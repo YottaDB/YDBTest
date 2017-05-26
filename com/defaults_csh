@@ -35,7 +35,7 @@ if ($?gtm_tools) then
 else
    $tst_awk -f $gtm_test_com_individual/process_defaults.awk $gtm_test_com_individual/gtm_env_missing_csh >! /tmp/__${USER}_test_suite_$$_gtm_env_missing.csh
    if ($status ) exit $status
-   source /tmp/__${USER}_test_suite_$$_gtm_env_missing.csh
+   source /tmp/__${USER}_test_suite_$$_gtm_env_missing.csh >! /tmp/__${USER}_test_suite_$$_gtm_env_missing2.csh
    set stat = $status
    if ($stat) exit $stat
 endif
