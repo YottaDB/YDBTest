@@ -1,0 +1,25 @@
+setenv gtm_chset UTF-8
+unset echo
+***This is the starting point of execution***
+C1(unic2m2c2m.c) in C->M->C->M
+In C1:Now gtm_ci('concat',ｈｅｌlｏ_3_すべての人間は、4,3後漢書𠞉𠟠4) will call into M1
+
+M1(concat.m) in C->M->C->M
+In M1:concat of ｈｅｌlｏ_3_すべての人間は、4 and 3後漢書𠞉𠟠4 is : ｈｅｌlｏ_3_すべての人間は、43後漢書𠞉𠟠4
+In M1:length of ｈｅｌlｏ_3_すべての人間は、4 : 17
+In M1:length of 3後漢書𠞉𠟠4 : 7
+In M1:lenght of concatenated string ｈｅｌlｏ_3_すべての人間は、43後漢書𠞉𠟠4 : 24
+In M1:Now <Set length=$&lengthc(string1)> will do external call to C2
+
+C2(lengthc.c) in C->M->C->M
+In C2:The length of "ｈｅｌlｏ_3_すべての人間は、4" is : 17
+In C2:The length of "3後漢書𠞉𠟠4" is : 7
+In C2:The length of concatenated string "ｈｅｌlｏ_3_すべての人間は、43後漢書𠞉𠟠4" is : 24
+In C2:Now gtm_ci('ucase',upper,mbstring) will call into M2
+
+M2(ucase.m) in C->M->C->M
+In M2:Upper case of 'ｈｅｌlｏ_3_すべての人間は、4' is : ＨＥＬLＯ_3_すべての人間は、4
+In C2:Call into ucase^ucase returned the upper case of ｈｅｌlｏ_3_すべての人間は、4 as :ＨＥＬLＯ_3_すべての人間は、4
+
+In M1:External call routine from M1 returned the length of ｈｅｌlｏ_3_すべての人間は、4 as 17
+In M1:Length of ｈｅｌlｏ_3_すべての人間は、4 as reported by $LENGTH is : 17

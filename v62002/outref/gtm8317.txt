@@ -1,0 +1,28 @@
+###################################################################
+
+gtm_tmp is bogus - expect INVTMPDIR from mumps (1)
+1
+##SUSPEND_OUTPUT HOST_AIX_RS6000
+
+###################################################################
+
+gtm_tmp is bogus - expect INVTMPDIR from gtmsecshr (1)
+1
+##ALLOW_OUTPUT HOST_AIX_RS6000
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+
+###################################################################
+
+gtm_tmp and gtm_linktmpdir are bogus - expect INVTMPDIR and INVLINKTMPDIR from mumps (2)
+2
+
+###################################################################
+
+gtm_linktmpdir is bogus - expect INVLINKTMPDIR from mumps (1)
+1
+
+###################################################################
+
+gtm_linktmpdir is bogus - expect gtmsecshr to not care (0)
+0
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64

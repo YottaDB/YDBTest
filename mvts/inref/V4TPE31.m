@@ -1,0 +1,65 @@
+V4TPE31 ;IW-KO-YS-TS,VV4TP,MVTS V9.10;15/7/96;PART-94 Transaction
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+11 ;---1. TSTART :SERIAL  ... TCOMMIT
+ D ^V4TPS21 ;^VA^VB(1)VAVB(1)
+ TSTART :SERIAL
+ F  Q:$$^V4GETS1
+ D ^V4TPS22 ;^VC^VD(1)VCVD(1)
+ D ^V4TPCHK1
+ TCOMMIT
+ D ^V4TPCHK1
+ L  H
+ ;
+12 ;---2. TSTART *:S  ... TROLLBACK
+ F  Q:$$^V4GETS2
+ TSTART *:S
+ D ^V4TPS22 ;^VC^VD(1)VCVD(1)
+ D ^V4TPCHK2
+ TROLLBACK
+ D ^V4TPCHK2
+ L  H
+ ;
+13 ;---3. TSTART lname:S  ... TCOMMIT
+ F  Q:$$^V4GETS3
+ TSTART VB:S
+ D ^V4TPS1 ;^VA^VB(1)VAVB(1)
+ K
+ D ^V4TPCHK3
+ TCOMMIT
+ D ^V4TPCHK3
+ L  H
+ ;
+ ;==========================================
+21 ;---1. TSTART :S  ... TCOMMIT
+ TSTART :S
+ F  Q:$$^V4GETS1
+ D ^V4TPS2 ;^va^vb(1)vavb(1)
+ D ^V4TPCHK1
+ TCOMMIT
+ D ^V4TPCHK1
+ L  H
+ ;
+22 ;---2. TSTART :SERIAL  ... TCOMMIT
+ F  Q:$$^V4GETS2
+ TSTART :SERIAL
+ K ^VA,^VB,^VC,^VD
+ S VA="va"
+ D ^V4TPCHK2
+ TCOMMIT
+ D ^V4TPCHK2
+ L  H
+ ;
+23 ;---3. TSTART ()  ... TROLLBACK
+ F  Q:$$^V4GETS3
+ TSTART ()
+ D ^V4TPS1 ;^VA^VB(1)VAVB(1)
+ D ^V4TPCHK3
+ TROLLBACK
+ D ^V4TPCHK3
+ L  H
+ ;
+ ;==========================================
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

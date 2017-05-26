@@ -1,0 +1,75 @@
+# Switch to the random version
+# Create databases with encryption
+# Create two more regions and db without encryption
+Created file ##TEST_PATH##/z.dat
+Created file ##TEST_PATH##/y.dat
+# Update a few random globals
+
+GTM>
+
+GTM>
+
+GTM>
+# Extract in binary format
+###################################################################
+# Switch to the current version and create encrypted database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+## Load the binary extract into the encrypted database
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 784  Max Subsc Len: 63  Max Data Len: 4
+Last LOAD record number: 11
+
+###################################################################
+# Create a non-encrypted database
+Created file ##TEST_PATH##/mumps.dat
+# Load the binary extract into the non-encrypted database
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 784  Max Subsc Len: 63  Max Data Len: 4
+Last LOAD record number: 11
+
+## Extract from unencrypted database now to be later loaded into a mix of encrypted and non-encrypted db
+###################################################################
+# Create a mix of encrypted and non-encrypted datbases
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Created file ##TEST_PATH##/y.dat
+# Load the binary extract into this mixed databases
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 784  Max Subsc Len: 63  Max Data Len: 4
+Last LOAD record number: 11
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+###################################################################
+## Load extract from unencrypted db into a mix of unencrypted and encrypted database files
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Created file ##TEST_PATH##/m.dat
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 784  Max Subsc Len: 63  Max Data Len: 4
+Last LOAD record number: 11
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

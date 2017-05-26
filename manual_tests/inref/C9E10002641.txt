@@ -1,0 +1,24 @@
+C9E10-002641 Journal pool fields must be updated by secshr_db_clnup for errors during commit
+
+Steps
+1. Create fresh dbs and start replication primary and secondary servers
+2. On primary, in session 0, run gtm under debugger. Issue an UPDATE (say, SET ^x=1) and stop at LSEEKWRITE in wcs_wtstart
+3. On primary, in session 1, run gtm and issue UPDATE to same global (say, SET ^x=2). This update will take approximately 4 minutes
+   to complete. You will notice operator log messages about cache verification.
+4. Depending on which image you are running, step 2 may result in cores. DBG will trip asserts (t_end_sysops, t_ch).
+   PRO will complete.
+5. Depending on which image you are running and the platform you are running on, due to step 2, source server (DBG) may trip
+   assert (gtmsource_readpool, tr_len and jnlpool_size validation). You may also notice source server switching to reading from
+   journal files although backlog is 0. This indicates journal pool corruption.
+6. Continue the GT.M process in session 0, issue another update (SET ^x=3). GT.M will trip assert in t_end (about early_write_addr being equal to write_addr). This also indicates journal pool corruption.PRO will complete without errors.
+
+With V5 and later, you will continue to see cache verificaiton messages, but gtm/source server/receiver/update all behave correctly.
+The transactions ^x=1, ^x=2 and ^x=3 are transmitted, received and processed with no errors under "PRO". Source server remains in pool-read mode as expected.
+
+The best way to test is to try building the "bta" build (which is pro + C-debugging). This will not do any assert checks but will enable one to stop at desired points using the C-debugger.
+With the bta build, follow the above steps. At the end of the test,
+* Source server or Receiver server should not break/exit.
+* Both the gtm sessions should return normally.
+* The value of ^x should be 3 both in the primary and secondary side.
+* The source log src.log should not have any message about switching to file read mode.
+

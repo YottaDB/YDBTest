@@ -1,0 +1,102 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+ 
+###################################################################
+# Test Case # 1: Current directory does not have write permissions and gtm_snaptmpdir is not set
+###################################################################
+# Verify SSTMPCREATE error is present.
+----------
+Error SSTMPCREATE seen in ../mupip_log1.log as expected:
+%GTM-E-SSTMPCREATE, Cannot create the temporary file in directory . for the requested snapshot
+----------
+----------
+##SUSPEND_OUTPUT HOST_OS390_S390
+Error ENO13 seen in ../mupip_log1.log as expected:
+%SYSTEM-E-ENO13, Permission denied
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+Error ENO111 seen in ../mupip_log1.log as expected:
+ Permission denied
+##ALLOW_OUTPUT HOST_ALL
+----------
+----------
+Error MUNOTALLINTEG seen in ../mupip_log1.log as expected:
+%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+----------
+# Setting write permissions on directory so test cleanup does not have a problem.
+ 
+###################################################################
+# Test Case # 2: Directory pointed to by gtm_snaptmpdir does not exist
+###################################################################
+# Verify SSTMPCREATE error is present.
+----------
+Error SSTMPCREATE seen in mupip_log2.log as expected:
+%GTM-E-SSTMPCREATE, Cannot create the temporary file in directory ##TEST_PATH##/dirdoesnotexist for the requested snapshot
+----------
+----------
+##SUSPEND_OUTPUT HOST_OS390_S390
+Error ENO2 seen in mupip_log2.log as expected:
+%SYSTEM-E-ENO2, No such file or directory
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+Error ENO129 seen in mupip_log2.log as expected:
+ No such file or directory
+##ALLOW_OUTPUT HOST_ALL
+----------
+----------
+Error MUNOTALLINTEG seen in mupip_log2.log as expected:
+%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+----------
+ 
+###################################################################
+# Test Case # 3: Directory pointed to by gtm_snaptmpdir does not have write permissions
+###################################################################
+# Verify SSTMPCREATE error is present.
+----------
+Error SSTMPCREATE seen in mupip_log3.log as expected:
+%GTM-E-SSTMPCREATE, Cannot create the temporary file in directory ##TEST_PATH##/dirwowriteperms for the requested snapshot
+----------
+----------
+##SUSPEND_OUTPUT HOST_OS390_S390
+Error ENO13 seen in mupip_log3.log as expected:
+%SYSTEM-E-ENO13, Permission denied
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+Error ENO111 seen in mupip_log3.log as expected:
+ Permission denied
+##ALLOW_OUTPUT HOST_ALL
+----------
+----------
+Error MUNOTALLINTEG seen in mupip_log3.log as expected:
+%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+----------
+# Setting write permissions on directory so test cleanup does not have a problem.
+ 
+###################################################################
+# Test Case # 4: Directory pointed to by gtm_snaptmpdir is actually a file
+###################################################################
+# Verify SSTMPCREATE error is present.
+----------
+Error SSTMPCREATE seen in mupip_log4.log as expected:
+%GTM-E-SSTMPCREATE, Cannot create the temporary file in directory ##TEST_PATH##/dirisafile for the requested snapshot
+----------
+----------
+##SUSPEND_OUTPUT HOST_OS390_S390
+Error ENO2 seen in mupip_log4.log as expected:
+%SYSTEM-E-ENO20, Not a directory
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+Error ENO135 seen in mupip_log4.log as expected:
+ Not a directory
+##ALLOW_OUTPUT HOST_ALL
+----------
+----------
+Error MUNOTALLINTEG seen in mupip_log4.log as expected:
+%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+----------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

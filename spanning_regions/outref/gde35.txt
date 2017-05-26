@@ -1,0 +1,58 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gde35.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gde35.cmd
+%GDE-I-MAPBAD, Region AREG for Name a* does not exist
+%GDE-I-MAPBAD, Region CREG for Name aa(1) does not exist
+%GDE-I-MAPBAD, Region AREG for Name aa(2) does not exist
+%GDE-I-MAPBAD, Region BREG for Name aa(3) does not exist
+%GDE-I-STDNULLCOLLREQ, Region AREG needs Standard Null Collation enabled because global ^aa spans through it
+%GDE-I-STDNULLCOLLREQ, Region BREG needs Standard Null Collation enabled because global ^aa spans through it
+%GDE-I-STDNULLCOLLREQ, Region CREG needs Standard Null Collation enabled because global ^aa spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-I-NOEXIT, Cannot exit because of verification failure
+
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ a*                                 AREG
+ aa(1)                              CREG
+ aa(3)                              BREG
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               a                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ a                               aa(1)                            REG = AREG
+                                                                  SEG = AREG
+                                                                  FILE = AREG.dat
+ aa(1)                           aa(1)++                          REG = CREG
+                                                                  SEG = CREG
+                                                                  FILE = CREG.dat
+ aa(1)++                         aa(3)                            REG = AREG
+                                                                  SEG = AREG
+                                                                  FILE = AREG.dat
+ aa(3)                           aa(3)++                          REG = BREG
+                                                                  SEG = BREG
+                                                                  FILE = BREG.dat
+ aa(3)++                         b                                REG = AREG
+                                                                  SEG = AREG
+                                                                  FILE = AREG.dat
+ b                               ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gde35.gld

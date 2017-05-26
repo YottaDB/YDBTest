@@ -1,0 +1,48 @@
+###################################################################
+Case 1 ==> Global directory has BG, but database has MM
+###################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+###################################################################
+==> Set access method in database to MM
+###################################################################
+  Access method                          MM  Global Buffers                1024
+###################################################################
+==> Do a TP transaction to ensure that the operation works fine.
+###################################################################
+^a="A simple set"
+###################################################################
+==> Do a Non-TP transaction to ensure that the operation works fine.
+###################################################################
+^b="A simple non-tp set"
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+###################################################################
+Case 2 ==> Global directory has MM, but database has BG
+###################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+ DEFAULT                         mumps.dat           MM  DYN  1024        100   100 DEFER
+###################################################################
+==> Set access method in database to BG
+###################################################################
+  Access method                          BG  Global Buffers                1024
+###################################################################
+==> Do a TP transaction to ensure that the operation works fine.
+###################################################################
+^a="A simple set"
+###################################################################
+==> Do a Non-TP transaction to ensure that the operation works fine.
+###################################################################
+^b="A simple non-tp set"
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

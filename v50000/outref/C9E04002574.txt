@@ -1,0 +1,90 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+--> Testing DBMAXNRSUBS error from cert_blk <--
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Checking integrity of block 3:
+%GTM-I-DBMAXNRSUBS,        3:18     0  Maximum number of subscripts exceeded
+
+DSE> 
+GTM>
+
+--> Testing DBKEYORD error from cert_blk <--
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Checking integrity of block 3:
+%GTM-I-DBKEYORD,        3:1B     0  Keys out of order
+
+DSE> 
+GTM>
+
+--> Testing DBINVGBL and DBDIRTSUBSC error from cert_blk <--
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Checking integrity of block 3:
+%GTM-I-DBINVGBL,        3:21     0  Invalid mixing of global names
+
+DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Checking integrity of block 3:
+%GTM-I-DBDIRTSUBSC,        3:18     0  Directory tree block contains non name-level entries
+
+DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Checking integrity of block 3:
+%GTM-I-DBDIRTSUBSC,        3:18     0  Directory tree block contains non name-level entries
+
+DSE> 
+GTM>
+
+--> Testing DBBDBALLOC error from cert_blk <--
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Checking integrity of block 4:
+%GTM-I-DBBDBALLOC,        4:29     1  Block doubly allocated
+
+DSE> 
+--> End of test
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

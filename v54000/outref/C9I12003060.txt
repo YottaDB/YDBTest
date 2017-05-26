@@ -1,0 +1,15 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+LKE SHOW -OUTPUT should succeed on a non-existent file
+Change permissions of created file to read-only
+LKE SHOW -OUTPUT should FAIL on this read-only file
+Cannot create file.out.
+Permission denied
+%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

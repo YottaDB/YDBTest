@@ -1,0 +1,18 @@
+# Running updates for 5 seconds with before journaling on
+# Running updates for 60 seconds with before journaling on
+# Running updates for 5 seconds with nobefore journaling on
+# Running updates for 60 seconds with nobefore journaling on
+##SUSPEND_OUTPUT BG
+##SUSPEND_OUTPUT HOST_AIX_RS6000
+# Check that ONLY 1 DB msync happened in case of nobefore image journaling irrespective of the duration of updates
+TEST-I-PASS. ONLY 1 DB msync seen
+##ALLOW_OUTPUT HOST_AIX_RS6000
+##ALLOW_OUTPUT BG
+##SUSPEND_OUTPUT MM
+# Check that ONLY 1 DB fsync happened in case of nobefore image journaling irrespective of the duration of updates
+TEST-I-PASS. ONLY 1 DB fsync seen
+##ALLOW_OUTPUT MM
+# Check that # of JNL fsyncs increase with the number of updates and duration irrespective of MM or BG and NOBEFORE/BEFORE
+TEST-I-PASS. # of JNL fsyncs for 60 second duration is greater than # JNL fsyncs for 5 second duration
+# Checking if the # of DB fsyncs in case of before image journaling increases significantly with the duration of updates
+TEST-I-PASS. The # of DB fsyncs in a before image case increased significantly between 5 sec update and 60 sec update

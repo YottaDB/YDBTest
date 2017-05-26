@@ -1,0 +1,33 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+Do updates that have ~ 3Mb of journal data such that they use up almost all
+	of the source server's internal buffer (after one expansion) but does not
+	have enough room to write TCOM record for the 3 regions
+Start receiver server after updates are done to ensure source server reads first jnl_seqno from files
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+Check that source server has sent all data without issues
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT ALL'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

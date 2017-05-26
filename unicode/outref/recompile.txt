@@ -1,0 +1,66 @@
+###################################################################
+If an m routine is compiled with $ZCHSET set to one setting, but executed when $ZCHSET is set to another setting, GT.M
+will error out. So we need to remove the object and compile it again.
+###################################################################
+setenv gtm_chset M
+unset echo
+#--> Check that the utfpattern.o (version 1) exists and note its sum (checksum or other information to see if it changes later on).
+###################################################################
+#--> Check that the utfpattern.o created above (version 1) was used.
+M in effect
+###################################################################
+#--> Check that the utfpattern.o created above (version 1) was used.
+M in effect
+###################################################################
+setenv gtm_chset UTF-8
+unset echo
+#  --> Check that utfpattern.o does not get regenerated automatically but instead error out with INVOBJ
+----------
+Error GTM-E-INVOBJFILE seen in out4.out as expected:
+%GTM-E-INVOBJFILE, Cannot ZLINK object file ##TEST_PATH##/utfpattern.o due to unexpected format
+----------
+----------
+Error GTM-I-TEXT seen in out4.out as expected:
+%GTM-I-TEXT, Object compiled with CHSET=M which is different from $ZCHSET
+----------
+UTF-8 in effect
+###################################################################
+setenv gtm_chset M
+unset echo
+#  --> Check that utfpattern.o does not get regenerated automatically but instead error out with INVOBJ
+----------
+Error GTM-E-INVOBJFILE seen in out5.out as expected:
+%GTM-E-INVOBJFILE, Cannot ZLINK object file ##TEST_PATH##/utfpattern.o due to unexpected format
+----------
+----------
+Error GTM-I-TEXT seen in out5.out as expected:
+%GTM-I-TEXT, Object compiled with CHSET=UTF-8 which is different from $ZCHSET
+----------
+M in effect
+###################################################################
+setenv gtm_chset UTF-8
+unset echo
+#  --> Check that utfpattern.o does not get regenerated automatically but instead error out with INVOBJ
+----------
+Error GTM-E-INVOBJFILE seen in out6.out as expected:
+%GTM-E-INVOBJFILE, Cannot ZLINK object file ##TEST_PATH##/utfpattern.o due to unexpected format
+----------
+----------
+Error GTM-I-TEXT seen in out6.out as expected:
+%GTM-I-TEXT, Object compiled with CHSET=M which is different from $ZCHSET
+----------
+UTF-8 in effect
+###################################################################
+setenv gtm_chset M
+unset echo
+#  --> Check that utfpattern.o does not get regenerated automatically but instead error out with INVOBJ
+----------
+Error GTM-E-INVOBJFILE seen in out7.out as expected:
+%GTM-E-INVOBJFILE, Cannot ZLINK object file ##TEST_PATH##/utfpattern.o due to unexpected format
+----------
+----------
+Error GTM-I-TEXT seen in out7.out as expected:
+%GTM-I-TEXT, Object compiled with CHSET=UTF-8 which is different from $ZCHSET
+----------
+M in effect
+###################################################################

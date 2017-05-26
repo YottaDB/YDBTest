@@ -1,0 +1,147 @@
+2-
+ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrst 3 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrst 3
+3-
+AB
+ 6
+ A
+B 
+8
+4-
+ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx 11 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx 11
+5-
+ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx 13 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx 13
+6-
+ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx 15 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx 15
+8-
+ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx 17 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrst
+uvwx 18
+9-
+what is LENGTH in effect acros
+s one write statement that spa
+ns multiple lines: 2some more2
+even more3
+what is LENGTH in effect?0some
+ more1even more1
+now one at a time: $Y=0
+now one at a time: $Y=1
+now one at a time: $Y=0
+10-
+ABCDEFGHIJKLMNOPQRSTUVWXYZabcd
+efghijklmnopqrstuvwxyzABCDEFGH
+IJKLMNOPQRSTUVW 4 ABCDEFGHIJKL
+MNOPQRSTUVWXYZabcdefghijklmnop
+qrstuvwxyzABCDEFGHIJKLMNOPQRST
+UVW 7
+11-
+ABCDE 9 ABCDE 9
+12-
+ABCDEFGHIJKLMNOPQRSTUVWXYZabcd
+efghijklmnopqrstuvwxyzABCDEFGH
+IJKLMNOPQRSTUVW 13 ABCDEFGHIJK
+LMNOPQRSTUVWXYZabcdefghijklmno
+pqrstuvwxyzABCDEFGHIJKLMNOPQRS
+TUVW 16
+13-
+ABCDEFGHIJKLMNOPQRSTUVWXYZabcd
+efghijklmn 19 ABCDEFGHIJKLMNOP
+QRSTUVWXYZabcdefghijklmn 20
+14-
+ABCDEFGHIJKLMNOPQRSTUVWXYZabcd
+efghijklmn 23 ABCDEFGHIJKLMNOP
+QRSTUVWXYZabcdefghijklmn 24
+
+###################################################################
+Step 4 - print the zshow output from terminal.m
+-------------------Test 1---------------------------------------------
+Test: terminal
+USE -> WIDTH=-1
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150372658,test+8^terminal,%GTM-X-DEVPARMNEG, Deviceparameter must be a positive value
+error+7^terminal
+test+8^terminal    ($ZTRAP)
+test1+10^terminal
++1^GTM$DMOD    (Direct mode) 
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-------------------Test 2---------------------------------------------
+Test: terminal
+USE -> WIDTH=0
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE NOWRAP WIDTH=255 LENG=XX 
+zshow.outx OPEN RMS 
+-------------------Test 3---------------------------------------------
+Test: terminal
+USE -> WIDTH=2
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=2 LENG=XX 
+zshow.outx OPEN RMS 
+-------------------Test 4---------------------------------------------
+Test: terminal
+USE -> WIDTH=32767
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=32767 LENG=XX 
+zshow.outx OPEN RMS 
+-------------------Test 5---------------------------------------------
+Test: terminal
+USE -> WIDTH=1048576
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=1048576 LENG=XX 
+zshow.outx OPEN RMS 
+-------------------Test 6---------------------------------------------
+Test: terminal
+USE -> WIDTH=1048580
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=1048580 LENG=XX 
+zshow.outx OPEN RMS 
+-------------------Test 7---------------------------------------------
+Test: terminal
+USE -> LENGTH=-1
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150372658,test+8^terminal,%GTM-X-DEVPARMNEG, Deviceparameter must be a positive value
+error+7^terminal
+test+8^terminal    ($ZTRAP)
+test1+17^terminal
++1^GTM$DMOD    (Direct mode) 
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-------------------Test 8---------------------------------------------
+Test: terminal
+USE -> (LENGTH=0:WIDTH=100)
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=100 LENG=0 
+zshow.outx OPEN RMS 
+-------------------Test 9---------------------------------------------
+Test: terminal
+USE -> (LENGTH=2:WIDTH=30)
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=2 
+zshow.outx OPEN RMS 
+-------------------Test 10---------------------------------------------
+Test: terminal
+USE -> (WIDTH=30:LENGTH=255)
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=255 
+zshow.outx OPEN RMS 
+-------------------Test 11---------------------------------------------
+Test: terminal
+USE -> (LENGTH=256)
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=256 
+zshow.outx OPEN RMS 
+-------------------Test 12---------------------------------------------
+Test: terminal
+USE -> LENGTH=32767
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=32767 
+zshow.outx OPEN RMS 
+-------------------Test 13---------------------------------------------
+Test: terminal
+USE -> LENGTH=1048576
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=1048576 
+zshow.outx OPEN RMS 
+-------------------Test 14---------------------------------------------
+Test: terminal
+USE -> LENGTH=1048580
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=1048580 
+zshow.outx OPEN RMS 
+###################################################################
+Step 6 - another terminal test (expect to see "$Y:1" and "$Y:9999")
+33:$Y:1
+34:$Y should be 1 in the above line...
+10035:$Y:9999
+10036:$Y should be 9999 in the above line...
+
+###################################################################
+Step 7 - writing 35000 bytes should not error out

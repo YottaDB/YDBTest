@@ -1,0 +1,7 @@
+TEST gtm8404 : 
+Comparing number of instruction: PASS
+Running ##SOURCE_PATH##/mumps -run gtm8404verbose
+Running ##SOURCE_PATH##/mumps -run gtm8404terse
+Comparing outputs: PASS
+Expected: mylabel ; This is a comment write $TEXT(+12),! mylabel ; This is a comment mylabel2 ; This is a second label with a comment mylabel2 ; This is a second label with a comment gtm8404verbose write $TEXT(mylabel2+-4),! gtm8404verbose
+Actual:   mylabel ; This is a comment write $TEXT(+12),! mylabel ; This is a comment mylabel2 ; This is a second label with a comment mylabel2 ; This is a second label with a comment gtm8404verbose write $TEXT(mylabel2+-4),! gtm8404verbose

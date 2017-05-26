@@ -1,0 +1,32 @@
+Create 2 regions AREG and DEFAULT with ^a* mapping to AREG and everything else to DEFAULT
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Enable journaling on AREG. Do not enable it on DEFAULT as we dont want 2-second sleeps there for every update
+Start GT.M process to do update to journaled region. This will sleep for 2 seconds before doing the update
+sleep 1 second to make it more likely MUPIP SET JOURNAL timestamp in new journal file is 1 second more than GT.M process
+Switch journal file. It is very likely this switch happens BEFORE the GT.M process finishes its 2 second sleep and update
+Wait for GT.M process to quit before exiting the test
+Extract journal files and verify <time> never decreases
+Extracting 2 files of type a*.mjl*
+##TEST_AWK##TEST_AWK	Extracting :  a.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) ----> a.mjf_[0-9]*(_[0-9][0-9]*|[0-9])
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/a.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+	Extracting :  a.mjl ----> a.mjf
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/a.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+Time Verification PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

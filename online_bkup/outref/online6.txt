@@ -1,0 +1,110 @@
+##SUSPEND_OUTPUT NON_UTF8
+setenv gtm_chset UTF-8
+unset echo
+##ALLOW_OUTPUT NON_UTF8
+ENTERING ONLINE6
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+online66.gld
+Using: ##SOURCE_PATH##/mupip
+online66.dat
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+online6.gld
+Using: ##SOURCE_PATH##/mupip
+online6.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+online6.gld
+Using: ##SOURCE_PATH##/mupip
+online6.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+##SUSPEND_OUTPUT UTF8
+PASS from fill3^myfill("set")
+##ALLOW_OUTPUT UTF8
+##SUSPEND_OUTPUT NON_UTF8
+set PASS
+##ALLOW_OUTPUT NON_UTF8
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/online6.mjl is renamed to ##TEST_PATH##/online6.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/online6.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##ALLOW_OUTPUT  NON_REPLIC
+##TEST_AWKMUPIP backup of database file ##TEST_PATH##/online6.dat to ##TEST_HOST##:[1-9][0-9]*
+##TEST_AWKDB file ##TEST_PATH##/online6.dat incrementally backed up in file ##TEST_HOST##:[1-9][0-9]*
+##SUSPEND_OUTPUT  COLLATION
+##SUSPEND_OUTPUT UTF8
+190 blocks saved.
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions from 0x0000000000000001 to 0x0000000000002001 are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions from 0x0000000000000001 to 0x0000000000002000 are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+##ALLOW_OUTPUT UTF8
+##SUSPEND_OUTPUT NON_UTF8
+12027 blocks saved.
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions from 0x0000000000000001 to 0x0000000000084037 are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions from 0x0000000000000001 to 0x0000000000083FBF are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+##ALLOW_OUTPUT NON_UTF8
+##ALLOW_OUTPUT  COLLATION
+##SUSPEND_OUTPUT  NON_COLLATION
+##SUSPEND_OUTPUT UTF8
+210 blocks saved.
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions from 0x0000000000000001 to 0x0000000000002002 are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions from 0x0000000000000001 to 0x0000000000002000 are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+##ALLOW_OUTPUT UTF8
+##SUSPEND_OUTPUT NON_UTF8
+12017 blocks saved.
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions from 0x0000000000000001 to 0x0000000000084036 are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions from 0x0000000000000001 to 0x0000000000083FBF are backed up.
+##ALLOW_OUTPUT MM_FILE_EXT
+##ALLOW_OUTPUT NON_UTF8
+##ALLOW_OUTPUT NON_COLLATION
+
+
+BACKUP COMPLETED.
+
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+
+GTM>
+##SUSPEND_OUTPUT UTF8
+PASS from fill3^myfill("ver")
+##ALLOW_OUTPUT UTF8
+##SUSPEND_OUTPUT NON_UTF8
+ver PASS
+##ALLOW_OUTPUT NON_UTF8
+
+GTM>
+CHECK_STRING_EXIST-I-FOUND. At least one of the messages passed is found in the file badtcp1.outx
+CHECK_STRING_EXIST-I-FOUND. At least one of the messages passed is found in the file badtcp2.outx
+CHECK_STRING_EXIST-I-FOUND. At least one of the messages passed is found in the file badtcp3.outx
+LEAVING ONLINE6

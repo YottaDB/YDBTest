@@ -1,0 +1,11 @@
+Database file mumps.dat now has 64 mutex queue slots
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+# do launchjobs^gtm7804
+# do letgo^gtm7804
+# Mutex queue should not be filled up
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,231 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+$gtm_exe/mumps -run %XCMD 'for i=1:1:10000 set v=$j(i,200) set ^a(i)=v,^b(i)=v,^c(i)=v,^d(i)=v'
+$MUPIP reorg -truncate
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a (region AREG)
+Blocks processed    : 1575 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1485 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: a (region BREG)
+Blocks processed    : 957 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 957 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: b (region AREG)
+Blocks processed    : 1879 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1871 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: b (region BREG)
+Blocks processed    : 595 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 592 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: b (region CREG)
+Blocks processed    : 57 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 57 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region BREG)
+Blocks processed    : 551 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 460 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region CREG)
+Blocks processed    : 1981 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1978 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: d (region DEFAULT)
+Blocks processed    : 2530 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 2416 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+Total root blocks moved: 0
+%GTM-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 0
+%GTM-I-MUTRUNCNOSPACE, Region BREG has insufficient space to meet truncate target percentage of 0
+Truncated region: CREG. Reduced total blocks from [2105] to [2048]. Reduced free blocks from [58] to [2].
+Truncated region: DEFAULT. Reduced total blocks from [2606] to [2560]. Reduced free blocks from [67] to [22].
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a (region AREG)
+Blocks processed    : 2530 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 2416 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: b (region BREG)
+Blocks processed    : 2530 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 2416 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region CREG)
+Blocks processed    : 2530 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 2416 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: d (region DEFAULT)
+Blocks processed    : 2530 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 2416 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+Total root blocks moved: 0
+Truncated region: AREG. Reduced total blocks from [2606] to [2560]. Reduced free blocks from [67] to [22].
+Truncated region: BREG. Reduced total blocks from [2606] to [2560]. Reduced free blocks from [67] to [22].
+Truncated region: CREG. Reduced total blocks from [2606] to [2560]. Reduced free blocks from [67] to [22].
+Truncated region: DEFAULT. Reduced total blocks from [2606] to [2560]. Reduced free blocks from [67] to [22].
+##ALLOW_OUTPUT SPANNING_REGIONS
+$gtm_exe/mumps -run %XCMD 'kill ^a,^b,^c,^d'
+$MUPIP reorg -truncate
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a (region AREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 1 
+Blocks extended     : 0 
+   
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+Global: a (region BREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 1 
+Blocks extended     : 0 
+   
+Global: b (region AREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 1 
+Blocks extended     : 0 
+   
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+Global: b (region BREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 1 
+Blocks extended     : 0 
+   
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+Global: b (region CREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 1 
+Blocks extended     : 0 
+   
+Global: c (region BREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 1 
+Blocks extended     : 0 
+   
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+Global: c (region CREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 1 
+Blocks extended     : 0 
+   
+Global: d (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 1 
+Blocks extended     : 0 
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+Total root blocks moved: 5
+Truncated region: AREG. Reduced total blocks from [3507] to [512]. Reduced free blocks from [3494] to [505].
+Truncated region: BREG. Reduced total blocks from [2205] to [512]. Reduced free blocks from [2192] to [503].
+Truncated region: CREG. Reduced total blocks from [2048] to [512]. Reduced free blocks from [2038] to [505].
+Truncated region: DEFAULT. Reduced total blocks from [2560] to [512]. Reduced free blocks from [2551] to [507].
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Total root blocks moved: 0
+Truncated region: AREG. Reduced total blocks from [2560] to [512]. Reduced free blocks from [2551] to [507].
+Truncated region: BREG. Reduced total blocks from [2560] to [512]. Reduced free blocks from [2551] to [507].
+Truncated region: CREG. Reduced total blocks from [2560] to [512]. Reduced free blocks from [2551] to [507].
+Truncated region: DEFAULT. Reduced total blocks from [2560] to [512]. Reduced free blocks from [2551] to [507].
+##ALLOW_OUTPUT SPANNING_REGIONS
+unset verbose
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

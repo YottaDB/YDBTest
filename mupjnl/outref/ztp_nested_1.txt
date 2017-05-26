@@ -1,0 +1,585 @@
+Test Case: 10a - ztp_nested
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Start before image journaling
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+d ^ztp1
+##TEST_AWKTime written into time1.txt:.*
+
+GTM>
+
+GTM>
+d ^ztp2wc
+##TEST_AWKTime written into time2.txt:.*
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+##TEST_AWKTime written into time21.txt:.*
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+##TEST_AWKTime written into time22.txt:.*
+
+GTM>
+
+GTM>
+d ^ztp3
+##TEST_AWKTime written into time3.txt:.*
+
+GTM>
+##TEST_AWKtime0 = .*
+##TEST_AWKtime0_d = .*
+##TEST_AWKtime1 = .*
+##TEST_AWKtime1_d = .*
+##TEST_AWKtime2 = .*
+##TEST_AWKtime2_d = .*
+##TEST_AWKtime21 = .*
+##TEST_AWKtime21_d = .*
+##TEST_AWKtime22 = .*
+##TEST_AWKtime22_d = .*
+##TEST_AWKtime3 = .*
+##TEST_AWKtime3_d = .*
+##TEST_AWKdt22t2 = .*
+##TEST_AWKdt22t21 = .*
+##TEST_AWKdt22t1 = .*
+------------------------------------------------------------------------------------------
+MUPIP journal -recover -back "*" -since=time22 -fence=none -look="time=0 0:0:0"
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+GTM>
+^z1(1)=1
+^z1(2)=2
+^z1(3)=3
+^z1(4)=4
+^z1(5)=5
+^z1(6)=6
+^z1(7)=7
+^z1(8)=8
+^z1(9)=9
+^z1(10)=10
+^z21(1)=1
+^z21(2)=2
+^z21(3)=3
+^z21(4)=4
+^z21(5)=5
+^z21(6)=6
+^z21(7)=7
+^z21(8)=8
+^z21(9)=9
+^z21(10)=10
+^z22(1)=1
+^z22(2)=2
+^z22(3)=3
+^z22(4)=4
+^z22(5)=5
+^z22(6)=6
+^z22(7)=7
+^z22(8)=8
+^z22(9)=9
+^z22(10)=10
+^z23(1)=1
+^z23(2)=2
+^z23(3)=3
+^z23(4)=4
+^z23(5)=5
+^z23(6)=6
+^z23(7)=7
+^z23(8)=8
+^z23(9)=9
+^z23(10)=10
+^z3(1)=1
+^z3(2)=2
+^z3(3)=3
+^z3(4)=4
+^z3(5)=5
+^z3(6)=6
+^z3(7)=7
+^z3(8)=8
+^z3(9)=9
+^z3(10)=10
+^z24(1)=1
+^z24(2)=2
+^z24(3)=3
+^z24(4)=4
+^z24(5)=5
+^z24(6)=6
+^z24(7)=7
+^z24(8)=8
+^z24(9)=9
+^z24(10)=10
+
+GTM>
+------------------------------------------------------------------------------------------
+MUPIP journal -recover -back "*" -since=time22 -look="time=0 0:0:0"
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Lookback processing started at ... ... .. ..:..:.. ....
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
+%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+
+-------------------------------------------------------------------------------
+##FILTERED##SHOW output for journal file ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+GTM>
+^z1(1)=1
+^z1(2)=2
+^z1(3)=3
+^z1(4)=4
+^z1(5)=5
+^z1(6)=6
+^z1(7)=7
+^z1(8)=8
+^z1(9)=9
+^z1(10)=10
+^z21(1)=1
+^z21(2)=2
+^z21(3)=3
+^z21(4)=4
+^z21(5)=5
+^z21(6)=6
+^z21(7)=7
+^z21(8)=8
+^z21(9)=9
+^z21(10)=10
+^z22(1)=1
+^z22(2)=2
+^z22(3)=3
+^z22(4)=4
+^z22(5)=5
+^z22(6)=6
+^z22(7)=7
+^z22(8)=8
+^z22(9)=9
+^z22(10)=10
+%GTM-E-GVUNDEF, Global variable undefined: ^z23
+
+GTM>
+^z23 and ^z24 will be in broken transaction file
+^z23(1)="1"
+^z23(2)="2"
+^z23(3)="3"
+^z23(4)="4"
+^z23(5)="5"
+^z23(6)="6"
+^z23(7)="7"
+^z23(8)="8"
+^z23(9)="9"
+^z23(10)="10"
+^z24(1)="1"
+^z24(2)="2"
+^z24(3)="3"
+^z24(4)="4"
+^z24(5)="5"
+^z24(6)="6"
+^z24(7)="7"
+^z24(8)="8"
+^z24(9)="9"
+^z24(10)="10"
+^z3 will be in lost transaction file
+^z3(1)="1"
+^z3(2)="2"
+^z3(3)="3"
+^z3(4)="4"
+^z3(5)="5"
+^z3(6)="6"
+^z3(7)="7"
+^z3(8)="8"
+^z3(9)="9"
+^z3(10)="10"
+------------------------------------------------------------------------------------------
+MUPIP journal -recover -back "*" -since=time22 -fence=always -look="time=0 0:0:0"
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Lookback processing started at ... ... .. ..:..:.. ....
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.broken is renamed to ##TEST_PATH##/mumps.broken_##TIMESTAMP##
+%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.lost is renamed to ##TEST_PATH##/mumps.lost_##TIMESTAMP##
+%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+
+-------------------------------------------------------------------------------
+##FILTERED##SHOW output for journal file ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+^z23,^z24,^z3 will be in broken transaction file
+^z23(1)="1"
+^z23(2)="2"
+^z23(3)="3"
+^z23(4)="4"
+^z23(5)="5"
+^z23(6)="6"
+^z23(7)="7"
+^z23(8)="8"
+^z23(9)="9"
+^z23(10)="10"
+^z24(1)="1"
+^z24(2)="2"
+^z24(3)="3"
+^z24(4)="4"
+^z24(5)="5"
+^z24(6)="6"
+^z24(7)="7"
+^z24(8)="8"
+^z24(9)="9"
+^z24(10)="10"
+^z3(1)="1"
+^z3(2)="2"
+^z3(3)="3"
+^z3(4)="4"
+^z3(5)="5"
+^z3(6)="6"
+^z3(7)="7"
+^z3(8)="8"
+^z3(9)="9"
+^z3(10)="10"
+------------------------------------------------------------------------------------------
+MUPIP journal -recover -back "*" -since=time22 -fence=always -look="time=time22 - time2"
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Lookback processing started at ... ... .. ..:..:.. ....
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.broken is renamed to ##TEST_PATH##/mumps.broken_##TIMESTAMP##
+%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.lost is renamed to ##TEST_PATH##/mumps.lost_##TIMESTAMP##
+%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+
+-------------------------------------------------------------------------------
+##FILTERED##SHOW output for journal file ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+^z21,^z22,^z23,^z24,^z3 will be in broken transaction file
+^z21(1)="1"
+^z21(2)="2"
+^z21(3)="3"
+^z21(4)="4"
+^z21(5)="5"
+^z21(6)="6"
+^z21(7)="7"
+^z21(8)="8"
+^z21(9)="9"
+^z21(10)="10"
+^z22(1)="1"
+^z22(2)="2"
+^z22(3)="3"
+^z22(4)="4"
+^z22(5)="5"
+^z22(6)="6"
+^z22(7)="7"
+^z22(8)="8"
+^z22(9)="9"
+^z22(10)="10"
+^z23(1)="1"
+^z23(2)="2"
+^z23(3)="3"
+^z23(4)="4"
+^z23(5)="5"
+^z23(6)="6"
+^z23(7)="7"
+^z23(8)="8"
+^z23(9)="9"
+^z23(10)="10"
+^z24(1)="1"
+^z24(2)="2"
+^z24(3)="3"
+^z24(4)="4"
+^z24(5)="5"
+^z24(6)="6"
+^z24(7)="7"
+^z24(8)="8"
+^z24(9)="9"
+^z24(10)="10"
+^z3(1)="1"
+^z3(2)="2"
+^z3(3)="3"
+^z3(4)="4"
+^z3(5)="5"
+^z3(6)="6"
+^z3(7)="7"
+^z3(8)="8"
+^z3(9)="9"
+^z3(10)="10"
+------------------------------------------------------------------------------------------
+MUPIP journal -recover -back "*" -since=time22 -fence=always -look="time=time22 - time21"
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Lookback processing started at ... ... .. ..:..:.. ....
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.broken is renamed to ##TEST_PATH##/mumps.broken_##TIMESTAMP##
+%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.lost is renamed to ##TEST_PATH##/mumps.lost_##TIMESTAMP##
+%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+
+-------------------------------------------------------------------------------
+##FILTERED##SHOW output for journal file ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+^z23,^z24,^z3 will be in broken transaction file
+^z23(1)="1"
+^z23(2)="2"
+^z23(3)="3"
+^z23(4)="4"
+^z23(5)="5"
+^z23(6)="6"
+^z23(7)="7"
+^z23(8)="8"
+^z23(9)="9"
+^z23(10)="10"
+^z24(1)="1"
+^z24(2)="2"
+^z24(3)="3"
+^z24(4)="4"
+^z24(5)="5"
+^z24(6)="6"
+^z24(7)="7"
+^z24(8)="8"
+^z24(9)="9"
+^z24(10)="10"
+^z3(1)="1"
+^z3(2)="2"
+^z3(3)="3"
+^z3(4)="4"
+^z3(5)="5"
+^z3(6)="6"
+^z3(7)="7"
+^z3(8)="8"
+^z3(9)="9"
+^z3(10)="10"
+------------------------------------------------------------------------------------------
+MUPIP journal -recover -back "*" -since=time22 -fence=always -look="time=time22 - time1"
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Lookback processing started at ... ... .. ..:..:.. ....
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.broken is renamed to ##TEST_PATH##/mumps.broken_##TIMESTAMP##
+%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.lost is renamed to ##TEST_PATH##/mumps.lost_##TIMESTAMP##
+%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+
+-------------------------------------------------------------------------------
+##FILTERED##SHOW output for journal file ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+^z21,^z22,^z23,^z24,^z3 will be in broken transaction file
+^z21(1)="1"
+^z21(2)="2"
+^z21(3)="3"
+^z21(4)="4"
+^z21(5)="5"
+^z21(6)="6"
+^z21(7)="7"
+^z21(8)="8"
+^z21(9)="9"
+^z21(10)="10"
+^z22(1)="1"
+^z22(2)="2"
+^z22(3)="3"
+^z22(4)="4"
+^z22(5)="5"
+^z22(6)="6"
+^z22(7)="7"
+^z22(8)="8"
+^z22(9)="9"
+^z22(10)="10"
+^z23(1)="1"
+^z23(2)="2"
+^z23(3)="3"
+^z23(4)="4"
+^z23(5)="5"
+^z23(6)="6"
+^z23(7)="7"
+^z23(8)="8"
+^z23(9)="9"
+^z23(10)="10"
+^z24(1)="1"
+^z24(2)="2"
+^z24(3)="3"
+^z24(4)="4"
+^z24(5)="5"
+^z24(6)="6"
+^z24(7)="7"
+^z24(8)="8"
+^z24(9)="9"
+^z24(10)="10"
+^z3(1)="1"
+^z3(2)="2"
+^z3(3)="3"
+^z3(4)="4"
+^z3(5)="5"
+^z3(6)="6"
+^z3(7)="7"
+^z3(8)="8"
+^z3(9)="9"
+^z3(10)="10"
+------------------------------------------------------------------------------------------
+MUPIP journal -recover -back "*" -since=time22 -fence=always -look="operations=1"
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Lookback processing started at ... ... .. ..:..:.. ....
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.broken is renamed to ##TEST_PATH##/mumps.broken_##TIMESTAMP##
+%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.lost is renamed to ##TEST_PATH##/mumps.lost_##TIMESTAMP##
+%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+
+-------------------------------------------------------------------------------
+##FILTERED##SHOW output for journal file ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+GTM>
+^z1(1)=1
+^z1(2)=2
+^z1(3)=3
+^z1(4)=4
+^z1(5)=5
+^z1(6)=6
+^z1(7)=7
+^z1(8)=8
+^z1(9)=9
+^z1(10)=10
+%GTM-E-GVUNDEF, Global variable undefined: ^z21
+
+GTM>
+------------------------------------------------------------------------------------------
+MUPIP journal -recover -back "*" -since=time22 -look="operations=2"
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Lookback processing started at ... ... .. ..:..:.. ....
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.broken is renamed to ##TEST_PATH##/mumps.broken_##TIMESTAMP##
+%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.lost is renamed to ##TEST_PATH##/mumps.lost_##TIMESTAMP##
+%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+
+-------------------------------------------------------------------------------
+##FILTERED##SHOW output for journal file ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+GTM>
+^z1(1)=1
+^z1(2)=2
+^z1(3)=3
+^z1(4)=4
+^z1(5)=5
+^z1(6)=6
+^z1(7)=7
+^z1(8)=8
+^z1(9)=9
+^z1(10)=10
+%GTM-E-GVUNDEF, Global variable undefined: ^z21
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+End of Test

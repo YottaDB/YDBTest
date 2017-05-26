@@ -1,0 +1,40 @@
+change -segment DEFAULT -file_name=mumps.dat
+add -name a* -region=areg
+add -name A* -region=areg
+add -region areg -dyn=aseg
+add -segment aseg -file=a.dat
+add -name b* -region=breg
+add -name B* -region=breg
+add -region breg -dyn=bseg
+add -segment bseg -file=b.dat
+add -name c* -region=creg
+add -name C* -region=creg
+add -region creg -dyn=cseg
+add -segment cseg -file=c.dat
+! Use this static .sprgde file since Transaction numbers in reference files
+! Number of records in *.dat files is 45
+! Number of included regions is 4
+!    Region 1 = AREG
+!    Region 2 = BREG
+!    Region 3 = CREG
+!    Region 4 = DEFAULT
+! Number of sections randomly chosen is 8
+! Map : ^a : Section excluded : Unsubscripted variable
+! Map : ^a(6) maps to DEFAULT
+add -name a(6:) -region=DEFAULT
+! Map : ^c(3) maps to BREG
+add -name c(3:4) -region=BREG
+! Map : ^c(4) maps to CREG
+add -name c(4:6) -region=CREG
+! Map : ^c(6) maps to AREG
+add -name c(6:10) -region=AREG
+! Map : ^c(10) maps to BREG
+add -name c(10:) -region=BREG
+! Map : ^zot(6) maps to AREG
+add -name zot(6:10) -region=AREG
+! Map : ^zot(10) maps to BREG
+add -name zot(10:) -region=BREG
+change -region AREG -std
+change -region BREG -std
+change -region CREG -std
+change -region DEFAULT -std

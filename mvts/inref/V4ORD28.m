@@ -1,0 +1,60 @@
+V4ORD28 ;IW-KO-TS-YS,V4ORDER,MVTS V9.10;15/6/96;$ORDER
+ ;
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1984-1996
+ ;
+ W !!,"115---V4ORD28:  $ORDER(glvn,expr)  -8-"
+ ;
+1 S ^ABSN="40723",^ITEM="IV-723  glvn contains an integer number"
+ S ^NEXT="2^V4ORD28,V4ORD29^V4ORDER,V4QUERY^VV4" D ^V4PRESET K
+ S A(2)=1,A("XXXXXXXXXX",3456789)=1
+ S ^VCOMP=$order(A(99999999),A(2))
+ S ^VCORR="XXXXXXXXXX" D ^VEXAMINE
+ ;
+2 S ^ABSN="40724",^ITEM="IV-724  glvn contains a number"
+ S ^NEXT="3^V4ORD28,V4ORD29^V4ORDER,V4QUERY^VV4" D ^V4PRESET K  K ^V
+ S ^V(-1E-25)="",V(1E-25)=-1
+ S ^VCOMP=$O(^V(1E25),V(1E-25))
+ S ^VCORR="-.0000000000000000000000001" D ^VEXAMINE K ^V
+ ;
+3 S ^ABSN="40725",^ITEM="IV-725  glvn contains a string"
+ S ^NEXT="4^V4ORD28,V4ORD29^V4ORDER,V4QUERY^VV4" D ^V4PRESET K
+ S V(0,"abcdefghijklmnopqrstuvwxyz","a","b")=1
+ S V(0,"abcdefghijklmnopqrstuvwxyz","B","b")=1
+ S V(0,"ABCDEFGHIJKLMNOPQRSTUVWXYZ",12)=2
+ S ^VCOMP=$O(V(0,"ABCDEFGHIJKLMNOPQRSTUVWXYZ"),1)
+ S ^VCORR="abcdefghijklmnopqrstuvwxyz" D ^VEXAMINE
+ ;
+4 S ^ABSN="40726",^ITEM="IV-726  glvn contains a naked reference"
+ S ^NEXT="5^V4ORD28,V4ORD29^V4ORDER,V4QUERY^VV4" D ^V4PRESET K  K ^V
+ S ^V("A",2,1)=21,^V("A",2,"ZZZZZZ")="zzz"
+ S ^V("A","B")="AB"
+ S ^VCOMP=$o(^(2,3),1)_" "_^(1)
+ S ^VCORR="ZZZZZZ 21" D ^VEXAMINE K ^V
+ ;
+5 S ^ABSN="40727",^ITEM="IV-727  glvn is a lvn"
+ S ^NEXT="6^V4ORD28,V4ORD29^V4ORDER,V4QUERY^VV4" D ^V4PRESET K
+ S A=-1
+ s B="b",C="c",D="d",E("e")=A,A(B,C,D,-12345.678)=12
+ S A(B,C,D)="X"
+ S A(B,C,D,12345.678)=1234
+ S ^VCOMP=$o(A(B,C,D,A),E("e"))
+ S ^VCORR="-12345.678" D ^VEXAMINE
+ ;
+6 S ^ABSN="40728",^ITEM="IV-728  glvn is a gvn"
+ S ^NEXT="7^V4ORD28,V4ORD29^V4ORDER,V4QUERY^VV4" D ^V4PRESET K  K ^V
+ S ^V(1,2,3,"4.0",0,-55.56,600,-7,8.9,"CCC")=""
+ S ^V(1,2,3,"4.0",0,-55.56,600,-7,8.9,"BBB")=""
+ S ^V(1,2,3,"4.0",0,-55.56,600,-7,8.9,"AAA")=""
+ S ^VCOMP=$o(^V(1,2,3,"4.0",0,-55.56,600,-7,8.9,"a"),-1)
+ S ^VCORR="CCC" D ^VEXAMINE K ^V
+ ;
+7 S ^ABSN="40729",^ITEM="IV-729  glvn contains a svn"
+ S ^NEXT="V4ORD29^V4ORDER,V4QUERY^VV4" D ^V4PRESET K
+ S A=1,A("ABCDEFGHJOKL","XYZ")=1 IF A
+ S ^VCOMP=$O(A("ABCDEFGHJOKL",$TEST),A)
+ S ^VCORR="XYZ" D ^VEXAMINE
+ ;
+END W !!,"End of 115 --- V4ORD28",!
+ K  Q
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

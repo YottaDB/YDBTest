@@ -1,0 +1,45 @@
+V4QSUB5 ;IW-KO-YS-TS,V4QSUB,MVTS V9.10;15/6/96;PART-94
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+ W !!,"58---V4QSUB5:  $QSUBSCRIPT function  -5-"
+ ;
+ W !!,"$QL(namevalue)<intexpr"
+ ;
+1 S ^ABSN="40426",^ITEM="IV-426  unsubscripted"
+ S ^NEXT="2^V4QSUB5,V4QSUB6^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^VCOMP=$QS("A",4)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+ W !!,"1 subscript"
+ ;
+2 S ^ABSN="40427",^ITEM="IV-427  subscript is an integer number"
+ S ^NEXT="3^V4QSUB5,V4QSUB6^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^VCOMP=$qsubscript("XYZ(98364)",2)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+3 S ^ABSN="40428",^ITEM="IV-428  subscript is a number"
+ S ^NEXT="4^V4QSUB5,V4QSUB6^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^VCOMP=$qs("ZZZZZ(929.384)",1900)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+4 S ^ABSN="40429",^ITEM="IV-429  subscript is a string"
+ S ^NEXT="5^V4QSUB5,V4QSUB6^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^VCOMP=$QS("ZZZZ(""ABCD"")",22)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+5 S ^ABSN="40430",^ITEM="IV-430  subscript contains a "" character"
+ S ^NEXT="6^V4QSUB5,V4QSUB6^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ ;(test fixed in V9.02;7/10/95)
+ S ^VCOMP=$QS("ZZZZ(""AB""""CD"")",22)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+6 S ^ABSN="40431",^ITEM="IV-431  subscript contains "" characters"
+ S ^NEXT="V4QSUB6^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^VCOMP=$QS("ZZ(""Z""""""""G"")",3)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+END W !!,"End of 58 --- V4QSUB5",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

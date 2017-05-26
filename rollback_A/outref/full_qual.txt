@@ -1,0 +1,122 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Start M process
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Receiver shut down ...
+Source shut down ...
+********************
+Rolling back ... 
+********************
+%GTM-S-JNLSUCCESS, Rollback successful
+******************************
+Verifying data ...
+******************************
+
+GTM>
+^x(0)=0
+^x(1)=1
+
+GTM>
+*****************************
+Extract ...
+*****************************
+extract result of mumps.mjl
+extract result of jfile1
+^x(0)="0"
+^x(1)="1"
+full extract result of jfile1
+^x(0)="0"
+^x(1)="1"
+^x(2)="2"
+Rolling back again... 
+%GTM-S-JNLSUCCESS, Rollback successful
+******************************
+Verifying data again ...
+******************************
+
+GTM>
+^x(0)=0
+
+GTM>
+*****************************
+Extract ...
+*****************************
+extract result of mumps.mjl
+extract result of jfile2
+full extract result of jfile2
+extract result of jfile1
+^x(0)="0"
+full extract result of jfile1
+^x(0)="0"
+^x(1)="1"
+^x(2)="2"
+---------------------------------
+*********************************
+Backward recovery 
+*********************************
+%GTM-S-JNLSUCCESS, Recover successful
+******************************
+Verifying data ...
+******************************
+
+GTM>
+^x(0)=0
+^x(1)=1
+
+GTM>
+*****************************
+Extract ...
+*****************************
+extract result of mumps.mjl
+extract result of jfile1
+^x(0)="0"
+^x(1)="1"
+full extract result of jfile1
+^x(0)="0"
+^x(1)="1"
+^x(2)="2"
+Backward recovery again... 
+%GTM-S-JNLSUCCESS, Recover successful
+******************************
+Verifying data again ...
+******************************
+
+GTM>
+^x(0)=0
+
+GTM>
+*****************************
+Extract ...
+*****************************
+extract result of mumps.mjl
+extract result of jfile2
+full extract result of jfile2
+extract result of jfile1
+^x(0)="0"
+full extract result of jfile1
+^x(0)="0"
+^x(1)="1"
+^x(2)="2"
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

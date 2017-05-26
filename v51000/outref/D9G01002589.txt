@@ -1,0 +1,393 @@
+
+########################################################################################
+                      Test GDE allows LOCK_SPACE upto 65536                             
+########################################################################################
+$GDE change -seg DEFAULT -lock=1024
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+if ( "ENCRYPT" == "$test_encryption" ) then
+##SUSPEND_OUTPUT  NON_ENCRYPT
+$gtm_tst/com/create_key_file.csh > & create_key_file_dbload.out
+endif
+##ALLOW_OUTPUT   NON_ENCRYPT
+$GDE show -seg DEFAULT
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=1024
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+$GDE change -seg DEFAULT -lock=2048
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+$GDE show -seg DEFAULT
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=2048
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+$GDE change -seg DEFAULT -lock=4096
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+$GDE show -seg DEFAULT
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=4096
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+$GDE change -seg DEFAULT -lock=16384
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+$GDE show -seg DEFAULT
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=16384
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+$GDE change -seg DEFAULT -lock=32768
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+$GDE show -seg DEFAULT
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=32768
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+$GDE change -seg DEFAULT -lock=65536
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+$GDE show -seg DEFAULT
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=65536
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+$GDE change -seg DEFAULT -lock=131072
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VALTOOBIG, 131072 is larger than the maximum of 65536 for a LOCK_SPACE
+%GDE-I-SEGIS, in BG segment DEFAULT
+
+%GDE-E-OBJNOTCHG, Not changing segment DEFAULT
+
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+$GDE show -seg DEFAULT
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=65536
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+$GDE change -seg DEFAULT -lock=65537
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VALTOOBIG, 65537 is larger than the maximum of 65536 for a LOCK_SPACE
+%GDE-I-SEGIS, in BG segment DEFAULT
+
+%GDE-E-OBJNOTCHG, Not changing segment DEFAULT
+
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+$GDE show -seg DEFAULT
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=65536
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+$GDE change -seg DEFAULT -lock=65535
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+$GDE show -seg DEFAULT
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=65535
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+$GDE change -seg DEFAULT -lock=32768
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+$GDE show -seg DEFAULT
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=32768
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+unset verbose
+
+########################################################################################
+           Test that GDE setting of LOCK_SPACE gets carried over to the database        
+########################################################################################
+$MUPIP create
+Created file ##TEST_PATH##/mumps.dat
+$gtm_tst/com/get_dse_df.csh
+$grep -E "Region          |Lock space" dse_df.log
+Region          DEFAULT
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00008000
+mv dse_df.log dse_df1.log
+
+unset verbose
+
+########################################################################################
+                      Test MUPIP SET allows LOCK_SPACE upto 65536                       
+########################################################################################
+$MUPIP set -reg DEFAULT -lock=1024
+Database file ##TEST_PATH##/mumps.dat now has lock space 1024 pages
+$MUPIP set -reg DEFAULT -lock=2048
+Database file ##TEST_PATH##/mumps.dat now has lock space 2048 pages
+$MUPIP set -reg DEFAULT -lock=4096
+Database file ##TEST_PATH##/mumps.dat now has lock space 4096 pages
+$MUPIP set -reg DEFAULT -lock=16384
+Database file ##TEST_PATH##/mumps.dat now has lock space 16384 pages
+$MUPIP set -reg DEFAULT -lock=32768
+Database file ##TEST_PATH##/mumps.dat now has lock space 32768 pages
+
+
+$gtm_tst/com/get_dse_df.csh
+$grep -E "Region          |Lock space" dse_df.log
+Region          DEFAULT
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00008000
+mv dse_df.log dse_df2.log
+
+$MUPIP set -reg DEFAULT -lock=65536
+Database file ##TEST_PATH##/mumps.dat now has lock space 65536 pages
+$MUPIP set -reg DEFAULT -lock=131072
+%GTM-W-MUPIPSET2BIG, 131072 too large, maximum LOCK_SPACE allowed is 65536
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+$MUPIP set -reg DEFAULT -lock=65537
+%GTM-W-MUPIPSET2BIG, 65537 too large, maximum LOCK_SPACE allowed is 65536
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+$MUPIP set -reg DEFAULT -lock=65535
+Database file ##TEST_PATH##/mumps.dat now has lock space 65535 pages
+$MUPIP set -reg DEFAULT -lock=16383
+Database file ##TEST_PATH##/mumps.dat now has lock space 16383 pages
+
+
+$gtm_tst/com/get_dse_df.csh
+$grep -E "Region          |Lock space" dse_df.log
+Region          DEFAULT
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00003FFF
+mv dse_df.log dse_df3.log
+
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

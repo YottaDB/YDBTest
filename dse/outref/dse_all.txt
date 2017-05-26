@@ -1,0 +1,247 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SUSPEND_OUTPUT  L NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  L NON_REPLIC
+
+GTM>
+
+GTM>
+TEST DSE - ALL COMMAND
+##SUSPEND_OUTPUT  L NON_REPLIC
+##SUSPEND_OUTPUT  MM
+Cache freeze id XXXXXXXX Flush timer 00:00:01:00
+Cache freeze id XXXXXXXX Flush timer 00:00:01:00
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+Cache freeze id XXXXXXXX Flush timer 00:00:01:00
+Cache freeze id XXXXXXXX Flush timer 00:00:01:00
+Cache freeze id XXXXXXXX Flush timer 00:00:01:00
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+Cache freeze id XXXXXXXX Flush timer 00:00:01:00
+Cache freeze id XXXXXXXX Flush timer 00:00:01:00
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+##ALLOW_OUTPUT  MM
+##SUSPEND_OUTPUT BG
+##TEST_AWKCache freeze id XXXXXXXX Flush timer 00:00:(30|10|01):00
+##TEST_AWKCache freeze id XXXXXXXX Flush timer 00:00:(30|10|01):00
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##TEST_AWKCache freeze id XXXXXXXX Flush timer 00:00:(30|10|01):00
+##TEST_AWKCache freeze id XXXXXXXX Flush timer 00:00:(30|10|01):00
+##TEST_AWKCache freeze id XXXXXXXX Flush timer 00:00:(30|10|01):00
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##TEST_AWKCache freeze id XXXXXXXX Flush timer 00:00:(30|10|01):00
+##TEST_AWKCache freeze id XXXXXXXX Flush timer 00:00:(30|10|01):00
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##ALLOW_OUTPUT BG
+  Reference count                        20  Wait Disk                        0
+  Reference count                        30  Wait Disk                        0
+  Reference count                         1  Wait Disk                        0
+  Reference count                         1  Wait Disk                        0
+##ALLOW_OUTPUT  L NON_REPLIC
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+##SUSPEND_OUTPUT  L NON_REPLIC
+DSE> DSE> DSE> 
+Write critical section owner is process id XDSE_PIDX
+DSE (process id: XDSE_PIDX owns the write critical section
+
+##ALLOW_OUTPUT  L NON_REPLIC
+DSE> DSE> 
+##SUSPEND_OUTPUT  REPLIC
+Seized write critical section.
+
+DSE> 
+Write critical section owner is process id XDSE_PIDX
+DSE (process id: XDSE_PIDX owns the write critical section
+
+DSE> Warning:  now leaving region in critical section: AREG
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Seized write critical section.
+
+DSE> 
+Write critical section owner is process id XDSE_PIDX
+DSE (process id: XDSE_PIDX owns the write critical section
+
+DSE> DSE> 
+##ALLOW_OUTPUT  REPLIC
+Write critical section is currently unowned
+##SUSPEND_OUTPUT  REPLIC
+DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+Write critical section is currently unowned
+##SUSPEND_OUTPUT  MM
+DSE> DSE> Cache freeze id XXXXXXXX Flush timer 00:00:01:00
+Cache freeze id XXXXXXXX Flush timer 00:00:01:00
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+Cache freeze id XXXXXXXX Flush timer 00:00:01:00
+Cache freeze id XXXXXXXX Flush timer 00:00:01:00
+Cache freeze id XXXXXXXX Flush timer 00:00:01:00
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+Cache freeze id XXXXXXXX Flush timer 00:00:01:00
+Cache freeze id XXXXXXXX Flush timer 00:00:01:00
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Reference count                        20  Wait Disk                        0
+  Reference count                        30  Wait Disk                        0
+  Reference count                         1  Wait Disk                        0
+  Reference count                         1  Wait Disk                        0
+In critical section XDSE_PIDX Timers pending 0
+Cache freeze id XXXXXXXX Flush timer 00:00:01:00
+  Reference count                        32  Wait Disk                        0
+  In critical section            0x00000000  Timers pending                   0
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+##ALLOW_OUTPUT MM
+##SUSPEND_OUTPUT BG
+##TEST_AWKDSE> DSE> Cache freeze id XXXXXXXX Flush timer 00:00:(30|10|01):00
+##TEST_AWKCache freeze id XXXXXXXX Flush timer 00:00:(30|10|01):00
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##TEST_AWKCache freeze id XXXXXXXX Flush timer 00:00:(30|10|01):00
+##TEST_AWKCache freeze id XXXXXXXX Flush timer 00:00:(30|10|01):00
+##TEST_AWKCache freeze id XXXXXXXX Flush timer 00:00:(30|10|01):00
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##TEST_AWKCache freeze id XXXXXXXX Flush timer 00:00:(30|10|01):00
+##TEST_AWKCache freeze id XXXXXXXX Flush timer 00:00:(30|10|01):00
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+  Reference count                        20  Wait Disk                        0
+  Reference count                        30  Wait Disk                        0
+  Reference count                         1  Wait Disk                        0
+  Reference count                         1  Wait Disk                        0
+In critical section XDSE_PIDX Timers pending 0
+##TEST_AWKCache freeze id XXXXXXXX Flush timer 00:00:(30|10|01):00
+  Reference count                        32  Wait Disk                        0
+  In critical section            0x00000000  Timers pending                   0
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##ALLOW_OUTPUT BG
+  Reference count                         1  Wait Disk                        0
+In critical section XDSE_PIDX Timers pending 0
+In critical section XDSE_PIDX Timers pending 0
+  In critical section            0x00000000  Timers pending                   0
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> DSE> 
+Write critical section owner is process id XDSE_PIDX
+DSE (process id: XDSE_PIDX owns the write critical section
+
+DSE> DSE> 
+Write critical section is currently unowned
+DSE> DSE> ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  L NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+DSE> DSE> Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##ALLOW_OUTPUT  L NON_REPLIC
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  L NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT L NON_REPLIC
+# GTM-7199 : Provide a DSE way to clear the CORRUPT FLAG in all regions with a single command.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+# Checking database file corrupt status
+00000
+# Corrupting database for AREG,BREG and CREG
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/b.dat
+Region	BREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/c.dat
+Region	CREG
+
+##SUSPEND_OUTPUT REPLIC
+DSE> DSE> # Checking database file corrupt status
+0
+# Clearing corrupt flag for all regions using clearcorrupt
+%GTM-W-DBFLCORRP, ##TEST_PATH##/a.dat Header indicates database file is corrupt
+%GTM-W-DBFLCORRP, ##TEST_PATH##/b.dat Header indicates database file is corrupt
+%GTM-W-DBFLCORRP, ##TEST_PATH##/c.dat Header indicates database file is corrupt
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+# Checking database file corrupt status
+00000
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT L NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+DSE> DSE> # Checking database file corrupt status
+01110
+# Clearing corrupt flag for all regions using clearcorrupt
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+# Checking database file corrupt status
+00000
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,53 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Start IMPTP
+TEST-I-PASS Successfully disabled counter semaphores
+# Stop IMPTP
+# IPCS should lay around
+# node_local.ftok_counter_halted and node_local.access_counter_halted flags should be set
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+# node_local.ftok_counter_halted and node_local.access_counter_halted flags should be clear
+# Check again. No IPCS should lay around
+# Verify the counters spit out error if -noqdbrundown
+# Start jobs
+# Verify the CRITSEMFAIL is in the output
+# node_local.ftok_counter_halted and node_local.access_counter_halted flags should be clear
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+# Replication Setup
+# Start passive source server
+# Start IMPTP
+# Stop IMPTP
+# IPCS should lay around
+# node_local.ftok_counter_halted and node_local.access_counter_halted flags should be set
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is [1-9][0-9]* .0x.*
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+# node_local.ftok_counter_halted and node_local.access_counter_halted flags should be clear
+# Check again. No IPCS should lay around
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

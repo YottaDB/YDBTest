@@ -1,0 +1,63 @@
+Contents of tempfile:
+The quick
+brown fox
+jumps over
+the lazy
+dog.
+
+modified by:
+$gtm_exe/mumps -r linerepl --match=/the/ --replace=:A: tempfile
+
+Contents of tempfile after linerepl change:
+A quick
+A lazy
+
+Executing posixtest and expect PASS for all
+
+PASS Invocation
+PASS $zhorolog
+PASS $ZHOROLOG
+##TEST_AWKDaylight Savings Time is (not )*in effect
+PASS mktime()
+PASS Microsecond resolution
+PASS regmatch^%POSIX 1
+PASS regfree^%POSIX
+PASS REGMATCH^%POSIX 1
+PASS REGFREE^%POSIX
+PASS regmatch^%POSIX 2
+PASS REGMATCH^%POSIX 2
+PASS regmatch^%POSIX 3
+PASS REGMATCH^%POSIX 3
+PASS regmatch^%POSIX 3
+PASS REGMATCH^%POSIX 3
+PASS regmatch^%POSIX 4
+PASS REGMATCH^%POSIX 4
+PASS regmatch^%POSIX 5
+PASS REGMATCH^%POSIX 5
+PASS mktmpdir
+PASS statfile.times
+PASS statfile.ids
+PASS filemodeconst^%POSIX
+PASS signal
+PASS STATFILE.times
+PASS STATFILE.ids
+##SUSPEND_OUTPUT UNICODE_MODE
+PASS syslog
+PASS SYSLOG
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT HOST_HP-UX_PA_RISC SNAIL TURTLE
+PASS setenv
+PASS unsetenv
+##ALLOW_OUTPUT HOST_HP-UX_PA_RISC SNAIL TURTLE
+PASS rmdir
+PASS MKTMPDIR
+PASS mkdir
+PASS MKDIR
+PASS UTIMES
+PASS UMASK
+PASS CHMOD
+PASS SYMLINK
+PASS REALPATH
+PASS CP
+PASS Nanosecond resolution
+PASS SYSCONF

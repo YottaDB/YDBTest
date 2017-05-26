@@ -1,0 +1,40 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+----------------------------------------------------------------
+# Test $ztrigger output with incremental trollbacks AND explicit restarts
+Added SET trigger on ^ROLLBACK named rollback1
+Added SET trigger on ^ROLLBACK named rollback5
+Added SET trigger on ^ROLLBACK named rollback7
+Added SET trigger on ^ROLLBACK named rollback8
+# print ^ROLLBACK trigger
+;trigger name: rollback1 (region DEFAULT)  cycle: 4
++^ROLLBACK(1) -name=rollback1 -commands=S -xecute="w 123"
+;trigger name: rollback5 (region DEFAULT)  cycle: 4
++^ROLLBACK(5) -name=rollback5 -commands=S -xecute="w 123"
+;trigger name: rollback7 (region DEFAULT)  cycle: 4
++^ROLLBACK(7) -name=rollback7 -commands=S -xecute="w 123"
+;trigger name: rollback8 (region DEFAULT)  cycle: 4
++^ROLLBACK(8) -name=rollback8 -commands=S -xecute="w 123"
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,99 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ext1.out created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+PASS. tn number is 2**32+10
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ext2.out created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+PASS. tn number is 2**63+10
+
+
+BEGIN & END trnasaction number should be 64 bit values here
+
+ Begin Transaction             9223372036854775798 [0x7FFFFFFFFFFFFFF6]
+ End Transaction               9223372036854775818 [0x800000000000000A]
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+PASS
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               2           3.222             1
+Free               96              NA              NA            NA
+Total             100               5              NA             2
+ integ clean.PASS
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

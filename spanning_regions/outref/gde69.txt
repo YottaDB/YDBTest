@@ -1,0 +1,23 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gde69.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gde69.cmd
+
+%GDE-E-NAMRANGEOVERLAP, Range in name specifications MODELNUM("z":"zzzz"_$C(1)) and MODELNUM("":"z"_$C(0)) overlap using collation sequence #0
+
+GDE> 
+%GDE-I-MAPBAD, Region STRING1 for Name MODELNUM("":"z"_$C(0)) does not exist
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^MODELNUM spans through it
+%GDE-I-STDNULLCOLLREQ, Region STRING1 needs Standard Null Collation enabled because global ^MODELNUM spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-I-NOEXIT, Cannot exit because of verification failure
+
+GDE> 
+%GDE-I-MAPBAD, Region STRING1 for Name MODELNUM("":"z"_$C(0)) does not exist
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^MODELNUM spans through it
+%GDE-I-STDNULLCOLLREQ, Region STRING1 needs Standard Null Collation enabled because global ^MODELNUM spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-E-VERIFY, Verification FAILED

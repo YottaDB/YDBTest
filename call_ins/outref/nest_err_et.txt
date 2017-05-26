@@ -1,0 +1,55 @@
+
+GTM>
+Do ^nesterr1
+Nested calls: M1->C->M2
+
+M1:  $ZLEVEL = 2
+M1:  $STACK = 1
+M1:  $ESTACK = 1
+Passing:
+    123.349
+    654.321
+    "c"
+    "C-style string"
+    "String structure"
+to inmult
+
+##SUSPEND_OUTPUT 64BIT_GTM
+xc_inmult: sizeof(arg_floatp) = 4,	*arg_floatp = 123.349
+xc_inmult: sizeof(arg_doublep) = 4,	*arg_doublep = 654.321
+xc_inmult: sizeof(arg_charp) = 4,	*arg_charp = 'c'
+xc_inmult: sizeof(arg_charpp) = 4,	*arg_charpp = 'C-style string'
+xc_inmult: sizeof(arg_stringp) = 4,	arg_stringp->length = 16
+##ALLOW_OUTPUT 64BIT_GTM
+##SUSPEND_OUTPUT 32BIT_GTM
+xc_inmult: sizeof(arg_floatp) = 8,	*arg_floatp = 123.349
+xc_inmult: sizeof(arg_doublep) = 8,	*arg_doublep = 654.321
+xc_inmult: sizeof(arg_charp) = 8,	*arg_charp = 'c'
+xc_inmult: sizeof(arg_charpp) = 8,	*arg_charpp = 'C-style string'
+xc_inmult: sizeof(arg_stringp) = 8,	arg_stringp->length = 16
+##ALLOW_OUTPUT 32BIT_GTM
+	*arg_stringp = 'String structure'
+
+
+
+GTM environment initialized within C...
+
+M2: $ZLEVEL = 2
+M2: $STACK = 1
+M2: $ESTACK = 1
+$stack(1,"PLACE") in divzro2 = +16^divzro2
+$stack(1,"MCODE") in divzro2 =     w !,"$stack(1,""MCODE"") in divzro2 = ",$stack(1,"MCODE")
+$stack(1,"ECODE") in divzro2 = 
+
+Illegal-- attempt to divide by zero 150373210,+19^divzro2,%GTM-E-DIVZERO, Attempt to divide by zero 
+
+Values returned from inmult:
+
+    123.349
+    654.321
+    "c"
+    "C-style string"
+    "String structure"
+
+Value of $ET in M1: Do error
+GTM>

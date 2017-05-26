@@ -1,0 +1,11 @@
+add -name a* -reg=AREG
+add -name b* -reg=BREG
+add -name c* -reg=CREG
+add -reg AREG -d=ASEG -null_subscripts=always -stdnullcoll
+add -reg BREG -d=BSEG -null_subscripts=always -nostdnullcoll
+add -reg CREG -d=CSEG -null_subscripts=always -stdnullcoll
+add -seg ASEG -file=amerge.dat
+add -seg BSEG -file=bmerge.dat
+add -seg CSEG -file=cmerge.dat
+change -reg DEFAULT -null_subscripts=always
+show -reg

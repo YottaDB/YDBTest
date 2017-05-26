@@ -1,0 +1,21 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+GTM>
+Killed
+##TEST_AWKSemaphore id [0-9]+ removed successfully
+##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,18 @@
+setenv gtm_chset UTF-8
+unset echo
+
+GTM>
+do ^unicodereadonly("UTF-8")
+
+GTM>
+File: readonly.txt
+#l   $L(l)   l
+1    4:12    ＰＱＲＳ
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+In ZTRAP
+150373618,unicodereadonly+12^unicodereadonly,%GTM-E-DEVICEREADONLY, Cannot write to read-only device
+The file, again:
+File: readonly.txt
+#l   $L(l)   l
+1    4:12    ＰＱＲＳ
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

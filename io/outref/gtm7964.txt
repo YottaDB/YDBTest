@@ -1,0 +1,82 @@
+setenv gtm_chset M
+unset echo
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+**************************** gtm7964 ****************************
+###################################################################
+
+Testing various pipe open's with parse device parameter and PATH defined
+
+open a:(comm="$/mupip integ -file mumps.dat":parse)::"pipe"
+STAT=gtm7964+7^gtm7964,%GTM-E-DEVOPENFAIL, Error opening PP,%GTM-I-TEXT, Invalid command string: $/mupip
+open a:(comm="$$/mupip integ -file mumps.dat":parse)::"pipe"
+STAT=gtm7964+9^gtm7964,%GTM-E-DEVOPENFAIL, Error opening PP,%GTM-I-TEXT, Invalid command string: $$/mupip
+open a:(comm="$ integ -file mumps.dat":parse)::"pipe"
+STAT=gtm7964+11^gtm7964,%GTM-E-DEVOPENFAIL, Error opening PP,%GTM-I-TEXT, Invalid command string: $
+open a:(comm="$/ integ -file mumps.dat":parse)::"pipe"
+STAT=gtm7964+13^gtm7964,%GTM-E-DEVOPENFAIL, Error opening PP,%GTM-I-TEXT, Invalid command string: $/
+open a:(comm="$gtm_dist/geteuid":parse:readonly)::"pipe"
+other
+open a:(comm="/bin/cat | nl":parse)::"pipe"
+     1	one
+open a:(comm="/bin/cat|&nl":parse)::"pipe"
+     1	one
+open a:(comm="/bin/cat|&zznl":parse)::"pipe"
+STAT=gtm7964+40^gtm7964,%GTM-E-DEVOPENFAIL, Error opening PP,%GTM-I-TEXT, Invalid command string: zznl
+open a:(comm="/bin/cat | zznl":parse)::"pipe"
+STAT=gtm7964+42^gtm7964,%GTM-E-DEVOPENFAIL, Error opening PP,%GTM-I-TEXT, Invalid command string: zznl
+open a:(comm="(cd; pwd)":WRITEONLY:parse)::"pipe"
+STAT=gtm7964+44^gtm7964,%GTM-E-DEVOPENFAIL, Error opening PP,%GTM-I-TEXT, Invalid command string: (cd
+open a:(comm="cd /usr/bin; pwd":parse)::"pipe"
+/usr/bin path verified
+open a:(comm="echo ""(test)""":parse)::"pipe"
+(test)
+open a:(comm="tr -d '()'":parse)::"pipe"
+test
+open a:(comm="tr e j | echoback":parse)::"pipe"
+stdout - onj
+stderr - two
+open a:(shell="/usr/local/bin/tcsh":comm="/bin/cat |& nl":parse)::"pipe"
+     1	one
+     2	two
+open a:(comm="mupip integ -file mumps.dat":parse)::"pipe"
+No errors detected by integ.
+open a:(comm="$gtm_dist/mupip integ -file mumps.dat":parse)::"pipe"
+No errors detected by integ.
+open a:(comm="nohup cat":parse)::"pipe"
+one
+###################################################################
+For each shell unsetenv PATH and use %XCMD to open a pipe with command=cat and read/write to it.
+Expect it to fail with the parse device parameter.
+Shell = tcsh
+With parse device parameter:
+%GTM-E-DEVOPENFAIL, Error opening PP
+%GTM-I-TEXT, $PATH undefined, Invalid command string: cat
+Without parse device parameter:
+PASS
+Shell = sh
+With parse device parameter:
+%GTM-E-DEVOPENFAIL, Error opening PP
+%GTM-I-TEXT, $PATH undefined, Invalid command string: cat
+Without parse device parameter:
+PASS
+Shell = csh
+With parse device parameter:
+%GTM-E-DEVOPENFAIL, Error opening PP
+%GTM-I-TEXT, $PATH undefined, Invalid command string: cat
+Without parse device parameter:
+PASS
+Shell = ksh
+With parse device parameter:
+%GTM-E-DEVOPENFAIL, Error opening PP
+%GTM-I-TEXT, $PATH undefined, Invalid command string: cat
+Without parse device parameter:
+PASS
+##ALLOW_OUTPUT NON_UTF8
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

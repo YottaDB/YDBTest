@@ -1,0 +1,202 @@
+
+########################################################################################
+                      Try saving LOCKSPACE in template                      
+########################################################################################
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+GDE> 
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK =1000
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+########################################################################################
+                      Try saving BLOCKSIZE and RECSIZE in template                      
+########################################################################################
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK =1000
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+GDE> 
+GDE> 
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0    8176    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  8192        100   100 GLOB =1024
+                                                                     LOCK =1000
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+########################################################################################
+                      Try saving STDNULLCOLL in template                      
+########################################################################################
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0    8176    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  8192        100   100 GLOB =1024
+                                                                     LOCK =1000
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+GDE> 
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0    8176    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  8192        100   100 GLOB =1024
+                                                                     LOCK =1000
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+########################################################################################
+                       Try reading STDNULLCOLL from saved template                      
+########################################################################################
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0    8176    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  8192        100   100 GLOB =1024
+                                                                     LOCK =1000
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld

@@ -1,0 +1,70 @@
+#!/usr/bin/expect -f
+#Everything must match initially
+set timeout -1
+match_max 100000
+
+# Start up a TCSH shell first. You could spawn $env(SHELL) if you like
+spawn /usr/local/bin/tcsh
+
+# Enable logging
+log_user 0
+log_file -noappend terminal_expect.log
+
+# Capture and sanitze the prompt. Note that expect uses \r to send carriage
+# returns like a keyboard. It is a good idea to preceed SENDs with the expected
+# output when writing scripts.
+expect "*"
+send -- "set prompt=\"terminal>\"\r"
+expect "set prompt=\"terminal>\""
+
+# Convince AIX to use ^? for erase
+expect "terminal>"
+send -- "stty erase '^?'\r"
+
+# Convince HP-UX to accept ctrl-c
+expect "terminal>"
+send -- "stty intr '^c'\r"
+
+# Set the terminal columns
+expect -exact "terminal>"
+send -- "stty cols 132\r"
+
+# Check it all
+expect "terminal>"
+send -- "stty -a\r"
+
+expect "terminal>"
+send -- "\$gtm_exe/mumps -direct\r"
+
+# Depending on what you are testing, you may need to incorporate the TERM and
+# TTY setup from test/expect/inref_u/d002548.exp
+
+# Loosen the matching restrictions only AFTER you get into your test. Here, we
+# are waiting for the GTM prompt before going forward
+set timeout 60
+
+# Wait for the GTM prompt and then do your routine
+expect "
+GTM>"
+send -- "do ^terminal\r"
+
+# Emtpy the expect buffer and start logging
+expect -re {$}
+log_user 1
+
+# Wait again for the GTM prompt and then halt out
+expect "
+GTM>"
+send_user "\r\n"
+log_user 0
+send -- "halt\r"
+
+# Exit out of the shell
+expect "terminal>"
+send "exit\r"
+
+# Disable logging
+log_file
+
+# Expect should wait until TCSH exits
+expect eof

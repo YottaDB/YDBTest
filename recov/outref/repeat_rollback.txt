@@ -1,0 +1,124 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Multi-Process GTM Process starts in background...
+
+GTM>
+
+GTM>
+set PASS
+
+GTM>
+set PASS
+
+GTM>
+
+GTM>
+Now GTM process ends
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+Extact from database...
+##SOURCE_PATH##/mupip journal -rollback -backward * -lost=lost_trans{1}.log >>&! rollback{1}.log
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+Extact from database...
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip journal -rollback -backward * -lost=lost_trans{2}.log >>&! rollback{2}.log
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+Extact from database...
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip journal -rollback -backward * -resync=8000 -lost=lost_trans{3}.log >>&! rollback{3}.log
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip journal -rollback -backward * -resync=6000 -lost=lost_trans{4}.log >>&! rollback{4}.log
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Extact from database...
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/c.dat
+Created file ##TEST_PATH##/d.dat
+Created file ##TEST_PATH##/e.dat
+Created file ##TEST_PATH##/f.dat
+Created file ##TEST_PATH##/g.dat
+Created file ##TEST_PATH##/mumps.dat
+##SOURCE_PATH##/mupip journal -recover -forward a.mjl,b.mjl,c.mjl,d.mjl,e.mjl,f.mjl,g.mjl,mumps.mjl
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+diff last_roll.glo forward.glo

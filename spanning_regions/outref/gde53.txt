@@ -1,0 +1,60 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gde53.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gde53.cmd
+
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ x(1:7)                             AREG
+ x(7:10)                            BREG
+ x(10:16)                           AREG
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               x(1)                             REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ x(1)                            x(7)                             REG = AREG
+                                                                  SEG = NONE
+                                                                  FILE = NONE
+ x(7)                            x(10)                            REG = BREG
+                                                                  SEG = NONE
+                                                                  FILE = NONE
+ x(10)                           x(16)                            REG = AREG
+                                                                  SEG = NONE
+                                                                  FILE = NONE
+ x(16)                           ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+%GDE-E-NAMRANGEOVERLAP, Range in name specifications x(2:15) and x(10:16) overlap using collation sequence #0
+
+GDE> 
+%GDE-I-MAPBAD, Region AREG for Name x(10:16) does not exist
+%GDE-I-MAPBAD, Region AREG for Name x(1:7) does not exist
+%GDE-I-MAPBAD, Region BREG for Name x(7:10) does not exist
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^x spans through it
+%GDE-I-STDNULLCOLLREQ, Region AREG needs Standard Null Collation enabled because global ^x spans through it
+%GDE-I-STDNULLCOLLREQ, Region BREG needs Standard Null Collation enabled because global ^x spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-I-NOEXIT, Cannot exit because of verification failure
+
+GDE> 
+%GDE-I-MAPBAD, Region AREG for Name x(10:16) does not exist
+%GDE-I-MAPBAD, Region AREG for Name x(1:7) does not exist
+%GDE-I-MAPBAD, Region BREG for Name x(7:10) does not exist
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^x spans through it
+%GDE-I-STDNULLCOLLREQ, Region AREG needs Standard Null Collation enabled because global ^x spans through it
+%GDE-I-STDNULLCOLLREQ, Region BREG needs Standard Null Collation enabled because global ^x spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-E-VERIFY, Verification FAILED

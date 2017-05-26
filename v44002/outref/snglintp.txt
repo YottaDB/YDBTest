@@ -1,0 +1,82 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+Do cmmit^snglintp
+
+Transaction Starts....
+
+$ZTEXIT = norethrow
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=0
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : uthrint+5^uthrint
+
+End of transaction....
+
+$ZTEXIT = 0
+
+GTM>
+
+GTM>
+
+Do cmmitd^snglintp
+
+Transaction Starts....
+
+$ZTEXIT = 1rethrow
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : thrint+5^thrint
+interrupt occurred at : cmmitd+16^snglintp
+
+End of transaction....
+
+$ZTEXIT = 1
+
+GTM>
+
+GTM>
+
+Do rollbck^snglintp
+
+Transaction Starts....
+
+$ZTEXIT = 0
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=0
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : uthrint+5^uthrint
+
+End of transaction....
+
+$ZTEXIT = 0
+
+GTM>
+
+GTM>
+
+Do rollbckd^snglintp
+
+Transaction Starts....
+
+$ZTEXIT = 1
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : thrint+5^thrint
+interrupt occurred at : rollbckd+17^snglintp
+
+End of transaction....
+
+$ZTEXIT = 1
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

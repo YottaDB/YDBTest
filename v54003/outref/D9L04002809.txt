@@ -1,0 +1,97 @@
+###################################################################
+Step 1 ===> Prepare a MSR configuration with two instances
+###################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+###################################################################
+Step 2 ===> Start some updates in the background...
+###################################################################
+
+###################################################################
+Step 3 ===> Get the PID of the update process and receiver server
+###################################################################
+=====> Receiver server PID = ##FILTERED##GTM_TEST_DEBUGINFO.*
+=====> Update process PID = ##FILTERED##GTM_TEST_DEBUGINFO.*
+
+###################################################################
+Step 4 ===> Crash Receiver server
+###################################################################
+Time before KILLing Receiver server - ##FILTERED##GTM_TEST_DEBUGINFO.*
+Time after KILLing Receiver server - ##FILTERED##GTM_TEST_DEBUGINFO.*
+
+###################################################################
+Step 5 ===> Bring back the receiver server with helper processes
+###################################################################
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 $MUPIP replic -receiv -start -listen=__RCV_PORTNO__ -log=__RCV_DIR__/RCVR_restart.log -helper'==
+###################################################################
+	Step 5a ===> Verify that receiver server detects an already existing update process
+###################################################################
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 $gtm_tst/com/wait_for_log.csh -log RCVR_restart.log -message GTM-I-TEXT -duration 120'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 $gtm_tst/com/check_error_exist.csh RCVR_restart.log GTM-I-TEXT'==
+----------
+Error GTM-I-TEXT seen in RCVR_restart.log as expected:
+%GTM-I-TEXT, Update process already exists. Not starting it
+----------
+
+###################################################################
+Step 6 ===> Shutdown background updates and SYNC
+###################################################################
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2 sync_to_disk'==
+
+###################################################################
+Step 7 ===> Crash Update process
+###################################################################
+Time before KILLing Update process - ##FILTERED##GTM_TEST_DEBUGINFO.*
+Time after KILLing Update process - ##FILTERED##GTM_TEST_DEBUGINFO.*
+###################################################################
+	Step 7a ===> Verify that receiver server detects that the OLD update process is NO more ALIVE
+###################################################################
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 $gtm_tst/com/wait_for_log.csh -log RCVR_restart.logx -message ALERT -duration 120'==
+----------
+Error ALERT seen in RCVR_restart.logx as expected:
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 $grep ALERT RCVR_restart.logx | $head -n 1'==
+##TEST_AWK... ... .. ..:..:.. 20.. : ALERT : Receiver Server detected that Update Process is not ALIVE
+----------
+
+###################################################################
+Step 8 ===> Bring back ONLY the Update process
+###################################################################
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -receiv -start -updateonly'==
+%GTM-I-REPLINFO, Update Process started successfully
+
+###################################################################
+Step 9 ===> Verify that Receiver checkhealth comes out clean with NO hangs
+###################################################################
+
+###################################################################
+Step 10 ===> SYNC, STOP and VERIFY DATABASE EXTRACTs
+###################################################################
+
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT ALL'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,126 @@
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
+##GT.CM##mumps.gld
+##GT.CM##Using: ##SOURCE_PATH##/mupip
+Create local (client) database...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+The database layout is:
+ASEG	a.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
+Starting the GT.CM Servers...
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/per2601.gde
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/local.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/local.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/other.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/other.gld
+Created file ##TEST_PATH##/mumps.dat
+
+
+^a0            AREG                ##TEST_PATH##/a.dat
+^a234567       DEFAULT             ##TEST_PATH##/mumps.dat
+^a2345670      AREG                ##TEST_PATH##/a.dat
+^a2345678      DEFAULT             ##TEST_PATH##/mumps.dat
+^a3            AREG                ##TEST_PATH##/a.dat
+^a7654320      AREG                ##TEST_PATH##/a.dat
+^a8            AREG                ##TEST_PATH##/a.dat
+
+^a8            AREG                ##TEST_PATH##/a.dat
+^a7654320      AREG                ##TEST_PATH##/a.dat
+^a3            AREG                ##TEST_PATH##/a.dat
+^a2345678      DEFAULT             ##TEST_PATH##/mumps.dat
+^a2345670      AREG                ##TEST_PATH##/a.dat
+^a234567       DEFAULT             ##TEST_PATH##/mumps.dat
+^a0            AREG                ##TEST_PATH##/a.dat
+
+^a0            DEFAULT             ##TEST_PATH##/mumps.dat
+^a234567       DEFAULT             ##TEST_PATH##/mumps.dat
+^a2345670      DEFAULT             ##TEST_PATH##/mumps.dat
+^a2345678      DEFAULT             ##TEST_PATH##/mumps.dat
+^a3            DEFAULT             ##TEST_PATH##/mumps.dat
+^a765432       DEFAULT             ##TEST_PATH##/mumps.dat
+^a7654320      DEFAULT             ##TEST_PATH##/mumps.dat
+^a7654321      DEFAULT             ##TEST_PATH##/mumps.dat
+^a8            DEFAULT             ##TEST_PATH##/mumps.dat
+
+^a8            DEFAULT             ##TEST_PATH##/mumps.dat
+^a7654321      DEFAULT             ##TEST_PATH##/mumps.dat
+^a7654320      DEFAULT             ##TEST_PATH##/mumps.dat
+^a765432       DEFAULT             ##TEST_PATH##/mumps.dat
+^a3            DEFAULT             ##TEST_PATH##/mumps.dat
+^a2345678      DEFAULT             ##TEST_PATH##/mumps.dat
+^a2345670      DEFAULT             ##TEST_PATH##/mumps.dat
+^a234567       DEFAULT             ##TEST_PATH##/mumps.dat
+^a0            DEFAULT             ##TEST_PATH##/mumps.dat
+
+^a0            AREG                ##TEST_PATH##/a.dat
+^a234567       DEFAULT             ##TEST_PATH##/mumps.dat
+^a2345670      AREG                ##TEST_PATH##/a.dat
+^a2345678      DEFAULT             ##TEST_PATH##/mumps.dat
+^a3            AREG                ##TEST_PATH##/a.dat
+^a765432       DEFAULT             ##TEST_PATH##/mumps.dat
+^a7654320      AREG                ##TEST_PATH##/a.dat
+^a7654321      DEFAULT             ##TEST_PATH##/mumps.dat
+^a8            AREG                ##TEST_PATH##/a.dat
+
+^a8            AREG                ##TEST_PATH##/a.dat
+^a7654321      DEFAULT             ##TEST_PATH##/mumps.dat
+^a7654320      AREG                ##TEST_PATH##/a.dat
+^a765432       DEFAULT             ##TEST_PATH##/mumps.dat
+^a3            AREG                ##TEST_PATH##/a.dat
+^a2345678      DEFAULT             ##TEST_PATH##/mumps.dat
+^a2345670      AREG                ##TEST_PATH##/a.dat
+^a234567       DEFAULT             ##TEST_PATH##/mumps.dat
+^a0            AREG                ##TEST_PATH##/a.dat
+
+^a0            AREG                ##TEST_PATH##/a.dat
+^a234567       DEFAULT             ##TEST_REMOTE_NODE_PATH_GTCM_1##/mumps.dat
+^a2345670      AREG                ##TEST_PATH##/a.dat
+^a2345678      DEFAULT             ##TEST_REMOTE_NODE_PATH_GTCM_1##/mumps.dat
+^a3            AREG                ##TEST_PATH##/a.dat
+^a765432       DEFAULT             ##TEST_REMOTE_NODE_PATH_GTCM_1##/mumps.dat
+^a7654320      AREG                ##TEST_PATH##/a.dat
+^a7654321      DEFAULT             ##TEST_REMOTE_NODE_PATH_GTCM_1##/mumps.dat
+^a8            AREG                ##TEST_PATH##/a.dat
+
+^a8            AREG                ##TEST_PATH##/a.dat
+^a7654321      DEFAULT             ##TEST_REMOTE_NODE_PATH_GTCM_1##/mumps.dat
+^a7654320      AREG                ##TEST_PATH##/a.dat
+^a765432       DEFAULT             ##TEST_REMOTE_NODE_PATH_GTCM_1##/mumps.dat
+^a3            AREG                ##TEST_PATH##/a.dat
+^a2345678      DEFAULT             ##TEST_REMOTE_NODE_PATH_GTCM_1##/mumps.dat
+^a2345670      AREG                ##TEST_PATH##/a.dat
+^a234567       DEFAULT             ##TEST_REMOTE_NODE_PATH_GTCM_1##/mumps.dat
+^a0            AREG                ##TEST_PATH##/a.dat
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####SOURCE_PATH##/mupip
+##GT.CM####SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ a.dat
+No errors detected by integ.

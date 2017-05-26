@@ -1,0 +1,503 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+mupip integ region DEFAULT with fast option
+
+
+
+Integ of region DEFAULT
+
+No errors detected by fast integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1              NA              NA             1
+Free               96              NA              NA            NA
+Total             100              NA              NA             2
+PASS did not get DBBTUWRNG warning
+
+mupip integ region DEFAULT
+
+
+
+Integ of region DEFAULT
+%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+%GTM-I-DBBTUFIXED, The blocks-to-upgrade file-header field has been changed to the correct value
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+PASS got expected DBBTUWRNG DBBTUFIXED warning
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+PASS integ error got fixed
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+mupip integ file mumps.dat with fast option
+
+
+No errors detected by fast integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1              NA              NA             1
+Free               96              NA              NA            NA
+Total             100              NA              NA             2
+PASS did not get DBBTUWRNG warning
+
+mupip integ file mumps.dat
+
+%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+%GTM-I-DBBTUFIXED, The blocks-to-upgrade file-header field has been changed to the correct value
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+PASS got expected DBBTUWRNG DBBTUFIXED warning
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+PASS integ error got fixed
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%GTM-I-DBTNTOOLG, 
+       3:0      0  Block transaction number too large
+                   Directory Path:  1:10, 2:10
+                   Path:  4:10, 3:0
+Keys from ^a to the end are suspect.
+%GTM-I-DBTN, Block TN is 0x0000000000000500
+%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+
+Total error count from integ:		2.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+
+Largest transaction number found in database was 500
+Current transaction number is                    3
+%GTM-E-INTEGERRS, Database integrity errors
+PASS did get DBBTUWRNG DBTNTOOLG messages
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%GTM-I-DBTNTOOLG, 
+       3:0      0  Block transaction number too large
+                   Directory Path:  1:10, 2:10
+                   Path:  4:10, 3:0
+Keys from ^a to the end are suspect.
+%GTM-I-DBTN, Block TN is 0x0000000000000500
+%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+
+Total error count from integ:		2.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+
+Largest transaction number found in database was 500
+Current transaction number is                    3
+%GTM-E-INTEGERRS, Database integrity errors
+PASS did get DBBTUWRNG DBTNTOOLG messages
+
+Block:Offset Level
+%GTM-I-DBTNTOOLG, 
+       3:0      0  Block transaction number too large
+                   Directory Path:  1:10, 2:10
+                   Path:  4:10, 3:0
+Keys from ^a to the end are suspect.
+%GTM-I-DBTN, Block TN is 0x0000000000000500
+%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+
+Total error count from integ:		2.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+
+Largest transaction number found in database was 500
+Current transaction number is                    3
+%GTM-E-INTEGERRS, Database integrity errors
+PASS did get DBBTUWRNG DBTNTOOLG messages
+
+Block:Offset Level
+%GTM-I-DBTNTOOLG, 
+       3:0      0  Block transaction number too large
+                   Directory Path:  1:10, 2:10
+                   Path:  4:10, 3:0
+Keys from ^a to the end are suspect.
+%GTM-I-DBTN, Block TN is 0x0000000000000500
+%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+
+Total error count from integ:		2.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+
+Largest transaction number found in database was 500
+Current transaction number is                    3
+%GTM-E-INTEGERRS, Database integrity errors
+PASS did get DBBTUWRNG DBTNTOOLG messages
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Integ of region DEFAULT
+%GTM-W-MUKILLIP, Kill in progress indicator is set for file ##TEST_PATH##/mumps.dat - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
+%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+
+Total error count from integ:		2.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+PASS did get DBBTUWRNG GTM-W-MUKILLIP messages
+
+
+Integ of region DEFAULT
+%GTM-W-MUKILLIP, Kill in progress indicator is set for file ##TEST_PATH##/mumps.dat - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
+%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+
+Total error count from integ:		2.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+PASS did get DBBTUWRNG GTM-W-MUKILLIP messages
+%GTM-W-MUKILLIP, Kill in progress indicator is set for file mumps.dat - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
+%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+PASS did get DBBTUWRNG GTM-W-MUKILLIP messages
+%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+%GTM-I-DBBTUFIXED, The blocks-to-upgrade file-header field has been changed to the correct value
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+PASS. Killip warning as expected got fixed
+Database file mumps.dat now has desired DB format V4
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Integ of region DEFAULT
+%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x0000000020000000 more transactions to go before reaching the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+PASS for D7FFFFFF displaying a warn
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Integ of region DEFAULT
+%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000001FFFFFFF more transactions to go before reaching the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+PASS for D8000000 displaying a warn
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+PASS for D7FFFFFE displaying a nowarn
+Database file mumps.dat now has desired DB format V6
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+PASS for E0000000 displaying a nowarn
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+PASS for 100000000 displaying a nowarn
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+PASS for 1000000000000 displaying a nowarn
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+PASS for 8000000000000000 displaying a nowarn
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+PASS for 8000000000000000 displaying a nowarn
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Integ of region DEFAULT
+%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x0000000010000000 more transactions to go before reaching the transaction number limit (0xFFFFFFFF83FFFFFF). Renew database with MUPIP INTEG TN_RESET
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+PASS for FFFFFFFF73FFFFFF displaying a warn
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Integ of region DEFAULT
+%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000000FFFFFFF more transactions to go before reaching the transaction number limit (0xFFFFFFFF83FFFFFF). Renew database with MUPIP INTEG TN_RESET
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+PASS for FFFFFFFF74000000 displaying a warn
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+Total error count from integ:		1.
+##TEST_AWK... ... .. ..:..:.. ... 20..
+
+
+Integ of region DEFAULT
+%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000000FFFFFFF more transactions to go before reaching the transaction number limit (0xFFFFFFFF83FFFFFF). Renew database with MUPIP INTEG TN_RESET
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+##TEST_PATH##/mupip.err_##TEST_AWK.._.._.._.._.._..
+%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000000FFFFFFF more transactions to go before reaching the transaction number limit (0xFFFFFFFF83FFFFFF). Renew database with MUPIP INTEG TN_RESET
+%GTM-E-INTEGERRS, Database integrity errors

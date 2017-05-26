@@ -1,0 +1,242 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+unsetenv gtm_chset
+unset echo
+###################################################################
+
+GTM>
+setenv gtm_chset whatever
+
+GTM>
+ZCHSET=M
+
+GTM>
+
+GTM>
+setenv gtm_chset UTF-8
+unset echo
+###################################################################
+
+GTM>
+setenv gtm_chset UTF-8
+
+GTM>
+ZCHSET=UTF-8
+
+GTM>
+
+GTM>
+setenv gtm_chset UTF-8
+unset echo
+###################################################################
+
+GTM>
+setenv gtm_chset utf-8
+
+GTM>
+ZCHSET=UTF-8
+
+GTM>
+
+GTM>
+unsetenv gtm_chset
+unset echo
+###################################################################
+
+GTM>
+setenv gtm_chset binary
+
+GTM>
+ZCHSET=M
+
+GTM>
+
+GTM>
+setenv gtm_chset M
+unset echo
+###################################################################
+
+GTM>
+setenv gtm_chset m
+
+GTM>
+ZCHSET=M
+
+GTM>
+
+GTM>
+unsetenv gtm_chset
+unset echo
+###################################################################
+
+GTM>
+setenv gtm_chset MUTF-8
+
+GTM>
+ZCHSET=M
+
+GTM>
+
+GTM>
+###################################################################
+SVNOSET error expected here
+----------
+Error SVNOSET seen in svnoset.out as expected:
+%GTM-E-SVNOSET, Cannot SET this special variable
+----------
+setenv gtm_chset UTF-8
+unset echo
+###################################################################
+Testing gtm_chset with UTF-8
+
+GTM>
+UTF-8
+
+GTM>
+Testing two byte א
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Testing three byte ☺
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Testing four byte 𝐀
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Testing an invalid character 
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+setenv gtm_chset M
+unset echo
+###################################################################
+Testing gtm_chset with M
+
+GTM>
+M
+
+GTM>
+Testing two byte
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Testing three byte
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Testing four byte
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Testing an invalid character 
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+unsetenv gtm_chset
+unset echo
+###################################################################
+Testing gtm_chset with binary
+
+GTM>
+M
+
+GTM>
+Testing two byte
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Testing three byte
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Testing four byte
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Testing an invalid character 
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+setenv gtm_chset UTF-8
+unset echo
+Try and load a pattable that has 128 and above code in it
+----------
+Error PATTABSYNTAX seen in patcode_error.out as expected:
+%GTM-E-PATTABSYNTAX, Error in pattable at line 4
+----------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

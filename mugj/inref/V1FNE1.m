@@ -1,0 +1,78 @@
+V1FNE1	;FUNCTION $EXTRACT -1-;YS-TS,V1FN,VALIDATION VERSION 7.1;31-AUG-1987;
+	;COPYRIGHT MUMPS SYSTEM LABORATORY 1978
+	S PASS=0,FAIL=0
+	W !!,"V1FNE1: TEST OF $EXTRACT FUNCTION -1-" W:$Y>55 #
+	W !!,"$EXTRACT(expr1,intexpr2)",! W:$Y>55 #
+263	W !,"I-263  expr1 is string literal"
+	S ITEM="I-263  " S VCOMP=$E("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",26) S VCORR="Z" D EXAMINER
+	;
+264	W !,"I-264  expr1 is positive integer"
+	S ITEM="I-264  " S VCOMP=$E(000789400,3) S VCORR="9" D EXAMINER
+	;
+265	W !,"I-265  expr1 is negative integer"
+	S ITEM="I-265.1  -000789400" S VCOMP=$E(-000789400,3) S VCORR="8" D EXAMINER
+	S ITEM="I-265.2  -00789400" S VCOMP=$E(-00789400,1) S VCORR="-" D EXAMINER
+	;
+266	W !,"I-266  expr1 is non-integer numeric literal"
+	S ITEM="I-266.1  0007.89400" S VCOMP=$E(0007.89400,3) S VCORR="8" D EXAMINER
+	S ITEM="I-266.2  -000723.89400E-01" S VCOMP=$E(-000723.89400E-01,4) S VCORR="." D EXAMINER
+	S ITEM="I-266.3  0000723.8900E04" S VCOMP=$E(0000723.8900E04,5) S VCORR="9" D EXAMINER
+	S ITEM="I-266.4  -0000.00E04" S VCOMP=$E(-0000.00E04,2) S VCORR="" D EXAMINER
+	;
+267	W !,"I-267  expr1 is function"
+	S ITEM="I-267.1  $EXTRACT(expr1,intexpr2)" S VCOMP=$E($EXTRACT(07564.56,2),1) S VCORR="5" D EXAMINER
+	S ITEM="I-267.2  $E(expr1,intexpr2,intexpr3)" S VCOMP=$E($E(07564.56,2,5),4) S VCORR="." D EXAMINER
+	;
+268	W !,"I-268  expr1 contains unary operator"
+	S ITEM="I-268.1  + unary operator" S VCOMP=$E(+"003.56E3",3) S VCORR="6" D EXAMINER
+	S ITEM="I-268.2  expr1 is + lvn" S A="38E4",VCOMP=$E(+A,6) S VCORR="0" D EXAMINER
+	;
+269	W !,"I-269  expr1 contains binary operator"
+	S ITEM="I-269.1  + binary operator" S VCOMP=$E(1234.56+95.45,6) S VCORR="0" D EXAMINER
+	S ITEM="I-269.2  - binary operator" S VCOMP=$E(34.56-45.453,5) S VCORR="8" D EXAMINER
+	S ITEM="I-269.3  + and / binary operators" S VCOMP=$E(.8+10/3,3) S VCORR="6" D EXAMINER
+	;
+270	W !,"I-270  expr1 empty string"
+	S ITEM="I-270  " S VCOMP=$E("",1) S VCORR="" D EXAMINER
+	;
+271	W !,"I-271  intexpr2 is string literal"
+	S ITEM="I-271.1  intexpr2=""A3BCD""" S VCOMP=$E(-456789.0,"A3BCD") S VCORR="" D EXAMINER
+	S ITEM="I-271.2  intexpr2=""3.6BCD""" S VCOMP=$E(-456789.0,"3.6BCD") S VCORR="5" D EXAMINER
+	;
+272	W !,"I-272  intexpr2 is positive integer"
+	S ITEM="I-272  " S VCOMP=$E("ABCDEFGHIJKLMNOPQRSTUVWXYZ",0.1E+2) S VCORR="J" D EXAMINER
+	;
+273	W !,"I-273  intexpr2 is negative integer"
+	S ITEM="I-273  " S VCOMP=$E(-456789.0,-1) S VCORR="" D EXAMINER
+	;
+274	W !,"I-274  intexpr2 is zero"
+	S ITEM="I-274  " S VCOMP=$E(456789.0,00) S VCORR="" D EXAMINER
+	;
+275	W !,"I-275  intexpr2>$L(expr1)"
+	S ITEM="I-275.1  (intexpr2+1)=$L(expr1)" S VCOMP=$E("-457.90E8",10) S VCORR="" D EXAMINER
+	S ITEM="I-275.2  intexpr2>255" S VCOMP=$E("-4567.890",999) S VCORR="" D EXAMINER
+	;
+276	W !,"I-276  intexpr2 is non-integer numeric literal"
+	S ITEM="I-276  " S VCOMP=$E("-457.90E8",3.9999) S VCORR="5" D EXAMINER
+	;
+277	W !,"I-277  intexpr2 is function"
+	S ITEM="I-277  " S VCOMP=$E("-457.90E8",$E("897647375475758",4)) S VCORR="9" D EXAMINER
+	;
+278	W !,"I-278  intexpr2 is lvn"
+	S ITEM="I-278  ",VCOMP="" F I=0:4:36 S VCOMP=VCOMP_$E("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",I)
+	S VCORR="DHLPTX260" D EXAMINER
+	;
+279	W !,"I-279  intexpr2 contains unary operator"
+	S ITEM="I-279  " S VCOMP=$E("987654321987654321",+"3.999 9") S VCORR="7" D EXAMINER
+	;
+280	W !,"I-280  intexpr2 contains binary operator"
+	S ITEM="I-280  " S VCOMP=$E("987654321987654321",.8+10/3) S VCORR="7" D EXAMINER
+	;
+END	W !!,"END OF V1FNE1",!
+	S ROUTINE="V1FNE1",TESTS=28,AUTO=28,VISUAL=0 D ^VREPORT
+	K  Q
+	;
+EXAMINER	I VCORR=VCOMP S PASS=PASS+1 W !,"   PASS  ",ITEM W:$Y>55 # Q
+	S FAIL=FAIL+1 W !,"** FAIL  ",ITEM W:$Y>55 #
+	W !,"           COMPUTED =""",VCOMP,"""" W:$Y>55 #
+	W !,"           CORRECT  =""",VCORR,"""" W:$Y>55 #

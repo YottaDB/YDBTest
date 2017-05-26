@@ -1,0 +1,140 @@
+Begin gtm7073
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+#No locks. All lock space should be free
+%GTM-I-NOLOCKMATCH, No matching locks were found in AREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in BREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+#All but DEFAULT region should have free space
+
+GTM>
+
+GTM>
+%GTM-I-NOLOCKMATCH, No matching locks were found in AREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in BREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+
+DEFAULT
+##TEST_AWKa Owned by PID= [1-9][0-9]* which is an existing process
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+
+GTM>
+#All but AREG region should have free space
+
+GTM>
+
+GTM>
+
+GTM>
+
+AREG
+##TEST_AWK.avar Owned by PID= [1-9][0-9]* which is an existing process
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in BREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+
+GTM>
+#All but BREG region should have free space
+
+GTM>
+
+GTM>
+
+GTM>
+%GTM-I-NOLOCKMATCH, No matching locks were found in AREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+
+BREG
+##TEST_AWK.bvar Owned by PID= [1-9][0-9]* which is an existing process
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+
+GTM>
+#CREG and DEFAULT region should have free space
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+AREG
+##TEST_AWK.avar Owned by PID= [1-9][0-9]* which is an existing process
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+
+BREG
+##TEST_AWK.bvar Owned by PID= [1-9][0-9]* which is an existing process
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+
+GTM>
+#No locks should be here
+%GTM-I-NOLOCKMATCH, No matching locks were found in AREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in BREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+#Trying to grab 1000 locks from DEFAULT (should hang before reaching 1000)
+%GTM-I-NOLOCKMATCH, No matching locks were found in AREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in BREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+TEST-I-PASS GTM-E-LOCKSPACEFULL found in operator log as expected.
+#Grabbing as many locks possible, releasing 2 of them, waiting on the bg
+#Adding 2 of the locks again. The lock space should be full but syslog should not have LOCKSPACEFULL
+%GTM-I-NOLOCKMATCH, No matching locks were found in AREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in BREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+TEST-I-PASS GTM-E-LOCKSPACEFULL not found in operator log as expected.
+#Stop the process
+#Trying with 2 diffrent processes...
+#Grab 3 locks with shorter names and wait in the background
+#Grab 1000 locks with shorter names and wait in the background
+TEST-I-PASS GTM-I-LOCKSPACEINFO found in operator log as expected.
+#Stop the processes
+#using half of the total lock space
+TEST-I-PASS GTM-E-LOCKSPACEFULL not found in operator log as expected.
+#Stop the processes
+#Fill up entire space with short named locks and check if LOCKSPACEFULL message exists in LKE SHOW command
+LOCKSPACEFULL message found in LKE SHOW output as expected.
+#Stop the processes
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+End gtm7073

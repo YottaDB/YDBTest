@@ -1,0 +1,112 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+Do multdef^multiple
+
+Transaction Starts....
+
+$ZTEXIT = 4rethrow
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : thrint+5^thrint
+interrupt occurred at : multdef+14^multiple
+
+End of transaction....
+
+$ZTEXIT = 1
+
+----------------------------------------------------
+
+
+GTM>
+
+GTM>
+
+muldef
+GTM>
+
+GTM>
+Do muldefrb^multiple
+
+Transaction Starts....
+
+$ZTEXIT = 4
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : thrint+5^thrint
+interrupt occurred at : muldefrb+15^multiple
+
+End of transaction....
+
+$ZTEXIT = 1
+
+----------------------------------------------------
+
+
+GTM>
+
+GTM>
+
+muldef
+GTM>
+
+GTM>
+Do mundefrb^multiple
+
+Transaction Starts....
+
+$ZTEXIT = norethrow
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=0
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : uthrint+5^uthrint
+
+End of transaction....
+
+$ZTEXIT = 0
+
+----------------------------------------------------
+
+
+GTM>
+
+GTM>
+
+muldef
+GTM>
+
+GTM>
+Do multndef^multiple
+
+Transaction Starts....
+
+$ZTEXIT = 0
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=0
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : uthrint+5^uthrint
+
+End of transaction....
+
+$ZTEXIT = 0
+
+----------------------------------------------------
+
+
+GTM>
+
+GTM>
+
+muldef
+mulundef
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

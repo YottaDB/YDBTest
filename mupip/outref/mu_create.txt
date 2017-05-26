@@ -1,0 +1,34 @@
+MUPIP CREATE
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/create.gld
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/tempcr.com
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/create.gld
+#
+# Create with a bad region
+#
+%GTM-E-NOREGION, REGION not found: FREELUNCH
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+Created file ##TEST_PATH##/create1.dat
+Created file ##TEST_PATH##/create2.dat
+Created file ##TEST_PATH##/create.dat
+##SUSPEND_OUTPUT HOST_OS390_S390
+Error opening file ##TEST_PATH##/create1.dat
+: File exists
+Error opening file ##TEST_PATH##/create2.dat
+: File exists
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+Error opening file ##TEST_PATH##/create1.dat
+: EDC5117I File exists. (errno2=0x05620063)
+Error opening file ##TEST_PATH##/create2.dat
+: EDC5117I File exists. (errno2=0x05620063)
+##ALLOW_OUTPUT HOST_ALL
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+PASS from fill1^myfill("set")
+PASS from fill1^myfill("ver")
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

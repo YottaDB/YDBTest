@@ -1,0 +1,130 @@
+***************BEGIN THE GDE TEST*******************
+#Create new gld file verify the ENCR flag value is OFF and turn it to ON#
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+                                                                     ENCR = OFF
+                                                                                    ENCR=OFF
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+                                                                     ENCR = OFF
+                                                                                    ENCR=ON
+#Update the gld by adding a new region and grep for ENCR flag to verify the default value is OFF#
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+                                                                     ENCR = OFF
+                                                                                    ENCR=ON
+                                                                                    ENCR=OFF
+#Add another region and turn on encryption for this region#
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+                                                                     ENCR = OFF
+                                                                                    ENCR=ON
+                                                                                    ENCR=ON
+                                                                                    ENCR=OFF
+#Trying to change the encryption flag for region#
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+%GDE-E-KEYWRDBAD, ENCR is not a valid qualifier in this context
+
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+#Enable encryption for previously added region#
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+                                                                     ENCR = OFF
+                                                                                    ENCR=ON
+                                                                                    ENCR=ON
+                                                                                    ENCR=ON
+#Add one more region and disable the encryption for a previous region whose encryption status was ON#
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+                                                                     ENCR = OFF
+                                                                                    ENCR=OFF
+                                                                                    ENCR=OFF
+                                                                                    ENCR=ON
+                                                                                    ENCR=ON
+Created file ##TEST_PATH##/Bfile.dat
+Created file ##TEST_PATH##/Cfile.dat
+Created file ##TEST_PATH##/mumps.dat
+Created file ##TEST_PATH##/newfile.dat
+****************END GDE TEST**************************

@@ -1,0 +1,36 @@
+VV4TP ;IW-KO-YS-TS,VV4TP,MVTS V9.10;15/7/96;PART-94 Transaction
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+START I $D(^VENVIRON("INTEGRITY"))=0 D ^VINT9
+ I ^VENVIRON("INTEGRITY")="OK" G START1
+ I ^VENVIRON("INTEGRITY")="NOT OK" G START1
+ D ^VINT9
+START1 ;
+ I $D(^VENVIRON("COMPLETE"))=1 D EDIT^VENVIRON
+ I $D(^VENVIRON("COMPLETE"))=0 D ^VENVIRON
+ S ^VREPORT="Part-94"
+ I $D(^VENVIRON("OUTPUT USE"))=1 U ^VENVIRON("OUTPUT USE")
+ W #,"*** Standard MUMPS Validation Test Suite Version 9.10, Part-94 Toransaction (DRIVER) ***"
+ W !,"    ( The last Test ID number for Part-94 Transaction is IV-923. )",!!
+ ;
+V4TP11 W !!,"142---V4TP11" D ^V4TP11
+V4TP12 W !!,"143---V4TP12" D ^V4TP12
+V4TP13 W !!,"144---V4TP13" D ^V4TP13
+V4TP14 W !!,"145---V4TP14" D ^V4TP14
+V4TP15 W !!,"146---V4TP15" D ^V4TP15
+V4TP16 W !!,"147---V4TP16" D ^V4TP16
+V4TP17 W !!,"148---V4TP17" D ^V4TP17
+;
+; MVTS LOCAL CHANGE - Nars Disable following tests as they fail/hang intermittently. Re-enable once C9C05-001891 is fixed.
+;
+;V4TP21 W !!,"149---V4TP21" D ^V4TP21
+;V4TP22 W !!,"150---V4TP22" D ^V4TP22
+;V4TP23 W !!,"151---V4TP23" D ^V4TP23
+;V4TP24 W !!,"152---V4TP24" D ^V4TP24
+;V4TP31 W !!,"153---V4TP31" D ^V4TP31
+;V4TP32 W !!,"154---V4TP32" D ^V4TP32
+END W !!,"*** Standard MUMPS Validation Test Suite Version 9.10,"
+ W !,"    Part-94 Transaction END ***",!!
+ Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

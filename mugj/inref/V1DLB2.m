@@ -1,0 +1,54 @@
+V1DLB2	;$DATA, KILL (LOCAL VARIABLES) -3-;YS-TS,V1DLB,VALIDATION VERSION 7.1;31-AUG-1987;
+	;COPYRIGHT MUMPS SYSTEM LABORATORY 1978
+	S ^PASS=0,^FAIL=0
+	W !!,"V1DLB2 : TEST OF $DATA FUNCTION AND KILL COMMAND ON LOCAL VARIABLES -3-",!
+226	W !,"I-226  $DATA of defined node whose immediate descendants are killed"
+	S ^ITEM="I-226  ",VCOMP="" K XX
+	S XX(2,1)=210 D DATA S XX(2)=200 D DATA K XX(2,1) D DATA
+	S VCORR="10 0 10 1 0 0 0 ****210****/10 0 11 1 0 0 0 ***200*210****/10 0 1 0 0 0 0 ***200*****/" D EXAMINER
+	;
+227	W !,"I-227  $DATA of defined node whose descendants 2 levels below are killed"
+	S ^ITEM="I-227  ",VCOMP="" K XX
+	S XX(2)=200 D DATA S XX(2,1,1)="#2110" D DATA K XX(2,1,1) D DATA
+	S VCORR="10 0 1 0 0 0 0 ***200*****/10 0 11 10 1 0 0 ***200**#2110***/10 0 1 0 0 0 0 ***200*****/" D EXAMINER
+	;
+228	W !,"I-228  $DATA of defined node whose parent is killed"
+	S ^ITEM="I-228  " K XX
+	S XX=0,XX(1)=100,XX(3)=300,XX(2,1,1)="^211",VCOMP=""
+	D DATA K XX D DATA
+	S VCORR="11 1 10 10 1 0 1 *0*100***^211**300*/0 0 0 0 0 0 0 ********/" D EXAMINER
+	;
+229	W !,"I-229  $DATA of defined node whose neighboring node is killed"
+	S ^ITEM="I-229  " K
+	S XX="ROOT",XX(2,1,1)="211GGG",XX(3)="3000",VCOMP="" D DATA
+	K A,Y,XX(50),XX(0),XX(2,1,1,1)
+	K XX(2,1,1) D DATA K XX(3) D DATA
+	S VCORR="11 0 10 10 1 0 1 *ROOT****211GGG**3000*/11 0 0 0 0 0 1 *ROOT******3000*/1 0 0 0 0 0 0 *ROOT*******/" D EXAMINER
+	;
+230	W !,"I-230  KILLing undefined subscripted local variables"
+	S ^ITEM="I-230  " K
+	S XX="ROOT",XX(1)=10,XX(3)=30,XX(2,1,1)=2110,VCOMP="" D DATA
+	K XX(2) D DATA K XX(2) D DATA
+	S VCORR="11 1 10 10 1 0 1 *ROOT*10***2110**30*/11 1 0 0 0 0 1 *ROOT*10*****30*/11 1 0 0 0 0 1 *ROOT*10*****30*/" D EXAMINER
+	;
+END	W !!,"END OF V1DLB2",!
+	S PASS=^PASS,FAIL=^FAIL
+	S ROUTINE="V1DLB2",TESTS=5,AUTO=5,VISUAL=0 D ^VREPORT
+	K  K ^ITEM,^PASS,^FAIL Q
+	;
+EXAMINER	I VCORR=VCOMP S PASS=^PASS,PASS=PASS+1,^PASS=PASS W !,"   PASS  ",^ITEM W:$Y>55 # Q
+	S FAIL=^FAIL,FAIL=FAIL+1,^FAIL=FAIL W !,"** FAIL  ",^ITEM W:$Y>55 #
+	W !,"           COMPUTED =""",VCOMP,"""" W:$Y>55 #
+	W !,"           CORRECT  =""",VCORR,"""" W:$Y>55 #
+	Q
+	;
+DATA	S VCOMP=VCOMP_$D(XX)_" "_$D(XX(1))_" "_$D(XX(2))_" "_$D(XX(2,1))_" "
+	S VCOMP=VCOMP_$D(XX(2,1,1))_" "_$D(XX(2,2))_" "_$D(XX(3))_" "
+	S VCOMP=VCOMP_"*" I $D(XX)#10=1 S VCOMP=VCOMP_XX
+	S VCOMP=VCOMP_"*" I $D(XX(1))#10=1 S VCOMP=VCOMP_XX(1)
+	S VCOMP=VCOMP_"*" I $D(XX(2))#10=1 S VCOMP=VCOMP_XX(2)
+	S VCOMP=VCOMP_"*" I $D(XX(2,1))#10=1 S VCOMP=VCOMP_XX(2,1)
+	S VCOMP=VCOMP_"*" I $D(XX(2,1,1))#10=1 S VCOMP=VCOMP_XX(2,1,1)
+	S VCOMP=VCOMP_"*" I $D(XX(2,2))#10=1 S VCOMP=VCOMP_XX(2,2)
+	S VCOMP=VCOMP_"*" I $D(XX(3))#10=1 S VCOMP=VCOMP_XX(3)
+	S VCOMP=VCOMP_"*/" Q

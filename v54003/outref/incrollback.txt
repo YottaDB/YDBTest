@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------------------
+BEGIN 1 :-) Create the database with maximum block size(1008)
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+END 1
+---------------------------------------------------------------------------------------
+
+GTM>
+
+GTM>
+---------------------------------------------------------------------------------------
+BEGIN 2 :-) Test that incremental rollback creates enough room for future global references
+
+Testing nested read/write
+ERROR HANDLER STARTS
+150376146,incrb+12^incrollback,%GTM-E-TRANS2BIG, Transaction exceeded available buffer space for region DEFAULT
+^x(64793)
+transaction failed to read with block #64793
+$tlevel=3
+ERROR HANDLER ENDS
+64792 blocks successfully read
+ERROR HANDLER STARTS
+150376146,incrb+23^incrollback,%GTM-E-TRANS2BIG, Transaction exceeded available buffer space for region DEFAULT
+^x(511)
+transaction failed to write with block #511
+$tlevel=3
+ERROR HANDLER ENDS
+510 blocks successfully written
+
+END 2
+---------------------------------------------------------------------------------------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

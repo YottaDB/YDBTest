@@ -1,0 +1,118 @@
+Files Created in ##TEST_PATH##:
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z.]*/mumps -run GDE
+mumps.gld
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z.]*/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/eightchar.gde
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+##TEST_AWK##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z.]*/mupip
+##TEST_AWK##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z.]*/mupip integ .REG .
+No errors detected by integ.
+
+GTM>
+Error expected here as GLD used is not the same version
+
+GTM>
+##TEST_AWK%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld, expected label: GTCGBDUNX..., found: GTCGBDUNX...
+
+GTM>
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               A                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ A                               A234567A                         REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ A234567A                        A234567A0                        REG = REG1
+                                                                  SEG = SEG1
+                                                                  FILE = A234567A.dat
+ A234567A0                       A234567B                         REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ A234567B                        A234567B0                        REG = REG2
+                                                                  SEG = SEG2
+                                                                  FILE = A234567B.dat
+ A234567B0                       B                                REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ B                               C                                REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ C                               D                                REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ D                               a                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ a                               b                                REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ b                               c                                REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ c                               d                                REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ d                               ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+A234567A.dat
+A234567B.dat
+a.dat
+b.dat
+c.dat
+mumps.dat
+
+GTM>
+LOTSVAR-I-END_SET
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Globals written to a_extract.glo
+CORRECT GLOBAL-DATAFILE MAPPING for AREG
+CORRECT 9CHAR GLOBAL-DATAFILE MAPPING
+Globals written to A234567A_extract.glo
+CORRECT 8CHAR GLOBAL-DATAFILE MAPPING
+Globals written to b_extract.glo
+CORRECT GLOBAL-DATAFILE MAPPING for BREG

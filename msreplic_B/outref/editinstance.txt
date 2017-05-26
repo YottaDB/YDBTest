@@ -1,0 +1,557 @@
+
+Expect a REPLINSTOPEN and a REPLINSTREAD error for the next 2 commands
+
+----------
+Error REPLINSTOPEN seen in editinstance_REPLINSTOPEN.out as expected:
+%GTM-E-REPLINSTOPEN, Error opening replication instance file mumps.repl
+----------
+----------
+##SUSPEND_OUTPUT HOST_OS390_S390
+Error SYSTEM-E-ENO2 seen in editinstance_REPLINSTOPEN.out as expected:
+%SYSTEM-E-ENO2, No such file or directory
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+Error SYSTEM-E-ENO129 seen in editinstance_REPLINSTOPEN.out as expected:
+%SYSTEM-E-ENO129, No such file or directory
+##ALLOW_OUTPUT HOST_ALL
+----------
+----------
+Error REPLINSTREAD seen in editinstance_REPLINSTREAD.out as expected:
+%GTM-E-REPLINSTREAD, Error reading [0x00000800] bytes at offset [0x0000000000000000] from replication instance file mumps.repl
+----------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance4:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+
+Expect a MUPCLIERR error next
+
+Instance File Name: %GTM-E-MUPCLIERR, Action not taken due to CLI errors
+Instance File Name: GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+
+----------------------------------------------------------
+File Header
+----------------------------------------------------------
+HDR Label (contains Major Version)             GDSRPLUNX05
+HDR Minor Version                                        1
+HDR Endian Format      ##FILTERED####ENDIAN##
+##SUSPEND_OUTPUT 32BIT_GTM
+HDR 64-bit Format                                     TRUE
+##ALLOW_OUTPUT 32BIT_GTM
+##SUSPEND_OUTPUT 64BIT_GTM
+HDR 64-bit Format                                    FALSE
+##ALLOW_OUTPUT 64BIT_GTM
+HDR Journal Pool Sem Id                            INVALID
+HDR Journal Pool Shm Id                            INVALID
+HDR Receive Pool Sem Id                            INVALID
+HDR Receive Pool Shm Id                            INVALID
+HDR Journal Pool Sem Create Time                         0
+HDR Journal Pool Shm Create Time                         0
+HDR Receive Pool Sem Create Time                         0
+HDR Receive Pool Shm Create Time                         0
+HDR Instance File Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR Instance Name                                INSTANCE1
+##TEST_AWKHDR Instance File Create Time          ..../../.. ..:..:..
+##TEST_AWKHDR Instance File Creator Pid          [ 0-9]* .0x.........
+HDR Journal Sequence Number                              0 [0x0000000000000000]
+HDR Root Primary Cycle                                   0 [0x00000000]
+HDR Number of used history records                       0 [0x00000000]
+HDR Allocated history records                            0 [0x00000000]
+HDR Crash                                            FALSE
+HDR Root Primary                                     FALSE
+HDR Supplementary Instance                           FALSE
+HDR Corrupt                                          FALSE
+HDR Quick database rundown is active                 .....
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simpleinstanceupdate.csh 1'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 3'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 10'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 4'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 100'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 1'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 1'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simpleinstanceupdate.csh 5'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3 RP'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replicate -editinstance -show mumps.repl         >& editinstance_nodetail.out'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replicate -editinstance -show mumps.repl -detail >& editinstance_detail.out'==
+==========================================================
+The instance file contents on INST1 (instancefile_1.out):
+GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+
+----------------------------------------------------------------------------
+File Header
+----------------------------------------------------------------------------
+Offset     Size
+0x00000000 0x000C HDR Label (contains Major Version)             GDSRPLUNX05
+0x0000000C 0x0001 HDR Minor Version                                        1
+0x0000000D 0x0001 HDR Endian Format      ##FILTERED####ENDIAN##
+##SUSPEND_OUTPUT 32BIT_GTM
+0x0000000E 0x0001 HDR 64-bit Format                                     TRUE
+##ALLOW_OUTPUT 32BIT_GTM
+##SUSPEND_OUTPUT 64BIT_GTM
+0x0000000E 0x0001 HDR 64-bit Format                                    FALSE
+##ALLOW_OUTPUT 64BIT_GTM
+0x00000010 0x0004 HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+0x00000014 0x0004 HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+0x00000018 0x0004 HDR Receive Pool Sem Id                            INVALID
+0x0000001C 0x0004 HDR Receive Pool Shm Id                            INVALID
+##SUSPEND_OUTPUT 32BIT_GTM
+0x00000020 0x0008 HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+0x00000028 0x0008 HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+0x00000030 0x0008 HDR Receive Pool Sem Create Time                         0
+0x00000038 0x0008 HDR Receive Pool Shm Create Time                         0
+##ALLOW_OUTPUT 32BIT_GTM
+##SUSPEND_OUTPUT 64BIT_GTM
+0x00000020 0x0004 HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+0x00000028 0x0004 HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+0x00000030 0x0004 HDR Receive Pool Sem Create Time                         0
+0x00000038 0x0004 HDR Receive Pool Shm Create Time                         0
+##ALLOW_OUTPUT 64BIT_GTM
+0x00000040 0x0010 HDR Instance File Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+0x00000050 0x0010 HDR Instance Name                                INSTANCE1
+0x00000060 0x0004 HDR Instance File Create Time          ..../../.. ..:..:..
+0x00000064 0x0004 HDR Instance File Creator Pid                 PIDINDECIMAL [0xPIDINHEX]
+0x00000068 0x0010 HDR LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+0x00000078 0x0010 HDR LMS Group Instance Name                      INSTANCE1
+0x0000008C 0x0004 HDR LMS Group Creator Pid                     PIDINDECIMAL [0xPIDINHEX]
+0x00000088 0x0004 HDR LMS Group Create Time              ..../../.. ..:..:..
+0x00000090 0x0008 HDR Journal Sequence Number                            121 [0x0000000000000079]
+0x00000098 0x0004 HDR Root Primary Cycle                                   8 [0x00000008]
+0x0000009C 0x0004 HDR Number of used history records                       8 [0x00000008]
+0x000000A0 0x0004 HDR Allocated history records                            8 [0x00000008]
+0x000000A4 0x0004 HDR Crash                                             TRUE
+0x000000A8 0x0004 HDR Root Primary                                      TRUE
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+0x000000AC 0x0004 HDR Supplementary Instance                           FALSE
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+0x000000AC 0x0004 HDR Supplementary Instance                            TRUE
+0x000000B0 0x0004 HDR STRM  0: Last history record number                  7 [0x00000007]
+0x000000F0 0x0008 HDR STRM  0: Journal Sequence Number                   121 [0x0000000000000079]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+0x000003C8 0x0004 HDR Corrupt                                          FALSE
+0x000003D0 0x0004 HDR Quick database rundown is active                 .....
+
+----------------------------------------------------------------------------
+Source Server Slots
+----------------------------------------------------------------------------
+Offset     Size
+0x00000400 0x0010 SLT # 0 : Secondary Instance Name                INSTANCE2
+0x00000410 0x0008 SLT # 0 : Resync Sequence Number                       126 [0x000000000000007E]
+0x00000418 0x0008 SLT # 0 : Connect Sequence Number                      121 [0x0000000000000079]
+----------------------------------------------------------------------------
+Offset     Size
+0x00000440 0x0010 SLT # 1 : Secondary Instance Name                INSTANCE3
+0x00000450 0x0008 SLT # 1 : Resync Sequence Number                         1 [0x0000000000000001]
+0x00000458 0x0008 SLT # 1 : Connect Sequence Number                        0 [0x0000000000000000]
+
+----------------------------------------------------------------------------
+History Records (histinfo structures)
+----------------------------------------------------------------------------
+Offset     Size
+0x00000800 0x0010 HST #      0 : Root Primary Instance Name        INSTANCE1
+0x00000810 0x0008 HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+0x00000818 0x0008 HST #      0 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+0x00000818 0x0008 HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+0x00000820 0x0004 HST #      0 : Root Primary Cycle                        1 [0x00000001]
+0x00000824 0x0004 HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+0x00000828 0x0004 HST #      0 : Creation Time           ..../../.. ..:..:..
+0x0000082C 0x0004 HST #      0 : History Number                            0 [0x00000000]
+0x00000830 0x0004 HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+0x00000834 0x0001 HST #      0 : Stream #                                  0 [0x00000000]
+0x00000835 0x0001 HST #      0 : History record type                       1 [0x00000001]
+----------------------------------------------------------------------------
+Offset     Size
+0x000008A0 0x0010 HST #      1 : Root Primary Instance Name        INSTANCE1
+0x000008B0 0x0008 HST #      1 : Start Sequence Number                     2 [0x0000000000000002]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+0x000008B8 0x0008 HST #      1 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+0x000008B8 0x0008 HST #      1 : Stream Sequence Number                    2 [0x0000000000000002]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+0x000008C0 0x0004 HST #      1 : Root Primary Cycle                        2 [0x00000002]
+0x000008C4 0x0004 HST #      1 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+0x000008C8 0x0004 HST #      1 : Creation Time           ..../../.. ..:..:..
+0x000008CC 0x0004 HST #      1 : History Number                            1 [0x00000001]
+0x000008D0 0x0004 HST #      1 : Previous History Number                   0 [0x00000000]
+0x000008D4 0x0001 HST #      1 : Stream #                                  0 [0x00000000]
+0x000008D5 0x0001 HST #      1 : History record type                       1 [0x00000001]
+0x00000900 0x0004 HST #      1 : Stream  0: Last History Number            0 [0x00000000]
+----------------------------------------------------------------------------
+Offset     Size
+0x00000940 0x0010 HST #      2 : Root Primary Instance Name        INSTANCE1
+0x00000950 0x0008 HST #      2 : Start Sequence Number                     5 [0x0000000000000005]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+0x00000958 0x0008 HST #      2 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+0x00000958 0x0008 HST #      2 : Stream Sequence Number                    5 [0x0000000000000005]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+0x00000960 0x0004 HST #      2 : Root Primary Cycle                        3 [0x00000003]
+0x00000964 0x0004 HST #      2 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+0x00000968 0x0004 HST #      2 : Creation Time           ..../../.. ..:..:..
+0x0000096C 0x0004 HST #      2 : History Number                            2 [0x00000002]
+0x00000970 0x0004 HST #      2 : Previous History Number                   1 [0x00000001]
+0x00000974 0x0001 HST #      2 : Stream #                                  0 [0x00000000]
+0x00000975 0x0001 HST #      2 : History record type                       1 [0x00000001]
+0x000009A0 0x0004 HST #      2 : Stream  0: Last History Number            1 [0x00000001]
+----------------------------------------------------------------------------
+Offset     Size
+0x000009E0 0x0010 HST #      3 : Root Primary Instance Name        INSTANCE1
+0x000009F0 0x0008 HST #      3 : Start Sequence Number                    15 [0x000000000000000F]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+0x000009F8 0x0008 HST #      3 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+0x000009F8 0x0008 HST #      3 : Stream Sequence Number                   15 [0x000000000000000F]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+0x00000A00 0x0004 HST #      3 : Root Primary Cycle                        4 [0x00000004]
+0x00000A04 0x0004 HST #      3 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+0x00000A08 0x0004 HST #      3 : Creation Time           ..../../.. ..:..:..
+0x00000A0C 0x0004 HST #      3 : History Number                            3 [0x00000003]
+0x00000A10 0x0004 HST #      3 : Previous History Number                   2 [0x00000002]
+0x00000A14 0x0001 HST #      3 : Stream #                                  0 [0x00000000]
+0x00000A15 0x0001 HST #      3 : History record type                       1 [0x00000001]
+0x00000A40 0x0004 HST #      3 : Stream  0: Last History Number            2 [0x00000002]
+----------------------------------------------------------------------------
+Offset     Size
+0x00000A80 0x0010 HST #      4 : Root Primary Instance Name        INSTANCE1
+0x00000A90 0x0008 HST #      4 : Start Sequence Number                    19 [0x0000000000000013]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+0x00000A98 0x0008 HST #      4 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+0x00000A98 0x0008 HST #      4 : Stream Sequence Number                   19 [0x0000000000000013]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+0x00000AA0 0x0004 HST #      4 : Root Primary Cycle                        5 [0x00000005]
+0x00000AA4 0x0004 HST #      4 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+0x00000AA8 0x0004 HST #      4 : Creation Time           ..../../.. ..:..:..
+0x00000AAC 0x0004 HST #      4 : History Number                            4 [0x00000004]
+0x00000AB0 0x0004 HST #      4 : Previous History Number                   3 [0x00000003]
+0x00000AB4 0x0001 HST #      4 : Stream #                                  0 [0x00000000]
+0x00000AB5 0x0001 HST #      4 : History record type                       1 [0x00000001]
+0x00000AE0 0x0004 HST #      4 : Stream  0: Last History Number            3 [0x00000003]
+----------------------------------------------------------------------------
+Offset     Size
+0x00000B20 0x0010 HST #      5 : Root Primary Instance Name        INSTANCE1
+0x00000B30 0x0008 HST #      5 : Start Sequence Number                   119 [0x0000000000000077]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+0x00000B38 0x0008 HST #      5 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+0x00000B38 0x0008 HST #      5 : Stream Sequence Number                  119 [0x0000000000000077]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+0x00000B40 0x0004 HST #      5 : Root Primary Cycle                        6 [0x00000006]
+0x00000B44 0x0004 HST #      5 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+0x00000B48 0x0004 HST #      5 : Creation Time           ..../../.. ..:..:..
+0x00000B4C 0x0004 HST #      5 : History Number                            5 [0x00000005]
+0x00000B50 0x0004 HST #      5 : Previous History Number                   4 [0x00000004]
+0x00000B54 0x0001 HST #      5 : Stream #                                  0 [0x00000000]
+0x00000B55 0x0001 HST #      5 : History record type                       1 [0x00000001]
+0x00000B80 0x0004 HST #      5 : Stream  0: Last History Number            4 [0x00000004]
+----------------------------------------------------------------------------
+Offset     Size
+0x00000BC0 0x0010 HST #      6 : Root Primary Instance Name        INSTANCE1
+0x00000BD0 0x0008 HST #      6 : Start Sequence Number                   120 [0x0000000000000078]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+0x00000BD8 0x0008 HST #      6 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+0x00000BD8 0x0008 HST #      6 : Stream Sequence Number                  120 [0x0000000000000078]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+0x00000BE0 0x0004 HST #      6 : Root Primary Cycle                        7 [0x00000007]
+0x00000BE4 0x0004 HST #      6 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+0x00000BE8 0x0004 HST #      6 : Creation Time           ..../../.. ..:..:..
+0x00000BEC 0x0004 HST #      6 : History Number                            6 [0x00000006]
+0x00000BF0 0x0004 HST #      6 : Previous History Number                   5 [0x00000005]
+0x00000BF4 0x0001 HST #      6 : Stream #                                  0 [0x00000000]
+0x00000BF5 0x0001 HST #      6 : History record type                       1 [0x00000001]
+0x00000C20 0x0004 HST #      6 : Stream  0: Last History Number            5 [0x00000005]
+----------------------------------------------------------------------------
+Offset     Size
+0x00000C60 0x0010 HST #      7 : Root Primary Instance Name        INSTANCE1
+0x00000C70 0x0008 HST #      7 : Start Sequence Number                   121 [0x0000000000000079]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+0x00000C78 0x0008 HST #      7 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+0x00000C78 0x0008 HST #      7 : Stream Sequence Number                  121 [0x0000000000000079]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+0x00000C80 0x0004 HST #      7 : Root Primary Cycle                        8 [0x00000008]
+0x00000C84 0x0004 HST #      7 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+0x00000C88 0x0004 HST #      7 : Creation Time           ..../../.. ..:..:..
+0x00000C8C 0x0004 HST #      7 : History Number                            7 [0x00000007]
+0x00000C90 0x0004 HST #      7 : Previous History Number                   6 [0x00000006]
+0x00000C94 0x0001 HST #      7 : Stream #                                  0 [0x00000000]
+0x00000C95 0x0001 HST #      7 : History record type                       1 [0x00000001]
+0x00000CC0 0x0004 HST #      7 : Stream  0: Last History Number            6 [0x00000006]
+==========================================================
+==Executing MULTISITE_REPLIC 'CRASH INST1'==
+Simulating crash on Instance INSTANCE1 in ##TEST_PATH##
+Instance INSTANCE1 crashed!
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+%GTM-E-SIZENOTVALID8, Size (in bytes) must be either 1, 2, 4, or 8
+Test offset = offset + size/2 for each of the offsets 1-6
+
+Error: OFFSET [0x00000C74] should be a multiple of Size [8]
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+Error: OFFSET [0x00000B24] should be a multiple of Size [8]
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+Error: OFFSET [0x00000B2C] should be a multiple of Size [8]
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+Error: OFFSET [0x00000A02] should be a multiple of Size [4]
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+Error: OFFSET [0x00000404] should be a multiple of Size [8]
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+Error: OFFSET [0x0000040C] should be a multiple of Size [8]
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+Error: OFFSET [0x00000414] should be a multiple of Size [8]
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+Error: OFFSET [0x00000054] should be a multiple of Size [8]
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+Error: OFFSET [0x0000005C] should be a multiple of Size [8]
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+Error: OFFSET [0x000000A6] should be a multiple of Size [4]
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+Test a bad offset, non-HEX value for offset and out of scope offset
+
+##SUSPEND_OUTPUT 32BIT_GTM
+Error: OFFSET [0x000007D3] should be a multiple of Size [4]
+##ALLOW_OUTPUT 32BIT_GTM
+##SUSPEND_OUTPUT 64BIT_GTM
+Error: OFFSET [0x000007D3] should be a multiple of Size [4]
+##ALLOW_OUTPUT 64BIT_GTM
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%GTM-E-CLIERR, Unrecognized value: badoffset, HEX number expected
+%GTM-E-REPLINSTREAD, Error reading [0x00000004] bytes at offset [0x0000000000000DC0] from replication instance file mumps.repl
+
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo "*" >&! rollback_losttrans.out'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $grep -E "RLBKJNSEQ|JNLSUCCESS" rollback_losttrans.out'==
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 126 [0x000000000000007E]
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+Offset 3184 [0x00000C70] : Old Value = 121 [0x79] : New Value = 337 [0x151] : Size = 8 [0x08]
+==========================================================
+Diffing instancefile_2.out and instancefile_3.out on INST1
+##TEST_AWK.*
+< 0x00000C70 0x0008 HST #      7 : Start Sequence Number                   121 [0x0000000000000079]
+---
+> 0x00000C70 0x0008 HST #      7 : Start Sequence Number                   337 [0x0000000000000151]
+==========================================================
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3'==
+----------
+Error REPLINSTSEQORD seen in ##TEST_PATH##/##FILTERED##START_##TIMESTAMP##.out as expected:
+%GTM-E-REPLINSTSEQORD, Instance file header has seqno [0x000000000000007E] which is less than last record seqno [0x0000000000000151] in replication instance file ##TEST_PATH##/mumps.repl
+----------
+----------
+Error NOJNLPOOL seen in ##TEST_PATH##/##FILTERED##START_##TIMESTAMP##.out as expected:
+%GTM-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
+----------
+Changing the offset B20
+
+Offset 2848 [0x00000B20] : Old Value = 73 [0x49] : New Value = 65 [0x41] : Size = 1 [0x01]
+0x00000B20 0x0010 HST #      5 : Root Primary Instance Name        ANSTANCE1
+Offset 2849 [0x00000B21] : Old Value = 78 [0x4E] : New Value = 50 [0x32] : Size = 1 [0x01]
+0x00000B20 0x0010 HST #      5 : Root Primary Instance Name        A2STANCE1
+Offset 2849 [0x00000B21] : Old Value = 50 [0x32] : New Value = 50 [0x32] : Size = 1 [0x01]
+0x00000B20 0x0010 HST #      5 : Root Primary Instance Name        A2STANCE1
+Offset 2850 [0x00000B22] : Old Value = 83 [0x53] : New Value = 75 [0x4B] : Size = 1 [0x01]
+0x00000B20 0x0010 HST #      5 : Root Primary Instance Name        A2KTANCE1
+Offset 2850 [0x00000B22] : Old Value = 75 [0x4B] : New Value = 76 [0x4C] : Size = 1 [0x01]
+0x00000B20 0x0010 HST #      5 : Root Primary Instance Name        A2LTANCE1
+Offset 2851 [0x00000B23] : Old Value = 84 [0x54] : New Value = 77 [0x4D] : Size = 1 [0x01]
+0x00000B20 0x0010 HST #      5 : Root Primary Instance Name        A2LMANCE1
+Offset 2851 [0x00000B23] : Old Value = 77 [0x4D] : New Value = 78 [0x4E] : Size = 1 [0x01]
+0x00000B20 0x0010 HST #      5 : Root Primary Instance Name        A2LNANCE1
+Offset 2852 [0x00000B24] : Old Value = 65 [0x41] : New Value = 79 [0x4F] : Size = 1 [0x01]
+0x00000B20 0x0010 HST #      5 : Root Primary Instance Name        A2LNONCE1
+Offset 2852 [0x00000B24] : Old Value = 79 [0x4F] : New Value = 79 [0x4F] : Size = 1 [0x01]
+0x00000B20 0x0010 HST #      5 : Root Primary Instance Name        A2LNONCE1
+%GTM-E-CLIERR, Unrecognized value: 4G, HEX number expected
+0x00000B20 0x0010 HST #      5 : Root Primary Instance Name        A2LNONCE1
+Offset 2853 [0x00000B25] : Old Value = 78 [0x4E] : New Value = 80 [0x50] : Size = 1 [0x01]
+0x00000B20 0x0010 HST #      5 : Root Primary Instance Name        A2LNOPCE1
+Offset 2854 [0x00000B26] : Old Value = 67 [0x43] : New Value = 0 [0x00] : Size = 1 [0x01]
+0x00000B20 0x0010 HST #      5 : Root Primary Instance Name           A2LNOP
+
+Offset 2560 [0x00000A00] : Old Value = 4 [0x00000004] : New Value = 8 [0x00000008] : Size = 4 [0x04]
+Offset 1024 [0x00000400] : Old Value = 73 [0x49] : New Value = 90 [0x5A] : Size = 1 [0x01]
+0x00000400 0x0010 SLT # 0 : Secondary Instance Name                ZNSTANCE2
+
+Changing the offset 50
+
+Offset 80 [0x00000050] : Old Value = 73 [0x49] : New Value = 105 [0x69] : Size = 1 [0x01]
+0x00000050 0x0010 HDR Instance Name                                iNSTANCE1
+Offset 81 [0x00000051] : Old Value = 78 [0x4E] : New Value = 106 [0x6A] : Size = 1 [0x01]
+0x00000050 0x0010 HDR Instance Name                                ijSTANCE1
+Offset 82 [0x00000052] : Old Value = 83 [0x53] : New Value = 107 [0x6B] : Size = 1 [0x01]
+0x00000050 0x0010 HDR Instance Name                                ijkTANCE1
+Offset 83 [0x00000053] : Old Value = 84 [0x54] : New Value = 108 [0x6C] : Size = 1 [0x01]
+0x00000050 0x0010 HDR Instance Name                                ijklANCE1
+Offset 84 [0x00000054] : Old Value = 65 [0x41] : New Value = 109 [0x6D] : Size = 1 [0x01]
+0x00000050 0x0010 HDR Instance Name                                ijklmNCE1
+Offset 85 [0x00000055] : Old Value = 78 [0x4E] : New Value = 110 [0x6E] : Size = 1 [0x01]
+0x00000050 0x0010 HDR Instance Name                                ijklmnCE1
+Offset 86 [0x00000056] : Old Value = 67 [0x43] : New Value = 0 [0x00] : Size = 1 [0x01]
+0x00000050 0x0010 HDR Instance Name                                   ijklmn
+Offset 164 [0x000000A4] : Old Value = 0 [0x00000000] : New Value = 1 [0x00000001] : Size = 4 [0x04]
+==========================================================
+Diffing instancefile_3.out and instancefile_4.out on INST1
+##TEST_AWK.*
+##TEST_AWK. 0x00000020 0x000[48] HDR Journal Pool Sem Create Time                         0
+##TEST_AWK. 0x00000028 0x000[48] HDR Journal Pool Shm Create Time                         0
+---
+##TEST_AWK. 0x00000020 0x000[48] HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+##TEST_AWK. 0x00000028 0x000[48] HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+##TEST_AWK.*
+< 0x00000050 0x0010 HDR Instance Name                                INSTANCE1
+---
+> 0x00000050 0x0010 HDR Instance Name                                   ijklmn
+##TEST_AWK.*
+< 0x000000A4 0x0004 HDR Crash                                            FALSE
+---
+> 0x000000A4 0x0004 HDR Crash                                             TRUE
+##TEST_AWK.*
+< 0x00000400 0x0010 SLT # 0 : Secondary Instance Name                INSTANCE2
+---
+> 0x00000400 0x0010 SLT # 0 : Secondary Instance Name                ZNSTANCE2
+##TEST_AWK.*
+< 0x00000A00 0x0004 HST #      3 : Root Primary Cycle                        4 [0x00000004]
+---
+> 0x00000A00 0x0004 HST #      3 : Root Primary Cycle                        8 [0x00000008]
+##TEST_AWK.*
+< 0x00000B20 0x0010 HST #      5 : Root Primary Instance Name        INSTANCE1
+---
+> 0x00000B20 0x0010 HST #      5 : Root Primary Instance Name           A2LNOP
+==========================================================
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT INST1 INST2'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

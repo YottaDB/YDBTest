@@ -1,0 +1,214 @@
+#### Test if the encryption supported databases, journals, backups and extracts stores the data encrypted ####
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+------------------------------------------------------------
+Database layout - 
+AREG REGION - A to B : UNENCRYPTED
+DEFAULT REGION - REST : ENCRYPTED
+------------------------------------------------------------
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/mumps.dat
+
+
+Create journal files for the respective regions
+
+Update 2 globals to the database - one each for the unencrypted and encrypted databases
+
+
+GTM>
+s ^thisIsEncryptedKey=abcdef_is_in_an_encrypted_database
+
+GTM>
+
+GTM>
+s ^AkeyNotEncrypted=123456_is_in_an_unencrypted_database
+
+GTM>
+
+GTM>
+
+---------------------------------------------
+BYTESTREAM BACKUP for mumps.dat --> mumps.bak
+$MUPIP backup -bytestream DEFAULT mumps.bak
+---------------------------------------------
+
+
+---------------------------------------------
+COMPREHENSIVE BACKUP for mumps.dat --> mumps.co
+$MUPIP backup -c DEFAULT mumps.co
+---------------------------------------------
+
+
+---------------------------------------------
+BYTESTREAM BACKUP for a.dat --> a.bak
+$MUPIP backup -bytestream DEFAULT a.bak
+---------------------------------------------
+
+
+---------------------------------------------
+COMPREHENSIVE BACKUP for a.dat --> a.co
+$MUPIP backup -c DEFAULT a.co
+---------------------------------------------
+
+
+---------------------------------------------
+BINARY EXTRACT for mumps.dat --> mumps.ext
+$MUPIP extract -fo=bin -select="t*" mumps.ext
+%GTM-I-RECORDSTAT, ^thisIsEncryptedKey:	  Key cnt: 1  max subsc len: 20  max rec len: 34  max node len: 58
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 20  max rec len: 34  max node len: 58
+---------------------------------------------
+
+
+---------------------------------------------
+BINARY EXTRACT for a.dat --> a.ext
+$MUPIP extract -fo=bin -select="A*" a.ext
+%GTM-I-RECORDSTAT, ^AkeyNotEncrypted:	  Key cnt: 1  max subsc len: 18  max rec len: 36  max node len: 58
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 18  max rec len: 36  max node len: 58
+---------------------------------------------
+
+STRINGS TEST FOR DATABASE FILES
+----------------------------------------------------------------
+Verify if ^thisIsEncryptedKey is stored encrypted in mumps.dat
+TEST-I-KEYNOTFOUND thisIsEncryptedKey not found in mumps.dat* as expected
+----------------------------------------------------------------
+
+
+----------------------------------------------------------------
+Verify if value - abcdef_is_in_an_encrypted_database is stored encrypted in mumps.dat
+TEST-I-VALUENOTFOUND abcdef_is_in_an_encrypted_database not found in mumps.dat* as expected
+----------------------------------------------------------------
+
+
+----------------------------------------------------------------
+Verify if ^AkeyNotEncrypted is present in a.dat
+TEST-I-KEYFOUND AkeyNotEncrypted found in a.dat* as expected
+----------------------------------------------------------------
+
+
+----------------------------------------------------------------
+Verify if value - 123456_is_in_an_unencrypted_database is present in a.dat
+TEST-I-VALUEFOUND 123456_is_in_an_unencrypted_database found in a.dat* as expected
+----------------------------------------------------------------
+
+
+
+STRINGS TEST FOR JOURNAL FILES
+----------------------------------------------------------------
+Verify if ^thisIsEncryptedKey is stored encrypted in mumps.mjl
+TEST-I-KEYNOTFOUND thisIsEncryptedKey not found in mumps.mjl* as expected
+----------------------------------------------------------------
+
+
+----------------------------------------------------------------
+Verify if value - abcdef_is_in_an_encrypted_database is stored encrypted in mumps.mjl
+TEST-I-VALUENOTFOUND abcdef_is_in_an_encrypted_database not found in mumps.mjl* as expected
+----------------------------------------------------------------
+
+
+----------------------------------------------------------------
+Verify if ^AkeyNotEncrypted is present in a.mjl
+TEST-I-KEYFOUND AkeyNotEncrypted found in a.mjl* as expected
+----------------------------------------------------------------
+
+
+----------------------------------------------------------------
+Verify if value - 123456_is_in_an_unencrypted_database is present in a.mjl
+TEST-I-VALUEFOUND 123456_is_in_an_unencrypted_database found in a.mjl* as expected
+----------------------------------------------------------------
+
+
+
+STRINGS TEST FOR BINARY EXTRACT FILES
+----------------------------------------------------------------
+Verify if ^thisIsEncryptedKey is stored encrypted in mumps.ext
+TEST-I-KEYNOTFOUND thisIsEncryptedKey not found in mumps.ext* as expected
+----------------------------------------------------------------
+
+
+----------------------------------------------------------------
+Verify if value - abcdef_is_in_an_encrypted_database is stored encrypted in mumps.ext
+TEST-I-VALUENOTFOUND abcdef_is_in_an_encrypted_database not found in mumps.ext* as expected
+----------------------------------------------------------------
+
+
+----------------------------------------------------------------
+Verify if ^AkeyNotEncrypted is present in a.ext
+TEST-I-KEYFOUND AkeyNotEncrypted found in a.ext* as expected
+----------------------------------------------------------------
+
+
+----------------------------------------------------------------
+Verify if value - 123456_is_in_an_unencrypted_database is present in a.ext
+TEST-I-VALUEFOUND 123456_is_in_an_unencrypted_database found in a.ext* as expected
+----------------------------------------------------------------
+
+
+
+STRINGS TEST FOR BYTESTREAM BACKUP FILES
+----------------------------------------------------------------
+Verify if ^thisIsEncryptedKey is stored encrypted in mumps.bak
+TEST-I-KEYNOTFOUND thisIsEncryptedKey not found in mumps.bak* as expected
+----------------------------------------------------------------
+
+
+----------------------------------------------------------------
+Verify if value - abcdef_is_in_an_encrypted_database is stored encrypted in mumps.bak
+TEST-I-VALUENOTFOUND abcdef_is_in_an_encrypted_database not found in mumps.bak* as expected
+----------------------------------------------------------------
+
+
+----------------------------------------------------------------
+Verify if ^AkeyNotEncrypted is present in a.bak
+TEST-I-KEYFOUND AkeyNotEncrypted found in a.bak* as expected
+----------------------------------------------------------------
+
+
+----------------------------------------------------------------
+Verify if value - 123456_is_in_an_unencrypted_database is present in a.bak
+TEST-I-VALUEFOUND 123456_is_in_an_unencrypted_database found in a.bak* as expected
+----------------------------------------------------------------
+
+
+
+STRINGS TEST FOR COMPREHENSIVE BACKUP FILES
+----------------------------------------------------------------
+Verify if ^thisIsEncryptedKey is stored encrypted in mumps.co
+TEST-I-KEYNOTFOUND thisIsEncryptedKey not found in mumps.co* as expected
+----------------------------------------------------------------
+
+
+----------------------------------------------------------------
+Verify if value - abcdef_is_in_an_encrypted_database is stored encrypted in mumps.co
+TEST-I-VALUENOTFOUND abcdef_is_in_an_encrypted_database not found in mumps.co* as expected
+----------------------------------------------------------------
+
+
+----------------------------------------------------------------
+Verify if ^AkeyNotEncrypted is present in a.co
+TEST-I-KEYFOUND AkeyNotEncrypted found in a.co* as expected
+----------------------------------------------------------------
+
+
+----------------------------------------------------------------
+Verify if value - 123456_is_in_an_unencrypted_database is present in a.co
+TEST-I-VALUEFOUND 123456_is_in_an_unencrypted_database found in a.co* as expected
+----------------------------------------------------------------
+
+

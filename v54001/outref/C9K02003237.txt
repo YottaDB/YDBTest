@@ -1,0 +1,13 @@
+##SUSPEND_OUTPUT PRO
+# Time before the run: ##FILTERED##GTM_TEST_DEBUGINFO.*
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+# Test if the output file exists
+# Time after the run: ##FILTERED##GTM_TEST_DEBUGINFO.*
+# Check the operator log for the message GTM-I-STUCKACT
+GTM-I-STUCKACT, Process stuck script invoked: SUCCESS : ##TEST_COM_PATH##/gtmprocstuck_get_stack_trace.csh

@@ -1,0 +1,28 @@
+V4MERGEI ;IW-KO-YS-TS,V4MERGE,MVTS V9.10;15/6/96;PART-94
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+ W !!,"92---V4MERGEI:  MERGE Command  -I-"
+ ;
+1 S ^ABSN="40611",^ITEM="IV-611  glvn contains naked reference"
+ S ^NEXT="2^V4MERGEI,V4READ^VV4" D ^V4PRESET K  K ^V,^VV
+ S ^VV(2,1)="VV21 ",^VV(2,1,1)="VV211 "
+ S ^V(1)="V1 "
+ S ^V(1,1)="V11 "
+ M ^(1)=^VV(2)
+ S X=$$^V4MERE("^VV"),Y=$$^V4MERE("^V"),^VCOMP=X_"/"_Y
+ S ^VCORR="11:VV21 111:VV211 21:VV21 211:VV211 /1:V1 11:V11 " D ^VEXAMINE K ^V,^VV
+ ;
+2 S ^ABSN="40612",^ITEM="IV-612  glvn contains an indirection"
+ S ^NEXT="V4READ^VV4" D ^V4PRESET K  K ^V,^VV
+ S A(1,1)="A11 ",A(2,1)="A21 ",A("A")="AA "
+ S ^V(2,2)="V22 ",^V(2,2,1)="V221 "
+ S B="A(1)"
+ M @B@(1)=^V(2)
+ S X=$$^V4MERE("A"),Y=$$^V4MERE("^V"),^VCOMP=X_"/"_Y
+ S ^VCORR="11:A11 112:V22 1121:V221 21:A21 A:AA /22:V22 221:V221 " D ^VEXAMINE K ^V,^VV
+ ;
+END W !!,"End of 92 --- V4MERGEI",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

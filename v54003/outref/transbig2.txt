@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------------------
+BEGIN 1 :-) Create the database with maximum block size(1008) and with limit of more than 32K number of global buffers
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+END 1
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 2 :-) Test the write-set limit of 32K number of blocks, for number of global buffers in one transaction, is not violated
+
+Test the write-set limit is less than 32K
+inside write1-error handler
+write block number=32390
+inside write1-error handler
+write block number=32390
+
+END 2
+---------------------------------------------------------------------------------------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,732 @@
+##SUSPEND_OUTPUT  REPLIC
+##################################################################
+##ALLOW_OUTPUT  REPLIC
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  REPLIC
+a.dat
+b.dat
+c.dat
+d.dat
+##ALLOW_OUTPUT  REPLIC
+mumps.dat
+##SUSPEND_OUTPUT  REPLIC
+#################### Test 1 ##############################
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+##SUSPEND_OUTPUT  REPLIC
+do ^c002472(off,3)...
+$VIEW("GVDUPSETNOOP"): 0
+OK.
+loop 1...
+loop 2...
+loop 3...
+loop 4...
+loop 5...
+$VIEW("GVDUPSETNOOP"): 0
+OK.
+##ALLOW_OUTPUT  REPLIC
+
+GTM>
+##SUSPEND_OUTPUT  REPLIC
+---------------------------------------------------------------
+#remove prior journal extract files...
+#do a fresh exract...
+---------------------------------------------------------------
+#Analyze the block TN information...
+---------------------------------------------------------------
+#Analyze DSE dump -fileheader information...
+TEST-I-OUTPUT, Relevant information is in output_1.out
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PBLK count is as expected. OK.
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##REMOTE_TEST_PATH##/mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##SUSPEND_OUTPUT JNL_NOBEFORE
+TEST-E-TOOFEW PBLK's on secondary: 2
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+TEST-E-TOOFEW PBLK's on secondary: 0
+##ALLOW_OUTPUT JNL_BEFORE
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  REPLIC
+---------------------------------------------------------------
+##################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+#################### Test 2 ##############################
+
+GTM>
+do ^c002472(on,3)...
+$VIEW("GVDUPSETNOOP"): 1
+OK.
+loop 1...
+loop 2...
+loop 3...
+loop 4...
+loop 5...
+$VIEW("GVDUPSETNOOP"): 1
+OK.
+
+GTM>
+---------------------------------------------------------------
+#remove prior journal extract files...
+#do a fresh exract...
+---------------------------------------------------------------
+#Analyze the block TN information...
+---------------------------------------------------------------
+#Analyze DSE dump -fileheader information...
+TEST-I-OUTPUT, Relevant information is in output_2.out
+##ALLOW_OUTPUT  REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  REPLIC
+---------------------------------------------------------------
+Output of optimization disabled...
+#---------------------------------------
+#Info for a.mjf:
+SET count   (for a.mjf): 75
+EPOCH count (for a.mjf): x, x>25: 1
+##SUSPEND_OUTPUT JNL_NOBEFORE
+PBLK count  (for a.mjf): 78
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+PBLK count  (for a.mjf): 0
+##ALLOW_OUTPUT JNL_BEFORE
+#---------------------------------------
+#Info for b.mjf:
+SET count   (for b.mjf): 50
+EPOCH count (for b.mjf): x, x>25: 1
+##SUSPEND_OUTPUT JNL_NOBEFORE
+PBLK count  (for b.mjf): 52
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+PBLK count  (for b.mjf): 0
+##ALLOW_OUTPUT JNL_BEFORE
+#---------------------------------------
+#Info for c.mjf:
+SET count   (for c.mjf): 75
+EPOCH count (for c.mjf): x, x>25: 1
+##SUSPEND_OUTPUT JNL_NOBEFORE
+PBLK count  (for c.mjf): 74
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+PBLK count  (for c.mjf): 0
+##ALLOW_OUTPUT JNL_BEFORE
+#---------------------------------------
+#Info for d.mjf:
+SET count   (for d.mjf): 50
+EPOCH count (for d.mjf): x, x>25: 1
+##SUSPEND_OUTPUT JNL_NOBEFORE
+PBLK count  (for d.mjf): 50
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+PBLK count  (for d.mjf): 0
+##ALLOW_OUTPUT JNL_BEFORE
+#---------------------------------------
+#Info for mumps.mjf:
+SET count   (for mumps.mjf): 1
+EPOCH count (for mumps.mjf): x, x>25: 0
+##SUSPEND_OUTPUT JNL_NOBEFORE
+PBLK count  (for mumps.mjf): 2
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+PBLK count  (for mumps.mjf): 0
+##ALLOW_OUTPUT JNL_BEFORE
+#---------------------------------------
+# block TN information
+Region	AREG
+Block 3 TN 49 V6
+Block 5 TN 4A V6
+Region	DEFAULT
+Block 3 TN 1 V6
+Region	BREG
+Block 3 TN 31 V6
+Region	CREG
+Block 3 TN 19 V6
+Block 5 TN 19 V6
+Region	DREG
+Block 3 TN 19 V6
+#---------------------------------------
+#DSE dump -fileheader information
+Region	AREG
+Region          AREG
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x000000000000004B
+  GET : # of GET   operations                   0x000000000000000F
+  NTW : # of Non-tp Tns that were read-Write    0x000000000000004B
+Region	DEFAULT
+Region          DEFAULT
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x0000000000000001
+  GET : # of GET   operations                   0x0000000000000037
+  NTW : # of Non-tp Tns that were read-Write    0x0000000000000001
+Region	BREG
+Region          BREG
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x0000000000000032
+  GET : # of GET   operations                   0x000000000000000A
+  NTW : # of Non-tp Tns that were read-Write    0x0000000000000032
+Region	CREG
+Region          CREG
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x000000000000004B
+  GET : # of GET   operations                   0x000000000000000F
+  TTW : # of Tp Tns that were read-Write        0x0000000000000019
+Region	DREG
+Region          DREG
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x0000000000000032
+  GET : # of GET   operations                   0x000000000000000A
+  TTW : # of Tp Tns that were read-Write        0x0000000000000019
+Output of optimization enabled...
+#---------------------------------------
+#Info for a.mjf:
+SET count   (for a.mjf): 75
+EPOCH count (for a.mjf): x, x>25: 1
+##SUSPEND_OUTPUT JNL_NOBEFORE
+PBLK count  (for a.mjf): 38
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+PBLK count  (for a.mjf): 0
+##ALLOW_OUTPUT JNL_BEFORE
+#---------------------------------------
+#Info for b.mjf:
+SET count   (for b.mjf): 50
+EPOCH count (for b.mjf): x, x>25: 1
+##SUSPEND_OUTPUT JNL_NOBEFORE
+PBLK count  (for b.mjf): 12
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+PBLK count  (for b.mjf): 0
+##ALLOW_OUTPUT JNL_BEFORE
+#---------------------------------------
+#Info for c.mjf:
+SET count   (for c.mjf): 75
+EPOCH count (for c.mjf): x, x>25: 1
+##SUSPEND_OUTPUT JNL_NOBEFORE
+PBLK count  (for c.mjf): 34
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+PBLK count  (for c.mjf): 0
+##ALLOW_OUTPUT JNL_BEFORE
+#---------------------------------------
+#Info for d.mjf:
+SET count   (for d.mjf): 50
+EPOCH count (for d.mjf): x, x>25: 1
+##SUSPEND_OUTPUT JNL_NOBEFORE
+PBLK count  (for d.mjf): 10
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+PBLK count  (for d.mjf): 0
+##ALLOW_OUTPUT JNL_BEFORE
+#---------------------------------------
+#Info for mumps.mjf:
+SET count   (for mumps.mjf): 1
+EPOCH count (for mumps.mjf): x, x>25: 0
+##SUSPEND_OUTPUT JNL_NOBEFORE
+PBLK count  (for mumps.mjf): 2
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+PBLK count  (for mumps.mjf): 0
+##ALLOW_OUTPUT JNL_BEFORE
+#---------------------------------------
+# block TN information
+Region	AREG
+Block 3 TN 49 V6
+Block 5 TN E V6
+Region	DEFAULT
+Block 3 TN 1 V6
+Region	BREG
+Block 3 TN 9 V6
+Region	CREG
+Block 3 TN 19 V6
+Block 5 TN 5 V6
+Region	DREG
+Block 3 TN 5 V6
+#---------------------------------------
+#DSE dump -fileheader information
+Region	AREG
+Region          AREG
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x000000000000004B
+  GET : # of GET   operations                   0x000000000000000F
+  NTW : # of Non-tp Tns that were read-Write    0x000000000000004B
+Region	DEFAULT
+Region          DEFAULT
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x0000000000000001
+  GET : # of GET   operations                   0x0000000000000037
+  NTW : # of Non-tp Tns that were read-Write    0x0000000000000001
+Region	BREG
+Region          BREG
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x0000000000000032
+  GET : # of GET   operations                   0x000000000000000A
+  NTW : # of Non-tp Tns that were read-Write    0x0000000000000032
+Region	CREG
+Region          CREG
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x000000000000004B
+  GET : # of GET   operations                   0x000000000000000F
+  TTW : # of Tp Tns that were read-Write        0x0000000000000019
+Region	DREG
+Region          DREG
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x0000000000000032
+  GET : # of GET   operations                   0x000000000000000A
+  TTW : # of Tp Tns that were read-Write        0x0000000000000019
+OK.
+Now test the other methods faster...
+##################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+#################### Test 1 ##############################
+
+GTM>
+do ^c002472(off,0)...
+$VIEW("GVDUPSETNOOP"): 0
+OK.
+loop 1...
+loop 2...
+loop 3...
+loop 4...
+loop 5...
+$VIEW("GVDUPSETNOOP"): 0
+OK.
+
+GTM>
+---------------------------------------------------------------
+#Analyze the block TN information...
+---------------------------------------------------------------
+#Analyze DSE dump -fileheader information...
+TEST-I-OUTPUT, Relevant information is in output_1.out
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+---------------------------------------------------------------
+##################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+#################### Test 2 ##############################
+
+GTM>
+do ^c002472(on,0)...
+$VIEW("GVDUPSETNOOP"): 1
+OK.
+loop 1...
+loop 2...
+loop 3...
+loop 4...
+loop 5...
+$VIEW("GVDUPSETNOOP"): 1
+OK.
+
+GTM>
+---------------------------------------------------------------
+#Analyze the block TN information...
+---------------------------------------------------------------
+#Analyze DSE dump -fileheader information...
+TEST-I-OUTPUT, Relevant information is in output_2.out
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+---------------------------------------------------------------
+##################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+#################### Test 3 ##############################
+
+GTM>
+do ^c002472(off,0)...
+$VIEW("GVDUPSETNOOP"): 0
+OK.
+loop 1...
+loop 2...
+loop 3...
+loop 4...
+loop 5...
+$VIEW("GVDUPSETNOOP"): 0
+OK.
+
+GTM>
+---------------------------------------------------------------
+#Analyze the block TN information...
+---------------------------------------------------------------
+#Analyze DSE dump -fileheader information...
+TEST-I-OUTPUT, Relevant information is in output_3.out
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+---------------------------------------------------------------
+##################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+#################### Test 4 ##############################
+
+GTM>
+do ^c002472(on,0)...
+$VIEW("GVDUPSETNOOP"): 1
+OK.
+loop 1...
+loop 2...
+loop 3...
+loop 4...
+loop 5...
+$VIEW("GVDUPSETNOOP"): 1
+OK.
+
+GTM>
+---------------------------------------------------------------
+#Analyze the block TN information...
+---------------------------------------------------------------
+#Analyze DSE dump -fileheader information...
+TEST-I-OUTPUT, Relevant information is in output_4.out
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+---------------------------------------------------------------
+##################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+#################### Test 5 ##############################
+
+GTM>
+do ^c002472(off,0)...
+$VIEW("GVDUPSETNOOP"): 0
+OK.
+loop 1...
+loop 2...
+loop 3...
+loop 4...
+loop 5...
+$VIEW("GVDUPSETNOOP"): 0
+OK.
+
+GTM>
+---------------------------------------------------------------
+#Analyze the block TN information...
+---------------------------------------------------------------
+#Analyze DSE dump -fileheader information...
+TEST-I-OUTPUT, Relevant information is in output_5.out
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+---------------------------------------------------------------
+##################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+#################### Test 6 ##############################
+
+GTM>
+
+GTM>
+do ^c002472(on,0)...
+$VIEW("GVDUPSETNOOP"): 1
+OK.
+loop 1...
+loop 2...
+loop 3...
+loop 4...
+loop 5...
+$VIEW("GVDUPSETNOOP"): 1
+OK.
+
+GTM>
+---------------------------------------------------------------
+#Analyze the block TN information...
+---------------------------------------------------------------
+#Analyze DSE dump -fileheader information...
+TEST-I-OUTPUT, Relevant information is in output_6.out
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+---------------------------------------------------------------
+##################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+#################### Test 7 ##############################
+
+GTM>
+
+GTM>
+do ^c002472(off,0)...
+$VIEW("GVDUPSETNOOP"): 0
+OK.
+loop 1...
+loop 2...
+loop 3...
+loop 4...
+loop 5...
+$VIEW("GVDUPSETNOOP"): 0
+OK.
+
+GTM>
+---------------------------------------------------------------
+#Analyze the block TN information...
+---------------------------------------------------------------
+#Analyze DSE dump -fileheader information...
+TEST-I-OUTPUT, Relevant information is in output_7.out
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+---------------------------------------------------------------
+##################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+#################### Test 8 ##############################
+
+GTM>
+do ^c002472(off,0)...
+$VIEW("GVDUPSETNOOP"): 0
+OK.
+loop 1...
+loop 2...
+loop 3...
+loop 4...
+loop 5...
+$VIEW("GVDUPSETNOOP"): 0
+OK.
+
+GTM>
+---------------------------------------------------------------
+#Analyze the block TN information...
+---------------------------------------------------------------
+#Analyze DSE dump -fileheader information...
+TEST-I-OUTPUT, Relevant information is in output_8.out
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+---------------------------------------------------------------
+##################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+#################### Test 9 ##############################
+
+GTM>
+do ^c002472(off,0)...
+$VIEW("GVDUPSETNOOP"): 0
+OK.
+loop 1...
+loop 2...
+loop 3...
+loop 4...
+loop 5...
+$VIEW("GVDUPSETNOOP"): 0
+OK.
+
+GTM>
+---------------------------------------------------------------
+#Analyze the block TN information...
+---------------------------------------------------------------
+#Analyze DSE dump -fileheader information...
+TEST-I-OUTPUT, Relevant information is in output_9.out
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+---------------------------------------------------------------
+Output of optimization disabled...
+#---------------------------------------
+# block TN information
+Region	AREG
+Block 3 TN 49 V6
+Block 5 TN 4A V6
+Region	DEFAULT
+Block 3 TN 1 V6
+Region	BREG
+Block 3 TN 31 V6
+Region	CREG
+Block 3 TN 19 V6
+Block 5 TN 19 V6
+Region	DREG
+Block 3 TN 19 V6
+#---------------------------------------
+#DSE dump -fileheader information
+Region	AREG
+Region          AREG
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x000000000000004B
+  GET : # of GET   operations                   0x000000000000000F
+  NTW : # of Non-tp Tns that were read-Write    0x000000000000004B
+Region	DEFAULT
+Region          DEFAULT
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x0000000000000001
+  GET : # of GET   operations                   0x0000000000000037
+  NTW : # of Non-tp Tns that were read-Write    0x0000000000000001
+Region	BREG
+Region          BREG
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x0000000000000032
+  GET : # of GET   operations                   0x000000000000000A
+  NTW : # of Non-tp Tns that were read-Write    0x0000000000000032
+Region	CREG
+Region          CREG
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x000000000000004B
+  GET : # of GET   operations                   0x000000000000000F
+  TTW : # of Tp Tns that were read-Write        0x0000000000000019
+Region	DREG
+Region          DREG
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x0000000000000032
+  GET : # of GET   operations                   0x000000000000000A
+  TTW : # of Tp Tns that were read-Write        0x0000000000000019
+Output of optimization enabled...
+#---------------------------------------
+# block TN information
+Region	AREG
+Block 3 TN 49 V6
+Block 5 TN E V6
+Region	DEFAULT
+Block 3 TN 1 V6
+Region	BREG
+Block 3 TN 9 V6
+Region	CREG
+Block 3 TN 19 V6
+Block 5 TN 5 V6
+Region	DREG
+Block 3 TN 5 V6
+#---------------------------------------
+#DSE dump -fileheader information
+Region	AREG
+Region          AREG
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x000000000000004B
+  GET : # of GET   operations                   0x000000000000000F
+  NTW : # of Non-tp Tns that were read-Write    0x000000000000004B
+Region	DEFAULT
+Region          DEFAULT
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x0000000000000001
+  GET : # of GET   operations                   0x0000000000000037
+  NTW : # of Non-tp Tns that were read-Write    0x0000000000000001
+Region	BREG
+Region          BREG
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x0000000000000032
+  GET : # of GET   operations                   0x000000000000000A
+  NTW : # of Non-tp Tns that were read-Write    0x0000000000000032
+Region	CREG
+Region          CREG
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x000000000000004B
+  GET : # of GET   operations                   0x000000000000000F
+  TTW : # of Tp Tns that were read-Write        0x0000000000000019
+Region	DREG
+Region          DREG
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  SET : # of SET   operations                   0x0000000000000032
+  GET : # of GET   operations                   0x000000000000000A
+  TTW : # of Tp Tns that were read-Write        0x0000000000000019
+OK.
+Check test 1 ...
+Check test 3 ...
+Check test 5 ...
+Check test 7 ...
+Check test 8 ...
+Check test 9 ...
+Check test 2 ...
+Check test 4 ...
+Check test 6 ...
+Verified that the bak*/output*.out files match.

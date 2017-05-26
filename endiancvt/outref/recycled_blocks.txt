@@ -1,0 +1,186 @@
+
+## Create a V4 database
+## Populate it with data
+## Kill some globals to create RECYCLED blocks
+## Using DSE check if a few blocks are marked as REUSABLE (':')
+##  - $DSE dump -block=0
+
+GT.M switched to ##FILTERED##PRIORVER## version
+Files Created in ##TEST_PATH##:
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z]*/mumps -run GDE
+mumps.gld
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z]*/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block 0  Size 88  Level -1  TN 354   Master Status: Free Space
+
+           	Low order                         High order
+Block        0:	|  XXXXX:X:  ::::::::  XXXXXXXX  X.......  |
+Block       20:	|  ........  ........  ........  ........  |
+Block       40:	|  ........  ........  ........  ........  |
+Block       60:	|  ........  ........  ........  ........  |
+Block       80:	|  ........  ........  ........  ........  |
+Block       A0:	|  ........  ........  ........  ........  |
+Block       C0:	|  ........  ........  ........  ........  |
+Block       E0:	|  ........  ........  ........  ........  |
+Block      100:	|  ........  ........  ........  ........  |
+Block      120:	|  ........  ........  ........  ........  |
+Block      140:	|  ........  ........  ........  ........  |
+Block      160:	|  ........  ........  ........  ........  |
+Block      180:	|  ........  ........  ........  ........  |
+Block      1A0:	|  ........  ........  ........  ........  |
+Block      1C0:	|  ........  ........  ........  ........  |
+Block      1E0:	|  ........  ........  ........  ........  |
+
+'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
+
+
+## Upgrade the database to V5 using the standard upgrade procedure
+## Test that BOTH endian convert AND reorg upgrade mark REUSABLE blocks as FREE
+## Endian convert the database
+##  - $MUPIP endiancvt mumps.dat
+## Move the database to the opposite endian platform
+## Using DSE check if the REUSABLE blocks are now changed into FREE blocks ('.')
+##  - $DSE dump -block=0
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+# dbcertify certify...
+%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+
+# mupip upgrade...
+##TEST_AWK%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M .*
+
+# convert the gld to V5 format
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+# mupip reorg upgrade...
+Region DEFAULT : MUPIP REORG UPGRADE started
+Region DEFAULT : Desired DB Format remains at V6 after MUPIP REORG UPGRADE
+Region DEFAULT : Database is now FULLY UPGRADED
+Region DEFAULT : MUPIP REORG UPGRADE finished
+# DSE dump after FIRST MUPIP REORG UPGRADE ; Make sure no REUSABLE blocks (:) show up
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block 0  Size 90  Level -1  TN 369 V6   Master Status: Free Space
+
+           	Low order                         High order
+Block        0:	|  XXXXXXXX  .XXX....  XXXXXXXX  X.......  |
+Block       20:	|  ........  ........  ........  ........  |
+Block       40:	|  ........  ........  ........  ........  |
+Block       60:	|  ........  ........  ........  ........  |
+Block       80:	|  ........  ........  ........  ........  |
+Block       A0:	|  ........  ........  ........  ........  |
+Block       C0:	|  ........  ........  ........  ........  |
+Block       E0:	|  ........  ........  ........  ........  |
+Block      100:	|  ........  ........  ........  ........  |
+Block      120:	|  ........  ........  ........  ........  |
+Block      140:	|  ........  ........  ........  ........  |
+Block      160:	|  ........  ........  ........  ........  |
+Block      180:	|  ........  ........  ........  ........  |
+Block      1A0:	|  ........  ........  ........  ........  |
+Block      1C0:	|  ........  ........  ........  ........  |
+Block      1E0:	|  ........  ........  ........  ........  |
+
+'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
+
+# Repopulate the data and redo the M-kill to create REUSABLE blocks
+
+GTM>
+
+GTM>
+# Rerun MUPIP REORG UPGRADE; This SECOND reorg should NOT mark REUSABLE blocks as FREE
+Region DEFAULT : MUPIP REORG UPGRADE started
+Region DEFAULT : Desired DB Format remains at V6 after MUPIP REORG UPGRADE
+Region DEFAULT : Blocks to Upgrade counter indicates no action needed for MUPIP REORG UPGRADE
+Region DEFAULT : MUPIP REORG UPGRADE finished
+# DSE dump after SECOND MUPIP REORG UPGRADE ; Make sure REUSABLE blocks (:) do show up
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block 0  Size 90  Level -1  TN 6C6 V6   Master Status: Free Space
+
+           	Low order                         High order
+Block        0:	|  XXXXXXXX  :XXX::::  XXXXXXXX  :::::X..  |
+Block       20:	|  ........  ........  ........  ........  |
+Block       40:	|  ........  ........  ........  ........  |
+Block       60:	|  ........  ........  ........  ........  |
+Block       80:	|  ........  ........  ........  ........  |
+Block       A0:	|  ........  ........  ........  ........  |
+Block       C0:	|  ........  ........  ........  ........  |
+Block       E0:	|  ........  ........  ........  ........  |
+Block      100:	|  ........  ........  ........  ........  |
+Block      120:	|  ........  ........  ........  ........  |
+Block      140:	|  ........  ........  ........  ........  |
+Block      160:	|  ........  ........  ........  ........  |
+Block      180:	|  ........  ........  ........  ........  |
+Block      1A0:	|  ........  ........  ........  ........  |
+Block      1C0:	|  ........  ........  ........  ........  |
+Block      1E0:	|  ........  ........  ........  ........  |
+
+'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##FILTERED##Converting database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+Converting in place - database will be damaged by an abnormal termination
+You must have a backup before proceeding
+Proceed [yes/no] ?
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+# DSE dump after endian cvt; Make sure REUSABLE blocks (:) do NOT show up
+
+File  	##REMOTE_TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block 0  Size 90  Level -1  TN 6C6 V6   Master Status: Free Space
+
+           	Low order                         High order
+Block        0:	|  XXXXXXXX  .XXX....  XXXXXXXX  .....X..  |
+Block       20:	|  ........  ........  ........  ........  |
+Block       40:	|  ........  ........  ........  ........  |
+Block       60:	|  ........  ........  ........  ........  |
+Block       80:	|  ........  ........  ........  ........  |
+Block       A0:	|  ........  ........  ........  ........  |
+Block       C0:	|  ........  ........  ........  ........  |
+Block       E0:	|  ........  ........  ........  ........  |
+Block      100:	|  ........  ........  ........  ........  |
+Block      120:	|  ........  ........  ........  ........  |
+Block      140:	|  ........  ........  ........  ........  |
+Block      160:	|  ........  ........  ........  ........  |
+Block      180:	|  ........  ........  ........  ........  |
+Block      1A0:	|  ........  ........  ........  ........  |
+Block      1C0:	|  ........  ........  ........  ........  |
+Block      1E0:	|  ........  ........  ........  ........  |
+
+'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
+

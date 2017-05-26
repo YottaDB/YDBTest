@@ -1,0 +1,289 @@
+
+###################################################################
+Create database and start replication
+###################################################################
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+###################################################################
+Wait for connection to be established
+###################################################################
+
+
+###################################################################
+Reset current TN value in each region
+###################################################################
+
+
+###################################################################
+Run a few updates to give replication a modicum of work to do
+###################################################################
+
+
+GTM>
+
+GTM>
+
+GTM>
+
+###################################################################
+Run peekaboo primary side first
+###################################################################
+
+The recvpool pool was not found - bypassing related testing section
+Expected error occurred
+##TEST_AWKGSA\(0,"gtmsource_pid"\)=[0-9]*
+GSA(0,"mode")=1
+GSA(0,"secondary_instname")="INSTANCE2"
+GSA(1,"gtmsource_pid")=0
+GSA(1,"mode")=0
+GSA(1,"secondary_instname")=""
+csarefcnt("AREG")=1
+csarefcnt("BREG")=1
+csarefcnt("CREG")=1
+csarefcnt("DEFAULT")=1
+csatotblk("AREG")=101
+csatotblk("BREG")=101
+csatotblk("CREG")=101
+csatotblk("DEFAULT")=101
+##TEST_AWKfhaccmeth\("AREG"\)=1|2
+##TEST_AWKfhaccmeth\("BREG"\)=1|2
+##TEST_AWKfhaccmeth\("CREG"\)=1|2
+##TEST_AWKfhaccmeth\("DEFAULT"\)=1|2
+fhblksiz("AREG")=1024
+fhblksiz("BREG")=1024
+fhblksiz("CREG")=1024
+fhblksiz("DEFAULT")=1024
+##SUSPEND_OUTPUT SPANNING_REGIONS
+fhcurrtn1("AREG")="0xFFFFFFFD93FFFF4B"
+fhcurrtn1("BREG")="0xFFFFFFFD93FFFF4B"
+fhcurrtn1("CREG")="0xFFFFFFFD93FFFF4B"
+fhcurrtn1("DEFAULT")="0xFFFFFFFD93FFFF4C"
+fhcurrtn2("AREG")="FFFFFFFD93FFFF4B"
+fhcurrtn2("BREG")="FFFFFFFD93FFFF4B"
+fhcurrtn2("CREG")="FFFFFFFD93FFFF4B"
+fhcurrtn2("DEFAULT")="FFFFFFFD93FFFF4C"
+fhcurrtn3("AREG")=-10401874101
+fhcurrtn3("BREG")=-10401874101
+fhcurrtn3("CREG")=-10401874101
+fhcurrtn3("DEFAULT")=-10401874100
+fhcurrtn4("AREG")="18446744063307677515"
+fhcurrtn4("BREG")="18446744063307677515"
+fhcurrtn4("CREG")="18446744063307677515"
+fhcurrtn4("DEFAULT")="18446744063307677516"
+##ALLOW_OUTPUT SPANNING_REGIONS
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+fhcurrtn1("AREG")="0xFFFFFFFD93FFFF4E"
+fhcurrtn1("BREG")="0xFFFFFFFD93FFFF4E"
+fhcurrtn1("CREG")="0xFFFFFFFD93FFFF45"
+fhcurrtn1("DEFAULT")="0xFFFFFFFD93FFFF4C"
+fhcurrtn2("AREG")="FFFFFFFD93FFFF4E"
+fhcurrtn2("BREG")="FFFFFFFD93FFFF4E"
+fhcurrtn2("CREG")="FFFFFFFD93FFFF45"
+fhcurrtn2("DEFAULT")="FFFFFFFD93FFFF4C"
+fhcurrtn3("AREG")=-10401874098
+fhcurrtn3("BREG")=-10401874098
+fhcurrtn3("CREG")=-10401874107
+fhcurrtn3("DEFAULT")=-10401874100
+fhcurrtn4("AREG")="18446744063307677518"
+fhcurrtn4("BREG")="18446744063307677518"
+fhcurrtn4("CREG")="18446744063307677509"
+fhcurrtn4("DEFAULT")="18446744063307677516"
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+fhlabel("AREG")="GDSDYNUNX03"_$C(0)
+fhlabel("BREG")="GDSDYNUNX03"_$C(0)
+fhlabel("CREG")="GDSDYNUNX03"_$C(0)
+fhlabel("DEFAULT")="GDSDYNUNX03"_$C(0)
+gdrrname("AREG")="AREG"
+gdrrname("BREG")="BREG"
+gdrrname("CREG")="CREG"
+gdrrname("DEFAULT")="DEFAULT"
+gdrrnamelen("AREG")=4
+gdrrnamelen("BREG")=4
+gdrrnamelen("CREG")=4
+gdrrnamelen("DEFAULT")=7
+gsa(0,"connect_jnl_seqno")="0x0000000000000001"
+##TEST_AWKgsa\(0,"resync_seqno"\)=[1-9][0-9]*
+gsa(0,"secondary_instname")="INSTANCE2"
+gsa(1,"connect_jnl_seqno")="0x0000000000000000"
+gsa(1,"resync_seqno")=0
+gsa(1,"secondary_instname")=""
+##TEST_AWKjbfepochitvl\("AREG"\)=30|300
+##TEST_AWKjbfepochitvl\("BREG"\)=30|300
+##TEST_AWKjbfepochitvl\("CREG"\)=30|300
+##TEST_AWKjbfepochitvl\("DEFAULT"\)=30|300
+##TEST_AWKjbfnxtepoch\("AREG"\)="[1-9][0-9]*,[0-9][0-9]*"
+##TEST_AWKjbfnxtepoch\("BREG"\)="[1-9][0-9]*,[0-9][0-9]*"
+##TEST_AWKjbfnxtepoch\("CREG"\)="[1-9][0-9]*,[0-9][0-9]*"
+##TEST_AWKjbfnxtepoch\("DEFAULT"\)="[1-9][0-9]*,[0-9][0-9]*"
+jpcchannel("AREG")=-1
+jpcchannel("BREG")=-1
+jpcchannel("CREG")=-1
+jpcchannel("DEFAULT")=-1
+jpcinstfn="##TEST_PATH##/mumps.repl"
+##TEST_AWKjpcjnlbuff\("AREG"\)="0x[0-9,A-F][0-9,A-F]*"
+##TEST_AWKjpcjnlbuff\("BREG"\)="0x[0-9,A-F][0-9,A-F]*"
+##TEST_AWKjpcjnlbuff\("CREG"\)="0x[0-9,A-F][0-9,A-F]*"
+##TEST_AWKjpcjnlbuff\("DEFAULT"\)="0x[0-9,A-F][0-9,A-F]*"
+jpcseqno="0x000000000000002A"
+nldbfile("AREG")="##TEST_PATH##/a.dat"
+nldbfile("BREG")="##TEST_PATH##/b.dat"
+nldbfile("CREG")="##TEST_PATH##/c.dat"
+nldbfile("DEFAULT")="##TEST_PATH##/mumps.dat"
+nlrefcnt("AREG")=2
+nlrefcnt("BREG")=2
+nlrefcnt("CREG")=2
+nlrefcnt("DEFAULT")=2
+##TEST_AWKrihissuppl=0|1
+rihlabel="GDSRPLUNX05"
+rnlrefcnt=0
+
+###################################################################
+Now running peekaboo on 2ndry side
+###################################################################
+
+Expected error occurred
+##TEST_AWKGSA\(0,"gtmsource_pid"\)=[0-9]*
+##TEST_AWKGSA\(0,"mode"\)=0|1
+##TEST_AWKGSA\(0,"secondary_instname"\)=("INSTANCE1"|"supp_INSTANCE2")
+GSA(1,"gtmsource_pid")=0
+GSA(1,"mode")=0
+GSA(1,"secondary_instname")=""
+csarefcnt("AREG")=1
+csarefcnt("BREG")=1
+csarefcnt("CREG")=1
+csarefcnt("DEFAULT")=1
+csatotblk("AREG")=101
+csatotblk("BREG")=101
+csatotblk("CREG")=101
+csatotblk("DEFAULT")=101
+##TEST_AWKfhaccmeth\("AREG"\)=1|2
+##TEST_AWKfhaccmeth\("BREG"\)=1|2
+##TEST_AWKfhaccmeth\("CREG"\)=1|2
+##TEST_AWKfhaccmeth\("DEFAULT"\)=1|2
+fhblksiz("AREG")=1024
+fhblksiz("BREG")=1024
+fhblksiz("CREG")=1024
+fhblksiz("DEFAULT")=1024
+##SUSPEND_OUTPUT SPANNING_REGIONS
+fhcurrtn1("AREG")="0xFFFFFFFD93FFFF4B"
+fhcurrtn1("BREG")="0xFFFFFFFD93FFFF4B"
+fhcurrtn1("CREG")="0xFFFFFFFD93FFFF4B"
+fhcurrtn1("DEFAULT")="0xFFFFFFFD93FFFF4C"
+fhcurrtn2("AREG")="FFFFFFFD93FFFF4B"
+fhcurrtn2("BREG")="FFFFFFFD93FFFF4B"
+fhcurrtn2("CREG")="FFFFFFFD93FFFF4B"
+fhcurrtn2("DEFAULT")="FFFFFFFD93FFFF4C"
+fhcurrtn3("AREG")=-10401874101
+fhcurrtn3("BREG")=-10401874101
+fhcurrtn3("CREG")=-10401874101
+fhcurrtn3("DEFAULT")=-10401874100
+fhcurrtn4("AREG")="18446744063307677515"
+fhcurrtn4("BREG")="18446744063307677515"
+fhcurrtn4("CREG")="18446744063307677515"
+fhcurrtn4("DEFAULT")="18446744063307677516"
+##ALLOW_OUTPUT SPANNING_REGIONS
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+fhcurrtn1("AREG")="0xFFFFFFFD93FFFF4E"
+fhcurrtn1("BREG")="0xFFFFFFFD93FFFF4E"
+fhcurrtn1("CREG")="0xFFFFFFFD93FFFF45"
+fhcurrtn1("DEFAULT")="0xFFFFFFFD93FFFF4C"
+fhcurrtn2("AREG")="FFFFFFFD93FFFF4E"
+fhcurrtn2("BREG")="FFFFFFFD93FFFF4E"
+fhcurrtn2("CREG")="FFFFFFFD93FFFF45"
+fhcurrtn2("DEFAULT")="FFFFFFFD93FFFF4C"
+fhcurrtn3("AREG")=-10401874098
+fhcurrtn3("BREG")=-10401874098
+fhcurrtn3("CREG")=-10401874107
+fhcurrtn3("DEFAULT")=-10401874100
+fhcurrtn4("AREG")="18446744063307677518"
+fhcurrtn4("BREG")="18446744063307677518"
+fhcurrtn4("CREG")="18446744063307677509"
+fhcurrtn4("DEFAULT")="18446744063307677516"
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+fhlabel("AREG")="GDSDYNUNX03"_$C(0)
+fhlabel("BREG")="GDSDYNUNX03"_$C(0)
+fhlabel("CREG")="GDSDYNUNX03"_$C(0)
+fhlabel("DEFAULT")="GDSDYNUNX03"_$C(0)
+gdrrname("AREG")="AREG"
+gdrrname("BREG")="BREG"
+gdrrname("CREG")="CREG"
+gdrrname("DEFAULT")="DEFAULT"
+gdrrnamelen("AREG")=4
+gdrrnamelen("BREG")=4
+gdrrnamelen("CREG")=4
+gdrrnamelen("DEFAULT")=7
+grllogfile="##REMOTE_TEST_PATH##/##FILTERED##RCVR_##TIMESTAMP##.log"
+grllogintvl=1000
+gsa(0,"connect_jnl_seqno")="0x0000000000000000"
+gsa(0,"resync_seqno")=1
+##TEST_AWKgsa\(0,"secondary_instname"\)=("INSTANCE1"|"supp_INSTANCE2")
+gsa(1,"connect_jnl_seqno")="0x0000000000000000"
+gsa(1,"resync_seqno")=0
+gsa(1,"secondary_instname")=""
+##TEST_AWKjbfepochitvl\("AREG"\)=30|300
+##TEST_AWKjbfepochitvl\("BREG"\)=30|300
+##TEST_AWKjbfepochitvl\("CREG"\)=30|300
+##TEST_AWKjbfepochitvl\("DEFAULT"\)=30|300
+##TEST_AWKjbfnxtepoch\("AREG"\)="[1-9][0-9]*,[0-9][0-9]*"
+##TEST_AWKjbfnxtepoch\("BREG"\)="[1-9][0-9]*,[0-9][0-9]*"
+##TEST_AWKjbfnxtepoch\("CREG"\)="[1-9][0-9]*,[0-9][0-9]*"
+##TEST_AWKjbfnxtepoch\("DEFAULT"\)="[1-9][0-9]*,[0-9][0-9]*"
+jpcchannel("AREG")=-1
+jpcchannel("BREG")=-1
+jpcchannel("CREG")=-1
+jpcchannel("DEFAULT")=-1
+jpcinstfn="##REMOTE_TEST_PATH##/mumps.repl"
+##TEST_AWKjpcjnlbuff\("AREG"\)="0x[0-9,A-F][0-9,A-F]*"
+##TEST_AWKjpcjnlbuff\("BREG"\)="0x[0-9,A-F][0-9,A-F]*"
+##TEST_AWKjpcjnlbuff\("CREG"\)="0x[0-9,A-F][0-9,A-F]*"
+##TEST_AWKjpcjnlbuff\("DEFAULT"\)="0x[0-9,A-F][0-9,A-F]*"
+jpcseqno="0x000000000000002A"
+nldbfile("AREG")="##REMOTE_TEST_PATH##/a.dat"
+nldbfile("BREG")="##REMOTE_TEST_PATH##/b.dat"
+nldbfile("CREG")="##REMOTE_TEST_PATH##/c.dat"
+nldbfile("DEFAULT")="##REMOTE_TEST_PATH##/mumps.dat"
+##TEST_AWKnlrefcnt\("AREG"\)=[0-9]+
+##TEST_AWKnlrefcnt\("BREG"\)=[0-9]+
+##TEST_AWKnlrefcnt\("CREG"\)=[0-9]+
+##TEST_AWKnlrefcnt\("DEFAULT"\)=[0-9]+
+##TEST_AWKrihissuppl=0|1
+rihlabel="GDSRPLUNX05"
+rnlrefcnt=0
+rpclabel="GDSRPLUNX04"
+uhchelpers=0
+##TEST_AWKuhchelprds=[0-9]
+##TEST_AWKuhchelpwts="0x0000000[0-8]"
+upllogfile="##REMOTE_TEST_PATH##/##FILTERED##RCVR_##TIMESTAMP##.log.updproc"
+upllogintvl=1000
+uplrjseqno=42
+
+###################################################################
+DB-check
+###################################################################
+
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

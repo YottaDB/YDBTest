@@ -1,0 +1,17 @@
+# This is the manual test for V44002: recovery performs standalone check on database
+
+# 	a. Create two databases
+        b. Start before image journaling 
+        c. gtm
+            f i=1:1:400000 s (^a(i),^b(i))=i
+	d. rm *.dat
+	e. Create two fresh databases
+        f. mupip journal -recover -forw mumps.mjl,a.mjl
+	
+	From another window (in the same directory) try 
+	  gtm
+	    s ^a(1)=200
+            w ^b(1)
+           
+   Currently the following error should occur:
+	%GTM-E-DBFLCORRP, /$testpath/a.dat Header indicates database file is corrupt

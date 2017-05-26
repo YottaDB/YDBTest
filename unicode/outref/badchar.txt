@@ -1,0 +1,179 @@
+###################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+write $VIEW(BADCHAR)
+GTM>
+Expcted output 0
+GTM>
+0
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+write $VIEW(BADCHAR)
+GTM>
+Expected output 1
+GTM>
+1
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+write $VIEW(BADCHAR)
+GTM>
+Expected output 1
+GTM>
+1
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+write $VIEW(BADCHAR)
+GTM>
+Expected output 0
+GTM>
+0
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+write $VIEW(BADCHAR)
+GTM>
+Expected output 0
+GTM>
+0
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+write $VIEW(BADCHAR)
+GTM>
+Expected output 1
+GTM>
+1
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+write $VIEW(BADCHAR)
+GTM>
+Expected output 1
+GTM>
+1
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+write $VIEW(BADCHAR)
+GTM>
+Expected output 0
+GTM>
+0
+GTM>
+
+GTM>
+
+GTM>
+BADCHAR PASSED
+PASS. Expected error GTM-E-BADCHAR seen and not other errors detected
+PASS. Expected error GTM-E-INVDLRCVAL seen and not other errors detected
+###################################################################
+Test for zconvert BADCHAR error when on three arguments
+Processing $ZCHAR(150,151,152) for UTF-8
+Processing $ZCHAR(150,151,152) for UTF-16LE
+Processing $ZCHAR(150,151,152) for UTF-16BE
+Processing $ZCHAR(239,188,161) for UTF-8
+Processing $ZCHAR(239,188,161) for UTF-16LE
+Processing $ZCHAR(239,188,161) for UTF-16BE
+Processing $ZCHAR(255,33) for UTF-8
+Processing $ZCHAR(255,33) for UTF-16LE
+Processing $ZCHAR(255,33) for UTF-16BE
+Processing $ZCHAR(33,255) for UTF-8
+Processing $ZCHAR(33,255) for UTF-16LE
+Processing $ZCHAR(33,255) for UTF-16BE
+Processing $ZCHAR(224,174,133) for UTF-8
+Processing $ZCHAR(224,174,133) for UTF-16LE
+Processing $ZCHAR(224,174,133) for UTF-16BE
+Processing $ZCHAR(11,133) for UTF-8
+Processing $ZCHAR(11,133) for UTF-16LE
+Processing $ZCHAR(11,133) for UTF-16BE
+Processing $ZCHAR(133,11) for UTF-8
+Processing $ZCHAR(133,11) for UTF-16LE
+Processing $ZCHAR(133,11) for UTF-16BE
+Processing $ZCHAR(224,176,133) for UTF-8
+Processing $ZCHAR(224,176,133) for UTF-16LE
+Processing $ZCHAR(224,176,133) for UTF-16BE
+Processing $ZCHAR(12,5) for UTF-8
+Processing $ZCHAR(12,5) for UTF-16LE
+Processing $ZCHAR(12,5) for UTF-16BE
+Processing $ZCHAR(5,12) for UTF-8
+Processing $ZCHAR(5,12) for UTF-16LE
+Processing $ZCHAR(5,12) for UTF-16BE
+Processing $ZCHAR(227,129,130) for UTF-8
+Processing $ZCHAR(227,129,130) for UTF-16LE
+Processing $ZCHAR(227,129,130) for UTF-16BE
+Processing $ZCHAR(48,66) for UTF-8
+Processing $ZCHAR(48,66) for UTF-16LE
+Processing $ZCHAR(48,66) for UTF-16BE
+Processing $ZCHAR(66,48) for UTF-8
+Processing $ZCHAR(66,48) for UTF-16LE
+Processing $ZCHAR(66,48) for UTF-16BE
+###################################################################
+PASS. Expected error GTM-E-BADCHAR seen and not other errors detected for ZCONVERT
+###################################################################
+Test compiling UTF-16 encoded m routine produces GTM-E-LSEXPECTED 
+
+GTM>
+BEGIN UTF-16 WRITE
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+END OF UTF-16 WRITE
+
+GTM>
+----------
+Error GTM-E-LSEXPECTED seen in testutf16.out as expected:
+%GTM-E-LSEXPECTED, A line separator is expected here
+----------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

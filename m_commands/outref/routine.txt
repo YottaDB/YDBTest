@@ -1,0 +1,499 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+do ^routine
+##################################################
+test zlink
+rout:q7XNDtj
+rout:rh7XNDtj
+rout:LBrh7XNDt
+rout:zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ
+rout:Brh7XNDtj9ZPFvlb1RHxnd3TJzpf5VLB
+rout:o5VLBrh7XN
+##################################################
+test zcompile
+rout:o5VLBrh7XN.m
+rout:TJzpf5VLBrh.m
+rout:ZPFvlb1RHxnd3TJzpf5V.m
+rout:Hxnd3TJzpf5VLBrh7XNDtj9ZPFvlb1.m
+Brh7XNDtj9ZPFvlb1RHxnd3TJzpf5VLB.o
+Hxnd3TJzpf5VLBrh7XNDtj9ZPFvlb1.o
+LBrh7XNDt.o
+TJzpf5VLBrh.o
+ZPFvlb1RHxnd3TJzpf5V.o
+examine.o
+lotsvar.o
+o5VLBrh7XN.o
+q7XNDtj.o
+rh7XNDtj.o
+routine.o
+zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ.o
+##################################################
+test zedit
+##TEST_PATH##/q7XNDtj.m
+##TEST_PATH##/rh7XNDtj.m
+##TEST_PATH##/LBrh7XNDt.m
+##TEST_PATH##/zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ.m
+##################################################
+test zprint ranges
+##################################################
+will ZPRINT @ref,ref=o5VLBrh^q7XNDtj:o5VLBrh+5
+o5VLBrh                          WRITE $TEXT(@$ZPOS),!
+         WRITE "labelname is supposed to be 7 characters",!
+         WRITE "routinename is supposed to be 7 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+         SET plussign=$FIND(zpos,"+")-1
+##################################################
+will ZPRINT @ref,ref=o5VLBrh+-2^q7XNDtj:o5VLBrh
+         SET ^DONE("q7XNDtj","q7XNDtj")=1
+         QUIT
+o5VLBrh                          WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=nd3TJzpf^q7XNDtj:nd3TJzpf+5
+nd3TJzpf(pa)                         WRITE $TEXT(@$ZPOS),!
+         WRITE "The parameter passed is: ",pa,!
+         WRITE "labelname is supposed to be 8 characters",!
+         WRITE "routinename is supposed to be 7 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+##################################################
+will ZPRINT @ref,ref=nd3TJzpf+-2^q7XNDtj:nd3TJzpf
+         SET ^DONE("o5VLBrh","q7XNDtj")=1
+         QUIT
+nd3TJzpf(pa)                         WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=gXNDtj9ZPF^q7XNDtj:gXNDtj9ZPF+5
+gXNDtj9ZPF(pa)                       WRITE $TEXT(@$ZPOS),!
+         WRITE "The parameter passed is: ",pa,!
+         WRITE "labelname is supposed to be 10 characters",!
+         WRITE "routinename is supposed to be 7 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+##################################################
+will ZPRINT @ref,ref=gXNDtj9ZPF+-2^q7XNDtj:gXNDtj9ZPF
+         SET ^DONE("Fvlb1RHxn","q7XNDtj")=1
+         QUIT
+gXNDtj9ZPF(pa)                       WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=NDtj9ZPFvlb1RHxnd3TJ^q7XNDtj:NDtj9ZPFvlb1RHxnd3TJ+5
+NDtj9ZPFvlb1RHxnd3TJ(pa)             WRITE $TEXT(@$ZPOS),!
+         WRITE "The parameter passed is: ",pa,!
+         WRITE "labelname is supposed to be 20 characters",!
+         WRITE "routinename is supposed to be 7 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+##################################################
+will ZPRINT @ref,ref=NDtj9ZPFvlb1RHxnd3TJ+-2^q7XNDtj:NDtj9ZPFvlb1RHxnd3TJ
+         SET ^DONE("Jzpf5VLBrh7","q7XNDtj")=1
+         QUIT
+NDtj9ZPFvlb1RHxnd3TJ(pa)             WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XN^q7XNDtj:tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XN+5
+tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XN(pa)   WRITE $TEXT(@$ZPOS),!
+         WRITE "The parameter passed is: ",pa,!
+         WRITE "labelname is supposed to be 30 characters",!
+         WRITE "routinename is supposed to be 7 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+##################################################
+will ZPRINT @ref,ref=tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XN+-2^q7XNDtj:tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XN
+         SET ^DONE("NDtj9ZPFvlb1RHxnd3TJ","q7XNDtj")=1
+         QUIT
+tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XN(pa)   WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=s9ZPFvlb1RHxnd3TJzpf5VLBrh7XNDt^q7XNDtj:s9ZPFvlb1RHxnd3TJzpf5VLBrh7XNDt+5
+s9ZPFvlb1RHxnd3TJzpf5VLBrh7XNDt  WRITE $TEXT(@$ZPOS),!
+         WRITE "labelname is supposed to be 31 characters",!
+         WRITE "routinename is supposed to be 7 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+         SET plussign=$FIND(zpos,"+")-1
+##################################################
+will ZPRINT @ref,ref=s9ZPFvlb1RHxnd3TJzpf5VLBrh7XNDt+-2^q7XNDtj:s9ZPFvlb1RHxnd3TJzpf5VLBrh7XNDt
+         SET ^DONE("tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XN","q7XNDtj")=1
+         QUIT
+s9ZPFvlb1RHxnd3TJzpf5VLBrh7XNDt  WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=pf5VLBr^rh7XNDtj:pf5VLBr+5
+pf5VLBr                          WRITE $TEXT(@$ZPOS),!
+         WRITE "labelname is supposed to be 7 characters",!
+         WRITE "routinename is supposed to be 8 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+         SET plussign=$FIND(zpos,"+")-1
+##################################################
+will ZPRINT @ref,ref=pf5VLBr+-2^rh7XNDtj:pf5VLBr
+         SET ^DONE("rh7XNDtj","rh7XNDtj")=1
+         QUIT
+pf5VLBr                          WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=xnd3TJzp^rh7XNDtj:xnd3TJzp+5
+xnd3TJzp(pa)                         WRITE $TEXT(@$ZPOS),!
+         WRITE "The parameter passed is: ",pa,!
+         WRITE "labelname is supposed to be 8 characters",!
+         WRITE "routinename is supposed to be 8 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+##################################################
+will ZPRINT @ref,ref=xnd3TJzp+-2^rh7XNDtj:xnd3TJzp
+         SET ^DONE("pf5VLBr","rh7XNDtj")=1
+         QUIT
+xnd3TJzp(pa)                         WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=q7XNDtj9ZP^rh7XNDtj:q7XNDtj9ZP+5
+q7XNDtj9ZP(pa)                       WRITE $TEXT(@$ZPOS),!
+         WRITE "The parameter passed is: ",pa,!
+         WRITE "labelname is supposed to be 10 characters",!
+         WRITE "routinename is supposed to be 8 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+##################################################
+will ZPRINT @ref,ref=q7XNDtj9ZP+-2^rh7XNDtj:q7XNDtj9ZP
+         SET ^DONE("PFvlb1RHx","rh7XNDtj")=1
+         QUIT
+q7XNDtj9ZP(pa)                       WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=XNDtj9ZPFvlb1RHxnd3T^rh7XNDtj:XNDtj9ZPFvlb1RHxnd3T+5
+XNDtj9ZPFvlb1RHxnd3T(pa)             WRITE $TEXT(@$ZPOS),!
+         WRITE "The parameter passed is: ",pa,!
+         WRITE "labelname is supposed to be 20 characters",!
+         WRITE "routinename is supposed to be 8 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+##################################################
+will ZPRINT @ref,ref=XNDtj9ZPFvlb1RHxnd3T+-2^rh7XNDtj:XNDtj9ZPFvlb1RHxnd3T
+         SET ^DONE("TJzpf5VLBrh","rh7XNDtj")=1
+         QUIT
+XNDtj9ZPFvlb1RHxnd3T(pa)             WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=Dtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X^rh7XNDtj:Dtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X+5
+Dtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X(pa)   WRITE $TEXT(@$ZPOS),!
+         WRITE "The parameter passed is: ",pa,!
+         WRITE "labelname is supposed to be 30 characters",!
+         WRITE "routinename is supposed to be 8 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+##################################################
+will ZPRINT @ref,ref=Dtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X+-2^rh7XNDtj:Dtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X
+         SET ^DONE("XNDtj9ZPFvlb1RHxnd3T","rh7XNDtj")=1
+         QUIT
+Dtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X(pa)   WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XND^rh7XNDtj:tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XND+5
+tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XND  WRITE $TEXT(@$ZPOS),!
+         WRITE "labelname is supposed to be 31 characters",!
+         WRITE "routinename is supposed to be 8 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+         SET plussign=$FIND(zpos,"+")-1
+##################################################
+will ZPRINT @ref,ref=tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XND+-2^rh7XNDtj:tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XND
+         SET ^DONE("Dtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X","rh7XNDtj")=1
+         QUIT
+tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XND  WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=Jzpf5VL^LBrh7XNDt:Jzpf5VL+5
+Jzpf5VL                          WRITE $TEXT(@$ZPOS),!
+         WRITE "labelname is supposed to be 7 characters",!
+         WRITE "routinename is supposed to be 9 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+         SET plussign=$FIND(zpos,"+")-1
+##################################################
+will ZPRINT @ref,ref=Jzpf5VL+-2^LBrh7XNDt:Jzpf5VL
+         SET ^DONE("LBrh7XNDt","LBrh7XNDt")=1
+         QUIT
+Jzpf5VL                          WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=RHxnd3TJ^LBrh7XNDt:RHxnd3TJ+5
+RHxnd3TJ(pa)                         WRITE $TEXT(@$ZPOS),!
+         WRITE "The parameter passed is: ",pa,!
+         WRITE "labelname is supposed to be 8 characters",!
+         WRITE "routinename is supposed to be 9 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+##################################################
+will ZPRINT @ref,ref=RHxnd3TJ+-2^LBrh7XNDt:RHxnd3TJ
+         SET ^DONE("Jzpf5VL","LBrh7XNDt")=1
+         QUIT
+RHxnd3TJ(pa)                         WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=Brh7XNDtj9^LBrh7XNDt:Brh7XNDtj9+5
+Brh7XNDtj9(pa)                       WRITE $TEXT(@$ZPOS),!
+         WRITE "The parameter passed is: ",pa,!
+         WRITE "labelname is supposed to be 10 characters",!
+         WRITE "routinename is supposed to be 9 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+##################################################
+will ZPRINT @ref,ref=Brh7XNDtj9+-2^LBrh7XNDt:Brh7XNDtj9
+         SET ^DONE("iZPFvlb1R","LBrh7XNDt")=1
+         QUIT
+Brh7XNDtj9(pa)                       WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=q7XNDtj9ZPFvlb1RHxnd^LBrh7XNDt:q7XNDtj9ZPFvlb1RHxnd+5
+q7XNDtj9ZPFvlb1RHxnd(pa)             WRITE $TEXT(@$ZPOS),!
+         WRITE "The parameter passed is: ",pa,!
+         WRITE "labelname is supposed to be 20 characters",!
+         WRITE "routinename is supposed to be 9 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+##################################################
+will ZPRINT @ref,ref=q7XNDtj9ZPFvlb1RHxnd+-2^LBrh7XNDt:q7XNDtj9ZPFvlb1RHxnd
+         SET ^DONE("m3TJzpf5VLB","LBrh7XNDt")=1
+         QUIT
+q7XNDtj9ZPFvlb1RHxnd(pa)             WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=XNDtj9ZPFvlb1RHxnd3TJzpf5VLBrh^LBrh7XNDt:XNDtj9ZPFvlb1RHxnd3TJzpf5VLBrh+5
+XNDtj9ZPFvlb1RHxnd3TJzpf5VLBrh(pa)   WRITE $TEXT(@$ZPOS),!
+         WRITE "The parameter passed is: ",pa,!
+         WRITE "labelname is supposed to be 30 characters",!
+         WRITE "routinename is supposed to be 9 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+##################################################
+will ZPRINT @ref,ref=XNDtj9ZPFvlb1RHxnd3TJzpf5VLBrh+-2^LBrh7XNDt:XNDtj9ZPFvlb1RHxnd3TJzpf5VLBrh
+         SET ^DONE("q7XNDtj9ZPFvlb1RHxnd","LBrh7XNDt")=1
+         QUIT
+XNDtj9ZPFvlb1RHxnd3TJzpf5VLBrh(pa)   WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=NDtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X^LBrh7XNDt:NDtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X+5
+NDtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X  WRITE $TEXT(@$ZPOS),!
+         WRITE "labelname is supposed to be 31 characters",!
+         WRITE "routinename is supposed to be 9 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+         SET plussign=$FIND(zpos,"+")-1
+##################################################
+will ZPRINT @ref,ref=NDtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X+-2^LBrh7XNDt:NDtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X
+         SET ^DONE("XNDtj9ZPFvlb1RHxnd3TJzpf5VLBrh","LBrh7XNDt")=1
+         QUIT
+NDtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X  WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=xnd3TJz^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ:xnd3TJz+5
+xnd3TJz                          WRITE $TEXT(@$ZPOS),!
+         WRITE "labelname is supposed to be 7 characters",!
+         WRITE "routinename is supposed to be 31 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+         SET plussign=$FIND(zpos,"+")-1
+##################################################
+will ZPRINT @ref,ref=xnd3TJz+-2^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ:xnd3TJz
+         SET ^DONE("zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ","zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ")=1
+         QUIT
+xnd3TJz                          WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=Fvlb1RHx^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ:Fvlb1RHx+5
+Fvlb1RHx(pa)                         WRITE $TEXT(@$ZPOS),!
+         WRITE "The parameter passed is: ",pa,!
+         WRITE "labelname is supposed to be 8 characters",!
+         WRITE "routinename is supposed to be 31 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+##################################################
+will ZPRINT @ref,ref=Fvlb1RHx+-2^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ:Fvlb1RHx
+         SET ^DONE("xnd3TJz","zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ")=1
+         QUIT
+Fvlb1RHx(pa)                         WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=pf5VLBrh7X^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ:pf5VLBrh7X+5
+pf5VLBrh7X(pa)                       WRITE $TEXT(@$ZPOS),!
+         WRITE "The parameter passed is: ",pa,!
+         WRITE "labelname is supposed to be 10 characters",!
+         WRITE "routinename is supposed to be 31 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+##################################################
+will ZPRINT @ref,ref=pf5VLBrh7X+-2^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ:pf5VLBrh7X
+         SET ^DONE("XNDtj9ZPF","zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ")=1
+         QUIT
+pf5VLBrh7X(pa)                       WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=eVLBrh7XNDtj9ZPFvlb1^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ:eVLBrh7XNDtj9ZPFvlb1+5
+eVLBrh7XNDtj9ZPFvlb1(pa)             WRITE $TEXT(@$ZPOS),!
+         WRITE "The parameter passed is: ",pa,!
+         WRITE "labelname is supposed to be 20 characters",!
+         WRITE "routinename is supposed to be 31 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+##################################################
+will ZPRINT @ref,ref=eVLBrh7XNDtj9ZPFvlb1+-2^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ:eVLBrh7XNDtj9ZPFvlb1
+         SET ^DONE("aRHxnd3TJzp","zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ")=1
+         QUIT
+eVLBrh7XNDtj9ZPFvlb1(pa)             WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=LBrh7XNDtj9ZPFvlb1RHxnd3TJzpf5^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ:LBrh7XNDtj9ZPFvlb1RHxnd3TJzpf5+5
+LBrh7XNDtj9ZPFvlb1RHxnd3TJzpf5(pa)   WRITE $TEXT(@$ZPOS),!
+         WRITE "The parameter passed is: ",pa,!
+         WRITE "labelname is supposed to be 30 characters",!
+         WRITE "routinename is supposed to be 31 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+##################################################
+will ZPRINT @ref,ref=LBrh7XNDtj9ZPFvlb1RHxnd3TJzpf5+-2^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ:LBrh7XNDtj9ZPFvlb1RHxnd3TJzpf5
+         SET ^DONE("eVLBrh7XNDtj9ZPFvlb1","zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ")=1
+         QUIT
+LBrh7XNDtj9ZPFvlb1RHxnd3TJzpf5(pa)   WRITE $TEXT(@$ZPOS),!
+##################################################
+will ZPRINT @ref,ref=Brh7XNDtj9ZPFvlb1RHxnd3TJzpf5VL^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ:Brh7XNDtj9ZPFvlb1RHxnd3TJzpf5VL+5
+Brh7XNDtj9ZPFvlb1RHxnd3TJzpf5VL  WRITE $TEXT(@$ZPOS),!
+         WRITE "labelname is supposed to be 31 characters",!
+         WRITE "routinename is supposed to be 31 characters",!
+         SET zpos=$ZPOSITION
+         WRITE "$ZPOSITION:",zpos,!
+         SET plussign=$FIND(zpos,"+")-1
+##################################################
+will ZPRINT @ref,ref=Brh7XNDtj9ZPFvlb1RHxnd3TJzpf5VL+-2^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ:Brh7XNDtj9ZPFvlb1RHxnd3TJzpf5VL
+         SET ^DONE("LBrh7XNDtj9ZPFvlb1RHxnd3TJzpf5","zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ")=1
+         QUIT
+Brh7XNDtj9ZPFvlb1RHxnd3TJzpf5VL  WRITE $TEXT(@$ZPOS),!
+##################################################
+test command do, goto and zgoto
+##################################################
+Post Conditional for rh7XNDtj is: 1
+rh7XNDtj                         WRITE $TEXT(@$ZPOS),!
+routine name is 8 characters
+In this routine, we will have labels with varying length upto 31 characters
+$ZPOSITION:rh7XNDtj+3^rh7XNDtj
+will goto to aRHxnd3TJzpf5VLBrh7XNDtj9ZPFvlb^ZPFvlb1RHxnd3TJzpf5V
+##TEST_AWK(|.*aRHxnd3TJzpf5VLBrh7XNDtj9ZPFvlb.*)
+labelname is supposed to be 31 characters
+routinename is supposed to be 20 characters
+$ZPOSITION:aRHxnd3TJzpf5VLBrh7XNDtj9ZPFvlb+3^ZPFvlb1RHxnd3TJzpf5V
+counter points to 53 calls
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+##################################################
+Post Conditional for rh7XNDtj is: 0
+##################################################
+Post Conditional for zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ is: 1
+zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ  WRITE $TEXT(@$ZPOS),!
+routine name is 31 characters
+In this routine, we will have labels with varying length upto 31 characters
+$ZPOSITION:zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ+3^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ
+will goto to Brh7XNDtj9ZPFvlb1RHxnd3TJzpf5VL^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ
+Brh7XNDtj9ZPFvlb1RHxnd3TJzpf5VL  WRITE $TEXT(@$ZPOS),!
+labelname is supposed to be 31 characters
+routinename is supposed to be 31 characters
+$ZPOSITION:Brh7XNDtj9ZPFvlb1RHxnd3TJzpf5VL+3^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ
+counter points to 71 calls
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+##################################################
+Post Conditional for zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ is: 0
+##################################################
+(1) will try to zgoto to (label only):Jzpf5VLBrh7XNDtj9ZPFvlb1RHxnd3T
+##TEST_AWK(|.*NDtj9ZPF.*)
+The parameter passed is: test_parameter
+labelname is supposed to be 8 characters
+routinename is supposed to be 30 characters
+$ZPOSITION:NDtj9ZPF+4^Hxnd3TJzpf5VLBrh7XNDtj9ZPFvlb1
+counter points to 56 calls
+will zgoto to Jzpf5VLBrh7XNDtj9ZPFvlb1RHxnd3T
+##TEST_AWK(|.*Jzpf5VLBrh7XNDtj9ZPFvlb1RHxnd3T.*)
+labelname is supposed to be 31 characters
+routinename is supposed to be 30 characters
+$ZPOSITION:Jzpf5VLBrh7XNDtj9ZPFvlb1RHxnd3T+3^Hxnd3TJzpf5VLBrh7XNDtj9ZPFvlb1
+counter points to 62 calls
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+##################################################
+some simple do's...
+##TEST_AWK(|.*aRHxnd3TJzpf5VLBrh7XNDtj9ZPFvlb.*)
+labelname is supposed to be 31 characters
+routinename is supposed to be 20 characters
+$ZPOSITION:aRHxnd3TJzpf5VLBrh7XNDtj9ZPFvlb+3^ZPFvlb1RHxnd3TJzpf5V
+counter points to 53 calls
+----------------------------------------------------------------------
+Brh7XNDtj9ZPFvlb1RHxnd3TJzpf5VL  WRITE $TEXT(@$ZPOS),!
+labelname is supposed to be 31 characters
+routinename is supposed to be 31 characters
+$ZPOSITION:Brh7XNDtj9ZPFvlb1RHxnd3TJzpf5VL+3^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ
+counter points to 71 calls
+----------------------------------------------------------------------
+##################################################
+Test that a label/routine name of length 31 can be jobbed off
+----------------------------------------
+will job: Job:(ri#2) @routname, routname=^q7XNDtj
+will execute: Job tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XN^q7XNDtj("test_job"):(output="tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XN.mjo":error="tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XN.mje")
+will job: Job:(ri#2) @routname, routname=^q7XNDtj
+will execute: Job s9ZPFvlb1RHxnd3TJzpf5VLBrh7XNDt^q7XNDtj:(output="s9ZPFvlb1RHxnd3TJzpf5VLBrh7XNDt.mjo":error="s9ZPFvlb1RHxnd3TJzpf5VLBrh7XNDt.mje")
+----------------------------------------
+will job: Job:(ri#2) @routname, routname=^rh7XNDtj
+will execute: Job Dtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X^rh7XNDtj("test_job"):(output="Dtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X.mjo":error="Dtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X.mje")
+will job: Job:(ri#2) @routname, routname=^rh7XNDtj
+will execute: Job tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XND^rh7XNDtj:(output="tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XND.mjo":error="tj9ZPFvlb1RHxnd3TJzpf5VLBrh7XND.mje")
+----------------------------------------
+will job: Job:(ri#2) @routname, routname=^LBrh7XNDt
+will execute: Job XNDtj9ZPFvlb1RHxnd3TJzpf5VLBrh^LBrh7XNDt("test_job"):(output="XNDtj9ZPFvlb1RHxnd3TJzpf5VLBrh.mjo":error="XNDtj9ZPFvlb1RHxnd3TJzpf5VLBrh.mje")
+will job: Job:(ri#2) @routname, routname=^LBrh7XNDt
+will execute: Job NDtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X^LBrh7XNDt:(output="NDtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X.mjo":error="NDtj9ZPFvlb1RHxnd3TJzpf5VLBrh7X.mje")
+----------------------------------------
+will job: Job:(ri#2) @routname, routname=^o5VLBrh7XN
+will execute: Job rh7XNDtj9ZPFvlb1RHxnd3TJzpf5VL^o5VLBrh7XN("test_job"):(output="rh7XNDtj9ZPFvlb1RHxnd3TJzpf5VL.mjo":error="rh7XNDtj9ZPFvlb1RHxnd3TJzpf5VL.mje")
+will job: Job:(ri#2) @routname, routname=^o5VLBrh7XN
+will execute: Job q7XNDtj9ZPFvlb1RHxnd3TJzpf5VLBr^o5VLBrh7XN:(output="q7XNDtj9ZPFvlb1RHxnd3TJzpf5VLBr.mjo":error="q7XNDtj9ZPFvlb1RHxnd3TJzpf5VLBr.mje")
+----------------------------------------
+will job: Job:(ri#2) @routname, routname=^TJzpf5VLBrh
+will execute: Job eVLBrh7XNDtj9ZPFvlb1RHxnd3TJzp^TJzpf5VLBrh("test_job"):(output="eVLBrh7XNDtj9ZPFvlb1RHxnd3TJzp.mjo":error="eVLBrh7XNDtj9ZPFvlb1RHxnd3TJzp.mje")
+will job: Job:(ri#2) @routname, routname=^TJzpf5VLBrh
+will execute: Job VLBrh7XNDtj9ZPFvlb1RHxnd3TJzpf5^TJzpf5VLBrh:(output="VLBrh7XNDtj9ZPFvlb1RHxnd3TJzpf5.mjo":error="VLBrh7XNDtj9ZPFvlb1RHxnd3TJzpf5.mje")
+----------------------------------------
+will job: Job:(ri#2) @routname, routname=^ZPFvlb1RHxnd3TJzpf5V
+will execute: Job k1RHxnd3TJzpf5VLBrh7XNDtj9ZPFv^ZPFvlb1RHxnd3TJzpf5V("test_job"):(output="k1RHxnd3TJzpf5VLBrh7XNDtj9ZPFv.mjo":error="k1RHxnd3TJzpf5VLBrh7XNDtj9ZPFv.mje")
+will job: Job:(ri#2) @routname, routname=^ZPFvlb1RHxnd3TJzpf5V
+will execute: Job aRHxnd3TJzpf5VLBrh7XNDtj9ZPFvlb^ZPFvlb1RHxnd3TJzpf5V:(output="aRHxnd3TJzpf5VLBrh7XNDtj9ZPFvlb.mjo":error="aRHxnd3TJzpf5VLBrh7XNDtj9ZPFvlb.mje")
+----------------------------------------
+will job: Job:(ri#2) @routname, routname=^Hxnd3TJzpf5VLBrh7XNDtj9ZPFvlb1
+will execute: Job TJzpf5VLBrh7XNDtj9ZPFvlb1RHxnd^Hxnd3TJzpf5VLBrh7XNDtj9ZPFvlb1("test_job"):(output="TJzpf5VLBrh7XNDtj9ZPFvlb1RHxnd.mjo":error="TJzpf5VLBrh7XNDtj9ZPFvlb1RHxnd.mje")
+will job: Job:(ri#2) @routname, routname=^Hxnd3TJzpf5VLBrh7XNDtj9ZPFvlb1
+will execute: Job Jzpf5VLBrh7XNDtj9ZPFvlb1RHxnd3T^Hxnd3TJzpf5VLBrh7XNDtj9ZPFvlb1:(output="Jzpf5VLBrh7XNDtj9ZPFvlb1RHxnd3T.mjo":error="Jzpf5VLBrh7XNDtj9ZPFvlb1RHxnd3T.mje")
+----------------------------------------
+will job: Job:(ri#2) @routname, routname=^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ
+will execute: Job LBrh7XNDtj9ZPFvlb1RHxnd3TJzpf5^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ("test_job"):(output="LBrh7XNDtj9ZPFvlb1RHxnd3TJzpf5.mjo":error="LBrh7XNDtj9ZPFvlb1RHxnd3TJzpf5.mje")
+will job: Job:(ri#2) @routname, routname=^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ
+will execute: Job Brh7XNDtj9ZPFvlb1RHxnd3TJzpf5VL^zpf5VLBrh7XNDtj9ZPFvlb1RHxnd3TJ:(output="Brh7XNDtj9ZPFvlb1RHxnd3TJzpf5VL.mjo":error="Brh7XNDtj9ZPFvlb1RHxnd3TJzpf5VL.mje")
+checking errors from jobs...
+
+GTM>
+
+GTM>
+zgoto 1:b2345678^routinex
+
+GTM>
+this is b2345678 in routinex
+
+GTM>
+zgoto 1:^@b
+
+GTM>
+
+GTM>
+this is direct entry into routinex
+
+GTM>
+zgoto 1:@c^@b
+
+GTM>
+
+GTM>
+this is b2345678 in routinex
+
+GTM>
+this is b2345678 in routinex
+
+GTM>
+this is b2345678 in routinex
+
+GTM>
+
+GTM>
+this is b2345678 in routinex
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,77 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+stress.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+stress.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+b234567890123456789012345678901.dat
+cpct1.dat
+d.dat
+ef_longGGGGGGGGGGGGGGGGGGGGGGGG.dat
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+Releasing jobs...
+Each job will start now...
+
+Each job will exit now
+
+GTM>
+Application Level Verification Starts...
+Application Level Verification Ends.
+
+GTM>
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Testing recover:
+Extract from original database...
+$MUPIP journal -recover -forward -verbose -fence=none *
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Extact from database after forward recovery...
+diff origdata.glo forwglo.glo
+##SUSPEND_OUTPUT JNL_NOBEFORE
+##SOURCE_PATH##/mupip journal -recover -backward -verbose '*' -since=0 0:0:1
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Extact from database after backward recovery...
+diff origdata.glo backglo.glo
+Testing rollback:
+Get JNLSEQNO from Secondary (B) at the first backup point...
+Now do rollback:
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT JNL_NOBEFORE

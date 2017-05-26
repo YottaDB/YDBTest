@@ -1,0 +1,66 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Try something simple (with userid and inode)
+PASS
+Try something simple (with gtm_obfuscation key)
+PASS
+Try something simple with spaces (with userid and inode)
+PASS
+Try something simple with spaces (with gtm_obfuscation key)
+PASS
+Try something simple but longer (with userid and inode)
+PASS
+Try something simple but longer (with gtm_obfuscation key)
+PASS
+Try something else (with userid and inode)
+PASS
+Try something else (with gtm_obfuscation key)
+PASS
+Try something else with spaces (with userid and inode)
+PASS
+Try something else with spaces (with gtm_obfuscation key)
+PASS
+Try all blanks (with userid and inode)
+PASS
+Try all blanks (with gtm_obfuscation key)
+PASS
+Test 1: Set a random password of length 50
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Test 2: Much longer password
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Test 3: Revert back the changes
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,67 @@
+CHECKING GVSUBOFLOW FOR KILL
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+
+GTM>
+# Change key and record size at the receiver
+Starting receiver server ...
+
+GTM>
+
+GTM>
+----------
+Error GVSUBOFLOW seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
+%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
+----------
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+Total error count from integ:		1.
+##TEST_AWK[A-Za-z0-9:, ]*
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+       3:10     0  Key larger than database maximum
+                   Directory Path:  1:10, 2:10
+                   Path:  4:10, 3:10
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           3.515             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+
+Restoring the key and record size
+Should not see any integ errors now
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               0           1.562             1
+Free               96              NA              NA            NA
+Total             100               3              NA             2

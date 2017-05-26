@@ -1,0 +1,39 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+File simple.trg, Line 1: Added SET trigger on ^A named trigger
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+Output File: 
+;trigger name: trigger (region DEFAULT)  cycle: 1
++^A -name=trigger -commands=S -xecute="do ^nothing"
+##SUSPEND_OUTPUT NON_UTF8
+
+Test case 1 : $TEXT at $tlevel=0
+----------------------------------------
+$tlevel before $TEXT = 0
+$text(^trigger#) = 
+$tlevel after  $TEXT = 0
+
+Test case 2 : $TEXT at $tlevel=1
+----------------------------------------
+$tlevel before $TEXT = 1
+$text(^trigger#) = 
+$tlevel after $TEXT = 1
+
+Test case 3 : $TEXT at $tlevel=2
+----------------------------------------
+$tlevel before $TEXT = 2
+$text(^trigger#) = 
+$tlevel after $TEXT = 2
+##ALLOW_OUTPUT NON_UTF8
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

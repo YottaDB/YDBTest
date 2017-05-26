@@ -1,0 +1,75 @@
+---------------------------------------------------------------------------------------
+BEGIN 1 :-) Create big.dat with journaling enabled:
+
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/big.gld
+
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/big.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/big.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/big.gld
+Created file ##TEST_PATH##/big.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/big.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+END 1
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 2 :-) Populate big database
+
+
+GTM>
+
+GTM>
+
+END 2
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 3 :-) Get the timestamp of fisrt epoch written to journal:
+
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/big.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+END 3
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 4 :-)
+
+---------------------------------------------------------------------------------------
+BEGIN 5 :-) CRASH database while updating it
+
+
+GTM>
+
+GTM>
+Killed
+
+END 5
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 6 :-) get jnl_eovtn and curr_tn from database file header
+
+
+END 6
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 7 :-) Recover should be succssful: db->jnl_eovtn <= jfh->eov_tn < db->curr_tn
+
+##TEST_AWKjnl_eovtn = 0x[0-9A-F]+
+##TEST_AWKcurr_tn = 0x[0-9A-F]+
+##TEST_AWK##SOURCE_PATH##.mupip journal -recover -backward -verbose -since=.* -before=.* . >&! RECOVER.log
+Recovery is successful
+
+END 7
+---------------------------------------------------------------------------------------

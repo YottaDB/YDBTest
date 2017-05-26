@@ -1,0 +1,1486 @@
+Begin of D9C08002194 subtest
+
+GTM>
+$stack     = 1
+$stack(-1) = 1
+$zlevel    = 2
+
+GTM>
+-----------> mumps -run test01 <------------
+0
+2
+0
+1
+3
+1
+I am in x2
+0
+I am in x1
+=================================================
+-----------> mumps -run test02 <------------
+
+$ecode     = ,M6,Z150373850,
+$stack     = 3
+$stack(-1) = 3
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         d START
+$stack(1,"ECODE") =  ,M6,Z150373850, :: $stack(1,"MCODE") =         WRITE A
+$stack(2,"ECODE") =                  :: $stack(2,"MCODE") =         d ERROR
+$stack(3,"ECODE") =                  :: $stack(3,"MCODE") =         for index=0:1:$stack(-1)  do
+
+$ecode     = ,M6,Z150373850,M9,Z150373210,
+$stack     = 1
+$stack(-1) = 2
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         d START
+$stack(1,"ECODE") =  ,M6,Z150373850, :: $stack(1,"MCODE") =         WRITE A
+$stack(2,"ECODE") =  ,M9,Z150373210, :: $stack(2,"MCODE") =         set x=1/0
+=================================================
+-----------> mumps -run test03 <------------
+
+$ecode     = ,M9,Z150373210,
+$stack     = 4
+$stack(-1) = 4
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         d y1
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         d START
+$stack(2,"ECODE") =                  :: $stack(2,"MCODE") =         KILL A WRITE A
+$stack(3,"ECODE") =  ,M9,Z150373210, :: $stack(3,"MCODE") =         set x=1/0
+$stack(4,"ECODE") =                  :: $stack(4,"MCODE") =         for index=0:1:$stack(-1)  do
+
+$ecode     = ,M9,Z150373210,
+$stack     = 3
+$stack(-1) = 3
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         d y1
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         d START
+$stack(2,"ECODE") =                  :: $stack(2,"MCODE") =         KILL A WRITE A
+$stack(3,"ECODE") =  ,M9,Z150373210, :: $stack(3,"MCODE") =         set x=1/0
+
+$ecode     = ,M9,Z150373210,
+$stack     = 2
+$stack(-1) = 3
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         d y1
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         d START
+$stack(2,"ECODE") =                  :: $stack(2,"MCODE") =         KILL A WRITE A
+$stack(3,"ECODE") =  ,M9,Z150373210, :: $stack(3,"MCODE") =         set x=1/0
+
+$ecode     = ,M9,Z150373210,
+$stack     = 1
+$stack(-1) = 3
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         d y1
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         d START
+$stack(2,"ECODE") =                  :: $stack(2,"MCODE") =         KILL A WRITE A
+$stack(3,"ECODE") =  ,M9,Z150373210, :: $stack(3,"MCODE") =         set x=1/0
+=================================================
+-----------> mumps -run test04 <------------
+
+$ecode     = ,M9,Z150373210,
+$stack     = 3
+$stack(-1) = 3
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         d y1
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         KILL A WRITE A
+$stack(2,"ECODE") =  ,M9,Z150373210, :: $stack(2,"MCODE") =         set x=1/0
+$stack(3,"ECODE") =                  :: $stack(3,"MCODE") =         for index=0:1:$stack(-1)  do
+
+$ecode     = ,M9,Z150373210,
+$stack     = 2
+$stack(-1) = 2
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         d y1
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         KILL A WRITE A
+$stack(2,"ECODE") =  ,M9,Z150373210, :: $stack(2,"MCODE") =         set x=1/0
+
+$ecode     = ,M9,Z150373210,
+$stack     = 1
+$stack(-1) = 2
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         d y1
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         KILL A WRITE A
+$stack(2,"ECODE") =  ,M9,Z150373210, :: $stack(2,"MCODE") =         set x=1/0
+=================================================
+-----------> mumps -run test05 <------------
+
+$ecode     = ,M9,Z150373210,
+$stack     = 3
+$stack(-1) = 3
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         d y1
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         KILL A WRITE A
+$stack(2,"ECODE") =  ,M9,Z150373210, :: $stack(2,"MCODE") =         set x=1/0
+$stack(3,"ECODE") =                  :: $stack(3,"MCODE") =         for index=0:1:$stack(-1)  do
+
+$ecode     = ,M9,Z150373210,
+$stack     = 2
+$stack(-1) = 2
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         d y1
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         KILL A WRITE A
+$stack(2,"ECODE") =  ,M9,Z150373210, :: $stack(2,"MCODE") =         set x=1/0
+
+$ecode     = ,M9,Z150373210,
+$stack     = 1
+$stack(-1) = 2
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         d y1
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         KILL A WRITE A
+$stack(2,"ECODE") =  ,M9,Z150373210, :: $stack(2,"MCODE") =         set x=1/0
+=================================================
+-----------> mumps -run test06 <------------
+
+$ecode     = ,M9,Z150373210,
+$stack     = 3
+$stack(-1) = 3
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         d y1
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         KILL A WRITE A
+$stack(2,"ECODE") =  ,M9,Z150373210, :: $stack(2,"MCODE") =         set x=1/0
+$stack(3,"ECODE") =                  :: $stack(3,"MCODE") =         for index=0:1:$stack(-1)  do
+
+$ecode     = ,M9,Z150373210,
+$stack     = 2
+$stack(-1) = 2
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         d y1
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         KILL A WRITE A
+$stack(2,"ECODE") =  ,M9,Z150373210, :: $stack(2,"MCODE") =         set x=1/0
+
+$ecode     = ,M9,Z150373210,
+$stack     = 1
+$stack(-1) = 2
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         d y1
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         KILL A WRITE A
+$stack(2,"ECODE") =  ,M9,Z150373210, :: $stack(2,"MCODE") =         set x=1/0
+=================================================
+-----------> mumps -run test07 <------------
+
+$ecode     = ,M6,Z150373850,
+$stack     = 3
+$stack(-1) = 3
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         do y
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         do z
+$stack(2,"ECODE") =  ,M6,Z150373850, :: $stack(2,"MCODE") =         kill x write x
+$stack(3,"ECODE") =                  :: $stack(3,"MCODE") =         for index=0:1:$stack(-1)  do
+
+$ecode     = ,M6,Z150373850,M9,Z150373210,
+$stack     = 2
+$stack(-1) = 3
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         do y
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         do z
+$stack(2,"ECODE") =  ,M6,Z150373850, :: $stack(2,"MCODE") =         kill x write x
+$stack(3,"ECODE") =  ,M9,Z150373210, :: $stack(3,"MCODE") =         if count=1  write 1/0
+
+$ecode     = ,M6,Z150373850,M9,Z150373210,M16,Z150374450,
+$stack     = 1
+$stack(-1) = 3
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         do y
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         do z
+$stack(2,"ECODE") =  ,M6,Z150373850, :: $stack(2,"MCODE") =         kill x write x
+$stack(3,"ECODE") =  ,M9,Z150373210, :: $stack(3,"MCODE") =         if count=1  write 1/0
+=================================================
+-----------> mumps -run test08 <------------
+I am in ZTRAP
+,M9,Z150373210,
+I am in ZTRAP
+,M9,Z150373210,
+I am in ZTRAP
+,M9,Z150373210,
+I am in ZTRAP
+,M9,Z150373210,
+I am in ZTRAP
+,M9,Z150373210,
+I am in ZTRAP
+,M9,Z150373210,
+I am in ZTRAP
+,M9,Z150373210,
+=================================================
+-----------> mumps -run test09 <------------
+,M9,Z150373210,
+,M9,Z150373210,
+,M9,Z150373210,
+=================================================
+-----------> mumps -run test10 <------------
+
+$ecode     = ,M9,Z150373210,
+$stack     = 5
+$stack(-1) = 5
+          $stack(0) = -run test10
+$stack(0,"ECODE") =                 
+$stack(0,"PLACE") = x0+4^test10
+$stack(0,"MCODE") =                do x1
+          $stack(1) =         DO
+$stack(1,"ECODE") =                 
+$stack(1,"PLACE") = x1+1^test10
+$stack(1,"MCODE") =                do x2
+          $stack(2) =         DO
+$stack(2,"ECODE") =                 
+$stack(2,"PLACE") = x2+1^test10
+$stack(2,"MCODE") =                do x3
+          $stack(3) =         DO
+$stack(3,"ECODE") =  ,M9,Z150373210,
+$stack(3,"PLACE") = x3+1^test10
+$stack(3,"MCODE") =            set x=1/0
+          $stack(4) =         DO
+$stack(4,"ECODE") =                 
+$stack(4,"PLACE") = etr+1^test10
+$stack(4,"MCODE") =            do yprint
+          $stack(5) =         DO
+$stack(5,"ECODE") =                 
+$stack(5,"PLACE") = yprint+4^test10
+$stack(5,"MCODE") =         for index=0:1:$stack(-1)  do
+
+$ecode     = ,M9,Z150373210,M6,Z150373850,
+$stack     = 4
+$stack(-1) = 4
+          $stack(0) = -run test10
+$stack(0,"ECODE") =                 
+$stack(0,"PLACE") = x0+4^test10
+$stack(0,"MCODE") =                do x1
+          $stack(1) =         DO
+$stack(1,"ECODE") =                 
+$stack(1,"PLACE") = x1+1^test10
+$stack(1,"MCODE") =                do x2
+          $stack(2) =         DO
+$stack(2,"ECODE") =                 
+$stack(2,"PLACE") = x2+1^test10
+$stack(2,"MCODE") =                do x3
+          $stack(3) =         DO
+$stack(3,"ECODE") =  ,M9,Z150373210,
+$stack(3,"PLACE") = x3+1^test10
+$stack(3,"MCODE") =            set x=1/0
+          $stack(4) =         DO
+$stack(4,"ECODE") =  ,M6,Z150373850,
+$stack(4,"PLACE") = etr+3^test10
+$stack(4,"MCODE") =         if count=1 kill a write a
+
+$ecode     = ,M9,Z150373210,M6,Z150373850,M16,Z150374450,
+$stack     = 3
+$stack(-1) = 4
+          $stack(0) = -run test10
+$stack(0,"ECODE") =                 
+$stack(0,"PLACE") = x0+4^test10
+$stack(0,"MCODE") =                do x1
+          $stack(1) =         DO
+$stack(1,"ECODE") =                 
+$stack(1,"PLACE") = x1+1^test10
+$stack(1,"MCODE") =                do x2
+          $stack(2) =         DO
+$stack(2,"ECODE") =                 
+$stack(2,"PLACE") = x2+1^test10
+$stack(2,"MCODE") =                do x3
+          $stack(3) =         DO
+$stack(3,"ECODE") =  ,M9,Z150373210,
+$stack(3,"PLACE") = x3+1^test10
+$stack(3,"MCODE") =            set x=1/0
+          $stack(4) =         DO
+$stack(4,"ECODE") =  ,M6,Z150373850,
+$stack(4,"PLACE") = etr+3^test10
+$stack(4,"MCODE") =         if count=1 kill a write a
+
+$ecode     = ,M9,Z150373210,M6,Z150373850,M16,Z150374450,M19,Z150379322,
+$stack     = 2
+$stack(-1) = 4
+          $stack(0) = -run test10
+$stack(0,"ECODE") =                 
+$stack(0,"PLACE") = x0+4^test10
+$stack(0,"MCODE") =                do x1
+          $stack(1) =         DO
+$stack(1,"ECODE") =                 
+$stack(1,"PLACE") = x1+1^test10
+$stack(1,"MCODE") =                do x2
+          $stack(2) =         DO
+$stack(2,"ECODE") =                 
+$stack(2,"PLACE") = x2+1^test10
+$stack(2,"MCODE") =                do x3
+          $stack(3) =         DO
+$stack(3,"ECODE") =  ,M9,Z150373210,
+$stack(3,"PLACE") = x3+1^test10
+$stack(3,"MCODE") =            set x=1/0
+          $stack(4) =         DO
+$stack(4,"ECODE") =  ,M6,Z150373850,
+$stack(4,"PLACE") = etr+3^test10
+$stack(4,"MCODE") =         if count=1 kill a write a
+=================================================
+-----------> mumps -run test11 <------------
+
+
+Make calls untill we get 10 deep, Cause an error. Pop to level 5 then exit.
+Now at level CNT:  1 and $ESTACK:  1
+Now at level CNT:  2 and $ESTACK:  3
+Now at level CNT:  3 and $ESTACK:  4
+Now at level CNT:  4 and $ESTACK:  5
+Now at level CNT:  5 and $ESTACK:  7  Setting a new ETRAP.
+Now at level CNT:  6 and $ESTACK:  1
+Now at level CNT:  7 and $ESTACK:  2
+Now at level CNT:  8 and $ESTACK:  4
+Now at level CNT:  9 and $ESTACK:  5
+Now at level CNT: 10 and $ESTACK:  6
+
+In the TRAP, $ST: 14  SHOW=B10 $ST(-1)=14
+,M9,Z150373210,
+
+$STACK(0)=-run test11
+ECODE=
+PLACE=A+6^test11
+MCODE= D B
+$STACK(1)=DO
+ECODE=
+PLACE=B+6^test11
+MCODE= S X=$$C() W !,"Continue in normal M,",?33," $ESTACK:",$J($ES,3),"  SHOW=",SHOW
+$STACK(2)=$$
+ECODE=
+PLACE=C+2^test11
+MCODE= D  Q 1
+$STACK(3)=DO
+ECODE=
+PLACE=C+6^test11
+MCODE= . D D(CNT) W !,"Continue in Extrinsic,",?33," $ESTACK:",$J($ES,3),"  SHOW=",SHOW
+$STACK(4)=DO
+ECODE=
+PLACE=D+5^test11
+MCODE= D B W !,"Continue in Parameter passing,",?33," $ESTACK:",$J($ES,3),"  SHOW=",SHOW
+$STACK(5)=DO
+ECODE=
+PLACE=B+6^test11
+MCODE= S X=$$C() W !,"Continue in normal M,",?33," $ESTACK:",$J($ES,3),"  SHOW=",SHOW
+$STACK(6)=$$
+ECODE=
+PLACE=C+2^test11
+MCODE= D  Q 1
+$STACK(7)=DO
+ECODE=
+PLACE=C+6^test11
+MCODE= . D D(CNT) W !,"Continue in Extrinsic,",?33," $ESTACK:",$J($ES,3),"  SHOW=",SHOW
+$STACK(8)=DO
+ECODE=
+PLACE=D+5^test11
+MCODE= D B W !,"Continue in Parameter passing,",?33," $ESTACK:",$J($ES,3),"  SHOW=",SHOW
+$STACK(9)=DO
+ECODE=
+PLACE=B+6^test11
+MCODE= S X=$$C() W !,"Continue in normal M,",?33," $ESTACK:",$J($ES,3),"  SHOW=",SHOW
+$STACK(10)=$$
+ECODE=
+PLACE=C+2^test11
+MCODE= D  Q 1
+$STACK(11)=DO
+ECODE=
+PLACE=C+6^test11
+MCODE= . D D(CNT) W !,"Continue in Extrinsic,",?33," $ESTACK:",$J($ES,3),"  SHOW=",SHOW
+$STACK(12)=DO
+ECODE=
+PLACE=D+5^test11
+MCODE= D B W !,"Continue in Parameter passing,",?33," $ESTACK:",$J($ES,3),"  SHOW=",SHOW
+$STACK(13)=DO
+ECODE=,M9,Z150373210,
+PLACE=B+4^test11
+MCODE= I CNT=EL W 1/0 W !,"** Rest of error line" Q
+$STACK(14)=DO
+ECODE=
+PLACE=TR+3^test11
+MCODE= W !,$ECODE,! D SHW
+$STACK(15)=DO
+ECODE=
+PLACE=SHW+1^test11
+MCODE= F I=0:1:$ST(-1) W !,"$STACK(",I,")=",$ST(I),!,"ECODE=",$ST(I,"ECODE"),!,"PLACE=",$ST(I,"PLACE"),!,"MCODE=",$ST(I,"MCODE")
+In the Unwinder  $ESTACK:  5  SHOW=B9 $ST(-1)=13
+In the Unwinder  $ESTACK:  4  SHOW=B8 $ST(-1)=13
+In the Unwinder  $ESTACK:  3  SHOW=B8 $ST(-1)=13
+In the Unwinder  $ESTACK:  2  SHOW=B7 $ST(-1)=13
+In the Unwinder  $ESTACK:  1  SHOW=B6 $ST(-1)=13
+Continue in Extrinsic,            $ESTACK:  0  SHOW=B5
+Continue in normal M,             $ESTACK:  5  SHOW=B4
+Continue in Parameter passing,    $ESTACK:  4  SHOW=B3
+Continue in Extrinsic,            $ESTACK:  3  SHOW=B2
+Continue in normal M,             $ESTACK:  1  SHOW=B1
+=================================================
+-----------> mumps -run test12 <------------
+in ztr
+in etr
+in ztr
+in etr
+in ztr
+in etr
+in ztr
+in etr
+1
+=================================================
+-----------> mumps -run test13 <------------
+---> In ztr
+$ecode = ,M9,Z150373210,
+---> In ztr
+$ecode = ,M9,Z150373210,M6,Z150373850,
+=================================================
+-----------> mumps -run test14 <------------
+$ecode = ,M9,Z150373210,
+$ecode = ,M9,Z150373210,M3,Z150373586,
+$ecode = ,M9,Z150373210,M3,Z150373586,M16,Z150374450,
+=================================================
+-----------> mumps -run test15 <------------
+I am in etr
+$ecode = ,M9,Z150373210,
+$ecode = ,M9,Z150373210,
+=================================================
+-----------> mumps -run test16 <------------
+I am in etr
+I am in ecprint
+$ecode = ,M26,Z150374122,
+=================================================
+-----------> mumps -run test17 <------------
+I am in etr
+I am in ecprint
+$ecode = ,M26,Z150374122,M16,Z150374450,
+=================================================
+-----------> mumps -run test18 <------------
+I am in etr
+I am in ecprint
+$ecode = ,M9,Z150373210,M26,Z150374122,
+=================================================
+-----------> mumps -run test19 <------------
+I am in etr
+I am in ecprint
+$ecode = ,M26,Z150374122,M26,Z150374122,
+=================================================
+-----------> mumps -run test20 <------------
+
+$et=g er1^test20
+in error trap, $st=3
+1: DO
+    etst1+4^test20:  . s x=2 d
+2: DO
+    etst1+5^test20:  . . s x=3 d
+3: DO
+    etst1+6^test20:  . . . s x=1/0
+    ,M9,Z150373210,
+$et=g er2^test20
+2 dots after error
+1 dots after error
+no dots after error
+=================================================
+-----------> mumps -run test21 <------------
+
+$et=g er1^test21
+in error trap, $st=3 (,M9,Z150373210, and ,M9,Z150373210,)
+1: DO
+    etst2+4^test21:  . s x=2 d
+2: DO
+    etst2+5^test21:  . . s x=3 d
+3: DO
+    etst2+6^test21:  . . . s x=1/0
+    ,M9,Z150373210,
+$et=g er2^test21
+in other error trap, $st=2 ( and ,M9,Z150373210,)
+1: DO
+    etst2+4^test21:  . s x=2 d
+2: DO
+    etst2+5^test21:  . . s x=3 d
+3: DO
+    etst2+6^test21:  . . . s x=1/0
+    ,M9,Z150373210,
+in other error trap, $st=1 ( and ,M9,Z150373210,)
+1: DO
+    etst2+4^test21:  . s x=2 d
+2: DO
+    etst2+5^test21:  . . s x=3 d
+3: DO
+    etst2+6^test21:  . . . s x=1/0
+    ,M9,Z150373210,
+in other error trap, $st=0 ( and ,M9,Z150373210,)
+1: DO
+    etst2+4^test21:  . s x=2 d
+2: DO
+    etst2+5^test21:  . . s x=3 d
+3: DO
+    etst2+6^test21:  . . . s x=1/0
+    ,M9,Z150373210,
+=================================================
+-----------> mumps -run test22 <------------
+
+$et=g er1^test22
+in error trap, $st=3 (,M9,Z150373210, and ,M9,Z150373210,)
+1: DO
+    etst3+4^test22:  . s x=2 d
+2: DO
+    etst3+5^test22:  . . s x=3 d
+3: DO
+    etst3+6^test22:  . . . s x=1/0
+    ,M9,Z150373210,
+$et=g er2^test22
+in other error trap, $st=2 ( and ,M9,Z150373210,M9,Z150373210,)
+1: DO
+    etst3+4^test22:  . s x=2 d
+2: DO
+    etst3+5^test22:  . . s x=3 d
+3: DO
+    etst3+6^test22:  . . . s x=1/0
+    ,M9,Z150373210,
+4: DO
+    er1+4^test22:  s x=2/0
+    ,M9,Z150373210,
+in other error trap, $st=1 ( and ,M9,Z150373210,M9,Z150373210,)
+1: DO
+    etst3+4^test22:  . s x=2 d
+2: DO
+    etst3+5^test22:  . . s x=3 d
+3: DO
+    etst3+6^test22:  . . . s x=1/0
+    ,M9,Z150373210,
+4: DO
+    er1+4^test22:  s x=2/0
+    ,M9,Z150373210,
+in other error trap, $st=0 ( and ,M9,Z150373210,M9,Z150373210,)
+1: DO
+    etst3+4^test22:  . s x=2 d
+2: DO
+    etst3+5^test22:  . . s x=3 d
+3: DO
+    etst3+6^test22:  . . . s x=1/0
+    ,M9,Z150373210,
+4: DO
+    er1+4^test22:  s x=2/0
+    ,M9,Z150373210,
+=================================================
+-----------> mumps -run test23 <------------
+
+$et=g er1^test23
+in error trap, $st=3 (,M9,Z150373210, and ,M9,Z150373210,)
+1: DO
+    etst4+4^test23:  . s x=2 d
+2: DO
+    etst4+5^test23:  . . s x=3 d
+3: DO
+    etst4+6^test23:  . . . s x=1/0
+    ,M9,Z150373210,
+$et=g er2^test23
+in other error trap, $st=2 ( and ,M9,Z150373210,M9,Z150373210,)
+1: DO
+    etst4+4^test23:  . s x=2 d
+2: DO
+    etst4+5^test23:  . . s x=3 d
+3: DO
+    etst4+6^test23:  . . . s x=1/0
+    ,M9,Z150373210,
+4: DO
+    er1+5^test23:  . s x=2/0
+    ,M9,Z150373210,
+in other error trap, $st=1 ( and ,M9,Z150373210,M9,Z150373210,)
+1: DO
+    etst4+4^test23:  . s x=2 d
+2: DO
+    etst4+5^test23:  . . s x=3 d
+3: DO
+    etst4+6^test23:  . . . s x=1/0
+    ,M9,Z150373210,
+4: DO
+    er1+5^test23:  . s x=2/0
+    ,M9,Z150373210,
+in other error trap, $st=0 ( and ,M9,Z150373210,M9,Z150373210,)
+1: DO
+    etst4+4^test23:  . s x=2 d
+2: DO
+    etst4+5^test23:  . . s x=3 d
+3: DO
+    etst4+6^test23:  . . . s x=1/0
+    ,M9,Z150373210,
+4: DO
+    er1+5^test23:  . s x=2/0
+    ,M9,Z150373210,
+=================================================
+-----------> mumps -run test24 <------------
+
+$et=d er1^test24
+in error trap, $st=4 ( and ,M9,Z150373210,)
+1: DO
+    etst5+4^test24:  . s x=2 d
+2: DO
+    etst5+5^test24:  . . s x=3 d
+3: DO
+    etst5+6^test24:  . . . s x=1/0
+    ,M9,Z150373210,
+4: DO
+    er1+1^test24:  f i=1:1:$st(-1) w !,i,": ",$st(i),!?4,$st(i,"PLACE"),": ",$st(i,"MCODE") w:$st(i,"ECODE")'="" !?4,$st(i,"ECODE")
+$et=g er2^test24
+in other error trap, $st=2 ( and ,M9,Z150373210,M9,Z150373210,)
+1: DO
+    etst5+4^test24:  . s x=2 d
+2: DO
+    etst5+5^test24:  . . s x=3 d
+3: DO
+    etst5+6^test24:  . . . s x=1/0
+    ,M9,Z150373210,
+4: DO
+    er1+4^test24:  s x=2/0
+    ,M9,Z150373210,
+in other error trap, $st=1 ( and ,M9,Z150373210,M9,Z150373210,)
+1: DO
+    etst5+4^test24:  . s x=2 d
+2: DO
+    etst5+5^test24:  . . s x=3 d
+3: DO
+    etst5+6^test24:  . . . s x=1/0
+    ,M9,Z150373210,
+4: DO
+    er1+4^test24:  s x=2/0
+    ,M9,Z150373210,
+in other error trap, $st=0 ( and ,M9,Z150373210,M9,Z150373210,)
+1: DO
+    etst5+4^test24:  . s x=2 d
+2: DO
+    etst5+5^test24:  . . s x=3 d
+3: DO
+    etst5+6^test24:  . . . s x=1/0
+    ,M9,Z150373210,
+4: DO
+    er1+4^test24:  s x=2/0
+    ,M9,Z150373210,
+=================================================
+-----------> mumps -run test25 <------------
+
+$et=d er1^test25
+in error trap, $st=4 ( and ,M9,Z150373210,)
+1: DO
+    etst6+4^test25:  . s x=2 d
+2: DO
+    etst6+5^test25:  . . s x=3 d
+3: DO
+    etst6+6^test25:  . . . s x=1/0
+    ,M9,Z150373210,
+4: DO
+    er1+1^test25:  f i=1:1:$st(-1) w !,i,": ",$st(i),!?4,$st(i,"PLACE"),": ",$st(i,"MCODE") w:$st(i,"ECODE")'="" !?4,$st(i,"ECODE")
+$et=g er2^test25
+2 dots after error
+1 dots after error
+no dots after error
+=================================================
+-----------> mumps -run test26 <------------
+$stack(-1) = 2
+$ecode     = ,M9,Z150373210,M16,Z150374450,
+$stack(0) = -run test26
+$stack(0,"ECODE") = 
+$stack(0,"PLACE") = x+2^test26
+$stack(0,"MCODE") =         do y
+$stack(1) = DO
+$stack(1,"ECODE") = 
+$stack(1,"PLACE") = y+3^test26
+$stack(1,"MCODE") =         s x=$$k^test26(1)
+$stack(2) = $$
+$stack(2,"ECODE") = ,M9,Z150373210,
+$stack(2,"PLACE") = k+1^test26
+$stack(2,"MCODE") =         s x=1/0
+=================================================
+-----------> mumps -run test27 <------------
+I am in etr
+I am in etr
+I am in etr
+=================================================
+-----------> mumps -run test28 <------------
+I am in etr
+$ecode = ,M9,Z150373210,
+$stack(-1) = 2
+$ecode = ,M16,Z150374450,
+$stack(-1) = 1
+$ecode = ,M16,Z150374450,
+=================================================
+-----------> mumps -run test29 <------------
+
+$ecode     = ,M9,Z150373210,
+$stack     = 4
+$stack(-1) = 4
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =  do y
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =  do z
+$stack(2,"ECODE") =                  :: $stack(2,"MCODE") =  do k
+$stack(3,"ECODE") =  ,M9,Z150373210, :: $stack(3,"MCODE") =  set x=1/0
+$stack(4,"ECODE") =                  :: $stack(4,"MCODE") =         for index=0:1:$stack(-1)  do
+
+$ecode     = ,M9,Z150373210,
+$stack     = 2
+$stack(-1) = 3
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =  do y
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =  do z
+$stack(2,"ECODE") =                  :: $stack(2,"MCODE") =  do k
+$stack(3,"ECODE") =  ,M9,Z150373210, :: $stack(3,"MCODE") =  set x=1/0
+in y : $ecode (should be non-NULL) = ,M9,Z150373210,
+in x : $ecode (should be non-NULL) = ,M9,Z150373210,
+=================================================
+-----------> mumps -run test30 <------------
+in etr : $ecode = ,M9,Z150373210,
+in etr : $ecode = ,M9,Z150373210,
+=================================================
+-----------> mumps -run test31 <------------
+
+$l($ecode) = 16385
+"," "M10," "," 
+$l($ecode) = 24577
+"," "M10," "M11," "," 
+$l($ecode) = 28673
+"," "M10," "M11," "M12," "," 
+$l($ecode) = 30721
+"," "M10," "M11," "M12," "M13," "," 
+$l($ecode) = 31745
+"," "M10," "M11," "M12," "M13," "M14," "," 
+$l($ecode) = 32257
+"," "M10," "M11," "M12," "M13," "M14," "M15," "," 
+$l($ecode) = 32513
+"," "M10," "M11," "M12," "M13," "M14," "M15," "M16," "," 
+$l($ecode) = 32641
+"," "M10," "M11," "M12," "M13," "M14," "M15," "M16," "M17," "," 
+$l($ecode) = 32705
+"," "M10," "M11," "M12," "M13," "M14," "M15," "M16," "M17," "M18," "," 
+$l($ecode) = 32737
+"," "M10," "M11," "M12," "M13," "M14," "M15," "M16," "M17," "M18," "M19," "," 
+$l($ecode) = 32753
+"," "M10," "M11," "M12," "M13," "M14," "M15," "M16," "M17," "M18," "M19," "M20," "," 
+$l($ecode) = 32761
+"," "M10," "M11," "M12," "M13," "M14," "M15," "M16," "M17," "M18," "M19," "M20," "M21," "," 
+$l($ecode) = 32756
+"," "M10," "M11," "M12," "M13," "M14," "M15," "M16," "M17," "M18," "M19," "Z150379696," "M22," "," 
+$l($ecode) = 32764
+"," "M10," "M11," "M12," "M13," "M14," "M15," "M16," "M17," "M18," "M19," "Z150379696," "M23," "," 
+$l($ecode) = 32748
+"," "M10," "M11," "M12," "M13," "M14," "M15," "M16," "M17," "M18," "Z150379696," "M24," "," 
+$l($ecode) = 32716
+"," "M10," "M11," "M12," "M13," "M14," "M15," "M16," "M17," "Z150379696," "M25," "," 
+$l($ecode) = 32652
+"," "M10," "M11," "M12," "M13," "M14," "M15," "M16," "Z150379696," "M26," "," 
+$l($ecode) = 32524
+"," "M10," "M11," "M12," "M13," "M14," "M15," "Z150379696," "M27," "," 
+$l($ecode) = 32268
+"," "M10," "M11," "M12," "M13," "M14," "Z150379696," "M28," "," 
+$l($ecode) = 31756
+"," "M10," "M11," "M12," "M13," "Z150379696," "M29," "," 
+$l($ecode) = 32268
+"," "M10," "M11," "M12," "M13," "Z150379696," "M29," "M30," "," 
+$l($ecode) = 32524
+"," "M10," "M11," "M12," "M13," "Z150379696," "M29," "M30," "M31," "," 
+$l($ecode) = 32652
+"," "M10," "M11," "M12," "M13," "Z150379696," "M29," "M30," "M31," "M32," "," 
+$l($ecode) = 32716
+"," "M10," "M11," "M12," "M13," "Z150379696," "M29," "M30," "M31," "M32," "M33," "," 
+$l($ecode) = 32748
+"," "M10," "M11," "M12," "M13," "Z150379696," "M29," "M30," "M31," "M32," "M33," "M34," "," 
+$l($ecode) = 32764
+"," "M10," "M11," "M12," "M13," "Z150379696," "M29," "M30," "M31," "M32," "M33," "M34," "M35," "," 
+$l($ecode) = 32767
+"," "M10," "M11," "M12," "M13," "Z150379696," "M29," "M30," "M31," "M32," "M33," "M34," "Z150379696," "M36," "," 
+$l($ecode) = 32767
+"," "M10," "M11," "M12," "M13," "Z150379696," "M29," "M30," "M31," "M32," "M33," "M34," "Z150379696," "M37," "," 
+$l($ecode) = 32743
+"," "M10," "M11," "M12," "M13," "Z150379696," "M29," "M30," "M31," "M32," "M33," "Z150379696," "M38," "," 
+$l($ecode) = 32759
+"," "M10," "M11," "M12," "M13," "Z150379696," "M29," "M30," "M31," "M32," "M33," "Z150379696," "M39," "," 
+$l($ecode) = 32727
+"," "M10," "M11," "M12," "M13," "Z150379696," "M29," "M30," "M31," "M32," "Z150379696," "M40," "," 
+$l($ecode) = 32663
+"," "M10," "M11," "M12," "M13," "Z150379696," "M29," "M30," "M31," "Z150379696," "M41," "," 
+$l($ecode) = 32535
+"," "M10," "M11," "M12," "M13," "Z150379696," "M29," "M30," "Z150379696," "M42," "," 
+$l($ecode) = 32279
+"," "M10," "M11," "M12," "M13," "Z150379696," "M29," "Z150379696," "M43," "," 
+$l($ecode) = 31767
+"," "M10," "M11," "M12," "M13," "Z150379696," "M44," "," 
+$l($ecode) = 32279
+"," "M10," "M11," "M12," "M13," "Z150379696," "M44," "M45," "," 
+$l($ecode) = 32535
+"," "M10," "M11," "M12," "M13," "Z150379696," "M44," "M45," "M46," "," 
+=================================================
+-----------> mumps -run test32 <------------
+$l($ecode) = 32765
+$l($ecode) = 32765
+=================================================
+-----------> mumps -run test33 <------------
+Error occurred: 150373050,y+7^test33,%GTM-E-INVCMD, Invalid command keyword encountered
+$l($ecode) = 32765
+=================================================
+-----------> mumps -run test34 <------------
+,M0,
+,M0,M1,
+,M0,M1,M2,
+,M0,M1,M2,M3,
+,M0,M1,M2,M3,M4,
+,M0,M1,M2,M3,M4,M5,
+,M0,M1,M2,M3,M4,M5,M6,
+,M0,M1,M2,M3,M4,M5,M6,M7,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,M19,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,M19,M20,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,M19,M20,M21,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,M19,M20,M21,M22,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,M19,M20,M21,M22,M23,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,M19,M20,M21,M22,M23,M24,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,M19,M20,M21,M22,M23,M24,M25,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,M19,M20,M21,M22,M23,M24,M25,M26,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,M19,M20,M21,M22,M23,M24,M25,M26,M27,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,M19,M20,M21,M22,M23,M24,M25,M26,M27,M28,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,M19,M20,M21,M22,M23,M24,M25,M26,M27,M28,M29,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,M19,M20,M21,M22,M23,M24,M25,M26,M27,M28,M29,M30,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,M19,M20,M21,M22,M23,M24,M25,M26,M27,M28,M29,M30,M31,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,M19,M20,M21,M22,M23,M24,M25,M26,M27,M28,M29,Z150379696,M32,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,M19,M20,M21,M22,M23,M24,M25,M26,M27,M28,M29,Z150379696,M33,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,M19,M20,M21,M22,M23,M24,M25,M26,M27,M28,M29,Z150379696,M34,
+,M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,M16,M17,M18,M19,M20,M21,M22,M23,M24,M25,M26,M27,M28,M29,Z150379696,M35,
+,M36,
+,M36,M37,
+,M36,M37,M38,
+,M36,M37,M38,M39,
+,M36,M37,M38,M39,M40,
+,M36,M37,M38,M39,M40,M41,
+,M36,M37,M38,M39,M40,M41,M42,
+,M36,M37,M38,M39,M40,M41,M42,M43,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,M55,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,M55,M56,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,M55,M56,M57,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,M55,M56,M57,M58,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,M55,M56,M57,M58,M59,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,M55,M56,M57,M58,M59,M60,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,M55,M56,M57,M58,M59,M60,M61,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,M55,M56,M57,M58,M59,M60,M61,M62,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,M55,M56,M57,M58,M59,M60,M61,M62,M63,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,M55,M56,M57,M58,M59,M60,M61,M62,M63,M64,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,M55,M56,M57,M58,M59,M60,M61,M62,M63,M64,M65,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,M55,M56,M57,M58,M59,M60,M61,M62,M63,M64,M65,M66,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,M55,M56,M57,M58,M59,M60,M61,M62,M63,M64,M65,M66,M67,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,M55,M56,M57,M58,M59,M60,M61,M62,M63,M64,M65,Z150379696,M68,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,M55,M56,M57,M58,M59,M60,M61,M62,M63,M64,M65,Z150379696,M69,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,M55,M56,M57,M58,M59,M60,M61,M62,M63,M64,M65,Z150379696,M70,
+,M36,M37,M38,M39,M40,M41,M42,M43,M44,M45,M46,M47,M48,M49,M50,M51,M52,M53,M54,M55,M56,M57,M58,M59,M60,M61,M62,M63,M64,M65,Z150379696,M71,
+,M72,
+,M72,M73,
+,M72,M73,M74,
+,M72,M73,M74,M75,
+,M72,M73,M74,M75,M76,
+,M72,M73,M74,M75,M76,M77,
+,M72,M73,M74,M75,M76,M77,M78,
+,M72,M73,M74,M75,M76,M77,M78,M79,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,M91,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,M91,M92,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,M91,M92,M93,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,M91,M92,M93,M94,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,M91,M92,M93,M94,M95,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,M91,M92,M93,M94,M95,M96,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,M91,M92,M93,M94,M95,M96,M97,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,M91,M92,M93,M94,M95,M96,M97,M98,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,M91,M92,M93,M94,M95,M96,M97,M98,M99,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,M91,M92,M93,M94,M95,M96,M97,M98,M99,M100,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,M91,M92,M93,M94,M95,M96,M97,M98,M99,M100,M101,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,M91,M92,M93,M94,M95,M96,M97,M98,M99,M100,M101,M102,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,M91,M92,M93,M94,M95,M96,M97,M98,M99,M100,M101,M102,M103,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,M91,M92,M93,M94,M95,M96,M97,M98,M99,M100,M101,Z150379696,M104,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,M91,M92,M93,M94,M95,M96,M97,M98,M99,M100,M101,Z150379696,M105,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,M91,M92,M93,M94,M95,M96,M97,M98,M99,M100,M101,Z150379696,M106,
+,M72,M73,M74,M75,M76,M77,M78,M79,M80,M81,M82,M83,M84,M85,M86,M87,M88,M89,M90,M91,M92,M93,M94,M95,M96,M97,M98,M99,M100,M101,Z150379696,M107,
+,M108,
+,M108,M109,
+,M108,M109,M110,
+,M108,M109,M110,M111,
+,M108,M109,M110,M111,M112,
+,M108,M109,M110,M111,M112,M113,
+,M108,M109,M110,M111,M112,M113,M114,
+,M108,M109,M110,M111,M112,M113,M114,M115,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,M127,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,M127,M128,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,M127,M128,M129,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,M127,M128,M129,M130,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,M127,M128,M129,M130,M131,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,M127,M128,M129,M130,M131,M132,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,M127,M128,M129,M130,M131,M132,M133,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,M127,M128,M129,M130,M131,M132,M133,M134,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,M127,M128,M129,M130,M131,M132,M133,M134,M135,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,M127,M128,M129,M130,M131,M132,M133,M134,M135,M136,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,M127,M128,M129,M130,M131,M132,M133,M134,M135,M136,M137,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,M127,M128,M129,M130,M131,M132,M133,M134,M135,M136,M137,M138,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,M127,M128,M129,M130,M131,M132,M133,M134,M135,M136,M137,M138,M139,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,M127,M128,M129,M130,M131,M132,M133,M134,M135,M136,M137,Z150379696,M140,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,M127,M128,M129,M130,M131,M132,M133,M134,M135,M136,M137,Z150379696,M141,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,M127,M128,M129,M130,M131,M132,M133,M134,M135,M136,M137,Z150379696,M142,
+,M108,M109,M110,M111,M112,M113,M114,M115,M116,M117,M118,M119,M120,M121,M122,M123,M124,M125,M126,M127,M128,M129,M130,M131,M132,M133,M134,M135,M136,M137,Z150379696,M143,
+,M144,
+,M144,M145,
+,M144,M145,M146,
+=================================================
+-----------> mumps -run test35 <------------
+in etr  : $stack(-1) = 2
+in etr1 : $stack(-1) = 3
+in etr  : $stack(-1) = 1
+in etr1 : $stack(-1) = 1
+=================================================
+-----------> mumps -run test36 <------------
+in etr  : $stack(-1) = 3
+in etr  : $stack(-1) = 2
+in etr  : $stack(-1) = 2
+=================================================
+-----------> mumps -run test37 <------------
+$stack(-1) = 5
+$stack(0) = -run test37
+$stack(0,"ECODE") = 
+$stack(0,"PLACE") = x+2^test37
+$stack(0,"MCODE") =         x "do y"
+$stack(1) = XECUTE
+$stack(1,"ECODE") = 
+$stack(1,"PLACE") = @
+$stack(1,"MCODE") = do y
+$stack(2) = DO
+$stack(2,"ECODE") = 
+$stack(2,"PLACE") = y+1^test37
+$stack(2,"MCODE") =         w $$z^test37(2)
+$stack(3) = $$
+$stack(3,"ECODE") = 
+$stack(3,"PLACE") = z+1^test37
+$stack(3,"MCODE") =         do k
+$stack(4) = DO
+$stack(4,"ECODE") = ,M9,Z150373210,
+$stack(4,"PLACE") = k+1^test37
+$stack(4,"MCODE") =         s x=1/0
+$stack(5) = DO
+$stack(5,"ECODE") = 
+$stack(5,"PLACE") = etr+2^test37
+$stack(5,"MCODE") =         for i=0:1:$stack(-1)  do
+$stack(-1) = 4
+$stack(0) = -run test37
+$stack(0,"ECODE") = 
+$stack(0,"PLACE") = x+2^test37
+$stack(0,"MCODE") =         x "do y"
+$stack(1) = XECUTE
+$stack(1,"ECODE") = 
+$stack(1,"PLACE") = @
+$stack(1,"MCODE") = do y
+$stack(2) = DO
+$stack(2,"ECODE") = 
+$stack(2,"PLACE") = y+1^test37
+$stack(2,"MCODE") =         w $$z^test37(2)
+$stack(3) = $$
+$stack(3,"ECODE") = 
+$stack(3,"PLACE") = z+1^test37
+$stack(3,"MCODE") =         do k
+$stack(4) = DO
+$stack(4,"ECODE") = ,M9,Z150373210,
+$stack(4,"PLACE") = k+1^test37
+$stack(4,"MCODE") =         s x=1/0
+$stack(-1) = 4
+$stack(0) = -run test37
+$stack(0,"ECODE") = 
+$stack(0,"PLACE") = x+2^test37
+$stack(0,"MCODE") =         x "do y"
+$stack(1) = XECUTE
+$stack(1,"ECODE") = 
+$stack(1,"PLACE") = @
+$stack(1,"MCODE") = do y
+$stack(2) = DO
+$stack(2,"ECODE") = 
+$stack(2,"PLACE") = y+1^test37
+$stack(2,"MCODE") =         w $$z^test37(2)
+$stack(3) = $$
+$stack(3,"ECODE") = 
+$stack(3,"PLACE") = z+1^test37
+$stack(3,"MCODE") =         do k
+$stack(4) = DO
+$stack(4,"ECODE") = ,M9,Z150373210,
+$stack(4,"PLACE") = k+1^test37
+$stack(4,"MCODE") =         s x=1/0
+$stack(-1) = 4
+$stack(0) = -run test37
+$stack(0,"ECODE") = 
+$stack(0,"PLACE") = x+2^test37
+$stack(0,"MCODE") =         x "do y"
+$stack(1) = XECUTE
+$stack(1,"ECODE") = 
+$stack(1,"PLACE") = @
+$stack(1,"MCODE") = do y
+$stack(2) = DO
+$stack(2,"ECODE") = 
+$stack(2,"PLACE") = y+1^test37
+$stack(2,"MCODE") =         w $$z^test37(2)
+$stack(3) = $$
+$stack(3,"ECODE") = 
+$stack(3,"PLACE") = z+1^test37
+$stack(3,"MCODE") =         do k
+$stack(4) = DO
+$stack(4,"ECODE") = ,M9,Z150373210,
+$stack(4,"PLACE") = k+1^test37
+$stack(4,"MCODE") =         s x=1/0
+$stack(-1) = 4
+$stack(0) = -run test37
+$stack(0,"ECODE") = 
+$stack(0,"PLACE") = x+2^test37
+$stack(0,"MCODE") =         x "do y"
+$stack(1) = XECUTE
+$stack(1,"ECODE") = 
+$stack(1,"PLACE") = @
+$stack(1,"MCODE") = do y
+$stack(2) = DO
+$stack(2,"ECODE") = 
+$stack(2,"PLACE") = y+1^test37
+$stack(2,"MCODE") =         w $$z^test37(2)
+$stack(3) = $$
+$stack(3,"ECODE") = 
+$stack(3,"PLACE") = z+1^test37
+$stack(3,"MCODE") =         do k
+$stack(4) = DO
+$stack(4,"ECODE") = ,M9,Z150373210,
+$stack(4,"PLACE") = k+1^test37
+$stack(4,"MCODE") =         s x=1/0
+=================================================
+-----------> mumps -run test38 <------------
+$stack(-1) = 4
+$stack(0)            = -run test38
+    $stack(0,"PLACE") = x+1^test38
+    $stack(0,"MCODE") =         do y
+$stack(1)            = DO
+    $stack(1,"PLACE") = y+1^test38
+    $stack(1,"MCODE") =         x "do z"
+$stack(2)            = XECUTE
+    $stack(2,"PLACE") = @
+    $stack(2,"MCODE") = do z
+$stack(3)            = DO
+    $stack(3,"PLACE") = z+1^test38
+    $stack(3,"MCODE") =         set x=$$k^test38(2)
+$stack(4)            = $$
+    $stack(4,"PLACE") = k+2^test38
+    $stack(4,"MCODE") =         for i=0:1:$stack(-1)  do
+=================================================
+-----------> mumps -run test39 <------------
+
+$ecode     = ,M9,Z150373210,
+$stack     = 4
+$stack(-1) = 4
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         do y
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         do z
+$stack(2,"ECODE") =  ,M9,Z150373210, :: $stack(2,"MCODE") =         set x=1/0
+$stack(3,"ECODE") =                  :: $stack(3,"MCODE") =  do ecprint
+$stack(4,"ECODE") =                  :: $stack(4,"MCODE") =         for index=0:1:$stack(-1)  do
+
+$ecode     = ,M9,Z150373210,M16,Z150374450,
+$stack     = 3
+$stack(-1) = 4
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         do y
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         do z
+$stack(2,"ECODE") =  ,M9,Z150373210, :: $stack(2,"MCODE") =         set x=1/0
+$stack(3,"ECODE") =                  :: $stack(3,"MCODE") =         if count=1 do p
+$stack(4,"ECODE") = ,M16,Z150374450, :: $stack(4,"MCODE") =         quit 1
+
+$ecode     = ,M9,Z150373210,M16,Z150374450,
+$stack     = 2
+$stack(-1) = 4
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         do y
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         do z
+$stack(2,"ECODE") =  ,M9,Z150373210, :: $stack(2,"MCODE") =         set x=1/0
+$stack(3,"ECODE") =                  :: $stack(3,"MCODE") =         if count=1 do p
+$stack(4,"ECODE") = ,M16,Z150374450, :: $stack(4,"MCODE") =         quit 1
+=================================================
+-----------> mumps -run test40 <------------
+
+$ecode     = ,M9,Z150373210,
+$stack     = 283
+$stack(-1) = 283
+$stack(0,"ECODE") =                  :: $stack(0,"MCODE") =         do y
+$stack(1,"ECODE") =                  :: $stack(1,"MCODE") =         do y
+$stack(2,"ECODE") =                  :: $stack(2,"MCODE") =         do y
+$stack(3,"ECODE") =                  :: $stack(3,"MCODE") =         do y
+$stack(4,"ECODE") =                  :: $stack(4,"MCODE") =         do y
+$stack(5,"ECODE") =                  :: $stack(5,"MCODE") =         do y
+$stack(6,"ECODE") =                  :: $stack(6,"MCODE") =         do y
+$stack(7,"ECODE") =                  :: $stack(7,"MCODE") =         do y
+$stack(8,"ECODE") =                  :: $stack(8,"MCODE") =         do y
+$stack(9,"ECODE") =                  :: $stack(9,"MCODE") =         do y
+$stack(10,"ECODE") =                  :: $stack(10,"MCODE") =         do y
+$stack(11,"ECODE") =                  :: $stack(11,"MCODE") =         do y
+$stack(12,"ECODE") =                  :: $stack(12,"MCODE") =         do y
+$stack(13,"ECODE") =                  :: $stack(13,"MCODE") =         do y
+$stack(14,"ECODE") =                  :: $stack(14,"MCODE") =         do y
+$stack(15,"ECODE") =                  :: $stack(15,"MCODE") =         do y
+$stack(16,"ECODE") =                  :: $stack(16,"MCODE") =         do y
+$stack(17,"ECODE") =                  :: $stack(17,"MCODE") =         do y
+$stack(18,"ECODE") =                  :: $stack(18,"MCODE") =         do y
+$stack(19,"ECODE") =                  :: $stack(19,"MCODE") =         do y
+$stack(20,"ECODE") =                  :: $stack(20,"MCODE") =         do y
+$stack(21,"ECODE") =                  :: $stack(21,"MCODE") =         do y
+$stack(22,"ECODE") =                  :: $stack(22,"MCODE") =         do y
+$stack(23,"ECODE") =                  :: $stack(23,"MCODE") =         do y
+$stack(24,"ECODE") =                  :: $stack(24,"MCODE") =         do y
+$stack(25,"ECODE") =                  :: $stack(25,"MCODE") =         do y
+$stack(26,"ECODE") =                  :: $stack(26,"MCODE") =         do y
+$stack(27,"ECODE") =                  :: $stack(27,"MCODE") =         do y
+$stack(28,"ECODE") =                  :: $stack(28,"MCODE") =         do y
+$stack(29,"ECODE") =                  :: $stack(29,"MCODE") =         do y
+$stack(30,"ECODE") =                  :: $stack(30,"MCODE") =         do y
+$stack(31,"ECODE") =                  :: $stack(31,"MCODE") =         do y
+$stack(32,"ECODE") =                  :: $stack(32,"MCODE") =         do y
+$stack(33,"ECODE") =                  :: $stack(33,"MCODE") =         do y
+$stack(34,"ECODE") =                  :: $stack(34,"MCODE") =         do y
+$stack(35,"ECODE") =                  :: $stack(35,"MCODE") =         do y
+$stack(36,"ECODE") =                  :: $stack(36,"MCODE") =         do y
+$stack(37,"ECODE") =                  :: $stack(37,"MCODE") =         do y
+$stack(38,"ECODE") =                  :: $stack(38,"MCODE") =         do y
+$stack(39,"ECODE") =                  :: $stack(39,"MCODE") =         do y
+$stack(40,"ECODE") =                  :: $stack(40,"MCODE") =         do y
+$stack(41,"ECODE") =                  :: $stack(41,"MCODE") =         do y
+$stack(42,"ECODE") =                  :: $stack(42,"MCODE") =         do y
+$stack(43,"ECODE") =                  :: $stack(43,"MCODE") =         do y
+$stack(44,"ECODE") =                  :: $stack(44,"MCODE") =         do y
+$stack(45,"ECODE") =                  :: $stack(45,"MCODE") =         do y
+$stack(46,"ECODE") =                  :: $stack(46,"MCODE") =         do y
+$stack(47,"ECODE") =                  :: $stack(47,"MCODE") =         do y
+$stack(48,"ECODE") =                  :: $stack(48,"MCODE") =         do y
+$stack(49,"ECODE") =                  :: $stack(49,"MCODE") =         do y
+$stack(50,"ECODE") =                  :: $stack(50,"MCODE") =         do y
+$stack(51,"ECODE") =                  :: $stack(51,"MCODE") =         do y
+$stack(52,"ECODE") =                  :: $stack(52,"MCODE") =         do y
+$stack(53,"ECODE") =                  :: $stack(53,"MCODE") =         do y
+$stack(54,"ECODE") =                  :: $stack(54,"MCODE") =         do y
+$stack(55,"ECODE") =                  :: $stack(55,"MCODE") =         do y
+$stack(56,"ECODE") =                  :: $stack(56,"MCODE") =         do y
+$stack(57,"ECODE") =                  :: $stack(57,"MCODE") =         do y
+$stack(58,"ECODE") =                  :: $stack(58,"MCODE") =         do y
+$stack(59,"ECODE") =                  :: $stack(59,"MCODE") =         do y
+$stack(60,"ECODE") =                  :: $stack(60,"MCODE") =         do y
+$stack(61,"ECODE") =                  :: $stack(61,"MCODE") =         do y
+$stack(62,"ECODE") =                  :: $stack(62,"MCODE") =         do y
+$stack(63,"ECODE") =                  :: $stack(63,"MCODE") =         do y
+$stack(64,"ECODE") =                  :: $stack(64,"MCODE") =         do y
+$stack(65,"ECODE") =                  :: $stack(65,"MCODE") =         do y
+$stack(66,"ECODE") =                  :: $stack(66,"MCODE") =         do y
+$stack(67,"ECODE") =                  :: $stack(67,"MCODE") =         do y
+$stack(68,"ECODE") =                  :: $stack(68,"MCODE") =         do y
+$stack(69,"ECODE") =                  :: $stack(69,"MCODE") =         do y
+$stack(70,"ECODE") =                  :: $stack(70,"MCODE") =         do y
+$stack(71,"ECODE") =                  :: $stack(71,"MCODE") =         do y
+$stack(72,"ECODE") =                  :: $stack(72,"MCODE") =         do y
+$stack(73,"ECODE") =                  :: $stack(73,"MCODE") =         do y
+$stack(74,"ECODE") =                  :: $stack(74,"MCODE") =         do y
+$stack(75,"ECODE") =                  :: $stack(75,"MCODE") =         do y
+$stack(76,"ECODE") =                  :: $stack(76,"MCODE") =         do y
+$stack(77,"ECODE") =                  :: $stack(77,"MCODE") =         do y
+$stack(78,"ECODE") =                  :: $stack(78,"MCODE") =         do y
+$stack(79,"ECODE") =                  :: $stack(79,"MCODE") =         do y
+$stack(80,"ECODE") =                  :: $stack(80,"MCODE") =         do y
+$stack(81,"ECODE") =                  :: $stack(81,"MCODE") =         do y
+$stack(82,"ECODE") =                  :: $stack(82,"MCODE") =         do y
+$stack(83,"ECODE") =                  :: $stack(83,"MCODE") =         do y
+$stack(84,"ECODE") =                  :: $stack(84,"MCODE") =         do y
+$stack(85,"ECODE") =                  :: $stack(85,"MCODE") =         do y
+$stack(86,"ECODE") =                  :: $stack(86,"MCODE") =         do y
+$stack(87,"ECODE") =                  :: $stack(87,"MCODE") =         do y
+$stack(88,"ECODE") =                  :: $stack(88,"MCODE") =         do y
+$stack(89,"ECODE") =                  :: $stack(89,"MCODE") =         do y
+$stack(90,"ECODE") =                  :: $stack(90,"MCODE") =         do y
+$stack(91,"ECODE") =                  :: $stack(91,"MCODE") =         do y
+$stack(92,"ECODE") =                  :: $stack(92,"MCODE") =         do y
+$stack(93,"ECODE") =                  :: $stack(93,"MCODE") =         do y
+$stack(94,"ECODE") =                  :: $stack(94,"MCODE") =         do y
+$stack(95,"ECODE") =                  :: $stack(95,"MCODE") =         do y
+$stack(96,"ECODE") =                  :: $stack(96,"MCODE") =         do y
+$stack(97,"ECODE") =                  :: $stack(97,"MCODE") =         do y
+$stack(98,"ECODE") =                  :: $stack(98,"MCODE") =         do y
+$stack(99,"ECODE") =                  :: $stack(99,"MCODE") =         do y
+$stack(100,"ECODE") =                  :: $stack(100,"MCODE") =         do y
+$stack(101,"ECODE") =                  :: $stack(101,"MCODE") =         do y
+$stack(102,"ECODE") =                  :: $stack(102,"MCODE") =         do y
+$stack(103,"ECODE") =                  :: $stack(103,"MCODE") =         do y
+$stack(104,"ECODE") =                  :: $stack(104,"MCODE") =         do y
+$stack(105,"ECODE") =                  :: $stack(105,"MCODE") =         do y
+$stack(106,"ECODE") =                  :: $stack(106,"MCODE") =         do y
+$stack(107,"ECODE") =                  :: $stack(107,"MCODE") =         do y
+$stack(108,"ECODE") =                  :: $stack(108,"MCODE") =         do y
+$stack(109,"ECODE") =                  :: $stack(109,"MCODE") =         do y
+$stack(110,"ECODE") =                  :: $stack(110,"MCODE") =         do y
+$stack(111,"ECODE") =                  :: $stack(111,"MCODE") =         do y
+$stack(112,"ECODE") =                  :: $stack(112,"MCODE") =         do y
+$stack(113,"ECODE") =                  :: $stack(113,"MCODE") =         do y
+$stack(114,"ECODE") =                  :: $stack(114,"MCODE") =         do y
+$stack(115,"ECODE") =                  :: $stack(115,"MCODE") =         do y
+$stack(116,"ECODE") =                  :: $stack(116,"MCODE") =         do y
+$stack(117,"ECODE") =                  :: $stack(117,"MCODE") =         do y
+$stack(118,"ECODE") =                  :: $stack(118,"MCODE") =         do y
+$stack(119,"ECODE") =                  :: $stack(119,"MCODE") =         do y
+$stack(120,"ECODE") =                  :: $stack(120,"MCODE") =         do y
+$stack(121,"ECODE") =                  :: $stack(121,"MCODE") =         do y
+$stack(122,"ECODE") =                  :: $stack(122,"MCODE") =         do y
+$stack(123,"ECODE") =                  :: $stack(123,"MCODE") =         do y
+$stack(124,"ECODE") =                  :: $stack(124,"MCODE") =         do y
+$stack(125,"ECODE") =                  :: $stack(125,"MCODE") =         do y
+$stack(126,"ECODE") =                  :: $stack(126,"MCODE") =         do y
+$stack(127,"ECODE") =                  :: $stack(127,"MCODE") =         do y
+$stack(128,"ECODE") =                  :: $stack(128,"MCODE") =         do y
+$stack(129,"ECODE") =                  :: $stack(129,"MCODE") =         do y
+$stack(130,"ECODE") =                  :: $stack(130,"MCODE") =         do y
+$stack(131,"ECODE") =                  :: $stack(131,"MCODE") =         do y
+$stack(132,"ECODE") =                  :: $stack(132,"MCODE") =         do y
+$stack(133,"ECODE") =                  :: $stack(133,"MCODE") =         do y
+$stack(134,"ECODE") =                  :: $stack(134,"MCODE") =         do y
+$stack(135,"ECODE") =                  :: $stack(135,"MCODE") =         do y
+$stack(136,"ECODE") =                  :: $stack(136,"MCODE") =         do y
+$stack(137,"ECODE") =                  :: $stack(137,"MCODE") =         do y
+$stack(138,"ECODE") =                  :: $stack(138,"MCODE") =         do y
+$stack(139,"ECODE") =                  :: $stack(139,"MCODE") =         do y
+$stack(140,"ECODE") =                  :: $stack(140,"MCODE") =         do y
+$stack(141,"ECODE") =                  :: $stack(141,"MCODE") =         do y
+$stack(142,"ECODE") =                  :: $stack(142,"MCODE") =         do y
+$stack(143,"ECODE") =                  :: $stack(143,"MCODE") =         do y
+$stack(144,"ECODE") =                  :: $stack(144,"MCODE") =         do y
+$stack(145,"ECODE") =                  :: $stack(145,"MCODE") =         do y
+$stack(146,"ECODE") =                  :: $stack(146,"MCODE") =         do y
+$stack(147,"ECODE") =                  :: $stack(147,"MCODE") =         do y
+$stack(148,"ECODE") =                  :: $stack(148,"MCODE") =         do y
+$stack(149,"ECODE") =                  :: $stack(149,"MCODE") =         do y
+$stack(150,"ECODE") =                  :: $stack(150,"MCODE") =         do y
+$stack(151,"ECODE") =                  :: $stack(151,"MCODE") =         do y
+$stack(152,"ECODE") =                  :: $stack(152,"MCODE") =         do y
+$stack(153,"ECODE") =                  :: $stack(153,"MCODE") =         do y
+$stack(154,"ECODE") =                  :: $stack(154,"MCODE") =         do y
+$stack(155,"ECODE") =                  :: $stack(155,"MCODE") =         do y
+$stack(156,"ECODE") =                  :: $stack(156,"MCODE") =         do y
+$stack(157,"ECODE") =                  :: $stack(157,"MCODE") =         do y
+$stack(158,"ECODE") =                  :: $stack(158,"MCODE") =         do y
+$stack(159,"ECODE") =                  :: $stack(159,"MCODE") =         do y
+$stack(160,"ECODE") =                  :: $stack(160,"MCODE") =         do y
+$stack(161,"ECODE") =                  :: $stack(161,"MCODE") =         do y
+$stack(162,"ECODE") =                  :: $stack(162,"MCODE") =         do y
+$stack(163,"ECODE") =                  :: $stack(163,"MCODE") =         do y
+$stack(164,"ECODE") =                  :: $stack(164,"MCODE") =         do y
+$stack(165,"ECODE") =                  :: $stack(165,"MCODE") =         do y
+$stack(166,"ECODE") =                  :: $stack(166,"MCODE") =         do y
+$stack(167,"ECODE") =                  :: $stack(167,"MCODE") =         do y
+$stack(168,"ECODE") =                  :: $stack(168,"MCODE") =         do y
+$stack(169,"ECODE") =                  :: $stack(169,"MCODE") =         do y
+$stack(170,"ECODE") =                  :: $stack(170,"MCODE") =         do y
+$stack(171,"ECODE") =                  :: $stack(171,"MCODE") =         do y
+$stack(172,"ECODE") =                  :: $stack(172,"MCODE") =         do y
+$stack(173,"ECODE") =                  :: $stack(173,"MCODE") =         do y
+$stack(174,"ECODE") =                  :: $stack(174,"MCODE") =         do y
+$stack(175,"ECODE") =                  :: $stack(175,"MCODE") =         do y
+$stack(176,"ECODE") =                  :: $stack(176,"MCODE") =         do y
+$stack(177,"ECODE") =                  :: $stack(177,"MCODE") =         do y
+$stack(178,"ECODE") =                  :: $stack(178,"MCODE") =         do y
+$stack(179,"ECODE") =                  :: $stack(179,"MCODE") =         do y
+$stack(180,"ECODE") =                  :: $stack(180,"MCODE") =         do y
+$stack(181,"ECODE") =                  :: $stack(181,"MCODE") =         do y
+$stack(182,"ECODE") =                  :: $stack(182,"MCODE") =         do y
+$stack(183,"ECODE") =                  :: $stack(183,"MCODE") =         do y
+$stack(184,"ECODE") =                  :: $stack(184,"MCODE") =         do y
+$stack(185,"ECODE") =                  :: $stack(185,"MCODE") =         do y
+$stack(186,"ECODE") =                  :: $stack(186,"MCODE") =         do y
+$stack(187,"ECODE") =                  :: $stack(187,"MCODE") =         do y
+$stack(188,"ECODE") =                  :: $stack(188,"MCODE") =         do y
+$stack(189,"ECODE") =                  :: $stack(189,"MCODE") =         do y
+$stack(190,"ECODE") =                  :: $stack(190,"MCODE") =         do y
+$stack(191,"ECODE") =                  :: $stack(191,"MCODE") =         do y
+$stack(192,"ECODE") =                  :: $stack(192,"MCODE") =         do y
+$stack(193,"ECODE") =                  :: $stack(193,"MCODE") =         do y
+$stack(194,"ECODE") =                  :: $stack(194,"MCODE") =         do y
+$stack(195,"ECODE") =                  :: $stack(195,"MCODE") =         do y
+$stack(196,"ECODE") =                  :: $stack(196,"MCODE") =         do y
+$stack(197,"ECODE") =                  :: $stack(197,"MCODE") =         do y
+$stack(198,"ECODE") =                  :: $stack(198,"MCODE") =         do y
+$stack(199,"ECODE") =                  :: $stack(199,"MCODE") =         do y
+$stack(200,"ECODE") =                  :: $stack(200,"MCODE") =         do y
+$stack(201,"ECODE") =                  :: $stack(201,"MCODE") =         do y
+$stack(202,"ECODE") =                  :: $stack(202,"MCODE") =         do y
+$stack(203,"ECODE") =                  :: $stack(203,"MCODE") =         do y
+$stack(204,"ECODE") =                  :: $stack(204,"MCODE") =         do y
+$stack(205,"ECODE") =                  :: $stack(205,"MCODE") =         do y
+$stack(206,"ECODE") =                  :: $stack(206,"MCODE") =         do y
+$stack(207,"ECODE") =                  :: $stack(207,"MCODE") =         do y
+$stack(208,"ECODE") =                  :: $stack(208,"MCODE") =         do y
+$stack(209,"ECODE") =                  :: $stack(209,"MCODE") =         do y
+$stack(210,"ECODE") =                  :: $stack(210,"MCODE") =         do y
+$stack(211,"ECODE") =                  :: $stack(211,"MCODE") =         do y
+$stack(212,"ECODE") =                  :: $stack(212,"MCODE") =         do y
+$stack(213,"ECODE") =                  :: $stack(213,"MCODE") =         do y
+$stack(214,"ECODE") =                  :: $stack(214,"MCODE") =         do y
+$stack(215,"ECODE") =                  :: $stack(215,"MCODE") =         do y
+$stack(216,"ECODE") =                  :: $stack(216,"MCODE") =         do y
+$stack(217,"ECODE") =                  :: $stack(217,"MCODE") =         do y
+$stack(218,"ECODE") =                  :: $stack(218,"MCODE") =         do y
+$stack(219,"ECODE") =                  :: $stack(219,"MCODE") =         do y
+$stack(220,"ECODE") =                  :: $stack(220,"MCODE") =         do y
+$stack(221,"ECODE") =                  :: $stack(221,"MCODE") =         do y
+$stack(222,"ECODE") =                  :: $stack(222,"MCODE") =         do y
+$stack(223,"ECODE") =                  :: $stack(223,"MCODE") =         do y
+$stack(224,"ECODE") =                  :: $stack(224,"MCODE") =         do y
+$stack(225,"ECODE") =                  :: $stack(225,"MCODE") =         do y
+$stack(226,"ECODE") =                  :: $stack(226,"MCODE") =         do y
+$stack(227,"ECODE") =                  :: $stack(227,"MCODE") =         do y
+$stack(228,"ECODE") =                  :: $stack(228,"MCODE") =         do y
+$stack(229,"ECODE") =                  :: $stack(229,"MCODE") =         do y
+$stack(230,"ECODE") =                  :: $stack(230,"MCODE") =         do y
+$stack(231,"ECODE") =                  :: $stack(231,"MCODE") =         do y
+$stack(232,"ECODE") =                  :: $stack(232,"MCODE") =         do y
+$stack(233,"ECODE") =                  :: $stack(233,"MCODE") =         do y
+$stack(234,"ECODE") =                  :: $stack(234,"MCODE") =         do y
+$stack(235,"ECODE") =                  :: $stack(235,"MCODE") =         do y
+$stack(236,"ECODE") =                  :: $stack(236,"MCODE") =         do y
+$stack(237,"ECODE") =                  :: $stack(237,"MCODE") =         do y
+$stack(238,"ECODE") =                  :: $stack(238,"MCODE") =         do y
+$stack(239,"ECODE") =                  :: $stack(239,"MCODE") =         do y
+$stack(240,"ECODE") =                  :: $stack(240,"MCODE") =         do y
+$stack(241,"ECODE") =                  :: $stack(241,"MCODE") =         do y
+$stack(242,"ECODE") =                  :: $stack(242,"MCODE") =         do y
+$stack(243,"ECODE") =                  :: $stack(243,"MCODE") =         do y
+$stack(244,"ECODE") =                  :: $stack(244,"MCODE") =         do y
+$stack(245,"ECODE") =                  :: $stack(245,"MCODE") =         do y
+$stack(246,"ECODE") =                  :: $stack(246,"MCODE") =         do y
+$stack(247,"ECODE") =                  :: $stack(247,"MCODE") =         do y
+$stack(248,"ECODE") =                  :: $stack(248,"MCODE") =         do y
+$stack(249,"ECODE") =                  :: $stack(249,"MCODE") =         do y
+$stack(250,"ECODE") =                  :: $stack(250,"MCODE") =         do y
+$stack(251,"ECODE") =                  :: $stack(251,"MCODE") =         do y
+$stack(252,"ECODE") =                  :: $stack(252,"MCODE") =         do y
+$stack(253,"ECODE") =                  :: $stack(253,"MCODE") =         do y
+$stack(254,"ECODE") =                  :: $stack(254,"MCODE") =         do y
+$stack(255,"ECODE") =                  :: $stack(255,"MCODE") =         do y
+$stack(256,"ECODE") =                  :: $stack(256,"MCODE") =         do y
+$stack(257,"ECODE") =                  :: $stack(257,"MCODE") =         if count>256 s x=1/0
+$stack(258,"ECODE") =                  :: $stack(258,"MCODE") =         do etr1
+$stack(259,"ECODE") =                  :: $stack(259,"MCODE") =         else  do etr1
+$stack(260,"ECODE") =                  :: $stack(260,"MCODE") =         else  do etr1
+$stack(261,"ECODE") =                  :: $stack(261,"MCODE") =         else  do etr1
+$stack(262,"ECODE") =                  :: $stack(262,"MCODE") =         else  do etr1
+$stack(263,"ECODE") =                  :: $stack(263,"MCODE") =         else  do etr1
+$stack(264,"ECODE") =                  :: $stack(264,"MCODE") =         else  do etr1
+$stack(265,"ECODE") =                  :: $stack(265,"MCODE") =         else  do etr1
+$stack(266,"ECODE") =                  :: $stack(266,"MCODE") =         else  do etr1
+$stack(267,"ECODE") =                  :: $stack(267,"MCODE") =         else  do etr1
+$stack(268,"ECODE") =                  :: $stack(268,"MCODE") =         else  do etr1
+$stack(269,"ECODE") =                  :: $stack(269,"MCODE") =         else  do etr1
+$stack(270,"ECODE") =                  :: $stack(270,"MCODE") =         else  do etr1
+$stack(271,"ECODE") =                  :: $stack(271,"MCODE") =         else  do etr1
+$stack(272,"ECODE") =                  :: $stack(272,"MCODE") =         else  do etr1
+$stack(273,"ECODE") =                  :: $stack(273,"MCODE") =         else  do etr1
+$stack(274,"ECODE") =                  :: $stack(274,"MCODE") =         else  do etr1
+$stack(275,"ECODE") =                  :: $stack(275,"MCODE") =         else  do etr1
+$stack(276,"ECODE") =                  :: $stack(276,"MCODE") =         else  do etr1
+$stack(277,"ECODE") =                  :: $stack(277,"MCODE") =         else  do etr1
+$stack(278,"ECODE") =                  :: $stack(278,"MCODE") =         else  do etr1
+$stack(279,"ECODE") =                  :: $stack(279,"MCODE") =         else  do etr1
+$stack(280,"ECODE") =                  :: $stack(280,"MCODE") =         else  do etr1
+$stack(281,"ECODE") =                  :: $stack(281,"MCODE") =         else  do etr1
+$stack(282,"ECODE") =                  :: $stack(282,"MCODE") =         if count>280 do etr2
+$stack(283,"ECODE") =                  :: $stack(283,"MCODE") =         for index=0:1:$stack(-1)  do
+=================================================
+-----------> mumps -run test41 <------------
+$stack     = 0
+$stack(-1) = 0
+$zlevel    = 1
+=================================================
+-----------> mumps -run test42 <------------
+$DEVICE=""
+$ECODE=""
+$ESTACK=0
+$ETRAP=""
+##TEST_AWK.HOROLOG="[0-9]*,[0-9]*"
+$IO=0
+##TEST_AWK.JOB=[0-9]*
+$KEY=""
+$PRINCIPAL=0
+$QUIT=0
+$REFERENCE=""
+$STACK=0
+##TEST_AWK.STORAGE=[0-9]*
+$SYSTEM="47,gtm_sysid"
+$TEST=1
+$TLEVEL=0
+$TRESTART=0
+$X=0
+$Y=18
+$ZA=0
+##TEST_AWK.ZALLOCSTOR=[0-9]*
+$ZB=""
+##TEST_AWK.ZCHSET="(M|UTF-8)"
+$ZCLOSE=0
+$ZCMDLINE=""
+##TEST_AWK.ZCOMPILE=.*
+$ZCSTATUS=0
+$ZDATEFORM=0
+$ZDIRECTORY="##TEST_PATH##/"
+$ZEDITOR=0
+$ZEOF=0
+$ZERROR="Unprocessed $ZERROR, see $ZSTATUS"
+$ZGBLDIR="##TEST_PATH##/mumps.gld"
+##TEST_AWK.ZHOROLOG="[0-9]*,[0-9]*,[0-9]*,[0-9]*"
+$ZININTERRUPT=0
+$ZINTERRUPT="IF $ZJOBEXAM()"
+$ZIO=0
+$ZJOB=0
+$ZKEY=""
+$ZLEVEL=1
+$ZMAXTPTIME=0
+$ZMODE="INTERACTIVE"
+$ZONLNRLBK=0
+$ZPATNUMERIC="M"
+$ZPIN="0< /"
+$ZPOSITION="test42+3^test42"
+$ZPOUT="0> /"
+$ZPROCESS=""
+$ZPROMPT="GTM>"
+$ZQUIT=0
+##TEST_AWK.ZREALSTOR=[0-9]*
+##TEST_AWK.ZROUTINES=.*
+$ZSOURCE=""
+$ZSTATUS=""
+$ZSTEP="B"
+$ZSYSTEM=0
+##SUSPEND_OUTPUT PLATFORM_NOTRIGGER
+$ZTNAME=""
+$ZTDATA=0
+$ZTDELIM=""
+##ALLOW_OUTPUT PLATFORM_NOTRIGGER
+$ZTEXIT=""
+##SUSPEND_OUTPUT PLATFORM_NOTRIGGER
+$ZTLEVEL=0
+$ZTOLDVAL=""
+##ALLOW_OUTPUT PLATFORM_NOTRIGGER
+$ZTRAP="B"
+##SUSPEND_OUTPUT PLATFORM_NOTRIGGER
+$ZTRIGGEROP=""
+$ZTSLATE=""
+$ZTUPDATE=""
+$ZTVALUE=""
+$ZTWORMHOLE=""
+##ALLOW_OUTPUT PLATFORM_NOTRIGGER
+##TEST_AWK.ZUSEDSTOR=[0-9]*
+##TEST_AWK.ZUT=[0-9]*
+##TEST_AWK.ZVERSION="GT.M V.*"
+$ZYERROR=""
+##SUSPEND_OUTPUT HOST_OS390_S390
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+0 OPEN RMS FILETAG=UNTAGGED TEXT 
+##ALLOW_OUTPUT HOST_ALL
+MLG:0,MLT:0
+##TEST_AWK.*
+test42+3^test42:40061889e6dc9121163079af88e3ad07
+=================================================
+End of D9C08002194 subtest

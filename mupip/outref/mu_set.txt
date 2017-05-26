@@ -1,0 +1,164 @@
+MUPIP SET
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+set.gld
+Using: ##SOURCE_PATH##/mupip
+set.dat
+set1.dat
+set2.dat
+#
+# Set with a bad region
+#
+%GTM-E-NOREGION, REGION not found: FREELUNCH
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+#
+# Set with a bad file
+#
+%GTM-E-DBOPNERR, Error opening database file FREELUNCH.dat
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+#
+# Set with a bad access method
+#
+%GTM-E-CLIERR, Unrecognized option : FOO
+#
+# Set with a bad extension_count
+#
+%GTM-E-CLIERR, Unrecognized value: -1, Decimal number expected
+#
+# Set with a bad extension_count
+#
+%GTM-W-MUPIPSET2BIG, 65536 too large, maximum EXTENSION_COUNT allowed is 65535
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+#
+# Set with a bad global buffers
+#
+%GTM-W-MUPIPSET2SML, 2 too small, minimum GLOBAL_BUFFERS allowed is 64
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+#
+# Set with a bad global buffers
+#
+##SUSPEND_OUTPUT 32BIT_GTM
+%GTM-W-MUPIPSET2BIG, 2097152 too large, maximum GLOBAL_BUFFERS allowed is 2097151
+##ALLOW_OUTPUT 32BIT_GTM
+##SUSPEND_OUTPUT 64BIT_GTM
+%GTM-W-MUPIPSET2BIG, 2097152 too large, maximum GLOBAL_BUFFERS allowed is 65536
+##ALLOW_OUTPUT 64BIT_GTM
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+#
+# Set with a bad key size
+#
+%GTM-W-MUPIPSET2SML, 2 too small, minimum KEY_SIZE allowed is 3
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+#
+# Set with a bad key size
+#
+%GTM-W-MUPIPSET2BIG, 1020 too large, maximum KEY_SIZE allowed is 1019
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+#
+# Set with a bad lock space
+#
+%GTM-W-MUPIPSET2SML, 9 too small, minimum LOCK_SPACE allowed is 10
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+#
+# Set with a bad lock space
+#
+%GTM-W-MUPIPSET2BIG, 65537 too large, maximum LOCK_SPACE allowed is 65536
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+#
+# Set with a bad mutex slots
+#
+%GTM-W-MUPIPSET2SML, 63 too small, minimum MUTEX_SLOTS allowed is 64
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+#
+# Set with a bad mutex slots
+#
+%GTM-W-MUPIPSET2BIG, 32769 too large, maximum MUTEX_SLOTS allowed is 32768
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+#
+# Set with a bad record size
+#
+%GTM-E-CLIERR, Unrecognized value: -1, Decimal number expected
+#
+# Set with a bad record size
+#
+%GTM-W-MUPIPSET2BIG, 1048577 too large, maximum RECORD_SIZE allowed is 1048576
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+#
+# Set with a bad sleep spin limit
+#
+%GTM-E-CLIERR, Unrecognized value: -1, Decimal number expected
+#
+# Set with a bad sleep spin limit
+#
+%GTM-W-MUPIPSET2BIG, 1000001 too large, maximum SLEEP_SPIN_COUNT allowed is 1000000
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+#
+# Set with a bad spin sleep count
+#
+%GTM-E-CLIERR, Unrecognized value: -1, Decimal number expected
+#
+# Set with a bad spin sleep count
+#
+%GTM-W-MUPIPSET2BIG, 1000000001 too large, maximum SPIN_SLEEP_LIMIT allowed is 1000000000
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+#
+# Set with a bad version
+#
+%GTM-E-CLIERR, Unrecognized option : V3
+#
+# Set with a bad wait disk
+#
+%GTM-E-CLIERR, Unrecognized value: -1, Decimal number expected
+#
+# Sets with a things that won't fly because of current state
+#
+%GTM-W-MUPIPSET2BIG, 1019 too large, maximum KEY_SIZE allowed is 992
+%GTM-I-TEXT, for current block size and reserved bytes
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+%GTM-W-MUPIPSET2BIG, 1000 too large, maximum RESERVED_BYTES allowed is 940
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+60 smaller than current maximum record size 256
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+
+PASS from musetchk
+PASS from fill1^myfill("set")
+PASS from fill1^myfill("ver")
+Database file set.dat now has epoch taper flag set to  TRUE
+Database file set.dat now has extension count 2000
+Database file set.dat now has sleep spin count 4
+Database file set.dat now has sleep spin mask 4095
+Database file set.dat now has 2048 global buffers
+Database file set.dat now has maximum record size 2048
+Database file ##TEST_PATH##/set1.dat now has 3096 global buffers
+Database file ##TEST_PATH##/set2.dat now has 3096 global buffers
+Database file ##TEST_PATH##/set.dat now has 7 reserved bytes
+Database file ##TEST_PATH##/set1.dat now has 7 reserved bytes
+Database file ##TEST_PATH##/set2.dat now has 7 reserved bytes
+Database file ##TEST_PATH##/set.dat now has 1500 mutex queue slots
+##SUSPEND_OUTPUT HOST_SUNOS_SPARC HP-UX
+Database file ##TEST_PATH##/set.dat now has defer allocation flag set to FALSE
+##ALLOW_OUTPUT HOST_SUNOS_SPARC HP-UX
+Database file ##TEST_PATH##/set.dat now has lock space 4000 pages
+Database file ##TEST_PATH##/set.dat now has maximum key size 255
+Database file ##TEST_PATH##/set.dat now has quick database rundown flag set to  TRUE
+Database file ##TEST_PATH##/set1.dat now has 1500 mutex queue slots
+##SUSPEND_OUTPUT HOST_SUNOS_SPARC HP-UX
+Database file ##TEST_PATH##/set1.dat now has defer allocation flag set to FALSE
+##ALLOW_OUTPUT HOST_SUNOS_SPARC HP-UX
+Database file ##TEST_PATH##/set1.dat now has lock space 4000 pages
+Database file ##TEST_PATH##/set1.dat now has maximum key size 255
+Database file ##TEST_PATH##/set1.dat now has quick database rundown flag set to  TRUE
+Database file ##TEST_PATH##/set2.dat now has 1500 mutex queue slots
+##SUSPEND_OUTPUT HOST_SUNOS_SPARC HP-UX
+Database file ##TEST_PATH##/set2.dat now has defer allocation flag set to FALSE
+##ALLOW_OUTPUT HOST_SUNOS_SPARC HP-UX
+Database file ##TEST_PATH##/set2.dat now has lock space 4000 pages
+Database file ##TEST_PATH##/set2.dat now has maximum key size 255
+Database file ##TEST_PATH##/set2.dat now has quick database rundown flag set to  TRUE
+PASS from fill1^myfill("ver")
+
+PASS from musetchk
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,16 @@
+#!/usr/bin/expect -f
+
+set timeout 120
+spawn /usr/local/bin/tcsh -f
+match_max 100000
+
+# Expect the spawned prompt
+expect "*>"
+# Set the prompt
+send -- "set prompt=\"termmumps > \"\r"
+# Expec the clean prompt
+expect "termmumps >"
+# execute sigproc.m - send TERM signal to process
+send -- "\$gtm_exe/mumps -run %XCMD 'write \"proc1=\"_\$j,! do ^sigproc(\"TERM\")'\r"
+expect "*%GTM-F-FORCEDHALT*\r"
+send -- "exit\r"

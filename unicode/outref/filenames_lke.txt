@@ -1,0 +1,49 @@
+::::::::::::::
+lke_clear_ｏｕｔｐｕｔ1.out
+::::::::::::::
+
+BREG
+Lock removed : ^b(1,ａｂｃ)
+Lock removed : ^b(我能吞下玻璃而不伤身体)
+::::::::::::::
+lke_clear_ｏｕｔｐｕｔ2.out
+::::::::::::::
+
+AREG
+Lock removed : ^a(ａｂｃ)
+%GTM-I-NOLOCKMATCH, No matching locks were found in BREG
+%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
+
+DEFAULT
+Lock removed : z(我能吞下玻璃而不伤身体)
+%GTM-I-NOLOCKMATCH, No matching locks were found in DREG
+::::::::::::::
+lke_ｏｕｔｐｕｔ1.out
+::::::::::::::
+
+AREG
+^a(ａｂｃ) Owned by PID= 13909 which is an existing process
+
+BREG
+^b(1,ａｂｃ) Owned by PID= 13909 which is an existing process
+^b(我能吞下玻璃而不伤身体)
+                         Owned by PID= 13909 which is an existing process
+%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
+
+DEFAULT
+z(我能吞下玻璃而不伤身体)
+                         Owned by PID= 13909 which is an existing process
+%GTM-I-NOLOCKMATCH, No matching locks were found in DREG
+::::::::::::::
+lke_ｏｕｔｐｕｔ2.out
+::::::::::::::
+
+AREG
+^a(ａｂｃ) Owned by PID= 13909 which is an existing process
+%GTM-I-NOLOCKMATCH, No matching locks were found in BREG
+%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
+
+DEFAULT
+z(我能吞下玻璃而不伤身体)
+                         Owned by PID= 13909 which is an existing process
+%GTM-I-NOLOCKMATCH, No matching locks were found in DREG

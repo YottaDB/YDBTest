@@ -1,0 +1,67 @@
+# switch to prior ver, create db and install a simple trigger
+File a.trg, Line 1: Added trigger on ^a named x#
+=========================================
+1 triggers added
+0 triggers deleted
+0 trigger file entries not changed
+0 triggers modified
+=========================================
+# switch to current ver and try setting ^a
+# Expect GTM-E-NEEDTRIGUPGRD for all the below attempts (GTM-8116 : $text should silently exit)
+$gtm_exe/mumps -run %XCMD 'set ^a=1'
+%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+$gtm_exe/mumps -run %XCMD 'set ^notrigger=1'
+%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+echo "" | $MUPIP trigger -select
+Output File: 
+%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+$MUPIP trigger -triggerfile=a.trg
+%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+$gtm_exe/mumps -run %XCMD 'zbreak ^x#'
+%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+$gtm_exe/mumps -run %XCMD 'write $text(^x#)'
+$gtm_exe/mumps -run %XCMD 'zprint ^x#'
+%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+unset verbose
+# The below that does not require trigger access should work fine
+$LKE show -all
+%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+$DSE dump -block=3 > & ! dsedumpbl3.out
+$grep '.-E-.' dsedumpbl3.out
+$gtm_exe/mumps -run %XCMD 'write ^a(1)'
+1
+$gtm_exe/mumps -run %XCMD 'write ^notrigger'
+%GTM-E-GVUNDEF, Global variable undefined: ^notrigger
+unset verbose
+# Try trigger -upgrade on a read-only database. Expect it to fail
+%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+# trigger -upgrade on a read-write database should work
+Triggers in region DEFAULT have been upgraded
+trigger executed
+# Adding a trigger with an exising trigger name should not work, though the existing trigger was with old ver
+File a.trg, Line 1: SET trigger on ^a already present in trigger named x - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# switch to prior ver and try setting ^a
+----------
+Error GTM-E-TRIGDEFBAD seen in prior_ver_upgraded_trig.out as expected:
+%GTM-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#LABEL")
+----------
+# switch to current ver and delete all triggers
+All existing triggers (count = 1) deleted
+1
+# switch to prior ver and load the trigger extract
+File tst_ver_triggerselect.trg, Line 2: Added trigger on ^a named x#
+=========================================
+1 triggers added
+0 triggers deleted
+0 trigger file entries not changed
+0 triggers modified
+=========================================
+trigger executed

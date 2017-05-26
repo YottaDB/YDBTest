@@ -1,0 +1,11 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##TEST_AWKProcess [0-9]* is alive after one MUPIP STOP
+##TEST_AWKProcess [0-9]* is alive after two MUPIP STOPs
+##TEST_AWKProcess [0-9]* is dead after three MUPIP STOPs
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

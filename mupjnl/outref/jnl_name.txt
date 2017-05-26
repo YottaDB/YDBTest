@@ -1,0 +1,49 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Enable no before image journaling
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+Forward recovering ......
+%GTM-S-JNLSUCCESS, Recover successful
+Verifying the data ...
+
+GTM>
+^x(1)=1
+^x(2)=2
+^x(3)=3
+^x(4)=4
+^x(5)=5
+^x(6)=6
+^x(7)=7
+^x(8)=8
+^x(9)=9
+^x(10)=10
+
+GTM>
+Forward recovering with journaling disabled...
+Created file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-NOTALLJNLEN, Journaling disabled/off for all regions
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+Backward rollback with replication/journaling disabled...
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-NOTALLREPLON, Replication off for all regions
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+Forward rollback with replication/journaling disabled...
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-NOTALLREPLON, Replication off for all regions
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASS
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

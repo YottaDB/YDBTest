@@ -1,0 +1,39 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Start the receiver without gtm_passwd - Expect GTM-W-CRYPTINIT warning in passive server log and update process log
+# Update some globals on primary - Expect update process to exit with GTM-E-CRYPTBADCONFIG
+# Expect both GTM-W-CRYPTINIT and GTM-E-CRYPTBADCONFIG from update process log
+----------
+Error GTM-W-CRYPTINIT seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
+%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##REMOTE_TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+----------
+----------
+Error GTM-E-CRYPTBADCONFIG seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
+%GTM-E-CRYPTBADCONFIG, Could not retrieve data from encrypted file ##REMOTE_TEST_PATH##/mumps.dat due to bad encryption configuration. Please look at prior messages related to encryption for more details
+----------
+# Shut down source and receiver processes
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Expect and filter out GTM-W-CRYPTINIT warning from receiver start log and passive source server log
+----------
+Error GTM-W-CRYPTINIT seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
+%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##REMOTE_TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+----------
+----------
+Error GTM-W-CRYPTINIT seen in ##FILTERED##passive_##TIMESTAMP##.log as expected:
+%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##REMOTE_TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+----------

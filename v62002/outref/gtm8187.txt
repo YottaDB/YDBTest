@@ -1,0 +1,128 @@
+Create TWO database files a.dat and mumps.dat
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+
+Execute : mumps -run gtm8187 to populate two database files before truncation
+
+cp a.dat abak.dat
+
+Run MUPIP reorg -truncate
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a1 (region AREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: a2 (region AREG)
+Blocks processed    : 253 
+Blocks coalesced    : 125 
+Blocks split        : 0 
+Blocks swapped      : 127 
+Blocks freed        : 250 
+Blocks reused       : 125 
+Blocks extended     : 0 
+   
+Global: b1 (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: b2 (region DEFAULT)
+Blocks processed    : 2531 
+Blocks coalesced    : 1250 
+Blocks split        : 0 
+Blocks swapped      : 1280 
+Blocks freed        : 2525 
+Blocks reused       : 1275 
+Blocks extended     : 0 
+Total root blocks moved: 2
+%GTM-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 0
+Truncated region: DEFAULT. Reduced total blocks from [2606] to [1536]. Reduced free blocks from [1314] to [247].
+
+Run MUPIP reorg -truncate one more time and verify no more truncation happens (i.e. previous truncate was optimal)
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a1 (region AREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: a2 (region AREG)
+Blocks processed    : 128 
+Blocks coalesced    : 2 
+Blocks split        : 0 
+Blocks swapped      : 80 
+Blocks freed        : 39 
+Blocks reused       : 38 
+Blocks extended     : 0 
+   
+Global: b1 (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: b2 (region DEFAULT)
+Blocks processed    : 1281 
+Blocks coalesced    : 20 
+Blocks split        : 0 
+Blocks swapped      : 1218 
+Blocks freed        : 1141 
+Blocks reused       : 1126 
+Blocks extended     : 0 
+Total root blocks moved: 2
+%GTM-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 0
+%GTM-I-MUTRUNCNOSPACE, Region DEFAULT has insufficient space to meet truncate target percentage of 0
+
+Remove write permissions on a.dat and redo MUPIP reorg -truncate to ensure it does not SIG-11 etc. on a read-only database file
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a1 (region AREG)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/a.dat read only
+   
+Global: a2 (region AREG)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/a.dat read only
+   
+Global: b1 (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: b2 (region DEFAULT)
+Blocks processed    : 1266 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+
+Do a dbcheck to ensure db integs clean
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,96 @@
+## Let's say the layout of the
+## servers is:
+##            |--> INST2 (B)
+## INST1 (A) -|
+##            |--> INST3 (C)
+## 
+## A client might have this layout (say A, and B are on the main site, with C at a DR site). Say A needs to go under some
+## maintenance, so they want to switch over to B. This subtest will test that.
+##
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'START INST1 INST3 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Database fill program starts
+Database fill program ends
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST3'==
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+## - Stop the receiver on INST2, and activate the source server on INST2.
+## - Shutdown primary source server on INST1.
+##   STOPSRC INST1 INST2
+## 	--> Note the source server has been running on INST1 while there was a source server on INST2 as well. But no
+## 	    receivers were running on either one, so this should be OK.
+## - Stop INST1 --> INST3
+##   STOPSRC INST1 INST3
+## - Restart INST1 as Secondary.
+##   STARTRCV INST2 INST1
+## - Shutdown replication on INST3.
+##   STOP INST3
+## - Switch INST3 to replicate from INST2 as well.
+##   START INST2 INST3
+##   So the layout will look like:
+##              |--> INST1 (A)
+##   INST2 (B) -|
+##              |--> INST3 (C)
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 $MUPIP replic -receiv -shutdown -timeout=0 >& INST2_shut.tmp; cat INST2_shut.tmp'==
+##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating shut down
+##FILTERED##... ... .. ..:..:.. 20.. : Receive pool shared memory removed
+##FILTERED##... ... .. ..:..:.. 20.. : Receive pool semaphore removed
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
+==Executing MULTISITE_REPLIC 'ACTIVATE INST2 INST1 RP'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating ACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE1]
+Background database fill program starts
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/imptp.csh >>&! imptp.out'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2 ON'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST3'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST1'==
+==Executing MULTISITE_REPLIC 'START INST2 INST3'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Background database fill program ends
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/endtp.csh >>&! endtp.out'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT INST1 INST2 INST3'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

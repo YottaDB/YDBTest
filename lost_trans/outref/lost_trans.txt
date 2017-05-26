@@ -1,0 +1,64 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT SINGLE_REG
+a.dat
+b.dat
+c.dat
+##ALLOW_OUTPUT SINGLE_REG
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT SINGLE_REG
+a.dat
+b.dat
+c.dat
+##ALLOW_OUTPUT SINGLE_REG
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Generate first batch of updates
+While updates are happening, sleep ##FILTERED##GTM_TEST_DEBUGINFO.*
+Shut down receiver server to create backlog...
+Generate second batch of updates
+While updates are happening, sleep ##FILTERED##GTM_TEST_DEBUGINFO.*
+Restarting (B) as primary...
+Note down database transaction numbers on new primary
+Do some updates on new primary so db tn changes in every region
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+ROLLBACK Synchronization is OK
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating NEEDRESTART operation on source server pid [##PID##] for secondary instance [INSTANCE1]
+Secondary Instance [INSTANCE1] DOES NOT NEED to be restarted
+Note down zqgblmod_tn numbers after rollback on secondary
+Verify accuracy of $ZQGBLMOD i.e. zqgblmod_tn is same as noted db curr_tn
+  --> zqgblmod_tn test PASS
+Applying the lost transactions...
+Shutting down Passive Source Server and Receiver Server in ##TEST_PATH##
+Shutting down Primary Source Server Server in ##REMOTE_TEST_PATH##
+DATABASE EXTRACT PASSED
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Lost transaction applying passed
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>

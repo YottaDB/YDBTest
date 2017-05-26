@@ -1,0 +1,28 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+1. Long DSE command
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> Error:  must specify a record number or offset for the record to be added.
+DSE> 
+###################################################################
+2. Long LKE command
+LKE> %GTM-E-NOREGION, REGION not found: BNONEXISTENTREGIONTHISTIMEAVERY
+LKE> 
+###################################################################
+3. Long MUPIP command
+##TEST_AWKMUPIP> .GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-INVQUALTIME, Invalid time qualifier value.  Specify as BEFORE=delta_or_absolute_time.
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

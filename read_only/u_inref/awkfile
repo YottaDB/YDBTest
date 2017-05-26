@@ -1,0 +1,13 @@
+BEGIN {FS = "_"}
+{
+	if (NR == 1)
+	{
+	temp = $10
+	gsub( temp, "PATH")
+	print
+	}
+	if (NR > 1)
+	{
+	print
+	}
+}

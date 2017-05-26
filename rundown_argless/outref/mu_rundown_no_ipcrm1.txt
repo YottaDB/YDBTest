@@ -1,0 +1,48 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+GTM Process starts in background...
+Simulating crash on receiver in ##REMOTE_TEST_PATH##
+Receiver crashed!
+Simulating crash on primary in ##TEST_PATH##
+Primary crashed!
+ ##SOURCE_PATH##/mupip rundown starts
+%GTM-I-SHMREMOVED, Removed Shared Memory id xxx corresponding to file ##TEST_PATH##/a.dat
+%GTM-I-SHMREMOVED, Removed Shared Memory id xxx corresponding to file ##TEST_PATH##/b.dat
+%GTM-I-SHMREMOVED, Removed Shared Memory id xxx corresponding to file ##TEST_PATH##/c.dat
+%GTM-I-SHMREMOVED, Removed Shared Memory id xxx corresponding to file ##TEST_PATH##/d.dat
+%GTM-I-SHMREMOVED, Removed Shared Memory id xxx corresponding to file ##TEST_PATH##/e.dat
+%GTM-I-SHMREMOVED, Removed Shared Memory id xxx corresponding to file ##TEST_PATH##/f.dat
+%GTM-I-SHMREMOVED, Removed Shared Memory id xxx corresponding to file ##TEST_PATH##/g.dat
+%GTM-I-SHMREMOVED, Removed Shared Memory id xxx corresponding to file ##TEST_PATH##/mumps.dat
+%GTM-I-SHMREMOVED, Removed Shared Memory id xxx corresponding to file ##REMOTE_TEST_PATH##/a.dat
+%GTM-I-SHMREMOVED, Removed Shared Memory id xxx corresponding to file ##REMOTE_TEST_PATH##/b.dat
+%GTM-I-SHMREMOVED, Removed Shared Memory id xxx corresponding to file ##REMOTE_TEST_PATH##/c.dat
+%GTM-I-SHMREMOVED, Removed Shared Memory id xxx corresponding to file ##REMOTE_TEST_PATH##/d.dat
+%GTM-I-SHMREMOVED, Removed Shared Memory id xxx corresponding to file ##REMOTE_TEST_PATH##/e.dat
+%GTM-I-SHMREMOVED, Removed Shared Memory id xxx corresponding to file ##REMOTE_TEST_PATH##/f.dat
+%GTM-I-SHMREMOVED, Removed Shared Memory id xxx corresponding to file ##REMOTE_TEST_PATH##/g.dat
+%GTM-I-SHMREMOVED, Removed Shared Memory id xxx corresponding to file ##REMOTE_TEST_PATH##/mumps.dat

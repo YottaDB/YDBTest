@@ -1,0 +1,3023 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+# Test case 1 : Treat deletion of a non-existent trigger as a success
+# Delete non-existent named trigger when no triggers exist in the db
+File t1.trg, Line 1: Trigger named abcdt1 does not exist
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+Trigger named abcdt0 does not exist
+1
+# A no-op named-trigger deletion is followed by a not-noop operation
+File t2.trg, Line 1: Trigger named abcdt2 does not exist
+File t2.trg, Line 2: Added SET trigger on ^abcdt2 named abcdt2
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Delete non-existent named trigger when some triggers exist in the db but the named trigger does not
+File t1.trg, Line 1: Trigger named abcdt1 does not exist
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+Trigger named abcdt0 does not exist
+1
+# Test case 2 :
+# Trigger names with a number part (after the #) starting with a 0 should not be considered valid
+# Trigger name length 22 before the # should not be considered a valid name
+----------------------------------------------------------------------
+Testing for name length : 1
+----------------------------------------------------------------------
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -xecute=""write 1""")
+Added SET trigger on ^a named a#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#02")
+Invalid name entry in SELECT list: "a#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a#02")
+Invalid trigger NAME string: "a#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -xecute=""write 1""")
+Added SET trigger on ^a named a#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#023")
+Invalid name entry in SELECT list: "a#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a#023")
+Invalid trigger NAME string: "a#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -xecute=""write 1""")
+Added SET trigger on ^a named a#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#0234")
+Invalid name entry in SELECT list: "a#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a#0234")
+Invalid trigger NAME string: "a#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -xecute=""write 1""")
+Added SET trigger on ^a named a#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#00045")
+Invalid name entry in SELECT list: "a#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a#00045")
+Invalid trigger NAME string: "a#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -xecute=""write 1""")
+Added SET trigger on ^a named a#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#023456")
+Invalid name entry in SELECT list: "a#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a#023456")
+Invalid trigger NAME string: "a#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -xecute=""write 1""")
+Added SET trigger on ^a named a#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#203456")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a#203456")
+Trigger named a#203456 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -xecute=""write 1""")
+Added SET trigger on ^a named a#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a*")
+;trigger name: a#1 (region DEFAULT)  cycle: 13
++^a -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a*")
+Deleted trigger named 'a#1' for global ^a (region DEFAULT)
+All existing triggers named a* (count = 1) now deleted
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -xecute=""write 1""")
+Added SET trigger on ^a named a#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#*")
+;trigger name: a#1 (region DEFAULT)  cycle: 15
++^a -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a#*")
+Deleted trigger named 'a#1' for global ^a (region DEFAULT)
+All existing triggers named a#* (count = 1) now deleted
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -xecute=""write 1""")
+Added SET trigger on ^a named a#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#1")
+;trigger name: a#1 (region DEFAULT)  cycle: 17
++^a -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a#1")
+Deleted trigger named 'a#1' for global ^a (region DEFAULT)
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -xecute=""write 1""")
+Added SET trigger on ^a named a#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a#")
+Trigger named a# does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -xecute=""write 1""")
+Added SET trigger on ^a named a#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a")
+Trigger named a does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -name=a -xecute=""write 1""")
+Added SET trigger on ^a named a
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#02")
+Invalid name entry in SELECT list: "a#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a#02")
+Invalid trigger NAME string: "a#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -name=a -xecute=""write 1""")
+Added SET trigger on ^a named a
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#023")
+Invalid name entry in SELECT list: "a#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a#023")
+Invalid trigger NAME string: "a#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -name=a -xecute=""write 1""")
+Added SET trigger on ^a named a
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#0234")
+Invalid name entry in SELECT list: "a#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a#0234")
+Invalid trigger NAME string: "a#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -name=a -xecute=""write 1""")
+Added SET trigger on ^a named a
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#00045")
+Invalid name entry in SELECT list: "a#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a#00045")
+Invalid trigger NAME string: "a#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -name=a -xecute=""write 1""")
+Added SET trigger on ^a named a
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#023456")
+Invalid name entry in SELECT list: "a#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a#023456")
+Invalid trigger NAME string: "a#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -name=a -xecute=""write 1""")
+Added SET trigger on ^a named a
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#203456")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a#203456")
+Trigger named a#203456 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -name=a -xecute=""write 1""")
+Added SET trigger on ^a named a
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a*")
+;trigger name: a (region DEFAULT)  cycle: 35
++^a -name=a -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a*")
+Deleted trigger named 'a' for global ^a (region DEFAULT)
+All existing triggers named a* (count = 1) now deleted
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -name=a -xecute=""write 1""")
+Added SET trigger on ^a named a
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#*")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a#*")
+No matching triggers of the form a#* found for deletion
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -name=a -xecute=""write 1""")
+Added SET trigger on ^a named a
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#1")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a#1")
+Trigger named a#1 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -name=a -xecute=""write 1""")
+Added SET trigger on ^a named a
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a#")
+;trigger name: a (region DEFAULT)  cycle: 41
++^a -name=a -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a#")
+Deleted trigger named 'a' for global ^a (region DEFAULT)
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a -commands=S -name=a -xecute=""write 1""")
+Added SET trigger on ^a named a
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a")
+;trigger name: a (region DEFAULT)  cycle: 43
++^a -name=a -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a")
+Deleted trigger named 'a' for global ^a (region DEFAULT)
+  --> Return value of $ztrigger = 1
+----------------------------------------------------------------------
+Testing for name length : 2
+----------------------------------------------------------------------
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2 named a2#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#02")
+Invalid name entry in SELECT list: "a2#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2#02")
+Invalid trigger NAME string: "a2#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2 named a2#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#023")
+Invalid name entry in SELECT list: "a2#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2#023")
+Invalid trigger NAME string: "a2#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2 named a2#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#0234")
+Invalid name entry in SELECT list: "a2#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2#0234")
+Invalid trigger NAME string: "a2#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2 named a2#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#00045")
+Invalid name entry in SELECT list: "a2#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2#00045")
+Invalid trigger NAME string: "a2#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2 named a2#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#023456")
+Invalid name entry in SELECT list: "a2#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2#023456")
+Invalid trigger NAME string: "a2#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2 named a2#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#203456")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2#203456")
+Trigger named a2#203456 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2 named a2#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2*")
+;trigger name: a2#1 (region DEFAULT)  cycle: 13
++^a2 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2*")
+Deleted trigger named 'a2#1' for global ^a2 (region DEFAULT)
+All existing triggers named a2* (count = 1) now deleted
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2 named a2#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#*")
+;trigger name: a2#1 (region DEFAULT)  cycle: 15
++^a2 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2#*")
+Deleted trigger named 'a2#1' for global ^a2 (region DEFAULT)
+All existing triggers named a2#* (count = 1) now deleted
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2 named a2#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#1")
+;trigger name: a2#1 (region DEFAULT)  cycle: 17
++^a2 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2#1")
+Deleted trigger named 'a2#1' for global ^a2 (region DEFAULT)
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2 named a2#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2#")
+Trigger named a2# does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2 named a2#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2")
+Trigger named a2 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -name=a2 -xecute=""write 1""")
+Added SET trigger on ^a2 named a2
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#02")
+Invalid name entry in SELECT list: "a2#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2#02")
+Invalid trigger NAME string: "a2#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -name=a2 -xecute=""write 1""")
+Added SET trigger on ^a2 named a2
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#023")
+Invalid name entry in SELECT list: "a2#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2#023")
+Invalid trigger NAME string: "a2#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -name=a2 -xecute=""write 1""")
+Added SET trigger on ^a2 named a2
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#0234")
+Invalid name entry in SELECT list: "a2#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2#0234")
+Invalid trigger NAME string: "a2#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -name=a2 -xecute=""write 1""")
+Added SET trigger on ^a2 named a2
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#00045")
+Invalid name entry in SELECT list: "a2#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2#00045")
+Invalid trigger NAME string: "a2#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -name=a2 -xecute=""write 1""")
+Added SET trigger on ^a2 named a2
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#023456")
+Invalid name entry in SELECT list: "a2#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2#023456")
+Invalid trigger NAME string: "a2#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -name=a2 -xecute=""write 1""")
+Added SET trigger on ^a2 named a2
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#203456")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2#203456")
+Trigger named a2#203456 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -name=a2 -xecute=""write 1""")
+Added SET trigger on ^a2 named a2
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2*")
+;trigger name: a2 (region DEFAULT)  cycle: 35
++^a2 -name=a2 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2*")
+Deleted trigger named 'a2' for global ^a2 (region DEFAULT)
+All existing triggers named a2* (count = 1) now deleted
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -name=a2 -xecute=""write 1""")
+Added SET trigger on ^a2 named a2
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#*")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2#*")
+No matching triggers of the form a2#* found for deletion
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -name=a2 -xecute=""write 1""")
+Added SET trigger on ^a2 named a2
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#1")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2#1")
+Trigger named a2#1 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -name=a2 -xecute=""write 1""")
+Added SET trigger on ^a2 named a2
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2#")
+;trigger name: a2 (region DEFAULT)  cycle: 41
++^a2 -name=a2 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2#")
+Deleted trigger named 'a2' for global ^a2 (region DEFAULT)
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2 -commands=S -name=a2 -xecute=""write 1""")
+Added SET trigger on ^a2 named a2
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2")
+;trigger name: a2 (region DEFAULT)  cycle: 43
++^a2 -name=a2 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2")
+Deleted trigger named 'a2' for global ^a2 (region DEFAULT)
+  --> Return value of $ztrigger = 1
+----------------------------------------------------------------------
+Testing for name length : 20
+----------------------------------------------------------------------
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#02")
+Invalid name entry in SELECT list: "a2345678901234567890#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890#02")
+Invalid trigger NAME string: "a2345678901234567890#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#023")
+Invalid name entry in SELECT list: "a2345678901234567890#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890#023")
+Invalid trigger NAME string: "a2345678901234567890#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#0234")
+Invalid name entry in SELECT list: "a2345678901234567890#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890#0234")
+Invalid trigger NAME string: "a2345678901234567890#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#00045")
+Invalid name entry in SELECT list: "a2345678901234567890#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890#00045")
+Invalid trigger NAME string: "a2345678901234567890#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#023456")
+Invalid name entry in SELECT list: "a2345678901234567890#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890#023456")
+Invalid trigger NAME string: "a2345678901234567890#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#203456")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2345678901234567890#203456")
+Trigger named a2345678901234567890#203456 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890*")
+;trigger name: a2345678901234567890#1 (region DEFAULT)  cycle: 13
++^a2345678901234567890 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2345678901234567890*")
+Deleted trigger named 'a2345678901234567890#1' for global ^a2345678901234567890 (region DEFAULT)
+All existing triggers named a2345678901234567890* (count = 1) now deleted
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#*")
+;trigger name: a2345678901234567890#1 (region DEFAULT)  cycle: 15
++^a2345678901234567890 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2345678901234567890#*")
+Deleted trigger named 'a2345678901234567890#1' for global ^a2345678901234567890 (region DEFAULT)
+All existing triggers named a2345678901234567890#* (count = 1) now deleted
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#1")
+;trigger name: a2345678901234567890#1 (region DEFAULT)  cycle: 17
++^a2345678901234567890 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2345678901234567890#1")
+Deleted trigger named 'a2345678901234567890#1' for global ^a2345678901234567890 (region DEFAULT)
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2345678901234567890#")
+Trigger named a2345678901234567890# does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2345678901234567890")
+Trigger named a2345678901234567890 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -name=a2345678901234567890 -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#02")
+Invalid name entry in SELECT list: "a2345678901234567890#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890#02")
+Invalid trigger NAME string: "a2345678901234567890#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -name=a2345678901234567890 -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#023")
+Invalid name entry in SELECT list: "a2345678901234567890#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890#023")
+Invalid trigger NAME string: "a2345678901234567890#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -name=a2345678901234567890 -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#0234")
+Invalid name entry in SELECT list: "a2345678901234567890#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890#0234")
+Invalid trigger NAME string: "a2345678901234567890#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -name=a2345678901234567890 -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#00045")
+Invalid name entry in SELECT list: "a2345678901234567890#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890#00045")
+Invalid trigger NAME string: "a2345678901234567890#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -name=a2345678901234567890 -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#023456")
+Invalid name entry in SELECT list: "a2345678901234567890#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890#023456")
+Invalid trigger NAME string: "a2345678901234567890#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -name=a2345678901234567890 -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#203456")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2345678901234567890#203456")
+Trigger named a2345678901234567890#203456 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -name=a2345678901234567890 -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890*")
+;trigger name: a2345678901234567890 (region DEFAULT)  cycle: 35
++^a2345678901234567890 -name=a2345678901234567890 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2345678901234567890*")
+Deleted trigger named 'a2345678901234567890' for global ^a2345678901234567890 (region DEFAULT)
+All existing triggers named a2345678901234567890* (count = 1) now deleted
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -name=a2345678901234567890 -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#*")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2345678901234567890#*")
+No matching triggers of the form a2345678901234567890#* found for deletion
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -name=a2345678901234567890 -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#1")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2345678901234567890#1")
+Trigger named a2345678901234567890#1 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -name=a2345678901234567890 -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890#")
+;trigger name: a2345678901234567890 (region DEFAULT)  cycle: 41
++^a2345678901234567890 -name=a2345678901234567890 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2345678901234567890#")
+Deleted trigger named 'a2345678901234567890' for global ^a2345678901234567890 (region DEFAULT)
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890 -commands=S -name=a2345678901234567890 -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890 named a2345678901234567890
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890")
+;trigger name: a2345678901234567890 (region DEFAULT)  cycle: 43
++^a2345678901234567890 -name=a2345678901234567890 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a2345678901234567890")
+Deleted trigger named 'a2345678901234567890' for global ^a2345678901234567890 (region DEFAULT)
+  --> Return value of $ztrigger = 1
+----------------------------------------------------------------------
+Testing for name length : 21
+----------------------------------------------------------------------
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#02")
+Invalid name entry in SELECT list: "a23456789012345678901#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901#02")
+Invalid trigger NAME string: "a23456789012345678901#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#023")
+Invalid name entry in SELECT list: "a23456789012345678901#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901#023")
+Invalid trigger NAME string: "a23456789012345678901#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#0234")
+Invalid name entry in SELECT list: "a23456789012345678901#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901#0234")
+Invalid trigger NAME string: "a23456789012345678901#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#00045")
+Invalid name entry in SELECT list: "a23456789012345678901#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901#00045")
+Invalid trigger NAME string: "a23456789012345678901#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#023456")
+Invalid name entry in SELECT list: "a23456789012345678901#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901#023456")
+Invalid trigger NAME string: "a23456789012345678901#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#203456")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901#203456")
+Trigger named a23456789012345678901#203456 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901*")
+;trigger name: a23456789012345678901#1 (region DEFAULT)  cycle: 13
++^a23456789012345678901 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901*")
+Deleted trigger named 'a23456789012345678901#1' for global ^a23456789012345678901 (region DEFAULT)
+All existing triggers named a23456789012345678901* (count = 1) now deleted
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#*")
+;trigger name: a23456789012345678901#1 (region DEFAULT)  cycle: 15
++^a23456789012345678901 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901#*")
+Deleted trigger named 'a23456789012345678901#1' for global ^a23456789012345678901 (region DEFAULT)
+All existing triggers named a23456789012345678901#* (count = 1) now deleted
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#1")
+;trigger name: a23456789012345678901#1 (region DEFAULT)  cycle: 17
++^a23456789012345678901 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901#1")
+Deleted trigger named 'a23456789012345678901#1' for global ^a23456789012345678901 (region DEFAULT)
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901#")
+Trigger named a23456789012345678901# does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901")
+Trigger named a23456789012345678901 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -name=a23456789012345678901 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#02")
+Invalid name entry in SELECT list: "a23456789012345678901#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901#02")
+Invalid trigger NAME string: "a23456789012345678901#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -name=a23456789012345678901 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#023")
+Invalid name entry in SELECT list: "a23456789012345678901#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901#023")
+Invalid trigger NAME string: "a23456789012345678901#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -name=a23456789012345678901 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#0234")
+Invalid name entry in SELECT list: "a23456789012345678901#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901#0234")
+Invalid trigger NAME string: "a23456789012345678901#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -name=a23456789012345678901 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#00045")
+Invalid name entry in SELECT list: "a23456789012345678901#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901#00045")
+Invalid trigger NAME string: "a23456789012345678901#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -name=a23456789012345678901 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#023456")
+Invalid name entry in SELECT list: "a23456789012345678901#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901#023456")
+Invalid trigger NAME string: "a23456789012345678901#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -name=a23456789012345678901 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#203456")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901#203456")
+Trigger named a23456789012345678901#203456 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -name=a23456789012345678901 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901*")
+;trigger name: a23456789012345678901 (region DEFAULT)  cycle: 35
++^a23456789012345678901 -name=a23456789012345678901 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901*")
+Deleted trigger named 'a23456789012345678901' for global ^a23456789012345678901 (region DEFAULT)
+All existing triggers named a23456789012345678901* (count = 1) now deleted
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -name=a23456789012345678901 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#*")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901#*")
+No matching triggers of the form a23456789012345678901#* found for deletion
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -name=a23456789012345678901 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#1")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901#1")
+Trigger named a23456789012345678901#1 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -name=a23456789012345678901 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901#")
+;trigger name: a23456789012345678901 (region DEFAULT)  cycle: 41
++^a23456789012345678901 -name=a23456789012345678901 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901#")
+Deleted trigger named 'a23456789012345678901' for global ^a23456789012345678901 (region DEFAULT)
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901 -commands=S -name=a23456789012345678901 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901 named a23456789012345678901
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901")
+;trigger name: a23456789012345678901 (region DEFAULT)  cycle: 43
++^a23456789012345678901 -name=a23456789012345678901 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901")
+Deleted trigger named 'a23456789012345678901' for global ^a23456789012345678901 (region DEFAULT)
+  --> Return value of $ztrigger = 1
+----------------------------------------------------------------------
+Testing for name length : 22
+----------------------------------------------------------------------
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#02")
+Invalid name entry in SELECT list: "a234567890123456789012#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012#02")
+Invalid trigger NAME string: "a234567890123456789012#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#023")
+Invalid name entry in SELECT list: "a234567890123456789012#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012#023")
+Invalid trigger NAME string: "a234567890123456789012#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#0234")
+Invalid name entry in SELECT list: "a234567890123456789012#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012#0234")
+Invalid trigger NAME string: "a234567890123456789012#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#00045")
+Invalid name entry in SELECT list: "a234567890123456789012#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012#00045")
+Invalid trigger NAME string: "a234567890123456789012#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#023456")
+Invalid name entry in SELECT list: "a234567890123456789012#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012#023456")
+Invalid trigger NAME string: "a234567890123456789012#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#203456")
+Invalid name entry in SELECT list: "a234567890123456789012#203456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012#203456")
+Invalid trigger NAME string: "a234567890123456789012#203456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012*")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a234567890123456789012*")
+No matching triggers of the form a234567890123456789012* found for deletion
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#*")
+Invalid name entry in SELECT list: "a234567890123456789012#*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012#*")
+Invalid trigger NAME string: "a234567890123456789012#*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#1")
+Invalid name entry in SELECT list: "a234567890123456789012#1"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012#1")
+Invalid trigger NAME string: "a234567890123456789012#1"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a234567890123456789012#")
+Trigger named a234567890123456789012# does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a234567890123456789012")
+Trigger named a234567890123456789012 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -name=a234567890123456789012 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a234567890123456789012
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#02")
+Invalid name entry in SELECT list: "a234567890123456789012#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012#02")
+Invalid trigger NAME string: "a234567890123456789012#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -name=a234567890123456789012 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a234567890123456789012
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#023")
+Invalid name entry in SELECT list: "a234567890123456789012#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012#023")
+Invalid trigger NAME string: "a234567890123456789012#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -name=a234567890123456789012 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a234567890123456789012
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#0234")
+Invalid name entry in SELECT list: "a234567890123456789012#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012#0234")
+Invalid trigger NAME string: "a234567890123456789012#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -name=a234567890123456789012 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a234567890123456789012
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#00045")
+Invalid name entry in SELECT list: "a234567890123456789012#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012#00045")
+Invalid trigger NAME string: "a234567890123456789012#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -name=a234567890123456789012 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a234567890123456789012
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#023456")
+Invalid name entry in SELECT list: "a234567890123456789012#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012#023456")
+Invalid trigger NAME string: "a234567890123456789012#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -name=a234567890123456789012 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a234567890123456789012
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#203456")
+Invalid name entry in SELECT list: "a234567890123456789012#203456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012#203456")
+Invalid trigger NAME string: "a234567890123456789012#203456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -name=a234567890123456789012 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a234567890123456789012
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012*")
+;trigger name: a234567890123456789012 (region DEFAULT)  cycle: 35
++^a234567890123456789012 -name=a234567890123456789012 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a234567890123456789012*")
+Deleted trigger named 'a234567890123456789012' for global ^a234567890123456789012 (region DEFAULT)
+All existing triggers named a234567890123456789012* (count = 1) now deleted
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -name=a234567890123456789012 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a234567890123456789012
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#*")
+Invalid name entry in SELECT list: "a234567890123456789012#*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012#*")
+Invalid trigger NAME string: "a234567890123456789012#*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -name=a234567890123456789012 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a234567890123456789012
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#1")
+Invalid name entry in SELECT list: "a234567890123456789012#1"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012#1")
+Invalid trigger NAME string: "a234567890123456789012#1"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -name=a234567890123456789012 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a234567890123456789012
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012#")
+;trigger name: a234567890123456789012 (region DEFAULT)  cycle: 41
++^a234567890123456789012 -name=a234567890123456789012 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a234567890123456789012#")
+Deleted trigger named 'a234567890123456789012' for global ^a234567890123456789012 (region DEFAULT)
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012 -commands=S -name=a234567890123456789012 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012 named a234567890123456789012
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012")
+;trigger name: a234567890123456789012 (region DEFAULT)  cycle: 43
++^a234567890123456789012 -name=a234567890123456789012 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a234567890123456789012")
+Deleted trigger named 'a234567890123456789012' for global ^a234567890123456789012 (region DEFAULT)
+  --> Return value of $ztrigger = 1
+----------------------------------------------------------------------
+Testing for name length : 27
+----------------------------------------------------------------------
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#02")
+Invalid name entry in SELECT list: "a23456789012345678901234567#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901234567#02")
+Invalid trigger NAME string: "a23456789012345678901234567#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#023")
+Invalid name entry in SELECT list: "a23456789012345678901234567#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901234567#023")
+Invalid trigger NAME string: "a23456789012345678901234567#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#0234")
+Invalid name entry in SELECT list: "a23456789012345678901234567#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901234567#0234")
+Invalid trigger NAME string: "a23456789012345678901234567#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#00045")
+Invalid name entry in SELECT list: "a23456789012345678901234567#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901234567#00045")
+Invalid trigger NAME string: "a23456789012345678901234567#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#023456")
+Invalid name entry in SELECT list: "a23456789012345678901234567#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901234567#023456")
+Invalid trigger NAME string: "a23456789012345678901234567#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#203456")
+Invalid name entry in SELECT list: "a23456789012345678901234567#203456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901234567#203456")
+Invalid trigger NAME string: "a23456789012345678901234567#203456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567*")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901234567*")
+No matching triggers of the form a23456789012345678901234567* found for deletion
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#*")
+Invalid name entry in SELECT list: "a23456789012345678901234567#*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901234567#*")
+Invalid trigger NAME string: "a23456789012345678901234567#*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#1")
+Invalid name entry in SELECT list: "a23456789012345678901234567#1"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901234567#1")
+Invalid trigger NAME string: "a23456789012345678901234567#1"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901234567#")
+Trigger named a23456789012345678901234567# does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901234567")
+Trigger named a23456789012345678901234567 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -name=a23456789012345678901234567 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901234567
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#02")
+Invalid name entry in SELECT list: "a23456789012345678901234567#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901234567#02")
+Invalid trigger NAME string: "a23456789012345678901234567#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -name=a23456789012345678901234567 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901234567
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#023")
+Invalid name entry in SELECT list: "a23456789012345678901234567#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901234567#023")
+Invalid trigger NAME string: "a23456789012345678901234567#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -name=a23456789012345678901234567 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901234567
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#0234")
+Invalid name entry in SELECT list: "a23456789012345678901234567#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901234567#0234")
+Invalid trigger NAME string: "a23456789012345678901234567#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -name=a23456789012345678901234567 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901234567
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#00045")
+Invalid name entry in SELECT list: "a23456789012345678901234567#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901234567#00045")
+Invalid trigger NAME string: "a23456789012345678901234567#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -name=a23456789012345678901234567 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901234567
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#023456")
+Invalid name entry in SELECT list: "a23456789012345678901234567#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901234567#023456")
+Invalid trigger NAME string: "a23456789012345678901234567#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -name=a23456789012345678901234567 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901234567
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#203456")
+Invalid name entry in SELECT list: "a23456789012345678901234567#203456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901234567#203456")
+Invalid trigger NAME string: "a23456789012345678901234567#203456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -name=a23456789012345678901234567 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901234567
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567*")
+;trigger name: a23456789012345678901234567 (region DEFAULT)  cycle: 35
++^a23456789012345678901234567 -name=a23456789012345678901234567 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901234567*")
+Deleted trigger named 'a23456789012345678901234567' for global ^a23456789012345678901234567 (region DEFAULT)
+All existing triggers named a23456789012345678901234567* (count = 1) now deleted
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -name=a23456789012345678901234567 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901234567
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#*")
+Invalid name entry in SELECT list: "a23456789012345678901234567#*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901234567#*")
+Invalid trigger NAME string: "a23456789012345678901234567#*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -name=a23456789012345678901234567 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901234567
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#1")
+Invalid name entry in SELECT list: "a23456789012345678901234567#1"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a23456789012345678901234567#1")
+Invalid trigger NAME string: "a23456789012345678901234567#1"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -name=a23456789012345678901234567 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901234567
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567#")
+;trigger name: a23456789012345678901234567 (region DEFAULT)  cycle: 41
++^a23456789012345678901234567 -name=a23456789012345678901234567 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901234567#")
+Deleted trigger named 'a23456789012345678901234567' for global ^a23456789012345678901234567 (region DEFAULT)
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a23456789012345678901234567 -commands=S -name=a23456789012345678901234567 -xecute=""write 1""")
+Added SET trigger on ^a23456789012345678901234567 named a23456789012345678901234567
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a23456789012345678901234567")
+;trigger name: a23456789012345678901234567 (region DEFAULT)  cycle: 43
++^a23456789012345678901234567 -name=a23456789012345678901234567 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a23456789012345678901234567")
+Deleted trigger named 'a23456789012345678901234567' for global ^a23456789012345678901234567 (region DEFAULT)
+  --> Return value of $ztrigger = 1
+----------------------------------------------------------------------
+Testing for name length : 28
+----------------------------------------------------------------------
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#02")
+Invalid name entry in SELECT list: "a234567890123456789012345678#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678#02")
+Invalid trigger NAME string: "a234567890123456789012345678#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#023")
+Invalid name entry in SELECT list: "a234567890123456789012345678#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678#023")
+Invalid trigger NAME string: "a234567890123456789012345678#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#0234")
+Invalid name entry in SELECT list: "a234567890123456789012345678#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678#0234")
+Invalid trigger NAME string: "a234567890123456789012345678#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#00045")
+Invalid name entry in SELECT list: "a234567890123456789012345678#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678#00045")
+Invalid trigger NAME string: "a234567890123456789012345678#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#023456")
+Invalid name entry in SELECT list: "a234567890123456789012345678#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678#023456")
+Invalid trigger NAME string: "a234567890123456789012345678#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#203456")
+Invalid name entry in SELECT list: "a234567890123456789012345678#203456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678#203456")
+Invalid trigger NAME string: "a234567890123456789012345678#203456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678*")
+Invalid name entry in SELECT list: "a234567890123456789012345678*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678*")
+Invalid trigger NAME string: "a234567890123456789012345678*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#*")
+Invalid name entry in SELECT list: "a234567890123456789012345678#*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678#*")
+Invalid trigger NAME string: "a234567890123456789012345678#*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#1")
+Invalid name entry in SELECT list: "a234567890123456789012345678#1"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678#1")
+Invalid trigger NAME string: "a234567890123456789012345678#1"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a234567890123456789012345678#")
+Trigger named a234567890123456789012345678# does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678")
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a234567890123456789012345678")
+Trigger named a234567890123456789012345678 does not exist
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -name=a234567890123456789012345678 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a234567890123456789012345678
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#02")
+Invalid name entry in SELECT list: "a234567890123456789012345678#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678#02")
+Invalid trigger NAME string: "a234567890123456789012345678#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -name=a234567890123456789012345678 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a234567890123456789012345678
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#023")
+Invalid name entry in SELECT list: "a234567890123456789012345678#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678#023")
+Invalid trigger NAME string: "a234567890123456789012345678#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -name=a234567890123456789012345678 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a234567890123456789012345678
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#0234")
+Invalid name entry in SELECT list: "a234567890123456789012345678#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678#0234")
+Invalid trigger NAME string: "a234567890123456789012345678#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -name=a234567890123456789012345678 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a234567890123456789012345678
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#00045")
+Invalid name entry in SELECT list: "a234567890123456789012345678#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678#00045")
+Invalid trigger NAME string: "a234567890123456789012345678#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -name=a234567890123456789012345678 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a234567890123456789012345678
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#023456")
+Invalid name entry in SELECT list: "a234567890123456789012345678#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678#023456")
+Invalid trigger NAME string: "a234567890123456789012345678#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -name=a234567890123456789012345678 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a234567890123456789012345678
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#203456")
+Invalid name entry in SELECT list: "a234567890123456789012345678#203456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678#203456")
+Invalid trigger NAME string: "a234567890123456789012345678#203456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -name=a234567890123456789012345678 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a234567890123456789012345678
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678*")
+Invalid name entry in SELECT list: "a234567890123456789012345678*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678*")
+Invalid trigger NAME string: "a234567890123456789012345678*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -name=a234567890123456789012345678 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a234567890123456789012345678
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#*")
+Invalid name entry in SELECT list: "a234567890123456789012345678#*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678#*")
+Invalid trigger NAME string: "a234567890123456789012345678#*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -name=a234567890123456789012345678 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a234567890123456789012345678
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#1")
+Invalid name entry in SELECT list: "a234567890123456789012345678#1"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678#1")
+Invalid trigger NAME string: "a234567890123456789012345678#1"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -name=a234567890123456789012345678 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a234567890123456789012345678
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678#")
+;trigger name: a234567890123456789012345678 (region DEFAULT)  cycle: 41
++^a234567890123456789012345678 -name=a234567890123456789012345678 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a234567890123456789012345678#")
+Deleted trigger named 'a234567890123456789012345678' for global ^a234567890123456789012345678 (region DEFAULT)
+  --> Return value of $ztrigger = 1
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678 -commands=S -name=a234567890123456789012345678 -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678 named a234567890123456789012345678
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678")
+;trigger name: a234567890123456789012345678 (region DEFAULT)  cycle: 43
++^a234567890123456789012345678 -name=a234567890123456789012345678 -commands=S -xecute="write 1"
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","-a234567890123456789012345678")
+Deleted trigger named 'a234567890123456789012345678' for global ^a234567890123456789012345678 (region DEFAULT)
+  --> Return value of $ztrigger = 1
+----------------------------------------------------------------------
+Testing for name length : 29
+----------------------------------------------------------------------
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890123456789 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789#02")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#02")
+Invalid trigger NAME string: "a2345678901234567890123456789#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890123456789 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789#023")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#023")
+Invalid trigger NAME string: "a2345678901234567890123456789#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890123456789 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789#0234")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#0234")
+Invalid trigger NAME string: "a2345678901234567890123456789#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890123456789 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789#00045")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#00045")
+Invalid trigger NAME string: "a2345678901234567890123456789#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890123456789 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789#023456")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#023456")
+Invalid trigger NAME string: "a2345678901234567890123456789#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890123456789 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789#203456")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#203456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#203456")
+Invalid trigger NAME string: "a2345678901234567890123456789#203456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890123456789 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789*")
+Invalid name entry in SELECT list: "a2345678901234567890123456789*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789*")
+Invalid trigger NAME string: "a2345678901234567890123456789*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890123456789 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789#*")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#*")
+Invalid trigger NAME string: "a2345678901234567890123456789#*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890123456789 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789#1")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#1"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#1")
+Invalid trigger NAME string: "a2345678901234567890123456789#1"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890123456789 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789#")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#")
+Invalid trigger NAME string: "a2345678901234567890123456789#"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a2345678901234567890123456789 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789")
+Invalid name entry in SELECT list: "a2345678901234567890123456789"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789")
+Invalid trigger NAME string: "a2345678901234567890123456789"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -name=a2345678901234567890123456789 -xecute=""write 1""")
+Trigger name length [29] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789#02")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#02")
+Invalid trigger NAME string: "a2345678901234567890123456789#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -name=a2345678901234567890123456789 -xecute=""write 1""")
+Trigger name length [29] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789#023")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#023")
+Invalid trigger NAME string: "a2345678901234567890123456789#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -name=a2345678901234567890123456789 -xecute=""write 1""")
+Trigger name length [29] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789#0234")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#0234")
+Invalid trigger NAME string: "a2345678901234567890123456789#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -name=a2345678901234567890123456789 -xecute=""write 1""")
+Trigger name length [29] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789#00045")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#00045")
+Invalid trigger NAME string: "a2345678901234567890123456789#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -name=a2345678901234567890123456789 -xecute=""write 1""")
+Trigger name length [29] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789#023456")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#023456")
+Invalid trigger NAME string: "a2345678901234567890123456789#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -name=a2345678901234567890123456789 -xecute=""write 1""")
+Trigger name length [29] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789#203456")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#203456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#203456")
+Invalid trigger NAME string: "a2345678901234567890123456789#203456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -name=a2345678901234567890123456789 -xecute=""write 1""")
+Trigger name length [29] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789*")
+Invalid name entry in SELECT list: "a2345678901234567890123456789*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789*")
+Invalid trigger NAME string: "a2345678901234567890123456789*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -name=a2345678901234567890123456789 -xecute=""write 1""")
+Trigger name length [29] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789#*")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#*")
+Invalid trigger NAME string: "a2345678901234567890123456789#*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -name=a2345678901234567890123456789 -xecute=""write 1""")
+Trigger name length [29] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789#1")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#1"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#1")
+Invalid trigger NAME string: "a2345678901234567890123456789#1"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -name=a2345678901234567890123456789 -xecute=""write 1""")
+Trigger name length [29] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789#")
+Invalid name entry in SELECT list: "a2345678901234567890123456789#"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789#")
+Invalid trigger NAME string: "a2345678901234567890123456789#"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789 -commands=S -name=a2345678901234567890123456789 -xecute=""write 1""")
+Trigger name length [29] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789")
+Invalid name entry in SELECT list: "a2345678901234567890123456789"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789")
+Invalid trigger NAME string: "a2345678901234567890123456789"
+  --> Return value of $ztrigger = 0
+----------------------------------------------------------------------
+Testing for name length : 31
+----------------------------------------------------------------------
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678901#02")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#02")
+Invalid trigger NAME string: "a234567890123456789012345678901#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678901#023")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#023")
+Invalid trigger NAME string: "a234567890123456789012345678901#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678901#0234")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#0234")
+Invalid trigger NAME string: "a234567890123456789012345678901#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678901#00045")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#00045")
+Invalid trigger NAME string: "a234567890123456789012345678901#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678901#023456")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#023456")
+Invalid trigger NAME string: "a234567890123456789012345678901#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678901#203456")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#203456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#203456")
+Invalid trigger NAME string: "a234567890123456789012345678901#203456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678901*")
+Invalid name entry in SELECT list: "a234567890123456789012345678901*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901*")
+Invalid trigger NAME string: "a234567890123456789012345678901*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678901#*")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#*")
+Invalid trigger NAME string: "a234567890123456789012345678901#*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678901#1")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#1"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#1")
+Invalid trigger NAME string: "a234567890123456789012345678901#1"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678901#")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#")
+Invalid trigger NAME string: "a234567890123456789012345678901#"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -xecute=""write 1""")
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a234567890123456789012345678901")
+Invalid name entry in SELECT list: "a234567890123456789012345678901"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901")
+Invalid trigger NAME string: "a234567890123456789012345678901"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -name=a234567890123456789012345678901 -xecute=""write 1""")
+Trigger name length [31] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a234567890123456789012345678901"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a234567890123456789012345678901#02")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#02")
+Invalid trigger NAME string: "a234567890123456789012345678901#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -name=a234567890123456789012345678901 -xecute=""write 1""")
+Trigger name length [31] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a234567890123456789012345678901"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a234567890123456789012345678901#023")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#023")
+Invalid trigger NAME string: "a234567890123456789012345678901#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -name=a234567890123456789012345678901 -xecute=""write 1""")
+Trigger name length [31] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a234567890123456789012345678901"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a234567890123456789012345678901#0234")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#0234")
+Invalid trigger NAME string: "a234567890123456789012345678901#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -name=a234567890123456789012345678901 -xecute=""write 1""")
+Trigger name length [31] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a234567890123456789012345678901"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a234567890123456789012345678901#00045")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#00045")
+Invalid trigger NAME string: "a234567890123456789012345678901#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -name=a234567890123456789012345678901 -xecute=""write 1""")
+Trigger name length [31] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a234567890123456789012345678901"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a234567890123456789012345678901#023456")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#023456")
+Invalid trigger NAME string: "a234567890123456789012345678901#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -name=a234567890123456789012345678901 -xecute=""write 1""")
+Trigger name length [31] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a234567890123456789012345678901"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a234567890123456789012345678901#203456")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#203456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#203456")
+Invalid trigger NAME string: "a234567890123456789012345678901#203456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -name=a234567890123456789012345678901 -xecute=""write 1""")
+Trigger name length [31] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a234567890123456789012345678901"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a234567890123456789012345678901*")
+Invalid name entry in SELECT list: "a234567890123456789012345678901*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901*")
+Invalid trigger NAME string: "a234567890123456789012345678901*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -name=a234567890123456789012345678901 -xecute=""write 1""")
+Trigger name length [31] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a234567890123456789012345678901"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a234567890123456789012345678901#*")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#*")
+Invalid trigger NAME string: "a234567890123456789012345678901#*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -name=a234567890123456789012345678901 -xecute=""write 1""")
+Trigger name length [31] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a234567890123456789012345678901"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a234567890123456789012345678901#1")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#1"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#1")
+Invalid trigger NAME string: "a234567890123456789012345678901#1"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -name=a234567890123456789012345678901 -xecute=""write 1""")
+Trigger name length [31] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a234567890123456789012345678901"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a234567890123456789012345678901#")
+Invalid name entry in SELECT list: "a234567890123456789012345678901#"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901#")
+Invalid trigger NAME string: "a234567890123456789012345678901#"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a234567890123456789012345678901 -commands=S -name=a234567890123456789012345678901 -xecute=""write 1""")
+Trigger name length [31] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a234567890123456789012345678901"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a234567890123456789012345678901")
+Invalid name entry in SELECT list: "a234567890123456789012345678901"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a234567890123456789012345678901")
+Invalid trigger NAME string: "a234567890123456789012345678901"
+  --> Return value of $ztrigger = 0
+----------------------------------------------------------------------
+Testing for name length : 32
+----------------------------------------------------------------------
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789012#02")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#02")
+Invalid trigger NAME string: "a2345678901234567890123456789012#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789012#023")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#023")
+Invalid trigger NAME string: "a2345678901234567890123456789012#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789012#0234")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#0234")
+Invalid trigger NAME string: "a2345678901234567890123456789012#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789012#00045")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#00045")
+Invalid trigger NAME string: "a2345678901234567890123456789012#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789012#023456")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#023456")
+Invalid trigger NAME string: "a2345678901234567890123456789012#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789012#203456")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#203456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#203456")
+Invalid trigger NAME string: "a2345678901234567890123456789012#203456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789012*")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012*")
+Invalid trigger NAME string: "a2345678901234567890123456789012*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789012#*")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#*")
+Invalid trigger NAME string: "a2345678901234567890123456789012#*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789012#1")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#1"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#1")
+Invalid trigger NAME string: "a2345678901234567890123456789012#1"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789012#")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#")
+Invalid trigger NAME string: "a2345678901234567890123456789012#"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Added SET trigger on ^a234567890123456789012345678901 named a23456789012345678901#1
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("select","a2345678901234567890123456789012")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012")
+Invalid trigger NAME string: "a2345678901234567890123456789012"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+All existing triggers (count = 1) deleted
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -name=a2345678901234567890123456789012 -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Trigger name length [32] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789012"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789012#02")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#02"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#02")
+Invalid trigger NAME string: "a2345678901234567890123456789012#02"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -name=a2345678901234567890123456789012 -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Trigger name length [32] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789012"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789012#023")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#023"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#023")
+Invalid trigger NAME string: "a2345678901234567890123456789012#023"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -name=a2345678901234567890123456789012 -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Trigger name length [32] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789012"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789012#0234")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#0234"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#0234")
+Invalid trigger NAME string: "a2345678901234567890123456789012#0234"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -name=a2345678901234567890123456789012 -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Trigger name length [32] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789012"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789012#00045")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#00045"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#00045")
+Invalid trigger NAME string: "a2345678901234567890123456789012#00045"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -name=a2345678901234567890123456789012 -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Trigger name length [32] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789012"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789012#023456")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#023456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#023456")
+Invalid trigger NAME string: "a2345678901234567890123456789012#023456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -name=a2345678901234567890123456789012 -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Trigger name length [32] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789012"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789012#203456")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#203456"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#203456")
+Invalid trigger NAME string: "a2345678901234567890123456789012#203456"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -name=a2345678901234567890123456789012 -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Trigger name length [32] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789012"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789012*")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012*")
+Invalid trigger NAME string: "a2345678901234567890123456789012*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -name=a2345678901234567890123456789012 -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Trigger name length [32] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789012"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789012#*")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#*"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#*")
+Invalid trigger NAME string: "a2345678901234567890123456789012#*"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -name=a2345678901234567890123456789012 -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Trigger name length [32] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789012"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789012#1")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#1"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#1")
+Invalid trigger NAME string: "a2345678901234567890123456789012#1"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -name=a2345678901234567890123456789012 -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Trigger name length [32] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789012"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789012#")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012#"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012#")
+Invalid trigger NAME string: "a2345678901234567890123456789012#"
+  --> Return value of $ztrigger = 0
+
+set x=$ztrigger("item","-*")
+No matching triggers found for deletion
+  --> Return value of $ztrigger = 1
+set x=$ztrigger("item","+^a2345678901234567890123456789012 -commands=S -name=a2345678901234567890123456789012 -xecute=""write 1""")
+Warning: global name truncated to ^a234567890123456789012345678901
+Trigger name length [32] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "a2345678901234567890123456789012"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("select","a2345678901234567890123456789012")
+Invalid name entry in SELECT list: "a2345678901234567890123456789012"
+  --> Return value of $ztrigger = 0
+set x=$ztrigger("item","-a2345678901234567890123456789012")
+Invalid trigger NAME string: "a2345678901234567890123456789012"
+  --> Return value of $ztrigger = 0
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,38 @@
+change -segment DEFAULT -file_name=mumps.dat
+change -region DEFAULT -inst_freeze_on_error
+add -name a* -region=areg
+add -name A* -region=areg
+add -region areg -dyn=aseg
+add -segment aseg -file=a.dat
+change -region areg -inst_freeze_on_error
+add -name b* -region=breg
+add -name B* -region=breg
+add -region breg -dyn=bseg
+add -segment bseg -file=b.dat
+change -region breg -inst_freeze_on_error
+! Using pre-existing GDE command file v43001_1_seq_format_M_COL0.sprgde
+! Number of records in *.dat files is 26
+! Number of included regions is 3
+!    Region 1 = AREG
+!    Region 2 = BREG
+!    Region 3 = DEFAULT
+! Number of sections randomly chosen is 8
+! Map : ^acn : Section excluded : Unsubscripted variable
+! Map : ^bcn : Section excluded : Unsubscripted variable
+add -name bcn(12) -region=BREG
+! Map : ^bcn(12,12) maps to AREG
+add -name bcn(12:) -region=AREG
+add -name bcn(12,12:) -region=AREG
+! Map : ^ccn : Section excluded : Unsubscripted variable
+add -name ccn(12) -region=DEFAULT
+! Map : ^ccn(12,12) maps to BREG
+add -name ccn(12:) -region=BREG
+add -name ccn(12,12:) -region=BREG
+! Map : ^x : Section excluded : Unsubscripted variable
+! Map : ^x(2) maps to AREG
+add -name x(2:3) -region=AREG
+! Map : ^x(3) maps to DEFAULT
+add -name x(3:) -region=DEFAULT
+change -region AREG -std
+change -region BREG -std
+change -region DEFAULT -std

@@ -1,0 +1,90 @@
+setenv gtm_chset M
+unset echo
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+************************* zshowprin.exp ***************************
+###################################################################
+ZSHOW "D" with no $PRINCIPAL redirection
+$P = abc, $ZPIN = abc, $ZPOUT = abc
+/dev/pts/* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE NOWRAP WIDTH=* LENG=* 
+A("D",1)="/dev/pts/* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE NOWRAP WIDTH=* LENG=* "
+ZSHOW "D" with no $PRINCIPAL redirection followed by attempt to open %$P
+/dev/pts/* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=* LENG=* 
+%GTM-E-DEVOPENFAIL, Error opening abc< /
+%GTM-I-TEXT, The value of $P followed by "< /" is an invalid device name
+ZSHOW "D" with no $PRINCIPAL redirection followed by attempt to open #$P
+/dev/pts/* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=* LENG=* 
+%GTM-E-DEVOPENFAIL, Error opening abc> /
+%GTM-I-TEXT, The value of $P followed by "> /" is an invalid device name
+ZSHOW "D" with $PRINCIPAL input redirected from a file
+0 OPEN RMS STREAM NOWRAP 
+0-out /dev/pts/* OPEN TERMINAL NOCENE NOPAST NOESCA NOREADS TYPE WIDTH=* LENG=* 
+A("D",1)="0 OPEN RMS STREAM NOWRAP "
+A("D",2)="0-out /dev/pts/* OPEN TERMINAL NOCENE NOPAST NOESCA NOREADS TYPE WIDTH=* LENG=* "
+ZSHOW "D" with $PRINCIPAL output redirected to a file - zshowprin1.out
+/dev/pts/* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=* LENG=* 
+0-out OPEN RMS STREAM 
+A("D",1)="/dev/pts/* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=* LENG=* "
+A("D",2)="0-out OPEN RMS STREAM "
+ZSHOW "D" with $PRINCIPAL input redirected by |
+0 OPEN FIFO STREAM 
+0-out /dev/pts/* OPEN TERMINAL NOCENE NOPAST NOESCA NOREADS TYPE NOWRAP WIDTH=* LENG=* 
+TESTING PIPE1
+A("D",1)="0 OPEN FIFO STREAM "
+A("D",2)="0-out /dev/pts/* OPEN TERMINAL NOCENE NOPAST NOESCA NOREADS TYPE NOWRAP WIDTH=* LENG=* "
+ZSHOW "D" with $PRINCIPAL output redirected by |
+/dev/pts/* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=* LENG=* 
+0-out OPEN FIFO STREAM 
+A("D",1)="/dev/pts/* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=* LENG=* "
+A("D",2)="0-out OPEN FIFO STREAM "
+ZSHOW "D" with $PRINCIPAL input and output redirected by |
+0 OPEN FIFO STREAM 
+0-out OPEN FIFO STREAM NOWRAP 
+TESTING PIPE2
+A("D",1)="0 OPEN FIFO STREAM "
+A("D",2)="0-out OPEN FIFO STREAM NOWRAP "
+ZSHOW "D" with $PRINCIPAL input redirected from a fifo
+0 OPEN FIFO STREAM NOWRAP 
+0-out /dev/pts/* OPEN TERMINAL NOCENE NOPAST NOESCA NOREADS TYPE WIDTH=* LENG=* 
+TESTING FIFO1
+A("D",1)="0 OPEN FIFO STREAM NOWRAP "
+A("D",2)="0-out /dev/pts/* OPEN TERMINAL NOCENE NOPAST NOESCA NOREADS TYPE WIDTH=* LENG=* "
+ZSHOW "D" with $PRINCIPAL output redirected to a fifo
+/dev/pts/* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=* LENG=* 
+0-out OPEN FIFO STREAM NOWRAP 
+TESTING FIFO2
+A("D",1)="/dev/pts/* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=* LENG=* "
+A("D",2)="0-out OPEN FIFO STREAM NOWRAP "
+TEST that ichset=M and ochset=M when OPEN $P:(ichset="M":ochset="M") is done with a split $P
+/dev/pts/* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=* LENG=* 
+0-out OPEN RMS STREAM 
+/dev/pts/* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=* LENG=* ICHSET=M OCHSET=M 
+0-out OPEN RMS STREAM 
+Demonstrate USE $P, $ZPOUT, and $ZPIN for a split device
+Demonstrate error message while attempting to open $ZPIN or $ZPOUT
+
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+$PRINCIPAL = 0
+$ZPIN = 0< /
+$ZPOUT = 0> /
+0 OPEN RMS STREAM 
+0-out OPEN RMS STREAM 
+0 OPEN RMS STREAM 
+0-out OPEN RMS STREAM NOWRAP 
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+tfile OPEN RMS 
+TEST OPEN and USE a file with a split $PRINCIPAL works fine
+STAT=zpinandzpout+27^zpinandzpout,%GTM-E-DEVOPENFAIL, Error opening 0< /,%GTM-I-TEXT, The value of $P followed by "< /" is an invalid device name
+STAT=zpinandzpout+29^zpinandzpout,%GTM-E-DEVOPENFAIL, Error opening 0> /,%GTM-I-TEXT, The value of $P followed by "> /" is an invalid device name
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+tfile OPEN RMS 
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

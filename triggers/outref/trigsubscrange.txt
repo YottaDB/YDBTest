@@ -1,0 +1,182 @@
+###################################################################
+1. Test standard trigger subscript collation, standard default region collation
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps1.gld
+Using: ##SOURCE_PATH##/mupip
+mumps1.dat
+trigcol1a.dat
+trigcol1b.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps1.gld
+Using: ##SOURCE_PATH##/mupip
+mumps1.dat
+trigcol1a.dat
+trigcol1b.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+%GTM-E-TRIGSUBSCRANGE, Trigger definition for global ^collrange has one or more invalid subscript range(s) : sub="G":"A",%GTM-I-TRIGIS, 		Trigger name: trigcolupper#
+		At M source location +7^trigcoldrv
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Output File: 
+;trigger name: trigcolupper (region TRIGCOL1A)  cycle: 2
++^collrange(sub="G":"A") -name=trigcolupper -commands=S -xecute="Set ^range(sub)=$ZTValue"
+;trigger name: trigcollower (region TRIGCOL1A)  cycle: 2
++^collrange(sub="p":"h") -name=trigcollower -commands=S -xecute="Set ^range(sub)=$ZTValue"
+
+###################################################################
+2. Alternate trigger subscript collation, standard default region collation
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps2.gld
+Using: ##SOURCE_PATH##/mupip
+mumps2.dat
+trigcol2a.dat
+trigcol2b.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps2.gld
+Using: ##SOURCE_PATH##/mupip
+mumps1.dat
+mumps2.dat
+trigcol1a.dat
+trigcol1b.dat
+trigcol2a.dat
+trigcol2b.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+%GTM-E-TRIGSUBSCRANGE, Trigger definition for global ^collrange has one or more invalid subscript range(s) : sub="A":"G",%GTM-I-TRIGIS, 		Trigger name: trigcolupper#
+		At M source location +7^trigcoldrv
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Output File: 
+;trigger name: trigcolupper (region TRIGCOL2A)  cycle: 2
++^collrange(sub="A":"G") -name=trigcolupper -commands=S -xecute="Set ^range(sub)=$ZTValue"
+;trigger name: trigcollower (region TRIGCOL2A)  cycle: 2
++^collrange(sub="h":"p") -name=trigcollower -commands=S -xecute="Set ^range(sub)=$ZTValue"
+
+###################################################################
+3. Standard trigger subscript collation, alternate default region collation
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps3.gld
+Using: ##SOURCE_PATH##/mupip
+mumps3.dat
+trigcol3a.dat
+trigcol3b.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps3.gld
+Using: ##SOURCE_PATH##/mupip
+mumps1.dat
+mumps2.dat
+mumps3.dat
+trigcol1a.dat
+trigcol1b.dat
+trigcol2a.dat
+trigcol2b.dat
+trigcol3a.dat
+trigcol3b.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+%GTM-E-TRIGSUBSCRANGE, Trigger definition for global ^collrange has one or more invalid subscript range(s) : sub="G":"A",%GTM-I-TRIGIS, 		Trigger name: trigcolupper#
+		At M source location +7^trigcoldrv
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Output File: 
+;trigger name: trigcolupper (region TRIGCOL3A)  cycle: 2
++^collrange(sub="G":"A") -name=trigcolupper -commands=S -xecute="Set ^range(sub)=$ZTValue"
+;trigger name: trigcollower (region TRIGCOL3A)  cycle: 2
++^collrange(sub="p":"h") -name=trigcollower -commands=S -xecute="Set ^range(sub)=$ZTValue"
+
+###################################################################
+4. Alternate trigger subscript collation, alternate default region collation
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps4.gld
+Using: ##SOURCE_PATH##/mupip
+mumps4.dat
+trigcol4a.dat
+trigcol4b.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps4.gld
+Using: ##SOURCE_PATH##/mupip
+mumps1.dat
+mumps2.dat
+mumps3.dat
+mumps4.dat
+trigcol1a.dat
+trigcol1b.dat
+trigcol2a.dat
+trigcol2b.dat
+trigcol3a.dat
+trigcol3b.dat
+trigcol4a.dat
+trigcol4b.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+%GTM-E-TRIGSUBSCRANGE, Trigger definition for global ^collrange has one or more invalid subscript range(s) : sub="A":"G",%GTM-I-TRIGIS, 		Trigger name: trigcolupper#
+		At M source location +7^trigcoldrv
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Output File: 
+;trigger name: trigcolupper (region TRIGCOL4A)  cycle: 2
++^collrange(sub="A":"G") -name=trigcolupper -commands=S -xecute="Set ^range(sub)=$ZTValue"
+;trigger name: trigcollower (region TRIGCOL4A)  cycle: 2
++^collrange(sub="h":"p") -name=trigcollower -commands=S -xecute="Set ^range(sub)=$ZTValue"
+

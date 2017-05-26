@@ -1,0 +1,128 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gde07.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gde07.cmd
+%GDE-I-MAPBAD, Region XREG for Name X(1,1:2) does not exist
+%GDE-I-MAPBAD, Region XREG for Name X(1,2) does not exist
+%GDE-I-MAPBAD, Region YREG for Name X(1,2:3) does not exist
+%GDE-I-MAPBAD, Region YREG for Name X(1,3) does not exist
+%GDE-I-MAPBAD, Region ZREG for Name X(1,3:4) does not exist
+%GDE-I-MAPBAD, Region ZREG for Name X(1,4) does not exist
+%GDE-I-MAPBAD, Region AREG for Name Y(1,"":2) does not exist
+%GDE-I-MAPBAD, Region AREG for Name Y(1,2) does not exist
+%GDE-I-MAPBAD, Region BREG for Name Y(1:3) does not exist
+%GDE-I-MAPBAD, Region BREG for Name Y(3) does not exist
+%GDE-I-MAPBAD, Region MREG for Name Z(1) does not exist
+%GDE-I-MAPBAD, Region MREG for Name Z(1,"":2) does not exist
+%GDE-I-MAPBAD, Region MREG for Name Z(1,2) does not exist
+%GDE-I-MAPBAD, Region NREG for Name Z(1,2:"") does not exist
+%GDE-I-MAPBAD, Region NREG for Name Z(1:3) does not exist
+%GDE-I-MAPBAD, Region NREG for Name Z(3) does not exist
+%GDE-I-MAPBAD, Region NREG for Name Z(3,"":5) does not exist
+%GDE-I-MAPBAD, Region NREG for Name Z(3,5) does not exist
+%GDE-I-MAPBAD, Region NREG for Name Z(3,5,"":6) does not exist
+%GDE-I-MAPBAD, Region NREG for Name Z(3,5,6) does not exist
+%GDE-I-MAPBAD, Region OREG for Name Z(3,5,6:"") does not exist
+%GDE-I-MAPBAD, Region OREG for Name Z(3,5:"") does not exist
+%GDE-I-MAPBAD, Region OREG for Name Z(3:"") does not exist
+%GDE-I-STDNULLCOLLREQ, Region OREG needs Standard Null Collation enabled because global ^Z spans through it
+%GDE-I-STDNULLCOLLREQ, Region NREG needs Standard Null Collation enabled because global ^Z spans through it
+%GDE-I-STDNULLCOLLREQ, Region MREG needs Standard Null Collation enabled because global ^Z spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^Z spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^Y spans through it
+%GDE-I-STDNULLCOLLREQ, Region BREG needs Standard Null Collation enabled because global ^Y spans through it
+%GDE-I-STDNULLCOLLREQ, Region AREG needs Standard Null Collation enabled because global ^Y spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^X spans through it
+%GDE-I-STDNULLCOLLREQ, Region ZREG needs Standard Null Collation enabled because global ^X spans through it
+%GDE-I-STDNULLCOLLREQ, Region YREG needs Standard Null Collation enabled because global ^X spans through it
+%GDE-I-STDNULLCOLLREQ, Region XREG needs Standard Null Collation enabled because global ^X spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-I-NOEXIT, Cannot exit because of verification failure
+
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ X(1,1:2)                           XREG
+ X(1,2)                             XREG
+ X(1,2:3)                           YREG
+ X(1,3)                             YREG
+ X(1,3:4)                           ZREG
+ X(1,4)                             ZREG
+ Y(1,"":2)                          AREG
+ Y(1,2)                             AREG
+ Y(1:3)                             BREG
+ Y(3)                               BREG
+ Z(1)                               MREG
+ Z(1,2)                             MREG
+ Z(1,2:"")                          NREG
+ Z(1:3)                             NREG
+ Z(3)                               NREG
+ Z(3,5)                             NREG
+ Z(3,5,6)                           NREG
+ Z(3,5,6:"")                        OREG
+ Z(3,5:"")                          OREG
+ Z(3:"")                            OREG
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               X(1,1)                           REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ X(1,1)                          X(1,2)++                         REG = XREG
+                                                                  SEG = XREG
+                                                                  FILE = XREG.dat
+ X(1,2)++                        X(1,3)++                         REG = YREG
+                                                                  SEG = YREG
+                                                                  FILE = YREG.dat
+ X(1,3)++                        X(1,4)++                         REG = ZREG
+                                                                  SEG = ZREG
+                                                                  FILE = ZREG.dat
+ X(1,4)++                        Y(1)                             REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Y(1)                            Y(1,"")                          REG = BREG
+                                                                  SEG = BREG
+                                                                  FILE = BREG.dat
+ Y(1,"")                         Y(1,2)++                         REG = AREG
+                                                                  SEG = AREG
+                                                                  FILE = AREG.dat
+ Y(1,2)++                        Y(3)++                           REG = BREG
+                                                                  SEG = BREG
+                                                                  FILE = BREG.dat
+ Y(3)++                          Z(1)                             REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Z(1)                            Z(1,2)++                         REG = MREG
+                                                                  SEG = MREG
+                                                                  FILE = MREG.dat
+ Z(1,2)++                        Z(3,5,6)++                       REG = NREG
+                                                                  SEG = NREG
+                                                                  FILE = NREG.dat
+ Z(3,5,6)++                      Z0                               REG = OREG
+                                                                  SEG = OREG
+                                                                  FILE = OREG.dat
+ Z0                              ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+
+                          *** MAP for region OREG ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ Z(3,5,6)++                      Z0                               REG = OREG
+                                                                  SEG = OREG
+                                                                  FILE = OREG.dat
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gde07.gld

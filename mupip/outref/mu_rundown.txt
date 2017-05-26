@@ -1,0 +1,103 @@
+MUPIP RUNDOWN
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/rundown.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/tempru.com
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/rundown.gld
+Created file ##TEST_PATH##/rundown.dat
+Created file ##TEST_PATH##/rundowna.dat
+Created file ##TEST_PATH##/rundownb.dat
+
+GTM>
+PASS from fill1^myfill("set")
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
+%GTM-I-GVIS, 		Global variable: ^b("a123456789a123456789a123456789a123456789a123456789a123456789")
+
+GTM>
+ok
+
+GTM>
+%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
+%GTM-I-GVIS, 		Global variable: ^b("a123456789a123456789a123456789a123456789a123456789a123456789")
+
+GTM>
+
+GTM>
+%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
+%GTM-I-GVIS, 		Global variable: ^c("a123456789a123456789a123456789a123456789a123456789a123456789")
+
+GTM>
+ok
+
+GTM>
+%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
+%GTM-I-GVIS, 		Global variable: ^c("a123456789a123456789a123456789a123456789a123456789a123456789")
+
+GTM>
+
+GTM>
+%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
+%GTM-I-GVIS, 		Global variable: ^d("a123456789a123456789a123456789a123456789a123456789a123456789")
+
+GTM>
+ok
+
+GTM>
+%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
+%GTM-I-GVIS, 		Global variable: ^d("a123456789a123456789a123456789a123456789a123456789a123456789")
+
+GTM>
+%GTM-I-MUFILRNDWNSUC, File rundown.dat successfully rundown
+#
+# Rundown with a bad region
+#
+%GTM-E-NOREGION, REGION not found: FREELUNCH
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/rundown.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/rundown.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/rundowna.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/rundownb.dat successfully rundown
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  L
+Created file ##TEST_PATH##/rundown.dat
+Created file ##TEST_PATH##/rundowna.dat
+Created file ##TEST_PATH##/rundownb.dat
+
+GTM>
+
+GTM>
+I am done my dear parent ....
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/rundown.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/rundowna.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/rundownb.dat successfully rundown
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

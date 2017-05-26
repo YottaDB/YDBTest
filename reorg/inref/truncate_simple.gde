@@ -1,0 +1,51 @@
+change -segment DEFAULT -file_name=mumps.dat
+change -segment DEFAULT -block_size=1024
+change -region DEFAULT -record_size=500
+change -region DEFAULT -key_size=255
+add -name a* -region=areg
+add -name A* -region=areg
+add -region areg -dyn=aseg
+add -segment aseg -file=a.dat
+change -segment aseg -block_size=1024
+change -region areg -record_size=500
+change -region areg -key_size=255
+add -name b* -region=breg
+add -name B* -region=breg
+add -region breg -dyn=bseg
+add -segment bseg -file=b.dat
+change -segment bseg -block_size=1024
+change -region breg -record_size=500
+change -region breg -key_size=255
+add -name c* -region=creg
+add -name C* -region=creg
+add -region creg -dyn=cseg
+add -segment cseg -file=c.dat
+change -segment cseg -block_size=1024
+change -region creg -record_size=500
+change -region creg -key_size=255
+! spanning regions configuration to be used by truncate_simple subtest
+! Number of records in *.dat files is 40004
+! User/Randomly excluded region = DEFAULT
+! Number of included regions is 3
+!    Region 1 = AREG
+!    Region 2 = BREG
+!    Region 3 = CREG
+! Number of sections randomly chosen is 8
+! Map : ^a(2056) maps to BREG
+add -name a(2056:5835) -region=BREG
+! Map : ^a(5835) maps to AREG
+add -name a(5835:) -region=AREG
+! Map : ^b(2351) maps to CREG
+add -name b(2351:2374) -region=CREG
+! Map : ^b(2374) maps to AREG
+add -name b(2374:9796) -region=AREG
+! Map : ^b(9796) maps to CREG
+add -name b(9796:) -region=CREG
+! Map : ^c(7828) maps to BREG
+add -name c(7828:) -region=BREG
+! Map : ^d(4602) : Section excluded : Global variable maps to excluded region : DEFAULT
+! Map : ^d(6818) : Section excluded : Global variable maps to excluded region : DEFAULT
+change -region AREG -std
+change -region BREG -std
+change -region CREG -std
+change -region DEFAULT -std

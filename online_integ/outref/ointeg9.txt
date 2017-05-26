@@ -1,0 +1,20 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+###################################################################
+# Let's get our large database which is an augmented version of the WorldVista db
+###################################################################
+
+----------
+Error FORCEDHALT seen in online_integ_final.out as expected:
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+
+###################################################################
+Snapshot files not found AS EXPECTED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

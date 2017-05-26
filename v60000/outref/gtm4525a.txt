@@ -1,0 +1,146 @@
+Test GLD Inst Freeze on Error Flag
+==================================
+
+# Add Regions
+
+A - noinst (default)
+B - noinst (set)
+C - inst (set)
+D - inst (template)
+
+Template - inst (set before D)
+
+REGION(A)=DISABLED
+REGION(B)=DISABLED
+REGION(C)=ENABLED
+REGION(D)=ENABLED
+REGION(DEFAULT)=DISABLED
+TEMPLATE(<default>)=ENABLED
+COMMAND: TEMPLATE -REGION 
+
+# Change Region
+
+A - inst (set)
+B - noinst (unchanged)
+C - noinst (set)
+D - inst (unchanged)
+
+Template - noinst (set)
+
+REGION(A)=ENABLED
+REGION(B)=DISABLED
+REGION(C)=DISABLED
+REGION(D)=ENABLED
+REGION(DEFAULT)=DISABLED
+TEMPLATE(<default>)=DISABLED
+COMMAND: TEMPLATE -REGION 
+
+Test File Header Inst Freeze on Error Flag
+==========================================
+
+# Create Files from GLD
+
+A - inst
+B - noinst
+C - noinst
+D - inst
+DEFAULT - noinst
+
+Region(A)=TRUE
+Region(B)=FALSE
+Region(C)=FALSE
+Region(D)=TRUE
+Region(DEFAULT)=FALSE
+
+# Modify Header Flag
+
+A - inst (default)
+B - inst (set)
+C - noinst (default)
+D - noinst (set)
+DEFAULT - inst (set)
+
+Region(A)=TRUE
+Region(B)=TRUE
+Region(C)=FALSE
+Region(D)=FALSE
+Region(DEFAULT)=TRUE
+
+Test Instance Header Freeze Fields
+==================================
+
+# Replication Setup
+
+
+# Manipulating Freeze Settings
+
+# 1
+Instance Freeze: OFF
+CTL Freeze                                           FALSE
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid [##PID##] for secondary instance name [gtm4525a2]
+PID ##FILTERED##[##PID##] Source server is alive in PASSIVE mode
+
+# 2
+Instance Freeze: ON
+ Freeze Comment: 
+CTL Freeze                                            TRUE
+CTL Freeze Comment                                        
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid [##PID##] for secondary instance name [gtm4525a2]
+PID ##FILTERED##[##PID##] Source server is alive in PASSIVE mode
+Warning: Instance Freeze is ON
+   Freeze Comment: 
+
+# 3
+Instance Freeze: ON
+ Freeze Comment: blah blah blah
+CTL Freeze                                            TRUE
+CTL Freeze Comment                          blah blah blah
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid [##PID##] for secondary instance name [gtm4525a2]
+PID ##FILTERED##[##PID##] Source server is alive in PASSIVE mode
+Warning: Instance Freeze is ON
+   Freeze Comment: blah blah blah
+
+# 4
+Instance Freeze: OFF
+CTL Freeze                                           FALSE
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid [##PID##] for secondary instance name [gtm4525a2]
+PID ##FILTERED##[##PID##] Source server is alive in PASSIVE mode
+
+# 5
+Instance Freeze: ON
+ Freeze Comment: All your database are belong to us. You are on the way to destruction.
+CTL Freeze                                            TRUE
+CTL Freeze Comment: All your database are belong to us. You are on the way to destruction.
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid [##PID##] for secondary instance name [gtm4525a2]
+PID ##FILTERED##[##PID##] Source server is alive in PASSIVE mode
+Warning: Instance Freeze is ON
+   Freeze Comment: All your database are belong to us. You are on the way to destruction.
+
+# 6
+Instance Freeze: ON
+ Freeze Comment: 
+CTL Freeze                                            TRUE
+CTL Freeze Comment                                        
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid [##PID##] for secondary instance name [gtm4525a2]
+PID ##FILTERED##[##PID##] Source server is alive in PASSIVE mode
+Warning: Instance Freeze is ON
+   Freeze Comment: 
+
+# 7
+Instance Freeze: OFF
+CTL Freeze                                           FALSE
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid [##PID##] for secondary instance name [gtm4525a2]
+PID ##FILTERED##[##PID##] Source server is alive in PASSIVE mode
+
+# Invalid Usage
+
+Missing qualifier, must specify either COMMENT or NOCOMMENT with FREEZE=ON
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+Invalid qualifier combination, cannot specify FREEZE=OFF with COMMENT
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+# Replication Shutdown
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

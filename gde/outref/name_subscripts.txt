@@ -1,0 +1,316 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/gdepopulation.cmd
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+                                                                     RES  =   0
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+
+         *** NAMES ***
+ Global                                 Region
+ ------------------------------------------------------------------------
+ *                                      DEFAULT
+ population("Africa","A":"I")           AFRICAAH
+ population("Africa","I":"Z")           AFRICAIY
+ population("Asia","A":"J")             ASIAAI
+ population("Asia","J":"[")             ASIAJZ
+ population("Australia")                AUSTRALIA
+ population("Europe","A":"H")           EUROPEAG
+ population("Europe","H":"P")           EUROPEHO
+ population("Europe","P":"[")           EUROPEPZ
+ population("NA")                       NA
+ population("SA")                       SA
+ population("USA","MidWest","A":"E")    USMWAD
+ population("USA","MidWest","E":"M")    USMWEL
+ population("USA","MidWest","M":"a")    USMWMZ
+ population("USA","Northeast","A":"H")  USNEAG
+ population("USA","Northeast","H":"M")  USNEHL
+ population("USA","Northeast","M":"S")  USNEMR
+ population("USA","Northeast","S":"[")  USNESZ
+ population("USA","South","A":"M")      USSAL
+ population("USA","South","M":"[")      USSMZ
+ population("USA","WestCoast")          USWC
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AFRICAAH                        AFRICAAH                           0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ AFRICAIY                        AFRICAIY                           0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ ASIAAI                          ASIAAI                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ ASIAJZ                          ASIAJZ                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ AUSTRALIA                       AUSTRALIA                          0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ EUROPEAG                        EUROPEAG                           0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ EUROPEHO                        EUROPEHO                           0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ EUROPEPZ                        EUROPEPZ                           0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ NA                              NA                                 0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ SA                              SA                                 0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ USMWAD                          USMWAD                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ USMWEL                          USMWEL                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ USMWMZ                          USMWMZ                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ USNEAG                          USNEAG                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ USNEHL                          USNEHL                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ USNEMR                          USNEMR                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ USNESZ                          USNESZ                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ USSAL                           USSAL                              0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ USSMZ                           USSMZ                              0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ USWC                            USWC                               0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ AFRICAAH                        AFRICAAH.dat        BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ AFRICAIY                        AFRICAIY.dat        BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ ASIAAI                          ASIAAI.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ ASIAJZ                          ASIAJZ.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ AUSTRALIA                       AUSTRALIA.dat       BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ EUROPEAG                        EUROPEAG.dat        BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ EUROPEHO                        EUROPEHO.dat        BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ EUROPEPZ                        EUROPEPZ.dat        BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ NA                              NA.dat              BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ SA                              SA.dat              BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ USMWAD                          USMWAD.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ USMWEL                          USMWEL.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ USMWMZ                          USMWMZ.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ USNEAG                          USNEAG.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ USNEHL                          USNEHL.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ USNEMR                          USNEMR.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ USNESZ                          USNESZ.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ USSAL                           USSAL.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ USSMZ                           USSMZ.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ USWC                            USWC.dat            BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                               Up to                               Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------
+ %                                  population("Africa","A")            REG = DEFAULT
+                                                                        SEG = DEFAULT
+                                                                        FILE = mumps.dat
+ population("Africa","A")           population("Africa","I")            REG = AFRICAAH
+                                                                        SEG = AFRICAAH
+                                                                        FILE = AFRICAAH.dat
+ population("Africa","I")           population("Africa","Z")            REG = AFRICAIY
+                                                                        SEG = AFRICAIY
+                                                                        FILE = AFRICAIY.dat
+ population("Africa","Z")           population("Asia","A")              REG = DEFAULT
+                                                                        SEG = DEFAULT
+                                                                        FILE = mumps.dat
+ population("Asia","A")             population("Asia","J")              REG = ASIAAI
+                                                                        SEG = ASIAAI
+                                                                        FILE = ASIAAI.dat
+ population("Asia","J")             population("Asia","[")              REG = ASIAJZ
+                                                                        SEG = ASIAJZ
+                                                                        FILE = ASIAJZ.dat
+ population("Asia","[")             population("Australia")             REG = DEFAULT
+                                                                        SEG = DEFAULT
+                                                                        FILE = mumps.dat
+ population("Australia")            population("Australia")++           REG = AUSTRALIA
+                                                                        SEG = AUSTRALIA
+                                                                        FILE = AUSTRALIA.dat
+ population("Australia")++          population("Europe","A")            REG = DEFAULT
+                                                                        SEG = DEFAULT
+                                                                        FILE = mumps.dat
+ population("Europe","A")           population("Europe","H")            REG = EUROPEAG
+                                                                        SEG = EUROPEAG
+                                                                        FILE = EUROPEAG.dat
+ population("Europe","H")           population("Europe","P")            REG = EUROPEHO
+                                                                        SEG = EUROPEHO
+                                                                        FILE = EUROPEHO.dat
+ population("Europe","P")           population("Europe","[")            REG = EUROPEPZ
+                                                                        SEG = EUROPEPZ
+                                                                        FILE = EUROPEPZ.dat
+ population("Europe","[")           population("NA")                    REG = DEFAULT
+                                                                        SEG = DEFAULT
+                                                                        FILE = mumps.dat
+ population("NA")                   population("NA")++                  REG = NA
+                                                                        SEG = NA
+                                                                        FILE = NA.dat
+ population("NA")++                 population("SA")                    REG = DEFAULT
+                                                                        SEG = DEFAULT
+                                                                        FILE = mumps.dat
+ population("SA")                   population("SA")++                  REG = SA
+                                                                        SEG = SA
+                                                                        FILE = SA.dat
+ population("SA")++                 population("USA","MidWest","A")     REG = DEFAULT
+                                                                        SEG = DEFAULT
+                                                                        FILE = mumps.dat
+ population("USA","MidWest","A")    population("USA","MidWest","E")     REG = USMWAD
+                                                                        SEG = USMWAD
+                                                                        FILE = USMWAD.dat
+ population("USA","MidWest","E")    population("USA","MidWest","M")     REG = USMWEL
+                                                                        SEG = USMWEL
+                                                                        FILE = USMWEL.dat
+ population("USA","MidWest","M")    population("USA","MidWest","a")     REG = USMWMZ
+                                                                        SEG = USMWMZ
+                                                                        FILE = USMWMZ.dat
+ population("USA","MidWest","a")    population("USA","Northeast","A")   REG = DEFAULT
+                                                                        SEG = DEFAULT
+                                                                        FILE = mumps.dat
+ population("USA","Northeast","A")  population("USA","Northeast","H")   REG = USNEAG
+                                                                        SEG = USNEAG
+                                                                        FILE = USNEAG.dat
+ population("USA","Northeast","H")  population("USA","Northeast","M")   REG = USNEHL
+                                                                        SEG = USNEHL
+                                                                        FILE = USNEHL.dat
+ population("USA","Northeast","M")  population("USA","Northeast","S")   REG = USNEMR
+                                                                        SEG = USNEMR
+                                                                        FILE = USNEMR.dat
+ population("USA","Northeast","S")  population("USA","Northeast","[")   REG = USNESZ
+                                                                        SEG = USNESZ
+                                                                        FILE = USNESZ.dat
+ population("USA","Northeast","[")  population("USA","South","A")       REG = DEFAULT
+                                                                        SEG = DEFAULT
+                                                                        FILE = mumps.dat
+ population("USA","South","A")      population("USA","South","M")       REG = USSAL
+                                                                        SEG = USSAL
+                                                                        FILE = USSAL.dat
+ population("USA","South","M")      population("USA","South","[")       REG = USSMZ
+                                                                        SEG = USSMZ
+                                                                        FILE = USSMZ.dat
+ population("USA","South","[")      population("USA","WestCoast")       REG = DEFAULT
+                                                                        SEG = DEFAULT
+                                                                        FILE = mumps.dat
+ population("USA","WestCoast")      population("USA","WestCoast")++     REG = USWC
+                                                                        SEG = USWC
+                                                                        FILE = USWC.dat
+ population("USA","WestCoast")++    ...                                 REG = DEFAULT
+                                                                        SEG = DEFAULT
+                                                                        FILE = mumps.dat
+ LOCAL LOCKS                                                            REG = DEFAULT
+                                                                        SEG = DEFAULT
+                                                                        FILE = mumps.dat
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld

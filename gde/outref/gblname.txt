@@ -1,0 +1,302 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+GDE> 
+%GDE-E-VALUEBAD, abcd1234$% is not a valid gblname
+
+GDE> 
+%GDE-E-VALUEBAD, abcd123-$ is not a valid gblname
+
+GDE> 
+GDE> 
+%GDE-E-GBLNAMCOLLUNDEF, Error opening shared library of collation sequence #11 for GBLNAME errorcoll
+
+GDE> 
+GDE> 
+%GDE-E-OBJDUP, Global Name abcd already exists
+
+GDE> 
+GDE> 
+%GDE-E-QUALREQD, Collation required
+
+GDE> 
+%GDE-E-OBJDUP, Global Name abcd already exists
+
+GDE> 
+GDE> 
+%GDE-E-OBJNOTCHG, Not changing gblname abcd1234
+
+GDE> 
+GDE> 
+%GDE-E-OBJNOTFND, Global Name abcd1 does not exist
+
+GDE> 
+%GDE-E-QUALREQD, Collation required
+
+GDE> 
+GDE> 
+%GDE-E-OBJNOTFND, Global Name abcd1 does not exist
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-E-OBJNOTFND, Old gblname efgh does not exist
+
+GDE> 
+GDE> 
+%GDE-E-OBJNOTFND, Old gblname abcd1234 does not exist
+
+GDE> 
+GDE> 
+GDE> 
+%GDE-E-OBJNOTFND, Global Name abcd1234 does not exist
+
+GDE> 
+
+         *** GBLNAMES ***
+ Global                             Coll  Ver
+ ------------------------------------------------------------------------------
+ abcd                                  0    0
+GDE> 
+
+         *** GBLNAMES ***
+ Global                             Coll  Ver
+ ------------------------------------------------------------------------------
+ abcd                                  0    0
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-OBJNOTFND, Global Name doesnotexist does not exist
+
+GDE> 
+%GDE-E-GBLNAMCOLLRANGE, Collation sequence #400 is out of range (0 thru 255)
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-OBJNOTFND, Global Name efgh does not exist
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+%GDE-E-OBJDUP, Global Name efgh already exists
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** GBLNAMES ***
+ Global                             Coll  Ver
+ ------------------------------------------------------------------------------
+ abcd                                  0    0
+ efgh                                255    0
+GDE> 
+TEMPLATE -REGION -COLLATION_DEFAULT=0
+TEMPLATE -REGION -EPOCHTAPER
+TEMPLATE -REGION -NOINST_FREEZE_ON_ERROR
+TEMPLATE -REGION -JOURNAL=(ALLOCATION=2048,AUTOSWITCHLIMIT=8386560,BEFORE_IMAGE,BUFFER_SIZE=2308,EXTENSION=2048)
+TEMPLATE -REGION -KEY_SIZE=64
+TEMPLATE -REGION -NULL_SUBSCRIPTS=NEVER
+TEMPLATE -REGION -NOQDBRUNDOWN
+TEMPLATE -REGION -RECORD_SIZE=256
+TEMPLATE -REGION -NOSTDNULLCOLL
+!
+TEMPLATE -REGION -NOJOURNAL
+!
+TEMPLATE -SEGMENT -ACCESS_METHOD=BG
+TEMPLATE -SEGMENT -ALLOCATION=100
+TEMPLATE -SEGMENT -BLOCK_SIZE=1024
+TEMPLATE -SEGMENT -DEFER_ALLOCATE
+TEMPLATE -SEGMENT -NOENCRYPTION_FLAG
+TEMPLATE -SEGMENT -EXTENSION_COUNT=100
+TEMPLATE -SEGMENT -GLOBAL_BUFFER_COUNT=1024
+TEMPLATE -SEGMENT -LOCK_SPACE=40
+TEMPLATE -SEGMENT -MUTEX_SLOTS=1024
+TEMPLATE -SEGMENT -RESERVED_BYTES=0
+!
+TEMPLATE -SEGMENT -ACCESS_METHOD=MM
+TEMPLATE -SEGMENT -ALLOCATION=100
+TEMPLATE -SEGMENT -BLOCK_SIZE=1024
+TEMPLATE -SEGMENT -DEFER
+TEMPLATE -SEGMENT -DEFER_ALLOCATE
+TEMPLATE -SEGMENT -NOENCRYPTION_FLAG
+TEMPLATE -SEGMENT -EXTENSION_COUNT=100
+TEMPLATE -SEGMENT -GLOBAL_BUFFER_COUNT=1024
+TEMPLATE -SEGMENT -LOCK_SPACE=40
+TEMPLATE -SEGMENT -MUTEX_SLOTS=1024
+TEMPLATE -SEGMENT -RESERVED_BYTES=0
+!
+TEMPLATE -SEGMENT -ACCESS_METHOD=BG
+!
+DELETE -REGION DEFAULT
+DELETE -SEGMENT DEFAULT
+ADD -REGION DEFAULT -DYNAMIC_SEGMENT=DEFAULT
+!
+ADD -SEGMENT DEFAULT -FILE_NAME="mumps.dat"
+!
+ADD -GBLNAME abcd -COLLATION=0
+ADD -GBLNAME efgh -COLLATION=255
+!
+LOCKS -REGION=DEFAULT
+!
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+##SUSPEND_OUTPUT UNICODE_MODE
+%GDE-E-VALUEBAD, க is not a valid gblname
+
+GDE> 
+%GDE-E-VALUEBAD, க is not a valid gblname
+
+GDE> 
+%GDE-E-VALUEBAD, க is not a valid gblname
+
+GDE> 
+%GDE-E-VALUEBAD, க is not a valid gblname
+
+GDE> 
+%GDE-E-VALUEBAD, க is not a valid gblname
+
+GDE> 
+%GDE-E-VALUEBAD, க is not a valid gblname
+
+GDE> 
+%GDE-E-VALUEBAD, க is not a valid gblname
+
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+%GDE-E-NONASCII, க is illegal for a gblname as it contains non-ASCII characters
+
+GDE> 
+%GDE-E-NONASCII, க is illegal for a gblname as it contains non-ASCII characters
+
+GDE> 
+%GDE-E-NONASCII, க is illegal for a gblname as it contains non-ASCII characters
+
+GDE> 
+%GDE-E-NONASCII, க is illegal for a gblname as it contains non-ASCII characters
+
+GDE> 
+%GDE-E-NONASCII, க is illegal for a gblname as it contains non-ASCII characters
+
+GDE> 
+%GDE-E-NONASCII, க is illegal for a gblname as it contains non-ASCII characters
+
+GDE> 
+%GDE-E-NONASCII, க is illegal for a gblname as it contains non-ASCII characters
+
+##ALLOW_OUTPUT NONUNICODE_MODE
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+TEMPLATE -REGION -COLLATION_DEFAULT=0
+TEMPLATE -REGION -EPOCHTAPER
+TEMPLATE -REGION -NOINST_FREEZE_ON_ERROR
+TEMPLATE -REGION -JOURNAL=(ALLOCATION=2048,AUTOSWITCHLIMIT=8386560,BEFORE_IMAGE,BUFFER_SIZE=2308,EXTENSION=2048)
+TEMPLATE -REGION -KEY_SIZE=64
+TEMPLATE -REGION -NULL_SUBSCRIPTS=NEVER
+TEMPLATE -REGION -NOQDBRUNDOWN
+TEMPLATE -REGION -RECORD_SIZE=256
+TEMPLATE -REGION -NOSTDNULLCOLL
+!
+TEMPLATE -REGION -NOJOURNAL
+!
+TEMPLATE -SEGMENT -ACCESS_METHOD=BG
+TEMPLATE -SEGMENT -ALLOCATION=100
+TEMPLATE -SEGMENT -BLOCK_SIZE=1024
+TEMPLATE -SEGMENT -DEFER_ALLOCATE
+TEMPLATE -SEGMENT -NOENCRYPTION_FLAG
+TEMPLATE -SEGMENT -EXTENSION_COUNT=100
+TEMPLATE -SEGMENT -GLOBAL_BUFFER_COUNT=1024
+TEMPLATE -SEGMENT -LOCK_SPACE=40
+TEMPLATE -SEGMENT -MUTEX_SLOTS=1024
+TEMPLATE -SEGMENT -RESERVED_BYTES=0
+!
+TEMPLATE -SEGMENT -ACCESS_METHOD=MM
+TEMPLATE -SEGMENT -ALLOCATION=100
+TEMPLATE -SEGMENT -BLOCK_SIZE=1024
+TEMPLATE -SEGMENT -DEFER
+TEMPLATE -SEGMENT -DEFER_ALLOCATE
+TEMPLATE -SEGMENT -NOENCRYPTION_FLAG
+TEMPLATE -SEGMENT -EXTENSION_COUNT=100
+TEMPLATE -SEGMENT -GLOBAL_BUFFER_COUNT=1024
+TEMPLATE -SEGMENT -LOCK_SPACE=40
+TEMPLATE -SEGMENT -MUTEX_SLOTS=1024
+TEMPLATE -SEGMENT -RESERVED_BYTES=0
+!
+TEMPLATE -SEGMENT -ACCESS_METHOD=BG
+!
+DELETE -REGION DEFAULT
+DELETE -SEGMENT DEFAULT
+ADD -REGION DEFAULT -DYNAMIC_SEGMENT=DEFAULT
+!
+ADD -SEGMENT DEFAULT -FILE_NAME="mumps.dat"
+!
+ADD -GBLNAME abcd -COLLATION=0
+ADD -GBLNAME efgh -COLLATION=255
+!
+LOCKS -REGION=DEFAULT
+!
+GDE> 
+%GDE-E-OBJDUP, Global Name abcd already exists
+
+GDE> 
+%GDE-E-OBJDUP, New gblname efgh already exists
+
+GDE> 
+
+         *** GBLNAMES ***
+ Global                             Coll  Ver
+ ------------------------------------------------------------------------------
+ abcd                                  0    0
+ efgh                                255    0
+GDE> 
+GDE> 
+
+         *** GBLNAMES ***
+ Global                             Coll  Ver
+ ------------------------------------------------------------------------------
+ abcd                                  0    0
+ efgh                                199    0
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+# unset gtm_collate_199, when efgh is created with -collation=199. Expect GDE to throw GTM-E-COLLATIONUNDEF
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+%GDE-E-GBLNAMCOLLUNDEF, Error opening shared library of collation sequence #199 for GBLNAME efgh
+# Now set back gtm_collate_199 and expect GDE to work
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+         *** GBLNAMES ***
+ Global                             Coll  Ver
+ ------------------------------------------------------------------------------
+ abcd                                  0    0
+ efgh                                199    0
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld

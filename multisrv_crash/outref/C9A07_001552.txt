@@ -1,0 +1,144 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+=== STEP 1 ===
+GTM Process starts in background...
+On Primary:
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/e.mjl is renamed to ##TEST_PATH##/e.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/e.mjl created for region EREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region EREG is now ON
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/f.mjl is renamed to ##TEST_PATH##/f.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/f.mjl created for region FREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region FREG is now ON
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/g.mjl is renamed to ##TEST_PATH##/g.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/g.mjl created for region GREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region GREG is now ON
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/h.mjl is renamed to ##TEST_PATH##/h.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/h.mjl created for region HREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region HREG is now ON
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+On Secondary:
+##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/b.mjl is renamed to ##REMOTE_TEST_PATH##/b.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##REMOTE_TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/c.mjl is renamed to ##REMOTE_TEST_PATH##/c.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##REMOTE_TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/d.mjl is renamed to ##REMOTE_TEST_PATH##/d.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##REMOTE_TEST_PATH##/d.mjl created for region DREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DREG is now ON
+##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##REMOTE_TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+=== STEP 2 ===
+Simulating crash on primary in ##TEST_PATH##
+Primary crashed!
+Simulating crash on receiver in ##REMOTE_TEST_PATH##
+Receiver crashed!
+mupip_rollback.csh -losttrans=lost1.glo * >&! rollback1.log
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+=== STEP 3 ===
+Restarting (A) as primary...
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+=== STEP 4 ===
+Simulating crash on primary in ##TEST_PATH##
+Primary crashed!
+mupip_rollback.csh -losttrans=lost2.glo * >&! rollback2.log
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+=== STEP 5 ===
+Restarting (A) as primary...
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+=== STEP 6 ===
+Simulating crash on primary in ##TEST_PATH##
+Primary crashed!
+=== STEP 7 ===
+DOING QUICK FAIL OVER...
+ROLLBACK on SIDE (B)...
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+Restarting (B) as primary...
+mupip_rollback.csh -fetchresync=portno -losttrans=fetch.glo *
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Multi-process Multi-region GTM restarts on primary (B)...
+=== STEP 8 ===
+Now GTM process ends
+Shutting down Passive Source Server and Receiver Server in ##TEST_PATH##
+Shutting down Primary Source Server Server in ##REMOTE_TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+Application level Verification Starts...
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Application level Verification Ends
+
+GTM>

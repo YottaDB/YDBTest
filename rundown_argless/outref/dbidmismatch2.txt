@@ -1,0 +1,69 @@
+---------------------------------------------------------------------------------------
+BEGIN 1 :-) Create backup.dat and mumps.dat
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+backup.gld
+Using: ##SOURCE_PATH##/mupip
+backup.dat
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+END 1
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 2 :-) Access mumps.dat and crash it
+
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+GTM>
+Killed
+
+END 2
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 3 :-) Switch to backup.dat and access database. It should issue DBIDMISMATCH error
+
+
+GTM>
+%GTM-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+##TEST_AWK.GTM-E-DBIDMISMATCH, Database file ##TEST_PATH##.mumps.dat .region ##TEST_PATH##.mumps.dat. id does not match file id in shared memory .id = [0-9]+..
+
+GTM>
+
+END 3
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 4 :-) Issue MUPIP RUNDOWN and verify that shared memory is removed
+
+Shared Memory Removed successdully
+
+END 4
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 5 :-) This database access should be clean
+
+
+GTM>
+set ^x=1
+GTM>
+
+GTM>
+Clean database access
+GTM>
+
+END 5
+---------------------------------------------------------------------------------------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

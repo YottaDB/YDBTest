@@ -1,0 +1,158 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+First Journal file names are:
+a.mjl
+mumps.mjl
+
+GTM>
+
+GTM>
+
+backup_jnl_link: Backup without switching journals:
+
+##SOURCE_PATH##/mupip backup * -nonewjnlfiles ./bak1
+
+
+
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file ./bak1/a.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ./bak1/mumps.dat
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000065 are backed up.
+a.mjl
+mumps.mjl
+
+backup_jnl_link: Backup with switching journals. New ones are linked to previous ones. Default action.
+
+##SOURCE_PATH##/mupip backup * ./bak2
+
+
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file ./bak2/a.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ./bak2/mumps.dat
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000065 are backed up.
+##TEST_AWK Prev journal file name ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##TEST_AWK Prev journal file name ##TEST_PATH##/a.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+
+backup_jnl_link: Backup with switching journals. Cut previous journal links:
+
+##SOURCE_PATH##/mupip backup * -journal=noprevjnlfile ./bak3
+
+
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/a.mjl created for database file ##TEST_PATH##/a.dat
+%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file ./bak3/a.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ./bak3/mumps.dat
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000065 are backed up.
+ Prev journal file name 
+ Prev journal file name 
+
+backup_jnl_link: Backup with journal=off for destinition database
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+%GTM-I-JNLSTATE, Journaling state for database file ./bak4/a.dat is now OFF
+DB file ##TEST_PATH##/a.dat backed up in file ./bak4/a.dat
+Transactions up to 0x0000000000000065 are backed up.
+
+
+BACKUP COMPLETED.
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLSTATE, Journaling state for database file ./bak4/mumps.dat is now OFF
+DB file ##TEST_PATH##/mumps.dat backed up in file ./bak4/mumps.dat
+Transactions up to 0x0000000000000001 are backed up.
+
+
+BACKUP COMPLETED.
+
+
+GTM>
+
+GTM>
+
+GTM>
+  Journal State                         OFF  Journal Before imaging##FILTERED##GTM_TEST_DEBUGINFO.*
+
+backup_jnl_link: Backup with journal=disable -nonewjnlfiles for destinition database
+
+%GTM-I-JNLSTATE, Journaling state for database file ./bak5/a.dat is now DISABLED
+DB file ##TEST_PATH##/a.dat backed up in file ./bak5/a.dat
+Transactions up to 0x0000000000000065 are backed up.
+
+
+BACKUP COMPLETED.
+
+%GTM-I-JNLSTATE, Journaling state for database file ./bak5/mumps.dat is now DISABLED
+DB file ##TEST_PATH##/mumps.dat backed up in file ./bak5/mumps.dat
+Transactions up to 0x0000000000000001 are backed up.
+
+
+BACKUP COMPLETED.
+
+
+GTM>
+
+GTM>
+
+GTM>
+  Journal State                    DISABLED
+
+GTM>
+
+GTM>
+
+GTM>
+
+backup_jnl_link: Backup with journal=noprev,disable for destinition database
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/a.mjl created for database file ##TEST_PATH##/a.dat
+%GTM-I-JNLSTATE, Journaling state for database file ./bak6/a.dat is now DISABLED
+DB file ##TEST_PATH##/a.dat backed up in file ./bak6/a.dat
+Transactions up to 0x0000000000000066 are backed up.
+
+
+BACKUP COMPLETED.
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
+%GTM-I-JNLSTATE, Journaling state for database file ./bak6/mumps.dat is now DISABLED
+DB file ##TEST_PATH##/mumps.dat backed up in file ./bak6/mumps.dat
+Transactions up to 0x0000000000000002 are backed up.
+
+
+BACKUP COMPLETED.
+
+ Prev journal file name 
+ Prev journal file name 
+
+GTM>
+
+GTM>
+
+GTM>
+  Journal State                    DISABLED
+
+GTM>
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

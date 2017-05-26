@@ -1,0 +1,110 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/d.mjl created for region DREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/e.mjl created for region EREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%GTM-I-JNLSTATE, Journaling state for region DREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region EREG is now ON
+GTM Process starts in background...
+Crash...
+Simulating kill of GTM Processes in ##TEST_PATH##
+GTM processes Killed!
+Recover...
+##SOURCE_PATH##/mupip journal -recover -backward *
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+Application level Verification Starts...
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Application level Verification Ends
+
+GTM>
+GTM Process starts in background...
+Crash...
+Simulating kill of GTM Processes in ##TEST_PATH##
+GTM processes Killed!
+Recover...
+##SOURCE_PATH##/mupip journal -recover -backward *
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+Application level Verification Starts...
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Application level Verification Ends
+
+GTM>
+GTM Process starts in background...
+Crash...
+Simulating kill of GTM Processes in ##TEST_PATH##
+GTM processes Killed!
+Recover...
+##SOURCE_PATH##/mupip journal -recover -backward *
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+Application level Verification Starts...
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Application level Verification Ends
+
+GTM>
+##TEST_AWK Prev journal file name ##TEST_PATH##/a.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##TEST_AWK Prev journal file name ##TEST_PATH##/b.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##TEST_AWK Prev journal file name ##TEST_PATH##/c.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##TEST_AWK Prev journal file name ##TEST_PATH##/d.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##TEST_AWK Prev journal file name ##TEST_PATH##/e.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##TEST_AWK Prev journal file name ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+crash_rec_back2 TEST PASSED

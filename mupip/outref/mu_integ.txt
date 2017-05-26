@@ -1,0 +1,614 @@
+MUPIP INTEG
+##SUSPEND_OUTPUT L
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+integneg.gld
+Using: ##SOURCE_PATH##/mupip
+integneg.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+integneg.gld
+Using: ##SOURCE_PATH##/mupip
+integneg.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/integneg.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+PASS from no neg flag
+PASS from -notransaction
+PASS from -nomax
+PASS from -nomax -transaction
+
+File  	##TEST_PATH##/integneg.dat
+Region	DEFAULT
+
+##SUSPEND_OUTPUT  REPLIC
+DSE> DSE> DSE> ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+DSE> DSE> DSE> Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT L
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+integ.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+integ.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+integ.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+integ.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+PASS from fill7^myfill("set")
+
+GTM>
+Integ of region AREG
+Integ of region BREG
+#
+# Integ with a bad region
+#
+%GTM-E-NOREGION, REGION not found: FREELUNCH
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+PASS from mupip integ region freeze.
+$MUPIP integ -region "*" -subscript="^a"
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+$MUPIP integ -region "*" -subscript="^a":"^c"
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+$MUPIP integ -file a.dat -tn_reset
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Directory           2               2           3.564            NA
+Index               1               9          15.136             1
+Data                9             199          39.453             9
+Free               88              NA              NA            NA
+Total             100             210              NA            10
+##ALLOW_OUTPUT SPANNING_REGIONS
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT COLLATION
+Directory           2               2           3.564            NA
+Index               1               2           6.152             1
+Data                2              64          57.763             2
+Free               95              NA              NA            NA
+Total             100              68              NA             3
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+Directory           2               2           3.564            NA
+Index               1               3           7.812             1
+Data                3             131          76.074             3
+Free               94              NA              NA            NA
+Total             100             136              NA             4
+##ALLOW_OUTPUT NON_COLLATION
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> Error:  already in region: AREG
+DSE> 
+File            ##TEST_PATH##/a.dat
+Region          AREG
+##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
+##TEST_AWK  Access method                          (BG|MM)  Global Buffers                 256
+  Reserved Bytes                          0  Block size (in bytes)         1024
+  Maximum record size                   256  Starting VBN                   513
+  Maximum key size                      128  Total blocks            0x00000065
+##SUSPEND_OUTPUT SPANNING_REGIONS
+  Null subscripts                     NEVER  Free blocks             0x00000058
+  Standard Null Collation             FALSE  Free space              0x00000000
+##ALLOW_OUTPUT SPANNING_REGIONS
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT COLLATION
+  Null subscripts                     NEVER  Free blocks             0x0000005F
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+  Null subscripts                     NEVER  Free blocks             0x0000005E
+##ALLOW_OUTPUT NON_COLLATION
+  Standard Null Collation              TRUE  Free space              0x00000000
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+  Last Record Backup     0x0000000000000001  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             1
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  In critical section            0x00000000  Timers pending                   0
+##SUSPEND_OUTPUT MM
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+##ALLOW_OUTPUT MM
+##SUSPEND_OUTPUT BG
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##ALLOW_OUTPUT BG
+  Freeze match                   0x00000000  Flush trigger                  240
+  Current transaction    0x0000000000000002  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+  Create in progress                  FALSE  Modified cache blocks            0
+  Reference count                         1  Wait Disk                        0
+##SUSPEND_OUTPUT  REPLIC
+  Journal State                    DISABLED
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+##TEST_AWK  Journal State               .inactive. ON  Journal Before imaging       .*
+  Journal Allocation                   2048  Journal Extension             2048
+##TEST_AWK  Journal Buffer Size                  2308  Journal Alignsize  *[1-9][0-9]*
+##TEST_AWK.*
+  Journal Yield Limit                     8  Journal Sync IO              FALSE
+  Journal File: ##TEST_PATH##/a.mjl
+##ALLOW_OUTPUT  NON_REPLIC
+  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
+  Mutex Queue Slots                    1024  KILLs in progress                0
+##SUSPEND_OUTPUT  REPLIC
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+##TEST_AWK  Replication State                      ON  Region Seqno    0x00000000000000C[68]
+##ALLOW_OUTPUT  NON_REPLIC
+  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
+  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
+  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+DSE> $MUPIP integ integ.dat
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+##ALLOW_OUTPUT SPANNING_REGIONS
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT COLLATION
+Directory           2               2           3.564            NA
+Index               1               1           2.343             1
+Data                1              28          51.464             1
+Free               96              NA              NA            NA
+Total             100              31              NA             2
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+Directory           2               2           3.564            NA
+Index               1               1           2.343             1
+Data                1              44          74.902             1
+Free               96              NA              NA            NA
+Total             100              47              NA             2
+##ALLOW_OUTPUT NON_COLLATION
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+$MUPIP integ -brief -fast -file a.dat
+
+No errors detected by fast integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Directory           2               2           3.564            NA
+Index               1               9          15.136             1
+Data                9              NA              NA             9
+Free               88              NA              NA            NA
+Total             100              NA              NA            10
+##ALLOW_OUTPUT SPANNING_REGIONS
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT COLLATION
+Directory           2               2           3.564            NA
+Index               1               2           6.152             1
+Data                2              NA              NA             2
+Free               95              NA              NA            NA
+Total             100              NA              NA             3
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+Directory           2               2           3.564            NA
+Index               1               3           7.812             1
+Data                3              NA              NA             3
+Free               94              NA              NA            NA
+Total             100              NA              NA             4
+##ALLOW_OUTPUT NON_COLLATION
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+$MUPIP integ -full -file b.dat
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+##SUSPEND_OUTPUT SPANNING_REGIONS
+    1               1               1           2.343           NA
+    0               1               0           1.562           NA
+##ALLOW_OUTPUT SPANNING_REGIONS
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT COLLATION
+    1               1               1           2.343           NA
+    0               1               1           4.785           NA
+
+Global variable ^aingfillingdatabase
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             1
+    0               1              54          93.164             1
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+    1               1               1           2.343           NA
+    0               1               0           1.562           NA
+##ALLOW_OUTPUT NON_COLLATION
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+##ALLOW_OUTPUT SPANNING_REGIONS
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT COLLATION
+Directory           2               2           3.564            NA
+Index               1               1           2.343             1
+Data                1              54          93.164             1
+Free               96              NA              NA            NA
+Total             100              57              NA             2
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+##ALLOW_OUTPUT NON_COLLATION
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+$MUPIP integ -file a.dat -nokeyranges -adjacency=50
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Directory           2               2           3.564            NA
+Index               1               9          15.136             1
+Data                9             199          39.453             9
+Free               88              NA              NA            NA
+Total             100             210              NA            10
+##ALLOW_OUTPUT SPANNING_REGIONS
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT COLLATION
+Directory           2               2           3.564            NA
+Index               1               2           6.152             1
+Data                2              64          57.763             2
+Free               95              NA              NA            NA
+Total             100              68              NA             3
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+Directory           2               2           3.564            NA
+Index               1               3           7.812             1
+Data                3             131          76.074             3
+Free               94              NA              NA            NA
+Total             100             136              NA             4
+##ALLOW_OUTPUT NON_COLLATION
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+$MUPIP integ -map=20 -maxkeysize=20 -transaction=5 a.dat
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Directory           2               2           3.564            NA
+Index               1               9          15.136             1
+Data                9             199          39.453             9
+Free               88              NA              NA            NA
+Total             100             210              NA            10
+##ALLOW_OUTPUT SPANNING_REGIONS
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT COLLATION
+Directory           2               2           3.564            NA
+Index               1               2           6.152             1
+Data                2              64          57.763             2
+Free               95              NA              NA            NA
+Total             100              68              NA             3
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+Directory           2               2           3.564            NA
+Index               1               3           7.812             1
+Data                3             131          76.074             3
+Free               94              NA              NA            NA
+Total             100             136              NA             4
+##ALLOW_OUTPUT NON_COLLATION
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+echo DEFAULT | $MUPIP integ -online
+File or Region: 
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+##ALLOW_OUTPUT SPANNING_REGIONS
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT COLLATION
+Directory           2               2           3.564            NA
+Index               1               1           2.343             1
+Data                1              28          51.464             1
+Free               96              NA              NA            NA
+Total             100              31              NA             2
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+Directory           2               2           3.564            NA
+Index               1               1           2.343             1
+Data                1              44          74.902             1
+Free               96              NA              NA            NA
+Total             100              47              NA             2
+##ALLOW_OUTPUT NON_COLLATION
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+
+GTM>
+PASS from fill7^myfill("ver")
+
+GTM>
+##SUSPEND_OUTPUT  REPLIC
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:7F,	3
+
+DSE> 
+Block 3   Size 390   Level 0   TN 3E8 V6
+
+DSE> 
+File            ##TEST_PATH##/mumps.dat
+Region          DEFAULT
+##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
+##TEST_AWK  Access method                          (BG|MM)  Global Buffers                1024
+  Reserved Bytes                          0  Block size (in bytes)         1024
+  Maximum record size                   256  Starting VBN                   513
+  Maximum key size                       64  Total blocks            0x00000065
+  Null subscripts                     NEVER  Free blocks             0x00000057
+  Standard Null Collation             FALSE  Free space              0x00000000
+  Last Record Backup     0x0000000000000001  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             1
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  In critical section            0x00000000  Timers pending                   0
+##SUSPEND_OUTPUT MM
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+##ALLOW_OUTPUT MM
+##SUSPEND_OUTPUT BG
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##ALLOW_OUTPUT BG
+  Freeze match                   0x00000000  Flush trigger                  960
+  Current transaction    0x00000000000003E9  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+##SUSPEND_OUTPUT  NON_COLLATION F
+  Default Collation                       1  Collation Version                0
+##ALLOW_OUTPUT  NON_COLLATION F
+  Create in progress                  FALSE  Modified cache blocks            0
+  Reference count                         1  Wait Disk                        0
+  Journal State                    DISABLED
+  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
+  Mutex Queue Slots                    1024  KILLs in progress                0
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
+  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
+  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+DSE> Test is valid, if a(1000) is in block 3
+Test is valid, if block 3 has transaction number 3e8
+Test is valid, if file header has curr_tn = 3e9
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+File            ##TEST_PATH##/mumps.dat
+Region          DEFAULT
+##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
+##TEST_AWK  Access method                          (BG|MM)  Global Buffers                1024
+  Reserved Bytes                          0  Block size (in bytes)         1024
+  Maximum record size                   256  Starting VBN                   513
+  Maximum key size                       64  Total blocks            0x00000065
+  Null subscripts                     NEVER  Free blocks             0x00000057
+  Standard Null Collation             FALSE  Free space              0x00000000
+  Last Record Backup     0x0000000000000001  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             1
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  In critical section            0x00000000  Timers pending                   0
+##SUSPEND_OUTPUT MM
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+##ALLOW_OUTPUT MM
+##SUSPEND_OUTPUT BG
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##ALLOW_OUTPUT BG
+  Freeze match                   0x00000000  Flush trigger                  960
+  Current transaction    0x00000000000003E8  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+##SUSPEND_OUTPUT  NON_COLLATION F
+  Default Collation                       1  Collation Version                0
+##ALLOW_OUTPUT  NON_COLLATION F
+  Create in progress                  FALSE  Modified cache blocks            0
+  Reference count                         1  Wait Disk                        0
+  Journal State                    DISABLED
+  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
+  Mutex Queue Slots                    1024  KILLs in progress                0
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
+  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
+  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+DSE> 
+Block:Offset Level
+%GTM-I-DBTNTOOLG, 
+       3:0      0  Block transaction number too large
+                   Directory Path:  1:10, 2:10
+                   Path:  4:7F, 3:0
+Keys from ^a(911.1) to the end are suspect.
+%GTM-I-DBTN, Block TN is 0x00000000000003E8
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1              10          13.183             1
+Data               10            1000          98.583            10
+Free               87              NA              NA            NA
+Total             100            1012              NA            11
+%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+
+Largest transaction number found in database was 3E8
+Current transaction number is                    3E8
+%GTM-E-INTEGERRS, Database integrity errors
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+Total error count from integ:		1.
+##TEST_AWK... ... .. ..:..:.. ... 20..
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%GTM-I-DBTNTOOLG, 
+       3:0      0  Block transaction number too large
+                   Directory Path:  1:10, 2:10
+                   Path:  4:7F, 3:0
+Keys from ^a(911.1) to the end are suspect.
+%GTM-I-DBTN, Block TN is 0x00000000000003E8
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1              10          13.183             1
+Data               10            1000          98.583            10
+Free               87              NA              NA            NA
+Total             100            1012              NA            11
+%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+
+Largest transaction number found in database was 3E8
+Current transaction number is                    3E8
+%GTM-E-INTEGERRS, Database integrity errors
+Test PASSED
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+integ.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+integ.dat
+%GTM-E-INTEGERRS, Database integrity errors
+%GTM-E-NOREGION, REGION not found: BREG
+%SYSTEM-E-ENO2, No such file or directory
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+integ.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+integ.dat
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+%SYSTEM-E-ENO13, Permission denied
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+##TEST_PATH##/mupip_integ_chmod.out
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+%SYSTEM-E-ENO13, Permission denied
+%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+##TEST_PATH##/mupip_integ_rm.out
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-NOREGION, REGION not found: BREG
+%GTM-E-INTEGERRS, Database integrity errors
+##TEST_PATH##/mupip.err_##TEST_AWK.*
+%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+%GTM-E-INTEGERRS, Database integrity errors

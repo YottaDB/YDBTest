@@ -1,0 +1,50 @@
+#!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2015-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+# This test case was copied wholesale from test/triggers/u_inref/trig2notrig.csh
+
+# Disabled settings that do not work with MSR and prior versions
+source $gtm_tst/com/disable_settings_msr_priorver.csh
+
+# Prepare local and remote directories
+$MULTISITE_REPLIC_PREPARE 2
+
+# Set the remote prior version to any prior ms version (note the V54002B introduced the last journal size increase), except when using MM. In that
+# case, use V53003 as the minimum version.
+set rand_range="-type ms"
+if ("MM" == $acc_meth) set rand_range="-gte V53003"
+set prior_ver=`$gtm_tst/com/random_ver.csh ${rand_range}`
+if ("$prior_ver" =~ "*-E-*") then
+	echo "No prior versions available: $prior_ver"
+	exit -1
+endif
+echo $prior_ver >& priorver.txt
+echo "Randomly chosen multisite version is GTM_TEST_DEBUGINFO: [$prior_ver]"
+
+# Switch to prior version PRO image for instance 1
+cp msr_instance_config.txt msr_instance_config.bak
+$tst_awk '/^INST1[^0-9]+(VERSION|IMAGE):/ {sub("'$tst_ver'","'$prior_ver'"); sub(/dbg/,"pro")} {print}' msr_instance_config.bak >&! msr_instance_config.txt
+
+$gtm_tst/com/dbcreate.csh mumps 1 125 1024 4096
+
+# Start source and reciever
+$MSR START INST1 INST2
+
+# Replicate the greater than 2MB transaction
+$MSR RUN INST1 '$gtm_dist/mumps -run gtm8423'
+
+# need to verify the replicated journals and databases.
+$MSR STOP INST1 INST2
+
+$gtm_tst/com/dbcheck.csh -extract
+

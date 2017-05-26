@@ -1,0 +1,121 @@
+Test that just setting various local collation options works
+Collation: 1; ncol: 0; nct: 0
+Collation: 1; ncol: 1; nct: 0
+Collation: 1; ncol: 1; nct: 1
+Collation: 1; ncol: 1; nct: 1
+Collation: 0; ncol: 1; nct: 1
+Collation: 0; ncol: 0; nct: 1
+Collation: 0; ncol: 0; nct: 0
+Collation: 0; ncol: 0; nct: 0
+Collation: 1; ncol: 0; nct: 0
+Collation: 1; ncol: 1; nct: 0
+Collation: 1; ncol: 1; nct: 1
+Collation: 1; ncol: 1; nct: 1
+Collation: 0; ncol: 1; nct: 1
+Collation: 0; ncol: 0; nct: 1
+Collation: 0; ncol: 0; nct: 0
+Collation: 0; ncol: 0; nct: 0
+
+Test that setting the above fails if there are some local data stored
+150373626,setparm+1^ylct,%GTM-E-COLLDATAEXISTS, Collation type cannot be changed while data exists
+Collation: 1; ncol: 0; nct: 0
+150373626,setparm+3^ylct,%GTM-E-COLLDATAEXISTS, Collation type cannot be changed while data exists
+Collation: 1; ncol: 0; nct: 0
+150373626,setparm+5^ylct,%GTM-E-COLLDATAEXISTS, Collation type cannot be changed while data exists
+Collation: 1; ncol: 0; nct: 0
+150373626,setparm+7^ylct,%GTM-E-COLLDATAEXISTS, Collation type cannot be changed while data exists
+Collation: 1; ncol: 0; nct: 0
+150373626,setparm+9^ylct,%GTM-E-COLLDATAEXISTS, Collation type cannot be changed while data exists
+Collation: 1; ncol: 0; nct: 0
+150373626,setparm+11^ylct,%GTM-E-COLLDATAEXISTS, Collation type cannot be changed while data exists
+Collation: 1; ncol: 0; nct: 0
+150373626,setparm+13^ylct,%GTM-E-COLLDATAEXISTS, Collation type cannot be changed while data exists
+Collation: 1; ncol: 0; nct: 0
+150373626,setparm+15^ylct,%GTM-E-COLLDATAEXISTS, Collation type cannot be changed while data exists
+Collation: 1; ncol: 0; nct: 0
+Collation: 1; ncol: 0; nct: 0
+Collation: 1; ncol: 0; nct: 0
+Collation: 1; ncol: 0; nct: 0
+Collation: 1; ncol: 0; nct: 0
+Collation: 1; ncol: 0; nct: 0
+Collation: 1; ncol: 0; nct: 0
+Collation: 1; ncol: 0; nct: 0
+Collation: 1; ncol: 0; nct: 0
+
+Test that 'sorts after' operator works as expected, first with no local collation
+0]]8 = 0
+1]]7 = 0
+"0"]]8 = 0
+0]]"8" = 0
+"0"]]"8" = 0
+"0.0"]]8 = 1
+0]]"08" = 0
+0]]"00" = 0
+"0"]]"00" = 0
+0]]$char(0) = 0
+"a"]]5 = 1
+"a"]]"8" = 1
+"a"]]"b" = 0
+
+Then using a local collation
+0]]8 = 0
+1]]7 = 0
+"0"]]8 = 0
+0]]"8" = 0
+"0"]]"8" = 0
+"0.0"]]8 = 1
+0]]"08" = 0
+0]]"00" = 0
+"0"]]"00" = 0
+0]]$char(0) = 0
+"a"]]5 = 1
+"a"]]"8" = 1
+"a"]]"b" = 0
+
+Then with nct enabled, but no local collation in use
+0]]8 = 0
+1]]7 = 0
+"0"]]8 = 0
+0]]"8" = 0
+"0"]]"8" = 0
+"0.0"]]8 = 0
+0]]"08" = 0
+0]]"00" = 0
+"0"]]"00" = 0
+0]]$char(0) = 1
+"a"]]5 = 1
+"a"]]"8" = 1
+"a"]]"b" = 0
+
+And finally with nct on and local collation in use
+0]]8 = 0
+1]]7 = 0
+"0"]]8 = 0
+0]]"8" = 0
+"0"]]"8" = 0
+"0.0"]]8 = 0
+0]]"08" = 0
+0]]"00" = 0
+"0"]]"00" = 0
+0]]$char(0) = 1
+"a"]]5 = 1
+"a"]]"8" = 1
+"a"]]"b" = 0
+
+Test that UNDEF errors are issued correctly with local collations
+
+GTM>
+
+1
+GTM>
+
+%GTM-E-UNDEF, Undefined local variable: a
+
+GTM>
+
+1
+GTM>
+
+%GTM-E-UNDEF, Undefined local variable: a
+
+GTM>

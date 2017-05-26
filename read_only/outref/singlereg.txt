@@ -1,0 +1,1853 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+
+GTM>
+Do fill1^myfill("set")
+
+GTM>
+PASS from fill1^myfill("set")
+
+GTM>
+
+*** TSTBAKNJ ***
+
+Created file ##TEST_PATH##/mumps.dat
+-rw-rw-rw- mumps.dat
+mupip backup -noonline DEFAULT back.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file back.dat
+Transactions up to 0x0000000000000001 are backed up.
+
+
+BACKUP COMPLETED.
+
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ back.dat
+No errors detected by integ.
+***** changing mumps.dat to read_only *****
+-r--r--r-- mumps.dat
+mupip backup -noonline DEFAULT back.dat
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+*** TSTBAKWJ.CSH ***
+
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+*** mumps.dat R/W mumps.mjl R/W ***
+DB file ##TEST_PATH##/mumps.dat backed up in file back.dat
+Transactions up to 0x0000000000000402 are backed up.
+
+
+BACKUP COMPLETED.
+
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ back.dat
+No errors detected by integ.
+*** mumps.dat R/W mumps.mjl R/O ***
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+DB file ##TEST_PATH##/mumps.dat backed up in file back.dat
+Transactions up to 0x0000000000000402 are backed up.
+
+
+BACKUP COMPLETED.
+
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ back.dat
+No errors detected by integ.
+*** mumps.dat R/O mumps.mjl R/W ***
+-r--r--r-- mumps.dat
+-rw-rw-rw- mumps.mjl
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+OK.
+
+*** mumps.dat R/O mumps.mjl R/O ***
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+OK.
+
+
+*** TSTEXTE.CSH ****
+
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+***** mumps.dat R/W  mumps.mjl R/W *****
+mupip extend DEFAULT
+Extension successful, file ##TEST_PATH##/mumps.dat extended by 100 blocks.  Total blocks = 400.
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+***** mumps.dat R/W  mumps.mjl R/O *****
+mupip extend DEFAULT 
+The extension failed on file ##TEST_PATH##/mumps.dat; check disk space and permissions.
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+-r--r--r-- mumps.dat
+-rw-rw-rw- mumps.mjl
+***** mumps.dat R/O  mumps.mjl R/W *****
+mupip extend DEFAULT 
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+***** mumps.dat R/O  mumps.mjl R/O *****
+mupip extend DEFAULT 
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+*** TSTEXTRNJ.CSH ***
+
+Created file ##TEST_PATH##/mumps.dat
+-rw-rw-rw- mumps.dat
+
+GTM>
+do init
+set ^a=1,^b=2,^c=3
+
+GTM>
+mupip extract -nolog glo.dir
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 3  max rec len: 1  max node len: 8
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+***** changing mumps.dat to read_only *****
+-r--r--r-- mumps.dat
+mupip extract -nolog glo.dir
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 3  max rec len: 1  max node len: 8
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+*** TSTEXTRNJ.CSH ***
+
+Created file ##TEST_PATH##/mumps.dat
+-rw-rw-rw- mumps.dat
+
+GTM>
+do init
+set ^a=1,^b=2,^c=3
+
+GTM>
+mupip extract -fr -nolog glo.dir
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 3  max rec len: 1  max node len: 8
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+***** changing mumps.dat to read_only *****
+-r--r--r-- mumps.dat
+mupip extract -fr -nolog glo.dir
+Cannot freeze the database
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+*** TSTEXTRWJ.CSH ***
+
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+**** mumps.dat R/W mumps.mjl R/W ***
+
+GTM>
+do init
+set ^a=1,^b=2,^c=3
+
+GTM>
+mupip extract -nolog glo.dir
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+**** mumps.dat R/W mumps.mjl R/O ***
+mupip extract -nolog glo.dir
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+-r--r--r-- mumps.dat
+-rw-rw-rw- mumps.mjl
+**** mumps.dat R/O mumps.mjl R/W ***
+mupip extract -nolog glo.dir
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+**** mumps.dat R/O mumps.mjl R/O ***
+mupip extract -nolog glo.dir
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+*** TSTEXTRWJWFR.CSH ***
+
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+**** mumps.dat R/W mumps.mjl R/W ***
+
+GTM>
+do init
+set ^a=1,^b=2,^c=3
+
+GTM>
+mupip extract -fr -nolog glo.dir
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+**** mumps.dat R/W mumps.mjl R/O ***
+mupip extract -fr -nolog glo.dir
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+-r--r--r-- mumps.dat
+-rw-rw-rw- mumps.mjl
+**** mumps.dat R/O mumps.mjl R/W ***
+mupip extract -fr -nolog glo.dir
+Cannot freeze the database
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+**** mumps.dat R/O mumps.mjl R/O ***
+mupip extract -fr -nolog glo.dir
+Cannot freeze the database
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+*** TSTFREZ.CSH ***
+
+***** mumps.dat R/W  mumps.mjl R/W *****
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+mupip freeze -on DEFAULT
+OK.
+
+mupip freeze -off DEFAULT
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+***** mumps.dat R/W  mumps.mjl R/O *****
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+mupip freeze -on DEFAULT
+OK.
+
+mupip freeze -off DEFAULT
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+***** mumps.dat R/O  mumps.mjl R/W *****
+-r--r--r-- mumps.dat
+-rw-rw-rw- mumps.mjl
+mupip freeze -on DEFAULT
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-FREEZEERR, Error while trying to freeze region DEFAULT
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+OK.
+
+mupip freeze -off DEFAULT
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-FREEZEERR, Error while trying to unfreeze region DEFAULT
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+***** mumps.dat R/O  mumps.mjl R/O *****
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+mupip freeze -on DEFAULT
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-FREEZEERR, Error while trying to freeze region DEFAULT
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+OK.
+
+mupip freeze -off DEFAULT
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-FREEZEERR, Error while trying to unfreeze region DEFAULT
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+*** TSTINTEGF.CSH ***
+
+Created file ##TEST_PATH##/mumps.dat
+-rw-rw-rw- mumps.dat
+
+First with no journal
+
+
+GTM>
+do init
+set ^a=1,^b=2,^c=3
+
+GTM>
+mupip integ -FAST mumps.dat
+
+No errors detected by fast integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               4           4.150            NA
+Index               3               3           2.343             3
+Data                3              NA              NA             3
+Free               92              NA              NA            NA
+Total             100              NA              NA             6
+mupip integ -file mumps.dat
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               4           4.150            NA
+Index               3               3           2.343             3
+Data                3               3           2.343             3
+Free               92              NA              NA            NA
+Total             100              10              NA             6
+OK.
+
+***** mumps.dat R/O *****
+-r--r--r-- mumps.dat
+mupip integ -FAST mumps.dat 
+
+No errors detected by fast integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               4           4.150            NA
+Index               3               3           2.343             3
+Data                3              NA              NA             3
+Free               92              NA              NA            NA
+Total             100              NA              NA             6
+mupip integ -file mumps.dat
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               4           4.150            NA
+Index               3               3           2.343             3
+Data                3               3           2.343             3
+Free               92              NA              NA            NA
+Total             100              10              NA             6
+OK.
+
+
+Now with journal
+
+***** mumps.dat R/W mumps.mjl R/W *****
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+do init
+set ^a=1,^b=2,^c=3
+
+GTM>
+mupip integ -FAST mumps.dat 
+
+No errors detected by fast integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148              NA              NA             4
+Free               98              NA              NA            NA
+Total             400              NA              NA             8
+mupip integ -file mumps.dat
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148            1026          18.521             4
+Free               98              NA              NA            NA
+Total             400            1327              NA             8
+OK.
+
+***** mumps.dat R/W mumps.mjl R/O *****
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+mupip integ -FAST mumps.dat 
+
+No errors detected by fast integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148              NA              NA             4
+Free               98              NA              NA            NA
+Total             400              NA              NA             8
+mupip integ -file mumps.dat
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148            1026          18.521             4
+Free               98              NA              NA            NA
+Total             400            1327              NA             8
+OK.
+
+***** mumps.dat R/O mumps.mjl R/W *****
+-r--r--r-- mumps.dat
+-rw-rw-rw- mumps.mjl
+mupip integ -FAST mumps.dat 
+
+No errors detected by fast integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148              NA              NA             4
+Free               98              NA              NA            NA
+Total             400              NA              NA             8
+mupip integ -file mumps.dat
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148            1026          18.521             4
+Free               98              NA              NA            NA
+Total             400            1327              NA             8
+OK.
+
+***** mumps.dat R/O mumps.mjl R/O *****
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+mupip integ -FAST mumps.dat 
+
+No errors detected by fast integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148              NA              NA             4
+Free               98              NA              NA            NA
+Total             400              NA              NA             8
+mupip integ -file mumps.dat
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148            1026          18.521             4
+Free               98              NA              NA            NA
+Total             400            1327              NA             8
+OK.
+
+
+*** TSTINTEGR.CSH ***
+
+*** First database with no journal***
+
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+do init
+set ^a=1,^b=2,^c=3
+
+GTM>
+***** mumps.dat R/W *****
+-rw-rw-rw- mumps.dat
+mupip integ -region DEFAULT
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               4           4.150            NA
+Index               3               3           2.343             3
+Data                3               3           2.343             3
+Free               92              NA              NA            NA
+Total             100              10              NA             6
+mupip integ mumps.dat
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               4           4.150            NA
+Index               3               3           2.343             3
+Data                3               3           2.343             3
+Free               92              NA              NA            NA
+Total             100              10              NA             6
+OK.
+
+***** mumps.dat R/O *****
+-r--r--r-- mumps.dat
+mupip integ -region DEFAULT
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               4           4.150            NA
+Index               3               3           2.343             3
+Data                3               3           2.343             3
+Free               92              NA              NA            NA
+Total             100              10              NA             6
+mupip integ mumps.dat
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               4           4.150            NA
+Index               3               3           2.343             3
+Data                3               3           2.343             3
+Free               92              NA              NA            NA
+Total             100              10              NA             6
+OK.
+
+*** Now database with journal***
+***** mumps.dat R/W  mumps.mjl R/W *****
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+do init
+set ^a=1,^b=2,^c=3
+
+GTM>
+mupip integ -region DEFAULT
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148            1026          18.521             4
+Free               98              NA              NA            NA
+Total             400            1327              NA             8
+OK.
+
+mupip integ mumps.dat
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148            1026          18.521             4
+Free               98              NA              NA            NA
+Total             400            1327              NA             8
+OK.
+
+
+***** mumps.dat R/W  mumps.mjl R/O *****
+
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+mupip integ -region DEFAULT
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148            1026          18.521             4
+Free               98              NA              NA            NA
+Total             400            1327              NA             8
+mupip integ mumps.dat
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148            1026          18.521             4
+Free               98              NA              NA            NA
+Total             400            1327              NA             8
+OK.
+
+
+***** mumps.dat R/O  mumps.mjl R/W *****
+-r--r--r-- mumps.dat
+-rw-rw-rw- mumps.mjl
+mupip integ -region DEFAULT
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148            1026          18.521             4
+Free               98              NA              NA            NA
+Total             400            1327              NA             8
+mupip integ mumps.dat
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148            1026          18.521             4
+Free               98              NA              NA            NA
+Total             400            1327              NA             8
+OK.
+
+
+***** mumps.dat R/O  mumps.mjl R/O *****
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+mupip integ -region DEFAULT
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148            1026          18.521             4
+Free               98              NA              NA            NA
+Total             400            1327              NA             8
+mupip integ mumps.dat
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148            1026          18.521             4
+Free               98              NA              NA            NA
+Total             400            1327              NA             8
+OK.
+
+
+*** TSTINTEGTN.CSH ***
+
+*** First database with no journal***
+
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+do init
+set ^a=1,^b=2,^c=3
+
+GTM>
+***** mumps.dat read_write *****
+-rw-rw-rw- mumps.dat
+mupip integ -tn_reset mumps.dat
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               4           4.150            NA
+Index               3               3           2.343             3
+Data                3               3           2.343             3
+Free               92              NA              NA            NA
+Total             100              10              NA             6
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+OK.
+
+***** mumps.dat read_only *****
+-r--r--r-- mumps.dat
+mupip integ -tn_reset mumps.dat 
+%GTM-E-DBRDONLY, Database file mumps.dat read only
+%GTM-E-DBTNRESET, Cannot reset transaction number for this region
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               4           4.150            NA
+Index               3               3           2.343             3
+Data                3               3           2.343             3
+Free               92              NA              NA            NA
+Total             100              10              NA             6
+OK.
+
+
+*** Now database with journal***
+
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+do init
+set ^a=1,^b=2,^c=3
+
+GTM>
+**** R/W mumps.dat R/W mumps.mjl ****
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+mupip integ - tn_reset mumps.dat 
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148            1026          18.521             4
+Free               98              NA              NA            NA
+Total             400            1327              NA             8
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+OK.
+
+**** R/W mumps.dat R/O mumps.mjl ****
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+mupip integ - tn_reset mumps.dat 
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148            1026          18.521             4
+Free               98              NA              NA            NA
+Total             400            1327              NA             8
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+OK.
+
+**** R/O mumps.dat R/W mumps.mjl ****
+-r--r--r-- mumps.dat
+-rw-rw-rw- mumps.mjl
+mupip integ -tn_reset mumps.dat 
+%GTM-E-DBRDONLY, Database file mumps.dat read only
+%GTM-E-DBTNRESET, Cannot reset transaction number for this region
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148            1026          18.521             4
+Free               98              NA              NA            NA
+Total             400            1327              NA             8
+OK.
+
+**** R/O mumps.dat R/O mumps.mjl ****
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+mupip integ -tn_reset mumps.dat 
+%GTM-E-DBRDONLY, Database file mumps.dat read only
+%GTM-E-DBTNRESET, Cannot reset transaction number for this region
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             153          56.884            NA
+Index             148             148           2.343             4
+Data              148            1026          18.521             4
+Free               98              NA              NA            NA
+Total             400            1327              NA             8
+OK.
+
+
+*** TSTLOAD.CSH ***
+
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+do init
+
+GTM>
+set ^a=1,^b=2,^c=3
+
+GTM>
+*****  mumps.dat R/W mumps.mjl R/W *****
+mupip load -begin=3 -end=5 load.go1
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 6  Max Data Len: 15
+Last LOAD record number: 5
+
+mupip load load.go1
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 8  Max Subsc Len: 6  Max Data Len: 15
+Last LOAD record number: 10
+
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*****  mumps.dat R/W mumps.mjl R/O *****
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+mupip load load.go2
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
+		Global variable : ^g
+%GTM-E-RECLOAD, Error loading record number: 3
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
+		Global variable : ^h
+%GTM-E-RECLOAD, Error loading record number: 4
+
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 3  Max Data Len: 11
+Last LOAD record number: 0
+
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*****  mumps.dat R/O mumps.mjl R/W *****
+-r--r--r-- mumps.dat
+-rw-rw-rw- mumps.mjl
+mupip load load.go3
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+		Global variable : ^d
+%GTM-E-RECLOAD, Error loading record number: 3
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+		Global variable : ^e
+%GTM-E-RECLOAD, Error loading record number: 4
+
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 3  Max Data Len: 248
+Last LOAD record number: 0
+
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*****  mumps.dat R/O mumps.mjl R/O *****
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+mupip load load.go2
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+		Global variable : ^g
+%GTM-E-RECLOAD, Error loading record number: 3
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+		Global variable : ^h
+%GTM-E-RECLOAD, Error loading record number: 4
+
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 3  Max Data Len: 11
+Last LOAD record number: 0
+
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+*** TSTREORGNJ.CSH ***
+
+
+GTM>
+set PASS
+
+GTM>
+ ------- Before reorg --------
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             154          57.356            NA
+Index             149             189           2.671             4
+Data              189            2023          28.481            21
+Free               56              NA              NA            NA
+Total             400            2366              NA            25
+##SOURCE_PATH##/mupip reorg -select=b*
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: bcd (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: bcdefghijklmn (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: bcdefghijklmnopqrstuvwx (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: bfill (region DEFAULT)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 4 
+Blocks reused       : 0 
+Blocks extended     : 0 
+ ------- After reorg --------
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             154          57.356            NA
+Index             149             185           2.661             4
+Data              185            2023          29.047            21
+Free               60              NA              NA            NA
+Total             400            2362              NA            25
+
+GTM>
+set PASS
+
+GTM>
+----- Before reorg -----
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             154          57.356            NA
+Index             149             189           2.671             4
+Data              189            2023          28.481            21
+Free               56              NA              NA            NA
+Total             400            2366              NA            25
+****** Changing database to read_only ******
+-r--r--r-- mumps.dat
+-rw-rw-r-- mumps.mjl
+##SOURCE_PATH##/mupip reorg -select=b*
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: bcd (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+   
+Global: bcdefghijklmn (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+   
+Global: bcdefghijklmnopqrstuvwx (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+   
+Global: bfill (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+ ----- After reorg on read_only database -----
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             154          57.356            NA
+Index             149             189           2.671             4
+Data              189            2023          28.481            21
+Free               56              NA              NA            NA
+Total             400            2366              NA            25
+
+*** TSTREORG.CSH ***
+
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+set PASS
+
+GTM>
+------- Before reorg -------
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             155          57.633            NA
+Index             150             200           2.750             4
+Data              200            2273          30.225            20
+Free               44              NA              NA            NA
+Total             400            2628              NA            24
+R/W mumps.dat R/W mumps.mjl
+##SOURCE_PATH##/mupip reorg -select=b*
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: bcd (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: bcdefghijklmn (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: bcdefghijklmnopqrstuvwx (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: bfill (region DEFAULT)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 4 
+Blocks reused       : 0 
+Blocks extended     : 0 
+------- Test last reorg -------
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             155          57.633            NA
+Index             150             196           2.740             4
+Data              196            2273          30.795            23
+Free               48              NA              NA            NA
+Total             400            2624              NA            27
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+set PASS
+
+GTM>
+------- Before reorg -------
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             155          57.633            NA
+Index             150             200           2.750             4
+Data              200            2273          30.225            20
+Free               44              NA              NA            NA
+Total             400            2628              NA            24
+R/O mumps.dat R/W mumps.mjl
+-r--r--r-- mumps.dat
+-rw-rw-rw- mumps.mjl
+##SOURCE_PATH##/mupip reorg -select=b*
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: bcd (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+   
+Global: bcdefghijklmn (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+   
+Global: bcdefghijklmnopqrstuvwx (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+   
+Global: bfill (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+------- Test last reorg -------
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             155          57.633            NA
+Index             150             200           2.750             4
+Data              200            2273          30.225            20
+Free               44              NA              NA            NA
+Total             400            2628              NA            24
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+set PASS
+
+GTM>
+------- Before reorg -------
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             155          57.633            NA
+Index             150             200           2.750             4
+Data              200            2273          30.225            20
+Free               44              NA              NA            NA
+Total             400            2628              NA            24
+R/W mumps.dat R/O mumps.mjl
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+##SOURCE_PATH##/mupip reorg -select=b*
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: bcd (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: bcdefghijklmn (region DEFAULT)
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
+------- Test last reorg -------
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             155          57.633            NA
+Index             150             200           2.750             4
+Data              200            2273          30.225            20
+Free               44              NA              NA            NA
+Total             400            2628              NA            24
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+set PASS
+
+GTM>
+------- Before reorg -------
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             155          57.633            NA
+Index             150             200           2.750             4
+Data              200            2273          30.225            20
+Free               44              NA              NA            NA
+Total             400            2628              NA            24
+R/O mumps.dat R/O mumps.mjl
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+##SOURCE_PATH##/mupip reorg -select=b*
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: bcd (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+   
+Global: bcdefghijklmn (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+   
+Global: bcdefghijklmnopqrstuvwx (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+   
+Global: bfill (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+------- Test last reorg -------
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           6             155          57.633            NA
+Index             150             200           2.750             4
+Data              200            2273          30.225            20
+Free               44              NA              NA            NA
+Total             400            2628              NA            24
+
+*** TSTRESTORE.CSH ***
+
+*** Initializing....  and creating a normal (r+w) database ***
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+do dbfill
+
+GTM>
+set PASS
+
+GTM>
+MUPIP backup of database file ##TEST_PATH##/mumps.dat to bak.dat
+DB file ##TEST_PATH##/mumps.dat incrementally backed up in file bak.dat
+1452 blocks saved.
+Transactions from 0x0000000000000001 to 0x000000000000080D are backed up.
+
+
+BACKUP COMPLETED.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Created file ##TEST_PATH##/mumps.dat
+***** mumps.dat R/W mumps.mjl R/W *****
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+mupip restore mumps.dat bak.dat
+
+RESTORE COMPLETED
+1452 blocks restored
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+***** mumps.dat R/W mumps.mjl R/O *****
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+mupip restore mumps.dat bak.dat
+Transaction in input file bak.dat does not align with database TN.
+DB: 0000000000000402	Input file: 0000000000000001
+%GTM-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+***** mumps.dat R/O mumps.mjl R/W *****
+-r--r--r-- mumps.dat
+-rw-rw-rw- mumps.mjl
+mupip restore mumps.dat bak.dat
+Error accessing output file mumps.dat. Aborting restore.
+open : Permission denied
+%SYSTEM-E-ENO13, Permission denied
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+***** mumps.dat R/O mumps.mjl R/O *****
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+mupip restore mumps.dat bak.dat
+Error accessing output file mumps.dat. Aborting restore.
+open : Permission denied
+%SYSTEM-E-ENO13, Permission denied
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Test for mupip command RUNDOWN ***
+
+*** TSTRUNDOWN ***
+
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+do init
+set ^a=1,^b=2,^c=3
+
+GTM>
+**** R/W mumps.dat R/W mumps.mjl ****
+mupip rundown -f mumps.dat
+%GTM-I-MUFILRNDWNSUC, File mumps.dat successfully rundown
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+**** R/W mumps.dat R/O mumps.mjl ****
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+mupip rundown -f mumps.dat
+%GTM-I-MUFILRNDWNSUC, File mumps.dat successfully rundown
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+**** R/O mumps.dat R/W mumps.mjl ****
+-r--r--r-- mumps.dat
+-rw-rw-rw- mumps.mjl
+mupip rundown -f mumps.dat
+%GTM-E-DBRDONLY, Database file mumps.dat read only
+%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+**** R/O mumps.dat R/O mumps.mjl ****
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+mupip rundown -f mumps.dat
+%GTM-E-DBRDONLY, Database file mumps.dat read only
+%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+*** TSTSETF.CSH ***
+
+*** Initializing....  and creating a normal (r+w) database ***
+*** R/W mumps.dat R/W mumps.mjl ***
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+##SOURCE_PATH##/mupip set -file mumps.dat -journal=enable,on,before
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Reinitializing....  and creating a normal (r+w) database ***
+*** R/W mumps.dat R/O mumps.mjl ***
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+##SOURCE_PATH##/mupip set -file mumps.dat -journal=enable,on,before
+%GTM-E-JNLRDONLY, Journal file ##TEST_PATH##/mumps.mjl read only
+%GTM-E-JNLNOCREATE, Journal file ##TEST_PATH##/mumps.mjl not created
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Reinitializing....  and creating a normal (r+w) database ***
+*** R/O mumps.dat R/W mumps.mjl ***
+-r--r--r-- mumps.dat
+-rw-rw-rw- mumps.mjl
+##SOURCE_PATH##/mupip set -file mumps.dat -journal=enable,on,before
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Reinitializing....  and creating a normal (r+w) database ***
+*** R/O mumps.dat R/O mumps.mjl ***
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+##SOURCE_PATH##/mupip set -file mumps.dat -journal=enable,on,before
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+*** TSTSETR.CSH ***
+
+*** Initializing....  and creating a normal (r+w) database ***
+*** R/W mumps.dat R/W mumps.mjl ***
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+##SOURCE_PATH##/mupip set -region DEFAULT -journal=enable,on,before
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Reinitializing....  and creating a normal (r+w) database ***
+*** R/W mumps.dat R/O mumps.mjl ***
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+##SOURCE_PATH##/mupip set -region DEFAULT -journal=enable,on,before
+%GTM-E-JNLRDONLY, Journal file ##TEST_PATH##/mumps.mjl read only
+%GTM-E-JNLNOCREATE, Journal file ##TEST_PATH##/mumps.mjl not created
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Reinitializing....  and creating a normal (r+w) database ***
+*** R/O mumps.dat R/W mumps.mjl ***
+-r--r--r-- mumps.dat
+-rw-rw-rw- mumps.mjl
+##SOURCE_PATH##/mupip set -region DEFAULT -journal=enable,on,before
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Reinitializing....  and creating a normal (r+w) database ***
+*** R/O mumps.dat R/O mumps.mjl ***
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+##SOURCE_PATH##/mupip set -region DEFAULT -journal=enable,on,before
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Test for MUPIP JOURNAL -EXTRACT ***
+
+*** TSTJLEX.CSH ***
+
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+do init
+set ^a=1,^b=2,^c=3
+
+GTM>
+*** Extracting journal R/W mumps.dat R/W mumps.mjl ***
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+mupip journal -extract=mumps.1 -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file mumps.1 created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Extracting journal R/O mumps.dat R/W mumps.mjl ***
+-r--r--r-- mumps.dat
+-rw-rw-rw- mumps.mjl
+mupip journal -extract=mumps.1 -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file mumps.1 created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Extracting journal R/W mumps.dat R/O mumps.mjl ***
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+mupip journal -extract=mumps.1 -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file mumps.1 created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Extracting journal R/O mumps.dat R/O mumps.mjl ***
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+mupip journal -extract=mumps.1 -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file mumps.1 created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** TSTJLREC.CSH ***
+
+*** Test for MUPIP JOURNAL -RECOVER ***
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+do init
+set ^a=1,^b=2,^c=3
+
+GTM>
+*** Recovering on R/W mumps.dat R/W mumps.mjl ***
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+Created file ##TEST_PATH##/mumps.dat
+mupip journal -recover -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Recovering on R/W mumps.dat R/O mumps.mjl ***
+Created file ##TEST_PATH##/mumps.dat
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+mupip journal -recover -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Recovering on R/O mumps.dat R/W mumps.mjl ***
+-r--r--r-- mumps.dat
+-rw-rw-rw- mumps.mjl
+mupip journal -recover -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Recovering on R/O mumps.dat R/O mumps.mjl ***
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+mupip journal -recover -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+*** TSTJLSH.CSH ***
+
+*** Test for MUPIP JOURNAL -SHOW ***
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+do init
+set ^a=1,^b=2,^c=3
+
+GTM>
+*** Showing on R/W mumps.dat R/W mumps.mjl ***
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+mupip journal -show=all -forward mumps.mjl >& jlsh1.out
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Showing on R/W mumps.dat R/O mumps.mjl ***
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+mupip journal -show=all -forward mumps.mjl >& jlsh2.out
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Showing on R/O mumps.dat R/W mumps.mjl ***
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+mupip journal -show=all -forward mumps.mjl >& jlsh3.out
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Showing on R/O mumps.dat R/O mumps.mjl ***
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+mupip journal -show=all -forward mumps.mjl >& jlsh4.out
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+jlsh1.out:%GTM-S-JNLSUCCESS, Show successful
+jlsh1.out:%GTM-S-JNLSUCCESS, Verify successful
+jlsh2.out:%GTM-S-JNLSUCCESS, Show successful
+jlsh2.out:%GTM-S-JNLSUCCESS, Verify successful
+jlsh3.out:%GTM-S-JNLSUCCESS, Show successful
+jlsh3.out:%GTM-S-JNLSUCCESS, Verify successful
+jlsh4.out:%GTM-S-JNLSUCCESS, Show successful
+jlsh4.out:%GTM-S-JNLSUCCESS, Verify successful
+
+*** TSTJLVERI.CSH ***
+
+*** Test for MUPIP JOURNAL -VERIFY ***
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+do init
+set ^a=1,^b=2,^c=3
+
+GTM>
+*** Verifying on R/W mumps.dat R/W mumps.mjl ***
+mupip journal -verify -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Verifying on R/W mumps.dat R/O mumps.mjl ***
+-rw-rw-rw- mumps.dat
+-r--r--r-- mumps.mjl
+mupip journal -verify -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Verifying on R/O mumps.dat R/W mumps.mjl ***
+-r--r--r-- mumps.dat
+-rw-rw-rw- mumps.mjl
+mupip journal -verify -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+*** Verifying on R/O mumps.dat R/O mumps.mjl ***
+-r--r--r-- mumps.dat
+-r--r--r-- mumps.mjl
+mupip journal -verify -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+OK.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

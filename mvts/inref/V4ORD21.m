@@ -1,0 +1,61 @@
+V4ORD21 ;IW-KO-TS-YS,V4ORDER,MVTS V9.10;15/6/96;$ORDER
+ ;
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1984-1996
+ ;
+ W !!,"108---V4ORD21:  $ORDER(glvn,expr)  -1-"
+ W !,"$ORDER(glvn,expr)"
+ W !,"expr=1"
+ W !,"glvn=lvn"
+ ;
+1 S ^ABSN="40681",^ITEM="IV-681  subscript is one character (95 graphics including space)"
+ S ^NEXT="2^V4ORD21,V4ORD22^V4ORDER,V4QUERY^VV4" D ^V4PRESET K
+ S VCOMP="",X=""
+ F I=126:-1:32 S V($C(I))=""
+ S X="" F I=0:0 S X=$ORDER(V(X),1) Q:X=""  S VCOMP=VCOMP_X
+ S X="0123456789 !""#$%&'()*+,-./" F I=58:1:126 S X=X_$C(I)
+ S ^VCOMP=VCOMP,^VCORR=X D ^VEXAMINE
+ ;
+2 S ^ABSN="40682",^ITEM="IV-682  sequence from an empty string"
+ S ^NEXT="3^V4ORD21,V4ORD22^V4ORDER,V4QUERY^VV4" D ^V4PRESET K
+ S ^VCOMP="",V(-192)=-192,V(-1)=-1,V(0)=0,V(839)=839,V("AAA")="AAA"
+ S ^VCOMP=^VCOMP_$O(V(""),1)_" "
+ K V(-192)
+ S ^VCOMP=^VCOMP_$O(V(""),1)_" "
+ K V(-1)
+ S ^VCOMP=^VCOMP_$O(V(""),1)_" "
+ K V(0)
+ S ^VCOMP=^VCOMP_$O(V(""),1)_" "
+ K V(839)
+ S ^VCOMP=^VCOMP_$O(V(""),1)_" "
+ K V("AAA")
+ S ^VCOMP=^VCOMP_$O(V(""),1)_" "
+ S ^VCORR="-192 -1 0 839 AAA  " D ^VEXAMINE
+ ;
+3 S ^ABSN="40683",^ITEM="IV-683  numeric interpretation of a subscript"
+ S ^NEXT="4^V4ORD21,V4ORD22^V4ORDER,V4QUERY^VV4" D ^V4PRESET K
+ D SETX^V4ORDE,SETL^V4ORDE S VCOMP="",X=-1E11
+ FOR I=1:1:35 S X=$O(V(X),1) S VCOMP=VCOMP_X_" "
+ S ^VCOMP=VCOMP,^VCORR=X(1)_X(2)_X(3) D ^VEXAMINE
+ ;
+4 S ^ABSN="40684",^ITEM="IV-684  sequence from an empty string when glvn is lvn"
+ S ^NEXT="5^V4ORD21,V4ORD22^V4ORDER,V4QUERY^VV4" D ^V4PRESET K
+ D SETX^V4ORDE,SETL^V4ORDE S VCOMP="",X=""
+ FOR I=1:1:35 S X=$O(V(X),1) S VCOMP=VCOMP_X_" "
+ S ^VCOMP=VCOMP,^VCORR=X(1)_X(2)_X(3) D ^VEXAMINE
+ ;
+5 S ^ABSN="40685",^ITEM="IV-685  what is the set A (local)?"
+ S ^NEXT="6^V4ORD21,V4ORD22^V4ORDER,V4QUERY^VV4" D ^V4PRESET K
+ D SETL2^V4ORDE S VCOMP="",X=""
+ FOR I=1:1:12 S X=$O(V(X),1.0000) S VCOMP=VCOMP_X_" "
+ S ^VCOMP=VCOMP,^VCORR=X(3) D ^VEXAMINE
+ ;
+6 S ^ABSN="40686",^ITEM="IV-686  the last returned value"
+ S ^NEXT="V4ORD22^V4ORDER,V4QUERY^VV4" D ^V4PRESET K
+ D SETL2^V4ORDE S VCOMP="",X=""
+ FOR I=1:1 S X=$O(V(X),1) S VCOMP=VCOMP_X_" " Q:X=""
+ S ^VCOMP=VCOMP,^VCORR=X(4) D ^VEXAMINE
+ ;
+END W !!,"End of 108 --- V4ORD21",!
+ K  Q
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

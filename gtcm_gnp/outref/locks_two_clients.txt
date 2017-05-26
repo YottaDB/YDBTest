@@ -1,0 +1,41 @@
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
+##GT.CM##mumps.gld
+##GT.CM##Using: ##SOURCE_PATH##/mupip
+Create local (client) database...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+The database layout is:
+ASEG	a.dat
+BSEG	##TEST_REMOTE_NODE_PATH_GTCM##/b.dat
+CSEG	##TEST_REMOTE_NODE_PATH_GTCM##/c.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
+Starting the GT.CM Servers...
+Testing LOCK...
+No other processes are holding locks...
+##################################################################################
+Now, another client process is going to lock ^b, ^d, a, b
+##TEST_AWKtime: [0-9,]*
+0
+it should not have gotten the lock
+##TEST_AWK\(at [0-9,]*\)
+
+now tell it to let go
+##TEST_AWK\(at [0-9,]*\)
+1
+now it should have gotten the lock
+##TEST_AWK\(at [0-9,]*\)
+##TEST_AWKThe time it took the lock command to finish:[5-9]|1[0-9]
+it should be as long as the lockbcl sleeps after releasing the lock (which is 5 seconds now).
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####SOURCE_PATH##/mupip
+##GT.CM####SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ a.dat
+No errors detected by integ.

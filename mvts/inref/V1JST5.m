@@ -1,0 +1,59 @@
+V1JST5 ;IW-YS-KO-TS,V1JST,MVTS V9.10;15/6/96; $JUSTIFY, $SELECT, $TEXT -5-
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1978-1996
+ W !!,"174---V1JST5: $JUSTIFY, $SELECT and $TEXT functions -5-",!
+SELECT W !,"$SELECT(L tvexpr:expr)",!
+586 W !,"I-586  Single argument"
+ S ^ABSN="12010",^ITEM="I-586  Single argument",^NEXT="587^V1JST5,V1JST6^V1JST,V1SVH^VV1" D ^V1PRESET
+ S ^VCOMP=$SELECT("ABC"="ABC":"...PASSED") S ^VCORR="...PASSED" D ^VEXAMINE
+ ;
+587 W !,"I-587  effect on $TEST"
+5871 S ^ABSN="12011",^ITEM="I-587.1  $TEST=1",^NEXT="5872^V1JST5,V1JST6^V1JST,V1SVH^VV1" D ^V1PRESET
+ S VCOMP="" I 1 S VCOMP=$S(0:0,$T:"...PASSED",1:"...FAILED"),VCOMP=VCOMP_$TEST
+ I  S VCOMP=VCOMP_" IF "
+ E  S VCOMP=VCOMP_" ELSE "
+ S ^VCOMP=VCOMP,^VCORR="...PASSED1 IF " D ^VEXAMINE
+ ;
+5872 S ^ABSN="12012",^ITEM="I-587.2  $TEST=0",^NEXT="588^V1JST5,V1JST6^V1JST,V1SVH^VV1" D ^V1PRESET
+ S VCOMP="" I 0
+ S VCOMP=$S(0:0,$T:"...PASSED",0:1,1:"...FAILED"),VCOMP=VCOMP_$TEST
+ I  S VCOMP=VCOMP_" IF "
+ E  S VCOMP=VCOMP_" ELSE "
+ S ^VCOMP=VCOMP,^VCORR="...FAILED0 ELSE " D ^VEXAMINE
+ ;
+588 W !,"I-588  Interpretation sequence of $SELECT argument"
+ S ^ABSN="12013",^ITEM="I-588  Interpretation sequence of $SELECT argument",^NEXT="589^V1JST5,V1JST6^V1JST,V1SVH^VV1" D ^V1PRESET
+ S VCOMP=""
+ S VCOMP=$SELECT(1=2:"...""FA""""ILED",1<2:"...""PASSED")
+ S ^VCOMP=VCOMP,^VCORR="...""PASSED" D ^VEXAMINE
+ ;
+589 W !,"I-589  Interpretation of tvexpr"
+ S ^ABSN="12014",^ITEM="I-589  Interpretation of tvexpr",^NEXT="590^V1JST5,V1JST6^V1JST,V1SVH^VV1" D ^V1PRESET
+ S VCOMP=""
+ K ^V1A,^V1B S ^V1A(1)=0,^(4)="ABC",^(5,6)="...PASSED"
+ S ^V1B(2,3)=9,^(4)="XYZ",^(5,6)="NG",^V1C(7)=1,^V1D(8,9)="FAILED"
+ S VCOMP=$S(^V1A(1)=1:^V1B(2,3),^(4)["A":^(5,6),^V1C(7)=1:^V1D(8,9))
+ S ^VCOMP=VCOMP,^VCORR="...PASSED" D ^VEXAMINE
+ ;
+590 W !,"I-590  Interpretation of expr, while tvexpr=0"
+ S ^ABSN="12015",^ITEM="I-590  Interpretation of expr, while tvexpr=0",^NEXT="591^V1JST5,V1JST6^V1JST,V1SVH^VV1" D ^V1PRESET
+ K ^V1A
+ S ^V1A(2,2)=22,^V1A(2,2,2)=222,^V1A(2,2,2,2)=2222
+ S VCOMP=$D(^V1A(2))_" "_$S(^(2,2)>2000:^(2,2),^(2,2)>1:^(2,2))_" "_^(2)
+ S ^VCOMP=VCOMP,^VCORR="10 2222 2222" D ^VEXAMINE
+ ;
+591 W !,"I-591  Interpretation of expr, while tvexpr=1"
+ S ^ABSN="12016",^ITEM="I-591  Interpretation of expr, while tvexpr=1",^NEXT="592^V1JST5,V1JST6^V1JST,V1SVH^VV1" D ^V1PRESET
+ K ^V1A
+ S ^V1A(2,2)=22,^V1A(2,2,2)=222,^V1A(2,2,2,2)=2222
+ S VCOMP=$D(^V1A(2))_" "_$S(^(2,2)>1:^(2,2),^(2,2):^(2,2))_" "_^(2)
+ S ^VCOMP=VCOMP,^VCORR="10 222 222" D ^VEXAMINE
+ ;
+592 W !,"I-592  Nesting of functions"
+ S ^ABSN="12017",^ITEM="I-592  Nesting of functions",^NEXT="V1JST6^V1JST,V1SVH^VV1" D ^V1PRESET
+ S ^VCOMP="" K X S ^VCOMP=$S($D(X):X,1:",,:"_"PASSED")
+ S ^VCORR=",,:PASSED" D ^VEXAMINE
+ ;
+END W !!,"End of 174---V1JST5",!
+ K  K ^V1A,^V1B,^V1C,^V1D Q
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

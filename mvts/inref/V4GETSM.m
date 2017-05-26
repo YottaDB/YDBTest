@@ -1,0 +1,21 @@
+V4GETSM() ;IW-KO-YS-TS,VV4TP,MVTS V9.10;15/7/96;PART-94 Transaction
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;Waitting for end of Transaction test jobs
+ IF $D(^HALT)=1 LOCK  Q 0
+ IF $D(^VS(1))=1 H 1 Q 0
+ IF $D(^VS(2))=1 H 1 Q 0
+ IF $D(^VS(3))=1 H 1 Q 0
+ LOCK ^V:1 ELSE  H 1 Q 0
+ S WAIT=WAIT_$T
+ S V="*"_WAIT_"/" D V4COMPM(V) Q 1
+ ;
+V4COMPM(V) ;
+ ;PUT COMPUTEED DATA
+ LOCK +^VCOMP
+ S I=$O(^VCOMP("M",""))+1
+ S ^VCOMP("M",I)=V
+ LOCK -^VCOMP
+ Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

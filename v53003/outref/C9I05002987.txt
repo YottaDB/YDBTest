@@ -1,0 +1,25 @@
+# Randomly choose a prior V5 version to create the database first.
+Randomly chosen prior V5 version is : ##FILTERED##GTM_TEST_DEBUGINFO.*
+----------------------------------------------------------------------
+# Switch to prior version
+Creating database using prior V5 version
+Files Created in ##TEST_PATH##:
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/.*
+mumps.gld
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/.*
+mumps.dat
+# Switch to current version
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+# Accessing the database using the current version.
+# Checking that DSE DUMP -FILE -ALL reports that FULLY UPGRADED is set to TRUE
+Region	DEFAULT
+Region          DEFAULT
+  Database is Fully Upgraded                :  TRUE
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

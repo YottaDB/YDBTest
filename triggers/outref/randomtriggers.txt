@@ -1,0 +1,78 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+Generating random set of triggers  : mumps -run randomtriggers               >& trigfile.trg
+Running MUPIP TRIGGER -TRIGGERFILE : mupip trigger -triggerfile=trigfile.trg >& trigfile.log
+Running MUPIP TRIGGER -SELECT      : mupip trigger -select                   >& trigfile.select.log
+Computing expected MUPIP TRIGGER -TRIGGERFILE (in trigfile.cmp) and MUPIP TRIGGER -SELECT (in trigfile.select.cmp) output
+    --> Running : mumps -run gentrigload^randomtriggers trigfile.trg trigfile.cmp trigfile.select.cmp
+diff trigfile.cmp trigfile.log
+Verification of MUPIP TRIGGER -TRIGGERFILE output : PASSED
+Sorting MUPIP TRIGGER -SELECT output before diff
+diff trigfile.select.cmp.sort trigfile.select.log.sort
+Verification of MUPIP TRIGGER -SELECT output : PASSED
+Checking database integs clean
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Recreating database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+Reloading triggers from MUPIP TRIGGER -SELECT output : mupip trigger -triggerfile=trigfile.select.cmp
+Selecting triggers from reloaded database : mupip trigger -select trigfile.reload.select.log
+Comparing trigger select output from the reloaded database with that of originally loaded database
+diff trigfile.reload.cmp trigfile.reload.log
+Verification of RELOAD of MUPIP TRIGGER -SELECT output : PASSED
+Checking reloaded database integs clean
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

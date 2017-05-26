@@ -1,0 +1,18 @@
+# Randomly choose a prior version to create the database with master-map size as 128M
+Randomly chosen prior V5 version is : ##FILTERED##GTM_TEST_DEBUGINFO.*
+----------------------------------------------------------------------
+# Switch to prior version
+Creating database using prior V5 version
+# Switch to current version
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+GTM-S-MUPGRDSUCC is present in the file upgrade.out
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

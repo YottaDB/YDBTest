@@ -1,0 +1,52 @@
+#!/usr/bin/expect -f
+#################################################################
+#								#
+# Copyright (c) 2014-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+set timeout -1
+if { $::env(alternate) == 1 } {
+    set leftkey "\033OD"
+    set rightkey "\033OC"
+} else {
+    set leftkey "\033\[D"
+    set rightkey "\033\[C"
+}
+spawn $env(SHELL)
+send "\$gtm_dist/mumps -direct\r"
+
+expect "GTM>"
+send "write \"bd\""
+# GTM>write "bc"
+# Three left arrows ; sleep because the 'write "bd"' cannot be expect'ed due
+# other intervening terminal characters. This *should* give enough spacing for
+# the arrow key usage below to work.
+sleep 1
+send -- $leftkey
+send -- $leftkey
+send -- $leftkey
+# "a" key
+send -- "a"
+# GTM>write "abc"
+# One right arrow
+sleep 1
+send -- $rightkey
+# "c" key
+send -- "c"
+# GTM>write "abcd"
+# This should execute: write "abcd"
+send -- "\r"
+set timeout 60
+expect {
+    -exact "abcd" { }
+    timeout { puts "TEST-E-FAIL Arrow keys do not work properly."; exit 1 }
+}
+expect "GTM>" {send "halt\r"}
+send -- "exit\r"
+expect eof

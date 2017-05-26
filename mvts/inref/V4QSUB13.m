@@ -1,0 +1,55 @@
+V4QSUB13 ;IW-KO-YS-TS,V4QSUB,MVTS V9.10;15/6/96;PART-94
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+ W !!,"66---V4QSUB13:  $QSUBSCRIPT function  -13-"
+ ;
+ W !!,"2 subscripts"
+ ;
+1 S ^ABSN="40490",^ITEM="IV-490  subscript is an integer number"
+ S ^NEXT="2^V4QSUB13,V4QSUB14^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^VCOMP=$QS("^V(12344,""3#"")",8)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+2 S ^ABSN="40491",^ITEM="IV-491  subscript is a number"
+ S ^NEXT="3^V4QSUB13,V4QSUB14^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^VCOMP=$QS("^V(""-.00002"",""192922"")",99)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+3 S ^ABSN="40492",^ITEM="IV-492  subscript are numbers"
+ S ^NEXT="4^V4QSUB13,V4QSUB14^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^VCOMP=$QS("^V(""-.00002"",""192929.02"")",999)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+4 S ^ABSN="40493",^ITEM="IV-493  subscript is a string"
+ S ^NEXT="5^V4QSUB13,V4QSUB14^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^VCOMP=$QS("^VVVVVV(12484,""000123"")",3)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+5 S ^ABSN="40494",^ITEM="IV-494  subscript are strings"
+ S ^NEXT="6^V4QSUB13,V4QSUB14^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^VCOMP=$QS("^V(""0939400"",""AID"")",100000)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+;**MVTS LOCAL CHANGE**
+; 2nd argument passed to $qsubscript not passed correctly
+; 10/2001 SE
+6 ;S ^ABSN="40495",^ITEM="IV-495  subscript contains a "" character"
+ ;S ^NEXT="7^V4QSUB13,V4QSUB14^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ ;S ^VCOMP=$qs("^V(""ABCDEF""""DHF"",1928)",1E20)
+ ;S ^VCORR="" D ^VEXAMINE
+ ;
+7 S ^ABSN="40496",^ITEM="IV-496  subscript contains "" characters"
+ S ^NEXT="8^V4QSUB13,V4QSUB14^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^VCOMP=$qs("^V(""ABC""""""""HF"",2939)",9)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+8 S ^ABSN="40497",^ITEM="IV-497  5 subscripts"
+ S ^NEXT="V4QSUB14^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^VCOMP=$QS("^V(""ABCD"",""A"",""B"",""C"",""D"")",6)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+END W !!,"End of 66 --- V4QSUB13",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

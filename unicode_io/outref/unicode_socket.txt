@@ -1,0 +1,37 @@
+setenv gtm_chset UTF-8
+unset echo
+
+GTM>
+
+GTM>
+do ^unicodesocket
+
+GTM>
+----------------------
+TEST val = -10
+STAT=use+5^io,%GTM-E-DEVPARMNEG, Deviceparameter must be a positive value
+Was expecting to fail! width = -10
+STAT=use+5^io,%GTM-E-DEVPARMNEG, Deviceparameter must be a positive value
+Was expecting to fail! length = -10
+----------------------
+TEST val = 0
+PASS
+PASS
+----------------------
+TEST val = 32767
+PASS
+PASS
+----------------------
+TEST val = 32768
+PASS
+PASS
+----------------------
+TEST val = 1048576
+PASS
+PASS
+----------------------
+TEST val = 1048577
+PASS
+PASS
+
+GTM>

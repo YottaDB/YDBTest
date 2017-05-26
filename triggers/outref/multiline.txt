@@ -1,0 +1,219 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+###################################################################
+###################################################################
+Validating cmdafterclose.trg expect FAIL
+$gtm_exe/mupip trigger -trig=cmdafterclose.trg
+=========================================
+4 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+###################################################################
+Validating cmdpos.trg expect PASS
+$gtm_exe/mupip trigger -trig=cmdpos.trg
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+###################################################################
+Validating errorsgalore.trg expect FAIL
+$gtm_exe/mupip trigger -trig=errorsgalore.trg
+=========================================
+15 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+###################################################################
+Validating falsemulti.trg expect FAIL
+$gtm_exe/mupip trigger -trig=falsemulti.trg
+=========================================
+2 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+###################################################################
+Validating garbageafterclose.trg expect FAIL
+$gtm_exe/mupip trigger -trig=garbageafterclose.trg
+=========================================
+1 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+###################################################################
+Validating leadingspaces.trg expect FAIL
+$gtm_exe/mupip trigger -trig=leadingspaces.trg
+=========================================
+6 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+###################################################################
+Validating nomulti.trg expect FAIL
+$gtm_exe/mupip trigger -trig=nomulti.trg
+=========================================
+1 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+###################################################################
+Validating nomultitude.trg expect FAIL
+$gtm_exe/mupip trigger -trig=nomultitude.trg
+=========================================
+1 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+###################################################################
+Validating quotes.trg expect FAIL
+$gtm_exe/mupip trigger -trig=quotes.trg
+=========================================
+11 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+###################################################################
+Validating strayclose.trg expect FAIL
+$gtm_exe/mupip trigger -trig=strayclose.trg
+=========================================
+2 trigger file entries have errors
+2 trigger file entries have no errors
+=========================================
+###################################################################
+Validating strayopen.trg expect FAIL
+	<<
+	^-----
+##TEST_AWK		At column 0, line 2, source module /.*/trgtmp.*
+%GTM-E-LSEXPECTED, A line separator is expected here
+$gtm_exe/mupip trigger -trig=strayopen.trg
+=========================================
+3 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+###################################################################
+Validating trailingspaces.trg expect PASS
+$gtm_exe/mupip trigger -trig=trailingspaces.trg
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+###################################################################
+Validating valid.trg expect PASS
+$gtm_exe/mupip trigger -trig=valid.trg
+=========================================
+6 triggers added
+0 triggers deleted
+0 triggers modified
+6 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+###################################################################
+Validating xecutegalore.trg expect PASS
+$gtm_exe/mupip trigger -trig=xecutegalore.trg
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+###################################################################
+$gtm_exe/mumps -run testoneline^multiline
+PASS 1
+PASS 2
+PASS 3
+PASS 4
+		set x=5 do l^mrtn()"
+		                    ^-----
+##TEST_AWK		At column 22, line 1, source module /.*/trgtmp.*
+%GTM-E-EXPR, Expression expected but not found
+	>>
+	^-----
+##TEST_AWK		At column 0, line 2, source module /.*/trgtmp.*
+%GTM-E-LSEXPECTED, A line separator is expected here
+PASS 5
+###################################################################
+###################################################################
+Export and re-import the triggers
+All existing triggers (count = 10) deleted
+=========================================
+10 triggers added
+0 triggers deleted
+0 triggers modified
+10 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+
+###################################################################
+Please enjoy the experience
+###################################################################
+	+4^multiline1#	$reference=^fired("multiline1#")	executions=1	$ztvalue=
+true if
+true if do
+true if do space indent
+true if do tab indent
+for true1	true2	true3	true4	true5	true6	true7	true8	true9	true10
+for do 0	0	0	0	0	0	0	0	0	0
+###################################################################
+	+1^oneline1#	$reference=^oneline	executions=1	$ztvalue=
+^fired("+1^oneline1#")=1
+^fired("+4^multiline1#")=1
+^fired("cmdpos#")=1
+^fired("multiline1#")=1
+^fired("multiline2#")=1
+^fired("multiline2#",1)="Please enjoy the label hopping experience"_$C(10)_"I hope you enjoyed the label hopping experience"
+^fired("multiline3#")=1
+^fired("multiline3#",1)="In GT.M triggers, triggers quit you!"
+^fired("spaceafteropen#")=1
+^fired("spaceafteropen#",1)="Sorry, I'm spacey after the <<"
+^fired("xecutegalore#")=1
+^fired("xecutegalore#",1)="xecutegalore"
+###################################################################
+###################################################################
+###################################################################
+smoketest
+###################################################################
+ensure line numbers are correct
+triggers are on lines
+1:+^multiline -commands=S,ZTR -name=multiline1 -xecute=<<
+23:+^multiline -commands=S,ZTR -name=multiline2 -xecute=<<
+42:+^multiline -commands=S,ZTR -name=multiline3 -xecute=<<
+47:+^multiline("halt") -commands=S,ZTR -name=multiline4 -xecute=<<
+53:+^CIF(key1=:,1) -name=vIDX0000058i1 -commands=SET -delim=$C(124) -pieces=2 -xecute=<<
+70:+^CIF(key1=:,1) -name=vIDX0000058i2 -commands=SET -delim=$C(124) -pieces=2 -xecute=<<
+make sure those lines match the trigger output file
+File valid.trg, Line 1: Added SET and/or Non-SET trigger on ^multiline named multiline1
+File valid.trg, Line 23: Added SET and/or Non-SET trigger on ^multiline named multiline2
+File valid.trg, Line 42: Added SET and/or Non-SET trigger on ^multiline named multiline3
+File valid.trg, Line 47: Added SET and/or Non-SET trigger on ^multiline named multiline4
+File valid.trg, Line 53: Added SET trigger on ^CIF named vIDX0000058i1
+File valid.trg, Line 70: Added SET trigger on ^CIF named vIDX0000058i2
+=========================================
+6 triggers added
+0 triggers deleted
+0 triggers modified
+6 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+###################################################################
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,278 @@
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
+##GT.CM##mumps.gld
+##GT.CM##Using: ##SOURCE_PATH##/mupip
+Create local (client) database...
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  GT.CM
+a.dat
+b.dat
+c.dat
+mumps.dat
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+##ALLOW_OUTPUT  GT.CM
+The database layout is:
+ASEG	a.dat
+BSEG	##TEST_REMOTE_NODE_PATH_GTCM##/b.dat
+CSEG	##TEST_REMOTE_NODE_PATH_GTCM##/c.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
+Starting the GT.CM Servers...
+##SUSPEND_OUTPUT  NON_REORG GT.CM NON_REPLIC
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REORG NON_REPLIC GT.CM
+
+GTM>
+
+
+Tests of MERGE command
+
+75---V4MERGE1
+
+75---V4MERGE1:  MERGE Command  -1-
+
+MERGE lvn1=lvn2
+   PASS  40545 IV-545  $d(lvn1)=0 and $d(lvn2)=0
+   PASS  40546 IV-546  $d(lvn1)=0 and $d(lvn2)=1
+   PASS  40547 IV-547  $d(lvn1)=0 and $d(lvn2)=10
+   PASS  40548 IV-548  $d(lvn1)=0 and $d(lvn2)=11
+
+End of 75 --- V4MERGE1
+
+
+76---V4MERGE2
+
+76---V4MERGE2:  MERGE Command  -2-
+   PASS  40549 IV-549  $d(lvn1)=1 and $d(lvn2)=0
+   PASS  40550 IV-550  $d(lvn1)=1 and $d(lvn2)=1
+   PASS  40551 IV-551  $d(lvn1)=1 and $d(lvn2)=10
+   PASS  40552 IV-552  $d(lvn1)=1 and $d(lvn2)=11
+
+End of 76 --- V4MERGE2
+
+
+77---V4MERGE3
+
+77---V4MERGE3:  MERGE Command  -3-
+   PASS  40553 IV-553  $d(lvn1)=10 and $d(lvn2)=0
+   PASS  40554 IV-554  $d(lvn1)=10 and $d(lvn2)=1
+   PASS  40555 IV-555  $d(lvn1)=10 and $d(lvn2)=10
+   PASS  40556 IV-556  $d(lvn1)=10 and $d(lvn2)=11
+
+End of 77 --- V4MERGE3
+
+
+78---V4MERGE4
+
+78---V4MERGE4:  MERGE Command  -4-
+   PASS  40557 IV-557  $d(lvn1)=11 and $d(lvn2)=0
+   PASS  40558 IV-558  $d(lvn1)=11 and $d(lvn2)=1
+   PASS  40559 IV-559  $d(lvn1)=11 and $d(lvn2)=10
+   PASS  40560 IV-560  $d(lvn1)=11 and $d(lvn2)=11
+
+End of 78 --- V4MERGE4
+
+
+79---V4MERGE5
+
+79---V4MERG^V4MERGE,V4READ^VV4:  MERGE Command  -5-
+
+MERGE lvn=gvn
+
+   PASS  40561 IV-561  $d(lvn)=0 and $d(gvn)=0
+
+
+   PASS  40562 IV-562  $d(lvn)=0 and $d(gvn)=1
+   PASS  40563 IV-563  $d(lvn)=0 and $d(gvn)=10
+   PASS  40564 IV-564  $d(lvn)=0 and $d(gvn)=11
+
+End of 79 --- V4MERGE5
+
+
+80---V4MERGE6
+
+80---V4MERGE6:  MERGE Command  -6-
+   PASS  40565 IV-565  $d(lvn)=1 and $d(gvn)=0
+   PASS  40566 IV-566  $d(lvn)=1 and $d(gvn)=1
+   PASS  40567 IV-567  $d(lvn)=1 and $d(gvn)=10
+   PASS  40568 IV-568  $d(lvn)=1 and $d(gvn)=11
+
+End of 80 --- V4MERGE6
+
+
+81---V4MERGE7
+
+81---V4MERGE7:  MERGE Command  -7-
+   PASS  40569 IV-569  $d(lvn)=10 and $d(gvn)=0
+   PASS  40570 IV-570  $d(lvn)=10 and $d(gvn)=1
+   PASS  40571 IV-571  $d(lvn)=10 and $d(gvn)=10
+   PASS  40572 IV-572  $d(lvn)=10 and $d(gvn)=11
+
+End of 81 --- V4MERGE7
+
+
+82---V4MERGE8
+
+82---V4MERGE8:  MERGE Command  -8-
+   PASS  40573 IV-573  $d(lvn)=11 and $d(gvn)=0
+   PASS  40574 IV-574  $d(lvn)=11 and $d(gvn)=1
+   PASS  40575 IV-575  $d(lvn)=11 and $d(gvn)=10
+   PASS  40576 IV-576  $d(lvn)=11 and $d(gvn)=11
+
+End of 82 --- V4MERGE8
+
+
+83---V4MERGE9
+
+83---V4MERGE9:  MERGE Command  -9-
+
+MERGE gvn=lvn
+   PASS  40577 IV-577  $d(gvn)=0 and $d(lvn)=0
+   PASS  40578 IV-578  $d(gvn)=0 and $d(lvn)=1
+   PASS  40579 IV-579  $d(gvn)=0 and $d(lvn)=10
+   PASS  40580 IV-580  $d(gvn)=0 and $d(lvn)=11
+
+End of 83 --- V4MERGE9
+
+
+84---V4MERGEA
+
+84---V4MERGEA:  MERGE Command  -A-
+   PASS  40581 IV-581  $d(gvn)=1 and $d(lvn)=0
+
+
+   PASS  40582 IV-582  $d(gvn)=1 and $d(lvn)=1
+   PASS  40583 IV-583  $d(gvn)=1 and $d(lvn)=10
+   PASS  40584 IV-584  $d(gvn)=1 and $d(lvn)=11
+
+End of 84 --- V4MERGEA
+
+
+85---V4MERGEB
+
+85---V4MERGEB:  MERGE Command  -B-
+   PASS  40585 IV-585  $d(gvn)=10 and $d(lvn)=0
+   PASS  40586 IV-586  $d(gvn)=10 and $d(lvn)=1
+   PASS  40587 IV-587  $d(gvn)=10 and $d(lvn)=10
+   PASS  40588 IV-588  $d(gvn)=10 and $d(lvn)=11
+
+End of 85 --- V4MERGEB
+
+
+86---V4MERGEC
+
+86---V4MERGEC:  MERGE Command  -C-
+   PASS  40589 IV-589  $d(gvn)=11 and $d(lvn)=0
+   PASS  40590 IV-590  $d(gvn)=11 and $d(lvn)=1
+   PASS  40591 IV-591  $d(gvn)=11 and $d(lvn)=10
+   PASS  40592 IV-592  $d(gvn)=11 and $d(lvn)=11
+
+End of 86 --- V4MERGEC
+
+
+87---V4MERGED
+
+87---V4MERGED:  MERGE Command  -D-
+
+MERGE gvn1=gvn2
+   PASS  40593 IV-593  $d(gvn1)=0 and $d(gvn2)=0
+   PASS  40594 IV-594  $d(gvn1)=0 and $d(gvn2)=1
+   PASS  40595 IV-595  $d(gvn1)=0 and $d(gvn2)=10
+   PASS  40596 IV-596  $d(gvn1)=0 and $d(gvn2)=11
+
+End of 87 --- V4MERGED
+
+
+88---V4MERGEE
+
+88---V4MERGEE:  MERGE Command  -E-
+   PASS  40597 IV-597  $d(gvn1)=1 and $d(gvn2)=0
+   PASS  40598 IV-598  $d(gvn1)=1 and $d(gvn2)=1
+   PASS  40599 IV-599  $d(gvn1)=1 and $d(gvn2)=10
+   PASS  40600 IV-600  $d(gvn1)=1 and $d(gvn2)=11
+
+End of 88 --- V4MERGEE
+
+
+89---V4MERGEF
+
+89---V4MERGEF:  MERGE Command  -F-
+   PASS  40601 IV-601  $d(gvn1)=10 and $d(gvn2)=0
+
+
+   PASS  40602 IV-602  $d(gvn1)=10 and $d(gvn2)=1
+   PASS  40603 IV-603  $d(gvn1)=10 and $d(gvn2)=10
+   PASS  40604 IV-604  $d(gvn1)=10 and $d(gvn2)=11
+
+End of 89 --- V4MERGEF
+
+
+90---V4MERGEG
+
+90---V4MERGEG:  MERGE Command  -G-
+   PASS  40605 IV-605  $d(gvn1)=11 and $d(gvn2)=0
+   PASS  40606 IV-606  $d(gvn1)=11 and $d(gvn2)=1
+   PASS  40607 IV-607  $d(gvn1)=11 and $d(gvn2)=10
+   PASS  40608 IV-608  $d(gvn1)=11 and $d(gvn2)=11
+
+End of 90 --- V4MERGEG
+
+
+91---V4MERGEH
+
+91---V4MERGEH:  MERGE Command  -H-
+   PASS  40609 IV-609  maximum length of a name
+   PASS  40610 IV-610  maximum length of a data
+
+End of 91 --- V4MERGEH
+
+
+92---V4MERGEI
+
+92---V4MERGEI:  MERGE Command  -I-
+   PASS  40611 IV-611  glvn contains naked reference
+   PASS  40612 IV-612  glvn contains an indirection
+
+End of 92 --- V4MERGEI
+
+GTM>
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####SOURCE_PATH##/mupip
+##GT.CM####SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##SUSPEND_OUTPUT  NON_REORG GT.CM NON_REPLIC
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REORG NON_REPLIC GT.CM
+##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  GT.CM
+##SOURCE_PATH##/mupip integ -REG *
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+##ALLOW_OUTPUT  GT.CM
+##SOURCE_PATH##/mupip integ a.dat
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REORG GT.CM NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

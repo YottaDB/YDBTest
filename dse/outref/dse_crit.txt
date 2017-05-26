@@ -1,0 +1,150 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SUSPEND_OUTPUT  L NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  L NON_REPLIC
+
+GTM>
+
+GTM>
+TEST DSE - CRIT COMMAND
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Write critical section is currently unowned
+DSE> 
+Write critical section is currently unowned
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Reinitialized critical section.
+
+DSE> 
+Seized write critical section.
+
+DSE> 
+Write critical section owner is process id XDSE_PIDX
+DSE (process id: XDSE_PIDX owns the write critical section
+
+DSE> Warning:  now leaving region in critical section: AREG
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Reinitialized critical section.
+
+DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+Write critical section owner is process id XDSE_PIDX
+DSE (process id: XDSE_PIDX owns the write critical section
+
+DSE> 
+Reinitialized critical section.
+
+DSE> 
+Write critical section is currently unowned
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Seized write critical section.
+
+DSE> 
+Write critical section owner is process id XDSE_PIDX
+DSE (process id: XDSE_PIDX owns the write critical section
+
+DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Write critical section owner is process id XDSE_PIDX
+
+DSE> DSE> 
+Critical section already released.
+
+DSE> DSE> 
+Write critical section owner is process id XDSE_PIDX
+DSE (process id: XDSE_PIDX owns the write critical section
+
+DSE> 
+Released write critical section.
+
+DSE> 
+Write critical section is currently unowned
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Seized write critical section.
+
+DSE> 
+Write critical section owner is process id XDSE_PIDX
+DSE (process id: XDSE_PIDX owns the write critical section
+
+DSE> 
+Reinitialized critical section.
+
+DSE> 
+Write critical section is currently unowned
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Seized write critical section.
+
+DSE> 
+Write critical section owner is process id XDSE_PIDX
+DSE (process id: XDSE_PIDX owns the write critical section
+
+DSE> 
+Removed owner of write critical section
+
+##SUSPEND_OUTPUT BG
+
+WARNING: No recovery because database is MM.
+
+##ALLOW_OUTPUT BG
+DSE> 
+Write critical section is currently unowned
+##SUSPEND_OUTPUT MM
+DSE> DSE> Cache freeze id XXXXXXXX Flush timer 00:00:01:00
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+##ALLOW_OUTPUT MM
+##SUSPEND_OUTPUT BG
+##TEST_AWKDSE> DSE> Cache freeze id XXXXXXXX Flush timer 00:00:(30|10|01):00
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##ALLOW_OUTPUT BG
+##SUSPEND_OUTPUT  L NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##ALLOW_OUTPUT  L NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  L NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

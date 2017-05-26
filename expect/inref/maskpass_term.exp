@@ -1,0 +1,32 @@
+# A helper script for the maskpass_term test. It verifies that maskpass restores
+# the terminal settings when terminated with a Ctrl-C.
+set timeout 10
+spawn bash
+
+send -- "PS1=\"CTRLC>\"; echo \$0\r"
+expect {
+    timeout { puts "TEST-E-FAIL Bash took a long time to launch"; exit 1 }
+    "bash" { send "stty -a > tty_before.logx\r" }
+}
+# If a platform has trouble accepting ctrl-c, "stty intr ^c" might be helpful.
+# This was a mandatory step for running this test on HP-UX
+expect {
+    timeout { puts "TEST-E-FAIL stty -a > tty_before.logx timed out"; exit 1 }
+    "CTRLC>" { send "\$gtm_dist/plugin/gtmcrypt/maskpass\r" }
+}
+expect {
+    timeout { puts "TEST-E-FAIL Not asking the passphrase"; exit 1 }
+    "Enter Passphrase: " { send "\003" }
+}
+expect {
+    timeout { puts "TEST-E-FAIL ctrl-c did not return as expected"; exit 1 }
+    "CTRLC>" { send "stty -a > tty_after.logx\r" }
+}
+expect {
+    timeout { puts "TEST-E-FAIL stty -a > tty_after.logx timed out"; exit 1 }
+    "CTRLC>" { send "exit\r"}
+}
+expect {
+    timeout { puts "TEST-E-FAIL The test has successfully completed, but there was a problem during quitting."; exit 1 }
+    eof
+}

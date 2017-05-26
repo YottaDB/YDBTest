@@ -1,0 +1,104 @@
+# Case 1 : Encrypting an unencrypted database while the database is being populated
+# Setup encryption keys
+# Create database in NON_ENCRYPT mode
+Database file ##TEST_PATH##/mumps.dat now has encryptable flag set to  TRUE
+# Start just the passive source server with updates enabled
+# Run the process that does global updates, in the background
+# Wait for the first global to be set
+# Encrypt the database with mumps_dat_key
+Region DEFAULT : MUPIP REORG ENCRYPT started
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+Region DEFAULT : Database is now FULLY ENCRYPTED with the following key: mumps_dat_key
+Region DEFAULT : MUPIP REORG ENCRYPT finished
+Database file ##TEST_PATH##/mumps.dat now has encryption marked complete
+# Wait for the backround process to exit and shutdown the passive source server
+# Should see both the globals
+^a=1
+^b=1
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Case 2 : Journal recover backward between two re-encryptions
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+# Setup keys
+# Do simple updates
+# Reencrypt AREG with mumps_dat_key and do some updates
+Region AREG : MUPIP REORG ENCRYPT started
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+Region AREG : Database is now FULLY ENCRYPTED with the following key: mumps_dat_key
+Region AREG : MUPIP REORG ENCRYPT finished
+Database file ##TEST_PATH##/a.dat now has encryption marked complete
+# Reencrypt DEFAULT with mumps_dat_key_2 and do some updates
+Region DEFAULT : MUPIP REORG ENCRYPT started
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+Region DEFAULT : Database is now FULLY ENCRYPTED with the following key: mumps_dat_key_2
+Region DEFAULT : MUPIP REORG ENCRYPT finished
+Database file ##TEST_PATH##/mumps.dat now has encryption marked complete
+# Reencrypt DEFAULT with mumps_dat_key and do some updates
+Region DEFAULT : MUPIP REORG ENCRYPT started
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+Region DEFAULT : Database is now FULLY ENCRYPTED with the following key: mumps_dat_key
+Region DEFAULT : MUPIP REORG ENCRYPT finished
+Database file ##TEST_PATH##/mumps.dat now has encryption marked complete
+# Reencrypt DEFAULT with mumps_dat_key_2 and do some updates
+Region DEFAULT : MUPIP REORG ENCRYPT started
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+Region DEFAULT : Database is now FULLY ENCRYPTED with the following key: mumps_dat_key_2
+Region DEFAULT : MUPIP REORG ENCRYPT finished
+Database file ##TEST_PATH##/mumps.dat now has encryption marked complete
+# mupip journal recover to $time1 should succeed
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Case 3 : reorg encrypt with one region read-only
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+# Setup keys for this test case
+# Make b.dat read only and run reorg -encrypt -reg '*'
+chmod 444 b.dat
+$MUPIP reorg -encrypt=mumps_dat_key_2 -region "*" > & ! reorg_encr_b_readonly.outx
+
+$grep 'AREG' reorg_encr_b_readonly.outx
+Region AREG : MUPIP REORG ENCRYPT started
+Region AREG : Database is now FULLY ENCRYPTED with the following key: mumps_dat_key_2
+Region AREG : MUPIP REORG ENCRYPT finished
+$grep 'DEFAULT' reorg_encr_b_readonly.outx
+Region DEFAULT : MUPIP REORG ENCRYPT started
+Region DEFAULT : Database is now FULLY ENCRYPTED with the following key: mumps_dat_key_2
+Region DEFAULT : MUPIP REORG ENCRYPT finished
+
+$grep -vE 'AREG|DEFAULT|^$' reorg_encr_b_readonly.outx
+Region BREG : MUPIP REORG ENCRYPT started
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$MUPIP set -encryptioncomplete -region "*" > & ! encrypt_complete_b_readonly.outx
+$grep 'a.dat' encrypt_complete_b_readonly.outx
+Database file ##TEST_PATH##/a.dat now has encryption marked complete
+$grep 'mumps.dat' encrypt_complete_b_readonly.outx
+Database file ##TEST_PATH##/mumps.dat now has encryption marked complete
+
+$grep -vE 'a.dat|mumps.dat' encrypt_complete_b_readonly.outx
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+unset verbose
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

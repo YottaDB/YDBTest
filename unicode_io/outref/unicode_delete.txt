@@ -1,0 +1,44 @@
+setenv gtm_chset UTF-8
+unset echo
+
+GTM>
+do ^unicodedelete("UTF-8")
+
+GTM>
+-> OPEN "deleteUTF-8.txt":(NEWVERSION:CHSET="UTF-8")
+s2=##TEST_PATH##/deleteUTF-8.txt
+PASS, file is deleted
+
+GTM>
+do ^unicodedelete("UTF-16")
+
+GTM>
+-> OPEN "deleteUTF-16.txt":(NEWVERSION:CHSET="UTF-16")
+s2=##TEST_PATH##/deleteUTF-16.txt
+PASS, file is deleted
+
+GTM>
+do ^unicodedelete("UTF-16LE")
+
+GTM>
+-> OPEN "deleteUTF-16LE.txt":(NEWVERSION:CHSET="UTF-16LE")
+s2=##TEST_PATH##/deleteUTF-16LE.txt
+PASS, file is deleted
+
+GTM>
+do ^unicodedelete("UTF-16BE")
+
+GTM>
+-> OPEN "deleteUTF-16BE.txt":(NEWVERSION:CHSET="UTF-16BE")
+s2=##TEST_PATH##/deleteUTF-16BE.txt
+PASS, file is deleted
+
+GTM>
+do ^unicodedelete("M")
+
+GTM>
+-> OPEN "deleteM.txt":(NEWVERSION:CHSET="M")
+s2=##TEST_PATH##/deleteM.txt
+PASS, file is deleted
+
+GTM>

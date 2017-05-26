@@ -1,0 +1,56 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Enable journaling
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with (|NO)BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+Start a GT.M process in the background ...
+##TEST_AWK.1. [0-9]*
+Now crash the gtm process ...
+##TEST_AWK.1.  . Killed                        ##SOURCE_PATH##/mumps -run jnlview < /dev/null >& jnlview.out
+##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+##TEST_AWK%GTM-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+mupip journal -recover -forw mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mupip journal -extract -forw mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+Verifying the data ...
+
+GTM>
+VERIFICATION PASSED
+
+GTM>
+Verifying the journal extract file ...
+
+GTM>
+VERIFICATION PASSED
+
+GTM>
+Test view function 
+
+GTM>
+##TEST_PATH##/mumps.mjl10
+GTM>
+
+GTM>
+##TEST_PATH##/mumps.mjl10
+GTM>
+PASS
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

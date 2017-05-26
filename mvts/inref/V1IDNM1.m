@@ -1,0 +1,71 @@
+V1IDNM1 ;IW-KO-TS,V1IDNM,MVTS V9.10;15/6/96;NAME LEVEL INDIRECTION -1-
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1978-1996
+ W !!,"146---V1IDNM1: Name level indirection -1-"
+FOR W !!,"FOR command",!
+489 W !,"I-489  Indirection of lvn"
+ S ^ABSN="11791",^ITEM="I-489  Indirection of lvn",^NEXT="490^V1IDNM1,V1IDNM2^V1IDNM,V1IDGO^VV1" D ^V1PRESET
+ S ^VCOMP=""
+ S A="B",B=0 F @A=1:1:3 S ^VCOMP=^VCOMP_B
+ S ^VCOMP=^VCOMP_" " K B F @A=4:1:6 S ^VCOMP=^VCOMP_B
+ S ^VCORR="123 456" D ^VEXAMINE
+ ;
+490 W !,"I-490  Indirection of forparameters"
+ S ^ABSN="11792",^ITEM="I-490  Indirection of forparameters",^NEXT="491^V1IDNM1,V1IDNM2^V1IDNM,V1IDGO^VV1" D ^V1PRESET
+ S ^VCOMP=""
+ S C="D1",D="D2",E="D3",D1=4,D2=1,D3=6
+ F B=@C:@D:@E S ^VCOMP=^VCOMP_B
+ S ^VCOMP=^VCOMP_" ",A="B",C="D1",D="D2",E="D3",D1=7,D2=1,D3=10
+ FOR @A=@C:@D:@E SET ^VCOMP=^VCOMP_B
+ S ^VCORR="456 78910" D ^VEXAMINE
+ ;
+491 W !,"I-491  Indirection of subscript of lvn"
+ S ^ABSN="11793",^ITEM="I-491  Indirection of subscript of lvn",^NEXT="492^V1IDNM1,V1IDNM2^V1IDNM,V1IDGO^VV1" D ^V1PRESET
+ S VCOMP="" K A
+ S A(2)="A3",A3=4 F A(@A(2))=1:1:3 S VCOMP=VCOMP_A(4),B(A(4))=A(4)*10
+ S VCOMP=VCOMP_A(4)_" ",A(4)="A(22)" F @A(@A(2))=4:1:7 S VCOMP=VCOMP_A(22)
+ S VCOMP=VCOMP_A(22)_" "
+ S BN1="B(1)",BN3="B(3)" F @A(@A(2))=@BN1:10:@BN3 S VCOMP=VCOMP_A(22)
+ S VCOMP=VCOMP_A(22),^VCOMP=VCOMP,^VCORR="1233 45677 10203030" D ^VEXAMINE K A,B,BN
+ ;
+492 W !,"I-492  Value of indirection contains function"
+ S ^ABSN="11794",^ITEM="I-492  Value of indirection contains function",^NEXT="493^V1IDNM1,V1IDNM2^V1IDNM,V1IDGO^VV1" D ^V1PRESET
+ S VCOMP="",A="@$E(""ABCDEF"",3)",B="@$E(""ABCDEF"",4)",D=4
+ F @A=1:1:@B S VCOMP=VCOMP_C
+ S ^VCOMP=VCOMP,^VCORR="1234" D ^VEXAMINE
+ ;
+493 W !,"I-493  Value of indirection is gvn"
+ S ^ABSN="11795",^ITEM="I-493  Value of indirection is gvn",^NEXT="494^V1IDNM1,V1IDNM2^V1IDNM,V1IDGO^VV1" D ^V1PRESET
+ S VCOMP=""
+ S A="^V1A(2)",^V1A(2)=100,B="^V1B(C)",^V1B(2)=400,C=00002
+ F I=@A:100:@B S VCOMP=VCOMP_I
+ S ^VCOMP=VCOMP,^VCORR="100200300400" D ^VEXAMINE
+ ;
+494 W !,"I-494  Value of indirection is lvn"
+ S ^ABSN="11796",^ITEM="I-494  Value of indirection is lvn",^NEXT="495^V1IDNM1,V1IDNM2^V1IDNM,V1IDGO^VV1" D ^V1PRESET
+ S VCOMP=""
+ S A="A(A(1))",A(1)=2,A(2)="20:10:40",B="@A(AA)",AA=11,A(11)="D"
+ F @B=@A,@A:10:$P(A(2),":",3) S VCOMP=VCOMP_D
+ S ^VCOMP=VCOMP,^VCORR="20:10:40203040" D ^VEXAMINE
+ ;
+495 W !,"I-495  2 levels of indirection"
+ S ^ABSN="11797",^ITEM="I-495  2 levels of indirection",^NEXT="496^V1IDNM1,V1IDNM2^V1IDNM,V1IDGO^VV1" D ^V1PRESET
+ S VCOMP=""
+ S A="B",B="C",C="" F @@A=1:1:5 S VCOMP=VCOMP_C
+ S VCOMP=VCOMP_C_A_B_" "
+ S A(1)="@B(2)",B(2)="D",D=1 FOR @A(1)=6:1:10 S VCOMP=VCOMP_D
+ S VCOMP=VCOMP_D_A(1)_B(2)
+ S ^VCOMP=VCOMP,^VCORR="123455BC 67891010@B(2)D" D ^VEXAMINE
+ ;
+496 W !,"I-496  3 levels of indirection"
+ S ^ABSN="11798",^ITEM="I-496  3 levels of indirection",^NEXT="V1IDNM2^V1IDNM,V1IDGO^VV1" D ^V1PRESET
+ S VCOMP=""
+ S A="B",B="C",C="D",D=9 F @@@A=1:1:5 S VCOMP=VCOMP_D
+ S VCOMP=VCOMP_D_A_B_C_" "
+ S A(1)="@B(2)",B(2)="@D",D="E",E=0 FOR @A(1)=6:1:10 S VCOMP=VCOMP_E
+ S VCOMP=VCOMP_E_A(1)_B(2)_D
+ S ^VCOMP=VCOMP,^VCORR="123455BCD 67891010@B(2)@DE" D ^VEXAMINE
+ ;
+END W !!,"End of 146---V1IDNM1",!
+ K  K ^V1A,^V1B Q
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

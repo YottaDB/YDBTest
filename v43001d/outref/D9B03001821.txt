@@ -1,0 +1,38 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+Block:Offset Level
+%GTM-I-DBTNTOOLG, 
+       4:0      1  Block transaction number too large
+                   Directory Path:  1:10, 2:10
+                   Path:  4:0
+Keys from ^x to the end are suspect.
+%GTM-I-DBTN, Block TN is 0x0000000000100000
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory           2               2           2....            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+
+Largest transaction number found in database was 100000
+Current transaction number is                    3
+%GTM-E-INTEGERRS, Database integrity errors

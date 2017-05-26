@@ -1,0 +1,27 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+THE DATABASE ENCRYPTION HEADER FIELDS ARE
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  DB is (re)encryptable               FALSE
+  DB encryption null IV mode          FALSE
+  DB encryption hash cutoff              -1
+  DB encr hash2 start TN 0x0000000000000000
+##TEST_AWK  Database file encryption hash           [0-9A-F]*
+  Database file encryption hash2          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+THE JOURNAL FILE  ENCRYPTION HEADER FIELDS ARE
+  Journal State               [inactive] ON  Journal Before imaging        TRUE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

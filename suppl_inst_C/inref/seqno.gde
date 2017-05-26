@@ -1,0 +1,7 @@
+change -segment DEFAULT -file=mumps.dat
+add -name lcl -region=areg
+add -region areg -dyn=aseg
+add -segment aseg -file=a
+add -name x -region=breg
+add -region breg -dyn=bseg
+add -segment bseg -file=b

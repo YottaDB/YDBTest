@@ -1,0 +1,30 @@
+MUPIP BACKUP/RESTORE over TCP: test Starts...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Will turn replication off
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+GTM starts...
+Stop GTM...
+Backup begins at primary...
+##TEST_AWK\$MUPIP backup -online -incremental -transaction=1 -nettimeout=420 DEFAULT "tcp://##TEST_REMOTE_HOST_SHORT##:[0-9]+"
+Restore begins at secondary...
+##TEST_AWK\$MUPIP restore -nettimeout=420 mumps.dat "tcp://##TEST_HOST_SHORT##[2]?:[0-9]+"
+
+RESTORE COMPLETED
+##TEST_AWK[0-9]+ blocks restored
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+MUPIP BACKUP/RESTORE over TCP: test DONE.

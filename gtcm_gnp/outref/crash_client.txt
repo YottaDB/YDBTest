@@ -1,0 +1,43 @@
+####################### Test CLIENT crash #########################################
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+##GT.CM##mumps.gld
+##GT.CM##Using: ##REMOTE_SOURCE_PATH##/mupip
+Create local (client) database...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+The database layout is:
+ASEG	a.dat
+BSEG	##TEST_REMOTE_NODE_PATH_GTCM##/b.dat
+CSEG	##TEST_REMOTE_NODE_PATH_GTCM##/c.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
+Starting the GT.CM Servers...
+Start a GT.M process in the background (GT.CM Client)...
+##TEST_AWK.1. [0-9]*
+Now crash the client...
+##TEST_AWK.1.  . Killed                        ##SOURCE_PATH##/mumps -run long . /dev/null .. long.log
+Now start another client...
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+^A,^B,^C,^D: 1234
+GTM>
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####REMOTE_SOURCE_PATH##/mupip
+##GT.CM####REMOTE_SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ a.dat
+No errors detected by integ.

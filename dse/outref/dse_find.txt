@@ -1,0 +1,216 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+
+GTM>
+
+GTM>
+TEST DSE - FIND COMMAND
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+DSE> 
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4
+
+DSE> %GTM-E-BLKINVALID, 00000232 is not a valid block as database file ##TEST_PATH##/a.dat has 00000065 total blocks
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Next free block is 2B.
+
+DSE> 
+Next free block is 2B.
+
+DSE> %GTM-E-BLKINVALID, 00000232 is not a valid block as database file ##TEST_PATH##/a.dat has 00000065 total blocks
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Key found in block  3.
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:1C0,	3:70,
+DSE> 
+Key not found, would be in block  3.
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:1C0,	3:11B,
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Key not found, no root present.
+Key ^notglobal maps to Region DEFAULT; Run "find -region=DEFAULT" before looking for this node
+
+DSE> Error:  invalid key.
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> List of global directory:	
+
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+DSE> List of global directory:	
+
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+DSE> Error:  already in region: AREG
+DSE> Error:  already in region: AREG
+DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> %GTM-E-NOREGION, REGION not found: NOREG
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+	Left sibling	Current block	Right sibling
+	0x00000027	0x00000003	none
+
+DSE> 
+	Left sibling	Current block	Right sibling
+	0x00000026	0x00000027	0x00000003
+
+DSE> 
+	Left sibling	Current block	Right sibling
+	0x00000025	0x00000026	0x00000027
+
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+DSE> %GTM-E-BLKINVALID, 00000230 is not a valid block as database file ##TEST_PATH##/a.dat has 00000065 total blocks
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Key found in block  3.
+    Directory path
+    Path--blk:off
+	1:10,	2:22,
+    Global tree path
+    Path--blk:off
+	4:10,	3:5A,
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Key found in block  3.
+    Directory path
+    Path--blk:off
+	1:10,	2:22,
+    Global tree path
+    Path--blk:off
+	4:10,	3:4D,
+DSE> DSE> grep "Key found in block find.log"
+Key found in block  5.
+Key found in block  5.
+Key found in block  5.
+Key found in block  5.
+Key found in block  5.
+Key found in block  5.
+Key found in block  5.
+Key found in block  5.
+Key found in block  5.
+Key found in block  5.
+Key found in block  5.
+Key found in block  5.
+Key found in block  5.
+Key found in block  5.
+Key found in block  5.
+Key found in block  5.
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> %GTM-E-NOGTCMDB, DSE does not support operation on GT.CM database region: DEFAULT
+DSE> DSE> %GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GTM-E-DBFILERR, Error with database file /testarea1/foo.dat
+%SYSTEM-E-ENO2, No such file or directory
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> %GTM-E-DSENOTOPEN, DSE could not open region DEFAULT - see DSE startup error message for cause
+DSE> DSE> 

@@ -1,0 +1,107 @@
+setenv gtm_chset UTF-8
+unset echo
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+#lock the globals that has unicode character subscripts
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+###################################################################
+#Show all the locks held
+###################################################################
+with gtm_chset equal to UTF-8
+
+DEFAULT
+^a("","ABC","ＮＯＮ-ＧＲＡＰＨＩＣ １")
+                         Owned by PID= ##PID## which is an existing process
+^a("","DEF","ＮＯＮ-ＧＲＡＰＨＩＣ ２")
+                         Owned by PID= ##PID## which is an existing process
+^a("♚♝A♞♜") Owned by PID= ##PID## which is an existing process
+^b("ڦAΨמ","ẙ۩Ÿ",2,"ĂȑƋっ")
+                         Owned by PID= ##PID## which is an existing process
+^zb("","ABC","ＺＡＬＬＯＣＡＴＥ ＮＯＮ-ＧＲＡＰＨＩＣ ")
+                         Owned by PID= ##PID## which is an existing process
+^zb("ڦAΨמ","ẙ۩Ÿ",2,"ĂȑƋっ")
+                         Owned by PID= ##PID## which is an existing process
+z("ΨΈẸẪΆΨ") Owned by PID= ##PID## which is an existing process
+zl("ΨΈẸẪΆΨ") Owned by PID= ##PID## which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+###################################################################
+with gtm_chset equal to bla
+TEST-I-PASS lke show -all test passed
+###################################################################
+show and clear certain existent and non-existent locks
+with gtm_chset equal to bla
+LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+LKE> 
+###################################################################
+#proceed with gtm_chset equal to UTF-8
+LKE> 
+DEFAULT
+^b("ڦAΨמ","ẙ۩Ÿ",2,"ĂȑƋっ")
+                         Owned by PID= ##PID## which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+LKE> 
+DEFAULT
+^a("","ABC","ＮＯＮ-ＧＲＡＰＨＩＣ １")
+                         Owned by PID= ##PID## which is an existing process
+^a("","DEF","ＮＯＮ-ＧＲＡＰＨＩＣ ２")
+                         Owned by PID= ##PID## which is an existing process
+^a("♚♝A♞♜") Owned by PID= ##PID## which is an existing process
+^b("ڦAΨמ","ẙ۩Ÿ",2,"ĂȑƋっ")
+                         Owned by PID= ##PID## which is an existing process
+^zb("","ABC","ＺＡＬＬＯＣＡＴＥ ＮＯＮ-ＧＲＡＰＨＩＣ ")
+                         Owned by PID= ##PID## which is an existing process
+^zb("ڦAΨמ","ẙ۩Ÿ",2,"ĂȑƋっ")
+                         Owned by PID= ##PID## which is an existing process
+z("ΨΈẸẪΆΨ") Owned by PID= ##PID## which is an existing process
+zl("ΨΈẸẪΆΨ") Owned by PID= ##PID## which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+LKE> 
+DEFAULT
+Lock removed : ^a("","ABC","ＮＯＮ-ＧＲＡＰＨＩＣ １")
+Lock removed : ^a("","DEF","ＮＯＮ-ＧＲＡＰＨＩＣ ２")
+Lock removed : ^a("♚♝A♞♜")
+Lock removed : ^b("ڦAΨמ","ẙ۩Ÿ",2,"ĂȑƋっ")
+Lock removed : ^zb("","ABC","ＺＡＬＬＯＣＡＴＥ ＮＯＮ-ＧＲＡＰＨＩＣ ")
+Lock removed : ^zb("ڦAΨמ","ẙ۩Ÿ",2,"ĂȑƋっ")
+Lock removed : z("ΨΈẸẪΆΨ")
+Lock removed : zl("ΨΈẸẪΆΨ")
+LKE> 
+#release the job
+
+GTM>
+
+GTM>
+###################################################################
+#Now do some badchar locks
+###################################################################
+# show and clear locks using lke. But redirect the o/p to a file and check
+###################################################################
+# compare badcharlke.out the stored badcharlke.txt in outref
+TEST-I-PASS badchar test for locks passed
+#release the job
+
+GTM>
+
+GTM>
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

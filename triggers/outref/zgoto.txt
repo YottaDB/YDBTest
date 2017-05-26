@@ -1,0 +1,268 @@
+
+GTM>
+###################################################################
+$gtm_exe/mumps -run noref^runzgoto
+Testing ZGOTO within a trigger w/o an entryref
+The trigger setgotoa# is doing S
+	$Reference:^a(1)	$Test:1
+	$ETrap:ZSHOW "*" zgoto $zlevel-($ztlevel*2)
+	$ZTDAta :0	$ZTVAlue:noref^runzgoto
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+	twork+7^twork	norefzgoto+2^norefzgoto	+1^setgotoa#	noref+5^runzgoto
+	+1^GTM$DMOD    (Direct mode) 
+The trigger setgotoa# is doing S
+	$Reference:^a(1)	$Test:1
+	$ETrap:ZSHOW "*" zgoto $zlevel-($ztlevel*2)
+	$ZTDAta :1	$ZTOLdval:noref^runzgoto	$ZTVAlue:1
+	$ZTLEvel:2	$ZLevel:8	$TLevel:1
+	twork+7^twork	norefzgoto+2^norefzgoto	+1^setgotoa#	norefzgoto+5^norefzgoto
+	+1^setgotoa#	noref+5^runzgoto	+1^GTM$DMOD    (Direct mode) 
+The trigger setgotoa# is doing S
+	$Reference:^a(2)	$Test:1
+	$ETrap:ZSHOW "*" zgoto $zlevel-($ztlevel*2)
+	$ZTDAta :0	$ZTVAlue:1
+	$ZTLEvel:3	$ZLevel:10	$TLevel:1
+	twork+7^twork	norefzgoto+2^norefzgoto	+1^setgotoa#	norefzgoto+5^norefzgoto
+	+1^setgotoa#	norefzgoto+5^norefzgoto	+1^setgotoa#	noref+5^runzgoto	+1^GTM$DMOD    (Direct mode) 
+1:ZGOTOing from $ZTLEVEL=3 and $ZLEVEL=8 to $zlevel=2
+Have expected successful return from triggers with $ZLEVEL=2 and $ZTLEVEL=0
+^a(1)=1
+^a(2)=1
+
+GTM>
+Back at GTM prompt with $ZLEVEL=1
+
+GTM>
+
+GTM>
+###################################################################
+$gtm_exe/mumps -run ref^runzgoto
+Testing ZGOTO within a trigger w/o an entryref
+The trigger setgotob# is doing S
+	$Reference:^b(1)	$Test:1
+	$ETrap:ZSHOW "*" zgoto $zlevel-($ztlevel*2)
+	$ZTDAta :0	$ZTVAlue:ref^runzgoto
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+	twork+7^twork	refzgoto+1^refzgoto	+1^setgotob#	ref+8^runzgoto
+	+1^GTM$DMOD    (Direct mode) 
+The trigger setgotob# is doing S
+	$Reference:^b(1)	$Test:1
+	$ETrap:ZSHOW "*" zgoto $zlevel-($ztlevel*2)
+	$ZTDAta :1	$ZTOLdval:ref^runzgoto	$ZTVAlue:1
+	$ZTLEvel:2	$ZLevel:8	$TLevel:1
+	twork+7^twork	refzgoto+1^refzgoto	+1^setgotob#	refzgoto+8^refzgoto
+	+1^setgotob#	ref+8^runzgoto	+1^GTM$DMOD    (Direct mode) 
+The trigger setgotob# is doing S
+	$Reference:^b(2)	$Test:1
+	$ETrap:ZSHOW "*" zgoto $zlevel-($ztlevel*2)
+	$ZTDAta :0	$ZTVAlue:1
+	$ZTLEvel:3	$ZLevel:10	$TLevel:1
+	twork+7^twork	refzgoto+1^refzgoto	+1^setgotob#	refzgoto+8^refzgoto
+	+1^setgotob#	refzgoto+8^refzgoto	+1^setgotob#	ref+8^runzgoto	+1^GTM$DMOD    (Direct mode) 
+The trigger setgotob# is doing S
+	$Reference:^b(3)	$Test:1
+	$ETrap:ZSHOW "*" zgoto $zlevel-($ztlevel*2)
+	$ZTDAta :0	$ZTVAlue:1
+	$ZTLEvel:4	$ZLevel:12	$TLevel:1
+	twork+7^twork	refzgoto+1^refzgoto	+1^setgotob#	refzgoto+8^refzgoto
+	+1^setgotob#	refzgoto+8^refzgoto	+1^setgotob#	refzgoto+8^refzgoto	+1^setgotob#
+	ref+8^runzgoto	+1^GTM$DMOD    (Direct mode) 
+ZGOTOing back out of trigger levels from $ZTLEVEL=4 and $ZLEVEL=10
+Expected zgoto return to primary code with $ZLEVEL=2 and $ZTLEVEL=0
+
+GTM>
+testing [z]goto to bounce around the same level
+
+GTM>
+$ZLevel3        $ZTLEvel1
+gotoloop+2^norefzgoto
++1^killgotoa#
++1^GTM$DMOD    (Direct mode) 
+$ZLevel3        $ZTLEvel1
+gotoloop+2^refzgoto
++1^killgotoa#
++1^GTM$DMOD    (Direct mode) 
+$ZLevel3        $ZTLEvel1
+gotoloop+6^norefzgoto
++1^killgotoa#
++1^GTM$DMOD    (Direct mode) 
+
+GTM>
+###################################################################
+$gtm_exe/mumps -run minusone^runzgoto
++1^e#1#
+minusone+4^runzgoto
+
+
++1^d#1#
++3^e#1#
+minusone+4^runzgoto
+
+
+The trigger setgotoa# is doing S
+	$Reference:^a(10)	$Test:1
+	$ETrap:write "unknown failure",! halt
+	$ZTDAta :0	$ZTVAlue:1024
+	$ZTLEvel:3	$ZLevel:7	$TLevel:1
+	twork+7^twork	norefzgoto+2^norefzgoto	+1^setgotoa#	+3^d#1#
+	+3^e#1#	minusone+4^runzgoto
+1:ZGOTOing from $ZTLEVEL=3 and $ZLEVEL=5 to $zlevel=-1
+d#1# completed
+e#1# completed
+Should get here
+###################################################################
++1^e#1#
+controlled+4^runzgoto
+
+
++1^d#1#
++3^e#1#
+controlled+4^runzgoto
+
+
+1:ZGOTOing from $ZTLEVEL=8 and $ZLEVEL=15 to $zlevel=4
+controlled return to $zlevel=4
+d#1# completed
+e#1# completed
+Have expected successful return from triggers with $ZLEVEL=1 and $ZTLEVEL=0
+###################################################################
+lock +^%jobwait(1)
+##TEST_AWKlock ..jobprimed.1,[0-9]*.
+d primed^multilinezgoto
+###################################################################
+
+This test case primes the zgoto pump
+###################################################################
+mline#1#
+start	5:1	threadnoparm+20^job	        Indirection	primed+2^multilinezgoto	test+8^multilinezgoto	+3^mline#1#
+label1	6:1	threadnoparm+20^job	        Indirection	primed+2^multilinezgoto	test+8^multilinezgoto	+4^mline#1#	label1+2^mline#1#
+label2	7:1	threadnoparm+20^job	        Indirection	primed+2^multilinezgoto	test+8^multilinezgoto	+4^mline#1#	label1+3^mline#1#	label2+2^mline#1#
+        zgoto $zlevel:label1+5^@$ZTNAme
+label3	8:1	threadnoparm+20^job	        Indirection	primed+2^multilinezgoto	test+8^multilinezgoto	+4^mline#1#	label1+3^mline#1#	label1+5^mline#1#	label3+2^mline#1#
+	zgoto $zlevel-2:label1+6^@$ZTNAme
+label1	6:1	threadnoparm+20^job	        Indirection	primed+2^multilinezgoto	test+8^multilinezgoto	+4^mline#1#	label1+7^mline#1#
+done	5:1	threadnoparm+20^job	        Indirection	primed+2^multilinezgoto	test+8^multilinezgoto	+6^mline#1#
+###################################################################
+1   mline#3# expects mline#3#
+    ztriggerop is ZTR and expects ZTR
+$ZLevel = 6	$ZTLevel = 1
+###################################################################
+1   mline#2#
+	6:1	threadnoparm+20^job	        Indirection	primed+2^multilinezgoto	test+13^multilinezgoto	+3^mline#2#	label1+1^mline#2#
+        zgoto -1
+	6:1	threadnoparm+20^job	        Indirection	primed+2^multilinezgoto	test+13^multilinezgoto	+4^mline#2#	label2+1^mline#2#
+        zgoto $zlevel-1
+	6:1	threadnoparm+20^job	        Indirection	primed+2^multilinezgoto	test+13^multilinezgoto	+5^mline#2#	label3+1^mline#2#
+	zgoto $zlevel:^@$ZTNAme
+2   mline#2#
+3   mline#2# expects mline#3#
+    ztriggerop is ZK and expects ZTR
+$ZLevel = 6	$ZTLevel = 1
+###################################################################
+###################################################################
+zgoto ^mline#3# from non-trigger land
+$ZLevel = 4	$ZTLevel = 0
+1    expects mline#3#
+    ztriggerop is  and expects ZTR
+$ZLevel = 4	$ZTLevel = 0
+###################################################################
+###################################################################
+lock +^%jobwait(1)
+##TEST_AWKlock ..jobunprimed.1,[0-9]*.
+d unprimed^multilinezgoto
+
+This test case does not prime the zgoto pump
+###################################################################
+mline#1#
+start	5:1	threadnoparm+20^job	        Indirection	unprimed+1^multilinezgoto	test+8^multilinezgoto	+3^mline#1#
+label1	6:1	threadnoparm+20^job	        Indirection	unprimed+1^multilinezgoto	test+8^multilinezgoto	+4^mline#1#	label1+2^mline#1#
+label2	7:1	threadnoparm+20^job	        Indirection	unprimed+1^multilinezgoto	test+8^multilinezgoto	+4^mline#1#	label1+3^mline#1#	label2+2^mline#1#
+        zgoto $zlevel:label1+5^@$ZTNAme
+label3	8:1	threadnoparm+20^job	        Indirection	unprimed+1^multilinezgoto	test+8^multilinezgoto	+4^mline#1#	label1+3^mline#1#	label1+5^mline#1#	label3+2^mline#1#
+	zgoto $zlevel-2:label1+6^@$ZTNAme
+label1	6:1	threadnoparm+20^job	        Indirection	unprimed+1^multilinezgoto	test+8^multilinezgoto	+4^mline#1#	label1+7^mline#1#
+done	5:1	threadnoparm+20^job	        Indirection	unprimed+1^multilinezgoto	test+8^multilinezgoto	+6^mline#1#
+###################################################################
+1   mline#2#
+	6:1	threadnoparm+20^job	        Indirection	unprimed+1^multilinezgoto	test+13^multilinezgoto	+3^mline#2#	label1+1^mline#2#
+        zgoto -1
+	6:1	threadnoparm+20^job	        Indirection	unprimed+1^multilinezgoto	test+13^multilinezgoto	+4^mline#2#	label2+1^mline#2#
+        zgoto $zlevel-1
+	6:1	threadnoparm+20^job	        Indirection	unprimed+1^multilinezgoto	test+13^multilinezgoto	+5^mline#2#	label3+1^mline#2#
+	zgoto $zlevel:^@$ZTNAme
+2   mline#2#
+150373978,+2^mline#2#,%GTM-E-ZLINKFILE, Error while zlinking "mline#3#",%GTM-E-FILENOTFND, File mline#3# not found
+###################################################################
+###################################################################
+zgoto ^mline#3# from non-trigger land
+$ZLevel = 4	$ZTLevel = 0
+150373978,notfromtrig+5^multilinezgoto,%GTM-E-ZLINKFILE, Error while zlinking "mline#3#",%GTM-E-FILENOTFND, File mline#3# not found
+###################################################################
+###################################################################
+lock +^%jobwait(1)
+##TEST_AWKlock ..jobnonexistent.1,[0-9]*.
+d nonexistent^multilinezgoto
+1   malign#1# zgoto nonexistent mline#4#
+
+###################################################################
+###################################################################
+###################################################################
+Force chained trigger order
+##TEST_AWK1   I am forced#[1-4]#
+##TEST_AWK2   I am forced#[1-4]#
+##TEST_AWK3   I am forced#[1-4]#
+##TEST_AWK4   I am forced#[1-4]#
+##TEST_AWKI am forced#[1-4]# this code is main.forced#4#
+$ZLevel = 3	ZTLevel = 1
+##TEST_AWKI am forced#[1-4]# this code is main.forced#3#
+$ZLevel = 3	ZTLevel = 1
+##TEST_AWKI am forced#[1-4]# this code is main.forced#2#
+$ZLevel = 3	ZTLevel = 1
+##TEST_AWKI am forced#[1-4]# this code is main.forced#1#
+$ZLevel = 3	ZTLevel = 1
+###################################################################
+Force chained trigger order in nested trigger
+    I am forced#5#	$ZLevel = 3	ZTLevel = 1
+##TEST_AWK1   I am forced#[1-4]#
+##TEST_AWK2   I am forced#[1-4]#
+##TEST_AWK3   I am forced#[1-4]#
+##TEST_AWK4   I am forced#[1-4]#
+##TEST_AWKI am forced#[1-4]# this code is main.forced#4#
+$ZLevel = 4	ZTLevel = 2
+##TEST_AWKI am forced#[1-4]# this code is main.forced#3#
+$ZLevel = 4	ZTLevel = 2
+##TEST_AWKI am forced#[1-4]# this code is main.forced#2#
+$ZLevel = 4	ZTLevel = 2
+##TEST_AWKI am forced#[1-4]# this code is main.forced#1#
+$ZLevel = 4	ZTLevel = 2
+    I am forced#5#	$ZLevel = 3	ZTLevel = 1
+###################################################################
+###################################################################
+zgoto between trigger levels to unstack triggers
+1   I am levelchange#1#	$ZLevel = 3	ZTLevel = 1
+1   I am levelchange#1#	$ZLevel = 4	ZTLevel = 2
+1   I am levelchange#1#	$ZLevel = 5	ZTLevel = 3
+1   I am levelchange#1#	$ZLevel = 6	ZTLevel = 4
+1   I am levelchange#1#	$ZLevel = 7	ZTLevel = 5
+Dropping down from 7 to 3
+1   I am levelchange#1#	$ZLevel = 3	ZTLevel = 1
+###################################################################
+zgoto between trigger levels, restarting the nesting
+1   I am levelchange#1#	$ZLevel = 3	ZTLevel = 1
+1   I am levelchange#1#	$ZLevel = 4	ZTLevel = 2
+1   I am levelchange#1#	$ZLevel = 5	ZTLevel = 3
+1   I am levelchange#1#	$ZLevel = 6	ZTLevel = 4
+1   I am levelchange#1#	$ZLevel = 7	ZTLevel = 5
+Dropping down from 7 to 3
+2   I am levelchange#1#	$ZLevel = 3	ZTLevel = 1
+1   I am levelchange#1#	$ZLevel = 4	ZTLevel = 2
+1   I am levelchange#1#	$ZLevel = 5	ZTLevel = 3
+1   I am levelchange#1#	$ZLevel = 6	ZTLevel = 4
+1   I am levelchange#1#	$ZLevel = 7	ZTLevel = 5
+Dropping down from 7 to 3
+3   I am levelchange#1#	$ZLevel = 3	ZTLevel = 1
+My nonce is too high
+###################################################################
+##TEST_AWK.*/unprimed_multilinezgoto.mjo1
+150373978,+2^mline#2#,%GTM-E-ZLINKFILE, Error while zlinking "mline#3#",%GTM-E-FILENOTFND, File mline#3# not found
+150373978,notfromtrig+5^multilinezgoto,%GTM-E-ZLINKFILE, Error while zlinking "mline#3#",%GTM-E-FILENOTFND, File mline#3# not found

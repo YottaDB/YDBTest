@@ -1,0 +1,156 @@
+-------------------------------------------------------------------------------
+Test 1 : Test of NEGATIVE CMPLVL
+-------------------------------------------------------------------------------
+This test is not implemented since GT.M currently gives a CLIERR for any negative input since it contains a dash
+-------------------------------------------------------------------------------
+Test 2 : Test that cmplvl=0 on source server side results in NO compression on the replication pipe
+-------------------------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+
+GTM>
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+Using zlib compression level .* for replication is not present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+Defaulting to NO compression is not present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+-------------------------------------------------------------------------------
+Test 3 : Test that cmplvl=0 on receiver server side results in NO compression on the replication pipe
+-------------------------------------------------------------------------------
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+
+GTM>
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+Using zlib compression level .* for replication is not present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+Receiver server could not decompress successfully is present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+Defaulting to NO compression is present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+-------------------------------------------------------------------------------
+Test 4 : Test that invalid cmplevel on source server results in NO compression on the replication pipe
+-------------------------------------------------------------------------------
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+
+GTM>
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+Using zlib compression level .* for replication is not present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+Compression level 10 invalid; Error from compress function before sending REPL_CMP_TEST message is present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+Defaulting to NO compression is present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+-------------------------------------------------------------------------------
+Test 5 : Test that invalid cmplevel on receiver server does not matter as long as it is greater than ZERO
+-------------------------------------------------------------------------------
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+
+GTM>
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##TEST_AWKUsing zlib compression level [1-9] for replication is present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+Defaulting to NO compression is not present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+-------------------------------------------------------------------------------
+Test 6 : Test that valid cmplevel on both source and receiver server results in compression on the replication pipe
+-------------------------------------------------------------------------------
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+
+GTM>
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##TEST_AWKUsing zlib compression level [1-9] for replication is present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+Defaulting to NO compression is not present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+^.* : REPL INFO - Jnl Total : [0-9]*  Msg Total : [0-9]*  CmpMsg Total : [0-9]* is present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+PASS : CmpMsg Total LESSER-THAN-OR-EQUAL-TO Msg Total
+-------------------------------------------------------------------------------
+Test 7 : Test that environment variable gtm_zlib_cmp_level=<valid-level> is EQUIVALENT to the cmplvl qualifier
+-------------------------------------------------------------------------------
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+
+GTM>
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##TEST_AWKUsing zlib compression level [1-9] for replication is present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+Defaulting to NO compression is not present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+-------------------------------------------------------------------------------
+Test 8 : Test that CMPLVL qualifier overrides the gtm_zlib_cmp_level environment variable
+-------------------------------------------------------------------------------
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+
+GTM>
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##TEST_AWKUsing zlib compression level [1-9] for replication is present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+Defaulting to NO compression is not present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+-------------------------------------------------------------------------------
+Test 9 : Test that environment variable gtm_zlib_cmp_level=0 implies NO compression
+-------------------------------------------------------------------------------
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+
+GTM>
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+Using zlib compression level .* for replication is not present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+Defaulting to NO compression is not present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+-------------------------------------------------------------------------------
+Test 10 : Test that environment variable gtm_zlib_cmp_level and CMPLVL qualifier work TOGETHER
+-------------------------------------------------------------------------------
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+
+GTM>
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##TEST_AWKUsing zlib compression level [1-9] for replication is present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+Defaulting to NO compression is not present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+-------------------------------------------------------------------------------
+Test 11 : Test that CMPLVL=0 is same as NOT specifying CMPLVL at all
+-------------------------------------------------------------------------------
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+
+GTM>
+Using zlib compression level .* for replication is not present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+Receiver server could not decompress successfully is present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+Defaulting to NO compression is present in the file ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

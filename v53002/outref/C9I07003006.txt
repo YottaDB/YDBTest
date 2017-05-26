@@ -1,0 +1,56 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Test with error trap that does: NEW of Intrinsic Special Variable
+# using mumps -run
+150373850,helper+2^c003006,%GTM-E-UNDEF, Undefined local variable: undef
+150373850,helper+2^c003006,%GTM-E-UNDEF, Undefined local variable: undef
+# using do command in GTM
+
+GTM>
+150373850,helper+2^c003006,%GTM-E-UNDEF, Undefined local variable: undef
+150373850,helper+2^c003006,%GTM-E-UNDEF, Undefined local variable: undef
+%GTM-E-UNDEF, Undefined local variable: undef
+
+GTM>
+# Test with error trap that does: NEW of a local variable
+# using mumps -run
+150373850,helper+2^c003006,%GTM-E-UNDEF, Undefined local variable: undef
+150373850,helper+2^c003006,%GTM-E-UNDEF, Undefined local variable: undef
+# using do command in GTM
+
+GTM>
+150373850,helper+2^c003006,%GTM-E-UNDEF, Undefined local variable: undef
+150373850,helper+2^c003006,%GTM-E-UNDEF, Undefined local variable: undef
+%GTM-E-UNDEF, Undefined local variable: undef
+
+GTM>
+# Test with error trap that does: TSTART
+# using mumps -run
+150373850,helper+2^c003006,%GTM-E-UNDEF, Undefined local variable: undef
+150373850,helper+2^c003006,%GTM-E-UNDEF, Undefined local variable: undef
+# using do command in GTM
+
+GTM>
+150373850,helper+2^c003006,%GTM-E-UNDEF, Undefined local variable: undef
+150373850,helper+2^c003006,%GTM-E-UNDEF, Undefined local variable: undef
+%GTM-E-UNDEF, Undefined local variable: undef
+
+GTM>
+# Test with error trap that does: Exclusive NEW
+# using mumps -run
+150373850,helper+2^c003006,%GTM-E-UNDEF, Undefined local variable: undef
+150373850,helper+2^c003006,%GTM-E-UNDEF, Undefined local variable: undef
+# using do command in GTM
+
+GTM>
+150373850,helper+2^c003006,%GTM-E-UNDEF, Undefined local variable: undef
+150373850,helper+2^c003006,%GTM-E-UNDEF, Undefined local variable: undef
+%GTM-E-UNDEF, Undefined local variable: undef
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

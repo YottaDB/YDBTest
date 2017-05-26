@@ -1,0 +1,45 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+PASS from fill1^myfill("set")
+
+GTM>
+PASS from fill1^myfill("ver")
+
+GTM>
+mupip backup -bytestream DEFAULT ./back1
+MUPIP backup of database file ##TEST_PATH##/mumps.dat to ./back1/mumps.dat
+DB file ##TEST_PATH##/mumps.dat incrementally backed up in file ./back1/mumps.dat
+297 blocks saved.
+##TEST_AWKTransactions from 0x[0-9A-F]* to 0x[0-9A-F]* are backed up.
+
+
+BACKUP COMPLETED.
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+---------------------------------------------------------------
+Restore database with out gtm_passwd and expect to error out
+---------------------------------------------------------------
+unsetenv gtm_passwd
+mupip restore mumps.dat ./back1/mumps.dat
+%GTM-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file mumps.dat. Environment variable gtm_passwd not set
+Error securing stand alone access to output file mumps.dat. Aborting restore.
+%GTM-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
+---------------------------------------------------------------
+Restore database with bad gtm_passwd and expect to error out
+---------------------------------------------------------------
+mupip restore mumps.dat ./back1/mumps.dat
+##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. .*
+Error securing stand alone access to output file mumps.dat. Aborting restore.
+%GTM-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

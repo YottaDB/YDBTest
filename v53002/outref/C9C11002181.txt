@@ -1,0 +1,369 @@
+---------------------------------------------------------------------------------------------------
+          Testing mumps -run c002181 1 through a PIPE DEVICE
+---------------------------------------------------------------------------------------------------
+
+THIS IS c002181a
+%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-STACKCRIT, Stack space critical
+		At M source location ET^c002181a
+GTM>
+$ZSTATUS="150372762,ET^c002181a,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-STACKCRIT, Stack space critical"
+
+---------------------------------------------------------------------------------------------------
+          Testing mumps -run test1^c002181
+---------------------------------------------------------------------------------------------------
+
+
+THIS IS c002181a
+%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-STACKCRIT, Stack space critical
+		At M source location ET^c002181a
+
+GTM>
+
+---------------------------------------------------------------------------------------------------
+          Testing do test1^c002181
+---------------------------------------------------------------------------------------------------
+
+
+GTM>
+
+THIS IS c002181a
+%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-STACKCRIT, Stack space critical
+		At M source location ET^c002181a
+
+GTM>
+$zlevel at end = 2
+
+GTM>
+$ZSTATUS="150372762,ET^c002181a,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-STACKCRIT, Stack space critical"
+
+GTM>
+
+---------------------------------------------------------------------------------------------------
+          Testing mumps -run c002181 2 through a PIPE DEVICE
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+          Testing mumps -run test2^c002181
+---------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+          Testing do test2^c002181
+---------------------------------------------------------------------------------------------------
+
+
+GTM>
+%GTM-E-STACKCRIT, Stack space critical
+
+GTM>
+$zlevel at end = 1
+
+GTM>
+$ZSTATUS="150372762,x+2^c002181b,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-STACKCRIT, Stack space critical"
+
+GTM>
+
+---------------------------------------------------------------------------------------------------
+          Testing mumps -run c002181 3 through a PIPE DEVICE
+---------------------------------------------------------------------------------------------------
+
+$ZT triggered
+
+---------------------------------------------------------------------------------------------------
+          Testing mumps -run test3^c002181
+---------------------------------------------------------------------------------------------------
+
+$ZT triggered
+
+---------------------------------------------------------------------------------------------------
+          Testing do test3^c002181
+---------------------------------------------------------------------------------------------------
+
+
+GTM>
+$ZT triggered
+%GTM-E-DIVZERO, Attempt to divide by zero
+
+GTM>
+$zlevel at end = 1
+
+GTM>
+$ZSTATUS="150372762,ztbug+1^c002181c,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-DIVZERO, Attempt to divide by zero"
+
+GTM>
+
+---------------------------------------------------------------------------------------------------
+          Testing mumps -run c002181 4 through a PIPE DEVICE
+---------------------------------------------------------------------------------------------------
+
+got to $zt
+got past error
+got to zstep
+got to $zt
+$zlevel at end of c002181d = 1
+$ZSTATUS="150372738,lab+1^c002181d,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab"
+
+---------------------------------------------------------------------------------------------------
+          Testing mumps -run test4^c002181
+---------------------------------------------------------------------------------------------------
+
+
+got to $zt
+
+got past error
+got to zstep
+
+got to $zt
+$zlevel at end of c002181d = 1
+$ZSTATUS="150372738,lab+1^c002181d,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab"
+
+---------------------------------------------------------------------------------------------------
+          Testing do test4^c002181
+---------------------------------------------------------------------------------------------------
+
+
+GTM>
+
+got to $zt
+
+got past error
+got to zstep
+
+got to $zt
+$zlevel at end of c002181d = 2
+$ZSTATUS="150372738,lab+1^c002181d,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab"
+
+GTM>
+$zlevel at end = 1
+
+GTM>
+$ZSTATUS="150372738,lab+1^c002181d,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab"
+
+GTM>
+
+---------------------------------------------------------------------------------------------------
+          Testing mumps -run c002181 5 through a PIPE DEVICE
+---------------------------------------------------------------------------------------------------
+
+Starting $ZL=2
+150373050,base^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=2
+150373050,ubase^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=2
+150373050,read^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=2
+150373050,write^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=2
+150373050,zbt0^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=2
+150373050,zbt1^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=2
+150372738,zbt3+1^c002181e,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab
+$ZL=2
+$zlevel at end of c002181e = 1
+$ZSTATUS="150372738,zbt3+1^c002181e,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab"
+
+---------------------------------------------------------------------------------------------------
+          Testing mumps -run test5^c002181
+---------------------------------------------------------------------------------------------------
+
+
+Starting $ZL=2
+
+150373050,base^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=2
+
+150373050,ubase^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=2
+
+150373050,read^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=2
+
+150373050,write^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=2
+
+150373050,zbt0^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=2
+
+150373050,zbt1^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=2
+
+150372738,zbt3+1^c002181e,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab
+$ZL=2
+$zlevel at end of c002181e = 1
+$ZSTATUS="150372738,zbt3+1^c002181e,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab"
+
+---------------------------------------------------------------------------------------------------
+          Testing do test5^c002181
+---------------------------------------------------------------------------------------------------
+
+
+GTM>
+
+Starting $ZL=3
+
+150373050,base^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=3
+
+150373050,ubase^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=3
+
+150373050,read^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=3
+
+150373050,write^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=3
+
+150373050,zbt0^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=3
+
+150373050,zbt1^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+$ZL=3
+
+150372738,zbt3+1^c002181e,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab
+$ZL=3
+$zlevel at end of c002181e = 2
+$ZSTATUS="150372738,zbt3+1^c002181e,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab"
+
+GTM>
+$zlevel at end = 1
+
+GTM>
+$ZSTATUS="150372738,zbt3+1^c002181e,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab"
+
+GTM>
+
+---------------------------------------------------------------------------------------------------
+          Test that test6^c002181 writes to the database when it exists
+---------------------------------------------------------------------------------------------------
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+THIS IS c002181f
+THIS IS SUB1
+THIS IS SUB2
+THIS IS SUB3^ERR("ZSTATUS",6)="150373210,BAD+2^c002181f,%GTM-E-DIVZERO, Attempt to divide by zero"
+
+YOUR HAVE ENCOUNTERED AN ERROR
+PLEASE NOTIFY JOAN Q SUPPORTPERSON AND PROVIDE A COPY OF 
+YOUR SCREEN/TERMINAL FROM BEFORE THE ERROR TWO LINES BELOW HERE
+
+$ZSTATUS=150373210,BAD+2^c002181f,%GTM-E-DIVZERO, Attempt to divide by zero
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+---------------------------------------------------------------------------------------------------
+          Test that test6^c002181 writes to file when database does not exist
+---------------------------------------------------------------------------------------------------
+
+
+THIS IS c002181f
+THIS IS SUB1
+THIS IS SUB2
+THIS IS SUB3
+YOUR HAVE ENCOUNTERED AN ERROR
+PLEASE NOTIFY JOAN Q SUPPORTPERSON AND PROVIDE A COPY OF 
+YOUR SCREEN/TERMINAL FROM BEFORE THE ERROR TWO LINES BELOW HERE
+
+$ZSTATUS=150374122,RECORD+3^ERR,%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.,%SYSTEM-E-ENO2, No such file or directory
+150374122,RECORD+3^ERR,%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.,%SYSTEM-E-ENO2, No such file or directory
+OPEN1+2^ERR
+SUB3+3^c002181f
+SUB2+3^c002181f
+SUB1+3^c002181f
+EP13+2^c002181f
+test6+1^c002181
+
+LOCAL VARIABLES FOR ZLEVEL:  5
+A=5
+C=5
+D=5
+
+LOCAL VARIABLES FOR ZLEVEL:  4
+B=4
+C=4
+D=4
+
+LOCAL VARIABLES FOR ZLEVEL:  3
+A=3
+B=3
+C=3
+
+LOCAL VARIABLES FOR ZLEVEL:  2
+
+LOCAL VARIABLES FOR ZLEVEL:  1
+
+
+PROGRAM STACK:
+$STACK: 0
+$STACK(-1): 5
+
+LEVEL: 5   PLACE: RECORD+3^ERR MCODE:  set ^ERR("ZSTATUS",$ZLEVEL)=$ZSTATUS ECODE: ,M26,Z150374122,
+LEVEL: 4   PLACE: SUB3+3^c002181f MCODE:         DO BAD ECODE: 
+LEVEL: 3   PLACE: SUB2+3^c002181f MCODE:         DO SUB3 ECODE: 
+LEVEL: 2   PLACE: SUB1+3^c002181f MCODE:         DO SUB2 ECODE: 
+LEVEL: 1   PLACE: EP13+2^c002181f MCODE:         DO SUB1 ECODE: 
+
+---------------------------------------------------------------------------------------------------
+          Testing test6^c002181 writes to the principal device when database does not exist and file is not creatable
+---------------------------------------------------------------------------------------------------
+
+
+THIS IS c002181f
+THIS IS SUB1
+THIS IS SUB2
+THIS IS SUB313,OPEN+4^ERR,%SYSTEM-E-ENO13, Permission denied
+OPEN1+2^ERR
+SUB3+3^c002181f
+SUB2+3^c002181f
+SUB1+3^c002181f
+EP13+2^c002181f
+test6+1^c002181
+
+LOCAL VARIABLES FOR ZLEVEL:  5
+A=5
+C=5
+D=5
+
+LOCAL VARIABLES FOR ZLEVEL:  4
+B=4
+C=4
+D=4
+
+LOCAL VARIABLES FOR ZLEVEL:  3
+A=3
+B=3
+C=3
+
+LOCAL VARIABLES FOR ZLEVEL:  2
+
+LOCAL VARIABLES FOR ZLEVEL:  1
+
+
+PROGRAM STACK:
+$STACK: 0
+$STACK(-1): 5
+
+LEVEL: 5   PLACE: RECORD+3^ERR MCODE:  set ^ERR("ZSTATUS",$ZLEVEL)=$ZSTATUS ECODE: ,M26,Z150374122,
+LEVEL: 4   PLACE: SUB3+3^c002181f MCODE:         DO BAD ECODE: 
+LEVEL: 3   PLACE: SUB2+3^c002181f MCODE:         DO SUB3 ECODE: 
+LEVEL: 2   PLACE: SUB1+3^c002181f MCODE:         DO SUB2 ECODE: 
+LEVEL: 1   PLACE: EP13+2^c002181f MCODE:         DO SUB1 ECODE: 
+YOUR HAVE ENCOUNTERED AN ERROR
+PLEASE NOTIFY JOAN Q SUPPORTPERSON AND PROVIDE A COPY OF 
+YOUR SCREEN/TERMINAL FROM BEFORE THE ERROR TWO LINES BELOW HERE
+
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+$ZSTATUS=111,OPEN+4^ERR,%SYSTEM-E-ENO13, Permission denied
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+$ZSTATUS=13,OPEN+4^ERR,%SYSTEM-E-ENO13, Permission denied
+##ALLOW_OUTPUT HOST_OS390_S390
+

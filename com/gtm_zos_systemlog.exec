@@ -1,0 +1,29 @@
+/* REXX */
+
+Parse Arg startdate starttime stopdate stoptime fn .
+
+parse source opsys command_type exec_name .
+mid = "<"exec_name">"
+
+debug=0
+
+if fn = "" then fn = '/tmp/GTM.syslog'
+
+outddn="SYSLOG"  /* DDName of output file */
+
+stoptime = time()
+stopdate = '20'||left(date('J'),2)||'.'||right(date('J'),3)
+
+say "Output file is" fn
+say "obtaining last" lastn "minutes of console log"
+  
+say "allocating file " fn 
+ call bpxwdyn "free  fi('SYSLOG')"
+ call bpxwdyn "alloc fi('SYSLOG') path('"||fn||"') pathopts(OCREAT,ORDWR) pathmode(SIRWXU,SIRGRP,SIROTH) msg(2) lrecl(130) recfm(f) filedata(text)"
+
+ bpxwdyn="alloc fi('SYSLOG') path('"||fn||"') pathopts(OCREAT,ORDWR) pathmode(SIRWXU,SIRGRP,SIROTH) msg(2) lrecl(130) recfm(f) filedata(text)"
+say bpxwdyn
+
+say 'zos_systemlog.exec' startdate starttime stopdate stoptime
+call 'zos_systemlog.exec' startdate starttime stopdate stoptime 
+call bpxwdyn 'free fi(syslog)'

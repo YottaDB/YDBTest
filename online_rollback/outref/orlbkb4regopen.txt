@@ -1,0 +1,103 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance4:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST4 RP'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Test 1 #
+PASS
+# Test 2 #
+PASS
+# Test 3 #
+PASS
+# Test 4 #
+PASS
+# Test 5 #
+PASS
+# Test 6 #
+PASS
+# Test 7 #
+PASS
+# Test 8 #
+PASS
+----------
+Error NOTALLREPLON seen in orlbk1.out orlbk2.out orlbk3.out orlbk4.out orlbk5.out orlbk6.out orlbk8.out as expected:
+orlbk1.out:%GTM-W-NOTALLREPLON, Replication off for one or more regions
+orlbk2.out:%GTM-W-NOTALLREPLON, Replication off for one or more regions
+orlbk3.out:%GTM-W-NOTALLREPLON, Replication off for one or more regions
+orlbk4.out:%GTM-W-NOTALLREPLON, Replication off for one or more regions
+orlbk5.out:%GTM-W-NOTALLREPLON, Replication off for one or more regions
+orlbk6.out:%GTM-W-NOTALLREPLON, Replication off for one or more regions
+orlbk8.out:%GTM-W-NOTALLREPLON, Replication off for one or more regions
+----------
+----------
+Error NOTALLREPLON seen in ##REMOTE_TEST_PATH##/instance3/orlbk7.out as expected:
+%GTM-W-NOTALLREPLON, Replication off for one or more regions
+----------
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

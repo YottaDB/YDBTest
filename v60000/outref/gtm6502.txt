@@ -1,0 +1,28 @@
+##TEST_AWKMax key size = [0-9]*
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+Try 1021 writes to globals with each one having a keysize one larger than the previous one
+
+Check for the correct number of successes and failures based on the max key size in the database
+
+GTM>
+
+Output device: <terminal>: 
+
+List ^
+
+List ^
+
+Globals are in maxkey.glo, with ^f being the number of failures
+
+Number of failures in ^f should equal number of lines containing GVSUBOFLOW in gv.out
+
+Passed
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

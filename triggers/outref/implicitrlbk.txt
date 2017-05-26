@@ -1,0 +1,74 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+###################################################################
+Test 1
+###################################################################
+Validate data 1
+###################################################################
+	+1^a#1#	$reference=^a(99)
+	+1^b4#	$reference=^b(990)
+	+1^halter#	$reference=^c(99)
+Updates before implicit ROLLBACK
+###################################################################
+Validate data 1
+	^a(99)="99 red ballons"
+	^b(990)="99 red ballons"
+	^c(99)="99 red ballons"
+###################################################################
+###################################################################
+Validate data 1
+###################################################################
+> 05 ^test="1"
+
+###################################################################
+Test 2
+###################################################################
+Validate data 2
+###################################################################
+	+1^a#1#	$reference=^a(99)
+	+1^b4#	$reference=^b(990)
+	+1^halter#	$reference=^c(99)
+	+1^a#1#	$reference=^c(99)
+###################################################################
+Validate data 2
+	^a(99)="99 red ballons"
+	^b(990)="99 red ballons"
+	^c(99)="99 red ballons"
+###################################################################
+###################################################################
+###################################################################
+Validate data 2
+	^a(99)="99 red ballons"
+	^b(990)="99 red ballons"
+	^c(99)="99 red ballons"
+###################################################################
+> 05 ^test="2"
+> 08
+> 05 ^a(99)="99 red ballons"
+> 05 ^b(990)="99 red ballons"
+> 05 ^c(99)="99 red ballons"
+> 09
+###################################################################
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,45 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+mumps.dat
+
+GTM env. successfully initialized
+
+
+ Do ^CUST 
+
+
+
+Acct # 2221001 currently has $22210.01
+
+***************************************
+Acct # 2221001 now has $24431.04 with 0.10 and 2221.00 accrued ytd
+
+
+***************************************
+Interest rate is $0.06
+Int accrued YTD is $2221.00
+Interest rate for acct # 2221001 is currently  0.06
+New interest rate for acct # 2221001 is 2.50
+
+ M -->C -> M...
+ M2, $ZLEVEL = 4
+ M -->C -> M...
+ M2, $ZLEVEL = 4
+
+GTM env. successfully shutdown
+
+##SUSPEND_OUTPUT NOTRIGGER
+firedtrig("ACCT")=75
+firedtrig("customerdata")=42
+##ALLOW_OUTPUT NOTRIGGER
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

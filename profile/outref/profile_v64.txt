@@ -1,0 +1,58 @@
+*********** constructing test directories ************
+********** restoring source and database from tar files **********
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/v64perf/gbls/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/v64perf/profile.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/v64perf/gbls/mumps.gld
+Created file ##TEST_PATH##/v64perf/gbls/mumps.tbls
+Created file ##TEST_PATH##/v64perf/gbls/mumps.ttx
+Created file ##TEST_PATH##/v64perf/gbls/mumps.ubg
+GT.M MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 6390717  Max Subsc Len: 71  Max Data Len: 453
+Last LOAD record number: 6390719
+
+Run verification info:
+
+
+GTM>
+##TEST_AWK^TTL=.59028|||[0-9]*|[0-9]*.
+^TTL(59028,"USD","D","SAV",300,"300A",0)="3876291000.00|538374.00|3876291000.00|538374.00|||100000|1255000|||100000|0|0|100000|1255000|0|0|0|0|100000|1255000|0|0|0.00|0.00|0|0||||||||0|0|0|0|0|0|0|0|0.00|0.00|0.00||||||||0.00|0.00|0.00|0.00|0.00|538374|0.00|0.00|0.00"
+
+GTM>
+^SYSBAL(59028,1,"USD","IIPS")="||100000|1255000"
+^SYSBAL(59028,1,"USD","MDR")="||1|1255000"
+
+GTM>
+^TGL(59028,1,"USD",59028,20103,0)="||100000|1255000||0"
+^TGL(59028,2,"USD",59028,22203,0)="1|1255000|||0"
+^TGL(59028,2,"USD",59028,22203,0,1)="22203|0|DR|1255000|||TYPE 300 CC 0|9400|"
+^TGL(59028,4)=""
+^TGL(59028,4,"USD",59028,22203,0)="||1|538374"
+^TGL(59028,4,"USD",59028,51003,0)="1|538374"
+^TGL(59028,7)="*"
+^TGL(59028,10)="*"
+
+GTM>
+
+GTM>
+0
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+##TEST_AWKQUE0.. PASSED .time in secs. actual = [0-9]* <= [0-9\.]* = max acceptable .ave = [0-9\.]*..2.[0-9\.]* = std dev..
+##TEST_AWKQUE0.. PASSED .time in secs. actual = [0-9]* <= [0-9\.]* = max acceptable .ave = [0-9\.]*..2.[0-9\.]* = std dev..
+##TEST_AWKQUE0.. PASSED .time in secs. actual = [0-9]* <= [0-9\.]* = max acceptable .ave = [0-9\.]*..2.[0-9\.]* = std dev..

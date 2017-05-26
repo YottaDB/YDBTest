@@ -1,0 +1,15 @@
+# Begin gtm7412 - check operator log for warnings when database extension=0
+# ##FILTERED##GTM_TEST_DEBUGINFO.*
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Database file ##TEST_PATH##/mumps.dat now has extension count 0
+%GTM-E-GBLOFLOW, Database segment is full
+##TEST_AWK.GTM-I-GVIS, 		Global variable: .a.[0-9]*.
+GTM-W-FREEBLKSLOW is present in the file syslog1.txt
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# End gtm7412

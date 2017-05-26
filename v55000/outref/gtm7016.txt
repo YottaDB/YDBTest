@@ -1,0 +1,99 @@
+Begin gtm7016
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Running test.o file to load some variables...
+^x=1
+^y=2
+^z=3
+Extracting from db to test.glo
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%GTM-I-RECORDSTAT, ^y:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%GTM-I-RECORDSTAT, ^z:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 3  max rec len: 1  max node len: 8
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+Moving current db to t1 directory and creating another blank db...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Testing mupip load -stdin < test.glo reads from STDIN...
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 3  Max Data Len: 1
+Last LOAD record number: 5
+
+
+GTM>
+^x=1
+^y=2
+^z=3
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+Moving current db to t2 directory and creating another blank db...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Testing mupip load test.glo reads from test.glo...
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 3  Max Data Len: 1
+Last LOAD record number: 5
+
+
+GTM>
+^x=1
+^y=2
+^z=3
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+Moving current db to t3 directory and creating another blank db...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Testing cat test.glo | mupip load -stdin reads from STDIN...
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 3  Max Data Len: 1
+Last LOAD record number: 5
+
+
+GTM>
+^x=1
+^y=2
+^z=3
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Testing mupip load -stdin foo.glo < test.glo fails...
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+Testing mupip load -stdin test.glo fails...
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+Testing mupip load test.glo -stdin fails...
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+Testing mupip load test.glo foo.glo fails...
+%GTM-E-CLIERR, Too many parameters
+End gtm7016

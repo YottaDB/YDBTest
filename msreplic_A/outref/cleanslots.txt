@@ -1,0 +1,354 @@
+###################################################################
+cleanslots -- design tests -- Source Server Shutdown
+        --------------------------------------------------------
+               INST1/P         INST2/S1          INST3/S2
+        --------------------------------------------------------
+This is to test that MUPIP REPLIC -SOURCE -SHUTDOWN cleans up one or more slots used up by formerly active or passive
+source servers that were not cleanly shutdown (Kill -15).
+1.	Create a primary instance P and two secondary instances S1 and S2.
+2.	Start an active source server from P to secondary S1.  Do not start S1 yet.
+3.	Start a passive source server from P to secondary S2.  Do not start S2 yet.
+4.	Two gtmsource_local slots in the journal pool should now be used up for S1 and S2.
+5.	Start GTM process and do updates for 10 seconds. Do not shut the GTM process.
+6.	Start S1 and S2.
+7.	Wait for 2 seconds.
+8.	Kill -15 the source server for S1.
+9.	Run MUPIP REPLIC -SOURCE -SHUTDOWN -INSTSECONDARY=S1. This should print a message saying the source server is already dead.
+10.	Restart active source server for S1. Should start without any problems and reuse the existing slot for S1.
+11.	Kill -15 the source server for S2.
+12.	Run MUPIP REPLIC -SOURCE -SHUTDOWN -INSTSECONDARY=S1 followed by the same command with S2 instead of S1. Both
+	should work fine, and the second one should print a message saying the source server is already dead.
+13.	You should see the journal pool still existing and GTM processes working fine.
+14.	Shut the GTM process.
+15.	The GTM process should be gone but the journal pool should still exist.
+16.  	Run SRC=INST1 RCV=INST2 'MUPIP replic -source -shutdown -instsecondary=__RCV_INSTNAME__'
+	Run SRC=INST1 RCV=INST3 'MUPIP replic -source -shutdown -instsecondary=__RCV_INSTNAME__'
+	Both the above should error out with SRCSRVNOTEXIST message. And journal pool should still exist.
+17.  	Randomly run one of the commands below
+	50% -- RUN SRC=INST1    'MUPIP replic -source -shutdown'
+	50% -- RUN INST2 	'MUPIP RUNDOWN -REG *'
+	Either of them should work without errors and the journal pool should be removed.
+18.	Run MUPIP REPLIC -EDITINSTANCE -SHOW to display the contents of the instance file. Check that CRASH etc. fields
+	are reset by the shutdown command.
+
+###################################################################
+#- Step 1:
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+#- Step 2:
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+srclogfile12 is ##FILTERED##SRC_##TIMESTAMP##.log
+###################################################################
+#- Step 3:
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3'==
+srclogfile13 is ##FILTERED##SRC_##TIMESTAMP##.log
+###################################################################
+#- Step 4:
+==========================================================
+The instance file contents on INST1 (instancefile_1.out):
+GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+
+----------------------------------------------------------
+File Header
+----------------------------------------------------------
+HDR Label (contains Major Version)             GDSRPLUNX05
+HDR Minor Version                                        1
+HDR Endian Format      ##FILTERED####ENDIAN##
+##SUSPEND_OUTPUT 32BIT_GTM
+HDR 64-bit Format                                     TRUE
+##ALLOW_OUTPUT 32BIT_GTM
+##SUSPEND_OUTPUT 64BIT_GTM
+HDR 64-bit Format                                    FALSE
+##ALLOW_OUTPUT 64BIT_GTM
+HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+HDR Receive Pool Sem Id                            INVALID
+HDR Receive Pool Shm Id                            INVALID
+HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+HDR Receive Pool Sem Create Time                         0
+HDR Receive Pool Shm Create Time                         0
+HDR Instance File Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR Instance Name                                INSTANCE1
+HDR Instance File Create Time          ..../../.. ..:..:..
+HDR Instance File Creator Pid                 PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR LMS Group Instance Name                      INSTANCE1
+HDR LMS Group Creator Pid                     PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Create Time              ..../../.. ..:..:..
+HDR Journal Sequence Number                              1 [0x0000000000000001]
+HDR Root Primary Cycle                                   1 [0x00000001]
+HDR Number of used history records                       1 [0x00000001]
+HDR Allocated history records                            1 [0x00000001]
+HDR Crash                                             TRUE
+HDR Root Primary                                      TRUE
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HDR Supplementary Instance                           FALSE
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HDR Supplementary Instance                            TRUE
+HDR STRM  0: Last history record number                  0 [0x00000000]
+HDR STRM  0: Journal Sequence Number                     1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HDR Corrupt                                          FALSE
+HDR Quick database rundown is active                 .....
+
+----------------------------------------------------------
+Source Server Slots
+----------------------------------------------------------
+SLT # 0 : Secondary Instance Name                INSTANCE2
+SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
+----------------------------------------------------------
+SLT # 1 : Secondary Instance Name                INSTANCE3
+SLT # 1 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 1 : Connect Sequence Number                        0 [0x0000000000000000]
+
+----------------------------------------------------------
+History Records (histinfo structures)
+----------------------------------------------------------
+HST #      0 : Root Primary Instance Name        INSTANCE1
+HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HST #      0 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Root Primary Cycle                        1 [0x00000001]
+HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      0 : Creation Time           ..../../.. ..:..:..
+HST #      0 : History Number                            0 [0x00000000]
+HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      0 : History record type                       1 [0x00000001]
+==========================================================
+#  	--> We should see the gtmsource_local slots for S1 and S2
+###################################################################
+#- Step 5:
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simplebgupdate.csh 10000 >>&! bg.out'==
+###################################################################
+#- Step 6:
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST3'==
+###################################################################
+#- Step 7:
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 $gtm_tst/com/wait_for_src_slot.csh -instance INSTANCE2 -searchstring "Resync Sequence Number" -eq 10001'==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 $gtm_tst/com/wait_for_src_slot.csh -instance INSTANCE3 -searchstring "Resync Sequence Number" -eq 10001'==
+###################################################################
+#- Step 8:
+#  kill -15 source server for INST2.
+----------
+Error FORCEDHALT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+###################################################################
+#- Step 9:
+#  	--> We expect a SRCSRVNOTEXIST error.
+----------
+Error SRCSRVNOTEXIST seen in shutdown12_1.log as expected:
+%GTM-E-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE2 is not alive
+----------
+----------
+Error SRCSRVNOTEXIST seen in msr_execute_##FILTERED##NO.out as expected:
+%GTM-E-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE2 is not alive
+----------
+###################################################################
+#- Step 10:
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+###################################################################
+#- Step 11:
+----------
+Error FORCEDHALT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+###################################################################
+#- Step 12:
+#  	--> This should succeed. (but jnlpool will not be removed due to the GTM processes
+##FILTERED##... ... .. ..:..:.. 20.. : Not deleting jnlpool ipcs. 1 processes still attached to jnlpool
+#  	--> We expect a SRCSRVNOTEXIST error.
+----------
+Error SRCSRVNOTEXIST seen in shutdown13.log as expected:
+%GTM-E-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
+----------
+----------
+Error SRCSRVNOTEXIST seen in msr_execute_##FILTERED##NO.out as expected:
+%GTM-E-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
+----------
+#- Step 13:
+#  Check the journal pool exists:
+JNLPOOL exists.
+#  Check gtm processes are fine:
+#  grep for errors in the imptp.out and other files related to the updates
+#- Step 14:
+# signal simplebgupdate to stop
+###################################################################
+#- Step 15:
+#  Check the journal pool still exists:
+JNLPOOL exists.
+Snapshot of instance file on INST1 written into instancefile_##FILTERED##NO.out
+#- Step 16:
+#	--> We expect a SRCSRVNOTEXIST, and jnlpool should exist.
+----------
+Error SRCSRVNOTEXIST seen in shutdown12_last.log as expected:
+%GTM-E-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE2 is not alive
+----------
+----------
+Error SRCSRVNOTEXIST seen in msr_execute_##FILTERED##NO.out as expected:
+%GTM-E-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE2 is not alive
+----------
+JNLPOOL exists.
+#	--> We expect a SRCSRVNOTEXIST, and jnlpool should exist.
+----------
+Error SRCSRVNOTEXIST seen in shutdown13_last.log as expected:
+%GTM-E-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
+----------
+----------
+Error SRCSRVNOTEXIST seen in msr_execute_##FILTERED##NO.out as expected:
+%GTM-E-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
+----------
+JNLPOOL exists.
+###################################################################
+#- Step 17:
+#  Randomly run one of the commands below
+#  50% -- RUN SRC=INST1 '##SOURCE_PATH##/mupip replic -source -shutdown'
+#  50% -- RUN INST1 '##SOURCE_PATH##/mupip RUNDOWN -REG *'
+  	  --> Both of them should work without errors and the journal pool should be removed.
+# Check the output at cleanslots_helper.log and helper.log
+#  The journal pool should be gone:
+JNLPOOL does not exist
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST3'==
+###################################################################
+#- Step 18:
+==========================================================
+The instance file contents on INST1 (instancefile_3.out):
+GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+
+----------------------------------------------------------
+File Header
+----------------------------------------------------------
+HDR Label (contains Major Version)             GDSRPLUNX05
+HDR Minor Version                                        1
+HDR Endian Format      ##FILTERED####ENDIAN##
+##SUSPEND_OUTPUT 32BIT_GTM
+HDR 64-bit Format                                     TRUE
+##ALLOW_OUTPUT 32BIT_GTM
+##SUSPEND_OUTPUT 64BIT_GTM
+HDR 64-bit Format                                    FALSE
+##ALLOW_OUTPUT 64BIT_GTM
+HDR Journal Pool Sem Id                            INVALID
+HDR Journal Pool Shm Id                            INVALID
+HDR Receive Pool Sem Id                            INVALID
+HDR Receive Pool Shm Id                            INVALID
+HDR Journal Pool Sem Create Time                         0
+HDR Journal Pool Shm Create Time                         0
+HDR Receive Pool Sem Create Time                         0
+HDR Receive Pool Shm Create Time                         0
+HDR Instance File Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR Instance Name                                INSTANCE1
+HDR Instance File Create Time          ..../../.. ..:..:..
+HDR Instance File Creator Pid                 PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR LMS Group Instance Name                      INSTANCE1
+HDR LMS Group Creator Pid                     PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Create Time              ..../../.. ..:..:..
+HDR Journal Sequence Number                          10001 [0x0000000000002711]
+HDR Root Primary Cycle                                   1 [0x00000001]
+HDR Number of used history records                       1 [0x00000001]
+HDR Allocated history records                            1 [0x00000001]
+HDR Crash                                            FALSE
+HDR Root Primary                                      TRUE
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HDR Supplementary Instance                           FALSE
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HDR Supplementary Instance                            TRUE
+HDR STRM  0: Last history record number                  0 [0x00000000]
+HDR STRM  0: Journal Sequence Number ##FILTERED##
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HDR Corrupt                                          FALSE
+HDR Quick database rundown is active                 .....
+
+----------------------------------------------------------
+Source Server Slots
+----------------------------------------------------------
+SLT # 0 : Secondary Instance Name                INSTANCE2
+SLT # 0 : Resync Sequence Number                     ##TEST_AWK.*
+SLT # 0 : Connect Sequence Number                    ##TEST_AWK.*
+----------------------------------------------------------
+SLT # 1 : Secondary Instance Name                INSTANCE3
+SLT # 1 : Resync Sequence Number                     ##TEST_AWK.*
+SLT # 1 : Connect Sequence Number                    ##TEST_AWK.*
+
+----------------------------------------------------------
+History Records (histinfo structures)
+----------------------------------------------------------
+HST #      0 : Root Primary Instance Name        INSTANCE1
+HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HST #      0 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Root Primary Cycle                        1 [0x00000001]
+HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      0 : Creation Time           ..../../.. ..:..:..
+HST #      0 : History Number                            0 [0x00000000]
+HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      0 : History record type                       1 [0x00000001]
+==========================================================
+Diffing instancefile_2.out and instancefile_3.out on INST1
+##TEST_AWK.*
+< HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+< HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+---
+> HDR Journal Pool Sem Id                            INVALID
+> HDR Journal Pool Shm Id                            INVALID
+##TEST_AWK.*
+< HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+< HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+---
+> HDR Journal Pool Sem Create Time                         0
+> HDR Journal Pool Shm Create Time                         0
+##TEST_AWK.*
+< HDR Journal Sequence Number                              1 [0x0000000000000001]
+---
+> HDR Journal Sequence Number                          10001 [0x0000000000002711]
+##TEST_AWK.*
+< HDR Crash                                             TRUE
+---
+> HDR Crash                                            FALSE
+==========================================================
+#  	--> Check the CRASH etc. fields are reset by the shutdown command. (depending on the command run in step 16).
+#- Wrap up:
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

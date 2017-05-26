@@ -1,0 +1,48 @@
+# Test case to exercise a journal switch inside MUPIP JOURNAL RECOVER
+# Since there is nothing much to test without journaling on, enable it
+# We want to exercise an autoswitch so use the smallest possible limit to reduce test runtime
+# This test requires BEFORE_IMAGE so set that unconditionally
+Create journaled database for AREG,BREG,DEFAULT
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+Generate enough updates to cause autoswitch in GT.M and kill the process
+
+GTM>
+Killed
+# Take backup of db and mjl for backward recover
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+# Take backup of db and mjl after dbcheck for later debugging if needed
+# Restore backup for backward recover
+# Miss out on specifying b.mjl in order to create broken transactions in MUPIP JOURNAL
+##TEST_AWK##SOURCE_PATH##/mupip journal -recover -back -noverify -since=".*" a.mjl,mumps.mjl -parallel=2
+# We expect to see a FILERENAME message in the DEFAULT region in the forward phase of recovery
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWKDEFAULT : %GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])

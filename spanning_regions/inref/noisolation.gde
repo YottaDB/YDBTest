@@ -1,0 +1,34 @@
+template -region -std -record_size=1024
+change -region DEFAULT -std -record_size=1024
+!
+add -name global -region=REG1
+add -name global(1:100) -region=REG2
+add -name global(100:1000) -region=REG3
+add -name global(1000:10000) -region=REG4
+add -name global(10000:100000) -region=REG5
+add -name global(100000:1000000) -region=REG6
+add -name global(1000000:10000000) -region=REG7
+add -name global(10000000:100000000) -region=REG8
+add -name global(100000000:1000000000) -region=REG9
+add -name global(1000000000:10000000000) -region=REG10
+!
+add -region REG1 -dyn=SEG1
+add -region REG2 -dyn=SEG2
+add -region REG3 -dyn=SEG3
+add -region REG4 -dyn=SEG4
+add -region REG5 -dyn=SEG5
+add -region REG6 -dyn=SEG6
+add -region REG7 -dyn=SEG7
+add -region REG8 -dyn=SEG8
+add -region REG9 -dyn=SEG9
+add -region REG10 -dyn=SEG10
+add -segment SEG1 -file=REG1
+add -segment SEG2 -file=REG2
+add -segment SEG3 -file=REG3
+add -segment SEG4 -file=REG4
+add -segment SEG5 -file=REG5
+add -segment SEG6 -file=REG6
+add -segment SEG7 -file=REG7
+add -segment SEG8 -file=REG8
+add -segment SEG9 -file=REG9
+add -segment SEG10 -file=REG10

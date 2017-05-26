@@ -1,0 +1,26 @@
+V4SVQE ;IW-KO-YS-TS,V4SVQ,MVTS V9.10;15/6/96;PART-94
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+ Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q
+DOESV ;
+ S V=V_$Q S A=$$ESV S V=V_$Q Q
+ESV() S V=V_$Q Q V
+DOEF S V=V_$Q S A=$$EF(1,2) S V=V_$Q Q
+EF(X,Y) N Z S V=V_$Q Q V
+DOWESV(X) ;
+ S V=V_$Q S A=$$ESV S V=V_$Q Q
+DOWEF(X,Y) S V=V_$Q S A=$$EF(1,2) S V=V_$Q Q
+ESVDW() S V=$q D PARA(1)
+ S V=V_$Q Q V
+ESVGO88 S V=V_$Q Q V
+ ;
+PARA(X) S V=V_$Q Q
+ ;
+EFDOWP(X) S X=X_$q DO AAA(.X) S X=X_$q Q X
+AAA(Y) S Y=Y_$q Q
+ ;
+ESVEOF() S V=$q D AAAB S V=V_$q Q V
+AAAB S V=V_$Q ;EOR

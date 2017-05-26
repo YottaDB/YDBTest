@@ -1,0 +1,76 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+SET,TSET,USET,GSET,FSET
+KILL,TKILL,UKILL,GKILL,FKILL
+Passed SET and KILL
+SET,TSET,USET,GSET,FSET
+ZKILL,TZKILL,UZKILL,GZKILL,FZKILL
+Check that only ^acn(11,11),^acn(12,12),^acn(13,13),^acn(14,14) are present
+^acn(11,11)="this is USET"
+^acn(12,12)="this is USET"
+^acn(13,13)="this is GSET"
+^acn(14,14)="this is GSET"
+^acn(15)="this is in broken file"
+^acn(16)="this is in broken file"
+
+GTM>
+forward extract ......
+%GTM-S-JNLSUCCESS, Extract successful
+Printing the record types ......
+GDSJDX08
+PINI
+PFIN
+PINI
+SET
+TSTART
+TSET
+USET
+USET
+TCOM
+ZTSTART
+FSET
+GSET
+GSET
+ZTCOM
+KILL
+TSTART
+TKILL
+UKILL
+TCOM
+ZTSTART
+FKILL
+GKILL
+INCTN
+ZTCOM
+SET
+TSTART
+TSET
+USET
+USET
+USET
+TCOM
+ZTSTART
+FSET
+GSET
+GSET
+GSET
+ZTCOM
+ZKILL
+TSTART
+TZKILL
+UZKILL
+TCOM
+ZTSTART
+FZKILL
+GZKILL
+ZTCOM
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,72 @@
+Trying to invoke call-ins without setting GTMCI:
+Caused by: java.lang.Exception: The GTMCI environment variable not set.
+
+Trying to omit the classpath during compilation:
+##TEST_AWK##TEST_PATH##/com/test/Test2.java:3:.*package com.fis.gtm.ji does not exist
+##TEST_AWK[0-9]* errors
+
+Trying to provide no classpath during execution:
+##TEST_AWKException in thread "main" java.lang.NoClassDefFoundError: com.fis.gtm.ji.GTMCI
+
+Test1.java produced the following diff:
+
+Test2.java produced the following diff:
+
+Test3.java produced the following diff:
+
+Test4.java produced the following diff:
+
+Test5.java produced the following diff:
+
+Test6.java produced the following diff:
+
+Test7.java produced the following diff:
+
+Test8.java produced the following diff:
+
+Test9.java produced the following diff:
+
+Test10.java produced the following diff:
+----------
+Error GTM-F-FORCEDHALT seen in test10.mje as expected:
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+
+Test11.java produced the following diff:
+
+Test12.java produced the following diff:
+
+Test13.java produced the following diff:
+
+Test14.java produced the following diff:
+
+Test15.java produced the following diff:
+
+Test16.java produced the following diff:
+
+Test17.java produced the following diff:
+
+Test18.java produced the following diff:
+
+Test19.java produced the following diff:
+
+Test20.java produced the following diff:
+
+Test21.java produced the following diff:
+
+Test22.java produced the following diff:
+----------
+Error GTM-F-FORCEDHALT seen in test22.mje as expected:
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+
+Test23.java produced the following diff:
+
+Test24.java produced the following diff:
+
+Test25.java produced the following diff:
+
+Test26.java produced the following diff:
+
+Test27.java produced the following diff:
+

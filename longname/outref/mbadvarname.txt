@@ -1,0 +1,90 @@
+
+GTM>
+
+mbadvarname test Started
+
+do badvarname^GTMBadVariableNameTest1
+	       set %12345678%9012345678901A=1
+	                    ^-----
+		At column 21, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest1.m
+%GTM-E-EQUAL, Equal sign expected but not found
+Error Number=1
+STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+do badvarname^GTMBadVariableNameTest2
+	       set %ABCDEFG%HIJKLM=1
+	                   ^-----
+		At column 20, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest2.m
+%GTM-E-EQUAL, Equal sign expected but not found
+Error Number=2
+STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+do badvarname^GTMBadVariableNameTest3
+	       set %ABCDEFG%123456=1
+	                   ^-----
+		At column 20, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest3.m
+%GTM-E-EQUAL, Equal sign expected but not found
+Error Number=3
+STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+do badvarname^GTMBadVariableNameTest4
+	       set %%=1
+	            ^-----
+		At column 13, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest4.m
+%GTM-E-EQUAL, Equal sign expected but not found
+Error Number=4
+STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+do badvarname^GTMBadVariableNameTest5
+	       set 123456789012345678901A=1
+	           ^-----
+		At column 12, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest5.m
+%GTM-E-VAREXPECTED, Variable expected in this context
+Error Number=5
+STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+do badvarname^GTMBadVariableNameTest6
+	       set 12345678901234567890
+	           ^-----
+		At column 12, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest6.m
+%GTM-E-VAREXPECTED, Variable expected in this context
+Error Number=6
+STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+do badvarname^GTMBadVariableNameTest7
+##TEST_AWK	       set 123456789012345678901234567....=1
+	           ^-----
+		At column 12, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest7.m
+%GTM-E-VAREXPECTED, Variable expected in this context
+Error Number=7
+STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+do badvarname^GTMBadVariableNameTest8
+##TEST_AWK	       set ....123456789012345678901234567=1
+	           ^-----
+		At column 12, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest8.m
+%GTM-E-VAREXPECTED, Variable expected in this context
+Error Number=8
+STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+do badvarname^GTMBadVariableNameTest9
+##TEST_AWK	       set ...............................=1
+	           ^-----
+		At column 12, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest9.m
+%GTM-E-VAREXPECTED, Variable expected in this context
+Error Number=9
+STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+cnt=31
+errcnt=9
+fn="GTMBadVariableNameTest9.m"
+fnbase="GTMBadVariableNameTest"
+max=9
+prg="badvarname^GTMBadVariableNameTest9"
+testno=9
+unix=1
+varname(1)="%12345678%9012345678901A"
+varname(2)="%ABCDEFG%HIJKLM"
+varname(3)="%ABCDEFG%123456"
+varname(4)="%%"
+varname(5)="123456789012345678901A"
+##TEST_AWKvarname.6.="12345678901234567890".*
+##TEST_AWKvarname.7.="123456789012345678901234567".*
+##TEST_AWKvarname.8.=.*
+##TEST_AWKvarname.9.=.*
+##TEST_AWKxstr=.*
+
+mbadvarname test ended successfully
+
+GTM>

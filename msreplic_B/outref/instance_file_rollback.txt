@@ -1,0 +1,505 @@
+###################################################################
+#  To test rollback will rollback the contents of the instance file if they had not made it to the database.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+#- Create a history in the instancefiles (INST1 and INST2 will share some history)
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 5'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 5'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 5'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS sync_to_disk'==
+Snapshot of instance file on INST1 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST2 written into instancefile_##FILTERED##NO.out
+###################################################################
+#- Now let's take a copy of the database on the secondary
+==Executing MULTISITE_REPLIC 'RUN INST2 mkdir -p backup; cp -p *.dat *.repl *.gld *.mjl* backup'==
+###################################################################
+#- Create a history in the instancefile
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 5'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 5'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 5'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 5'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 5'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+###################################################################
+#- Wait until the instancefile contents are updated.
+lasthistrec1: 7, lasthistrec2: 7
+###################################################################
+==========================================================
+Diffing instancefile_1.out and instancefile_2.out on INST1
+##TEST_AWK.*
+< HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+< HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+---
+> HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+> HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+##TEST_AWK.*
+< HDR Journal Sequence Number                             11 [0x000000000000000B]
+< HDR Root Primary Cycle                                   3 [0x00000003]
+< HDR Number of used history records                       3 [0x00000003]
+< HDR Allocated history records                            3 [0x00000003]
+---
+> HDR Journal Sequence Number                             41 [0x0000000000000029]
+> HDR Root Primary Cycle                                   8 [0x00000008]
+> HDR Number of used history records                       8 [0x00000008]
+> HDR Allocated history records                            8 [0x00000008]
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+##TEST_AWK.*
+< HDR STRM  0: Last history record number                  2 [0x00000002]
+< HDR STRM  0: Journal Sequence Number                    11 [0x000000000000000B]
+---
+> HDR STRM  0: Last history record number                  7 [0x00000007]
+> HDR STRM  0: Journal Sequence Number                    41 [0x0000000000000029]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+##TEST_AWK.*
+< SLT # 0 : Resync Sequence Number                        16 [0x0000000000000010]
+< SLT # 0 : Connect Sequence Number                       11 [0x000000000000000B]
+---
+> SLT # 0 : Resync Sequence Number                        41 [0x0000000000000029]
+> SLT # 0 : Connect Sequence Number                       41 [0x0000000000000029]
+##TEST_AWK.*
+> ----------------------------------------------------------
+> HST #      3 : Root Primary Instance Name        INSTANCE1
+> HST #      3 : Start Sequence Number                    21 [0x0000000000000015]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+> HST #      3 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+> HST #      3 : Stream Sequence Number                   21 [0x0000000000000015]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+> HST #      3 : Root Primary Cycle                        4 [0x00000004]
+> HST #      3 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+> HST #      3 : Creation Time           ..../../.. ..:..:..
+> HST #      3 : History Number                            3 [0x00000003]
+> HST #      3 : Previous History Number                   2 [0x00000002]
+> HST #      3 : Stream #                                  0 [0x00000000]
+> HST #      3 : History record type                       1 [0x00000001]
+> HST #      3 : Stream  0: Last History Number            2 [0x00000002]
+> ----------------------------------------------------------
+> HST #      4 : Root Primary Instance Name        INSTANCE1
+> HST #      4 : Start Sequence Number                    26 [0x000000000000001A]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+> HST #      4 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+> HST #      4 : Stream Sequence Number                   26 [0x000000000000001A]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+> HST #      4 : Root Primary Cycle                        5 [0x00000005]
+> HST #      4 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+> HST #      4 : Creation Time           ..../../.. ..:..:..
+> HST #      4 : History Number                            4 [0x00000004]
+> HST #      4 : Previous History Number                   3 [0x00000003]
+> HST #      4 : Stream #                                  0 [0x00000000]
+> HST #      4 : History record type                       1 [0x00000001]
+> HST #      4 : Stream  0: Last History Number            3 [0x00000003]
+> ----------------------------------------------------------
+> HST #      5 : Root Primary Instance Name        INSTANCE1
+> HST #      5 : Start Sequence Number                    31 [0x000000000000001F]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+> HST #      5 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+> HST #      5 : Stream Sequence Number                   31 [0x000000000000001F]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+> HST #      5 : Root Primary Cycle                        6 [0x00000006]
+> HST #      5 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+> HST #      5 : Creation Time           ..../../.. ..:..:..
+> HST #      5 : History Number                            5 [0x00000005]
+> HST #      5 : Previous History Number                   4 [0x00000004]
+> HST #      5 : Stream #                                  0 [0x00000000]
+> HST #      5 : History record type                       1 [0x00000001]
+> HST #      5 : Stream  0: Last History Number            4 [0x00000004]
+> ----------------------------------------------------------
+> HST #      6 : Root Primary Instance Name        INSTANCE1
+> HST #      6 : Start Sequence Number                    36 [0x0000000000000024]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+> HST #      6 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+> HST #      6 : Stream Sequence Number                   36 [0x0000000000000024]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+> HST #      6 : Root Primary Cycle                        7 [0x00000007]
+> HST #      6 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+> HST #      6 : Creation Time           ..../../.. ..:..:..
+> HST #      6 : History Number                            6 [0x00000006]
+> HST #      6 : Previous History Number                   5 [0x00000005]
+> HST #      6 : Stream #                                  0 [0x00000000]
+> HST #      6 : History record type                       1 [0x00000001]
+> HST #      6 : Stream  0: Last History Number            5 [0x00000005]
+> ----------------------------------------------------------
+> HST #      7 : Root Primary Instance Name        INSTANCE1
+> HST #      7 : Start Sequence Number                    41 [0x0000000000000029]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+> HST #      7 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+> HST #      7 : Stream Sequence Number                   41 [0x0000000000000029]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+> HST #      7 : Root Primary Cycle                        8 [0x00000008]
+> HST #      7 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+> HST #      7 : Creation Time           ..../../.. ..:..:..
+> HST #      7 : History Number                            7 [0x00000007]
+> HST #      7 : Previous History Number                   6 [0x00000006]
+> HST #      7 : Stream #                                  0 [0x00000000]
+> HST #      7 : History record type                       1 [0x00000001]
+> HST #      7 : Stream  0: Last History Number            6 [0x00000006]
+==========================================================
+==========================================================
+Diffing instancefile_1.out and instancefile_2.out on INST2
+##TEST_AWK.*
+< HDR Journal Sequence Number                             11 [0x000000000000000B]
+---
+> HDR Journal Sequence Number                             41 [0x0000000000000029]
+##TEST_AWK.*
+< HDR Number of used history records                       3 [0x00000003]
+< HDR Allocated history records                            3 [0x00000003]
+---
+> HDR Number of used history records                       8 [0x00000008]
+> HDR Allocated history records                            8 [0x00000008]
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+##TEST_AWK.*
+< HDR STRM  0: Last history record number                  2 [0x00000002]
+< HDR STRM  0: Journal Sequence Number                    11 [0x000000000000000B]
+---
+> HDR STRM  0: Last history record number                  7 [0x00000007]
+> HDR STRM  0: Journal Sequence Number                    41 [0x0000000000000029]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+##TEST_AWK.*
+> ----------------------------------------------------------
+> HST #      3 : Root Primary Instance Name        INSTANCE1
+> HST #      3 : Start Sequence Number                    21 [0x0000000000000015]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+> HST #      3 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+> HST #      3 : Stream Sequence Number                   21 [0x0000000000000015]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+> HST #      3 : Root Primary Cycle                        4 [0x00000004]
+> HST #      3 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+> HST #      3 : Creation Time           ..../../.. ..:..:..
+> HST #      3 : History Number                            3 [0x00000003]
+> HST #      3 : Previous History Number                   2 [0x00000002]
+> HST #      3 : Stream #                                  0 [0x00000000]
+> HST #      3 : History record type                       1 [0x00000001]
+> HST #      3 : Stream  0: Last History Number            2 [0x00000002]
+> ----------------------------------------------------------
+> HST #      4 : Root Primary Instance Name        INSTANCE1
+> HST #      4 : Start Sequence Number                    26 [0x000000000000001A]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+> HST #      4 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+> HST #      4 : Stream Sequence Number                   26 [0x000000000000001A]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+> HST #      4 : Root Primary Cycle                        5 [0x00000005]
+> HST #      4 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+> HST #      4 : Creation Time           ..../../.. ..:..:..
+> HST #      4 : History Number                            4 [0x00000004]
+> HST #      4 : Previous History Number                   3 [0x00000003]
+> HST #      4 : Stream #                                  0 [0x00000000]
+> HST #      4 : History record type                       1 [0x00000001]
+> HST #      4 : Stream  0: Last History Number            3 [0x00000003]
+> ----------------------------------------------------------
+> HST #      5 : Root Primary Instance Name        INSTANCE1
+> HST #      5 : Start Sequence Number                    31 [0x000000000000001F]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+> HST #      5 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+> HST #      5 : Stream Sequence Number                   31 [0x000000000000001F]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+> HST #      5 : Root Primary Cycle                        6 [0x00000006]
+> HST #      5 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+> HST #      5 : Creation Time           ..../../.. ..:..:..
+> HST #      5 : History Number                            5 [0x00000005]
+> HST #      5 : Previous History Number                   4 [0x00000004]
+> HST #      5 : Stream #                                  0 [0x00000000]
+> HST #      5 : History record type                       1 [0x00000001]
+> HST #      5 : Stream  0: Last History Number            4 [0x00000004]
+> ----------------------------------------------------------
+> HST #      6 : Root Primary Instance Name        INSTANCE1
+> HST #      6 : Start Sequence Number                    36 [0x0000000000000024]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+> HST #      6 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+> HST #      6 : Stream Sequence Number                   36 [0x0000000000000024]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+> HST #      6 : Root Primary Cycle                        7 [0x00000007]
+> HST #      6 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+> HST #      6 : Creation Time           ..../../.. ..:..:..
+> HST #      6 : History Number                            6 [0x00000006]
+> HST #      6 : Previous History Number                   5 [0x00000005]
+> HST #      6 : Stream #                                  0 [0x00000000]
+> HST #      6 : History record type                       1 [0x00000001]
+> HST #      6 : Stream  0: Last History Number            5 [0x00000005]
+> ----------------------------------------------------------
+> HST #      7 : Root Primary Instance Name        INSTANCE1
+> HST #      7 : Start Sequence Number                    41 [0x0000000000000029]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+> HST #      7 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+> HST #      7 : Stream Sequence Number                   41 [0x0000000000000029]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+> HST #      7 : Root Primary Cycle                        8 [0x00000008]
+> HST #      7 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+> HST #      7 : Creation Time           ..../../.. ..:..:..
+> HST #      7 : History Number                            7 [0x00000007]
+> HST #      7 : Previous History Number                   6 [0x00000006]
+> HST #      7 : Stream #                                  0 [0x00000000]
+> HST #      7 : History record type                       1 [0x00000001]
+> HST #      7 : Stream  0: Last History Number            6 [0x00000006]
+==========================================================
+#  	--> We expect the history records from the primary to be in the instance file on INST2.
+#- Crash the receiver server.
+==Executing MULTISITE_REPLIC 'CRASH INST2'==
+Simulating crash on Instance INSTANCE2 in ##FILTERED##_REMOTE_TEST_PATH_
+Instance INSTANCE2 crashed!
+#- Now copy over the saved database (that is at an older state than the replication instance file)
+==Executing MULTISITE_REPLIC 'RUN INST2 cp backup/{*.dat,*.mjl*} .'==
+###################################################################
+#- Now rollback:
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+==========================================================
+No diff on INST1 between instancefile_2.out instancefile_3.out
+==========================================================
+==========================================================
+Diffing instancefile_2.out and instancefile_3.out on INST2
+##TEST_AWK.*
+< HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+< HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+< HDR ##FILTERED##Receive Pool Sem Id             .......... [0x........]
+< HDR ##FILTERED##Receive Pool Shm Id             .......... [0x........]
+< HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+< HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+< HDR Receive Pool Sem Create Time       ..../../.. ..:..:..
+< HDR Receive Pool Shm Create Time       ..../../.. ..:..:..
+---
+> HDR Journal Pool Sem Id                            INVALID
+> HDR Journal Pool Shm Id                            INVALID
+> HDR Receive Pool Sem Id                            INVALID
+> HDR Receive Pool Shm Id                            INVALID
+> HDR Journal Pool Sem Create Time                         0
+> HDR Journal Pool Shm Create Time                         0
+> HDR Receive Pool Sem Create Time                         0
+> HDR Receive Pool Shm Create Time                         0
+##TEST_AWK.*
+< HDR Journal Sequence Number                             41 [0x0000000000000029]
+---
+> HDR Journal Sequence Number                             16 [0x0000000000000010]
+##TEST_AWK.*
+< HDR Number of used history records                       8 [0x00000008]
+---
+> HDR Number of used history records                       3 [0x00000003]
+##TEST_AWK.*
+< HDR Crash                                             TRUE
+---
+> HDR Crash                                            FALSE
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+##TEST_AWK.*
+< HDR STRM  0: Last history record number                  7 [0x00000007]
+< HDR STRM  0: Journal Sequence Number                    41 [0x0000000000000029]
+---
+> HDR STRM  0: Last history record number                  2 [0x00000002]
+> HDR STRM  0: Journal Sequence Number                    16 [0x0000000000000010]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+##TEST_AWK.*
+< ----------------------------------------------------------
+< HST #      3 : Root Primary Instance Name        INSTANCE1
+< HST #      3 : Start Sequence Number                    21 [0x0000000000000015]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+< HST #      3 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+< HST #      3 : Stream Sequence Number                   21 [0x0000000000000015]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+< HST #      3 : Root Primary Cycle                        4 [0x00000004]
+< HST #      3 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+< HST #      3 : Creation Time           ..../../.. ..:..:..
+< HST #      3 : History Number                            3 [0x00000003]
+< HST #      3 : Previous History Number                   2 [0x00000002]
+< HST #      3 : Stream #                                  0 [0x00000000]
+< HST #      3 : History record type                       1 [0x00000001]
+< HST #      3 : Stream  0: Last History Number            2 [0x00000002]
+< ----------------------------------------------------------
+< HST #      4 : Root Primary Instance Name        INSTANCE1
+< HST #      4 : Start Sequence Number                    26 [0x000000000000001A]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+< HST #      4 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+< HST #      4 : Stream Sequence Number                   26 [0x000000000000001A]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+< HST #      4 : Root Primary Cycle                        5 [0x00000005]
+< HST #      4 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+< HST #      4 : Creation Time           ..../../.. ..:..:..
+< HST #      4 : History Number                            4 [0x00000004]
+< HST #      4 : Previous History Number                   3 [0x00000003]
+< HST #      4 : Stream #                                  0 [0x00000000]
+< HST #      4 : History record type                       1 [0x00000001]
+< HST #      4 : Stream  0: Last History Number            3 [0x00000003]
+< ----------------------------------------------------------
+< HST #      5 : Root Primary Instance Name        INSTANCE1
+< HST #      5 : Start Sequence Number                    31 [0x000000000000001F]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+< HST #      5 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+< HST #      5 : Stream Sequence Number                   31 [0x000000000000001F]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+< HST #      5 : Root Primary Cycle                        6 [0x00000006]
+< HST #      5 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+< HST #      5 : Creation Time           ..../../.. ..:..:..
+< HST #      5 : History Number                            5 [0x00000005]
+< HST #      5 : Previous History Number                   4 [0x00000004]
+< HST #      5 : Stream #                                  0 [0x00000000]
+< HST #      5 : History record type                       1 [0x00000001]
+< HST #      5 : Stream  0: Last History Number            4 [0x00000004]
+< ----------------------------------------------------------
+< HST #      6 : Root Primary Instance Name        INSTANCE1
+< HST #      6 : Start Sequence Number                    36 [0x0000000000000024]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+< HST #      6 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+< HST #      6 : Stream Sequence Number                   36 [0x0000000000000024]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+< HST #      6 : Root Primary Cycle                        7 [0x00000007]
+< HST #      6 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+< HST #      6 : Creation Time           ..../../.. ..:..:..
+< HST #      6 : History Number                            6 [0x00000006]
+< HST #      6 : Previous History Number                   5 [0x00000005]
+< HST #      6 : Stream #                                  0 [0x00000000]
+< HST #      6 : History record type                       1 [0x00000001]
+< HST #      6 : Stream  0: Last History Number            5 [0x00000005]
+< ----------------------------------------------------------
+< HST #      7 : Root Primary Instance Name        INSTANCE1
+< HST #      7 : Start Sequence Number                    41 [0x0000000000000029]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+< HST #      7 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+< HST #      7 : Stream Sequence Number                   41 [0x0000000000000029]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+< HST #      7 : Root Primary Cycle                        8 [0x00000008]
+< HST #      7 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+< HST #      7 : Creation Time           ..../../.. ..:..:..
+< HST #      7 : History Number                            7 [0x00000007]
+< HST #      7 : Previous History Number                   6 [0x00000006]
+< HST #      7 : Stream #                                  0 [0x00000000]
+< HST #      7 : History record type                       1 [0x00000001]
+< HST #      7 : Stream  0: Last History Number            6 [0x00000006]
+==========================================================
+#  	--> We expect all of the new history to be removed.
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+#  	--> All updates should make it successfully.
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT INST1 INST2'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

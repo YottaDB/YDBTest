@@ -1,0 +1,64 @@
+Test case : 13  ztp_tp_ntp_multi_process
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Start Before image journaling
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/d.mjl created for region DREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/e.mjl created for region EREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/f.mjl created for region FREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/g.mjl created for region GREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/h.mjl created for region HREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%GTM-I-JNLSTATE, Journaling state for region DREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region EREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region FREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region GREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region HREG is now ON
+##TEST_AWKtime1 = .*
+Start the background jobs
+Wait for background job completion
+
+GTM>
+Done Waiting for region AREG : Refcnt = 0
+Done Waiting for region BREG : Refcnt = 0
+Done Waiting for region CREG : Refcnt = 0
+Done Waiting for region DEFAULT : Refcnt = 0
+Done Waiting for region DREG : Refcnt = 0
+Done Waiting for region EREG : Refcnt = 0
+Done Waiting for region FREG : Refcnt = 0
+Done Waiting for region GREG : Refcnt = 0
+Done Waiting for region HREG : Refcnt = 0
+
+GTM>
+--------------------------------------------------------------------------------------------------
+mupip journal -recov -back "*" -since=time1
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+--------------------------------------------------------------------------------------------------
+Remove databases
+mupip journal -recov -forw "*"
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+End of test
+=====================================================================================================
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

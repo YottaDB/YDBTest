@@ -1,0 +1,1005 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+_________________________________________________________________
+====================
+Test Basic Loading, Appending, and Removal Options with the same trigger file
+Load a trigger file triggers.trg with -trig=<filename>
+Output File: 
+;trigger name: a#1 (region AREG)  cycle: 8
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 8
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 8
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 8
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 8
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 8
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 8
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 8
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: b#1 (region BREG)  cycle: 3
++^b -commands=S -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 3
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 3
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: c#1 (region CREG)  cycle: 2
++^c -commands=S -xecute="do ^twork"
+;trigger name: c#2 (region CREG)  cycle: 2
++^c(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: bard#1 (region DREG)  cycle: 2
++^bard(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: bard#2 (region DREG)  cycle: 2
+##SUSPEND_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: d#1 (region DREG)  cycle: 1
++^d -commands=S -xecute="do ^twork"
+;trigger name: drek#1 (region DREG)  cycle: 2
++^drek(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: drek#2 (region DREG)  cycle: 2
++^drek(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+
+Appending of the same triggers in the DB
+Output File: 
+;trigger name: a#1 (region AREG)  cycle: 8
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 8
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 8
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 8
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 8
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 8
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 8
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 8
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: b#1 (region BREG)  cycle: 3
++^b -commands=S -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 3
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 3
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: c#1 (region CREG)  cycle: 2
++^c -commands=S -xecute="do ^twork"
+;trigger name: c#2 (region CREG)  cycle: 2
++^c(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: bard#1 (region DREG)  cycle: 2
++^bard(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: bard#2 (region DREG)  cycle: 2
+##SUSPEND_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: d#1 (region DREG)  cycle: 1
++^d -commands=S -xecute="do ^twork"
+;trigger name: drek#1 (region DREG)  cycle: 2
++^drek(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: drek#2 (region DREG)  cycle: 2
++^drek(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+
+Removal of all the same triggers from the DB
+Output File: 
+
+Appending of the same triggers with none in the DB
+Appending and removal of the same triggers, but use the output of the show command
+Output File: 
+
+_________________________________________________________________
+====================
+Test Basic Loading, Appending, and Removal Options with null files
+Load an empty trigger file null.trg with -triggerfile=<filename>
+Output File: 
+
+Load an empty trigger file null.trg with -trig=<filename>, but answer no
+File null.trg, Line 1: This operation will delete all triggers.
+Proceed? [Y/N]: 
+Triggers NOT deleted
+Output File: 
+
+Load an empty trigger file null.trg with -trig=<filename> and answer yes
+File null.trg, Line 1: This operation will delete all triggers.
+Proceed? [Y/N]: 
+No matching triggers found for deletion
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+Output File: 
+
+Load an empty trigger file null.trg with -trig=<filename> again
+File null.trg, Line 1: This operation will delete all triggers.
+Proceed? [Y/N]: 
+No matching triggers found for deletion
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+Output File: 
+
+_________________________________________________________________
+====================
+Test Basic Loading, Appending, and Removal Options with non-existent files
+Load a non-existent file with -triggerfile=<filename>
+%GTM-E-CLIERR, Unrecognized option : TRIGGERFILE, value expected but not found
+Load a non-existent file with -trig=<filename>, but answer no
+%GTM-E-CLIERR, Unrecognized option : TRIGGERFILE, value expected but not found
+Load a non-existent file with -trig=<filename> and answer yes
+%GTM-E-CLIERR, Unrecognized option : TRIGGERFILE, value expected but not found
+_________________________________________________________________
+====================
+Test Basic Loading, Appending, and Removal Options with directories and other assorted file types
+Load a directory with -triggerfile=<filename>
+Invalid file name: ##TEST_PATH##: Not a proper input file
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+Load a directory with -trig=<filename>, but answer no
+Invalid file name: .: Not a proper input file
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+Load a directory with -trig=<filename> and answer yes
+Invalid file name: .: Not a proper input file
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+
+Doing the something similar with ZTrigger
+pass in an empty file 1
+pass in a nonexistent file Invalid file name: noexist: No such file or directory
+0
+pass in the CWD Invalid file name: .: Not a proper input file
+0
+pass in the PWD Invalid file name: ##TEST_PATH##: Not a proper input file
+0
+pass in a null string 1
+_________________________________________________________________
+====================
+Testing trigger append and removal operations
+Remove non-existent triggers
+Output File: 
+
+Load a trigger file appendremove.trg with -trig=<filename>
+Output File: 
+;trigger name: a#1 (region AREG)  cycle: 40
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 40
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 40
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 40
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 40
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 40
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 40
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 40
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: apiece#1 (region AREG)  cycle: 1
++^apiece -commands=S -delim=""" " -pieces=1:5 -xecute="do ^nothing"
+;trigger name: b#1 (region BREG)  cycle: 15
++^b -commands=S -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 15
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 15
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: bpiece#1 (region BREG)  cycle: 1
++^bpiece -commands=S,ZK,ZTK -options=NOI,NOC -delim="|" -pieces=1:5 -xecute="do ^nothing"
+;trigger name: c#1 (region CREG)  cycle: 10
++^c -commands=S -xecute="do ^twork"
+;trigger name: c#2 (region CREG)  cycle: 10
++^c(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: bard#1 (region DREG)  cycle: 10
++^bard(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: bard#2 (region DREG)  cycle: 10
+##SUSPEND_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: d#1 (region DREG)  cycle: 5
++^d -commands=S -xecute="do ^twork"
+;trigger name: drek#1 (region DREG)  cycle: 10
++^drek(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: drek#2 (region DREG)  cycle: 10
++^drek(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+
+Remove non-existent triggers (again)
+Output File: 
+;trigger name: a#1 (region AREG)  cycle: 40
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 40
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 40
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 40
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 40
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 40
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 40
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 40
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: apiece#1 (region AREG)  cycle: 1
++^apiece -commands=S -delim=""" " -pieces=1:5 -xecute="do ^nothing"
+;trigger name: b#1 (region BREG)  cycle: 15
++^b -commands=S -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 15
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 15
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: bpiece#1 (region BREG)  cycle: 1
++^bpiece -commands=S,ZK,ZTK -options=NOI,NOC -delim="|" -pieces=1:5 -xecute="do ^nothing"
+;trigger name: c#1 (region CREG)  cycle: 10
++^c -commands=S -xecute="do ^twork"
+;trigger name: c#2 (region CREG)  cycle: 10
++^c(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: bard#1 (region DREG)  cycle: 10
++^bard(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: bard#2 (region DREG)  cycle: 10
+##SUSPEND_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: d#1 (region DREG)  cycle: 5
++^d -commands=S -xecute="do ^twork"
+;trigger name: drek#1 (region DREG)  cycle: 10
++^drek(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: drek#2 (region DREG)  cycle: 10
++^drek(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+
+Add new triggers
+Output File: 
+;trigger name: a#1 (region AREG)  cycle: 41
++^a -commands=S,ZK -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 41
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 41
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 41
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 41
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 41
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 41
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 41
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: apiece#1 (region AREG)  cycle: 1
++^apiece -commands=S -delim=""" " -pieces=1:5 -xecute="do ^nothing"
+;trigger name: b#1 (region BREG)  cycle: 16
++^b -commands=S,K,ZK -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 16
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 16
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: bpiece#1 (region BREG)  cycle: 1
++^bpiece -commands=S,ZK,ZTK -options=NOI,NOC -delim="|" -pieces=1:5 -xecute="do ^nothing"
+;trigger name: c#1 (region CREG)  cycle: 11
++^c -commands=S,K,ZK -xecute="do ^twork"
+;trigger name: c#2 (region CREG)  cycle: 11
++^c(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: bard#1 (region DREG)  cycle: 10
++^bard(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: bard#2 (region DREG)  cycle: 10
+##SUSPEND_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: d#1 (region DREG)  cycle: 6
++^d -commands=S,K,ZK -xecute="do ^twork"
+;trigger name: drek#1 (region DREG)  cycle: 10
++^drek(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: drek#2 (region DREG)  cycle: 10
++^drek(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+
+Remove new triggers
+Output File: 
+;trigger name: a#1 (region AREG)  cycle: 42
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 42
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 42
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 42
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 42
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 42
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 42
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 42
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: apiece#1 (region AREG)  cycle: 1
++^apiece -commands=S -delim=""" " -pieces=1:5 -xecute="do ^nothing"
+;trigger name: b#1 (region BREG)  cycle: 17
++^b -commands=S -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 17
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 17
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: bpiece#1 (region BREG)  cycle: 1
++^bpiece -commands=S,ZK,ZTK -options=NOI,NOC -delim="|" -pieces=1:5 -xecute="do ^nothing"
+;trigger name: c#1 (region CREG)  cycle: 12
++^c -commands=S -xecute="do ^twork"
+;trigger name: c#2 (region CREG)  cycle: 12
++^c(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: bard#1 (region DREG)  cycle: 10
++^bard(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: bard#2 (region DREG)  cycle: 10
+##SUSPEND_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: d#1 (region DREG)  cycle: 7
++^d -commands=S -xecute="do ^twork"
+;trigger name: drek#1 (region DREG)  cycle: 10
++^drek(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: drek#2 (region DREG)  cycle: 10
++^drek(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+
+_________________________________________________________________
+====================
+Testing trigger matching for append and removal operations with lookalike triggers
+Load a trigger file lookalikes.trg with -triggerfile=<filename>
+Output File: 
+;trigger name: a#1 (region AREG)  cycle: 45
++^a -commands=S,ZK -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 45
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 45
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 45
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 45
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 45
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 45
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 45
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#9 (region AREG)  cycle: 45
++^a(:2;5:) -commands=S -options=I -delim="$char(126)_$char(96)" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#10 (region AREG)  cycle: 45
++^a(tvar=:2;5:) -commands=S -options=I -delim="$zchar(126)_$char(96)" -pieces=1 -xecute="do ^tkilla"
+;trigger name: apiece#1 (region AREG)  cycle: 2
++^apiece -commands=S -delim=""" " -pieces=1:5 -xecute="do ^nothing"
+;trigger name: apiece#2 (region AREG)  cycle: 2
++^apiece -commands=S -delim=""" " -pieces=1:6 -xecute="do ^nothing"
+;trigger name: b#1 (region BREG)  cycle: 19
++^b -commands=S -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 19
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 19
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: b#4 (region BREG)  cycle: 19
++^b -commands=S -xecute="do ^twerk"
+;trigger name: b#5 (region BREG)  cycle: 19
++^b -commands=S -delim=":" -pieces=1 -xecute="do ^twerk"
+;trigger name: bpiece#1 (region BREG)  cycle: 2
++^bpiece -commands=S,ZK,ZTK -options=NOI,NOC -delim="|" -pieces=1:5 -xecute="do ^nothing"
+;trigger name: bpiece#2 (region BREG)  cycle: 2
++^bpiece -commands=S -options=NOI,NOC -zdelim="|" -pieces=1:5 -xecute="do ^nothing"
+;trigger name: c#1 (region CREG)  cycle: 13
++^c -commands=S -xecute="do ^twork"
+;trigger name: c#2 (region CREG)  cycle: 13
++^c(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: c#3 (region CREG)  cycle: 13
++^c -commands=ZK -xecute="do ^twerk"
+;trigger name: bard#1 (region DREG)  cycle: 10
++^bard(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: bard#2 (region DREG)  cycle: 10
+##SUSPEND_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: d#1 (region DREG)  cycle: 8
++^d -commands=S,K,ZK -xecute="do ^twork"
+;trigger name: drek#1 (region DREG)  cycle: 10
++^drek(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: drek#2 (region DREG)  cycle: 10
++^drek(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+
+_________________________________________________________________
+====================
+Testing trigger matching symmetry for append and removal operations
+Load a trigger file symmetry_up.trg with -triggerfile=<filename>
+Special case for ZTKIll symmetry
+Trigger load for symmetry_ztkill.trg PASSED
+Load a trigger file symmetry_down.trg with -triggerfile=<filename>
+diff up.trg a_down.trg
+< +^a -commands=S,ZK -xecute="do ^twork"
+> +^a -commands=S,ZK,ZTK -xecute="do ^twork"
+> +^dsym -commands=S -delim="." -pieces=12 -xecute="set ^a=55"
+> +^dsym -commands=S -delim="." -xecute="set ^a=55"
+> +^subs(2,"C") -commands=S,K,ZK -xecute="set b=9"
+diff up.trg r_down.trg
+< +^a -commands=S,ZK -xecute="do ^twork"
+< +^dsym -commands=S,K,ZK -delim="|" -xecute="set ^a=55"
+< +^pdsym -commands=S,K,ZK -delim="." -pieces=1:10 -xecute="set ^a=99"
+> +^dsym -commands=S,ZK -delim="|" -xecute="set ^a=55"
+< +^subs("c") -commands=S,K,ZK -xecute="set b=9"
+_________________________________________________________________
+====================
+Test Basic SELECT Options
+Output File: 
+;trigger name: a#1 (region AREG)  cycle: 58
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 58
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 58
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 58
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 58
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 58
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: b#1 (region BREG)  cycle: 23
++^b -commands=S -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 23
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 23
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: c#1 (region CREG)  cycle: 16
++^c -commands=S -xecute="do ^twork"
+;trigger name: c#2 (region CREG)  cycle: 16
++^c(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: bard#1 (region DREG)  cycle: 13
++^bard(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: bard#2 (region DREG)  cycle: 13
+##SUSPEND_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: d#1 (region DREG)  cycle: 10
++^d -commands=S -xecute="do ^twork"
+;trigger name: drek#1 (region DREG)  cycle: 13
++^drek(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: drek#2 (region DREG)  cycle: 13
++^drek(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+
+##SOURCE_PATH##/mupip trigger -select select_all.trg
+##SOURCE_PATH##/mupip trigger -select select_all2.trg
+diff select_all.trg select_all2.trg
+##SOURCE_PATH##/mupip trigger -select=
+%GTM-E-CLIERR, Unrecognized option : SELECT, value expected but not found
+
+##SOURCE_PATH##/mupip trigger -select=^a
+;trigger name: a#1 (region AREG)  cycle: 58
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 58
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 58
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 58
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 58
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 58
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+##SOURCE_PATH##/mupip trigger -select=^a,^a
+;trigger name: a#1 (region AREG)  cycle: 58
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 58
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 58
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 58
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 58
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 58
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+##SOURCE_PATH##/mupip trigger -select="^a,^b"
+;trigger name: a#1 (region AREG)  cycle: 58
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 58
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 58
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 58
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 58
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 58
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: b#1 (region BREG)  cycle: 23
++^b -commands=S -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 23
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 23
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+##SOURCE_PATH##/mupip trigger -select="^a,^b*"
+;trigger name: a#1 (region AREG)  cycle: 58
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 58
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 58
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 58
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 58
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 58
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: b#1 (region BREG)  cycle: 23
++^b -commands=S -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 23
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 23
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: bard#1 (region DREG)  cycle: 13
++^bard(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: bard#2 (region DREG)  cycle: 13
+##SUSPEND_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+##SOURCE_PATH##/mupip trigger -select="^drek,^c(:),^bard"
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+status of the above -select command : 130
+;trigger name: drek#1 (region DREG)  cycle: 13
++^drek(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: drek#2 (region DREG)  cycle: 13
++^drek(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+Invalid global variable name in SELECT list: "^c(:)"
+;trigger name: bard#1 (region DREG)  cycle: 13
++^bard(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: bard#2 (region DREG)  cycle: 13
+##SUSPEND_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+Existing files are not overwritten
+##SOURCE_PATH##/mupip trigger -select=^a ##TEST_PATH##
+Error opening output file: ##TEST_PATH## -- File exists
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+
+Doing the something similar with ZTrigger
+select with no opt params ;trigger name: a#1 (region AREG)  cycle: 58
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 58
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 58
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 58
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 58
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 58
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: b#1 (region BREG)  cycle: 23
++^b -commands=S -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 23
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 23
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: c#1 (region CREG)  cycle: 16
++^c -commands=S -xecute="do ^twork"
+;trigger name: c#2 (region CREG)  cycle: 16
++^c(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: bard#1 (region DREG)  cycle: 13
++^bard(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: bard#2 (region DREG)  cycle: 13
+##SUSPEND_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: d#1 (region DREG)  cycle: 10
++^d -commands=S -xecute="do ^twork"
+;trigger name: drek#1 (region DREG)  cycle: 13
++^drek(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: drek#2 (region DREG)  cycle: 13
++^drek(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+1
+==========
+select with null opt params ;trigger name: a#1 (region AREG)  cycle: 58
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 58
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 58
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 58
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 58
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 58
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: b#1 (region BREG)  cycle: 23
++^b -commands=S -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 23
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 23
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: c#1 (region CREG)  cycle: 16
++^c -commands=S -xecute="do ^twork"
+;trigger name: c#2 (region CREG)  cycle: 16
++^c(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: bard#1 (region DREG)  cycle: 13
++^bard(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: bard#2 (region DREG)  cycle: 13
+##SUSPEND_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: d#1 (region DREG)  cycle: 10
++^d -commands=S -xecute="do ^twork"
+;trigger name: drek#1 (region DREG)  cycle: 13
++^drek(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: drek#2 (region DREG)  cycle: 13
++^drek(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+1
+==========
+select with asterix opt params ;trigger name: a#1 (region AREG)  cycle: 58
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 58
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 58
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 58
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 58
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 58
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: b#1 (region BREG)  cycle: 23
++^b -commands=S -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 23
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 23
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: c#1 (region CREG)  cycle: 16
++^c -commands=S -xecute="do ^twork"
+;trigger name: c#2 (region CREG)  cycle: 16
++^c(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: bard#1 (region DREG)  cycle: 13
++^bard(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: bard#2 (region DREG)  cycle: 13
+##SUSPEND_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: d#1 (region DREG)  cycle: 10
++^d -commands=S -xecute="do ^twork"
+;trigger name: drek#1 (region DREG)  cycle: 13
++^drek(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: drek#2 (region DREG)  cycle: 13
++^drek(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+1
+==========
+select with '^a' ;trigger name: a#1 (region AREG)  cycle: 58
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 58
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 58
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 58
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 58
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 58
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+1
+==========
+select with 'a#*' ;trigger name: a#1 (region AREG)  cycle: 58
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 58
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 58
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 58
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 58
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 58
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+1
+==========
+select with 'a#*#' Invalid name entry in SELECT list: "a#*#"
+0
+==========
+select with '^a,^b' ;trigger name: a#1 (region AREG)  cycle: 58
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 58
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 58
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 58
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 58
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 58
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: b#1 (region BREG)  cycle: 23
++^b -commands=S -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 23
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 23
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+1
+==========
+select with '^a,^b*' ;trigger name: a#1 (region AREG)  cycle: 58
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 58
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 58
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 58
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 58
++^a(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: a#6 (region AREG)  cycle: 58
+##SUSPEND_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^a(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+;trigger name: a#7 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#8 (region AREG)  cycle: 58
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: b#1 (region BREG)  cycle: 23
++^b -commands=S -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 23
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 23
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: bard#1 (region DREG)  cycle: 13
++^bard(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: bard#2 (region DREG)  cycle: 13
+##SUSPEND_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+1
+==========
+select with '^drek,^c(:),^bard' ;trigger name: drek#1 (region DREG)  cycle: 13
++^drek(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: drek#2 (region DREG)  cycle: 13
++^drek(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+Invalid global variable name in SELECT list: "^c(:)"
+;trigger name: bard#1 (region DREG)  cycle: 13
++^bard(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+;trigger name: bard#2 (region DREG)  cycle: 13
+##SUSPEND_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
++^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+0
+
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##TEST_AWK##TEST_PATH##/pri_.*.trg.sort ##REMOTE_TEST_PATH##/sec_.*.trg.sort differ: char [0-9]*, line 30
+RFEXTR-E-FAIL: trigger extract is different on primary and secondary
+##TEST_AWKdiff pri_.*.trg ##REMOTE_TEST_PATH##/sec_.*.trg follows
+22a23,26
+> ;trigger name: bard#1 (region BREG)  cycle: X
+> +^bard(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+> ;trigger name: bard#2 (region BREG)  cycle: X
+##SUSPEND_OUTPUT UNICODE_MODE
+> +^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
+> +^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+27,30d30
+< ;trigger name: bard#1 (region DREG)  cycle: X
+< +^bard(:2;5:) -commands=S -options=I -delim="~`" -pieces=1 -xecute="do ^tkilla"
+< ;trigger name: bard#2 (region DREG)  cycle: X
+##SUSPEND_OUTPUT UNICODE_MODE
+< +^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_"þ""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##ALLOW_OUTPUT UNICODE_MODE
+< +^bard(2:,:"m";10;20;25;30;35;44;50,*) -commands=S,K,ZK -zdelim=$C(9)_$ZCH(254)_"""" -pieces=1:3;7:8 -xecute="do multi^tkilla"
+##ALLOW_OUTPUT NONUNICODE_MODE
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

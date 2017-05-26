@@ -1,0 +1,4 @@
+$GTM << EOF
+d ^C001599A
+d ^C001599B
+EOF

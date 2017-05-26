@@ -1,0 +1,66 @@
+# Create a 4 region V5 database and populate them with data
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Now endian convert the databases concurrently
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file a.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file b.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file c.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+# In the remote machine, find the endian format of all the databases using dse dump
+region DEFAULT has the expected endian format
+region AREG has the expected endian format
+region BREG has the expected endian format
+region CREG has the expected endian format
+
+# In the remote machine, endian convert mumps.dat and b.dat only
+##FILTERED##Converting database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+Converting in place - database will be damaged by an abnormal termination
+You must have a backup before proceeding
+Proceed [yes/no] ?
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+##FILTERED##Converting database file b.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+Converting in place - database will be damaged by an abnormal termination
+You must have a backup before proceeding
+Proceed [yes/no] ?
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file b.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+# Now test the endianness of each database using DSE
+# DEFAULT: mumps.dat
+region DEFAULT has the expected endian format
+# AREG: a.dat
+region AREG has the expected endian format
+# BREG: b.dat
+region BREG has the expected endian format
+# CREG: c.dat
+region CREG has the expected endian format
+#  In the remote machine, run endiancvt on all the databases simultaneously
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file a.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file b.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file c.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+# Now test the endianness of each database using DSE
+# DEFAULT: mumps.dat
+region DEFAULT has the expected endian format
+# AREG: a.dat
+region AREG has the expected endian format
+# BREG: b.dat
+region BREG has the expected endian format
+# CREG: c.dat
+region CREG has the expected endian format
+End of test

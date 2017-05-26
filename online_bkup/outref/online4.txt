@@ -1,0 +1,85 @@
+ENTERING ONLINE4
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+online4.gld
+Using: ##SOURCE_PATH##/mupip
+acct.dat
+acnm.dat
+jnl.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+online4.gld
+Using: ##SOURCE_PATH##/mupip
+acct.dat
+acnm.dat
+jnl.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+##SUSPEND_OUTPUT REPLIC
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/acct.mjl created for region ACCT with NOBEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/acnm.mjl created for region ACNM with NOBEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/jnl.mjl created for region JNL with NOBEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region ACCT is now ON
+%GTM-I-JNLSTATE, Journaling state for region ACNM is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%GTM-I-JNLSTATE, Journaling state for region JNL is now ON
+##ALLOW_OUTPUT REPLIC
+
+GTM>
+ Initializing database
+ Initialization complete
+
+GTM>
+
+GTM>
+ Spawning tasks..
+Releasing tasks and waiting..
+Test complete (PASS)
+
+GTM>
+
+GTM>
+ PBank verify started
+ PBank verify ended
+
+GTM>
+BACKUP COMPLETED.
+Expect count of 2 for errors GTM-E-JNLOPNERR and GTM-E-FILEIDMATCH found in online4/back_update.logx:
+2
+Expect no difference between before_back_update.log and after_back_update.log
+No difference seen
+Expect no journal switches between after_back_update.log and after_source_update.log
+No journal switch - as expected
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/acct.dat is now OFF
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/acnm.dat is now OFF
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/jnl.dat is now OFF
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+ PBank verify started
+ PBank verify ended
+value of ^a in source database after recovery = 2
+Expect no journal switches between after_source_update_MJL.log and after_recovery_MJL.log
+No journal switch - as expected
+LEAVING ONLINE4

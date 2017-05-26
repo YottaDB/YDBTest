@@ -1,0 +1,37 @@
+setgd -f=makedmp.gld
+add -name ACCT            -region=ACCT1
+add -name ACCT(:3333)     -region=ACCT1
+add -name ACCT(3333:6666) -region=ACCT2
+add -name ACCT(6666:)     -region=ACCT3
+add -name ACNM            -region=ACNM1
+add -name ACNM(:5000)     -region=ACNM1
+add -name ACNM(5000:)     -region=ACNM2
+add -name JNL             -region=JNL
+add -region ACCT1         -dynamic=ACCT1
+add -region ACCT2         -dynamic=ACCT2
+add -region ACCT3         -dynamic=ACCT3
+add -region ACNM1         -dynamic=ACNM1
+add -region ACNM2         -dynamic=ACNM2
+add -region JNL           -dynamic=JNL
+change -region ACCT1      -std
+change -region ACCT2      -std
+change -region ACCT3      -std
+change -region ACNM1      -std
+change -region ACNM2      -std
+change -region JNL        -std
+change -region DEFAULT    -std
+add -segment ACCT1        -file=acct1.dat
+add -segment ACCT2        -file=acct2.dat
+add -segment ACCT3        -file=acct3.dat
+add -segment ACNM1        -file=acnm1.dat
+add -segment ACNM2        -file=acnm2.dat
+add -segment JNL          -file=jnl.dat
+change -segment ACCT1     -access_method=bg -block_size=1024 -allocation=4000 -extension_count=1000 -g=4096
+change -segment ACCT2     -access_method=bg -block_size=1024 -allocation=4000 -extension_count=1000 -g=4096
+change -segment ACCT3     -access_method=bg -block_size=1024 -allocation=4000 -extension_count=1000 -g=4096
+change -segment ACNM1     -access_method=bg -block_size=1024 -allocation=5000 -extension_count=1000 -g=4096
+change -segment ACNM2     -access_method=bg -block_size=1024 -allocation=5000 -extension_count=1000 -g=4096
+change -segment DEFAULT   -access_method=bg -block_size=1024 -allocation=5000 -extension_count=1000 -g=4096
+change -segment JNL       -access_method=bg -block_size=1024 -allocation=6000 -extension_count=1000 -g=4096
+change -region DEFAULT    -record=1000      -key=255
+exit

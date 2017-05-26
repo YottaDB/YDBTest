@@ -1,0 +1,67 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+###################################################################
+Test with database supporting null subscript
+###################################################################
+^fired("a#1#")=1
+^fired("a#1#",1)="$reference=^a(""b"","""")"
+^fired("a#2#")=1
+^fired("a#2#",1)="$reference=^a("""")"
+^fired("b#1#")=2
+^fired("b#1#",1)="$reference=^b("""")"
+^fired("b#1#",2)="$reference=^b(10)"
+^fired("b#2#")=2
+^fired("b#2#",1)="$reference=^b("""")"
+^fired("b#2#",2)="$reference=^b(10)"
+^fired("b#3#")=1
+^fired("b#3#",1)="$reference=^b("""")"
+^fired("b#4#")=1
+^fired("b#4#",1)="$reference=^b("""")"
+^fired("c#1#")=1
+^fired("c#1#",1)="$reference=^c(""a"")"
+^fired("d#1#")=1
+^fired("d#1#",1)="$reference=^d(""$"")"
+^fired("e#1#")=1
+^fired("e#1#",1)="$reference=^e(""a"")"
+^fired("a#2#")=1
+^fired("a#2#",1)="$reference=^a("""")"
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+###################################################################
+Test with database not supporting null subscript
+###################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+^fired("a#1#")=1
+^fired("a#1#",1)="$reference=^a(""b"","""")"
+^fired("a#2#")=1
+^fired("a#2#",1)="$reference=^a("""")"
+^fired("b#1#")=2
+^fired("b#1#",1)="$reference=^b("""")"
+^fired("b#1#",2)="$reference=^b(10)"
+^fired("b#2#")=2
+^fired("b#2#",1)="$reference=^b("""")"
+^fired("b#2#",2)="$reference=^b(10)"
+^fired("b#3#")=1
+^fired("b#3#",1)="$reference=^b("""")"
+^fired("b#4#")=1
+^fired("b#4#",1)="$reference=^b("""")"
+^fired("c#1#")=1
+^fired("c#1#",1)="$reference=^c(""a"")"
+^fired("d#1#")=1
+^fired("d#1#",1)="$reference=^d(""$"")"
+^fired("e#1#")=1
+^fired("e#1#",1)="$reference=^e(""a"")"
+150373498,start+16^nullsub,%GTM-E-NULSUBSC, Null subscripts are not allowed for region: AREG,%GTM-I-GVIS, 		Global variable: ^a("")
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

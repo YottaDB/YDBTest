@@ -1,0 +1,359 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+do ^sptp1(1,1000)
+
+GTM>
+sptp1 Started
+sptp1 Ends
+
+GTM>
+# Switch journals right before shutting down to ensure $ZQGBLMOD returns the "best" values since $ZQGBLMOD returns the most pessimistic values (i.e. beginning of the journal file).
+# Shut down receiver (B)...
+
+GTM>
+do ^sptp2(1001,10000)
+
+GTM>
+sptp2 Started
+sptp2 Ends
+
+GTM>
+Shutdown Primary in (A)...
+Restarting (B) as primary...
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating NEEDRESTART operation on source server pid [##PID##] for secondary instance [INSTANCE1]
+Secondary Instance [INSTANCE1] DOES NOT NEED to be restarted
+
+GTM>
+do ^sptp3(1,5)
+
+GTM>
+sptp3 Started
+sptp3 Ends
+
+GTM>
+
+GTM>
+do ^zqlapp(11,100)
+
+GTM>
+ZQLAPP Started
+$zqgblmod of ^alongglobalnameforzqgblmod 1
+$zqgblmod of ^b 1
+$zqgblmod of ^clongglobalnameforzqgblmod 0
+$zqgblmod of ^d 1
+$zqgblmod of ^e 1
+
+Followings globals should be checked manually
+^alongglobalnameforzqgblmod(11) 
+^b(11) 
+^d(11) 
+^e(11) 
+^alongglobalnameforzqgblmod(12) 
+^b(12) 
+^d(12) 
+^e(12) 
+^alongglobalnameforzqgblmod(13) 
+^b(13) 
+^d(13) 
+^e(13) 
+^alongglobalnameforzqgblmod(14) 
+^b(14) 
+^d(14) 
+^e(14) 
+^alongglobalnameforzqgblmod(15) 
+^b(15) 
+^d(15) 
+^e(15) 
+^alongglobalnameforzqgblmod(16) 
+^b(16) 
+^d(16) 
+^e(16) 
+^alongglobalnameforzqgblmod(17) 
+^b(17) 
+^d(17) 
+^e(17) 
+^alongglobalnameforzqgblmod(18) 
+^b(18) 
+^d(18) 
+^e(18) 
+^alongglobalnameforzqgblmod(19) 
+^b(19) 
+^d(19) 
+^e(19) 
+^alongglobalnameforzqgblmod(20) 
+^b(20) 
+^d(20) 
+^e(20) 
+^alongglobalnameforzqgblmod(21) 
+^b(21) 
+^d(21) 
+^e(21) 
+^alongglobalnameforzqgblmod(22) 
+^b(22) 
+^d(22) 
+^e(22) 
+^alongglobalnameforzqgblmod(23) 
+^b(23) 
+^d(23) 
+^e(23) 
+^alongglobalnameforzqgblmod(24) 
+^b(24) 
+^d(24) 
+^e(24) 
+^alongglobalnameforzqgblmod(25) 
+^b(25) 
+^d(25) 
+^e(25) 
+^alongglobalnameforzqgblmod(26) 
+^b(26) 
+^d(26) 
+^e(26) 
+^alongglobalnameforzqgblmod(27) 
+^b(27) 
+^d(27) 
+^e(27) 
+^alongglobalnameforzqgblmod(28) 
+^b(28) 
+^d(28) 
+^e(28) 
+^alongglobalnameforzqgblmod(29) 
+^b(29) 
+^d(29) 
+^e(29) 
+^alongglobalnameforzqgblmod(30) 
+^b(30) 
+^d(30) 
+^e(30) 
+^alongglobalnameforzqgblmod(31) 
+^b(31) 
+^d(31) 
+^e(31) 
+^alongglobalnameforzqgblmod(32) 
+^b(32) 
+^d(32) 
+^e(32) 
+^alongglobalnameforzqgblmod(33) 
+^b(33) 
+^d(33) 
+^e(33) 
+^alongglobalnameforzqgblmod(34) 
+^b(34) 
+^d(34) 
+^e(34) 
+^alongglobalnameforzqgblmod(35) 
+^b(35) 
+^d(35) 
+^e(35) 
+^alongglobalnameforzqgblmod(36) 
+^b(36) 
+^d(36) 
+^e(36) 
+^alongglobalnameforzqgblmod(37) 
+^b(37) 
+^d(37) 
+^e(37) 
+^alongglobalnameforzqgblmod(38) 
+^b(38) 
+^d(38) 
+^e(38) 
+^alongglobalnameforzqgblmod(39) 
+^b(39) 
+^d(39) 
+^e(39) 
+^alongglobalnameforzqgblmod(40) 
+^b(40) 
+^d(40) 
+^e(40) 
+^alongglobalnameforzqgblmod(41) 
+^b(41) 
+^d(41) 
+^e(41) 
+^alongglobalnameforzqgblmod(42) 
+^b(42) 
+^d(42) 
+^e(42) 
+^alongglobalnameforzqgblmod(43) 
+^b(43) 
+^d(43) 
+^e(43) 
+^alongglobalnameforzqgblmod(44) 
+^b(44) 
+^d(44) 
+^e(44) 
+^alongglobalnameforzqgblmod(45) 
+^b(45) 
+^d(45) 
+^e(45) 
+^alongglobalnameforzqgblmod(46) 
+^b(46) 
+^d(46) 
+^e(46) 
+^alongglobalnameforzqgblmod(47) 
+^b(47) 
+^d(47) 
+^e(47) 
+^alongglobalnameforzqgblmod(48) 
+^b(48) 
+^d(48) 
+^e(48) 
+^alongglobalnameforzqgblmod(49) 
+^b(49) 
+^d(49) 
+^e(49) 
+^alongglobalnameforzqgblmod(50) 
+^b(50) 
+^d(50) 
+^e(50) 
+^alongglobalnameforzqgblmod(51) 
+^b(51) 
+^d(51) 
+^e(51) 
+^alongglobalnameforzqgblmod(52) 
+^b(52) 
+^d(52) 
+^e(52) 
+^alongglobalnameforzqgblmod(53) 
+^b(53) 
+^d(53) 
+^e(53) 
+^alongglobalnameforzqgblmod(54) 
+^b(54) 
+^d(54) 
+^e(54) 
+^alongglobalnameforzqgblmod(55) 
+^b(55) 
+^d(55) 
+^e(55) 
+^alongglobalnameforzqgblmod(56) 
+^b(56) 
+^d(56) 
+^e(56) 
+^alongglobalnameforzqgblmod(57) 
+^b(57) 
+^d(57) 
+^e(57) 
+^b(58) 
+^d(58) 
+^e(58) 
+^b(59) 
+^d(59) 
+^e(59) 
+^d(60) 
+^e(60) 
+^d(61) 
+^e(61) 
+^d(62) 
+^e(62) 
+^d(63) 
+^e(63) 
+^d(64) 
+^e(64) 
+^d(65) 
+^e(65) 
+^d(66) 
+^e(66) 
+^d(67) 
+^e(67) 
+^d(68) 
+^e(68) 
+^d(69) 
+^e(69) 
+^d(70) 
+^e(70) 
+^d(71) 
+^e(71) 
+^d(72) 
+^e(72) 
+^d(73) 
+^e(73) 
+^d(74) 
+^e(74) 
+^d(75) 
+^e(75) 
+^d(76) 
+^e(76) 
+^d(77) 
+^e(77) 
+^d(78) 
+^e(78) 
+^d(79) 
+^e(79) 
+^d(80) 
+^e(80) 
+^d(81) 
+^e(81) 
+^d(82) 
+^e(82) 
+^d(83) 
+^e(83) 
+^d(84) 
+^e(84) 
+^d(85) 
+^e(85) 
+^d(86) 
+^e(86) 
+^d(87) 
+^e(87) 
+^d(88) 
+^e(88) 
+^d(89) 
+^e(89) 
+^d(90) 
+^e(90) 
+^d(91) 
+^e(91) 
+^d(92) 
+^e(92) 
+^d(93) 
+^e(93) 
+^d(94) 
+^e(94) 
+^d(95) 
+^e(95) 
+^d(96) 
+^e(96) 
+^d(97) 
+^e(97) 
+^d(98) 
+^e(98) 
+^d(99) 
+^e(99) 
+^d(100) 
+^e(100) 
+$zqgblmod of ^aa 0
+$zqgblmod of ^bb 0
+$zqgblmod of ^cc 0
+$zqgblmod of ^dd 0
+$zqgblmod of ^ee 0
+Check variables which was never applied
+Following globals was never applied but zqgblmod is doubtful...
+ZQLAPP Ends
+
+GTM>
+Shutting down Passive Source Server and Receiver Server in ##TEST_PATH##
+Shutting down Primary Source Server Server in ##REMOTE_TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

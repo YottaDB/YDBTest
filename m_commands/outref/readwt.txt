@@ -1,0 +1,167 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+do ^readwrit
+
+######## test read/write/zwrite for long names ####### 
+
+----------------- len = 7 -------------
+line 1
+line2
+line 3
+108
+in
+e 4
+line 5
+line 6
+108
+ine 7
+q7XNDtj="line 1"
+q7XNDtj(1)="line2"
+q7XNDtj(1,"q7XNDtj")="line 3"
+q7XNDtj(2)=108
+q7XNDtj(2,"q7XNDtj")="in"
+q7XNDtj(1)="line2"
+^q7XNDtj="e 4"
+^q7XNDtj(1)="line 5"
+^q7XNDtj(1,2)=108
+^q7XNDtj(1,"naked")="ine 7"
+^q7XNDtj(1,"q7XNDtj")="line 6"
+^q7XNDtj(1)="line 5"
+^q7XNDtj(1,2)=108
+^q7XNDtj(1,"naked")="ine 7"
+----------------- len = 8 -------------
+line 8
+line 9
+line 10
+108
+in
+e 11
+line 12
+line 13
+108
+ine 14
+pf5VLBrh="line 8"
+pf5VLBrh(1)="line 9"
+pf5VLBrh(1,"pf5VLBrh")="line 10"
+pf5VLBrh(2)=108
+pf5VLBrh(2,"pf5VLBrh")="in"
+pf5VLBrh(1)="line 9"
+^pf5VLBrh="e 11"
+^pf5VLBrh(1)="line 12"
+^pf5VLBrh(1,2)=108
+^pf5VLBrh(1,"naked")="ine 14"
+^pf5VLBrh(1,"pf5VLBrh")="line 13"
+^pf5VLBrh(1)="line 12"
+^pf5VLBrh(1,2)=108
+^pf5VLBrh(1,"naked")="ine 14"
+----------------- len = 9 -------------
+line 15
+line 16
+line 17
+108
+in
+e 18
+line 19
+line 20
+108
+ine 21
+Hxnd3TJzp="line 15"
+Hxnd3TJzp(1)="line 16"
+Hxnd3TJzp(1,"Hxnd3TJzp")="line 17"
+Hxnd3TJzp(2)=108
+Hxnd3TJzp(2,"Hxnd3TJzp")="in"
+Hxnd3TJzp(1)="line 16"
+^Hxnd3TJzp="e 18"
+^Hxnd3TJzp(1)="line 19"
+^Hxnd3TJzp(1,2)=108
+^Hxnd3TJzp(1,"Hxnd3TJzp")="line 20"
+^Hxnd3TJzp(1,"naked")="ine 21"
+^Hxnd3TJzp(1)="line 19"
+^Hxnd3TJzp(1,2)=108
+^Hxnd3TJzp(1,"naked")="ine 21"
+----------------- len = 31 -------------
+line 22
+line 23
+line 24
+108
+in
+e 25
+line 26
+line 27
+108
+ine 28
+xnd3TJzpf5VLBrh7XNDtj9ZPFvlb1RH="line 22"
+xnd3TJzpf5VLBrh7XNDtj9ZPFvlb1RH(1)="line 23"
+xnd3TJzpf5VLBrh7XNDtj9ZPFvlb1RH(1,"xnd3TJzpf5VLBrh7XNDtj9ZPFvlb1RH")="line 24"
+xnd3TJzpf5VLBrh7XNDtj9ZPFvlb1RH(2)=108
+xnd3TJzpf5VLBrh7XNDtj9ZPFvlb1RH(2,"xnd3TJzpf5VLBrh7XNDtj9ZPFvlb1RH")="in"
+xnd3TJzpf5VLBrh7XNDtj9ZPFvlb1RH(1)="line 23"
+^xnd3TJzpf5VLBrh7XNDtj9ZPFvlb1RH="e 25"
+^xnd3TJzpf5VLBrh7XNDtj9ZPFvlb1RH(1)="line 26"
+^xnd3TJzpf5VLBrh7XNDtj9ZPFvlb1RH(1,2)=108
+^xnd3TJzpf5VLBrh7XNDtj9ZPFvlb1RH(1,"naked")="ine 28"
+^xnd3TJzpf5VLBrh7XNDtj9ZPFvlb1RH(1,"xnd3TJzpf5VLBrh7XNDtj9ZPFvlb1RH")="line 27"
+^xnd3TJzpf5VLBrh7XNDtj9ZPFvlb1RH(1)="line 26"
+^xnd3TJzpf5VLBrh7XNDtj9ZPFvlb1RH(1,2)=108
+^xnd3TJzpf5VLBrh7XNDtj9ZPFvlb1RH(1,"naked")="ine 28"
+
+########## test more with set and zwrite for long names ########
+
+
+---- zwrite ^ahgdbkdfgpaogdjgksjfdgsogjlkjdg ----
+^ahgdbkdfgpaogdjgksjfdgsogjlkjdg(1,"jh",2)="random12"
+^ahgdbkdfgpaogdjgksjfdgsogjlkjdg(1,"jh",3,4)="random 34"
+^ahgdbkdfgpaogdjgksjfdgsogjlkjdg(1,"jh",3,5)="random 5"
+^ahgdbkdfgpaogdjgksjfdgsogjlkjdg(1,"jh","naked")="random naked"
+
+---- zwrite ^?1"%"2U.E(,"A":"z") ----
+^%BC3456789012345678901234567890(1,"March")=12
+^%CD3456789012345678901234567890(1,"april")=12
+^%DE3456789012345678901234567890(1,"June")=12
+
+---- zwrite ?1"B".E(?1"x"3N) ----
+B234567890123456789012345678901("x123")="x123"
+B234567890123456789012345678901("x234")="x234"
+B234567890123456789012345678901("x345")="x345"
+
+---- zwrite ?.E(,:,3) ----
+B234567890123456789012345678901("xy123","rr",3)="x123"
+B234567890123456789012345678901("xy123","ss",3)="x123"
+
+---- zwrite ^ahgdbkdfgpaogdjgksjfdgsogjlkjdg(1,*) ----
+^ahgdbkdfgpaogdjgksjfdgsogjlkjdg(1,"jh",2)="random12"
+^ahgdbkdfgpaogdjgksjfdgsogjlkjdg(1,"jh",3,4)="random 34"
+^ahgdbkdfgpaogdjgksjfdgsogjlkjdg(1,"jh",3,5)="random 5"
+^ahgdbkdfgpaogdjgksjfdgsogjlkjdg(1,"jh","naked")="random naked"
+
+ZWRITE output
+B234567890123456789012345678901("x123")="x123"
+B234567890123456789012345678901("x234")="x234"
+B234567890123456789012345678901("x345")="x345"
+B234567890123456789012345678901("xy123","rr",3)="x123"
+B234567890123456789012345678901("xy123","ss",3)="x123"
+postcond=1
+postconditional=0
+xstr="zwrite ^ahgdbkdfgpaogdjgksjfdgsogjlkjdg(1,*)"
+
+---- zshow "V":zshowvariable ----
+
+---- zwrite zshowvariable ----
+zshowvariable("V",1)="B234567890123456789012345678901(""x123"")=""x123"""
+zshowvariable("V",2)="B234567890123456789012345678901(""x234"")=""x234"""
+zshowvariable("V",3)="B234567890123456789012345678901(""x345"")=""x345"""
+zshowvariable("V",4)="B234567890123456789012345678901(""xy123"",""rr"",3)=""x123"""
+zshowvariable("V",5)="B234567890123456789012345678901(""xy123"",""ss"",3)=""x123"""
+zshowvariable("V",6)="postcond=1"
+zshowvariable("V",7)="postconditional=0"
+zshowvariable("V",8)="xstr=""zshow """"V"""":zshowvariable"""
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,132 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Create some *-only blocks
+-------------------------------------------------------------
+                             root                            
+      *              *               *               *       
+ reorgvar(77) : reorgvar(177) : reorgvar(266) : reorgvar(267)
+-------------------------------------------------------------
+Fill Factor:: Index blocks 100%: Data blocks 100%
+##SUSPEND_OUTPUT PRO
+GTMPOOLLIMIT used for mupip reorg : ##FILTERED##
+##ALLOW_OUTPUT PRO
+   
+Global: reorgvar (region DEFAULT)
+Blocks processed    : 7 
+Blocks coalesced    : 2 
+Blocks split        : 0 
+Blocks swapped      : 5 
+Blocks freed        : 8 
+Blocks reused       : 6 
+Levels Eliminated   : 1 
+Blocks extended     : 0 
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory           2               2           [23]....            NA
+Index               1               4           6.933             1
+Data                4               4          99.975             4
+Free              393              NA              NA            NA
+Total             400              10              NA             5
+
+GTM>
+1111
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+--------------------------------------------------------------
+                             root                             
+   non-*              *               *               *       
+reorgvar(1:77) : reorgvar(177) : reorgvar(266) : reorgvar(267)
+--------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Fill Factor:: Index blocks 100%: Data blocks 100%
+##SUSPEND_OUTPUT PRO
+GTMPOOLLIMIT used for mupip reorg : ##FILTERED##
+##ALLOW_OUTPUT PRO
+   
+Global: reorgvar (region DEFAULT)
+Blocks processed    : 84 
+Blocks coalesced    : 1 
+Blocks split        : 0 
+Blocks swapped      : 44 
+Blocks freed        : 6 
+Blocks reused       : 5 
+Blocks extended     : 0 
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory           2               2           [23]....            NA
+Index               3              83          34.082             2
+Data               81              81          99.904            81
+Free              314              NA              NA            NA
+Total             400             166              NA            83
+
+GTM>
+1111
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+--------------------------------------------------------------
+                             root                             
+   *              non-*               *               *       
+reorgvar(77) :reorgvar(110:177) : reorgvar(266) : reorgvar(267)
+--------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Fill Factor:: Index blocks 100%: Data blocks 100%
+##SUSPEND_OUTPUT PRO
+GTMPOOLLIMIT used for mupip reorg : ##FILTERED##
+##ALLOW_OUTPUT PRO
+   
+Global: reorgvar (region DEFAULT)
+Blocks processed    : 74 
+Blocks coalesced    : 2 
+Blocks split        : 0 
+Blocks swapped      : 39 
+Blocks freed        : 8 
+Blocks reused       : 6 
+Levels Eliminated   : 1 
+Blocks extended     : 0 
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory           2               2           [23]....            NA
+Index               1              71          79.589             1
+Data               71              71          99.988            71
+Free              326              NA              NA            NA
+Total             400             144              NA            72
+
+GTM>
+1111
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

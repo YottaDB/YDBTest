@@ -1,0 +1,96 @@
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_LINUX_S390X
+##TEST_AWKNo prior versions available: .*
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_LINUX_S390X
+Files Created in ##TEST_PATH##:
+Using: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro/mumps -run GDE
+mumps.gld
+Using: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro/mupip
+a.dat
+b.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro/mumps -run GDE
+mumps.gld
+Using: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro/mupip
+a.dat
+b.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+==================================================
+############## Primary Side ######################
+==================================================
+Database fill program starts
+==================================================
+############# Secondary Side #####################
+==================================================
+Shut down receiver server/update process...(B)
+PASS
+After shutting down receiver server in side B
+### Upgrade to the test version in secondary side ###
+Start V5 replication servers in secondary site 
+==================================================
+############## Primary Side ######################
+==================================================
+Stop updates on primary side (Side A)
+
+GTM>
+##FILTERED##GTM_TEST_DEBUGINFO.*
+GTM>
+==================================================
+############# Secondary Side #####################
+==================================================
+Stop replication servers in the upgraded secondary site (B)
+==================================================
+############## Primary Side ######################
+==================================================
+Do some more updates on side A, while receiver server is down
+
+GTM>
+##FILTERED##GTM_TEST_DEBUGINFO.*
+GTM>
+Time written into time1_##FILTERED##GTM_TEST_DEBUGINFO.*
+SET,TSET,USET,GSET,FSET
+Time written into time2_##FILTERED##GTM_TEST_DEBUGINFO.*
+Time written into time3_##FILTERED##GTM_TEST_DEBUGINFO.*
+KILL,TKILL,UKILL,GKILL,FKILL
+Passed SET and KILL
+SET,TSET,USET,GSET,FSET
+Time written into time4_##FILTERED##GTM_TEST_DEBUGINFO.*
+ZKILL,TZKILL,UZKILL,GZKILL,FZKILL
+Time written into time5_##FILTERED##GTM_TEST_DEBUGINFO.*
+Check that only ^acn(11,11),^acn(12,12),^acn(13,13),^acn(14,14) are present
+^acn(11,11)="this is USET"
+^acn(12,12)="this is USET"
+^acn(13,13)="this is GSET"
+^acn(14,14)="this is GSET"
+
+GTM>
+Shut down primary source server...
+=======================================================================================================
+Restarting (B) as primary...
+Start some updates in side B (new Primary)
+Do rollback in side A
+Rollback succesful
+Now update side A to the current version
+### Upgrade to the test version in secondary side ###
+Start V5 replication servers in secondary site 
+# Switch over ends. Now the replication setup is of the type A->B i.e secondary is non-supplementary
+HDR Supplementary Instance                           FALSE
+# The below steps convert this setup to A->P
+# Shutdown secondary
+# Recreate instance file with -supplementary
+# Start source server with -updok
+# Start rcvr with -updateresync=<old_non-suppl_repl_file>
+HDR Supplementary Instance                            TRUE
+# Stop updates on the primary side
+Shutting down Passive Source Server and Receiver Server in ##TEST_PATH##
+Shutting down Primary Source Server Server in ##REMOTE_TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

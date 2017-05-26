@@ -1,0 +1,406 @@
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
+##GT.CM##mumps.gld
+##GT.CM##Using: ##SOURCE_PATH##/mupip
+Create local (client) database...
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  GT.CM
+a.dat
+b.dat
+c.dat
+mumps.dat
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+##ALLOW_OUTPUT  GT.CM
+The database layout is:
+ASEG	a.dat
+BSEG	##TEST_REMOTE_NODE_PATH_GTCM##/b.dat
+CSEG	##TEST_REMOTE_NODE_PATH_GTCM##/c.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
+Starting the GT.CM Servers...
+##SUSPEND_OUTPUT  NON_REORG GT.CM NON_REPLIC
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REORG NON_REPLIC GT.CM
+
+GTM>
+STEP 1
+^A(1,2)="Third"
+^A(1,2,4)="Second"
+^A(1,2,8,1)="Fifth"
+^A(1,2,8,9)="Sixth"
+STEP 2
+^A(1,2)="Third"
+^A(1,2,3,1)="Fifth"
+^A(1,2,3,9)="Sixth"
+^A(1,2,4)="Second"
+^A(1,2,8,1)="Fifth"
+^A(1,2,8,9)="Sixth"
+STEP 3
+^ABC(1,2)="reset naked indicator"
+^ABC(1,5,3,4)="PASSVAL"
+^ABC(1,5,3,"TESTNAKED")="OK"
+^ABC(1,5,6)="PASSVAL"
+
+GTM>
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####SOURCE_PATH##/mupip
+##GT.CM####SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##SUSPEND_OUTPUT  NON_REORG GT.CM NON_REPLIC
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REORG NON_REPLIC GT.CM
+##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  GT.CM
+##SOURCE_PATH##/mupip integ -REG *
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+##ALLOW_OUTPUT  GT.CM
+##SOURCE_PATH##/mupip integ a.dat
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+No errors detected by integ.
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
+##GT.CM##mumps.gld
+##GT.CM##Using: ##SOURCE_PATH##/mupip
+Create local (client) database...
+##SUSPEND_OUTPUT  NON_REORG GT.CM NON_REPLIC
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REORG NON_REPLIC GT.CM
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  GT.CM
+a.dat
+b.dat
+c.dat
+mumps.dat
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+##ALLOW_OUTPUT  GT.CM
+The database layout is:
+ASEG	a.dat
+BSEG	##TEST_REMOTE_NODE_PATH_GTCM##/b.dat
+CSEG	##TEST_REMOTE_NODE_PATH_GTCM##/c.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
+Starting the GT.CM Servers...
+##SUSPEND_OUTPUT  NON_REORG GT.CM NON_REPLIC
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REORG NON_REPLIC GT.CM
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+^var1(1001,"ind1001",1000)="BBB2"
+^var1(1001,"ind1001",1001)="BBB3"
+^var1(1001,"ind1001",1002)="BBB4"
+^var1(1001,"ind1001",1003)="BBB5"
+^var1(1001,"ind1001",1004)="BBB6"
+^var1(1001,"ind1001",1005)="BBB7"
+^var1(1002,"ind1002",1000)="BBB8"
+^var1(1002,"ind1002",1001)="BBB9"
+^var1(1002,"ind1002",1002)="BBB10"
+^var1(1002,"ind1002",1003)="BBB11"
+^var1(1002,"ind1002",1004)="BBB12"
+^var1(1002,"ind1002",1005)="BBB13"
+^var1(1003,"ind1003")="BBB1003"
+^var1(1003,"ind1003",1000)="BBB14"
+^var1(1003,"ind1003",1001)="BBB15"
+^var1(1003,"ind1003",1002)="BBB16"
+^var1(1003,"ind1003",1003)="BBB17"
+^var1(1003,"ind1003",1004)="BBB18"
+^var1(1003,"ind1003",1005)="BBB19"
+^var1(1004,"ind1004",1000)="BBB20"
+^var1(1004,"ind1004",1001)="BBB21"
+^var1(1004,"ind1004",1002)="BBB22"
+^var1(1004,"ind1004",1003)="BBB23"
+^var1(1004,"ind1004",1004)="BBB24"
+^var1(1004,"ind1004",1005)="BBB25"
+^var1(1005,"ind1005",1000)="BBB26"
+^var1(1005,"ind1005",1001)="BBB27"
+^var1(1005,"ind1005",1002)="BBB28"
+^var1(1005,"ind1005",1003)="BBB29"
+^var1(1005,"ind1005",1004)="BBB30"
+^var1(1005,"ind1005",1005)="BBB31"
+
+GTM>
+
+GTM>
+^new2("NEWVAR",1001,"ind1001",1000)="BBB2"
+^new2("NEWVAR",1001,"ind1001",1001)="BBB3"
+^new2("NEWVAR",1001,"ind1001",1002)="BBB4"
+^new2("NEWVAR",1001,"ind1001",1003)="BBB5"
+^new2("NEWVAR",1001,"ind1001",1004)="BBB6"
+^new2("NEWVAR",1001,"ind1001",1005)="BBB7"
+^new2("NEWVAR",1002,"ind1002",1000)="BBB8"
+^new2("NEWVAR",1002,"ind1002",1001)="BBB9"
+^new2("NEWVAR",1002,"ind1002",1002)="BBB10"
+^new2("NEWVAR",1002,"ind1002",1003)="BBB11"
+^new2("NEWVAR",1002,"ind1002",1004)="BBB12"
+^new2("NEWVAR",1002,"ind1002",1005)="BBB13"
+^new2("NEWVAR",1003,"ind1003")="BBB1003"
+^new2("NEWVAR",1003,"ind1003",1000)="BBB14"
+^new2("NEWVAR",1003,"ind1003",1001)="BBB15"
+^new2("NEWVAR",1003,"ind1003",1002)="BBB16"
+^new2("NEWVAR",1003,"ind1003",1003)="BBB17"
+^new2("NEWVAR",1003,"ind1003",1004)="BBB18"
+^new2("NEWVAR",1003,"ind1003",1005)="BBB19"
+^new2("NEWVAR",1004,"ind1004",1000)="BBB20"
+^new2("NEWVAR",1004,"ind1004",1001)="BBB21"
+^new2("NEWVAR",1004,"ind1004",1002)="BBB22"
+^new2("NEWVAR",1004,"ind1004",1003)="BBB23"
+^new2("NEWVAR",1004,"ind1004",1004)="BBB24"
+^new2("NEWVAR",1004,"ind1004",1005)="BBB25"
+^new2("NEWVAR",1005,"ind1005",1000)="BBB26"
+^new2("NEWVAR",1005,"ind1005",1001)="BBB27"
+^new2("NEWVAR",1005,"ind1005",1002)="BBB28"
+^new2("NEWVAR",1005,"ind1005",1003)="BBB29"
+^new2("NEWVAR",1005,"ind1005",1004)="BBB30"
+^new2("NEWVAR",1005,"ind1005",1005)="BBB31"
+
+GTM>
+
+GTM>
+^new1("aaa","bbbb","cccc")="BBB1003"
+^new1("aaa","bbbb","cccc",1000)="BBB14"
+^new1("aaa","bbbb","cccc",1001)="BBB15"
+^new1("aaa","bbbb","cccc",1002)="BBB16"
+^new1("aaa","bbbb","cccc",1003)="BBB17"
+^new1("aaa","bbbb","cccc",1004)="BBB18"
+^new1("aaa","bbbb","cccc",1005)="BBB19"
+
+GTM>
+
+GTM>
+^new1("aaa","bbbb","cccc")="BBB1003"
+^new1("aaa","bbbb","cccc",1000)="BBB14"
+^new1("aaa","bbbb","cccc",1001)="BBB15"
+^new1("aaa","bbbb","cccc",1002)="BBB16"
+^new1("aaa","bbbb","cccc",1003)="BBB17"
+^new1("aaa","bbbb","cccc",1004)="BBB18"
+^new1("aaa","bbbb","cccc",1005)="BBB19"
+^new1("kkk",1000)="BBB2"
+^new1("kkk",1001)="BBB3"
+^new1("kkk",1002)="BBB4"
+^new1("kkk",1003)="BBB5"
+^new1("kkk",1004)="BBB6"
+^new1("kkk",1005)="BBB7"
+
+GTM>
+
+GTM>
+^new1("aaa","bbbb","cccc")="BBB1003"
+^new1("aaa","bbbb","cccc",1000)="BBB14"
+^new1("aaa","bbbb","cccc",1001)="BBB15"
+^new1("aaa","bbbb","cccc",1002)="BBB16"
+^new1("aaa","bbbb","cccc",1003)="BBB17"
+^new1("aaa","bbbb","cccc",1004)="BBB18"
+^new1("aaa","bbbb","cccc",1005)="BBB19"
+^new1("aaa","ind1004",1000)="BBB20"
+^new1("aaa","ind1004",1001)="BBB21"
+^new1("aaa","ind1004",1002)="BBB22"
+^new1("aaa","ind1004",1003)="BBB23"
+^new1("aaa","ind1004",1004)="BBB24"
+^new1("aaa","ind1004",1005)="BBB25"
+^new1("kkk",1000)="BBB2"
+^new1("kkk",1001)="BBB3"
+^new1("kkk",1002)="BBB4"
+^new1("kkk",1003)="BBB5"
+^new1("kkk",1004)="BBB6"
+^new1("kkk",1005)="BBB7"
+
+GTM>
+
+GTM>
+^new1("aaa","bbbb","cccc")="BBB1003"
+^new1("aaa","bbbb","cccc",1000)="BBB14"
+^new1("aaa","bbbb","cccc",1001)="BBB15"
+^new1("aaa","bbbb","cccc",1002)="BBB16"
+^new1("aaa","bbbb","cccc",1003)="BBB17"
+^new1("aaa","bbbb","cccc",1004)="BBB18"
+^new1("aaa","bbbb","cccc",1005)="BBB19"
+^new1("aaa","ind1004",1000)="BBB20"
+^new1("aaa","ind1004",1001)="BBB21"
+^new1("aaa","ind1004",1002)="BBB22"
+^new1("aaa","ind1004",1003)="BBB23"
+^new1("aaa","ind1004",1004)="BBB24"
+^new1("aaa","ind1004",1005)="BBB25"
+^new1("aaa","ind1005",1000)="BBB26"
+^new1("aaa","ind1005",1001)="BBB27"
+^new1("aaa","ind1005",1002)="BBB28"
+^new1("aaa","ind1005",1003)="BBB29"
+^new1("aaa","ind1005",1004)="BBB30"
+^new1("aaa","ind1005",1005)="BBB31"
+^new1("kkk",1000)="BBB2"
+^new1("kkk",1001)="BBB3"
+^new1("kkk",1002)="BBB4"
+^new1("kkk",1003)="BBB5"
+^new1("kkk",1004)="BBB6"
+^new1("kkk",1005)="BBB7"
+
+GTM>
+
+GTM>
+^new1("aaa","bbbb","cccc")="BBB1003"
+^new1("aaa","bbbb","cccc",1000)="BBB14"
+^new1("aaa","bbbb","cccc",1001)="BBB15"
+^new1("aaa","bbbb","cccc",1002)="BBB16"
+^new1("aaa","bbbb","cccc",1003)="BBB17"
+^new1("aaa","bbbb","cccc",1004)="BBB18"
+^new1("aaa","bbbb","cccc",1005)="BBB19"
+^new1("aaa","ind1004",1000)="BBB20"
+^new1("aaa","ind1004",1001)="BBB21"
+^new1("aaa","ind1004",1002)="BBB22"
+^new1("aaa","ind1004",1003)="BBB23"
+^new1("aaa","ind1004",1004)="BBB24"
+^new1("aaa","ind1004",1005)="BBB25"
+^new1("aaa","ind1005",1000)="BBB26"
+^new1("aaa","ind1005",1001)="BBB27"
+^new1("aaa","ind1005",1002)="BBB28"
+^new1("aaa","ind1005",1003)="BBB29"
+^new1("aaa","ind1005",1004)="BBB30"
+^new1("aaa","ind1005",1005)="BBB31"
+^new1("kkk",1000)="BBB2"
+^new1("kkk",1001)="BBB3"
+^new1("kkk",1002)="BBB4"
+^new1("kkk",1003)="BBB5"
+^new1("kkk",1004)="BBB6"
+^new1("kkk",1005)="BBB7"
+^new1("lll",1000)="BBB2"
+^new1("lll",1001)="BBB3"
+^new1("lll",1002)="BBB4"
+^new1("lll",1003)="BBB5"
+^new1("lll",1004)="BBB6"
+^new1("lll",1005)="BBB7"
+
+GTM>
+
+GTM>
+
+GTM>
+^new1("aaa","bbbb","cccc")="BBB1003"
+^new1("aaa","bbbb","cccc",1000)="BBB14"
+^new1("aaa","bbbb","cccc",1001)="BBB15"
+^new1("aaa","bbbb","cccc",1002)="BBB16"
+^new1("aaa","bbbb","cccc",1003)="BBB17"
+^new1("aaa","bbbb","cccc",1004)="BBB18"
+^new1("aaa","bbbb","cccc",1005)="BBB19"
+^new1("aaa","ind1004",1000)="BBB20"
+^new1("aaa","ind1004",1001)="BBB21"
+^new1("aaa","ind1004",1002)="BBB22"
+^new1("aaa","ind1004",1003)="BBB23"
+^new1("aaa","ind1004",1004)="BBB24"
+^new1("aaa","ind1004",1005)="BBB25"
+^new1("aaa","ind1005",1000)="BBB26"
+^new1("aaa","ind1005",1001)="BBB27"
+^new1("aaa","ind1005",1002)="BBB28"
+^new1("aaa","ind1005",1003)="BBB29"
+^new1("aaa","ind1005",1004)="BBB30"
+^new1("aaa","ind1005",1005)="BBB31"
+^new1("kkk",1000)="BBB2"
+^new1("kkk",1001)="BBB3"
+^new1("kkk",1002)="BBB4"
+^new1("kkk",1003)="BBB5"
+^new1("kkk",1004)="BBB6"
+^new1("kkk",1005)="BBB7"
+^new1("lll")="BBB16"
+^new1("lll",1000)="BBB2"
+^new1("lll",1001)="BBB3"
+^new1("lll",1002)="BBB4"
+^new1("lll",1003)="BBB5"
+^new1("lll",1004)="BBB6"
+^new1("lll",1005)="BBB7"
+^new1("lll0")="BBB4"
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+^new1longnamevariableswork4merge(1,2,4)="tmp"
+^new1longnamevariableswork4merge(1,2,"naked1")="naked reference into (1,2,""nakedx"")"
+^new1longnamevariableswork4merge(1,2,"naked2")="naked reference into (1,2,""nakedx"")"
+^new1longnamevariableswork4merge("aaa")="long global to global"
+^new1longnamevariableswork4merge("bbb")="long global to global"
+^new1longnamevariableswork4merge("ccc")="long global to global"
+
+GTM>
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####SOURCE_PATH##/mupip
+##GT.CM####SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##SUSPEND_OUTPUT  NON_REORG GT.CM NON_REPLIC
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REORG NON_REPLIC GT.CM
+##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  GT.CM
+##SOURCE_PATH##/mupip integ -REG *
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+##ALLOW_OUTPUT  GT.CM
+##SOURCE_PATH##/mupip integ a.dat
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REORG GT.CM NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

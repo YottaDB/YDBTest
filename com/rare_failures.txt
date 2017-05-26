@@ -1,0 +1,49 @@
+# This file contains a set of rare failures corresponding to tests and/or subtests.  When one of these rare
+# events happen, the "diff" file will point to the mrep that corresponds to the failure.  The intention is
+# to cut down on analysis time by identifying possible causes initially.  Note: the string to grep for must
+# be in the original diff file, either subtest.diff for a subtest or diff.log for a test without subtests.
+#
+# The entry for a test without subtests (for example "basic") needs to have a "." in the subtest column.
+# A "." can also be used to wildcard a test name.
+# Cores expected: indicates if cores are expected in this rare failure. 1 -> cores are expected ; 0 -> cores not expected so do not flag the failure as this rare faiure if cores are found
+#
+#--------------------------------------------------------------------------------------------------------------------------------------
+# Test			Subtest						String to grep			cores expected	mrep signature
+#--------------------------------------------------------------------------------------------------------------------------------------
+#
+stress_3		concurr_replwason				NOPREVLINK				0	<concurr_replwason_NOPREVLINK_error>
+gtcm_omi_0		basic						JNLUNXPCTERR				1	<C9D06_002290_GTMASSERT_mur_read_file_line_819>
+jnl_crash_2		crash_rec_ztp					NOPREVLINK				0	<daylight_time_change_failures>
+ideminter_rolrec_0	.						NOPREVLINK				0	<daylight_time_change_failures>
+set_jnl_0		autoswitch1					NOPREVLINK				0	<daylight_time_change_failures>
+set_jnl_0		autoswitch2					NOPREVLINK				0	<daylight_time_change_failures>
+set_jnl_0		autoswitchbigtp					NOPREVLINK				0	<daylight_time_change_failures>
+set_jnl_0		autoswitchtp					NOPREVLINK				0	<daylight_time_change_failures>
+set_jnl_0		autoswitch_chng_auto				NOPREVLINK				0	<daylight_time_change_failures>
+64bittn_0		mupip_journal					NOPREVLINK				0	<daylight_time_change_failures>
+rollback_A_1		C9901000794					NOPREVLINK				0	<daylight_time_change_failures>
+.			.						GTMSECSHRSRVF				0	<v53003_D9I10002703_blocks_access_to_gtmsecshr>
+v52000_0		D9G12002636					ALPHABET				0	<v52000_D9G12002636_no_interrupts>
+.			.						dollarh.c				1	<Assert_fail_dollarh_c_line_60>
+.			.						GDEPUT....GDEPUT			0	<prior_version_GDECHECK_errors_from_dbcreate>
+64bittn_0		D9F07002556					MUSTANDALONE				0	<C9G06_002797_ftokcollision>
+64bittn_0		read_only					MUSTANDALONE				0	<C9G06_002797_ftokcollision>
+dual_fail_1		dual_fail5					COMPARISON.FAILED			0	<dual_fail6_COMPARISON_FAILED>
+dual_fail_1		dual_fail6					COMPARISON.FAILED			0	<dual_fail6_COMPARISON_FAILED>
+tcpip_0			.						timed.out				0	<C9E04_002587_tcpbasic_timeouts>
+mupjnl_0		test_extract_show_multi				#PID.#					0	<mupjnl_pid_reuse>
+repl_misc_qual		.						gtmsource_readfiles.c 			0	<repl_misc_qual_JNLRECBADFMT_gtmsource_readfiles/resolution_v2>
+ideminter_rolrec_0	interrupted_rollback_or_recover			REQROLLBACK				1	<argumentless_rundown_removes_sem>
+v60001_0		gtm7443						non-zero.JRI				0	<system_load_related_test_failures/resolution_v3>
+64bittn_0		.						E.ERROR..certify.failed			0	<C9G06_002797_ftokcollision>
+locks_0			locks_main					4.PASS					0	<locks_timing_failure>
+locks_1			locks_main					4.PASS					0	<locks_timing_failure>
+.			.						closed.by.remote.host			0	<vas_access_issue>
+dbload			.						WAITTOOLONG				0	<pid_reuse>
+mvts									FAIL..OPT05.I-745..Randomness.of	0	<mvts_randomness_failure/resolution_v5.txt>
+msreplic_A_1		updateproc_nohang				killed.by.a.signal.11			1	<GTM_7910_mutex_deadlock_check>
+expect_0		ctrlc						spawn.id.exp..not.open			0	<expect_spawn_id_expNN_not_open>
+v62000_0		gtm8003						spawn.id.exp..not.open			0	<GTM8460>
+v54002_0		unlink						GTMPCAT-F-ASSERTFAIL			0	<system_load_related_test_failures/resolution_v7>
+.			.						failed.to.get.extents.info		0	<concurrent_backup_cp_extension>
+encryption_0		encr_env					TEST-E-FAIL..Test.case			0	<gtm_gpg_use_agent>

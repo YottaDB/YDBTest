@@ -1,0 +1,59 @@
+TEST DSE - INTEG COMMAND
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Checking integrity of block 0:
+
+  No errors detected.
+
+DSE> 
+Saving version 1 of block 4
+DSE> Warning:  removed a star record from the end of this block.
+DSE> 
+Checking integrity of block 4:
+%GTM-I-DBSTARSIZ,        4:1B3    1  Star record has wrong size
+
+DSE> 
+Restoring block 4 from version 1
+
+DSE> 
+Checking integrity of block 4:
+
+  No errors detected.
+
+##SUSPEND_OUTPUT  REPLIC
+DSE> DSE> ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+DSE> DSE> Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

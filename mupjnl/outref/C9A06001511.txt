@@ -1,0 +1,121 @@
+---------------------------------------------------------------
+TEST-E-DBCREATE, errors seen in the log file dbcreate.out:
+%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
+---------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+GTM>
+Show and Extract ......
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Extract successful
+PBLK record size is: [0x0040]
+PBLK record size is: [0x00c0]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x7f38]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x00c0]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x7f38]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x00c0]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x7f38]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x00c0]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x7f38]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x00c0]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x7f38]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x00c0]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x7f38]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x00c0]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x7f38]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x00c0]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x7f38]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x00c0]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x7f38]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x00c0]
+PBLK record size is: [0x0048]
+PBLK record size is: [0x0040]
+PBLK record size is: [0x0040]
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##TEST_PATH##/dbcreate.out
+%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup

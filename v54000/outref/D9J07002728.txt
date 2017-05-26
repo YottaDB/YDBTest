@@ -1,0 +1,20 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Start background job with compile error
+##TEST_AWK.1. [0-9]*
+# Wait until object file is created
+# Output from lsof means badcomp.o is open (and probably locked).  We expect no output.
+# Signal background zcompile job to finish
+
+GTM>
+
+GTM>
+
+GTM>
+[1]  + Done                          ##SOURCE_PATH##/mumps -direct << GTM_EOF >& badcomp.outx
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

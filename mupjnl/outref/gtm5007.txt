@@ -1,0 +1,27 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+# Case 1 : Set gtm_mupjnl_parallel to > 1 and explicitly pass -parallel=1 - Expect -parallel setting to override gtm_mupjnl_parallel
+# gtm_mupjnl_parallel is set to : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# journal recover
+# Do not expect any region prefix messages in the recover output
+# journal show
+# The region order in journal show output should be deterministic
+a.mjl
+b.mjl
+c.mjl
+mumps.mjl
+# Case 2 : Set gtm_mupjnl_parallel to 1 or unset it and explicitly pass -parallel=n - Expect -parallel setting to override gtm_mupjnl_parallel
+# The value passed to -parallel= is : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# Do journal recover with -parallel=n
+# Expect region prefix messages in the recover output
+# Do journal show with -parallel=n
+# The region order in journal show output should not be deterministic
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

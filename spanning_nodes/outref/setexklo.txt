@@ -1,0 +1,111 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-EXECOM, Executing command file ##TEST_AWK.*
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/c.dat
+Created file ##TEST_PATH##/mumps.dat
+%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/d.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
+Created file ##TEST_PATH##/d.dat
+Created file ##TEST_PATH##/e.dat
+Created file ##TEST_PATH##/f.dat
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> Error:  already in region: AREG
+DSE> DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+File  	##TEST_PATH##/b.dat
+Region	BREG
+
+DSE> DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+File  	##TEST_PATH##/c.dat
+Region	CREG
+
+DSE> DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+File  	##TEST_PATH##/d.dat
+Region	DREG
+
+DSE> DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+File  	##TEST_PATH##/e.dat
+Region	EREG
+
+DSE> DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+File  	##TEST_PATH##/f.dat
+Region	FREG
+
+DSE> DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> %GTM-I-RECORDSTAT, ^a:	  Key cnt: 120  max subsc len: 12  max rec len: 1048576  max node len: 16368
+%GTM-I-RECORDSTAT, ^am:	  Key cnt: 120  max subsc len: 13  max rec len: 1048576  max node len: 16368
+%GTM-I-RECORDSTAT, ^b:	  Key cnt: 120  max subsc len: 12  max rec len: 1048576  max node len: 2032
+%GTM-I-RECORDSTAT, ^bm:	  Key cnt: 120  max subsc len: 13  max rec len: 1048576  max node len: 2032
+%GTM-I-RECORDSTAT, ^c:	  Key cnt: 120  max subsc len: 12  max rec len: 1048576  max node len: 8176
+%GTM-I-RECORDSTAT, ^cm:	  Key cnt: 120  max subsc len: 13  max rec len: 1048576  max node len: 8176
+%GTM-I-RECORDSTAT, ^d:	  Key cnt: 120  max subsc len: 12  max rec len: 1048576  max node len: 32752
+%GTM-I-RECORDSTAT, ^dm:	  Key cnt: 120  max subsc len: 13  max rec len: 1048576  max node len: 32752
+%GTM-I-RECORDSTAT, ^e:	  Key cnt: 120  max subsc len: 12  max rec len: 1048576  max node len: 1008
+%GTM-I-RECORDSTAT, ^em:	  Key cnt: 120  max subsc len: 13  max rec len: 1048576  max node len: 1008
+%GTM-I-RECORDSTAT, ^f:	  Key cnt: 120  max subsc len: 12  max rec len: 1048576  max node len: 4080
+%GTM-I-RECORDSTAT, ^fm:	  Key cnt: 120  max subsc len: 13  max rec len: 1048576  max node len: 4080
+%GTM-I-RECORDSTAT, ^g:	  Key cnt: 120  max subsc len: 12  max rec len: 1048576  max node len: 496
+%GTM-I-RECORDSTAT, ^gm:	  Key cnt: 120  max subsc len: 13  max rec len: 1048576  max node len: 496
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1680  max subsc len: 13  max rec len: 1048576  max node len: 32752
+1682
+%GTM-W-NOSELECT, None of the selected variables exist -- halting
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 1680  Max Subsc Len: 13  Max Data Len: 1048576
+Last LOAD record number: 1682
+
+Data verification PASS
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 120  max subsc len: 12  max rec len: 1048576  max node len: 16368
+%GTM-I-RECORDSTAT, ^am:	  Key cnt: 120  max subsc len: 13  max rec len: 1048576  max node len: 16368
+%GTM-I-RECORDSTAT, ^b:	  Key cnt: 120  max subsc len: 12  max rec len: 1048576  max node len: 2032
+%GTM-I-RECORDSTAT, ^bm:	  Key cnt: 120  max subsc len: 13  max rec len: 1048576  max node len: 2032
+%GTM-I-RECORDSTAT, ^c:	  Key cnt: 120  max subsc len: 12  max rec len: 1048576  max node len: 8176
+%GTM-I-RECORDSTAT, ^cm:	  Key cnt: 120  max subsc len: 13  max rec len: 1048576  max node len: 8176
+%GTM-I-RECORDSTAT, ^d:	  Key cnt: 120  max subsc len: 12  max rec len: 1048576  max node len: 32752
+%GTM-I-RECORDSTAT, ^dm:	  Key cnt: 120  max subsc len: 13  max rec len: 1048576  max node len: 32752
+%GTM-I-RECORDSTAT, ^e:	  Key cnt: 120  max subsc len: 12  max rec len: 1048576  max node len: 1008
+%GTM-I-RECORDSTAT, ^em:	  Key cnt: 120  max subsc len: 13  max rec len: 1048576  max node len: 1008
+%GTM-I-RECORDSTAT, ^f:	  Key cnt: 120  max subsc len: 12  max rec len: 1048576  max node len: 4080
+%GTM-I-RECORDSTAT, ^fm:	  Key cnt: 120  max subsc len: 13  max rec len: 1048576  max node len: 4080
+%GTM-I-RECORDSTAT, ^g:	  Key cnt: 120  max subsc len: 12  max rec len: 1048576  max node len: 496
+%GTM-I-RECORDSTAT, ^gm:	  Key cnt: 120  max subsc len: 13  max rec len: 1048576  max node len: 496
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1680  max subsc len: 13  max rec len: 1048576  max node len: 32752
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

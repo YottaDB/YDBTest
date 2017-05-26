@@ -1,0 +1,30 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+
+###################################################################
+Start few mumps processes
+###################################################################
+
+
+###################################################################
+Using gtmtest1 as the other user, set gtm_snaptmpdir such that, it is accessible only by gtmtest1 and not by the current user
+With this setup, start ONLINE INTEG as gtmtest1 user.
+###################################################################
+
+
+###################################################################
+REGSSFAIL error seen during ONLINE INTEG run as expected
+###################################################################
+
+
+###################################################################
+SSFILOPERR errors seen during ONLINE INTEG run as expected
+###################################################################
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,44 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+In the init routine
+File trivial.trg, Line 1: Added SET trigger on ^a named trivial
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+###################################################################
+###################################################################
+test1^ztrignullsubs
+;trigger name: trivial (region DEFAULT)  cycle: 1
++^a(acn=*) -name=trivial -commands=S -xecute="set x=2"
+###################################################################
+###################################################################
+test2^ztrignullsubs
+;trigger name: trivial (region DEFAULT)  cycle: 1
++^a(acn=*) -name=trivial -commands=S -xecute="set x=2"
+###################################################################
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+###################################################################
+test3^ztrignullsubs
+^GBL("SUBS")="VALUE"
+;trigger name: trivial (region DEFAULT)  cycle: 1
++^a(acn=*) -name=trivial -commands=S -xecute="set x=2"
+###################################################################
+###################################################################
+test4^ztrignullsubs
+;trigger name: trivial (region DEFAULT)  cycle: 1
++^a(acn=*) -name=trivial -commands=S -xecute="set x=2"
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

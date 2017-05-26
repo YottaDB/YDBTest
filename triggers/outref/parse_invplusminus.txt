@@ -1,0 +1,87 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+=======================
+Invalid use of +/-
+load trigger file by file with ztrigger
+File invalid_plusminus.trg, Line 1: Invalid trigger NAME string: "+"
+File invalid_plusminus.trg, Line 2: Error : Missing global name:
+"-"
+File invalid_plusminus.trg, Line 3: Error : Missing global name:
+""
+File invalid_plusminus.trg, Line 4: Error : Invalid global name:
+"^"
+File invalid_plusminus.trg, Line 5: Error : Missing global name:
+" *"
+File invalid_plusminus.trg, Line 6: Invalid trigger NAME string: ""
+File invalid_plusminus.trg, Line 7: Invalid trigger NAME string: " *"
+File invalid_plusminus.trg, Line 8: Error : Invalid global name:
+"^*"
+File invalid_plusminus.trg, Line 9: Error : Invalid global name:
+"^ *"
+File invalid_plusminus.trg, Line 10: Error : Invalid global name:
+"^ a"
+File invalid_plusminus.trg, Line 11: Invalid trigger NAME string: "a^"
+File invalid_plusminus.trg, Line 12: Invalid trigger NAME string: "a^*"
+=========================================
+12 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+load trigger file by file with ztrigger
+File invalid_plusminus.trg, Line 1: Invalid trigger NAME string: "+"
+File invalid_plusminus.trg, Line 2: Error : Missing global name:
+"-"
+File invalid_plusminus.trg, Line 3: Error : Missing global name:
+""
+File invalid_plusminus.trg, Line 4: Error : Invalid global name:
+"^"
+File invalid_plusminus.trg, Line 5: Error : Missing global name:
+" *"
+File invalid_plusminus.trg, Line 6: Invalid trigger NAME string: ""
+File invalid_plusminus.trg, Line 7: Invalid trigger NAME string: " *"
+File invalid_plusminus.trg, Line 8: Error : Invalid global name:
+"^*"
+File invalid_plusminus.trg, Line 9: Error : Invalid global name:
+"^ *"
+File invalid_plusminus.trg, Line 10: Error : Invalid global name:
+"^ a"
+File invalid_plusminus.trg, Line 11: Invalid trigger NAME string: "a^"
+File invalid_plusminus.trg, Line 12: Invalid trigger NAME string: "a^*"
+=========================================
+12 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+load trigger file line by line with ztrigger
+12 triggers should get 12 failures
+12
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

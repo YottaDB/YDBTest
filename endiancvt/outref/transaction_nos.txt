@@ -1,0 +1,242 @@
+
+## Foreach tn (0, 4G-128M, 4G, 4G+128M)
+##   Create a V5 database
+##   DSE change -file -curr=<tn>
+##   Populate the database
+##   mupip endiancvt mumps.dat
+##   copy mumps.dat to the other endian machine
+##   In the remote machine
+##    MUPIP INTEG REG *
+##    Repeat the same updates on the converted database
+##    MUPIP INTEG REG *
+##    dbcheck
+## end
+
+# Transaction Number : 1
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Set the transaction number to 1
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+# Populate the databse
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Endian convert the database
+##FILTERED##Converting database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+Converting in place - database will be damaged by an abnormal termination
+You must have a backup before proceeding
+Proceed [yes/no] ?
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+# Copy the converted database to the remote machine, do the same updates and do an integ/application check
+# Run mupip integ, do the same set of updates and run mupip integ again
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory           2               4           [45]....            NA
+Index               3              18           8.854             2
+Data               18             850          92.447            17
+Free               77              NA              NA            NA
+Total             100             872              NA            19
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory           2               4           [45]....            NA
+Index               3              18           8.854             2
+Data               18             850          92.447            17
+Free               77              NA              NA            NA
+Total             100             872              NA            19
+
+#######################################################################
+
+# Transaction Number : F8000000
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Set the transaction number to F8000000
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+# Populate the databse
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Endian convert the database
+##FILTERED##Converting database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+Converting in place - database will be damaged by an abnormal termination
+You must have a backup before proceeding
+Proceed [yes/no] ?
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+# Copy the converted database to the remote machine, do the same updates and do an integ/application check
+# Run mupip integ, do the same set of updates and run mupip integ again
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory           2               4           [45]....            NA
+Index               3              18           8.854             2
+Data               18             850          92.447            17
+Free               77              NA              NA            NA
+Total             100             872              NA            19
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory           2               4           [45]....            NA
+Index               3              18           8.854             2
+Data               18             850          92.447            17
+Free               77              NA              NA            NA
+Total             100             872              NA            19
+
+#######################################################################
+
+# Transaction Number : FFFFFFFF
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Set the transaction number to FFFFFFFF
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+# Populate the databse
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Endian convert the database
+##FILTERED##Converting database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+Converting in place - database will be damaged by an abnormal termination
+You must have a backup before proceeding
+Proceed [yes/no] ?
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+# Copy the converted database to the remote machine, do the same updates and do an integ/application check
+# Run mupip integ, do the same set of updates and run mupip integ again
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory           2               4           [45]....            NA
+Index               3              18           8.854             2
+Data               18             850          92.447            17
+Free               77              NA              NA            NA
+Total             100             872              NA            19
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory           2               4           [45]....            NA
+Index               3              18           8.854             2
+Data               18             850          92.447            17
+Free               77              NA              NA            NA
+Total             100             872              NA            19
+
+#######################################################################
+
+# Transaction Number : 108000000
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Set the transaction number to 108000000
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+# Populate the databse
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Endian convert the database
+##FILTERED##Converting database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+Converting in place - database will be damaged by an abnormal termination
+You must have a backup before proceeding
+Proceed [yes/no] ?
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+# Copy the converted database to the remote machine, do the same updates and do an integ/application check
+# Run mupip integ, do the same set of updates and run mupip integ again
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory           2               4           [45]....            NA
+Index               3              18           8.854             2
+Data               18             850          92.447            17
+Free               77              NA              NA            NA
+Total             100             872              NA            19
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory           2               4           [45]....            NA
+Index               3              18           8.854             2
+Data               18             850          92.447            17
+Free               77              NA              NA            NA
+Total             100             872              NA            19
+
+#######################################################################
+

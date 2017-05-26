@@ -1,0 +1,35 @@
+# initially have journal pool and receive pool size at 1Mb
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+# Create a HUGE update transaction (approx 2Mb jnl size) on the primary
+# Wait for connection reset string to appear in the source server log
+# Wait for receiver server exiting message to appear in the receiver server log
+# Make sure REPLTRANS2BIG error exists in receiver server log file
+----------
+Error GTM-E-REPLTRANS2BIG seen in ##REMOTE_TEST_PATH##/##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+##TEST_AWK.GTM-E-REPLTRANS2BIG, Transaction 0000000000000001 of size [0-9]* .pre-filter size 0. too large to be accommodated in the Receive pool
+----------
+# Shut down receiver side (update process etc.)
+# reset receive pool size to 32Mb to accommodate the HUGE transaction
+# Check that HUGE transaction did get replicated finally
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Check that uncompressed message is greater than 1Mb in size. If yes PASS message is NOT displayed.
+# If run with non-zero gtm_zlib_cmp_level, check that compressed message is less than 1Mb. If yes PASS message is NOT displayed.

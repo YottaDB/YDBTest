@@ -1,0 +1,13 @@
+##TEST_AWK# Is db_init\(\) retry limit is reduced to 1\? \[1 if yes, 0 otherwise\]: [01]
+# Launching 2 jobs.
+
+GTM>
+
+GTM>
+# Launching a DSE process which will hold the ftok semaphore
+# Launching another DSE process which will bypass the ftok semaphore
+# Stopping mumps processes
+# Bypasser DSE process should continue with db_init. Verify if this is done
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

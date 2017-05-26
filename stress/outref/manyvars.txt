@@ -1,0 +1,79 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+cnt=5000
+cnt=10000
+cnt=15000
+cnt=20000
+cnt=25000
+cnt=30000
+cnt=35000
+cnt=40000
+cnt=45000
+cnt=50000
+set PASS
+Total Names = 50000
+
+GTM>
+cnt=5000
+cnt=10000
+cnt=15000
+cnt=20000
+cnt=25000
+cnt=30000
+cnt=35000
+cnt=40000
+cnt=45000
+cnt=50000
+ver PASS
+Total Names = 50000
+
+GTM>
+cnt=5000
+cnt=10000
+set PASS
+Total Names = 10000
+
+GTM>
+cnt=5000
+cnt=10000
+ver PASS
+Total Names = 10000
+
+GTM>
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

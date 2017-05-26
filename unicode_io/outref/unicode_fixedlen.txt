@@ -1,0 +1,14 @@
+setenv gtm_chset UTF-8
+unset echo
+
+GTM>
+do ^unicodefixedlen("UTF-8")
+
+GTM>
+Will test a valid fixed len (1048576)
+The length of variable line read was:8
+line="｀ａｂｃｄｅｆｇ"
+The length of variable line read was:15
+line="生まれながらにして自由であり、"
+Will test an invalid fixed len (1048577)
+150377474,unicodefixedlen+18^unicodefixedlen,%GTM-E-RDFLTOOLONG, Length specified for fixed length read exceeds the maximum string size

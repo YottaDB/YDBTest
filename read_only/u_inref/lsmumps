@@ -1,0 +1,7 @@
+#!/usr/local/bin/tcsh -f
+if (-f mumps.dat) then
+	ls -l mumps.dat | $tst_awk '{print($1,$NF);}'
+endif
+if (-f mumps.mjl) then
+	ls -l mumps.mjl | $tst_awk '{print($1,$NF);}'
+endif

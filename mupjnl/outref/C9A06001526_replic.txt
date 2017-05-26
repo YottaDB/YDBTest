@@ -1,0 +1,71 @@
+Testing that replic related callers of jnl_ensure_open() handle non-return success
+On error, journaling should be ##TEST_AWK.*
+Testing for sr_port/mur_output_record.c
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##TEST_AWKTime written into time1: .............. ..-...-20.. ..:..:..
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-MUJNLPREVGEN, Previous generation journal file ##REMOTE_TEST_PATH##/mumps.mjl_##TEST_AWK............. included for database file ##REMOTE_TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-E-JNLFILOPN, Error opening journal file ##REMOTE_TEST_PATH##/mumps.mjl for database file ##REMOTE_TEST_PATH##/mumps.dat
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+Testing for sr_port/updproc.c
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+TEST-E-RF_SYNC Receiver server/Update process server died
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+Testing for sr_port/gtmsource_ctl_init.c
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+
+GTM>
+##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHUTDOWN operation on source server pid [##PID##] for secondary instance [INSTANCE2]
+##FILTERED##... ... .. ..:..:.. 20.. : Waiting for upto XXX seconds for the source server to shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Not deleting jnlpool ipcs. 1 processes still attached to jnlpool
+
+GTM>
+
+GTM>
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE2]
+TEST-E-RF_SYNC Receiver server/Update process server died
+TEST-E-RF_SYNC Primary server died
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##FILTERED##SRC_##TIMESTAMP##.log:%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
+##FILTERED##RCVR_##TIMESTAMP##.log.updproc:%GTM-E-JNLFILOPN, Error opening journal file ##REMOTE_TEST_PATH##/mumps.mjl for database file ##REMOTE_TEST_PATH##/mumps.dat

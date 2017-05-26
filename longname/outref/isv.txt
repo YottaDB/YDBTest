@@ -1,0 +1,30 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+Testing Intrinsic special variables
+
+GTM>
+#############################################
+Test $reference
+
+^a234567890123456789012345678901
+^a234567890123456789012345678901(1)
+^a234567890123456789012345678901(2)
+^a234567890123456789012345678901(3,1)
+$GET(^a23456789012345678901234567890a(3,"subca",1))=
+^a23456789012345678901234567890a(3,"subsca",2)
+^a23456789012345678901234567890a(3,"subsca",2,3,"abc")
+^gbl
+#############################################
+Test $zsource
+
+x234567890123456789012345678901a
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

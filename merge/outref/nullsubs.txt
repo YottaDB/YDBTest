@@ -1,0 +1,2021 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+null.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+null.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+
+Caution: Database Block Certification Has Been Enabled
+
+GTM>
+d ^nullfill("set")
+
+set Started
+
+set Finished
+
+GTM>
+d ^nullntp
+
+
+Starting nullntp for Non-TP
+ZWR ^varlongvariablenamesworkfornull
+^varlongvariablenamesworkfornull(-100,100,-100)=1
+^varlongvariablenamesworkfornull(-100,100,-3.14285714285714285)=2
+^varlongvariablenamesworkfornull(-100,100,0)=3
+^varlongvariablenamesworkfornull(-100,100,3.14285714285714285)=4
+^varlongvariablenamesworkfornull(-100,100,100)=5
+^varlongvariablenamesworkfornull(-100,100,"")=6
+^varlongvariablenamesworkfornull(-100,100,$C(0))=7
+^varlongvariablenamesworkfornull(-100,100,$C(1,2,3,4))=8
+^varlongvariablenamesworkfornull(-100,100," abcdefg ")=9
+^varlongvariablenamesworkfornull(-100,"",-100)=10
+^varlongvariablenamesworkfornull(-100,"",-3.14285714285714285)=11
+^varlongvariablenamesworkfornull(-100,"",0)=12
+^varlongvariablenamesworkfornull(-100,"",3.14285714285714285)=13
+^varlongvariablenamesworkfornull(-100,"",100)=14
+^varlongvariablenamesworkfornull(-100,"","")=15
+^varlongvariablenamesworkfornull(-100,"",$C(0))=16
+^varlongvariablenamesworkfornull(-100,"",$C(1,2,3,4))=17
+^varlongvariablenamesworkfornull(-100,""," abcdefg ")=18
+^varlongvariablenamesworkfornull(-100,$C(0),-100)=19
+^varlongvariablenamesworkfornull(-100,$C(0),-3.14285714285714285)=20
+^varlongvariablenamesworkfornull(-100,$C(0),0)=21
+^varlongvariablenamesworkfornull(-100,$C(0),3.14285714285714285)=22
+^varlongvariablenamesworkfornull(-100,$C(0),100)=23
+^varlongvariablenamesworkfornull(-100,$C(0),"")=24
+^varlongvariablenamesworkfornull(-100,$C(0),$C(0))=25
+^varlongvariablenamesworkfornull(-100,$C(0),$C(1,2,3,4))=26
+^varlongvariablenamesworkfornull(-100,$C(0)," abcdefg ")=27
+^varlongvariablenamesworkfornull(-3.14285714285714285,100,-100)=28
+^varlongvariablenamesworkfornull(-3.14285714285714285,100,-3.14285714285714285)=29
+^varlongvariablenamesworkfornull(-3.14285714285714285,100,0)=30
+^varlongvariablenamesworkfornull(-3.14285714285714285,100,3.14285714285714285)=31
+^varlongvariablenamesworkfornull(-3.14285714285714285,100,100)=32
+^varlongvariablenamesworkfornull(-3.14285714285714285,100,"")=33
+^varlongvariablenamesworkfornull(-3.14285714285714285,100,$C(0))=34
+^varlongvariablenamesworkfornull(-3.14285714285714285,100,$C(1,2,3,4))=35
+^varlongvariablenamesworkfornull(-3.14285714285714285,100," abcdefg ")=36
+^varlongvariablenamesworkfornull(-3.14285714285714285,"",-100)=37
+^varlongvariablenamesworkfornull(-3.14285714285714285,"",-3.14285714285714285)=38
+^varlongvariablenamesworkfornull(-3.14285714285714285,"",0)=39
+^varlongvariablenamesworkfornull(-3.14285714285714285,"",3.14285714285714285)=40
+^varlongvariablenamesworkfornull(-3.14285714285714285,"",100)=41
+^varlongvariablenamesworkfornull(-3.14285714285714285,"","")=42
+^varlongvariablenamesworkfornull(-3.14285714285714285,"",$C(0))=43
+^varlongvariablenamesworkfornull(-3.14285714285714285,"",$C(1,2,3,4))=44
+^varlongvariablenamesworkfornull(-3.14285714285714285,""," abcdefg ")=45
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),-100)=46
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),-3.14285714285714285)=47
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),0)=48
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),3.14285714285714285)=49
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),100)=50
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),"")=51
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),$C(0))=52
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),$C(1,2,3,4))=53
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0)," abcdefg ")=54
+^varlongvariablenamesworkfornull(0,100,-100)=55
+^varlongvariablenamesworkfornull(0,100,-3.14285714285714285)=56
+^varlongvariablenamesworkfornull(0,100,0)=57
+^varlongvariablenamesworkfornull(0,100,3.14285714285714285)=58
+^varlongvariablenamesworkfornull(0,100,100)=59
+^varlongvariablenamesworkfornull(0,100,"")=60
+^varlongvariablenamesworkfornull(0,100,$C(0))=61
+^varlongvariablenamesworkfornull(0,100,$C(1,2,3,4))=62
+^varlongvariablenamesworkfornull(0,100," abcdefg ")=63
+^varlongvariablenamesworkfornull(0,"",-100)=64
+^varlongvariablenamesworkfornull(0,"",-3.14285714285714285)=65
+^varlongvariablenamesworkfornull(0,"",0)=66
+^varlongvariablenamesworkfornull(0,"",0,"")="null,0,null,0"
+^varlongvariablenamesworkfornull(0,"",3.14285714285714285)=67
+^varlongvariablenamesworkfornull(0,"",100)=68
+^varlongvariablenamesworkfornull(0,"","")=69
+^varlongvariablenamesworkfornull(0,"",$C(0))=70
+^varlongvariablenamesworkfornull(0,"",$C(1,2,3,4))=71
+^varlongvariablenamesworkfornull(0,""," abcdefg ")=72
+^varlongvariablenamesworkfornull(0,$C(0),-100)=73
+^varlongvariablenamesworkfornull(0,$C(0),-3.14285714285714285)=74
+^varlongvariablenamesworkfornull(0,$C(0),0)=75
+^varlongvariablenamesworkfornull(0,$C(0),3.14285714285714285)=76
+^varlongvariablenamesworkfornull(0,$C(0),100)=77
+^varlongvariablenamesworkfornull(0,$C(0),"")=78
+^varlongvariablenamesworkfornull(0,$C(0),$C(0))=79
+^varlongvariablenamesworkfornull(0,$C(0),$C(1,2,3,4))=80
+^varlongvariablenamesworkfornull(0,$C(0)," abcdefg ")=81
+^varlongvariablenamesworkfornull(3.14285714285714285,100,-100)=82
+^varlongvariablenamesworkfornull(3.14285714285714285,100,-3.14285714285714285)=83
+^varlongvariablenamesworkfornull(3.14285714285714285,100,0)=84
+^varlongvariablenamesworkfornull(3.14285714285714285,100,3.14285714285714285)=85
+^varlongvariablenamesworkfornull(3.14285714285714285,100,100)=86
+^varlongvariablenamesworkfornull(3.14285714285714285,100,"")=87
+^varlongvariablenamesworkfornull(3.14285714285714285,100,$C(0))=88
+^varlongvariablenamesworkfornull(3.14285714285714285,100,$C(1,2,3,4))=89
+^varlongvariablenamesworkfornull(3.14285714285714285,100," abcdefg ")=90
+^varlongvariablenamesworkfornull(3.14285714285714285,"",-100)=91
+^varlongvariablenamesworkfornull(3.14285714285714285,"",-3.14285714285714285)=92
+^varlongvariablenamesworkfornull(3.14285714285714285,"",0)=93
+^varlongvariablenamesworkfornull(3.14285714285714285,"",3.14285714285714285)=94
+^varlongvariablenamesworkfornull(3.14285714285714285,"",100)=95
+^varlongvariablenamesworkfornull(3.14285714285714285,"","")=96
+^varlongvariablenamesworkfornull(3.14285714285714285,"",$C(0))=97
+^varlongvariablenamesworkfornull(3.14285714285714285,"",$C(1,2,3,4))=98
+^varlongvariablenamesworkfornull(3.14285714285714285,""," abcdefg ")=99
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0),-100)=100
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0),-3.14285714285714285)=101
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0),0)=102
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0),3.14285714285714285)=103
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0),100)=104
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0),"")=105
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0),$C(0))=106
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0),$C(1,2,3,4))=107
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0)," abcdefg ")=108
+^varlongvariablenamesworkfornull(100,100,-100)=109
+^varlongvariablenamesworkfornull(100,100,-3.14285714285714285)=110
+^varlongvariablenamesworkfornull(100,100,0)=111
+^varlongvariablenamesworkfornull(100,100,3.14285714285714285)=112
+^varlongvariablenamesworkfornull(100,100,100)=113
+^varlongvariablenamesworkfornull(100,100,"")=114
+^varlongvariablenamesworkfornull(100,100,$C(0))=115
+^varlongvariablenamesworkfornull(100,100,$C(1,2,3,4))=116
+^varlongvariablenamesworkfornull(100,100," abcdefg ")=117
+^varlongvariablenamesworkfornull(100,"",-100)=118
+^varlongvariablenamesworkfornull(100,"",-3.14285714285714285)=119
+^varlongvariablenamesworkfornull(100,"",0)=120
+^varlongvariablenamesworkfornull(100,"",3.14285714285714285)=121
+^varlongvariablenamesworkfornull(100,"",100)=122
+^varlongvariablenamesworkfornull(100,"","")=123
+^varlongvariablenamesworkfornull(100,"",$C(0))=124
+^varlongvariablenamesworkfornull(100,"",$C(1,2,3,4))=125
+^varlongvariablenamesworkfornull(100,""," abcdefg ")=126
+^varlongvariablenamesworkfornull(100,$C(0),-100)=127
+^varlongvariablenamesworkfornull(100,$C(0),-3.14285714285714285)=128
+^varlongvariablenamesworkfornull(100,$C(0),0)=129
+^varlongvariablenamesworkfornull(100,$C(0),3.14285714285714285)=130
+^varlongvariablenamesworkfornull(100,$C(0),100)=131
+^varlongvariablenamesworkfornull(100,$C(0),"")=132
+^varlongvariablenamesworkfornull(100,$C(0),$C(0))=133
+^varlongvariablenamesworkfornull(100,$C(0),$C(1,2,3,4))=134
+^varlongvariablenamesworkfornull(100,$C(0)," abcdefg ")=135
+^varlongvariablenamesworkfornull("")="null"
+^varlongvariablenamesworkfornull("",100,-100)=136
+^varlongvariablenamesworkfornull("",100,-3.14285714285714285)=137
+^varlongvariablenamesworkfornull("",100,0)=138
+^varlongvariablenamesworkfornull("",100,3.14285714285714285)=139
+^varlongvariablenamesworkfornull("",100,100)=140
+^varlongvariablenamesworkfornull("",100,"")=141
+^varlongvariablenamesworkfornull("",100,$C(0))=142
+^varlongvariablenamesworkfornull("",100,$C(1,2,3,4))=143
+^varlongvariablenamesworkfornull("",100," abcdefg ")=144
+^varlongvariablenamesworkfornull("","",-100)=145
+^varlongvariablenamesworkfornull("","",-3.14285714285714285)=146
+^varlongvariablenamesworkfornull("","",0)=147
+^varlongvariablenamesworkfornull("","",3.14285714285714285)=148
+^varlongvariablenamesworkfornull("","",100)=149
+^varlongvariablenamesworkfornull("","","")=150
+^varlongvariablenamesworkfornull("","",$C(0))=151
+^varlongvariablenamesworkfornull("","",$C(1,2,3,4))=152
+^varlongvariablenamesworkfornull("",""," abcdefg ")=153
+^varlongvariablenamesworkfornull("",$C(0),-100)=154
+^varlongvariablenamesworkfornull("",$C(0),-3.14285714285714285)=155
+^varlongvariablenamesworkfornull("",$C(0),0)=156
+^varlongvariablenamesworkfornull("",$C(0),3.14285714285714285)=157
+^varlongvariablenamesworkfornull("",$C(0),100)=158
+^varlongvariablenamesworkfornull("",$C(0),"")=159
+^varlongvariablenamesworkfornull("",$C(0),$C(0))=160
+^varlongvariablenamesworkfornull("",$C(0),$C(1,2,3,4))=161
+^varlongvariablenamesworkfornull("",$C(0)," abcdefg ")=162
+^varlongvariablenamesworkfornull($C(0),100,-100)=163
+^varlongvariablenamesworkfornull($C(0),100,-3.14285714285714285)=164
+^varlongvariablenamesworkfornull($C(0),100,0)=165
+^varlongvariablenamesworkfornull($C(0),100,3.14285714285714285)=166
+^varlongvariablenamesworkfornull($C(0),100,100)=167
+^varlongvariablenamesworkfornull($C(0),100,"")=168
+^varlongvariablenamesworkfornull($C(0),100,$C(0))=169
+^varlongvariablenamesworkfornull($C(0),100,$C(1,2,3,4))=170
+^varlongvariablenamesworkfornull($C(0),100," abcdefg ")=171
+^varlongvariablenamesworkfornull($C(0),"",-100)=172
+^varlongvariablenamesworkfornull($C(0),"",-3.14285714285714285)=173
+^varlongvariablenamesworkfornull($C(0),"",0)=174
+^varlongvariablenamesworkfornull($C(0),"",3.14285714285714285)=175
+^varlongvariablenamesworkfornull($C(0),"",100)=176
+^varlongvariablenamesworkfornull($C(0),"","")=177
+^varlongvariablenamesworkfornull($C(0),"",$C(0))=178
+^varlongvariablenamesworkfornull($C(0),"",$C(1,2,3,4))=179
+^varlongvariablenamesworkfornull($C(0),""," abcdefg ")=180
+^varlongvariablenamesworkfornull($C(0),$C(0),-100)=181
+^varlongvariablenamesworkfornull($C(0),$C(0),-3.14285714285714285)=182
+^varlongvariablenamesworkfornull($C(0),$C(0),0)=183
+^varlongvariablenamesworkfornull($C(0),$C(0),3.14285714285714285)=184
+^varlongvariablenamesworkfornull($C(0),$C(0),100)=185
+^varlongvariablenamesworkfornull($C(0),$C(0),"")=186
+^varlongvariablenamesworkfornull($C(0),$C(0),$C(0))=187
+^varlongvariablenamesworkfornull($C(0),$C(0),$C(1,2,3,4))=188
+^varlongvariablenamesworkfornull($C(0),$C(0)," abcdefg ")=189
+^varlongvariablenamesworkfornull($C(1,2,3,4),100,-100)=190
+^varlongvariablenamesworkfornull($C(1,2,3,4),100,-3.14285714285714285)=191
+^varlongvariablenamesworkfornull($C(1,2,3,4),100,0)=192
+^varlongvariablenamesworkfornull($C(1,2,3,4),100,3.14285714285714285)=193
+^varlongvariablenamesworkfornull($C(1,2,3,4),100,100)=194
+^varlongvariablenamesworkfornull($C(1,2,3,4),100,"")=195
+^varlongvariablenamesworkfornull($C(1,2,3,4),100,$C(0))=196
+^varlongvariablenamesworkfornull($C(1,2,3,4),100,$C(1,2,3,4))=197
+^varlongvariablenamesworkfornull($C(1,2,3,4),100," abcdefg ")=198
+^varlongvariablenamesworkfornull($C(1,2,3,4),"",-100)=199
+^varlongvariablenamesworkfornull($C(1,2,3,4),"",-3.14285714285714285)=200
+^varlongvariablenamesworkfornull($C(1,2,3,4),"",0)=201
+^varlongvariablenamesworkfornull($C(1,2,3,4),"",3.14285714285714285)=202
+^varlongvariablenamesworkfornull($C(1,2,3,4),"",100)=203
+^varlongvariablenamesworkfornull($C(1,2,3,4),"","")=204
+^varlongvariablenamesworkfornull($C(1,2,3,4),"",$C(0))=205
+^varlongvariablenamesworkfornull($C(1,2,3,4),"",$C(1,2,3,4))=206
+^varlongvariablenamesworkfornull($C(1,2,3,4),""," abcdefg ")=207
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),-100)=208
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),-3.14285714285714285)=209
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),0)=210
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),3.14285714285714285)=211
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),100)=212
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),"")=213
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),$C(0))=214
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),$C(1,2,3,4))=215
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0)," abcdefg ")=216
+^varlongvariablenamesworkfornull(" abcdefg ",100,-100)=217
+^varlongvariablenamesworkfornull(" abcdefg ",100,-3.14285714285714285)=218
+^varlongvariablenamesworkfornull(" abcdefg ",100,0)=219
+^varlongvariablenamesworkfornull(" abcdefg ",100,3.14285714285714285)=220
+^varlongvariablenamesworkfornull(" abcdefg ",100,100)=221
+^varlongvariablenamesworkfornull(" abcdefg ",100,"")=222
+^varlongvariablenamesworkfornull(" abcdefg ",100,$C(0))=223
+^varlongvariablenamesworkfornull(" abcdefg ",100,$C(1,2,3,4))=224
+^varlongvariablenamesworkfornull(" abcdefg ",100," abcdefg ")=225
+^varlongvariablenamesworkfornull(" abcdefg ","",-100)=226
+^varlongvariablenamesworkfornull(" abcdefg ","",-3.14285714285714285)=227
+^varlongvariablenamesworkfornull(" abcdefg ","",0)=228
+^varlongvariablenamesworkfornull(" abcdefg ","",3.14285714285714285)=229
+^varlongvariablenamesworkfornull(" abcdefg ","",100)=230
+^varlongvariablenamesworkfornull(" abcdefg ","","")=231
+^varlongvariablenamesworkfornull(" abcdefg ","",$C(0))=232
+^varlongvariablenamesworkfornull(" abcdefg ","",$C(1,2,3,4))=233
+^varlongvariablenamesworkfornull(" abcdefg ",""," abcdefg ")=234
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0),-100)=235
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0),-3.14285714285714285)=236
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0),0)=237
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0),3.14285714285714285)=238
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0),100)=239
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0),"")=240
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0),$C(0))=241
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0),$C(1,2,3,4))=242
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0)," abcdefg ")=243
+Test global to global:
+M ^xgbl("newtree","")=^varlongvariablenamesworkfornull
+M ^xgbl=^varlongvariablenamesworkfornull
+Next Command Will fail
+M ^agbl("newtree","")=^varlongvariablenamesworkfornull
+Error Number=1
+STAT=nullntp+9^nullntp,%GTM-E-NULSUBSC, Null subscripts are not allowed for region: AREG,%GTM-I-GVIS, 		Global variable: ^agbl("newtree","",-100,100,-100)
+Next Command Will fail
+M ^agbl=^varlongvariablenamesworkfornull
+Error Number=2
+STAT=nullntp+11^nullntp,%GTM-E-NULSUBSC, Null subscripts are not allowed for region: AREG,%GTM-I-GVIS, 		Global variable: ^agbl(-100,100,"")
+Verify MERGE
+
+Verify ^xgbl("newtree","")
+
+Verify of ^xgbl("newtree","") Passed
+K ^xgbl("newtree","")
+
+Verify ^xgbl
+
+Verify of ^xgbl Passed
+ZWR ^agbl
+^agbl(-100,100,-100)=1
+^agbl(-100,100,-3.14285714285714285)=2
+^agbl(-100,100,0)=3
+^agbl(-100,100,3.14285714285714285)=4
+^agbl(-100,100,100)=5
+Test more:
+Next Command Will fail
+Error Number=3
+STAT=nullntp+23^nullntp,%GTM-E-NULSUBSC, Null subscripts are not allowed for region: AREG,%GTM-I-GVIS, 		Global variable: ^aaa("I will not be created",1,"",200)
+Next Command Will fail
+Error Number=4
+STAT=nullntp+25^nullntp,%GTM-E-NULSUBSC, Null subscripts are not allowed for region: AREG,%GTM-I-GVIS, 		Global variable: ^aaa("I will not be created",2,"")
+Next Command Will fail
+Error Number=5
+STAT=nullntp+27^nullntp,%GTM-E-NULSUBSC, Null subscripts are not allowed for region: AREG,%GTM-I-GVIS, 		Global variable: ^aaa("I will not be created",3,"",200)
+Next Command Will fail
+Error Number=6
+STAT=nullntp+29^nullntp,%GTM-E-NULSUBSC, Null subscripts are not allowed for region: AREG,%GTM-I-GVIS, 		Global variable: ^aaa("I will not be created",3,"")
+
+
+Test local to global:
+M ^cgbl=varlongvariablenamesworkfornull
+Next Command Will fail
+M ^bgbl=varlongvariablenamesworkfornull
+Error Number=7
+STAT=nullntp+37^nullntp,%GTM-E-NULSUBSC, Null subscripts are not allowed for region: BREG,%GTM-I-GVIS, 		Global variable: ^bgbl(-100,100,"")
+Verify MERGE
+
+Verify ^cgbl
+
+Verify of ^cgbl Passed
+ZWR ^bgbl
+^bgbl(-100,100,-100)=1
+^bgbl(-100,100,-3.14285714285714285)=2
+^bgbl(-100,100,0)=3
+^bgbl(-100,100,3.14285714285714285)=4
+^bgbl(-100,100,100)=5
+view "LVNULLSUBS"
+
+
+Test global into local when null enabled for local:
+M alcl(1,2,3,4,5,6,7,8,9,10,",12,13,14)=^varlongvariablenamesworkfornull
+M blcl=^varlongvariablenamesworkfornull
+
+Verify alcl(1,2,3,4,5,6,7,8,9,10,"",12,13,14)
+
+Verify of alcl(1,2,3,4,5,6,7,8,9,10,"",12,13,14) Passed
+
+Verify blcl
+
+Verify of blcl Passed
+
+
+Test local into local when null disabled for local:
+view "NOLVNULLSUBS"
+Next Command Will fail
+M nllcl1=varlongvariablenamesworkfornull
+Error Number=8
+STAT=nullntp+58^nullntp,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+Next Command Will fail
+M nllcl2(1,"")=varlongvariablenamesworkfornull
+Error Number=9
+STAT=nullntp+60^nullntp,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+K (varlongvariablenamesworkfornull,nllcl1,nllcl2)Verify MERGE
+ZSHOW "V"
+nllcl1(-100,100,-100)=1
+nllcl1(-100,100,-3.14285714285714285)=2
+nllcl1(-100,100,0)=3
+nllcl1(-100,100,3.14285714285714285)=4
+nllcl1(-100,100,100)=5
+varlongvariablenamesworkfornull(-100,100,-100)=1
+varlongvariablenamesworkfornull(-100,100,-3.14285714285714285)=2
+varlongvariablenamesworkfornull(-100,100,0)=3
+varlongvariablenamesworkfornull(-100,100,3.14285714285714285)=4
+varlongvariablenamesworkfornull(-100,100,100)=5
+varlongvariablenamesworkfornull(-100,100,"")=6
+varlongvariablenamesworkfornull(-100,100,$C(0))=7
+varlongvariablenamesworkfornull(-100,100,$C(1,2,3,4))=8
+varlongvariablenamesworkfornull(-100,100," abcdefg ")=9
+varlongvariablenamesworkfornull(-100,"",-100)=10
+varlongvariablenamesworkfornull(-100,"",-3.14285714285714285)=11
+varlongvariablenamesworkfornull(-100,"",0)=12
+varlongvariablenamesworkfornull(-100,"",3.14285714285714285)=13
+varlongvariablenamesworkfornull(-100,"",100)=14
+varlongvariablenamesworkfornull(-100,"","")=15
+varlongvariablenamesworkfornull(-100,"",$C(0))=16
+varlongvariablenamesworkfornull(-100,"",$C(1,2,3,4))=17
+varlongvariablenamesworkfornull(-100,""," abcdefg ")=18
+varlongvariablenamesworkfornull(-100,$C(0),-100)=19
+varlongvariablenamesworkfornull(-100,$C(0),-3.14285714285714285)=20
+varlongvariablenamesworkfornull(-100,$C(0),0)=21
+varlongvariablenamesworkfornull(-100,$C(0),3.14285714285714285)=22
+varlongvariablenamesworkfornull(-100,$C(0),100)=23
+varlongvariablenamesworkfornull(-100,$C(0),"")=24
+varlongvariablenamesworkfornull(-100,$C(0),$C(0))=25
+varlongvariablenamesworkfornull(-100,$C(0),$C(1,2,3,4))=26
+varlongvariablenamesworkfornull(-100,$C(0)," abcdefg ")=27
+varlongvariablenamesworkfornull(-3.14285714285714285,100,-100)=28
+varlongvariablenamesworkfornull(-3.14285714285714285,100,-3.14285714285714285)=29
+varlongvariablenamesworkfornull(-3.14285714285714285,100,0)=30
+varlongvariablenamesworkfornull(-3.14285714285714285,100,3.14285714285714285)=31
+varlongvariablenamesworkfornull(-3.14285714285714285,100,100)=32
+varlongvariablenamesworkfornull(-3.14285714285714285,100,"")=33
+varlongvariablenamesworkfornull(-3.14285714285714285,100,$C(0))=34
+varlongvariablenamesworkfornull(-3.14285714285714285,100,$C(1,2,3,4))=35
+varlongvariablenamesworkfornull(-3.14285714285714285,100," abcdefg ")=36
+varlongvariablenamesworkfornull(-3.14285714285714285,"",-100)=37
+varlongvariablenamesworkfornull(-3.14285714285714285,"",-3.14285714285714285)=38
+varlongvariablenamesworkfornull(-3.14285714285714285,"",0)=39
+varlongvariablenamesworkfornull(-3.14285714285714285,"",3.14285714285714285)=40
+varlongvariablenamesworkfornull(-3.14285714285714285,"",100)=41
+varlongvariablenamesworkfornull(-3.14285714285714285,"","")=42
+varlongvariablenamesworkfornull(-3.14285714285714285,"",$C(0))=43
+varlongvariablenamesworkfornull(-3.14285714285714285,"",$C(1,2,3,4))=44
+varlongvariablenamesworkfornull(-3.14285714285714285,""," abcdefg ")=45
+varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),-100)=46
+varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),-3.14285714285714285)=47
+varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),0)=48
+varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),3.14285714285714285)=49
+varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),100)=50
+varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),"")=51
+varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),$C(0))=52
+varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),$C(1,2,3,4))=53
+varlongvariablenamesworkfornull(-3.14285714285714285,$C(0)," abcdefg ")=54
+varlongvariablenamesworkfornull(0,100,-100)=55
+varlongvariablenamesworkfornull(0,100,-3.14285714285714285)=56
+varlongvariablenamesworkfornull(0,100,0)=57
+varlongvariablenamesworkfornull(0,100,3.14285714285714285)=58
+varlongvariablenamesworkfornull(0,100,100)=59
+varlongvariablenamesworkfornull(0,100,"")=60
+varlongvariablenamesworkfornull(0,100,$C(0))=61
+varlongvariablenamesworkfornull(0,100,$C(1,2,3,4))=62
+varlongvariablenamesworkfornull(0,100," abcdefg ")=63
+varlongvariablenamesworkfornull(0,"",-100)=64
+varlongvariablenamesworkfornull(0,"",-3.14285714285714285)=65
+varlongvariablenamesworkfornull(0,"",0)=66
+varlongvariablenamesworkfornull(0,"",0,"")="null,0,null,0"
+varlongvariablenamesworkfornull(0,"",3.14285714285714285)=67
+varlongvariablenamesworkfornull(0,"",100)=68
+varlongvariablenamesworkfornull(0,"","")=69
+varlongvariablenamesworkfornull(0,"",$C(0))=70
+varlongvariablenamesworkfornull(0,"",$C(1,2,3,4))=71
+varlongvariablenamesworkfornull(0,""," abcdefg ")=72
+varlongvariablenamesworkfornull(0,$C(0),-100)=73
+varlongvariablenamesworkfornull(0,$C(0),-3.14285714285714285)=74
+varlongvariablenamesworkfornull(0,$C(0),0)=75
+varlongvariablenamesworkfornull(0,$C(0),3.14285714285714285)=76
+varlongvariablenamesworkfornull(0,$C(0),100)=77
+varlongvariablenamesworkfornull(0,$C(0),"")=78
+varlongvariablenamesworkfornull(0,$C(0),$C(0))=79
+varlongvariablenamesworkfornull(0,$C(0),$C(1,2,3,4))=80
+varlongvariablenamesworkfornull(0,$C(0)," abcdefg ")=81
+varlongvariablenamesworkfornull(3.14285714285714285,100,-100)=82
+varlongvariablenamesworkfornull(3.14285714285714285,100,-3.14285714285714285)=83
+varlongvariablenamesworkfornull(3.14285714285714285,100,0)=84
+varlongvariablenamesworkfornull(3.14285714285714285,100,3.14285714285714285)=85
+varlongvariablenamesworkfornull(3.14285714285714285,100,100)=86
+varlongvariablenamesworkfornull(3.14285714285714285,100,"")=87
+varlongvariablenamesworkfornull(3.14285714285714285,100,$C(0))=88
+varlongvariablenamesworkfornull(3.14285714285714285,100,$C(1,2,3,4))=89
+varlongvariablenamesworkfornull(3.14285714285714285,100," abcdefg ")=90
+varlongvariablenamesworkfornull(3.14285714285714285,"",-100)=91
+varlongvariablenamesworkfornull(3.14285714285714285,"",-3.14285714285714285)=92
+varlongvariablenamesworkfornull(3.14285714285714285,"",0)=93
+varlongvariablenamesworkfornull(3.14285714285714285,"",3.14285714285714285)=94
+varlongvariablenamesworkfornull(3.14285714285714285,"",100)=95
+varlongvariablenamesworkfornull(3.14285714285714285,"","")=96
+varlongvariablenamesworkfornull(3.14285714285714285,"",$C(0))=97
+varlongvariablenamesworkfornull(3.14285714285714285,"",$C(1,2,3,4))=98
+varlongvariablenamesworkfornull(3.14285714285714285,""," abcdefg ")=99
+varlongvariablenamesworkfornull(3.14285714285714285,$C(0),-100)=100
+varlongvariablenamesworkfornull(3.14285714285714285,$C(0),-3.14285714285714285)=101
+varlongvariablenamesworkfornull(3.14285714285714285,$C(0),0)=102
+varlongvariablenamesworkfornull(3.14285714285714285,$C(0),3.14285714285714285)=103
+varlongvariablenamesworkfornull(3.14285714285714285,$C(0),100)=104
+varlongvariablenamesworkfornull(3.14285714285714285,$C(0),"")=105
+varlongvariablenamesworkfornull(3.14285714285714285,$C(0),$C(0))=106
+varlongvariablenamesworkfornull(3.14285714285714285,$C(0),$C(1,2,3,4))=107
+varlongvariablenamesworkfornull(3.14285714285714285,$C(0)," abcdefg ")=108
+varlongvariablenamesworkfornull(100,100,-100)=109
+varlongvariablenamesworkfornull(100,100,-3.14285714285714285)=110
+varlongvariablenamesworkfornull(100,100,0)=111
+varlongvariablenamesworkfornull(100,100,3.14285714285714285)=112
+varlongvariablenamesworkfornull(100,100,100)=113
+varlongvariablenamesworkfornull(100,100,"")=114
+varlongvariablenamesworkfornull(100,100,$C(0))=115
+varlongvariablenamesworkfornull(100,100,$C(1,2,3,4))=116
+varlongvariablenamesworkfornull(100,100," abcdefg ")=117
+varlongvariablenamesworkfornull(100,"",-100)=118
+varlongvariablenamesworkfornull(100,"",-3.14285714285714285)=119
+varlongvariablenamesworkfornull(100,"",0)=120
+varlongvariablenamesworkfornull(100,"",3.14285714285714285)=121
+varlongvariablenamesworkfornull(100,"",100)=122
+varlongvariablenamesworkfornull(100,"","")=123
+varlongvariablenamesworkfornull(100,"",$C(0))=124
+varlongvariablenamesworkfornull(100,"",$C(1,2,3,4))=125
+varlongvariablenamesworkfornull(100,""," abcdefg ")=126
+varlongvariablenamesworkfornull(100,$C(0),-100)=127
+varlongvariablenamesworkfornull(100,$C(0),-3.14285714285714285)=128
+varlongvariablenamesworkfornull(100,$C(0),0)=129
+varlongvariablenamesworkfornull(100,$C(0),3.14285714285714285)=130
+varlongvariablenamesworkfornull(100,$C(0),100)=131
+varlongvariablenamesworkfornull(100,$C(0),"")=132
+varlongvariablenamesworkfornull(100,$C(0),$C(0))=133
+varlongvariablenamesworkfornull(100,$C(0),$C(1,2,3,4))=134
+varlongvariablenamesworkfornull(100,$C(0)," abcdefg ")=135
+varlongvariablenamesworkfornull("")="null"
+varlongvariablenamesworkfornull("",100,-100)=136
+varlongvariablenamesworkfornull("",100,-3.14285714285714285)=137
+varlongvariablenamesworkfornull("",100,0)=138
+varlongvariablenamesworkfornull("",100,3.14285714285714285)=139
+varlongvariablenamesworkfornull("",100,100)=140
+varlongvariablenamesworkfornull("",100,"")=141
+varlongvariablenamesworkfornull("",100,$C(0))=142
+varlongvariablenamesworkfornull("",100,$C(1,2,3,4))=143
+varlongvariablenamesworkfornull("",100," abcdefg ")=144
+varlongvariablenamesworkfornull("","",-100)=145
+varlongvariablenamesworkfornull("","",-3.14285714285714285)=146
+varlongvariablenamesworkfornull("","",0)=147
+varlongvariablenamesworkfornull("","",3.14285714285714285)=148
+varlongvariablenamesworkfornull("","",100)=149
+varlongvariablenamesworkfornull("","","")=150
+varlongvariablenamesworkfornull("","",$C(0))=151
+varlongvariablenamesworkfornull("","",$C(1,2,3,4))=152
+varlongvariablenamesworkfornull("",""," abcdefg ")=153
+varlongvariablenamesworkfornull("",$C(0),-100)=154
+varlongvariablenamesworkfornull("",$C(0),-3.14285714285714285)=155
+varlongvariablenamesworkfornull("",$C(0),0)=156
+varlongvariablenamesworkfornull("",$C(0),3.14285714285714285)=157
+varlongvariablenamesworkfornull("",$C(0),100)=158
+varlongvariablenamesworkfornull("",$C(0),"")=159
+varlongvariablenamesworkfornull("",$C(0),$C(0))=160
+varlongvariablenamesworkfornull("",$C(0),$C(1,2,3,4))=161
+varlongvariablenamesworkfornull("",$C(0)," abcdefg ")=162
+varlongvariablenamesworkfornull($C(0),100,-100)=163
+varlongvariablenamesworkfornull($C(0),100,-3.14285714285714285)=164
+varlongvariablenamesworkfornull($C(0),100,0)=165
+varlongvariablenamesworkfornull($C(0),100,3.14285714285714285)=166
+varlongvariablenamesworkfornull($C(0),100,100)=167
+varlongvariablenamesworkfornull($C(0),100,"")=168
+varlongvariablenamesworkfornull($C(0),100,$C(0))=169
+varlongvariablenamesworkfornull($C(0),100,$C(1,2,3,4))=170
+varlongvariablenamesworkfornull($C(0),100," abcdefg ")=171
+varlongvariablenamesworkfornull($C(0),"",-100)=172
+varlongvariablenamesworkfornull($C(0),"",-3.14285714285714285)=173
+varlongvariablenamesworkfornull($C(0),"",0)=174
+varlongvariablenamesworkfornull($C(0),"",3.14285714285714285)=175
+varlongvariablenamesworkfornull($C(0),"",100)=176
+varlongvariablenamesworkfornull($C(0),"","")=177
+varlongvariablenamesworkfornull($C(0),"",$C(0))=178
+varlongvariablenamesworkfornull($C(0),"",$C(1,2,3,4))=179
+varlongvariablenamesworkfornull($C(0),""," abcdefg ")=180
+varlongvariablenamesworkfornull($C(0),$C(0),-100)=181
+varlongvariablenamesworkfornull($C(0),$C(0),-3.14285714285714285)=182
+varlongvariablenamesworkfornull($C(0),$C(0),0)=183
+varlongvariablenamesworkfornull($C(0),$C(0),3.14285714285714285)=184
+varlongvariablenamesworkfornull($C(0),$C(0),100)=185
+varlongvariablenamesworkfornull($C(0),$C(0),"")=186
+varlongvariablenamesworkfornull($C(0),$C(0),$C(0))=187
+varlongvariablenamesworkfornull($C(0),$C(0),$C(1,2,3,4))=188
+varlongvariablenamesworkfornull($C(0),$C(0)," abcdefg ")=189
+varlongvariablenamesworkfornull($C(1,2,3,4),100,-100)=190
+varlongvariablenamesworkfornull($C(1,2,3,4),100,-3.14285714285714285)=191
+varlongvariablenamesworkfornull($C(1,2,3,4),100,0)=192
+varlongvariablenamesworkfornull($C(1,2,3,4),100,3.14285714285714285)=193
+varlongvariablenamesworkfornull($C(1,2,3,4),100,100)=194
+varlongvariablenamesworkfornull($C(1,2,3,4),100,"")=195
+varlongvariablenamesworkfornull($C(1,2,3,4),100,$C(0))=196
+varlongvariablenamesworkfornull($C(1,2,3,4),100,$C(1,2,3,4))=197
+varlongvariablenamesworkfornull($C(1,2,3,4),100," abcdefg ")=198
+varlongvariablenamesworkfornull($C(1,2,3,4),"",-100)=199
+varlongvariablenamesworkfornull($C(1,2,3,4),"",-3.14285714285714285)=200
+varlongvariablenamesworkfornull($C(1,2,3,4),"",0)=201
+varlongvariablenamesworkfornull($C(1,2,3,4),"",3.14285714285714285)=202
+varlongvariablenamesworkfornull($C(1,2,3,4),"",100)=203
+varlongvariablenamesworkfornull($C(1,2,3,4),"","")=204
+varlongvariablenamesworkfornull($C(1,2,3,4),"",$C(0))=205
+varlongvariablenamesworkfornull($C(1,2,3,4),"",$C(1,2,3,4))=206
+varlongvariablenamesworkfornull($C(1,2,3,4),""," abcdefg ")=207
+varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),-100)=208
+varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),-3.14285714285714285)=209
+varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),0)=210
+varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),3.14285714285714285)=211
+varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),100)=212
+varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),"")=213
+varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),$C(0))=214
+varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),$C(1,2,3,4))=215
+varlongvariablenamesworkfornull($C(1,2,3,4),$C(0)," abcdefg ")=216
+varlongvariablenamesworkfornull(" abcdefg ",100,-100)=217
+varlongvariablenamesworkfornull(" abcdefg ",100,-3.14285714285714285)=218
+varlongvariablenamesworkfornull(" abcdefg ",100,0)=219
+varlongvariablenamesworkfornull(" abcdefg ",100,3.14285714285714285)=220
+varlongvariablenamesworkfornull(" abcdefg ",100,100)=221
+varlongvariablenamesworkfornull(" abcdefg ",100,"")=222
+varlongvariablenamesworkfornull(" abcdefg ",100,$C(0))=223
+varlongvariablenamesworkfornull(" abcdefg ",100,$C(1,2,3,4))=224
+varlongvariablenamesworkfornull(" abcdefg ",100," abcdefg ")=225
+varlongvariablenamesworkfornull(" abcdefg ","",-100)=226
+varlongvariablenamesworkfornull(" abcdefg ","",-3.14285714285714285)=227
+varlongvariablenamesworkfornull(" abcdefg ","",0)=228
+varlongvariablenamesworkfornull(" abcdefg ","",3.14285714285714285)=229
+varlongvariablenamesworkfornull(" abcdefg ","",100)=230
+varlongvariablenamesworkfornull(" abcdefg ","","")=231
+varlongvariablenamesworkfornull(" abcdefg ","",$C(0))=232
+varlongvariablenamesworkfornull(" abcdefg ","",$C(1,2,3,4))=233
+varlongvariablenamesworkfornull(" abcdefg ",""," abcdefg ")=234
+varlongvariablenamesworkfornull(" abcdefg ",$C(0),-100)=235
+varlongvariablenamesworkfornull(" abcdefg ",$C(0),-3.14285714285714285)=236
+varlongvariablenamesworkfornull(" abcdefg ",$C(0),0)=237
+varlongvariablenamesworkfornull(" abcdefg ",$C(0),3.14285714285714285)=238
+varlongvariablenamesworkfornull(" abcdefg ",$C(0),100)=239
+varlongvariablenamesworkfornull(" abcdefg ",$C(0),"")=240
+varlongvariablenamesworkfornull(" abcdefg ",$C(0),$C(0))=241
+varlongvariablenamesworkfornull(" abcdefg ",$C(0),$C(1,2,3,4))=242
+varlongvariablenamesworkfornull(" abcdefg ",$C(0)," abcdefg ")=243
+kill
+ZSHOW "V"
+End nullntp
+
+
+GTM>
+
+GTM>
+
+Caution: Database Block Certification Has Been Enabled
+
+GTM>
+d ^nullfill("set")
+
+set Started
+
+set Finished
+
+GTM>
+d ^nulltp
+
+
+nulltp started....
+view "LVNULLSUBS"
+Test global to global:
+Next TP Will not COMMIT
+M ^ctp=^varlongvariablenamesworkfornull
+M ^btp=^varlongvariablenamesworkfornull
+In Error trap
+
+In lab2
+M ^ctp=^varlongvariablenamesworkfornull
+
+Verify ^ctp
+
+Verify of ^ctp Passed
+
+In lab3
+
+
+Test local to global
+Next TP Will not COMMIT
+M ^xtp=varlongvariablenamesworkfornull
+M ^atp=varlongvariablenamesworkfornull
+In Error trap
+
+In lab4
+M ^xtp=varlongvariablenamesworkfornull
+
+Verify ^xtp
+
+Verify of ^xtp Passed
+
+In lab5
+
+
+Test global into local (null enabled for local):
+M avar(1,2,3,4,5,6,7,8,9,10,"",12,13,14)=^varlongvariablenamesworkfornull
+
+Verify avar(1,2,3,4,5,6,7,8,9,10,"",12,13,14)
+
+Verify of avar(1,2,3,4,5,6,7,8,9,10,"",12,13,14) Passed
+
+In lab6
+M bvar=^varlongvariablenamesworkfornull
+
+Verify bvar
+
+Verify of bvar Passed
+
+nulltp finished
+
+GTM>
+
+GTM>
+
+Caution: Database Block Certification Has Been Enabled
+
+GTM>
+d ^nullfill("set")
+
+set Started
+
+set Finished
+
+GTM>
+d ^nulllc
+
+
+nulllc:Test for MERGE into local (null subscript is disabled for locals)
+Using TP:
+view "NOLVNULLSUBS"
+Next TP Will not COMMIT
+M avar(1,2,3,4,5,6,7,8,9,10,11,12,13,14)=^varlongvariablenamesworkfornull
+In Error trap
+Do a trestart
+
+In lab2
+Next TP Will not COMMIT
+M ^vardum=^varlongvariablenamesworkfornull
+M bvar("root")=^varlongvariablenamesworkfornull
+In Error trap
+Do a trestart
+
+In lab3
+Next TP Will not COMMIT
+M cvar(1,")=^varlongvariablenamesworkfornull
+In Error trap
+Do a trestart
+
+In lab4
+Using Non-TP:
+Next Command Will fail
+M avar(1,2,3,4,5,6,7,8,9,10,11,12,13,14)=^varlongvariablenamesworkfornull
+Error Number=10
+STAT=lab4+8^nulllc,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+Next Command Will fail
+M bbvar=^varlongvariablenamesworkfornull
+Error Number=11
+STAT=lab4+11^nulllc,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+Next Command Will fail
+M ccvar(1,"")=^varlongvariablenamesworkfornull
+Error Number=12
+STAT=lab4+14^nulllc,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+Final ZWR
+avar(1,2,3,4,5,6,7,8,9,10,11,12,13,14,-100,100,-100)=1
+avar(1,2,3,4,5,6,7,8,9,10,11,12,13,14,-100,100,-3.14285714285714285)=2
+avar(1,2,3,4,5,6,7,8,9,10,11,12,13,14,-100,100,0)=3
+avar(1,2,3,4,5,6,7,8,9,10,11,12,13,14,-100,100,3.14285714285714285)=4
+avar(1,2,3,4,5,6,7,8,9,10,11,12,13,14,-100,100,100)=5
+bbvar(-100,100,-100)=1
+bbvar(-100,100,-3.14285714285714285)=2
+bbvar(-100,100,0)=3
+bbvar(-100,100,3.14285714285714285)=4
+bbvar(-100,100,100)=5
+End nulllc
+
+
+GTM>
+##SOURCE_PATH##/mupip extract extr.glo
+%GTM-I-RECORDSTAT, ^agbl:	  Key cnt: 5  max subsc len: 25  max rec len: 1  max node len: 22
+%GTM-I-RECORDSTAT, ^bgbl:	  Key cnt: 5  max subsc len: 25  max rec len: 1  max node len: 22
+%GTM-I-RECORDSTAT, ^cgbl:	  Key cnt: 245  max subsc len: 34  max rec len: 13  max node len: 35
+%GTM-I-RECORDSTAT, ^ctp:	  Key cnt: 245  max subsc len: 33  max rec len: 13  max node len: 34
+%GTM-I-RECORDSTAT, ^errcnt:	  Key cnt: 1  max subsc len: 8  max rec len: 2  max node len: 14
+%GTM-I-RECORDSTAT, ^varlongvariablenamesworkfornull:	  Key cnt: 245  max subsc len: 61  max rec len: 13  max node len: 58
+%GTM-I-RECORDSTAT, ^vvv:	  Key cnt: 2  max subsc len: 15  max rec len: 8  max node len: 25
+%GTM-I-RECORDSTAT, ^xgbl:	  Key cnt: 245  max subsc len: 34  max rec len: 13  max node len: 29
+%GTM-I-RECORDSTAT, ^xtp:	  Key cnt: 245  max subsc len: 33  max rec len: 13  max node len: 34
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1238  max subsc len: 61  max rec len: 13  max node len: 58
+tail -n +3 extr.glo
+^agbl(-100,100,-100)="1"
+^agbl(-100,100,-3.14285714285714285)="2"
+^agbl(-100,100,0)="3"
+^agbl(-100,100,3.14285714285714285)="4"
+^agbl(-100,100,100)="5"
+^bgbl(-100,100,-100)="1"
+^bgbl(-100,100,-3.14285714285714285)="2"
+^bgbl(-100,100,0)="3"
+^bgbl(-100,100,3.14285714285714285)="4"
+^bgbl(-100,100,100)="5"
+^cgbl(-100,100,-100)="1"
+^cgbl(-100,100,-3.14285714285714285)="2"
+^cgbl(-100,100,0)="3"
+^cgbl(-100,100,3.14285714285714285)="4"
+^cgbl(-100,100,100)="5"
+^cgbl(-100,100,"")="6"
+^cgbl(-100,100,$C(0))="7"
+^cgbl(-100,100,$C(1,2,3,4))="8"
+^cgbl(-100,100," abcdefg ")="9"
+^cgbl(-100,"",-100)="10"
+^cgbl(-100,"",-3.14285714285714285)="11"
+^cgbl(-100,"",0)="12"
+^cgbl(-100,"",3.14285714285714285)="13"
+^cgbl(-100,"",100)="14"
+^cgbl(-100,"","")="15"
+^cgbl(-100,"",$C(0))="16"
+^cgbl(-100,"",$C(1,2,3,4))="17"
+^cgbl(-100,""," abcdefg ")="18"
+^cgbl(-100,$C(0),-100)="19"
+^cgbl(-100,$C(0),-3.14285714285714285)="20"
+^cgbl(-100,$C(0),0)="21"
+^cgbl(-100,$C(0),3.14285714285714285)="22"
+^cgbl(-100,$C(0),100)="23"
+^cgbl(-100,$C(0),"")="24"
+^cgbl(-100,$C(0),$C(0))="25"
+^cgbl(-100,$C(0),$C(1,2,3,4))="26"
+^cgbl(-100,$C(0)," abcdefg ")="27"
+^cgbl(-3.14285714285714285,100,-100)="28"
+^cgbl(-3.14285714285714285,100,-3.14285714285714285)="29"
+^cgbl(-3.14285714285714285,100,0)="30"
+^cgbl(-3.14285714285714285,100,3.14285714285714285)="31"
+^cgbl(-3.14285714285714285,100,100)="32"
+^cgbl(-3.14285714285714285,100,"")="33"
+^cgbl(-3.14285714285714285,100,$C(0))="34"
+^cgbl(-3.14285714285714285,100,$C(1,2,3,4))="35"
+^cgbl(-3.14285714285714285,100," abcdefg ")="36"
+^cgbl(-3.14285714285714285,"",-100)="37"
+^cgbl(-3.14285714285714285,"",-3.14285714285714285)="38"
+^cgbl(-3.14285714285714285,"",0)="39"
+^cgbl(-3.14285714285714285,"",3.14285714285714285)="40"
+^cgbl(-3.14285714285714285,"",100)="41"
+^cgbl(-3.14285714285714285,"","")="42"
+^cgbl(-3.14285714285714285,"",$C(0))="43"
+^cgbl(-3.14285714285714285,"",$C(1,2,3,4))="44"
+^cgbl(-3.14285714285714285,""," abcdefg ")="45"
+^cgbl(-3.14285714285714285,$C(0),-100)="46"
+^cgbl(-3.14285714285714285,$C(0),-3.14285714285714285)="47"
+^cgbl(-3.14285714285714285,$C(0),0)="48"
+^cgbl(-3.14285714285714285,$C(0),3.14285714285714285)="49"
+^cgbl(-3.14285714285714285,$C(0),100)="50"
+^cgbl(-3.14285714285714285,$C(0),"")="51"
+^cgbl(-3.14285714285714285,$C(0),$C(0))="52"
+^cgbl(-3.14285714285714285,$C(0),$C(1,2,3,4))="53"
+^cgbl(-3.14285714285714285,$C(0)," abcdefg ")="54"
+^cgbl(0,100,-100)="55"
+^cgbl(0,100,-3.14285714285714285)="56"
+^cgbl(0,100,0)="57"
+^cgbl(0,100,3.14285714285714285)="58"
+^cgbl(0,100,100)="59"
+^cgbl(0,100,"")="60"
+^cgbl(0,100,$C(0))="61"
+^cgbl(0,100,$C(1,2,3,4))="62"
+^cgbl(0,100," abcdefg ")="63"
+^cgbl(0,"",-100)="64"
+^cgbl(0,"",-3.14285714285714285)="65"
+^cgbl(0,"",0)="66"
+^cgbl(0,"",0,"")="null,0,null,0"
+^cgbl(0,"",3.14285714285714285)="67"
+^cgbl(0,"",100)="68"
+^cgbl(0,"","")="69"
+^cgbl(0,"",$C(0))="70"
+^cgbl(0,"",$C(1,2,3,4))="71"
+^cgbl(0,""," abcdefg ")="72"
+^cgbl(0,$C(0),-100)="73"
+^cgbl(0,$C(0),-3.14285714285714285)="74"
+^cgbl(0,$C(0),0)="75"
+^cgbl(0,$C(0),3.14285714285714285)="76"
+^cgbl(0,$C(0),100)="77"
+^cgbl(0,$C(0),"")="78"
+^cgbl(0,$C(0),$C(0))="79"
+^cgbl(0,$C(0),$C(1,2,3,4))="80"
+^cgbl(0,$C(0)," abcdefg ")="81"
+^cgbl(3.14285714285714285,100,-100)="82"
+^cgbl(3.14285714285714285,100,-3.14285714285714285)="83"
+^cgbl(3.14285714285714285,100,0)="84"
+^cgbl(3.14285714285714285,100,3.14285714285714285)="85"
+^cgbl(3.14285714285714285,100,100)="86"
+^cgbl(3.14285714285714285,100,"")="87"
+^cgbl(3.14285714285714285,100,$C(0))="88"
+^cgbl(3.14285714285714285,100,$C(1,2,3,4))="89"
+^cgbl(3.14285714285714285,100," abcdefg ")="90"
+^cgbl(3.14285714285714285,"",-100)="91"
+^cgbl(3.14285714285714285,"",-3.14285714285714285)="92"
+^cgbl(3.14285714285714285,"",0)="93"
+^cgbl(3.14285714285714285,"",3.14285714285714285)="94"
+^cgbl(3.14285714285714285,"",100)="95"
+^cgbl(3.14285714285714285,"","")="96"
+^cgbl(3.14285714285714285,"",$C(0))="97"
+^cgbl(3.14285714285714285,"",$C(1,2,3,4))="98"
+^cgbl(3.14285714285714285,""," abcdefg ")="99"
+^cgbl(3.14285714285714285,$C(0),-100)="100"
+^cgbl(3.14285714285714285,$C(0),-3.14285714285714285)="101"
+^cgbl(3.14285714285714285,$C(0),0)="102"
+^cgbl(3.14285714285714285,$C(0),3.14285714285714285)="103"
+^cgbl(3.14285714285714285,$C(0),100)="104"
+^cgbl(3.14285714285714285,$C(0),"")="105"
+^cgbl(3.14285714285714285,$C(0),$C(0))="106"
+^cgbl(3.14285714285714285,$C(0),$C(1,2,3,4))="107"
+^cgbl(3.14285714285714285,$C(0)," abcdefg ")="108"
+^cgbl(100,100,-100)="109"
+^cgbl(100,100,-3.14285714285714285)="110"
+^cgbl(100,100,0)="111"
+^cgbl(100,100,3.14285714285714285)="112"
+^cgbl(100,100,100)="113"
+^cgbl(100,100,"")="114"
+^cgbl(100,100,$C(0))="115"
+^cgbl(100,100,$C(1,2,3,4))="116"
+^cgbl(100,100," abcdefg ")="117"
+^cgbl(100,"",-100)="118"
+^cgbl(100,"",-3.14285714285714285)="119"
+^cgbl(100,"",0)="120"
+^cgbl(100,"",3.14285714285714285)="121"
+^cgbl(100,"",100)="122"
+^cgbl(100,"","")="123"
+^cgbl(100,"",$C(0))="124"
+^cgbl(100,"",$C(1,2,3,4))="125"
+^cgbl(100,""," abcdefg ")="126"
+^cgbl(100,$C(0),-100)="127"
+^cgbl(100,$C(0),-3.14285714285714285)="128"
+^cgbl(100,$C(0),0)="129"
+^cgbl(100,$C(0),3.14285714285714285)="130"
+^cgbl(100,$C(0),100)="131"
+^cgbl(100,$C(0),"")="132"
+^cgbl(100,$C(0),$C(0))="133"
+^cgbl(100,$C(0),$C(1,2,3,4))="134"
+^cgbl(100,$C(0)," abcdefg ")="135"
+^cgbl("")="null"
+^cgbl("",100,-100)="136"
+^cgbl("",100,-3.14285714285714285)="137"
+^cgbl("",100,0)="138"
+^cgbl("",100,3.14285714285714285)="139"
+^cgbl("",100,100)="140"
+^cgbl("",100,"")="141"
+^cgbl("",100,$C(0))="142"
+^cgbl("",100,$C(1,2,3,4))="143"
+^cgbl("",100," abcdefg ")="144"
+^cgbl("","",-100)="145"
+^cgbl("","",-3.14285714285714285)="146"
+^cgbl("","",0)="147"
+^cgbl("","",3.14285714285714285)="148"
+^cgbl("","",100)="149"
+^cgbl("","","")="150"
+^cgbl("","",$C(0))="151"
+^cgbl("","",$C(1,2,3,4))="152"
+^cgbl("",""," abcdefg ")="153"
+^cgbl("",$C(0),-100)="154"
+^cgbl("",$C(0),-3.14285714285714285)="155"
+^cgbl("",$C(0),0)="156"
+^cgbl("",$C(0),3.14285714285714285)="157"
+^cgbl("",$C(0),100)="158"
+^cgbl("",$C(0),"")="159"
+^cgbl("",$C(0),$C(0))="160"
+^cgbl("",$C(0),$C(1,2,3,4))="161"
+^cgbl("",$C(0)," abcdefg ")="162"
+^cgbl($C(0),100,-100)="163"
+^cgbl($C(0),100,-3.14285714285714285)="164"
+^cgbl($C(0),100,0)="165"
+^cgbl($C(0),100,3.14285714285714285)="166"
+^cgbl($C(0),100,100)="167"
+^cgbl($C(0),100,"")="168"
+^cgbl($C(0),100,$C(0))="169"
+^cgbl($C(0),100,$C(1,2,3,4))="170"
+^cgbl($C(0),100," abcdefg ")="171"
+^cgbl($C(0),"",-100)="172"
+^cgbl($C(0),"",-3.14285714285714285)="173"
+^cgbl($C(0),"",0)="174"
+^cgbl($C(0),"",3.14285714285714285)="175"
+^cgbl($C(0),"",100)="176"
+^cgbl($C(0),"","")="177"
+^cgbl($C(0),"",$C(0))="178"
+^cgbl($C(0),"",$C(1,2,3,4))="179"
+^cgbl($C(0),""," abcdefg ")="180"
+^cgbl($C(0),$C(0),-100)="181"
+^cgbl($C(0),$C(0),-3.14285714285714285)="182"
+^cgbl($C(0),$C(0),0)="183"
+^cgbl($C(0),$C(0),3.14285714285714285)="184"
+^cgbl($C(0),$C(0),100)="185"
+^cgbl($C(0),$C(0),"")="186"
+^cgbl($C(0),$C(0),$C(0))="187"
+^cgbl($C(0),$C(0),$C(1,2,3,4))="188"
+^cgbl($C(0),$C(0)," abcdefg ")="189"
+^cgbl($C(1,2,3,4),100,-100)="190"
+^cgbl($C(1,2,3,4),100,-3.14285714285714285)="191"
+^cgbl($C(1,2,3,4),100,0)="192"
+^cgbl($C(1,2,3,4),100,3.14285714285714285)="193"
+^cgbl($C(1,2,3,4),100,100)="194"
+^cgbl($C(1,2,3,4),100,"")="195"
+^cgbl($C(1,2,3,4),100,$C(0))="196"
+^cgbl($C(1,2,3,4),100,$C(1,2,3,4))="197"
+^cgbl($C(1,2,3,4),100," abcdefg ")="198"
+^cgbl($C(1,2,3,4),"",-100)="199"
+^cgbl($C(1,2,3,4),"",-3.14285714285714285)="200"
+^cgbl($C(1,2,3,4),"",0)="201"
+^cgbl($C(1,2,3,4),"",3.14285714285714285)="202"
+^cgbl($C(1,2,3,4),"",100)="203"
+^cgbl($C(1,2,3,4),"","")="204"
+^cgbl($C(1,2,3,4),"",$C(0))="205"
+^cgbl($C(1,2,3,4),"",$C(1,2,3,4))="206"
+^cgbl($C(1,2,3,4),""," abcdefg ")="207"
+^cgbl($C(1,2,3,4),$C(0),-100)="208"
+^cgbl($C(1,2,3,4),$C(0),-3.14285714285714285)="209"
+^cgbl($C(1,2,3,4),$C(0),0)="210"
+^cgbl($C(1,2,3,4),$C(0),3.14285714285714285)="211"
+^cgbl($C(1,2,3,4),$C(0),100)="212"
+^cgbl($C(1,2,3,4),$C(0),"")="213"
+^cgbl($C(1,2,3,4),$C(0),$C(0))="214"
+^cgbl($C(1,2,3,4),$C(0),$C(1,2,3,4))="215"
+^cgbl($C(1,2,3,4),$C(0)," abcdefg ")="216"
+^cgbl(" abcdefg ",100,-100)="217"
+^cgbl(" abcdefg ",100,-3.14285714285714285)="218"
+^cgbl(" abcdefg ",100,0)="219"
+^cgbl(" abcdefg ",100,3.14285714285714285)="220"
+^cgbl(" abcdefg ",100,100)="221"
+^cgbl(" abcdefg ",100,"")="222"
+^cgbl(" abcdefg ",100,$C(0))="223"
+^cgbl(" abcdefg ",100,$C(1,2,3,4))="224"
+^cgbl(" abcdefg ",100," abcdefg ")="225"
+^cgbl(" abcdefg ","",-100)="226"
+^cgbl(" abcdefg ","",-3.14285714285714285)="227"
+^cgbl(" abcdefg ","",0)="228"
+^cgbl(" abcdefg ","",3.14285714285714285)="229"
+^cgbl(" abcdefg ","",100)="230"
+^cgbl(" abcdefg ","","")="231"
+^cgbl(" abcdefg ","",$C(0))="232"
+^cgbl(" abcdefg ","",$C(1,2,3,4))="233"
+^cgbl(" abcdefg ",""," abcdefg ")="234"
+^cgbl(" abcdefg ",$C(0),-100)="235"
+^cgbl(" abcdefg ",$C(0),-3.14285714285714285)="236"
+^cgbl(" abcdefg ",$C(0),0)="237"
+^cgbl(" abcdefg ",$C(0),3.14285714285714285)="238"
+^cgbl(" abcdefg ",$C(0),100)="239"
+^cgbl(" abcdefg ",$C(0),"")="240"
+^cgbl(" abcdefg ",$C(0),$C(0))="241"
+^cgbl(" abcdefg ",$C(0),$C(1,2,3,4))="242"
+^cgbl(" abcdefg ",$C(0)," abcdefg ")="243"
+^ctp(-100,100,-100)="1"
+^ctp(-100,100,-3.14285714285714285)="2"
+^ctp(-100,100,0)="3"
+^ctp(-100,100,3.14285714285714285)="4"
+^ctp(-100,100,100)="5"
+^ctp(-100,100,"")="6"
+^ctp(-100,100,$C(0))="7"
+^ctp(-100,100,$C(1,2,3,4))="8"
+^ctp(-100,100," abcdefg ")="9"
+^ctp(-100,"",-100)="10"
+^ctp(-100,"",-3.14285714285714285)="11"
+^ctp(-100,"",0)="12"
+^ctp(-100,"",3.14285714285714285)="13"
+^ctp(-100,"",100)="14"
+^ctp(-100,"","")="15"
+^ctp(-100,"",$C(0))="16"
+^ctp(-100,"",$C(1,2,3,4))="17"
+^ctp(-100,""," abcdefg ")="18"
+^ctp(-100,$C(0),-100)="19"
+^ctp(-100,$C(0),-3.14285714285714285)="20"
+^ctp(-100,$C(0),0)="21"
+^ctp(-100,$C(0),3.14285714285714285)="22"
+^ctp(-100,$C(0),100)="23"
+^ctp(-100,$C(0),"")="24"
+^ctp(-100,$C(0),$C(0))="25"
+^ctp(-100,$C(0),$C(1,2,3,4))="26"
+^ctp(-100,$C(0)," abcdefg ")="27"
+^ctp(-3.14285714285714285,100,-100)="28"
+^ctp(-3.14285714285714285,100,-3.14285714285714285)="29"
+^ctp(-3.14285714285714285,100,0)="30"
+^ctp(-3.14285714285714285,100,3.14285714285714285)="31"
+^ctp(-3.14285714285714285,100,100)="32"
+^ctp(-3.14285714285714285,100,"")="33"
+^ctp(-3.14285714285714285,100,$C(0))="34"
+^ctp(-3.14285714285714285,100,$C(1,2,3,4))="35"
+^ctp(-3.14285714285714285,100," abcdefg ")="36"
+^ctp(-3.14285714285714285,"",-100)="37"
+^ctp(-3.14285714285714285,"",-3.14285714285714285)="38"
+^ctp(-3.14285714285714285,"",0)="39"
+^ctp(-3.14285714285714285,"",3.14285714285714285)="40"
+^ctp(-3.14285714285714285,"",100)="41"
+^ctp(-3.14285714285714285,"","")="42"
+^ctp(-3.14285714285714285,"",$C(0))="43"
+^ctp(-3.14285714285714285,"",$C(1,2,3,4))="44"
+^ctp(-3.14285714285714285,""," abcdefg ")="45"
+^ctp(-3.14285714285714285,$C(0),-100)="46"
+^ctp(-3.14285714285714285,$C(0),-3.14285714285714285)="47"
+^ctp(-3.14285714285714285,$C(0),0)="48"
+^ctp(-3.14285714285714285,$C(0),3.14285714285714285)="49"
+^ctp(-3.14285714285714285,$C(0),100)="50"
+^ctp(-3.14285714285714285,$C(0),"")="51"
+^ctp(-3.14285714285714285,$C(0),$C(0))="52"
+^ctp(-3.14285714285714285,$C(0),$C(1,2,3,4))="53"
+^ctp(-3.14285714285714285,$C(0)," abcdefg ")="54"
+^ctp(0,100,-100)="55"
+^ctp(0,100,-3.14285714285714285)="56"
+^ctp(0,100,0)="57"
+^ctp(0,100,3.14285714285714285)="58"
+^ctp(0,100,100)="59"
+^ctp(0,100,"")="60"
+^ctp(0,100,$C(0))="61"
+^ctp(0,100,$C(1,2,3,4))="62"
+^ctp(0,100," abcdefg ")="63"
+^ctp(0,"",-100)="64"
+^ctp(0,"",-3.14285714285714285)="65"
+^ctp(0,"",0)="66"
+^ctp(0,"",0,"")="null,0,null,0"
+^ctp(0,"",3.14285714285714285)="67"
+^ctp(0,"",100)="68"
+^ctp(0,"","")="69"
+^ctp(0,"",$C(0))="70"
+^ctp(0,"",$C(1,2,3,4))="71"
+^ctp(0,""," abcdefg ")="72"
+^ctp(0,$C(0),-100)="73"
+^ctp(0,$C(0),-3.14285714285714285)="74"
+^ctp(0,$C(0),0)="75"
+^ctp(0,$C(0),3.14285714285714285)="76"
+^ctp(0,$C(0),100)="77"
+^ctp(0,$C(0),"")="78"
+^ctp(0,$C(0),$C(0))="79"
+^ctp(0,$C(0),$C(1,2,3,4))="80"
+^ctp(0,$C(0)," abcdefg ")="81"
+^ctp(3.14285714285714285,100,-100)="82"
+^ctp(3.14285714285714285,100,-3.14285714285714285)="83"
+^ctp(3.14285714285714285,100,0)="84"
+^ctp(3.14285714285714285,100,3.14285714285714285)="85"
+^ctp(3.14285714285714285,100,100)="86"
+^ctp(3.14285714285714285,100,"")="87"
+^ctp(3.14285714285714285,100,$C(0))="88"
+^ctp(3.14285714285714285,100,$C(1,2,3,4))="89"
+^ctp(3.14285714285714285,100," abcdefg ")="90"
+^ctp(3.14285714285714285,"",-100)="91"
+^ctp(3.14285714285714285,"",-3.14285714285714285)="92"
+^ctp(3.14285714285714285,"",0)="93"
+^ctp(3.14285714285714285,"",3.14285714285714285)="94"
+^ctp(3.14285714285714285,"",100)="95"
+^ctp(3.14285714285714285,"","")="96"
+^ctp(3.14285714285714285,"",$C(0))="97"
+^ctp(3.14285714285714285,"",$C(1,2,3,4))="98"
+^ctp(3.14285714285714285,""," abcdefg ")="99"
+^ctp(3.14285714285714285,$C(0),-100)="100"
+^ctp(3.14285714285714285,$C(0),-3.14285714285714285)="101"
+^ctp(3.14285714285714285,$C(0),0)="102"
+^ctp(3.14285714285714285,$C(0),3.14285714285714285)="103"
+^ctp(3.14285714285714285,$C(0),100)="104"
+^ctp(3.14285714285714285,$C(0),"")="105"
+^ctp(3.14285714285714285,$C(0),$C(0))="106"
+^ctp(3.14285714285714285,$C(0),$C(1,2,3,4))="107"
+^ctp(3.14285714285714285,$C(0)," abcdefg ")="108"
+^ctp(100,100,-100)="109"
+^ctp(100,100,-3.14285714285714285)="110"
+^ctp(100,100,0)="111"
+^ctp(100,100,3.14285714285714285)="112"
+^ctp(100,100,100)="113"
+^ctp(100,100,"")="114"
+^ctp(100,100,$C(0))="115"
+^ctp(100,100,$C(1,2,3,4))="116"
+^ctp(100,100," abcdefg ")="117"
+^ctp(100,"",-100)="118"
+^ctp(100,"",-3.14285714285714285)="119"
+^ctp(100,"",0)="120"
+^ctp(100,"",3.14285714285714285)="121"
+^ctp(100,"",100)="122"
+^ctp(100,"","")="123"
+^ctp(100,"",$C(0))="124"
+^ctp(100,"",$C(1,2,3,4))="125"
+^ctp(100,""," abcdefg ")="126"
+^ctp(100,$C(0),-100)="127"
+^ctp(100,$C(0),-3.14285714285714285)="128"
+^ctp(100,$C(0),0)="129"
+^ctp(100,$C(0),3.14285714285714285)="130"
+^ctp(100,$C(0),100)="131"
+^ctp(100,$C(0),"")="132"
+^ctp(100,$C(0),$C(0))="133"
+^ctp(100,$C(0),$C(1,2,3,4))="134"
+^ctp(100,$C(0)," abcdefg ")="135"
+^ctp("")="null"
+^ctp("",100,-100)="136"
+^ctp("",100,-3.14285714285714285)="137"
+^ctp("",100,0)="138"
+^ctp("",100,3.14285714285714285)="139"
+^ctp("",100,100)="140"
+^ctp("",100,"")="141"
+^ctp("",100,$C(0))="142"
+^ctp("",100,$C(1,2,3,4))="143"
+^ctp("",100," abcdefg ")="144"
+^ctp("","",-100)="145"
+^ctp("","",-3.14285714285714285)="146"
+^ctp("","",0)="147"
+^ctp("","",3.14285714285714285)="148"
+^ctp("","",100)="149"
+^ctp("","","")="150"
+^ctp("","",$C(0))="151"
+^ctp("","",$C(1,2,3,4))="152"
+^ctp("",""," abcdefg ")="153"
+^ctp("",$C(0),-100)="154"
+^ctp("",$C(0),-3.14285714285714285)="155"
+^ctp("",$C(0),0)="156"
+^ctp("",$C(0),3.14285714285714285)="157"
+^ctp("",$C(0),100)="158"
+^ctp("",$C(0),"")="159"
+^ctp("",$C(0),$C(0))="160"
+^ctp("",$C(0),$C(1,2,3,4))="161"
+^ctp("",$C(0)," abcdefg ")="162"
+^ctp($C(0),100,-100)="163"
+^ctp($C(0),100,-3.14285714285714285)="164"
+^ctp($C(0),100,0)="165"
+^ctp($C(0),100,3.14285714285714285)="166"
+^ctp($C(0),100,100)="167"
+^ctp($C(0),100,"")="168"
+^ctp($C(0),100,$C(0))="169"
+^ctp($C(0),100,$C(1,2,3,4))="170"
+^ctp($C(0),100," abcdefg ")="171"
+^ctp($C(0),"",-100)="172"
+^ctp($C(0),"",-3.14285714285714285)="173"
+^ctp($C(0),"",0)="174"
+^ctp($C(0),"",3.14285714285714285)="175"
+^ctp($C(0),"",100)="176"
+^ctp($C(0),"","")="177"
+^ctp($C(0),"",$C(0))="178"
+^ctp($C(0),"",$C(1,2,3,4))="179"
+^ctp($C(0),""," abcdefg ")="180"
+^ctp($C(0),$C(0),-100)="181"
+^ctp($C(0),$C(0),-3.14285714285714285)="182"
+^ctp($C(0),$C(0),0)="183"
+^ctp($C(0),$C(0),3.14285714285714285)="184"
+^ctp($C(0),$C(0),100)="185"
+^ctp($C(0),$C(0),"")="186"
+^ctp($C(0),$C(0),$C(0))="187"
+^ctp($C(0),$C(0),$C(1,2,3,4))="188"
+^ctp($C(0),$C(0)," abcdefg ")="189"
+^ctp($C(1,2,3,4),100,-100)="190"
+^ctp($C(1,2,3,4),100,-3.14285714285714285)="191"
+^ctp($C(1,2,3,4),100,0)="192"
+^ctp($C(1,2,3,4),100,3.14285714285714285)="193"
+^ctp($C(1,2,3,4),100,100)="194"
+^ctp($C(1,2,3,4),100,"")="195"
+^ctp($C(1,2,3,4),100,$C(0))="196"
+^ctp($C(1,2,3,4),100,$C(1,2,3,4))="197"
+^ctp($C(1,2,3,4),100," abcdefg ")="198"
+^ctp($C(1,2,3,4),"",-100)="199"
+^ctp($C(1,2,3,4),"",-3.14285714285714285)="200"
+^ctp($C(1,2,3,4),"",0)="201"
+^ctp($C(1,2,3,4),"",3.14285714285714285)="202"
+^ctp($C(1,2,3,4),"",100)="203"
+^ctp($C(1,2,3,4),"","")="204"
+^ctp($C(1,2,3,4),"",$C(0))="205"
+^ctp($C(1,2,3,4),"",$C(1,2,3,4))="206"
+^ctp($C(1,2,3,4),""," abcdefg ")="207"
+^ctp($C(1,2,3,4),$C(0),-100)="208"
+^ctp($C(1,2,3,4),$C(0),-3.14285714285714285)="209"
+^ctp($C(1,2,3,4),$C(0),0)="210"
+^ctp($C(1,2,3,4),$C(0),3.14285714285714285)="211"
+^ctp($C(1,2,3,4),$C(0),100)="212"
+^ctp($C(1,2,3,4),$C(0),"")="213"
+^ctp($C(1,2,3,4),$C(0),$C(0))="214"
+^ctp($C(1,2,3,4),$C(0),$C(1,2,3,4))="215"
+^ctp($C(1,2,3,4),$C(0)," abcdefg ")="216"
+^ctp(" abcdefg ",100,-100)="217"
+^ctp(" abcdefg ",100,-3.14285714285714285)="218"
+^ctp(" abcdefg ",100,0)="219"
+^ctp(" abcdefg ",100,3.14285714285714285)="220"
+^ctp(" abcdefg ",100,100)="221"
+^ctp(" abcdefg ",100,"")="222"
+^ctp(" abcdefg ",100,$C(0))="223"
+^ctp(" abcdefg ",100,$C(1,2,3,4))="224"
+^ctp(" abcdefg ",100," abcdefg ")="225"
+^ctp(" abcdefg ","",-100)="226"
+^ctp(" abcdefg ","",-3.14285714285714285)="227"
+^ctp(" abcdefg ","",0)="228"
+^ctp(" abcdefg ","",3.14285714285714285)="229"
+^ctp(" abcdefg ","",100)="230"
+^ctp(" abcdefg ","","")="231"
+^ctp(" abcdefg ","",$C(0))="232"
+^ctp(" abcdefg ","",$C(1,2,3,4))="233"
+^ctp(" abcdefg ",""," abcdefg ")="234"
+^ctp(" abcdefg ",$C(0),-100)="235"
+^ctp(" abcdefg ",$C(0),-3.14285714285714285)="236"
+^ctp(" abcdefg ",$C(0),0)="237"
+^ctp(" abcdefg ",$C(0),3.14285714285714285)="238"
+^ctp(" abcdefg ",$C(0),100)="239"
+^ctp(" abcdefg ",$C(0),"")="240"
+^ctp(" abcdefg ",$C(0),$C(0))="241"
+^ctp(" abcdefg ",$C(0),$C(1,2,3,4))="242"
+^ctp(" abcdefg ",$C(0)," abcdefg ")="243"
+^errcnt="12"
+^varlongvariablenamesworkfornull(-100,100,-100)="1"
+^varlongvariablenamesworkfornull(-100,100,-3.14285714285714285)="2"
+^varlongvariablenamesworkfornull(-100,100,0)="3"
+^varlongvariablenamesworkfornull(-100,100,3.14285714285714285)="4"
+^varlongvariablenamesworkfornull(-100,100,100)="5"
+^varlongvariablenamesworkfornull(-100,100,"")="6"
+^varlongvariablenamesworkfornull(-100,100,$C(0))="7"
+^varlongvariablenamesworkfornull(-100,100,$C(1,2,3,4))="8"
+^varlongvariablenamesworkfornull(-100,100," abcdefg ")="9"
+^varlongvariablenamesworkfornull(-100,"",-100)="10"
+^varlongvariablenamesworkfornull(-100,"",-3.14285714285714285)="11"
+^varlongvariablenamesworkfornull(-100,"",0)="12"
+^varlongvariablenamesworkfornull(-100,"",3.14285714285714285)="13"
+^varlongvariablenamesworkfornull(-100,"",100)="14"
+^varlongvariablenamesworkfornull(-100,"","")="15"
+^varlongvariablenamesworkfornull(-100,"",$C(0))="16"
+^varlongvariablenamesworkfornull(-100,"",$C(1,2,3,4))="17"
+^varlongvariablenamesworkfornull(-100,""," abcdefg ")="18"
+^varlongvariablenamesworkfornull(-100,$C(0),-100)="19"
+^varlongvariablenamesworkfornull(-100,$C(0),-3.14285714285714285)="20"
+^varlongvariablenamesworkfornull(-100,$C(0),0)="21"
+^varlongvariablenamesworkfornull(-100,$C(0),3.14285714285714285)="22"
+^varlongvariablenamesworkfornull(-100,$C(0),100)="23"
+^varlongvariablenamesworkfornull(-100,$C(0),"")="24"
+^varlongvariablenamesworkfornull(-100,$C(0),$C(0))="25"
+^varlongvariablenamesworkfornull(-100,$C(0),$C(1,2,3,4))="26"
+^varlongvariablenamesworkfornull(-100,$C(0)," abcdefg ")="27"
+^varlongvariablenamesworkfornull(-3.14285714285714285,100,-100)="28"
+^varlongvariablenamesworkfornull(-3.14285714285714285,100,-3.14285714285714285)="29"
+^varlongvariablenamesworkfornull(-3.14285714285714285,100,0)="30"
+^varlongvariablenamesworkfornull(-3.14285714285714285,100,3.14285714285714285)="31"
+^varlongvariablenamesworkfornull(-3.14285714285714285,100,100)="32"
+^varlongvariablenamesworkfornull(-3.14285714285714285,100,"")="33"
+^varlongvariablenamesworkfornull(-3.14285714285714285,100,$C(0))="34"
+^varlongvariablenamesworkfornull(-3.14285714285714285,100,$C(1,2,3,4))="35"
+^varlongvariablenamesworkfornull(-3.14285714285714285,100," abcdefg ")="36"
+^varlongvariablenamesworkfornull(-3.14285714285714285,"",-100)="37"
+^varlongvariablenamesworkfornull(-3.14285714285714285,"",-3.14285714285714285)="38"
+^varlongvariablenamesworkfornull(-3.14285714285714285,"",0)="39"
+^varlongvariablenamesworkfornull(-3.14285714285714285,"",3.14285714285714285)="40"
+^varlongvariablenamesworkfornull(-3.14285714285714285,"",100)="41"
+^varlongvariablenamesworkfornull(-3.14285714285714285,"","")="42"
+^varlongvariablenamesworkfornull(-3.14285714285714285,"",$C(0))="43"
+^varlongvariablenamesworkfornull(-3.14285714285714285,"",$C(1,2,3,4))="44"
+^varlongvariablenamesworkfornull(-3.14285714285714285,""," abcdefg ")="45"
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),-100)="46"
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),-3.14285714285714285)="47"
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),0)="48"
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),3.14285714285714285)="49"
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),100)="50"
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),"")="51"
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),$C(0))="52"
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0),$C(1,2,3,4))="53"
+^varlongvariablenamesworkfornull(-3.14285714285714285,$C(0)," abcdefg ")="54"
+^varlongvariablenamesworkfornull(0,100,-100)="55"
+^varlongvariablenamesworkfornull(0,100,-3.14285714285714285)="56"
+^varlongvariablenamesworkfornull(0,100,0)="57"
+^varlongvariablenamesworkfornull(0,100,3.14285714285714285)="58"
+^varlongvariablenamesworkfornull(0,100,100)="59"
+^varlongvariablenamesworkfornull(0,100,"")="60"
+^varlongvariablenamesworkfornull(0,100,$C(0))="61"
+^varlongvariablenamesworkfornull(0,100,$C(1,2,3,4))="62"
+^varlongvariablenamesworkfornull(0,100," abcdefg ")="63"
+^varlongvariablenamesworkfornull(0,"",-100)="64"
+^varlongvariablenamesworkfornull(0,"",-3.14285714285714285)="65"
+^varlongvariablenamesworkfornull(0,"",0)="66"
+^varlongvariablenamesworkfornull(0,"",0,"")="null,0,null,0"
+^varlongvariablenamesworkfornull(0,"",3.14285714285714285)="67"
+^varlongvariablenamesworkfornull(0,"",100)="68"
+^varlongvariablenamesworkfornull(0,"","")="69"
+^varlongvariablenamesworkfornull(0,"",$C(0))="70"
+^varlongvariablenamesworkfornull(0,"",$C(1,2,3,4))="71"
+^varlongvariablenamesworkfornull(0,""," abcdefg ")="72"
+^varlongvariablenamesworkfornull(0,$C(0),-100)="73"
+^varlongvariablenamesworkfornull(0,$C(0),-3.14285714285714285)="74"
+^varlongvariablenamesworkfornull(0,$C(0),0)="75"
+^varlongvariablenamesworkfornull(0,$C(0),3.14285714285714285)="76"
+^varlongvariablenamesworkfornull(0,$C(0),100)="77"
+^varlongvariablenamesworkfornull(0,$C(0),"")="78"
+^varlongvariablenamesworkfornull(0,$C(0),$C(0))="79"
+^varlongvariablenamesworkfornull(0,$C(0),$C(1,2,3,4))="80"
+^varlongvariablenamesworkfornull(0,$C(0)," abcdefg ")="81"
+^varlongvariablenamesworkfornull(3.14285714285714285,100,-100)="82"
+^varlongvariablenamesworkfornull(3.14285714285714285,100,-3.14285714285714285)="83"
+^varlongvariablenamesworkfornull(3.14285714285714285,100,0)="84"
+^varlongvariablenamesworkfornull(3.14285714285714285,100,3.14285714285714285)="85"
+^varlongvariablenamesworkfornull(3.14285714285714285,100,100)="86"
+^varlongvariablenamesworkfornull(3.14285714285714285,100,"")="87"
+^varlongvariablenamesworkfornull(3.14285714285714285,100,$C(0))="88"
+^varlongvariablenamesworkfornull(3.14285714285714285,100,$C(1,2,3,4))="89"
+^varlongvariablenamesworkfornull(3.14285714285714285,100," abcdefg ")="90"
+^varlongvariablenamesworkfornull(3.14285714285714285,"",-100)="91"
+^varlongvariablenamesworkfornull(3.14285714285714285,"",-3.14285714285714285)="92"
+^varlongvariablenamesworkfornull(3.14285714285714285,"",0)="93"
+^varlongvariablenamesworkfornull(3.14285714285714285,"",3.14285714285714285)="94"
+^varlongvariablenamesworkfornull(3.14285714285714285,"",100)="95"
+^varlongvariablenamesworkfornull(3.14285714285714285,"","")="96"
+^varlongvariablenamesworkfornull(3.14285714285714285,"",$C(0))="97"
+^varlongvariablenamesworkfornull(3.14285714285714285,"",$C(1,2,3,4))="98"
+^varlongvariablenamesworkfornull(3.14285714285714285,""," abcdefg ")="99"
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0),-100)="100"
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0),-3.14285714285714285)="101"
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0),0)="102"
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0),3.14285714285714285)="103"
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0),100)="104"
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0),"")="105"
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0),$C(0))="106"
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0),$C(1,2,3,4))="107"
+^varlongvariablenamesworkfornull(3.14285714285714285,$C(0)," abcdefg ")="108"
+^varlongvariablenamesworkfornull(100,100,-100)="109"
+^varlongvariablenamesworkfornull(100,100,-3.14285714285714285)="110"
+^varlongvariablenamesworkfornull(100,100,0)="111"
+^varlongvariablenamesworkfornull(100,100,3.14285714285714285)="112"
+^varlongvariablenamesworkfornull(100,100,100)="113"
+^varlongvariablenamesworkfornull(100,100,"")="114"
+^varlongvariablenamesworkfornull(100,100,$C(0))="115"
+^varlongvariablenamesworkfornull(100,100,$C(1,2,3,4))="116"
+^varlongvariablenamesworkfornull(100,100," abcdefg ")="117"
+^varlongvariablenamesworkfornull(100,"",-100)="118"
+^varlongvariablenamesworkfornull(100,"",-3.14285714285714285)="119"
+^varlongvariablenamesworkfornull(100,"",0)="120"
+^varlongvariablenamesworkfornull(100,"",3.14285714285714285)="121"
+^varlongvariablenamesworkfornull(100,"",100)="122"
+^varlongvariablenamesworkfornull(100,"","")="123"
+^varlongvariablenamesworkfornull(100,"",$C(0))="124"
+^varlongvariablenamesworkfornull(100,"",$C(1,2,3,4))="125"
+^varlongvariablenamesworkfornull(100,""," abcdefg ")="126"
+^varlongvariablenamesworkfornull(100,$C(0),-100)="127"
+^varlongvariablenamesworkfornull(100,$C(0),-3.14285714285714285)="128"
+^varlongvariablenamesworkfornull(100,$C(0),0)="129"
+^varlongvariablenamesworkfornull(100,$C(0),3.14285714285714285)="130"
+^varlongvariablenamesworkfornull(100,$C(0),100)="131"
+^varlongvariablenamesworkfornull(100,$C(0),"")="132"
+^varlongvariablenamesworkfornull(100,$C(0),$C(0))="133"
+^varlongvariablenamesworkfornull(100,$C(0),$C(1,2,3,4))="134"
+^varlongvariablenamesworkfornull(100,$C(0)," abcdefg ")="135"
+^varlongvariablenamesworkfornull("")="null"
+^varlongvariablenamesworkfornull("",100,-100)="136"
+^varlongvariablenamesworkfornull("",100,-3.14285714285714285)="137"
+^varlongvariablenamesworkfornull("",100,0)="138"
+^varlongvariablenamesworkfornull("",100,3.14285714285714285)="139"
+^varlongvariablenamesworkfornull("",100,100)="140"
+^varlongvariablenamesworkfornull("",100,"")="141"
+^varlongvariablenamesworkfornull("",100,$C(0))="142"
+^varlongvariablenamesworkfornull("",100,$C(1,2,3,4))="143"
+^varlongvariablenamesworkfornull("",100," abcdefg ")="144"
+^varlongvariablenamesworkfornull("","",-100)="145"
+^varlongvariablenamesworkfornull("","",-3.14285714285714285)="146"
+^varlongvariablenamesworkfornull("","",0)="147"
+^varlongvariablenamesworkfornull("","",3.14285714285714285)="148"
+^varlongvariablenamesworkfornull("","",100)="149"
+^varlongvariablenamesworkfornull("","","")="150"
+^varlongvariablenamesworkfornull("","",$C(0))="151"
+^varlongvariablenamesworkfornull("","",$C(1,2,3,4))="152"
+^varlongvariablenamesworkfornull("",""," abcdefg ")="153"
+^varlongvariablenamesworkfornull("",$C(0),-100)="154"
+^varlongvariablenamesworkfornull("",$C(0),-3.14285714285714285)="155"
+^varlongvariablenamesworkfornull("",$C(0),0)="156"
+^varlongvariablenamesworkfornull("",$C(0),3.14285714285714285)="157"
+^varlongvariablenamesworkfornull("",$C(0),100)="158"
+^varlongvariablenamesworkfornull("",$C(0),"")="159"
+^varlongvariablenamesworkfornull("",$C(0),$C(0))="160"
+^varlongvariablenamesworkfornull("",$C(0),$C(1,2,3,4))="161"
+^varlongvariablenamesworkfornull("",$C(0)," abcdefg ")="162"
+^varlongvariablenamesworkfornull($C(0),100,-100)="163"
+^varlongvariablenamesworkfornull($C(0),100,-3.14285714285714285)="164"
+^varlongvariablenamesworkfornull($C(0),100,0)="165"
+^varlongvariablenamesworkfornull($C(0),100,3.14285714285714285)="166"
+^varlongvariablenamesworkfornull($C(0),100,100)="167"
+^varlongvariablenamesworkfornull($C(0),100,"")="168"
+^varlongvariablenamesworkfornull($C(0),100,$C(0))="169"
+^varlongvariablenamesworkfornull($C(0),100,$C(1,2,3,4))="170"
+^varlongvariablenamesworkfornull($C(0),100," abcdefg ")="171"
+^varlongvariablenamesworkfornull($C(0),"",-100)="172"
+^varlongvariablenamesworkfornull($C(0),"",-3.14285714285714285)="173"
+^varlongvariablenamesworkfornull($C(0),"",0)="174"
+^varlongvariablenamesworkfornull($C(0),"",3.14285714285714285)="175"
+^varlongvariablenamesworkfornull($C(0),"",100)="176"
+^varlongvariablenamesworkfornull($C(0),"","")="177"
+^varlongvariablenamesworkfornull($C(0),"",$C(0))="178"
+^varlongvariablenamesworkfornull($C(0),"",$C(1,2,3,4))="179"
+^varlongvariablenamesworkfornull($C(0),""," abcdefg ")="180"
+^varlongvariablenamesworkfornull($C(0),$C(0),-100)="181"
+^varlongvariablenamesworkfornull($C(0),$C(0),-3.14285714285714285)="182"
+^varlongvariablenamesworkfornull($C(0),$C(0),0)="183"
+^varlongvariablenamesworkfornull($C(0),$C(0),3.14285714285714285)="184"
+^varlongvariablenamesworkfornull($C(0),$C(0),100)="185"
+^varlongvariablenamesworkfornull($C(0),$C(0),"")="186"
+^varlongvariablenamesworkfornull($C(0),$C(0),$C(0))="187"
+^varlongvariablenamesworkfornull($C(0),$C(0),$C(1,2,3,4))="188"
+^varlongvariablenamesworkfornull($C(0),$C(0)," abcdefg ")="189"
+^varlongvariablenamesworkfornull($C(1,2,3,4),100,-100)="190"
+^varlongvariablenamesworkfornull($C(1,2,3,4),100,-3.14285714285714285)="191"
+^varlongvariablenamesworkfornull($C(1,2,3,4),100,0)="192"
+^varlongvariablenamesworkfornull($C(1,2,3,4),100,3.14285714285714285)="193"
+^varlongvariablenamesworkfornull($C(1,2,3,4),100,100)="194"
+^varlongvariablenamesworkfornull($C(1,2,3,4),100,"")="195"
+^varlongvariablenamesworkfornull($C(1,2,3,4),100,$C(0))="196"
+^varlongvariablenamesworkfornull($C(1,2,3,4),100,$C(1,2,3,4))="197"
+^varlongvariablenamesworkfornull($C(1,2,3,4),100," abcdefg ")="198"
+^varlongvariablenamesworkfornull($C(1,2,3,4),"",-100)="199"
+^varlongvariablenamesworkfornull($C(1,2,3,4),"",-3.14285714285714285)="200"
+^varlongvariablenamesworkfornull($C(1,2,3,4),"",0)="201"
+^varlongvariablenamesworkfornull($C(1,2,3,4),"",3.14285714285714285)="202"
+^varlongvariablenamesworkfornull($C(1,2,3,4),"",100)="203"
+^varlongvariablenamesworkfornull($C(1,2,3,4),"","")="204"
+^varlongvariablenamesworkfornull($C(1,2,3,4),"",$C(0))="205"
+^varlongvariablenamesworkfornull($C(1,2,3,4),"",$C(1,2,3,4))="206"
+^varlongvariablenamesworkfornull($C(1,2,3,4),""," abcdefg ")="207"
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),-100)="208"
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),-3.14285714285714285)="209"
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),0)="210"
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),3.14285714285714285)="211"
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),100)="212"
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),"")="213"
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),$C(0))="214"
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0),$C(1,2,3,4))="215"
+^varlongvariablenamesworkfornull($C(1,2,3,4),$C(0)," abcdefg ")="216"
+^varlongvariablenamesworkfornull(" abcdefg ",100,-100)="217"
+^varlongvariablenamesworkfornull(" abcdefg ",100,-3.14285714285714285)="218"
+^varlongvariablenamesworkfornull(" abcdefg ",100,0)="219"
+^varlongvariablenamesworkfornull(" abcdefg ",100,3.14285714285714285)="220"
+^varlongvariablenamesworkfornull(" abcdefg ",100,100)="221"
+^varlongvariablenamesworkfornull(" abcdefg ",100,"")="222"
+^varlongvariablenamesworkfornull(" abcdefg ",100,$C(0))="223"
+^varlongvariablenamesworkfornull(" abcdefg ",100,$C(1,2,3,4))="224"
+^varlongvariablenamesworkfornull(" abcdefg ",100," abcdefg ")="225"
+^varlongvariablenamesworkfornull(" abcdefg ","",-100)="226"
+^varlongvariablenamesworkfornull(" abcdefg ","",-3.14285714285714285)="227"
+^varlongvariablenamesworkfornull(" abcdefg ","",0)="228"
+^varlongvariablenamesworkfornull(" abcdefg ","",3.14285714285714285)="229"
+^varlongvariablenamesworkfornull(" abcdefg ","",100)="230"
+^varlongvariablenamesworkfornull(" abcdefg ","","")="231"
+^varlongvariablenamesworkfornull(" abcdefg ","",$C(0))="232"
+^varlongvariablenamesworkfornull(" abcdefg ","",$C(1,2,3,4))="233"
+^varlongvariablenamesworkfornull(" abcdefg ",""," abcdefg ")="234"
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0),-100)="235"
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0),-3.14285714285714285)="236"
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0),0)="237"
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0),3.14285714285714285)="238"
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0),100)="239"
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0),"")="240"
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0),$C(0))="241"
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0),$C(1,2,3,4))="242"
+^varlongvariablenamesworkfornull(" abcdefg ",$C(0)," abcdefg ")="243"
+^vvv(100,"",200)="GBL_vvv1"
+^vvv("str","",200)="GBL_vvv1"
+^xgbl(-100,100,-100)="1"
+^xgbl(-100,100,-3.14285714285714285)="2"
+^xgbl(-100,100,0)="3"
+^xgbl(-100,100,3.14285714285714285)="4"
+^xgbl(-100,100,100)="5"
+^xgbl(-100,100,"")="6"
+^xgbl(-100,100,$C(0))="7"
+^xgbl(-100,100,$C(1,2,3,4))="8"
+^xgbl(-100,100," abcdefg ")="9"
+^xgbl(-100,"",-100)="10"
+^xgbl(-100,"",-3.14285714285714285)="11"
+^xgbl(-100,"",0)="12"
+^xgbl(-100,"",3.14285714285714285)="13"
+^xgbl(-100,"",100)="14"
+^xgbl(-100,"","")="15"
+^xgbl(-100,"",$C(0))="16"
+^xgbl(-100,"",$C(1,2,3,4))="17"
+^xgbl(-100,""," abcdefg ")="18"
+^xgbl(-100,$C(0),-100)="19"
+^xgbl(-100,$C(0),-3.14285714285714285)="20"
+^xgbl(-100,$C(0),0)="21"
+^xgbl(-100,$C(0),3.14285714285714285)="22"
+^xgbl(-100,$C(0),100)="23"
+^xgbl(-100,$C(0),"")="24"
+^xgbl(-100,$C(0),$C(0))="25"
+^xgbl(-100,$C(0),$C(1,2,3,4))="26"
+^xgbl(-100,$C(0)," abcdefg ")="27"
+^xgbl(-3.14285714285714285,100,-100)="28"
+^xgbl(-3.14285714285714285,100,-3.14285714285714285)="29"
+^xgbl(-3.14285714285714285,100,0)="30"
+^xgbl(-3.14285714285714285,100,3.14285714285714285)="31"
+^xgbl(-3.14285714285714285,100,100)="32"
+^xgbl(-3.14285714285714285,100,"")="33"
+^xgbl(-3.14285714285714285,100,$C(0))="34"
+^xgbl(-3.14285714285714285,100,$C(1,2,3,4))="35"
+^xgbl(-3.14285714285714285,100," abcdefg ")="36"
+^xgbl(-3.14285714285714285,"",-100)="37"
+^xgbl(-3.14285714285714285,"",-3.14285714285714285)="38"
+^xgbl(-3.14285714285714285,"",0)="39"
+^xgbl(-3.14285714285714285,"",3.14285714285714285)="40"
+^xgbl(-3.14285714285714285,"",100)="41"
+^xgbl(-3.14285714285714285,"","")="42"
+^xgbl(-3.14285714285714285,"",$C(0))="43"
+^xgbl(-3.14285714285714285,"",$C(1,2,3,4))="44"
+^xgbl(-3.14285714285714285,""," abcdefg ")="45"
+^xgbl(-3.14285714285714285,$C(0),-100)="46"
+^xgbl(-3.14285714285714285,$C(0),-3.14285714285714285)="47"
+^xgbl(-3.14285714285714285,$C(0),0)="48"
+^xgbl(-3.14285714285714285,$C(0),3.14285714285714285)="49"
+^xgbl(-3.14285714285714285,$C(0),100)="50"
+^xgbl(-3.14285714285714285,$C(0),"")="51"
+^xgbl(-3.14285714285714285,$C(0),$C(0))="52"
+^xgbl(-3.14285714285714285,$C(0),$C(1,2,3,4))="53"
+^xgbl(-3.14285714285714285,$C(0)," abcdefg ")="54"
+^xgbl(0,100,-100)="55"
+^xgbl(0,100,-3.14285714285714285)="56"
+^xgbl(0,100,0)="57"
+^xgbl(0,100,3.14285714285714285)="58"
+^xgbl(0,100,100)="59"
+^xgbl(0,100,"")="60"
+^xgbl(0,100,$C(0))="61"
+^xgbl(0,100,$C(1,2,3,4))="62"
+^xgbl(0,100," abcdefg ")="63"
+^xgbl(0,"",-100)="64"
+^xgbl(0,"",-3.14285714285714285)="65"
+^xgbl(0,"",0)="66"
+^xgbl(0,"",0,"")="null,0,null,0"
+^xgbl(0,"",3.14285714285714285)="67"
+^xgbl(0,"",100)="68"
+^xgbl(0,"","")="69"
+^xgbl(0,"",$C(0))="70"
+^xgbl(0,"",$C(1,2,3,4))="71"
+^xgbl(0,""," abcdefg ")="72"
+^xgbl(0,$C(0),-100)="73"
+^xgbl(0,$C(0),-3.14285714285714285)="74"
+^xgbl(0,$C(0),0)="75"
+^xgbl(0,$C(0),3.14285714285714285)="76"
+^xgbl(0,$C(0),100)="77"
+^xgbl(0,$C(0),"")="78"
+^xgbl(0,$C(0),$C(0))="79"
+^xgbl(0,$C(0),$C(1,2,3,4))="80"
+^xgbl(0,$C(0)," abcdefg ")="81"
+^xgbl(3.14285714285714285,100,-100)="82"
+^xgbl(3.14285714285714285,100,-3.14285714285714285)="83"
+^xgbl(3.14285714285714285,100,0)="84"
+^xgbl(3.14285714285714285,100,3.14285714285714285)="85"
+^xgbl(3.14285714285714285,100,100)="86"
+^xgbl(3.14285714285714285,100,"")="87"
+^xgbl(3.14285714285714285,100,$C(0))="88"
+^xgbl(3.14285714285714285,100,$C(1,2,3,4))="89"
+^xgbl(3.14285714285714285,100," abcdefg ")="90"
+^xgbl(3.14285714285714285,"",-100)="91"
+^xgbl(3.14285714285714285,"",-3.14285714285714285)="92"
+^xgbl(3.14285714285714285,"",0)="93"
+^xgbl(3.14285714285714285,"",3.14285714285714285)="94"
+^xgbl(3.14285714285714285,"",100)="95"
+^xgbl(3.14285714285714285,"","")="96"
+^xgbl(3.14285714285714285,"",$C(0))="97"
+^xgbl(3.14285714285714285,"",$C(1,2,3,4))="98"
+^xgbl(3.14285714285714285,""," abcdefg ")="99"
+^xgbl(3.14285714285714285,$C(0),-100)="100"
+^xgbl(3.14285714285714285,$C(0),-3.14285714285714285)="101"
+^xgbl(3.14285714285714285,$C(0),0)="102"
+^xgbl(3.14285714285714285,$C(0),3.14285714285714285)="103"
+^xgbl(3.14285714285714285,$C(0),100)="104"
+^xgbl(3.14285714285714285,$C(0),"")="105"
+^xgbl(3.14285714285714285,$C(0),$C(0))="106"
+^xgbl(3.14285714285714285,$C(0),$C(1,2,3,4))="107"
+^xgbl(3.14285714285714285,$C(0)," abcdefg ")="108"
+^xgbl(100,100,-100)="109"
+^xgbl(100,100,-3.14285714285714285)="110"
+^xgbl(100,100,0)="111"
+^xgbl(100,100,3.14285714285714285)="112"
+^xgbl(100,100,100)="113"
+^xgbl(100,100,"")="114"
+^xgbl(100,100,$C(0))="115"
+^xgbl(100,100,$C(1,2,3,4))="116"
+^xgbl(100,100," abcdefg ")="117"
+^xgbl(100,"",-100)="118"
+^xgbl(100,"",-3.14285714285714285)="119"
+^xgbl(100,"",0)="120"
+^xgbl(100,"",3.14285714285714285)="121"
+^xgbl(100,"",100)="122"
+^xgbl(100,"","")="123"
+^xgbl(100,"",$C(0))="124"
+^xgbl(100,"",$C(1,2,3,4))="125"
+^xgbl(100,""," abcdefg ")="126"
+^xgbl(100,$C(0),-100)="127"
+^xgbl(100,$C(0),-3.14285714285714285)="128"
+^xgbl(100,$C(0),0)="129"
+^xgbl(100,$C(0),3.14285714285714285)="130"
+^xgbl(100,$C(0),100)="131"
+^xgbl(100,$C(0),"")="132"
+^xgbl(100,$C(0),$C(0))="133"
+^xgbl(100,$C(0),$C(1,2,3,4))="134"
+^xgbl(100,$C(0)," abcdefg ")="135"
+^xgbl("")="null"
+^xgbl("",100,-100)="136"
+^xgbl("",100,-3.14285714285714285)="137"
+^xgbl("",100,0)="138"
+^xgbl("",100,3.14285714285714285)="139"
+^xgbl("",100,100)="140"
+^xgbl("",100,"")="141"
+^xgbl("",100,$C(0))="142"
+^xgbl("",100,$C(1,2,3,4))="143"
+^xgbl("",100," abcdefg ")="144"
+^xgbl("","",-100)="145"
+^xgbl("","",-3.14285714285714285)="146"
+^xgbl("","",0)="147"
+^xgbl("","",3.14285714285714285)="148"
+^xgbl("","",100)="149"
+^xgbl("","","")="150"
+^xgbl("","",$C(0))="151"
+^xgbl("","",$C(1,2,3,4))="152"
+^xgbl("",""," abcdefg ")="153"
+^xgbl("",$C(0),-100)="154"
+^xgbl("",$C(0),-3.14285714285714285)="155"
+^xgbl("",$C(0),0)="156"
+^xgbl("",$C(0),3.14285714285714285)="157"
+^xgbl("",$C(0),100)="158"
+^xgbl("",$C(0),"")="159"
+^xgbl("",$C(0),$C(0))="160"
+^xgbl("",$C(0),$C(1,2,3,4))="161"
+^xgbl("",$C(0)," abcdefg ")="162"
+^xgbl($C(0),100,-100)="163"
+^xgbl($C(0),100,-3.14285714285714285)="164"
+^xgbl($C(0),100,0)="165"
+^xgbl($C(0),100,3.14285714285714285)="166"
+^xgbl($C(0),100,100)="167"
+^xgbl($C(0),100,"")="168"
+^xgbl($C(0),100,$C(0))="169"
+^xgbl($C(0),100,$C(1,2,3,4))="170"
+^xgbl($C(0),100," abcdefg ")="171"
+^xgbl($C(0),"",-100)="172"
+^xgbl($C(0),"",-3.14285714285714285)="173"
+^xgbl($C(0),"",0)="174"
+^xgbl($C(0),"",3.14285714285714285)="175"
+^xgbl($C(0),"",100)="176"
+^xgbl($C(0),"","")="177"
+^xgbl($C(0),"",$C(0))="178"
+^xgbl($C(0),"",$C(1,2,3,4))="179"
+^xgbl($C(0),""," abcdefg ")="180"
+^xgbl($C(0),$C(0),-100)="181"
+^xgbl($C(0),$C(0),-3.14285714285714285)="182"
+^xgbl($C(0),$C(0),0)="183"
+^xgbl($C(0),$C(0),3.14285714285714285)="184"
+^xgbl($C(0),$C(0),100)="185"
+^xgbl($C(0),$C(0),"")="186"
+^xgbl($C(0),$C(0),$C(0))="187"
+^xgbl($C(0),$C(0),$C(1,2,3,4))="188"
+^xgbl($C(0),$C(0)," abcdefg ")="189"
+^xgbl($C(1,2,3,4),100,-100)="190"
+^xgbl($C(1,2,3,4),100,-3.14285714285714285)="191"
+^xgbl($C(1,2,3,4),100,0)="192"
+^xgbl($C(1,2,3,4),100,3.14285714285714285)="193"
+^xgbl($C(1,2,3,4),100,100)="194"
+^xgbl($C(1,2,3,4),100,"")="195"
+^xgbl($C(1,2,3,4),100,$C(0))="196"
+^xgbl($C(1,2,3,4),100,$C(1,2,3,4))="197"
+^xgbl($C(1,2,3,4),100," abcdefg ")="198"
+^xgbl($C(1,2,3,4),"",-100)="199"
+^xgbl($C(1,2,3,4),"",-3.14285714285714285)="200"
+^xgbl($C(1,2,3,4),"",0)="201"
+^xgbl($C(1,2,3,4),"",3.14285714285714285)="202"
+^xgbl($C(1,2,3,4),"",100)="203"
+^xgbl($C(1,2,3,4),"","")="204"
+^xgbl($C(1,2,3,4),"",$C(0))="205"
+^xgbl($C(1,2,3,4),"",$C(1,2,3,4))="206"
+^xgbl($C(1,2,3,4),""," abcdefg ")="207"
+^xgbl($C(1,2,3,4),$C(0),-100)="208"
+^xgbl($C(1,2,3,4),$C(0),-3.14285714285714285)="209"
+^xgbl($C(1,2,3,4),$C(0),0)="210"
+^xgbl($C(1,2,3,4),$C(0),3.14285714285714285)="211"
+^xgbl($C(1,2,3,4),$C(0),100)="212"
+^xgbl($C(1,2,3,4),$C(0),"")="213"
+^xgbl($C(1,2,3,4),$C(0),$C(0))="214"
+^xgbl($C(1,2,3,4),$C(0),$C(1,2,3,4))="215"
+^xgbl($C(1,2,3,4),$C(0)," abcdefg ")="216"
+^xgbl(" abcdefg ",100,-100)="217"
+^xgbl(" abcdefg ",100,-3.14285714285714285)="218"
+^xgbl(" abcdefg ",100,0)="219"
+^xgbl(" abcdefg ",100,3.14285714285714285)="220"
+^xgbl(" abcdefg ",100,100)="221"
+^xgbl(" abcdefg ",100,"")="222"
+^xgbl(" abcdefg ",100,$C(0))="223"
+^xgbl(" abcdefg ",100,$C(1,2,3,4))="224"
+^xgbl(" abcdefg ",100," abcdefg ")="225"
+^xgbl(" abcdefg ","",-100)="226"
+^xgbl(" abcdefg ","",-3.14285714285714285)="227"
+^xgbl(" abcdefg ","",0)="228"
+^xgbl(" abcdefg ","",3.14285714285714285)="229"
+^xgbl(" abcdefg ","",100)="230"
+^xgbl(" abcdefg ","","")="231"
+^xgbl(" abcdefg ","",$C(0))="232"
+^xgbl(" abcdefg ","",$C(1,2,3,4))="233"
+^xgbl(" abcdefg ",""," abcdefg ")="234"
+^xgbl(" abcdefg ",$C(0),-100)="235"
+^xgbl(" abcdefg ",$C(0),-3.14285714285714285)="236"
+^xgbl(" abcdefg ",$C(0),0)="237"
+^xgbl(" abcdefg ",$C(0),3.14285714285714285)="238"
+^xgbl(" abcdefg ",$C(0),100)="239"
+^xgbl(" abcdefg ",$C(0),"")="240"
+^xgbl(" abcdefg ",$C(0),$C(0))="241"
+^xgbl(" abcdefg ",$C(0),$C(1,2,3,4))="242"
+^xgbl(" abcdefg ",$C(0)," abcdefg ")="243"
+^xtp(-100,100,-100)="1"
+^xtp(-100,100,-3.14285714285714285)="2"
+^xtp(-100,100,0)="3"
+^xtp(-100,100,3.14285714285714285)="4"
+^xtp(-100,100,100)="5"
+^xtp(-100,100,"")="6"
+^xtp(-100,100,$C(0))="7"
+^xtp(-100,100,$C(1,2,3,4))="8"
+^xtp(-100,100," abcdefg ")="9"
+^xtp(-100,"",-100)="10"
+^xtp(-100,"",-3.14285714285714285)="11"
+^xtp(-100,"",0)="12"
+^xtp(-100,"",3.14285714285714285)="13"
+^xtp(-100,"",100)="14"
+^xtp(-100,"","")="15"
+^xtp(-100,"",$C(0))="16"
+^xtp(-100,"",$C(1,2,3,4))="17"
+^xtp(-100,""," abcdefg ")="18"
+^xtp(-100,$C(0),-100)="19"
+^xtp(-100,$C(0),-3.14285714285714285)="20"
+^xtp(-100,$C(0),0)="21"
+^xtp(-100,$C(0),3.14285714285714285)="22"
+^xtp(-100,$C(0),100)="23"
+^xtp(-100,$C(0),"")="24"
+^xtp(-100,$C(0),$C(0))="25"
+^xtp(-100,$C(0),$C(1,2,3,4))="26"
+^xtp(-100,$C(0)," abcdefg ")="27"
+^xtp(-3.14285714285714285,100,-100)="28"
+^xtp(-3.14285714285714285,100,-3.14285714285714285)="29"
+^xtp(-3.14285714285714285,100,0)="30"
+^xtp(-3.14285714285714285,100,3.14285714285714285)="31"
+^xtp(-3.14285714285714285,100,100)="32"
+^xtp(-3.14285714285714285,100,"")="33"
+^xtp(-3.14285714285714285,100,$C(0))="34"
+^xtp(-3.14285714285714285,100,$C(1,2,3,4))="35"
+^xtp(-3.14285714285714285,100," abcdefg ")="36"
+^xtp(-3.14285714285714285,"",-100)="37"
+^xtp(-3.14285714285714285,"",-3.14285714285714285)="38"
+^xtp(-3.14285714285714285,"",0)="39"
+^xtp(-3.14285714285714285,"",3.14285714285714285)="40"
+^xtp(-3.14285714285714285,"",100)="41"
+^xtp(-3.14285714285714285,"","")="42"
+^xtp(-3.14285714285714285,"",$C(0))="43"
+^xtp(-3.14285714285714285,"",$C(1,2,3,4))="44"
+^xtp(-3.14285714285714285,""," abcdefg ")="45"
+^xtp(-3.14285714285714285,$C(0),-100)="46"
+^xtp(-3.14285714285714285,$C(0),-3.14285714285714285)="47"
+^xtp(-3.14285714285714285,$C(0),0)="48"
+^xtp(-3.14285714285714285,$C(0),3.14285714285714285)="49"
+^xtp(-3.14285714285714285,$C(0),100)="50"
+^xtp(-3.14285714285714285,$C(0),"")="51"
+^xtp(-3.14285714285714285,$C(0),$C(0))="52"
+^xtp(-3.14285714285714285,$C(0),$C(1,2,3,4))="53"
+^xtp(-3.14285714285714285,$C(0)," abcdefg ")="54"
+^xtp(0,100,-100)="55"
+^xtp(0,100,-3.14285714285714285)="56"
+^xtp(0,100,0)="57"
+^xtp(0,100,3.14285714285714285)="58"
+^xtp(0,100,100)="59"
+^xtp(0,100,"")="60"
+^xtp(0,100,$C(0))="61"
+^xtp(0,100,$C(1,2,3,4))="62"
+^xtp(0,100," abcdefg ")="63"
+^xtp(0,"",-100)="64"
+^xtp(0,"",-3.14285714285714285)="65"
+^xtp(0,"",0)="66"
+^xtp(0,"",0,"")="null,0,null,0"
+^xtp(0,"",3.14285714285714285)="67"
+^xtp(0,"",100)="68"
+^xtp(0,"","")="69"
+^xtp(0,"",$C(0))="70"
+^xtp(0,"",$C(1,2,3,4))="71"
+^xtp(0,""," abcdefg ")="72"
+^xtp(0,$C(0),-100)="73"
+^xtp(0,$C(0),-3.14285714285714285)="74"
+^xtp(0,$C(0),0)="75"
+^xtp(0,$C(0),3.14285714285714285)="76"
+^xtp(0,$C(0),100)="77"
+^xtp(0,$C(0),"")="78"
+^xtp(0,$C(0),$C(0))="79"
+^xtp(0,$C(0),$C(1,2,3,4))="80"
+^xtp(0,$C(0)," abcdefg ")="81"
+^xtp(3.14285714285714285,100,-100)="82"
+^xtp(3.14285714285714285,100,-3.14285714285714285)="83"
+^xtp(3.14285714285714285,100,0)="84"
+^xtp(3.14285714285714285,100,3.14285714285714285)="85"
+^xtp(3.14285714285714285,100,100)="86"
+^xtp(3.14285714285714285,100,"")="87"
+^xtp(3.14285714285714285,100,$C(0))="88"
+^xtp(3.14285714285714285,100,$C(1,2,3,4))="89"
+^xtp(3.14285714285714285,100," abcdefg ")="90"
+^xtp(3.14285714285714285,"",-100)="91"
+^xtp(3.14285714285714285,"",-3.14285714285714285)="92"
+^xtp(3.14285714285714285,"",0)="93"
+^xtp(3.14285714285714285,"",3.14285714285714285)="94"
+^xtp(3.14285714285714285,"",100)="95"
+^xtp(3.14285714285714285,"","")="96"
+^xtp(3.14285714285714285,"",$C(0))="97"
+^xtp(3.14285714285714285,"",$C(1,2,3,4))="98"
+^xtp(3.14285714285714285,""," abcdefg ")="99"
+^xtp(3.14285714285714285,$C(0),-100)="100"
+^xtp(3.14285714285714285,$C(0),-3.14285714285714285)="101"
+^xtp(3.14285714285714285,$C(0),0)="102"
+^xtp(3.14285714285714285,$C(0),3.14285714285714285)="103"
+^xtp(3.14285714285714285,$C(0),100)="104"
+^xtp(3.14285714285714285,$C(0),"")="105"
+^xtp(3.14285714285714285,$C(0),$C(0))="106"
+^xtp(3.14285714285714285,$C(0),$C(1,2,3,4))="107"
+^xtp(3.14285714285714285,$C(0)," abcdefg ")="108"
+^xtp(100,100,-100)="109"
+^xtp(100,100,-3.14285714285714285)="110"
+^xtp(100,100,0)="111"
+^xtp(100,100,3.14285714285714285)="112"
+^xtp(100,100,100)="113"
+^xtp(100,100,"")="114"
+^xtp(100,100,$C(0))="115"
+^xtp(100,100,$C(1,2,3,4))="116"
+^xtp(100,100," abcdefg ")="117"
+^xtp(100,"",-100)="118"
+^xtp(100,"",-3.14285714285714285)="119"
+^xtp(100,"",0)="120"
+^xtp(100,"",3.14285714285714285)="121"
+^xtp(100,"",100)="122"
+^xtp(100,"","")="123"
+^xtp(100,"",$C(0))="124"
+^xtp(100,"",$C(1,2,3,4))="125"
+^xtp(100,""," abcdefg ")="126"
+^xtp(100,$C(0),-100)="127"
+^xtp(100,$C(0),-3.14285714285714285)="128"
+^xtp(100,$C(0),0)="129"
+^xtp(100,$C(0),3.14285714285714285)="130"
+^xtp(100,$C(0),100)="131"
+^xtp(100,$C(0),"")="132"
+^xtp(100,$C(0),$C(0))="133"
+^xtp(100,$C(0),$C(1,2,3,4))="134"
+^xtp(100,$C(0)," abcdefg ")="135"
+^xtp("")="null"
+^xtp("",100,-100)="136"
+^xtp("",100,-3.14285714285714285)="137"
+^xtp("",100,0)="138"
+^xtp("",100,3.14285714285714285)="139"
+^xtp("",100,100)="140"
+^xtp("",100,"")="141"
+^xtp("",100,$C(0))="142"
+^xtp("",100,$C(1,2,3,4))="143"
+^xtp("",100," abcdefg ")="144"
+^xtp("","",-100)="145"
+^xtp("","",-3.14285714285714285)="146"
+^xtp("","",0)="147"
+^xtp("","",3.14285714285714285)="148"
+^xtp("","",100)="149"
+^xtp("","","")="150"
+^xtp("","",$C(0))="151"
+^xtp("","",$C(1,2,3,4))="152"
+^xtp("",""," abcdefg ")="153"
+^xtp("",$C(0),-100)="154"
+^xtp("",$C(0),-3.14285714285714285)="155"
+^xtp("",$C(0),0)="156"
+^xtp("",$C(0),3.14285714285714285)="157"
+^xtp("",$C(0),100)="158"
+^xtp("",$C(0),"")="159"
+^xtp("",$C(0),$C(0))="160"
+^xtp("",$C(0),$C(1,2,3,4))="161"
+^xtp("",$C(0)," abcdefg ")="162"
+^xtp($C(0),100,-100)="163"
+^xtp($C(0),100,-3.14285714285714285)="164"
+^xtp($C(0),100,0)="165"
+^xtp($C(0),100,3.14285714285714285)="166"
+^xtp($C(0),100,100)="167"
+^xtp($C(0),100,"")="168"
+^xtp($C(0),100,$C(0))="169"
+^xtp($C(0),100,$C(1,2,3,4))="170"
+^xtp($C(0),100," abcdefg ")="171"
+^xtp($C(0),"",-100)="172"
+^xtp($C(0),"",-3.14285714285714285)="173"
+^xtp($C(0),"",0)="174"
+^xtp($C(0),"",3.14285714285714285)="175"
+^xtp($C(0),"",100)="176"
+^xtp($C(0),"","")="177"
+^xtp($C(0),"",$C(0))="178"
+^xtp($C(0),"",$C(1,2,3,4))="179"
+^xtp($C(0),""," abcdefg ")="180"
+^xtp($C(0),$C(0),-100)="181"
+^xtp($C(0),$C(0),-3.14285714285714285)="182"
+^xtp($C(0),$C(0),0)="183"
+^xtp($C(0),$C(0),3.14285714285714285)="184"
+^xtp($C(0),$C(0),100)="185"
+^xtp($C(0),$C(0),"")="186"
+^xtp($C(0),$C(0),$C(0))="187"
+^xtp($C(0),$C(0),$C(1,2,3,4))="188"
+^xtp($C(0),$C(0)," abcdefg ")="189"
+^xtp($C(1,2,3,4),100,-100)="190"
+^xtp($C(1,2,3,4),100,-3.14285714285714285)="191"
+^xtp($C(1,2,3,4),100,0)="192"
+^xtp($C(1,2,3,4),100,3.14285714285714285)="193"
+^xtp($C(1,2,3,4),100,100)="194"
+^xtp($C(1,2,3,4),100,"")="195"
+^xtp($C(1,2,3,4),100,$C(0))="196"
+^xtp($C(1,2,3,4),100,$C(1,2,3,4))="197"
+^xtp($C(1,2,3,4),100," abcdefg ")="198"
+^xtp($C(1,2,3,4),"",-100)="199"
+^xtp($C(1,2,3,4),"",-3.14285714285714285)="200"
+^xtp($C(1,2,3,4),"",0)="201"
+^xtp($C(1,2,3,4),"",3.14285714285714285)="202"
+^xtp($C(1,2,3,4),"",100)="203"
+^xtp($C(1,2,3,4),"","")="204"
+^xtp($C(1,2,3,4),"",$C(0))="205"
+^xtp($C(1,2,3,4),"",$C(1,2,3,4))="206"
+^xtp($C(1,2,3,4),""," abcdefg ")="207"
+^xtp($C(1,2,3,4),$C(0),-100)="208"
+^xtp($C(1,2,3,4),$C(0),-3.14285714285714285)="209"
+^xtp($C(1,2,3,4),$C(0),0)="210"
+^xtp($C(1,2,3,4),$C(0),3.14285714285714285)="211"
+^xtp($C(1,2,3,4),$C(0),100)="212"
+^xtp($C(1,2,3,4),$C(0),"")="213"
+^xtp($C(1,2,3,4),$C(0),$C(0))="214"
+^xtp($C(1,2,3,4),$C(0),$C(1,2,3,4))="215"
+^xtp($C(1,2,3,4),$C(0)," abcdefg ")="216"
+^xtp(" abcdefg ",100,-100)="217"
+^xtp(" abcdefg ",100,-3.14285714285714285)="218"
+^xtp(" abcdefg ",100,0)="219"
+^xtp(" abcdefg ",100,3.14285714285714285)="220"
+^xtp(" abcdefg ",100,100)="221"
+^xtp(" abcdefg ",100,"")="222"
+^xtp(" abcdefg ",100,$C(0))="223"
+^xtp(" abcdefg ",100,$C(1,2,3,4))="224"
+^xtp(" abcdefg ",100," abcdefg ")="225"
+^xtp(" abcdefg ","",-100)="226"
+^xtp(" abcdefg ","",-3.14285714285714285)="227"
+^xtp(" abcdefg ","",0)="228"
+^xtp(" abcdefg ","",3.14285714285714285)="229"
+^xtp(" abcdefg ","",100)="230"
+^xtp(" abcdefg ","","")="231"
+^xtp(" abcdefg ","",$C(0))="232"
+^xtp(" abcdefg ","",$C(1,2,3,4))="233"
+^xtp(" abcdefg ",""," abcdefg ")="234"
+^xtp(" abcdefg ",$C(0),-100)="235"
+^xtp(" abcdefg ",$C(0),-3.14285714285714285)="236"
+^xtp(" abcdefg ",$C(0),0)="237"
+^xtp(" abcdefg ",$C(0),3.14285714285714285)="238"
+^xtp(" abcdefg ",$C(0),100)="239"
+^xtp(" abcdefg ",$C(0),"")="240"
+^xtp(" abcdefg ",$C(0),$C(0))="241"
+^xtp(" abcdefg ",$C(0),$C(1,2,3,4))="242"
+^xtp(" abcdefg ",$C(0)," abcdefg ")="243"
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

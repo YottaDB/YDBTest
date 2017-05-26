@@ -1,0 +1,60 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+--------------------------------------------------------------------------------
+  Test $increment in multiple jobs executing triggers
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+  Validate all 5 jobs passed
+--------------------------------------------------------------------------------
+Comparison child_trigincrement.mjo1 passed
+Comparison child_trigincrement.mjo2 passed
+Comparison child_trigincrement.mjo3 passed
+Comparison child_trigincrement.mjo4 passed
+Comparison child_trigincrement.mjo5 passed
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##TEST_HOST_SHORT##:##TEST_PATH##/child_trigincrement.mjo1
+$zstatus=150373850,child+4^trigincrement,%GTM-E-UNDEF, Undefined local variable: y
+##TEST_HOST_SHORT##:##TEST_PATH##/child_trigincrement.mjo2
+$zstatus=150373850,child+4^trigincrement,%GTM-E-UNDEF, Undefined local variable: y
+##TEST_HOST_SHORT##:##TEST_PATH##/child_trigincrement.mjo3
+$zstatus=150373850,child+4^trigincrement,%GTM-E-UNDEF, Undefined local variable: y
+##TEST_HOST_SHORT##:##TEST_PATH##/child_trigincrement.mjo4
+$zstatus=150373850,child+4^trigincrement,%GTM-E-UNDEF, Undefined local variable: y
+##TEST_HOST_SHORT##:##TEST_PATH##/child_trigincrement.mjo5
+$zstatus=150373850,child+4^trigincrement,%GTM-E-UNDEF, Undefined local variable: y
+##SUSPEND_OUTPUT REPLIC
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##TEST_PATH##/child_trigincrement.mjo1
+$zstatus=150373850,child+4^trigincrement,%GTM-E-UNDEF, Undefined local variable: y
+##TEST_PATH##/child_trigincrement.mjo2
+$zstatus=150373850,child+4^trigincrement,%GTM-E-UNDEF, Undefined local variable: y
+##TEST_PATH##/child_trigincrement.mjo3
+$zstatus=150373850,child+4^trigincrement,%GTM-E-UNDEF, Undefined local variable: y
+##TEST_PATH##/child_trigincrement.mjo4
+$zstatus=150373850,child+4^trigincrement,%GTM-E-UNDEF, Undefined local variable: y
+##TEST_PATH##/child_trigincrement.mjo5
+$zstatus=150373850,child+4^trigincrement,%GTM-E-UNDEF, Undefined local variable: y

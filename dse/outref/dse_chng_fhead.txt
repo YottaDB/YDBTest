@@ -1,0 +1,333 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Start fileheader tests...
+before changes...
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File            ##TEST_PATH##/mumps.dat
+Region          DEFAULT
+##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
+##TEST_AWK  Access method                          (MM|BG)  Global Buffers                1024
+  Reserved Bytes                          0  Block size (in bytes)         1024
+  Maximum record size                   256  Starting VBN                   513
+  Maximum key size                       64  Total blocks            0x00000BBE
+  Null subscripts                     NEVER  Free blocks             0x00000BB6
+  Standard Null Collation             FALSE  Free space              0x00000000
+  Last Record Backup     0x0000000000000001  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             6
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  In critical section            0x00000000  Timers pending                   0
+##SUSPEND_OUTPUT MM
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+##ALLOW_OUTPUT MM
+##SUSPEND_OUTPUT BG
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##ALLOW_OUTPUT BG
+  Freeze match                   0x00000000  Flush trigger                  960
+  Current transaction    0x0000000000000001  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+##SUSPEND_OUTPUT NON_COLLATION
+  Default Collation                       1  Collation Version                0
+##ALLOW_OUTPUT NON_COLLATION
+  Create in progress                  FALSE  Modified cache blocks            0
+  Reference count                         1  Wait Disk                        0
+  Journal State                    DISABLED
+  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
+  Mutex Queue Slots                    1024  KILLs in progress                0
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
+  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
+  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+command: change -fileheader -location=NULL -size=1 -value=1 ...
+command: change -fileheader -location=10 -size=z -value=1...
+command: change -fileheader -location=Z -size=1 -value=1...
+command: change -fileheader -location=1000 -size=0 -value=99 ...
+check converting string to hex for value....
+check converting string to hex for location...
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> %GTM-E-CLIERR, Unrecognized value: \, HEX number expected
+DSE> %GTM-E-CLIERR, Unrecognized value: z, Decimal number expected
+DSE> %GTM-E-CLIERR, Unrecognized value: Z, HEX number expected
+DSE> %GTM-E-SIZENOTVALID8, Size (in bytes) must be either 1, 2, 4, or 8
+DSE> Location 5632 [0x00001600] : Old Value = 0 [0x00] : New Value = 0 [0x00] : Size = 1 [0x01]
+DSE> Error: cannot convert 50000000000000000000000 value to hex number.
+DSE> Error: cannot convert fffffffffffffffffffffff value to hex number.
+DSE> command: change -fileheader -location=1000 -value=11111111 size=1
+command: change -fileheader -location=1002 -value=22222222 size=2
+command: change -fileheader -location=1000 -value=22222222 size=4
+command: change -fileheader -location=1200 -value=7FFFFFFFFFFFFFFF size=8
+command: change -fileheader -location=1200 -value=FFFFFFFFFFFFFFFF size=8
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> Location 4096 [0x00001000] : Old Value = 0 [0x00] : New Value = 17 [0x11] : Size = 1 [0x01]
+DSE> Location 4098 [0x00001002] : Old Value = 0 [0x0000] : New Value = 8738 [0x2222] : Size = 2 [0x02]
+DSE> Location 4096 [0x00001000] : Old Value = XXXXXXXX [0xXXXXXXXX] : New Value = 572662306 [0x22222222] : Size = 4 [0x04]
+DSE> Location 4608 [0x00001200] : Old Value = 0 [0x0] : New Value = 9223372036854775807 [0x7FFFFFFFFFFFFFFF] : Size = 8 [0x08]
+DSE> Location 4608 [0x00001200] : Old Value = 9223372036854775807 [0x7FFFFFFFFFFFFFFF] : New Value = 18446744073709551615 [0xFFFFFFFFFFFFFFFF] : Size = 8 [0x08]
+DSE> 
+after changes...
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File            ##TEST_PATH##/mumps.dat
+Region          DEFAULT
+##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
+##TEST_AWK  Access method                          (MM|BG)  Global Buffers                1024
+  Reserved Bytes                          0  Block size (in bytes)         1024
+  Maximum record size                   256  Starting VBN                   513
+  Maximum key size                       64  Total blocks            0x00000BBE
+  Null subscripts                     NEVER  Free blocks             0x00000BB6
+  Standard Null Collation             FALSE  Free space              0x00000000
+  Last Record Backup     0x0000000000000001  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             6
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  In critical section            0x00000000  Timers pending                   0
+##SUSPEND_OUTPUT MM
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+##ALLOW_OUTPUT MM
+##SUSPEND_OUTPUT BG
+##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##ALLOW_OUTPUT BG
+  Freeze match                   0x00000000  Flush trigger                  960
+  Current transaction    0x0000000000000001  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+##SUSPEND_OUTPUT NON_COLLATION
+  Default Collation                       1  Collation Version                0
+##ALLOW_OUTPUT NON_COLLATION
+  Create in progress                  FALSE  Modified cache blocks            0
+  Reference count                         1  Wait Disk                        0
+  Journal State                    DISABLED
+  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
+  Mutex Queue Slots                    1024  KILLs in progress                0
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
+  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
+  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+Check -nocrit qualifier...
+Seize critical section for process A-----------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> Location 4096 [0x00001000] : Old Value = XX [0xXX] : New Value = 85 [0x55] : Size = 1 [0x01]
+DSE> 
+Seized write critical section.
+
+DSE> 
+##TEST_AWKWrite critical section owner is process id [0-9][0-9]*
+##TEST_AWKDSE \(process id:  [0-9][0-9]*\) owns the write critical section
+
+DSE> In process B for write to critical section-----------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+##TEST_AWKWrite critical section owner is process id [0-9][0-9]*
+
+DSE> Location 4096 [0x00001000] : Old Value = XX [0xXXXX] : New Value = 34 [0x0022] : Size = 2 [0x02]
+DSE> 
+leaving process B-----------------------------
+DSE> 
+Released write critical section.
+
+DSE> Location 4096 [0x00001000] : Old Value = XX [0xXX] : New Value = 102 [0x66] : Size = 1 [0x01]
+DSE> 
+Leaving critical section for process A------------------------
+end critical section tests...
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+
+Integ of region DEFAULT
+%GTM-W-MUKILLIP, Kill in progress indicator is set for file ##TEST_PATH##/mumps.dat - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory[ 0-9.AN]*
+##TEST_AWKIndex[ 0-9.AN]*
+##TEST_AWKData[ 0-9.AN]*
+##TEST_AWKFree[ 0-9.AN]*
+##TEST_AWKTotal[ 0-9.AN]*
+%GTM-E-INTEGERRS, Database integrity errors
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory[ 0-9.AN]*
+##TEST_AWKIndex[ 0-9.AN]*
+##TEST_AWKData[ 0-9.AN]*
+##TEST_AWKFree[ 0-9.AN]*
+##TEST_AWKTotal[ 0-9.AN]*
+dse change -file -sleep=0 -spin=FFFFFF
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+dse dump -file
+Spin sleep time mask    0x00FFFFFF is present in the file dse_dump_0.out
+Mutex Sleep Spin Count           0 is present in the file dse_dump_0.out
+dse dump -file -all
+  Database is Fully Upgraded                :  TRUE
+  Database WAS ONCE Fully Upgraded from V4  :  TRUE
+dse change -file -fully_upgraded=0
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+dse dump -file -all
+  Database is Fully Upgraded                : FALSE
+  Database WAS ONCE Fully Upgraded from V4  :  TRUE
+dse change -file -fully_upgraded=1
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+dse dump -file -all
+  Database is Fully Upgraded                :  TRUE
+  Database WAS ONCE Fully Upgraded from V4  :  TRUE
+dse change -file -fully_upgraded=TRUE it should give an error
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+%GTM-E-CLIERR, Unrecognized value: TRUE, Decimal number expected
+dse change -file fully_upgraded=-7
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+%GTM-E-CLIERR, Unrecognized value: -7, Decimal number expected
+dse change -file fully_upgraded=7
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+dse dump -file -all
+  Database is Fully Upgraded                :  TRUE
+  Database WAS ONCE Fully Upgraded from V4  :  TRUE
+dse change -file fully_upgraded=32313214343
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Error: cannot convert 32313214343 value to decimal number.
+testing interrupted_recov flag
+set tp transactions
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+Killed
+##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+##TEST_AWK%GTM-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+##SUSPEND_OUTPUT JNL_NOBEFORE
+unset gtmgbldir and try journal recover
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$gtmgbldir.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+Set gtmgbldir and retry journal recover
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mupip rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+mupip integ
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory[ 0-9.AN]*
+##TEST_AWKIndex[ 0-9.AN]*
+##TEST_AWKData[ 0-9.AN]*
+##TEST_AWKFree[ 0-9.AN]*
+##TEST_AWKTotal[ 0-9.AN]*
+  Recover interrupted          FALSE        INTRPT resolve time              0
+Set -partial_recov_bypass
+Database file mumps.dat now has partial recovery flag set to  0(FALSE) 
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory[ 0-9.AN]*
+##TEST_AWKIndex[ 0-9.AN]*
+##TEST_AWKData[ 0-9.AN]*
+##TEST_AWKFree[ 0-9.AN]*
+##TEST_AWKTotal[ 0-9.AN]*
+Turn off journaling
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now DISABLED
+Moving journal files to bak
+Enable journaling
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+Attempt a journal backward recovery
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+  Recover interrupted          FALSE        INTRPT resolve time              0
+Set -interrupted_recov=FALSE
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+  Recover interrupted          FALSE        INTRPT resolve time              0
+Retry backward journal recovery, after setting interrupted_recov=FALSE
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##ALLOW_OUTPUT  JNL_NOBEFORE
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+end fileheader tests...

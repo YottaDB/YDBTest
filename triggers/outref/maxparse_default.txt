@@ -1,0 +1,274 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+Testing triggers with 31 and more subscripts
+Added SET trigger on ^bmaxcolon named bmaxcolon#1
+PASS
+Deleted SET trigger on ^bmaxcolon named bmaxcolon#1
+Too many subscripts
+"^bovermaxcolon(:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:) -commands=set -xecute=""do ^maxrtn"" "
+PASS
+###################################################################
+Testing triggers with 8192 charactes and more subscripts
+Key size is 64
+subscript length 8192
+subscripts 28
+overlong 8283
+###################################################################
+Testing LONG lines
+Load with mupip trigger and ztrigger by file
+###################################################################
+< %GTM-E-MUNOACTION, MUPIP unable to perform requested action
+###################################################################
+Load with ztrigger in one big M program and individual M programs
+< Added SET trigger on ^a06 named pass
+> SET trigger on ^a06 already present in trigger named pass - no action taken
+< Added SET trigger on ^a07 named passagain
+> SET trigger on ^a07 already present in trigger named passagain - no action taken
+< Added SET trigger on ^a12 named a12#1
+> SET trigger on ^a12 already present in trigger named a12#1 - no action taken
+###################################################################
+Testing triggers with GVN 28,31 characters and longer
+28 and 31 character GVNs which overlap to the same trigger name
+Added SET trigger on ^BCDEFGHIJKLMNOPQRSTUVWXYZABC named BCDEFGHIJKLMNOPQRSTUV#1
+PASS
+Added SET trigger on ^BCDEFGHIJKLMNOPQRSTUVWXYZABCDEF named BCDEFGHIJKLMNOPQRSTUV#2
+PASS
+;trigger name: BCDEFGHIJKLMNOPQRSTUV#1 (region DEFAULT)  cycle: 1
++^BCDEFGHIJKLMNOPQRSTUVWXYZABC -commands=S -xecute="do ^maxrtn"
+;trigger name: BCDEFGHIJKLMNOPQRSTUV#2 (region DEFAULT)  cycle: 1
++^BCDEFGHIJKLMNOPQRSTUVWXYZABCDEF -commands=S -xecute="do ^maxrtn"
+;trigger name: pass (region DEFAULT)  cycle: 1
++^a06 -name=pass -commands=S -xecute="s x=1"
+;trigger name: passagain (region DEFAULT)  cycle: 1
++^a07 -name=passagain -commands=S -delim="=" -pieces=1 -xecute="s x=1"
+;trigger name: a12#1 (region DEFAULT)  cycle: 1
++^a12 -commands=S -xecute="s x=1"
+
+32+ character GVNs which overlap to the same trigger name
+Warning: global name truncated to ^oBCDEFGHIJKLMNOPQRSTUVWXYZABCDE
+Added SET trigger on ^oBCDEFGHIJKLMNOPQRSTUVWXYZABCDE named oBCDEFGHIJKLMNOPQRSTU#1
+PASS
+Warning: global name truncated to ^oBCDEFGHIJKLMNOPQRSTUVWXYZABCDE
+SET trigger on ^oBCDEFGHIJKLMNOPQRSTUVWXYZABCDE already present in trigger named oBCDEFGHIJKLMNOPQRSTU#1 - no action taken
+PASS
+;trigger name: BCDEFGHIJKLMNOPQRSTUV#1 (region DEFAULT)  cycle: 1
++^BCDEFGHIJKLMNOPQRSTUVWXYZABC -commands=S -xecute="do ^maxrtn"
+;trigger name: BCDEFGHIJKLMNOPQRSTUV#2 (region DEFAULT)  cycle: 1
++^BCDEFGHIJKLMNOPQRSTUVWXYZABCDEF -commands=S -xecute="do ^maxrtn"
+;trigger name: pass (region DEFAULT)  cycle: 1
++^a06 -name=pass -commands=S -xecute="s x=1"
+;trigger name: passagain (region DEFAULT)  cycle: 1
++^a07 -name=passagain -commands=S -delim="=" -pieces=1 -xecute="s x=1"
+;trigger name: a12#1 (region DEFAULT)  cycle: 1
++^a12 -commands=S -xecute="s x=1"
+;trigger name: oBCDEFGHIJKLMNOPQRSTU#1 (region DEFAULT)  cycle: 1
++^oBCDEFGHIJKLMNOPQRSTUVWXYZABCDE -commands=S -xecute="do ^maxrtn"
+
+###################################################################
+
+Test maximum number of subscripts
+Trigger load for maxsubs.trg PASSED
+Trigger load for overmaxsubs.trg PASSED
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+
+###################################################################
+Test maximum length of subscripts
+ztrigger first
+Testing triggers with 8192 charactes and more subscripts
+Key size is 64
+subscript length 8192
+subscripts 28
+
+ztrigger the acceptably long trigger matching the file test
+Error : ^Z trigger - value larger than max record size
+FAIL
+
+ztrigger load unacceptably long triggers from 8193 and up
+PASS:8193
+Trigger definition too long
+
+
+Compare loaded trigger length to select output trigger length
+FAIL: wrote 8229 but select shows only 0
+
+
+now mupip trigger
+Trigger load for maxsubslen.trg FAILED see  ./maxsubslen.trg.trigout
+File maxsubslen.trg, Line 2: Error : ^Z trigger - value larger than max record size
+=========================================
+1 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+Trigger load for overmaxsubslen.trg PASSED
+File overmaxsubslen.trg, Line 2: Subscript too long
+
+###################################################################
+Test maximum gvn length
+Trigger load for maxgvnlength.trg PASSED
+Trigger load for overmaxgvnlength.trg PASSED
+File overmaxgvnlength.trg, Line 1: Warning: global name truncated to ^oBCDEFGHIJKLMNOPQRSTUVWXYZABCDE
+File overmaxgvnlength.trg, Line 2: Warning: global name truncated to ^oBCDEFGHIJKLMNOPQRSTUVWXYZABCDE
+Output File: 
+;trigger name: BCDEFGHIJKLMNOPQRSTUV#1 (region DEFAULT)  cycle: 3
++^BCDEFGHIJKLMNOPQRSTUVWXYZABC -commands=S -xecute="do ^maxrtn"
+;trigger name: BCDEFGHIJKLMNOPQRSTUV#2 (region DEFAULT)  cycle: 3
++^BCDEFGHIJKLMNOPQRSTUVWXYZABCDEF -commands=S -xecute="do ^maxrtn"
+;trigger name: oBCDEFGHIJKLMNOPQRSTU#1 (region DEFAULT)  cycle: 3
++^oBCDEFGHIJKLMNOPQRSTUVWXYZABCDE -commands=S -xecute="do ^maxrtn"
+
+
+###################################################################
+Test maximum delimiter length
+Trigger load for maxdelim.trg FAILED see  ./maxdelim.trg.trigout
+File maxdelim.trg, Line 1: Error : ^cmaxdelim trigger - value larger than max record size
+=========================================
+1 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+Trigger load for overmaxdelim.trg PASSED
+File overmaxdelim.trg, Line 1: Delimiter too long
+###################################################################
+Run the ztr^maxdelim test twice because that produced a core once upon a time
+For delimiter of length 1000	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1001	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1002	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1003	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1004	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1005	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1006	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1007	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1008	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1009	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1010	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1011	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1012	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1013	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1014	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1015	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1016	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1017	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1018	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1019	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1020	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1021	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1022	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1000	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1001	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1002	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1003	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1004	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1005	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1006	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1007	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1008	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1009	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1010	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1011	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1012	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1013	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1014	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1015	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1016	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1017	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1018	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1019	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1020	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1021	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1022	Error : ^cmaxdelim trigger - value larger than max record size
+Number of 'Entry too large to properly index' errors 0
+For delimiter of length 1023	Delimiter too long
+For delimiter of length 1024	Delimiter too long
+For delimiter of length 1025	Delimiter too long
+For delimiter of length 1026	Delimiter too long
+###################################################################
+For delimiter of length 1000	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1001	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1002	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1003	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1004	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1005	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1006	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1007	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1008	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1009	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1010	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1011	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1012	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1013	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1014	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1015	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1016	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1017	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1018	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1019	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1020	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1021	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1022	Error : ^cmaxdelim trigger - value larger than max record size
+Number of 'Entry too large to properly index' errors 0
+For delimiter of length 1023	Delimiter too long
+For delimiter of length 1024	Delimiter too long
+For delimiter of length 1025	Delimiter too long
+For delimiter of length 1026	Delimiter too long
+###################################################################
+
+###################################################################
+Test maximum trigger name length
+Trigger load for maxname.trg PASSED
+Trigger load for overmaxname.trg PASSED
+File overmaxname.trg, Line 2: Trigger name length [29] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+File overmaxname.trg, Line 5: Trigger name length [100] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+
+###################################################################
+Test maximum trigger lines
+
+Load a long line of 21646
+Error : ^longline trigger - value larger than max record size
+
+Load a long line of 32766 that collides with the previous name
+Error : ^longline trigger - value larger than max record size
+
+Load a long line of 32766
+Error : ^longline trigger - value larger than max record size
+
+Load a long line of 57407
+Trigger definition too long
+"^longline(100,""A0"";""A1"";""A2"";""A3"";""A4"";""A5"";""A6"";""A7"";""A8"";""A9"";""AA"";""AB"";""AC"";""AD"";""AE"";
+###################################################################
+Trigger load for maxline.trg FAILED see  ./maxline.trg.trigout
+File maxline.trg, Line 2: Error : ^longline trigger - value larger than max record size
+=========================================
+1 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+File maxline.trg, Line 2: Error : ^longline trigger - value larger than max record size
+Trigger load for maxline32.trg FAILED see  ./maxline32.trg.trigout
+File maxline32.trg, Line 2: Error : ^longline trigger - value larger than max record size
+=========================================
+1 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+File maxline32.trg, Line 2: Error : ^longline trigger - value larger than max record size
+Trigger load for maxline64.trg PASSED
+File maxline64.trg, Line 2: Trigger definition too long
+
+###################################################################
+Reload Test
+4 triggers deleted
+0 triggers modified
+4 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

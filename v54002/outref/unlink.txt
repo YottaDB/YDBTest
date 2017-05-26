@@ -1,0 +1,89 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+############# Test 1 ##############################
+Testing unlink with normal (linked in) object files
+ In tulnk1
+ In tulnk2
+ In tulnk3
+ In tulnk4
+ In tulnk5
+ In tulnk6 - Gathering info then doing zgoto
+Everything is gone - verify cleanup
+##SUSPEND_OUTPUT HOST_OS390_S390 HOST_OSF1_ALPHA
+gtmpcat output verified
+##ALLOW_OUTPUT HOST_OS390_S390 HOST_OSF1_ALPHA
+Exiting allgone
+###################################################################
+##SUSPEND_OUTPUT HOST_LINUX_IX86
+
+############# Test 2 ##############################
+Testing unlink with modules in shared libraries
+ In tulnk1
+ In tulnk2
+ In tulnk3
+ In tulnk4
+ In tulnk5
+ In tulnk6 - Gathering info then doing zgoto
+Everything is gone - verify cleanup
+##SUSPEND_OUTPUT HOST_OS390_S390 HOST_OSF1_ALPHA
+gtmpcat output verified
+##ALLOW_OUTPUT HOST_OS390_S390 HOST_OSF1_ALPHA
+Exiting allgone
+###################################################################
+##ALLOW_OUTPUT HOST_LINUX_IX86
+
+############# Test 3 ##############################
+Testing error path - expect ZLINKFILE error for missing allgone routine but should still have full stack
+ In tulnk1
+ In tulnk2
+ In tulnk3
+ In tulnk4
+ In tulnk5
+ In tulnk6 - Gathering info then doing zgoto - expect error
+150373978,+2^tulnk6,%GTM-E-ZLINKFILE, Error while zlinking "allgone",%GTM-E-FILENOTFND, File allgone not found
+###################################################################
+
+############# Test 4 ##############################
+Testing error path - expect ZGOCALLOUTIN when stack has a call-in on it
+In simpleci - attempting UNLINK type ZGOTO - expect ZGOCALLOUTIN error
+ 150381954,+5^simpleci,%GTM-E-ZGOCALLOUTIN, ZGOTO level 0 with entry ref not valid when using call-ins 
+###################################################################
+
+############# Test 5 ##############################
+Test unlink with many routines with ZBREAKs in them
+Reached main restart point
+##SUSPEND_OUTPUT HOST_HP-UX_PA_RISC
+
+############# Test 6 ##############################
+Test unlink with active triggers
+File ##IN_TEST_PATH##/inref/unlinktrg.trg, Line 1: Added SET trigger on ^A named A#1
+File ##IN_TEST_PATH##/inref/unlinktrg.trg, Line 2: Added SET trigger on ^B named B#1
+File ##IN_TEST_PATH##/inref/unlinktrg.trg, Line 3: Added SET trigger on ^C named C#1
+File ##IN_TEST_PATH##/inref/unlinktrg.trg, Line 4: Added SET trigger on ^D named D#1
+=========================================
+4 triggers added
+0 triggers deleted
+0 triggers modified
+4 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+Drive triggers in order ^A, ^B, ^C, ^D
+Entered trigger for ^A
+Entered trigger for ^B
+Entered trigger for ^C
+Entered trigger for ^D
+Performing unlink
+Unlink successful - creating replacement routines
+Re-driving triggers in same order as before
+Entered trigger for ^A
+Entered trigger for ^B
+Entered trigger for ^C
+Entered trigger for ^D
+##ALLOW_OUTPUT HOST_HP-UX_PA_RISC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,40 @@
+#!/usr/bin/expect -f
+#################################################################
+#								#
+# Copyright (c) 2012-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+set timeout 10
+match_max 100000
+spawn env PS1=rx0% /bin/sh
+
+# tuatara's /bin/sh (bash) overrides PS1. In the event that another platform
+# does something as stupid use a timeout to correct this. In the successful
+# case, use "echo" to advance it so the next match works
+expect {
+	"rx0%"  {send -- "echo\r"}
+	-re "(#|>|%|\\\$)" {
+		send -- "PS1=rx0%\r"
+		expect  "rx0%"
+	}
+	timeout {
+		send -- "PS1=rx0%\r"
+		expect  "rx0%"
+	}
+}
+set timeout -1
+
+expect "rx0%"
+# execute rx0, it should exit back to the prompt
+send -- "\$gtm_dist/mumps -run %XCMD 'do ^rx0'\r"
+# exit
+expect "rx0%"
+send -- "exit\r"
+expect eof

@@ -1,0 +1,32 @@
+-----------------------------------------------------------------------------------------------------------------
+Test 32K counter semaphore overflow when QDBRUNDOWN is not enabled in replication instance file AND database file
+-----------------------------------------------------------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Test DB counter overflow error message
+Test Replication instance file counter overflow error message
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+----------------------------------------------------------------------------------------------------
+Expect ENO34 errors in dbchild4.mje and replchild4.mje to be caught by error-catching test framework
+----------------------------------------------------------------------------------------------------
+##TEST_HOST_SHORT##:##TEST_PATH##/dbchild4.mje
+##TEST_AWK%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat,%GTM-E-CRITSEMFAIL.* ##TEST_PATH##/mumps.dat,%GTM-E-SYSCALL, Error received from system call semctl../semop.. -- called from module ##SOURCE_SRC_PATH##/gvcst_init_sysops.c .*,%SYSTEM-E-ENO34, .*
+##TEST_HOST_SHORT##:##TEST_PATH##/replchild4.mje
+##TEST_AWK%GTM-E-JNLPOOLSETUP, Journal Pool setup error,%GTM-I-TEXT, Error incrementing the ftok semaphore counter,%SYSTEM-E-ENO34, .*

@@ -1,0 +1,35 @@
+###################################################################
+Test that NULSUBSC error is issued by the update process
+###################################################################
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+###################################################################
+Check for NULSUBSC error
+###################################################################
+
+
+----------
+Error NULSUBSC seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: DEFAULT
+----------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

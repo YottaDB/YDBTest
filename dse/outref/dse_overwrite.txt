@@ -1,0 +1,171 @@
+TEST DSE - OVERWRITE COMMAND 
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+
+GTM>
+Region DEFAULT is now FROZEN
+All requested regions frozen
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+Rec:4  Blk 3  Off 31  Size A  Cmpc 3  Key ^x(4)
+
+DSE> DSE> Region DEFAULT is now UNFROZEN
+All requested regions unfrozen
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> Error:  offset too small.
+DSE> Error:  offset too large.
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Saving version 1 of block 0
+DSE> DSE> CRIT is currently unowned on all regions
+DSE> 
+Block 0  Size 90  Level -1  TN 9 V6   Master Status: Free Space
+
+           	Low order                         High order
+Block        0:	|  .X?.:X:.  ........  ........  ........  |
+Block       20:	|  ........  ........  ........  ........  |
+Block       40:	|  ........  ........  ........  ........  |
+Block       60:	|  ........  ........  ........  ........  |
+Block       80:	|  ........  ........  ........  ........  |
+Block       A0:	|  ........  ........  ........  ........  |
+Block       C0:	|  ........  ........  ........  ........  |
+Block       E0:	|  ........  ........  ........  ........  |
+Block      100:	|  ........  ........  ........  ........  |
+Block      120:	|  ........  ........  ........  ........  |
+Block      140:	|  ........  ........  ........  ........  |
+Block      160:	|  ........  ........  ........  ........  |
+Block      180:	|  ........  ........  ........  ........  |
+Block      1A0:	|  ........  ........  ........  ........  |
+Block      1C0:	|  ........  ........  ........  ........  |
+Block      1E0:	|  ........  ........  ........  ........  |
+
+'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
+
+%GTM-E-BITMAPSBAD, Database bit maps are incorrect
+DSE> CRIT is currently unowned on all regions
+DSE> 
+Restoring block 0 from version 1
+
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+Seized write critical section.
+
+DSE> 
+Saving version 1 of block 0
+DSE> DSE> 
+Block 0  Size 90  Level -1  TN 4D3 V6   Master Status: Free Space
+
+           	Low order                         High order
+Block        0:	|  .X?.:X:.  XXXXXXXX  XXXXXXXX  XXXXXXXX  |
+Block       20:	|  XXXXXXXX  ........  ........  ........  |
+Block       40:	|  ........  ........  ........  ........  |
+Block       60:	|  ........  ........  ........  ........  |
+Block       80:	|  ........  ........  ........  ........  |
+Block       A0:	|  ........  ........  ........  ........  |
+Block       C0:	|  ........  ........  ........  ........  |
+Block       E0:	|  ........  ........  ........  ........  |
+Block      100:	|  ........  ........  ........  ........  |
+Block      120:	|  ........  ........  ........  ........  |
+Block      140:	|  ........  ........  ........  ........  |
+Block      160:	|  ........  ........  ........  ........  |
+Block      180:	|  ........  ........  ........  ........  |
+Block      1A0:	|  ........  ........  ........  ........  |
+Block      1C0:	|  ........  ........  ........  ........  |
+Block      1E0:	|  ........  ........  ........  ........  |
+
+'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
+
+%GTM-E-BITMAPSBAD, Database bit maps are incorrect
+##TEST_AWKDSE. Database ##TEST_PATH##/a.dat . CRIT Owned by pid .*
+DSE> 
+Restoring block 0 from version 1
+
+DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	3
+
+DSE> %GTM-E-CLIERR, Unrecognized option : DATA, value expected but not found
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	3
+
+DSE> Error:  offset must be specified.
+DSE> Error:  data must be specified.
+##SUSPEND_OUTPUT  NON_REPLIC
+DSE> DSE> Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  REPLIC
+##ALLOW_OUTPUT  NON_REPLIC
+DSE> DSE> ##SOURCE_PATH##/mupip
+##ALLOW_OUTPUT  REPLIC
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

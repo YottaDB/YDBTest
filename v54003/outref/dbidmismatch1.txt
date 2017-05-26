@@ -1,0 +1,84 @@
+---------------------------------------------------------------------------------------
+BEGIN 1 :-) Choose randomly between -reg OR -file qualifier
+
+
+END 1
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 2 :-) Create backup.dat and mumps.dat
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+backup.gld
+Using: ##SOURCE_PATH##/mupip
+backup.dat
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+END 2
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 3 :-) Access mumps.dat and crash it
+
+
+GTM>
+set ^x=1
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+GTM>
+Killed
+
+END 3
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 4 :-) get the ftok semid for mumps.dat. Then switch to backup.dat and access database. It should issue DBIDMISMATCH error
+
+
+GTM>
+set ^y=1
+GTM>
+%GTM-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+##TEST_AWK.GTM-E-DBIDMISMATCH, Database file ##TEST_PATH##.mumps.dat .region ##TEST_PATH##/mumps.dat. id does not match file id in shared memory .id = [0-9]+..
+
+GTM>
+
+END 4
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 5 :-) Do MUPIP RUNDOWN and acccess database. This database access should be clean
+
+##TEST_AWKmupip rundown .*
+##TEST_AWK.GTM-I-DBIDMISMATCH, Database file ##TEST_PATH##.mumps.dat .region .*mumps.dat. id does not match file id in shared memory .id = [0-9]+..
+%GTM-I-TEXT, [MUPIP] Database filename and fileid in shared memory are not in sync
+##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file .*mumps.dat
+##TEST_AWK.GTM-I-MUFILRNDWNSUC, File .*mumps.dat successfully rundown
+
+GTM>
+set ^y=1
+GTM>
+
+GTM>
+clean database access
+GTM>
+
+END 5
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 6 :-) Remove leftover ftok semaphore
+
+##TEST_AWKftok id=[0-9]+
+
+END 6
+---------------------------------------------------------------------------------------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

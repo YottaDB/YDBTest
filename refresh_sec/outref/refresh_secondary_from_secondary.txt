@@ -1,0 +1,68 @@
+###################################################################
+
+        |--> INST2
+INST1  -|
+        |--> INST3
+
+###################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'START INST1 INST3'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Starting GTM processes...
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST3 ON '' buffer_flush'==
+Create backlog...
+==Executing MULTISITE_REPLIC 'RUN INST2 mkdir bak1;$MUPIP backup -replinstance=bak1 "*" bak1 >&! inst2_bkup.out;$grep -v "shmpool lock" inst2_bkup.out; mv bak1/mumps.repl bak1/sec_mumps.repl'==
+Replication Instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl backed up in file bak1/mumps.repl
+##TEST_AWK.*Journal Seqnos up to 0x[0-9A-F]* are backed up.
+
+##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/instance2/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/instance2/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##REMOTE_TEST_PATH##/instance2/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+DB file ##REMOTE_TEST_PATH##/instance2/mumps.dat backed up in file bak1/mumps.dat
+##TEST_AWKTransactions up to 0x[0-9A-Z]* are backed up.
+
+
+BACKUP COMPLETED.
+
+==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST3 cp bak1/* __RCV_DIR__/'==
+##SUSPEND_OUTPUT  NON_ENCRYPT
+==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST3 cp *key* __RCV_DIR__/'==
+##ALLOW_OUTPUT  NON_ENCRYPT
+##FILTERED##%GTM-I-FILERENAME, File ##FILTERED##_REMOTE_TEST_PATH_INSTANCE_/mumps.repl is renamed to ##FILTERED##_REMOTE_TEST_PATH_INSTANCE_/mumps.repl_##TIMESTAMP##
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST3 updateresync=sec_mumps.repl'==
+Stopping GTM processes...
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/endtp.csh >>&! endtp.out'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT INST1 INST2 INST3'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

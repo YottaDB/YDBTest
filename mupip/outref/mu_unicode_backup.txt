@@ -1,0 +1,234 @@
+setenv gtm_chset UTF-8
+unset echo
+MUPIP BACKUP
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+ＡＢＣＤ.gld
+Using: ##SOURCE_PATH##/mupip
+ＡＢＣＤ.dat
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+Do in0^udbfill("set")
+
+GTM>
+set PASS
+
+GTM>
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/ＡＢＣＤ.mjl is renamed to ##TEST_PATH##/ＡＢＣＤ.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
+DB file ##TEST_PATH##/ＡＢＣＤ.dat backed up in file ##TEST_PATH##/ＡＤＩＲ/ＡＢＣＤ.dat
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions up to 0x000000000000040D are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions up to 0x0000000000000400 are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+
+
+BACKUP COMPLETED.
+
+
+GTM>
+Do in0^udbfill("kill")
+
+GTM>
+kill PASS
+
+GTM>
+Do in1^udbfill("set")
+
+GTM>
+set PASS
+
+GTM>
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/ＡＢＣＤ.mjl is renamed to ##TEST_PATH##/ＡＢＣＤ.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
+MUPIP backup of database file ##TEST_PATH##/ＡＢＣＤ.dat to ##TEST_PATH##/αβγδε/backup.bak2
+DB file ##TEST_PATH##/ＡＢＣＤ.dat incrementally backed up in file ##TEST_PATH##/αβγδε/backup.bak2
+##SUSPEND_OUTPUT  NON_COLLATION
+##TEST_AWK150[45] blocks saved.
+##ALLOW_OUTPUT  NON_COLLATION
+##SUSPEND_OUTPUT  COLLATION
+##TEST_AWK151[56] blocks saved.
+##ALLOW_OUTPUT  COLLATION
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions from 0x000000000000040D to 0x0000000000001A94 are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions from 0x0000000000000400 to 0x0000000000001A85 are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+
+
+BACKUP COMPLETED.
+
+
+GTM>
+Do in1^udbfill("kill")
+
+GTM>
+kill PASS
+
+GTM>
+Do in2^udbfill("set")
+
+GTM>
+set PASS
+
+GTM>
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/ＡＢＣＤ.mjl is renamed to ##TEST_PATH##/ＡＢＣＤ.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
+MUPIP backup of database file ##TEST_PATH##/ＡＢＣＤ.dat to ##TEST_PATH##/我能吞下玻璃而不伤身体/backup.bak3
+DB file ##TEST_PATH##/ＡＢＣＤ.dat incrementally backed up in file ##TEST_PATH##/我能吞下玻璃而不伤身体/backup.bak3
+##SUSPEND_OUTPUT  NON_COLLATION
+16715 blocks saved.
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions from 0x0000000000001A94 to 0x00000000000863BC are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions from 0x0000000000001A85 to 0x0000000000086318 are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+##SUSPEND_OUTPUT  COLLATION
+##ALLOW_OUTPUT  NON_COLLATION
+16708 blocks saved.
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions from 0x0000000000001A94 to 0x00000000000863C5 are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions from 0x0000000000001A85 to 0x0000000000086318 are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+##ALLOW_OUTPUT  COLLATION
+
+
+BACKUP COMPLETED.
+
+MUPIP backup of database file ##TEST_PATH##/ＡＢＣＤ.dat to ##TEST_PATH##/我能吞下玻璃而不伤身体/backup.bak33
+DB file ##TEST_PATH##/ＡＢＣＤ.dat incrementally backed up in file ##TEST_PATH##/我能吞下玻璃而不伤身体/backup.bak33
+##SUSPEND_OUTPUT  NON_COLLATION
+17430 blocks saved.
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions from 0x0000000000000001 to 0x00000000000863BC are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions from 0x0000000000000001 to 0x0000000000086308 are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+##SUSPEND_OUTPUT  COLLATION
+##ALLOW_OUTPUT  NON_COLLATION
+17423 blocks saved.
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions from 0x0000000000000001 to 0x00000000000863C5 are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions from 0x0000000000000001 to 0x0000000000086318 are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+##ALLOW_OUTPUT  COLLATION
+
+
+BACKUP COMPLETED.
+
+MUPIP backup of database file ##TEST_PATH##/ＡＢＣＤ.dat to ##TEST_PATH##/我能吞下玻璃而不伤身体/backup.bak333
+DB file ##TEST_PATH##/ＡＢＣＤ.dat incrementally backed up in file ##TEST_PATH##/我能吞下玻璃而不伤身体/backup.bak333
+##SUSPEND_OUTPUT  NON_COLLATION
+17430 blocks saved.
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions from 0x0000000000000001 to 0x00000000000863BC are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions from 0x0000000000000001 to 0x0000000000086308 are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+##SUSPEND_OUTPUT  COLLATION
+##ALLOW_OUTPUT  NON_COLLATION
+17423 blocks saved.
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions from 0x0000000000000001 to 0x00000000000863C5 are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions from 0x0000000000000001 to 0x0000000000086318 are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+##ALLOW_OUTPUT  COLLATION
+
+
+BACKUP COMPLETED.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+GTM>
+Do in0^udbfill("ver")
+
+GTM>
+ver PASS
+
+GTM>
+
+RESTORE COMPLETED
+##TEST_AWK15[0-1][456] blocks restored
+
+GTM>
+Do in1^udbfill("ver")
+
+GTM>
+ver PASS
+
+GTM>
+
+RESTORE COMPLETED
+##SUSPEND_OUTPUT  NON_COLLATION
+16715 blocks restored
+##SUSPEND_OUTPUT  COLLATION
+##ALLOW_OUTPUT  NON_COLLATION
+16708 blocks restored
+##ALLOW_OUTPUT  COLLATION
+
+GTM>
+Do in2^udbfill("ver")
+
+GTM>
+ver PASS
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Created file ##TEST_PATH##/ＡＢＣＤ.dat
+
+RESTORE COMPLETED
+##SUSPEND_OUTPUT  NON_COLLATION
+17430 blocks restored
+##SUSPEND_OUTPUT  COLLATION
+##ALLOW_OUTPUT  NON_COLLATION
+17423 blocks restored
+##ALLOW_OUTPUT  COLLATION
+
+GTM>
+Do in2^udbfill("ver")
+
+GTM>
+ver PASS
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Created file ##TEST_PATH##/ＡＢＣＤ.dat
+
+RESTORE COMPLETED
+##SUSPEND_OUTPUT  NON_COLLATION
+17430 blocks restored
+##SUSPEND_OUTPUT  COLLATION
+##ALLOW_OUTPUT  NON_COLLATION
+17423 blocks restored
+##ALLOW_OUTPUT  COLLATION
+
+GTM>
+Do in2^udbfill("ver")
+
+GTM>
+ver PASS
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

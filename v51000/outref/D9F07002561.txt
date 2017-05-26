@@ -1,0 +1,64 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+sleep 75
+unset echo
+----------------------------------------------------------------------------
+Checking that ALL older generation journal files are closed.
+PASS from check
+----------------------------------------------------------------------------
+Checking how many processes have latest generation journal file open.
+PASS from check
+----------------------------------------------------------------------------
+
+GTM>
+
+GTM>
+
+GTM>
+grep final mumps.mjf
+^final(1)="1"
+^final(10)="1"
+^final(11)="1"
+^final(12)="1"
+^final(13)="1"
+^final(14)="1"
+^final(15)="1"
+^final(2)="1"
+^final(3)="1"
+^final(4)="1"
+^final(5)="1"
+^final(6)="1"
+^final(7)="1"
+^final(8)="1"
+^final(9)="1"
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

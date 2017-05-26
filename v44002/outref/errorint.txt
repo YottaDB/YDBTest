@@ -1,0 +1,49 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+Do errcmmt^errorint
+
+Transaction Starts....
+
+$ZTEXIT = 1
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : thrint+5^erthrint
+%GTM-E-ERRWZINTR, Error while processing $ZINTERRUPT,-GTM-E-UNDEF, Undefined local variable: zzzzzz
+		At M source location errcmmt+15^errorint
+
+GTM>
+
+GTM>
+
+errcmt
+GTM>
+
+GTM>
+Do errlbck^errorint
+
+Transaction Starts....
+
+$ZTEXIT = 1
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : thrint+5^erthrint
+%GTM-E-ERRWZINTR, Error while processing $ZINTERRUPT,-GTM-E-UNDEF, Undefined local variable: zzzzzz
+		At M source location errlbck+16^errorint
+
+GTM>
+
+GTM>
+
+errcmt
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

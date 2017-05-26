@@ -1,0 +1,2079 @@
+Begining of incrbas subtest
+##SUSPEND_OUTPUT  GT.M
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
+##GT.CM##mumps.gld
+##GT.CM##Using: ##SOURCE_PATH##/mupip
+Create local (client) database...
+##ALLOW_OUTPUT  GT.M
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  GT.M
+The database layout is:
+ASEG	a.dat
+BSEG	##TEST_REMOTE_NODE_PATH_GTCM##/b.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
+Starting the GT.CM Servers...
+##SUSPEND_OUTPUT  GT.CM
+##ALLOW_OUTPUT  GT.M
+a.dat
+b.dat
+mumps.dat
+##ALLOW_OUTPUT  GT.CM
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+		write $INC(@glvn,6)	; Expected: INVFCN error because of incomplete function name
+		       ^-----
+		At column 9, line 64, source module ##IN_TEST_PATH##/inref/incrbas.m
+%GTM-E-INVFCN, Invalid function name
+		write $ZINC(@glvn,7)	; Expected: INVFCN error because of incomplete function name
+		       ^-----
+		At column 9, line 74, source module ##IN_TEST_PATH##/inref/incrbas.m
+%GTM-E-INVFCN, Invalid function name
+		write $incr(@glvn,-1E-5a)	; Expected: RPARENMISSING error because of trailing "a" in -1E-5a
+		                       ^-----
+		At column 25, line 279, source module ##IN_TEST_PATH##/inref/incrbas.m
+%GTM-E-RPARENMISSING, Right parenthesis expected
+
+Stepping STARTED
+incrbas:	quit
+incrbas:	set newstage="--------------------------------------------------------------------------------------"
+incrbas:	set substagestr=" ----------------------------------------------------- "
+incrbas:	set spacestr="               "
+incrbas:	set numtests=$length(allstage,",")
+incrbas:	for mainindx=1:1:numtests  do
+incrbas:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+increrr1:	.	for gvnorlvn="lvn","gvn"  do
+increrr1:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               increrr1 : lvn
+ ----------------------------------------------------- 
+increrr1:	.	.	do @stagestr
+increrr1:	new glvn
+increrr1:	do setglvn("glvn","x")
+increrr1:setglvn(glvname,value);
+increrr1:	set @glvname=value
+increrr1:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+increrr1:	kill @@glvname	; start afresh
+increrr1:	quit
+increrr1:	set @glvn=16
+increrr1:	write $INC(@glvn,6)	; Expected: INVFCN error because of incomplete function name
+increrr1:	do sstop
+increrr1:	set $zstep=""
+increrr1:	set %zsaveio=$io use $p write !,"Stepping STOPPED",!  use %zsaveio
+
+Stepping STOPPED
+ZSTATUS=increrr1+6^incrbas,%GTM-E-INVFCN, Invalid function name
+
+Stepping STARTED
+increrr1:	quit
+increrr1:	zgoto @newprog
+increrr1:	kill @glvn
+increrr1:	quit
+increrr1:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               increrr1 : gvn
+ ----------------------------------------------------- 
+increrr1:	.	.	do @stagestr
+increrr1:	new glvn
+increrr1:	do setglvn("glvn","x")
+increrr1:setglvn(glvname,value);
+increrr1:	set @glvname=value
+increrr1:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+increrr1:	kill @@glvname	; start afresh
+increrr1:	quit
+increrr1:	set @glvn=16
+increrr1:	write $INC(@glvn,6)	; Expected: INVFCN error because of incomplete function name
+increrr1:	do sstop
+increrr1:	set $zstep=""
+increrr1:	set %zsaveio=$io use $p write !,"Stepping STOPPED",!  use %zsaveio
+
+Stepping STOPPED
+ZSTATUS=increrr1+6^incrbas,%GTM-E-INVFCN, Invalid function name
+
+Stepping STARTED
+increrr1:	quit
+increrr1:	zgoto @newprog
+increrr1:	kill @glvn
+increrr1:	quit
+increrr1:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+increrr2:	.	for gvnorlvn="lvn","gvn"  do
+increrr2:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               increrr2 : lvn
+ ----------------------------------------------------- 
+increrr2:	.	.	do @stagestr
+increrr2:	new glvn
+increrr2:	do setglvn("glvn","X")
+increrr2:setglvn(glvname,value);
+increrr2:	set @glvname=value
+increrr2:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+increrr2:	kill @@glvname	; start afresh
+increrr2:	quit
+increrr2:	set @glvn=0
+increrr2:	write $ZINC(@glvn,7)	; Expected: INVFCN error because of incomplete function name
+increrr2:	do sstop
+increrr2:	set $zstep=""
+increrr2:	set %zsaveio=$io use $p write !,"Stepping STOPPED",!  use %zsaveio
+
+Stepping STOPPED
+ZSTATUS=increrr2+6^incrbas,%GTM-E-INVFCN, Invalid function name
+
+Stepping STARTED
+increrr2:	quit
+increrr2:	zgoto @newprog
+increrr2:	kill @glvn
+increrr2:	quit
+increrr2:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               increrr2 : gvn
+ ----------------------------------------------------- 
+increrr2:	.	.	do @stagestr
+increrr2:	new glvn
+increrr2:	do setglvn("glvn","X")
+increrr2:setglvn(glvname,value);
+increrr2:	set @glvname=value
+increrr2:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+increrr2:	kill @@glvname	; start afresh
+increrr2:	quit
+increrr2:	set @glvn=0
+increrr2:	write $ZINC(@glvn,7)	; Expected: INVFCN error because of incomplete function name
+increrr2:	do sstop
+increrr2:	set $zstep=""
+increrr2:	set %zsaveio=$io use $p write !,"Stepping STOPPED",!  use %zsaveio
+
+Stepping STOPPED
+ZSTATUS=increrr2+6^incrbas,%GTM-E-INVFCN, Invalid function name
+
+Stepping STARTED
+increrr2:	quit
+increrr2:	zgoto @newprog
+increrr2:	kill @glvn
+increrr2:	quit
+increrr2:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr01:	.	for gvnorlvn="lvn","gvn"  do
+incr01:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr01 : lvn
+ ----------------------------------------------------- 
+incr01:	.	.	do @stagestr
+incr01:	new glvn
+incr01:	do setglvn("glvn","x1")
+incr01:setglvn(glvname,value);
+incr01:	set @glvname=value
+incr01:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr01:	kill @@glvname	; start afresh
+incr01:	quit
+incr01:	set @glvn=1
+incr01:	write $I(@glvn,1)		; Expected:  2
+2
+incr01:	write $INCR(@glvn,2)		; Expected:  4
+4
+incr01:	write $INCREMENT(@glvn,4)	; Expected:  8
+8
+incr01:	write $ZINCR(@glvn,3)		; Expected: 11
+11
+incr01:	write $ZINCREMENT(@glvn,5)	; Expected: 16
+16
+incr01:	zwrite @glvn			; Expected: 16
+x1=16
+incr01:	kill @glvn
+incr01:	quit
+incr01:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr01 : gvn
+ ----------------------------------------------------- 
+incr01:	.	.	do @stagestr
+incr01:	new glvn
+incr01:	do setglvn("glvn","x1")
+incr01:setglvn(glvname,value);
+incr01:	set @glvname=value
+incr01:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr01:	kill @@glvname	; start afresh
+incr01:	quit
+incr01:	set @glvn=1
+incr01:	write $I(@glvn,1)		; Expected:  2
+2
+incr01:	write $INCR(@glvn,2)		; Expected:  4
+4
+incr01:	write $INCREMENT(@glvn,4)	; Expected:  8
+8
+incr01:	write $ZINCR(@glvn,3)		; Expected: 11
+11
+incr01:	write $ZINCREMENT(@glvn,5)	; Expected: 16
+16
+incr01:	zwrite @glvn			; Expected: 16
+^x1=16
+incr01:	kill @glvn
+incr01:	quit
+incr01:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr02:	.	for gvnorlvn="lvn","gvn"  do
+incr02:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr02 : lvn
+ ----------------------------------------------------- 
+incr02:	.	.	do @stagestr
+incr02:	new glvn
+incr02:	do setglvn("glvn","X5f")
+incr02:setglvn(glvname,value);
+incr02:	set @glvname=value
+incr02:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr02:	kill @@glvname	; start afresh
+incr02:	quit
+incr02:	set @glvn=4
+incr02:	write $incr(@glvn,3)		; Expected:  7
+7
+incr02:	write $i(@glvn)			; Expected:  8
+8
+incr02:	write $i(@glvn,@glvn)		; Expected: 16
+16
+incr02:	write $incr(@glvn)		; Expected: 17
+17
+incr02:	zwrite @glvn			; Expected: 17
+X5f=17
+incr02:	kill @glvn
+incr02:	quit
+incr02:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr02 : gvn
+ ----------------------------------------------------- 
+incr02:	.	.	do @stagestr
+incr02:	new glvn
+incr02:	do setglvn("glvn","X5f")
+incr02:setglvn(glvname,value);
+incr02:	set @glvname=value
+incr02:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr02:	kill @@glvname	; start afresh
+incr02:	quit
+incr02:	set @glvn=4
+incr02:	write $incr(@glvn,3)		; Expected:  7
+7
+incr02:	write $i(@glvn)			; Expected:  8
+8
+incr02:	write $i(@glvn,@glvn)		; Expected: 16
+16
+incr02:	write $incr(@glvn)		; Expected: 17
+17
+incr02:	zwrite @glvn			; Expected: 17
+^X5f=17
+incr02:	kill @glvn
+incr02:	quit
+incr02:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr03a:	.	for gvnorlvn="lvn","gvn"  do
+incr03a:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr03a : lvn
+ ----------------------------------------------------- 
+incr03a:	.	.	do @stagestr
+incr03a:	new glvn1,glvn2,glvn3,indx
+incr03a:	do setglvn("glvn1","variablex8ace")
+incr03a:setglvn(glvname,value);
+incr03a:	set @glvname=value
+incr03a:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03a:	kill @@glvname	; start afresh
+incr03a:	quit
+incr03a:	do setglvn("glvn2","variableyMr6L")
+incr03a:setglvn(glvname,value);
+incr03a:	set @glvname=value
+incr03a:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03a:	kill @@glvname	; start afresh
+incr03a:	quit
+incr03a:	do setglvn("glvn3","variablezHypg")
+incr03a:setglvn(glvname,value);
+incr03a:	set @glvname=value
+incr03a:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03a:	kill @@glvname	; start afresh
+incr03a:	quit
+incr03a:	set @glvn1=11
+incr03a:	set @glvn2=222
+incr03a:	set @glvn3=3333
+incr03a:	set @glvn3=$incr(@glvn2,@glvn1) 
+incr03a:	zwrite @glvn1		; Expected:  11
+variablex8ace=11
+incr03a:	zwrite @glvn2		; Expected: 233
+variableyMr6L=233
+incr03a:	zwrite @glvn3		; Expected: 233
+variablezHypg=233
+incr03a:	for indx=1:1:10  do
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 11 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+22
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 22 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+44
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 44 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+88
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 88 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+176
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 176 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+352
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 352 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+704
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 704 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+1408
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 1408 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+2816
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 2816 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+5632
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 5632 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+11264
+incr03a:	zwrite @glvn1		; Expected: 11264
+variablex8ace=11264
+incr03a:	kill @glvn1,@glvn2,@glvn3
+incr03a:	quit
+incr03a:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr03a : gvn
+ ----------------------------------------------------- 
+incr03a:	.	.	do @stagestr
+incr03a:	new glvn1,glvn2,glvn3,indx
+incr03a:	do setglvn("glvn1","variablex8ace")
+incr03a:setglvn(glvname,value);
+incr03a:	set @glvname=value
+incr03a:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03a:	kill @@glvname	; start afresh
+incr03a:	quit
+incr03a:	do setglvn("glvn2","variableyMr6L")
+incr03a:setglvn(glvname,value);
+incr03a:	set @glvname=value
+incr03a:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03a:	kill @@glvname	; start afresh
+incr03a:	quit
+incr03a:	do setglvn("glvn3","variablezHypg")
+incr03a:setglvn(glvname,value);
+incr03a:	set @glvname=value
+incr03a:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03a:	kill @@glvname	; start afresh
+incr03a:	quit
+incr03a:	set @glvn1=11
+incr03a:	set @glvn2=222
+incr03a:	set @glvn3=3333
+incr03a:	set @glvn3=$incr(@glvn2,@glvn1) 
+incr03a:	zwrite @glvn1		; Expected:  11
+^variablex8ace=11
+incr03a:	zwrite @glvn2		; Expected: 233
+^variableyMr6L=233
+incr03a:	zwrite @glvn3		; Expected: 233
+^variablezHypg=233
+incr03a:	for indx=1:1:10  do
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 11 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+22
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 22 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+44
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 44 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+88
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 88 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+176
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 176 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+352
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 352 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+704
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 704 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+1408
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 1408 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+2816
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 2816 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+5632
+incr03a:	.	write "@glvn1 = ",@glvn1," : $incr(@glvn1,@glvn1) = "
+@glvn1 = 5632 : $incr(@glvn1,@glvn1) = 
+incr03a:	.	write $incr(@glvn1,@glvn1)	; Expected: <11,22>, <22,44>, ... <5632,11264>
+11264
+incr03a:	zwrite @glvn1		; Expected: 11264
+^variablex8ace=11264
+incr03a:	kill @glvn1,@glvn2,@glvn3
+incr03a:	quit
+incr03a:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr03b:	.	for gvnorlvn="lvn","gvn"  do
+incr03b:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr03b : lvn
+ ----------------------------------------------------- 
+incr03b:	.	.	do @stagestr
+incr03b:	new glvn
+incr03b:	do setglvn("glvn","xAb2long")
+incr03b:setglvn(glvname,value);
+incr03b:	set @glvname=value
+incr03b:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03b:	kill @@glvname	; start afresh
+incr03b:	quit
+incr03b:	set @glvn="abcd89"  write $incr(@glvn)		; Expected:  1
+1
+incr03b:	zwrite @glvn					; Expected:  1
+xAb2long=1
+incr03b:	set @glvn="23abcd"  write $incr(@glvn)		; Expected: 24
+24
+incr03b:	zwrite @glvn					; Expected: 24
+xAb2long=24
+incr03b:	set @glvn="-74.5f8" write $incr(@glvn,"12ab3")	; Expected: -62.5
+-62.5
+incr03b:	zwrite @glvn					; Expected: -62.5
+xAb2long=-62.5
+incr03b:	kill @glvn
+incr03b:	quit
+incr03b:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr03b : gvn
+ ----------------------------------------------------- 
+incr03b:	.	.	do @stagestr
+incr03b:	new glvn
+incr03b:	do setglvn("glvn","xAb2long")
+incr03b:setglvn(glvname,value);
+incr03b:	set @glvname=value
+incr03b:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03b:	kill @@glvname	; start afresh
+incr03b:	quit
+incr03b:	set @glvn="abcd89"  write $incr(@glvn)		; Expected:  1
+1
+incr03b:	zwrite @glvn					; Expected:  1
+^xAb2long=1
+incr03b:	set @glvn="23abcd"  write $incr(@glvn)		; Expected: 24
+24
+incr03b:	zwrite @glvn					; Expected: 24
+^xAb2long=24
+incr03b:	set @glvn="-74.5f8" write $incr(@glvn,"12ab3")	; Expected: -62.5
+-62.5
+incr03b:	zwrite @glvn					; Expected: -62.5
+^xAb2long=-62.5
+incr03b:	kill @glvn
+incr03b:	quit
+incr03b:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr03c:	.	for gvnorlvn="lvn","gvn"  do
+incr03c:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr03c : lvn
+ ----------------------------------------------------- 
+incr03c:	.	.	do @stagestr
+incr03c:	new piecestr,tmp,glvn
+incr03c:	do setglvn("glvn","AMindicator")			; set glvn="AMindicator" or glvn="^AMindicator"
+incr03c:setglvn(glvname,value);
+incr03c:	set @glvname=value
+incr03c:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03c:	kill @@glvname	; start afresh
+incr03c:	quit
+incr03c:	do setglvn(glvn,"PMvariable")			; set AMindicator="PMvariable"    or ^AMindicator="^PMvariable"
+incr03c:setglvn(glvname,value);
+incr03c:	set @glvname=value
+incr03c:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03c:	kill @@glvname	; start afresh
+incr03c:	quit
+incr03c:	set @@glvn=11				; set PMvariable=11      or ^PMvariable=11
+incr03c:	set piecestr="N,"_glvn_",E"
+incr03c:	write $incr(@@$piece(piecestr,",",2))	; Expected: 12
+12
+incr03c:	zwrite @glvn				; Expected: "PMvariable" or "^PMvariable"
+AMindicator="PMvariable"
+incr03c:	zwrite @@glvn				; Expected: 12
+PMvariable=12
+incr03c:	set tmp=@glvn
+incr03c:	write $incr(@$piece(piecestr,",",2))	; Expected: 1
+1
+incr03c:	zwrite @glvn				; Expected: 1
+AMindicator=1
+incr03c:	zwrite @tmp				; Expected: 12
+PMvariable=12
+incr03c:	kill @tmp,@glvn
+incr03c:	quit
+incr03c:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr03c : gvn
+ ----------------------------------------------------- 
+incr03c:	.	.	do @stagestr
+incr03c:	new piecestr,tmp,glvn
+incr03c:	do setglvn("glvn","AMindicator")			; set glvn="AMindicator" or glvn="^AMindicator"
+incr03c:setglvn(glvname,value);
+incr03c:	set @glvname=value
+incr03c:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03c:	kill @@glvname	; start afresh
+incr03c:	quit
+incr03c:	do setglvn(glvn,"PMvariable")			; set AMindicator="PMvariable"    or ^AMindicator="^PMvariable"
+incr03c:setglvn(glvname,value);
+incr03c:	set @glvname=value
+incr03c:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03c:	kill @@glvname	; start afresh
+incr03c:	quit
+incr03c:	set @@glvn=11				; set PMvariable=11      or ^PMvariable=11
+incr03c:	set piecestr="N,"_glvn_",E"
+incr03c:	write $incr(@@$piece(piecestr,",",2))	; Expected: 12
+12
+incr03c:	zwrite @glvn				; Expected: "PMvariable" or "^PMvariable"
+^AMindicator="^PMvariable"
+incr03c:	zwrite @@glvn				; Expected: 12
+^PMvariable=12
+incr03c:	set tmp=@glvn
+incr03c:	write $incr(@$piece(piecestr,",",2))	; Expected: 1
+1
+incr03c:	zwrite @glvn				; Expected: 1
+^AMindicator=1
+incr03c:	zwrite @tmp				; Expected: 12
+^PMvariable=12
+incr03c:	kill @tmp,@glvn
+incr03c:	quit
+incr03c:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr03d:	.	for gvnorlvn="lvn","gvn"  do
+incr03d:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr03d : lvn
+ ----------------------------------------------------- 
+incr03d:	.	.	do @stagestr
+incr03d:	new c,C
+incr03d:	kill ^variable
+incr03d:	do setglvn("c(1)","x")
+incr03d:setglvn(glvname,value);
+incr03d:	set @glvname=value
+incr03d:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03d:	kill @@glvname	; start afresh
+incr03d:	quit
+incr03d:	set @c(1)=1
+incr03d:	set ^variable(123)=$c(66),C(1,6)="c(1)"
+incr03d:	write $incr(@@@$piece($char(65,66,67),^variable(123),$find("abc","a"))@(1,6),9)	; Expected: 10
+10
+incr03d:	zwrite C									; Expected: "c(1)"
+C(1,6)="c(1)"
+incr03d:	zwrite c									; Expected: "x" or "^x"
+c(1)="x"
+incr03d:	zwrite @c(1)									; Expected: 10
+x=10
+incr03d:	kill @c(1),^variable
+incr03d:	quit
+incr03d:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr03d : gvn
+ ----------------------------------------------------- 
+incr03d:	.	.	do @stagestr
+incr03d:	new c,C
+incr03d:	kill ^variable
+incr03d:	do setglvn("c(1)","x")
+incr03d:setglvn(glvname,value);
+incr03d:	set @glvname=value
+incr03d:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03d:	kill @@glvname	; start afresh
+incr03d:	quit
+incr03d:	set @c(1)=1
+incr03d:	set ^variable(123)=$c(66),C(1,6)="c(1)"
+incr03d:	write $incr(@@@$piece($char(65,66,67),^variable(123),$find("abc","a"))@(1,6),9)	; Expected: 10
+10
+incr03d:	zwrite C									; Expected: "c(1)"
+C(1,6)="c(1)"
+incr03d:	zwrite c									; Expected: "x" or "^x"
+c(1)="^x"
+incr03d:	zwrite @c(1)									; Expected: 10
+^x=10
+incr03d:	kill @c(1),^variable
+incr03d:	quit
+incr03d:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr03e:	.	for gvnorlvn="lvn","gvn"  do
+incr03e:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr03e : lvn
+ ----------------------------------------------------- 
+incr03e:	.	.	do @stagestr
+incr03e:	new undefstr,stgstr1
+incr03e:	for undefstr="NOUNDEF","UNDEF"  do
+incr03e:	.	view undefstr
+incr03e:	.	for stgstr1="incr03e1","incr03e2"  do
+incr03e:	.	.	write substagestr,!,spacestr,stgstr1," : ",gvnorlvn," : ",undefstr,!,substagestr
+ ----------------------------------------------------- 
+               incr03e1 : lvn : NOUNDEF
+ ----------------------------------------------------- 
+incr03e:	.	.	do @stgstr1
+incr03e:	new glvn
+incr03e:	do setglvn("glvn","xZjDXhBVfzTd")
+incr03e:setglvn(glvname,value);
+incr03e:	set @glvname=value
+incr03e:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03e:	kill @@glvname	; start afresh
+incr03e:	quit
+incr03e:	set @glvn@(1)="abcd"
+incr03e:	write $incr(@glvn)	; Expected: 1
+1
+incr03e:	write $incr(@glvn)	; Expected: 2
+2
+incr03e:	zwrite @glvn		; Expected: (xZjDXhBVfzTd(1)="abcd" or ^xZjDXhBVfzTd(1)="abcd") AND (xZjDXhBVfzTd=2 or ^xZjDXhBVfzTd=2)
+xZjDXhBVfzTd=2
+xZjDXhBVfzTd(1)="abcd"
+incr03e:	zkill @glvn		; kill "xZjDXhBVfzTd" (or ^xZjDXhBVfzTd) without killing "xZjDXhBVfzTd(1)" (or "^xZjDXhBVfzTd(1)")
+incr03e:	write $incr(@glvn)	; Expected: 1
+1
+incr03e:	write $incr(@glvn)	; Expected: 2
+2
+incr03e:	zwrite @glvn		; Expected: (xZjDXhBVfzTd(1)="abcd" or ^xZjDXhBVfzTd(1)="abcd") AND (xZjDXhBVfzTd=2 or ^xZjDXhBVfzTd=2)
+xZjDXhBVfzTd=2
+xZjDXhBVfzTd(1)="abcd"
+incr03e:	kill @glvn		; kill "xZjDXhBVfzTd" and "xZjDXhBVfzTd(1)" (or ^xZjDXhBVfzTd and ^xZjDXhBVfzTd(1))
+incr03e:	write $incr(@glvn)	; Expected: 1
+1
+incr03e:	zwrite @glvn		; Expected: xZjDXhBVfzTd=1 (or ^xZjDXhBVfzTd=1) and nothing else
+xZjDXhBVfzTd=1
+incr03e:	kill @glvn
+incr03e:	quit
+incr03e:	.	.	write substagestr,!,spacestr,stgstr1," : ",gvnorlvn," : ",undefstr,!,substagestr
+ ----------------------------------------------------- 
+               incr03e2 : lvn : NOUNDEF
+ ----------------------------------------------------- 
+incr03e:	.	.	do @stgstr1
+incr03e:	new glvn
+incr03e:	do setglvn("glvn","xZjDXhBVfzTd")
+incr03e:setglvn(glvname,value);
+incr03e:	set @glvname=value
+incr03e:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03e:	kill @@glvname	; start afresh
+incr03e:	quit
+incr03e:	set @glvn="abcd"
+incr03e:	write $incr(@glvn@(1),-5)	; Expected: -5
+-5
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd="abcd" or ^xZjDXhBVfzTd="abcd") AND (xZjDXhBVfzTd(1)=5 or ^xZjDXhBVfzTd(1)=5)
+xZjDXhBVfzTd="abcd"
+xZjDXhBVfzTd(1)=-5
+incr03e:	zkill @glvn			; kill "xZjDXhBVfzTd" (or ^xZjDXhBVfzTd) without killing xZjDXhBVfzTd(1) (or ^xZjDXhBVfzTd(1))
+incr03e:	write $incr(@glvn@(1),8)	; Expected: 3
+3
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd(1)=3 (or ^xZjDXhBVfzTd(1)=3) and nothing else)
+xZjDXhBVfzTd(1)=3
+incr03e:	write $incr(@glvn,23)		; Expected: 23
+23
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd=23,xZjDXhBVfzTd(1)=3 (or ^xZjDXhBVfzTd=23,^xZjDXhBVfzTd(1)=3) and nothing else)
+xZjDXhBVfzTd=23
+xZjDXhBVfzTd(1)=3
+incr03e:	write $incr(@glvn@(1,"abcd"))	; Expected: 1
+1
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd=23,xZjDXhBVfzTd(1)=3,xZjDXhBVfzTd(1,"abcd")=1 (or ^xZjDXhBVfzTd=23,^xZjDXhBVfzTd(1)=3,^xZjDXhBVfzTd(1,"abcd")=1) and nothing else)
+xZjDXhBVfzTd=23
+xZjDXhBVfzTd(1)=3
+xZjDXhBVfzTd(1,"abcd")=1
+incr03e:	zkill @glvn@(1)
+incr03e:	write $incr(@glvn@(1,"abcd"))	; Expected: 2
+2
+incr03e:	write $incr(@glvn@(1),-5)	; Expected: -5
+-5
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd=23,xZjDXhBVfzTd(1)=-5,xZjDXhBVfzTd(1,"abcd")=2 (or ^xZjDXhBVfzTd=23,^xZjDXhBVfzTd(1)=-5,^xZjDXhBVfzTd(1,"abcd")=2) and nothing else)
+xZjDXhBVfzTd=23
+xZjDXhBVfzTd(1)=-5
+xZjDXhBVfzTd(1,"abcd")=2
+incr03e:	kill @glvn
+incr03e:	quit
+incr03e:	.	view undefstr
+incr03e:	.	for stgstr1="incr03e1","incr03e2"  do
+incr03e:	.	.	write substagestr,!,spacestr,stgstr1," : ",gvnorlvn," : ",undefstr,!,substagestr
+ ----------------------------------------------------- 
+               incr03e1 : lvn : UNDEF
+ ----------------------------------------------------- 
+incr03e:	.	.	do @stgstr1
+incr03e:	new glvn
+incr03e:	do setglvn("glvn","xZjDXhBVfzTd")
+incr03e:setglvn(glvname,value);
+incr03e:	set @glvname=value
+incr03e:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03e:	kill @@glvname	; start afresh
+incr03e:	quit
+incr03e:	set @glvn@(1)="abcd"
+incr03e:	write $incr(@glvn)	; Expected: 1
+1
+incr03e:	write $incr(@glvn)	; Expected: 2
+2
+incr03e:	zwrite @glvn		; Expected: (xZjDXhBVfzTd(1)="abcd" or ^xZjDXhBVfzTd(1)="abcd") AND (xZjDXhBVfzTd=2 or ^xZjDXhBVfzTd=2)
+xZjDXhBVfzTd=2
+xZjDXhBVfzTd(1)="abcd"
+incr03e:	zkill @glvn		; kill "xZjDXhBVfzTd" (or ^xZjDXhBVfzTd) without killing "xZjDXhBVfzTd(1)" (or "^xZjDXhBVfzTd(1)")
+incr03e:	write $incr(@glvn)	; Expected: 1
+1
+incr03e:	write $incr(@glvn)	; Expected: 2
+2
+incr03e:	zwrite @glvn		; Expected: (xZjDXhBVfzTd(1)="abcd" or ^xZjDXhBVfzTd(1)="abcd") AND (xZjDXhBVfzTd=2 or ^xZjDXhBVfzTd=2)
+xZjDXhBVfzTd=2
+xZjDXhBVfzTd(1)="abcd"
+incr03e:	kill @glvn		; kill "xZjDXhBVfzTd" and "xZjDXhBVfzTd(1)" (or ^xZjDXhBVfzTd and ^xZjDXhBVfzTd(1))
+incr03e:	write $incr(@glvn)	; Expected: 1
+1
+incr03e:	zwrite @glvn		; Expected: xZjDXhBVfzTd=1 (or ^xZjDXhBVfzTd=1) and nothing else
+xZjDXhBVfzTd=1
+incr03e:	kill @glvn
+incr03e:	quit
+incr03e:	.	.	write substagestr,!,spacestr,stgstr1," : ",gvnorlvn," : ",undefstr,!,substagestr
+ ----------------------------------------------------- 
+               incr03e2 : lvn : UNDEF
+ ----------------------------------------------------- 
+incr03e:	.	.	do @stgstr1
+incr03e:	new glvn
+incr03e:	do setglvn("glvn","xZjDXhBVfzTd")
+incr03e:setglvn(glvname,value);
+incr03e:	set @glvname=value
+incr03e:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03e:	kill @@glvname	; start afresh
+incr03e:	quit
+incr03e:	set @glvn="abcd"
+incr03e:	write $incr(@glvn@(1),-5)	; Expected: -5
+-5
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd="abcd" or ^xZjDXhBVfzTd="abcd") AND (xZjDXhBVfzTd(1)=5 or ^xZjDXhBVfzTd(1)=5)
+xZjDXhBVfzTd="abcd"
+xZjDXhBVfzTd(1)=-5
+incr03e:	zkill @glvn			; kill "xZjDXhBVfzTd" (or ^xZjDXhBVfzTd) without killing xZjDXhBVfzTd(1) (or ^xZjDXhBVfzTd(1))
+incr03e:	write $incr(@glvn@(1),8)	; Expected: 3
+3
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd(1)=3 (or ^xZjDXhBVfzTd(1)=3) and nothing else)
+xZjDXhBVfzTd(1)=3
+incr03e:	write $incr(@glvn,23)		; Expected: 23
+23
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd=23,xZjDXhBVfzTd(1)=3 (or ^xZjDXhBVfzTd=23,^xZjDXhBVfzTd(1)=3) and nothing else)
+xZjDXhBVfzTd=23
+xZjDXhBVfzTd(1)=3
+incr03e:	write $incr(@glvn@(1,"abcd"))	; Expected: 1
+1
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd=23,xZjDXhBVfzTd(1)=3,xZjDXhBVfzTd(1,"abcd")=1 (or ^xZjDXhBVfzTd=23,^xZjDXhBVfzTd(1)=3,^xZjDXhBVfzTd(1,"abcd")=1) and nothing else)
+xZjDXhBVfzTd=23
+xZjDXhBVfzTd(1)=3
+xZjDXhBVfzTd(1,"abcd")=1
+incr03e:	zkill @glvn@(1)
+incr03e:	write $incr(@glvn@(1,"abcd"))	; Expected: 2
+2
+incr03e:	write $incr(@glvn@(1),-5)	; Expected: -5
+-5
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd=23,xZjDXhBVfzTd(1)=-5,xZjDXhBVfzTd(1,"abcd")=2 (or ^xZjDXhBVfzTd=23,^xZjDXhBVfzTd(1)=-5,^xZjDXhBVfzTd(1,"abcd")=2) and nothing else)
+xZjDXhBVfzTd=23
+xZjDXhBVfzTd(1)=-5
+xZjDXhBVfzTd(1,"abcd")=2
+incr03e:	kill @glvn
+incr03e:	quit
+incr03e:	quit
+incr03e:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr03e : gvn
+ ----------------------------------------------------- 
+incr03e:	.	.	do @stagestr
+incr03e:	new undefstr,stgstr1
+incr03e:	for undefstr="NOUNDEF","UNDEF"  do
+incr03e:	.	view undefstr
+incr03e:	.	for stgstr1="incr03e1","incr03e2"  do
+incr03e:	.	.	write substagestr,!,spacestr,stgstr1," : ",gvnorlvn," : ",undefstr,!,substagestr
+ ----------------------------------------------------- 
+               incr03e1 : gvn : NOUNDEF
+ ----------------------------------------------------- 
+incr03e:	.	.	do @stgstr1
+incr03e:	new glvn
+incr03e:	do setglvn("glvn","xZjDXhBVfzTd")
+incr03e:setglvn(glvname,value);
+incr03e:	set @glvname=value
+incr03e:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03e:	kill @@glvname	; start afresh
+incr03e:	quit
+incr03e:	set @glvn@(1)="abcd"
+incr03e:	write $incr(@glvn)	; Expected: 1
+1
+incr03e:	write $incr(@glvn)	; Expected: 2
+2
+incr03e:	zwrite @glvn		; Expected: (xZjDXhBVfzTd(1)="abcd" or ^xZjDXhBVfzTd(1)="abcd") AND (xZjDXhBVfzTd=2 or ^xZjDXhBVfzTd=2)
+^xZjDXhBVfzTd=2
+^xZjDXhBVfzTd(1)="abcd"
+incr03e:	zkill @glvn		; kill "xZjDXhBVfzTd" (or ^xZjDXhBVfzTd) without killing "xZjDXhBVfzTd(1)" (or "^xZjDXhBVfzTd(1)")
+incr03e:	write $incr(@glvn)	; Expected: 1
+1
+incr03e:	write $incr(@glvn)	; Expected: 2
+2
+incr03e:	zwrite @glvn		; Expected: (xZjDXhBVfzTd(1)="abcd" or ^xZjDXhBVfzTd(1)="abcd") AND (xZjDXhBVfzTd=2 or ^xZjDXhBVfzTd=2)
+^xZjDXhBVfzTd=2
+^xZjDXhBVfzTd(1)="abcd"
+incr03e:	kill @glvn		; kill "xZjDXhBVfzTd" and "xZjDXhBVfzTd(1)" (or ^xZjDXhBVfzTd and ^xZjDXhBVfzTd(1))
+incr03e:	write $incr(@glvn)	; Expected: 1
+1
+incr03e:	zwrite @glvn		; Expected: xZjDXhBVfzTd=1 (or ^xZjDXhBVfzTd=1) and nothing else
+^xZjDXhBVfzTd=1
+incr03e:	kill @glvn
+incr03e:	quit
+incr03e:	.	.	write substagestr,!,spacestr,stgstr1," : ",gvnorlvn," : ",undefstr,!,substagestr
+ ----------------------------------------------------- 
+               incr03e2 : gvn : NOUNDEF
+ ----------------------------------------------------- 
+incr03e:	.	.	do @stgstr1
+incr03e:	new glvn
+incr03e:	do setglvn("glvn","xZjDXhBVfzTd")
+incr03e:setglvn(glvname,value);
+incr03e:	set @glvname=value
+incr03e:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03e:	kill @@glvname	; start afresh
+incr03e:	quit
+incr03e:	set @glvn="abcd"
+incr03e:	write $incr(@glvn@(1),-5)	; Expected: -5
+-5
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd="abcd" or ^xZjDXhBVfzTd="abcd") AND (xZjDXhBVfzTd(1)=5 or ^xZjDXhBVfzTd(1)=5)
+^xZjDXhBVfzTd="abcd"
+^xZjDXhBVfzTd(1)=-5
+incr03e:	zkill @glvn			; kill "xZjDXhBVfzTd" (or ^xZjDXhBVfzTd) without killing xZjDXhBVfzTd(1) (or ^xZjDXhBVfzTd(1))
+incr03e:	write $incr(@glvn@(1),8)	; Expected: 3
+3
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd(1)=3 (or ^xZjDXhBVfzTd(1)=3) and nothing else)
+^xZjDXhBVfzTd(1)=3
+incr03e:	write $incr(@glvn,23)		; Expected: 23
+23
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd=23,xZjDXhBVfzTd(1)=3 (or ^xZjDXhBVfzTd=23,^xZjDXhBVfzTd(1)=3) and nothing else)
+^xZjDXhBVfzTd=23
+^xZjDXhBVfzTd(1)=3
+incr03e:	write $incr(@glvn@(1,"abcd"))	; Expected: 1
+1
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd=23,xZjDXhBVfzTd(1)=3,xZjDXhBVfzTd(1,"abcd")=1 (or ^xZjDXhBVfzTd=23,^xZjDXhBVfzTd(1)=3,^xZjDXhBVfzTd(1,"abcd")=1) and nothing else)
+^xZjDXhBVfzTd=23
+^xZjDXhBVfzTd(1)=3
+^xZjDXhBVfzTd(1,"abcd")=1
+incr03e:	zkill @glvn@(1)
+incr03e:	write $incr(@glvn@(1,"abcd"))	; Expected: 2
+2
+incr03e:	write $incr(@glvn@(1),-5)	; Expected: -5
+-5
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd=23,xZjDXhBVfzTd(1)=-5,xZjDXhBVfzTd(1,"abcd")=2 (or ^xZjDXhBVfzTd=23,^xZjDXhBVfzTd(1)=-5,^xZjDXhBVfzTd(1,"abcd")=2) and nothing else)
+^xZjDXhBVfzTd=23
+^xZjDXhBVfzTd(1)=-5
+^xZjDXhBVfzTd(1,"abcd")=2
+incr03e:	kill @glvn
+incr03e:	quit
+incr03e:	.	view undefstr
+incr03e:	.	for stgstr1="incr03e1","incr03e2"  do
+incr03e:	.	.	write substagestr,!,spacestr,stgstr1," : ",gvnorlvn," : ",undefstr,!,substagestr
+ ----------------------------------------------------- 
+               incr03e1 : gvn : UNDEF
+ ----------------------------------------------------- 
+incr03e:	.	.	do @stgstr1
+incr03e:	new glvn
+incr03e:	do setglvn("glvn","xZjDXhBVfzTd")
+incr03e:setglvn(glvname,value);
+incr03e:	set @glvname=value
+incr03e:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03e:	kill @@glvname	; start afresh
+incr03e:	quit
+incr03e:	set @glvn@(1)="abcd"
+incr03e:	write $incr(@glvn)	; Expected: 1
+1
+incr03e:	write $incr(@glvn)	; Expected: 2
+2
+incr03e:	zwrite @glvn		; Expected: (xZjDXhBVfzTd(1)="abcd" or ^xZjDXhBVfzTd(1)="abcd") AND (xZjDXhBVfzTd=2 or ^xZjDXhBVfzTd=2)
+^xZjDXhBVfzTd=2
+^xZjDXhBVfzTd(1)="abcd"
+incr03e:	zkill @glvn		; kill "xZjDXhBVfzTd" (or ^xZjDXhBVfzTd) without killing "xZjDXhBVfzTd(1)" (or "^xZjDXhBVfzTd(1)")
+incr03e:	write $incr(@glvn)	; Expected: 1
+1
+incr03e:	write $incr(@glvn)	; Expected: 2
+2
+incr03e:	zwrite @glvn		; Expected: (xZjDXhBVfzTd(1)="abcd" or ^xZjDXhBVfzTd(1)="abcd") AND (xZjDXhBVfzTd=2 or ^xZjDXhBVfzTd=2)
+^xZjDXhBVfzTd=2
+^xZjDXhBVfzTd(1)="abcd"
+incr03e:	kill @glvn		; kill "xZjDXhBVfzTd" and "xZjDXhBVfzTd(1)" (or ^xZjDXhBVfzTd and ^xZjDXhBVfzTd(1))
+incr03e:	write $incr(@glvn)	; Expected: 1
+1
+incr03e:	zwrite @glvn		; Expected: xZjDXhBVfzTd=1 (or ^xZjDXhBVfzTd=1) and nothing else
+^xZjDXhBVfzTd=1
+incr03e:	kill @glvn
+incr03e:	quit
+incr03e:	.	.	write substagestr,!,spacestr,stgstr1," : ",gvnorlvn," : ",undefstr,!,substagestr
+ ----------------------------------------------------- 
+               incr03e2 : gvn : UNDEF
+ ----------------------------------------------------- 
+incr03e:	.	.	do @stgstr1
+incr03e:	new glvn
+incr03e:	do setglvn("glvn","xZjDXhBVfzTd")
+incr03e:setglvn(glvname,value);
+incr03e:	set @glvname=value
+incr03e:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr03e:	kill @@glvname	; start afresh
+incr03e:	quit
+incr03e:	set @glvn="abcd"
+incr03e:	write $incr(@glvn@(1),-5)	; Expected: -5
+-5
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd="abcd" or ^xZjDXhBVfzTd="abcd") AND (xZjDXhBVfzTd(1)=5 or ^xZjDXhBVfzTd(1)=5)
+^xZjDXhBVfzTd="abcd"
+^xZjDXhBVfzTd(1)=-5
+incr03e:	zkill @glvn			; kill "xZjDXhBVfzTd" (or ^xZjDXhBVfzTd) without killing xZjDXhBVfzTd(1) (or ^xZjDXhBVfzTd(1))
+incr03e:	write $incr(@glvn@(1),8)	; Expected: 3
+3
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd(1)=3 (or ^xZjDXhBVfzTd(1)=3) and nothing else)
+^xZjDXhBVfzTd(1)=3
+incr03e:	write $incr(@glvn,23)		; Expected: 23
+23
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd=23,xZjDXhBVfzTd(1)=3 (or ^xZjDXhBVfzTd=23,^xZjDXhBVfzTd(1)=3) and nothing else)
+^xZjDXhBVfzTd=23
+^xZjDXhBVfzTd(1)=3
+incr03e:	write $incr(@glvn@(1,"abcd"))	; Expected: 1
+1
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd=23,xZjDXhBVfzTd(1)=3,xZjDXhBVfzTd(1,"abcd")=1 (or ^xZjDXhBVfzTd=23,^xZjDXhBVfzTd(1)=3,^xZjDXhBVfzTd(1,"abcd")=1) and nothing else)
+^xZjDXhBVfzTd=23
+^xZjDXhBVfzTd(1)=3
+^xZjDXhBVfzTd(1,"abcd")=1
+incr03e:	zkill @glvn@(1)
+incr03e:	write $incr(@glvn@(1,"abcd"))	; Expected: 2
+2
+incr03e:	write $incr(@glvn@(1),-5)	; Expected: -5
+-5
+incr03e:	zwrite @glvn			; Expected: (xZjDXhBVfzTd=23,xZjDXhBVfzTd(1)=-5,xZjDXhBVfzTd(1,"abcd")=2 (or ^xZjDXhBVfzTd=23,^xZjDXhBVfzTd(1)=-5,^xZjDXhBVfzTd(1,"abcd")=2) and nothing else)
+^xZjDXhBVfzTd=23
+^xZjDXhBVfzTd(1)=-5
+^xZjDXhBVfzTd(1,"abcd")=2
+incr03e:	kill @glvn
+incr03e:	quit
+incr03e:	quit
+incr03e:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr04a:	.	for gvnorlvn="lvn","gvn"  do
+incr04a:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04a : lvn
+ ----------------------------------------------------- 
+incr04a:	.	.	do @stagestr
+incr04a:	new glvn
+incr04a:	do setglvn("glvn","xpressionforms")
+incr04a:setglvn(glvname,value);
+incr04a:	set @glvname=value
+incr04a:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04a:	kill @@glvname	; start afresh
+incr04a:	quit
+incr04a:	set @glvn=123
+incr04a:	write $incr(@glvn,1)		; Expected: 124
+124
+incr04a:	write $incr(@glvn,-1)		; Expected: 123
+123
+incr04a:	write $incr(@glvn,100)		; Expected: 223
+223
+incr04a:	write $incr(@glvn,-200)		; Expected:  23
+23
+incr04a:	write $incr(@glvn,"1abcd")	; Expected:  24
+24
+incr04a:	write $incr(@glvn,"-3X;")	; Expected:  21
+21
+incr04a:	write $incr(@glvn,"X235")	; Expected:  21
+21
+incr04a:	write $incr(@glvn,"wxyz")	; Expected:  21
+21
+incr04a:	zwrite @glvn			; Expected: xpressionforms=21 (or ^xpressionforms=21) and nothing else
+xpressionforms=21
+incr04a:	kill @glvn
+incr04a:	quit
+incr04a:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04a : gvn
+ ----------------------------------------------------- 
+incr04a:	.	.	do @stagestr
+incr04a:	new glvn
+incr04a:	do setglvn("glvn","xpressionforms")
+incr04a:setglvn(glvname,value);
+incr04a:	set @glvname=value
+incr04a:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04a:	kill @@glvname	; start afresh
+incr04a:	quit
+incr04a:	set @glvn=123
+incr04a:	write $incr(@glvn,1)		; Expected: 124
+124
+incr04a:	write $incr(@glvn,-1)		; Expected: 123
+123
+incr04a:	write $incr(@glvn,100)		; Expected: 223
+223
+incr04a:	write $incr(@glvn,-200)		; Expected:  23
+23
+incr04a:	write $incr(@glvn,"1abcd")	; Expected:  24
+24
+incr04a:	write $incr(@glvn,"-3X;")	; Expected:  21
+21
+incr04a:	write $incr(@glvn,"X235")	; Expected:  21
+21
+incr04a:	write $incr(@glvn,"wxyz")	; Expected:  21
+21
+incr04a:	zwrite @glvn			; Expected: xpressionforms=21 (or ^xpressionforms=21) and nothing else
+^xpressionforms=21
+incr04a:	kill @glvn
+incr04a:	quit
+incr04a:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr04b:	.	for gvnorlvn="lvn","gvn"  do
+incr04b:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04b : lvn
+ ----------------------------------------------------- 
+incr04b:	.	.	do @stagestr
+incr04b:	new glvn
+incr04b:	do setglvn("glvn","xpressionform(1,""23"")")
+incr04b:setglvn(glvname,value);
+incr04b:	set @glvname=value
+incr04b:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04b:	kill @@glvname	; start afresh
+incr04b:	quit
+incr04b:	set @glvn=12
+incr04b:	write $incr(@glvn,"")		; Expected: 12
+12
+incr04b:	zwrite @glvn			; Expected: xpressionform(1,"23")=12 (or ^xpressionform(1,"23")=12) and nothing else
+xpressionform(1,23)=12
+incr04b:	kill @glvn
+incr04b:	quit
+incr04b:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04b : gvn
+ ----------------------------------------------------- 
+incr04b:	.	.	do @stagestr
+incr04b:	new glvn
+incr04b:	do setglvn("glvn","xpressionform(1,""23"")")
+incr04b:setglvn(glvname,value);
+incr04b:	set @glvname=value
+incr04b:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04b:	kill @@glvname	; start afresh
+incr04b:	quit
+incr04b:	set @glvn=12
+incr04b:	write $incr(@glvn,"")		; Expected: 12
+12
+incr04b:	zwrite @glvn			; Expected: xpressionform(1,"23")=12 (or ^xpressionform(1,"23")=12) and nothing else
+^xpressionform(1,23)=12
+incr04b:	kill @glvn
+incr04b:	quit
+incr04b:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr04c:	.	for gvnorlvn="lvn","gvn"  do
+incr04c:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04c : lvn
+ ----------------------------------------------------- 
+incr04c:	.	.	do @stagestr
+incr04c:	new glvn
+incr04c:	do setglvn("glvn","xpressionform(""23"")")
+incr04c:setglvn(glvname,value);
+incr04c:	set @glvname=value
+incr04c:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04c:	kill @@glvname	; start afresh
+incr04c:	quit
+incr04c:	set @glvn=-123456789E15
+incr04c:	write $incr(@glvn,1E25)		; Expected: 9876543211000000000000000
+9876543211000000000000000
+incr04c:	zwrite @glvn			; Expected: xpressionform("23")=9876543211000000000000000 (or ^xpressionform(23))
+xpressionform(23)=9876543211000000000000000
+incr04c:	write $incr(@glvn,"1E25")	; Expected: 19876543211000000000000000
+19876543211000000000000000
+incr04c:	zwrite @glvn			; Expected: xpressionform("23")=19876543211000000000000000 (or ^xpressionform(23))
+xpressionform(23)=19876543211000000000000000
+incr04c:	set @glvn="1E-4"
+incr04c:	write $incr(@glvn,"1E-5abc")	; Expected: .00011
+.00011
+incr04c:	write $incr(@glvn,-1E-5)	; Expected: .0001
+.0001
+incr04c:	write $incr(@glvn,-5.12355678)	; Expected: -5.12345678
+-5.12345678
+incr04c:	write $incr(@glvn,-1E-5a)	; Expected: RPARENMISSING error because of trailing "a" in -1E-5a
+incr04c:	do sstop
+incr04c:	set $zstep=""
+incr04c:	set %zsaveio=$io use $p write !,"Stepping STOPPED",!  use %zsaveio
+
+Stepping STOPPED
+ZSTATUS=incr04c+14^incrbas,%GTM-E-RPARENMISSING, Right parenthesis expected
+
+Stepping STARTED
+incr04c:	quit
+incr04c:	zgoto @newprog
+incr04c:	zwrite @glvn			; Expected: -5.12345678
+xpressionform(23)=-5.12345678
+incr04c:	kill @glvn	
+incr04c:	quit
+incr04c:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04c : gvn
+ ----------------------------------------------------- 
+incr04c:	.	.	do @stagestr
+incr04c:	new glvn
+incr04c:	do setglvn("glvn","xpressionform(""23"")")
+incr04c:setglvn(glvname,value);
+incr04c:	set @glvname=value
+incr04c:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04c:	kill @@glvname	; start afresh
+incr04c:	quit
+incr04c:	set @glvn=-123456789E15
+incr04c:	write $incr(@glvn,1E25)		; Expected: 9876543211000000000000000
+9876543211000000000000000
+incr04c:	zwrite @glvn			; Expected: xpressionform("23")=9876543211000000000000000 (or ^xpressionform(23))
+^xpressionform(23)=9876543211000000000000000
+incr04c:	write $incr(@glvn,"1E25")	; Expected: 19876543211000000000000000
+19876543211000000000000000
+incr04c:	zwrite @glvn			; Expected: xpressionform("23")=19876543211000000000000000 (or ^xpressionform(23))
+^xpressionform(23)=19876543211000000000000000
+incr04c:	set @glvn="1E-4"
+incr04c:	write $incr(@glvn,"1E-5abc")	; Expected: .00011
+.00011
+incr04c:	write $incr(@glvn,-1E-5)	; Expected: .0001
+.0001
+incr04c:	write $incr(@glvn,-5.12355678)	; Expected: -5.12345678
+-5.12345678
+incr04c:	write $incr(@glvn,-1E-5a)	; Expected: RPARENMISSING error because of trailing "a" in -1E-5a
+incr04c:	do sstop
+incr04c:	set $zstep=""
+incr04c:	set %zsaveio=$io use $p write !,"Stepping STOPPED",!  use %zsaveio
+
+Stepping STOPPED
+ZSTATUS=incr04c+14^incrbas,%GTM-E-RPARENMISSING, Right parenthesis expected
+
+Stepping STARTED
+incr04c:	quit
+incr04c:	zgoto @newprog
+incr04c:	zwrite @glvn			; Expected: -5.12345678
+^xpressionform(23)=-5.12345678
+incr04c:	kill @glvn	
+incr04c:	quit
+incr04c:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr04d:	.	for gvnorlvn="lvn","gvn"  do
+incr04d:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04d : lvn
+ ----------------------------------------------------- 
+incr04d:	.	.	do @stagestr
+incr04d:	new glvn,incrlocal
+incr04d:	do setglvn("glvn","TOKEN")
+incr04d:setglvn(glvname,value);
+incr04d:	set @glvname=value
+incr04d:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04d:	kill @@glvname	; start afresh
+incr04d:	quit
+incr04d:	set @glvn=17
+incr04d:	set incrlocal=37
+incr04d:	write $incr(@glvn,incrlocal)		; Expected: 54
+54
+incr04d:	set incrlocal(1,"abcd")=-29
+incr04d:	write $incr(@glvn,incrlocal(1,"abcd"))	; Expected: 25
+25
+incr04d:	zwrite @glvn				; Expected: TOKEN=25 (or ^TOKEN=25)
+TOKEN=25
+incr04d:	zwrite incrlocal			; Expected: incrlocal=37,incrlocal(1,"abcd")=-29
+incrlocal=37
+incrlocal(1,"abcd")=-29
+incr04d:	kill @glvn	
+incr04d:	quit
+incr04d:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04d : gvn
+ ----------------------------------------------------- 
+incr04d:	.	.	do @stagestr
+incr04d:	new glvn,incrlocal
+incr04d:	do setglvn("glvn","TOKEN")
+incr04d:setglvn(glvname,value);
+incr04d:	set @glvname=value
+incr04d:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04d:	kill @@glvname	; start afresh
+incr04d:	quit
+incr04d:	set @glvn=17
+incr04d:	set incrlocal=37
+incr04d:	write $incr(@glvn,incrlocal)		; Expected: 54
+54
+incr04d:	set incrlocal(1,"abcd")=-29
+incr04d:	write $incr(@glvn,incrlocal(1,"abcd"))	; Expected: 25
+25
+incr04d:	zwrite @glvn				; Expected: TOKEN=25 (or ^TOKEN=25)
+^TOKEN=25
+incr04d:	zwrite incrlocal			; Expected: incrlocal=37,incrlocal(1,"abcd")=-29
+incrlocal=37
+incrlocal(1,"abcd")=-29
+incr04d:	kill @glvn	
+incr04d:	quit
+incr04d:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr04e:	.	for gvnorlvn="lvn","gvn"  do
+incr04e:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04e : lvn
+ ----------------------------------------------------- 
+incr04e:	.	.	do @stagestr
+incr04e:	new glvn
+incr04e:	do setglvn("glvn","TOKEN")
+incr04e:setglvn(glvname,value);
+incr04e:	set @glvname=value
+incr04e:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04e:	kill @@glvname	; start afresh
+incr04e:	quit
+incr04e:	set @glvn=17
+incr04e:	kill ^incrlocal
+incr04e:	set ^incrlocal=-37
+incr04e:	write $incr(@glvn,^incrlocal)		; Expected: -20
+-20
+incr04e:	set ^incrlocal("abcd",1)=-29
+incr04e:	write $incr(@glvn,^incrlocal("abcd",1))	; Expected: -49
+-49
+incr04e:	zwrite @glvn				; Expected: TOKEN=-49 (or ^TOKEN=-49)
+TOKEN=-49
+incr04e:	zwrite ^incrlocal			; Expected: ^incrlocal=-37,^incrlocal("abcd",1)=-29
+^incrlocal=-37
+^incrlocal("abcd",1)=-29
+incr04e:	kill ^incrlocal
+incr04e:	kill @glvn	
+incr04e:	quit
+incr04e:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04e : gvn
+ ----------------------------------------------------- 
+incr04e:	.	.	do @stagestr
+incr04e:	new glvn
+incr04e:	do setglvn("glvn","TOKEN")
+incr04e:setglvn(glvname,value);
+incr04e:	set @glvname=value
+incr04e:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04e:	kill @@glvname	; start afresh
+incr04e:	quit
+incr04e:	set @glvn=17
+incr04e:	kill ^incrlocal
+incr04e:	set ^incrlocal=-37
+incr04e:	write $incr(@glvn,^incrlocal)		; Expected: -20
+-20
+incr04e:	set ^incrlocal("abcd",1)=-29
+incr04e:	write $incr(@glvn,^incrlocal("abcd",1))	; Expected: -49
+-49
+incr04e:	zwrite @glvn				; Expected: TOKEN=-49 (or ^TOKEN=-49)
+^TOKEN=-49
+incr04e:	zwrite ^incrlocal			; Expected: ^incrlocal=-37,^incrlocal("abcd",1)=-29
+^incrlocal=-37
+^incrlocal("abcd",1)=-29
+incr04e:	kill ^incrlocal
+incr04e:	kill @glvn	
+incr04e:	quit
+incr04e:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr04f:	.	for gvnorlvn="lvn","gvn"  do
+incr04f:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04f : lvn
+ ----------------------------------------------------- 
+incr04f:	.	.	do @stagestr
+incr04f:	new glvn
+incr04f:	do setglvn("glvn","sVNvariable") ; the code below assumes $test will be 0 if glvn is local and 1 if glvn is global
+incr04f:setglvn(glvname,value);
+incr04f:	set @glvname=value
+incr04f:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04f:	kill @@glvname	; start afresh
+incr04f:	quit
+incr04f:	set @glvn=17
+incr04f:	write $incr(@glvn,$test)		; Expected: 17 (if local) and 18 (if global)
+17
+incr04f:	write $incr(@glvn,$tlevel)		; Expected: 17 (if local) and 18 (if global)
+17
+incr04f:	write $incr(@glvn,$zinterrupt)		; Expected: 17 (if local) and 18 (if global)
+17
+incr04f:	write $incr(@glvn,$zininterrupt)	; Expected: 17 (if local) and 18 (if global)
+17
+incr04f:	zwrite @glvn				; Expected: sVNvariable=17 (or ^sVNvariable=18) and nothing else
+sVNvariable=17
+incr04f:	kill @glvn	
+incr04f:	quit
+incr04f:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04f : gvn
+ ----------------------------------------------------- 
+incr04f:	.	.	do @stagestr
+incr04f:	new glvn
+incr04f:	do setglvn("glvn","sVNvariable") ; the code below assumes $test will be 0 if glvn is local and 1 if glvn is global
+incr04f:setglvn(glvname,value);
+incr04f:	set @glvname=value
+incr04f:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04f:	kill @@glvname	; start afresh
+incr04f:	quit
+incr04f:	set @glvn=17
+incr04f:	write $incr(@glvn,$test)		; Expected: 17 (if local) and 18 (if global)
+18
+incr04f:	write $incr(@glvn,$tlevel)		; Expected: 17 (if local) and 18 (if global)
+18
+incr04f:	write $incr(@glvn,$zinterrupt)		; Expected: 17 (if local) and 18 (if global)
+18
+incr04f:	write $incr(@glvn,$zininterrupt)	; Expected: 17 (if local) and 18 (if global)
+18
+incr04f:	zwrite @glvn				; Expected: sVNvariable=17 (or ^sVNvariable=18) and nothing else
+^sVNvariable=18
+incr04f:	kill @glvn	
+incr04f:	quit
+incr04f:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr04g:	.	for gvnorlvn="lvn","gvn"  do
+incr04g:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04g : lvn
+ ----------------------------------------------------- 
+incr04g:	.	.	do @stagestr
+incr04g:	new glvn,y
+incr04g:	kill ^z
+incr04g:	do setglvn("glvn","Increment")
+incr04g:setglvn(glvname,value);
+incr04g:	set @glvname=value
+incr04g:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04g:	kill @@glvname	; start afresh
+incr04g:	quit
+incr04g:	set @glvn=3
+incr04g:	set y=7
+incr04g:	set ^z=17
+incr04g:	write $incr(@glvn,y)				; Expected:  10
+10
+incr04g:	write $incr(@glvn,$incr(@glvn,^z))		; Expected:  54
+54
+incr04g:	write $incr(@glvn,$incr(@glvn,$incr(^z,y)))	; Expected: 156
+156
+incr04g:	zwrite @glvn					; Expected: Increment=156 (or ^Increment=156)
+Increment=156
+incr04g:	zwrite y					; Expected: y=7
+y=7
+incr04g:	zwrite ^z					; Expected: ^z=24
+^z=24
+incr04g:	kill @glvn
+incr04g:	kill ^z
+incr04g:	quit
+incr04g:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04g : gvn
+ ----------------------------------------------------- 
+incr04g:	.	.	do @stagestr
+incr04g:	new glvn,y
+incr04g:	kill ^z
+incr04g:	do setglvn("glvn","Increment")
+incr04g:setglvn(glvname,value);
+incr04g:	set @glvname=value
+incr04g:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04g:	kill @@glvname	; start afresh
+incr04g:	quit
+incr04g:	set @glvn=3
+incr04g:	set y=7
+incr04g:	set ^z=17
+incr04g:	write $incr(@glvn,y)				; Expected:  10
+10
+incr04g:	write $incr(@glvn,$incr(@glvn,^z))		; Expected:  54
+54
+incr04g:	write $incr(@glvn,$incr(@glvn,$incr(^z,y)))	; Expected: 156
+156
+incr04g:	zwrite @glvn					; Expected: Increment=156 (or ^Increment=156)
+^Increment=156
+incr04g:	zwrite y					; Expected: y=7
+y=7
+incr04g:	zwrite ^z					; Expected: ^z=24
+^z=24
+incr04g:	kill @glvn
+incr04g:	kill ^z
+incr04g:	quit
+incr04g:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr04h:	.	for gvnorlvn="lvn","gvn"  do
+incr04h:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04h : lvn
+ ----------------------------------------------------- 
+incr04h:	.	.	do @stagestr
+incr04h:	new glvn,var1,var2
+incr04h:	do setglvn("glvn","loongname0123456789012345678901twothree(1,2,3,5)")
+incr04h:setglvn(glvname,value);
+incr04h:	set @glvname=value
+incr04h:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04h:	kill @@glvname	; start afresh
+incr04h:	quit
+incr04h:	set @glvn=10
+incr04h:	set var1=23
+incr04h:	set var2=45
+incr04h:	write $incr(@glvn,$get(var1)-$data(var2)+(var2*var1/9))		; Expected: 147
+147
+incr04h:	set var2(1)="abcd"
+incr04h:	write $incr(@glvn,$get(var1)-$data(var2)+var2)			; Expected: 204
+204
+incr04h:	zwrite @glvn							; Expected: 204
+loongname0123456789012345678901(1,2,3,5)=204
+incr04h:	zwrite var1							; Expected: var1=23 (or ^var1=23)
+var1=23
+incr04h:	zwrite var2							; Expected: var2=45,var2(1)="abcd" (or ^var2=45,^var2(1)="abcd")
+var2=45
+var2(1)="abcd"
+incr04h:	kill @glvn
+incr04h:	quit
+incr04h:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04h : gvn
+ ----------------------------------------------------- 
+incr04h:	.	.	do @stagestr
+incr04h:	new glvn,var1,var2
+incr04h:	do setglvn("glvn","loongname0123456789012345678901twothree(1,2,3,5)")
+incr04h:setglvn(glvname,value);
+incr04h:	set @glvname=value
+incr04h:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04h:	kill @@glvname	; start afresh
+incr04h:	quit
+incr04h:	set @glvn=10
+incr04h:	set var1=23
+incr04h:	set var2=45
+incr04h:	write $incr(@glvn,$get(var1)-$data(var2)+(var2*var1/9))		; Expected: 147
+147
+incr04h:	set var2(1)="abcd"
+incr04h:	write $incr(@glvn,$get(var1)-$data(var2)+var2)			; Expected: 204
+204
+incr04h:	zwrite @glvn							; Expected: 204
+^loongname0123456789012345678901(1,2,3,5)=204
+incr04h:	zwrite var1							; Expected: var1=23 (or ^var1=23)
+var1=23
+incr04h:	zwrite var2							; Expected: var2=45,var2(1)="abcd" (or ^var2=45,^var2(1)="abcd")
+var2=45
+var2(1)="abcd"
+incr04h:	kill @glvn
+incr04h:	quit
+incr04h:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr04i:	.	for gvnorlvn="lvn","gvn"  do
+incr04i:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04i : lvn
+ ----------------------------------------------------- 
+incr04i:	.	.	do @stagestr
+incr04i:	new glvn1,glvn2,glvn3
+incr04i:	do setglvn("glvn1","abCdefghijk(1,""xstr"",4)")
+incr04i:setglvn(glvname,value);
+incr04i:	set @glvname=value
+incr04i:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04i:	kill @@glvname	; start afresh
+incr04i:	quit
+incr04i:	do setglvn("glvn2","efGhjklmnop(""ymNd"",4,2)")
+incr04i:setglvn(glvname,value);
+incr04i:	set @glvname=value
+incr04i:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04i:	kill @@glvname	; start afresh
+incr04i:	quit
+incr04i:	do setglvn("glvn3","Gchefghijkl(""Kpdn"",45.5)")
+incr04i:setglvn(glvname,value);
+incr04i:	set @glvname=value
+incr04i:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04i:	kill @@glvname	; start afresh
+incr04i:	quit
+incr04i:	set @glvn1=1,@glvn2=2,@glvn3=3
+incr04i:	write $incr(@glvn1,@glvn2)+$incr(@glvn2,@glvn3)+$incr(@glvn3,@glvn1)+$incr(@glvn1,@glvn3)+$incr(@glvn2,@glvn1)+$incr(@glvn3,@glvn2)
+57
+incr04i:	zwrite @glvn1	; Expected:  9
+abCdefghijk(1,"xstr",4)=9
+incr04i:	zwrite @glvn2	; Expected: 14
+efGhjklmnop("ymNd",4,2)=14
+incr04i:	zwrite @glvn3	; Expected: 20
+Gchefghijkl("Kpdn",45.5)=20
+incr04i:	kill @glvn1
+incr04i:	kill @glvn2
+incr04i:	kill @glvn3
+incr04i:	quit
+incr04i:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr04i : gvn
+ ----------------------------------------------------- 
+incr04i:	.	.	do @stagestr
+incr04i:	new glvn1,glvn2,glvn3
+incr04i:	do setglvn("glvn1","abCdefghijk(1,""xstr"",4)")
+incr04i:setglvn(glvname,value);
+incr04i:	set @glvname=value
+incr04i:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04i:	kill @@glvname	; start afresh
+incr04i:	quit
+incr04i:	do setglvn("glvn2","efGhjklmnop(""ymNd"",4,2)")
+incr04i:setglvn(glvname,value);
+incr04i:	set @glvname=value
+incr04i:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04i:	kill @@glvname	; start afresh
+incr04i:	quit
+incr04i:	do setglvn("glvn3","Gchefghijkl(""Kpdn"",45.5)")
+incr04i:setglvn(glvname,value);
+incr04i:	set @glvname=value
+incr04i:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr04i:	kill @@glvname	; start afresh
+incr04i:	quit
+incr04i:	set @glvn1=1,@glvn2=2,@glvn3=3
+incr04i:	write $incr(@glvn1,@glvn2)+$incr(@glvn2,@glvn3)+$incr(@glvn3,@glvn1)+$incr(@glvn1,@glvn3)+$incr(@glvn2,@glvn1)+$incr(@glvn3,@glvn2)
+57
+incr04i:	zwrite @glvn1	; Expected:  9
+^abCdefghijk(1,"xstr",4)=9
+incr04i:	zwrite @glvn2	; Expected: 14
+^efGhjklmnop("ymNd",4,2)=14
+incr04i:	zwrite @glvn3	; Expected: 20
+^Gchefghijkl("Kpdn",45.5)=20
+incr04i:	kill @glvn1
+incr04i:	kill @glvn2
+incr04i:	kill @glvn3
+incr04i:	quit
+incr04i:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr05a:	.	for gvnorlvn="lvn","gvn"  do
+incr05a:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr05a : lvn
+ ----------------------------------------------------- 
+incr05a:	.	.	do @stagestr
+incr05a:	new globalnameB,globalnameNA
+incr05a:	do setglvn("globalnameB(3)","globalnameA(1,3)")
+incr05a:setglvn(glvname,value);
+incr05a:	set @glvname=value
+incr05a:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr05a:	kill @@glvname	; start afresh
+incr05a:	quit
+incr05a:	set @globalnameB(3)@(4,67)="globalnameNA(2,3)",globalnameNA(2,3)=11
+incr05a:	write $incr(@@globalnameB(3)@(4,67))	; Expected: 12
+12
+incr05a:	zwrite @globalnameB(3)@(4,67)		; Expected: globalnameA(1,3,4,67)="globalnameNA(2,3)" (or ^globalnameA(1,3,4,67)="globalnameNA(2,3)")
+globalnameA(1,3,4,67)="globalnameNA(2,3)"
+incr05a:	zwrite globalnameNA			; Expected: globalnameNA(2,3)=12
+globalnameNA(2,3)=12
+incr05a:	kill @globalnameB(3)
+incr05a:	kill globalnameB
+incr05a:	kill globalnameNA
+incr05a:	quit
+incr05a:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr05a : gvn
+ ----------------------------------------------------- 
+incr05a:	.	.	do @stagestr
+incr05a:	new globalnameB,globalnameNA
+incr05a:	do setglvn("globalnameB(3)","globalnameA(1,3)")
+incr05a:setglvn(glvname,value);
+incr05a:	set @glvname=value
+incr05a:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr05a:	kill @@glvname	; start afresh
+incr05a:	quit
+incr05a:	set @globalnameB(3)@(4,67)="globalnameNA(2,3)",globalnameNA(2,3)=11
+incr05a:	write $incr(@@globalnameB(3)@(4,67))	; Expected: 12
+12
+incr05a:	zwrite @globalnameB(3)@(4,67)		; Expected: globalnameA(1,3,4,67)="globalnameNA(2,3)" (or ^globalnameA(1,3,4,67)="globalnameNA(2,3)")
+^globalnameA(1,3,4,67)="globalnameNA(2,3)"
+incr05a:	zwrite globalnameNA			; Expected: globalnameNA(2,3)=12
+globalnameNA(2,3)=12
+incr05a:	kill @globalnameB(3)
+incr05a:	kill globalnameB
+incr05a:	kill globalnameNA
+incr05a:	quit
+incr05a:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr05b:	.	for gvnorlvn="lvn","gvn"  do
+incr05b:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr05b : lvn
+ ----------------------------------------------------- 
+incr05b:	.	.	do @stagestr
+incr05b:	new glvn
+incr05b:	do setglvn("glvn","longvariableV3GET(9)")
+incr05b:setglvn(glvname,value);
+incr05b:	set @glvname=value
+incr05b:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr05b:	kill @@glvname	; start afresh
+incr05b:	quit
+incr05b:	set @glvn="^longvariableV3GET(3,5)",^longvariableV3GET(3,5,"BOOK",1)=22
+incr05b:	write $incr(@(@glvn)@("BOOK",1))	; Expected: 23
+23
+incr05b:	zwrite ^longvariableV3GET(3,*)			; Expected: ^longvariableV3GET(3,5,"BOOK",1)=23
+^longvariableV3GET(3,5,"BOOK",1)=23
+incr05b:	kill @glvn
+incr05b:	kill ^longvariableV3GET
+incr05b:	quit
+incr05b:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr05b : gvn
+ ----------------------------------------------------- 
+incr05b:	.	.	do @stagestr
+incr05b:	new glvn
+incr05b:	do setglvn("glvn","longvariableV3GET(9)")
+incr05b:setglvn(glvname,value);
+incr05b:	set @glvname=value
+incr05b:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr05b:	kill @@glvname	; start afresh
+incr05b:	quit
+incr05b:	set @glvn="^longvariableV3GET(3,5)",^longvariableV3GET(3,5,"BOOK",1)=22
+incr05b:	write $incr(@(@glvn)@("BOOK",1))	; Expected: 23
+23
+incr05b:	zwrite ^longvariableV3GET(3,*)			; Expected: ^longvariableV3GET(3,5,"BOOK",1)=23
+^longvariableV3GET(3,5,"BOOK",1)=23
+incr05b:	kill @glvn
+incr05b:	kill ^longvariableV3GET
+incr05b:	quit
+incr05b:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr05c:	.	for gvnorlvn="lvn","gvn"  do
+incr05c:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr05c : lvn
+ ----------------------------------------------------- 
+incr05c:	.	.	do @stagestr
+incr05c:	new glvn,A,B,C
+incr05c:	do setglvn("glvn","VV")
+incr05c:setglvn(glvname,value);
+incr05c:	set @glvname=value
+incr05c:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr05c:	kill @@glvname	; start afresh
+incr05c:	quit
+incr05c:	set @glvn=-25
+incr05c:	set A="B(1,C(8))",C(8)="88",B(1,88)="188",@glvn@(188)=33
+incr05c:	write $incr(@glvn,@glvn@(@A))		; Expected: 8
+8
+incr05c:	write @glvn				; Expected: 8
+8
+incr05c:	kill @glvn
+incr05c:	quit
+incr05c:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr05c : gvn
+ ----------------------------------------------------- 
+incr05c:	.	.	do @stagestr
+incr05c:	new glvn,A,B,C
+incr05c:	do setglvn("glvn","VV")
+incr05c:setglvn(glvname,value);
+incr05c:	set @glvname=value
+incr05c:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr05c:	kill @@glvname	; start afresh
+incr05c:	quit
+incr05c:	set @glvn=-25
+incr05c:	set A="B(1,C(8))",C(8)="88",B(1,88)="188",@glvn@(188)=33
+incr05c:	write $incr(@glvn,@glvn@(@A))		; Expected: 8
+8
+incr05c:	write @glvn				; Expected: 8
+8
+incr05c:	kill @glvn
+incr05c:	quit
+incr05c:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr05d:	.	for gvnorlvn="lvn","gvn"  do
+incr05d:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr05d : lvn
+ ----------------------------------------------------- 
+incr05d:	.	.	do @stagestr
+incr05d:	new glvn,A,B,VV
+incr05d:	do setglvn("glvn","AA")
+incr05d:setglvn(glvname,value);
+incr05d:	set @glvname=value
+incr05d:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr05d:	kill @@glvname	; start afresh
+incr05d:	quit
+incr05d:	set @glvn=1
+incr05d:	set B="1",VV="@VV(B)",VV(1)="VV(B,B+B)",VV(1,2)="1.5"
+incr05d:	write $incr(@glvn,$get(A,@VV))		; Expected: 2.5
+2.5
+incr05d:	zwrite @glvn				; Expected: 2.5
+AA=2.5
+incr05d:	kill @glvn
+incr05d:	quit
+incr05d:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr05d : gvn
+ ----------------------------------------------------- 
+incr05d:	.	.	do @stagestr
+incr05d:	new glvn,A,B,VV
+incr05d:	do setglvn("glvn","AA")
+incr05d:setglvn(glvname,value);
+incr05d:	set @glvname=value
+incr05d:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr05d:	kill @@glvname	; start afresh
+incr05d:	quit
+incr05d:	set @glvn=1
+incr05d:	set B="1",VV="@VV(B)",VV(1)="VV(B,B+B)",VV(1,2)="1.5"
+incr05d:	write $incr(@glvn,$get(A,@VV))		; Expected: 2.5
+2.5
+incr05d:	zwrite @glvn				; Expected: 2.5
+^AA=2.5
+incr05d:	kill @glvn
+incr05d:	quit
+incr05d:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr05e:	.	for gvnorlvn="lvn","gvn"  do
+incr05e:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr05e : lvn
+ ----------------------------------------------------- 
+incr05e:	.	.	do @stagestr
+incr05e:	new glvn,BB
+incr05e:	kill ^VV
+incr05e:	do setglvn("glvn","AA")
+incr05e:setglvn(glvname,value);
+incr05e:	set @glvname=value
+incr05e:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr05e:	kill @@glvname	; start afresh
+incr05e:	quit
+incr05e:	set @glvn=1
+incr05e:	set ^VV(1,2,3,4,12,456)="1234567",^VV="@BB@(3,4)",^VV(1,2,3,4,12,4)="44"
+incr05e:	set BB="^VV(1,2)"
+incr05e:	write $incr(@glvn,@^VV@(12,456))	; Expected: 1234568
+1234568
+incr05e:	zwrite @glvn				; Expected: AA=1234568 (or ^AA=1234568)
+AA=1234568
+incr05e:	kill @glvn
+incr05e:	kill ^VV
+incr05e:	quit
+incr05e:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr05e : gvn
+ ----------------------------------------------------- 
+incr05e:	.	.	do @stagestr
+incr05e:	new glvn,BB
+incr05e:	kill ^VV
+incr05e:	do setglvn("glvn","AA")
+incr05e:setglvn(glvname,value);
+incr05e:	set @glvname=value
+incr05e:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr05e:	kill @@glvname	; start afresh
+incr05e:	quit
+incr05e:	set @glvn=1
+incr05e:	set ^VV(1,2,3,4,12,456)="1234567",^VV="@BB@(3,4)",^VV(1,2,3,4,12,4)="44"
+incr05e:	set BB="^VV(1,2)"
+incr05e:	write $incr(@glvn,@^VV@(12,456))	; Expected: 1234568
+1234568
+incr05e:	zwrite @glvn				; Expected: AA=1234568 (or ^AA=1234568)
+^AA=1234568
+incr05e:	kill @glvn
+incr05e:	kill ^VV
+incr05e:	quit
+incr05e:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr05f:	.	for gvnorlvn="lvn","gvn"  do
+incr05f:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr05f : lvn
+ ----------------------------------------------------- 
+incr05f:	.	.	do @stagestr
+incr05f:	new glvn
+incr05f:	kill ^VV
+incr05f:	do setglvn("glvn","AA")
+incr05f:setglvn(glvname,value);
+incr05f:	set @glvname=value
+incr05f:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr05f:	kill @@glvname	; start afresh
+incr05f:	quit
+incr05f:	set @glvn=1
+incr05f:	set ^VV(3,4,12,456)="12345",^VV(0)="^(3,4)",^VV(3,4,12,4)="44"
+incr05f:	write $incr(@glvn,@^VV(0)@(12,456))	; Expected: 12346
+12346
+incr05f:	zwrite @glvn				; Expected: AA=12346 (or ^AA=12346)
+AA=12346
+incr05f:	kill @glvn
+incr05f:	kill ^VV
+incr05f:	quit
+incr05f:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr05f : gvn
+ ----------------------------------------------------- 
+incr05f:	.	.	do @stagestr
+incr05f:	new glvn
+incr05f:	kill ^VV
+incr05f:	do setglvn("glvn","AA")
+incr05f:setglvn(glvname,value);
+incr05f:	set @glvname=value
+incr05f:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr05f:	kill @@glvname	; start afresh
+incr05f:	quit
+incr05f:	set @glvn=1
+incr05f:	set ^VV(3,4,12,456)="12345",^VV(0)="^(3,4)",^VV(3,4,12,4)="44"
+incr05f:	write $incr(@glvn,@^VV(0)@(12,456))	; Expected: 12346
+12346
+incr05f:	zwrite @glvn				; Expected: AA=12346 (or ^AA=12346)
+^AA=12346
+incr05f:	kill @glvn
+incr05f:	kill ^VV
+incr05f:	quit
+incr05f:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr06a:	.	for gvnorlvn="lvn","gvn"  do
+incr06a:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr06a : lvn
+ ----------------------------------------------------- 
+incr06a:	.	.	do @stagestr
+incr06a:	new glvn
+incr06a:	do setglvn("glvn","globalreference(1)")
+incr06a:setglvn(glvname,value);
+incr06a:	set @glvname=value
+incr06a:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr06a:	kill @@glvname	; start afresh
+incr06a:	quit
+incr06a:	set @glvn=1
+incr06a:	kill ^m,^k
+incr06a:	set ^m(2)=3
+incr06a:	set ^k(3)=2
+incr06a:	write $incr(@glvn,^m(2)+^k(3))	; Expected: 6
+6
+incr06a:	write $name(^(4))		; Expected: ^k(4) (if lvn) and ^globalreference(4) (if gvn)
+^k(4)
+incr06a:	write @glvn			; Expected 6
+6
+incr06a:	kill @glvn
+incr06a:	kill ^m,^k
+incr06a:	quit
+incr06a:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr06a : gvn
+ ----------------------------------------------------- 
+incr06a:	.	.	do @stagestr
+incr06a:	new glvn
+incr06a:	do setglvn("glvn","globalreference(1)")
+incr06a:setglvn(glvname,value);
+incr06a:	set @glvname=value
+incr06a:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr06a:	kill @@glvname	; start afresh
+incr06a:	quit
+incr06a:	set @glvn=1
+incr06a:	kill ^m,^k
+incr06a:	set ^m(2)=3
+incr06a:	set ^k(3)=2
+incr06a:	write $incr(@glvn,^m(2)+^k(3))	; Expected: 6
+6
+incr06a:	write $name(^(4))		; Expected: ^k(4) (if lvn) and ^globalreference(4) (if gvn)
+^globalreference(4)
+incr06a:	write @glvn			; Expected 6
+6
+incr06a:	kill @glvn
+incr06a:	kill ^m,^k
+incr06a:	quit
+incr06a:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr06b:	.	for gvnorlvn="lvn","gvn"  do
+incr06b:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr06b : lvn
+ ----------------------------------------------------- 
+incr06b:	.	.	do @stagestr
+incr06b:	new glvn,a
+incr06b:	do setglvn("glvn","localreference(1)")
+incr06b:setglvn(glvname,value);
+incr06b:	set @glvname=value
+incr06b:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr06b:	kill @@glvname	; start afresh
+incr06b:	quit
+incr06b:	set @glvn=22
+incr06b:	set a=33
+incr06b:	kill ^m(1)
+incr06b:	write $incr(@glvn,a)	; Expected: 55
+55
+incr06b:	write $name(^(4))	; Expected: ^m(4) (if lvn) and ^localreference(4) (if gvn)
+^m(4)
+incr06b:	write @glvn		; Expected: 55
+55
+incr06b:	kill @glvn
+incr06b:	kill ^m
+incr06b:	quit
+incr06b:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr06b : gvn
+ ----------------------------------------------------- 
+incr06b:	.	.	do @stagestr
+incr06b:	new glvn,a
+incr06b:	do setglvn("glvn","localreference(1)")
+incr06b:setglvn(glvname,value);
+incr06b:	set @glvname=value
+incr06b:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr06b:	kill @@glvname	; start afresh
+incr06b:	quit
+incr06b:	set @glvn=22
+incr06b:	set a=33
+incr06b:	kill ^m(1)
+incr06b:	write $incr(@glvn,a)	; Expected: 55
+55
+incr06b:	write $name(^(4))	; Expected: ^m(4) (if lvn) and ^localreference(4) (if gvn)
+^localreference(4)
+incr06b:	write @glvn		; Expected: 55
+55
+incr06b:	kill @glvn
+incr06b:	kill ^m
+incr06b:	quit
+incr06b:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr06c:	.	for gvnorlvn="lvn","gvn"  do
+incr06c:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr06c : lvn
+ ----------------------------------------------------- 
+incr06c:	.	.	do @stagestr
+incr06c:	new glvn
+incr06c:	do setglvn("glvn","A")
+incr06c:setglvn(glvname,value);
+incr06c:	set @glvname=value
+incr06c:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr06c:	kill @@glvname	; start afresh
+incr06c:	quit
+incr06c:	set @glvn@(0)=0
+incr06c:	set @glvn@(10)=10
+incr06c:	set ^VV("A",1,2,3)=123
+incr06c:	set ^VV("A",1,2,4)="A124"
+incr06c:	set ^VV("A",4)="A4"
+incr06c:	write $incr(@glvn@($data(^VV("A",1,2))),^(1,2,3))	; Expected: 133
+133
+incr06c:	write $name(^(4))					; Expected: ^VV("A",1,4) (if lvn) and ^A(4) (if gvn)
+^VV("A",1,4)
+incr06c:	write @glvn@(10)					; Expected: 133
+133
+incr06c:	kill @glvn
+incr06c:	kill ^VV
+incr06c:	quit
+incr06c:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr06c : gvn
+ ----------------------------------------------------- 
+incr06c:	.	.	do @stagestr
+incr06c:	new glvn
+incr06c:	do setglvn("glvn","A")
+incr06c:setglvn(glvname,value);
+incr06c:	set @glvname=value
+incr06c:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr06c:	kill @@glvname	; start afresh
+incr06c:	quit
+incr06c:	set @glvn@(0)=0
+incr06c:	set @glvn@(10)=10
+incr06c:	set ^VV("A",1,2,3)=123
+incr06c:	set ^VV("A",1,2,4)="A124"
+incr06c:	set ^VV("A",4)="A4"
+incr06c:	write $incr(@glvn@($data(^VV("A",1,2))),^(1,2,3))	; Expected: 133
+133
+incr06c:	write $name(^(4))					; Expected: ^VV("A",1,4) (if lvn) and ^A(4) (if gvn)
+^A(4)
+incr06c:	write @glvn@(10)					; Expected: 133
+133
+incr06c:	kill @glvn
+incr06c:	kill ^VV
+incr06c:	quit
+incr06c:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr06d:	.	for gvnorlvn="lvn","gvn"  do
+incr06d:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr06d : lvn
+ ----------------------------------------------------- 
+incr06d:	.	.	do @stagestr
+incr06d:	new glvn
+incr06d:	do setglvn("glvn","X")
+incr06d:setglvn(glvname,value);
+incr06d:	set @glvname=value
+incr06d:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr06d:	kill @@glvname	; start afresh
+incr06d:	quit
+incr06d:	kill ^longvariableV3GET
+incr06d:	set @glvn@(4)=glvn_"4"
+incr06d:	set ^longvariableV3GET(4)=4,^longvariableV3GET(2,3)=23
+incr06d:	set @glvn@(23)=523,@glvn@(123)=5123
+incr06d:	set ^longvariableV3GET(1,2,3)=123,^longvariableV3GET(1,2,4)=124,^longvariableV3GET(1,3)=13,^longvariableV3GET(1,4)=14
+incr06d:	write $incr(@glvn@(^(2,3)))_" "_^(4)	; Expected: "5124 124" (if lvn) or "5124 ^X4" (if gvn)
+5124 124
+incr06d:	write @glvn@(123)			; Expected: 5124
+5124
+incr06d:	kill @glvn
+incr06d:	kill ^longvariableV3GET
+incr06d:	quit
+incr06d:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr06d : gvn
+ ----------------------------------------------------- 
+incr06d:	.	.	do @stagestr
+incr06d:	new glvn
+incr06d:	do setglvn("glvn","X")
+incr06d:setglvn(glvname,value);
+incr06d:	set @glvname=value
+incr06d:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr06d:	kill @@glvname	; start afresh
+incr06d:	quit
+incr06d:	kill ^longvariableV3GET
+incr06d:	set @glvn@(4)=glvn_"4"
+incr06d:	set ^longvariableV3GET(4)=4,^longvariableV3GET(2,3)=23
+incr06d:	set @glvn@(23)=523,@glvn@(123)=5123
+incr06d:	set ^longvariableV3GET(1,2,3)=123,^longvariableV3GET(1,2,4)=124,^longvariableV3GET(1,3)=13,^longvariableV3GET(1,4)=14
+incr06d:	write $incr(@glvn@(^(2,3)))_" "_^(4)	; Expected: "5124 124" (if lvn) or "5124 ^X4" (if gvn)
+5124 ^X4
+incr06d:	write @glvn@(123)			; Expected: 5124
+5124
+incr06d:	kill @glvn
+incr06d:	kill ^longvariableV3GET
+incr06d:	quit
+incr06d:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
+incr06e:	.	for gvnorlvn="lvn","gvn"  do
+incr06e:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr06e : lvn
+ ----------------------------------------------------- 
+incr06e:	.	.	do @stagestr
+incr06e:	new glvn
+incr06e:	do setglvn("glvn","X")
+incr06e:setglvn(glvname,value);
+incr06e:	set @glvname=value
+incr06e:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr06e:	kill @@glvname	; start afresh
+incr06e:	quit
+incr06e:	kill ^longvariableV3GET
+incr06e:	kill ^longvariableV4GET
+incr06e:	set @glvn@(4)=glvn_"4"
+incr06e:	set ^longvariableV3GET(4)=4,^longvariableV3GET(2,3)=23
+incr06e:	set @glvn@(23)=523,@glvn@(123)=5123
+incr06e:	set @glvn@(3123)=53123,@glvn@(4123)=54123
+incr06e:	set ^longvariableV4GET(1,2,3)=4123,^longvariableV4GET(1,2,4)=4124,^longvariableV4GET(1,3)=413,^longvariableV4GET(1,4)=414
+incr06e:	set ^longvariableV4GET(1,3123)=413123,^longvariableV4GET(2,3)=423
+incr06e:	set ^longvariableV3GET(1,2,3)=3123,^longvariableV3GET(1,2,4)=3124,^longvariableV3GET(1,3)=313,^longvariableV3GET(1,4)=314
+incr06e:	write $incr(@glvn@(^(2,3)),^longvariableV4GET(1,^(2,3)))_" "_^(4)	; Expected: "467246 4124" (if lvn) or "467246 ^X4" (if gvn)
+467246 4124
+incr06e:	write @glvn@(4123)					; Expected: 467246
+467246
+incr06e:	kill @glvn
+incr06e:	kill ^longvariableV3GET
+incr06e:	kill ^longvariableV4GET
+incr06e:	quit
+incr06e:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
+ ----------------------------------------------------- 
+               incr06e : gvn
+ ----------------------------------------------------- 
+incr06e:	.	.	do @stagestr
+incr06e:	new glvn
+incr06e:	do setglvn("glvn","X")
+incr06e:setglvn(glvname,value);
+incr06e:	set @glvname=value
+incr06e:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
+incr06e:	kill @@glvname	; start afresh
+incr06e:	quit
+incr06e:	kill ^longvariableV3GET
+incr06e:	kill ^longvariableV4GET
+incr06e:	set @glvn@(4)=glvn_"4"
+incr06e:	set ^longvariableV3GET(4)=4,^longvariableV3GET(2,3)=23
+incr06e:	set @glvn@(23)=523,@glvn@(123)=5123
+incr06e:	set @glvn@(3123)=53123,@glvn@(4123)=54123
+incr06e:	set ^longvariableV4GET(1,2,3)=4123,^longvariableV4GET(1,2,4)=4124,^longvariableV4GET(1,3)=413,^longvariableV4GET(1,4)=414
+incr06e:	set ^longvariableV4GET(1,3123)=413123,^longvariableV4GET(2,3)=423
+incr06e:	set ^longvariableV3GET(1,2,3)=3123,^longvariableV3GET(1,2,4)=3124,^longvariableV3GET(1,3)=313,^longvariableV3GET(1,4)=314
+incr06e:	write $incr(@glvn@(^(2,3)),^longvariableV4GET(1,^(2,3)))_" "_^(4)	; Expected: "467246 4124" (if lvn) or "467246 ^X4" (if gvn)
+467246 ^X4
+incr06e:	write @glvn@(4123)					; Expected: 467246
+467246
+incr06e:	kill @glvn
+incr06e:	kill ^longvariableV3GET
+incr06e:	kill ^longvariableV4GET
+incr06e:	quit
+incr06e:	quit
+
+GTM>
+##SUSPEND_OUTPUT  GT.M
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####SOURCE_PATH##/mupip
+##GT.CM####SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##ALLOW_OUTPUT  GT.M
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  GT.M
+##SOURCE_PATH##/mupip integ a.dat
+##SUSPEND_OUTPUT  GT.CM
+##ALLOW_OUTPUT  GT.M
+##SOURCE_PATH##/mupip integ -REG *
+##ALLOW_OUTPUT  GT.CM
+No errors detected by integ.
+End of incrbas subtest

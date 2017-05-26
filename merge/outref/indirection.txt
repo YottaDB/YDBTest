@@ -1,0 +1,196 @@
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
+##GT.CM##mumps.gld
+##GT.CM##Using: ##SOURCE_PATH##/mupip
+Create local (client) database...
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  GT.CM
+a.dat
+mumps.dat
+##SUSPEND_OUTPUT  NON_REORG NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+##ALLOW_OUTPUT  NON_REORG NON_REPLIC GT.CM
+The database layout is:
+ASEG	a.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
+Starting the GT.CM Servers...
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+
+GTM>
+
+
+GT.M Tests for MERGE Start of 1 --- Indirection
+
+MERGE lvn1 or @lvn1=lvn2 or @lvn2
+   PASS  1 MERGE-INDR-1
+   PASS  1 MERGE-INDR-2
+   PASS  1 MERGE-INDR-3
+   PASS  1 MERGE-INDR-4
+   PASS  1 MERGE-INDR-5
+   PASS  1 MERGE-INDR-6
+   PASS  1 MERGE-INDR-7
+   PASS  1 MERGE-INDR-8
+   PASS  1 MERGE-INDR-9
+
+End of 1 --- Indirection
+
+GTM>
+
+
+GT.M Tests for MERGE Start of 2 --- Indirection
+
+MERGE lvn1 or @lvn1=lvn2 or @lvn2
+   PASS  2 MERGE-INDR-1
+   PASS  2 MERGE-INDR-2
+   PASS  2 MERGE-INDR-3
+   PASS  2 MERGE-INDR-4
+   PASS  2 MERGE-INDR-5
+   PASS  2 MERGE-INDR-6
+   PASS  2 MERGE-INDR-7
+   PASS  2 MERGE-INDR-8
+   PASS  2 MERGE-INDR-9
+
+End of 2 --- Indirection
+
+GTM>
+
+
+GT.M Tests for MERGE Start of 3 --- Indirection
+
+MERGE lvn1 or @lvn1=lvn2 or @lvn2
+   PASS  3 MERGE-INDR-1
+   PASS  3 MERGE-INDR-2
+   PASS  3 MERGE-INDR-3
+   PASS  3 MERGE-INDR-4
+   PASS  3 MERGE-INDR-5
+   PASS  3 MERGE-INDR-6
+   PASS  3 MERGE-INDR-7
+   PASS  3 MERGE-INDR-8
+   PASS  3 MERGE-INDR-9
+
+End of 3 --- Indirection
+
+GTM>
+
+
+GT.M Tests for MERGE Start of 1 --- Indirection
+
+MERGE lvn1 or @lvn1=lvn2 or @lvn2
+   PASS  4 MERGE-INDR-1
+
+
+   PASS  4 MERGE-INDR-2
+   PASS  4 MERGE-INDR-3
+   PASS  4 MERGE-INDR-4
+   PASS  4 MERGE-INDR-5
+   PASS  4 MERGE-INDR-6
+   PASS  4 MERGE-INDR-7
+   PASS  4 MERGE-INDR-8
+   PASS  4 MERGE-INDR-9
+
+End of 4 --- Indirection
+
+GTM>
+
+
+Start of --- MINDMISC
+A(1,2,3,"abcde1")=12345.6789
+A(2,3,4,"abcde2")=24691.3578
+A(3,4,5,"abcde3")=37037.0367
+A(4,5,6,"abcde4")=49382.7156
+A(5,6,7,"abcde5")=61728.3945
+B(9.9,"A",1,300,1,2,3,"abcde1")=12345.6789
+B(9.9,"A",1,300,2,3,4,"abcde2")=24691.3578
+B(9.9,"A",1,300,3,4,5,"abcde3")=37037.0367
+B(9.9,"A",1,300,4,5,6,"abcde4")=49382.7156
+B(9.9,"A",1,300,5,6,7,"abcde5")=61728.3945
+A(1,2,3,"abcde1")=12345.6789
+A(2,3,4,"abcde2")=24691.3578
+A(3,4,5,"abcde3")=37037.0367
+A(4,5,6,"abcde4")=49382.7156
+A(5,6,7,"abcde5")=61728.3945
+B(9.9,"A",1,300,1,2,3,"abcde1")=12345.6789
+B(9.9,"A",1,300,2,3,4,"abcde2")=24691.3578
+B(9.9,"A",1,300,3,4,5,"abcde3")=37037.0367
+B(9.9,"A",1,300,4,5,6,"abcde4")=49382.7156
+B(9.9,"A",1,300,5,6,7,"abcde5")=61728.3945
+A(1,2,3,"abcde1")=12345.6789
+A(2,3,4,"abcde2")=24691.3578
+A(3,4,5,"abcde3")=37037.0367
+A(4,5,6,"abcde4")=49382.7156
+A(5,6,7,"abcde5")=61728.3945
+B(9.9,"A",1,300,1,2,3,"abcde1")=12345.6789
+B(9.9,"A",1,300,2,3,4,"abcde2")=24691.3578
+B(9.9,"A",1,300,3,4,5,"abcde3")=37037.0367
+B(9.9,"A",1,300,4,5,6,"abcde4")=49382.7156
+B(9.9,"A",1,300,5,6,7,"abcde5")=61728.3945
+x234567890123456789012345678901="@X"
+y234567890123456789012345678901="@Y"
+X="a"
+Y="b"
+a(1)=1
+a(1,1)=1
+a(1,2)=2
+a(1,3)=3
+a(1,4)=4
+a(1,5)=5
+a(1,6)=6
+a(1,7)=7
+a(1,8)=8
+a(1,9)=9
+a(1,10)=10
+b(1)=1
+b(1,1)=1
+b(1,2)=2
+b(1,3)=3
+b(1,4)=4
+b(1,5)=5
+b(1,6)=6
+b(1,7)=7
+b(1,8)=8
+b(1,9)=9
+b(1,10)=10
+
+
+End of --- MINDMISC
+
+GTM>
+##SUSPEND_OUTPUT  NON_REORG NON_REPLIC GT.CM
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+##ALLOW_OUTPUT  NON_REORG NON_REPLIC GT.CM
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####SOURCE_PATH##/mupip
+##GT.CM####SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  GT.CM
+##SOURCE_PATH##/mupip integ -REG *
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+##ALLOW_OUTPUT  GT.CM
+##SOURCE_PATH##/mupip integ a.dat
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REORG NON_REPLIC GT.CM
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

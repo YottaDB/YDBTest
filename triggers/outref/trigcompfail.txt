@@ -1,0 +1,40 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Output File: 
+;trigger name: a#1 (region DEFAULT)  cycle: 1
++^a -commands=S -xecute="write ^a,!"
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Output File: 
+;trigger name: a#1 (region DEFAULT)  cycle: 1
++^a -commands=S -xecute="jrite ^a,!"
+
+
+GTM>
+	 jrite ^a,!
+	 ^-----
+##TEST_AWK		At column 2, line 1, source module.*
+%GTM-E-INVCMD, Invalid command keyword encountered
+%GTM-E-TRIGCOMPFAIL, Compilation of database trigger named a#1 failed
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+GTM>
+1
+
+GTM>
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

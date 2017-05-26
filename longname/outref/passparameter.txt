@@ -1,0 +1,105 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###### Begin Actual Formal Parameter List check ######
+
+GTM>
+		do DUMMYLONGLONGLONGLONGLONGLONG^lists(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33)
+		                                                                                                                              ^-----
+		At column 128, line 114, source module ##IN_TEST_PATH##/inref/paramchk.m
+%GTM-E-MAXACTARG, Maximum number of actual arguments exceeded
+Actual List is 4 Formal List is 4
+I'll give the sum of the numbers
+SUM = 60
+I'll give the sum of the numbers
+SUM = 1211
+Actual list is 2 Formal list is 2
+I'll print the numbers passed
+30 40
+Actual list is 1 Formal list is 2,should not give error as no usage of 2ndvar
+I'll use only one variable & double it
+Doubled value = 60
+I'll use only one variable & double it
+Doubled value = 864
+Actual list is 32 Formal list is 32
+I'll produce the sum of all numbers passed
+ZIGMA = 948
+Actual List is 3 Formal list is 3
+>8 char label correctly calledSUM = 30
+>8 char label correctly calledSUM = 706
+Actual List is 32 Formal list is 32
+I'll produce the sum of all numbers passed
+BIGZIGMA = 608
+Actual List is 2 Formal list is 3,extra var simply newed no error
+This is the product of two numbers passed in actual
+PROD = 600
+This is the product of two numbers passed in actual
+PROD = 396066
+Actual List is 32 Formal list is 32 in a long filenamed M Routine
+CORRECT CALL OF LONG LABEL IN A LONG FILE
+SUM = 527
+I'll print the numbers passed
+333 456
+correct behavior parameters are newed inside function
+correct behavior parameters are newed inside function
+I'll print the numbers passed
+second parameter not passed in
+456 
+correct behavior parameters are newed inside function
+correct behavior parameters are newed inside function
+I'll print the numbers passed
+first parameter not passed in
+second parameter not passed in
+ 
+correct behavior parameters are newed inside function
+correct behavior parameters are newed inside function
+
+GTM>
+
+GTM>
+Actual List is 2 Formal list is 3,should give undefined local var. error
+
+%GTM-E-UNDEF, Undefined local variable: nowthisisenoughtosetlong
+		At M source location error+2^paramchk
+
+GTM>
+check for 32 parameter limit,This case should give error
+
+%GTM-E-MAXACTARG, Maximum number of actual arguments exceeded
+		At M source location error1+2^paramchk
+
+GTM>
+Actual list is 1 Formal list is 2,should give undefined local var.error
+
+%GTM-E-UNDEF, Undefined local variable: checklabelvaluelong
+		At M source location error2+2^paramchk
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+###### Begin call by reference parameters check ######
+refvars.m begins to check 31char longnames
+
+GTM>
+Call by reference is correct for lentvar8longlonglonglonglonglon
+Call by reference is correct for Strings & numerals
+
+GTM>
+pcntvars.m begins to check 31char longnames beginning with %
+
+GTM>
+Call by reference is correct for %variables
+
+GTM>
+xcessvar.m begins to check >31char longnames getting truncated
+
+GTM>
+Call by reference is correct for truncated varables
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,43 @@
+There would be lots of GTM-E- errors following. They are part of the test
+ 
+expect REPLINSTNMUNDEF error
+ 
+%GTM-E-REPLINSTNMUNDEF, Replication instance name not defined
+ 
+expect GTM-E-CLIERR error
+ 
+%GTM-E-CLIERR, Unrecognized option : NAME, value expected but not found
+ 
+expect 3 REPLINSTNMLEN errors
+ 
+%GTM-E-REPLINSTNMLEN, Replication instance name  should be 1 to 15 characters long
+%GTM-E-REPLINSTNMLEN, Replication instance name LONGNAME90123456 should be 1 to 15 characters long
+%GTM-E-REPLINSTNMLEN, Replication instance name LONGNAME90123456 should be 1 to 15 characters long
+ 
+expect instance name to be GOODNAME
+ 
+HDR Instance Name                                 GOODNAME
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.repl is renamed to ##TEST_PATH##/mumps.repl_##TIMESTAMP##
+ 
+expect mumps.repl_<timestamp>
+ 
+##TEST_AWKmumps.repl_[0-9]*
+ 
+The next 8 outputs should be 'Instance Name <name>'
+The instance names should be B , C , 1 , 2 , ABC4E6G890 , TESTINSTANCEA45 , INTE_RES/+TING. , INTE_RES/+TING.
+ 
+HDR Instance Name                                        B
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.repl is renamed to ##TEST_PATH##/mumps.repl_##TIMESTAMP##
+HDR Instance Name                                        C
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.repl is renamed to ##TEST_PATH##/mumps.repl_##TIMESTAMP##
+HDR Instance Name                                        1
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.repl is renamed to ##TEST_PATH##/mumps.repl_##TIMESTAMP##
+HDR Instance Name                                        2
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.repl is renamed to ##TEST_PATH##/mumps.repl_##TIMESTAMP##
+HDR Instance Name                               ABC4E6G890
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.repl is renamed to ##TEST_PATH##/mumps.repl_##TIMESTAMP##
+HDR Instance Name                          TESTINSTANCEA45
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.repl is renamed to ##TEST_PATH##/mumps.repl_##TIMESTAMP##
+HDR Instance Name                          INTE_RES/+TING.
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.repl is renamed to ##TEST_PATH##/mumps.repl_##TIMESTAMP##
+HDR Instance Name                          INTE_RES/+TING.

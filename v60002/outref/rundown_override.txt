@@ -1,0 +1,195 @@
+Case1
+Killed
+----------
+Error MUUSERECOV seen in rundown1a.out as expected:
+%GTM-E-MUUSERECOV, Abnormal shutdown of journaled database ##TEST_PATH##/mumps.dat detected
+----------
+----------
+Error MUNOTALLSEC seen in rundown1a.out as expected:
+%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+----------
+##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Case2
+Killed
+----------
+Error REQRECOV seen in gtm2.out as expected:
+%GTM-E-REQRECOV, Error accessing database ##TEST_PATH##/mumps.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+----------
+----------
+Error ENO seen in gtm2.out as expected:
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
+----------
+----------
+Error MUUSERECOV seen in rundown2a.out as expected:
+%GTM-E-MUUSERECOV, Abnormal shutdown of journaled database ##TEST_PATH##/mumps.dat detected
+----------
+----------
+Error MUNOTALLSEC seen in rundown2a.out as expected:
+%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+----------
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Case3
+==Executing MULTISITE_REPLIC 'RUN INST2 cp mumps.dat mumps.dat.bak'==
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+==Executing MULTISITE_REPLIC 'CRASH INST2 NO_IPCRM'==
+Simulating crash on Instance INSTANCE2 in ##FILTERED##_REMOTE_TEST_PATH_
+Instance INSTANCE2 crashed!
+
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
+
+----------
+Error REPLREQROLLBACK seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##TIMESTAMP##.out as expected:
+%GTM-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+%GTM-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+----------
+----------
+Error ENO seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##TIMESTAMP##.out as expected:
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
+----------
+----------
+Error JNL_ON-E-MUPIP seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##TIMESTAMP##.out as expected:
+##TEST_AWKJNL_ON-E-MUPIP, mupip set -journal=enable,on,.* returned status 10. Please check jnl.log
+----------
+----------
+Error REQROLLBACK seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
+%GTM-E-REQROLLBACK, Error accessing database ##REMOTE_TEST_PATH##/instance2/mumps.dat.  Run MUPIP JOURNAL ROLLBACK on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+----------
+----------
+Error ENO seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
+----------
+----------
+Error MUNOFINISH seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+----------
+----------
+Error JNL_ON-E-MUPIP seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
+##TEST_AWKJNL_ON-E-MUPIP, the previous mupip set command returned status [0-9]*
+----------
+
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP rundown -region "*" >>&! rundown3a.out'==
+TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
+
+----------
+Error MUUSERLBK seen in ##REMOTE_TEST_PATH##/instance2/rundown3a.out as expected:
+%GTM-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##REMOTE_TEST_PATH##/instance2/mumps.dat detected
+----------
+----------
+Error MUNOTALLSEC seen in ##REMOTE_TEST_PATH##/instance2/rundown3a.out as expected:
+%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+----------
+
+==Executing MULTISITE_REPLIC 'RUN INST2 setenv gtm_white_box_test_case_enable 1 ; setenv gtm_white_box_test_case_number 29 ; $MUPIP rundown -region "*" -override >>&! rundown3b.out'==
+
+%GTM-I-MUFILRNDWNSUC, File ##REMOTE_TEST_PATH##/instance2/mumps.dat successfully rundown
+
+==Executing MULTISITE_REPLIC 'STOP INST1'==
+
+==Executing MULTISITE_REPLIC 'RUN INST2 cp mumps.dat mumps.dat.orig; cp mumps.dat.bak mumps.dat'==
+
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+==Executing MULTISITE_REPLIC 'RUN INST2 mkdir case3; mv *dat case3; mv *.mjl* case3; mv *.gld case3'==
+
+Case4
+==Executing MULTISITE_REPLIC 'RUN INST2 cp mumps.dat mumps.dat.bak'==
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+==Executing MULTISITE_REPLIC 'CRASH INST2'==
+Simulating crash on Instance INSTANCE2 in ##FILTERED##_REMOTE_TEST_PATH_
+Instance INSTANCE2 crashed!
+
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
+
+----------
+Error REPLREQROLLBACK seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##TIMESTAMP##.out as expected:
+%GTM-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+%GTM-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+----------
+----------
+Error ENO seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##TIMESTAMP##.out as expected:
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
+----------
+----------
+Error JNL_ON-E-MUPIP seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##TIMESTAMP##.out as expected:
+##TEST_AWKJNL_ON-E-MUPIP, mupip set -journal=enable,on,.* returned status 10. Please check jnl.log
+----------
+----------
+Error REQROLLBACK seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
+%GTM-E-REQROLLBACK, Error accessing database ##REMOTE_TEST_PATH##/instance2/mumps.dat.  Run MUPIP JOURNAL ROLLBACK on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+----------
+----------
+Error ENO seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
+----------
+----------
+Error MUNOFINISH seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+----------
+----------
+Error JNL_ON-E-MUPIP seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
+##TEST_AWKJNL_ON-E-MUPIP, the previous mupip set command returned status [0-9]*
+----------
+
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP rundown -region "*" >>&! rundown4a.out'==
+TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
+
+----------
+Error MUUSERLBK seen in ##REMOTE_TEST_PATH##/instance2/rundown4a.out as expected:
+%GTM-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##REMOTE_TEST_PATH##/instance2/mumps.dat detected
+----------
+----------
+Error MUNOTALLSEC seen in ##REMOTE_TEST_PATH##/instance2/rundown4a.out as expected:
+%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+----------
+
+==Executing MULTISITE_REPLIC 'RUN INST2 setenv gtm_white_box_test_case_enable 1 ; setenv gtm_white_box_test_case_number 29 ; $MUPIP rundown -region "*" -override >>&! rundown4b.out'==
+
+%GTM-I-MUFILRNDWNSUC, File ##REMOTE_TEST_PATH##/instance2/mumps.dat successfully rundown
+
+==Executing MULTISITE_REPLIC 'STOP INST1'==
+
+==Executing MULTISITE_REPLIC 'RUN INST2 cp mumps.dat mumps.dat.orig; cp mumps.dat.bak mumps.dat'==
+
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+==Executing MULTISITE_REPLIC 'RUN INST2 mkdir case4; mv *dat case4; mv *.mjl* case4; mv *.gld case4'==
+

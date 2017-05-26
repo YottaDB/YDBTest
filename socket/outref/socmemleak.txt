@@ -1,0 +1,38 @@
+ENTERING SOCKET SOCKETMEMLEAK
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+ERR_SOCKETEXIST, no delimiter
+  PASSED
+ERR_SOCKETEXIST, delimiter
+  PASSED
+ERR_DELIMWIDTH, delimiter
+  PASSED
+ERR_SOCKMAX, no delimiter
+  PASSED
+ERR_SOCKMAX, delimiter
+  PASSED
+Connect fails, no delimiter
+  PASSED
+Connect fails, delimiter
+  PASSED
+Server - listen and bind fails, no delimiter
+  PASSED
+Server - listen and bind fails, delimiter
+  PASSED
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ mumps.dat
+No errors detected by integ.
+LEAVING SOCKET SOCKETMEMLEAK

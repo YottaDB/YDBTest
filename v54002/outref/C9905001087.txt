@@ -1,0 +1,43 @@
+Setting GT.M     null subscript collation returned 1
+
+--> test1 : Test $query handling of null subscripts with GT.M Null collation
+a("")
+a("",1)
+
+--> test2 : One more test of $query handling of null subscripts with GT.M Null collation
+lcl(1)=1
+lcl(1,2)=2
+lcl(1,2,0)=6
+lcl(1,2,"")=3
+lcl(1,2,"","")=4
+lcl(1,2,"","",4)=5
+lcl(1,2,"abc",5)=7
+lcl("")=1
+lcl("",1)=1
+lcl("x")=1
+
+Setting Standard null subscript collation returned 1
+
+--> test1 : Test $query handling of null subscripts with Standard Null collation
+a("")
+a("",1)
+
+--> test2 : One more test of $query handling of null subscripts with Standard Null collation
+lcl("")=1
+lcl("",1)=1
+lcl(1)=1
+lcl(1,2)=2
+lcl(1,2,"")=3
+lcl(1,2,"","")=4
+lcl(1,2,"","",4)=5
+lcl(1,2,0)=6
+lcl(1,2,"abc",5)=7
+lcl("x")=1
+
+--> test3 : Test $next handling
+-1
+-2
+-2
+
+--> test4 : Test for no memory-leaks during symbol table pop
+PASS from test4

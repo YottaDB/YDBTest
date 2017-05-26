@@ -1,0 +1,36 @@
+---------------------------------------------------------------------------------------
+BEGIN 1 :-) Create a database with maximum block size(1008) and fill it with 64K+1 blocks of data
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+END 1
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 2 :-) Test the read-set limit of 64K blocks, for number of global buffers in one transaction, is not violated
+
+Test the read-set limit for number of blocks in single transaction is 64K
+inside read-error handler
+read block number=64793
+inside read-error handler
+read block number=64793
+
+END 2
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 3 :-) Test the write-set limit of half of the number of blocks, for number of global buffers in one transaction, is not violated
+
+Test the write-set limit is less than or equal to half of the number of global buffers
+inside write1-error handler
+write block number=511
+inside write1-error handler
+write block number=511
+
+END 3
+---------------------------------------------------------------------------------------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

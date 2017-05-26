@@ -1,0 +1,570 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+NCT Enabled
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+##SUSPEND_OUTPUT  REPLIC
+##ALLOW_OUTPUT  NON_REPLIC
+^TESTINGLONGGLOBALNAME2345678901("%")="%"
+^TESTINGLONGGLOBALNAME2345678901("-1")=-1
+^TESTINGLONGGLOBALNAME2345678901("-2")=-2
+^TESTINGLONGGLOBALNAME2345678901("1")=1
+^TESTINGLONGGLOBALNAME2345678901("ABCDEFGHIJKL")="ABCDEFGHIJKL"
+^TESTINGLONGGLOBALNAME2345678901("ZYXWVUTSR")="ZYXWVUTSR"
+^TESTINGLONGGLOBALNAME2345678901("abcdefghi")="abcdefghi"
+^TESTINGLONGGLOBALNAME2345678901("zyxwvutsr")="zyxwvutsr"
+Now testing set get and kill of GBLDEF
+^setgetandkillusageofgbldef78901("0")=0
+^setgetandkillusageofgbldef78901("1")=1
+^setgetandkillusageofgbldef78901("10")=10
+^setgetandkillusageofgbldef78901("100")=100
+^setgetandkillusageofgbldef78901("2")=2
+^setgetandkillusageofgbldef78901("20")=20
+^setgetandkillusageofgbldef78901("3")=3
+^setgetandkillusageofgbldef78901("30")=30
+^setgetandkillusageofgbldef78901("4")=4
+^setgetandkillusageofgbldef78901("40")=40
+^setgetandkillusageofgbldef78901("5")=5
+^setgetandkillusageofgbldef78901("50")=50
+^setgetandkillusageofgbldef78901("6")=6
+^setgetandkillusageofgbldef78901("60")=60
+^setgetandkillusageofgbldef78901("7")=7
+^setgetandkillusageofgbldef78901("70")=70
+^setgetandkillusageofgbldef78901("8")=8
+^setgetandkillusageofgbldef78901("80")=80
+^setgetandkillusageofgbldef78901("9")=9
+^setgetandkillusageofgbldef78901("90")=90
+^setgetandkillusageofgbldef78901("A")="A"
+^setgetandkillusageofgbldef78901("D")="D"
+^setgetandkillusageofgbldef78901("G")="G"
+^setgetandkillusageofgbldef78901("J")="J"
+^setgetandkillusageofgbldef78901("M")="M"
+^setgetandkillusageofgbldef78901("P")="P"
+^setgetandkillusageofgbldef78901("S")="S"
+^setgetandkillusageofgbldef78901("V")="V"
+^setgetandkillusageofgbldef78901("Y")="Y"
+^setgetandkillusageofgbldef78901("b")="b"
+^setgetandkillusageofgbldef78901("e")="e"
+^setgetandkillusageofgbldef78901("h")="h"
+^setgetandkillusageofgbldef78901("k")="k"
+^setgetandkillusageofgbldef78901("n")="n"
+^setgetandkillusageofgbldef78901("q")="q"
+^setgetandkillusageofgbldef78901("t")="t"
+^setgetandkillusageofgbldef78901("w")="w"
+^setgetandkillusageofgbldef78901("z")="z"
+PASSED testing set get and kill of GBLDEF
+
+GTM>
+
+GTM>
+set PASS
+
+GTM>
+set PASS
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking ZWR output of globals for straight Collation
+Globals collation check PASSED
+Now verify data in application level
+
+GTM>
+ver PASS
+
+GTM>
+ver PASS
+
+GTM>
+END of TEST1 NCT test
+##SOURCE_PATH##/mupip extract -format=bin extr.bin
+%GTM-I-RECORDSTAT, ^AGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
+%GTM-I-RECORDSTAT, ^BGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
+%GTM-I-RECORDSTAT, ^CGLOBALVAR1:	  Key cnt: 502  max subsc len: 18  max rec len: 14  max node len: 36
+%GTM-I-RECORDSTAT, ^TESTINGLONGGLOBALNAME2345678901:	  Key cnt: 8  max subsc len: 47  max rec len: 12  max node len: 41
+%GTM-I-RECORDSTAT, ^morefill:	  Key cnt: 20  max subsc len: 42  max rec len: 5  max node len: 50
+%GTM-I-RECORDSTAT, ^prefix:	  Key cnt: 1  max subsc len: 8  max rec len: 1  max node len: 13
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 31775  max subsc len: 63  max rec len: 15  max node len: 79
+Files Created in ##TEST_PATH##:
+##ALLOW_OUTPUT  REPLIC
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SUSPEND_OUTPUT  REPLIC
+##SOURCE_PATH##/mupip load -format=bin extr.bin
+##ALLOW_OUTPUT  REPLIC
+
+##SUSPEND_OUTPUT  REPLIC
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 31775  Max Subsc Len: 57  Max Data Len: 15
+Last LOAD record number: 2105
+
+Checking ZWR output of globals for straight Collation
+Globals collation check PASSED
+Now verify data in application level
+
+##ALLOW_OUTPUT  REPLIC
+GTM>
+##SUSPEND_OUTPUT  REPLIC
+ver PASS
+##ALLOW_OUTPUT  REPLIC
+
+GTM>
+##SUSPEND_OUTPUT  REPLIC
+ver PASS
+##ALLOW_OUTPUT  REPLIC
+
+GTM>
+##SUSPEND_OUTPUT  REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+END of TEST2 NCT test
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##ALLOW_OUTPUT  REPLIC
+
+GTM>
+
+GTM>
+##SUSPEND_OUTPUT  REPLIC
+
+GTM>
+
+GTM>
+
+GTM>
+##ALLOW_OUTPUT  REPLIC
+NCT Enabled
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##SUSPEND_OUTPUT  REPLIC
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip load -format=bin extr.bin
+##ALLOW_OUTPUT  REPLIC
+
+##SUSPEND_OUTPUT  REPLIC
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 31775  Max Subsc Len: 63  Max Data Len: 15
+Last LOAD record number: 2105
+
+Checking ZWR output of globals for straight Collation
+Globals collation check PASSED
+Now verify data in application level
+
+##ALLOW_OUTPUT  REPLIC
+GTM>
+##SUSPEND_OUTPUT  REPLIC
+ver PASS
+
+GTM>
+ver PASS
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+END of TEST3 NCT test
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+NCT Enabled
+
+GTM>
+^TESTINGLONGGLOBALNAME2345678901("%")="%"
+^TESTINGLONGGLOBALNAME2345678901("-1")=-1
+^TESTINGLONGGLOBALNAME2345678901("-2")=-2
+^TESTINGLONGGLOBALNAME2345678901("1")=1
+^TESTINGLONGGLOBALNAME2345678901("ABCDEFGHIJKL")="ABCDEFGHIJKL"
+^TESTINGLONGGLOBALNAME2345678901("ZYXWVUTSR")="ZYXWVUTSR"
+^TESTINGLONGGLOBALNAME2345678901("abcdefghi")="abcdefghi"
+^TESTINGLONGGLOBALNAME2345678901("zyxwvutsr")="zyxwvutsr"
+Now testing set get and kill of GBLDEF
+^setgetandkillusageofgbldef78901("0")=0
+^setgetandkillusageofgbldef78901("1")=1
+^setgetandkillusageofgbldef78901("10")=10
+^setgetandkillusageofgbldef78901("100")=100
+^setgetandkillusageofgbldef78901("2")=2
+^setgetandkillusageofgbldef78901("20")=20
+^setgetandkillusageofgbldef78901("3")=3
+^setgetandkillusageofgbldef78901("30")=30
+^setgetandkillusageofgbldef78901("4")=4
+^setgetandkillusageofgbldef78901("40")=40
+^setgetandkillusageofgbldef78901("5")=5
+^setgetandkillusageofgbldef78901("50")=50
+^setgetandkillusageofgbldef78901("6")=6
+^setgetandkillusageofgbldef78901("60")=60
+^setgetandkillusageofgbldef78901("7")=7
+^setgetandkillusageofgbldef78901("70")=70
+^setgetandkillusageofgbldef78901("8")=8
+^setgetandkillusageofgbldef78901("80")=80
+^setgetandkillusageofgbldef78901("9")=9
+^setgetandkillusageofgbldef78901("90")=90
+^setgetandkillusageofgbldef78901("A")="A"
+^setgetandkillusageofgbldef78901("D")="D"
+^setgetandkillusageofgbldef78901("G")="G"
+^setgetandkillusageofgbldef78901("J")="J"
+^setgetandkillusageofgbldef78901("M")="M"
+^setgetandkillusageofgbldef78901("P")="P"
+^setgetandkillusageofgbldef78901("S")="S"
+^setgetandkillusageofgbldef78901("V")="V"
+^setgetandkillusageofgbldef78901("Y")="Y"
+^setgetandkillusageofgbldef78901("b")="b"
+^setgetandkillusageofgbldef78901("e")="e"
+^setgetandkillusageofgbldef78901("h")="h"
+^setgetandkillusageofgbldef78901("k")="k"
+^setgetandkillusageofgbldef78901("n")="n"
+^setgetandkillusageofgbldef78901("q")="q"
+^setgetandkillusageofgbldef78901("t")="t"
+^setgetandkillusageofgbldef78901("w")="w"
+^setgetandkillusageofgbldef78901("z")="z"
+PASSED testing set get and kill of GBLDEF
+
+GTM>
+##ALLOW_OUTPUT  REPLIC
+
+GTM>
+set PASS
+
+GTM>
+set PASS
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking ZWR output of globals for straight Collation
+##SUSPEND_OUTPUT  REPLIC
+##ALLOW_OUTPUT  NON_REPLIC
+Checking ZWR output of globals for reverse Collation
+##ALLOW_OUTPUT  REPLIC
+Globals collation check PASSED
+Now verify data in application level
+
+GTM>
+ver PASS
+
+GTM>
+ver PASS
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+END of TEST1 NCT test
+##SUSPEND_OUTPUT  REPLIC
+##ALLOW_OUTPUT  NON_REPLIC
+END of TEST4 NCT test
+##ALLOW_OUTPUT  REPLIC
+##SOURCE_PATH##/mupip extract -format=bin extr.bin
+%GTM-I-RECORDSTAT, ^AGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
+%GTM-I-RECORDSTAT, ^BGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
+%GTM-I-RECORDSTAT, ^CGLOBALVAR1:	  Key cnt: 502  max subsc len: 18  max rec len: 14  max node len: 36
+##SUSPEND_OUTPUT  REPLIC
+%GTM-I-RECORDSTAT, ^TESTINGLONGGLOBALNAME2345678901:	  Key cnt: 8  max subsc len: 47  max rec len: 12  max node len: 41
+##ALLOW_OUTPUT  REPLIC
+%GTM-I-RECORDSTAT, ^morefill:	  Key cnt: 20  max subsc len: 42  max rec len: 5  max node len: 50
+%GTM-I-RECORDSTAT, ^prefix:	  Key cnt: 1  max subsc len: 8  max rec len: 1  max node len: 13
+##SUSPEND_OUTPUT  NON_REPLIC
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 31767  max subsc len: 63  max rec len: 15  max node len: 79
+##SUSPEND_OUTPUT  REPLIC
+##ALLOW_OUTPUT  NON_REPLIC
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 31775  max subsc len: 63  max rec len: 15  max node len: 79
+##ALLOW_OUTPUT  REPLIC
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SOURCE_PATH##/mupip load -format=bin extr.bin
+
+##SUSPEND_OUTPUT  NON_REPLIC
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 31767  Max Subsc Len: 57  Max Data Len: 15
+Last LOAD record number: 2104
+##SUSPEND_OUTPUT  REPLIC
+##ALLOW_OUTPUT  NON_REPLIC
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 31775  Max Subsc Len: 57  Max Data Len: 15
+Last LOAD record number: 2105
+##ALLOW_OUTPUT  REPLIC
+
+##SUSPEND_OUTPUT  NON_REPLIC
+Checking ZWR output of globals for straight Collation
+##SUSPEND_OUTPUT  REPLIC
+##ALLOW_OUTPUT  NON_REPLIC
+Checking ZWR output of globals for reverse Collation
+##ALLOW_OUTPUT  REPLIC
+Globals collation check PASSED
+Now verify data in application level
+
+GTM>
+ver PASS
+
+GTM>
+ver PASS
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+END of TEST2 NCT test
+##SUSPEND_OUTPUT  REPLIC
+##ALLOW_OUTPUT  NON_REPLIC
+END of TEST5 NCT test
+##ALLOW_OUTPUT  REPLIC
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+NCT Enabled
+
+GTM>
+##SOURCE_PATH##/mupip load -format=bin extr.bin
+
+##SUSPEND_OUTPUT  NON_REPLIC
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 31767  Max Subsc Len: 63  Max Data Len: 15
+Last LOAD record number: 2104
+##SUSPEND_OUTPUT  REPLIC
+##ALLOW_OUTPUT  NON_REPLIC
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 31775  Max Subsc Len: 63  Max Data Len: 15
+Last LOAD record number: 2105
+##ALLOW_OUTPUT  REPLIC
+
+##SUSPEND_OUTPUT  NON_REPLIC
+Checking ZWR output of globals for straight Collation
+##SUSPEND_OUTPUT  REPLIC
+##ALLOW_OUTPUT  NON_REPLIC
+Checking ZWR output of globals for reverse Collation
+##ALLOW_OUTPUT  REPLIC
+Globals collation check PASSED
+Now verify data in application level
+
+GTM>
+ver PASS
+
+GTM>
+ver PASS
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+END of TEST3 NCT test
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+NCT Enabled
+
+GTM>
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+NCT Enabled
+
+GTM>
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+
+GTM>
+set PASS
+
+GTM>
+set PASS
+
+GTM>
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking ZWR output of globals for reverse Collation
+Globals collation check PASSED
+Now verify data in application level
+
+GTM>
+ver PASS
+
+GTM>
+ver PASS
+
+GTM>
+END of TEST4 NCT test
+##SOURCE_PATH##/mupip extract -format=bin extr.bin
+%GTM-I-RECORDSTAT, ^AGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
+%GTM-I-RECORDSTAT, ^BGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
+%GTM-I-RECORDSTAT, ^CGLOBALVAR1:	  Key cnt: 502  max subsc len: 18  max rec len: 14  max node len: 36
+%GTM-I-RECORDSTAT, ^morefill:	  Key cnt: 20  max subsc len: 42  max rec len: 5  max node len: 50
+%GTM-I-RECORDSTAT, ^prefix:	  Key cnt: 1  max subsc len: 8  max rec len: 1  max node len: 13
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 31767  max subsc len: 63  max rec len: 15  max node len: 79
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SOURCE_PATH##/mupip load -format=bin extr.bin
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 31767  Max Subsc Len: 57  Max Data Len: 15
+Last LOAD record number: 2104
+
+Checking ZWR output of globals for reverse Collation
+Globals collation check PASSED
+Now verify data in application level
+
+GTM>
+ver PASS
+
+GTM>
+ver PASS
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+END of TEST5 NCT test
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+NCT Enabled
+
+GTM>
+##SOURCE_PATH##/mupip load -format=bin extr.bin
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 31767  Max Subsc Len: 63  Max Data Len: 15
+Last LOAD record number: 2104
+
+Checking ZWR output of globals for reverse Collation
+Globals collation check PASSED
+Now verify data in application level
+
+GTM>
+ver PASS
+
+GTM>
+ver PASS
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+END of TEST6 NCT test

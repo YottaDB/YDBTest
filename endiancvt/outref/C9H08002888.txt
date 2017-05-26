@@ -1,0 +1,21 @@
+Randomly chosen prior V5 version is ##FILTERED##GTM_TEST_DEBUGINFO.*
+# Switch to prior version
+# Create Database using prior V5 version
+Files Created in ##TEST_PATH##:
+Using: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro/mumps -run GDE
+mumps.gld
+Using: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro/mupip
+mumps.dat
+# Switch to current version
+# Do a reorg upgrade
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Proceed to do endian conversion. It should pass
+##FILTERED##Converting database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+Converting in place - database will be damaged by an abnormal termination
+You must have a backup before proceeding
+Proceed [yes/no] ?
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+# Now copy the database to the remote machine and do an integ check
+TEST-I-INTEG check of mumps.dat passed

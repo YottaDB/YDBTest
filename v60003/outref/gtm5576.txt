@@ -1,0 +1,27 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+----------
+Error GTM-I-DLLNOOPEN seen in zwr.op as expected:
+##TEST_AWK%GTM-I-DLLNOOPEN, Failed to load external dynamic library badcollation.s.
+----------
+----------
+Error GTM-E-COLLATIONUNDEF seen in zwr.op as expected:
+%GTM-E-COLLATIONUNDEF, Collation type 1 is not defined
+----------
+----------
+Error GTM-I-GVIS seen in zwr.op as expected:
+%GTM-I-GVIS, 		Global variable: x
+----------
+^x(1)=1
+^x(2)=2
+^x(3)=3
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

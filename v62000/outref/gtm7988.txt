@@ -1,0 +1,16 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Executing [^]zwrite varA
+# Executing [^]zwrite varA(1)
+# Executing [^]set varA(10,2)=1
+# Executing [^]zwrite varA(10)
+# Executing [^]set varB=2
+# Executing [^]zwrite varB(1)
+# Executing [^]set varB(1,1)=3
+# Executing [^]zwrite varB(1)
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,386 @@
+/* REXX */
+trace o
+/* SLOG: Read and extract syslog */
+Parse Arg startdate starttime stopdate stoptime member
+
+parse source opsys command_type exec_name .
+mid = "<"exec_name">"
+
+debug=0
+
+outddn="SYSLOG"  /* DDName of output file */
+command="ST"     /* SDSF panel name to get syslog jobs */
+
+/* need to deal with year roll over an leap year here */
+
+
+if  startdate="" | starttime="" | ,
+   stopdate="" | stoptime="" then
+  do
+    call usage
+    Exit 20
+  end
+
+     /******************************************/
+     /* Default JES member name to system name */
+     /* which may not be true on all systems   */
+     /******************************************/
+if member="" then
+  member=MVSVAR("sysname")
+
+Say mid "Options in effect:"
+Say mid "  Command............" command
+Say mid "  StartDate.........." startdate
+Say mid "  StartTime.........." starttime
+Say mid "  StopDate..........." stopdate
+Say mid "  StopTime..........." stoptime
+Say mid "  Member............." member
+Say mid "  Output DDName......" outddn
+
+rc=isfcalls('ON')   /* Make SDSF accessible to REXX */
+
+if rc<>0 then
+  do
+    Say mid "Unable to establish SDSF environment, rc="rc"."
+    Exit 20
+  end
+
+     /*******************************************/
+     /* Assign SDSF special variables to select */
+     /* syslog jobs and the columns needed      */
+     /*******************************************/
+isfowner="*"
+isfprefix="syslog"
+isfcols="jname jobid esysid dater timer"
+isfsort="dater a timer a"
+isffilter="esysid eq" member
+
+     /*******************************/
+     /* Get list of all syslog jobs */
+     /*******************************/
+Address SDSF "ISFEXEC" command "(DELAYED VERBOSE ALTERNATE) "
+isfrc = rc
+
+if isfrc<>0 | debug<>0 then
+  do
+    Say mid "ISFEXEC complete, rc="isfrc
+
+    Say mid "isfdiag is:" isfdiag
+    Say mid "isftline is:" isftline
+    Say mid "isfrows is:" isfrows
+    Say mid "Number of columns:" words(isfcols)
+    Say mid "isfcols is:" isfcols
+    Say mid "isfrcols is:" isfrcols
+    Say mid "isftitles is:" isftitles
+    Say mid "isfdisplay is:" isfdisplay
+
+    call msgrtn
+  end
+
+if isfrows=0 then
+  do
+    Say mid "*** Error: No rows returned ***"
+    Exit 20
+  end
+
+if debug<>0 then
+  call listcols
+
+     /***************************/
+     /* Loop for al syslog jobs */
+     /***************************/
+prefstr="jds_"
+
+do sx=1 to jname.0
+
+     /*****************************************/
+     /* Get data set list for each syslog job */
+     /*****************************************/
+  Say mid "Obtaining data set list for" jname.sx"("jobid.sx") ..."
+  isfcols2="ddname dsid dsdate dsname"
+  isfsort2="dsdate a"
+
+  Address SDSF "ISFACT" command "TOKEN('"token.sx"') PARM(NP '?')" ,
+      "(DELAYED2 prefix" prefstr")"
+  isfrc = rc
+
+  if isfrc<>0 | debug<>0 then
+    do
+      Say mid "ISFACT JDS complete, rc="isfrc
+      Say mid "isfdiag is:" isfdiag
+      Say mid "isftline is:" isftline
+      Say mid "isfrows2 is:" isfrows2
+      Say mid "Number of columns:" words(isfcols2)
+      Say mid "isfcols2 is:" isfcols2
+      Say mid "isfrcols2 is:" isfrcols2
+      Say mid "isftitles2 is:" isftitles2
+      Say mid "isfdisplay is:" isfdisplay
+
+      call msgrtn
+    end
+
+  if debug<>0 then
+    call listcols2
+
+     /*********************************************/
+     /* Select syslog data sets within date range */
+     /*********************************************/
+  do lx=1 to jds_dsname.0
+
+    datevar=value((prefstr)(dsdate).lx)
+    Parse var datevar crdate crtime
+
+    if crdate <= stopdate then
+      do
+        Say mid "Dataset" jds_dsname.lx "with" ,
+          "creation date" crdate crtime ,
+          "will be processed."
+
+        call processLog jds_dsname.lx jds_token.lx
+      end
+    else
+      do
+        Say mid "Dataset" jds_dsname.lx "skipped since" ,
+          "creation date" crdate crtime ,
+          "after stop date" stopdate stoptime"."
+      end
+  end
+
+end
+
+     /*************************/
+     /* Close the output file */
+     /*************************/
+address MVS "EXECIO 0 DISKW" outddn "(FINIS"  /* close the file */
+
+rc=isfcalls('OFF')
+
+Say mid "Processing ended."
+Exit 0
+
+    /****************************************/
+    /* Subroutine to read a syslog data set */
+    /****************************************/
+processLog: procedure expose mid debug outddn command ,
+                             starttime startdate ,
+                             isfcols isfcols2 ,
+                             isfprefix isfowner , 
+                             stoptime stopdate
+
+Parse Arg dsname dstoken
+
+     /********************************/
+     /* Allocate the syslog data set */
+     /********************************/
+Say mid "Allocating" dsname "..."
+
+Address SDSF "ISFACT" command "TOKEN('"dstoken"') PARM(NP SA)"
+isfrc=rc
+
+if isfrc<>0 | debug<>0 then
+  do
+    Say mid "ISFACT SA complete, rc="isfrc
+    call msgrtn
+  end
+
+reccnt=0
+
+     /********************************************/
+     /* Read the syslog and select records based */
+     /* on time and date                         */
+     /********************************************/
+do ix=1 to isfddname.0
+
+  write="no"
+
+  eof="no"
+  do while eof="no"
+
+    address MVS "EXECIO 1 DISKR" isfddname.ix "(STEM line."
+    lrc=rc
+    if rc=2 then
+      eof="yes"
+    else
+      do
+        parse var line.1 20 ldate 26 .
+        if substr(ldate,1,2) <> '20' then  
+          do
+             if ldate <> '' then ldate = '20'||ldate
+             parse var line.1,
+               26 ltime,
+               37 .,
+               38 jobname,
+               46 .,
+               57 txtmsg
+          end
+          else do
+             parse var line.1,
+               20 ldate,
+               28 ltime,
+               39 .,
+               40 jobname,
+               48 .,
+               59 txtmsg
+          end
+                                                  
+        if ldate<>"" then
+          do
+            savedate=ldate
+            savetime=ltime
+          end
+
+        if ldate="" then
+          do
+            ldate=savedate
+            ltime=savetime
+          end
+
+        lldate=substr(ldate,1,4)"."substr(ldate,5,3)
+        lltime=substr(ltime,1,8)
+
+        if debug>=2 then
+          Say mid "Record read:" lldate lltime txtmsg
+
+        if lldate > stopdate & ,
+           lltime > stoptime then
+          do
+            eof="yes"
+            say "eof reached"
+          end
+
+        if eof="no" then
+          do
+            sel="no"
+            if lldate >= startdate & ,
+               lldate <= stopdate then
+              do
+                if lldate <> startdate & ,
+                   lldate <> stopdate then
+                  sel="yes"
+
+                if sel="no" &  , /* same day only */
+                   (lldate = startdate) & (lldate = stopdate) & ,
+                   (lltime >= starttime) & (lltime <= stoptime) then
+                  sel="yes"
+
+                if sel="no" & ,
+                   lldate = startdate & startdate <> stopdate & ,
+                   lltime >= starttime then
+                  sel="yes"
+
+                if sel="no" & ,
+                   lldate = stopdate & stopdate <> startdate & ,
+                   lltime <= stoptime then
+                  sel="yes"
+
+                if sel="yes" & ,
+                   lldate = stopdate & ,
+                   lltime > stoptime then
+                  do
+                    sel="no"
+                    eof="yes"
+                    Say "stop time eof"
+                  end
+              end
+
+            if sel="yes" then
+              do
+                outline.0 = 1
+                outline.1 = line.1
+                address MVS "EXECIO 1 DISKW" outddn "(STEM outline."
+                reccnt = reccnt + 1
+              end
+          end
+      end
+  end  /* while not eof */
+
+  address MVS "EXECIO 0 DISKR" isfddname.ix "(FINIS"  /* close the file */
+
+end  /* for all ddnames */
+
+Say mid reccnt "records extracted from" dsname"."
+return
+
+     /************************************/
+     /* Subroutine to list SDSF messages */
+     /************************************/
+msgrtn: procedure expose mid isfmsg isfmsg2.
+Say mid "isfmsg is:" isfmsg
+if datatype(isfmsg2.0) = "NUM" then
+  do ix=1 to isfmsg2.0
+    Say mid "isfmsg2."ix "is:" isfmsg2.ix
+  end
+return
+
+
+     /********************************************/
+     /* Subroutine to list all columns for a row */
+     /********************************************/
+listcols:
+fixedfield = word(isfcols,1)
+if datatype(value(fixedfield".0")) = "NUM" then
+  do
+    Say mid "Number of rows:" value(fixedfield".0")
+    do ix=1 to value(fixedfield".0")
+      Say mid "Now processing:" value(fixedfield"."ix)
+      do jx=1 to words(isfcols)
+        col = word(isfcols,jx)
+        Say mid "Column" col"."ix "is:" value(col"."ix)
+
+        if wordpos(col,isfrcols) > 0 then
+          do kx=1 to value(col"."ix".0")
+            Say mid "Column" col"."ix"."kx "is >>"||,
+                  value(col"."ix"."kx)"<<"
+          end
+      end
+    end
+  end
+
+return
+
+
+
+     /********************************************/
+     /* Subroutine to list all columns for a row */
+     /* (secondary display)                      */
+     /********************************************/
+listcols2:
+fixedfield = (prefstr)word(isfcols2,1)
+if datatype(value(fixedfield".0")) = "NUM" then
+  do
+    Say mid "Number of rows:" value(fixedfield".0")
+    do ix=1 to value(fixedfield".0")
+      Say mid "Now processing:" value(fixedfield"."ix)
+      do jx=1 to words(isfcols2)
+        col = (prefstr)word(isfcols2,jx)
+        Say mid "Column" col"."ix "is:" value(col"."ix)
+
+        basecol = word(isfcols2,jx)
+        if wordpos(basecol,isfrcols2) > 0 then
+          do kx=1 to value(col"."ix".0")
+            Say mid "Column" col"."ix"."kx "is >>"||,
+              value(col"."ix"."kx)"<<"
+          end
+      end
+    end
+  end
+return
+
+     /***********************/
+     /* Displays usage text */
+     /***********************/
+usage: procedure expose mid exec_name
+  Say mid "Usage:"
+  Say mid
+  Say mid "  " execname "startdate starttime" ,
+                        "stopdate stoptime [member]"
+  Say mid
+  Say mid "where"
+  Say mid
+  Say mid "  startdate is the starting date (yyyy.ddd)"
+  Say mid "  starttime is the starting time (hh:mm:ss)"
+  Say mid "  stopdate  is the ending   date (yyyy.ddd)"
+  Say mid "  stoptime  is the ending   time (hh:mm:ss)"
+  Say mid "  member    is the JES member name associated with log"
+  Say mid "            (default is local sysname)"
+return

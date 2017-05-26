@@ -1,0 +1,54 @@
+Test Case for TR:C9903-000899
+Journal filename containing . in directory name
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+Create directories: a.b, a.b.c, a.b.c.d, e..f
+--------------------------------------------------------------
+MUPIP set -journal=enable,nobefore,filename="./a.b/c.mjl" -file mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.b/c.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+  Journal File: ##TEST_PATH##/a.b/c.mjl
+--------------------------------------------------------------
+$MUPIP set -journal=enable,nobefore,filename="a.b/c.d" -file mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.b/c.d created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+  Journal File: ##TEST_PATH##/a.b/c.d
+--------------------------------------------------------------
+$MUPIP set -journal=enable,nobefore,filename="./a.b.c/d.mjl" -file mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.b.c/d.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+  Journal File: ##TEST_PATH##/a.b.c/d.mjl
+--------------------------------------------------------------
+$MUPIP set -journal=enable,nobefore,filename="./e..f/mumps.mjl" -file mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/e..f/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+  Journal File: ##TEST_PATH##/e..f/mumps.mjl
+--------------------------------------------------------------
+$MUPIP set -journal=enable,nobefore,filename="$cur_dir/a.b.c.d/mumps.mjl" -file $cur_dir/mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.b.c.d/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+  Journal File: ##TEST_PATH##/a.b.c.d/mumps.mjl
+--------------------------------------------------------------
+$MUPIP set -journal=enable,nobefore,filename="../a.b.c/d2.jnl" -file $cur_dir/mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.b.c/d2.jnl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+  Journal File: ##TEST_PATH##/a.b.c/d2.jnl
+--------------------------------------------------------------
+$MUPIP set -journal=enable,nobefore,filename="../c.d/failed.mjl" -file mumps.dat
+##TEST_AWK%GTM-W-JNLCRESTATUS, .*
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-JNLNOCREATE, Journal file ##TEST_PATH##/c.d/failed.mjl not created
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+  Journal File: ##TEST_PATH##/a.b.c/d2.jnl
+--------------------------------------------------------------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

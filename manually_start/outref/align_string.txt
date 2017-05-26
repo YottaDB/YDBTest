@@ -1,0 +1,43 @@
+ALIGN_STRINGS Test Starts...
+##SUSPEND_OUTPUT DBG
+TEST-W-Speed test reference data is for PRO only
+Ops/CPU_sec     = No of Operations/CPU second/CPU>
+Ops/Elapsed_sec = No of Operations/Elapsed second>
+PASS/FAIL reported on Ops/CPU_sec
+Find number of processors
+Create executable ##TEST_PATH##/prime_root to be used later
+Local Variable: Ordered Keys : No Journaling: Single-Process
+SPEED_TEST:     LCL:   SETOP: SEQOP: NOJNL:PASS
+SPEED_TEST:     LCL:  READOP: SEQOP: NOJNL:PASS
+Local Variable: Random Keys : No Journaling: Single-Process
+SPEED_TEST:     LCL:   SETOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL:  READOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL:   GETOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL:  DATAOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL: ORDEROP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL: ZPREVOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL: QUERYOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL:  KILLOP:RANDOP: NOJNL:PASS
+Local Variable: Ordered Keys : No Journaling: Single-Process
+SPEED_TEST:     LCL:   SETOP: SEQOP: NOJNL:PASS
+SPEED_TEST:     LCL:  READOP: SEQOP: NOJNL:PASS
+Local Variable: Random Keys : No Journaling: Single-Process
+SPEED_TEST:     LCL:   SETOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL:  READOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL:   GETOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL:  DATAOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL: ORDEROP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL: ZPREVOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL: QUERYOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL:  KILLOP:RANDOP: NOJNL:PASS
+Speed Test Ends...
+##ALLOW_OUTPUT DBG
+Compile M routines with align_strings qualifier
+Compile M routines with noalign_strings qualifier
+M filename  object size with align  object size with noalign  difference
+waitchrg.m  5274		  5274		    0
+umjrnl.m    12583		  12583		    0
+imptp.m     25073		  25073		    0
+checkdb.m   37854		  37854		    0
+lotsvar.m   11639		  11639		    0
+ALIGN_STRINGS Test Ends...

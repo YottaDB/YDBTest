@@ -1,0 +1,49 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: x (region DEFAULT)
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+Blocks processed    : 6252 
+Blocks coalesced    : 1217 
+Blocks split        : 0 
+##TEST_AWKBlocks swapped      : 508[2-5] 
+##TEST_AWKBlocks freed        : 4[89][0-9]+ 
+##TEST_AWKBlocks reused       : 3[678][0-9]+ 
+Blocks extended     : 0 
+Fill Factor:: Index blocks 80%: Data blocks 80%
+   
+Global: x (region DEFAULT)
+Blocks processed    : 5084 
+Blocks coalesced    : 2 
+Blocks split        : 0 
+Blocks swapped      : 3591 
+Blocks freed        : 3593 
+Blocks reused       : 3591 
+Blocks extended     : 0 
+Applying all journal files ......
+Created file ##TEST_PATH##/mumps.dat
+diff data1.glo data2.glo
+Applying all journal files in larger alloc size......
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+diff data1.glo data3.glo
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

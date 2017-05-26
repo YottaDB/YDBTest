@@ -1,0 +1,12 @@
+template -region -stdnullcoll
+change -reg DEFAULT -stdnullcoll
+add -region areg -dyn=aseg
+add -segment aseg -file=a
+add -region breg -dyn=bseg
+add -segment bseg -file=b
+add -region creg -dyn=cseg
+add -segment cseg -file=c
+add -name A(1) -reg=AREG
+add -name A(2) -reg=BREG
+add -name A(3) -reg=CREG
+add -name A(4) -reg=DEFAULT

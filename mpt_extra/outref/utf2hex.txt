@@ -1,0 +1,113 @@
+setenv gtm_chset UTF-8
+unset echo
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Begin test for UTF2HEX , HEX2UTF utilities
+
+GTM>
+
+GTM>
+do ^%UTF2HEX on 1024*10 bytes of unicode str
+PASS ^%UTF2HEX
+do ^%HEX2UTF on 1024*10 bytes of unicode str
+PASS ^%HEX2UTF
+%S=$ZCH(255)_$C(0)_$ZCH(240)_$C(18)_"e"
+%S=$ZCH(255)_$C(0)_$ZCH(240)_$C(18)_"e"
+
+GTM>
+%S=$ZCH(255)_$C(0)_$ZCH(240)_$C(18)_"e"
+%S=$ZCH(255)_$C(0)_$ZCH(240)_$C(18)_"e"
+
+GTM>
+Interactive mode testing on chinese characters
+
+GTM>
+
+GTM>
+
+GTM>
+
+String: 
+GTM>
+
+GTM>
+
+Hexadecimal byte stream: 
+GTM>
+
+GTM>
+Interactive mode testing on hebrew accents 
+
+GTM>
+
+GTM>
+
+GTM>
+
+String: 
+GTM>
+
+GTM>
+
+Hexadecimal byte stream: 
+GTM>
+
+GTM>
+Interactive mode testing on Japanese characters 
+
+GTM>
+
+GTM>
+
+GTM>
+
+String: 
+GTM>
+
+GTM>
+
+Hexadecimal byte stream: 
+GTM>
+
+GTM>
+Interactive mode testing on CJK extension $CHAR(19266-19903)
+
+GTM>
+
+GTM>
+
+GTM>
+
+String: 
+GTM>
+
+GTM>
+
+Hexadecimal byte stream: 
+GTM>
+
+GTM>
+Testing ONE MB strings
+
+GTM>
+
+GTM>
+
+GTM>
+Final ZSHOW begins - ther should not be any left over local vars
+
+GTM>
+
+GTM>
+END OF TEST
+
+GTM>
+
+GTM>
+End of test for UTF2HEX , HEX2UTF utilities
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

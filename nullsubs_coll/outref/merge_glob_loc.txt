@@ -1,0 +1,410 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/stdnull.gde
+
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 ALWAYS     Y    N   DISABLED DISABLED ENABLED
+ BREG                            BSEG                               0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+ CREG                            CSEG                               0      256    64 ALWAYS     Y    N   DISABLED DISABLED ENABLED
+ DEFAULT                         DEFAULT                            0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/amerge.dat
+Created file ##TEST_PATH##/bmerge.dat
+Created file ##TEST_PATH##/cmerge.dat
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+^aglobalvar("")=10
+^aglobalvar(1)=1
+^aglobalvar(1,"")=11
+^aglobalvar(1,"",1)=111
+^bvariableglobally(2)=2
+^bvariableglobally(2,"")=22
+^bvariableglobally(2,"",1)=222
+^bvariableglobally("")=20
+^c("")=30
+^c(3)=3
+^c(3,"")=33
+^c(3,"",1)=333
+^c(3,"",3)=700
+^d(4)=4
+^d(4,"")=44
+^d(4,"",1)=444
+^d("")=40
+=====================================================
+MERGE global=global
+MERGING ^aglobalvar(1)=^c(3,") Result in std.nullcollation
+^aglobalvar("")=10
+^aglobalvar(1)=33
+^aglobalvar(1,"")=11
+^aglobalvar(1,"",1)=111
+^aglobalvar(1,1)=333
+^aglobalvar(1,3)=700
+naked reference now is^aglobalvar(1)
+naked indicator checked, value written should be 11
+^aglobalvar(1,"")=11
+MERGING ^d(4)=^aglobalvar(1) Result in nostd.nullcollation
+^d(4)=33
+^d(4,1)=333
+^d(4,3)=700
+^d(4,"")=11
+^d(4,"",1)=111
+^d("")=40
+naked reference now is^d(4)
+naked indicator checked, value written should be 11
+^d(4,"")=11
+MERGING ^c(3,")=^bvariableglobally(2) Result in std.nullcollation
+^c("")=30
+^c(3)=3
+^c(3,"")=2
+^c(3,"","")=22
+^c(3,"","",1)=222
+^c(3,"",1)=333
+^c(3,"",3)=700
+naked reference now is^c(3,"")
+naked indicator checked, value written should be 700
+^c(3,"",3)=700
+MERGE ^bvariableglobally(2)=^d(4) Result in nostd.nullcollation
+^bvariableglobally(2)=33
+^bvariableglobally(2,1)=333
+^bvariableglobally(2,3)=700
+^bvariableglobally(2,"")=11
+^bvariableglobally(2,"",1)=111
+^bvariableglobally("")=20
+naked reference now is^bvariableglobally(2)
+naked indicator checked, value written should be 111
+^bvariableglobally(2,"",1)=111
+lcl(5)="five"
+lcl(5,"")="five_null"
+lcl(5,"",1)="five_null_one"
+lcl(5,"","x")="five_null_x"
+lcl("")="null"
+^aglobalvar("")=10
+^aglobalvar(1)=33
+^aglobalvar(1,"")=11
+^aglobalvar(1,"",1)=111
+^aglobalvar(1,1)=333
+^aglobalvar(1,3)=700
+=====================================================
+MERGE global=local
+MERGE ^aglobalvar(1)=lcl(5,"") Result in std.nullcollation
+^aglobalvar("")=10
+^aglobalvar(1)="five_null"
+^aglobalvar(1,"")=11
+^aglobalvar(1,"",1)=111
+^aglobalvar(1,1)="five_null_one"
+^aglobalvar(1,3)=700
+^aglobalvar(1,"x")="five_null_x"
+MERGE ^bvariableglobally(2)=lcl(5,"") Result in nostd.nullcollation
+^bvariableglobally(2)="five_null"
+^bvariableglobally(2,1)="five_null_one"
+^bvariableglobally(2,3)=700
+^bvariableglobally(2,"")=11
+^bvariableglobally(2,"",1)=111
+^bvariableglobally(2,"x")="five_null_x"
+^bvariableglobally("")=20
+1lcl("")="null"
+lcl(5)="five"
+lcl(5,"")="five_null"
+lcl(5,"",1)="five_null_one"
+lcl(5,"","x")="five_null_x"
+MERGE ^aglobalvar(1)=lcl(5,") Result in std.nullcollation
+^aglobalvar("")=10
+^aglobalvar(1)="five_null"
+^aglobalvar(1,"")=11
+^aglobalvar(1,"",1)=111
+^aglobalvar(1,1)="five_null_one"
+^aglobalvar(1,3)=700
+^aglobalvar(1,"x")="five_null_x"
+MERGE ^bvariableglobally(2)=lcl(5,"") Result in nostd.nullcollation
+^bvariableglobally(2)="five_null"
+^bvariableglobally(2,1)="five_null_one"
+^bvariableglobally(2,3)=700
+^bvariableglobally(2,"")=11
+^bvariableglobally(2,"",1)=111
+^bvariableglobally(2,"x")="five_null_x"
+^bvariableglobally("")=20
+=====================================================
+MERGE local=global
+MERGE lcl(5,"")=^aglobalvar(1) Result in std.nullcollation
+lcl("")="null"
+lcl(5)="five"
+lcl(5,"")="five_null"
+lcl(5,"","")=11
+lcl(5,"","",1)=111
+lcl(5,"",1)="five_null_one"
+lcl(5,"",3)=700
+lcl(5,"","x")="five_null_x"
+naked reference now is^aglobalvar(1)
+check naked indicator reference here, value written should be 11
+^aglobalvar(1,"")=11
+MERGE lcl(5,"")=^bvariableglobally(2) Result in std.nullcollation
+lcl("")="null"
+lcl(5)="five"
+lcl(5,"")="five_null"
+lcl(5,"","")=11
+lcl(5,"","",1)=111
+lcl(5,"",1)="five_null_one"
+lcl(5,"",3)=700
+lcl(5,"","x")="five_null_x"
+naked reference now is^bvariableglobally(2)
+check naked indicator reference here, value written should be 111
+^bvariableglobally(2,"",1)=111
+1MERGE lcl(5,"")=^c(3,") Result in nostd.nullcollation
+lcl(5)="five"
+lcl(5,"")=2
+lcl(5,"",1)=333
+lcl(5,"",3)=700
+lcl(5,"","")=22
+lcl(5,"","",1)=222
+lcl(5,"","x")="five_null_x"
+lcl("")="null"
+naked reference now is^c(3,"")
+check naked indicator reference here, value written should be 700
+^c(3,"",3)=700
+MERGE lcl(5,"")=^d(4) Result in nostd.nullcollation
+lcl(5)="five"
+lcl(5,"")=33
+lcl(5,"",1)=333
+lcl(5,"",3)=700
+lcl(5,"","")=11
+lcl(5,"","",1)=111
+lcl(5,"","x")="five_null_x"
+lcl("")="null"
+naked reference now is^d(4)
+check naked indicator reference here, value written should be 11
+^d(4,"")=11
+
+GTM>
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/nullsub.gde
+
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+ BREG                            BSEG                               0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+ CREG                            CSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/c.dat
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+set globals with null_sub values
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+checking merge on global1 when null_subs=never
+
+GTM>
+Merging global1 (NEVER) with global2 (NEVER) should pass
+
+^defaultregion(1)=33
+^defaultregion(1,2)=333
+Merging global1 (NEVER) with global2 (ALWAYS) should pass,since no descendants
+
+^defaultregion(1)=22
+^defaultregion(1,2)=333
+Merging global1 (NEVER) with local (without null_subs) should pass
+
+^defaultregion(1)=99
+^defaultregion(1,2)=333
+
+GTM>
+Merging global1 (NEVER) with global2 (ALWAYS) should error out
+
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: DEFAULT,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+		At M source location error1neverglobal+2^nullsubmerge
+
+GTM>
+Merging global1 (NEVER) with global2 (EXISTING) should error out
+
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: DEFAULT,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+		At M source location error2neverglobal+2^nullsubmerge
+
+GTM>
+Merging global1 (NEVER) with local (with null_subs) should error out
+
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: DEFAULT,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+		At M source location error3neverglobal+2^nullsubmerge
+
+GTM>
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+checking merge on global1 when null_subs=always
+
+GTM>
+Merging global1 (ALWAYS) with global2 (NEVER) should pass
+
+^defaultregion(1)=33
+^defaultregion(1,2)=333
+^defaultregion(1,"",1)=999
+Merging global1 (ALWAYS) with global2 (ALWAYS) should pass
+
+^defaultregion(1)="iam B null"
+^defaultregion(1,1)=22
+^defaultregion(1,2)=333
+^defaultregion(1,"",1)=999
+Merging global1 (ALWAYS) with global2 (EXISTING) should pass
+
+^defaultregion(1)="iam A null"
+^defaultregion(1,1)=11
+^defaultregion(1,2)=333
+^defaultregion(1,"",1)=999
+^defaultregion(1)="iam A null"
+^defaultregion(1,1)=11
+^defaultregion(1,2)=333
+^defaultregion(1,"",1)="iam A null"
+^defaultregion(1,"",1,1)=11
+Merging global1 (ALWAYS) with local (with null_subs) should pass
+
+^defaultregion(1)="1NULL"
+^defaultregion(1,1)="1NULL1"
+^defaultregion(1,2)=333
+^defaultregion(1,"",1)="iam A null"
+^defaultregion(1,"",1,1)=11
+Merging global1 (ALWAYS) with local (without null_subs) should pass
+
+^defaultregion(1)=66
+^defaultregion(1,1)="1NULL1"
+^defaultregion(1,2)=333
+^defaultregion(1,"")="1NULL"
+^defaultregion(1,"",1)="1NULL1"
+^defaultregion(1,"",1,1)=11
+
+GTM>
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+checking merge on global1 when null_subs=existing
+
+GTM>
+Merging global1 (EXIST) with global2 (NEVER) should pass
+
+^defaultregion(1)=33
+^defaultregion(1,1)="1NULL1"
+^defaultregion(1,2)=333
+^defaultregion(1,"")="1NULL"
+^defaultregion(1,"",1)="1NULL1"
+^defaultregion(1,"",1,1)=11
+Merging global1 (EXIST) with global2 (ALWAYS) should pass as global2 has no null_sub descendants
+
+^defaultregion(1)="null"
+^defaultregion(1,1)="null1"
+^defaultregion(1,1,"abc")="null1str"
+^defaultregion(1,2)="null2"
+^defaultregion(1,"")="1NULL"
+^defaultregion(1,"",1)="1NULL1"
+^defaultregion(1,"",1,1)=11
+
+GTM>
+Merging global1 (EXIST) with global2 (NEVER) should error out as LHS contains null_subs
+
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: DEFAULT,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"",1)
+		At M source location error1+2^nullsubmerge
+
+GTM>
+Merging global1 (EXIST) with global2 (ALWAYS) should error out with source global having descendant null subs
+
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: DEFAULT,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+		At M source location error2+2^nullsubmerge
+
+GTM>
+Merging global1 (EXIST) with global2 (ALWAYS) should error out as merging with destination global's null subs
+
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: DEFAULT,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+		At M source location error2sub+2^nullsubmerge
+
+GTM>
+Merging global1 (EXIST) with global2 (ALWAYS) should error out with source global having descendant null subs
+
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: DEFAULT,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+		At M source location error3+2^nullsubmerge
+
+GTM>
+Merging global1 (EXIST) with global2 (ALWAYS) should error out as merging with destination global's null subs
+
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: DEFAULT,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+		At M source location error3sub+2^nullsubmerge
+
+GTM>
+Merging global1 (EXIST) with local should error out with source having descendant null subs
+
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: DEFAULT,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+		At M source location error4+2^nullsubmerge
+
+GTM>
+Merging global1 (EXIST) with local should error out as merging with destination global's null subs
+
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: DEFAULT,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+		At M source location error5+2^nullsubmerge
+
+GTM>

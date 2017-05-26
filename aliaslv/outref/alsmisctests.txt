@@ -1,0 +1,32 @@
+
+-------------------------------------------------------
+--> Running : mumps -run quitalsinv
+-------------------------------------------------------
+Test : PASSED
+
+-------------------------------------------------------
+--> Running : mumps -run alsopunwind1
+-------------------------------------------------------
+Test QUIT * while in a frame where a primary error already occurred (i.e. $ecode is non-NULL).
+
+-------------------------------------------------------
+--> Running : mumps -run alsopunwind2
+-------------------------------------------------------
+Test : PASSED
+
+-------------------------------------------------------
+--> Running : mumps -run alsrefcnt1
+-------------------------------------------------------
+Test that reference counts are properly maintained in case of a NOTEXTRINSIC error (from a QUIT *)
+LV_CREF of a = 0
+150374450,funcals+2^alsrefcnt1,%GTM-E-NOTEXTRINSIC, Quit does not return to an extrinsic function: argument not allowed
+150374450,funcals+2^alsrefcnt1,%GTM-E-NOTEXTRINSIC, Quit does not return to an extrinsic function: argument not allowed
+150374450,funcals+2^alsrefcnt1,%GTM-E-NOTEXTRINSIC, Quit does not return to an extrinsic function: argument not allowed
+LV_CREF of a = 0
+a=3
+i=3
+
+-------------------------------------------------------
+--> Running : mumps -run alsrefcnt2
+-------------------------------------------------------
+Test : PASSED

@@ -1,0 +1,131 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+##SUSPEND_OUTPUT  REPLIC
+mumps1.gld
+Using: ##SOURCE_PATH##/mupip
+mumps1.dat
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+##ALLOW_OUTPUT  REPLIC
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+do ^locks1
+##TEST_PATH##/mumps.gld
+d TEST1
+1 PASS
+d TEST2
+d TEST4
+4 PASS
+d TEST5
+5 PASS
+d TEST6
+6 PASS
+d TEST7
+7 PASS
+d TEST9
+9 PASS
+d TEST10
+Zallocate test 
+10 PASS
+d TEST11
+11 PASS
+d TEST12
+Testing $T 0
+12 PASS
+d d002014
+d002014 PASS
+
+GTM>
+##SUSPEND_OUTPUT  REPLIC
+do ^locks2
+##TEST_PATH##/mumps.gld
+d TEST3
+TEST3 Passed
+d TEST8
+TEST8 Passed
+
+GTM>
+##SUSPEND_OUTPUT L NON_REPLIC
+##ALLOW_OUTPUT REPLIC
+
+GTM>
+##SUSPEND_OUTPUT  REPLIC
+##ALLOW_OUTPUT L NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ mumps1.dat
+No errors detected by integ.
+##SUSPEND_OUTPUT  L
+
+GTM>
+##ALLOW_OUTPUT  REPLIC
+do ^locksub1
+
+onn^locksub1
+onxn^locksub1
+ondoprm^locksub1
+onk^locksub1
+onzw^locksub1
+onxk^locksub1
+OK from lsubtst
+GTM>
+do ^locktst4
+
+PASS from locktst4
+GTM>
+
+GTM>
+do ^per3086
+per3086 - PASSED
+
+GTM>
+##SUSPEND_OUTPUT  F
+
+GTM>
+do ^lockwake
+Starting lockwake.m
+End lockwake.m
+
+GTM>
+%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+S1 DONE
+S2 DONE
+S3 DONE
+
+GTM>
+do ^clocks
+Main task started
+^result(1)="GOT THE LOCK"
+^result(2)="GOT THE LOCK"
+^result(3)="GOT THE LOCK"
+^result(4)="GOT THE LOCK"
+^result(5)="GOT THE LOCK"
+^result(6)="GOT THE LOCK"
+Main task ended
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  F L
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,29 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Added SET trigger on ^a named a#1
+Added SET trigger on ^b named b#1
+Global: #t (region AREG)
+Global: #t (region BREG)
+Truncated region: AREG. Reduced total blocks from [1403] to [512]. Reduced free blocks from [1394] to [505].
+Truncated region: BREG. Reduced total blocks from [1403] to [512]. Reduced free blocks from [1394] to [505].
+Truncated region: DEFAULT. Reduced total blocks from [1403] to [512]. Reduced free blocks from [1396] to [507].
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

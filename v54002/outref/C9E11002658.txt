@@ -1,0 +1,74 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/C9E11002658.gde
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-LOGON, Logging to file ##TEST_PATH##/C9E11002658_create.log
+
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               a23456789012345678901234567890y  REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ a23456789012345678901234567890y a23456789012345678901234567890z  REG = A
+                                                                  SEG = A
+                                                                  FILE = a.dat
+ a23456789012345678901234567890z a23456789012345678901234567891   REG = B
+                                                                  SEG = B
+                                                                  FILE = b.dat
+ a23456789012345678901234567891  b                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ b                               c                                REG = B
+                                                                  SEG = B
+                                                                  FILE = b.dat
+ c                               ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+%GDE-I-LOGOFF, No longer logging to file ##TEST_PATH##/C9E11002658_create.log
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/other.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-LOGON, Logging to file ##TEST_PATH##/C9E11002658_reload.log
+
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               a23456789012345678901234567890y  REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ a23456789012345678901234567890y a23456789012345678901234567890z  REG = A
+                                                                  SEG = A
+                                                                  FILE = a.dat
+ a23456789012345678901234567890z a23456789012345678901234567891   REG = B
+                                                                  SEG = B
+                                                                  FILE = b.dat
+ a23456789012345678901234567891  b                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ b                               c                                REG = B
+                                                                  SEG = B
+                                                                  FILE = b.dat
+ c                               ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+%GDE-I-LOGOFF, No longer logging to file ##TEST_PATH##/C9E11002658_reload.log
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld

@@ -1,0 +1,237 @@
+
+GTM>
+do ^pct
+
+Test of differentiation between % and regular routines
+d  PASS
+
+GTM>
+do ^mptdat
+
+
+MPTDAT: TEST OF %DATE/TIME CONVERSIONS
+I-162/153  date conversions
+   PASS  I-162/153.0  current date
+   PASS  I-162/153.1  %DATE, %H - date to horolog and reverse
+   PASS  I-162/153.2  %H - date to horolog and reverse
+I-162/154  time conversions
+   PASS  I-162/154.0  current time
+   PASS  I-162/153.1  %TI, %H - time to horolog and reverse
+   PASS  I-162/153.2  %H - time to horolog and reverse
+
+END OF MPTDAT
+
+GTM>
+do ^mptnum
+
+
+MPTNUM: TEST OF %NUMERIC CONVERSIONS and STRING CONVERSIONS
+I-152/153  decimal to hex and reverse conversion 
+   PASS  I-152/153.0  decimal to hex and reverse - low natural
+   PASS  I-152/153.1  decimal to hex and reverse - high natural
+   PASS  I-152/153.2  decimal to hex and reverse - low negative
+   PASS  I-152/153.3  decimal to hex and reverse - high negative
+I-152/154  decimal to octal and reverse conversion 
+   PASS  I-152/154.0  decimal to octal and reverse - low natural
+   PASS  I-152/154.1  decimal to octal and reverse - high natural
+   PASS  I-152/154.2  decimal to octal and reverse - low negative
+   PASS  I-152/154.3  decimal to octal and reverse - high negative
+I-152/155  octal to hex and reverse conversion 
+   PASS  I-152/155.0  octal to hex and reverse - low 
+   PASS  I-152/155.1  octal to hex and reverse - high 
+I-152/156  exponentiation - 
+   PASS  I-152/156.0  exponentiation
+I-152/157  Lower/Upper case conversions - 
+   PASS  I-152/157.0  Mixed to Lower then to Upper
+   PASS  I-152/157.1  Mixed to Lower then to Upper using Long Name
+
+END OF MPTNUM
+
+GTM>
+   test of %fl 
+
+First Line Lister
+
+Routine: 
+mptdat    mptglo    mptnum    mptpgm    
+Current total of 4 routines.
+
+Routine: 
+
+Output device: <terminal>: 
+
+mptdat    mptglo    mptnum    mptpgm    
+
+Total of 4 lines in 4 routines.
+
+
+GTM>
+   test of %rd 
+
+Routine directory
+Routine: 
+mptdat    mptglo    mptnum    mptpgm    
+Total of 4 routines.
+
+Routine: 
+
+GTM>
+   test of %ro 
+
+Routine Output - Save selected routines into RO file.
+
+Routine: 
+mptpgm    
+Current total of 1 routine.
+
+Routine: 
+
+Output device: <terminal>: 
+
+Header Label: 
+Strip comments <No>?: 
+mptpgm    
+
+Total of 3 lines in 1 routine.
+
+
+GTM>
+   test of %rsel 
+
+Routine: 
+
+GTM>
+   test of %rsel 
+
+Routine: 
+mptdat    mptglo    mptnum    mptpgm    
+Current total of 4 routines.
+
+Routine: 
+
+GTM>
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT SINGLE_REG
+a.dat
+b.dat
+##ALLOW_OUTPUT SINGLE_REG
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT SINGLE_REG
+a.dat
+b.dat
+##ALLOW_OUTPUT SINGLE_REG
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+do ^mptglo
+
+
+MPTDAT: TEST OF %GLOBAL LISTINGS
+
+DO EMPTYGD
+
+
+TEST ^%GD with an empty transaction
+
+Global Directory
+
+Global ^
+
+Total of 0 globals.
+
+
+I-172/153.0  %G - names, descendants and values
+Output device: <terminal>: 
+
+List ^
+
+List ^
+
+Output device: <terminal>: 
+
+List ^
+^A2345678="root A8"
+^A2345678(0)="a0 of A8"
+^A2345678(0,0)=64008
+^A234567890123456789012345678901="root A31"
+^A234567890123456789012345678901(0)="a0 of A31"
+^A234567890123456789012345678901(0,0)=640031
+^B2345678="root B8"
+^B2345678(0)="b0 of B8"
+^B234567890123456789012345678901="root B31"
+^B234567890123456789012345678901(0)="b0 of B31"
+^C2345678="root C8"
+^C2345678(0)="c0 of C8"
+^C2345678(0,0)=66008
+^C234567890123456789012345678901="root C31"
+^C234567890123456789012345678901(0)="c0 of C31"
+^C234567890123456789012345678901(0,0)=660031
+^D2345678="root D8"
+^D2345678(0)="d0 of D8"
+^D2345678(0,0)=67008
+^D234567890123456789012345678901="root D31"
+^D234567890123456789012345678901(0)="d0 of D31"
+^D234567890123456789012345678901(0,0)=670031
+^E2345678="root E8"
+^E2345678(0)="e0 of E8"
+^E234567890123456789012345678901="root E31"
+^E234567890123456789012345678901(0)="e0 of E31"
+^F2345678="root F8"
+^F2345678(0)="f0 of F8"
+^F2345678(0,0)=69008
+^F234567890123456789012345678901="root F31"
+^F234567890123456789012345678901(0)="f0 of F31"
+^F234567890123456789012345678901(0,0)=690031
+
+List ^
+
+I-172/153.1  %GD - globals listling
+Global Directory
+
+Global ^
+
+Total of 0 globals.
+
+Global Directory
+
+Global ^
+^A2345678 ^A234567890123456789012345678901        ^B2345678 ^B234567890123456789012345678901        
+^C2345678 ^C234567890123456789012345678901        ^D2345678 ^D234567890123456789012345678901        
+^E2345678 ^E234567890123456789012345678901        ^F2345678 ^F234567890123456789012345678901        
+Total of 12 globals.
+
+Global ^
+
+I-172/153.2  %GSEL - globals selection
+Global ^
+
+Global ^
+
+Current total of 0 globals.
+
+Global ^
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,35 @@
+Begin of D9C03002051 subtest
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Extension Count 100
+Try to change extension_count, which will succeed
+Database file mumps.dat now has extension count 300
+Extension Count 300
+Multi-processes start in the background
+Now try to change -extension_count, which will also succeed
+MUPIP set -extension_count=400 -file mumps.dat
+Database file mumps.dat now has extension count 400
+Extension Count 400
+Now try to change extension_count with global_buffer which needs standalone access
+MUPIP set -extension_count=500 -global_buffer=2048 -file mumps.dat
+MUPIP set -extension_count=500 -global_buffer=2048 -reg "*"
+Extension Count 400
+Stop the background processes
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+MUPIP set -extension_count=600 -global_buffer=2048 -file mumps.dat
+Database file mumps.dat now has extension count 600
+Database file mumps.dat now has 2048 global buffers
+Extension Count 600
+End of D9C03002051 subtest

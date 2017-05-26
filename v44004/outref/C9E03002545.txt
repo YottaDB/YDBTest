@@ -1,0 +1,111 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+Turn the full block writes on
+************
+GTM updates
+
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+************
+DSE dump -f -all
+
+##TEST_AWK  Full Block Writes                      ON  Full Block Write Len          [0-9]*
+************
+MUPIP integ -reg *
+
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               3           0.427            NA
+Index               2               4           0.476             2
+Data                4            2000          66.741             4
+Free               92              NA              NA            NA
+Total             100            2007              NA             6
+************
+MUPIP reorg -fill=30
+
+Fill Factor:: Index blocks 30%: Data blocks 30%
+   
+Global: a (region DEFAULT)
+Blocks processed    : 5 
+Blocks coalesced    : 1 
+Blocks split        : 3 
+Blocks swapped      : 4 
+Blocks freed        : 0 
+Blocks reused       : 3 
+Blocks extended     : 0 
+   
+Global: b (region DEFAULT)
+Blocks processed    : 5 
+Blocks coalesced    : 1 
+Blocks split        : 3 
+Blocks swapped      : 4 
+Blocks freed        : 0 
+Blocks reused       : 3 
+Blocks extended     : 0 
+************
+MUPIP extract extr.glo
+
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 1000  max subsc len: 7  max rec len: 5  max node len: 15
+%GTM-I-RECORDSTAT, ^b:	  Key cnt: 1000  max subsc len: 7  max rec len: 5  max node len: 15
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2000  max subsc len: 7  max rec len: 5  max node len: 15
+************
+MUPIP load extr.glo
+
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 2000  Max Subsc Len: 7  Max Data Len: 5
+Last LOAD record number: 2002
+
+************
+MUPIP backup *
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+DB file ##TEST_PATH##/mumps.dat backed up in file ./backup
+Transactions up to 0x0000000000000FB1 are backed up.
+
+
+BACKUP COMPLETED.
+
+************
+MUPIP journal -recov -back * -since=0 0:0:1
+
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl_##TIMESTAMP## is renamed to ##TEST_PATH##/rolled_bak_mumps.mjl_##TIMESTAMP##
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+ Do the dbcheck.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Turn the Full Block writes off
+  Full Block Writes                     OFF  Full Block Write Len             0
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

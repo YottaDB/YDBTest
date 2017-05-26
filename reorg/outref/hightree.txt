@@ -1,0 +1,41 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+Fill Factor:: Index blocks 30%: Data blocks 30%
+##SUSPEND_OUTPUT PRO
+GTMPOOLLIMIT used for mupip reorg : ##FILTERED##
+##ALLOW_OUTPUT PRO
+   
+Global: a (region DEFAULT)
+%GTM-E-MAXBTLEVEL, Global ^a in region DEFAULT reached maximum level
+Blocks processed    : 1072 
+Blocks coalesced    : 3 
+Blocks split        : 532 
+Blocks swapped      : 1067 
+Blocks freed        : 3 
+Blocks reused       : 815 
+Levels Increased    : 4 
+Blocks extended     : 801 
+%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory           2               2           2....            NA
+Index             354            3346          34.178           157
+Data             2993           10000          72.868          2430
+Free               51              NA              NA            NA
+Total            3400           13348              NA          2587
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

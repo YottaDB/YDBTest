@@ -1,0 +1,32 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/other.gld
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/other.gld
+Created file ##TEST_PATH##/other.dat
+
+DEFAULT
+OTHER
+DEFAULT
+5
+1
+DEFAULT
+6
+1
+OTHER
+5
+DEFAULT
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

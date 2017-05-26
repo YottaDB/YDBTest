@@ -1,0 +1,18 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+###################################################################
+Test if libgcrypt warnings are seen in syslog
+###################################################################
+
+
+TEST-I-PASSED : Libgcrypt warning NOT seen in syslog as expected
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

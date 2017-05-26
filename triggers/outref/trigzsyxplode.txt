@@ -1,0 +1,107 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+###################################################################
+zsystems inside a trigger violate the isolation of ACID
+Begin transaction
+Run: 1	Restarts: 0
+ZTWO:1	ZTLE:1	TL:1
+^a=1
+^c=5
+Run: 2	Restarts: 1
+^c=101
+ZTWO:2	ZTLE:1	TL:1
+^a=2
+^c=10
+Run: 3	Restarts: 2
+^c=101
+ZTWO:3	ZTLE:1	TL:1
+^a=3
+^c=15
+Run: 4	Restarts: 3
+^c=101
+ZTWO:4	ZTLE:1	TL:1
+^a=4
+^c=20
+Run: 5	Restarts: 4
+stopping the insanity
+5 restarts occured
+^c exists, 101
+###################################################################
+
+Run the trigzsyxplode from inside an implicit transation
+
+###################################################################
+zsystems inside a trigger violate the isolation of ACID
+Begin transaction
+Run: 1	Restarts: 0
+ZTWO:1	ZTLE:2	TL:2
+^a=1
+^c=5
+0 restarts occured
+^a exists, 1
+^b exists, 5
+###################################################################
+zsystems inside a trigger violate the isolation of ACID
+Begin transaction
+Run: 1	Restarts: 1
+^c=101
+ZTWO:1	ZTLE:2	TL:2
+^a=1
+^c=5
+1 restarts occured
+^a exists, 1
+^b exists, 5
+###################################################################
+zsystems inside a trigger violate the isolation of ACID
+Begin transaction
+Run: 1	Restarts: 2
+^c=101
+ZTWO:1	ZTLE:2	TL:2
+^a=1
+^c=5
+2 restarts occured
+^a exists, 1
+^b exists, 5
+###################################################################
+zsystems inside a trigger violate the isolation of ACID
+Begin transaction
+Run: 1	Restarts: 3
+^c=101
+ZTWO:1	ZTLE:2	TL:2
+^a=1
+^c=5
+3 restarts occured
+^a exists, 1
+^b exists, 5
+###################################################################
+zsystems inside a trigger violate the isolation of ACID
+Begin transaction
+Run: 1	Restarts: 4
+stopping the insanity
+4 restarts occured
+^c exists, 101
+###################################################################
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT NON_REPLIC

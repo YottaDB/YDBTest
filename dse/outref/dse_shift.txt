@@ -1,0 +1,199 @@
+TEST DSE - SHIFT COMMAND 
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	3
+
+DSE> DSE> 
+Rec:1  Blk 3  Off 10  Size D  Cmpc 0  Key ^x(1)
+
+Rec:2  Blk 3  Off 1D  Size A  Cmpc 3  Key ^x(2)
+
+Rec:3  Blk 3  Off 27  Size A  Cmpc 3  Key ^x(3)
+
+Rec:4  Blk 3  Off 31  Size A  Cmpc 3  Key ^x(4)
+
+Rec:5  Blk 3  Off 3B  Size 0  Cmpc 0  Key 
+
+Rec:6  Blk 3  Off 3F  Size 0  Cmpc 0  Key 
+
+Rec:7  Blk 3  Off 43  Size 0  Cmpc 0  Key 
+
+Rec:8  Blk 3  Off 47  Size 0  Cmpc 0  Key 
+
+##SUSPEND_OUTPUT  COLLATION
+Rec:9  Blk 3  Off 4B  Size 12  Cmpc 2  Key ^.abc
+##SUSPEND_OUTPUT  NON_COLLATION
+##ALLOW_OUTPUT  COLLATION
+Rec:9  Blk 3  Off 4B  Size 12  Cmpc 2  Key ^.AMO
+##ALLOW_OUTPUT  NON_COLLATION
+
+##SUSPEND_OUTPUT  COLLATION
+Rec:A  Blk 3  Off 5D  Size D  Cmpc 6  Key ^.abc
+##SUSPEND_OUTPUT  NON_COLLATION
+##ALLOW_OUTPUT  COLLATION
+Rec:A  Blk 3  Off 5D  Size D  Cmpc 6  Key ^.AMO
+##ALLOW_OUTPUT  NON_COLLATION
+
+##SUSPEND_OUTPUT  COLLATION
+Rec:B  Blk 3  Off 6A  Size 7  Cmpc 6  Key ^.abc
+##SUSPEND_OUTPUT  NON_COLLATION
+##ALLOW_OUTPUT  COLLATION
+Rec:B  Blk 3  Off 6A  Size 7  Cmpc 6  Key ^.AMO
+##ALLOW_OUTPUT  NON_COLLATION
+
+DSE> 
+Checking integrity of block 3:
+%GTM-I-DBRSIZMN,        3:3B     0  Physical record too small
+
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	3
+
+DSE> DSE> 
+Rec:1  Blk 3  Off 10  Size D  Cmpc 0  Key ^x(1)
+
+Rec:2  Blk 3  Off 1D  Size A  Cmpc 3  Key ^x(2)
+
+Rec:3  Blk 3  Off 27  Size A  Cmpc 3  Key ^x(3)
+
+Rec:4  Blk 3  Off 31  Size A  Cmpc 3  Key ^x(4)
+
+Rec:5  Blk 3  Off 3B  Size 12  Cmpc 2  Key ^x("abc")
+
+Rec:6  Blk 3  Off 4D  Size D  Cmpc 6  Key ^x("abc"def")
+
+Rec:7  Blk 3  Off 5A  Size 7  Cmpc 6  Key ^x("abcd")
+
+DSE> 
+Checking integrity of block 3:
+
+  No errors detected.
+
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	3
+
+DSE> Error:  must specify amount to shift.
+DSE> Error:  must specify amount to shift.
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	3
+
+DSE> Error:  block not large enough to accommodate shift.
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	3
+
+DSE> Error:  offset not in range of block.
+DSE> Error:  offset not in range of block.
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	3
+
+DSE> Error: shift greater than offset not allowed.
+##SUSPEND_OUTPUT  REPLIC
+DSE> DSE> ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+DSE> DSE> Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

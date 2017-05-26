@@ -1,0 +1,106 @@
+# This subtest generates a lot of GTM-W-LITNONGRAPH, GTM-E-SPOREOL and GTM-E-EQUAL errors
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Compile the mumps routine containing malformed string literals
+		write !,"this is a bad string literal with a tab	in it,!
+		                                                ^-----
+		At column 50, line 3, source module ##TEST_PATH##/c003032.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
+		write !,"this is a bad string literal with a tab	in it,!
+		                                                	       ^-----
+		At column 58, line 3, source module ##TEST_PATH##/c003032.m
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		set a="unclosed string
+		                      ^-----
+		At column 24, line 4, source module ##TEST_PATH##/c003032.m
+%GTM-E-EQUAL, Equal sign expected but not found
+		set ^b="this is 	tab
+		                ^-----
+		At column 18, line 5, source module ##TEST_PATH##/c003032.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
+		set ^b="this is 	tab
+		                	   ^-----
+		At column 22, line 5, source module ##TEST_PATH##/c003032.m
+%GTM-E-EQUAL, Equal sign expected but not found
+# Run the compiled version
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		At M source location c003032+2^c003032
+
+GTM>
+# Remove the object file and run the routine
+		write !,"this is a bad string literal with a tab	in it,!
+		                                                ^-----
+		At column 50, line 3, source module ##IN_TEST_PATH##/inref/c003032.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
+		write !,"this is a bad string literal with a tab	in it,!
+		                                                	       ^-----
+		At column 58, line 3, source module ##IN_TEST_PATH##/inref/c003032.m
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		set a="unclosed string
+		                      ^-----
+		At column 24, line 4, source module ##IN_TEST_PATH##/inref/c003032.m
+%GTM-E-EQUAL, Equal sign expected but not found
+		set ^b="this is 	tab
+		                ^-----
+		At column 18, line 5, source module ##IN_TEST_PATH##/inref/c003032.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
+		set ^b="this is 	tab
+		                	   ^-----
+		At column 22, line 5, source module ##IN_TEST_PATH##/inref/c003032.m
+%GTM-E-EQUAL, Equal sign expected but not found
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		At M source location c003032+2^c003032
+
+GTM>
+# Run the routine in direct mode
+
+GTM>
+		write !,"this is a bad string literal with a tab	in it,!
+		                                                ^-----
+		At column 50, line 3, source module ##IN_TEST_PATH##/inref/c003032.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
+		write !,"this is a bad string literal with a tab	in it,!
+		                                                	       ^-----
+		At column 58, line 3, source module ##IN_TEST_PATH##/inref/c003032.m
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		set a="unclosed string
+		                      ^-----
+		At column 24, line 4, source module ##IN_TEST_PATH##/inref/c003032.m
+%GTM-E-EQUAL, Equal sign expected but not found
+		set ^b="this is 	tab
+		                ^-----
+		At column 18, line 5, source module ##IN_TEST_PATH##/inref/c003032.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
+		set ^b="this is 	tab
+		                	   ^-----
+		At column 22, line 5, source module ##IN_TEST_PATH##/inref/c003032.m
+%GTM-E-EQUAL, Equal sign expected but not found
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		At M source location c003032+2^c003032
+
+GTM>
+# Execute the write command with malformed string literal in direct mode
+
+GTM>
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	write !,"this is a bad string literal with a tab        in it,!
+	                                                               ^-----
+
+GTM>
+%GTM-E-EQUAL, Equal sign expected but not found
+	set a="unclosed string
+	                      ^-----
+
+GTM>
+%GTM-E-EQUAL, Equal sign expected but not found
+	set ^b="this is 	tab
+	                	   ^-----
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+End of C9I09003032 test...

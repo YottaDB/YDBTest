@@ -1,0 +1,166 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP set -flush=00:10:00 -reg "*"'==
+
+# MUPIP INTEG -REG
+Killed
+----------
+Error MUINSTFROZEN seen in integ.out as expected:
+----------
+----------
+Error MUINSTUNFROZEN seen in integ.out as expected:
+----------
+
+# MUPIP BACKUP
+Killed
+----------
+Error MUINSTFROZEN seen in backup.out as expected:
+----------
+----------
+Error MUINSTUNFROZEN seen in backup.out as expected:
+----------
+
+# MUPIP FREEZE
+Killed
+----------
+Error MUINSTFROZEN seen in freeze.out as expected:
+----------
+----------
+Error MUINSTUNFROZEN seen in freeze.out as expected:
+----------
+
+# MUPIP SET -JOURNAL
+Killed
+----------
+Error MUINSTFROZEN seen in mupip_set1.out as expected:
+----------
+----------
+Error MUINSTUNFROZEN seen in mupip_set1.out as expected:
+----------
+
+# MUPIP SET -EXTENSION
+Killed
+----------
+Error MUINSTFROZEN seen in mupip_set2.out as expected:
+----------
+----------
+Error MUINSTUNFROZEN seen in mupip_set2.out as expected:
+----------
+
+# MUPIP EXTRACT -FREEZE
+Killed
+----------
+Error MUINSTFROZEN seen in extract.out as expected:
+----------
+----------
+Error MUINSTUNFROZEN seen in extract.out as expected:
+----------
+
+# MUPIP EXTEND
+Killed
+----------
+Error MUINSTFROZEN seen in extend.out as expected:
+----------
+----------
+Error MUINSTUNFROZEN seen in extend.out as expected:
+----------
+
+# MUPIP REORG
+Killed
+----------
+Error MUINSTFROZEN seen in reorg.out as expected:
+----------
+----------
+Error MUINSTUNFROZEN seen in reorg.out as expected:
+----------
+
+# MUPIP REORG -DOWNGRADE
+Killed
+----------
+Error MUINSTFROZEN seen in downgrade.out as expected:
+----------
+----------
+Error MUINSTUNFROZEN seen in downgrade.out as expected:
+----------
+
+# MUPIP REORG -UPGRADE
+Killed
+----------
+Error MUINSTFROZEN seen in upgrade.out as expected:
+----------
+----------
+Error MUINSTUNFROZEN seen in upgrade.out as expected:
+----------
+
+# MUPIP JOURNAL -ONLINE -ROLLBACK
+Killed
+----------
+Error MUINSTFROZEN seen in online_rlbk.out as expected:
+----------
+----------
+Error MUINSTUNFROZEN seen in online_rlbk.out as expected:
+----------
+
+# To test Regular Rollback, we need the Shared Memory and Journal Pool around, but not the processes. So, Kill -9 them
+---> Kill the GT.M process
+Killed
+---> SYNC and Kill the Source Server
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+
+# MUPIP JOURNAL -ROLLBACK
+----------
+Error MUINSTFROZEN seen in rlbk.out as expected:
+----------
+----------
+Error MUINSTUNFROZEN seen in rlbk.out as expected:
+----------
+
+# At this point, the Source Server is dead and the Shared Memory is removed as well. So, go ahead and start a new one.
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+
+# MUPIP RUNDOWN -REG DEFAULT
+---> Do one update on DEFAULT and suicide
+Killed
+---> Start a background process which does one update on AREG and hangs until told otherwise or Kill -9ed
+---> SYNC and Kill the Source Server
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+----------
+Error MUINSTFROZEN seen in rundown_reg.out as expected:
+----------
+----------
+Error MUINSTUNFROZEN seen in rundown_reg.out as expected:
+----------
+----------
+Error MUNOTALLSEC seen in rundown_reg.out as expected:
+%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+----------
+----------
+Error MUFILRNDWNSUC seen in rundown_reg.out as expected:
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+----------
+
+# MUPIP RUNDOWN -REG '*'
+---> Kill the process attached to AREG and Journal Pool
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,57 @@
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 cp $gtm_tst/$tst/inref/jnl_on_specific_dblist.txt .'==
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log.updproc -message UPDREPLSTATEOFF'==
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log.updproc UPDREPLSTATEOFF'==
+----------
+Error UPDREPLSTATEOFF seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
+%GTM-E-UPDREPLSTATEOFF, Error replicating global ^bglobal as it maps to database ##REMOTE_TEST_PATH##/instance2/b.dat which has replication turned OFF
+----------
+==Executing MULTISITE_REPLIC 'RUN INST2 set msr_dont_chk_stat ; $MUPIP replicate -receiver -checkhealth'==
+PID ##FILTERED##[##PID##] Receiver server is alive
+PID ##FILTERED##[##PID##] Update process is NOT alive
+Update Process crashed during shutdown
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log.updproc -message UPDREPLSTATEOFF'==
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log.updproc UPDREPLSTATEOFF'==
+----------
+Error UPDREPLSTATEOFF seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
+%GTM-E-UPDREPLSTATEOFF, Error replicating global ^bglobal as it maps to database ##REMOTE_TEST_PATH##/instance2/b.dat which has replication turned OFF
+----------
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+# Turn replication ON in region BREG. (MSR action command not printed)
+%GTM-I-REPLSTATE, Replication state for database file ##REMOTE_TEST_PATH##/instance2/b.dat is now ON
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT ALL'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

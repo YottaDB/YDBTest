@@ -1,0 +1,89 @@
+---------------------------------------------------------------------------------------
+BEGIN 1 :-) Choose randomly between -reg OR -file qualifier
+
+
+END 1
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 2 :-) create mumps.dat database in tmp directory
+
+Files Created in ##TEST_PATH##/tmp:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+END 2
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 3 :-) access database mumps.dat and crash it
+
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/tmp/mumps.dat
+Region	DEFAULT
+
+
+GTM>
+Killed
+
+END 3
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 4 :-) create backup.dat
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+backup.gld
+Using: ##SOURCE_PATH##/mupip
+backup.dat
+
+END 4
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 5 :-) try to access backup.dat database to trigger DBNAMEMISMATCH error
+
+
+GTM>
+%GTM-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/backup.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+##TEST_AWK.GTM-E-DBNAMEMISMATCH, Database file ##TEST_PATH##.backup.dat points to shared memory .id = [0-9]+. which in turn points to an inaccessible database file ##TEST_PATH##.tmp.mumps.dat
+%SYSTEM-E-ENO13, Permission denied
+
+GTM>
+
+END 5
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 6 :-) Do MUPIP rundown on backup.dat and then access it. Database access should be clean
+
+##TEST_AWKmupip rundown .*
+##TEST_AWK.GTM-I-DBNAMEMISMATCH, Database file .*backup.dat points to shared memory .id = [0-9]+. which in turn points to an inaccessible database file ##TEST_PATH##.tmp.mumps.dat
+%SYSTEM-E-ENO13, Permission denied
+##TEST_AWK.GTM-I-MUFILRNDWNSUC, File .*backup.dat successfully rundown
+
+GTM>
+set ^x=1
+GTM>
+
+GTM>
+Clean database access
+GTM>
+
+END 6
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 7 :-) do mupip rundown on mumps.dat to remove leftover ipcs
+
+mupip rundown -reg "*"
+##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/tmp/mumps.dat
+##TEST_AWK%GTM-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+##TEST_AWK.GTM-I-MUFILRNDWNSUC, File .*mumps.dat successfully rundown
+
+END 7
+---------------------------------------------------------------------------------------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,58 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+Output File: 
+;trigger name: a#1 (region DEFAULT)  cycle: 1
++^a -commands=S -xecute="set ^b=$ZTVALUE-1 set ^c=$ZTVALUE+1 set ^save=$ZJOBEXAM()"
+
+###################################################################
+output from trigintrpt M routine
+###################################################################
+
+if $ZJOBEXAM()'="" set ^a=4
+After direct set of ^a to 3, ^a= 3 ^b= 2 ^c= 4
+##TEST_AWKINTRPT issued to process [0-9]*
+After modification of ^a in $ZINTERRUPT, ^a= 4 ^b= 3 ^c= 5
+
+###################################################################
+
+###################################################################
+extract relevant trigger information from the 3 GTM... files created by $ZJOBEXAM
+###################################################################
+
+$TLEVEL=1 $ZTLEVEL=1 $ZTOLDVAL="" $ZTRIGGEROP="S" $ZTVALUE=3 
+$TLEVEL=0 $ZTLEVEL=0 $ZTOLDVAL="" $ZTRIGGEROP="" $ZTVALUE="" 
+$TLEVEL=1 $ZTLEVEL=1 $ZTOLDVAL=3 $ZTRIGGEROP="S" $ZTVALUE=4 
+
+###################################################################
+
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+TEST-E-FAILED: DATABASE EXTRACTs on PRIMARY and SECONDARY are DIFFERENT. Check RF_EXTR_debuglog.out for details
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+###################################################################
+test that the globals (other than ^save) are the same on primary and secondary
+###################################################################
+##SUSPEND_OUTPUT REPLIC
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

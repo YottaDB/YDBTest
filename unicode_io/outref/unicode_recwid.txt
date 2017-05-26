@@ -1,0 +1,137 @@
+setenv gtm_chset UTF-8
+unset echo
+
+GTM>
+do ^unicoderecwid("UTF-8")
+
+GTM>
+-> OPEN "UTF-8_recordwidth1.txt":(NEWVERSION:RECORDSIZE=10:CHSET="UTF-8")
+-> USE "UTF-8_recordwidth1.txt":(width=20)
+-> CLOSE "UTF-8_recordwidth1.txt"
+File: UTF-8_recordwidth1.txt
+#l   $L(l)   l
+1    3:9     １２３
+2    3:9     ４５６
+3    3:9     ７８９
+4    3:9     ０１２
+5    2:4     ３2
+-> OPEN "UTF-8_recordwidth2.txt":(newversion:recordsize=20:CHSET="UTF-8")
+-> USE "UTF-8_recordwidth2.txt":(width=10)
+-> CLOSE "UTF-8_recordwidth2.txt"
+File: UTF-8_recordwidth2.txt
+#l   $L(l)   l
+1    5:15    １２３４５
+2    5:15    ６７８９０
+3    4:10    １２３6
+-> OPEN "UTF-8_recordwidth3.txt":(newversion:recordsize=10:CHSET="UTF-8")
+-> USE "UTF-8_recordwidth3.txt"
+-> CLOSE "UTF-8_recordwidth3.txt"
+File: UTF-8_recordwidth3.txt
+#l   $L(l)   l
+1    3:9     １２３
+2    3:9     ４５６
+3    3:9     ７８９
+4    3:9     ０１２
+5    4:10    ３2１２
+6    3:9     ３４５
+7    3:9     ６７８
+8    3:9     ９０１
+9    3:7     ２３4
+
+GTM>
+do ^unicoderecwid("UTF-16")
+
+GTM>
+-> OPEN "UTF-16_recordwidth1.txt":(NEWVERSION:RECORDSIZE=10:CHSET="UTF-16")
+-> USE "UTF-16_recordwidth1.txt":(width=20)
+-> CLOSE "UTF-16_recordwidth1.txt"
+File: UTF-16_recordwidth1.txt
+#l   $L(l)   l
+1    5:15    １２３４５
+2    5:15    ６７８９０
+3    4:10    １２３6
+-> OPEN "UTF-16_recordwidth2.txt":(newversion:recordsize=20:CHSET="UTF-16")
+-> USE "UTF-16_recordwidth2.txt":(width=10)
+-> CLOSE "UTF-16_recordwidth2.txt"
+File: UTF-16_recordwidth2.txt
+#l   $L(l)   l
+1    5:15    １２３４５
+2    5:15    ６７８９０
+3    4:10    １２３6
+-> OPEN "UTF-16_recordwidth3.txt":(newversion:recordsize=10:CHSET="UTF-16")
+-> USE "UTF-16_recordwidth3.txt"
+-> CLOSE "UTF-16_recordwidth3.txt"
+File: UTF-16_recordwidth3.txt
+#l   $L(l)   l
+1    5:15    １２３４５
+2    5:15    ６７８９０
+3    5:13    １２３6１
+4    5:15    ２３４５６
+5    5:15    ７８９０１
+6    3:7     ２３4
+
+GTM>
+do ^unicoderecwid("UTF-16LE")
+
+GTM>
+-> OPEN "UTF-16LE_recordwidth1.txt":(NEWVERSION:RECORDSIZE=10:CHSET="UTF-16LE")
+-> USE "UTF-16LE_recordwidth1.txt":(width=20)
+-> CLOSE "UTF-16LE_recordwidth1.txt"
+File: UTF-16LE_recordwidth1.txt
+#l   $L(l)   l
+1    5:15    １２３４５
+2    5:15    ６７８９０
+3    4:10    １２３6
+-> OPEN "UTF-16LE_recordwidth2.txt":(newversion:recordsize=20:CHSET="UTF-16LE")
+-> USE "UTF-16LE_recordwidth2.txt":(width=10)
+-> CLOSE "UTF-16LE_recordwidth2.txt"
+File: UTF-16LE_recordwidth2.txt
+#l   $L(l)   l
+1    5:15    １２３４５
+2    5:15    ６７８９０
+3    4:10    １２３6
+-> OPEN "UTF-16LE_recordwidth3.txt":(newversion:recordsize=10:CHSET="UTF-16LE")
+-> USE "UTF-16LE_recordwidth3.txt"
+-> CLOSE "UTF-16LE_recordwidth3.txt"
+File: UTF-16LE_recordwidth3.txt
+#l   $L(l)   l
+1    5:15    １２３４５
+2    5:15    ６７８９０
+3    5:13    １２３6１
+4    5:15    ２３４５６
+5    5:15    ７８９０１
+6    3:7     ２３4
+
+GTM>
+do ^unicoderecwid("UTF-16BE")
+
+GTM>
+-> OPEN "UTF-16BE_recordwidth1.txt":(NEWVERSION:RECORDSIZE=10:CHSET="UTF-16BE")
+-> USE "UTF-16BE_recordwidth1.txt":(width=20)
+-> CLOSE "UTF-16BE_recordwidth1.txt"
+File: UTF-16BE_recordwidth1.txt
+#l   $L(l)   l
+1    5:15    １２３４５
+2    5:15    ６７８９０
+3    4:10    １２３6
+-> OPEN "UTF-16BE_recordwidth2.txt":(newversion:recordsize=20:CHSET="UTF-16BE")
+-> USE "UTF-16BE_recordwidth2.txt":(width=10)
+-> CLOSE "UTF-16BE_recordwidth2.txt"
+File: UTF-16BE_recordwidth2.txt
+#l   $L(l)   l
+1    5:15    １２３４５
+2    5:15    ６７８９０
+3    4:10    １２３6
+-> OPEN "UTF-16BE_recordwidth3.txt":(newversion:recordsize=10:CHSET="UTF-16BE")
+-> USE "UTF-16BE_recordwidth3.txt"
+-> CLOSE "UTF-16BE_recordwidth3.txt"
+File: UTF-16BE_recordwidth3.txt
+#l   $L(l)   l
+1    5:15    １２３４５
+2    5:15    ６７８９０
+3    5:13    １２３6１
+4    5:15    ２３４５６
+5    5:15    ７８９０１
+6    3:7     ２３4
+
+GTM>

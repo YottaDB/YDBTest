@@ -1,0 +1,137 @@
+###################################################################
+gtm8389
+No matching triggers found for deletion
+Added SET trigger on ^a named a#1
+Xecute
+$ZTNAME="a#1#"
+$ZTOLDVAL=""
+All existing triggers (count = 1) deleted
+Added SET trigger on ^a named a#1
+
+ZPrint ^a#1# 
+$TRESTART=0
+ zwrite $ztname,$ztoldvalue
+
+Xecute
+$ZTNAME="a#1#"
+ zwrite $ztname
+
+###################################################################
+; Show how ZPrint'ing a trigger that was not already executed works as expected
+notexecuted
+=>Loading triggers
+TEST: ZPrint ^NOTEXECUTED#1# 
+ zwrite $ztname
+
+###################################################################
+; Show how ZPrint'ing a trigger that was executed and deleted works as expected
+executedbutdeleted
+=>Loading triggers
+Invoke ^EXECUTEDBUTDELETED
+$ZTNAME="EXECUTEDBUTDELETED#1#"
+=>Unloading triggers
+ZPrint ^EXECUTEDBUTDELETED#1# 
+ zwrite $ztname
+
+###################################################################
+; Show how ZPrint'ing a trigger that was executed and replaced will use whatever trigger is
+; currently loaded - the prior trigger
+replaced
+=>Loading triggers
+Invoke ^REPLACED
+$ZTNAME="REPLACED#1#"
+=>Replacing triggers
+TEST: ZPrint ^REPLACED#1# 
+ zwrite $ztname
+
+###################################################################
+; Show how ZPrint'ing a trigger that was executed and replaced will use whatever trigger is
+; currently loaded - the new trigger
+execreplaced
+=>Loading triggers
+Invoke ^EXECREPLACED
+$ZTNAME="EXECREPLACED#1#"
+=>Replacing triggers
+Xecute ^EXECREPLACED#1# 
+before: zwrite $ztname
+$ZTNAME="EXECREPLACED#1#"
+after : ZWRITE $ZTNAME
+
+###################################################################
+; Show how ZPrint'ing a trigger that was already ZPrint'ed/$TEXT()'d inside a trigger and then
+; deleted will print regardless of transaction state. While the outcome is no different than
+; the above, the prior version behaved differently in this scenario
+zprintinflight
+=>Loading triggers
+Invoke ^ZPRINTINFLIGHT
+ zprint @($char(94)_$ztname)
+=>Unloading triggers
+TEST: ZPrint ^ZPRINTINFLIGHT#1# 
+ zprint @($char(94)_$ztname)
+
+###################################################################
+; Show how $TEXT()'ing a trigger that was already ZPrint'ed/$TEXT()'d inside a trigger and then
+; deleted will print regardless of transaction state. While the outcome is no different than
+; the above, the prior version behaved differently in this scenario
+dtinflight
+=>Loading triggers
+Invoke ^DTINFLIGHT
+ write $text(@($char(94)_$ztname)),!
+=>Unloading triggers
+TEST: $Text ^DTINFLIGHT#1# 
+ write $text(@($char(94)_$ztname)),!
+
+###################################################################
+; Show how ZPRINTing a trigger that was already ZPRINTed/$TEXT()'d or executed prior to execution
+; of an UNLINK scenario is reloaded and printed at this reference.
+zprintunlink
+=>Loading triggers
+Invoke ^ZPRINTUNLINK
+$ZTNAME="ZPRINTUNLINK#1#"
+=>Replacing triggers
+TEST: ZGOTO 0:zprintunlinkcont successful - redo setup then try trigger
+=>Loading triggers
+TEST: ZPrint ^ZPRINTUNLINKCONT#1# 
+ zwrite $ztname
+
+###################################################################
+; Show how $TEXT()ing a trigger that was already ZPRINTed/$TEXT()'d or executed prior to execution
+; of an UNLINK scenario is reloaded and printed at this reference.
+dtunlink
+=>Loading triggers
+Invoke ^DTUNLINK
+$ZTNAME="DTUNLINK#1#"
+=>Replacing triggers
+TEST: ZGOTO 0:dtunlinkcont successful - redo setup then try trigger
+=>Loading triggers
+TEST: $Text ^DTUNLINKCONT#1# 
+ zwrite $ztname
+
+###################################################################
+; Show how ZPRINTing a trigger that was already ZPRINTed/$TEXT()'d or executed prior to execution
+; of an UNLINK scenario is deleted and printed at this reference (expect error).
+zprintunlinkdel
+=>Loading triggers
+Invoke ^ZPRINTUNLINKDEL
+$ZTNAME="ZPRINTUNLINKDEL#1#"
+=>Replacing triggers
+TEST: ZGOTO 0:zprintunlinkdelcont successful - redo setup then try trigger
+All existing triggers (count = 1) deleted
+
+TEST: ZPrint ^ZPRINTUNLINKDELCONT#1# 
+zprintunlinkdelcont $ETRAP triggered - $ZSTATUS: 150376042,testit+4^gtm8389,%GTM-E-TRIGNAMENF, Trigger name ZPRINTUNLINKDELCONT#1# not found with the current default global directory
+
+###################################################################
+; Show how $TEXT()ing a trigger that was already ZPRINTed/$TEXT()'d or executed prior to execution
+; of an UNLINK scenario is deleted and printed at this reference (expect null string return).
+dtunlinkdel
+=>Loading triggers
+Invoke ^DTUNLINKDEL
+$ZTNAME="DTUNLINKDEL#1#"
+=>Replacing triggers
+TEST: ZGOTO 0:dtunlinkdelcont successful - redo setup then try trigger
+All existing triggers (count = 1) deleted
+
+TEST: $Text ^DTUNLINKDELCONT#1# 
+
+

@@ -1,0 +1,114 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+TEST CASE 1: Small value for verify-depth should issue an appropriate error.
+
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+TEST-I-PASSED, TLSHANDSHAKE is found in replication logs as expected.
+
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+TEST CASE 2: Bad private key should issue an appropriate error.
+
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+----------
+Error W-TLSCONVSOCK seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%GTM-W-TLSCONVSOCK, Failed to convert Unix TCP/IP socket to TLS/SSL aware socket
+----------
+----------
+Error GTM-I-TEXT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%GTM-I-TEXT, Failed to read private key ##TEST_PATH##/demoCA/private/client.key. Reason: error:0906D066:PEM routines:PEM_read_bio:bad end line
+----------
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+TEST CASE 3: Test that specifying neither CAfile nor CApath leads to an error due to failure in certificate validation
+
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+TEST-I-PASSED, TLSHANDSHAKE is found in replication logs as expected.
+
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+TEST CASE 4: Test that specifying a bad password issues appropriate error
+
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+----------
+Error W-TLSCONVSOCK seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%GTM-W-TLSCONVSOCK, Failed to convert Unix TCP/IP socket to TLS/SSL aware socket
+----------
+----------
+Error GTM-I-TEXT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+##TEST_AWK%GTM-I-TEXT, Failed to read private key ##TEST_PATH##/demoCA/private/client.key. Reason: error:.*(bad decrypt|wrong tag|header too long)
+----------
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+TEST CASE 5: Test that expired certificates issues appropriate errors.
+
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+TEST-I-PASSED, TLSHANDSHAKE is found in replication logs as expected.
+
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+TEST CASE 6: Test that specifying only one of dh* parameters issues an appropriate error.
+
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+----------
+Error W-TLSCONVSOCK seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+%GTM-W-TLSCONVSOCK, Failed to convert Unix TCP/IP socket to TLS/SSL aware socket
+----------
+----------
+Error GTM-I-TEXT seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+%GTM-I-TEXT, Configuration parameter `tls.dh512' not specified.
+----------
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+TEST CASE 7: Test that revoked certificates issues appropriate errors.
+
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+TEST-I-PASSED, TLSHANDSHAKE is found in replication logs as expected.
+
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT ALL'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

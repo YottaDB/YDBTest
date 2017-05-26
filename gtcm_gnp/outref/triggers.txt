@@ -1,0 +1,128 @@
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
+##GT.CM##mumps.gld
+##GT.CM##Using: ##SOURCE_PATH##/mupip
+Create local (client) database...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+The database layout is:
+ASEG	a.dat
+BSEG	##TEST_REMOTE_NODE_PATH_GTCM##/b.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
+Starting the GT.CM Servers...
+# Expect GTM-E-UNIMPLOP error when triggers that go to remote (i.e gtcm client) regions is loaded
+%GTM-E-UNIMPLOP, Unimplemented construct encountered
+%GTM-I-TEXT, This utility does not support remote database operations
+# Loading triggers that go to the local region only should work fine
+File local.trg, Line 1: Added SET trigger on ^a named a#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Select/delete/load triggers using $ztrigger()
+# Select/Load/Delete triggers that map to the local region should work fine
+;trigger name: a#1 (region AREG)  cycle: 1
++^a(acn=*) -commands=S -xecute="Set ^a(acn,acn+1)=$ztval"
+1
+-a* :
+Deleted trigger named 'a#1' for global ^a (region AREG)
+All existing triggers named a* (count = 1) now deleted
+1
++^a(acn=:) -commands=SET -xecute="Set ^a(acn,acn+1)=$ztval" :
+Added SET trigger on ^a named a#1
+1
+File localdel.trg, Line 1: Deleted trigger named 'a#1' for global ^a (region AREG)
+File localdel.trg, Line 1: All existing triggers named a* (count = 1) now deleted
+=========================================
+0 triggers added
+1 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+File local.trg, Line 1: Added SET trigger on ^a named a#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Select/Load/Delete triggers that map to the remote (GTCM client) region should error gracefully
+1
+1
+-^b(acn=:) -commands=SET -name=btrig -xecute="Set ^b(acn,acn+1)=$ztval" :
+STAT=loadbyitem+4^gtcmtriggers,%GTM-E-REMOTEDBNOTRIG, Trigger operations on global b not supported as it maps to database region BREG that points to a remote file
+-^x(acn=:) -commands=SET -xecute="Set ^x(acn,acn+1)=$ztval" :
+STAT=loadbyitem+4^gtcmtriggers,%GTM-E-REMOTEDBNOTRIG, Trigger operations on global x not supported as it maps to database region DEFAULT that points to a remote file
+-btrig :
+Trigger named btrig does not exist
+1
+-b* :
+No matching triggers of the form b* found for deletion
+1
+-x* :
+No matching triggers of the form x* found for deletion
+1
++^b(acn=:) -commands=SET -name=btrig -xecute="Set ^b(acn,acn+1)=$ztval" :
+STAT=loadbyitem+4^gtcmtriggers,%GTM-E-REMOTEDBNOTRIG, Trigger operations on global b not supported as it maps to database region BREG that points to a remote file
++^x(acn=:) -commands=SET -xecute="Set ^x(acn,acn+1)=$ztval" :
+STAT=loadbyitem+4^gtcmtriggers,%GTM-E-REMOTEDBNOTRIG, Trigger operations on global x not supported as it maps to database region DEFAULT that points to a remote file
+STAT=triggers+13^gtcmtriggers,%GTM-E-REMOTEDBNOTRIG, Trigger operations on global b not supported as it maps to database region BREG that points to a remote file
+STAT=triggers+14^gtcmtriggers,%GTM-E-REMOTEDBNOTRIG, Trigger operations on global b not supported as it maps to database region BREG that points to a remote file
+
+
+###################################################################
+Load triggers on remote nodes. See trigload*.out for the actual trigger command
+###################################################################
+
+
+###################################################################
+Do updates on Local and Remote nodes. The updates to remote nodes should not invoke triggers
+###################################################################
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+
+###################################################################
+Verify that no triggers were invoked on the remote sides
+###################################################################
+
+GTM>
+^a(1)="Update to 'a' global"
+^a(1,2)="Update to 'a' global"
+
+GTM>
+^b(1)="Remote update"
+
+GTM>
+^x(1)="Remote update 2"
+
+GTM>
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####SOURCE_PATH##/mupip
+##GT.CM####SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ a.dat
+No errors detected by integ.

@@ -1,0 +1,94 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+0001
+GTM>
+----------------------------------------------
+File t2.trg, Line 1: Added SET trigger on ^a named a#1
+File t2.trg, Line 2: Added SET trigger on ^a named a#2
+File t2.trg, Line 3: Added SET trigger on ^a named a#3
+File t2.trg, Line 4: Added SET trigger on ^a named a#4
+File t2.trg, Line 5: Added SET trigger on ^b named b#1
+=========================================
+5 triggers added
+0 triggers deleted
+0 triggers modified
+5 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+----------------------------------------------
+File t1.trg, Line 1: Empty subscript not allowed
+"^a() -command=SET -xecute=""do ^twork"""
+File t1.trg, Line 2: Invalid character "^" in subscript
+"^a(^a(1)) -command=SET -xecute=""do ^twork"""
+File t1.trg, Line 3: Invalid variable name in subscript
+"^a(lvn) -command=SET -xecute=""do ^twork"""
+File t1.trg, Line 4: Invalid character "@" in subscript
+"^a(@(""blah"")) -command=SET -xecute=""do ^twork"""
+File t1.trg, Line 5: Error : Invalid global name:
+"^#t -command=SET -xecute=""do ^twork"""
+=========================================
+5 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+----------------------------------------------
+Invalid file name: /dev/null: Not a proper input file
+Invalid file name: xyzzy: No such file or directory
+----------------------------------------------
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,280 @@
+setenv gtm_chset UTF-8
+unset echo
+
+GTM>
+do createFilesTruncate^eoftest
+
+GTM>
+createFiles for truncation followed by reads
+
+
+
+init
+zlengths(1)=63
+zlengths(2)=87
+zlengths(3)=123
+zlengths(4)=123
+zlengths(5)=123
+zlengths(6)=123
+zlengths(7)=144
+zlengths(8)=35
+fileinfo(1)="utf8-1.txt|UTF-8|0|1114111"
+fileinfo(2)="utf8-2.txt|UTF-8|0|1114111"
+fileinfo(3)="utf8-3.txt|UTF-8|0|1114111"
+fileinfo(4)="utf16.txt|UTF-16|0|1114111"
+fileinfo(5)="utf16_BE.txt|UTF-16BE|0|1114111"
+fileinfo(6)="utf16_LE.txt|UTF-16LE|0|1114111"
+fileinfo(7)="utf16-Surrogate.txt|UTF-16|0|1114111"
+fileinfo(8)="ascii.txt|M|0|1114111"
+
+GTM>
+Truncation Stats
+
+64 utf8-1.txt
+##TEST_PATH##/ftruncate utf8-1.txt 62
+88 utf8-2.txt
+##TEST_PATH##/ftruncate utf8-2.txt 85
+124 utf8-3.txt
+##TEST_PATH##/ftruncate utf8-3.txt 120
+146 utf16.txt
+##TEST_PATH##/ftruncate utf16.txt 143
+144 utf16_BE.txt
+##TEST_PATH##/ftruncate utf16_BE.txt 141
+144 utf16_LE.txt
+##TEST_PATH##/ftruncate utf16_LE.txt 141
+188 utf16-Surrogate.txt
+##TEST_PATH##/ftruncate utf16-Surrogate.txt 184
+
+GTM>
+
+
+
+readTruncates
+
+
+
+init
+filename=utf8-1.txt : encoding=UTF-8
+-> OPEN "utf8-1.txt":(READONLY:RECORDSIZE=32000:EXCEPTION="set err=""open"" goto ioerror":CHSET="UTF-8")
+-> USE "utf8-1.txt":(EXCEPTION="set err=""use"" goto ioerror")
+=================================================
+Source of error was use
+150381066,badFileRead+2^eoftest,%GTM-E-BADCHAR, $ZCHAR(226,130) is not a valid character in the UTF-8 encoding form
+continue...
+=================================================
+str="This will be truncated by last 1 byte -١٢٣٤٥٧₁₂₃"
+zb=$ZCH(226,130)
+filename=utf8-2.txt : encoding=UTF-8
+-> OPEN "utf8-2.txt":(READONLY:RECORDSIZE=32000:EXCEPTION="set err=""open"" goto ioerror":CHSET="UTF-8")
+-> USE "utf8-2.txt":(EXCEPTION="set err=""use"" goto ioerror")
+=================================================
+Source of error was use
+150381066,badFileRead+2^eoftest,%GTM-E-BADCHAR, $ZCHAR(239) is not a valid character in the UTF-8 encoding form
+continue...
+=================================================
+str="This will be truncated by last 2 byte -١٢٣٤٥٧₁₂₃₄０１２３４５６"
+zb=$ZCH(239)
+filename=utf8-3.txt : encoding=UTF-8
+-> OPEN "utf8-3.txt":(READONLY:RECORDSIZE=32000:EXCEPTION="set err=""open"" goto ioerror":CHSET="UTF-8")
+-> USE "utf8-3.txt":(EXCEPTION="set err=""use"" goto ioerror")
+=================================================
+Source of error was use
+150381066,badFileRead+2^eoftest,%GTM-E-BADCHAR, $ZCHAR(244) is not a valid character in the UTF-8 encoding form
+continue...
+=================================================
+str="This will be truncated by last 3 byte -١٢٣٤٥٧₁₂₃₄０１２３４５６７乴亐亯仑件伞佉佷"_$C(1111110,1111111)
+zb=$ZCH(244)
+filename=utf16.txt : encoding=UTF-16
+-> OPEN "utf16.txt":(READONLY:RECORDSIZE=32000:EXCEPTION="set err=""open"" goto ioerror":CHSET="UTF-16")
+-> USE "utf16.txt":(EXCEPTION="set err=""use"" goto ioerror")
+=================================================
+Source of error was use
+150381066,badFileRead+2^eoftest,%GTM-E-BADCHAR, $ZCHAR(219,253,220) is not a valid character in the UTF-16BE encoding form
+continue...
+=================================================
+str="This will be truncated by last 1 byte -١٢٣٤٥٧₁₂₃₄０１２３４５６７乴亐亯仑件伞佉佷"_$C(1111110,1111111)
+zb=$ZCH(219,253,220)
+filename=utf16_BE.txt : encoding=UTF-16BE
+-> OPEN "utf16_BE.txt":(READONLY:RECORDSIZE=32000:EXCEPTION="set err=""open"" goto ioerror":CHSET="UTF-16BE")
+-> USE "utf16_BE.txt":(EXCEPTION="set err=""use"" goto ioerror")
+=================================================
+Source of error was use
+150381066,badFileRead+2^eoftest,%GTM-E-BADCHAR, $ZCHAR(219,253,220) is not a valid character in the UTF-16BE encoding form
+continue...
+=================================================
+str="This will be truncated by last 1 byte -١٢٣٤٥٧₁₂₃₄０１２３４５６７乴亐亯仑件伞佉佷"_$C(1111110,1111111)
+zb=$ZCH(219,253,220)
+filename=utf16_LE.txt : encoding=UTF-16LE
+-> OPEN "utf16_LE.txt":(READONLY:RECORDSIZE=32000:EXCEPTION="set err=""open"" goto ioerror":CHSET="UTF-16LE")
+-> USE "utf16_LE.txt":(EXCEPTION="set err=""use"" goto ioerror")
+=================================================
+Source of error was use
+150381066,badFileRead+2^eoftest,%GTM-E-BADCHAR, $ZCHAR(253,219,72) is not a valid character in the UTF-16LE encoding form
+continue...
+=================================================
+str="This will be truncated by last 1 byte -١٢٣٤٥٧₁₂₃₄０１２３４５６７乴亐亯仑件伞佉佷"_$C(1111110,1111111)
+zb=$ZCH(253,219)_"H"
+filename=utf16-Surrogate.txt : encoding=UTF-16
+-> OPEN "utf16-Surrogate.txt":(READONLY:RECORDSIZE=32000:EXCEPTION="set err=""open"" goto ioerror":CHSET="UTF-16")
+-> USE "utf16-Surrogate.txt":(EXCEPTION="set err=""use"" goto ioerror")
+=================================================
+Source of error was use
+150381066,badFileRead+2^eoftest,%GTM-E-BADCHAR, $ZCHAR(216,0) is not a valid character in the UTF-16BE encoding form
+continue...
+=================================================
+str="This will be truncated by last 2 bytes of a surrogate pair -١٢٣٤٥٧₁₂₃₄０１２３４５６７乴亐亯仑件伞佉佷𐀀𐀁"
+zb=$ZCH(216)
+filename=ascii.txt : encoding=M
+-> OPEN "ascii.txt":(READONLY:RECORDSIZE=32000:EXCEPTION="set err=""open"" goto ioerror":CHSET="M")
+-> USE "ascii.txt":(EXCEPTION="set err=""use"" goto ioerror")
+str="This is a simple ASCII file (0-127)"
+zb=""
+
+GTM>
+
+GTM>
+do createFilesEncoding^eoftest
+
+GTM>
+createFiles for different encoding reads
+
+
+
+init
+zlengthe(1)=25
+zlengthe(2)=25
+zlengthe(3)=25
+zlengthe(4)=25
+zlengthe(5)=25
+zlengthe(6)=25
+zlengthe(7)=25
+zlengthe(8)=25
+
+GTM>
+
+GTM>
+
+
+
+readBadEncoding
+readBadEncoding test has the following characteristics
+
+The actual data is solid blocks which will turn into chinese when the encoding is UTF16(LE,BE)
+
+Issue BOMMISMATCH when LE and BE are read interchangeably
+
+Issue BADCHAR when UTF16 data is read using UTF8 encoding
+
+
+
+
+init
+filename=utf8-1.txt : encoding=UTF-8
+-> OPEN "utf8-1.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-8")
+-> USE "utf8-1.txt"
+str="█▇▆▅▄▃▂▁"_$C(0)
+zb=""
+-> OPEN "utf8-1.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16")
+-> USE "utf8-1.txt"
+str=$C(58006)_"裢隇"_$C(58006)_"蛢隅"_$C(58006)_"蓢隃"_$C(58006)_"苢隁"
+zb=""
+-> OPEN "utf8-1.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16BE")
+-> USE "utf8-1.txt"
+str=$C(58006)_"裢隇"_$C(58006)_"蛢隅"_$C(58006)_"蓢隃"_$C(58006)_"苢隁"
+zb=""
+-> OPEN "utf8-1.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16LE")
+-> USE "utf8-1.txt"
+str="離"_$C(57992)_"螖離"_$C(57990)_"薖離"_$C(57988)_"莖離"_$C(57986)_"膖"_$C(2560)
+zb=""
+-> OPEN "utf8-1.txt":(READONLY:RECORDSIZE=32000:CHSET="M")
+-> USE "utf8-1.txt"
+str="█▇▆▅▄▃▂▁"_$C(0)
+zb=""
+filename=utf16.txt : encoding=UTF-16
+-> OPEN "utf16.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-8")
+-> USE "utf16.txt"
+STAT=badFileOpenRead+10^eoftest,%GTM-E-BADCHAR, $ZCHAR(254) is not a valid character in the UTF-8 encoding form
+str=""
+zb=""
+-> OPEN "utf16.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16")
+-> USE "utf16.txt"
+str="█▇▆▅▄▃▂▁"_$C(0)
+zb=""
+-> OPEN "utf16.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16BE")
+-> USE "utf16.txt"
+str="█▇▆▅▄▃▂▁"_$C(0)
+zb=""
+-> OPEN "utf16.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16LE")
+STAT=open+13^io,%GTM-E-BOMMISMATCH, UTF-16BE Byte Order Marker found when UTF-16LE character set specified
+-> OPEN "utf16.txt":(READONLY:RECORDSIZE=32000:CHSET="M")
+-> USE "utf16.txt"
+str=$ZCH(254,255)_"%"_$ZCH(136)_"%"_$ZCH(135)_"%"_$ZCH(134)_"%"_$ZCH(133)_"%"_$ZCH(132)_"%"_$ZCH(131)_"%"_$ZCH(130)_"%"_$ZCH(129)_$C(0,0,0)
+zb=""
+filename=utf16_BE.txt : encoding=UTF-16BE
+-> OPEN "utf16_BE.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-8")
+-> USE "utf16_BE.txt"
+STAT=badFileOpenRead+10^eoftest,%GTM-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
+str="%"
+zb=""
+-> OPEN "utf16_BE.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16")
+-> USE "utf16_BE.txt"
+str="█▇▆▅▄▃▂▁"_$C(0)
+zb=""
+-> OPEN "utf16_BE.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16BE")
+-> USE "utf16_BE.txt"
+str="█▇▆▅▄▃▂▁"_$C(0)
+zb=""
+-> OPEN "utf16_BE.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16LE")
+-> USE "utf16_BE.txt"
+str="蠥蜥蘥蔥营茥舥脥"_$C(0,2560)
+zb=""
+-> OPEN "utf16_BE.txt":(READONLY:RECORDSIZE=32000:CHSET="M")
+-> USE "utf16_BE.txt"
+str="%"_$ZCH(136)_"%"_$ZCH(135)_"%"_$ZCH(134)_"%"_$ZCH(133)_"%"_$ZCH(132)_"%"_$ZCH(131)_"%"_$ZCH(130)_"%"_$ZCH(129)_$C(0,0,0)
+zb=""
+filename=utf16_LE.txt : encoding=UTF-16LE
+-> OPEN "utf16_LE.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-8")
+-> USE "utf16_LE.txt"
+STAT=badFileOpenRead+10^eoftest,%GTM-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
+str=""
+zb=""
+-> OPEN "utf16_LE.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16")
+-> USE "utf16_LE.txt"
+str="蠥蜥蘥蔥营茥舥脥"_$C(0,2560)
+zb=""
+-> OPEN "utf16_LE.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16BE")
+-> USE "utf16_LE.txt"
+str="蠥蜥蘥蔥营茥舥脥"_$C(0,2560)
+zb=""
+-> OPEN "utf16_LE.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16LE")
+-> USE "utf16_LE.txt"
+str="█▇▆▅▄▃▂▁"_$C(0)
+zb=""
+-> OPEN "utf16_LE.txt":(READONLY:RECORDSIZE=32000:CHSET="M")
+-> USE "utf16_LE.txt"
+str=$ZCH(136)_"%"_$ZCH(135)_"%"_$ZCH(134)_"%"_$ZCH(133)_"%"_$ZCH(132)_"%"_$ZCH(131)_"%"_$ZCH(130)_"%"_$ZCH(129)_"%"_$C(0,0)
+zb=""
+filename=ascii.txt : encoding=M
+-> OPEN "ascii.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-8")
+-> USE "ascii.txt"
+str="█▇▆▅▄▃▂▁"_$C(0)
+zb=""
+-> OPEN "ascii.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16")
+-> USE "ascii.txt"
+str=$C(58006)_"裢隇"_$C(58006)_"蛢隅"_$C(58006)_"蓢隃"_$C(58006)_"苢隁"
+zb=""
+-> OPEN "ascii.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16BE")
+-> USE "ascii.txt"
+str=$C(58006)_"裢隇"_$C(58006)_"蛢隅"_$C(58006)_"蓢隃"_$C(58006)_"苢隁"
+zb=""
+-> OPEN "ascii.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16LE")
+-> USE "ascii.txt"
+str="離"_$C(57992)_"螖離"_$C(57990)_"薖離"_$C(57988)_"莖離"_$C(57986)_"膖"_$C(2560)
+zb=""
+-> OPEN "ascii.txt":(READONLY:RECORDSIZE=32000:CHSET="M")
+-> USE "ascii.txt"
+str="█▇▆▅▄▃▂▁"_$C(0)
+zb=""
+
+GTM>
+END OF TEST

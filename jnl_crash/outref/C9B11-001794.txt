@@ -1,0 +1,60 @@
+C9B11-001794: Test rundown/recover
+They should succeed when <kill -9 pid> and <ipcrm -s sem> is done (no <ipcrm -m shm>)
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Start Iteration 1
+GTM Process starts in background...
+Kill -9 <pid> : ipcrm -s <sem_id>
+Shared Memory is existing
+##SOURCE_PATH##/mupip rundown -reg *
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%GTM-I-SHMREMOVED, Removed Shared Memory id XXXX corresponding to file ##TEST_PATH##/a.dat
+%GTM-I-SHMREMOVED, Removed Shared Memory id XXXX corresponding to file ##TEST_PATH##/b.dat
+%GTM-I-SHMREMOVED, Removed Shared Memory id XXXX corresponding to file ##TEST_PATH##/mumps.dat
+Recover...
+##SOURCE_PATH##/mupip journal -recover -backward *
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+End Iteration 1
+Start Iteration 2
+GTM Process starts in background...
+Kill -9 <pid> : ipcrm -s <sem_id>
+Shared Memory is existing
+Recover...
+##SOURCE_PATH##/mupip journal -recover -backward *
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+End Iteration 2
+ Prev journal file name ##FILTERED##GTM_TEST_DEBUGINFO.*
+ Prev journal file name ##FILTERED##GTM_TEST_DEBUGINFO.*
+ Prev journal file name ##FILTERED##GTM_TEST_DEBUGINFO.*
+C9B11-001794 Test Finished

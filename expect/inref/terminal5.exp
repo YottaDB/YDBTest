@@ -1,0 +1,44 @@
+#################################################################
+#								#
+# Copyright (c) 2015-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#!/usr/bin/expect -f
+# Use a relaxed pattern match expectation for a more successful execution
+set timeout -1
+match_max 100000
+
+# Start up a mumps process in direct mode. screen unsets LD_LIBRARY_PATH, so add it to the command startup
+spawn screen -T "$env(TERM)" $env(gtm_dist)/mumps -direct
+
+# Wait for the GTM prompt and then do your routine
+expect "
+GTM>"
+send -- "use \$PRINCIPAL:(X=0:Y=0:CLEARSCREEN) write \"HERE: \",\$X,\",\",\$Y,! use \$PRINCIPAL:(X=8:y=2) write \"HERE: \",\$X,\",\",\$Y,!\r"
+
+# Wait for the "HERE" message because fast machines (I'm looking at you thunder and bolt) need this to slow down. Otherwise the screen capture gets all wonky
+expect "HERE"
+
+# Wait for the prompt
+expect "
+GTM>"
+send -- ":hardcopy terminal5.out.1\r"
+send -- "use \$PRINCIPAL:(X=1:Y=1) write \"HERE: \",\$X,\",\",\$Y,!\r"
+
+# Wait for the "HERE" message because fast machines (I'm looking at you thunder and bolt) need this to slow down. Otherwise the screen capture gets all wonky
+expect "HERE"
+
+# Wait again for the GTM prompt and then halt out
+expect "
+GTM>"
+send -- ":hardcopy terminal5.out.2\r"
+send -- "halt\r"
+
+# Expect should wait until MUMPS exits
+expect eof

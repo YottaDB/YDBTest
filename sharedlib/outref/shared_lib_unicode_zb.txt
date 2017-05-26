@@ -1,0 +1,119 @@
+Files Created in ##TEST_PATH##/multi_ｂｙｔｅ_後漢書_byte:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+################################################################### unizbbasic ###################################################################
+Simple zbreak test starts
+###################################################################
+Set break points
+After break points set: Show the break points and stack:
+zbbasic+14^zbbasicexec
+zbbasic+13^zbbasicexec
+zbbasic+12^zbbasicexec
+zbbasic+11^zbbasicexec
+zbbasic+10^zbbasicexec
+zbbasic+9^zbbasicexec
+zbbasic+8^zbbasicexec
+zbbasic+7^zbbasicexec
+zbbasic+6^zbbasicexec
+zbbasic+5^zbbasicexec
+zbbasic+4^zbbasicexec
+zbbasic+3^zbbasicexec
+zbbasic+2^zbbasicexec
+basic+11^unizbbasic
+dozbbasic+3^unizbdrive
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+###################################################################
+Test xecute
+Verify xecute
+###################################################################
+Test zbreak actions
+do zbbasic^zbbasicexec
+zbbasic+1^zbbasicexec$zlevel=4
+After zbreak actions: Show the break points and stack:
+zbbasic+14^zbbasicexec
+zbbasic+13^zbbasicexec
+zbbasic+12^zbbasicexec
+zbbasic+11^zbbasicexec
+zbbasic+10^zbbasicexec
+zbbasic+9^zbbasicexec
+zbbasic+8^zbbasicexec
+zbbasic+7^zbbasicexec
+zbbasic+6^zbbasicexec
+zbbasic+5^zbbasicexec
+zbbasic+4^zbbasicexec
+zbbasic+3^zbbasicexec
+zbbasic+2^zbbasicexec
+basic+28^unizbbasic
+dozbbasic+3^unizbdrive
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Now verify data
+do verify^zbbasicexec
+###################################################################
+Set break points again
+Test xecute cmd
+Verify xecute cmd
+###################################################################
+Test zbreak actions again
+do zbbasic^zbbasicexec
+zbbasic+1^zbbasicexec$zlevel=4
+After second zbreak actions: Show the break points and stack:
+zbbasic+14^zbbasicexec
+zbbasic+13^zbbasicexec
+zbbasic+12^zbbasicexec
+zbbasic+11^zbbasicexec
+zbbasic+10^zbbasicexec
+zbbasic+9^zbbasicexec
+zbbasic+8^zbbasicexec
+zbbasic+7^zbbasicexec
+zbbasic+6^zbbasicexec
+zbbasic+5^zbbasicexec
+zbbasic+4^zbbasicexec
+zbbasic+3^zbbasicexec
+zbbasic+2^zbbasicexec
+basic+57^unizbbasic
+dozbbasic+3^unizbdrive
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Now verify data
+do verify^zbbasicexec
+Simple zbreak test ends...
+################################################################### dounicode ###################################################################
+Show the breakpoints for dounicode
+testunicode+4^unizbbasic
+testunicode+3^unizbbasic
+This section is to trigger zbreak to do routine passing unicode string
+Will force a zbreak on executing next 2 lines
+The string passed is : multi_ｂｙｔｅ_後漢書 string
+dounicode ends...
+Trigger zbreak
+The string passed is : multi_ｂｙｔｅ_後漢書 string
+dounicode ends...
+zbreak triggered
+testunicode ends...
+################################################################### dollartext ###################################################################
+Show the breakpoints for dollartext
+dodollartext+5^unizbbasic
+dodollartext+4^unizbbasic
+dodollartext+3^unizbbasic
+dodollartext+2^unizbbasic
+dodollartext+1^unizbbasic
+$text=  write "This section is to test $text with unicode data",!
+Test unicode data in $text
+$text=  ; __UNICODE COMMENT_
+checks the display of unicode comment
+$text=  write "This is unicode ｂｙｔｅ_後漢書_？？_4 text",!
+and unicode text
+$text=  ; comment having ASCII and unicode - ｂｙｔｅ_後漢書_？？_4
+.. and both
+$text=  write "testdollartext ends...",!
+dodollartext ends...
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

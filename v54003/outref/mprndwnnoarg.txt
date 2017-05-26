@@ -1,0 +1,103 @@
+---------------------------------------------------------------------------------------
+BEGIN 1 :-) Choose randomly between -reg OR -file qualifier
+
+
+END 1
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 2 :-) create database mumps.dat:
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+END 2
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 3 :-) Access the database(hence create the shared memory) and crash the database
+
+
+GTM>
+set ^x=1
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+GTM>
+Killed
+
+END 3
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 4 :-) Do argumentless MUPIP RUNDOWN while two shared memory points to same db file name
+
+test that active shared memory is not rundown
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+set ^x=11
+GTM>
+
+GTM>
+
+GTM>
+set ^x=22
+GTM>
+
+GTM>
+Shared memory is not removed by mupip rundown in previous command
+GTM>
+
+END 4
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 5 :-) get the shmid for mumps.dat and old_mumps.dat and verfiy its validity
+
+
+END 5
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+##TEST_AWKBEGIN 6 .-. Verify that shared memory corresponding to old_mumps.dat \([0-9]*\) is removed
+
+##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+
+END 6
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 7 :-) Verify that access to old_mumps.dat should issue MUPIP RUNDOWN required
+
+
+GTM>
+set ^y=1
+GTM>
+%GTM-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%GTM-I-TEXT, Error with database control shmctl
+##TEST_AWK.SYSTEM-E-ENO(22|43).*
+
+GTM>
+
+END 7
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 8 :-) do MUPIP RUNDOWN on old_mumps.dat(now mumps.dat) and then access it. It should work fine
+
+##TEST_AWKmupip rundown .*
+##TEST_AWK%GTM-I-MUFILRNDWNSUC, File.*mumps.dat successfully rundown
+
+GTM>
+set ^y=1
+GTM>
+
+GTM>
+
+END 8
+---------------------------------------------------------------------------------------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

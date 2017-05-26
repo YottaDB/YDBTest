@@ -1,0 +1,16 @@
+setgd -file=mumps
+add -name a234567 -region=DEFAULT
+add -name a2345678 -region=DEFAULT
+add -name a765432 -region=DEFAULT
+add -name a7654321 -region=DEFAULT
+setgd -file=local
+add -name a* -region=AREG
+add -name A* -region=AREG
+add -region AREG -dynamic=ASEG
+add -segment ASEG -file=a
+add -name a234567 -region=DEFAULT
+add -name a2345678 -region=DEFAULT
+add -name a765432 -region=DEFAULT
+add -name a7654321 -region=DEFAULT
+setgd -file=other
+exit

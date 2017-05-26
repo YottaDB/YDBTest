@@ -1,0 +1,110 @@
+#!/usr/local/bin/tcsh -f
+ 
+# dsrtest.sh - test interest posting and accruals and totals
+
+set iterations = $1
+set counter=0
+set hname=`echo {$HOST:r:r:r}| cut -c 1-31`
+
+setenv > env.fil
+
+while ( $iterations > 0 )
+      if ( $counter > 0 ) then
+      		dbr		     # restore the database
+	else
+		set counter=`expr $counter + 1`
+      endif
+      if ( -e "*.mje" ) then
+		\rm *.mje
+      endif
+      if ( -e "spool/INT.*" ) then
+		\rm spool/INT.*
+      endif
+      echo "Before run:" >>&! ${testbasedir}/v${profileversion}perf/spool/uptime.logx
+      uptime >>&! ${testbasedir}/v${profileversion}perf/spool/uptime.logx
+      $ps >>& ${testbasedir}/v${profileversion}perf/spool/uptime.logx
+      $CALIPER $CALIPER_REPORT -o $tst_general_dir/mumps.txt $GTM << FIN >>&! ${testbasedir}/v${profileversion}perf/spool/dsrtest.log
+      W "Run ",${iterations},!
+      S TLO="dsrtest"
+      D EXT^SCADRV0(1,"QUE055")
+      S TLO="dsrtest"
+      D EXT^SCADRV0(1,"QUE039")
+      S TLO="dsrtest"
+      D EXT^SCADRV0(1,"QUE096")
+FIN
+      echo "Run verification info:"
+      echo
+	  $GTM << FIN
+      ZWR ^TTL
+      ZWR ^SYSBAL
+      ZWR ^TGL
+FIN
+      $GTM << FIN >>&! ${testbasedir}/v${profileversion}perf/spool/dsrtest.log
+      W "*** RUN ",${iterations}," ******************************"
+      ZWR ^SYSLOG
+      s io="${testbasedir}/v${profileversion}perf/spool/runtimes.dat"
+      o io:append
+      u io w "Run # ",${iterations},"  ",\$\$DAT^%ZM,"  ",\$\$TIM^%ZM,!
+      s x="^SYSLOG"
+      f  s x=\$q(@x) q:x=""  s y=@x w \$p(y,"|",3)," - ",\$p(y,"|",5)-\$p(y,"|",4)," seconds",!
+      w !
+      c io
+FIN
+      echo "After run:" >>&! ${testbasedir}/v${profileversion}perf/spool/uptime.logx
+      uptime >>&! ${testbasedir}/v${profileversion}perf/spool/uptime.logx
+      $ps >>& ${testbasedir}/v${profileversion}perf/spool/uptime.logx
+      $GTM << FIN
+      w \$D(^ERROR)
+      if \$D(^ERROR) w "***BEGIN ^ERROR DUMP***"
+      if \$D(^ERROR) zwr ^ERROR
+      if \$D(^ERROR) w "***END ^ERROR DUMP***"
+      H
+FIN
+      if (-e tmp.glo) then
+		# first load old values
+	       $MUPIP load tmp.glo >>&! load_tmp.out
+	      # then write out all
+	      \rm tmp.glo
+      endif
+
+      $MUPIP extract -select="^SYSLOG*" tmp.glo >>&! extract_tmp.out
+      $DSE << FIN >>&! ${testbasedir}/v${profileversion}perf/spool/dsrtest.log
+      f -r=UBG
+      d -f -all
+      f -r=TBLS
+      d -f -all
+      f -r=TTX
+      d -f -all
+      exit
+FIN
+
+
+      @ iterations =  $iterations - 1
+end
+
+if (-e $gtm_test_log_dir/$hname.glo) then
+	$MUPIP load $gtm_test_log_dir/$hname.glo >>&! load_$hname.out
+endif
+
+if (! -e serverconf.m) echo "There is nothing to compare against! Please prepare $gtm_tst/com/serverconf.m"
+
+if (-e $gtm_test_log_dir/$hname.dat) then
+	cp $gtm_test_log_dir/$hname.dat $hname.dat
+endif
+
+#call conclu only once
+$GTM << FIN >>&! ${testbasedir}/v${profileversion}perf/spool/dsrtest.log
+s io="${testbasedir}/v${profileversion}perf/spool/passorfail.dat"
+o io:(new:rewind)
+u io
+d ^conclu
+w !
+c io
+h
+FIN
+
+$MUPIP extract -select="^total*" $hname.glo >>&! extract_$hname.out
+\cp $hname.csv $gtm_test_log_dir
+\cp $hname.glo $gtm_test_log_dir
+\cp $hname.dat $gtm_test_log_dir
+\mv $hname.m $tst_general_dir

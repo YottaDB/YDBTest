@@ -1,0 +1,287 @@
+TSTART test starts for longnames....
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+--------------------------------------------
+$trest = 0
+inside TP zwr=
+%cindirl="I" ;*
+%cindirlongnamecheck="new" ;*
+aindirlongnamecheck="org" ;*
+alongname="aindirlongnamecheck"
+avariableisalongvariable="aindirlongnamecheck"
+bisalsoaverylongname="sometext" ;*
+ccouldbe="%cindirl"
+ccouldbeveryverylongtoo="%cindirlongnamecheck"
+disthelongestofalltocount="d2345678"
+dorestart=2
+eiam8bit="e0000000"
+flagval="errorOFF"
+passval="errorOFF"
+someothervariable="."
+--------------
+inside TP, after sets, zwrite=
+%cindirl="I intent to check 8 char" ;*
+%cindirlongnamecheck="new0" ;*
+aindirlongnamecheck="org_11" ;*
+alongname=1
+avariableisalongvariable="someothervariable"
+bisalsoaverylongname="sometext somemoretext" ;*
+ccouldbe="%cindirl"
+ccouldbeveryverylongtoo="%cindirlongnamecheck"
+disthelongestofalltocount=-1
+dorestart=2
+eiam8bit="e00000001"
+flagval="errorOFF"
+passval="errorOFF"
+someothervariable="someothervariable_21_31"
+--------------------------------------------
+check for "noundef" inside tstart
+
+iamalongvarverylongoflength29 variable is accessed without defining but I am in a "view noundef" state
+--------------------------------------------
+$trest = 1
+inside TP zwr=
+%cindirl="I" ;*
+%cindirlongnamecheck="new" ;*
+aindirlongnamecheck="org" ;*
+alongname=1
+avariableisalongvariable="someothervariable"
+bisalsoaverylongname="sometext" ;*
+ccouldbe="%cindirl"
+ccouldbeveryverylongtoo="%cindirlongnamecheck"
+disthelongestofalltocount=-1
+dorestart=1
+eiam8bit="e00000001"
+flagval="errorOFF"
+iamalongvarverylongoflengthup31=10
+passval="errorOFF"
+someothervariable="someothervariable_21_31"
+--------------
+inside TP, after sets, zwrite=
+%cindirl="I intent to check 8 char" ;*
+%cindirlongnamecheck="new1" ;*
+aindirlongnamecheck="org_11" ;*
+alongname=2
+avariableisalongvariable="someothervariable"
+bisalsoaverylongname="sometext somemoretext" ;*
+ccouldbe="%cindirl"
+ccouldbeveryverylongtoo="%cindirlongnamecheck"
+disthelongestofalltocount=-2
+dorestart=1
+eiam8bit="e000000011"
+flagval="errorOFF"
+iamalongvarverylongoflengthup31=10
+passval="errorOFF"
+someothervariable="someothervariable_21_31"
+--------------------------------------------
+check for "noundef" inside tstart
+
+iamalongvarverylongoflength29 variable is accessed without defining but I am in a "view noundef" state
+--------------------------------------------
+$trest = 2
+inside TP zwr=
+%cindirl="I" ;*
+%cindirlongnamecheck="new" ;*
+aindirlongnamecheck="org" ;*
+alongname=2
+avariableisalongvariable="someothervariable"
+bisalsoaverylongname="sometext" ;*
+ccouldbe="%cindirl"
+ccouldbeveryverylongtoo="%cindirlongnamecheck"
+disthelongestofalltocount=-2
+dorestart=0
+eiam8bit="e000000011"
+flagval="errorOFF"
+iamalongvarverylongoflengthup31=10
+passval="errorOFF"
+someothervariable="someothervariable_21_31"
+--------------
+inside TP, after sets, zwrite=
+%cindirl="I intent to check 8 char" ;*
+%cindirlongnamecheck="new2" ;*
+aindirlongnamecheck="org_11" ;*
+alongname=3
+avariableisalongvariable="someothervariable"
+bisalsoaverylongname="sometext somemoretext" ;*
+ccouldbe="%cindirl"
+ccouldbeveryverylongtoo="%cindirlongnamecheck"
+disthelongestofalltocount=-3
+dorestart=0
+eiam8bit="e0000000111"
+flagval="errorOFF"
+iamalongvarverylongoflengthup31=10
+passval="errorOFF"
+someothervariable="someothervariable_21_31"
+--------------------------------------------
+check for "noundef" inside tstart
+
+iamalongvarverylongoflength29 variable is accessed without defining but I am in a "view noundef" state
+--------------------------------------------
+outside TP zwr=
+%cindirl="I intent to check 8 char"
+%cindirlongnamecheck="new2"
+aindirlongnamecheck="org_11"
+alongname=3
+avariableisalongvariable="someothervariable"
+bisalsoaverylongname="sometext somemoretext"
+ccouldbe="%cindirl"
+ccouldbeveryverylongtoo="%cindirlongnamecheck"
+disthelongestofalltocount=-3
+dorestart=-1
+eiam8bit="e0000000111"
+flagval="errorOFF"
+iamalongvarverylongoflengthup31=10
+passval="errorOFF"
+someothervariable="someothervariable_21_31"
+
+GTM>
+
+GTM>
+
+GTM>
+--------------------------------------------
+$trest = 0
+inside TP zwr=
+%cindirl="I" ;*
+%cindirlongnamecheck="new" ;*
+aindirlongnamecheck="org" ;*
+alongname="aindirlongnamecheck"
+avariableisalongvariable="aindirlongnamecheck"
+bisalsoaverylongname="sometext" ;*
+ccouldbe="%cindirl"
+ccouldbeveryverylongtoo="%cindirlongnamecheck"
+disthelongestofalltocount="d2345678"
+dorestart=2
+eiam8bit="e0000000"
+flagval="errorON"
+iamalongvarverylongoflengthup31=10
+passval="errorON"
+someothervariable="."
+--------------
+inside TP, after sets, zwrite=
+%cindirl="I intent to check 8 char" ;*
+%cindirlongnamecheck="new0" ;*
+aindirlongnamecheck="org_11" ;*
+alongname=1
+avariableisalongvariable="someothervariable"
+bisalsoaverylongname="sometext somemoretext" ;*
+ccouldbe="%cindirl"
+ccouldbeveryverylongtoo="%cindirlongnamecheck"
+disthelongestofalltocount=-1
+dorestart=2
+eiam8bit="e00000001"
+flagval="errorON"
+iamalongvarverylongoflengthup31=10
+passval="errorON"
+someothervariable="someothervariable_21_31"
+--------------------------------------------
+check for "noundef" inside tstart
+
+--------------------------------------------
+$trest = 1
+inside TP zwr=
+%cindirl="I" ;*
+%cindirlongnamecheck="new" ;*
+aindirlongnamecheck="org" ;*
+alongname=1
+avariableisalongvariable="someothervariable"
+bisalsoaverylongname="sometext" ;*
+ccouldbe="%cindirl"
+ccouldbeveryverylongtoo="%cindirlongnamecheck"
+disthelongestofalltocount=-1
+dorestart=1
+eiam8bit="e00000001"
+flagval="errorON"
+iamalongvarverylongoflengthup31=10
+passval="errorON"
+someothervariable="someothervariable_21_31"
+--------------
+inside TP, after sets, zwrite=
+%cindirl="I intent to check 8 char" ;*
+%cindirlongnamecheck="new1" ;*
+aindirlongnamecheck="org_11" ;*
+alongname=2
+avariableisalongvariable="someothervariable"
+bisalsoaverylongname="sometext somemoretext" ;*
+ccouldbe="%cindirl"
+ccouldbeveryverylongtoo="%cindirlongnamecheck"
+disthelongestofalltocount=-2
+dorestart=1
+eiam8bit="e000000011"
+flagval="errorON"
+iamalongvarverylongoflengthup31=10
+passval="errorON"
+someothervariable="someothervariable_21_31"
+--------------------------------------------
+check for "noundef" inside tstart
+
+--------------------------------------------
+$trest = 2
+inside TP zwr=
+%cindirl="I" ;*
+%cindirlongnamecheck="new" ;*
+aindirlongnamecheck="org" ;*
+alongname=2
+avariableisalongvariable="someothervariable"
+bisalsoaverylongname="sometext" ;*
+ccouldbe="%cindirl"
+ccouldbeveryverylongtoo="%cindirlongnamecheck"
+disthelongestofalltocount=-2
+dorestart=0
+eiam8bit="e000000011"
+flagval="errorON"
+iamalongvarverylongoflengthup31=10
+passval="errorON"
+someothervariable="someothervariable_21_31"
+--------------
+inside TP, after sets, zwrite=
+%cindirl="I intent to check 8 char" ;*
+%cindirlongnamecheck="new2" ;*
+aindirlongnamecheck="org_11" ;*
+alongname=3
+avariableisalongvariable="someothervariable"
+bisalsoaverylongname="sometext somemoretext" ;*
+ccouldbe="%cindirl"
+ccouldbeveryverylongtoo="%cindirlongnamecheck"
+disthelongestofalltocount=-3
+dorestart=0
+eiam8bit="e0000000111"
+flagval="errorON"
+iamalongvarverylongoflengthup31=10
+passval="errorON"
+someothervariable="someothervariable_21_31"
+--------------------------------------------
+check for "noundef" inside tstart
+
+--------------------------------------------
+outside TP zwr=
+%cindirl="I intent to check 8 char"
+%cindirlongnamecheck="new2"
+aindirlongnamecheck="org_11"
+alongname=3
+avariableisalongvariable="someothervariable"
+bisalsoaverylongname="sometext somemoretext"
+ccouldbe="%cindirl"
+ccouldbeveryverylongtoo="%cindirlongnamecheck"
+disthelongestofalltocount=-3
+dorestart=-1
+eiam8bit="e0000000111"
+flagval="errorON"
+iamalongvarverylongoflengthup31=10
+passval="errorON"
+someothervariable="someothervariable_21_31"
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+TSTART test for longnames ends

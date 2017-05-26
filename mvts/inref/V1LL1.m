@@ -1,0 +1,89 @@
+V1LL1 ;IW-YS-TS,VV1,MVTS V9.10;15/6/96;ACCEPTABLE LINE LABELS -1-
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1978-1996
+ W !!,"4---V1LL1: Acceptable line labels -1-"
+ W !,"Regarding label length and character mix."
+ W:$Y>55 #
+ ;
+ ;I-609 TEST MOVE TO V1LL0 ROUTINE (V7.3;20/6/88)
+ ;
+601 W !,"I-601  Labelless line"
+ S ^ABSN="10011",^ITEM="I-601  Labelless line",^NEXT="602^V1LL1,V1LL2^VV1" D ^V1PRESET
+ S ^VCOMP=""
+ S ^VCOMP="LABELLESS LINE"
+ S ^VCORR="LABELLESS LINE" D ^VEXAMINE
+ ;
+602 W !,"I-602  label is ""%"""
+ S ^ABSN="10012",^ITEM="I-602  label is ""%""",^NEXT="603^V1LL1,V1LL2^VV1" D ^V1PRESET
+ S ^VCOMP=""
+% S ^VCOMP="%"
+ S ^VCORR="%" D ^VEXAMINE
+ ;
+603 W !,"I-603  label is ""%"" and alpha"
+6031 S ^ABSN="10013",^ITEM="I-603.1  %A",^NEXT="6032^V1LL1,V1LL2^VV1" D ^V1PRESET
+ S ^VCOMP=""
+%A S ^VCOMP="%A"
+ S ^VCORR="%A" D ^VEXAMINE
+ ;
+6032 S ^ABSN="10014",^ITEM="I-603.2  %ABZWQ",^NEXT="6033^V1LL1,V1LL2^VV1" D ^V1PRESET
+ S ^VCOMP=""
+%ABZWQ S ^VCOMP="%ABZWQ"
+ S ^VCORR="%ABZWQ" D ^VEXAMINE
+ ;
+6033 S ^ABSN="10015",^ITEM="I-603.3  %ABCDE",^NEXT="604^V1LL1,V1LL2^VV1" D ^V1PRESET
+ S ^VCOMP=""
+%ABCDE S ^VCOMP="%ABCDE"
+ S ^VCORR="%ABCDE" D ^VEXAMINE
+ ;
+604 W !,"I-604  label is ""%"" and digit"
+6041 S ^ABSN="10016",^ITEM="I-604.1  %01",^NEXT="6042^V1LL1,V1LL2^VV1" D ^V1PRESET
+ S VCOMP=""
+%01 S VCOMP="%01"
+ S ^VCOMP=VCOMP,^VCORR="%01" D ^VEXAMINE
+ ;
+6042 S ^ABSN="10017",^ITEM="I-604.2  %000000",^NEXT="605^V1LL1,V1LL2^VV1" D ^V1PRESET
+ S VCOMP=""
+%000000 S VCOMP=" %000000"
+ S ^VCOMP=VCOMP,^VCORR=" %000000" D ^VEXAMINE
+ ;
+605 W !,"I-605  label is ""%"" and combination of alpha and digit"
+6051 S ^ABSN="10018",^ITEM="I-605.1  %09A",^NEXT="6052^V1LL1,V1LL2^VV1" D ^V1PRESET
+ S ^VCOMP=""
+%09A S ^VCOMP="%09A"
+ S ^VCORR="%09A" D ^VEXAMINE
+ ;
+6052 S ^ABSN="10019",^ITEM="I-605.2  %09AB",^NEXT="6053^V1LL1,V1LL2^VV1" D ^V1PRESET
+ S ^VCOMP=""
+%09AB S ^VCOMP="%09AB"
+ S ^VCORR="%09AB" D ^VEXAMINE
+ ;
+6053 S ^ABSN="10020",^ITEM="I-605.3  %ABC000",^NEXT="6054^V1LL1,V1LL2^VV1" D ^V1PRESET
+ S VCOMP=""
+%ABC000 S VCOMP="%ABC000"
+ S ^VCOMP=VCOMP,^VCORR="%ABC000" D ^VEXAMINE
+ ;
+6054 S ^ABSN="10021",^ITEM="I-605.4  %ABC0000",^NEXT="6055^V1LL1,V1LL2^VV1" D ^V1PRESET
+ S ^VCOMP=""
+%ABC0000 S ^VCOMP="%ABC0000"
+ S ^VCORR="%ABC0000" D ^VEXAMINE
+ ;
+ W !!,"According to the portability requirement of MUMPS language standard by ANSI,"
+ W !,"no explicit limit on label length is described.  Except minimum "
+ W !,"differentiation of 8 chars." W:$Y>55 #
+ W !,"For further arbitrary tests for longer labels than 8 chars. "
+ W !,"You may exchange the following label into '%234EFGH90KLM45', To make"
+ W !,"sure that your MUMPS works well on this point.",!
+6055 S ^ABSN="10022",^ITEM="I-605.5  %234EFGH",^NEXT="V1LL2^VV1" D ^V1PRESET
+ S VCOMP=""
+%234EFGH S VCOMP="%234EFGH"
+ S ^VCOMP=VCOMP,^VCORR="%234EFGH" D ^VEXAMINE
+ ;
+ ;6055 S ^ABSN="10022^ITEM="I-605.5  %234EFGH90KLM45",^NEXT="V1LL2^VV1" D ^V1PRESET
+ ; S VCOMP=""
+ ;%234EFGH90KLM45 S VCOMP="%234EFGH90KLM45"
+ ; S ^VCOMP=VCOMP,^VCORR="%234EFGH90KLM45" D ^VEXAMINE
+ ;
+END W !!,"End of 4---V1LL1",!
+ K  Q
+ Q
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

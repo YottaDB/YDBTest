@@ -1,0 +1,13 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+ZWRITE at $trestart = 0
+ZWRITE at $trestart = 1
+150373210,gtm8114+6^gtm8114,%GTM-E-DIVZERO, Attempt to divide by zero
+ZWRITE after TCOMMIT
+a(1)=2
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

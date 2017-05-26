@@ -1,0 +1,24 @@
+change -segment DEFAULT -file_name=mumps.dat
+change -region DEFAULT -inst_freeze_on_error
+change -region DEFAULT -qdbrundown
+change -region DEFAULT -collation_default=1
+add -name a* -region=areg
+add -name A* -region=areg
+add -region areg -dyn=aseg
+add -segment aseg -file=a.dat
+change -region areg -inst_freeze_on_error
+change -region areg -qdbrundown
+add -name b* -region=breg
+add -name B* -region=breg
+add -region breg -dyn=bseg -collation_default=1
+add -segment bseg -file=b.dat
+change -region breg -inst_freeze_on_error
+change -region breg -qdbrundown
+! .sprgde file generated manually
+! Map : ^a(1) maps to DEFAULT
+add -name a(1:) -region=DEFAULT
+! Map : ^c("ten") maps to BREG
+add -name c("ten":) -region=BREG
+change -region AREG -std
+change -region BREG -std
+change -region DEFAULT -std

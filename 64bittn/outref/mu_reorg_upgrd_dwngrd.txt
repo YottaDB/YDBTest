@@ -1,0 +1,839 @@
+GT.M switched to ##FILTERED##PRIORVER## version
+Database file ##TEST_PATH##/mumps.dat now has 8 reserved bytes
+
+
+Total blocks in database  -------##SCAN_BLOCKS##
+Total local bitmap blocks -------##SCAN_BLOCKS##
+Blocks bypassed -----------------##SCAN_BLOCKS##
+Blocks processed ----------------##SCAN_BLOCKS##
+Blocks needing to be split ------##SCAN_BLOCKS##
+- DT leaf (data) blocks ---------##SCAN_BLOCKS##
+- DT index blocks ---------------##SCAN_BLOCKS##
+- GVT leaf (data) blocks --------##SCAN_BLOCKS##
+- GVT index blocks --------------##SCAN_BLOCKS##
+%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip upgrade started
+%GTM-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
+%GTM-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
+%GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
+%GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
+%GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
+%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgrade to GT.M ##MACHTYPE##
+
+Begin Section 2
+
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+Region DEFAULT : MUPIP REORG UPGRADE started
+Region DEFAULT : Desired DB Format remains at V6 after MUPIP REORG UPGRADE
+Region ##REG## : Started processing from block number ##REORG_BLOCKS##
+Region ##REG## : Stopped processing at block number ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Bitmap)     : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (Free)              : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Non-Bitmap) : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in disk)   : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in cache)  : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Bitmap)          : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Non-Bitmap)      : ##REORG_BLOCKS##
+Region ##REG## : Total Blocks = ##TOT_BLKS## : Free Blocks = ##FREE_BLKS## : Blocks to upgrade = ##UPG_BLKS##
+Region ##REG## : Database is now FULLY UPGRADED
+Region ##REG## : MUPIP REORG UPGRADE finished
+
+
+bks_to_upgrade value check PASS
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+GTM>
+ --> Verify Directory Tree : PASS
+ --> Verify all Global Variable Tree : PASS
+
+GTM>
+
+Region DEFAULT : MUPIP REORG DOWNGRADE started
+Region DEFAULT : Desired DB Format set to V4 by MUPIP REORG DOWNGRADE
+Region ##REG## : Started processing from block number ##REORG_BLOCKS##
+Region ##REG## : Stopped processing at block number ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Bitmap)     : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (Free)              : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Non-Bitmap) : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in disk)   : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in cache)  : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Bitmap)          : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Non-Bitmap)      : ##REORG_BLOCKS##
+Region ##REG## : Total Blocks = ##TOT_BLKS## : Free Blocks = ##FREE_BLKS## : Blocks to upgrade = ##UPG_BLKS##
+Region DEFAULT : MUPIP REORG DOWNGRADE finished
+
+
+bks_to_upgrade value check PASS
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+GTM>
+ --> Verify Directory Tree : PASS
+ --> Verify all Global Variable Tree : PASS
+
+GTM>
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+Begin Section 3
+
+upgrade with -safejnl should pass as journaling is turned off
+
+Region DEFAULT : MUPIP REORG UPGRADE started
+Region DEFAULT : Desired DB Format remains at V6 after MUPIP REORG UPGRADE
+Region ##REG## : Started processing from block number ##REORG_BLOCKS##
+Region ##REG## : Stopped processing at block number ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Bitmap)     : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (Free)              : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Non-Bitmap) : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in disk)   : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in cache)  : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Bitmap)          : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Non-Bitmap)      : ##REORG_BLOCKS##
+Region ##REG## : Total Blocks = ##TOT_BLKS## : Free Blocks = ##FREE_BLKS## : Blocks to upgrade = ##UPG_BLKS##
+Region ##REG## : Database is now FULLY UPGRADED
+Region ##REG## : MUPIP REORG UPGRADE finished
+
+
+bks_to_upgrade value check PASS
+
+
+Region DEFAULT : MUPIP REORG DOWNGRADE started
+Region DEFAULT : Desired DB Format set to V4 by MUPIP REORG DOWNGRADE
+Region ##REG## : Started processing from block number ##REORG_BLOCKS##
+Region ##REG## : Stopped processing at block number ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Bitmap)     : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (Free)              : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Non-Bitmap) : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in disk)   : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in cache)  : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Bitmap)          : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Non-Bitmap)      : ##REORG_BLOCKS##
+Region ##REG## : Total Blocks = ##TOT_BLKS## : Free Blocks = ##FREE_BLKS## : Blocks to upgrade = ##UPG_BLKS##
+Region DEFAULT : MUPIP REORG DOWNGRADE finished
+
+
+bks_to_upgrade value check PASS
+
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+No Before Image turned on
+
+Region DEFAULT : MUPIP REORG UPGRADE started
+Region DEFAULT : Desired DB Format set to V6 by MUPIP REORG UPGRADE
+Region ##REG## : Started processing from block number ##REORG_BLOCKS##
+Region ##REG## : Stopped processing at block number ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Bitmap)     : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (Free)              : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Non-Bitmap) : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in disk)   : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in cache)  : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Bitmap)          : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Non-Bitmap)      : ##REORG_BLOCKS##
+Region ##REG## : Total Blocks = ##TOT_BLKS## : Free Blocks = ##FREE_BLKS## : Blocks to upgrade = ##UPG_BLKS##
+Region ##REG## : Database is now FULLY UPGRADED
+Region ##REG## : MUPIP REORG UPGRADE finished
+
+
+bks_to_upgrade value check PASS
+
+
+INCTN PBLK record check PASS
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+Region DEFAULT : MUPIP REORG DOWNGRADE started
+Region DEFAULT : Desired DB Format set to V4 by MUPIP REORG DOWNGRADE
+Region ##REG## : Started processing from block number ##REORG_BLOCKS##
+Region ##REG## : Stopped processing at block number ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Bitmap)     : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (Free)              : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Non-Bitmap) : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in disk)   : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in cache)  : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Bitmap)          : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Non-Bitmap)      : ##REORG_BLOCKS##
+Region ##REG## : Total Blocks = ##TOT_BLKS## : Free Blocks = ##FREE_BLKS## : Blocks to upgrade = ##UPG_BLKS##
+Region DEFAULT : MUPIP REORG DOWNGRADE finished
+
+
+bks_to_upgrade value check PASS
+
+
+INCTN PBLK record check PASS
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+Before Image turned on
+
+Region DEFAULT : MUPIP REORG UPGRADE started
+Region DEFAULT : Desired DB Format set to V6 by MUPIP REORG UPGRADE
+Region ##REG## : Started processing from block number ##REORG_BLOCKS##
+Region ##REG## : Stopped processing at block number ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Bitmap)     : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (Free)              : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Non-Bitmap) : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in disk)   : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in cache)  : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Bitmap)          : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Non-Bitmap)      : ##REORG_BLOCKS##
+Region ##REG## : Total Blocks = ##TOT_BLKS## : Free Blocks = ##FREE_BLKS## : Blocks to upgrade = ##UPG_BLKS##
+Region ##REG## : Database is now FULLY UPGRADED
+Region ##REG## : MUPIP REORG UPGRADE finished
+
+
+bks_to_upgrade value check PASS
+
+
+INCTN PBLK record check PASS
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+Region DEFAULT : MUPIP REORG DOWNGRADE started
+Region DEFAULT : Desired DB Format set to V4 by MUPIP REORG DOWNGRADE
+Region ##REG## : Started processing from block number ##REORG_BLOCKS##
+Region ##REG## : Stopped processing at block number ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Bitmap)     : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (Free)              : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Non-Bitmap) : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in disk)   : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in cache)  : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Bitmap)          : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Non-Bitmap)      : ##REORG_BLOCKS##
+Region ##REG## : Total Blocks = ##TOT_BLKS## : Free Blocks = ##FREE_BLKS## : Blocks to upgrade = ##UPG_BLKS##
+Region DEFAULT : MUPIP REORG DOWNGRADE finished
+
+
+bks_to_upgrade value check PASS
+
+
+INCTN PBLK record check PASS
+
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+GTM>
+ --> Verify Directory Tree : PASS
+ --> Verify all Global Variable Tree : PASS
+
+GTM>
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+Begin Section 4
+
+
+Region DEFAULT : MUPIP REORG UPGRADE started
+Region DEFAULT : Desired DB Format remains at V6 after MUPIP REORG UPGRADE
+Region ##REG## : Started processing from block number ##REORG_BLOCKS##
+Region ##REG## : Stopped processing at block number ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Bitmap)     : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (Free)              : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Non-Bitmap) : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in disk)   : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in cache)  : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Bitmap)          : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Non-Bitmap)      : ##REORG_BLOCKS##
+Region ##REG## : Total Blocks = ##TOT_BLKS## : Free Blocks = ##FREE_BLKS## : Blocks to upgrade = ##UPG_BLKS##
+Region ##REG## : Database is now FULLY UPGRADED
+Region ##REG## : MUPIP REORG UPGRADE finished
+
+
+bks_to_upgrade value check PASS
+
+
+Region DEFAULT : MUPIP REORG DOWNGRADE started
+Region DEFAULT : Desired DB Format set to V4 by MUPIP REORG DOWNGRADE
+Region ##REG## : Started processing from block number ##REORG_BLOCKS##
+Region ##REG## : Stopped processing at block number ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Bitmap)     : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (Free)              : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Non-Bitmap) : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in disk)   : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in cache)  : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Bitmap)          : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Non-Bitmap)      : ##REORG_BLOCKS##
+Region ##REG## : Total Blocks = ##TOT_BLKS## : Free Blocks = ##FREE_BLKS## : Blocks to upgrade = ##UPG_BLKS##
+Region DEFAULT : MUPIP REORG DOWNGRADE finished
+
+
+bks_to_upgrade value check PASS
+
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+Region DEFAULT : MUPIP REORG UPGRADE started
+Region DEFAULT : Desired DB Format set to V6 by MUPIP REORG UPGRADE
+Region ##REG## : Started processing from block number ##REORG_BLOCKS##
+Region ##REG## : Stopped processing at block number ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Bitmap)     : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (Free)              : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Non-Bitmap) : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in disk)   : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in cache)  : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Bitmap)          : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Non-Bitmap)      : ##REORG_BLOCKS##
+Region ##REG## : Total Blocks = ##TOT_BLKS## : Free Blocks = ##FREE_BLKS## : Blocks to upgrade = ##UPG_BLKS##
+Region ##REG## : Database is now FULLY UPGRADED
+Region ##REG## : MUPIP REORG UPGRADE finished
+
+
+bks_to_upgrade value check PASS
+
+
+INCTN PBLK record check PASS
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+Region DEFAULT : MUPIP REORG DOWNGRADE started
+Region DEFAULT : Desired DB Format set to V4 by MUPIP REORG DOWNGRADE
+Region ##REG## : Started processing from block number ##REORG_BLOCKS##
+Region ##REG## : Stopped processing at block number ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Bitmap)     : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (Free)              : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Non-Bitmap) : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in disk)   : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in cache)  : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Bitmap)          : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Non-Bitmap)      : ##REORG_BLOCKS##
+Region ##REG## : Total Blocks = ##TOT_BLKS## : Free Blocks = ##FREE_BLKS## : Blocks to upgrade = ##UPG_BLKS##
+Region DEFAULT : MUPIP REORG DOWNGRADE finished
+
+
+bks_to_upgrade value check PASS
+
+
+INCTN PBLK record check PASS
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+Region DEFAULT : MUPIP REORG UPGRADE started
+Region DEFAULT : Desired DB Format set to V6 by MUPIP REORG UPGRADE
+Region ##REG## : Started processing from block number ##REORG_BLOCKS##
+Region ##REG## : Stopped processing at block number ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Bitmap)     : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (Free)              : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Non-Bitmap) : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in disk)   : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in cache)  : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Bitmap)          : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Non-Bitmap)      : ##REORG_BLOCKS##
+Region ##REG## : Total Blocks = ##TOT_BLKS## : Free Blocks = ##FREE_BLKS## : Blocks to upgrade = ##UPG_BLKS##
+Region ##REG## : Database is now FULLY UPGRADED
+Region ##REG## : MUPIP REORG UPGRADE finished
+
+
+bks_to_upgrade value check PASS
+
+
+INCTN PBLK record check PASS
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+Region DEFAULT : MUPIP REORG DOWNGRADE started
+Region DEFAULT : Desired DB Format set to V4 by MUPIP REORG DOWNGRADE
+Region ##REG## : Started processing from block number ##REORG_BLOCKS##
+Region ##REG## : Stopped processing at block number ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Bitmap)     : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (Free)              : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Non-Bitmap) : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in disk)   : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in cache)  : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Bitmap)          : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Non-Bitmap)      : ##REORG_BLOCKS##
+Region ##REG## : Total Blocks = ##TOT_BLKS## : Free Blocks = ##FREE_BLKS## : Blocks to upgrade = ##UPG_BLKS##
+Region DEFAULT : MUPIP REORG DOWNGRADE finished
+
+
+bks_to_upgrade value check PASS
+
+
+INCTN PBLK record check PASS
+
+%GTM-S-JNLSUCCESS, Recover successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+GTM>
+ --> Verify Directory Tree : PASS
+ --> Verify all Global Variable Tree : PASS
+
+GTM>
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+Begin Section 5
+
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+Region DEFAULT : MUPIP REORG UPGRADE started
+Region DEFAULT : Desired DB Format remains at V6 after MUPIP REORG UPGRADE
+Region ##REG## : Started processing from block number ##REORG_BLOCKS##
+Region ##REG## : Stopped processing at block number ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Bitmap)     : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (Free)              : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Read From Disk (Non-Bitmap) : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in disk)   : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Skipped (new fmt in cache)  : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Bitmap)          : ##REORG_BLOCKS##
+Region ##REG## : Statistics : Blocks Converted (Non-Bitmap)      : ##REORG_BLOCKS##
+Region ##REG## : Total Blocks = ##TOT_BLKS## : Free Blocks = ##FREE_BLKS## : Blocks to upgrade = ##UPG_BLKS##
+Region ##REG## : Database is now FULLY UPGRADED
+Region ##REG## : MUPIP REORG UPGRADE finished
+
+
+bks_to_upgrade value check PASS
+
+
+INCTN PBLK record check PASS
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+GTM>
+ --> Verify Directory Tree : PASS
+ --> Verify all Global Variable Tree : PASS
+
+GTM>
+
+Begin Section 6
+
+GT.M switched to ##FILTERED##PRIORVER## version
+Files Created in ##TEST_PATH##:
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z]*/mumps -run GDE
+mumps.gld
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z]*/mupip
+a.dat
+mumps.dat
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+GTM>
+
+GTM>
+
+
+Total blocks in database  -------            101 [0x00000065]
+Total local bitmap blocks -------              1 [0x00000001]
+Blocks bypassed -----------------             96 [0x00000060]
+Blocks processed ----------------              5 [0x00000005]
+Blocks needing to be split ------              0 [0x00000000]
+- DT leaf (data) blocks ---------              0 [0x00000000]
+- DT index blocks ---------------              0 [0x00000000]
+- GVT leaf (data) blocks --------              0 [0x00000000]
+- GVT index blocks --------------              0 [0x00000000]
+%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+
+
+Total blocks in database  -------            101 [0x00000065]
+Total local bitmap blocks -------              1 [0x00000001]
+Blocks bypassed -----------------             96 [0x00000060]
+Blocks processed ----------------              5 [0x00000005]
+Blocks needing to be split ------              0 [0x00000000]
+- DT leaf (data) blocks ---------              0 [0x00000000]
+- DT index blocks ---------------              0 [0x00000000]
+- GVT leaf (data) blocks --------              0 [0x00000000]
+- GVT index blocks --------------              0 [0x00000000]
+%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/a.dat has been certified for use with GT.M V5
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip upgrade started
+%GTM-I-MUINFOUINT4, Old file header size : 24576 [0x00006000]
+%GTM-I-MUINFOUINT8, Old file length : 128512 [0x000000000001F600]
+%GTM-I-MUINFOUINT4, Old file start_vbn : 49 [0x00000031]
+%GTM-I-MUINFOUINT4, Old file gds blk_size : 1024 [0x00000400]
+%GTM-I-MUINFOUINT4, Old file total_blks : 101 [0x00000065]
+##TEST_AWK%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M.*
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip upgrade started
+%GTM-I-MUINFOUINT4, Old file header size : 24576 [0x00006000]
+%GTM-I-MUINFOUINT8, Old file length : 128512 [0x000000000001F600]
+%GTM-I-MUINFOUINT4, Old file start_vbn : 49 [0x00000031]
+%GTM-I-MUINFOUINT4, Old file gds blk_size : 1024 [0x00000400]
+%GTM-I-MUINFOUINT4, Old file total_blks : 101 [0x00000065]
+##TEST_AWK%GTM-S-MUPGRDSUCC, Database file a.dat successfully upgraded to GT.M.*
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+Region AREG : MUPIP REORG UPGRADE started
+Region AREG : Desired DB Format remains at V6 after MUPIP REORG UPGRADE
+Region AREG : Started processing from block number [0x00000000]
+Region AREG : Stopped processing at block number [0x00000065]
+Region AREG : Statistics : Blocks Read From Disk (Bitmap)     : 0x00000001
+Region AREG : Statistics : Blocks Skipped (Free)              : 0x00000060
+Region AREG : Statistics : Blocks Read From Disk (Non-Bitmap) : 0x00000004
+Region AREG : Statistics : Blocks Skipped (new fmt in disk)   : 0x00000000
+Region AREG : Statistics : Blocks Skipped (new fmt in cache)  : 0x00000000
+Region AREG : Statistics : Blocks Converted (Bitmap)          : 0x00000001
+Region AREG : Statistics : Blocks Converted (Non-Bitmap)      : 0x00000004
+Region AREG : Total Blocks = [0x00000065] : Free Blocks = [0x00000060] : Blocks to upgrade = [0x00000000]
+Region AREG : Database is now FULLY UPGRADED
+Region AREG : MUPIP REORG UPGRADE finished
+
+blks_to_upgarde value should be zero in AREG
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+
+File            ##TEST_PATH##/a.dat
+Region          AREG
+##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
+  Access method                          BG  Global Buffers                1024
+  Reserved Bytes                          0  Block size (in bytes)         1024
+  Maximum record size                   256  Starting VBN                    49
+  Maximum key size                       64  Total blocks            0x00000065
+  Null subscripts                     NEVER  Free blocks             0x00000060
+  Standard Null Collation             FALSE  Free space              0x00000000
+  Last Record Backup     0x0000000000000001  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             1
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  In critical section            0x00000000  Timers pending                   0
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Freeze match                   0x00000000  Flush trigger                  960
+  Current transaction    0x0000000000000007  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+  Master Bitmap Size                     32  Blocks to Upgrade       0x00000000
+  Create in progress                  FALSE  Modified cache blocks            0
+  Reference count                         1  Wait Disk                        0
+  Journal State                    DISABLED
+  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
+  Mutex Queue Slots                    1024  KILLs in progress                0
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
+  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
+  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+blks_to_upgarde value should be untouched in DEFAULT
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+File            ##TEST_PATH##/mumps.dat
+Region          DEFAULT
+##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
+  Access method                          BG  Global Buffers                1024
+  Reserved Bytes                          0  Block size (in bytes)         1024
+  Maximum record size                   256  Starting VBN                    49
+  Maximum key size                       64  Total blocks            0x00000065
+  Null subscripts                     NEVER  Free blocks             0x00000060
+  Standard Null Collation             FALSE  Free space              0x00000000
+  Last Record Backup     0x0000000000000001  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             1
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  In critical section            0x00000000  Timers pending                   0
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Freeze match                   0x00000000  Flush trigger                  960
+  Current transaction    0x0000000000000002  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+  Master Bitmap Size                     32  Blocks to Upgrade       0x00000005
+  Create in progress                  FALSE  Modified cache blocks            0
+  Reference count                         1  Wait Disk                        0
+  Journal State                    DISABLED
+  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
+  Mutex Queue Slots                    1024  KILLs in progress                0
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
+  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
+  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+DSE> ##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Correct mapping for globals
+
+Begin Section 7
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Database file mumps.dat now has desired DB format V4
+
+Region DEFAULT : MUPIP REORG UPGRADE started
+Region DEFAULT : Desired DB Format set to V6 by MUPIP REORG UPGRADE
+Region DEFAULT : Started processing from block number [0x00000000]
+Region DEFAULT : Stopped processing at block number [0x00000065]
+Region DEFAULT : Statistics : Blocks Read From Disk (Bitmap)     : 0x00000001
+Region DEFAULT : Statistics : Blocks Skipped (Free)              : 0x00000062
+Region DEFAULT : Statistics : Blocks Read From Disk (Non-Bitmap) : 0x00000002
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in disk)   : 0x00000003
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in cache)  : 0x00000000
+Region DEFAULT : Statistics : Blocks Converted (Bitmap)          : 0x00000000
+Region DEFAULT : Statistics : Blocks Converted (Non-Bitmap)      : 0x00000000
+Region DEFAULT : Total Blocks = [0x00000065] : Free Blocks = [0x00000062] : Blocks to upgrade = [0x00000000]
+Region DEFAULT : Database is now FULLY UPGRADED
+Region DEFAULT : MUPIP REORG UPGRADE finished
+
+Desired DB format is V6.PASS
+Database file mumps.dat now has desired DB format V6
+
+Region DEFAULT : MUPIP REORG DOWNGRADE started
+Region DEFAULT : Desired DB Format set to V4 by MUPIP REORG DOWNGRADE
+Region DEFAULT : Started processing from block number [0x00000000]
+Region DEFAULT : Stopped processing at block number [0x00000065]
+Region DEFAULT : Statistics : Blocks Read From Disk (Bitmap)     : 0x00000001
+Region DEFAULT : Statistics : Blocks Skipped (Free)              : 0x00000062
+Region DEFAULT : Statistics : Blocks Read From Disk (Non-Bitmap) : 0x00000002
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in disk)   : 0x00000000
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in cache)  : 0x00000000
+Region DEFAULT : Statistics : Blocks Converted (Bitmap)          : 0x00000001
+Region DEFAULT : Statistics : Blocks Converted (Non-Bitmap)      : 0x00000002
+Region DEFAULT : Total Blocks = [0x00000065] : Free Blocks = [0x00000062] : Blocks to upgrade = [0x00000003]
+Region DEFAULT : MUPIP REORG DOWNGRADE finished
+
+Desired DB format is V6.PASS
+
+Begin Section 8
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+GTM>
+
+GTM>
+
+GTM>
+Correct Transaction number after non-tp updates
+PASS.40 blocks updated
+TNTOOLARGE error expected here on reorg -downgrade
+
+Region DEFAULT : MUPIP REORG DOWNGRADE started
+Region DEFAULT : Desired DB Format set to V4 by MUPIP REORG DOWNGRADE
+Region DEFAULT : Started processing from block number [0x00000000]
+%GTM-E-TNTOOLARGE, Database file ##TEST_PATH##/mumps.dat has reached the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
+Desired DB format is V4.PASS
+blks_to_upgrade correct at this stage
+%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000053, found 0x00000008
+%GTM-I-DBBTUFIXED, The blocks-to-upgrade file-header field has been changed to the correct value
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2              41          31.250            NA
+Index              40              40           2.343             4
+Data               40              40           2.832             4
+Free               18              NA              NA            NA
+Total             100             121              NA             8
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+Desired DB format is V4.PASS
+
+bks_to_upgrade value check PASS
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Begin Section 9
+
+GT.M switched to ##FILTERED##PRIORVER## version
+Files Created in ##TEST_PATH##:
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z]*/mumps -run GDE
+mumps.gld
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z]*/mupip
+mumps.dat
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+GTM>
+
+GTM>
+
+
+Total blocks in database  -------            101 [0x00000065]
+Total local bitmap blocks -------              1 [0x00000001]
+Blocks bypassed -----------------             87 [0x00000057]
+Blocks processed ----------------             14 [0x0000000e]
+Blocks needing to be split ------              0 [0x00000000]
+- DT leaf (data) blocks ---------              0 [0x00000000]
+- DT index blocks ---------------              0 [0x00000000]
+- GVT leaf (data) blocks --------              0 [0x00000000]
+- GVT index blocks --------------              0 [0x00000000]
+%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip upgrade started
+%GTM-I-MUINFOUINT4, Old file header size : 24576 [0x00006000]
+%GTM-I-MUINFOUINT8, Old file length : 128512 [0x000000000001F600]
+%GTM-I-MUINFOUINT4, Old file start_vbn : 49 [0x00000031]
+%GTM-I-MUINFOUINT4, Old file gds blk_size : 1024 [0x00000400]
+%GTM-I-MUINFOUINT4, Old file total_blks : 101 [0x00000065]
+##TEST_AWK%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M.*
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Region DEFAULT : MUPIP REORG UPGRADE started
+Region DEFAULT : Desired DB Format remains at V6 after MUPIP REORG UPGRADE
+Region DEFAULT : Started processing from block number [0x00000000]
+Region DEFAULT : Stopped processing at block number [0x00000065]
+Region DEFAULT : Statistics : Blocks Read From Disk (Bitmap)     : 0x00000001
+Region DEFAULT : Statistics : Blocks Skipped (Free)              : 0x00000057
+Region DEFAULT : Statistics : Blocks Read From Disk (Non-Bitmap) : 0x0000000D
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in disk)   : 0x00000002
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in cache)  : 0x00000000
+Region DEFAULT : Statistics : Blocks Converted (Bitmap)          : 0x00000001
+Region DEFAULT : Statistics : Blocks Converted (Non-Bitmap)      : 0x0000000B
+Region DEFAULT : Total Blocks = [0x00000065] : Free Blocks = [0x00000057] : Blocks to upgrade = [0x00000000]
+Region DEFAULT : Database is now FULLY UPGRADED
+Region DEFAULT : MUPIP REORG UPGRADE finished
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block 8   Size 33A   Level 0   TN 100 V6
+
+Desired DB format is V6.PASS
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block 9   Size 345   Level 0   TN C V6
+
+Desired DB format is V6.PASS
+
+bks_to_upgrade value check PASS
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Region DEFAULT : MUPIP REORG DOWNGRADE started
+Region DEFAULT : Desired DB Format set to V4 by MUPIP REORG DOWNGRADE
+Region DEFAULT : Started processing from block number [0x00000000]
+Region DEFAULT : Stopped processing at block number [0x00000065]
+Region DEFAULT : Statistics : Blocks Read From Disk (Bitmap)     : 0x00000001
+Region DEFAULT : Statistics : Blocks Skipped (Free)              : 0x00000057
+Region DEFAULT : Statistics : Blocks Read From Disk (Non-Bitmap) : 0x0000000D
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in disk)   : 0x00000000
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in cache)  : 0x00000000
+Region DEFAULT : Statistics : Blocks Converted (Bitmap)          : 0x00000001
+Region DEFAULT : Statistics : Blocks Converted (Non-Bitmap)      : 0x0000000D
+Region DEFAULT : Total Blocks = [0x00000065] : Free Blocks = [0x00000057] : Blocks to upgrade = [0x0000000E]
+Region DEFAULT : MUPIP REORG DOWNGRADE finished
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block 8   Size 33A   Level 0   TN 23 V4
+
+Desired DB format is V4.PASS
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block 9   Size 345   Level 0   TN 24 V4
+
+Desired DB format is V4.PASS
+
+bks_to_upgrade value check PASS
+

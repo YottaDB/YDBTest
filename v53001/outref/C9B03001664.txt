@@ -1,0 +1,1290 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+test gtm_noundef env.variable settings
+###################################################################
+gtm_noundef not set
+
+GTM>
+1
+GTM>
+
+GTM>
+0
+GTM>
+gtm_noundef set to TRUE
+
+GTM>
+0
+GTM>
+
+GTM>
+1
+GTM>
+gtm_noundef set to FALSE
+
+GTM>
+1
+GTM>
+
+GTM>
+0
+GTM>
+###################################################################
+run noundeftst with gtm_noundef set to FALSE
+###################################################################
+Do not pass the parameter GEN, so that all the test runs in indirection mode
+###################################################################
+
+Test case: S $ZE(j,k,k+1)=k
+Test case: S $ZE(j,@k)=k
+Test case: S $ZE(k,k,@k)=k
+Test case: S $ZPI(j,k,k,k+1)=k
+Test case: S $ZPI(j,@k)=k
+Test case: S $ZPI(j,k,@k)=k
+Test case: S $ZPI(j,k,k,@k)=k
+Test case: S j=$ZA(k,k)
+Test case: S j=$ZA(@k)
+Test case: S j=$ZA(k,@k)
+Test case: B:k k
+Test case: S j=$ZCH(k)
+Test case: S j=$ZCH(@k)
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Test case: S j=$ZCO(k,k,k)
+Test case: S j=$ZCO(@k,k)
+Test case: S j=$ZCO(k,@k)
+Test case: S j=$ZCO(k,k,@k)
+##ALLOW_OUTPUT NONUNICODE_MODE
+Test case: S j=$ZE(k,k,k+1)
+Test case: S j=$ZE(@k)
+Test case: S j=$ZE(k,@k,@k)
+Test case: S j=$ZF(k,k,k)
+Test case: S j=$ZF(@k,k)
+Test case: S j=$ZF(k,@k)
+Test case: S j=$ZJ(k,k)
+Test case: S j=$ZJ(k,k,k)
+Test case: S j=$ZJ(@k,k)
+Test case: S j=$ZJ(k,@k)
+Test case: S j=$ZJ(k,k,@k)
+Test case: S j=$ZL(k)
+Test case: S j=$ZL(k,k)
+Test case: S j=$ZL(@k)
+Test case: S j=$ZL(k,@k)
+Test case: S j=$ZPI(k,k)
+Test case: S j=$ZPI(k,k,k)
+Test case: S j=$ZPI(k,k,k,k)
+Test case: S j=$ZPI(@k,k)
+Test case: S j=$ZPI(k,@k)
+Test case: S j=$ZPI(k,k,@k)
+Test case: S j=$ZPI(k,k,k,@k)
+Test case: S j=$ZSUB(k,k,k)
+Test case: S j=$ZSUB(@k,k)
+Test case: S j=$ZSUB(k,k,@k)
+Test case: S j=$ZTR(k,k,k)
+Test case: S j=$ZTR(@k,k)
+Test case: S j=$ZTR(k,@k)
+Test case: S j=$ZTR(k,k,@k)
+Test case: S j=$ZW(k)
+Test case: S j=$ZW(@k)
+Test case: C k
+Test case: C "foo":rename=k
+Test case: C @k
+Test case: D dummy+k^noundeftst
+Test case: D dummy1^noundeftst(k)
+Test case: D @k
+Test case: D ^@k
+Test case: F j=k:1:2
+Test case: F j=1:1:k
+Test case: F j=1:k:1 q
+Test case: F j=k,l
+Test case: G ick+k
+Test case: G @k
+Test case: G ^@k
+Test case: H k
+Test case: H @k
+Test case: I k=k
+Test case: I k'=k
+Test case: I k=+k
+Test case: I k'=+k
+Test case: I k>k
+Test case: I k'>k
+Test case: I k'<k
+Test case: I k'<k
+Test case: I k&k
+Test case: I k!k
+Test case: I k[k
+Test case: I k'[k
+Test case: I k]k
+Test case: I k']k
+Test case: I k]]k
+Test case: I k']]k
+Test case: I k?.e
+Test case: I k?@k
+Test case: I ""=k
+Test case: I ""'=k
+Test case: I @k
+Test case: J dummy+k^noundeftst
+Test case: J dummy1^noundeftst(k)
+Test case: J @k
+Test case: J ^@k
+Test case: J dummy+@k^noundeftst
+Test case: K j(k)
+Test case: K (act,k,nound)
+Test case: N  K @k
+Test case: L j(k):k L
+Test case: L @k
+Test case: M j=k
+Test case: M @k
+Test case: N k
+Test case: N (act,k,nound)
+Test case: N @k
+Test case: O k C k:delete
+Test case: O "foo":(exception=k:extension=k):k C "foo":delete
+Test case: O "foo"::k C "foo":delete
+Test case: O @k
+Test case: R j:k
+Test case: R *j:k
+Test case: R j#k:k
+Test case: TS k:TRANSACTIONID=k TRO:$TR  S:$TL ^noundef=k TRE:$TL
+Test case: TS (k) S ^noundef=k TC
+Test case: S j=k
+Test case: S j=+k
+Test case: S j=-k
+Test case: S j=k+k
+Test case: S j=k-k
+Test case: S j=k*k
+Test case: S j=k**k
+Test case: S j=k/k
+Test case: S j=k\k
+Test case: S j=k#k
+Test case: S j(k)=l
+Test case: S ^k(k)=k
+Test case: S j=$$dummy2^noundeftst(1)
+Test case: S j="k",l=j_@j
+Test case: S j=@k
+Test case: S @k
+Test case: S $E(j,k,k+1)=k
+Test case: S $E(j,@k)=k
+Test case: S $E(k,k,@k)=k
+Test case: S $P(j,k,k,k+1)=k
+Test case: S $P(j,@k)=k
+Test case: S $P(j,k,@k)=k
+Test case: S $P(j,k,k,@k)=k
+Test case: U $P:(length=k:length=24:exception=k)
+Test case: U @k
+Test case: V k
+Test case: V @k
+Test case: W k
+Test case: W ?k
+Test case: W *k
+Test case: W @k
+Test case: X k
+Test case: X @k
+Test case: ZA j(k):k L
+Test case: ZA @k
+Test case: ZCOM k
+Test case: ZCOM @k
+Test case: ZD j(k),@k
+Test case: ZG k:ick+k
+Test case: ZG @k
+Test case: ZG @k:ick
+Test case: ZG $ZL:@k
+Test case: ZG $ZL:^@k
+Test case: ZK j(k)
+Test case: ZK @k
+Test case: ZL k
+Test case: ZL @k
+Test case: ZM k
+Test case: ZP k
+Test case: O "tmp":newv U "tmp" ZP @k C "tmp":delete
+Test case: ZSH k
+Test case: O "tmp":newv U "tmp" ZSH @k C "tmp":delete
+Test case: ZSY $S($ZVER["VMS":"log/brief",1:"exit")_k
+Test case: ZWI j(k)
+Test case: ZWI @k
+Test case: ZWR k
+Test case: S j=$A(k,k)
+Test case: S j=$A(@k)
+Test case: S j=$A(k,@k)
+Test case: S j=$C(k)
+Test case: S j=$C(@k)
+Test case: S j=$D(k)
+Test case: S j=$D(@k)
+Test case: S j=$E(k,k,k+1)
+Test case: S j=$E(@k)
+Test case: S j=$E(k,@k,@k)
+Test case: S j=$F(k,k,k)
+Test case: S j=$F(@k,k)
+Test case: S j=$F(k,@k)
+Test case: S j=$FN(k,k,k)
+Test case: S j=$FN(@k,k,k)
+Test case: S j=$FN(k,@k,k)
+Test case: S j=$FN(k,k,@k)
+Test case: S j=$G(k,k)
+Test case: S j=$G(@k)
+Test case: S j=$G(k,@k)
+Test case: S j=$I(k,k)
+Test case: S j=$I(@k)
+Test case: S j=$I(k,@k)
+Test case: S j=$J(k,k)
+Test case: S j=$J(k,k,k)
+Test case: S j=$J(@k,k)
+Test case: S j=$J(k,@k)
+Test case: S j=$J(k,k,@k)
+Test case: S j=$L(k)
+Test case: S j=$L(k,k)
+Test case: S j=$L(@k)
+Test case: S j=$L(k,@k)
+Test case: S j=$NA(k,k)
+Test case: S j=$NA(@k)
+Test case: S j=$NA(k,@k)
+Test case: S j=$N(k(k))
+Test case: S j=$N(@k)
+Test case: S j=$O(l(k))
+Test case: S j=$O(l(""),k)
+Test case: S j=$O(@k)
+Test case: S j=$O(k(""),@k)
+Test case: S j=$P(k,k)
+Test case: S j=$P(k,k,k)
+Test case: S j=$P(k,k,k,k)
+Test case: S j=$P(@k,k)
+Test case: S j=$P(k,@k)
+Test case: S j=$P(k,k,@k)
+Test case: S j=$P(k,k,k,@k)
+Test case: S j=$Q(k(l))
+Test case: S j=$Q(@k)
+Test case: S j=$QL(k)
+Test case: S j=$QL(@k)
+Test case: S j=$QS(k,k)
+Test case: S j=$QS("k",k)
+Test case: S j=$QS(@k,k)
+Test case: S j=$QS("k",@k)
+Test case: S j=$R(k)
+Test case: S j=$R(@k)
+Test case: S j=$RE(k)
+Test case: S j=$RE(@k)
+Test case: S j=$S(k:k,1:0)
+Test case: S j=$S(@k:k,1:0)
+Test case: S j=$S(k:k,1:@k)
+Test case: S j=$ST(k)
+Test case: S j=$ST(k,k)
+Test case: S j=$ST(@k)
+Test case: S j=$ST(k,@k)
+Test case: S j=$T(k+k^k)
+Test case: S j=$T(@k+k^k)
+Test case: S j=$T(k+@k^k)
+Test case: S j=$T(k+k^@k)
+Test case: S j=$T(@k+@k^k)
+Test case: S j=$T(k+@k^@k)
+Test case: S j=$T(@k+k^@k)
+Test case: S j=$T(@k+@k)
+Test case: S j=$T(+@k^@k)
+Test case: S j=$T(@k^@k)
+Test case: S j=$T(@k)
+Test case: S j=$TR(k,k,k)
+Test case: S j=$TR(@k,k)
+Test case: S j=$TR(k,@k)
+Test case: S j=$TR(k,k,@k)
+Test case: S j=$V(k)
+Test case: S j=$V(@k)
+Test case: S j=$ZBITAND(k,k)
+Test case: S j=$ZBITAND(@k,k)
+Test case: S j=$ZBITAND(k,@k)
+Test case: S j=$ZBITCOUNT(k)
+Test case: S j=$ZBITCOUNT(@k)
+Test case: S j=$ZBITFIND(k,k,k)
+Test case: S j=$ZBITFIND(@k,k,k)
+Test case: S j=$ZBITFIND(k,@k,k)
+Test case: S j=$ZBITFIND(k,k,@k)
+Test case: S j=$ZBITGET(k,k)
+Test case: S j=$ZBITGET(@k,k)
+Test case: S j=$ZBITGET(k,@k)
+Test case: S j=$ZBITLEN(k)
+Test case: S j=$ZBITLEN(@k)
+Test case: S j=$ZBITNOT(k)
+Test case: S j=$ZBITNOT(@k)
+Test case: S j=$ZBITOR(k,k)
+Test case: S j=$ZBITOR(@k,k)
+Test case: S j=$ZBITOR(k,@k)
+Test case: S j=$ZBITSET(k,k,k)
+Test case: S j=$ZBITSET(@k,k,k)
+Test case: S j=$ZBITSET(k,@k,k)
+Test case: S j=$ZBITSET(k,k,@k)
+Test case: S j=$ZBITSTR(k,k)
+Test case: S j=$ZBITSTR(@k,k)
+Test case: S j=$ZBITSTR(k,@k)
+Test case: S j=$ZBITXOR(k,k)
+Test case: S j=$ZBITXOR(@k,k)
+Test case: S j=$ZBITXOR(k,@k)
+Test case: S j=$ZD(k)
+Test case: S j=$ZD(@k)
+Test case: S j=$ZJOBEXAM(k)
+Test case: S j=$ZJOBEXAM(@k)
+Test case: S j=$ZM(k)
+Test case: S j=$ZM(@k)
+Test case: S j=$ZP(k(l))
+Test case: S j=$ZP(@k)
+Test case: S j=$ZPARSE(k,k,k,k,k)
+Test case: S j=$ZPARSE(@k,k,k,k,k)
+Test case: S j=$ZPARSE(k,@k,k,k,k)
+Test case: S j=$ZPARSE(k,k,@k,k,k)
+Test case: S j=$ZPARSE(k,k,k,@k,k)
+Test case: S j=$ZPARSE(k,k,k,k,@k)
+Test case: S j=$ZQGBLMOD(^noundef(k))
+Test case: S j=$ZQGBLMOD(@k)
+Test case: S j=$ZSEARCH(k,k)
+Test case: S j=$ZSEARCH(@k)
+Test case: S j=$ZSEARCH(k,@k)
+Test case: S j=$ZTRNLNM(k)
+Test case: S j=$ZTRNLNM(@k)
+Test case: S j=$ZWRITE(k)
+##SUSPEND_OUTPUT NONUNICODE_MODE
+PASS from 300 cases in noundeftst in operating in UNDEF mode
+##ALLOW_OUTPUT NONUNICODE_MODE
+##SUSPEND_OUTPUT UNICODE_MODE
+PASS from 296 cases in noundeftst in operating in UNDEF mode
+##ALLOW_OUTPUT UNICODE_MODE
+###################################################################
+Pass the parameter GEN, so that the test creates a file with all the test cases and runs in direct mode
+###################################################################
+
+Test case: S $ZE(j,k,k+1)=k
+Test case: S $ZE(j,@k)=k
+Test case: S $ZE(k,k,@k)=k
+Test case: S $ZPI(j,k,k,k+1)=k
+Test case: S $ZPI(j,@k)=k
+Test case: S $ZPI(j,k,@k)=k
+Test case: S $ZPI(j,k,k,@k)=k
+Test case: S j=$ZA(k,k)
+Test case: S j=$ZA(@k)
+Test case: S j=$ZA(k,@k)
+Test case: B:k k
+Test case: S j=$ZCH(k)
+Test case: S j=$ZCH(@k)
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Test case: S j=$ZCO(k,k,k)
+Test case: S j=$ZCO(@k,k)
+Test case: S j=$ZCO(k,@k)
+Test case: S j=$ZCO(k,k,@k)
+##ALLOW_OUTPUT NONUNICODE_MODE
+Test case: S j=$ZE(k,k,k+1)
+Test case: S j=$ZE(@k)
+Test case: S j=$ZE(k,@k,@k)
+Test case: S j=$ZF(k,k,k)
+Test case: S j=$ZF(@k,k)
+Test case: S j=$ZF(k,@k)
+Test case: S j=$ZJ(k,k)
+Test case: S j=$ZJ(k,k,k)
+Test case: S j=$ZJ(@k,k)
+Test case: S j=$ZJ(k,@k)
+Test case: S j=$ZJ(k,k,@k)
+Test case: S j=$ZL(k)
+Test case: S j=$ZL(k,k)
+Test case: S j=$ZL(@k)
+Test case: S j=$ZL(k,@k)
+Test case: S j=$ZPI(k,k)
+Test case: S j=$ZPI(k,k,k)
+Test case: S j=$ZPI(k,k,k,k)
+Test case: S j=$ZPI(@k,k)
+Test case: S j=$ZPI(k,@k)
+Test case: S j=$ZPI(k,k,@k)
+Test case: S j=$ZPI(k,k,k,@k)
+Test case: S j=$ZSUB(k,k,k)
+Test case: S j=$ZSUB(@k,k)
+Test case: S j=$ZSUB(k,k,@k)
+Test case: S j=$ZTR(k,k,k)
+Test case: S j=$ZTR(@k,k)
+Test case: S j=$ZTR(k,@k)
+Test case: S j=$ZTR(k,k,@k)
+Test case: S j=$ZW(k)
+Test case: S j=$ZW(@k)
+Test case: C k
+Test case: C "foo":rename=k
+Test case: C @k
+Test case: D dummy+k^noundeftst
+Test case: D dummy1^noundeftst(k)
+Test case: D @k
+Test case: D ^@k
+Test case: F j=k:1:2
+Test case: F j=1:1:k
+Test case: F j=1:k:1 q
+Test case: F j=k,l
+Test case: G ick+k
+Test case: G @k
+Test case: G ^@k
+Test case: H k
+Test case: H @k
+Test case: I k=k
+Test case: I k'=k
+Test case: I k=+k
+Test case: I k'=+k
+Test case: I k>k
+Test case: I k'>k
+Test case: I k'<k
+Test case: I k'<k
+Test case: I k&k
+Test case: I k!k
+Test case: I k[k
+Test case: I k'[k
+Test case: I k]k
+Test case: I k']k
+Test case: I k]]k
+Test case: I k']]k
+Test case: I k?.e
+Test case: I k?@k
+Test case: I ""=k
+Test case: I ""'=k
+Test case: I @k
+Test case: J dummy+k^noundeftst
+Test case: J dummy1^noundeftst(k)
+Test case: J @k
+Test case: J ^@k
+Test case: J dummy+@k^noundeftst
+Test case: K j(k)
+Test case: K (act,k,nound)
+Test case: N  K @k
+Test case: L j(k):k L
+Test case: L @k
+Test case: M j=k
+Test case: M @k
+Test case: N k
+Test case: N (act,k,nound)
+Test case: N @k
+Test case: O k C k:delete
+Test case: O "foo":(exception=k:extension=k):k C "foo":delete
+Test case: O "foo"::k C "foo":delete
+Test case: O @k
+Test case: R j:k
+Test case: R *j:k
+Test case: R j#k:k
+Test case: TS k:TRANSACTIONID=k TRO:$TR  S:$TL ^noundef=k TRE:$TL
+Test case: TS (k) S ^noundef=k TC
+Test case: S j=k
+Test case: S j=+k
+Test case: S j=-k
+Test case: S j=k+k
+Test case: S j=k-k
+Test case: S j=k*k
+Test case: S j=k**k
+Test case: S j=k/k
+Test case: S j=k\k
+Test case: S j=k#k
+Test case: S j(k)=l
+Test case: S ^k(k)=k
+Test case: S j=$$dummy2^noundeftst(1)
+Test case: S j="k",l=j_@j
+Test case: S j=@k
+Test case: S @k
+Test case: S $E(j,k,k+1)=k
+Test case: S $E(j,@k)=k
+Test case: S $E(k,k,@k)=k
+Test case: S $P(j,k,k,k+1)=k
+Test case: S $P(j,@k)=k
+Test case: S $P(j,k,@k)=k
+Test case: S $P(j,k,k,@k)=k
+Test case: U $P:(length=k:length=24:exception=k)
+Test case: U @k
+Test case: V k
+Test case: V @k
+Test case: W k
+Test case: W ?k
+Test case: W *k
+Test case: W @k
+Test case: X k
+Test case: X @k
+Test case: ZA j(k):k L
+Test case: ZA @k
+Test case: ZCOM k
+Test case: ZCOM @k
+Test case: ZD j(k),@k
+Test case: ZG k:ick+k
+Test case: ZG @k
+Test case: ZG @k:ick
+Test case: ZG $ZL:@k
+Test case: ZG $ZL:^@k
+Test case: ZK j(k)
+Test case: ZK @k
+Test case: ZL k
+Test case: ZL @k
+Test case: ZM k
+Test case: ZP k
+Test case: O "tmp":newv U "tmp" ZP @k C "tmp":delete
+Test case: ZSH k
+Test case: O "tmp":newv U "tmp" ZSH @k C "tmp":delete
+Test case: ZSY $S($ZVER["VMS":"log/brief",1:"exit")_k
+Test case: ZWI j(k)
+Test case: ZWI @k
+Test case: ZWR k
+Test case: S j=$A(k,k)
+Test case: S j=$A(@k)
+Test case: S j=$A(k,@k)
+Test case: S j=$C(k)
+Test case: S j=$C(@k)
+Test case: S j=$D(k)
+Test case: S j=$D(@k)
+Test case: S j=$E(k,k,k+1)
+Test case: S j=$E(@k)
+Test case: S j=$E(k,@k,@k)
+Test case: S j=$F(k,k,k)
+Test case: S j=$F(@k,k)
+Test case: S j=$F(k,@k)
+Test case: S j=$FN(k,k,k)
+Test case: S j=$FN(@k,k,k)
+Test case: S j=$FN(k,@k,k)
+Test case: S j=$FN(k,k,@k)
+Test case: S j=$G(k,k)
+Test case: S j=$G(@k)
+Test case: S j=$G(k,@k)
+Test case: S j=$I(k,k)
+Test case: S j=$I(@k)
+Test case: S j=$I(k,@k)
+Test case: S j=$J(k,k)
+Test case: S j=$J(k,k,k)
+Test case: S j=$J(@k,k)
+Test case: S j=$J(k,@k)
+Test case: S j=$J(k,k,@k)
+Test case: S j=$L(k)
+Test case: S j=$L(k,k)
+Test case: S j=$L(@k)
+Test case: S j=$L(k,@k)
+Test case: S j=$NA(k,k)
+Test case: S j=$NA(@k)
+Test case: S j=$NA(k,@k)
+Test case: S j=$N(k(k))
+Test case: S j=$N(@k)
+Test case: S j=$O(l(k))
+Test case: S j=$O(l(""),k)
+Test case: S j=$O(@k)
+Test case: S j=$O(k(""),@k)
+Test case: S j=$P(k,k)
+Test case: S j=$P(k,k,k)
+Test case: S j=$P(k,k,k,k)
+Test case: S j=$P(@k,k)
+Test case: S j=$P(k,@k)
+Test case: S j=$P(k,k,@k)
+Test case: S j=$P(k,k,k,@k)
+Test case: S j=$Q(k(l))
+Test case: S j=$Q(@k)
+Test case: S j=$QL(k)
+Test case: S j=$QL(@k)
+Test case: S j=$QS(k,k)
+Test case: S j=$QS("k",k)
+Test case: S j=$QS(@k,k)
+Test case: S j=$QS("k",@k)
+Test case: S j=$R(k)
+Test case: S j=$R(@k)
+Test case: S j=$RE(k)
+Test case: S j=$RE(@k)
+Test case: S j=$S(k:k,1:0)
+Test case: S j=$S(@k:k,1:0)
+Test case: S j=$S(k:k,1:@k)
+Test case: S j=$ST(k)
+Test case: S j=$ST(k,k)
+Test case: S j=$ST(@k)
+Test case: S j=$ST(k,@k)
+Test case: S j=$T(k+k^k)
+Test case: S j=$T(@k+k^k)
+Test case: S j=$T(k+@k^k)
+Test case: S j=$T(k+k^@k)
+Test case: S j=$T(@k+@k^k)
+Test case: S j=$T(k+@k^@k)
+Test case: S j=$T(@k+k^@k)
+Test case: S j=$T(@k+@k)
+Test case: S j=$T(+@k^@k)
+Test case: S j=$T(@k^@k)
+Test case: S j=$T(@k)
+Test case: S j=$TR(k,k,k)
+Test case: S j=$TR(@k,k)
+Test case: S j=$TR(k,@k)
+Test case: S j=$TR(k,k,@k)
+Test case: S j=$V(k)
+Test case: S j=$V(@k)
+Test case: S j=$ZBITAND(k,k)
+Test case: S j=$ZBITAND(@k,k)
+Test case: S j=$ZBITAND(k,@k)
+Test case: S j=$ZBITCOUNT(k)
+Test case: S j=$ZBITCOUNT(@k)
+Test case: S j=$ZBITFIND(k,k,k)
+Test case: S j=$ZBITFIND(@k,k,k)
+Test case: S j=$ZBITFIND(k,@k,k)
+Test case: S j=$ZBITFIND(k,k,@k)
+Test case: S j=$ZBITGET(k,k)
+Test case: S j=$ZBITGET(@k,k)
+Test case: S j=$ZBITGET(k,@k)
+Test case: S j=$ZBITLEN(k)
+Test case: S j=$ZBITLEN(@k)
+Test case: S j=$ZBITNOT(k)
+Test case: S j=$ZBITNOT(@k)
+Test case: S j=$ZBITOR(k,k)
+Test case: S j=$ZBITOR(@k,k)
+Test case: S j=$ZBITOR(k,@k)
+Test case: S j=$ZBITSET(k,k,k)
+Test case: S j=$ZBITSET(@k,k,k)
+Test case: S j=$ZBITSET(k,@k,k)
+Test case: S j=$ZBITSET(k,k,@k)
+Test case: S j=$ZBITSTR(k,k)
+Test case: S j=$ZBITSTR(@k,k)
+Test case: S j=$ZBITSTR(k,@k)
+Test case: S j=$ZBITXOR(k,k)
+Test case: S j=$ZBITXOR(@k,k)
+Test case: S j=$ZBITXOR(k,@k)
+Test case: S j=$ZD(k)
+Test case: S j=$ZD(@k)
+Test case: S j=$ZJOBEXAM(k)
+Test case: S j=$ZJOBEXAM(@k)
+Test case: S j=$ZM(k)
+Test case: S j=$ZM(@k)
+Test case: S j=$ZP(k(l))
+Test case: S j=$ZP(@k)
+Test case: S j=$ZPARSE(k,k,k,k,k)
+Test case: S j=$ZPARSE(@k,k,k,k,k)
+Test case: S j=$ZPARSE(k,@k,k,k,k)
+Test case: S j=$ZPARSE(k,k,@k,k,k)
+Test case: S j=$ZPARSE(k,k,k,@k,k)
+Test case: S j=$ZPARSE(k,k,k,k,@k)
+Test case: S j=$ZQGBLMOD(^noundef(k))
+Test case: S j=$ZQGBLMOD(@k)
+Test case: S j=$ZSEARCH(k,k)
+Test case: S j=$ZSEARCH(@k)
+Test case: S j=$ZSEARCH(k,@k)
+Test case: S j=$ZTRNLNM(k)
+Test case: S j=$ZTRNLNM(@k)
+Test case: S j=$ZWRITE(k)
+##SUSPEND_OUTPUT NONUNICODE_MODE
+PASS from 300 cases in noundeftst in operating in UNDEF mode
+##ALLOW_OUTPUT NONUNICODE_MODE
+##SUSPEND_OUTPUT UNICODE_MODE
+PASS from 296 cases in noundeftst in operating in UNDEF mode
+##ALLOW_OUTPUT UNICODE_MODE
+###################################################################
+run noundeftst with gtm_noundef set to TRUE
+###################################################################
+###################################################################
+Do not pass the parameter GEN, so that all the test runs in indirection mode
+###################################################################
+
+GTM>
+
+Test case: S $ZE(j,k,k+1)=k
+Test case: S $ZE(j,@k)=k
+Test case: S $ZE(k,k,@k)=k
+Test case: S $ZPI(j,k,k,k+1)=k
+Test case: S $ZPI(j,@k)=k
+Test case: S $ZPI(j,k,@k)=k
+Test case: S $ZPI(j,k,k,@k)=k
+Test case: S j=$ZA(k,k)
+Test case: S j=$ZA(@k)
+Test case: S j=$ZA(k,@k)
+Test case: B:k k
+Test case: S j=$ZCH(k)
+Test case: S j=$ZCH(@k)
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Test case: S j=$ZCO(k,k,k)
+Test case: S j=$ZCO(@k,k)
+Test case: S j=$ZCO(k,@k)
+Test case: S j=$ZCO(k,k,@k)
+##ALLOW_OUTPUT NONUNICODE_MODE
+Test case: S j=$ZE(k,k,k+1)
+Test case: S j=$ZE(@k)
+Test case: S j=$ZE(k,@k,@k)
+Test case: S j=$ZF(k,k,k)
+Test case: S j=$ZF(@k,k)
+Test case: S j=$ZF(k,@k)
+Test case: S j=$ZJ(k,k)
+Test case: S j=$ZJ(k,k,k)
+Test case: S j=$ZJ(@k,k)
+Test case: S j=$ZJ(k,@k)
+Test case: S j=$ZJ(k,k,@k)
+Test case: S j=$ZL(k)
+Test case: S j=$ZL(k,k)
+Test case: S j=$ZL(@k)
+Test case: S j=$ZL(k,@k)
+Test case: S j=$ZPI(k,k)
+Test case: S j=$ZPI(k,k,k)
+Test case: S j=$ZPI(k,k,k,k)
+Test case: S j=$ZPI(@k,k)
+Test case: S j=$ZPI(k,@k)
+Test case: S j=$ZPI(k,k,@k)
+Test case: S j=$ZPI(k,k,k,@k)
+Test case: S j=$ZSUB(k,k,k)
+Test case: S j=$ZSUB(@k,k)
+Test case: S j=$ZSUB(k,k,@k)
+Test case: S j=$ZTR(k,k,k)
+Test case: S j=$ZTR(@k,k)
+Test case: S j=$ZTR(k,@k)
+Test case: S j=$ZTR(k,k,@k)
+Test case: S j=$ZW(k)
+Test case: S j=$ZW(@k)
+Test case: C k
+Test case: C "foo":rename=k
+Test case: C @k
+Test case: D dummy+k^noundeftst
+Test case: D dummy1^noundeftst(k)
+Test case: D @k
+Test case: D ^@k
+Test case: F j=k:1:2
+Test case: F j=1:1:k
+Test case: F j=1:k:1 q
+Test case: F j=k,l
+Test case: G ick+k
+Test case: G @k
+Test case: G ^@k
+Test case: H k
+Test case: H @k
+Test case: I k=k
+Test case: I k'=k
+Test case: I k=+k
+Test case: I k'=+k
+Test case: I k>k
+Test case: I k'>k
+Test case: I k'<k
+Test case: I k'<k
+Test case: I k&k
+Test case: I k!k
+Test case: I k[k
+Test case: I k'[k
+Test case: I k]k
+Test case: I k']k
+Test case: I k]]k
+Test case: I k']]k
+Test case: I k?.e
+Test case: I k?@k
+Test case: I ""=k
+Test case: I ""'=k
+Test case: I @k
+Test case: J dummy+k^noundeftst
+Test case: J dummy1^noundeftst(k)
+Test case: J @k
+Test case: J ^@k
+Test case: J dummy+@k^noundeftst
+Test case: K j(k)
+Test case: K (act,k,nound)
+Test case: N  K @k
+Test case: L j(k):k L
+Test case: L @k
+Test case: M j=k
+Test case: M @k
+Test case: N k
+Test case: N (act,k,nound)
+Test case: N @k
+Test case: O k C k:delete
+Test case: O "foo":(exception=k:extension=k):k C "foo":delete
+Test case: O "foo"::k C "foo":delete
+Test case: O @k
+Test case: R j:k
+Test case: R *j:k
+Test case: R j#k:k
+Test case: TS k:TRANSACTIONID=k TRO:$TR  S:$TL ^noundef=k TRE:$TL
+Test case: TS (k) S ^noundef=k TC
+Test case: S j=k
+Test case: S j=+k
+Test case: S j=-k
+Test case: S j=k+k
+Test case: S j=k-k
+Test case: S j=k*k
+Test case: S j=k**k
+Test case: S j=k/k
+Test case: S j=k\k
+Test case: S j=k#k
+Test case: S j(k)=l
+Test case: S ^k(k)=k
+Test case: S j=$$dummy2^noundeftst(1)
+Test case: S j="k",l=j_@j
+Test case: S j=@k
+Test case: S @k
+Test case: S $E(j,k,k+1)=k
+Test case: S $E(j,@k)=k
+Test case: S $E(k,k,@k)=k
+Test case: S $P(j,k,k,k+1)=k
+Test case: S $P(j,@k)=k
+Test case: S $P(j,k,@k)=k
+Test case: S $P(j,k,k,@k)=k
+Test case: U $P:(length=k:length=24:exception=k)
+Test case: U @k
+Test case: V k
+Test case: V @k
+Test case: W k
+Test case: W ?k 
+Test case: W *k
+Test case: W @k
+Test case: X k
+Test case: X @k
+Test case: ZA j(k):k L
+Test case: ZA @k
+Test case: ZCOM k
+Test case: ZCOM @k
+Test case: ZD j(k),@k
+Test case: ZG k:ick+k
+Test case: ZG @k:ick
+Test case: ZG $ZL:^@k
+Test case: ZK j(k)
+Test case: ZK @k
+Test case: ZL k
+Test case: ZL @k
+Test case: ZM k
+Test case: ZP k
+Test case: O "tmp":newv U "tmp" ZP @k C "tmp":delete
+Test case: ZSH k
+Test case: O "tmp":newv U "tmp" ZSH @k C "tmp":delete
+Test case: ZSY $S($ZVER["VMS":"log/brief",1:"exit")_k
+Test case: ZWI j(k)
+Test case: ZWI @k
+Test case: ZWR k
+Test case: S j=$A(k,k)
+Test case: S j=$A(@k)
+Test case: S j=$A(k,@k)
+Test case: S j=$C(k)
+Test case: S j=$C(@k)
+Test case: S j=$D(k)
+Test case: S j=$D(@k)
+Test case: S j=$E(k,k,k+1)
+Test case: S j=$E(@k)
+Test case: S j=$E(k,@k,@k)
+Test case: S j=$F(k,k,k)
+Test case: S j=$F(@k,k)
+Test case: S j=$F(k,@k)
+Test case: S j=$FN(k,k,k)
+Test case: S j=$FN(@k,k,k)
+Test case: S j=$FN(k,@k,k)
+Test case: S j=$FN(k,k,@k)
+Test case: S j=$G(k,k)
+Test case: S j=$G(@k)
+Test case: S j=$G(k,@k)
+Test case: S j=$I(k,k)
+Test case: S j=$I(@k)
+Test case: S j=$I(k,@k)
+Test case: S j=$J(k,k)
+Test case: S j=$J(k,k,k)
+Test case: S j=$J(@k,k)
+Test case: S j=$J(k,@k)
+Test case: S j=$J(k,k,@k)
+Test case: S j=$L(k)
+Test case: S j=$L(k,k)
+Test case: S j=$L(@k)
+Test case: S j=$L(k,@k)
+Test case: S j=$NA(k,k)
+Test case: S j=$NA(@k)
+Test case: S j=$NA(k,@k)
+Test case: S j=$N(k(k))
+Test case: S j=$N(@k)
+Test case: S j=$O(l(k))
+Test case: S j=$O(l(""),k)
+Test case: S j=$O(@k)
+Test case: S j=$O(k(""),@k)
+Test case: S j=$P(k,k)
+Test case: S j=$P(k,k,k)
+Test case: S j=$P(k,k,k,k)
+Test case: S j=$P(@k,k)
+Test case: S j=$P(k,@k)
+Test case: S j=$P(k,k,@k)
+Test case: S j=$P(k,k,k,@k)
+Test case: S j=$Q(k(l))
+Test case: S j=$Q(@k)
+Test case: S j=$QL(k)
+Test case: S j=$QL(@k)
+Test case: S j=$QS(k,k)
+Test case: S j=$QS("k",k)
+Test case: S j=$QS(@k,k)
+Test case: S j=$QS("k",@k)
+Test case: S j=$R(k)
+Test case: S j=$R(@k)
+Test case: S j=$RE(k)
+Test case: S j=$RE(@k)
+Test case: S j=$S(k:k,1:0)
+Test case: S j=$S(@k:k,1:0)
+Test case: S j=$S(k:k,1:@k)
+Test case: S j=$ST(k)
+Test case: S j=$ST(k,k)
+Test case: S j=$ST(@k)
+Test case: S j=$ST(k,@k)
+Test case: S j=$T(k+k^k)
+Test case: S j=$T(@k+k^k)
+Test case: S j=$T(k+@k^k)
+Test case: S j=$T(k+k^@k)
+Test case: S j=$T(@k+@k^k)
+Test case: S j=$T(k+@k^@k)
+Test case: S j=$T(@k+k^@k)
+Test case: S j=$T(@k+@k)
+Test case: S j=$T(+@k^@k)
+Test case: S j=$T(@k^@k)
+Test case: S j=$T(@k)
+Test case: S j=$TR(k,k,k)
+Test case: S j=$TR(@k,k)
+Test case: S j=$TR(k,@k)
+Test case: S j=$TR(k,k,@k)
+Test case: S j=$V(k)
+Test case: S j=$V(@k)
+Test case: S j=$ZBITAND(k,k)
+Test case: S j=$ZBITAND(@k,k)
+Test case: S j=$ZBITAND(k,@k)
+Test case: S j=$ZBITCOUNT(k)
+Test case: S j=$ZBITCOUNT(@k)
+Test case: S j=$ZBITFIND(k,k,k)
+Test case: S j=$ZBITFIND(@k,k,k)
+Test case: S j=$ZBITFIND(k,@k,k)
+Test case: S j=$ZBITFIND(k,k,@k)
+Test case: S j=$ZBITGET(k,k)
+Test case: S j=$ZBITGET(@k,k)
+Test case: S j=$ZBITGET(k,@k)
+Test case: S j=$ZBITLEN(k)
+Test case: S j=$ZBITLEN(@k)
+Test case: S j=$ZBITNOT(k)
+Test case: S j=$ZBITNOT(@k)
+Test case: S j=$ZBITOR(k,k)
+Test case: S j=$ZBITOR(@k,k)
+Test case: S j=$ZBITOR(k,@k)
+Test case: S j=$ZBITSET(k,k,k)
+Test case: S j=$ZBITSET(@k,k,k)
+Test case: S j=$ZBITSET(k,@k,k)
+Test case: S j=$ZBITSET(k,k,@k)
+Test case: S j=$ZBITSTR(k,k)
+Test case: S j=$ZBITSTR(@k,k)
+Test case: S j=$ZBITSTR(k,@k)
+Test case: S j=$ZBITXOR(k,k)
+Test case: S j=$ZBITXOR(@k,k)
+Test case: S j=$ZBITXOR(k,@k)
+Test case: S j=$ZD(k)
+Test case: S j=$ZD(@k)
+Test case: S j=$ZJOBEXAM(k)
+Test case: S j=$ZJOBEXAM(@k)
+Test case: S j=$ZM(k)
+Test case: S j=$ZM(@k)
+Test case: S j=$ZP(k(l))
+Test case: S j=$ZP(@k)
+Test case: S j=$ZPARSE(k,k,k,k,k)
+Test case: S j=$ZPARSE(@k,k,k,k,k)
+Test case: S j=$ZPARSE(k,@k,k,k,k)
+Test case: S j=$ZPARSE(k,k,@k,k,k)
+Test case: S j=$ZPARSE(k,k,k,@k,k)
+Test case: S j=$ZPARSE(k,k,k,k,@k)
+Test case: S j=$ZQGBLMOD(^noundef(k))
+Test case: S j=$ZQGBLMOD(@k)
+Test case: S j=$ZSEARCH(k,k)
+Test case: S j=$ZSEARCH(@k)
+Test case: S j=$ZSEARCH(k,@k)
+Test case: S j=$ZTRNLNM(k)
+Test case: S j=$ZTRNLNM(@k)
+Test case: S j=$ZWRITE(k)
+##SUSPEND_OUTPUT NONUNICODE_MODE
+PASS from 298 cases in noundeftst in operating in NOUNDEF mode
+##ALLOW_OUTPUT NONUNICODE_MODE
+##SUSPEND_OUTPUT UNICODE_MODE
+PASS from 294 cases in noundeftst in operating in NOUNDEF mode
+##ALLOW_OUTPUT UNICODE_MODE
+###################################################################
+Pass the parameter GEN, so that the test creates a file with all the test cases and runs in direct mode
+###################################################################
+
+Test case: S $ZE(j,k,k+1)=k
+Test case: S $ZE(j,@k)=k
+Test case: S $ZE(k,k,@k)=k
+Test case: S $ZPI(j,k,k,k+1)=k
+Test case: S $ZPI(j,@k)=k
+Test case: S $ZPI(j,k,@k)=k
+Test case: S $ZPI(j,k,k,@k)=k
+Test case: S j=$ZA(k,k)
+Test case: S j=$ZA(@k)
+Test case: S j=$ZA(k,@k)
+Test case: B:k k
+Test case: S j=$ZCH(k)
+Test case: S j=$ZCH(@k)
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Test case: S j=$ZCO(k,k,k)
+Test case: S j=$ZCO(@k,k)
+Test case: S j=$ZCO(k,@k)
+Test case: S j=$ZCO(k,k,@k)
+##ALLOW_OUTPUT NONUNICODE_MODE
+Test case: S j=$ZE(k,k,k+1)
+Test case: S j=$ZE(@k)
+Test case: S j=$ZE(k,@k,@k)
+Test case: S j=$ZF(k,k,k)
+Test case: S j=$ZF(@k,k)
+Test case: S j=$ZF(k,@k)
+Test case: S j=$ZJ(k,k)
+Test case: S j=$ZJ(k,k,k)
+Test case: S j=$ZJ(@k,k)
+Test case: S j=$ZJ(k,@k)
+Test case: S j=$ZJ(k,k,@k)
+Test case: S j=$ZL(k)
+Test case: S j=$ZL(k,k)
+Test case: S j=$ZL(@k)
+Test case: S j=$ZL(k,@k)
+Test case: S j=$ZPI(k,k)
+Test case: S j=$ZPI(k,k,k)
+Test case: S j=$ZPI(k,k,k,k)
+Test case: S j=$ZPI(@k,k)
+Test case: S j=$ZPI(k,@k)
+Test case: S j=$ZPI(k,k,@k)
+Test case: S j=$ZPI(k,k,k,@k)
+Test case: S j=$ZSUB(k,k,k)
+Test case: S j=$ZSUB(@k,k)
+Test case: S j=$ZSUB(k,k,@k)
+Test case: S j=$ZTR(k,k,k)
+Test case: S j=$ZTR(@k,k)
+Test case: S j=$ZTR(k,@k)
+Test case: S j=$ZTR(k,k,@k)
+Test case: S j=$ZW(k)
+Test case: S j=$ZW(@k)
+Test case: C k
+Test case: C "foo":rename=k
+Test case: C @k
+Test case: D dummy+k^noundeftst
+Test case: D dummy1^noundeftst(k)
+Test case: D @k
+Test case: D ^@k
+Test case: F j=k:1:2
+Test case: F j=1:1:k
+Test case: F j=1:k:1 q
+Test case: F j=k,l
+Test case: G ick+k
+Test case: G @k
+Test case: G ^@k
+Test case: H k
+Test case: H @k
+Test case: I k=k
+Test case: I k'=k
+Test case: I k=+k
+Test case: I k'=+k
+Test case: I k>k
+Test case: I k'>k
+Test case: I k'<k
+Test case: I k'<k
+Test case: I k&k
+Test case: I k!k
+Test case: I k[k
+Test case: I k'[k
+Test case: I k]k
+Test case: I k']k
+Test case: I k]]k
+Test case: I k']]k
+Test case: I k?.e
+Test case: I k?@k
+Test case: I ""=k
+Test case: I ""'=k
+Test case: I @k
+Test case: J dummy+k^noundeftst
+Test case: J dummy1^noundeftst(k)
+Test case: J @k
+Test case: J ^@k
+Test case: J dummy+@k^noundeftst
+Test case: K j(k)
+Test case: K (act,k,nound)
+Test case: N  K @k
+Test case: L j(k):k L
+Test case: L @k
+Test case: M j=k
+Test case: M @k
+Test case: N k
+Test case: N (act,k,nound)
+Test case: N @k
+Test case: O k C k:delete
+Test case: O "foo":(exception=k:extension=k):k C "foo":delete
+Test case: O "foo"::k C "foo":delete
+Test case: O @k
+Test case: R j:k
+Test case: R *j:k
+Test case: R j#k:k
+Test case: TS k:TRANSACTIONID=k TRO:$TR  S:$TL ^noundef=k TRE:$TL
+Test case: TS (k) S ^noundef=k TC
+Test case: S j=k
+Test case: S j=+k
+Test case: S j=-k
+Test case: S j=k+k
+Test case: S j=k-k
+Test case: S j=k*k
+Test case: S j=k**k
+Test case: S j=k/k
+Test case: S j=k\k
+Test case: S j=k#k
+Test case: S j(k)=l
+Test case: S ^k(k)=k
+Test case: S j=$$dummy2^noundeftst(1)
+Test case: S j="k",l=j_@j
+Test case: S j=@k
+Test case: S @k
+Test case: S $E(j,k,k+1)=k
+Test case: S $E(j,@k)=k
+Test case: S $E(k,k,@k)=k
+Test case: S $P(j,k,k,k+1)=k
+Test case: S $P(j,@k)=k
+Test case: S $P(j,k,@k)=k
+Test case: S $P(j,k,k,@k)=k
+Test case: U $P:(length=k:length=24:exception=k)
+Test case: U @k
+Test case: V k
+Test case: V @k
+Test case: W k
+Test case: W ?k 
+Test case: W *k
+Test case: W @k
+Test case: X k
+Test case: X @k
+Test case: ZA j(k):k L
+Test case: ZA @k
+Test case: ZCOM k
+Test case: ZCOM @k
+Test case: ZD j(k),@k
+Test case: ZG k:ick+k
+Test case: ZG @k:ick
+Test case: ZG $ZL:^@k
+Test case: ZK j(k)
+Test case: ZK @k
+Test case: ZL k
+Test case: ZL @k
+Test case: ZM k
+Test case: ZP k
+Test case: O "tmp":newv U "tmp" ZP @k C "tmp":delete
+Test case: ZSH k
+Test case: O "tmp":newv U "tmp" ZSH @k C "tmp":delete
+Test case: ZSY $S($ZVER["VMS":"log/brief",1:"exit")_k
+Test case: ZWI j(k)
+Test case: ZWI @k
+Test case: ZWR k
+Test case: S j=$A(k,k)
+Test case: S j=$A(@k)
+Test case: S j=$A(k,@k)
+Test case: S j=$C(k)
+Test case: S j=$C(@k)
+Test case: S j=$D(k)
+Test case: S j=$D(@k)
+Test case: S j=$E(k,k,k+1)
+Test case: S j=$E(@k)
+Test case: S j=$E(k,@k,@k)
+Test case: S j=$F(k,k,k)
+Test case: S j=$F(@k,k)
+Test case: S j=$F(k,@k)
+Test case: S j=$FN(k,k,k)
+Test case: S j=$FN(@k,k,k)
+Test case: S j=$FN(k,@k,k)
+Test case: S j=$FN(k,k,@k)
+Test case: S j=$G(k,k)
+Test case: S j=$G(@k)
+Test case: S j=$G(k,@k)
+Test case: S j=$I(k,k)
+Test case: S j=$I(@k)
+Test case: S j=$I(k,@k)
+Test case: S j=$J(k,k)
+Test case: S j=$J(k,k,k)
+Test case: S j=$J(@k,k)
+Test case: S j=$J(k,@k)
+Test case: S j=$J(k,k,@k)
+Test case: S j=$L(k)
+Test case: S j=$L(k,k)
+Test case: S j=$L(@k)
+Test case: S j=$L(k,@k)
+Test case: S j=$NA(k,k)
+Test case: S j=$NA(@k)
+Test case: S j=$NA(k,@k)
+Test case: S j=$N(k(k))
+Test case: S j=$N(@k)
+Test case: S j=$O(l(k))
+Test case: S j=$O(l(""),k)
+Test case: S j=$O(@k)
+Test case: S j=$O(k(""),@k)
+Test case: S j=$P(k,k)
+Test case: S j=$P(k,k,k)
+Test case: S j=$P(k,k,k,k)
+Test case: S j=$P(@k,k)
+Test case: S j=$P(k,@k)
+Test case: S j=$P(k,k,@k)
+Test case: S j=$P(k,k,k,@k)
+Test case: S j=$Q(k(l))
+Test case: S j=$Q(@k)
+Test case: S j=$QL(k)
+Test case: S j=$QL(@k)
+Test case: S j=$QS(k,k)
+Test case: S j=$QS("k",k)
+Test case: S j=$QS(@k,k)
+Test case: S j=$QS("k",@k)
+Test case: S j=$R(k)
+Test case: S j=$R(@k)
+Test case: S j=$RE(k)
+Test case: S j=$RE(@k)
+Test case: S j=$S(k:k,1:0)
+Test case: S j=$S(@k:k,1:0)
+Test case: S j=$S(k:k,1:@k)
+Test case: S j=$ST(k)
+Test case: S j=$ST(k,k)
+Test case: S j=$ST(@k)
+Test case: S j=$ST(k,@k)
+Test case: S j=$T(k+k^k)
+Test case: S j=$T(@k+k^k)
+Test case: S j=$T(k+@k^k)
+Test case: S j=$T(k+k^@k)
+Test case: S j=$T(@k+@k^k)
+Test case: S j=$T(k+@k^@k)
+Test case: S j=$T(@k+k^@k)
+Test case: S j=$T(@k+@k)
+Test case: S j=$T(+@k^@k)
+Test case: S j=$T(@k^@k)
+Test case: S j=$T(@k)
+Test case: S j=$TR(k,k,k)
+Test case: S j=$TR(@k,k)
+Test case: S j=$TR(k,@k)
+Test case: S j=$TR(k,k,@k)
+Test case: S j=$V(k)
+Test case: S j=$V(@k)
+Test case: S j=$ZBITAND(k,k)
+Test case: S j=$ZBITAND(@k,k)
+Test case: S j=$ZBITAND(k,@k)
+Test case: S j=$ZBITCOUNT(k)
+Test case: S j=$ZBITCOUNT(@k)
+Test case: S j=$ZBITFIND(k,k,k)
+Test case: S j=$ZBITFIND(@k,k,k)
+Test case: S j=$ZBITFIND(k,@k,k)
+Test case: S j=$ZBITFIND(k,k,@k)
+Test case: S j=$ZBITGET(k,k)
+Test case: S j=$ZBITGET(@k,k)
+Test case: S j=$ZBITGET(k,@k)
+Test case: S j=$ZBITLEN(k)
+Test case: S j=$ZBITLEN(@k)
+Test case: S j=$ZBITNOT(k)
+Test case: S j=$ZBITNOT(@k)
+Test case: S j=$ZBITOR(k,k)
+Test case: S j=$ZBITOR(@k,k)
+Test case: S j=$ZBITOR(k,@k)
+Test case: S j=$ZBITSET(k,k,k)
+Test case: S j=$ZBITSET(@k,k,k)
+Test case: S j=$ZBITSET(k,@k,k)
+Test case: S j=$ZBITSET(k,k,@k)
+Test case: S j=$ZBITSTR(k,k)
+Test case: S j=$ZBITSTR(@k,k)
+Test case: S j=$ZBITSTR(k,@k)
+Test case: S j=$ZBITXOR(k,k)
+Test case: S j=$ZBITXOR(@k,k)
+Test case: S j=$ZBITXOR(k,@k)
+Test case: S j=$ZD(k)
+Test case: S j=$ZD(@k)
+Test case: S j=$ZJOBEXAM(k)
+Test case: S j=$ZJOBEXAM(@k)
+Test case: S j=$ZM(k)
+Test case: S j=$ZM(@k)
+Test case: S j=$ZP(k(l))
+Test case: S j=$ZP(@k)
+Test case: S j=$ZPARSE(k,k,k,k,k)
+Test case: S j=$ZPARSE(@k,k,k,k,k)
+Test case: S j=$ZPARSE(k,@k,k,k,k)
+Test case: S j=$ZPARSE(k,k,@k,k,k)
+Test case: S j=$ZPARSE(k,k,k,@k,k)
+Test case: S j=$ZPARSE(k,k,k,k,@k)
+Test case: S j=$ZQGBLMOD(^noundef(k))
+Test case: S j=$ZQGBLMOD(@k)
+Test case: S j=$ZSEARCH(k,k)
+Test case: S j=$ZSEARCH(@k)
+Test case: S j=$ZSEARCH(k,@k)
+Test case: S j=$ZTRNLNM(k)
+Test case: S j=$ZTRNLNM(@k)
+Test case: S j=$ZWRITE(k)
+##SUSPEND_OUTPUT NONUNICODE_MODE
+PASS from 298 cases in noundeftst in operating in NOUNDEF mode
+##ALLOW_OUTPUT NONUNICODE_MODE
+##SUSPEND_OUTPUT UNICODE_MODE
+PASS from 294 cases in noundeftst in operating in NOUNDEF mode
+##ALLOW_OUTPUT UNICODE_MODE
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

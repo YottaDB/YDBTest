@@ -1,0 +1,8 @@
+;
+;	PER 2968:  This is the version of the called routine that doesn't
+;		   contain the label `foo';  it gets ZLINKed in place of
+;		   the other version.
+;
+per2968b w "This is the called routine",!
+	w "This is where label foo^per2968b used to be",!
+	q

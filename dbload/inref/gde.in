@@ -1,0 +1,38 @@
+change -segment default	-file="max_db.dat"	-block_size=2048			-global_buffer_count=64
+add -segment max_cd	-file="max_cd.dat"	-block_size=2048	-allocation=10	-global_buffer_count=64
+add -segment max_cm	-file="max_cm.dat"	-block_size=2048	-allocation=10	-global_buffer_count=64
+add -segment max_rp	-file="max_rp.dat"	-block_size=2048	-allocation=10	-global_buffer_count=64
+add -segment max_sc	-file="max_sc.dat"	-block_size=2048	-allocation=10	-global_buffer_count=64
+add -segment max_tmp	-file="max_tmp.dat"	-block_size=2048	-allocation=10	-global_buffer_count=64
+add -segment max_tr	-file="max_tr.dat"	-block_size=2048	-allocation=10	-global_buffer_count=64
+add -segment max_tw	-file="max_tw.dat"	-block_size=2048	-allocation=10	-global_buffer_count=64
+add -segment max_xrf	-file="max_xrf.dat"	-block_size=2048	-allocation=10	-global_buffer_count=64
+change -region default				-record_size=400
+add -region max_cd_reg	-dynamic=max_cd		-record_size=400
+add -region max_cm_reg	-dynamic=max_cm		-record_size=400
+add -region max_rp_reg	-dynamic=max_rp		-record_size=400
+add -region max_sc_reg	-dynamic=max_sc		-record_size=400
+add -region max_tmp_reg	-dynamic=max_tmp	-record_size=400	-key_size=128
+add -region max_tr_reg	-dynamic=max_tr		-record_size=400
+add -region max_tw_reg	-dynamic=max_tw		-record_size=400
+add -region max_xrf_reg	-dynamic=max_xrf	-record_size=400	-key_size=128
+add -name arx	-region=max_xrf_reg
+add -name cd*	-region=max_cd_reg
+add -name cm*	-region=max_cm_reg
+add -name jb*	-region=max_cm_reg
+add -name job*	-region=max_cm_reg
+add -name mi*	-region=max_cd_reg
+add -name mm*	-region=max_cd_reg
+add -name mx	-region=max_cd_reg
+add -name op	-region=max_cd_reg
+add -name or*	-region=max_cm_reg
+add -name prds	-region=max_tw_reg
+add -name ptx	-region=max_xrf_reg
+add -name qu	-region=max_cm_reg
+add -name rp*	-region=max_rp_reg
+add -name sc*	-region=max_sc_reg
+add -name sh*	-region=max_cm_reg
+add -name so*	-region=max_cm_reg
+add -name tmp	-region=max_tmp_reg
+add -name tr*	-region=max_tr_reg
+add -name tw*	-region=max_tw_reg

@@ -1,0 +1,46 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gde60.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gde60.cmd
+%GDE-I-MAPBAD, Region A1 for Name a(10:40) does not exist
+%GDE-I-MAPBAD, Region A4 for Name a(40:"") does not exist
+%GDE-I-STDNULLCOLLREQ, Region A4 needs Standard Null Collation enabled because global ^a spans through it
+%GDE-I-STDNULLCOLLREQ, Region A1 needs Standard Null Collation enabled because global ^a spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^a spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-I-NOEXIT, Cannot exit because of verification failure
+
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ a(10:40)                           A1
+ a(40:"")                           A4
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               a(10)                            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ a(10)                           a(40)                            REG = A1
+                                                                  SEG = A1
+                                                                  FILE = A1.dat
+ a(40)                           a0                               REG = A4
+                                                                  SEG = A4
+                                                                  FILE = A4.dat
+ a0                              ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gde60.gld

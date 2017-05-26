@@ -1,0 +1,1040 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ Aa*                                AA345678901
+ Ba345678901                        BB3456789012345678901
+ Bb3456789012345678901              BB3456789012345678901
+ Bc345678901234567890123456789*     BB3456789012345678901
+ Ca345678901*                       CC345678901234567890123456789
+ Cb3456789012345678901*             CC345678901234567890123456789
+ Cc345678901234567890123456789*     DD3456789012345678901234567890
+ Cd3456789012345678901234567890     DD3456789012345678901234567890
+ D1                                 CC345678901234567890123456789
+ D2                                 CC345678901234567890123456789
+ D4                                 CC345678901234567890123456789
+ Dc345678901234567890123456789      DD3456789012345678901234567890
+ Dd3456789012345678901234567890*    DD3456789012345678901234567890
+ Ec345678901234567890123456789*     EE34567890123456789012345678901
+ Ed3456789012345678901234567890     EE34567890123456789012345678901
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AA345678901                     AA345678901                        0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ BB3456789012345678901           BB3456789012345678901              0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ CC345678901234567890123456789   CC345678901234567890123456789      0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ DD3456789012345678901234567890  DD3456789012345678901234567890     0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ EE34567890123456789012345678901 EE34567890123456789012345678901    0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ AA345678901                     a.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ BB3456789012345678901           b.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ CC345678901234567890123456789   c.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ DD3456789012345678901234567890  d.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ EE34567890123456789012345678901 e.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               Aa                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Aa                              Ab                               REG = AA345678901
+                                                                  SEG = AA345678901
+                                                                  FILE = a.dat
+ Ab                              Ba345678901                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Ba345678901                     Ba3456789010                     REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Ba3456789010                    Bb3456789012345678901            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Bb3456789012345678901           Bb34567890123456789010           REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Bb34567890123456789010          Bc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Bc345678901234567890123456789   Bc34567890123456789012345678A    REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Bc34567890123456789012345678A   Ca345678901                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Ca345678901                     Ca345678902                      REG = CC345678901234567890123456789
+                                                                  SEG = CC345678901234567890123456789
+                                                                  FILE = c.dat
+ Ca345678902                     Cb3456789012345678901            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cb3456789012345678901           Cb3456789012345678902            REG = CC345678901234567890123456789
+                                                                  SEG = CC345678901234567890123456789
+                                                                  FILE = c.dat
+ Cb3456789012345678902           Cc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cc345678901234567890123456789   Cc34567890123456789012345678A    REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Cc34567890123456789012345678A   Cd3456789012345678901234567890   REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cd3456789012345678901234567890  Cd34567890123456789012345678900  REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Cd34567890123456789012345678900 D1                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ D1                              D10                              REG = CC345678901234567890123456789
+                                                                  SEG = CC345678901234567890123456789
+                                                                  FILE = c.dat
+ D10                             D2                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ D2                              D20                              REG = CC345678901234567890123456789
+                                                                  SEG = CC345678901234567890123456789
+                                                                  FILE = c.dat
+ D20                             D4                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ D4                              D40                              REG = CC345678901234567890123456789
+                                                                  SEG = CC345678901234567890123456789
+                                                                  FILE = c.dat
+ D40                             Dc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Dc345678901234567890123456789   Dc3456789012345678901234567890   REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Dc3456789012345678901234567890  Dd3456789012345678901234567890   REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Dd3456789012345678901234567890  Dd3456789012345678901234567891   REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Dd3456789012345678901234567891  Ec345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Ec345678901234567890123456789   Ec34567890123456789012345678A    REG = EE34567890123456789012345678901
+                                                                  SEG = EE34567890123456789012345678901
+                                                                  FILE = e.dat
+ Ec34567890123456789012345678A   Ed3456789012345678901234567890   REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Ed3456789012345678901234567890  Ed34567890123456789012345678900  REG = EE34567890123456789012345678901
+                                                                  SEG = EE34567890123456789012345678901
+                                                                  FILE = e.dat
+ Ed34567890123456789012345678900 ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ DD3456789012345678901234567890  DD3456789012345678901234567890     0      256   128 NEVER      N    N   DISABLED DISABLED ENABLED
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ EE34567890123456789012345678901 TEMP                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ Aa*                                AA345678901
+ Ba345678901                        BB3456789012345678901
+ Bb3456789012345678901              BB3456789012345678901
+ Bc345678901234567890123456789*     BB3456789012345678901
+ Ca345678901*                       CC345678901234567890123456789
+ Cb3456789012345678901*             CC345678901234567890123456789
+ Cc345678901234567890123456789*     DD3456789012345678901234567890
+ Cd3456789012345678901234567890     DD3456789012345678901234567890
+ Da345678901*                       CC345678901234567890123456789
+ Db3456789012345678901*             CC345678901234567890123456789
+ Dc345678901234567890123456789      DD3456789012345678901234567890
+ Dd3456789012345678901234567890*    DD3456789012345678901234567890
+ Dd34567890123456789012345678901    CC345678901234567890123456789
+ Ec345678901234567890123456789*     EE34567890123456789012345678901
+ Ed3456789012345678901234567890     EE34567890123456789012345678901
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AA345678901                     AA345678901                        0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ BB3456789012345678901           BB3456789012345678901              0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ CC345678901234567890123456789   TEMP                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ DD3456789012345678901234567890  DD3456789012345678901234567890     0      256   128 NEVER      N    N   DISABLED DISABLED ENABLED
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ AA345678901                     a.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ BB3456789012345678901           b.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ DD3456789012345678901234567890  d.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ TEMP                            temp.dat            BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               Aa                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Aa                              Ab                               REG = AA345678901
+                                                                  SEG = AA345678901
+                                                                  FILE = a.dat
+ Ab                              Ba345678901                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Ba345678901                     Ba3456789010                     REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Ba3456789010                    Bb3456789012345678901            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Bb3456789012345678901           Bb34567890123456789010           REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Bb34567890123456789010          Bc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Bc345678901234567890123456789   Bc34567890123456789012345678A    REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Bc34567890123456789012345678A   Ca345678901                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Ca345678901                     Ca345678902                      REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Ca345678902                     Cb3456789012345678901            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cb3456789012345678901           Cb3456789012345678902            REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Cb3456789012345678902           Cc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cc345678901234567890123456789   Cc34567890123456789012345678A    REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Cc34567890123456789012345678A   Cd3456789012345678901234567890   REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cd3456789012345678901234567890  Cd34567890123456789012345678900  REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Cd34567890123456789012345678900 Da345678901                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Da345678901                     Da345678902                      REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Da345678902                     Db3456789012345678901            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Db3456789012345678901           Db3456789012345678902            REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Db3456789012345678902           Dc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Dc345678901234567890123456789   Dc3456789012345678901234567890   REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Dc3456789012345678901234567890  Dd3456789012345678901234567890   REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Dd3456789012345678901234567890  Dd34567890123456789012345678901  REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Dd34567890123456789012345678901 Dd34567890123456789012345678902  REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Dd34567890123456789012345678902 Dd3456789012345678901234567891   REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Dd3456789012345678901234567891  Ec345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Ec345678901234567890123456789   Ec34567890123456789012345678A    REG = EE34567890123456789012345678901
+                                                                  SEG = NONE
+                                                                  FILE = NONE
+ Ec34567890123456789012345678A   Ed3456789012345678901234567890   REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Ed3456789012345678901234567890  Ed34567890123456789012345678900  REG = EE34567890123456789012345678901
+                                                                  SEG = NONE
+                                                                  FILE = NONE
+ Ed34567890123456789012345678900 ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+GDE> 
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ Aa*                                AA345678901
+ Ba345678901                        BB3456789012345678901
+ Bb3456789012345678901              BB3456789012345678901
+ Bc345678901234567890123456789*     BB3456789012345678901
+ Ca345678901*                       CC345678901234567890123456789
+ Cb3456789012345678901*             CC345678901234567890123456789
+ Cc345678901234567890123456789*     DD3456789012345678901234567890
+ Cd3456789012345678901234567890     DD3456789012345678901234567890
+ Da345678901*                       CC345678901234567890123456789
+ Db3456789012345678901*             CC345678901234567890123456789
+ Dc345678901234567890123456789      DD3456789012345678901234567890
+ Dd3456789012345678901234567890*    DD3456789012345678901234567890
+ Dd34567890123456789012345678901    CC345678901234567890123456789
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AA345678901                     AA345678901                        0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ BB3456789012345678901           BB3456789012345678901              0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ CC345678901234567890123456789   TEMP                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ DD3456789012345678901234567890  DD3456789012345678901234567890     0      256   128 NEVER      N    N   DISABLED DISABLED ENABLED
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ AA345678901                     a.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ BB3456789012345678901           b.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ DD3456789012345678901234567890  d.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ TEMP                            temp.dat            BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               Aa                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Aa                              Ab                               REG = AA345678901
+                                                                  SEG = AA345678901
+                                                                  FILE = a.dat
+ Ab                              Ba345678901                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Ba345678901                     Ba3456789010                     REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Ba3456789010                    Bb3456789012345678901            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Bb3456789012345678901           Bb34567890123456789010           REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Bb34567890123456789010          Bc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Bc345678901234567890123456789   Bc34567890123456789012345678A    REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Bc34567890123456789012345678A   Ca345678901                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Ca345678901                     Ca345678902                      REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Ca345678902                     Cb3456789012345678901            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cb3456789012345678901           Cb3456789012345678902            REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Cb3456789012345678902           Cc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cc345678901234567890123456789   Cc34567890123456789012345678A    REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Cc34567890123456789012345678A   Cd3456789012345678901234567890   REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cd3456789012345678901234567890  Cd34567890123456789012345678900  REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Cd34567890123456789012345678900 Da345678901                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Da345678901                     Da345678902                      REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Da345678902                     Db3456789012345678901            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Db3456789012345678901           Db3456789012345678902            REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Db3456789012345678902           Dc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Dc345678901234567890123456789   Dc3456789012345678901234567890   REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Dc3456789012345678901234567890  Dd3456789012345678901234567890   REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Dd3456789012345678901234567890  Dd34567890123456789012345678901  REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Dd34567890123456789012345678901 Dd34567890123456789012345678902  REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Dd34567890123456789012345678902 Dd3456789012345678901234567891   REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Dd3456789012345678901234567891  ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ Ba345678901                        BB3456789012345678901
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ Bb3456789012345678901              BB3456789012345678901
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ Bc345678901234567890123456789*     BB3456789012345678901
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ Ca345678901*                       CC345678901234567890123456789
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ Cb3456789012345678901*             CC345678901234567890123456789
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ Cc345678901234567890123456789*     DD3456789012345678901234567890
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ Da345678901*                       CC345678901234567890123456789
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ Db3456789012345678901*             CC345678901234567890123456789
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ Dc345678901234567890123456789      DD3456789012345678901234567890
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ Dd3456789012345678901234567890*    DD3456789012345678901234567890
+GDE> 
+%GDE-E-OBJNOTFND, Name Dd3456789012345678901234567890 does not exist
+
+GDE> 
+%GDE-E-OBJNOTFND, Name De34567890123456789012345678901 does not exist
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ Cc345678901234567890123456789*     DD3456789012345678901234567890
+GDE> 
+%GDE-E-OBJNOTFND, Name Cd3456789012345678901234567890* does not exist
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ Cd3456789012345678901234567890     DD3456789012345678901234567890
+GDE> 
+%GDE-E-OBJNOTFND, Name Ce34567890123456789012345678901 does not exist
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ Da345678901*                       CC345678901234567890123456789
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ Db3456789012345678901*             CC345678901234567890123456789
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ Aa*                                AA345678901
+ Ba345678901                        BB3456789012345678901
+ Bb3456789012345678901              BB3456789012345678901
+ Bc345678901234567890123456789*     BB3456789012345678901
+ Ca345678901*                       CC345678901234567890123456789
+ Cb3456789012345678901*             CC345678901234567890123456789
+ Cc345678901234567890123456789*     DD3456789012345678901234567890
+ Cd3456789012345678901234567890     DD3456789012345678901234567890
+ Da345678901*                       CC345678901234567890123456789
+ Db3456789012345678901*             CC345678901234567890123456789
+ Dc345678901234567890123456789      DD3456789012345678901234567890
+ Dd3456789012345678901234567890*    DD3456789012345678901234567890
+ Dd34567890123456789012345678901    CC345678901234567890123456789
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               Aa                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Aa                              Ab                               REG = AA345678901
+                                                                  SEG = AA345678901
+                                                                  FILE = a.dat
+ Ab                              Ba345678901                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Ba345678901                     Ba3456789010                     REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Ba3456789010                    Bb3456789012345678901            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Bb3456789012345678901           Bb34567890123456789010           REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Bb34567890123456789010          Bc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Bc345678901234567890123456789   Bc34567890123456789012345678A    REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Bc34567890123456789012345678A   Ca345678901                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Ca345678901                     Ca345678902                      REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Ca345678902                     Cb3456789012345678901            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cb3456789012345678901           Cb3456789012345678902            REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Cb3456789012345678902           Cc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cc345678901234567890123456789   Cc34567890123456789012345678A    REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Cc34567890123456789012345678A   Cd3456789012345678901234567890   REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cd3456789012345678901234567890  Cd34567890123456789012345678900  REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Cd34567890123456789012345678900 Da345678901                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Da345678901                     Da345678902                      REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Da345678902                     Db3456789012345678901            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Db3456789012345678901           Db3456789012345678902            REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Db3456789012345678902           Dc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Dc345678901234567890123456789   Dc3456789012345678901234567890   REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Dc3456789012345678901234567890  Dd3456789012345678901234567890   REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Dd3456789012345678901234567890  Dd34567890123456789012345678901  REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Dd34567890123456789012345678901 Dd34567890123456789012345678902  REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Dd34567890123456789012345678902 Dd3456789012345678901234567891   REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Dd3456789012345678901234567891  ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ Aa*                                AA345678901
+ Ba345678901                        BB3456789012345678901
+ Bb3456789012345678901              BB3456789012345678901
+ Bc345678901234567890123456789*     BB3456789012345678901
+ Ca345678901*                       CC345678901234567890123456789
+ Cb3456789012345678901*             CC345678901234567890123456789
+ Cc345678901234567890123456789*     DD3456789012345678901234567890
+ Cd3456789012345678901234567890     DD3456789012345678901234567890
+ Da345678901*                       CC345678901234567890123456789
+ Db3456789012345678901*             CC345678901234567890123456789
+ Dc345678901234567890123456789      DD3456789012345678901234567890
+ Dd3456789012345678901234567890*    DD3456789012345678901234567890
+ Dd34567890123456789012345678901    CC345678901234567890123456789
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AA345678901                     AA345678901                        0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ BB3456789012345678901           BB3456789012345678901              0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ CC345678901234567890123456789   TEMP                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ DD3456789012345678901234567890  DD3456789012345678901234567890     0      256   128 NEVER      N    N   DISABLED DISABLED ENABLED
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ AA345678901                     a.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ BB3456789012345678901           b.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ DD3456789012345678901234567890  d.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ TEMP                            temp.dat            BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               Aa                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Aa                              Ab                               REG = AA345678901
+                                                                  SEG = AA345678901
+                                                                  FILE = a.dat
+ Ab                              Ba345678901                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Ba345678901                     Ba3456789010                     REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Ba3456789010                    Bb3456789012345678901            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Bb3456789012345678901           Bb34567890123456789010           REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Bb34567890123456789010          Bc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Bc345678901234567890123456789   Bc34567890123456789012345678A    REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Bc34567890123456789012345678A   Ca345678901                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Ca345678901                     Ca345678902                      REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Ca345678902                     Cb3456789012345678901            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cb3456789012345678901           Cb3456789012345678902            REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Cb3456789012345678902           Cc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cc345678901234567890123456789   Cc34567890123456789012345678A    REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Cc34567890123456789012345678A   Cd3456789012345678901234567890   REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cd3456789012345678901234567890  Cd34567890123456789012345678900  REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Cd34567890123456789012345678900 Da345678901                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Da345678901                     Da345678902                      REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Da345678902                     Db3456789012345678901            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Db3456789012345678901           Db3456789012345678902            REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Db3456789012345678902           Dc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Dc345678901234567890123456789   Dc3456789012345678901234567890   REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Dc3456789012345678901234567890  Dd3456789012345678901234567890   REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Dd3456789012345678901234567890  Dd34567890123456789012345678901  REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Dd34567890123456789012345678901 Dd34567890123456789012345678902  REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Dd34567890123456789012345678902 Dd3456789012345678901234567891   REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Dd3456789012345678901234567891  ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-OBJNOTFND, Name Dd3456789012345678901234567890 does not exist
+
+GDE> 
+%GDE-I-OBJNOTFND, Name De34567890123456789012345678901 does not exist
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 

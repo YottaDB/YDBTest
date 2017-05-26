@@ -1,0 +1,15 @@
+Run with gtmcompile set to -nowarning so error is after the hello
+hello from gtm7321a
+Reverse the setting established by the environment variable and ZLINK again
+		zfoo
+		^-----
+		At column 2, line 15, source module ##IN_TEST_PATH##/inref/gtm7321a.m
+%GTM-E-INVCMD, Invalid command keyword encountered
+Run with gtmcompile undefined so error is before the hello
+		zfoo
+		^-----
+		At column 2, line 15, source module ##IN_TEST_PATH##/inref/gtm7321a.m
+%GTM-E-INVCMD, Invalid command keyword encountered
+hello from gtm7321a
+Reverse the setting established by the environment variable and ZLINK again
+-nowarning should prevent messages to stderror but leave them in a listing

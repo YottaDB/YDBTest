@@ -1,0 +1,110 @@
+
+Check the output of dbcreate in dbcreate.log
+
+
+===>Start replication A->B, P->Q and A->P
+
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'START INST3 INST4 RP'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+==Executing MULTISITE_REPLIC 'START INST1 INST3 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+
+===>Do some updates on A and P and let them replicate to B, P and Q as appropriate
+
+Switch over from A to B
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+==Executing MULTISITE_REPLIC 'STOP INST1 INST3'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Shutting down Primary Source Server Server in ##TEST_PATH##
+==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST1 RP'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST2 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >&! rollback_1.out; $grep "Rollback successful" rollback_1.out'==
+%GTM-S-JNLSUCCESS, Rollback successful
+==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST1'==
+==Executing MULTISITE_REPLIC 'START INST2 INST3 RP'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Switch over from P to Q
+==Executing MULTISITE_REPLIC 'STOP INST2 INST3'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'STOP INST3 INST4'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+==Executing MULTISITE_REPLIC 'STARTSRC INST4 INST3 RP'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST3 SRC=INST4 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >&! rollback_2.out; $grep "Rollback successful" rollback_2.out'==
+%GTM-S-JNLSUCCESS, Rollback successful
+==Executing MULTISITE_REPLIC 'STARTRCV INST4 INST3'==
+==Executing MULTISITE_REPLIC 'START INST2 INST4 RP'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+Switch over back from B to A
+==Executing MULTISITE_REPLIC 'STOP INST2 INST1'==
+Shutting down Passive Source Server and Receiver Server in ##TEST_PATH##
+Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'STOP INST2 INST4'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >&! rollback_3.out; $grep "Rollback successful" rollback_3.out'==
+%GTM-S-JNLSUCCESS, Rollback successful
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+==Executing MULTISITE_REPLIC 'START INST1 INST4 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+Switch over back from Q to P
+==Executing MULTISITE_REPLIC 'STOP INST1 INST4'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+Shutting down Primary Source Server Server in ##TEST_PATH##
+==Executing MULTISITE_REPLIC 'STOP INST4 INST3'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST4 RP'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST4 SRC=INST3 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >&! rollback_4.out; $grep "Rollback successful" rollback_4.out'==
+%GTM-S-JNLSUCCESS, Rollback successful
+==Executing MULTISITE_REPLIC 'STARTRCV INST3 INST4'==
+==Executing MULTISITE_REPLIC 'START INST1 INST3 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+
+===>Do showbacklog on A->B side
+
+==Executing MULTISITE_REPLIC 'SHOWBACKLOG INST1 INST2 SRC'==
+Source backlog saved in ##TEST_PATH##/##FILTERED##backlog_##TIMESTAMP##.out
+
+===>Do showbacklog on P->Q side
+
+==Executing MULTISITE_REPLIC 'SHOWBACKLOG INST3 INST4 SRC'==
+##TEST_AWKSource backlog saved in .*/instance3/##FILTERED##backlog_##TIMESTAMP##.out
+
+===>Do showbacklog on A->P side
+
+==Executing MULTISITE_REPLIC 'SHOWBACKLOG INST1 INST3 SRC'==
+Source backlog saved in ##TEST_PATH##/##FILTERED##backlog_##TIMESTAMP##.out
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT ALL'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

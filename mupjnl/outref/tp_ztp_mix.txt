@@ -1,0 +1,30 @@
+Test Case: 07 tp_ztp_mixup
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+d t1^ztptp
+%GTM-E-TPMIXUP, An M transaction cannot be started within a fenced logical transaction
+		At M source location t1+3^ztptp
+
+GTM>
+
+GTM>
+d t2^ztptp
+%GTM-E-TPMIXUP, A fenced logical transaction cannot be started within an M transaction
+		At M source location t2+3^ztptp
+
+GTM>
+
+GTM>
+d t3^ztptp
+%GTM-E-TPMIXUP, An M transaction cannot be started within a fenced logical transaction
+		At M source location t3+4^ztptp
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

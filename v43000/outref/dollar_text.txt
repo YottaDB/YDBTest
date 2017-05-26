@@ -1,0 +1,42 @@
+
+ 1:  9: doltext ;
+ 2: 40:  For i=1:1 Set x=$Text(+i) Quit:x=""  Do
+ 3: 57:  . Write !,$Justify(i,2),": ",$Justify($Length(x),2),": "
+ 4: 26:  . For p=1:1:$Length(x) Do
+ 5: 22:  . . Set a=$ASCII(x,p)
+ 6: 30:  . . If a=9 Write "<tab>" Quit
+ 7: 33:  . . If a<32 Write "<",a,">" Quit
+ 8: 19:  . . Write $Char(a)
+ 9:  9:  . . Quit
+10:  7:  . Quit
+11:  2:  ;
+12: 42:  ; This routine contains a number of lines
+13: 50:  ; that have special considerations when presented
+14: 17:  ; through $TEXT.
+15:  4:  w !
+16: 42:  ; The next line starts with three spaces:
+17: 21:    w "Three spaces",!
+18: 48:  ; The next line starts with space - tab - space
+19: 24:    w "Space Tab Space",!
+20: 46:  ; The next line starts with tab - space - tab
+21: 22:    w "Tab space Tab",!
+22: 39:  ; The next line starts with ine space,
+23: 39:  ; and contains a tab later in the line
+24: 32:  W "Here is a tab",! ;<tab>and a tab
+25: 39:  ; The next line is only a "line-start"
+26:  1:  
+27: 36:  ; The next line is completely empty
+28:  1:  
+29: 50:  ; According to the ANSI standard, this would mean
+30: 53:  ; that this line is not part of the program anymore.
+31: 52:  ; An extension to the standard in GT.M allows empty
+32: 50:  ; lines in source files, so these lines are still
+33: 23:  ; part of the program.
+34: 50:  ; The value of $TEXT for the empty line, however,
+35: 52:  ; does conform to the ANSI standard, i.e., the line
+36: 50:  ; shows up as if it contains one space character.
+37:  2:  q
+Three spaces
+Space Tab Space
+Tab space Tab
+Here is a tab

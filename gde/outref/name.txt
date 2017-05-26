@@ -1,0 +1,318 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ A("abcd",1:"")                     AREG
+ A("efgh","":1)                     AREG
+ A("ijkl","":"")                    BREG
+ B("ABCD",3:"abcd")                 BREG
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ A(1,2,3:"")                        BREG
+ A("abcd",1:"")                     AREG
+ B("":"")                           BREG
+ B("ABCD",3)                        AREG
+GDE> 
+GDE> 
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ A("abcd",1:"")                     AREG
+ A("efgh","":1)                     AREG
+ B("":"")                           BREG
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-E-OBJDUP, Name A(1) already exists
+
+GDE> 
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ A(1)                               AREG
+ A("0.1E1")                         AREG
+ A("1")                             AREG
+ A("abcd",1:"")                     AREG
+ A("efgh","":1)                     AREG
+ B("":"")                           BREG
+ X("":"")                           AREG
+ X(2,"":"")                         BREG
+ Y("":"")                           AREG
+ Y(2)                               BREG
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-E-OBJDUP, Name pointa(1:10) already exists
+
+GDE> 
+%GDE-E-OBJDUP, Name pointa(1) already exists
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ A(1)                               AREG
+ A("0.1E1")                         AREG
+ A("1")                             AREG
+ A("abcd",1:"")                     AREG
+ A("efgh","":1)                     AREG
+ B("":"")                           BREG
+ PRODAGE(0:10)                      DECADE0
+ PRODAGE(10:20)                     DECADE1
+ PRODAGE(20:30)                     DECADE2
+ X("":"")                           AREG
+ X(2,"":"")                         BREG
+ Y("":"")                           AREG
+ Y(2)                               BREG
+ pointa(1)                          AREG
+ pointa(1:10)                       BREG
+GDE> 
+GDE> 
+GDE> 
+%GDE-E-OBJDUP, Name PRODAGE(10:20) already exists
+
+GDE> 
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ A(1)                               AREG
+ A("0.1E1")                         AREG
+ A("1")                             AREG
+ A("abcd",1:"")                     AREG
+ A("efgh","":1)                     AREG
+ B("":"")                           BREG
+ PRODAGE("")                        DEFAULT
+ PRODAGE("":10)                     DECADE0
+ PRODAGE(10:20)                     DECADE1
+ PRODAGE(20:"")                     DECADE2
+ X("":"")                           AREG
+ X(2,"":"")                         BREG
+ Y("":"")                           AREG
+ Y(2)                               BREG
+ pointa(1)                          AREG
+ pointa(1:10)                       BREG
+GDE> 
+%GDE-E-NAMRANGEOVERLAP, Range in name specifications PRODAGE("":"10") and PRODAGE(20:"") overlap using collation sequence #0
+
+GDE> 
+%GDE-E-NAMRANGEOVERLAP, Range in name specifications PRODAGE(10:"20") and PRODAGE(20:"") overlap using collation sequence #0
+
+GDE> 
+GDE> 
+GDE> 
+%GDE-E-OBJDUP, Name PRODAGE("20":"") already exists
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ A(1)                               AREG
+ A("0.1E1")                         AREG
+ A("1")                             AREG
+ A("abcd",1:"")                     AREG
+ A("efgh","":1)                     AREG
+ B("":"")                           BREG
+ PRODAGE("")                        DEFAULT
+ PRODAGE("":10)                     DECADE0
+ PRODAGE(10:20)                     DECADE1
+ PRODAGE(20:"10")                   DECADE2
+ PRODAGE("10":"100")                DECADE1
+ PRODAGE("100":"120")               DECADE0
+ PRODAGE("120":"20")                DECADE1
+ PRODAGE("20":"")                   DECADE2
+ X("":"")                           AREG
+ X(2,"":"")                         BREG
+ Y("":"")                           AREG
+ Y(2)                               BREG
+ pointa(1)                          AREG
+ pointa(1:10)                       BREG
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+ %                               A(1)                             REG = DEFAULT
+ A(1)                            A(1)++                           REG = AREG
+ A(1)++                          A("0.1E1")                       REG = DEFAULT
+ A("0.1E1")                      A("0.1E1")++                     REG = AREG
+ A("0.1E1")++                    A("1")                           REG = DEFAULT
+ A("1")                          A("1")++                         REG = AREG
+ A("1")++                        A("abcd",1)                      REG = DEFAULT
+ A("abcd",1)                     A("abcd")++                      REG = AREG
+ A("abcd")++                     A("efgh","")                     REG = DEFAULT
+ A("efgh","")                    A("efgh",1)                      REG = AREG
+ A("efgh",1)                     B("")                            REG = DEFAULT
+ B("")                           B0                               REG = BREG
+ B0                              PRODAGE("")++                    REG = DEFAULT
+ PRODAGE("")++                   PRODAGE(10)                      REG = DECADE0
+ PRODAGE(10)                     PRODAGE(20)                      REG = DECADE1
+ PRODAGE(20)                     PRODAGE("10")                    REG = DECADE2
+ PRODAGE("10")                   PRODAGE("100")                   REG = DECADE1
+ PRODAGE("100")                  PRODAGE("120")                   REG = DECADE0
+ PRODAGE("120")                  PRODAGE("20")                    REG = DECADE1
+ PRODAGE("20")                   PRODAGE0                         REG = DECADE2
+ PRODAGE0                        X("")                            REG = DEFAULT
+ X("")                           X(2,"")                          REG = AREG
+ X(2,"")                         X(2)++                           REG = BREG
+ X(2)++                          X0                               REG = AREG
+ X0                              Y("")                            REG = DEFAULT
+ Y("")                           Y(2)                             REG = AREG
+ Y(2)                            Y(2)++                           REG = BREG
+ Y(2)++                          Y0                               REG = AREG
+ Y0                              pointa(1)                        REG = DEFAULT
+ pointa(1)                       pointa(1)++                      REG = AREG
+ pointa(1)++                     pointa(10)                       REG = BREG
+ pointa(10)                      ...                              REG = DEFAULT
+ LOCAL LOCKS                                                      REG = DEFAULT
+# name map case : 2 - Checking name : X
+ADD -NAME X -REGION=AREG
+ %                               X                                REG = DEFAULT
+ X                               X0                               REG = AREG
+ X0                              ...                              REG = DEFAULT
+ LOCAL LOCKS                                                      REG = DEFAULT
+# name map case : 3 - Checking name : X(1)
+ADD -NAME X(1) -REGION=AREG
+ %                               X(1)                             REG = DEFAULT
+ X(1)                            X(1)++                           REG = AREG
+ X(1)++                          ...                              REG = DEFAULT
+ LOCAL LOCKS                                                      REG = DEFAULT
+# name map case : 4 - Checking name : X("abc")
+ADD -NAME X("abc") -REGION=AREG
+ %                               X("abc")                         REG = DEFAULT
+ X("abc")                        X("abc")++                       REG = AREG
+ X("abc")++                      ...                              REG = DEFAULT
+ LOCAL LOCKS                                                      REG = DEFAULT
+# name map case : 5 - Checking name : X(1:"abc")
+ADD -NAME X(1:"abc") -REGION=AREG
+ %                               X(1)                             REG = DEFAULT
+ X(1)                            X("abc")                         REG = AREG
+ X("abc")                        ...                              REG = DEFAULT
+ LOCAL LOCKS                                                      REG = DEFAULT
+# name map case : 6 - Checking name : X(:"a")
+ADD -NAME X("":"a") -REGION=AREG
+ %                               X("")                            REG = DEFAULT
+ X("")                           X("a")                           REG = AREG
+ X("a")                          ...                              REG = DEFAULT
+ LOCAL LOCKS                                                      REG = DEFAULT
+# name map case : 7 - Checking name : X(:)
+ADD -NAME X("":"") -REGION=AREG
+ %                               X("")                            REG = DEFAULT
+ X("")                           X0                               REG = AREG
+ X0                              ...                              REG = DEFAULT
+ LOCAL LOCKS                                                      REG = DEFAULT
+# name map case : 8 - Checking name : X(2,:)
+ADD -NAME X(2,"":"") -REGION=AREG
+ %                               X(2,"")                          REG = DEFAULT
+ X(2,"")                         X(2)++                           REG = AREG
+ X(2)++                          ...                              REG = DEFAULT
+ LOCAL LOCKS                                                      REG = DEFAULT
+# name map case : 9 - Checking name : X("abcd","z":)
+ADD -NAME X("abcd","z":"") -REGION=AREG
+ %                               X("abcd","z")                    REG = DEFAULT
+ X("abcd","z")                   X("abcd")++                      REG = AREG
+ X("abcd")++                     ...                              REG = DEFAULT
+ LOCAL LOCKS                                                      REG = DEFAULT
+# name map case : 10 - Checking name : X($char(22))
+ADD -NAME X($C(22)) -REGION=AREG
+ %                               X($C(22))                        REG = DEFAULT
+ X($C(22))                       X($C(22))++                      REG = AREG
+ X($C(22))++                     ...                              REG = DEFAULT
+ LOCAL LOCKS                                                      REG = DEFAULT
+# name map case : 11 - Checking name : X($ZCHAR(29))
+ADD -NAME X($C(29)) -REGION=AREG
+ %                               X($C(29))                        REG = DEFAULT
+ X($C(29))                       X($C(29))++                      REG = AREG
+ X($C(29))++                     ...                              REG = DEFAULT
+ LOCAL LOCKS                                                      REG = DEFAULT
+# Checking a complex name mapping scenario - case : 11
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-FILENOTFND, File ##TEST_PATH##/gdenamemap1.cmd  dummy.cmd not found
+
+
+
+GDE> 
+%GDE-I-FILENOTFND, File ##TEST_PATH##/gdenamemap1.cmd  @dummy.cmd not found
+
+
+
+GDE> 
+%GDE-I-FILENOTFND, File ##TEST_PATH##/gdenamemap1.cmd  dummy.cmd y.c not found
+
+
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/gdenamemap1.cmd
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+ %                               X(1)                             REG = DEFAULT
+ X(1)                            X(10)                            REG = AREG
+ X(10)                           X(10,"")                         REG = DREG
+ X(10,"")                        X(10,15)                         REG = BREG
+ X(10,15)                        X(10,15,"")                      REG = DREG
+ X(10,15,"")                     X(10,15,"abcd","")               REG = CREG
+ X(10,15,"abcd","")              X(10,15,"abcd")++                REG = DREG
+ X(10,15,"abcd")++               X(10,15)++                       REG = CREG
+ X(10,15)++                      X($C(0))                         REG = DREG
+ X($C(0))                        X($C(0))++                       REG = DEFAULT
+ X($C(0))++                      X0                               REG = DREG
+ X0                              ...                              REG = DEFAULT
+ LOCAL LOCKS                                                      REG = DEFAULT

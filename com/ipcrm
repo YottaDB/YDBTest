@@ -1,0 +1,147 @@
+#!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+#	Copyright 2013, 2014 Fidelity Information Services, Inc	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+if (0 == $#argv) then
+	echo "usage: ipcrm [ [-q msqid] [-m shmid] [-s semid]"
+	echo "	[-Q msgkey] [-M shmkey] [-S semkey] ... ]"
+	echo "	Both decimal and hex keys can be used"
+	exit
+endif
+
+if (`basename $0` == $0) then
+   setenv source_dir "$PWD"
+else
+   setenv source_dir `dirname $0`
+endif
+
+source $source_dir/set_specific.csh
+set outfile = ipcrm_`date +%H_%M_%S`.outx
+# If $gtm_tst is not defined, it is called by tools. Define gtm_tst and redirect the log to ~/logs/ directory
+if !($?gtm_tst) then
+	setenv gtm_tst $gtm_test/T990
+	set outfile = __${USER}_${HOST:r:r:r:r}_$outfile
+	if (-e ~/logs) set outfile = ~/logs/$outfile
+endif
+set ipcrm_status = 0
+if ($HOSTOS != "Linux") then
+	@ argc1 = 1
+	while ($argc1 <= $#argv)
+		set arg = $argv[$argc1]
+		@ argc1 = $argc1 + 1
+		# Ignore negative values
+		if (-1 == $argv[$argc1]) then
+			@ argc1++
+			continue
+		endif
+		switch ($arg)
+		case "-M":
+		case "-S":
+		case "-Q":
+			# Determine the hex value if decimal is given...
+			if ($argv[$argc1] !~ 0x*) then
+				# Decimal value given, convert to Hex
+				set arg_hex = `echo $argv[$argc1] | $tst_awk '{printf("0x%x",$0)}'`
+				set  argv[$argc1] = $arg_hex
+			endif
+			#Intentionally fall through. NOTE: ipcrm on OS/390 does one target at a time, do not move from here
+		default:
+			\ipcrm $arg $argv[$argc1] >>&! $outfile
+			@ ipcrm_status = $ipcrm_status + $status
+			breaksw
+		endsw
+
+		@ argc1 = $argc1 + 1
+	end
+else
+	#Linux
+	setenv ipcs_linux  "$gtm_tst/com/ipcs"
+	@ argc1 = 1
+	while ($argc1 <= $#argv)
+		set arg = $argv[$argc1]
+		@ argc1 = $argc1 + 1
+
+		set stat = 0
+		# Ignore negative values
+		if (-1 == $argv[$argc1]) then
+			@ argc1++
+			continue
+		endif
+
+		# Determine the hex value if decimal is given...
+		if ($argv[$argc1] !~ 0x*) then
+			set next_arg_hex = `echo $argv[$argc1] | $tst_awk '{printf("0x%x",$0)}'`
+		else
+			set next_arg_hex = $argv[$argc1]
+		endif
+
+		switch ($arg)
+		case "-m" :
+			\ipcrm shm $argv[$argc1] >>&! $outfile
+			@ ipcrm_status = $ipcrm_status + $status
+			breaksw
+		case "-s" :
+			\ipcrm sem $argv[$argc1] >>&! $outfile
+			@ ipcrm_status = $ipcrm_status + $status
+			breaksw
+		case "-q" :
+			\ipcrm msg $argv[$argc1] >>&! $outfile
+			@ ipcrm_status = $ipcrm_status + $status
+			breaksw
+		case "-M" :
+			set ipcrm_ipc = `$ipcs_linux |$tst_awk -v var=$next_arg_hex '($1 ~ /m/) && ($3 ~ var ){print $2  }' `
+			if ("$ipcrm_ipc" == "") then
+				echo "%TESTIPCRM-E-INVARG Invalid argument, id/key not found ($next_arg_hex)"
+				echo "Not going on with ipcrm"
+				exit
+			endif
+			if ($ipcrm_ipc) then
+				\ipcrm shm $ipcrm_ipc >>&! $outfile
+				@ ipcrm_status = $ipcrm_status + $status
+			endif
+			breaksw
+		case "-S" :
+			set ipcrm_ipc = `$ipcs_linux |$tst_awk -v var=$next_arg_hex '($1 ~ /s/) && ($3 ~ var ){print $2  }' `
+			if ("$ipcrm_ipc" == "") then
+				echo "%TESTIPCRM-E-INVARG Invalid argument, id/key not found ($next_arg_hex)"
+				echo "Not going on with ipcrm"
+				exit
+			endif
+			if ($ipcrm_ipc) then
+				\ipcrm sem $ipcrm_ipc >>&! $outfile
+				@ ipcrm_status = $ipcrm_status + $status
+			endif
+			breaksw
+		case "-Q" :
+			set ipcrm_ipc = `$ipcs_linux |$tst_awk -v var=$next_arg_hex '($1 ~ /q/) && ($3 ~ var ){print $2  }' `
+			if ("$ipcrm_ipc" == "") then
+				echo "%TESTIPCRM-E-INVARG Invalid argument, id/key not found ($next_arg_hex)"
+				echo "Not going on with ipcrm"
+				exit
+			endif
+			if ($ipcrm_ipc) then
+				\ipcrm msg $ipcrm_ipc >>&! $outfile
+				@ ipcrm_status = $ipcrm_status + $status
+			endif
+			breaksw
+		default	:
+			echo "Invalid argument"
+			echo "Usage: ipcrm [-q msqid] [-m shmid] [-s semid] [-Q msgkey] [-M shmkey] [-S semkey]"
+			echo "Both decimal and hex keys can be used"
+			exit
+			breaksw
+		endsw
+
+		@ argc1 = $argc1 + 1
+	end
+endif
+if ($ipcrm_status) then
+	$grep -vE "not found" $outfile
+endif

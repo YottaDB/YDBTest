@@ -1,0 +1,1579 @@
+###################################################################
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/ｍｕｍｐｓ.ｇｌｄ
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/ｇｄｅ.gdecmd
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/ｍｕｍｐｓ.ｇｌｄ
+###################################################################
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/ｍｕｍｐｓ.ｇｌｄ
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/ｍｕｍｐｓ.ｇｌｄ
+###################################################################
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/ｍｕｍｐｓ.ｇｌｄ
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ A*                                 AREG
+ B*                                 BREG
+ C*                                 CREG
+ D*                                 DREG
+ a*                                 AREG
+ b*                                 BREG
+ c*                                 CREG
+ d*                                 DREG
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ BREG                            BSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ CREG                            CSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ DREG                            DSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ ASEG                            安办在.好           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ BSEG                            我能吞下玻璃而不伤身体.dat
+                                                     BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ CSEG                            ＲＥＧＣ.dat        BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ DEFAULT                         ＲＥＧＤＥＦＡＵＬＴ.dat
+                                                     BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ DSEG                            D我能吞下玻璃而不伤身体.dat
+                                                     BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               A                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = ＲＥＧＤＥＦＡＵＬＴ.dat
+ A                               B                                REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = 安办在.好
+ B                               C                                REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = 我能吞下玻璃而不伤身体.dat
+ C                               D                                REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = ＲＥＧＣ.dat
+ D                               E                                REG = DREG
+                                                                  SEG = DSEG
+                                                                  FILE = D我能吞下玻璃而不伤身体.dat
+ E                               a                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = ＲＥＧＤＥＦＡＵＬＴ.dat
+ a                               b                                REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = 安办在.好
+ b                               c                                REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = 我能吞下玻璃而不伤身体.dat
+ c                               d                                REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = ＲＥＧＣ.dat
+ d                               e                                REG = DREG
+                                                                  SEG = DSEG
+                                                                  FILE = D我能吞下玻璃而不伤身体.dat
+ e                               ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = ＲＥＧＤＥＦＡＵＬＴ.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = ＲＥＧＤＥＦＡＵＬＴ.dat
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               A                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = ＲＥＧＤＥＦＡＵＬＴ.dat
+ A                               B                                REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = 安办在.好
+ B                               C                                REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = 我能吞下玻璃而不伤身体.dat
+ C                               D                                REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = ＲＥＧＣ.dat
+ D                               E                                REG = DREG
+                                                                  SEG = DSEG
+                                                                  FILE = D我能吞下玻璃而不伤身体.dat
+ E                               a                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = ＲＥＧＤＥＦＡＵＬＴ.dat
+ a                               b                                REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = 安办在.好
+ b                               c                                REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = 我能吞下玻璃而不伤身体.dat
+ c                               d                                REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = ＲＥＧＣ.dat
+ d                               e                                REG = DREG
+                                                                  SEG = DSEG
+                                                                  FILE = D我能吞下玻璃而不伤身体.dat
+ e                               ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = ＲＥＧＤＥＦＡＵＬＴ.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = ＲＥＧＤＥＦＡＵＬＴ.dat
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ BREG                            BSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ CREG                            CSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ DREG                            DSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+##TEST_AWK                                                                     RES  = *[ 0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/ｍｕｍｐｓ.ｇｌｄ
+###################################################################
+Created file ##TEST_PATH##/安办在.好
+Created file ##TEST_PATH##/我能吞下玻璃而不伤身体.dat
+Created file ##TEST_PATH##/ＲＥＧＣ.dat
+Created file ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat
+Created file ##TEST_PATH##/D我能吞下玻璃而不伤身体.dat
+
+GTM>
+
+GTM>
+###################################################################
+setenv gtm_chset M
+unset echo
+
+GTM>
+
+GTM>
+###################################################################
+setenv gtm_chset UTF-8
+unset echo
+
+GTM>
+
+GTM>
+###################################################################
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/ｍｕｍｐｓ.ｇｌｄ
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-LOGON, Logging to file ##TEST_PATH##/ｇｄｅｌｏｇ.log
+
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ A*                                 AREG
+ B*                                 BREG
+ C*                                 CREG
+ D*                                 DREG
+ a*                                 AREG
+ b*                                 BREG
+ c*                                 CREG
+ d*                                 DREG
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ BREG                            BSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ CREG                            CSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ DREG                            DSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ ASEG                            安办在.好           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ BSEG                            我能吞下玻璃而不伤身体.dat
+                                                     BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ CSEG                            ＲＥＧＣ.dat        BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ DEFAULT                         ＲＥＧＤＥＦＡＵＬＴ.dat
+                                                     BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ DSEG                            D我能吞下玻璃而不伤身体.dat
+                                                     BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               A                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = ＲＥＧＤＥＦＡＵＬＴ.dat
+ A                               B                                REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = 安办在.好
+ B                               C                                REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = 我能吞下玻璃而不伤身体.dat
+ C                               D                                REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = ＲＥＧＣ.dat
+ D                               E                                REG = DREG
+                                                                  SEG = DSEG
+                                                                  FILE = D我能吞下玻璃而不伤身体.dat
+ E                               a                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = ＲＥＧＤＥＦＡＵＬＴ.dat
+ a                               b                                REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = 安办在.好
+ b                               c                                REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = 我能吞下玻璃而不伤身体.dat
+ c                               d                                REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = ＲＥＧＣ.dat
+ d                               e                                REG = DREG
+                                                                  SEG = DSEG
+                                                                  FILE = D我能吞下玻璃而不伤身体.dat
+ e                               ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = ＲＥＧＤＥＦＡＵＬＴ.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = ＲＥＧＤＥＦＡＵＬＴ.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/ｍｕｍｐｓ.ｇｌｄ
+SHOW -ALL
+!
+!
+!                              *** TEMPLATES ***
+!                                                                         Std      Inst
+!                                            Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+!Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+!-----------------------------------------------------------------------------------------------------------
+!<default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+!
+!Segment          Active              Acc Typ Block      Alloc Exten Options
+!------------------------------------------------------------------------------
+!<default>          *                 BG  DYN  1024        100   100 GLOB =1024
+!                                                                    LOCK = 40
+##TEST_AWK!                                                                    RES  = *[0-9]*
+!                                                                    ENCR = OFF
+!                                                                    MSLT =1024
+!                                                                    DALL=YES
+!<default>                            MM  DYN  1024        100   100 DEFER
+!                                                                    LOCK = 40
+!                                                                    MSLT =1024
+!                                                                    DALL=YES
+!
+!
+!        *** NAMES ***
+!Global                             Region
+!------------------------------------------------------------------------------
+!*                                  DEFAULT
+!A*                                 AREG
+!B*                                 BREG
+!C*                                 CREG
+!D*                                 DREG
+!a*                                 AREG
+!b*                                 BREG
+!c*                                 CREG
+!d*                                 DREG
+!
+!
+!                               *** REGIONS ***
+!                                                                                               Std      Inst
+!                                Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+!Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+!----------------------------------------------------------------------------------------------------------------------------------
+!AREG                            ASEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+!BREG                            BSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+!CREG                            CSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+!DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+!DREG                            DSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+!
+!
+!                               *** SEGMENTS ***
+!Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+!-------------------------------------------------------------------------------------------
+!ASEG                            安办在.好           BG  DYN  1024        100   100 GLOB=1024
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+!                                                                                   ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+!                                                                                   ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+!                                                                                   MSLT=1024
+!                                                                                   DALL=YES
+!BSEG                            我能吞下玻璃而不伤身体.dat
+!                                                    BG  DYN  1024        100   100 GLOB=1024
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+!                                                                                   ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+!                                                                                   ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+!                                                                                   MSLT=1024
+!                                                                                   DALL=YES
+!CSEG                            ＲＥＧＣ.dat        BG  DYN  1024        100   100 GLOB=1024
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+!                                                                                   ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+!                                                                                   ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+!                                                                                   MSLT=1024
+!                                                                                   DALL=YES
+!DEFAULT                         ＲＥＧＤＥＦＡＵＬＴ.dat
+!                                                    BG  DYN  1024        100   100 GLOB=1024
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+!                                                                                   ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+!                                                                                   ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+!                                                                                   MSLT=1024
+!                                                                                   DALL=YES
+!DSEG                            D我能吞下玻璃而不伤身体.dat
+!                                                    BG  DYN  1024        100   100 GLOB=1024
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+!                                                                                   ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+!                                                                                   ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+!                                                                                   MSLT=1024
+!                                                                                   DALL=YES
+!
+!
+!                                 *** MAP ***
+!  -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+!From                            Up to                            Region / Segment / File(def ext: .dat)
+!--------------------------------------------------------------------------------------------------------------------------
+!%                               A                                REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = ＲＥＧＤＥＦＡＵＬＴ.dat
+!A                               B                                REG = AREG
+!                                                                 SEG = ASEG
+!                                                                 FILE = 安办在.好
+!B                               C                                REG = BREG
+!                                                                 SEG = BSEG
+!                                                                 FILE = 我能吞下玻璃而不伤身体.dat
+!C                               D                                REG = CREG
+!                                                                 SEG = CSEG
+!                                                                 FILE = ＲＥＧＣ.dat
+!D                               E                                REG = DREG
+!                                                                 SEG = DSEG
+!                                                                 FILE = D我能吞下玻璃而不伤身体.dat
+!E                               a                                REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = ＲＥＧＤＥＦＡＵＬＴ.dat
+!a                               b                                REG = AREG
+!                                                                 SEG = ASEG
+!                                                                 FILE = 安办在.好
+!b                               c                                REG = BREG
+!                                                                 SEG = BSEG
+!                                                                 FILE = 我能吞下玻璃而不伤身体.dat
+!c                               d                                REG = CREG
+!                                                                 SEG = CSEG
+!                                                                 FILE = ＲＥＧＣ.dat
+!d                               e                                REG = DREG
+!                                                                 SEG = DSEG
+!                                                                 FILE = D我能吞下玻璃而不伤身体.dat
+!e                               ...                              REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = ＲＥＧＤＥＦＡＵＬＴ.dat
+!LOCAL LOCKS                                                      REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = ＲＥＧＤＥＦＡＵＬＴ.dat
+###################################################################
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mｇmｄｅｆ.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/安办在.mjl created for region AREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/我能吞下玻璃而不伤身体.mjl created for region BREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl created for region CREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/D我能吞下玻璃而不伤身体.mjl created for region DREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DREG is now ON
+##FILTERED##GTM_TEST_DEBUGINFO.*
+sleep 2
+unset echo
+##FILTERED##GTM_TEST_DEBUGINFO.*
+###################################################################
+#- Set some globals.
+
+GTM>
+
+GTM>
+###################################################################
+#- cut a new generation jnl file for one region (DEFAULT)
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mｇmｄｅｆ１.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##GTM_TEST_DEBUGINFO.*
+sleep 2
+unset echo
+##FILTERED##GTM_TEST_DEBUGINFO.*
+#- ls -lt mｇmｄｅｆ*.mjl*
+##FILTERED##GTM_TEST_DEBUGINFO.*
+##FILTERED##GTM_TEST_DEBUGINFO.*
+###################################################################
+----------
+Error MUNOACTION seen in mjon.log as expected:
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+#- Set some globals.
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+###################################################################
+#- cut a new generation jnl file for one region (DEFAULT) again
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mｇmｄｅｆ１.mjl is renamed to ##TEST_PATH##/mｇmｄｅｆ１.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mｇmｄｅｆ１.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+#- ls -lt mｇmｄｅｆ*.mjl*
+##FILTERED##GTM_TEST_DEBUGINFO.*
+##FILTERED##GTM_TEST_DEBUGINFO.*
+##FILTERED##GTM_TEST_DEBUGINFO.*
+
+##FILTERED##GTM_TEST_DEBUGINFO.*
+sleep 2
+unset echo
+##FILTERED##GTM_TEST_DEBUGINFO.*
+
+#- cut a new generation jnl file for CREG, would be named ＲＥＧＣ．ｍｊｌ.mjl
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl is renamed to ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl created for region CREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+
+GTM>
+
+GTM>
+
+GTM>
+##FILTERED##GTM_TEST_DEBUGINFO.*
+sleep 2
+unset echo
+##FILTERED##GTM_TEST_DEBUGINFO.*
+#- cut a new generation jnl file for DEFAULT without jnl filename
+##FILTERED##GTM_TEST_DEBUGINFO.*
+##FILTERED##GTM_TEST_DEBUGINFO.*
+##FILTERED##GTM_TEST_DEBUGINFO.*
+
+GTM>
+
+GTM>
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mｇmｄｅｆ１.mjl is renamed to ##TEST_PATH##/mｇmｄｅｆ１.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mｇmｄｅｆ１.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##GTM_TEST_DEBUGINFO.*
+##FILTERED##GTM_TEST_DEBUGINFO.*
+##FILTERED##GTM_TEST_DEBUGINFO.*
+##FILTERED##GTM_TEST_DEBUGINFO.*
+###################################################################
+# - mupip journal -extract to extract from the journal files
+# DEFAULT region
+# mｇmｄｅｆ.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mｇmｄｅｆ.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+05 11 ^zvar(1,"我能吞下玻璃而不伤身体",1)="ｓｏｍｅ ｄａｔａ"
+05 12 ^zvar(2,"我能吞下玻璃而不伤身体",2)="ｓｏｍｅ ｄａｔａ"
+05 13 ^zvar(3,"我能吞下玻璃而不伤身体",3)="ｓｏｍｅ ｄａｔａ"
+05 14 ^zvar(4,"我能吞下玻璃而不伤身体",4)="ｓｏｍｅ ｄａｔａ"
+05 15 ^zvar(5,"我能吞下玻璃而不伤身体",5)="ｓｏｍｅ ｄａｔａ"
+PASS from lost transaction analysis
+###################################################################
+# defmjlprev1
+##FILTERED##GTM_TEST_DEBUGINFO.*
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mｇmｄｅｆ１.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+05 16 ^zvar(1,"我能吞下玻璃而不伤身体",1)="ｓｏｍｅ ｄａｔａ"
+05 17 ^zvar(2,"我能吞下玻璃而不伤身体",2)="ｓｏｍｅ ｄａｔａ"
+05 18 ^zvar(3,"我能吞下玻璃而不伤身体",3)="ｓｏｍｅ ｄａｔａ"
+05 19 ^zvar(4,"我能吞下玻璃而不伤身体",4)="ｓｏｍｅ ｄａｔａ"
+05 20 ^zvar(5,"我能吞下玻璃而不伤身体",5)="ｓｏｍｅ ｄａｔａ"
+05 21 ^zvar(6,"我能吞下玻璃而不伤身体",6)="ｓｏｍｅ ｄａｔａ"
+05 22 ^zvar(7,"我能吞下玻璃而不伤身体",7)="ｓｏｍｅ ｄａｔａ"
+05 23 ^zvar(8,"我能吞下玻璃而不伤身体",8)="ｓｏｍｅ ｄａｔａ"
+05 24 ^zvar(9,"我能吞下玻璃而不伤身体",9)="ｓｏｍｅ ｄａｔａ"
+05 25 ^zvar(10,"我能吞下玻璃而不伤身体",10)="ｓｏｍｅ ｄａｔａ"
+05 26 ^zvar(11,"我能吞下玻璃而不伤身体",11)="ｓｏｍｅ ｄａｔａ"
+05 27 ^zvar(12,"我能吞下玻璃而不伤身体",12)="ｓｏｍｅ ｄａｔａ"
+05 28 ^zvar(13,"我能吞下玻璃而不伤身体",13)="ｓｏｍｅ ｄａｔａ"
+05 29 ^zvar(14,"我能吞下玻璃而不伤身体",14)="ｓｏｍｅ ｄａｔａ"
+05 30 ^zvar(15,"我能吞下玻璃而不伤身体",15)="ｓｏｍｅ ｄａｔａ"
+05 31 ^zvar(16,"我能吞下玻璃而不伤身体",16)="ｓｏｍｅ ｄａｔａ"
+05 32 ^zvar(17,"我能吞下玻璃而不伤身体",17)="ｓｏｍｅ ｄａｔａ"
+05 33 ^zvar(18,"我能吞下玻璃而不伤身体",18)="ｓｏｍｅ ｄａｔａ"
+05 34 ^zvar(19,"我能吞下玻璃而不伤身体",19)="ｓｏｍｅ ｄａｔａ"
+05 35 ^zvar(20,"我能吞下玻璃而不伤身体",20)="ｓｏｍｅ ｄａｔａ"
+05 36 ^zvar(21,"我能吞下玻璃而不伤身体",21)="ｓｏｍｅ ｄａｔａ"
+05 37 ^zvar(22,"我能吞下玻璃而不伤身体",22)="ｓｏｍｅ ｄａｔａ"
+05 38 ^zvar(23,"我能吞下玻璃而不伤身体",23)="ｓｏｍｅ ｄａｔａ"
+05 39 ^zvar(24,"我能吞下玻璃而不伤身体",24)="ｓｏｍｅ ｄａｔａ"
+05 40 ^zvar(25,"我能吞下玻璃而不伤身体",25)="ｓｏｍｅ ｄａｔａ"
+05 41 ^zvar(26,"我能吞下玻璃而不伤身体",26)="ｓｏｍｅ ｄａｔａ"
+05 42 ^zvar(27,"我能吞下玻璃而不伤身体",27)="ｓｏｍｅ ｄａｔａ"
+05 43 ^zvar(28,"我能吞下玻璃而不伤身体",28)="ｓｏｍｅ ｄａｔａ"
+05 44 ^zvar(29,"我能吞下玻璃而不伤身体",29)="ｓｏｍｅ ｄａｔａ"
+05 45 ^zvar(30,"我能吞下玻璃而不伤身体",30)="ｓｏｍｅ ｄａｔａ"
+05 46 ^zvar(31,"我能吞下玻璃而不伤身体",31)="ｓｏｍｅ ｄａｔａ"
+05 47 ^zvar(32,"我能吞下玻璃而不伤身体",32)="ｓｏｍｅ ｄａｔａ"
+05 48 ^zvar(33,"我能吞下玻璃而不伤身体",33)="ｓｏｍｅ ｄａｔａ"
+05 49 ^zvar(34,"我能吞下玻璃而不伤身体",34)="ｓｏｍｅ ｄａｔａ"
+05 50 ^zvar(35,"我能吞下玻璃而不伤身体",35)="ｓｏｍｅ ｄａｔａ"
+05 51 ^zvar(36,"我能吞下玻璃而不伤身体",36)="ｓｏｍｅ ｄａｔａ"
+05 52 ^zvar(37,"我能吞下玻璃而不伤身体",37)="ｓｏｍｅ ｄａｔａ"
+05 53 ^zvar(38,"我能吞下玻璃而不伤身体",38)="ｓｏｍｅ ｄａｔａ"
+05 54 ^zvar(39,"我能吞下玻璃而不伤身体",39)="ｓｏｍｅ ｄａｔａ"
+05 55 ^zvar(40,"我能吞下玻璃而不伤身体",40)="ｓｏｍｅ ｄａｔａ"
+05 56 ^zvar(41,"我能吞下玻璃而不伤身体",41)="ｓｏｍｅ ｄａｔａ"
+05 57 ^zvar(42,"我能吞下玻璃而不伤身体",42)="ｓｏｍｅ ｄａｔａ"
+05 58 ^zvar(43,"我能吞下玻璃而不伤身体",43)="ｓｏｍｅ ｄａｔａ"
+05 59 ^zvar(44,"我能吞下玻璃而不伤身体",44)="ｓｏｍｅ ｄａｔａ"
+05 60 ^zvar(45,"我能吞下玻璃而不伤身体",45)="ｓｏｍｅ ｄａｔａ"
+05 61 ^zvar(46,"我能吞下玻璃而不伤身体",46)="ｓｏｍｅ ｄａｔａ"
+05 62 ^zvar(47,"我能吞下玻璃而不伤身体",47)="ｓｏｍｅ ｄａｔａ"
+05 63 ^zvar(48,"我能吞下玻璃而不伤身体",48)="ｓｏｍｅ ｄａｔａ"
+05 64 ^zvar(49,"我能吞下玻璃而不伤身体",49)="ｓｏｍｅ ｄａｔａ"
+05 65 ^zvar(50,"我能吞下玻璃而不伤身体",50)="ｓｏｍｅ ｄａｔａ"
+05 66 ^zvar(51,"我能吞下玻璃而不伤身体",51)="ｓｏｍｅ ｄａｔａ"
+05 67 ^zvar(52,"我能吞下玻璃而不伤身体",52)="ｓｏｍｅ ｄａｔａ"
+05 68 ^zvar(53,"我能吞下玻璃而不伤身体",53)="ｓｏｍｅ ｄａｔａ"
+05 69 ^zvar(54,"我能吞下玻璃而不伤身体",54)="ｓｏｍｅ ｄａｔａ"
+05 70 ^zvar(55,"我能吞下玻璃而不伤身体",55)="ｓｏｍｅ ｄａｔａ"
+05 71 ^zvar(56,"我能吞下玻璃而不伤身体",56)="ｓｏｍｅ ｄａｔａ"
+05 72 ^zvar(57,"我能吞下玻璃而不伤身体",57)="ｓｏｍｅ ｄａｔａ"
+05 73 ^zvar(58,"我能吞下玻璃而不伤身体",58)="ｓｏｍｅ ｄａｔａ"
+05 74 ^zvar(59,"我能吞下玻璃而不伤身体",59)="ｓｏｍｅ ｄａｔａ"
+05 75 ^zvar(60,"我能吞下玻璃而不伤身体",60)="ｓｏｍｅ ｄａｔａ"
+05 76 ^zvar(61,"我能吞下玻璃而不伤身体",61)="ｓｏｍｅ ｄａｔａ"
+05 77 ^zvar(62,"我能吞下玻璃而不伤身体",62)="ｓｏｍｅ ｄａｔａ"
+05 78 ^zvar(63,"我能吞下玻璃而不伤身体",63)="ｓｏｍｅ ｄａｔａ"
+05 79 ^zvar(64,"我能吞下玻璃而不伤身体",64)="ｓｏｍｅ ｄａｔａ"
+05 80 ^zvar(65,"我能吞下玻璃而不伤身体",65)="ｓｏｍｅ ｄａｔａ"
+05 81 ^zvar(66,"我能吞下玻璃而不伤身体",66)="ｓｏｍｅ ｄａｔａ"
+05 82 ^zvar(67,"我能吞下玻璃而不伤身体",67)="ｓｏｍｅ ｄａｔａ"
+05 83 ^zvar(68,"我能吞下玻璃而不伤身体",68)="ｓｏｍｅ ｄａｔａ"
+05 84 ^zvar(69,"我能吞下玻璃而不伤身体",69)="ｓｏｍｅ ｄａｔａ"
+05 85 ^zvar(70,"我能吞下玻璃而不伤身体",70)="ｓｏｍｅ ｄａｔａ"
+05 86 ^zvar(71,"我能吞下玻璃而不伤身体",71)="ｓｏｍｅ ｄａｔａ"
+05 87 ^zvar(72,"我能吞下玻璃而不伤身体",72)="ｓｏｍｅ ｄａｔａ"
+05 88 ^zvar(73,"我能吞下玻璃而不伤身体",73)="ｓｏｍｅ ｄａｔａ"
+05 89 ^zvar(74,"我能吞下玻璃而不伤身体",74)="ｓｏｍｅ ｄａｔａ"
+05 90 ^zvar(75,"我能吞下玻璃而不伤身体",75)="ｓｏｍｅ ｄａｔａ"
+05 91 ^zvar(76,"我能吞下玻璃而不伤身体",76)="ｓｏｍｅ ｄａｔａ"
+05 92 ^zvar(77,"我能吞下玻璃而不伤身体",77)="ｓｏｍｅ ｄａｔａ"
+05 93 ^zvar(78,"我能吞下玻璃而不伤身体",78)="ｓｏｍｅ ｄａｔａ"
+05 94 ^zvar(79,"我能吞下玻璃而不伤身体",79)="ｓｏｍｅ ｄａｔａ"
+05 95 ^zvar(80,"我能吞下玻璃而不伤身体",80)="ｓｏｍｅ ｄａｔａ"
+05 96 ^zvar(81,"我能吞下玻璃而不伤身体",81)="ｓｏｍｅ ｄａｔａ"
+05 97 ^zvar(82,"我能吞下玻璃而不伤身体",82)="ｓｏｍｅ ｄａｔａ"
+05 98 ^zvar(83,"我能吞下玻璃而不伤身体",83)="ｓｏｍｅ ｄａｔａ"
+05 99 ^zvar(84,"我能吞下玻璃而不伤身体",84)="ｓｏｍｅ ｄａｔａ"
+05 100 ^zvar(85,"我能吞下玻璃而不伤身体",85)="ｓｏｍｅ ｄａｔａ"
+05 101 ^zvar(86,"我能吞下玻璃而不伤身体",86)="ｓｏｍｅ ｄａｔａ"
+05 102 ^zvar(87,"我能吞下玻璃而不伤身体",87)="ｓｏｍｅ ｄａｔａ"
+05 103 ^zvar(88,"我能吞下玻璃而不伤身体",88)="ｓｏｍｅ ｄａｔａ"
+PASS from lost transaction analysis
+##FILTERED##GTM_TEST_DEBUGINFO.*
+sleep 2
+unset echo
+##FILTERED##GTM_TEST_DEBUGINFO.*
+# defmjlprev2
+##FILTERED##GTM_TEST_DEBUGINFO.*
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mｇmｄｅｆ１.mjf is renamed to ##TEST_PATH##/mｇmｄｅｆ１.mjf_##TIMESTAMP##
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mｇmｄｅｆ１.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+05 104 ^zvar("another")="for jnl timestamp"
+PASS from lost transaction analysis
+# mｇmｄｅｆ１.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mｇmｄｅｆ１.mjf is renamed to ##TEST_PATH##/mｇmｄｅｆ１.mjf_##TIMESTAMP##
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mｇmｄｅｆ１.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+lost transaction file empty
+###################################################################
+#AREG
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/安办在.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+05 11 ^avar(1,"我能吞下玻璃而不伤身体",1)="ｓｏｍｅ ｄａｔａ"
+05 12 ^avar(2,"我能吞下玻璃而不伤身体",2)="ｓｏｍｅ ｄａｔａ"
+05 13 ^avar(3,"我能吞下玻璃而不伤身体",3)="ｓｏｍｅ ｄａｔａ"
+05 14 ^avar(4,"我能吞下玻璃而不伤身体",4)="ｓｏｍｅ ｄａｔａ"
+05 15 ^avar(5,"我能吞下玻璃而不伤身体",5)="ｓｏｍｅ ｄａｔａ"
+05 16 ^avar(6,"我能吞下玻璃而不伤身体",6)="ｓｏｍｅ ｄａｔａ"
+05 17 ^avar(7,"我能吞下玻璃而不伤身体",7)="ｓｏｍｅ ｄａｔａ"
+05 18 ^avar(8,"我能吞下玻璃而不伤身体",8)="ｓｏｍｅ ｄａｔａ"
+05 19 ^avar(9,"我能吞下玻璃而不伤身体",9)="ｓｏｍｅ ｄａｔａ"
+05 20 ^avar(10,"我能吞下玻璃而不伤身体",10)="ｓｏｍｅ ｄａｔａ"
+05 21 ^avar(11,"我能吞下玻璃而不伤身体",11)="ｓｏｍｅ ｄａｔａ"
+05 22 ^avar(1,"ｓｏｍｅ",1)="some data"
+05 23 ^avar(2,"ｓｏｍｅ",2)="some data"
+05 24 ^avar(3,"ｓｏｍｅ",3)="some data"
+05 25 ^avar(4,"ｓｏｍｅ",4)="some data"
+05 26 ^avar(5,"ｓｏｍｅ",5)="some data"
+05 27 ^avar(6,"ｓｏｍｅ",6)="some data"
+05 28 ^avar(7,"ｓｏｍｅ",7)="some data"
+PASS from lost transaction analysis
+#BREG
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/我能吞下玻璃而不伤身体.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+05 11 ^bvar(1,"我能吞下玻璃而不伤身体",1)="ｓｏｍｅ ｄａｔａ"
+05 12 ^bvar(2,"我能吞下玻璃而不伤身体",2)="ｓｏｍｅ ｄａｔａ"
+05 13 ^bvar(3,"我能吞下玻璃而不伤身体",3)="ｓｏｍｅ ｄａｔａ"
+05 14 ^bvar(4,"我能吞下玻璃而不伤身体",4)="ｓｏｍｅ ｄａｔａ"
+05 15 ^bvar(5,"我能吞下玻璃而不伤身体",5)="ｓｏｍｅ ｄａｔａ"
+05 16 ^bvar(6,"我能吞下玻璃而不伤身体",6)="ｓｏｍｅ ｄａｔａ"
+05 17 ^bvar(7,"我能吞下玻璃而不伤身体",7)="ｓｏｍｅ ｄａｔａ"
+05 18 ^bvar(8,"我能吞下玻璃而不伤身体",8)="ｓｏｍｅ ｄａｔａ"
+05 19 ^bvar(9,"我能吞下玻璃而不伤身体",9)="ｓｏｍｅ ｄａｔａ"
+05 20 ^bvar(10,"我能吞下玻璃而不伤身体",10)="ｓｏｍｅ ｄａｔａ"
+05 21 ^bvar(11,"我能吞下玻璃而不伤身体",11)="ｓｏｍｅ ｄａｔａ"
+05 22 ^bvar(12,"我能吞下玻璃而不伤身体",12)="ｓｏｍｅ ｄａｔａ"
+05 23 ^bvar(13,"我能吞下玻璃而不伤身体",13)="ｓｏｍｅ ｄａｔａ"
+05 24 ^bvar(14,"我能吞下玻璃而不伤身体",14)="ｓｏｍｅ ｄａｔａ"
+05 25 ^bvar(15,"我能吞下玻璃而不伤身体",15)="ｓｏｍｅ ｄａｔａ"
+05 26 ^bvar(16,"我能吞下玻璃而不伤身体",16)="ｓｏｍｅ ｄａｔａ"
+05 27 ^bvar(17,"我能吞下玻璃而不伤身体",17)="ｓｏｍｅ ｄａｔａ"
+05 28 ^bvar(18,"我能吞下玻璃而不伤身体",18)="ｓｏｍｅ ｄａｔａ"
+05 29 ^bvar(19,"我能吞下玻璃而不伤身体",19)="ｓｏｍｅ ｄａｔａ"
+05 30 ^bvar(20,"我能吞下玻璃而不伤身体",20)="ｓｏｍｅ ｄａｔａ"
+05 31 ^bvar(21,"我能吞下玻璃而不伤身体",21)="ｓｏｍｅ ｄａｔａ"
+05 32 ^bvar(22,"我能吞下玻璃而不伤身体",22)="ｓｏｍｅ ｄａｔａ"
+PASS from lost transaction analysis
+#CREG
+##FILTERED##GTM_TEST_DEBUGINFO.*
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+05 11 ^cvar(1,"我能吞下玻璃而不伤身体",1)="ｓｏｍｅ ｄａｔａ"
+05 12 ^cvar(2,"我能吞下玻璃而不伤身体",2)="ｓｏｍｅ ｄａｔａ"
+05 13 ^cvar(3,"我能吞下玻璃而不伤身体",3)="ｓｏｍｅ ｄａｔａ"
+05 14 ^cvar(4,"我能吞下玻璃而不伤身体",4)="ｓｏｍｅ ｄａｔａ"
+05 15 ^cvar(5,"我能吞下玻璃而不伤身体",5)="ｓｏｍｅ ｄａｔａ"
+05 16 ^cvar(6,"我能吞下玻璃而不伤身体",6)="ｓｏｍｅ ｄａｔａ"
+05 17 ^cvar(7,"我能吞下玻璃而不伤身体",7)="ｓｏｍｅ ｄａｔａ"
+05 18 ^cvar(8,"我能吞下玻璃而不伤身体",8)="ｓｏｍｅ ｄａｔａ"
+05 19 ^cvar(9,"我能吞下玻璃而不伤身体",9)="ｓｏｍｅ ｄａｔａ"
+05 20 ^cvar(10,"我能吞下玻璃而不伤身体",10)="ｓｏｍｅ ｄａｔａ"
+05 21 ^cvar(11,"我能吞下玻璃而不伤身体",11)="ｓｏｍｅ ｄａｔａ"
+05 22 ^cvar(12,"我能吞下玻璃而不伤身体",12)="ｓｏｍｅ ｄａｔａ"
+05 23 ^cvar(13,"我能吞下玻璃而不伤身体",13)="ｓｏｍｅ ｄａｔａ"
+05 24 ^cvar(14,"我能吞下玻璃而不伤身体",14)="ｓｏｍｅ ｄａｔａ"
+05 25 ^cvar(15,"我能吞下玻璃而不伤身体",15)="ｓｏｍｅ ｄａｔａ"
+05 26 ^cvar(16,"我能吞下玻璃而不伤身体",16)="ｓｏｍｅ ｄａｔａ"
+05 27 ^cvar(17,"我能吞下玻璃而不伤身体",17)="ｓｏｍｅ ｄａｔａ"
+05 28 ^cvar(18,"我能吞下玻璃而不伤身体",18)="ｓｏｍｅ ｄａｔａ"
+05 29 ^cvar(19,"我能吞下玻璃而不伤身体",19)="ｓｏｍｅ ｄａｔａ"
+05 30 ^cvar(20,"我能吞下玻璃而不伤身体",20)="ｓｏｍｅ ｄａｔａ"
+05 31 ^cvar(21,"我能吞下玻璃而不伤身体",21)="ｓｏｍｅ ｄａｔａ"
+05 32 ^cvar(22,"我能吞下玻璃而不伤身体",22)="ｓｏｍｅ ｄａｔａ"
+05 33 ^cvar(23,"我能吞下玻璃而不伤身体",23)="ｓｏｍｅ ｄａｔａ"
+05 34 ^cvar(24,"我能吞下玻璃而不伤身体",24)="ｓｏｍｅ ｄａｔａ"
+05 35 ^cvar(25,"我能吞下玻璃而不伤身体",25)="ｓｏｍｅ ｄａｔａ"
+05 36 ^cvar(26,"我能吞下玻璃而不伤身体",26)="ｓｏｍｅ ｄａｔａ"
+05 37 ^cvar(27,"我能吞下玻璃而不伤身体",27)="ｓｏｍｅ ｄａｔａ"
+05 38 ^cvar(28,"我能吞下玻璃而不伤身体",28)="ｓｏｍｅ ｄａｔａ"
+05 39 ^cvar(29,"我能吞下玻璃而不伤身体",29)="ｓｏｍｅ ｄａｔａ"
+05 40 ^cvar(30,"我能吞下玻璃而不伤身体",30)="ｓｏｍｅ ｄａｔａ"
+05 41 ^cvar(31,"我能吞下玻璃而不伤身体",31)="ｓｏｍｅ ｄａｔａ"
+05 42 ^cvar(32,"我能吞下玻璃而不伤身体",32)="ｓｏｍｅ ｄａｔａ"
+05 43 ^cvar(33,"我能吞下玻璃而不伤身体",33)="ｓｏｍｅ ｄａｔａ"
+PASS from lost transaction analysis
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjf is renamed to ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjf_##TIMESTAMP##
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+05 44 ^cvar(1,"ｓｏｍｅ",1)="some data"
+05 45 ^cvar(2,"ｓｏｍｅ",2)="some data"
+05 46 ^cvar(3,"ｓｏｍｅ",3)="some data"
+05 47 ^cvar(4,"ｓｏｍｅ",4)="some data"
+05 48 ^cvar(5,"ｓｏｍｅ",5)="some data"
+05 49 ^cvar(6,"ｓｏｍｅ",6)="some data"
+05 50 ^cvar(7,"ｓｏｍｅ",7)="some data"
+PASS from lost transaction analysis
+#DREG
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/D我能吞下玻璃而不伤身体.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+05 11 ^dvar(1,"我能吞下玻璃而不伤身体",1)="ｓｏｍｅ ｄａｔａ"
+05 12 ^dvar(2,"我能吞下玻璃而不伤身体",2)="ｓｏｍｅ ｄａｔａ"
+05 13 ^dvar(3,"我能吞下玻璃而不伤身体",3)="ｓｏｍｅ ｄａｔａ"
+05 14 ^dvar(4,"我能吞下玻璃而不伤身体",4)="ｓｏｍｅ ｄａｔａ"
+05 15 ^dvar(5,"我能吞下玻璃而不伤身体",5)="ｓｏｍｅ ｄａｔａ"
+05 16 ^dvar(6,"我能吞下玻璃而不伤身体",6)="ｓｏｍｅ ｄａｔａ"
+05 17 ^dvar(7,"我能吞下玻璃而不伤身体",7)="ｓｏｍｅ ｄａｔａ"
+05 18 ^dvar(8,"我能吞下玻璃而不伤身体",8)="ｓｏｍｅ ｄａｔａ"
+05 19 ^dvar(9,"我能吞下玻璃而不伤身体",9)="ｓｏｍｅ ｄａｔａ"
+05 20 ^dvar(10,"我能吞下玻璃而不伤身体",10)="ｓｏｍｅ ｄａｔａ"
+05 21 ^dvar(11,"我能吞下玻璃而不伤身体",11)="ｓｏｍｅ ｄａｔａ"
+05 22 ^dvar(12,"我能吞下玻璃而不伤身体",12)="ｓｏｍｅ ｄａｔａ"
+05 23 ^dvar(13,"我能吞下玻璃而不伤身体",13)="ｓｏｍｅ ｄａｔａ"
+05 24 ^dvar(14,"我能吞下玻璃而不伤身体",14)="ｓｏｍｅ ｄａｔａ"
+05 25 ^dvar(15,"我能吞下玻璃而不伤身体",15)="ｓｏｍｅ ｄａｔａ"
+05 26 ^dvar(16,"我能吞下玻璃而不伤身体",16)="ｓｏｍｅ ｄａｔａ"
+05 27 ^dvar(17,"我能吞下玻璃而不伤身体",17)="ｓｏｍｅ ｄａｔａ"
+05 28 ^dvar(18,"我能吞下玻璃而不伤身体",18)="ｓｏｍｅ ｄａｔａ"
+05 29 ^dvar(19,"我能吞下玻璃而不伤身体",19)="ｓｏｍｅ ｄａｔａ"
+05 30 ^dvar(20,"我能吞下玻璃而不伤身体",20)="ｓｏｍｅ ｄａｔａ"
+05 31 ^dvar(21,"我能吞下玻璃而不伤身体",21)="ｓｏｍｅ ｄａｔａ"
+05 32 ^dvar(22,"我能吞下玻璃而不伤身体",22)="ｓｏｍｅ ｄａｔａ"
+05 33 ^dvar(23,"我能吞下玻璃而不伤身体",23)="ｓｏｍｅ ｄａｔａ"
+05 34 ^dvar(24,"我能吞下玻璃而不伤身体",24)="ｓｏｍｅ ｄａｔａ"
+05 35 ^dvar(25,"我能吞下玻璃而不伤身体",25)="ｓｏｍｅ ｄａｔａ"
+05 36 ^dvar(26,"我能吞下玻璃而不伤身体",26)="ｓｏｍｅ ｄａｔａ"
+05 37 ^dvar(27,"我能吞下玻璃而不伤身体",27)="ｓｏｍｅ ｄａｔａ"
+05 38 ^dvar(28,"我能吞下玻璃而不伤身体",28)="ｓｏｍｅ ｄａｔａ"
+05 39 ^dvar(29,"我能吞下玻璃而不伤身体",29)="ｓｏｍｅ ｄａｔａ"
+05 40 ^dvar(30,"我能吞下玻璃而不伤身体",30)="ｓｏｍｅ ｄａｔａ"
+05 41 ^dvar(31,"我能吞下玻璃而不伤身体",31)="ｓｏｍｅ ｄａｔａ"
+05 42 ^dvar(32,"我能吞下玻璃而不伤身体",32)="ｓｏｍｅ ｄａｔａ"
+05 43 ^dvar(33,"我能吞下玻璃而不伤身体",33)="ｓｏｍｅ ｄａｔａ"
+05 44 ^dvar(34,"我能吞下玻璃而不伤身体",34)="ｓｏｍｅ ｄａｔａ"
+05 45 ^dvar(35,"我能吞下玻璃而不伤身体",35)="ｓｏｍｅ ｄａｔａ"
+05 46 ^dvar(36,"我能吞下玻璃而不伤身体",36)="ｓｏｍｅ ｄａｔａ"
+05 47 ^dvar(37,"我能吞下玻璃而不伤身体",37)="ｓｏｍｅ ｄａｔａ"
+05 48 ^dvar(38,"我能吞下玻璃而不伤身体",38)="ｓｏｍｅ ｄａｔａ"
+05 49 ^dvar(39,"我能吞下玻璃而不伤身体",39)="ｓｏｍｅ ｄａｔａ"
+05 50 ^dvar(40,"我能吞下玻璃而不伤身体",40)="ｓｏｍｅ ｄａｔａ"
+05 51 ^dvar(41,"我能吞下玻璃而不伤身体",41)="ｓｏｍｅ ｄａｔａ"
+05 52 ^dvar(42,"我能吞下玻璃而不伤身体",42)="ｓｏｍｅ ｄａｔａ"
+05 53 ^dvar(43,"我能吞下玻璃而不伤身体",43)="ｓｏｍｅ ｄａｔａ"
+05 54 ^dvar(44,"我能吞下玻璃而不伤身体",44)="ｓｏｍｅ ｄａｔａ"
+PASS from lost transaction analysis
+###################################################################
+# - mupip journal -show 
+#AREG
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/安办在.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/安办在.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/安办在.好
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                       FALSE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ End of Data                             ##FILTERED##
+ Prev Recovery End of Data                       0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                              11 [0x000000000000000B]
+ End Transaction                                29 [0x000000000000001D]
+ Align size                                2097152 [0x00200000] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      0 [0x0000000000000000]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+%GTM-S-JNLSUCCESS, Show successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#BREG
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/我能吞下玻璃而不伤身体.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/我能吞下玻璃而不伤身体.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/我能吞下玻璃而不伤身体.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+#CREG
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+##FILTERED##SHOW output for journal file ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl_##TIMESTAMP##
+-------------------------------------------------------------------------------
+
+##TEST_AWKJournal file name       ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/ＲＥＧＣ.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/ＲＥＧＣ.dat
+##TEST_AWK Prev journal file name ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+ Next journal file name 
+
+#DREG
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/D我能吞下玻璃而不伤身体.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/D我能吞下玻璃而不伤身体.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/D我能吞下玻璃而不伤身体.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+#DEFAULT
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mｇmｄｅｆ.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mｇmｄｅｆ.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+##FILTERED##SHOW output for journal file ##TEST_PATH##/mｇmｄｅｆ１.mjl_##TIMESTAMP##
+-------------------------------------------------------------------------------
+
+##TEST_AWKJournal file name       ##TEST_PATH##/mｇmｄｅｆ１.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat
+ Prev journal file name ##TEST_PATH##/mｇmｄｅｆ.mjl
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+##FILTERED##SHOW output for journal file ##TEST_PATH##/mｇmｄｅｆ１.mjl_##TIMESTAMP##
+-------------------------------------------------------------------------------
+
+##TEST_AWKJournal file name       ##TEST_PATH##/mｇmｄｅｆ１.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat
+##TEST_AWK Prev journal file name ##TEST_PATH##/mｇmｄｅｆ１.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mｇmｄｅｆ１.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mｇmｄｅｆ１.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat
+##TEST_AWK Prev journal file name ##TEST_PATH##/mｇmｄｅｆ１.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+###################################################################
+#- mupip backup to a directory with a name with unicode characters
+Transactions up to 0x000000000000001D are backed up.
+Transactions up to 0x0000000000000021 are backed up.
+Transactions up to 0x0000000000000033 are backed up.
+Transactions up to 0x0000000000000037 are backed up.
+Transactions up to 0x0000000000000069 are backed up.
+
+BACKUP COMPLETED.
+#Contents of the backup directory:
+ＲＥＧＤＥＦＡＵＬＴ.dat
+安办在.好
+我能吞下玻璃而不伤身体.dat
+ＲＥＧＣ.dat
+D我能吞下玻璃而不伤身体.dat
+
+GTM>
+
+GTM>
+
+GTM>
+hello
+
+GTM>
+###################################################################
+#- mupip set -file ... -glo=
+#	--> Change the global buffers, and verify that it worked.
+#AREG
+Database file 安办在.好 now has 2048 global buffers
+#BREG
+Database file 我能吞下玻璃而不伤身体.dat now has 4096 global buffers
+#CREG
+Database file ＲＥＧＣ.dat now has 2048 global buffers
+#DREG
+Database file ##TEST_PATH##/D我能吞下玻璃而不伤身体.dat now has 2048 global buffers
+#DEFAULT
+Database file ＲＥＧＤＥＦＡＵＬＴ.dat now has 4096 global buffers
+#- mupip extend the databases
+#	--> This should succeed, verify the new block count.
+#AREG
+Extension successful, file ##TEST_PATH##/安办在.好 extended by 100 blocks.  Total blocks = 200.
+#BREG
+Extension successful, file ##TEST_PATH##/我能吞下玻璃而不伤身体.dat extended by 200 blocks.  Total blocks = 300.
+#CREG
+Extension successful, file ##TEST_PATH##/ＲＥＧＣ.dat extended by 300 blocks.  Total blocks = 400.
+#DREG
+Extension successful, file ##TEST_PATH##/D我能吞下玻璃而不伤身体.dat extended by 400 blocks.  Total blocks = 500.
+#DEFAULT
+Extension successful, file ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat extended by 500 blocks.  Total blocks = 600.
+# verify the new Global Buffers and Total blocks
+# Compare global buffers before and after the mupip set done above
+1,5c1,5
+<   Access method                          BG  Global Buffers                1024
+<   Access method                          BG  Global Buffers                1024
+<   Access method                          BG  Global Buffers                1024
+<   Access method                          BG  Global Buffers                1024
+<   Access method                          BG  Global Buffers                1024
+---
+>   Access method                          BG  Global Buffers                2048
+>   Access method                          BG  Global Buffers                4096
+>   Access method                          BG  Global Buffers                2048
+>   Access method                          BG  Global Buffers                2048
+>   Access method                          BG  Global Buffers                4096
+# Compare total blocks count before and after the mupip extend done above
+1,5c1,5
+<   Maximum key size                       64  Total blocks            0x00000065
+<   Maximum key size                       64  Total blocks            0x00000065
+<   Maximum key size                       64  Total blocks            0x00000065
+<   Maximum key size                       64  Total blocks            0x00000065
+<   Maximum key size                       64  Total blocks            0x00000065
+---
+>   Maximum key size                       64  Total blocks            0x000000C9
+>   Maximum key size                       64  Total blocks            0x0000012D
+>   Maximum key size                       64  Total blocks            0x00000191
+>   Maximum key size                       64  Total blocks            0x000001F5
+>   Maximum key size                       64  Total blocks            0x0000025A
+###################################################################
+#- Test that DSE DUMP -fileheader and DSE DUMP -fileheader -all shows the filenames correctly (database and journal).
+File  	##TEST_PATH##/安办在.好
+File            ##TEST_PATH##/安办在.好
+  Journal File: ##TEST_PATH##/安办在.mjl
+File  	##TEST_PATH##/我能吞下玻璃而不伤身体.dat
+File            ##TEST_PATH##/我能吞下玻璃而不伤身体.dat
+  Journal File: ##TEST_PATH##/我能吞下玻璃而不伤身体.mjl
+File  	##TEST_PATH##/ＲＥＧＣ.dat
+File            ##TEST_PATH##/ＲＥＧＣ.dat
+  Journal File: ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl
+File  	##TEST_PATH##/D我能吞下玻璃而不伤身体.dat
+File            ##TEST_PATH##/D我能吞下玻璃而不伤身体.dat
+  Journal File: ##TEST_PATH##/D我能吞下玻璃而不伤身体.mjl
+File  	##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat
+File            ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat
+  Journal File: ##TEST_PATH##/mｇmｄｅｆ１.mjl
+File  	##TEST_PATH##/安办在.好
+File            ##TEST_PATH##/安办在.好
+  Journal File: ##TEST_PATH##/安办在.mjl
+###################################################################
+#- mupip extract the data
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 14  max node len: 22
+%GTM-I-RECORDSTAT, ^avar:	  Key cnt: 18  max subsc len: 47  max rec len: 25  max node len: 76
+%GTM-I-RECORDSTAT, ^binregb:	  Key cnt: 10  max subsc len: 12  max rec len: 14  max node len: 28
+%GTM-I-RECORDSTAT, ^bvar:	  Key cnt: 22  max subsc len: 47  max rec len: 25  max node len: 76
+%GTM-I-RECORDSTAT, ^cats:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
+%GTM-I-RECORDSTAT, ^cvar:	  Key cnt: 40  max subsc len: 47  max rec len: 25  max node len: 76
+%GTM-I-RECORDSTAT, ^dogs:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
+%GTM-I-RECORDSTAT, ^dvar:	  Key cnt: 44  max subsc len: 47  max rec len: 25  max node len: 76
+%GTM-I-RECORDSTAT, ^xyz:	  Key cnt: 10  max subsc len: 8  max rec len: 14  max node len: 24
+%GTM-I-RECORDSTAT, ^zvar:	  Key cnt: 90  max subsc len: 47  max rec len: 25  max node len: 76
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 264  max subsc len: 47  max rec len: 25  max node len: 76
+Output File: %GTM-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 14  max node len: 22
+%GTM-I-RECORDSTAT, ^avar:	  Key cnt: 18  max subsc len: 47  max rec len: 25  max node len: 76
+%GTM-I-RECORDSTAT, ^binregb:	  Key cnt: 10  max subsc len: 12  max rec len: 14  max node len: 28
+%GTM-I-RECORDSTAT, ^bvar:	  Key cnt: 22  max subsc len: 47  max rec len: 25  max node len: 76
+%GTM-I-RECORDSTAT, ^cats:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
+%GTM-I-RECORDSTAT, ^cvar:	  Key cnt: 40  max subsc len: 47  max rec len: 25  max node len: 76
+%GTM-I-RECORDSTAT, ^dogs:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
+%GTM-I-RECORDSTAT, ^dvar:	  Key cnt: 44  max subsc len: 47  max rec len: 25  max node len: 76
+%GTM-I-RECORDSTAT, ^xyz:	  Key cnt: 10  max subsc len: 8  max rec len: 14  max node len: 24
+%GTM-I-RECORDSTAT, ^zvar:	  Key cnt: 90  max subsc len: 47  max rec len: 25  max node len: 76
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 264  max subsc len: 47  max rec len: 25  max node len: 76
+GT.M MUPIP EXTRACT UTF-8
+##FILTERED##..-...-....  ..:..:.. ZWR
+GT.M MUPIP EXTRACT UTF-8
+##FILTERED##..-...-....  ..:..:.. ZWR
+###################################################################
+#- mupip load using a filename with multi-byte characters.
+#	--> This should succeed.
+# mupip create - will give 'File exists' error for the existing database files... please ignore
+Error opening file ##TEST_PATH##/安办在.好
+##SUSPEND_OUTPUT HOST_OS390_S390
+: File exists
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+: File exists (errno2=0x05620063)
+##ALLOW_OUTPUT HOST_ALL
+Error opening file ##TEST_PATH##/我能吞下玻璃而不伤身体.dat
+##SUSPEND_OUTPUT HOST_OS390_S390
+: File exists
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+: File exists (errno2=0x05620063)
+##ALLOW_OUTPUT HOST_ALL
+Created file ##TEST_PATH##/ＲＥＧＣ.dat
+Created file ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat
+Error opening file ##TEST_PATH##/D我能吞下玻璃而不伤身体.dat
+##SUSPEND_OUTPUT HOST_OS390_S390
+: File exists
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+: File exists (errno2=0x05620063)
+##ALLOW_OUTPUT HOST_ALL
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+# mupip load ｍｕｐｉｐｅｘｔ1.ext
+GT.M MUPIP EXTRACT UTF-8
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 264  Max Subsc Len: 47  Max Data Len: 25
+Last LOAD record number: 266
+
+# now do mupip extract into ｍｕｐｉｐｅｘｔ3.ext
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 14  max node len: 22
+%GTM-I-RECORDSTAT, ^avar:	  Key cnt: 18  max subsc len: 47  max rec len: 25  max node len: 76
+%GTM-I-RECORDSTAT, ^binregb:	  Key cnt: 10  max subsc len: 12  max rec len: 14  max node len: 28
+%GTM-I-RECORDSTAT, ^bvar:	  Key cnt: 22  max subsc len: 47  max rec len: 25  max node len: 76
+%GTM-I-RECORDSTAT, ^cats:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
+%GTM-I-RECORDSTAT, ^cvar:	  Key cnt: 40  max subsc len: 47  max rec len: 25  max node len: 76
+%GTM-I-RECORDSTAT, ^dogs:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
+%GTM-I-RECORDSTAT, ^dvar:	  Key cnt: 44  max subsc len: 47  max rec len: 25  max node len: 76
+%GTM-I-RECORDSTAT, ^xyz:	  Key cnt: 10  max subsc len: 8  max rec len: 14  max node len: 24
+%GTM-I-RECORDSTAT, ^zvar:	  Key cnt: 90  max subsc len: 47  max rec len: 25  max node len: 76
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 264  max subsc len: 47  max rec len: 25  max node len: 76
+# check if the two extracts ｍｕｐｉｐｅｘｔ1.ext and ｍｕｐｉｐｅｘｔ3.ext differ
+TEST-I-PASS mupip load test passed.
+###################################################################
+#- mupip freeze one of the databases.
+#	--> This should succeed, verify the freeze is effective by attempting to change a global in a frozen region.
+##TEST_AWK.1. [0-9][0-9]*
+##FILTERED##GTM_TEST_DEBUGINFO.*
+sleep 12
+unset echo
+##FILTERED##GTM_TEST_DEBUGINFO.*
+##TEST_AWK.1.  . Done                          ##SOURCE_PATH##/mumps -run frozen >& frozen.log
+##FILTERED##GTM_TEST_DEBUGINFO.*
+PASS
+##FILTERED##GTM_TEST_DEBUGINFO.*
+###################################################################
+#- error from MUPIP freeze: nonexisting region
+----------
+##SUSPEND_OUTPUT HOST_OS390_S390
+Error ENO2 seen in freeze_err.log as expected:
+%SYSTEM-E-ENO2, No such file or directory
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+Error ENO129 seen in freeze_err.log as expected:
+%SYSTEM-E-ENO129, No such file or directory
+##ALLOW_OUTPUT HOST_ALL
+----------
+----------
+Error MUNOACTION seen in freeze_err.log as expected:
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+# cat freeze_err.log
+REGION DEFAULT's file ＲＥＧＤＥＦＡＵＬＴ.dat cannot be found.
+%GTM-E-NOREGION, REGION not found: DEFAULT
+
+MUPIP cannot start freeze with above errors
+
+###################################################################
+#- Lock some globals, and test that the -OUTPUT qualifier of LKE SHOW and CLEAR can write into files with names
+#  with multi-byte characters.
+#  Note that this is NOT the test for multi-byte characters in the locked variables, that test is in the locks test.
+#lock some globals
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+AREG
+##TEST_AWK.a."ａｂｃ". Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+
+BREG
+##TEST_AWK.b.1,"ａｂｃ". Owned by PID= [1-9][0-9]* which is an existing process
+^b("我能吞下玻璃而不伤身体")
+##TEST_AWK                         Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+
+DEFAULT
+z("我能吞下玻璃而不伤身体")
+##TEST_AWK                         Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in DREG
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+#lke and output files
+LKE> LKE> LKE> # all locks should be gone now
+%GTM-I-NOLOCKMATCH, No matching locks were found in AREG
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in BREG
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in DREG
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+#release the job
+
+GTM>
+
+GTM>
+###################################################################
+#- job off a process with the log and error going to filenames with multi-byte characters.
+
+GTM>
+
+GTM>
+
+GTM>
+grep -v PID ｊｏｂｏｆｆ.ｍｊｏ
+Here in the jobbed off process
+
+GTM>
+----------
+Error DIVZERO seen in ｊｏｂｏｆｆ.ｍｊｅ as expected:
+%GTM-E-DIVZERO, Attempt to divide by zero
+----------
+###################################################################
+#- Create a replication instance file 我能吞下玻璃而不伤身体.repl, with -name=我能吞
+#- Attempt a mupip replic command with an instance name that has multi-byte characters
+(such as mupip replic -source -start -instsecondary=我能吞我能)
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [我能吞我能]
+#- editinstance -show
+GTM-I-MUREPLSHOW, SHOW output for replication instance file 我能吞下玻璃而不伤身体.repl
+
+----------------------------------------------------------
+File Header
+----------------------------------------------------------
+HDR Label (contains Major Version)             GDSRPLUNX05
+HDR Minor Version                                        1
+HDR Endian Format      ##FILTERED####ENDIAN##
+##SUSPEND_OUTPUT 32BIT_GTM
+HDR 64-bit Format                                     TRUE
+##ALLOW_OUTPUT 32BIT_GTM
+##SUSPEND_OUTPUT 64BIT_GTM
+HDR 64-bit Format                                    FALSE
+##ALLOW_OUTPUT 64BIT_GTM
+HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+HDR Receive Pool Sem Id                            INVALID
+HDR Receive Pool Shm Id                            INVALID
+##TEST_AWKHDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+##TEST_AWKHDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+HDR Receive Pool Sem Create Time                         0
+HDR Receive Pool Shm Create Time                         0
+HDR Instance File Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR Instance Name                                   我能吞
+##TEST_AWKHDR Instance File Create Time          ..../../.. ..:..:..
+##TEST_AWKHDR Instance File Creator Pid          [ 0-9]* .0x.........
+HDR Journal Sequence Number                   ##FILTERED##
+HDR Root Primary Cycle                                   0 [0x00000000]
+HDR Number of used history records                       0 [0x00000000]
+HDR Allocated history records                            0 [0x00000000]
+HDR Crash                                             TRUE
+HDR Root Primary                                     FALSE
+HDR Supplementary Instance                           FALSE
+HDR Corrupt                                          FALSE
+HDR Quick database rundown is active                 .....
+
+----------------------------------------------------------
+Source Server Slots
+----------------------------------------------------------
+SLT # 0 : Secondary Instance Name               我能吞我能
+SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
+#- shutdown the instance
+##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHUTDOWN operation on source server pid [##PID##] for secondary instance [我能吞我能]
+##FILTERED##... ... .. ..:..:.. 20.. : Waiting for upto XXX seconds for the source server to shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool shared memory removed
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool semaphore removed
+###################################################################
+#- set an environment variable envvar_ｅｎｖ to some value, and attempt to read the value from GTM.
+#	--> It should succeed.
+
+GTM>
+
+GTM>
+The value read from the environment variable is:some value, ｌｏｏｋ
+
+GTM>
+###################################################################
+#- try some command that does not accept multi-byte characters, and see the error makes sense.
+
+GTM>
+%GTM_E_CMD, Command expected but not found
+	ｗｒｉｔｅ "abc",!
+	^-----
+
+GTM>
+%GTM_E_EXPR, Expression expected but not found
+	write ａｂｃ,!
+	      ^-----
+
+GTM>
+%GTM_E_RHMISSING, Right-hand side of expression expected
+	set x=3+ａ
+	        ^-----
+
+GTM>
+%GTM_E_EXPR, Expression expected but not found
+	write "But there is an error ｏｎ ｔｈｉｓ ｌｉｎｅ!",!,,
+	                                                        ^-----
+
+GTM>
+###################################################################
+#- mupip integ
+#AREG
+#BREG
+#CREG
+#DREG
+#DEFAULT
+integ_areg.out:No errors detected by integ.
+integ_breg.out:No errors detected by integ.
+integ_creg.out:No errors detected by integ.
+integ_defreg1.out:No errors detected by integ.
+integ_defreg2.out:No errors detected by integ.
+integ_dreg.out:No errors detected by integ.
+integ_star.out:No errors detected by integ.
+integ_star.out:No errors detected by integ.
+integ_star.out:No errors detected by integ.
+integ_star.out:No errors detected by integ.
+integ_star.out:No errors detected by integ.
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##TEST_PATH##/freeze_err.log
+%GTM-E-NOREGION, REGION not found: DEFAULT
+##TEST_PATH##/mjon.log
+%GTM-E-NOREGION, REGION not found: 安办在

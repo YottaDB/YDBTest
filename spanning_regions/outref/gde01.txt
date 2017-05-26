@@ -1,0 +1,220 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gde01.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gde01.cmd
+%GDE-I-MAPBAD, Region AUSTRALIA for Name DIVISION("Australia") does not exist
+%GDE-I-MAPBAD, Region EUROPEAL for Name DIVISION("Europe","a":"m") does not exist
+%GDE-I-MAPBAD, Region EUROPEM for Name DIVISION("Europe","m":"z") does not exist
+%GDE-I-MAPBAD, Region USMWAD for Name DIVISION("USA","MidWest","a":"e") does not exist
+%GDE-I-MAPBAD, Region USMWEL for Name DIVISION("USA","MidWest","e":"m") does not exist
+%GDE-I-MAPBAD, Region USMWMZ for Name DIVISION("USA","MidWest","m":"{") does not exist
+%GDE-I-MAPBAD, Region USNEAG for Name DIVISION("USA","Northeast","a":"h") does not exist
+%GDE-I-MAPBAD, Region USNEHL for Name DIVISION("USA","Northeast","h":"m") does not exist
+%GDE-I-MAPBAD, Region USNEMR for Name DIVISION("USA","Northeast","m":"s") does not exist
+%GDE-I-MAPBAD, Region USNESZ for Name DIVISION("USA","Northeast","s":"{") does not exist
+%GDE-I-MAPBAD, Region USSAL for Name DIVISION("USA","South","a":"m") does not exist
+%GDE-I-MAPBAD, Region USSMZ for Name DIVISION("USA","South","m":"{") does not exist
+%GDE-I-MAPBAD, Region USWC for Name DIVISION("USA","WestCoast") does not exist
+%GDE-I-MAPBAD, Region MISCMUMPS for Name IMPL does not exist
+%GDE-I-MAPBAD, Region MYMUMPS for Name IMPL("GT.M") does not exist
+%GDE-I-MAPBAD, Region NUMERIC for Name MODELNUM does not exist
+%GDE-I-MAPBAD, Region STRING for Name MODELNUM($C(0):"") does not exist
+%GDE-I-MAPBAD, Region STRING for Name MODELNUM("") does not exist
+%GDE-I-MAPBAD, Region DECADE0 for Name PRODAGE("":10) does not exist
+%GDE-I-MAPBAD, Region DECADE1 for Name PRODAGE(10:20) does not exist
+%GDE-I-MAPBAD, Region DECADE2 for Name PRODAGE(20:"") does not exist
+%GDE-I-STDNULLCOLLREQ, Region DECADE2 needs Standard Null Collation enabled because global ^PRODAGE spans through it
+%GDE-I-STDNULLCOLLREQ, Region DECADE1 needs Standard Null Collation enabled because global ^PRODAGE spans through it
+%GDE-I-STDNULLCOLLREQ, Region DECADE0 needs Standard Null Collation enabled because global ^PRODAGE spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^PRODAGE spans through it
+%GDE-I-STDNULLCOLLREQ, Region STRING needs Standard Null Collation enabled because global ^MODELNUM spans through it
+%GDE-I-STDNULLCOLLREQ, Region NUMERIC needs Standard Null Collation enabled because global ^MODELNUM spans through it
+%GDE-I-STDNULLCOLLREQ, Region MISCMUMPS needs Standard Null Collation enabled because global ^IMPL spans through it
+%GDE-I-STDNULLCOLLREQ, Region MYMUMPS needs Standard Null Collation enabled because global ^IMPL spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^DIVISION spans through it
+%GDE-I-STDNULLCOLLREQ, Region USWC needs Standard Null Collation enabled because global ^DIVISION spans through it
+%GDE-I-STDNULLCOLLREQ, Region USSMZ needs Standard Null Collation enabled because global ^DIVISION spans through it
+%GDE-I-STDNULLCOLLREQ, Region USSAL needs Standard Null Collation enabled because global ^DIVISION spans through it
+%GDE-I-STDNULLCOLLREQ, Region USNESZ needs Standard Null Collation enabled because global ^DIVISION spans through it
+%GDE-I-STDNULLCOLLREQ, Region USNEMR needs Standard Null Collation enabled because global ^DIVISION spans through it
+%GDE-I-STDNULLCOLLREQ, Region USNEHL needs Standard Null Collation enabled because global ^DIVISION spans through it
+%GDE-I-STDNULLCOLLREQ, Region USNEAG needs Standard Null Collation enabled because global ^DIVISION spans through it
+%GDE-I-STDNULLCOLLREQ, Region USMWMZ needs Standard Null Collation enabled because global ^DIVISION spans through it
+%GDE-I-STDNULLCOLLREQ, Region USMWEL needs Standard Null Collation enabled because global ^DIVISION spans through it
+%GDE-I-STDNULLCOLLREQ, Region USMWAD needs Standard Null Collation enabled because global ^DIVISION spans through it
+%GDE-I-STDNULLCOLLREQ, Region EUROPEM needs Standard Null Collation enabled because global ^DIVISION spans through it
+%GDE-I-STDNULLCOLLREQ, Region EUROPEAL needs Standard Null Collation enabled because global ^DIVISION spans through it
+%GDE-I-STDNULLCOLLREQ, Region AUSTRALIA needs Standard Null Collation enabled because global ^DIVISION spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-I-NOEXIT, Cannot exit because of verification failure
+
+
+         *** NAMES ***
+ Global                               Region
+ ----------------------------------------------------------------------
+ *                                    DEFAULT
+ DIVISION("Australia")                AUSTRALIA
+ DIVISION("Europe","a":"m")           EUROPEAL
+ DIVISION("Europe","m":"z")           EUROPEM
+ DIVISION("USA","MidWest","a":"e")    USMWAD
+ DIVISION("USA","MidWest","e":"m")    USMWEL
+ DIVISION("USA","MidWest","m":"{")    USMWMZ
+ DIVISION("USA","Northeast","a":"h")  USNEAG
+ DIVISION("USA","Northeast","h":"m")  USNEHL
+ DIVISION("USA","Northeast","m":"s")  USNEMR
+ DIVISION("USA","Northeast","s":"{")  USNESZ
+ DIVISION("USA","South","a":"m")      USSAL
+ DIVISION("USA","South","m":"{")      USSMZ
+ DIVISION("USA","WestCoast")          USWC
+ IMPL                                 MISCMUMPS
+ IMPL("GT.M")                         MYMUMPS
+ MODELNUM                             NUMERIC
+ MODELNUM("")                         STRING
+ MODELNUM($C(0):"")                   STRING
+ PRODAGE("":10)                       DECADE0
+ PRODAGE(10:20)                       DECADE1
+ PRODAGE(20:"")                       DECADE2
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               DIVISION("Australia")            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ DIVISION("Australia")           DIVISION("Australia")++          REG = AUSTRALIA
+                                                                  SEG = AUSTRALIA
+                                                                  FILE = AUSTRALIA.dat
+ DIVISION("Australia")++         DIVISION("Europe","a")           REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ DIVISION("Europe","a")          DIVISION("Europe","m")           REG = EUROPEAL
+                                                                  SEG = EUROPEAL
+                                                                  FILE = EUROPEAL.dat
+ DIVISION("Europe","m")          DIVISION("Europe","z")           REG = EUROPEM
+                                                                  SEG = EUROPEM
+                                                                  FILE = EUROPEM.dat
+ DIVISION("Europe","z")          DIVISION("USA","MidWest","a")    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ DIVISION("USA","MidWest","a")   DIVISION("USA","MidWest","e")    REG = USMWAD
+                                                                  SEG = USMWAD
+                                                                  FILE = USMWAD.dat
+ DIVISION("USA","MidWest","e")   DIVISION("USA","MidWest","m")    REG = USMWEL
+                                                                  SEG = USMWEL
+                                                                  FILE = USMWEL.dat
+ DIVISION("USA","MidWest","m")   DIVISION("USA","MidWest","{")    REG = USMWMZ
+                                                                  SEG = USMWMZ
+                                                                  FILE = USMWMZ.dat
+ DIVISION("USA","MidWest","{")   DIVISION("USA","Northeast","a")  REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ DIVISION("USA","Northeast","a") DIVISION("USA","Northeast","h")  REG = USNEAG
+                                                                  SEG = USNEAG
+                                                                  FILE = USNEAG.dat
+ DIVISION("USA","Northeast","h") DIVISION("USA","Northeast","m")  REG = USNEHL
+                                                                  SEG = USNEHL
+                                                                  FILE = USNEHL.dat
+ DIVISION("USA","Northeast","m") DIVISION("USA","Northeast","s")  REG = USNEMR
+                                                                  SEG = USNEMR
+                                                                  FILE = USNEMR.dat
+ DIVISION("USA","Northeast","s") DIVISION("USA","Northeast","{")  REG = USNESZ
+                                                                  SEG = USNESZ
+                                                                  FILE = USNESZ.dat
+ DIVISION("USA","Northeast","{") DIVISION("USA","South","a")      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ DIVISION("USA","South","a")     DIVISION("USA","South","m")      REG = USSAL
+                                                                  SEG = USSAL
+                                                                  FILE = USSAL.dat
+ DIVISION("USA","South","m")     DIVISION("USA","South","{")      REG = USSMZ
+                                                                  SEG = USSMZ
+                                                                  FILE = USSMZ.dat
+ DIVISION("USA","South","{")     DIVISION("USA","WestCoast")      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ DIVISION("USA","WestCoast")     DIVISION("USA","WestCoast")++    REG = USWC
+                                                                  SEG = USWC
+                                                                  FILE = USWC.dat
+ DIVISION("USA","WestCoast")++   IMPL                             REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ IMPL                            IMPL("GT.M")                     REG = MISCMUMPS
+                                                                  SEG = MISCMUMPS
+                                                                  FILE = MISCMUMPS.dat
+ IMPL("GT.M")                    IMPL("GT.M")++                   REG = MYMUMPS
+                                                                  SEG = MYMUMPS
+                                                                  FILE = MYMUMPS.dat
+ IMPL("GT.M")++                  IMPL0                            REG = MISCMUMPS
+                                                                  SEG = MISCMUMPS
+                                                                  FILE = MISCMUMPS.dat
+ IMPL0                           MODELNUM                         REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ MODELNUM                        MODELNUM("")                     REG = NUMERIC
+                                                                  SEG = NUMERIC
+                                                                  FILE = NUMERIC.dat
+ MODELNUM("")                    MODELNUM("")++                   REG = STRING
+                                                                  SEG = STRING
+                                                                  FILE = STRING.dat
+ MODELNUM("")++                  MODELNUM($C(0))                  REG = NUMERIC
+                                                                  SEG = NUMERIC
+                                                                  FILE = NUMERIC.dat
+ MODELNUM($C(0))                 MODELNUM0                        REG = STRING
+                                                                  SEG = STRING
+                                                                  FILE = STRING.dat
+ MODELNUM0                       PRODAGE("")                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ PRODAGE("")                     PRODAGE(10)                      REG = DECADE0
+                                                                  SEG = DECADE0
+                                                                  FILE = DECADE0.dat
+ PRODAGE(10)                     PRODAGE(20)                      REG = DECADE1
+                                                                  SEG = DECADE1
+                                                                  FILE = DECADE1.dat
+ PRODAGE(20)                     PRODAGE0                         REG = DECADE2
+                                                                  SEG = DECADE2
+                                                                  FILE = DECADE2.dat
+ PRODAGE0                        ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+
+                        *** MAP for region EUROPEAL ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ DIVISION("Europe","a")          DIVISION("Europe","m")           REG = EUROPEAL
+                                                                  SEG = EUROPEAL
+                                                                  FILE = EUROPEAL.dat
+
+                         *** MAP for region STRING ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ MODELNUM("")                    MODELNUM("")++                   REG = STRING
+                                                                  SEG = STRING
+                                                                  FILE = STRING.dat
+ MODELNUM($C(0))                 MODELNUM0                        REG = STRING
+                                                                  SEG = STRING
+                                                                  FILE = STRING.dat
+
+                         *** MAP for region NUMERIC ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ MODELNUM                        MODELNUM("")                     REG = NUMERIC
+                                                                  SEG = NUMERIC
+                                                                  FILE = NUMERIC.dat
+ MODELNUM("")++                  MODELNUM($C(0))                  REG = NUMERIC
+                                                                  SEG = NUMERIC
+                                                                  FILE = NUMERIC.dat
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gde01.gld

@@ -1,0 +1,266 @@
+MUPIP BACKUP and SET JOURNAL ..
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with NOBEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with NOBEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+set PASS
+
+GTM>
+=============================================================
+Test Case 44
+NEWJNLFILES option
+
+
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with NOBEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with NOBEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back1/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back1/b.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back1/mumps.dat
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x0000000000000DBC are backed up.
+##ALLOW_OUTPUT SPANNING_REGIONS
+
+
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with NOBEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with NOBEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back2/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back2/b.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back2/mumps.dat
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x0000000000000DBC are backed up.
+##ALLOW_OUTPUT SPANNING_REGIONS
+
+
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with NOBEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with NOBEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back3/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back3/b.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back3/mumps.dat
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x0000000000000DBC are backed up.
+##ALLOW_OUTPUT SPANNING_REGIONS
+
+
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with NOBEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with NOBEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/a.mjl created for database file ##TEST_PATH##/a.dat
+%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/b.mjl created for database file ##TEST_PATH##/b.dat
+%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back4/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back4/b.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back4/mumps.dat
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x0000000000000DBC are backed up.
+##ALLOW_OUTPUT SPANNING_REGIONS
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                     DISABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                       FALSE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ End of Data                             ##FILTERED##
+ Prev Recovery End of Data                       0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ ##SUSPEND_OUTPUT SPANNING_REGIONS
+ Begin Transaction                            3516 [0x0000000000000DBC]
+ End Transaction                              3516 [0x0000000000000DBC]
+ ##ALLOW_OUTPUT SPANNING_REGIONS
+ ##SUSPEND_OUTPUT NONSPANNING_REGIONS
+ ##TEST_AWKBegin Transaction                           ..... .0x000000000000.....
+ ##TEST_AWKEnd Transaction                             ..... .0x000000000000.....
+ ##ALLOW_OUTPUT NONSPANNING_REGIONS
+ Align size                                2097152 [0x00200000] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      1 [0x0000000000000001]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+%GTM-S-JNLSUCCESS, Show successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+=============================================================
+Test Case 45
+NO_NEWJNLFILES
+
+
+
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back5/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back5/b.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back5/mumps.dat
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x0000000000000DBC are backed up.
+##ALLOW_OUTPUT SPANNING_REGIONS
+=============================================================
+Test Case 46
+BKUPDBJNL qualifier
+%GTM-E-CLIERR, Unrecognized option : XXXX
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE OFF
+
+
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with NOBEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with NOBEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back8/a.dat is now DISABLED
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back8/b.dat is now DISABLED
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back8/mumps.dat is now DISABLED
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back8/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back8/b.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back8/mumps.dat
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x0000000000000DBC are backed up.
+##ALLOW_OUTPUT SPANNING_REGIONS
+
+
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with NOBEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with NOBEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back9/a.dat is now OFF
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back9/b.dat is now OFF
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back9/mumps.dat is now OFF
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back9/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back9/b.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back9/mumps.dat
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x0000000000000DBC are backed up.
+##ALLOW_OUTPUT SPANNING_REGIONS
+%GTM-E-CLIERR, Unrecognized option : XXXX
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE OFF
+
+
+
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back12/a.dat is now DISABLED
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back12/b.dat is now DISABLED
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back12/mumps.dat is now DISABLED
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back12/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back12/b.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back12/mumps.dat
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x0000000000000DBC are backed up.
+##ALLOW_OUTPUT SPANNING_REGIONS
+
+
+
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back13/a.dat is now OFF
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back13/b.dat is now OFF
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back13/mumps.dat is now OFF
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back13/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back13/b.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back13/mumps.dat
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x00000000000001F7 are backed up.
+Transactions up to 0x0000000000000DBC are backed up.
+##ALLOW_OUTPUT SPANNING_REGIONS
+
+GTM>
+ver PASS
+
+GTM>
+=============================================================
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

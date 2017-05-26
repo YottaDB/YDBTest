@@ -1,0 +1,80 @@
+Test case 77a : Replication configuration
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+GTM Process starts in background...
+Simulating crash on receiver in ##REMOTE_TEST_PATH##
+Receiver crashed!
+Simulating crash on primary in ##TEST_PATH##
+Primary crashed!
+Created file ##TEST_PATH##/h.dat
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+Created file ##REMOTE_TEST_PATH##/h.dat
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+Restarting Primary (A)...
+Restart gtm...
+Restarting Secondary (B)...
+Now GTM process will end.
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+Created file ##TEST_PATH##/h.dat
+Created file ##REMOTE_TEST_PATH##/h.dat
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+##TEST_HOST_SHORT##:##TEST_PATH##/INSTANCE1_0_mupip_rollback_backward.out
+%GTM-W-NOTALLREPLON, Replication off for one or more regions
+##SUSPEND_OUTPUT NOFORWARD_ROLLBACK
+##TEST_HOST_SHORT##:##TEST_PATH##/INSTANCE1_0_mupip_rollback_forward.out
+%GTM-W-NOTALLREPLON, Replication off for one or more regions
+##ALLOW_OUTPUT NOFORWARD_ROLLBACK
+##TEST_HOST_SHORT##:##TEST_PATH##/rollback1.log
+%GTM-W-NOTALLREPLON, Replication off for one or more regions
+##TEST_HOST_SHORT##:##REMOTE_TEST_PATH##/INSTANCE2_0_mupip_rollback_backward.out
+%GTM-W-NOTALLREPLON, Replication off for one or more regions
+##SUSPEND_OUTPUT NOFORWARD_ROLLBACK
+##TEST_HOST_SHORT##:##REMOTE_TEST_PATH##/INSTANCE2_0_mupip_rollback_forward.out
+%GTM-W-NOTALLREPLON, Replication off for one or more regions
+##ALLOW_OUTPUT NOFORWARD_ROLLBACK
+##TEST_HOST_SHORT##:##REMOTE_TEST_PATH##/rollback2.log
+%GTM-W-NOTALLREPLON, Replication off for one or more regions

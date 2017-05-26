@@ -1,0 +1,97 @@
+ENTERING ONLINE5
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+online5.gld
+Using: ##SOURCE_PATH##/mupip
+online5.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+online5.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+online5.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+PASS from fill3^myfill("set")
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/online5.mjl is renamed to ##TEST_PATH##/online5.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/online5.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##ALLOW_OUTPUT  NON_REPLIC
+##TEST_AWKMUPIP backup of database file ##TEST_PATH##/online5.dat to  .*gzip -c > online5pipe.inc.gz
+##TEST_AWKDB file ##TEST_PATH##/online5.dat incrementally backed up in file  .*gzip -c > online5pipe.inc.gz
+##SUSPEND_OUTPUT COLLATION
+190 blocks saved.
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions from 0x0000000000000001 to 0x0000000000002001 are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions from 0x0000000000000001 to 0x0000000000002000 are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+210 blocks saved.
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions from 0x0000000000000001 to 0x0000000000002002 are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions from 0x0000000000000001 to 0x0000000000002000 are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+##ALLOW_OUTPUT NON_COLLATION
+
+
+BACKUP COMPLETED.
+
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+Created file ##TEST_PATH##/online5.dat
+
+RESTORE COMPLETED
+##SUSPEND_OUTPUT COLLATION
+190 blocks restored
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+210 blocks restored
+##ALLOW_OUTPUT NON_COLLATION
+
+GTM>
+PASS from fill3^myfill("ver")
+
+GTM>
+Created file ##TEST_PATH##/online5.dat
+RESTORE COMPLETED
+##SUSPEND_OUTPUT COLLATION
+190 blocks restored
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+210 blocks restored
+##ALLOW_OUTPUT NON_COLLATION
+
+GTM>
+PASS from fill3^myfill("ver")
+
+GTM>
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+LEAVING ONLINE5

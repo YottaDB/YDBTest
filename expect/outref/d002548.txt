@@ -1,0 +1,333 @@
+spawn /usr/local/bin/tcsh
+set prompt="D9F05002548>"
+uname
+]0;shaha@titan:tmp[shaha@titan tmp]$ set prompt="D9F05002548>"
+D9F05002548>uname
+Linux
+D9F05002548>
+D9F05002548>##TEST_SOURCE##/expect/inref/d002548.csh
+###################################################################
+Current TERMINAL Settings
+TERM     = 'xterm'
+TERMINFO = ''
+speed 38400 baud; rows 40; columns 151; line = 0;
+intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = <undef>; eol2 = <undef>; swtch = <undef>; start = ^Q; stop = ^S; susp = ^Z; rprnt = ^R;
+werase = ^W; lnext = ^V; flush = ^O; min = 1; time = 0;
+-parenb -parodd cs8 -hupcl -cstopb cread -clocal -crtscts -cdtrdsr
+-ignbrk brkint -ignpar -parmrk -inpck -istrip -inlcr -igncr icrnl ixon -ixoff -iuclc -ixany imaxbel -iutf8
+opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0
+isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke
+###################################################################
+YOU MAY NEED TO PLAY WITH THE TERM ENVIRONMENT
+###################################################################
+Most OSes faired well enough with xterm, vt420
+and vt320. Use them in that order. Solaris must
+use vt320. However for vt320 to work, the server
+needed to have SunFreeWare terminfo settings
+installed to /usr/local/lib/terminfo
+###################################################################
+
+###################################################################
+***** KNOWN ISSUES
+* Backspace and DEL are known to cause problems. Use the control-key forms below	*
+* as needed.									*
+*  Backspace	^H	control-H						*
+*  DEL		^? 	control-shift-forward slash				*
+###################################################################
+* A NOTE ABOUT THE INSTRUCTION:	 						 *
+* Wherever user input is expected, the exact input to be given would be displayed	 *
+* The ones between angular braces are the EDITING control characters	 	 *
+* For e.g <ctrl-B> stands for control-B (^B) and <left> stands for left arrow 	 *
+* PRESS return *ONLY* IF SPECIFIED AS <ret>				 	 *
+###################################################################
+
+#### Testing for gtm_principal_editing : NOINSERT:EDITING ####
+************************************************
+Input :
+inseft<ctrl-B><ctrl-B>r<ret> for X
+alv<ctrl-A>m<right><right>ern<ret> for Y
+oerstrike<ctrl-A><right><ins>v<ins><ret> for Z:
+************************************************
+NOPASTHRU
+Input for X: [?1h=i[Cn[Cs[Ce[Cf[Ct[C  rt[C[?1l>Input for Y : [?1h=a[Cl[Cv[C   mlv[C[C[Ce[Cr[Cn[C[?1l>Input for Z : [?1h=o[Ce[Cr[Cs[Ct[Cr[Ci[Ck[Ce[C[C        verstrike[C[?1l>
+PASS
+PASS
+PASS
+************************************************
+Input : inseft<ctrl-B><ctrl-B>r<ret>
+PASTHRU
+inseftr
+PASS
+************************************************
+Input for X: a
+Input for Y: <up><ret>
+Input for Z: works
+NOPASTHRU
+Input for X: aInput for Y: [?1h=a[?1l>Input for Z: [?1h=w[Co[Cr[Ck[Cs[C[?1l>
+PASS
+PASS
+PASS
+
+Input the following:
+do btest^ttyread<ctrl-A><right><right><right>a
+The display should be 'do atest^ttyread'. Press <ret>
+You should see the following message 'This is routine ATEST'
+
+GTM>[?1h=d[Co[C [Cb[Ct[Ce[Cs[Ct[C^[Ct[Ct[Cy[Cr[Ce[Ca[Cd[C[C[C[C             atest^ttyread[C[?1l>
+PASS This is routine ATEST
+EXPECT MUMPS PASS
+#### Testing for gtm_principal_editing : INSERT:EDITING ####
+************************************************
+Use <ctrl-?> for del because of Tru64 and AIX
+Input fgf<ctrl-U>asdfgf<ret> for X
+Input<up> for Y and
+Input bcdf<del char><ctrl-A>a<ctrl-E>e for Z
+************************************************
+NOPASTHRU
+Input for X: [?1h=f[Cg[Cf[C   a[Cs[Cd[Cf[Cg[Cf[C[?1l>
+Single char input Y: [?1h=a[?1l>
+Five Char input Z: [?1h=b[Cc[Cd[Cf[C    abcd[C[C[C[Ce[C[?1l>
+PASS
+PASS
+PASS
+************************************************
+Input aple<left><left>p<ctrl-F><ctrl-F>s for X
+Input qwertyu<ctrl-B><ctrl-B><ctrl-K>y<ret> for Y and
+Input b<up> for Z
+NOPASTHRU
+Input for X: [?1h=a[Cp[Cl[Ce[C  ple[C[C[Cs[C[?1l>
+Input for Y : [?1h=q[Cw[Ce[Cr[Ct[Cy[Cu[C  y[C[?1l>
+Input for Z : [?1h=b[C qw[?1l>
+PASS
+PASS
+PASS
+************************************************
+Input :
+inseft<ctrl-B><ctrl-B>r<ret> for X
+alv<ctrl-A>m<right><right>ern<ret> for Y
+oerstrike<ctrl-A><right><ins>v<ins><ret> for Z:
+NOPASTHRU
+Input for X: [?1h=i[Cn[Cs[Ce[Cf[Ct[C  rft[C[?1l>Input for Y : [?1h=a[Cl[Cv[C   malv[C[C[C ev[C rv[C nv[C[?1l>Input for Z : [?1h=o[Ce[Cr[Cs[Ct[Cr[Ci[Ck[Ce[C[C        vrstrike[C[?1l>
+PASS
+PASS
+PASS
+************************************************
+************************************************  NOTE  ************************************************
+************************************************
+If the PC <backspace> key is mapped to send the <del> character use it for the below test.(only if it is not mapped use any other key)
+Input for X: testing<ctrl-A><ctrl-E><5 or more ctrl-F><ret>
+Input for Y: testing<ctrl-A><3 right> and keep pressing <backspace> even after it stops shrinking the input buffer. Now press <ret>
+Input for Z: <up><ret>
+
+NOPASTHRU
+Input for X: [?1h=t[Ce[Cs[Ct[Ci[Cn[Cg[C[C[C[C[C[C[C[C[?1l>Input for Y : [?1h=t[Ce[Cs[Ct[Ci[Cn[Cg[C[C[C[C     ting     ting     ting[?1l>Input for Z : [?1h=ting[?1l>
+PASS
+PASS
+PASS
+************************************************
+This section is to test the <del> character and the <backspace> character
+************************************************NOTE************************************************
+************************************************
+When the test requests for a <del> , input a delete *character*.
+---- Check your settings to find the key mapping to send delete character. (ascii 127).
+---- Your PC <backspace> key MAY BE mapped to send a delete character 
+When the test requests for a <backspace>, input a Backspace *character*.
+---- Check your settings to find the key mapping to send backspace character. (ascii 8).
+---- If <Backspace> key is mapped to send del char, then <CTRL BS> may send a backspace character
+---- <CTRL H> can also be used to send <backspace> character
+************************************************
+************************************************
+Input the following: backspace<ctrl A><3 ctrl F><del><ret>
+[?1h=b[Ca[Cc[Ck[Cs[Cp[Ca[Cc[Ce[C[C[C[C       kspace[?1l>
+Input the following: backspace<ctrl A><3 ctrl F><ctrl H><ret>
+[?1h=b[Ca[Cc[Ck[Cs[Cp[Ca[Cc[Ce[C[C[C[C      kspace[C[?1l>
+PASS
+PASS
+Input : inseft<ctrl-B><ctrl-B>r<ret>
+PASTHRU
+inseftr
+PASS
+************************************************
+Input the following for the next read
+mystr<Ctrl-B>e<Ctrl-E>y<ret>    [NOTE: input characters will not be visible]
+PASTHRU
+
+PASS
+Input before<ret> :[?1h=b[Ce[Cf[Co[Cr[Ce[C[?1l>
+************************************************
+Input after<ret> for Y    [NOTE: input characters will not be visible]
+Input <up><ret> for Z
+************************************************
+Input for Y :
+Input for Z :[?1h=before[?1l>
+PASS
+PASS
+PASS
+
+Input the following:
+do atest^ttyreadin<ctrl-B><crtl-B><ctrl-K>
+The display should be 'do atest^ttyread'. Press <ret>
+You should see the following message 'This is routine ATEST'
+
+GTM>[?1h=d[Co[C [Ca[Ct[Ce[Cs[Ct[C^[Ct[Ct[Cy[Cr[Ce[Ca[Cd[Ci[Cn[C  [?1l>
+PASS This is routine ATEST
+EXPECT MUMPS PASS
+#### Testing for gtm_principal_editing : NOEDITING ####
+************************************************
+Input 1234<left> :1234[D
+PASS
+PASS
+
+Input the following:
+so<Ctrl-U>do atest^ttyra<left>e<ctrl-E>d
+The display should be 'do atest^ttyread'. Press <ret>
+You should see the following message 'This is routine ATEST'
+
+GTM>[?1h=s[Co[C  d[Co[C [Ca[Ct[Ce[Cs[Ct[C^[Ct[Ct[Cy[Cr[Ca[C ea[C[Cd[C[?1l>
+PASS This is routine ATEST
+EXPECT MUMPS PASS
+Testing for multiple line read
+Input the following for the next read
+12345678901234567<ctrl-A>a<ctrl-E>b<4 lefts><del>b<ctrl-B><ins>c<ret>
+***************
+***************
+***************
+***
+[?1h=1[C2[C3[C4[C5[C6[C7[C8[C9[C0[C1[C2[C3[C4[C5
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+6[C7[C[A               
+  [Aa12345678901234
+567[A[C
+[C[C[Cb[C[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C 
+    [A[C[C[C[C[C[C[C[C[C[C5
+67b[A[C[C[C[C[C[C[C[C[C[C[C 
+   [A[C[C[C[C[C[C[C[C[C[C[Cb
+567b[A[C[C[C[C[C[C[C[C[C[C
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C 
+    [A[C[C[C[C[C[C[C[C[C[Cc
+567b[A[C[C[C[C[C[C[C[C[C[C
+[?1l>PASS
+Testing for CTRAP/TERMINATOR
+This is to test ctrap
+Input testing<ret> : [?1h=t[Ce[Cs[Ct[Ci[Cn[Cg[C[?1l>
+************************************************
+Input asdfgf and any of the EDITING characters.
+Any of ^B, ^E and ^K should give a message and return to read mode
+Continue giving more Editing Chars. Press <ctrl-R> when done.
+************************************************
+Input asdfgf<ctrl-A><Ctrl-F><right><Ctrl-B>
+[?1h=a[Cs[Cd[Cf[Cg[Cf[C[C[C[?1l>
+you typed one of the EDITING Control characters ^B, ^E, ^K
+[?1h=[?1l>
+you typed one of the EDITING Control characters ^B, ^E, ^K
+[?1h=[?1l>
+you typed one of the EDITING Control characters ^B, ^E, ^K
+[?1h=[?1l>
+Are you sure the message displayed if and only if the input was ^B, ^E and ^K
+
+
+Testing nowrap with length=0
+/dev/pts/1 OPEN TERMINAL NOPAST NOREADS TYPE NOWRAP WIDTH=80 LENG=0 EDIT 
+************************************************
+Input nowrap<ret> for the below read
+************************************************
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:[?1h=n[Co[Cw[Cr[Ca[Cp[C[?1l>
+a="nowrap"
+PASS
+#### Testing for gtm_principal_editing : INSERT:EDITING ####
+*** Now checking GDE ***
+**************************************
+Input the following in the GDE> prompt
+show eg<ctrl-B><ctrl-B>r<ctrl-E>ion<ctrl-A><5 right>-<ret>
+**************************************
+Check if the right command is executed.i.e Does it show the regions list?
+**************************************
+Now input the following
+ we<ctrl-U>quit<ret>
+**************************************
+
+
+show eg^B^Br^Eion^A^[OC^[OC^[OC^[OC^[OC-
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> [?1h=s[Ch[Co[Cw[C [Ce[Cg[C  reg[C[C[Ci[Co[Cn[C[C[C[C[C[C      -region[C[?1l>
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ --------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   ENABLED  ENABLED ENABLED
+GDE> [?1h=EXPECT GDE PASS
+w[Ce[C  q[Cu[Ci[Ct[C[?1l>
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+EXPECT GDE PASS
+#### Testing for gtm_principal_editing : NOINSERT:EDITING ####
+**************************************
+Input the following in the GDE> prompt
+show -teg<ctrl-B><left><left>r<ctrl-E>ion<ret>
+**************************************
+Check if the right command is executed.i.e Does it show the regions list?
+**************************************
+Now input the following
+ we<ctrl-U>wuit<ctrl-A>q<ret>
+**************************************
+
+
+show -teg^B^[OD^[ODr^Eion
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> [?1h=s[Ch[Co[Cw[C [C-[Ct[Ce[Cg[C   reg[C[C[Ci[Co[Cn[C[?1l>
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ --------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   ENABLED  ENABLED ENABLED
+GDE> [?1h=EXPECT GDE PASS
+w[Ce[C  w[Cu[Ci[Ct[C    quit[C[?1l>
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+EXPECT GDE PASS
+#### Testing for gtm_principal_editing : NOEDITING ####
+**************************************
+Input the following in the GDE> prompt
+quit<ctrl-A><ctrl-E><ctrl-B>
+None of the above EDITING Characters should work. Press <ret>
+**************************************
+quit^A^E^B
+EXPECT GDE PASS
+quit
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> quit
+
+GDE> quit
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+*** Now Testing [NO]ESCAPE ***
+
+************************************************
+use $P:escape
+Input asdfg<F9> [No <ret> will be required]
+asdfg
+PASS
+PASS
+use $P:(noescape:term=$c(13))
+Input asdfg<F9><ret>
+asdfg[20~
+PASS
+PASS
+
+ *** END OF TEST *** 
+D9F05002548>
+D9F05002548>exit
+exit

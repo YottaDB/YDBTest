@@ -1,0 +1,88 @@
+set timeout 30
+spawn $env(SHELL)
+# convince HP-UX to accept ctrl-c
+send -- "stty intr ^c\r"
+expect "stty intr ^c"
+send -- "set prompt=\"ZHELP>\"\r"
+expect "ZHELP>"
+send -- "\$GTM\r"
+expect "GTM>"
+# ensure default settings for $P
+send -- "use \$principal:(NOPAST:NOESCA:NOREADS:TYPE:WRAP)\r"
+expect "GTM>"
+#invoke GDEHELP directly with a bad global directory to make sure an error doesn't mess with the $P settings
+send -- "do ^GTMHELP(\"summary\",\"foo\")\r"
+expect "GTM>"
+# redirect $IO
+send -- "set f=\"foo.txt\" open f:newversion use f\r"
+expect "GTM>"
+send -- "zhelp \"func\"\r"
+expect "Press RETURN to continue ..."
+# send ctrl-c
+send -- "\003"
+# should take us to the base menu
+expect "Topic?"
+# should be able to exit because we're at the base
+send -- "\r"
+expect "GTM>"
+# do z zshow "D" and it should go to foo.txt
+send -- "zshow \"D\"\r"
+expect "GTM>"
+# close and send a bunch of <NL>s in an attempt to get things back in sync if the step above had problems
+send -- "close f\r\r\r\r"
+expect "GTM>"
+send -- "halt\r"
+expect "ZHELP>"
+# invoke DSE
+send -- "\$DSE\r"
+expect "DSE>"
+send -- "help summary\r"
+expect "Press RETURN to continue ..."
+# send ctrl-c which should take us to the base menu
+send -- "\003"
+expect "Topic?"
+# should be able to exit because we're at the base
+send -- "\r"
+expect "DSE>"
+send -- "exit\r"
+expect "ZHELP>"
+# invoke GDE
+send -- "\$GDE\r"
+expect "GDE>"
+send -- "help summary\r"
+expect "Press RETURN to continue ..."
+# send ctrl-c which should take us to the base menu
+send -- "\003"
+expect "Topic?"
+# should be able to exit because we're at the base
+send -- "\r"
+expect "GDE>"
+send -- "exit\r"
+expect "ZHELP>"
+# invoke LKE
+send -- "\$LKE\r"
+expect "LKE>"
+send -- "help summary\r"
+expect "Press RETURN to continue ..."
+# send ctrl-c which should take us to the base menu
+send -- "\003"
+expect "Topic?"
+# should be able to exit because we're at the base
+send -- "\r"
+expect "LKE>"
+send -- "exit\r"
+expect "ZHELP>"
+# invoke MUPIP
+send -- "\$MUPIP\r"
+expect "MUPIP>"
+send -- "help summary\r"
+expect "Press RETURN to continue ..."
+# send ctrl-c which should take us to the base menu
+send -- "\003"
+expect "Topic?"
+# should be able to exit because we're at the base
+send -- "\r"
+expect "MUPIP>"
+send -- "exit\r"
+expect "ZHELP>"
+send -- "\004"

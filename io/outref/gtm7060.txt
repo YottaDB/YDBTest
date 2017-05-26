@@ -1,0 +1,100 @@
+setenv gtm_chset M
+unset echo
+###################################################################
+**************************** gtm7060 in M mode ****************************
+###################################################################
+
+test1, variable with wrap:
+test1.out OPEN RMS REC=60 
+Start of test1 output:
+
+123456789012345678901234567890123456789012345678901234567890
+abc
+123456789012345678901234567890123456789012345678901234567890
+abc
+End of test1 output
+
+test2, variable with nowrap:
+test2.out OPEN RMS REC=60 NOWRAP 
+Start of test2 output:
+
+123456789012345678901234567890123456789012345678901234567890
+End of test2 output
+
+test3, fixed with wrap:
+test3.out OPEN RMS FIXED REC=60 
+Start of test3 output:
+123456789012345678901234567890123456789012345678901234567890abc                                                         123456789012345678901234567890123456789012345678901234567890abc                                                         End of test3 output
+
+test4, fixed with nowrap:
+test4.out OPEN RMS FIXED REC=60 NOWRAP 
+Start of test4 output:
+123456789012345678901234567890123456789012345678901234567890End of test4 output
+
+test5, stream with wrap:
+test5.out OPEN RMS STREAM REC=60 
+Start of test5 output:
+
+123456789012345678901234567890123456789012345678901234567890
+abc
+123456789012345678901234567890123456789012345678901234567890
+abc
+End of test5 output
+
+test6, stream with nowrap:
+test6.out OPEN RMS STREAM REC=60 NOWRAP 
+Start of test6 output:
+123456789012345678901234567890123456789012345678901234567890abc
+123456789012345678901234567890123456789012345678901234567890abc
+End of test6 output
+##SUSPEND_OUTPUT NON_UTF8
+###################################################################
+**************************** gtm7060 in UTF-8 mode ****************************
+###################################################################
+setenv gtm_chset UTF-8
+unset echo
+
+utest1, variable with wrap:
+utest1.out OPEN RMS WIDTH=37 
+Start of utest1 output:
+
+1234567890ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ012
+345
+1234567890ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ012
+345
+End of utest1 output
+
+utest2, variable with nowrap:
+utest2.out OPEN RMS WIDTH=37 NOWRAP 
+Start of utest2 output:
+
+1234567890ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ012
+End of utest2 output
+
+utest3, fixed with wrap:
+utest3.out OPEN RMS FIXED REC=52 WIDTH=37 
+Start of utest3 output:
+                                                    1234567890ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ0121234567890ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ012End of utest3 output
+
+utest4, fixed with nowrap:
+utest4.out OPEN RMS FIXED REC=52 WIDTH=37 NOWRAP 
+Start of utest4 output:
+                                                    End of utest4 output
+
+utest5, stream with wrap:
+utest5.out OPEN RMS STREAM WIDTH=37 
+Start of utest5 output:
+
+1234567890ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ012
+345
+1234567890ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ012
+345
+End of utest5 output
+
+utest6, stream with nowrap:
+utest6.out OPEN RMS STREAM WIDTH=37 NOWRAP 
+Start of utest6 output:
+1234567890ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ012345
+1234567890ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ012345
+End of utest6 output
+##ALLOW_OUTPUT NON_UTF8

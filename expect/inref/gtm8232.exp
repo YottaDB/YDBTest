@@ -1,0 +1,60 @@
+#!/usr/bin/expect -f
+#################################################################
+#								#
+# Copyright (c) 2015-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+set timeout 10
+match_max 100000
+spawn env PS1=NEXT_COMM /bin/sh
+
+# tuatara's /bin/sh (bash) overrides PS1. In the event that another platform
+# does something as stupid use a timeout to correct this. In the successful
+# case, use "echo" to advance it so the next match works
+expect {
+	"NEXT_COMM" {send -- "echo\r"}
+	-re "(#|>|%|\\\$)" {
+		send -- "PS1=NEXT_COMM\r"
+		expect  "NEXT_COMM"
+	}
+	timeout     {
+		send -- "PS1=NEXT_COMM\r"
+		expect  "NEXT_COMM"
+	}
+}
+set timeout -1
+
+expect "NEXT_COMM"
+send "stty rows 50\r"
+expect "NEXT_COMM"
+send "stty intr ^c\r"
+
+# Main test body, loosen timeout
+expect "NEXT_COMM"
+set timeout 30
+expect_after {
+    timeout { puts "TEST-F-FAIL timeout <$expect_out(buffer)>"; exit 1 }
+}
+send "\$MUPIP reorg 2>&1 | more\r"
+# Move down 3 pages
+expect "Global: a102"
+send " "
+expect "Global: a107"
+send " "
+expect "Global: a112"
+send " "
+# The 4th page should have a117
+expect "Global: a117"
+send "\003"
+send "\r"
+
+expect "NEXT_COMM"
+send "exit\r"
+expect eof

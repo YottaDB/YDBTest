@@ -1,0 +1,45 @@
+
+Test mumps ftok conflict
+========================
+Randomly chosen prior version is : ##FILTERED##GTM_TEST_DEBUGINFO.*
+------------------------------------------------------------------
+# Switch to prior version
+# Create database
+# Create global directory for old version
+# Create global directory for current version
+# Update database with old version and wait
+##TEST_AWK\[1\] [0-9]+
+# Old mumps running
+# Switch to current version
+# Attempt to connect with current version
+##TEST_AWK%GTM-E-VERMISMATCH, Attempt to access .*/mumps.dat with version GT.M V.*, while already using GT.M V.*
+		At M source location dowrite+1^gtm6811
+
+GTM>
+# Attempt a mupip rundown with current version
+----------
+Error VERMISMATCH seen in rundown.log as expected:
+##TEST_AWK%GTM-E-VERMISMATCH, Attempt to access .*/mumps.dat with version GT.M V.*, while already using GT.M V.*
+----------
+----------
+Error MUNOTALLSEC seen in rundown.log as expected:
+%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+----------
+# Switch to prior version
+# Stop old mumps
+##TEST_AWK.*Done.*/mumps -run dohang1.gtm6811 > updater.log
+# Old mumps stopped
+# Switch to current version
+# Update database with new version and wait
+##TEST_AWK\[1\] [0-9]+
+# New mumps running
+# Switch to prior version
+# Attempt to connect with prior version
+Found expected error
+# Switch to current version
+# Stop new mumps
+##TEST_AWK.*Done.*/mumps -run dohang2.gtm6811 > updater.log
+# New mumps stopped
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

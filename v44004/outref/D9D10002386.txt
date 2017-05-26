@@ -1,0 +1,71 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+#######################################################################################
+#Update region A
+###########
+##FILTERED##GTM_TEST_DEBUGINFO.*
+##FILTERED##GTM_TEST_DEBUGINFO.*
+###########
+##FILTERED##GTM_TEST_DEBUGINFO.*
+#resync seqno right after the update
+#shm_resync1 is: 	##FILTERED##GTM_TEST_DEBUGINFO.*
+#disk_resync1 is:	##FILTERED##GTM_TEST_DEBUGINFO.*
+#shm_resync1_slt is: 	##FILTERED##GTM_TEST_DEBUGINFO.*
+#######################################################################################
+###########
+#After 90 seconds of inactivity
+#The resync seqno from shared memory (-jnlpool -show) should be the same as the resync seqno from the replication instance file.
+##FILTERED##GTM_TEST_DEBUGINFO.*
+#shm_resync2 is: 	##FILTERED##GTM_TEST_DEBUGINFO.*
+#disk_resync2 is:	##FILTERED##GTM_TEST_DEBUGINFO.*
+#shm_resync2_slt is: 	##FILTERED##GTM_TEST_DEBUGINFO.*
+#######################################################################################
+#Shut down the receiver server to create backlog
+##FILTERED##GTM_TEST_DEBUGINFO.*
+##FILTERED##GTM_TEST_DEBUGINFO.*
+#Stop the background GTM process
+##FILTERED##GTM_TEST_DEBUGINFO.*
+#Start the receiver server to clear the backlog
+##FILTERED##GTM_TEST_DEBUGINFO.*
+#After 90 seconds of catchup, the resync seqno from disk should be less than or equal to the info from shm.
+###########
+##FILTERED##GTM_TEST_DEBUGINFO.*
+#shm_resync3 is: 	##FILTERED##GTM_TEST_DEBUGINFO.*
+#disk_resync3 is:	##FILTERED##GTM_TEST_DEBUGINFO.*
+#shm_resync3_slt is: 	##FILTERED##GTM_TEST_DEBUGINFO.*
+#After 90 seconds of clearing the backlog, the resync seqno from disk should get updated.
+###########
+#######################################################################################
+#wait until the backlog is cleared.
+###########
+##FILTERED##GTM_TEST_DEBUGINFO.*
+#######################################################################################
+##FILTERED##GTM_TEST_DEBUGINFO.*
+#After backlog is cleared (and a sleep of 60) all locations (disk, shm SRC slot, shm SLT info) should have the same value
+###########
+##FILTERED##GTM_TEST_DEBUGINFO.*
+#shm_resync4 is: 	##FILTERED##GTM_TEST_DEBUGINFO.*
+#disk_resync4 is: 	##FILTERED##GTM_TEST_DEBUGINFO.*
+#shm_resync4_slt is: 	##FILTERED##GTM_TEST_DEBUGINFO.*
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

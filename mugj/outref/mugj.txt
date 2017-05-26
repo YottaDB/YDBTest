@@ -1,0 +1,4930 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+##SUSPEND_OUTPUT NON_COLLATION
+Running with alternative collation. II-168.2, II-170.2, and II-172 will FAIL
+##ALLOW_OUTPUT NON_COLLATION
+
+GTM>
+
+
+V1WR
+
+V1WR: WRITE ALL CHARACTERS
+
+I-802  Output of alphabetics
+
+I-802.1  Output of upper-case alphabetics  (visual)
+         following two lines should be identical
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+
+I-802.2  Output of lower-case alphabetics  (visual)
+         following two lines should be identical
+abcdefghijklmnopqrstuvwxyz
+abcdefghijklmnopqrstuvwxyz
+
+I-803  Output of digits  (visual)
+       following two lines should be identical
+1234567890
+1234567890
+
+I-804  Output of punctuation characters  (visual)
+       following two lines should be identical
+ !"#$%&'()+,-./:;<=>?@[\]^_`{|}~
+ !"#$%&'()+,-./:;<=>?@[\]^_`{|}~
+
+END OF V1WR
+
+GTM>
+
+
+V1CMT
+
+V1CMT: TEST COMMENT
+
+I-186  Comment coming after ls  (visual)
+   PASS  I-186
+I-187  Comment coming after label ls  (visual)
+   PASS  I-187
+I-188  Comment coming after command argument  (visual)
+   PASS  I-188
+I-189  Comment coming after argumentless command with postconditional  (visual)
+   PASS  I-189
+I-190  Comment coming after argumentless command without postconditional  (visual)
+   PASS  I-190
+
+END OF V1CMT
+
+GTM>
+
+
+V1LL1
+
+V1LL1: TEST ACCEPTABLE LINE LABELS, REGARDING LABEL LENGTH
+AND CHARACTER MIX -1-.
+ IF YOUR IMPLEMENTATION FAILS THESE TESTS,
+YOUR MUMPS WILL REPORT AN ERROR.
+
+
+I-609  the first line is labelless
+   PASS  I-609  
+I-601  labelless line
+   PASS  I-601  
+I-602  label is "%"
+   PASS  I-602  
+I-603  label is "%" and alpha
+   PASS  I-603.1  %A
+   PASS  I-603.2  %ABZWQ
+   PASS  I-603.3  %ABCDE
+I-604  label is "%" and digit
+   PASS  I-604.1  %01
+   PASS  I-604.2  %000000
+I-605  label is "%" and combination of alpha and digit
+   PASS  I-605.1  %09A
+   PASS  I-605.2  %09AB
+   PASS  I-605.3  %ABC000
+   PASS  I-605.4  %ABC0000
+
+ACCORDING TO THE PORTABILITY REQUIREMENT OF MUMPS LANGUAGE STANDARD BY ANSI,
+NO EXPLICIT LIMIT ON LABEL LENGTH IS DESCRIBED.  EXCEPT MINIMUM 
+DIFFERENTIATION OF 8 CHARS.
+FOR FURTHER ARBITRARY TESTS FOR LONGER LABELS THAN 8 CHARS. 
+YOU MAY EXCHANGE THE FOLLOWING LABEL INTO '%234EFGH90KLM45', TO MAKE
+SURE THAT YOUR MUMPS WORKS WELL ON THIS POINT.
+
+   PASS  I-605.5  %234EFGH
+
+END OF V1LL1
+
+GTM>
+
+
+V1LL2
+
+V1LL2: TEST ACCEPTABLE LINE LABELS, REGARDING LABEL LENGTH
+AND CHARACTER MIX -2-.
+ IF YOUR IMPLEMENTATION FAILS THESE TESTS,
+YOUR MUMPS WILL REPORT AN ERROR.
+
+I-606  label is alpha
+   PASS  I-606.1  A
+   PASS  I-606.2  AB
+   PASS  I-606.3  ABC
+   PASS  I-606.4  ABCD
+   PASS  I-606.5  ABCDE
+   PASS  I-606.6  ABCDEF
+   PASS  I-606.7  ABCDEFG
+
+YOU MAY EXCHANGE THE FOLLOWING LABEL INTO 'ABCDEFGHIJKLMNOPS'
+RESPECTIVELY FOR THE SAME REASON AS DESCRIBED ABOVE.
+
+   PASS  I-606.8  ABCDEFGH
+
+I-607  label is intlit
+   PASS  I-607.1  3
+
+
+   PASS  I-607.2  00
+   PASS  I-607.3  123
+   PASS  I-607.4  1234
+   PASS  I-607.5  12345
+   PASS  I-607.6  000000
+   PASS  I-607.7  0000001
+
+YOU MAY EXCHANGE THE FOLLOWING LABEL TO '123456789012345' FOR
+THE SAME REASON AGAIN.
+
+   PASS  I-607.8  12345678
+
+I-608  label is combination of alpha and digit
+   PASS  I-608.1  A1B2C3
+   PASS  I-608.2  A1BCDE
+   PASS  I-608.3  A1234B
+I-610  maximum length of label
+   PASS  I-610.1  88888888
+   PASS  I-610.2  %AB777Z0
+
+END OF V1LL2
+
+GTM>
+
+
+V1PRGD
+
+V1PRGD: PRELIMINARY TEST OF GOTO, DO AND QUIT COMMAND
+
+I-726  GOTO label
+   PASS  I-726.1  ABCD
+   PASS  I-726.2  3
+   PASS  I-726.3  FOUR4
+I-727/729/730  DO label
+   PASS  I-727/729/730.1  2; explicit quit
+   PASS  I-727/729/730.2  YOU; explicit quit
+   PASS  I-727/729/730.3  SIX66; implicit quit
+I-728/729/730  DO ^routineref
+   PASS  I-728/729/730.1  ^V1PRGD1; explicit quit
+   PASS  I-728/729/730.2  ^V1PRGD2; implicit quit
+   PASS  I-728/729/730.3  ^V1PRGD3; implicit quit
+
+END OF V1PRGD
+
+GTM>
+
+
+V1RN
+
+V1RN: TESTS ACCEPTABLE ROUTINE NAMES
+
+I-776  routinename is "%"
+   PASS  I-776  
+I-777  routinename is "%" followed by alpha and digit
+   PASS  I-777  
+I-778  routinename is alphas
+   PASS  I-778  
+
+
+I-779  routinename is alpha followed by digits
+   PASS  I-779  
+I-780  Maximum length of routinename
+   PASS  I-780  
+
+END OF V1RN
+
+GTM>
+
+
+V1PRSET
+
+V1PRSET: PRELIMINARY TEST OF SET AND KILL COMMAND AND UNSUBSCRIPTED LOCAL VAR
+
+I-734  SET local variables without subscript  (visual)
+       following two lines should be identical
+1A
+1A
+
+I-735  setargument list  (visual)
+       following two lines should be identical
+234BCD
+234BCD
+
+I-736  reassignment  (visual)
+       following two lines should be identical
+34ABCD22
+34ABCD22
+
+I-737  KILL local variables all  (visual)
+       following two lines should be identical
+KILL LOCAL VARIABLES ALL IS ACCEPTED
+KILL LOCAL VARIABLES ALL IS ACCEPTED
+
+END OF V1PRSET
+
+GTM>
+
+
+V1PRIE
+
+V1PRIE: PRELIMINARY TEST OF IF & ELSE COMMAND
+
+I-731/733  interpretation of ifargument and ELSE command
+   PASS  I-731/733.1  ifargument is 0 
+   PASS  I-731/733.2  ifargument is 1 
+   PASS  I-731/733.3  ifargument is 2 
+   PASS  I-731/733.4  ifargument is -1 
+   PASS  I-731/733.5  ifargument is -0.00000001 
+   PASS  I-731/733.6  list of IF command and all ifargument is true
+   PASS  I-731/733.7  list of IF command and a ifargument is false
+I-732/733  ELSE command and argument list of IF command 
+   PASS  I-732/733.1  all ifargument is true
+   PASS  I-732/733.2  a ifargument is false
+
+END OF V1PRIE
+
+GTM>
+
+
+V1PRFOR
+
+V1PRFOR: PRELIMINARY TEST OF FOR COMMAND
+
+FOR lvn=numexpr1:numexpr2:numexpr3
+
+I-724  numexpr1<numexpr3 and numexpr2>0
+   PASS  I-724.1  numexpr2=1
+   PASS  I-724.2  numexpr2=3
+I-725  numexpr1>numexpr3 and numexpr2<0
+   PASS  I-725.1  numexpr2=-1
+   PASS  I-725.2  numexpr2=-3
+
+END OF V1PRFOR
+
+GTM>
+
+
+V1NUM
+
+V1NUM1
+
+V1NUM1: TEST OF NUMERIC LITERALS -1-
+
+I-662  deletion of leading zero, while expr>1
+   PASS  I-662.1  1
+   PASS  I-662.2  02
+   PASS  I-662.3  0003
+   PASS  I-662.4  00004
+   PASS  I-662.5  0000050
+   PASS  I-662.6  0000006
+   PASS  I-662.7  00000007000
+   PASS  I-662.8  000000000000000000
+   PASS  I-662.9  0000000000000000000000000000000000000000000000012300
+   PASS  I-662.10  0000050.002
+   PASS  I-662.11  000000645.23000
+I-663  deletion of leading zero, while expr<1
+   PASS  I-663.1  -1
+   PASS  I-663.2  -02
+   PASS  I-663.3  -0003
+   PASS  I-663.4  -00004
+   PASS  I-663.5  -0000050
+   PASS  I-663.6  -0000006
+   PASS  I-663.7  -00000007000
+   PASS  I-663.8  -000000000000000000
+   PASS  I-663.9  -0000000000000000000000000000000000000000000000012300
+   PASS  I-663.10  -0000006.034501
+   PASS  I-663.11  -00000007000.00900000
+I-664  deletion of trailing zero, while expr is integer
+   PASS  I-664.1  1.
+   PASS  I-664.2  2.000000
+   PASS  I-664.3  3200.0000000000
+   PASS  I-664.4  -3.00000000
+   PASS  I-664.5  -300.0000000000
+   PASS  I-664.6  -.0000000000000000000
+
+END OF V1NUM1
+
+
+V1NUM2
+
+V1NUM2: TEST OF NUMERIC LITERALS -2-
+
+I-665  deletion of trailing zero, while expr is non-integer
+   PASS  I-665.1  1.23
+
+
+   PASS  I-665.2  456.7890
+   PASS  I-665.3  0.0100
+   PASS  I-665.4  .020
+   PASS  I-665.5  -.0000500000
+   PASS  I-665.6  000001.000100000
+   PASS  I-665.7  -00000.200000
+   PASS  I-665.8  00000000.000000
+   PASS  I-665.9  -00000.0000000
+I-666  abbreviation of multiple minus sign (-)
+   PASS  I-666.1  -432
+   PASS  I-666.2  --06.54
+   PASS  I-666.3  ---432E-001
+   PASS  I-666.4  ----6.540E-3
+   PASS  I-666.5  -+--+-000000432.000000
+   PASS  I-666.6  ---+6.5400E00000003
+   PASS  I-666.7  +---000006.54E+0002
+   PASS  I-666.8  +---+00006.54E-0003
+   PASS  I-666.9  +6.540000000000000E-3
+   PASS  I-666.10  ++06.54E-2
+   PASS  I-666.11  -+000.0654E+2
+   PASS  I-666.12  -0
+
+END OF V1NUM2
+
+
+V1NUM3
+
+V1NUM3: TEST OF NUMERIC LITERALS -3-
+
+I-667  location of point (.), when exp exist
+   PASS  I-667.1  0000000432E-1
+   PASS  I-667.2  6.54000E-3
+   PASS  I-667.3  -0432E-1
+   PASS  I-667.4  -6.054E-3
+   PASS  I-667.5  432E1
+   PASS  I-667.6  6.54E3
+   PASS  I-667.7  -432E1
+   PASS  I-667.8  -6.54E3
+   PASS  I-667.9  432E+1
+   PASS  I-667.10  6.54E+3
+   PASS  I-667.11  -432E+1
+   PASS  I-667.12  -6.54E+3
+   PASS  I-667.13  0E-0
+   PASS  I-667.14  -0E0
+   PASS  I-667.15  0000E9
+   PASS  I-667.16  -00000E-9
+   PASS  I-667.17  1E000
+   PASS  I-667.18  -1E-0000
+   PASS  I-667.19  -00000.00000E+000000
+   PASS  I-667.20  000000.000000E+000000
+   PASS  I-667.21  000000.000000E000000
+   PASS  I-667.22  .000005E007
+   PASS  I-667.23  00000.123000000000000000000000000000000000000000000000000
+
+END OF V1NUM3
+
+
+V1NUM4
+
+V1NUM4: TEST OF NUMERIC LITERALS -4-
+
+I-668  interpretation of "head" of string literal
+   PASS  I-668.1  .$
+
+
+   PASS  I-668.2  - 1
+   PASS  I-668.3  543.QWERTY
+   PASS  I-668.4  00098765432NUMLIT
+   PASS  I-668.5  987600.0000END
+   PASS  I-668.6  4560.023000000DOIT
+   PASS  I-668.7  76540E0000002 999
+   PASS  I-668.8  000.0056800E4GOLD
+   PASS  I-668.9  00.02350E7SEASON
+   PASS  I-668.10  067.8900000E00000ZERO
+   PASS  I-668.11  098765E-10"99
+   PASS  I-668.12  8594E-3
+   PASS  I-668.13  102.030E+02
+   PASS  I-668.14  10.20.34
+   PASS  I-668.15  --234.5
+   PASS  I-668.16  .-23
+   PASS  I-668.17  -."
+   PASS  I-668.18  -1-5
+   PASS  I-668.19  45.6300E-ABV
+   PASS  I-668.20  3455E2.4
+   PASS  I-668.21  234E++2
+   PASS  I-668.22  120.02000E--3
+   PASS  I-668.23  1234e2
+   PASS  I-668.24  0000007D2
+   PASS  I-668.25  879F+3
+   PASS  I-668.26  .  23
+   PASS  I-668.27  000087:123
+   PASS  I-668.28  876,897
+   PASS  I-668.29  ""
+   PASS  I-668.30  ONE
+   PASS  I-668.31  $1.502
+
+END OF V1NUM4
+
+GTM>
+
+
+V1FC
+
+V1FC1
+
+V1FC1: TEST FORMAT CHARACTERS !,?,# -1-
+
+I-248  parameters occur in a single instance of format  (visual)
+       following two lines should be identical
+       12345
+       12345
+
+I-249  "New line" operation by !  (visual)
+       following two lines should be identical
+"New line" operation by !
+"New line" operation by !
+
+I-250  "Top of page" operation by #  (visual)
+
+Top of page  operation by #
+
+I-251  Effect of comma in WRITE command  (visual)
+       following two lines should be identical
+01 0 000 A"B ABC
+01 0 000 A"B ABC
+
+I-252  Effect of comma between "new line operator" (!)  (visual)
+       CORRECT OUTPUT: 5 ROWS OF ASTERISKS; 1ST AND 2ND ROWS SINGLE
+       PACED, 2ND AND 3RD SKIP ONE LINE, 3RD AND 4TH SKIP 2 LINES,
+       4TH AND 5TH SKIP 3 LINES
+
+*****
+*****
+
+*****
+
+
+*****
+
+
+
+*****
+
+I-253  Effect of comment delimiter on format  (visual)
+       following two lines should be identical
+COMMENT DELIMITERS ;OUTPUT IS ON ONE LINE
+COMMENT DELIMITERS ;OUTPUT IS ON ONE LINE
+
+
+Tab operation  ?intexpr
+
+I-254  intexpr is positive integer  (visual)
+       following two lines should be identical five times
+          1         2         3         4         5         6
+          1         2         3         4         5         6
+12345     12345     12345     12345     12345     12345     12345
+12345     12345     12345     12345     12345     12345     12345
+          A         B         C         D         E         F
+          A         B         C         D         E         F
+ABCDEFGH  ABCDEFGH  ABCDEFGH  ABCDEFGH  ABCDEFGH  ABCDEFGH  ABCDEFGH
+ABCDEFGH  ABCDEFGH  ABCDEFGH  ABCDEFGH  ABCDEFGH  ABCDEFGH  ABCDEFGH
+1.23      -1.23     123       123       0         0         10
+1.23      -1.23     123       123       0         0         10
+
+
+I-255  intexpr is zero  (visual)
+       following three lines should be identical
+12345     12345     12345     12345     12345     12345     12345
+12345     12345     12345     12345     12345     12345     12345
+12345     12345     12345     12345     12345     12345     12345
+
+
+I-256  intexpr less than zero  (visual)
+       following two lines should be identical
+ABC       ABC       ABC       ABC       ABC       ABC       ABC
+ABC       ABC       ABC       ABC       ABC       ABC       ABC
+
+
+END OF V1FC1
+
+
+V1FC2
+
+
+
+V1FC2: TEST FORMAT CHARACTERS !,?,# -2-
+
+
+I-257  intexpr is non-integer numeric literal  (visual)
+       following three lines should be identical
+          1         2         3         4         5         6
+          1         2         3         4         5         6
+          1         2         3         4         5         6
+
+
+I-258  intexpr contains binary operator  (visual)
+       following two lines should be identical
+-12345    -12345    -12345    -12345    -12345    -12345    -12345
+-12345    -12345    -12345    -12345    -12345    -12345    -12345
+
+
+I-259  intexpr contains unary operator  (visual)
+       following two lines should be identical
+          A         B         C         D         E         F
+          A         B         C         D         E         F
+
+
+I-260  intexpr is function  (visual)
+       following two lines should be identical
+ABCDEFGH  ABCDEFGH  ABCDEFGH  ABCDEFGH  ABCDEFGH  ABCDEFGH  ABCDEFGH
+ABCDEFGH  ABCDEFGH  ABCDEFGH  ABCDEFGH  ABCDEFGH  ABCDEFGH  ABCDEFGH
+
+
+I-261  intexpr is variable name  (visual)
+       following two lines should be identical
+BBBBBBBB  BBBBBBBB  BBBBBBBB  BBBBBBBB  BBBBBBBB  BBBBBBBB  BBBBBBBB
+BBBBBBBB  BBBBBBBB  BBBBBBBB  BBBBBBBB  BBBBBBBB  BBBBBBBB  BBBBBBBB
+
+
+I-262  intexpr is greater than $X  (visual)
+       following two lines should be identical
+ABC       ABC       ABC       ABC       ABC       ABC       ABC
+ABC       ABC       ABC       ABC       ABC       ABC       ABC
+
+
+END OF V1FC2
+
+GTM>
+
+
+V1UO
+
+V1UO1A
+
+V1UO1A: TEST OF UNARY OPERATOR -1-
+
+I-798  plus unary operator
+
+I-798.1  plus unary operator and a numlit
+   PASS  I-798.1.1  +0
+
+
+   PASS  I-798.1.2  +1
+   PASS  I-798.1.3  +intlit
+   PASS  I-798.1.4  +.intlit
+   PASS  I-798.1.5  +intlit.intlit
+   PASS  I-798.1.6  +mantEintlit
+   PASS  I-798.1.7  +mantE+intlit
+   PASS  I-798.1.8  +mantE-intlit
+I-798.2  plus unary operator and a strlit
+   PASS  I-798.2.1  +"0"
+   PASS  I-798.2.2  +"1"
+   PASS  I-798.2.3  +strlit
+   PASS  I-798.2.4  +.intlit
+   PASS  I-798.2.5  +intlit.intlit
+   PASS  I-798.2.6  +mantEintlit
+   PASS  I-798.2.7  +mantE+intlit
+   PASS  I-798.2.8  +mantE-intlit
+   PASS  I-798.2.9  +empty string
+   PASS  I-798.2.10  +"AB2"
+   PASS  I-798.2.11  +"2A2B"
+
+END OF V1UO1A
+
+
+V1UO1B
+
+V1UO1B: TEST OF UNARY OPERATOR -2-
+
+I-798.3  plus unary operator and a strlit contains plus operator
+   PASS  I-798.3.1  +"+0"
+   PASS  I-798.3.2  +"+1"
+   PASS  I-798.3.3  +strlit
+   PASS  I-798.3.4  +".intlit"
+   PASS  I-798.3.5  +"intlit.intlit"
+   PASS  I-798.3.6  +"mantEintlit"
+   PASS  I-798.3.7  +"mantE+intlit"
+   PASS  I-798.3.8  +"mantE-intlit"
+   PASS  I-798.3.9  +"+AB2"
+   PASS  I-798.3.10  +"+2A2B"
+I-798.4  plus unary operator and a lvn
+   PASS  I-798.4.1  0
+   PASS  I-798.4.2  1
+   PASS  I-798.4.3  intlit
+   PASS  I-798.4.4  .intlit
+   PASS  I-798.4.5  intlit.intlit
+   PASS  I-798.4.6  mantEintlit
+   PASS  I-798.4.7  mantE+intlit
+   PASS  I-798.4.8  mantE-intlit
+I-798.5  plus unary operator and a lvn
+   PASS  I-798.5.1  "0"
+   PASS  I-798.5.2  "1"
+   PASS  I-798.5.3  "intlit"
+   PASS  I-798.5.4  ".intlit"
+   PASS  I-798.5.5  "intlit.intlit"
+   PASS  I-798.5.6  "mantEintlit"
+   PASS  I-798.5.7  "mantE+intlit"
+   PASS  I-798.5.8  "mantE-intlit"
+
+
+
+END OF V1UO1B
+
+
+V1UO2A
+
+V1UO2A: TEST OF UNARY OPERATOR -3-
+
+I-799  negate unary operator
+
+I-799.1  negate unary operator and a numlit
+   PASS  I-799.1.1  -0
+   PASS  I-799.1.2  -1
+   PASS  I-799.1.3  -intlit
+   PASS  I-799.1.4  -.intlit
+   PASS  I-799.1.5  -intlit.intlit
+   PASS  I-799.1.6  -mantEintlit
+   PASS  I-799.1.7  -mantE+intlit
+   PASS  I-799.1.8  -mantE-intlit
+I-799.2  negate unary operator and a strlit
+   PASS  I-799.2.1  -"0"
+   PASS  I-799.2.2  -"1"
+   PASS  I-799.2.3  -"intlit"
+   PASS  I-799.2.4  -".intlit"
+   PASS  I-799.2.5  -"intlit.intlit"
+   PASS  I-799.2.6  -"mantEintlit"
+   PASS  I-799.2.7  -"mantE+intlit"
+   PASS  I-799.2.8  -"mantE-intlit"
+   PASS  I-799.2.9  -empty string
+   PASS  I-799.2.10  -"AB2"
+   PASS  I-799.2.11  -"2A2B"
+
+END OF V1UO2A
+
+
+V1UO2B
+
+V1UO2B: TEST OF UNARY OPERATOR -4-
+
+I-799.3  negate unary operator and a strlit
+   PASS  I-799.3.1  -"-0"
+   PASS  I-799.3.2  -"-1"
+   PASS  I-799.3.3  -"+intlit"
+   PASS  I-799.3.4  -"-.intlit"
+   PASS  I-799.3.5  -"-intlit.intlit"
+   PASS  I-799.3.6  -"-mantEintlit"
+   PASS  I-799.3.7  -"-mantE+intlit"
+   PASS  I-799.3.8  -"-mantE-intlit"
+   PASS  I-799.3.9  -"-AB2"
+   PASS  I-799.3.10  -"-2A2B"
+I-799.4  negate unary operator and a lvn
+   PASS  I-799.4.1  0
+   PASS  I-799.4.2  1
+   PASS  I-799.4.3  intlit
+   PASS  I-799.4.4  .intlit
+   PASS  I-799.4.5  intlit.intlit
+
+
+   PASS  I-799.4.6  mantEintlit
+   PASS  I-799.4.7  mantE+intlit
+   PASS  I-799.4.8  mantE-intlit
+I-799.5  negate unary operator and a lvn
+   PASS  I-799.5.1  "0"
+   PASS  I-799.5.2  "1"
+   PASS  I-799.5.3  "intlit"
+   PASS  I-799.5.4  ".intlit"
+   PASS  I-799.5.5  "intlit.intlit"
+   PASS  I-799.5.6  "mantEintlit"
+   PASS  I-799.5.7  "mantE+intlit"
+   PASS  I-799.5.8  "mantE-intlit"
+
+END OF V1UO2B
+
+
+V1UO3A
+
+V1UO3A: TEST OF UNARY OPERATOR -5-
+
+I-800  not unary operator
+
+I-800.1  not unary operator and a numlit
+   PASS  I-800.1.1  '0
+   PASS  I-800.1.2  '1
+   PASS  I-800.1.3  'intlit
+   PASS  I-800.1.4  '.intlit
+   PASS  I-800.1.5  'intlit.intlit
+   PASS  I-800.1.6  'mantEintlit
+   PASS  I-800.1.7  'mantE+intlit
+   PASS  I-800.1.8  'mantE-intlit
+I-800.2  not unary operator and a strlit
+   PASS  I-800.2.1  '"0"
+   PASS  I-800.2.2  '"1"
+   PASS  I-800.2.3  'intlit
+   PASS  I-800.2.4  '.intlit
+   PASS  I-800.2.5  'intlit.intlit
+   PASS  I-800.2.6  'mantEintlit
+   PASS  I-800.2.7  'mantE+intlit
+   PASS  I-800.2.8  'mantE-intlit
+   PASS  I-800.2.9  'empty string
+   PASS  I-800.2.10  '"AB2"
+   PASS  I-800.2.11  '"2A2B"
+
+END OF V1UO3A
+
+
+V1UO3B
+
+V1UO3B: TEST OF UNARY OPERATOR -6-
+
+I-800.3  not unary operator and a strlit
+   PASS  I-800.3.1  '"+0"
+   PASS  I-800.3.2  '"+1"
+   PASS  I-800.3.3  'intlit
+   PASS  I-800.3.4  '.intlit
+
+
+   PASS  I-800.3.5  'intlit.intlit
+   PASS  I-800.3.6  'mantEintlit
+   PASS  I-800.3.7  'mantE+intlit
+   PASS  I-800.3.8  'mantE-intlit
+   PASS  I-800.3.9  '"-AB2"
+   PASS  I-800.3.10  '"-2A2B"
+I-800.4  not unary operator and a lvn
+   PASS  I-800.4.1  '0
+   PASS  I-800.4.2  '1
+   PASS  I-800.4.3  'intlit
+   PASS  I-800.4.4  '.intlit
+   PASS  I-800.4.5  'intlit.intlit
+   PASS  I-800.4.6  'mantEintlit
+   PASS  I-800.4.7  'mantE+intlit
+   PASS  I-800.4.8  'mantE-intlit
+I-800.5  not unary operator and a lvn
+   PASS  I-800.5.1  "0"
+   PASS  I-800.5.2  "1"
+   PASS  I-800.5.3  "intlit"
+   PASS  I-800.5.4  ".intlit"
+   PASS  I-800.5.5  "intlit.intlit"
+   PASS  I-800.5.6  "mantEintlit"
+   PASS  I-800.5.7  "mantE+intlit"
+   PASS  I-800.5.8  "mantE-intlit"
+
+END OF V1UO3B
+
+
+V1UO4A
+
+V1UO4A: TEST OF UNARY OPERATOR -7-
+
+I-801  muiti unary operators
+
+I-801.1  duplicate unary operators and a numlit
+   PASS  I-801.1.1  ++0
+   PASS  I-801.1.2  +-0
+   PASS  I-801.1.3  +'0
+   PASS  I-801.1.4  -+0
+   PASS  I-801.1.5  --0
+   PASS  I-801.1.6  -'0
+   PASS  I-801.1.7  '+0
+   PASS  I-801.1.8  '-0
+   PASS  I-801.1.9  ''0
+   PASS  I-801.1.10  ++intlit
+   PASS  I-801.1.11  +-intlit
+   PASS  I-801.1.12  +'intlit
+   PASS  I-801.1.13  -+intlit
+   PASS  I-801.1.14  --intlit
+   PASS  I-801.1.15  -'intlit
+   PASS  I-801.1.16  '+intlit
+   PASS  I-801.1.17  '-intlit
+   PASS  I-801.1.18  ''intlit
+
+END OF V1UO4A
+
+
+V1UO4B
+
+V1UO4B: TEST OF UNARY OPERATOR -8-
+
+I-801.2  triplicate unary operators and a numlit
+   PASS  I-801.2.1  +++numlit
+
+
+   PASS  I-801.2.2  ++-numlit
+   PASS  I-801.2.3  ++'numlit
+   PASS  I-801.2.4  +-+numlit
+   PASS  I-801.2.5  +--numlit
+   PASS  I-801.2.6  +-'numlit
+   PASS  I-801.2.7  +'+numlit
+   PASS  I-801.2.8  +'-numlit
+   PASS  I-801.2.9  +''numlit
+   PASS  I-801.2.10  -++numlit
+   PASS  I-801.2.11  -+-numlit
+   PASS  I-801.2.12  -+'numlit
+   PASS  I-801.2.13  --+numlit
+   PASS  I-801.2.14  ---numlit
+   PASS  I-801.2.15  --'numlit
+   PASS  I-801.2.16  -'+numlit
+   PASS  I-801.2.17  -'-numlit
+   PASS  I-801.2.18  -''numlit
+   PASS  I-801.2.19  '++numlit
+   PASS  I-801.2.20  '+-numlit
+   PASS  I-801.2.21  '+'numlit
+   PASS  I-801.2.22  '-+numlit
+   PASS  I-801.2.23  '--numlit
+   PASS  I-801.2.24  '-'numlit
+   PASS  I-801.2.25  ''+numlit
+   PASS  I-801.2.26  ''-numlit
+   PASS  I-801.2.27  '''numlit
+I-801.3  multiple unary operators and a numlit
+   PASS  I-801.3.1  -'+'-'+'-numlit
+   PASS  I-801.3.2  +'-'+'-'+numlit
+   PASS  I-801.3.3  +--''+'-numlit
+
+END OF V1UO4B
+
+
+V1UO5A
+
+V1UO5A: TEST OF UNARY OPERATOR -9-
+
+I-801.4  duplicate unary operators and a strlit
+   PASS  I-801.4.1  ++"0"
+   PASS  I-801.4.2  +-"0"
+   PASS  I-801.4.3  +'"0"
+   PASS  I-801.4.4  -+"0"
+   PASS  I-801.4.5  --"0"
+   PASS  I-801.4.6  -'"0"
+   PASS  I-801.4.7  '+"0"
+   PASS  I-801.4.8  '-"0"
+   PASS  I-801.4.9  ''"0"
+   PASS  I-801.4.10  ++strlit
+   PASS  I-801.4.11  +-strlit
+   PASS  I-801.4.12  +'strlit
+   PASS  I-801.4.13  -+strlit
+   PASS  I-801.4.14  --strlit
+   PASS  I-801.4.15  -'strlit
+   PASS  I-801.4.16  '+strlit
+   PASS  I-801.4.17  '-strlit
+
+
+   PASS  I-801.4.18  ''strlit
+I-801.5  duplicate unary operators and a strlit
+   PASS  I-801.5.1  ++"+0"
+   PASS  I-801.5.2  +-"-0"
+   PASS  I-801.5.3  +'"-0"
+   PASS  I-801.5.4  -+"+0"
+   PASS  I-801.5.5  --"-0"
+   PASS  I-801.5.6  -'"+0"
+   PASS  I-801.5.7  '+"-0"
+   PASS  I-801.5.8  '-"+0"
+   PASS  I-801.5.9  ''"+0"
+   PASS  I-801.5.10  ++strlit
+   PASS  I-801.5.11  +-strlit
+   PASS  I-801.5.12  +'strlit
+   PASS  I-801.5.13  -+strlit
+   PASS  I-801.5.14  --strlit
+   PASS  I-801.5.15  -'strlit
+   PASS  I-801.5.16  '+strlit
+   PASS  I-801.5.17  '-strlit
+   PASS  I-801.5.18  ''strlit
+
+END OF V1UO5A
+
+
+V1UO5B
+
+V1UO5B: TEST OF UNARY OPERATOR -10-
+
+I-801.6   unary operator(s) and a strlit
+   PASS  I-801.6.1  -"+-2"
+   PASS  I-801.6.2  '"+++2"
+   PASS  I-801.6.3  -"-+-2"
+   PASS  I-801.6.4  ++--+-"+-+.20E+01.5"
+I-801.7  duplicate unary operators and a lvn
+   PASS  I-801.7.1  ++lvn (lvn=0)
+   PASS  I-801.7.2  +-lvn (lvn=0)
+   PASS  I-801.7.3  +'lvn (lvn=0)
+   PASS  I-801.7.4  -+lvn (lvn=0)
+   PASS  I-801.7.5  --lvn (lvn=0)
+   PASS  I-801.7.6  -'lvn (lvn=0)
+   PASS  I-801.7.7  '+lvn (lvn=0)
+   PASS  I-801.7.8  '-lvn (lvn=0)
+   PASS  I-801.7.9  ''lvn (lvn=0)
+   PASS  I-801.7.10  ++lvn
+   PASS  I-801.7.11  +-lvn
+   PASS  I-801.7.12  +'lvn
+   PASS  I-801.7.13  -+lvn
+   PASS  I-801.7.14  --lvn
+   PASS  I-801.7.15  -'lvn
+   PASS  I-801.7.16  '+lvn
+   PASS  I-801.7.17  '-lvn
+   PASS  I-801.7.18  ''lvn
+
+END OF V1UO5B
+
+GTM>
+
+
+V1BOA
+
+V1BOA1
+
+V1BOA1: TEST OF BINARY OPERATORS -1.1- (ARITHMETIC: +-*/#\ )
+
+algebraic sum
+
+I-22  expratom=0
+   PASS  I-22.1  0+0
+   PASS  I-22.2  000000+0000
+   PASS  I-22.3  100+0
+   PASS  I-22.4  0+2.0
+   PASS  I-22.5  00+-98.0010
+   PASS  I-22.6  -0.0980010+0
+I-23  left expratom>0, right expratom>0
+   PASS  I-23.1  2+3
+   PASS  I-23.2  0.5+0.5
+   PASS  I-23.3  0.3+0.300
+   PASS  I-23.4  0.01000+4
+   PASS  I-23.5  50.03000+4
+I-24  left expratom>0, right expratom<0
+   PASS  I-24.1  5+-2
+   PASS  I-24.2  0.3+-0.3
+   PASS  I-24.3  10.1+-25
+   PASS  I-24.4  0.99+-0.34
+I-25  left expratom<0, right expratom>0
+   PASS  I-25.1  -1+5
+   PASS  I-25.2  -597.2+25
+   PASS  I-25.3  -0987.34+987.340
+   PASS  I-25.4  -.345+.344
+I-26  left expratom<0, right expratom<0
+   PASS  I-26.1  -2+-7
+   PASS  I-26.2  -2.0+-50.3
+   PASS  I-26.3  -0.567+-.433
+   PASS  I-26.4  -0.000345+-00.0000345
+I-27  expratoms are numlit
+   PASS  I-27.1  1E1+1.10
+   PASS  I-27.2  92.36E-2+12.36E+1
+   PASS  I-27.3  00023.E3+98.0000E-2
+   PASS  I-27.4  .123E2+12300E-2
+I-28  expratoms are strlit
+   PASS  I-28.1  "2A2B"+"2E2B"
+   PASS  I-28.2  "234E-1+1AJDB"+"2E+2B"
+   PASS  I-28.3  "ONE2A2B"+"00002E-2B"
+I-29  expratoms are lvn
+   PASS  I-29.1  unsubscripted lvn
+   PASS  I-29.2  subscripted lvn
+
+END OF V1BOA1
+
+
+V1BOA2
+
+V1BOA2: TEST OF BINARY OPERATORS -1.2- (ARITHMETIC: +-*/#\ )
+
+algebraic difference
+
+I-30  expratom=0
+   PASS  I-30.1  0-0
+   PASS  I-30.2  1-0
+   PASS  I-30.3  000-2
+   PASS  I-30.4  0-+.999
+   PASS  I-30.5  00000-00000.00000E2
+
+
+I-31  left expratom>0, right expratom>0
+   PASS  I-31.1  2-3
+   PASS  I-31.2  0.5-0.5
+   PASS  I-31.3  0.01-4
+I-32  left expratom>0, right expratom<0
+   PASS  I-32.1  5--2
+   PASS  I-32.2  .3--0.3
+   PASS  I-32.3  876.653--5.62
+I-33  left expratom<0, right expratom>0
+   PASS  I-33.1  -1-5
+   PASS  I-33.2  -597.2-25
+   PASS  I-33.3  -1176.59-20000
+I-34  left expratom<0, right expratom<0
+   PASS  I-34.1  -2--7
+   PASS  I-34.2  -2.000--00050.3
+   PASS  I-34.3  -4235.786--84.95100
+I-35  expratoms are numlit
+   PASS  I-35.1  1E1-1.10
+   PASS  I-35.2  92.36E-2-12.36E+1
+   PASS  I-35.3  00023.E3-98.0000E-2
+   PASS  I-35.4  0.123E2-12300E-2
+I-36  expratoms are strlit
+   PASS  I-36.1  "AB2"-"2AB"
+   PASS  I-36.2  "2A2B"-"2E2B"
+   PASS  I-36.3  "234E-1+1AJDB"-"2.008E+1.B5456"
+   PASS  I-36.4  "ONE2A2B"-"00002E-2B"
+I-37  expratoms are lvn
+   PASS  I-37.1  unsubscripted lvn
+   PASS  I-37.2  subscripted lvn
+
+END OF V1BOA2
+
+
+V1BOA3
+
+V1BOA3: TEST OF BINARY OPERATORS -1.3- (ARITHMETIC: +-*/#\ )
+
+algebraic product
+
+I-38  expratom=0
+   PASS  I-38.1  0*0
+   PASS  I-38.2  0*1
+   PASS  I-38.3  2*00
+   PASS  I-38.4  -3*0.0E2
+   PASS  I-38.5  0.0*-4
+I-39  left expratom>0, right expratom>0
+   PASS  I-39.1  1*1
+   PASS  I-39.2  2*3
+   PASS  I-39.3  0.5*.5
+   PASS  I-39.4  .01*4.0
+I-40  left expratom>0, right expratom<0
+   PASS  I-40.1  3*-2
+   PASS  I-40.2  .3*-0.3
+I-41  left expratom<0, right expratom>0
+   PASS  I-41.1  -2*4
+   PASS  I-41.2  -597.2*25
+
+
+   PASS  I-41.3  -.023*00.190
+I-42  left expratom<0, right expratom<0
+   PASS  I-42.1  -3*-4
+   PASS  I-42.2  -2.0*-50.3
+   PASS  I-42.3  -.00239*-.092
+I-43  expratoms are numlit
+   PASS  I-43.1  1E1*1.10
+   PASS  I-43.2  92.36E-1*12.3E+1
+   PASS  I-43.3  09900E-2*000.065432100
+   PASS  I-43.4  0.123E2*12300E-2
+I-44  expratoms are strlit
+   PASS  I-44.1  "AB2"*"2AB"
+   PASS  I-44.2  "2A2B"*"2E2B"
+I-45  expratoms are lvn
+   PASS  I-45.1  unsubscripted lvn
+   PASS  I-45.2  subscripted lvn
+
+END OF V1BOA3
+
+
+V1BOA4
+
+V1BOA4: TEST OF BINARY OPERATORS -1.4- (ARITHMETIC: +-*/#\ )
+
+algebraic quotient
+
+I-46  expratom=0
+   PASS  I-46.1  0/1
+   PASS  I-46.2  0/-6
+I-47  left expratom>0, right expratom>0
+   PASS  I-47.1  3/3
+   PASS  I-47.2  8/2
+   PASS  I-47.3  3/2
+   PASS  I-47.4  3/4
+   PASS  I-47.5  10/4
+   PASS  I-47.6  .5/0.5
+   PASS  I-47.7  4.1/0.01
+I-48  left expratom>0, right expratom<0
+   PASS  I-48.1  11/-4
+   PASS  I-48.2  .3/-0.3
+   PASS  I-48.3  016.1370/-01.630
+   PASS  I-48.4  0.0618700/-026.90
+I-49  left expratom<0, right expratom>0
+   PASS  I-49.1  -9/4
+   PASS  I-49.2  -597.5/25
+   PASS  I-49.3  -0.9191799/999.0
+I-50  left expratom<0, right expratom<0
+   PASS  I-50.1  -12/-4
+   PASS  I-50.2  -50.3/-0.25
+   PASS  I-50.3  -00.00404/-0.10100
+I-51  expratoms are numlit
+   PASS  I-51.1  1E1/1.60
+   PASS  I-51.2  64777779E-07/0.099E+3
+   PASS  I-51.3  00023.E3/11.50000E-2
+   PASS  I-51.4  .123E2/12300E-2
+I-52  expratoms are strlit
+   PASS  I-52.1  "AB2"/"2AB"
+
+
+   PASS  I-52.2  "2A2B"/"2E2B"
+I-53  expratoms are lvn
+   PASS  I-53.1  unsubscripted lvn
+   PASS  I-53.2  subscripted lvn
+
+END OF V1BOA4
+
+
+V1BOA5
+
+V1BOA5: TEST OF BINARY OPERATORS -1.5- (ARITHMETIC: +-*/#\ )
+
+integer interpretation of algebraic quotient
+
+I-54  expratom=0
+   PASS  I-54.1  0\1
+   PASS  I-54.2  0\-8
+I-55  left expratom>0, right expratom>0
+   PASS  I-55.1  3\3
+   PASS  I-55.2  8\2
+   PASS  I-55.3  3\2
+   PASS  I-55.4  3\4
+   PASS  I-55.5  10\4
+   PASS  I-55.6  0.5\.5
+   PASS  I-55.7  4.1\0.01
+I-56  left expratom>0, right expratom<0
+   PASS  I-56.1  11\-4
+   PASS  I-56.2  0.3\-.3
+   PASS  I-56.3  8083.5742\-808.6
+I-57  left expratom<0, right expratom>0
+   PASS  I-57.1  -9\4
+   PASS  I-57.2  -597.5\25
+   PASS  I-57.3  -.005468\0.000113
+I-58  left expratom<0, right expratom<0
+   PASS  I-58.1  -12\-4
+   PASS  I-58.2  -50.3\-0.25
+   PASS  I-58.3  -0.90136\-0.0001980
+I-59  expratoms are numlit
+   PASS  I-59.1  1E1\1.10
+   PASS  I-59.2  92.36E-2\12.36E+1
+   PASS  I-59.3  26.29369\2.632
+   PASS  I-59.4  0.123E2\12300E-2
+I-60  expratoms are strlit
+   PASS  I-60.1  "AB2"\"2AB"
+   PASS  I-60.2  "2A2B"\"2E2B"
+I-61  expratoms are lvn
+   PASS  I-61.1  unsubscripted lvn
+   PASS  I-61.2  subscripted lvn
+
+END OF V1BOA5
+
+
+V1BOA6
+
+V1BOA6: TEST OF BINARY OPERATORS -1.6- (ARITHMETIC: +-*/#\ )
+
+the left argument modulo the right argument
+
+I-62  expratom=0
+   PASS  I-62.1  0#4
+
+
+   PASS  I-62.2  0#-4
+I-63  left expratom>0, right expratom>0
+   PASS  I-63.1  1#4
+   PASS  I-63.2  2#4
+   PASS  I-63.3  3#4
+   PASS  I-63.4  4#4
+   PASS  I-63.5  5#4
+   PASS  I-63.6  6#4
+   PASS  I-63.7  7#4
+   PASS  I-63.8  8#4
+   PASS  I-63.9  0.5#.5
+   PASS  I-63.10  4.1#.01
+I-64  left expratom>0, right expratom<0
+   PASS  I-64.1  1#-4
+   PASS  I-64.2  2#-4
+   PASS  I-64.3  3#-4
+   PASS  I-64.4  4#-4
+   PASS  I-64.5  5#-4
+   PASS  I-64.6  6#-4
+   PASS  I-64.7  7#-4
+   PASS  I-64.8  8#-4
+   PASS  I-64.9  0.3#-.3
+I-65  left expratom<0, right expratom>0
+   PASS  I-65.1  -1#4
+   PASS  I-65.2  -2#4
+   PASS  I-65.3  -3#4
+   PASS  I-65.4  -4#4
+   PASS  I-65.5  -5#4
+   PASS  I-65.6  -6#4
+   PASS  I-65.7  -7#4
+   PASS  I-65.8  -8#4
+   PASS  I-65.9  -597.5#25
+I-66  left expratom<0, right expratom<0
+   PASS  I-66.1  -1#-4
+   PASS  I-66.2  -2#-4
+   PASS  I-66.3  -3#-4
+   PASS  I-66.4  -4#-4
+   PASS  I-66.5  -5#-4
+   PASS  I-66.6  -6#-4
+   PASS  I-66.7  -7#-4
+   PASS  I-66.8  -8#-4
+   PASS  I-66.9  -50.3#-0.25
+I-67  expratoms are numlit
+   PASS  I-67.1  1E1#1.10
+   PASS  I-67.2  923.6E-1#.1236E+1
+   PASS  I-67.3  00023.E3#00.980000E+2
+   PASS  I-67.4  0.123E2#12300E-2
+I-68  expratoms are strlit
+   PASS  I-68.1  "AB2"#"2AB"
+   PASS  I-68.2  "2A2B"#"2E2B"
+I-69  expratoms are lvn
+   PASS  I-69.1  unsubscripted lvn
+   PASS  I-69.2  subscripted lvn
+
+END OF V1BOA6
+
+GTM>
+
+
+V1BOB
+
+V1BOB1
+
+V1BOB1: TEST OF BINARY OPERATORS -2.1-  (RELATIONAL: < )
+
+numeric less than (<)
+
+I-70  expratoms are numlit and numlit
+   PASS  I-70.1  0<0
+   PASS  I-70.2  0<3
+   PASS  I-70.3  3<0
+   PASS  I-70.4  3<3
+   PASS  I-70.5  3<4
+   PASS  I-70.6  -3<0
+   PASS  I-70.7  -3<-4
+   PASS  I-70.8  4<3.0
+   PASS  I-70.9  -4.1<3
+   PASS  I-70.10  .3E1<00400E-2
+   PASS  I-70.11  -.3E01<4E0
+   PASS  I-70.12  -5<-4
+I-71  expratoms are numlit and strlit
+   PASS  I-71.1  3.1<"3.2"
+   PASS  I-71.2  3.1<"-3.0"
+   PASS  I-71.3  3.1<"+3.2E+5"
+   PASS  I-71.4  0010000.000<"00099.2e+500"
+   PASS  I-71.5  00.01<"00000.1000000000000000"
+   PASS  I-71.6  3.1<"3.1WQWEQWQWQWQWWQ"
+I-72  expratoms are strlit and numlit
+   PASS  I-72.1  "3A"<4
+   PASS  I-72.2  "3.1"<3.2
+   PASS  I-72.3  "3E1"<31
+   PASS  I-72.4  "'0"<.023
+   PASS  I-72.5  "-10"<-5
+   PASS  I-72.6  "3.1"<3.1
+I-73  expratoms are strlit and strlit
+   PASS  I-73.1  "3A"<"4"
+   PASS  I-73.2  -"3E1A"<+"30.01A"
+   PASS  I-73.3  +"3A"<"4"
+   PASS  I-73.4  "3E1A"<"30.01E-"
+   PASS  I-73.5  "+3A"<"2"
+   PASS  I-73.6  "+30A"<"30"
+   PASS  I-73.7  "QWERTY"<"ZXY30"
+I-74  empty string on left side
+   PASS  I-74.1  ""<3
+   PASS  I-74.2  ""<0
+   PASS  I-74.3  ""<"-.03"
+   PASS  I-74.4  ""<"+.03"
+I-75  empty string on right side
+   PASS  I-75.1  3<""
+   PASS  I-75.2  0<""
+   PASS  I-75.3  -3<""
+I-76  empty string on both sides
+   PASS  I-76  
+
+END OF V1BOB1
+
+
+V1BOB2
+
+V1BOB2: TEST OF BINARY OPERATORS -2.2-  (RELATIONAL: '< )
+
+numeric not less than ('<)
+
+I-77  expratoms are numlit and numlit
+   PASS  I-77.1  0'<0
+
+
+   PASS  I-77.2  0'<3
+   PASS  I-77.3  3'<0
+   PASS  I-77.4  3'<3
+   PASS  I-77.5  3'<4
+   PASS  I-77.6  -3'<0
+   PASS  I-77.7  -3'<-4
+   PASS  I-77.8  4'<3.0
+   PASS  I-77.9  -4.1'<3
+   PASS  I-77.10  .3E1'<00400E-2
+   PASS  I-77.11  -.3E01'<4E0
+   PASS  I-77.12  -5'<-4
+I-78  expratoms are numlit and strlit
+   PASS  I-78.1  0'<"0"
+   PASS  I-78.2  0'<"00"
+   PASS  I-78.3  3.1'<"3.2"
+   PASS  I-78.4  3.1'<"-3.0"
+   PASS  I-78.5  3.1'<"+3.2E+5"
+   PASS  I-78.6  0010000.000'<"00099.2e+500"
+   PASS  I-78.7  00.01'<"00000.100000000000000"
+   PASS  I-78.8  30.10'<"30.1"
+I-79  expratoms are strlit and numlit
+   PASS  I-79.1  "3A"'<4
+   PASS  I-79.2  "3.1"'<3.2
+   PASS  I-79.3  "3E1"'<31
+   PASS  I-79.4  "'0"'<.023
+   PASS  I-79.5  "-10"'<-5
+   PASS  I-79.6  "3.1"'<3.1
+I-80  expratoms are strlit and strlit
+   PASS  I-80.1  "3A"'<"4"
+   PASS  I-80.2  -"3E1A"'<+"30.01A"
+   PASS  I-80.3  +"3A"'<"4"
+   PASS  I-80.4  "3E1A"'<"30.01E-"
+   PASS  I-80.5  "+3A"'<"2"
+   PASS  I-80.6  "987654A"'<"987654E"
+   PASS  I-80.7  "QWERTY"'<"ZXY30"
+I-81  empty string on left side
+   PASS  I-81.1  ""'<3
+   PASS  I-81.2  ""'<0
+   PASS  I-81.3  ""'<"-.03"
+   PASS  I-81.4  ""'<"+.03"
+I-82  empty string on right side
+   PASS  I-82.1  3'<""
+   PASS  I-82.2  0'<""
+   PASS  I-82.3  -3'<""
+I-83  empty string on both sides
+   PASS  I-83  
+
+END OF V1BOB2
+
+
+V1BOB3
+
+V1BOB3: TEST OF BINARY OPERATORS -2.3-  (RELATIONAL: > )
+
+numeric greater than (>)
+
+I-84  expratoms are numlit and numlit
+   PASS  I-84.1  0>0
+
+
+   PASS  I-84.2  0>3
+   PASS  I-84.3  3>0
+   PASS  I-84.4  3>3
+   PASS  I-84.5  4>3
+   PASS  I-84.6  -3>0
+   PASS  I-84.7  -3>-4
+   PASS  I-84.8  4>3.0
+   PASS  I-84.9  -4.1>3
+   PASS  I-84.10  .3E1>00400E-2
+   PASS  I-84.11  .3E01>-4E0
+   PASS  I-84.12  -95.00001>-95
+I-85  expratoms are numlit and strlit
+   PASS  I-85.1  2>"9Q"
+   PASS  I-85.2  30.1>"3E+1"
+   PASS  I-85.3  30.1>"30.+999DG"
+   PASS  I-85.4  30.1>"20+589"
+   PASS  I-85.5  20>"-3E+1"
+   PASS  I-85.6  30.1>"30.1"
+   PASS  I-85.7  -30.1>"-30.1"
+   PASS  I-85.8  -987.0456>"-87.56"
+   PASS  I-85.9  -987.0456>"-8787.56"
+I-86  expratoms are strlit and numlit
+   PASS  I-86.1  "3A">2
+   PASS  I-86.2  "3E1">29
+   PASS  I-86.3  "3.1">3.0
+   PASS  I-86.4  "2.99">3.0
+   PASS  I-86.5  "-87.01E-1">-98710
+I-87  expratoms are strlit and strlit
+   PASS  I-87.1  "3A">"2"
+   PASS  I-87.2  +"3E1A">"029.9A"
+   PASS  I-87.3  "-23ENGLISH">"-22.00e-9" 
+I-88  empty string on left side
+   PASS  I-88.1  "">9
+   PASS  I-88.2  "">0
+   PASS  I-88.3  "">-9
+   PASS  I-88.4  "">"-9FIND"
+I-89  empty string on right side
+   PASS  I-89.1  2>""
+   PASS  I-89.2  0>""
+   PASS  I-89.3  -2.2>""
+I-90  empty string on both sides
+   PASS  I-90  
+
+END OF V1BOB3
+
+
+V1BOB4
+
+V1BOB4: TEST OF BINARY OPERATORS -2.4-  (RELATIONAL: '> )
+
+numeric not greater than ('>)
+
+I-91  expratoms are numlit and numlit
+   PASS  I-91.1  3'>3
+   PASS  I-91.2  4'>3
+   PASS  I-91.3  0'>0
+
+
+   PASS  I-91.4  0'>3
+   PASS  I-91.5  3'>0
+   PASS  I-91.6  -3'>0
+   PASS  I-91.7  -3'>-4
+   PASS  I-91.8  4'>3.0
+   PASS  I-91.9  -4.1'>3
+   PASS  I-91.10  .3E1'>00400E-2
+   PASS  I-91.11  .3E01'>-4E0
+I-92  expratoms are numlit and strlit
+   PASS  I-92.1  2'>"9Q"
+   PASS  I-92.2  30.1'>"3E+1"
+   PASS  I-92.3  30.1'>"30.+999DG"
+   PASS  I-92.4  30.1'>"20+589"
+   PASS  I-92.5  20'>"-3E+1"
+I-93  expratoms are strlit and numlit
+   PASS  I-93.1  "3A"'>2
+   PASS  I-93.2  "3E1"'>29
+   PASS  I-93.3  "3.1"'>3.0
+   PASS  I-93.4  "2.99"'>3.0
+   PASS  I-93.5  "-87.01E-1"'>-98710
+I-94  expratoms are strlit and strlit
+   PASS  I-94.1  "3A"'>"2"
+   PASS  I-94.2  "3E1A"'>"029.9A"
+   PASS  I-94.3  "-23ENGLISH"'>"-22.00e-9"
+I-95  empty string on left side
+   PASS  I-95.1  ""'>9
+   PASS  I-95.2  ""'>0
+   PASS  I-95.3  ""'>-9
+   PASS  I-95.4  ""'>"-9FIND"
+I-96  empty string on right side
+   PASS  I-96.1  2'>""
+   PASS  I-96.2  0'>""
+   PASS  I-96.3  -2.2'>""
+I-97  empty string on both sides
+   PASS  I-97  
+
+END OF V1BOB4
+
+
+V1BOB5A
+
+V1BOB5A: TEST OF BINARY OPERATORS -2.5.1-  (RELATIONAL: = -1-)
+
+string identity (=)
+
+I-98  expratoms are numlit and numlit
+   PASS  I-98.1  30=30
+   PASS  I-98.2  3E2=300
+   PASS  I-98.3  3.000=0003
+   PASS  I-98.4  -0.1=-.1
+   PASS  I-98.5  9E-3=.009
+   PASS  I-98.6  222.21=222.201
+   PASS  I-98.7  00.03000E+3=30
+   PASS  I-98.8  -0=0.00000E+3
+   PASS  I-98.9  0=00000
+   PASS  I-98.10  30=000020
+
+
+I-99  expratoms are numlit and strlit
+   PASS  I-99.1  3="3"
+   PASS  I-99.2  98765="98765.0"
+   PASS  I-99.3  .1="0.1"
+   PASS  I-99.4  0.1="0.1"
+   PASS  I-99.5  0.1=".1"
+   PASS  I-99.6  98765=-"-98765.0"
+   PASS  I-99.7  00="00"
+   PASS  I-99.8  3.10="3.1E-00"
+   PASS  I-99.9  3100="000003.1000E+003"
+I-100  expratoms are strlit and numlit
+   PASS  I-100.1  "3A"=3
+   PASS  I-100.2  "0.1"=.1
+   PASS  I-100.3  "0.1"=0.1
+   PASS  I-100.4  ".1"=0.1
+   PASS  I-100.5  ".1"=.1
+   PASS  I-100.6  "-3.1"=-3.1
+   PASS  I-100.7  "3E1"=30
+   PASS  I-100.8  +"3A"=3
+   PASS  I-100.9  +-+-++"3E1A"=30
+   PASS  I-100.10  "00"=00
+   PASS  I-100.11  "3.1E-00"=3.1
+   PASS  I-100.12  "3.1E-003"=.0031
+   PASS  I-100.13  -"3A"=-3
+
+END OF V1BOB5A
+
+
+V1BOB5B
+
+V1BOB5B: TEST OF BINARY OPERATORS -2.5.2-  (RELATIONAL: = -2-)
+
+I-101  expratoms are strlit and strlit
+   PASS  I-101.1  "A"="A"
+   PASS  I-101.2  "A"="B"
+   PASS  I-101.3  "ABCDE"="ABCDZ"
+   PASS  I-101.4  "+23.0"="23"
+   PASS  I-101.5  "ABCDEFG"="ABCDEFG"
+   PASS  I-101.6  "ABCDEFGHIJKL"="ABCDEFGHIJL"
+   PASS  I-101.7  "987654321098765432109876543210"="98765432109876543210987654321"
+   PASS  I-101.8  "0987654321098765432109876543210"="987654321098765432109876543210"
+   PASS  I-101.9  "987654321098765432109876543210"="987654321098765432109876543210"
+I-102  empty string on left side
+   PASS  I-102.1  ""="A"
+   PASS  I-102.2  ""=0
+   PASS  I-102.3  ""=1
+   PASS  I-102.4  ""="#$%&"
+I-103  empty string on right side
+   PASS  I-103.1  "Z"=""
+   PASS  I-103.2  0=""
+   PASS  I-103.3  .1=""
+   PASS  I-103.4  +"^^^^"=""
+I-104  empty string on both sides
+   PASS  I-104  
+
+END OF V1BOB5B
+
+
+V1BOB6A
+
+V1BOB6A: TEST OF BINARY OPERATORS -2.6.1-  (RELATIONAL: '= -1-)
+
+string not identical ('=)
+
+I-105  expratoms are numlit and numlit
+   PASS  I-105.1  30'=30
+   PASS  I-105.2  3E2'=300
+   PASS  I-105.3  3.000'=0003
+   PASS  I-105.4  00000.100000'=.1
+   PASS  I-105.5  0009E-3'=0.00900000
+   PASS  I-105.6  222.21'=222.201
+   PASS  I-105.7  00.03000E+000003'=30
+   PASS  I-105.8  0'=000.00000E-03
+   PASS  I-105.9  0'=00000
+I-106  expratoms are numlit and strlit
+   PASS  I-106.1  3'="3"
+   PASS  I-106.2  98765'="98765.0"
+   PASS  I-106.3  .1'="0.1"
+   PASS  I-106.4  0.1'="0.1"
+   PASS  I-106.5  0.1'=".1"
+   PASS  I-106.6  98765'=-"-98765.0"
+   PASS  I-106.7  00'="00"
+I-107  expratoms are strlit and numlit
+   PASS  I-107.1  "3A"'=3
+   PASS  I-107.2  "0.1"'=.1
+   PASS  I-107.3  "0.1"'=0.1
+   PASS  I-107.4  ".1"'=0.1
+   PASS  I-107.5  ".1"'=.1
+   PASS  I-107.6  "3.1"'=3.1
+   PASS  I-107.7  "3E1"'=30
+   PASS  I-107.8  +"3A"'=3
+   PASS  I-107.9  +-+-++"3E1A"'=30
+   PASS  I-107.10  "00"'=00
+
+END OF V1BOB6A
+
+
+V1BOB6B
+
+V1BOB6B: TEST OF BINARY OPERATORS -2.6.2-  (RELATIONAL: '= -2-)
+
+I-108  expratoms are strlit and strlit
+   PASS  I-108.1  "AB"'="AB"
+   PASS  I-108.2  "AB"'="ABV"
+   PASS  I-108.3  "ABCDE"'="ABCDZ"
+   PASS  I-108.4  "+23.0"'="23"
+   PASS  I-108.5  "ABCDEFG"'="ABCDEFG"
+   PASS  I-108.6  "ABCDEFGHIJKL"'="ABCDEFGHIJL"
+   PASS  I-108.7  "987654321098765432109876543210"'="98765432109876543210987654321"
+   PASS  I-108.8  "0987654321098765432109876543210"'="987654321098765432109876543210"
+   PASS  I-108.9  "987654321098765432109876543210"'="987654321098765432109876543210"
+I-109  empty string on left side
+   PASS  I-109.1  ""'=1
+   PASS  I-109.2  ""'=0
+   PASS  I-109.3  ""'="****"
+I-110  empty string on right side
+   PASS  I-110.1  1'=""
+   PASS  I-110.2  0'=""
+   PASS  I-110.3  "@#$"'=""
+I-111  empty string on both sides
+   PASS  I-111  
+
+END OF V1BOB6B
+
+
+V1BOB7
+
+V1BOB7: TEST OF BINARY OPERATORS -2.7-  (RELATIONAL: [ )
+
+string contains ([)
+
+I-112  expratoms are numlit and numlit
+   PASS  I-112.1  123[2
+   PASS  I-112.2  00123[0
+   PASS  I-112.3  3.0[3
+   PASS  I-112.4  23.456[0.4
+   PASS  I-112.5  28.4536[03.0
+   PASS  I-112.6  23.459876[0.45980
+   PASS  I-112.7  -0.456[-0.
+I-113  expratoms are numlit and strlit
+   PASS  I-113.1  3.0["."
+   PASS  I-113.2  3.0["0"
+   PASS  I-113.3  -3["-"
+   PASS  I-113.4  3E1["E"
+   PASS  I-113.5  -0.456["-."
+   PASS  I-113.6  -0.456E+2["+"
+   PASS  I-113.7  456E-5["."
+I-114  expratoms are strlit and numlit
+   PASS  I-114.1  "00123"[0
+   PASS  I-114.2  "00123"[13
+   PASS  I-114.3  "T-114 "[0114.0
+   PASS  I-114.4  "HELP2191-1101191HELP"[1191
+   PASS  I-114.5  "2//211001021202003"[2E2
+I-115  expratoms are strlit and strlit
+   PASS  I-115.1  "A"["A"
+   PASS  I-115.2  "A"["AB"
+   PASS  I-115.3  "BA"["A"
+   PASS  I-115.4  "ABC"["AB"
+   PASS  I-115.5  +"3A"["A"
+   PASS  I-115.6  "00123E-5"["."
+I-116  empty string on left side
+   PASS  I-116.1  ""["A"
+   PASS  I-116.2  ""["123456"
+I-117  empty string on right side
+   PASS  I-117.1  "A"[""
+   PASS  I-117.2  "ABC"[""
+I-118  empty string on both sides
+   PASS  I-118  
+
+END OF V1BOB7
+
+
+V1BOB8
+
+V1BOB8: TEST OF BINARY OPERATORS -2.8-  (RELATIONAL: '[ )
+
+string not contains ('[)
+
+I-119  expratoms are numlit and numlit
+   PASS  I-119.1  123'[2
+   PASS  I-119.2  00123'[0
+   PASS  I-119.3  3.0'[3
+   PASS  I-119.4  23.456'[0.4
+   PASS  I-119.5  28.4536'[03.0
+   PASS  I-119.6  23.459876'[0.45980
+   PASS  I-119.7  -0.456'[-0.
+I-120  expratoms are numlit and strlit
+   PASS  I-120.1  3.0'["."
+
+
+   PASS  I-120.2  3.0'["0"
+   PASS  I-120.3  -3'["-"
+   PASS  I-120.4  3E1'["E"
+   PASS  I-120.5  -0.456'["-."
+   PASS  I-120.6  -0.456E+2'["+"
+   PASS  I-120.7  456E-5'["."
+I-121  expratoms are strlit and numlit
+   PASS  I-121.1  "00123"'[0
+   PASS  I-121.2  "00123"'[13
+   PASS  I-121.3  "T-114 "'[0114.0
+   PASS  I-121.4  "HELP2191-1101191HELP"'[1191
+   PASS  I-121.5  "2//211001021202003"'[2E2
+I-122  expratoms are strlit and strlit
+   PASS  I-122.1  "A"'["A"
+   PASS  I-122.2  "AB"'["A"
+   PASS  I-122.3  "A"'["BA"
+   PASS  I-122.4  +"3A"'["A"
+   PASS  I-122.5  "00123E-5"'["."
+I-123  empty string on left side
+   PASS  I-123.1  ""'["A"
+   PASS  I-123.2  ""'["123456"
+I-124  empty string on right side
+   PASS  I-124.1  "A"'[""
+   PASS  I-124.2  "ABC"'[""
+I-125  empty string on both sides
+   PASS  I-125  
+
+END OF V1BOB8
+
+
+V1BOB9
+
+V1BOB9: TEST OF BINARY OPERATORS -2.9-  (RELATIONAL: ] )
+
+string follows (])
+
+I-126  expratoms are numlit and numlit
+   PASS  I-126.1  123]1
+   PASS  I-126.2  3.0]3
+   PASS  I-126.3  00123]1
+   PASS  I-126.4  00.34]0
+   PASS  I-126.5  1234]124
+   PASS  I-126.6  98788.34]987880
+   PASS  I-126.7  98788.34]987
+I-127  expratoms are numlit and strlit
+   PASS  I-127.1  987]"987"
+   PASS  I-127.2  3.1]"3.1ABD"
+   PASS  I-127.3  22.56]"22$56"
+   PASS  I-127.4  99.2]" ! "
+   PASS  I-127.5  -099.2]"-9 ! "
+I-128  expratoms are strlit and numlit
+   PASS  I-128.1  "3"]3
+   PASS  I-128.2  "3A"]3
+   PASS  I-128.3  "00123"]1
+   PASS  I-128.4  "ABCD"]1
+   PASS  I-128.5  "!"""]0231
+
+
+   PASS  I-128.6  +"3E-2A"]-3
+I-129  expratoms are strlit and strlit
+   PASS  I-129.1  "A"]"A"
+   PASS  I-129.2  "AB"]"A"
+   PASS  I-129.3  "ABC"]"ABC"
+   PASS  I-129.4  "AAA"]"AA"
+   PASS  I-129.5  -"3A"]"-"
+   PASS  I-129.6  "AA"]"AAA"
+   PASS  I-129.7  "AAA"]"aaa"
+   PASS  I-129.8  "aaa"]"AAA"
+I-130  empty string on left side
+   PASS  I-130.1  ""]"A"
+   PASS  I-130.2  ""]".1234"
+I-131  empty string on right side
+   PASS  I-131.1  "A"]""
+   PASS  I-131.2  "%AND"]""
+I-132  empty string on both sides
+   PASS  I-132  
+
+END OF V1BOB9
+
+
+V1BOB10
+
+V1BOB10: TEST OF BINARY OPERATORS -2.10-  (RELATIONAL: '] )
+
+string not follows ('])
+
+I-133  expratoms are numlit and numlit
+   PASS  I-133.1  123']1
+   PASS  I-133.2  3.0']3
+   PASS  I-133.3  00123']1
+   PASS  I-133.4  00.34']0
+   PASS  I-133.5  1234']124
+   PASS  I-133.6  98788.34']987880
+   PASS  I-133.7  98788.34']987
+I-134  expratoms are numlit and strlit
+   PASS  I-134.1  987']"987"
+   PASS  I-134.2  3.1']"3.1ABD"
+   PASS  I-134.3  22.56']"22$56"
+   PASS  I-134.4  99.2']" ! "
+   PASS  I-134.5  -099.2']"-9 ! "
+I-135  expratoms are strlit and numlit
+   PASS  I-135.1  "3"']3
+   PASS  I-135.2  "3A"']3
+   PASS  I-135.3  "00123"']1
+   PASS  I-135.4  "ABCD"']1
+   PASS  I-135.5  "!"""']0231
+   PASS  I-135.6  +"3E-2A"']-3
+I-136  expratoms are strlit and strlit
+   PASS  I-136.1  "B"']"A"
+   PASS  I-136.2  ")"']"("
+   PASS  I-136.3  "#"']"A"
+   PASS  I-136.4  "A"']"A"
+   PASS  I-136.5  "AB"']"A"
+   PASS  I-136.6  "ABC"']"ABC"
+
+
+   PASS  I-136.7  "AAA"']"AA"
+   PASS  I-136.8  -"3A"']"-"
+   PASS  I-136.9  "AA"']"AAA"
+   PASS  I-136.10  "AAA"']"aaa"
+   PASS  I-136.11  "aaa"']"AAA"
+I-137  empty string on left side
+   PASS  I-137.1  ""']"A"
+   PASS  I-137.2  ""']".1234"
+I-138  empty string on right side
+   PASS  I-138.1  "A"']""
+   PASS  I-138.2  "%AND"']""
+I-139  empty string on both sides
+   PASS  I-139  
+
+END OF V1BOB10
+
+GTM>
+
+
+V1BOC
+
+V1BOC1
+
+V1BOC1: TEST OF BINARY OPERATORS -3.1- (&)
+
+And (&)
+
+I-140  expratoms are 0 or 1
+   PASS  I-140.1  1&1
+   PASS  I-140.2  1&0
+   PASS  I-140.3  0&1
+   PASS  I-140.4  0&0
+I-141  expratoms are numlit
+   PASS  I-141.1  2&3
+   PASS  I-141.2  4&0
+   PASS  I-141.3  0&-5
+   PASS  I-141.4  0.06&-0.007
+I-142  expratoms are strlit
+   PASS  I-142.1  "A"&"B"
+   PASS  I-142.2  "-0.0A"&"2B"
+I-143  expratoms are empty string
+   PASS  I-143  
+I-144  expratoms are lvn
+   PASS  I-144.1  A&B
+   PASS  I-144.2  C&%D
+
+Nand ('&)
+
+I-145  expratoms are 0 or 1
+   PASS  I-145.1  1'&1
+   PASS  I-145.2  1'&0
+   PASS  I-145.3  0'&1
+   PASS  I-145.4  0'&0
+I-146  expratoms are numlit
+   PASS  I-146.1  2'&30000
+   PASS  I-146.2  40'&0
+
+
+   PASS  I-146.3  2E-10'&0
+   PASS  I-146.4  00.0300'&4E10
+I-147  expratoms are strlit
+   PASS  I-147.1  "A"'&"B"
+   PASS  I-147.2  "-0.0A"'&"2B"
+I-148  expratoms are empty string
+   PASS  I-148  
+I-149  expratoms are lvn
+   PASS  I-149.1  C'&D
+   PASS  I-149.2  D'&%A
+
+END OF V1BOC1
+
+
+V1BOC2
+
+V1BOC2: TEST OF BINARY OPERATORS -3.2- (!)
+
+Or (!)
+
+I-150  expratoms are 0 or 1
+   PASS  I-150.1  1!1
+   PASS  I-150.2  1!0
+   PASS  I-150.3  0!1
+   PASS  I-150.4  0!0
+I-151  expratoms are numlit
+   PASS  I-151.1  2!1000
+   PASS  I-151.2  -8E-10!0.00E-3
+   PASS  I-151.3  0!9E-12
+   PASS  I-151.4  0.06E+12!-0.007
+I-152  expratoms are strlit
+   PASS  I-152.1  "A3B3"!"ABC"
+   PASS  I-152.2  "2E2A"!"2B2A"
+I-153  expratoms are empty string
+   PASS  I-153  
+I-154  expratoms are lvn
+   PASS  I-154.1  A!C
+   PASS  I-154.2  B!%D
+
+Nor ('!)
+
+I-155  expratoms are 0 or 1
+   PASS  I-155.1  1'!1
+   PASS  I-155.2  1'!0
+   PASS  I-155.3  0'!1
+   PASS  I-155.4  0'!0
+I-156  expratoms are numlit
+   PASS  I-156.1  2'!1000
+   PASS  I-156.2  -8E-10'!0.00E+6
+   PASS  I-156.3  000000'!9E-12
+   PASS  I-156.4  0.06E+12'!-0.007
+I-157  expratoms are strlit
+   PASS  I-157.1  "A3B3"'!"ABC"
+   PASS  I-157.2  "2E2A"'!"2B2A"
+I-158  expratoms are empty string
+   PASS  I-158  
+
+
+I-159  expratoms are lvn
+   PASS  I-159.1  A'!B
+   PASS  I-159.2  B'!%D
+
+END OF V1BOC2
+
+
+V1BOC3
+
+V1BOC3: TEST OF BINARY OPERATORS -3.3- (_)
+
+Concatenation (_)
+
+I-160  expratoms are strlit
+   PASS  I-160.1  "A"_"B"
+   PASS  I-160.2  "#"_"%"
+   PASS  I-160.3  "000"_"010"
+   PASS  I-160.4  "_""_"_"zxcv"
+I-161  expratoms are numlit
+   PASS  I-161.1  2_3
+   PASS  I-161.2  000.000_3.4
+   PASS  I-161.3  3E1_-.5E1
+I-162  relation with unary operator
+   PASS  I-162.1  '0_''0
+   PASS  I-162.2  000.000_+"3.4E2"
+I-163  more than one concatenation in one expr
+   PASS  I-163  
+I-164  expratoms are lvn
+   PASS  I-164.1  A_B
+   PASS  I-164.2  B_C_"ABD"_D
+   PASS  I-164.3  C_D
+   PASS  I-164.4  A_-D
+   PASS  I-164.5  A(29)_B(0,20)
+
+END OF V1BOC3
+
+GTM>
+
+
+V1FN
+
+V1FNE1
+
+V1FNE1: TEST OF $EXTRACT FUNCTION -1-
+
+$EXTRACT(expr1,intexpr2)
+
+I-263  expr1 is string literal
+   PASS  I-263  
+I-264  expr1 is positive integer
+   PASS  I-264  
+I-265  expr1 is negative integer
+   PASS  I-265.1  -000789400
+   PASS  I-265.2  -00789400
+I-266  expr1 is non-integer numeric literal
+   PASS  I-266.1  0007.89400
+
+
+   PASS  I-266.2  -000723.89400E-01
+   PASS  I-266.3  0000723.8900E04
+   PASS  I-266.4  -0000.00E04
+I-267  expr1 is function
+   PASS  I-267.1  $EXTRACT(expr1,intexpr2)
+   PASS  I-267.2  $E(expr1,intexpr2,intexpr3)
+I-268  expr1 contains unary operator
+   PASS  I-268.1  + unary operator
+   PASS  I-268.2  expr1 is + lvn
+I-269  expr1 contains binary operator
+   PASS  I-269.1  + binary operator
+   PASS  I-269.2  - binary operator
+   PASS  I-269.3  + and / binary operators
+I-270  expr1 empty string
+   PASS  I-270  
+I-271  intexpr2 is string literal
+   PASS  I-271.1  intexpr2="A3BCD"
+   PASS  I-271.2  intexpr2="3.6BCD"
+I-272  intexpr2 is positive integer
+   PASS  I-272  
+I-273  intexpr2 is negative integer
+   PASS  I-273  
+I-274  intexpr2 is zero
+   PASS  I-274  
+I-275  intexpr2>$L(expr1)
+   PASS  I-275.1  (intexpr2+1)=$L(expr1)
+   PASS  I-275.2  intexpr2>255
+I-276  intexpr2 is non-integer numeric literal
+   PASS  I-276  
+I-277  intexpr2 is function
+   PASS  I-277  
+I-278  intexpr2 is lvn
+   PASS  I-278  
+I-279  intexpr2 contains unary operator
+   PASS  I-279  
+I-280  intexpr2 contains binary operator
+   PASS  I-280  
+
+END OF V1FNE1
+
+
+V1FNE2
+
+V1FNE2: TEST OF $EXTRACT FUNCTION -2-
+
+$EXTRACT(expr1,intexpr2,intexpr3)
+
+I-281  intexpr2<intexpr3
+   PASS  I-281.1  intexpr3<$L(expr1)
+   PASS  I-281.2  intexpr contains lvn
+   PASS  I-281.3  intexpr3>$L(expr1)
+   PASS  I-281.4  intexpr2<0
+   PASS  I-281.5  intexpr2<0 and intexpr3>$L(expr1)
+   PASS  I-281.6  expr1 is function
+I-282  intexpr2=intexpr3
+   PASS  I-282.1  intexpr=1
+
+
+   PASS  I-282.2  1<intexpr<$L(expr1)
+   PASS  I-282.3  intexpr=$L(expr1)
+   PASS  I-282.4  intexpr=0
+   PASS  I-282.5  intexpr<-1
+   PASS  I-282.6  intexpr>$L(expr1)
+   PASS  I-282.7  expr1 is empty string and intexpr=1
+I-283  intexpr2>intexpr3
+   PASS  I-283.1  intexpr3>0
+   PASS  I-283.2  intexpr2>1 and intexpr3<-1
+I-284  intexpr3>$LENGTH(expr1)
+   PASS  I-284.1  intexpr2=1
+   PASS  I-284.2  1<intexpr2<$L(expr1)
+   PASS  I-284.3  expr1 contains unary operator
+   PASS  I-284.4  intexpr2<-1
+I-285  intexpr3>intexpr2>$LENGTH(expr1)
+   PASS  I-285  
+I-286  intexpr2>$LENGTH(expr1) and intexpr3<0
+   PASS  I-286  
+
+END OF V1FNE2
+
+
+V1FNF1
+
+V1FNF1: TEST OF $FIND FUNCTION -1-
+
+$FIND(expr1,expr2)
+
+I-287  expr1 is string literal and contains expr2
+   PASS  I-287.1  $L(expr2)=1
+   PASS  I-287.2  $L(expr2)=2
+   PASS  I-287.3  expr1=expr2
+   PASS  I-287.4  $L(expr1,expr2)=2 and $E(expr1,1,$L(expr2))=expr2
+   PASS  I-287.5  $L(expr1,expr2)>2 and $E(expr1,1,$L(expr2))=expr2
+   PASS  I-287.6  $E(expr1,$L(expr1)-$L(expr2)+1,$L(expr1))=expr2
+   PASS  I-287.7  $L(expr1,expr2)=2 and $E(expr1,1,$L(expr2))'=expr2
+   PASS  I-287.8  $L(expr1,expr2)>2 and $E(expr1,1,$L(expr2))'=expr2
+   PASS  I-287.9  expr2 is "."
+I-288  expr1 is numeric literal and contains expr2
+   PASS  I-288.1  expr1 is numlit
+   PASS  I-288.2  expr1 is another numlit
+I-289  expr1 is string literal and does not contains expr2
+   PASS  I-289.1  expr1 does not contains expr2 character
+   PASS  I-289.2  expr2 is lvn
+   PASS  I-289.3  $L(expr1)=$L(expr2) and expr1'=expr2
+   PASS  I-289.4  $L(expr1)<$L(expr2)
+   PASS  I-289.5  $L(expr1,$E(expr2,1,$L(expr2)-1))>1
+   PASS  I-289.6  $L(expr1,$E(expr2,2,$L(expr2)))>1
+   PASS  I-289.7  $L(expr1,$E(expr2,2,$L(expr2)-1))>1
+
+END OF V1FNF1
+
+
+V1FNF2
+
+V1FNF2: TEST OF $FIND FUNCTION -2-
+I-290  expr1 is numeric literal and does not contains expr2
+   PASS  I-290.1  expr1 is numlit
+
+
+   PASS  I-290.2  expr1 is another numlit
+I-291  expr1 is non-integer numeric literal
+   PASS  I-291.1  expr1 is numlit
+   PASS  I-291.2  expr1 is another numlit
+I-292  expr1 contains more than one expr2's
+   PASS  I-292.1  $L(expr2)>1
+   PASS  I-292.2  another
+   PASS  I-292.3  $L(expr2)=1
+I-293  expr1 is non-integer numeric and expr is "." or "-"
+   PASS  I-293.1  expr1 is mant
+   PASS  I-293.2  expr1 is mant exp
+   PASS  I-293.3  expr1 is negative non-integer numlit
+I-294.1  expr1 is empty string
+   PASS  I-294.1  expr1 is strlit
+   PASS  I-294.2  expr1 is lvn
+I-295  expr2 is empty string
+   PASS  I-295.1  expr2 is strlit
+   PASS  I-295.2  expr2 is lvn
+I-296  Both expr1 and expr2 are empty string
+   PASS  I-296.1  Both expr1 and expr2 are strlit
+   PASS  I-296.2  Both expr1 and expr2 are lvn
+I-847 $F(expr1,expr2)=256  ;boundary
+   PASS  I-847.1  $F=255
+   PASS  I-847.2  $F=256
+
+END OF V1FNF2
+
+
+V1FNF3
+
+V1FNF3: TEST OF $FIND FUNCTION -3-
+
+$FIND(expr1,expr2,intexpr3)
+
+I-297  intexpr3<0
+   PASS  I-297.1  expr1 contains expr2
+   PASS  I-297.2  expr2 is empty string
+   PASS  I-297.3  expr1 and expr2 are empty string
+   PASS  I-297.4  expr1 is empty string
+I-298  intexpr3=0
+   PASS  I-298.1  $L(expr1)>$L(expr2)
+   PASS  I-298.2  $L(expr1)<$L(expr2)
+   PASS  I-298.3  expr2 is empty string
+   PASS  I-298.4  expr1 and expr2 are empty string
+   PASS  I-298.5  expr1 is empty string
+I-299  0<intexpr3 and intexpr3'>$L(expr1)
+   PASS  I-299.1  intexpr3=1
+   PASS  I-299.2  $E(expr1,intexpr3,intexpr3+$L(expr2)-1)=expr2
+   PASS  I-299.3  intexpr3=$L(expr1)
+   PASS  I-299.4  expr2 is empty string
+I-300  intexpr3>$LENGTH(expr1)
+   PASS  I-300.1  $L(expr1)>$L(expr2)>1
+   PASS  I-300.2  expr2 is empty string
+   PASS  I-300.3  expr2 is empty string and intexpr3>255
+   PASS  I-300.4  expr1 and expr2 are empty string
+I-301  expr1 contains more than one expr2's and intexpr3'>$F(expr1,expr2)
+   PASS  I-301  
+
+
+I-302  expr1 contains more than one expr2's and intexpr3>$F(expr1,expr2)
+   PASS  I-302  
+
+END OF V1FNF3
+
+
+V1FNL
+
+V1FNL: TEST OF $LENGTH FUNCTION; $LENGTH(expr)
+
+I-303  expr is string literal
+   PASS  I-303.1  all 95 ASCII printable character, including SP
+   PASS  I-303.2  "002"
+   PASS  I-303.3  strlit contains " character
+   PASS  I-303.4  $L(expr)=256
+I-304  expr is empty literal
+   PASS  I-304  
+I-305  expr is control character
+   PASS  I-305.1  one control character
+   PASS  I-305.2  all control characters
+I-306  expr contains operator
+   PASS  I-306.1  + unary operator
+   PASS  I-306.2  + binary operator
+   PASS  I-306.3  _ binary operator
+I-307  expr contains function
+   PASS  I-307  
+I-308  expr is integer
+   PASS  I-308.1  123
+   PASS  I-308.2  0
+   PASS  I-308.3  -0.0
+I-309  expr is non-integer
+   PASS  I-309.1  3000.11
+   PASS  I-309.2  00030.011000
+I-310  expr is negative numeric
+   PASS  I-310.1  -123
+   PASS  I-310.2  -123000
+   PASS  I-310.3  -9.86056000
+   PASS  I-310.4  -000.0110
+I-311  0<expr<1
+   PASS  I-311  000.1100
+I-312  expr is numeric represented by scientific notation
+   PASS  I-312.1  -1E3
+   PASS  I-312.2  000001.0000E-6
+   PASS  I-312.3  98765E-3
+I-313  expr is numeric literal with leading zero
+   PASS  I-313.1  002
+   PASS  I-313.2  0000000000000099.12
+I-314  expr is decimal with following zero
+   PASS  I-314.1  3.110000000000000000
+   PASS  I-314.2  3.1100000000000E-00002
+   PASS  I-314.3  -00000000000000.0000000000000
+
+END OF V1FNL
+
+
+V1FNP1
+
+V1FNP1: TEST OF $PIECE FUNCTION -1-
+
+
+$PIECE(expr1,expr2,intexpr3)
+
+I-315  substring specified by intexpr3 exist intexpr1
+   PASS  I-315.1  intexpr3=1
+   PASS  I-315.2  intexpr3=2
+   PASS  I-315.3  intexpr3=3
+   PASS  I-315.4  intexpr3=4
+   PASS  I-315.5  expr1 contains unary operator
+I-316  substring specified by intexpr3 does not exist intexpr1
+   PASS  I-316.1  intexpr3=1
+   PASS  I-316.2  intexpr3>$L(expr1)
+I-317  intexpr3<0
+   PASS  I-317  
+I-318  intexpr3=0
+   PASS  I-318  
+I-319  intexpr3>$LENGTH(expr1)
+   PASS  I-319  
+I-320  $LENGTH(expr1)<$LENGTH(expr2)
+   PASS  I-320.1  intexpr3=1
+   PASS  I-320.2  intexpr3=2
+I-321  expr1=expr2
+   PASS  I-321  
+I-322  intexpr3>255
+   PASS  I-322  
+I-323  intexpr3 is non-intexpr numeric
+   PASS  I-323.1  3.9999
+   PASS  I-323.2  3.49999
+I-324  Control characters are used as delimiters (expr2)
+   PASS  I-324  
+
+END OF V1FNP1
+
+
+V1FNP2
+
+V1FNP2: TEST OF $PIECE FUNCTION -2-
+
+I-325  expr1 is non-intexpr numeric literal
+   PASS  I-325  
+I-326  expr1 is empty string
+   PASS  I-326  
+I-327  expr2 is empty string
+   PASS  I-327  
+I-328  expr1 are expr2 are empty string
+   PASS  I-328  
+I-329  expr2 is numeric literal
+   PASS  I-329  
+I-330  expr2 contains operators
+   PASS  I-330.1  concatenation operator
+   PASS  I-330.2  another concatenation operator
+   PASS  I-330.3  + binary operators
+
+$PIECE(expr1,expr2,intexpr3,intexpr4)
+
+I-331  intexpr4 is positive integer
+   PASS  I-331.1  intexpr3<intexpr4
+
+
+   PASS  I-331.2  expr1 is intlit
+   PASS  I-331.3  intexpr3<-1
+   PASS  I-331.4  intexpr4>$L(expr1)
+   PASS  I-331.5  $F(expr1,expr2)=0
+   PASS  I-331.6  expr1 contains _ binary operator
+   PASS  I-331.7  expr1 is empty string
+   PASS  I-331.8  expr2 is empty string
+   PASS  I-331.9  expr1 and expr2 are empty string
+I-332  intexpr4 is non-integer
+   PASS  I-332.1  2.5
+   PASS  I-332.2  02.4560000
+I-333  intexpr3>intexpr4
+   PASS  I-333  
+I-334  intexpr4>255
+   PASS  I-334  
+
+END OF V1FNP2
+
+GTM>
+
+
+V1AC
+
+V1AC1
+
+V1AC1: TEST OF $CHAR FUNCTION
+
+$CHAR(L intexpr)
+
+I-1  intexpr is checked for 32-126
+   PASS  I-1  
+I-2  L intexpr is checked for 32-126
+   PASS  I-2  
+I-3  Integer interpretation of intexpr, while intexpr is string literal
+   PASS  I-3  
+I-4  Integer interpretation of intexpr, while intexpr is numeric literal
+   PASS  I-4  
+I-5  Integer interpretation of intexpr, while intexpr contains binaryop
+   PASS  I-5  
+I-6  intexpr<0
+   PASS  I-6  
+I-7  The difference between $CHAR(0) and empty string
+   PASS  I-7.1  empty string
+   PASS  I-7.2  $LENGTH
+   PASS  I-7.3  value of $A
+
+END OF V1AC1
+
+
+V1AC2
+
+V1AC2: TEST OF $ASCII FUNCTION
+
+$ASCII(expr)
+
+I-8  expr is string literal, and $L(expr)=0  i.e. expr is empty string
+   PASS  I-8  
+
+
+I-9  expr is string literal, and $L(expr)=1
+   PASS  I-9  
+I-10  expr is string literal, and $L(expr)>0
+   PASS  I-10  
+I-11  expr is numeric literal, and $L(expr)=1  i.e. expr is a digit
+   PASS  I-11  
+I-12  expr is numeric literal, and $L(expr)>1,expr<0
+   PASS  I-12  
+I-13  expr is numeric literal, and $L(expr)>1,expr<=0
+   PASS  I-13  
+I-14  expr is $CHAR corresponding to ASCII code 0-127
+   PASS  I-14.1  0-31
+   PASS  I-14.2  32-94
+   PASS  I-14.3  95-127
+   PASS  I-14.4  expr is lvn
+
+$A(expr1,intexpr2)
+
+I-15  expr1 is string literal
+   PASS  I-15  
+I-16  expr1 is non-integer numeric literal, and greater than zero
+   PASS  I-16  
+I-17  expr1 is non-integer numeric literal, and less than zero
+   PASS  I-17  
+I-18  expr1 is integer numeric literal, and greater than zero
+   PASS  I-18  
+I-19  expr1 is integer numeric literal, and less than zero
+   PASS  I-19  
+I-20/21  intexpr2 is less than zero or greater than $L(expr1)
+   PASS  I-20/21.1  intexpr2 is less than zero
+   PASS  I-20/21.2  intexpr2 is greater than $L(expr1)
+   PASS  I-20/21.3  expr1 is strlit
+   PASS  I-20/21.4  expr1 is non-integer literal
+
+END OF V1AC2
+
+GTM>
+
+
+V1LVN
+
+V1LVN: TEST OF ACCEPTABLE LOCAL VARIABLE NAMES
+
+I-611  lvn is "%"
+   PASS  I-611  
+I-612  lvn is "%" and alphas
+   PASS  I-612  
+I-613  lvn is "%" and digits
+   PASS  I-613  
+I-614  lvn is "%" followed by a alpha and a digit
+   PASS  I-614  
+I-615  lvn is alpha
+   PASS  I-615.1  A
+   PASS  I-615.2  AB
+   PASS  I-615.3  ABCD
+   PASS  I-615.4  ABCDEF
+
+
+   PASS  I-615.5  ABCDEFG
+I-616  lvn is combination of alpha and digit
+   PASS  I-616.1  Q00
+   PASS  I-616.2  Z1Y2X3
+   PASS  I-616.3  Q000000A
+I-617  maximum length of lvn
+   PASS  I-617  %ABC456G
+I-618  8 levels depth of subscript
+   PASS  I-618.1  1 level depth of subscript
+   PASS  I-618.2  ABCDEFGH(1,2,3,4,5,6,7,8)
+   PASS  I-618.3  %1X2Y3Z(1,10,100,12,123,2,01)
+
+END OF V1LVN
+
+GTM>
+
+
+V1GVN
+
+V1GVN: TEST OF ACCEPTABLE GLOBAL VARIABLE NAMES
+
+I-393  gvn is "%"
+   PASS  I-393  
+I-394  gvn is % followed by alphas
+   PASS  I-394  
+I-395  gvn is % followed by digits
+   PASS  I-395  
+I-396  gvn is % followed by alpha and digit
+   PASS  I-396.1  gvn is % followed by a alpha and a digit
+   PASS  I-396.2  gvn is % followed by alphas and digits
+I-397  gvn is a alpha
+   PASS  I-397  ^V
+I-398  gvn is alpha and digit
+   PASS  I-398.1  ^V1
+   PASS  I-398.2  ^V1A
+   PASS  I-398.3  ^V100
+   PASS  I-398.4  ^V1AB
+   PASS  I-398.5  ^V1Z1Y2X
+   PASS  I-398.6  ^V1ABCDE
+I-399  Maximum length of gvn
+   PASS  I-399.1  gvn is ^V1ABCDEF
+   PASS  I-399.2  ^V100000A
+I-400  8 levels depth subscript
+   PASS  I-400.1  1 level depth subscript
+   PASS  I-400.2  8 levels depth subscript
+   PASS  I-400.3  gvn is ^%1X2Y3Z(1,1,1,1,1,1,1,1)
+
+END OF V1GVN
+
+GTM>
+
+
+V1DLA
+
+V1DLA : TEST OF $DATA FUNCTION AND KILL COMMAND ON LOCAL VARIABLES -1-
+
+I-824  KILLing undefined unsubscripted local variables
+   PASS  I-824  
+
+
+I-211/212  SETting unsubscripted local variable and its $DATA value
+   PASS  I-211/212  
+I-213/214  KILLing unsubscripted local variable and its $DATA value
+   PASS  I-213/214  
+I-215  Assign string literal to unsubscripted local variables
+   PASS  I-215  
+I-216  Assign numeric literal to unsubscripted local variables
+   PASS  I-216  
+I-217  KILL all local variable
+   PASS  I-217  
+I-218  Exclusive KILL
+   PASS  I-218  
+I-219  Allowed local variable name
+   PASS  I-219  
+
+END OF V1DLA
+
+GTM>
+
+
+V1DLB
+
+V1DLB1
+
+V1DLB1 : TEST OF $DATA FUNCTION AND KILL COMMAND ON LOCAL VARIABLES -2-
+
+I-220  $DATA of undefined node which has immediate descendants
+   PASS  I-220  
+I-221  $DATA of undefined node which has descendants 2 levels below
+   PASS  I-221  
+I-222  $DATA of undefined node whose immediate descendants are killed
+   PASS  I-222  
+I-223  $DATA of undefined node whose descendants 2 levels below are killed
+   PASS  I-223  
+I-224  $DATA of defined node which has immediate descendants
+   PASS  I-224  
+I-225  $DATA of defined node which has descendants 2 levels below
+   PASS  I-225  
+
+END OF V1DLB1
+
+
+V1DLB2
+
+V1DLB2 : TEST OF $DATA FUNCTION AND KILL COMMAND ON LOCAL VARIABLES -3-
+
+I-226  $DATA of defined node whose immediate descendants are killed
+   PASS  I-226  
+I-227  $DATA of defined node whose descendants 2 levels below are killed
+   PASS  I-227  
+I-228  $DATA of defined node whose parent is killed
+   PASS  I-228  
+I-229  $DATA of defined node whose neighboring node is killed
+   PASS  I-229  
+I-230  KILLing undefined subscripted local variables
+   PASS  I-230  
+
+
+
+END OF V1DLB2
+
+GTM>
+
+
+V1DLC
+
+V1DLC : TEST OF $DATA FUNCTION AND KILL COMMAND ON LOCAL VARIABLES -4-
+
+I-231  Selective KILL
+   PASS  I-231  
+I-232  Exclusive KILL with argument list
+   PASS  I-232  
+I-233  Exclusive KILL with one argument
+   PASS  I-233  
+I-234  Exclusive KILL, which lvn is not defined
+   PASS  I-234  
+I-235  Mixture of selective KILL and exclusive KILL in one argument
+   PASS  I-235  
+
+END OF V1DLC
+
+GTM>
+
+
+V1DGA
+
+V1DGA : TEST OF $DATA FUNCTION AND KILL COMMAND ON GLOBAL VARIABLES -1-
+
+I-822  KILLing undefined unsubscripted global variables
+   PASS  I-822  
+I-191/192  The value of $DATA of SET unsubscripted global variables
+   PASS  I-191/192  
+I-193/194  The value of $DATA of KILLing unsubscripted global variables
+   PASS  I-193/194  
+I-195  Assign numeric literal to unsubscripted global variables
+   PASS  I-195  
+I-196  Assign string literal to unsubscripted global variables
+   PASS  I-196  
+I-197  Effect on global variables by killing local variables
+   PASS  I-197  
+I-198  Effect on global variables by executing exclusive kill
+   PASS  I-198  
+I-199  Effect on global variables by executing kill all local variable
+   PASS  I-199  
+I-200  Allowed global variable name
+   PASS  I-200  
+
+END OF V1DGA
+
+GTM>
+
+
+V1DGB
+
+V1DGB1
+
+V1DGB1 : TEST OF $DATA FUNCTION AND KILL COMMAND ON GLOBAL VARIABLES -2-
+
+I-823  KILLing undefined subscripted global variables
+   PASS  I-823  
+
+
+I-201  $DATA of undefined node which has immediate descendants
+   PASS  I-201  
+I-202  $DATA of undefined node which has descendants 2 levels below
+   PASS  I-202  
+I-203  $DATA of undefined node whose immediate descendants are killed
+   PASS  I-203  
+I-204  $DATA of undefined node whose descendants 2 levels below are killed
+   PASS  I-204  
+I-205  $DATA of defined node which has immediate descendants
+   PASS  I-205  
+
+END OF V1DGB1
+
+
+V1DGB2
+
+V1DGB2 : TEST OF $DATA FUNCTION AND KILL COMMAND ON GLOBAL VARIABLES -3-
+
+I-206  $DATA of defined node which has descendants 2 levels below
+   PASS  I-206  
+I-207  $DATA of defined node whose immediate descendants are killed
+   PASS  I-207  
+I-208  $DATA of defined node whose descendants 2 levels below are killed
+   PASS  I-208  
+I-209  $DATA of defined node whose parent is killed
+   PASS  I-209  
+I-210  $DATA of defined node whose neighboring node is killed
+   PASS  I-210  
+
+END OF V1DGB2
+
+GTM>
+
+
+V1NR
+
+V1NR1
+
+V1NR1: TEST OF NAKED REFERENCES ON GLOBAL VARIABLES -1-
+
+I-648  interpretation sequence of SET command
+   PASS  I-648  
+I-649  interpretation sequence of subscripted variable
+   PASS  I-649.1  local variable's subscript
+   PASS  I-649.2  glvn is naked reference
+   PASS  I-649.3  subscripts are naked reference
+   PASS  I-649.4  nesting naked reference
+   PASS  I-649.5  6 level subscripts
+I-650  effect of global reference in $DATA on naked indicator
+   PASS  I-650.1  2 level subscripts
+   PASS  I-650.2  a subscript
+   PASS  I-650.3  2 globals using
+
+END OF V1NR1
+
+
+V1NR2
+
+V1NR2: TEST OF NAKED REFERENCES ON GLOBAL VARIABLES -2-
+
+I-651  effect of KILLing global variables on naked indicator
+   PASS  I-651.1  killing defined global variable
+
+
+   PASS  I-651.2  killing undefined global variable
+   PASS  I-651.3  2 globals using
+I-652  interpretation of naked reference
+   PASS  I-652  
+I-825  Naked reference of undefined global node whose immediate ascendant exist
+   PASS  I-825  
+I-826  Naked reference of undefined global node whose immediate ascendant does not exist
+   PASS  I-826.1  immediate ascendant is unsubscripted variable
+   PASS  I-826.2  immediate ascendant is 2-subscripts variable
+   PASS  I-826.3  another same level variable exist
+
+END OF V1NR2
+
+GTM>
+
+
+V1NX
+
+V1NX1
+
+V1NX1 : TEST OF $NEXT FUNCTION -1-
+
+V1NX DEFINES 6 NODES OF AN ARRAY, THEN FINDS THE NODES BY $NEXTING
+THROUGH THE ARRAY (VALUE STORED AT A GIVEN NODE IS THE
+SUBSCRIPTS OF THAT NODE).  THEN VNX REPEATS THE PROCESS ON A GLOBAL.
+
+I-669  glvn is not defined
+   PASS  I-669  
+I-670  glvn has no neighboring node
+   PASS  I-670  
+I-671  the last subscript of glvn is -1
+   PASS  I-671  
+I-672  glvn as naked reference
+   PASS  I-672  
+I-673  expected returned value is zero
+   PASS  I-673  
+
+END OF V1NX1
+
+
+V1NX2
+
+V1NX2 : TEST OF $NEXT FUNCTION -2-
+
+V1NX DEFINES 6 NODES OF AN ARRAY, THEN FINDS THE NODES BY $NEXTING
+THROUGH THE ARRAY (VALUE STORED AT A GIVEN NODE IS THE
+SUBSCRIPTS OF THAT NODE).  THEN VNX REPEATS THE PROCESS ON A GLOBAL.
+
+I-674  glvn is lvn
+   PASS  I-674  
+I-675  glvn is gvn
+   PASS  I-675  
+
+END OF V1NX2
+
+GTM>
+
+
+V1SET
+
+V1SET: TEST OF SET COMMAND
+
+I-781  expr is string literal
+   PASS  I-781.1  subscripted variables assigned with constant values
+
+
+   PASS  I-781.2  variables' values reassigned to other variables
+I-782  expr is lvn
+   PASS  I-782  
+I-783  expr is gvn
+   PASS  I-783  
+I-784  glvn is subscripted variable
+   PASS  I-784  
+I-785  Multi-assigment of unsubscripted variables
+   PASS  I-785  
+I-786  Multi-assigment of subscripted variables
+   PASS  I-786  
+I-787  Execution sequence of SET command
+   PASS  I-787  
+
+END OF V1SET
+
+GTM>
+
+
+V1GO
+
+V1GO1
+
+V1GO1: TEST OF GOTO COMMAND (LOCAL BRANCHING) -1-
+
+GOTO label
+
+I-382/383  label is % followed by alpha and digit
+   PASS  I-382/383.1  label is %
+   PASS  I-382/383.2  label is % followed by a alpha
+   PASS  I-382/383.3  label is % followed by alphas
+   PASS  I-382/383.4  label is % followed by a digit
+   PASS  I-382/383.5  label is % followed by 2 digits
+   PASS  I-382/383.6  label is % followed by 7 digits
+   PASS  I-382/383.7  label is % followed by another 7 digits
+   PASS  I-382/383.8  label is % followed by combination of a alpha and a digit
+   PASS  I-382/383.9  label is % followed by combination of alphas and digits
+I-380  label is alpha
+   PASS  I-380.1  label is a alpha
+   PASS  I-380.2  label is different alpha
+   PASS  I-380.3  label is different alpha
+   PASS  I-380.4  label is 2 alphas
+   PASS  I-380.5  label is another 2 alphas
+   PASS  I-380.6  label is 4 alphas
+   PASS  I-380.7  label is 3 alphas
+   PASS  I-380.8  label is 8 alphas
+I-381  label is intlit
+   PASS  I-381.1  0
+   PASS  I-381.2  1
+   PASS  I-381.3  01
+   PASS  I-381.4  10
+   PASS  I-381.5  12
+   PASS  I-381.6  100
+   PASS  I-381.7  012
+   PASS  I-381.8  0012
+   PASS  I-381.9  92345678
+
+
+   PASS  I-381.10  00000000
+I-384  label is combination of alpha and digit
+   PASS  I-384.1  label is combination of a alpha and a digit
+   PASS  I-384.2  label is combination of a alpha and digits
+   PASS  I-384.3  label is combination of alphas and digits
+
+END OF V1GO1
+
+
+V1GO2
+
+V1GO2: TEST OF GOTO COMMAND (LOCAL BRANCHING) -2-
+
+GOTO label+intexpr
+
+I-385  intexpr is positive integer
+   PASS  I-385  
+I-386  intexpr is zero
+   PASS  I-386  
+I-387  intexpr is non-integer numeric literal
+   PASS  I-387  
+I-388  intexpr is function
+   PASS  I-388  
+I-389  intexpr is gvn
+   PASS  I-389  
+I-390  intexpr contains binary operator
+   PASS  I-390  
+I-391  intexpr contains unary operator
+   PASS  I-391  
+I-392  intexpr contains gvn as expratom
+   PASS  I-392  
+I-827  argument list label without postcondition
+   PASS  I-827  
+I-828  argument list label+intexpr without postcondition
+   PASS  I-828  
+
+END OF V1GO2
+
+GTM>
+
+
+V1OV
+
+V1OV: TEST OF GOTO (OVERLAY) COMMAND
+
+I-677  postconditional of argument
+   PASS  I-677  
+I-678  GOTO ^routineref
+   PASS  I-678  
+
+GOTO label^routineref
+
+I-679/685  label is alpha
+   PASS  I-679/685  
+I-680/686  label is intlit
+   PASS  I-680/686  
+
+
+I-681  label is "%"
+   PASS  I-681  
+I-682  label is "%" and alpha
+   PASS  I-682  
+I-683  label is "%" and digit
+   PASS  I-683  
+I-684  label is "%" and combination of alpha and digit
+   PASS  I-684  
+I-687  label is combination of alpha and digit
+   PASS  I-687  
+
+GOTO label+intexpr^routineref
+
+I-688  intexpr is positive integer
+   PASS  I-688  
+I-689  intexpr is zero
+   PASS  I-689  
+I-690  intexpr is non-integer numeric
+   PASS  I-690  
+I-691  intexpr contains binary operators
+   PASS  I-691  
+I-692  intexpr contains unary operators
+   PASS  I-692  
+I-693  intexpr is function
+   PASS  I-693  
+I-694  intexpr is gvn
+   PASS  I-694  
+I-695  intexpr contains gvn as expratom
+   PASS  I-695  
+I-676/829  argument list ^routineref without postcondition
+   PASS  I-676/829  
+I-676/830  argument list label^routineref without postcondition
+   PASS  I-676/830  
+I-676/831  argument list label+intexpr^routineref without postcondition
+   PASS  I-676/831  
+
+END OF V1OV
+
+GTM>
+
+
+V1DO
+
+V1DO1
+
+V1DO1 : TEST OF DO COMMAND (LOCAL BRANCHING) -1-
+
+DO label
+
+I-238/239  label is a "%" followed by alpha and/or digit
+   PASS  I-238/239.1  label is a %
+   PASS  I-238/239.2  label is a % followed by an alpha
+   PASS  I-238/239.3  label is a % followed by 7 alphas
+   PASS  I-238/239.4  label is a % followed by a digit
+   PASS  I-238/239.5  label is a % followed by 2 digits
+   PASS  I-238/239.6  label is a % followed by 7 digits
+
+
+   PASS  I-238/239.7  label is a % followed by another 7 digits
+   PASS  I-238/239.8  label is a % followed by combination of an alpha and a digit
+   PASS  I-238/239.9  label is a % followed by combination of alphas and digits
+   PASS  I-238/239.10  label is a % followed by combination of digits and alphas
+
+END OF V1DO1
+
+
+V1DO2
+
+V1DO2 : TEST OF DO COMMAND (LOCAL BRANCHING) -2-
+
+I-236  label is an alpha followed by alpha and/or digit
+   PASS  I-236.1  label is an alpha
+   PASS  I-236.2  label is a different alpha
+   PASS  I-236.3  label is a different alpha
+   PASS  I-236.4  label is 2 alphas
+   PASS  I-236.5  label is another 2 alphas
+   PASS  I-236.6  label is 4 alphas
+   PASS  I-236.7  label is 3 alphas
+   PASS  I-236.8  label is 8 alphas
+   PASS  I-236.9  label is an alpha followed by combination of an alpha and a digit
+   PASS  I-236.10  label is an alpha followed by combination of digits and an alpha
+   PASS  I-236.11  label is an alpha followed by combination of alphas and digits
+I-237  label is intlit
+   PASS  I-237.1  label is 0
+   PASS  I-237.2  label is 1
+   PASS  I-237.3  label is 01
+   PASS  I-237.4  label is 10
+   PASS  I-237.5  label is 12
+   PASS  I-237.6  label is 100
+   PASS  I-237.7  label is 012
+   PASS  I-237.8  label is 0012
+   PASS  I-237.9  label is 92345678; 8 digits
+   PASS  I-237.10  label is 00000000; 8 digits
+
+END OF V1DO2
+
+
+V1DO3
+
+V1DO3 : TEST OF DO COMMAND (LOCAL BRANCHING) -3-
+
+DO label+intexpr
+
+I-240  intexpr is positive integer
+   PASS  I-240  
+I-241  intexpr is zero
+   PASS  I-241  
+I-242  intexpr is non-integer numlit
+   PASS  I-242  
+I-243  intexpr is function
+   PASS  I-243  
+I-244  intexpr is gvn
+   PASS  I-244  
+I-245  intexpr contains binary operator
+   PASS  I-245.1  + operator
+
+
+   PASS  I-245.2  _ operator
+   PASS  I-245.3  combination binary operators
+I-246  intexpr contains unary operator
+   PASS  I-246  
+I-247  intexpr contains gvn as expratom
+   PASS  I-247  
+I-832  argument list label without postcondition
+   PASS  I-832  
+I-833  argument list label+intexpr without postcondition
+   PASS  I-833  
+
+END OF V1DO3
+
+GTM>
+
+
+V1CALL
+
+V1CALL : TEST OF DO command ( call external routine )
+
+I-172  argument list
+   PASS  I-172  
+I-173  ^routineref
+   PASS  I-173  
+
+DO label^routineref
+
+I-174  label^routineref  label is  alpha
+   PASS  I-174  
+I-175  label^routineref  label is  intlit
+   PASS  I-175  
+I-176  label^routineref  label is  % and alpha
+   PASS  I-176  
+I-177  label^routineref  label is  % and digit
+   PASS  I-177  
+
+DO label+intexpr^routineref
+
+I-178  intexpr is positive integer
+   PASS  I-178  
+I-179  intexpr is zero
+   PASS  I-179  
+I-180  intexpr is non-integer numlit
+   PASS  I-180  
+I-181  intexpr contains binaryop
+   PASS  I-181  
+I-182  intexpr contains unaryop
+   PASS  I-182  
+I-183  intexpr is function
+   PASS  I-183  
+I-184  intexpr is gvn
+   PASS  I-184  
+I-185  intexpr contains gvn as expratom
+   PASS  I-185  
+I-834  argument list ^routineref without postcondition
+   PASS  I-834  
+
+
+I-835  argument list label^routineref without postcondition
+   PASS  I-835  
+I-836  argument list label+intexpr^routineref without postcondition
+   PASS  I-836  
+
+END OF V1CALL
+
+GTM>
+
+
+V1IE
+
+V1IE1
+
+V1IE1: TEST OF IF, ELSE, $TEST -1-
+
+I-518  tvexpr contains binary operator
+   PASS  I-518.1  tvexpr is true
+   PASS  I-518.2  tvexpr is false
+I-519  tvexpr contains unary operator
+   PASS  I-519  
+I-520  tvexpr is string literal
+   PASS  I-520.1  "ABC"
+   PASS  I-520.2  "1ABC"
+   PASS  I-520.3  ".05EEE"
+I-521  tvexpr is empty string
+   PASS  I-521  
+I-522  tvexpr is integer
+   PASS  I-522  
+I-523  tvexpr is non-integer
+   PASS  I-523  
+I-524  ELSE command, while $T=1
+   PASS  I-524  
+I-525  ELSE command, while $T=0
+   PASS  I-525  
+I-526  argumentless IF command, while $T=1
+   PASS  I-526  
+
+END OF V1IE1
+
+
+V1IE2
+
+V1IE2: TEST OF IF, ELSE, $TEST -2-
+
+I-527  argumentless IF command, while $T=0
+   PASS  I-527  
+I-528  equal operator (=) in ifargument
+   PASS  I-528.1  IF $TEST=1
+   PASS  I-528.2  ifargument list is true
+   PASS  I-528.3  ifargument list is false
+   PASS  I-528.4  ifargument is 0=""
+   PASS  I-528.5  ifargument contains lvn; all ifargument are true
+   PASS  I-528.6  ifargument contains lvn; a ifargument is false
+I-529  effect on $TEST by executing IF command
+   PASS  I-529.1  ifargument is true
+
+
+   PASS  I-529.2  ifargument is false
+I-530  $TEST included in ifargument
+   PASS  I-530.1  $T=1
+   PASS  I-530.2  $T=1 another
+   PASS  I-530.3  $T=0
+I-531  interpretation sequence of ifargument
+   PASS  I-531  
+
+END OF V1IE2
+
+GTM>
+
+
+V1PC
+
+V1PCA
+
+V1PCA: TEST OF POST-CONDITIONALS -1-
+
+I-712  WRITE command
+   PASS  I-712.1  postcondition contains = operator  (visual)
+   PASS  I-712.2  postcondition contains lvn  (visual)
+I-713  SET command
+   PASS  I-713.1  local
+   PASS  I-713.2  global
+I-714  GOTO command ( command word )
+   PASS  I-714  
+I-715  GOTO command ( argument )
+   PASS  I-715  
+I-837  GOTO with postconditionalized label list
+   PASS  I-837  
+I-838  GOTO with postconditionalized label+intexpr list
+   PASS  I-838  
+I-839  GOTO with postconditionalized ^routineref list
+   PASS  I-839  
+I-840  GOTO with postconditionalized label^routineref list
+   PASS  I-840  
+I-841  GOTO with postconditionalized label+intexpr^routineref list
+   PASS  I-841  
+
+END OF V1PCA
+
+
+V1PCB
+
+V1PCB: TEST OF POST-CONDITIONALS -2-
+
+I-716  DO command ( command word )
+   PASS  I-716  
+I-717  DO command ( argument )
+   PASS  I-717  
+I-842  DO with postconditionalized label list
+   PASS  I-842  
+I-843  DO with postconditionalized label+intexpr list
+   PASS  I-843  
+I-844  DO with postconditionalized ^routineref list
+   PASS  I-844  
+
+
+I-845  DO with postconditionalized label^routineref list
+   PASS  I-845  
+I-846  DO with postconditionalized label+intexpr^routineref list
+   PASS  I-846  
+I-718  KILL command
+   PASS  I-718.1  local
+   PASS  I-718.2  global
+
+END OF V1PCB
+
+GTM>
+
+
+V1FORA
+
+V1FORA1
+
+V1FORA1: TEST OF FOR COMMAND -1.1-
+
+FOR lvn=expr
+
+I-335  expr is intlit
+   PASS  I-335.1  lvn does not exist
+   PASS  I-335.2  lvn exist
+I-336  expr is numlit
+   PASS  I-336  
+I-337  expr is strlit
+   PASS  I-337  
+
+FOR lvn=numexpr1:numexpr2:numexpr3
+
+I-338/339/342  numexpr2>0
+   PASS  I-338/339/342.1  numexpr1<numexpr3
+   PASS  I-338/339/342.2  numexpr1=numexpr3
+   PASS  I-338/339/342.3  numexpr1>numexpr3
+I-340  numexpr2=0
+   PASS  I-340.1  numexpr1<numexpr3
+   PASS  I-340.2  numexpr1=numexpr3
+   PASS  I-340.3  numexpr1>numexpr3
+   PASS  I-340.4  numexpr1<numexpr3 another
+I-341/343  numexpr2<0
+   PASS  I-341/343.1  numexpr1<numexpr3
+   PASS  I-341/343.2  numexpr1=numexpr3
+   PASS  I-341/343.3  numexpr1>numexpr3
+I-344  numexpr1=numexpr2=numexpr3
+   PASS  I-344.1  numexpr>0
+   PASS  I-344.2  numexpr=0
+   PASS  I-344.3  numexpr<0
+
+END OF V1FORA1
+
+
+V1FORA2
+
+V1FORA2: TEST OF FOR COMMAND -1.2-
+
+I-345  5 levels of FOR nesting
+   PASS  I-345  
+
+
+I-346  GOTO command in FOR scope
+   PASS  I-346  
+I-347  QUIT command in FOR scope
+   PASS  I-347.1  QUIT without postcondition
+   PASS  I-347.2  QUIT with postcondition
+I-348  XECUTE command in FOR scope
+   PASS  I-348  
+I-349  numexpr is string literal
+   PASS  I-349  
+
+FOR lvn=numexpr1:numexpr2
+
+I-350  numexpr1>0 and numexpr2>0
+   PASS  I-350  
+I-351  numexpr1>0 and numexpr2<0
+   PASS  I-351  
+I-352  numexpr1<0 and numexpr2>0
+   PASS  I-352  
+I-353  numexpr1<0 and numexpr2<0
+   PASS  I-353  
+I-354  numexpr2=0
+   PASS  I-354  
+
+END OF V1FORA2
+
+GTM>
+
+
+V1FORB
+
+V1FORB: TEST OF FOR COMMAND -2-
+
+List of forparameter
+
+I-355  forparameter is expr
+   PASS  I-355  
+I-356  forparameter is numexpr1:numexpr2
+   PASS  I-356  
+I-357  forparameter is numexpr1:numexpr2:numexpr3
+   PASS  I-357  
+I-358  forparameter is mixture of the three above
+   PASS  I-358  
+
+FOR lvn=forparameter
+
+I-359  Value of lvn in execution of FOR scope
+   PASS  I-359  
+I-360  lvn has subscript
+   PASS  I-360.1  3 subscripts
+   PASS  I-360.2  1 subscript
+   PASS  I-360.3  subscript contains binary operator
+I-361  Interpretation sequence of forparameter
+   PASS  I-361.1  forparameter is expr
+   PASS  I-361.2  forparameter is numexpr1:numexpr2
+   PASS  I-361.3  forparameter is numexpr1:numexpr2:numexpr3
+   PASS  I-361.4  numexpr2 is lvn
+
+
+I-362  forparameter contains lvn
+   PASS  I-362  
+I-363  Change the value of lvn in FOR scope
+   PASS  I-363.1  SET lvn=lvn+1
+   PASS  I-363.2  DO command in FOR scope
+
+END OF V1FORB
+
+GTM>
+
+
+V1FORC
+
+V1FORC1
+
+V1FORC1: TEST OF FOR COMMAND -3.1-
+
+FOR lvn=numexpr1:numexpr2:numexpr3
+
+I-364  numexpr is non-integer numeric literal
+   PASS  I-364  
+I-365  numexpr is function
+   PASS  I-365  
+I-366  numexpr contains unary operator
+   PASS  I-366  
+I-367  numexpr contains binary operator
+   PASS  I-367  
+I-368  numexpr is unsubscripted gvn
+   PASS  I-368  
+I-369  numexpr is subscripted gvn
+   PASS  I-369  
+
+Combination of FOR scope
+
+I-370  FOR ... QUIT ... FOR
+   PASS  I-370  
+I-371  FOR ... QUIT ... FOR ... QUIT
+   PASS  I-371  
+I-372  FOR ... FOR ... QUIT
+   PASS  I-372  
+
+END OF V1FORC1
+
+
+V1FORC2
+
+V1FORC2: TEST OF FOR COMMAND -3.2-
+
+I-373  FOR ... FOR ... QUIT ... FOR ... QUIT
+   PASS  I-373  
+I-374  FOR ... FOR ... GOTO
+   PASS  I-374.1  a forparameter
+   PASS  I-374.2  list of forparameter
+I-375  FOR ... GOTO ... FOR
+   PASS  I-375  
+I-376  FOR ... FOR ... FOR ... GOTO
+   PASS  I-376  
+
+
+I-377  FOR ... GOTO ... QUIT
+   PASS  I-377  
+I-378  FOR ... QUIT ... FOR ... GOTO
+   PASS  I-378  
+I-379  FOR ... FOR ... QUIT ... GOTO
+   PASS  I-379  
+
+END OF V1FORC2
+
+GTM>
+
+
+V1IDNM
+
+V1IDNM1
+
+V1IDNM1: TEST OF NAME LEVEL INDIRECTION -1-
+
+FOR command
+
+I-489  indirection of lvn
+   PASS  I-489  
+I-490  indirection of forparameters
+   PASS  I-490  
+I-491  indirection of subscript of lvn
+   PASS  I-491  
+I-492  value of indirection contains function
+   PASS  I-492  
+I-493  value of indirection is gvn
+   PASS  I-493  
+I-494  value of indirection is lvn
+   PASS  I-494  
+I-495  2 levels of indirection
+   PASS  I-495  
+I-496  3 levels of indirection
+   PASS  I-496  
+
+END OF V1IDNM1
+
+
+V1IDNM2
+
+V1IDNM2: TEST OF NAME LEVEL INDIRECTION -2-
+
+SET command
+
+I-497  indirection of the left side lvn
+   PASS  I-497  
+I-498  indirection of the right side lvn
+   PASS  I-498  
+I-499  indirection of the left side gvn
+   PASS  I-499  
+I-500  indirection of the right side gvn
+   PASS  I-500  
+I-501  indirection of lvn subscript
+   PASS  I-501  
+
+
+I-502  indirection of gvn subscript
+   PASS  I-502  
+I-503  value of indirection contains function
+   PASS  I-503  
+I-504  value of indirection is gvn
+   PASS  I-504  
+I-505  value of indirection is lvn
+   PASS  I-505  
+I-506  value of indirection contains numeric literal
+   PASS  I-506  
+I-507  2 levels of indirection
+   PASS  I-507  
+I-508  3 levels of indirection
+   PASS  I-508  
+
+END OF V1IDNM2
+
+
+V1IDNM3
+
+V1IDNM3: TEST OF NAME LEVEL INDIRECTION -3-
+
+$DATA(@expratom)
+
+I-509  indirection of $DATA argument
+   PASS  I-509  
+I-510  indirection of subscript
+   PASS  I-510  
+I-511  2 levels of indirection
+   PASS  I-511  
+I-512  3 levels of indirection
+   PASS  I-512  
+
+$NEXT(@expratom)
+
+I-513  indirection of $NEXT argument
+   PASS  I-513  
+I-514  indirection of subscript
+   PASS  I-514  
+I-515  indirection of naked reference
+   PASS  I-515  
+I-516  2 levels of indirection
+   PASS  I-516  
+I-517  3 levels of indirection
+   PASS  I-517  
+
+END OF V1IDNM3
+
+GTM>
+
+
+V1IDGO
+
+V1IDGOA
+
+V1IDGOA: TEST OF INDIRECTION IN GOTO ARGUMENTS -1-
+
+I-475  indirection of dlabel
+   PASS  I-475  
+
+
+I-476  indirection of dlabel, while dlabel contains indirection
+   PASS  I-476  
+I-477  indirection of dlabel+intexpr
+   PASS  I-477  
+I-478  indirection of dlabel+intexpr, while intexpr contains indirection
+   PASS  I-478  
+I-479  indirection of dlabel+intexpr, while dlabel and intexpr contains
+   PASS  I-479  
+I-480  indirection of routine name
+   PASS  I-480  
+
+END OF V1IDGOA
+
+
+V1IDGOB
+
+V1IDGOB: TEST OF INDIRECTION IN GOTO ARGUMENTS -2-
+
+I-481  indirection of routine name, while routine name contains indirection
+   PASS  I-481  
+I-482  indirection of dlabel^routinename
+   PASS  I-482  
+I-483  indirection of dlabel+intexpr^routinename
+   PASS  I-483  
+I-484  argument level indirection without postcondition
+   PASS  I-484  
+I-485  argument level indirection with postcondition
+   PASS  I-485  
+I-486  indirection of argument list without postcondition
+   PASS  I-486  
+I-487  indirection of argument list with postcondition
+   PASS  I-487  
+I-488  indirection of postcondition
+   PASS  I-488  
+
+END OF V1IDGOB
+
+GTM>
+
+
+V1IDDO
+
+V1IDDOA
+
+V1IDDOA: TEST OF INDIRECTION IN DO ARGUMENTS -1-
+
+I-461  indirection of dlabel
+   PASS  I-461  
+I-462  indirection of dlabel, while dlabel contains indirection
+   PASS  I-462  
+I-463  indirection of dlabel+intexpr
+   PASS  I-463  
+I-464  indirection of dlabel+intexpr, while intexpr contains indirection
+   PASS  I-464  
+I-465  indirection of dlabel+intexpr, while dlabel and intexpr contains
+   PASS  I-465  
+
+
+I-466  indirection of routine name
+   PASS  I-466  
+I-467  indirection of routine name, while routine name contains indirection
+   PASS  I-467  
+
+END OF V1IDDOA
+
+
+V1IDDOB
+
+V1IDDOB: TEST OF INDIRECTION IN DO ARGUMENTS -2-
+
+I-468  indirection of dlabel^routinename
+   PASS  I-468  
+I-469  indirection of dlabel+intexpr^routinename
+   PASS  I-469  
+I-470  argument level indirection without postcondition
+   PASS  I-470  
+I-471  argument level indirection with postcondition
+   PASS  I-471  
+I-472  indirection of argument list without postcondition
+   PASS  I-472  
+I-473  indirection of argument list with postcondition
+   PASS  I-473  
+I-474  indirection of postcondition
+   PASS  I-474  
+
+END OF V1IDDOB
+
+GTM>
+
+
+V1IDARG
+
+V1IDARG1
+
+V1IDARG1: TEST OF ARGUMENT LEVEL INDIRECTION -1-
+
+IF command
+
+I-417  indirection of ifargument
+   PASS  I-417  
+I-418  indirection of ifargument list
+   PASS  I-418  
+I-419  list of indirection and ifargument
+   PASS  I-419  
+I-420  2 levels of ifargument indirection
+   PASS  I-420  
+I-421  3 levels of ifargument indirection
+   PASS  I-421  
+I-422  Value of indirection expratom contains operator
+   PASS  I-422  
+I-423  Value of indirection expratom is function
+   PASS  I-423  
+I-424  Value of indirection expratom contains indirection
+   PASS  I-424  
+
+
+I-425  Value of indirection expratom subscripted variable name
+   PASS  I-425  
+
+END OF V1IDARG1
+
+
+V1IDARG2
+
+V1IDARG2: TEST OF ARGUMENT LEVEL INDIRECTION -2-
+
+KILL command
+
+I-426  indirection of killargument
+   PASS  I-426  
+I-427  indirection of killargument list
+   PASS  I-427  
+I-428  subscript is denoted by name level indirection
+   PASS  I-428  
+I-429  indirection of exclusive KILL
+   PASS  I-429  
+I-430  Value of indirection contains indirection
+   PASS  I-430  
+I-431  Value of indirection contains operators
+   PASS  I-431  
+I-432  Value of indirection is function
+   PASS  I-432  
+I-433  Value of indirection is lvn
+   PASS  I-433  
+I-434  Value of indirection is gvn
+   PASS  I-434  
+
+END OF V1IDARG2
+
+
+V1IDARG3
+
+V1IDARG3: TEST OF ARGUMENT LEVEL INDIRECTION -3-
+
+SET command
+
+I-435  indirection of setargument
+   PASS  I-435  
+I-436  indirection of setargument list
+   PASS  I-436  
+I-437  indirection of multi-assignment
+   PASS  I-437  
+I-438  2 levels of setargument indirection
+   PASS  I-438  
+I-439  3 levels of setargument indirection
+   PASS  I-439  
+I-440  Value of indirection contains name level indirection
+   PASS  I-440  
+I-441  Value of indirection contains operators
+   PASS  I-441  
+I-442  Value of indirection is function
+   PASS  I-442  
+
+
+I-443  Value of indirection contains subscripted local variable
+   PASS  I-443  
+
+END OF V1IDARG3
+
+
+V1IDARG4
+
+V1IDARG4: TEST OF ARGUMENT LEVEL INDIRECTION -4-
+
+WRITE command
+
+I-444  indirection of writeargument except format  (visual)
+       following two lines should be identical
+   WRITE
+   WRITE
+
+I-445  indirection of writeargument list  (visual)
+       following two lines should be identical
+    **  ** DOT
+    **  ** DOT
+
+I-446  indirection of format control parameters  (visual)
+       following two lines should be identical
+   AB
+   AB
+
+I-447  2 levels of writeargument indirection  (visual)
+       following two lines should be identical
+   1 LINE PAGE
+   1 LINE PAGE
+
+I-448  3 levels of writeargument indirection  (visual)
+       following two lines should be identical
+   #%% 12.324.612
+   #%% 12.324.612
+
+I-449  Value of indirection contains name level indirection  (visual)
+       following two lines should be identical
+   101
+   101
+
+I-450  Value of indirection contains operators  (visual)
+       following two lines should be identical
+   1
+   1
+
+I-451  Value of indirection contains function  (visual)
+       following two lines should be identical
+   *****
+   *****
+
+I-452  Value of indirection is numeric literal  (visual)
+       following two lines should be identical
+   987.56
+   987.56
+
+END OF V1IDARG4
+
+
+V1IDARG5
+
+V1IDARG5: TEST OF ARGUMENT LEVEL INDIRECTION -5-
+
+XECUTE command
+
+I-453  indirection of xecuteargument
+   PASS  I-453  
+I-454  indirection of xecuteargument list
+   PASS  I-454  
+I-455  2 levels of xecuteargument indirection
+   PASS  I-455  
+I-456  3 levels of xecuteargument indirection
+   PASS  I-456  
+I-457  Value of indirection contains name level indirection
+   PASS  I-457  
+I-458  Value of indirection contains operators
+   PASS  I-458  
+I-459  Value of indirection contains function
+   PASS  I-459  
+I-460  Value of indirection contains argument level indirection
+   PASS  I-460  
+
+END OF V1IDARG5
+
+GTM>
+
+
+V1XECA
+
+V1XECA1
+
+V1XECA1: TEST OF XECUTE COMMAND -1.1-
+
+I-805  Single argument
+  PASS  I-805  
+I-806  Argument list
+  PASS  I-806  
+I-807  Interpretation of argument as expression
+  PASS  I-807.1  SET command
+  PASS  I-807.2  argument contains _ operator
+I-808  Postconditional of arguments
+  PASS  I-808.1  tvexpr is true
+  PASS  I-808.2  tvexpr is false
+  PASS  I-808.3  tvexpr contains indirection
+I-809  Postconditional of command word
+  PASS  I-809.1  tvexpr is true
+  PASS  I-809.2  tvexpr is false
+
+END OF V1XECA1
+
+
+V1XECA2
+
+V1XECA2: TEST OF XECUTE COMMAND -1-
+
+I-810  Argument level indirection
+  PASS  I-810.1  1 level
+  PASS  I-810.2  2 level
+  PASS  I-810.3  value of indirection contains postcondition
+I-811  GOTO command in XECUTE command
+  PASS  I-811.1  local branching
+
+
+  PASS  I-811.2  overlay with external routine
+I-812  FOR command in XECUTE command
+  PASS  I-812  
+I-813  DO command in XECUTE command
+  PASS  I-813.1  local branching
+  PASS  I-813.2  call external routine
+  PASS  I-813.3  call external and local
+I-814  QUIT command in XECUTE command
+  PASS  I-814  
+I-815  Nesting of XECUTE command
+  PASS  I-815.1  2 level nesting
+  PASS  I-815.2  3 level nesting
+  PASS  I-815.3  3 level nesting another
+
+END OF V1XECA2
+
+GTM>
+
+
+V1XECB
+
+V1XECB: TEST OF XECUTE COMMAND -2-
+
+I-816  DO command in 2 levels nesting of XECUTE command
+   PASS  I-816  
+I-817  GOTO command in 2 levels nesting of XECUTE command
+   PASS  I-817  
+I-818  QUIT command in 2 levels nesting of XECUTE command
+   PASS  I-818  
+I-819  FOR command in 2 levels nesting of XECUTE command
+   PASS  I-819.1  without postcondition
+   PASS  I-819.2  with postcondition
+I-820  XECUTE a variable whose data value contains KILL of
+       that variable itself
+   PASS  I-820  
+I-821  XECUTE a variable whose data value contains SETting
+       the same variable name to a different value from the
+       one set to be XECUTE
+   PASS  I-821  
+
+END OF V1XECB
+
+GTM>
+
+
+V1SEQ
+
+V1SEQ: TEST OF EXECUTION SEQUENCE OF ROUTINES
+
+I-788  GOTO and DO
+   PASS  I-788  
+I-789  FOR and DO
+   PASS  I-789  
+I-790  FOR, DO, and GOTO
+   PASS  I-790  
+I-791  FOR, XECUTE, DO, and GOTO
+   PASS  I-791.1  FOR, XECUTE, DO
+
+
+   PASS  I-791.2  FOR, XECUTE, GOTO
+   PASS  I-791.3  FOR, XECUTE, QUIT
+I-792  FOR, XECUTE, GOTO, and indirection
+   PASS  I-792  
+
+END OF V1SEQ
+
+GTM>
+
+
+V1PAT
+
+V1PAT1
+
+V1PAT1: TEST OF PATTERN MATCH OPERATOR -1-
+
+I-696  pattern code "C" and its mapping
+   PASS  I-696.1  function?1C
+   PASS  I-696.2  lvn?5C
+I-697  pattern code "N" and its mapping
+   PASS  I-697.1  function?1N
+   PASS  I-697.2  lvn?5N
+I-698  pattern code "P" and its mapping
+   PASS  I-698.1  function?1P
+   PASS  I-698.2  lvn?5P
+I-699  pattern code "A" and its mapping
+   PASS  I-699.1  function?1A
+   PASS  I-699.2  lvn?5A
+I-700  pattern code "L" and its mapping
+   PASS  I-700.1  function?1L
+   PASS  I-700.2  lvn?5L
+I-701  pattern code "U" and its mapping
+   PASS  I-701.1  function?1U
+   PASS  I-701.2  lvn?5U
+I-702  pattern code "E" and its mapping
+   PASS  I-702.1  function?1E
+   PASS  I-702.2  lvn?5E
+
+END OF V1PAT1
+
+
+V1PAT2
+
+V1PAT2: TEST OF PATTERN MATCH OPERATOR -2-
+
+I-703  multiplier>0
+   PASS  I-703  
+I-704  multiplier=0
+   PASS  I-704  
+I-705  infinite multiplier (.)
+   PASS  I-705  
+I-706  empty string as patatom
+   PASS  I-706.1  ?patatom
+   PASS  I-706.2  '?patatom
+I-707  not match ('?)
+   PASS  I-707  
+
+
+I-708  pattern level indirection
+   PASS  I-708  
+I-709  interpretation of left side expression
+   PASS  I-709  
+I-710  pattern match of maximum length of data
+   PASS  I-710  
+I-711  various combination of patcode
+   PASS  I-711  
+
+END OF V1PAT2
+
+GTM>
+
+
+V1NST1
+%GTM-E-LABELMISSING, Label referenced but not defined: G6602
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/V1NST1.m
+%GTM-E-LABELMISSING, Label referenced but not defined: G6601
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/V1NST1.m
+
+
+V1NST1: TEST OF NESTING ( FOR, XECUTE, DO, @, <FUNCTION> ) -1-
+AS THIS OWN ROUTINE IS COUNTED AS ONE LEVEL OF NESTING
+ADDITIONAL 14 LEVELS OF NESTING ARE REQUIRED.
+ADMITTED NESTING LEVELS ARE INDICATED BY THE NUMBER IN EACH TEST.
+
+I-653  1 level of DO, and 14 levels of FOR
+   PASS  I-653.1  termination by GOTO
+   PASS  I-653.2  termination by QUIT
+I-654  1 level of DO, and 14 levels of XECUTE
+   PASS  I-654  
+I-655  15 levels of DO
+   PASS  I-655.1  local DO
+   PASS  I-655.2  external DO
+I-656  15 levels of combinated DO, FOR, XECUTE
+   PASS  I-656  
+
+END OF V1NST1
+
+GTM>
+
+
+V1NST2
+%GTM-E-LABELMISSING, Label referenced but not defined: G6602
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/V1NST2.m
+
+
+V1NST2: TEST OF NESTING ( FOR, XECUTE, DO, @, <FUNCTION> ) -2-
+AS THIS OWN ROUTINE IS COUNTED AS ONE LEVEL OF NESTING
+ADDITIONAL 14 LEVELS OF NESTING ARE REQUIRED.
+ADMITTED NESTING LEVELS ARE INDICATED BY THE NUMBER IN EACH TEST.
+
+I-657  1 level of DO, and 14 levels of argument level indirection
+   PASS  I-657  
+I-658  1 level of DO, and 14 levels of name level indirection
+   PASS  I-658  
+
+
+I-659  up to 6 levels nesting of functions
+   PASS  I-659  
+
+END OF V1NST2
+
+GTM>
+
+
+V1NST3
+
+V1NST3: TEST OF NESTING ( FOR, XECUTE, DO, @, <FUNCTION> ) -3-
+AS THIS OWN ROUTINE IS COUNTED AS ONE LEVEL OF NESTING
+ADDITIONAL 14 LEVELS OF NESTING ARE REQUIRED.
+ADMITTED NESTING LEVELS ARE INDICATED BY THE NUMBER IN EACH TEST.
+
+I-660  effect of GOTO command on nesting
+   PASS  I-660.1  local GOTO
+   PASS  I-660.2  external GOTO
+I-661  effect of QUIT command on nesting
+   PASS  I-661  
+
+END OF V1NST3
+
+GTM>
+
+
+V1JST
+
+V1JST1
+
+V1JST1: TEST OF $JUSTIFY, $SELECT AND $TEXT FUNCTIONS -1-
+
+$JUSTIFY(expr1,intexpr2)
+
+I-555  expr1 is string literal
+   PASS  I-555  
+I-556  expr1 is empty string
+   PASS  I-556  
+I-557  expr1 is positive integer
+   PASS  I-557.1  0001234.0000
+   PASS  I-557.2  000123400.00E1
+I-558  expr1 is negative integer
+   PASS  I-558.1  -00098
+   PASS  I-558.2  -0009800.00
+I-559  expr1 is positive non-integer numeric
+   PASS  I-559  0987654.E-003
+I-560  expr1 is negative non-integer numeric
+   PASS  I-560  -9876.54E-003
+I-561  expr1 is greater than zero and less than one
+   PASS  I-561  98.7654E-003
+I-562  expr1 contains binary operator
+   PASS  I-562.1  "12AHD"*"12"
+   PASS  I-562.2  "-"_"0012"
+I-563  expr1 contains unary operator
+   PASS  I-563  
+I-564  expr1 contains function
+   PASS  I-564.1  $LENGTH
+
+
+   PASS  I-564.2  $JUSTIFY
+I-565  expr1 contains gvn
+   PASS  I-565  
+I-566  intexpr2>0
+   PASS  I-566  
+I-567  intexpr2=0
+   PASS  I-567  
+I-568  intexpr2<0
+   PASS  I-568  
+I-569  intexpr2<$L(expr1)
+   PASS  I-569.1  intexpr2=1
+   PASS  I-569.2  intexpr2=($L(expr1)+1)
+I-570  intexpr2=$L(expr1)
+   PASS  I-570  
+I-571  intexpr2>$L(expr1)
+   PASS  I-571  
+
+END OF V1JST1
+
+
+V1JST2
+
+V1JST2: TEST OF $JUSTIFY, $SELECT AND $TEXT FUNCTIONS -2-
+
+$JUSTIFY(numexpr1,intexpr2,intexpr3)
+
+I-572  numexpr1 is empty string
+   PASS  I-572.1  intexpr3=1
+   PASS  I-572.2  intexpr3>1
+I-573  numexpr1 is positive non-integer numeric
+   PASS  I-573  
+I-574  numexpr1 is negative non-integer numeric
+   PASS  I-574.1  intexpr3=2
+   PASS  I-574.2  intexpr3=1
+   PASS  I-574.3  intexpr3=0
+   PASS  I-574.4  intexpr3=0 another
+I-575  numexpr1 is greater than zero and less than one
+   PASS  I-575.1  numexpr1>0
+   PASS  I-575.2  numexpr1<0
+I-576  numexpr1 is mant exp
+   PASS  I-576.1  -0.0099E1
+   PASS  I-576.2  -1.0099E-1
+   PASS  I-576.3  000.004567E+7
+I-577  intexpr2<0
+   PASS  I-577  
+I-578   intexpr2=0
+   PASS  I-578  
+I-579  intexpr2>0 and intexpr3>0
+   PASS  I-579  
+I-580  intexpr2<0 and intexpr3=0
+   PASS  I-580  
+I-581  intexpr2<0 and intexpr3<0
+       ( This test I-581 was nullified in 1984 ANSI, MSL )
+I-582  intexpr2>intexpr3
+   PASS  I-582  
+I-583  intexpr2=intexpr3
+   PASS  I-583.1  expr1="5.449"
+
+
+   PASS  I-583.2  expr1="9995E-4"
+I-584  intexpr2<intexpr3
+   PASS  I-584  
+I-585  interpretation of intexpr2, intexpr3
+   PASS  I-585  
+
+END OF V1JST2
+
+
+V1JST3
+
+V1JST3: TEST OF $JUSTIFY, $SELECT AND $TEXT FUNCTIONS -3-
+
+$SELECT(L tvexpr:expr)
+
+I-586  single argument
+   PASS  I-586  
+I-587  effect on $TEST
+   PASS  I-587.1  $TEST=1
+   PASS  I-587.2  $TEST=0
+I-588  interpretation sequence of $SELECT argument
+   PASS  I-588  
+I-589  interpretation of tvexpr
+   PASS  I-589  
+I-590  interpretation of expr, while tvexpr=0
+   PASS  I-590  
+I-591  interpretation of expr, while tvexpr=1
+   PASS  I-591  
+I-592  nesting of functions
+   PASS  I-592  
+
+$TEXT(lineref),  $TEXT(+intexpr)
+
+I-593  the line specified by lineref does not exist
+   PASS  I-593  
+I-594  the line specified by +intexpr does not exist
+   PASS  I-594  
+I-595  the line specified by lineref exist
+   PASS  I-595.1  lineref is a label
+   PASS  I-595.2  lineref is a another label
+   PASS  I-595.3  nesting of function
+I-596  the line specified by +intexpr exist
+   PASS  I-596  
+I-597  lineref=label
+   PASS  I-597  
+I-598  lineref=label+intexpr
+   PASS  I-598  
+I-599/600  indirection of argument
+   PASS  I-599/600  
+
+END OF V1JST3
+
+GTM>
+
+
+V1SVH
+
+V1SVH: TEST OF SPECIAL VARIABLE ( $HOROLOG )
+
+I-793  Format of $H
+   PASS  I-793  
+
+
+
+I-794  Value of $H  (visual)
+       CONFIRM THE FOLLOWING DATE AND TIME BY ACCURATE WATCH
+
+END OF V1SVH
+
+GTM>
+
+
+V1SVS
+
+V1SVS: TEST OF SPECIAL VARIABLE $STORAGE
+
+I-795  Format of $S
+   PASS  I-795  
+I-796  Effect on $STORAGE by setting local variables
+   PASS  I-796.1  "KILL ALL"
+   PASS  I-796.2  "SET A=1234567"
+   PASS  I-796.3  "SET B=$S"
+I-797  Partition size for assurance of routine transferability (4000 Byte)
+   PASS  I-797  
+
+END OF V1SVS
+
+GTM>
+
+
+V1MAX
+
+V1MAX1
+
+V1MAX1: TEST OF MAXIMUM RANGE -1-
+
+I-619  255 characters in one routine line
+
+I-619.1  write command  (visual)
+   THERE SHOULD APPEAR SIX "THIS IS MAXIMUM LENGTH LINE. (255CHAR'S)"'S
+
+THIS IS MAXIMUM LENGTH LINE. (255)
+THIS IS MAXIMUM LENGTH LINE. (255)
+THIS IS MAXIMUM LENGTH LINE. (255)
+THIS IS MAXIMUM LENGTH LINE. (255)
+THIS IS MAXIMUM LENGTH LINE. (255)
+THIS IS MAXIMUM LENGTH LINE. (255)
+END      
+   PASS  I-619.2  set command
+
+I-620  255 characters in one data of lvn
+   PASS  I-620  
+I-621  255 characters in one data of gvn
+   PASS  I-621  
+I-622  numeric range ( 10 power -25 to 10 power 25 )
+   PASS  I-622  
+I-623  significant digit up to 9 digits
+   PASS  I-623.1  local data
+   PASS  I-623.2  global data
+
+
+
+END OF V1MAX1
+
+
+V1MAX2
+
+V1MAX2: TEST OF MAXIMUM RANGE -2-
+
+I-624  9 digits subscript of local variable
+   PASS  I-624  
+I-625  9 digits subscript of global variable
+   PASS  I-625  
+I-626  15 levels subscript of local variable
+   PASS  I-626  
+I-627  15 levels subscript of global variable
+   PASS  I-627  
+
+END OF V1MAX2
+
+GTM>
+
+
+V1BR
+
+V1BR: TEST OF BREAK COMMAND
+
+'*BREAK*' WILL APPEAR IN EVERY OCCURENCE OF ACTIVE BREAK COMMAND.
+WHEN YOU MEET THIS MESSAGE, PLEASE EXECUTE THE COMMAND
+ WHICH WOULD RESUME THE EXECUTION OF THIS ROUTINE.
+IF THE EXECUTION IS INTERRUPTED WITHOUT THIS MESSAGE,
+ IT INDICATES THAT THERE IS SOMETHING WRONG WITH BREAK COMMAND.
+
+I-165/166  breaking point and restarting point
+
+TEST 1: *BREAK*
+%GTM-I-BREAK, Break instruction encountered
+		At M source location 165+2^V1BR
+
+GTM>
+
+   PASS  I-165/166  
+
+I-167  post conditional
+
+TEST 2: *BREAK* (B:1=1  )
+%GTM-I-BREAK, Break instruction encountered
+		At M source location 167+2^V1BR
+
+GTM>
+
+   PASS  I-167.1  postcondition is true
+
+
+
+TEST 3: *BREAK* (B:0  )
+   PASS  I-167.2  postcondition is false
+
+I-168  BREAK in internal routine in DO command
+
+TEST 4: *BREAK* (B  )
+%GTM-I-BREAK, Break instruction encountered
+		At M source location A^V1BR
+
+GTM>
+
+   PASS  I-168  
+
+I-169  BREAK in external routine in DO command
+
+TEST 5: *BREAK*
+%GTM-I-BREAK, Break instruction encountered
+		At M source location V1BR1+2^V1BR1
+
+GTM>
+
+   PASS  I-169  
+
+I-170  BREAK in FOR loop
+
+TEST 6: *BREAK*
+%GTM-I-BREAK, Break instruction encountered
+		At M source location 170+2^V1BR
+
+GTM>
+
+   PASS  I-170  
+
+I-171  BREAK in XECUTE command
+
+TEST 7: *BREAK*
+%GTM-I-BREAK, Break instruction encountered
+		At M source location 171+3^V1BR
+
+GTM>
+
+   PASS  I-171  
+
+END OF V1BR
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+
+VV2CS
+
+VV2CS: TEST OF COMMAND SPACES
+
+II-1  cs between ls and comment
+   PASS  II-1
+II-2  cs between command and command
+   PASS  II-2
+II-3  cs of IF command
+   PASS  II-3
+II-4  cs of ELSE command
+   PASS  II-4
+II-5  cs of FOR - QUIT - DO command
+   PASS  II-5
+II-6  cs between ls and comment in XECUTE command
+   PASS  II-6
+II-7  cs between commands in XECUTE command
+   PASS  II-7
+II-8  cs between commands with indirection argument
+   PASS  II-8
+
+END OF VV2CS
+
+GTM>
+
+
+VV2LCC1
+
+VV2LCC1: TEST OF LOWER CASE LETTER COMMAND WORDS AND $data -1-
+
+II-9  for
+   PASS  II-9
+II-10  f
+   PASS  II-10
+II-11  write  (visual)
+   PASS  II-11
+II-12  w  (visual)
+   PASS  II-12
+II-13/17  do and quit
+   PASS  II-13
+II-14/18   d and q
+   PASS  II-14
+II-15  hang  (visual)
+   PASS  II-15
+II-16  h  (visual)
+   PASS  II-16
+II-19  goto
+   PASS  II-19
+II-20  g
+   PASS  II-20
+
+END OF VV2LCC1
+
+GTM>
+
+
+VV2LCC2
+
+VV2LCC2: TEST OF LOWER CASE LETTER COMMAND WORDS AND $data -2-
+
+II-21  if
+   PASS  II-21
+
+
+II-22  i
+   PASS  II-22
+II-23  else
+   PASS  II-23
+II-24  e
+   PASS  II-24
+II-25  set
+   PASS  II-25
+II-26  s
+   PASS  II-26
+II-27/29  kill and $data
+   PASS  II-27/29
+II-28/30  k and $d
+   PASS  II-28/30
+II-31  xecute
+   PASS  II-31
+II-32  x
+   PASS  II-32
+
+END OF VV2LCC2
+
+GTM>
+
+
+VV2LCF1
+
+VV2LCF1: TEST OF LOWER CASE LETTER FUNCTION NAMES (LESS $data)
+         AND SPECIAL VARIABLES -1-
+
+function names are lower case letters ($a $c $e $f $j $l $n $o $p)
+
+II-33  $ascii
+   PASS  II-33  
+II-34  $a
+   PASS  II-34  
+II-35  $char
+   PASS  II-35  
+II-36  $c
+   PASS  II-36  
+II-37  $extract
+   PASS  II-37  
+II-38  $e
+   PASS  II-38  
+II-39  $find
+   PASS  II-39  
+II-40  $f
+   PASS  II-40  
+II-41  $justify
+   PASS  II-41  
+II-42  $j
+   PASS  II-42  
+II-43  $length
+   PASS  II-43  
+II-44  $l
+   PASS  II-44  
+II-45  $next
+   PASS  II-45  
+
+
+II-46  $n
+   PASS  II-46  
+II-47  $order
+   PASS  II-47  
+II-48  $o
+   PASS  II-48  
+II-49  $piece
+   PASS  II-49  
+II-50  $p
+   PASS  II-50  
+
+END OF VV2LCF1
+
+GTM>
+
+
+VV2LCF2
+
+VV2LCF2: TEST OF LOWER CASE LETTER FUNCTION NAMES (LESS$data)
+         AND SPECIAL VARIABLE NEAMES -2-
+
+function names are lower case letters ($r $s $t)
+
+II-51  $random
+   PASS  II-51  
+II-52  $r
+   PASS  II-52  
+II-53  $select
+   PASS  II-53  
+II-54  $s
+   PASS  II-54  
+II-55  $text
+   PASS  II-55  
+II-56  $t
+   PASS  II-56  
+
+special variable names are lower case letters ($x $y $i $j $h $s $t)
+
+II-57  $x
+   PASS  II-57  
+II-58  $y
+   PASS  II-58  
+II-59  $io
+   PASS  II-59  
+II-60  $i
+   PASS  II-60  
+II-61  $job
+   PASS  II-61  
+II-62  $j
+   PASS  II-62  
+II-63  $horolog
+   PASS  II-63  
+II-64  $h
+   PASS  II-64  
+II-65  $storage
+   PASS  II-65  
+
+
+II-66  $s11
+   PASS  II-66  
+II-67  $test
+   PASS  II-67  
+II-68  $t
+   PASS  II-68  
+
+END OF VV2LCF2
+
+GTM>
+
+
+VV2FN1
+
+VV2FN1: TEST OF FUNCTIONS EXTENDED ($D,$E,$F,$J,$L,$P,$T) -1-
+
+$DATA(glvn)
+
+II-69  Effect of local variable descendant KILL
+   PASS  II-69  
+II-70  Effect of global variable descendant KILL
+   PASS  II-70  
+
+$EXTRACT(expr)
+
+II-71  expr is strlit
+   PASS  II-71  
+II-72  expr is 255 characters
+   PASS  II-72  
+II-73  expr is empty string
+   PASS  II-73  
+II-74  expr is numeric literal
+   PASS  II-74  
+
+$FIND(expr1,expr2,intexpr3)
+
+II-75  intexpr3<0 and expr1 is strlit
+   PASS  II-75  
+II-76  intexpr3<0 and expr1 is variable
+   PASS  II-76  
+
+$JUSTIFY(numexpr1,intexpr2,intexpr3)
+
+II-77  0<numexpr1<1
+   PASS  II-77  
+II-78  -1<numexpr1<0
+   PASS  II-78  
+
+$PIECE(expr1,expr2)
+
+II-91  expr1 and expr2 are strlits
+   PASS  II-91  
+II-92  expr2 is empty string
+   PASS  II-92  
+II-93  expr1 is empty string
+   PASS  II-93  
+
+
+II-94  expr1 and expr2 are variables
+   PASS  II-94  
+
+END OF VV2FN1
+
+GTM>
+
+
+VV2FN2
+
+VV2FN2: TEST OF FUNCTIONS EXTENDED ($D,$E,$F,$J,$L,$P,$T) -2-
+
+
+$LENGTH(expr1,expr2)
+
+II-79  expr1 and expr2 are string literals
+   PASS  II-79  
+II-80  expr2 is empty string
+   PASS  II-80  
+II-81  $L(expr1)<$L(expr2)
+   PASS  II-81  
+II-82  $L(expr1,expr2)=3
+   PASS  II-82  
+II-83  $L(expr1,expr2)=2
+   PASS  II-83  
+II-84  expr1 and expr2 are empty strings
+   PASS  II-84  
+II-85  expr1 is empty string
+   PASS  II-85  
+II-86  $L(expr1,expr2)=1
+   PASS  II-86  
+II-87  expr1 and expr2 are variables
+   PASS  II-87  
+II-88  $L(expr1,expr2)=256
+   PASS  II-88  
+II-89  expr2 is control character
+   PASS  II-89  
+II-90  expr1 is numeric literal
+   PASS  II-90  
+
+$TEXT(+intexpr)  $TEXT(lineref)
+
+II-95  $TEXT
+   PASS  II-95.1  intexpr=0
+   PASS  II-95.2  ls is multi spaces
+
+END OF VV2FN2
+
+GTM>
+
+
+VV2LHP1
+
+VV2LHP1: TEST OF LEFT-HAND $PIECE -1-
+
+$PIECE(glvn,expr1)
+
+II-96  expr1 is string literal
+   PASS  II-96  
+
+
+
+$PIECE(glvn,expr1,intexpr2)
+
+II-97  expr1 is string literal
+   PASS  II-97  
+
+$PIECE(glvn,expr1,intexpr2,intexpr3) K=max(0,$L(glvn,expr1)-1)
+
+II-98  intexpr2>intexpr3
+   PASS  II-98  
+II-99  intexpr3<1
+   PASS  II-99.1  intexpr2=1
+   PASS  II-99.2  intexpr2<intexpr3
+   PASS  II-99.3  intexpr2>intexpr3
+II-100  K<intexpr2-1<intexpr3
+   PASS  II-100.1  K=0
+   PASS  II-100.2  K=1
+   PASS  II-100.3  K=2
+II-101  intexpr2-1<=K<intexpr3
+   PASS  II-101.1  K=0
+   PASS  II-101.2  K=1
+   PASS  II-101.3  K=2
+II-102  intexpr2-1<intexpr3<=K
+   PASS  II-102.1  K=1
+   PASS  II-102.2  K=2
+   PASS  II-102.3  K=5
+II-103  $D(glvn)=0 and intexpr3<1
+   PASS  II-103  
+II-104  $D(glvn)=0 and intexpr2>intexpr3
+   PASS  II-104  
+II-105  $D(glvn)=0 and intexpr3>intexpr2>1
+   PASS  II-105  
+II-106  intexpr2<1
+   PASS  II-106  
+II-107  glvn is naked reference
+   PASS  II-107  
+II-108  Interpretation sequence of subscripted left hand $PIECE
+   PASS  II-108  
+
+END OF VV2LHP1
+
+GTM>
+
+
+VV2LHP2
+
+VV2LHP2: TEST OF LEFT-HAND $PIECE -2-
+
+II-109  Naked indicator when intexpr2>intexpr3
+   PASS  II-109  
+II-110  Naked indicator when intexpr3<1
+   PASS  II-110  
+II-111  Lower case letter left hand "$piece"
+   PASS  II-111  
+II-112  Left hand $PIECE with postcondition
+   PASS  II-112  
+
+
+II-113  Indirection of left hand $PIECE
+   PASS  II-113  
+II-114  expr1 is empty string
+   PASS  II-114  
+II-115  Value of glvn is numeric data
+   PASS  II-115  
+II-116  Control characters are used as delimiters (expr1)
+   PASS  II-116  
+II-117  Value of expr1 contains operators
+   PASS  II-117  
+II-118  intexpr2 and intexpr3 are numlits
+   PASS  II-118  
+II-119  Value of expr1,intexpr2,intexpr3 are functions
+   PASS  II-119.1  $C
+   PASS  II-119.2  $L
+   PASS  II-119.3  $P
+
+END OF VV2LHP2
+
+GTM>
+
+
+VV2VNIA
+
+VV2VNIA: VARIABLE NAME INDIRECTION -1-
+
+@lnamind@(L expr)
+
+II-120  lnamind is lvn
+   PASS  II-120  
+II-121  lnamind is string literal
+   PASS  II-121  
+II-122  lnamind is rexpratom
+   PASS  II-122  
+
+@gnamind@(L expr)
+
+II-123  gnamind is gvn
+   PASS  II-123  
+II-124  gnamind is indirection
+   PASS  II-124  
+II-125  gnamind is 2 levels indirection
+   PASS  II-125  
+II-126  Subscript is variable name indirection
+   PASS  II-126  
+
+@lnamind@(L expr)
+
+II-127  Multi use variable name indirection
+   PASS  II-127  
+
+@gnamind@(L expr)
+
+II-128  Multi use variable name indirection
+   PASS  II-128  
+II-129  Effect of naked indicator by variable name indirection
+   PASS  II-129  
+
+
+
+END OF VV2VNIA
+
+GTM>
+
+
+VV2VNIB
+
+VV2VNIB: VARIABLE NAME INDIRECTION -2-
+
+II-130  Variable name indirection in postcondition
+   PASS  II-130.1  local
+   PASS  II-130.2  global
+   PASS  II-130.3  DO and GOTO command
+II-131  Variable name indirection in expr to the right of the =
+   PASS  II-131  
+II-132  Value of indirection contains variable name indirection
+   PASS  II-132.1  interpretation of indirection
+   PASS  II-132.2  another interpretation of indirection
+   PASS  II-132.3  value of name indirection contains variable name indirection
+
+END OF VV2VNIB
+
+GTM>
+
+
+VV2VNIC
+
+VV2VNIC: VARIABLE NAME INDIRECTION -3-
+
+II-133  Variable name indirection in expr
+   PASS  II-133  
+II-134  Multi-assignment of variable name indirection
+   PASS  II-134  
+II-135  Value of XECUTE argument contains variable name indirection
+   PASS  II-135  
+
+END OF VV2VNIC
+
+GTM>
+
+
+VV2NR
+
+VV2NR: TEST OF NAKED REFERENCES
+
+II-136  Effect of naked reference on KILL command
+   PASS  II-136  
+II-137  Effect of naked reference on $DATA function
+   PASS  II-137  
+II-138  Effect of global reference in $DATA on naked indicator
+   PASS  II-138  
+II-139  Interpretation sequence of SET command
+   PASS  II-139  
+
+END OF VV2NR
+
+GTM>
+
+
+VV2READ - timeouts cannot be automated
+
+VV2READ: TEST OF READ COUNT 
+
+II-140  Terminated by readcount characters
+   read X#3 : TYPE "ABC" AND NEVER TOUCH THE <CR> KEY >
+   PASS  II-140
+
+II-141  Terminated by <CR>
+   r X#10 : TYPE "ABC" AND <CR> KEY >
+   PASS  II-141
+
+II-142  Indirection argument
+   @A (R X#10) : TYPE "ABC" AND <CR> KEY >
+   PASS  II-142
+
+II-143  Terminated by readcount characters
+   r X#3:60 : TYPE "ABC" ONLY WITHIN 60 SECONDS >
+   PASS  II-143
+
+II-144  Terminated by <CR>
+   rEAD X#10:60 : TYPE "ABC" AND <CR> KEY >
+   PASS  II-144
+
+II-145  Terminated by timeout
+   R X#10:15 : TYPE "ABC" ONLY WITHIN 15 SECONDS >
+** FAIL  II-145
+           COMPUTED ="1 ABC"
+           CORRECT  ="0 ABC"
+
+II-146  Test of $TEST  when timeout time is 0
+   R X#10:0 : NEVER TOUCH ANY KEY >
+** FAIL  II-146
+           COMPUTED ="1"
+           CORRECT  ="0"
+
+II-147  Indirection argument
+   @A (R X#10:60.4) : TYPE "ABC" AND <CR> KEY >
+   PASS  II-147
+
+END OF VV2READ
+
+GTM>
+
+
+VV2PAT1
+
+VV2PAT1: TEST OF PATTERN MATCH OPERATOR -1-
+
+II-148  expr ? .intlit2 patcode
+   PASS  II-148  
+II-149  expr ? intlit1.patcode
+   PASS  II-149  
+II-150  expr ? intlit1.intlit2 patcode
+   PASS  II-150  
+II-151  '?
+   PASS  II-151  
+II-152  Multi patatom
+   PASS  II-152  
+II-153  expr ? repcount patcode when expr is empty string
+   PASS  II-153  
+II-154  expr contains control characters
+   PASS  II-154  
+
+
+
+END OF VV2PAT1
+
+GTM>
+
+
+VV2PAT2
+
+VV2PAT2: TEST OF PATTERN MATCH OPERATOR -2-
+
+II-155  Indirection pattern
+   PASS  II-155  
+II-156  Nesting of pattern
+   PASS  II-156  
+II-157  expr is 255 characters
+   PASS  II-157  
+II-158  expr ? repcount strlit when strlit is empty string
+   PASS  II-158  
+II-159  expr ? repcount strlit when expr is empty string
+   PASS  II-159  
+II-160  Lower case letter pattern code "c"
+   PASS  II-160.1  repcount
+   PASS  II-160.2  its mapping
+   PASS  II-160.3  lvn?5c
+II-161  Lower case letter pattern code "p"
+   PASS  II-161.1  repcount
+   PASS  II-161.2  its mapping
+   PASS  II-161.3  lvn?5p
+
+END OF VV2PAT2
+
+GTM>
+
+
+VV2PAT3
+
+VV2PAT3: TEST OF PATTERN MATCH OPERATOR -3-
+
+II-162  Lower case letter pattern code "n"
+   PASS  II-162.1  repcount
+   PASS  II-162.2  its mapping
+   PASS  II-162.3  lvn?5n
+II-163  Lower case letter pattern code "u"
+   PASS  II-163.1  repcount
+   PASS  II-163.2  its mapping
+   PASS  II-163.3  lvn?5u
+II-164  Lower case letter pattern code "l"
+   PASS  II-164.1  repcount
+   PASS  II-164.2  its mapping
+   PASS  II-164.3  lvn?5l
+II-165  Lower case letter pattern code "a"
+   PASS  II-165.1  repcount
+   PASS  II-165.2  its mapping
+   PASS  II-165.3  lvn?5a
+II-166  Lower case letter pattern code "e"
+   PASS  II-166.1  repcount
+
+
+   PASS  II-166.2  its mapping
+   PASS  II-166.3  lvn?5e
+
+END OF VV2PAT3
+
+GTM>
+
+
+VV2NO
+
+VV2NO: TEST OF $NEXT AND $ORDER
+
+ Though the use of "negative numeric subscripts" is restricted in
+Portability Requirements 2.2.3, they are "arbitrarily" tested in $NEXT
+(function under way of being switched to $ORDER).
+Such failures SHOULD NOT be counted as FAILURES.
+
+$NEXT(glvn)
+
+II-167  Sequence from -1 when glvn is lvn
+   PASS  II-167.1  subscript is a string
+   PASS  II-167.2  subscript is one character (all graphic characters)
+II-168  Sequence from -1 when glvn is gvn
+   PASS  II-168.1  subscript is a string
+##SUSPEND_OUTPUT COLLATION
+   PASS  II-168.2  subscript is one character (all graphic characters)
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+** FAIL  II-168.2  subscript is one character (all graphic characters)
+##TEST_AWK.*COMPUTED.*
+           CORRECT  ="0123456789 !"#$%&'()*+,-./:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
+##ALLOW_OUTPUT NON_COLLATION
+
+$ORDER(glvn)
+
+II-169  Sequence from empty string when glvn is lvn
+   PASS  II-169.1  subscript is a string
+   PASS  II-169.2  subscript is one character (all graphic characters)
+II-170  Sequence from empty string when glvn is gvn
+   PASS  II-170.1  subscript is a string
+##SUSPEND_OUTPUT COLLATION
+   PASS  II-170.2  subscript is one character (all graphic characters)
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+** FAIL  II-170.2  subscript is one character (all graphic characters)
+##TEST_AWK.*COMPUTED.*
+           CORRECT  ="0123456789 !"#$%&'()*+,-./:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
+##ALLOW_OUTPUT NON_COLLATION
+
+END OF VV2NO
+
+GTM>
+
+
+VV2SS1
+
+VV2SS1: TEST OF STRING SUBSCRIPT -1-
+
+II-171  Local variable primitive sequence
+   PASS  II-171  
+II-172  Global variable primitive sequence
+##SUSPEND_OUTPUT COLLATION
+   PASS  II-172  
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+** FAIL  II-172
+##TEST_AWK.*COMPUTED.*
+           CORRECT  ="49111111111-251111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+##ALLOW_OUTPUT NON_COLLATION
+II-173  Length of local variable subscript is 31 characters
+   PASS  II-173  
+##SUSPEND_OUTPUT NON_COLLATION
+
+
+##ALLOW_OUTPUT NON_COLLATION
+II-174  Length of local variable is 63 characters
+   PASS  II-174  
+II-175  Length of global variable subscript is 31 characters
+   PASS  II-175  
+II-176  Length of global variable is 63 characters
+   PASS  II-176  
+##SUSPEND_OUTPUT COLLATION
+
+
+##ALLOW_OUTPUT COLLATION
+
+END OF VV2SS1
+
+GTM>
+
+
+VV2SS2
+
+VV2SS2: TEST OF STRING SUBSCRIPT -2-
+
+II-177  Naked reference when length of global variable is 63 characters
+   PASS  II-177  
+II-178  Maximum and minimum number of local variable subscript
+   PASS  II-178  
+II-179  Maximum and minimum number of global variable subscript
+   PASS  II-179  
+II-180  Number of local variable subscripts is 31 (max)
+   PASS  II-180  
+II-181  Number of global variable subscripts is 31 (max)
+   PASS  II-181  
+
+END OF VV2SS2
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

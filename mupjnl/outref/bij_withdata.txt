@@ -1,0 +1,719 @@
+Test case: 04 - bij_withdata
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+Back up the database
+---------------------------------------------------------
+mupip journal -recover -backward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASSED
+
+GTM>
+PASSED
+---------------------------------------------------------
+delete database
+mupip journal -extract -backward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+---------------------------------------------------------
+mupip journal -verify -backward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASSED
+---------------------------------------------------------
+mupip journal -show -backward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                       FALSE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ End of Data                             ##FILTERED##
+ Prev Recovery End of Data                       0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+ End Transaction                               101 [0x0000000000000065]
+ Align size                                2097152 [0x00200000] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      0 [0x0000000000000000]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           0
+   PFIN           0
+   ZTCOM          0
+   KILL           0
+   FKILL          0
+   GKILL          0
+   SET            0
+   FSET           0
+   GSET           0
+   PBLK           0
+   EPOCH          0
+   EOF            0
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           0
+   ALIGN          0
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          0
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASSED
+---------------------------------------------------------
+mupip journal -extract -verify -recover -show -backward mumps.mjl
+This should fail, because there  is no database
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-FILENOTFND, File ##TEST_PATH##/mumps.dat not found
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+---------------------------------------------------------
+Now copy  the backup database
+mupip journal -extract -verify -recover -show -backward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                       FALSE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ End of Data                             ##FILTERED##
+ Prev Recovery End of Data                       0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+ End Transaction                               101 [0x0000000000000065]
+ Align size                                2097152 [0x00200000] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      0 [0x0000000000000000]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           0
+   PFIN           0
+   ZTCOM          0
+   KILL           0
+   FKILL          0
+   GKILL          0
+   SET            0
+   FSET           0
+   GSET           0
+   PBLK           0
+   EPOCH          0
+   EOF            0
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           0
+   ALIGN          0
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          0
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+---------------------------------------------------------
+mupip journal -recover -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##/mumps.mjl has beginning transaction number [0x0000000000000001], but database ##TEST_PATH##/mumps.dat has current transaction number [0x0000000000000065] and journal end transaction number [0x0000000000000001]
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+---------------------------------------------------------
+mupip journal -recover -forward mumps.mjl -nochecktn
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASSED
+---------------------------------------------------------
+mupip journal -extract -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASSED
+---------------------------------------------------------
+mupip journal -verify -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASSED
+---------------------------------------------------------
+mupip journal -show -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                       FALSE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ End of Data                             ##FILTERED##
+ Prev Recovery End of Data                       0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+ End Transaction                               101 [0x0000000000000065]
+ Align size                                2097152 [0x00200000] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      0 [0x0000000000000000]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+Process(es) that are COMPLETE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           2
+   PFIN           2
+   ZTCOM          0
+   KILL           0
+   FKILL          0
+   GKILL          0
+   SET          100
+   FSET           0
+   GSET           0
+   PBLK           2
+   EPOCH          2
+   EOF            1
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           0
+   ALIGN          0
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          0
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASSED
+---------------------------------------------------------
+Now delete database
+Created file ##TEST_PATH##/mumps.dat
+make journal file read-only and then run recover
+mupip journal -recover -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASSED
+
+GTM>
+PASSED
+---------------------------------------------------------
+mupip journal -extract -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASSED
+---------------------------------------------------------
+mupip journal -verify -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASSED
+---------------------------------------------------------
+mupip journal -show -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                       FALSE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ End of Data                             ##FILTERED##
+ Prev Recovery End of Data                       0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+ End Transaction                               101 [0x0000000000000065]
+ Align size                                2097152 [0x00200000] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      0 [0x0000000000000000]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+Process(es) that are COMPLETE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           2
+   PFIN           2
+   ZTCOM          0
+   KILL           0
+   FKILL          0
+   GKILL          0
+   SET          100
+   FSET           0
+   GSET           0
+   PBLK           2
+   EPOCH          2
+   EOF            1
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           0
+   ALIGN          0
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          0
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASSED
+---------------------------------------------------------
+rm: No match.
+Created file ##TEST_PATH##/mumps.dat
+mupip journal -recover -extract -verify -show -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                       FALSE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ End of Data                             ##FILTERED##
+ Prev Recovery End of Data                       0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+ End Transaction                               101 [0x0000000000000065]
+ Align size                                2097152 [0x00200000] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      0 [0x0000000000000000]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+Process(es) that are COMPLETE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           2
+   PFIN           2
+   ZTCOM          0
+   KILL           0
+   FKILL          0
+   GKILL          0
+   SET          100
+   FSET           0
+   GSET           0
+   PBLK           2
+   EPOCH          2
+   EOF            1
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           0
+   ALIGN          0
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          0
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASSED
+---------------------------------------------------------
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+##TEST_AWKTime written into time1.txt:.*
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+GTM>
+##TEST_AWKmupip journal -extract -backward -since=".*" -before=".*" mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+---------------------------------------------------------
+For TR C9C06-002010
+Created file ##TEST_PATH##/mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+
+GTM>
+##TEST_AWKTime written into sincetime.txt:.*
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+
+GTM>
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl_##TIMESTAMP## is renamed to ##TEST_PATH##/rolled_bak_mumps.mjl_##TIMESTAMP##
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+GTM>
+first,third,fourth
+%GTM-E-GVUNDEF, Global variable undefined: ^a(2)
+
+GTM>
+Now extract...
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file c2010.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+End of test
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

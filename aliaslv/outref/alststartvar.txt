@@ -1,0 +1,33 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+Zwrite output BEFORE trestart
+a=1 ;*
+*a(1)=b
+b=29 ;*
+b("a")=457
+*c(2)=b
+
+Zwrite output AFTER  trestart
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=29 ;*
+$ZWRTAC1("a")=457
+*c(2)=b
+$ZWRTAC=""
+
+Zwrite output AFTER  tcommit
+a=1
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=29 ;*
+$ZWRTAC1("a")=457
+kk=3
+$ZWRTAC=""
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

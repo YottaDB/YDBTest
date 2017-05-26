@@ -1,0 +1,76 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+Do cmmit^manyints
+
+Transaction Starts....
+
+$ZTEXIT = notdefined
+
+SIGUSR1 sent to process
+
+
+
+***************************
+Interrupt issued to process
+
+***************************
+
+SIGUSR1 sent to process
+**************************************************************
+
+End of transaction....
+
+$ZTEXIT = notdefined
+
+----------------------------------------------------
+
+
+GTM>
+
+GTM>
+
+commit
+GTM>
+
+GTM>
+
+Do rollbck^manyints
+
+Transaction Starts....
+
+$ZTEXIT = 0
+
+SIGUSR1 sent to process
+
+
+
+***************************
+Interrupt issued to process
+
+***************************
+
+SIGUSR1 sent to process
+**************************************************************
+
+End of transaction....
+
+$ZTEXIT = 0
+
+----------------------------------------------------
+
+
+GTM>
+
+GTM>
+
+commit
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

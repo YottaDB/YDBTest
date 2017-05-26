@@ -1,0 +1,189 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gde23.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gde23.cmd
+%GDE-I-MAPBAD, Region AREG for Name a("a"_$C(0)) does not exist
+%GDE-I-MAPBAD, Region BREG for Name b("a"_$C(0,0)) does not exist
+%GDE-I-MAPBAD, Region CREG for Name c("a"_$C(1)) does not exist
+%GDE-I-MAPBAD, Region DREG for Name d("a"_$C(1,1)) does not exist
+%GDE-I-MAPBAD, Region EREG for Name e("a"_$C(0,1)) does not exist
+%GDE-I-MAPBAD, Region FREG for Name f("a"_$C(1,0)) does not exist
+%GDE-I-MAPBAD, Region GREG for Name g("a"_$C(1,0,1)) does not exist
+%GDE-I-MAPBAD, Region HREG for Name h("a"_$C(0,1,0)) does not exist
+%GDE-I-MAPBAD, Region HREG for Name h("abcdefghijklmnop"_$C(0,1,0)) does not exist
+%GDE-I-MAPBAD, Region HREG for Name h("abcdefghijklmnop"_$C(0,1,0)_"efghijklmnopqrstuvwxyz") does not exist
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^h spans through it
+%GDE-I-STDNULLCOLLREQ, Region HREG needs Standard Null Collation enabled because global ^h spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^g spans through it
+%GDE-I-STDNULLCOLLREQ, Region GREG needs Standard Null Collation enabled because global ^g spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^f spans through it
+%GDE-I-STDNULLCOLLREQ, Region FREG needs Standard Null Collation enabled because global ^f spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^e spans through it
+%GDE-I-STDNULLCOLLREQ, Region EREG needs Standard Null Collation enabled because global ^e spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^d spans through it
+%GDE-I-STDNULLCOLLREQ, Region DREG needs Standard Null Collation enabled because global ^d spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^c spans through it
+%GDE-I-STDNULLCOLLREQ, Region CREG needs Standard Null Collation enabled because global ^c spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^b spans through it
+%GDE-I-STDNULLCOLLREQ, Region BREG needs Standard Null Collation enabled because global ^b spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^a spans through it
+%GDE-I-STDNULLCOLLREQ, Region AREG needs Standard Null Collation enabled because global ^a spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-I-NOEXIT, Cannot exit because of verification failure
+
+
+         *** NAMES ***
+ Global                                                    Region
+ -------------------------------------------------------------------------------------------
+ *                                                         DEFAULT
+ a("a"_$C(0))                                              AREG
+ b("a"_$C(0,0))                                            BREG
+ c("a"_$C(1))                                              CREG
+ d("a"_$C(1,1))                                            DREG
+ e("a"_$C(0,1))                                            EREG
+ f("a"_$C(1,0))                                            FREG
+ g("a"_$C(1,0,1))                                          GREG
+ h("a"_$C(0,1,0))                                          HREG
+ h("abcdefghijklmnop"_$C(0,1,0))                           HREG
+ h("abcdefghijklmnop"_$C(0,1,0)_"efghijklmnopqrstuvwxyz")  HREG
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                                                        Up to                                                        Region / Segment / File(def ext: .dat)
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ %                                                           a("a"_$C(0))                                                 REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ a("a"_$C(0))                                                a("a"_$C(0))++                                               REG = AREG
+                                                                                                                          SEG = AREG
+                                                                                                                          FILE = AREG.dat
+ a("a"_$C(0))++                                              b("a"_$C(0,0))                                               REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ b("a"_$C(0,0))                                              b("a"_$C(0,0))++                                             REG = BREG
+                                                                                                                          SEG = BREG
+                                                                                                                          FILE = BREG.dat
+ b("a"_$C(0,0))++                                            c("a"_$C(1))                                                 REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ c("a"_$C(1))                                                c("a"_$C(1))++                                               REG = CREG
+                                                                                                                          SEG = CREG
+                                                                                                                          FILE = CREG.dat
+ c("a"_$C(1))++                                              d("a"_$C(1,1))                                               REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ d("a"_$C(1,1))                                              d("a"_$C(1,1))++                                             REG = DREG
+                                                                                                                          SEG = DREG
+                                                                                                                          FILE = DREG.dat
+ d("a"_$C(1,1))++                                            e("a"_$C(0,1))                                               REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ e("a"_$C(0,1))                                              e("a"_$C(0,1))++                                             REG = EREG
+                                                                                                                          SEG = EREG
+                                                                                                                          FILE = EREG.dat
+ e("a"_$C(0,1))++                                            f("a"_$C(1,0))                                               REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ f("a"_$C(1,0))                                              f("a"_$C(1,0))++                                             REG = FREG
+                                                                                                                          SEG = FREG
+                                                                                                                          FILE = FREG.dat
+ f("a"_$C(1,0))++                                            g("a"_$C(1,0,1))                                             REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ g("a"_$C(1,0,1))                                            g("a"_$C(1,0,1))++                                           REG = GREG
+                                                                                                                          SEG = GREG
+                                                                                                                          FILE = GREG.dat
+ g("a"_$C(1,0,1))++                                          h("a"_$C(0,1,0))                                             REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ h("a"_$C(0,1,0))                                            h("a"_$C(0,1,0))++                                           REG = HREG
+                                                                                                                          SEG = HREG
+                                                                                                                          FILE = HREG.dat
+ h("a"_$C(0,1,0))++                                          h("abcdefghijklmnop"_$C(0,1,0))                              REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ h("abcdefghijklmnop"_$C(0,1,0))                             h("abcdefghijklmnop"_$C(0,1,0))++                            REG = HREG
+                                                                                                                          SEG = HREG
+                                                                                                                          FILE = HREG.dat
+ h("abcdefghijklmnop"_$C(0,1,0))++                           h("abcdefghijklmnop"_$C(0,1,0)_"efghijklmnopqrstuvwxyz")     REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ h("abcdefghijklmnop"_$C(0,1,0)_"efghijklmnopqrstuvwxyz")    h("abcdefghijklmnop"_$C(0,1,0)_"efghijklmnopqrstuvwxyz")++   REG = HREG
+                                                                                                                          SEG = HREG
+                                                                                                                          FILE = HREG.dat
+ h("abcdefghijklmnop"_$C(0,1,0)_"efghijklmnopqrstuvwxyz")++  ...                                                          REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ LOCAL LOCKS                                                                                                              REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+
+                          *** MAP for region AREG ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ a("a"_$C(0))                    a("a"_$C(0))++                   REG = AREG
+                                                                  SEG = AREG
+                                                                  FILE = AREG.dat
+
+                          *** MAP for region HREG ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                                                        Up to                                                        Region / Segment / File(def ext: .dat)
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ h("a"_$C(0,1,0))                                            h("a"_$C(0,1,0))++                                           REG = HREG
+                                                                                                                          SEG = HREG
+                                                                                                                          FILE = HREG.dat
+ h("abcdefghijklmnop"_$C(0,1,0))                             h("abcdefghijklmnop"_$C(0,1,0))++                            REG = HREG
+                                                                                                                          SEG = HREG
+                                                                                                                          FILE = HREG.dat
+ h("abcdefghijklmnop"_$C(0,1,0)_"efghijklmnopqrstuvwxyz")    h("abcdefghijklmnop"_$C(0,1,0)_"efghijklmnopqrstuvwxyz")++   REG = HREG
+                                                                                                                          SEG = HREG
+                                                                                                                          FILE = HREG.dat
+
+                         *** MAP for region DEFAULT ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                                                        Up to                                                        Region / Segment / File(def ext: .dat)
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ %                                                           a("a"_$C(0))                                                 REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ a("a"_$C(0))++                                              b("a"_$C(0,0))                                               REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ b("a"_$C(0,0))++                                            c("a"_$C(1))                                                 REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ c("a"_$C(1))++                                              d("a"_$C(1,1))                                               REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ d("a"_$C(1,1))++                                            e("a"_$C(0,1))                                               REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ e("a"_$C(0,1))++                                            f("a"_$C(1,0))                                               REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ f("a"_$C(1,0))++                                            g("a"_$C(1,0,1))                                             REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ g("a"_$C(1,0,1))++                                          h("a"_$C(0,1,0))                                             REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ h("a"_$C(0,1,0))++                                          h("abcdefghijklmnop"_$C(0,1,0))                              REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ h("abcdefghijklmnop"_$C(0,1,0))++                           h("abcdefghijklmnop"_$C(0,1,0)_"efghijklmnopqrstuvwxyz")     REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ h("abcdefghijklmnop"_$C(0,1,0)_"efghijklmnopqrstuvwxyz")++  ...                                                          REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+ LOCAL LOCKS                                                                                                              REG = DEFAULT
+                                                                                                                          SEG = DEFAULT
+                                                                                                                          FILE = mumps.dat
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gde23.gld

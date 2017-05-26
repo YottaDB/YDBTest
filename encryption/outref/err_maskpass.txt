@@ -1,0 +1,52 @@
+###################################################################
+Current USER environment variable set to: ##FILTERED##GTM_TEST_DEBUGINFO.*
+Current gtm_dist environment variable set to: ##SOURCE_PATH##
+###################################################################
+
+###################################################################
+Test 1: Unset USER environment variable only. Appropriate error should be issued
+Environment variable USER not set
+###################################################################
+
+###################################################################
+Test 2: Unset gtm_dist environment variable only. Appropriate error should be issued
+Environment variable gtm_dist not set
+###################################################################
+
+###################################################################
+Test 3: Set gtm_dist to a location where mumps executable is not present. Appropriate error should be issued
+Cannot stat ##TEST_PATH##/mumps
+###################################################################
+
+###################################################################
+Test 4: Constructive Testing. Everything is fine in the user environment. Maskpass should just work
+###################################################################
+###################################################################
+Test 5: Constructive Testing. gtm_obfuscation key points to a file with readable contents. Maskpass should just work
+Enter Passphrase: 94C82E6D0C1A02C4EE2058AF
+###################################################################
+###################################################################
+Test 6: Constructive Testing. gtm_obfuscation key points to a file with readable contents. Maskpass should just work
+Enter Passphrase: 560152ACA6022A7032CBAF57
+###################################################################
+###################################################################
+Test 7: Constructive Testing. gtm_obfuscation key points to a file with readable contents. Maskpass should just work
+Enter Passphrase: E810147F7D3D9D34BC14E56A
+###################################################################
+###################################################################
+Test 8: Use invalid value for gtm_obfuscation_key. Maskpass should fall back to using USER and inode
+PASS
+###################################################################
+###################################################################
+Test 9: Use non-existant filename as value for gtm_obfuscation_key. Maskpass should fall back to using USER and inode
+PASS
+###################################################################
+###################################################################
+Test 10: Use an unreadable file as value for gtm_obfuscation_key. Maskpass should fall back to using USER and inode
+PASS
+###################################################################
+###################################################################
+Test 11: Use a non-regular file as value for gtm_obfuscation_key. Maskpass should fall back to using USER and inode
+PASS
+###################################################################
+Test Ends

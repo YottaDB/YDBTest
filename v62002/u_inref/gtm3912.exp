@@ -1,0 +1,20 @@
+set timeout 120
+spawn $env(SHELL)
+send -- "set prompt=\"ZSHOWD>\"\r"
+expect "ZSHOWD>"
+send -- "gtm\r"
+expect "GTM>"
+send -- "set \$etrap=\"use \$principal:width=132 zshow \"\"v\"\"\"\r"
+expect "GTM>"
+send -- "set x=\"the quick brown fox jumped over the lazy dog\"\r"
+expect "GTM>"
+send -- "use \$principal:width=11\r"
+expect "GTM>"
+send -- "zshow \"D\"\r"
+expect "GTM>"
+send -- "use \$principal:width=10\r"
+expect "GTM>"
+send -- "zwrite\r"
+expect "GTM>"
+send -- halt\r
+expect "ZSHOWD>"

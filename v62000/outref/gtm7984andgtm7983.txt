@@ -1,0 +1,255 @@
+a) Test that MUPIP JOURNAL -EXTRACT extracts jnl records > 32Kb in size
+b) Test that DSE DUMP -GLO/-ZWR correctly extracts unsubscripted nodes
+c) Test that piping the output of GT.M or MUPIP or DSE that has lines longer than 32Kb now works fine
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+ -------------------- Record size = 32768 ------------------
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+ --> Test of (c) : MUPIP EXTRACT -STDOUT <-- 
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 3  max subsc len: 9  max rec len: 1000  max node len: 1011
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 3  max subsc len: 985  max rec len: 32768  max node len: 4080
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 6  max subsc len: 985  max rec len: 32768  max node len: 4080
+
+GTM>
+^a="<999 >1"
+^a(1)="<999 >1"
+^a("abcd")="<999 >1"
+^x="<32767 >2"
+^x(1)="<32767 >2"
+^x("<979 >1")="<32767 >2"
+
+GTM>
+ --> Test of (a) : MUPIP JOURNAL -EXTRACT <-- 
+^a="<999 >1"
+^a(1)="<999 >1"
+^a("abcd")="<999 >1"
+^x="<32767 >2"
+^x(1)="<32767 >2"
+^x("<979 >1")="<32767 >2"
+ --> Test of (b) : DSE DUMP -ZWR <-- 
+
+GTM>
+##SUSPEND_OUTPUT NONUNICODE_MODE
+; DSE EXTRACT UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+##SUSPEND_OUTPUT UNICODE_MODE
+; DSE EXTRACT
+##ALLOW_OUTPUT UNICODE_MODE
+; ZWR
+^a="<999 >1"
+^a(1)="<999 >1"
+^a("abcd")="<999 >1"
+
+GTM>
+ --> Test of (b) : DSE DUMP -GLO <-- 
+
+GTM>
+##SUSPEND_OUTPUT UNICODE_MODE
+; DSE EXTRACT
+; GLO
+^a
+<999 >1
+^a(1)
+<999 >1
+^a("abcd")
+<999 >1
+##ALLOW_OUTPUT UNICODE_MODE
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+ -------------------- Record size = 65536 ------------------
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+ --> Test of (c) : MUPIP EXTRACT -STDOUT <-- 
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 3  max subsc len: 9  max rec len: 1000  max node len: 1011
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 3  max subsc len: 985  max rec len: 65536  max node len: 4080
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 6  max subsc len: 985  max rec len: 65536  max node len: 4080
+
+GTM>
+^a="<999 >1"
+^a(1)="<999 >1"
+^a("abcd")="<999 >1"
+^x="<65535 >2"
+^x(1)="<65535 >2"
+^x("<979 >1")="<65535 >2"
+
+GTM>
+ --> Test of (a) : MUPIP JOURNAL -EXTRACT <-- 
+^a="<999 >1"
+^a(1)="<999 >1"
+^a("abcd")="<999 >1"
+^x="<65535 >2"
+^x(1)="<65535 >2"
+^x("<979 >1")="<65535 >2"
+ --> Test of (b) : DSE DUMP -ZWR <-- 
+
+GTM>
+##SUSPEND_OUTPUT NONUNICODE_MODE
+; DSE EXTRACT UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+##SUSPEND_OUTPUT UNICODE_MODE
+; DSE EXTRACT
+##ALLOW_OUTPUT UNICODE_MODE
+; ZWR
+^a="<999 >1"
+^a(1)="<999 >1"
+^a("abcd")="<999 >1"
+
+GTM>
+ --> Test of (b) : DSE DUMP -GLO <-- 
+
+GTM>
+##SUSPEND_OUTPUT UNICODE_MODE
+; DSE EXTRACT
+; GLO
+^a
+<999 >1
+^a(1)
+<999 >1
+^a("abcd")
+<999 >1
+##ALLOW_OUTPUT UNICODE_MODE
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+ -------------------- Record size = 1048576 ------------------
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+ --> Test of (c) : MUPIP EXTRACT -STDOUT <-- 
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 3  max subsc len: 9  max rec len: 1000  max node len: 1011
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 3  max subsc len: 985  max rec len: 1048576  max node len: 4080
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 6  max subsc len: 985  max rec len: 1048576  max node len: 4080
+
+GTM>
+^a="<999 >1"
+^a(1)="<999 >1"
+^a("abcd")="<999 >1"
+^x="<1048575 >2"
+^x(1)="<1048575 >2"
+^x("<979 >1")="<1048575 >2"
+
+GTM>
+ --> Test of (a) : MUPIP JOURNAL -EXTRACT <-- 
+^a="<999 >1"
+^a(1)="<999 >1"
+^a("abcd")="<999 >1"
+^x="<1048575 >2"
+^x(1)="<1048575 >2"
+^x("<979 >1")="<1048575 >2"
+ --> Test of (b) : DSE DUMP -ZWR <-- 
+
+GTM>
+##SUSPEND_OUTPUT NONUNICODE_MODE
+; DSE EXTRACT UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+##SUSPEND_OUTPUT UNICODE_MODE
+; DSE EXTRACT
+##ALLOW_OUTPUT UNICODE_MODE
+; ZWR
+^a="<999 >1"
+^a(1)="<999 >1"
+^a("abcd")="<999 >1"
+
+GTM>
+ --> Test of (b) : DSE DUMP -GLO <-- 
+
+GTM>
+##SUSPEND_OUTPUT UNICODE_MODE
+; DSE EXTRACT
+; GLO
+^a
+<999 >1
+^a(1)
+<999 >1
+^a("abcd")
+<999 >1
+##ALLOW_OUTPUT UNICODE_MODE
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+d) Also test that ZSHOW D for pipe devices display STREAM/NOWRAP as appropriate
+
+
+Open command ----> open dev:(command="ps -ef|grep mumps":readonly:exception="goto done")::"PIPE"
+ZSHOW D output --> gtmProc OPEN PIPE COMMAND="ps -ef|grep mumps" READ EXCE="goto done"
+
+Open command ----> open dev:(command="ps -ef|grep mumps":readonly:wrap:exception="goto done")::"PIPE"
+ZSHOW D output --> gtmProc OPEN PIPE COMMAND="ps -ef|grep mumps" READ EXCE="goto done"
+
+Open command ----> open dev:(command="ps -ef|grep mumps":readonly:nowrap:exception="goto done")::"PIPE"
+ZSHOW D output --> gtmProc OPEN PIPE COMMAND="ps -ef|grep mumps" READ NOWRAP EXCE="goto done"
+
+Open command ----> open dev:(command="ps -ef|grep mumps":readonly:fixed:exception="goto done")::"PIPE"
+ZSHOW D output --> gtmProc OPEN PIPE COMMAND="ps -ef|grep mumps" FIXED READ EXCE="goto done"
+
+Open command ----> open dev:(command="ps -ef|grep mumps":readonly:fixed:wrap:exception="goto done")::"PIPE"
+ZSHOW D output --> gtmProc OPEN PIPE COMMAND="ps -ef|grep mumps" FIXED READ EXCE="goto done"
+
+Open command ----> open dev:(command="ps -ef|grep mumps":readonly:fixed:nowrap:exception="goto done")::"PIPE"
+ZSHOW D output --> gtmProc OPEN PIPE COMMAND="ps -ef|grep mumps" FIXED READ NOWRAP EXCE="goto done"
+
+Open command ----> open dev:(command="ps -ef|grep mumps":readonly:variable:exception="goto done")::"PIPE"
+ZSHOW D output --> gtmProc OPEN PIPE COMMAND="ps -ef|grep mumps" READ EXCE="goto done"
+
+Open command ----> open dev:(command="ps -ef|grep mumps":readonly:variable:wrap:exception="goto done")::"PIPE"
+ZSHOW D output --> gtmProc OPEN PIPE COMMAND="ps -ef|grep mumps" READ EXCE="goto done"
+
+Open command ----> open dev:(command="ps -ef|grep mumps":readonly:variable:nowrap:exception="goto done")::"PIPE"
+ZSHOW D output --> gtmProc OPEN PIPE COMMAND="ps -ef|grep mumps" READ NOWRAP EXCE="goto done"
+
+Open command ----> open dev:(command="ps -ef|grep mumps":readonly:stream:exception="goto done")::"PIPE"
+ZSHOW D output --> gtmProc OPEN PIPE COMMAND="ps -ef|grep mumps" STREAM READ EXCE="goto done"
+
+Open command ----> open dev:(command="ps -ef|grep mumps":readonly:stream:wrap:exception="goto done")::"PIPE"
+ZSHOW D output --> gtmProc OPEN PIPE COMMAND="ps -ef|grep mumps" STREAM READ EXCE="goto done"
+
+Open command ----> open dev:(command="ps -ef|grep mumps":readonly:stream:nowrap:exception="goto done")::"PIPE"
+ZSHOW D output --> gtmProc OPEN PIPE COMMAND="ps -ef|grep mumps" STREAM READ NOWRAP EXCE="goto done"

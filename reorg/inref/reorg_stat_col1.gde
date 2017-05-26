@@ -1,0 +1,30 @@
+change -segment DEFAULT -file_name=mumps.dat
+change -region DEFAULT -collation_default=1
+add -name a* -region=areg
+add -name A* -region=areg
+add -region areg -dyn=aseg
+add -segment aseg -file=a.dat
+! Use this spanning regions configuration to have a static reference file
+! Number of included regions is 2
+!    Region 1 = AREG
+!    Region 2 = DEFAULT
+! Number of sections randomly chosen is 8
+! Map : ^afill(427) maps to DEFAULT
+add -name afill(427:1416) -region=DEFAULT
+! Map : ^afill(1416) maps to AREG
+add -name afill(1416:7411) -region=AREG
+! Map : ^afill(7411) maps to DEFAULT
+add -name afill(7411:9059) -region=DEFAULT
+! Map : ^afill(9059) maps to AREG
+add -name afill(9059:9361) -region=AREG
+! Map : ^afill(9361) maps to DEFAULT
+add -name afill(9361:) -region=DEFAULT
+add -gblname bfill -coll=1
+! Map : ^bfill(4577) maps to AREG
+add -name bfill(4577:5416) -region=AREG
+! Map : ^bfill(5416) maps to DEFAULT
+add -name bfill(5416:8352) -region=DEFAULT
+! Map : ^bfill(8352) maps to AREG
+add -name bfill(8352:) -region=AREG
+change -region AREG -std
+change -region DEFAULT -std

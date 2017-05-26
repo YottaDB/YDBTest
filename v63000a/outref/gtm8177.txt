@@ -1,0 +1,55 @@
+# Create database
+# Freeze replication instance
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log.updproc -message MUINSTFROZEN'==
+# Kill all processes accessing the database file
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP ftok mumps.dat'==
+                File  ::             Semaphore Id  ::         Shared Memory Id  ::                FileId
+---------------------------------------------------------------------------------------------------------------
+##TEST_AWK  *mumps.dat  *::  *[1-9][0-9]*  *\[0x[0-9a-f]*\]  *::  *[1-9][0-9]*  *\[0x[0-9a-f]*\]  *::  *0x[0-9a-f]*
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP ftok -jnlpool mumps.repl'==
+                File  ::             Semaphore Id  ::         Shared Memory Id  ::                FileId
+---------------------------------------------------------------------------------------------------------------
+##TEST_AWK  *mumps.repl  *::  *[1-9][0-9]*  *\[0x[0-9a-f]*\]  *::  *[1-9][0-9]*  *\[0x[0-9a-f]*\]  *::  *0x[0-9a-f]*
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP ftok -recvpool mumps.repl'==
+                File  ::             Semaphore Id  ::         Shared Memory Id  ::                FileId
+---------------------------------------------------------------------------------------------------------------
+##TEST_AWK  *mumps.repl  *::  *[1-9][0-9]*  *\[0x[0-9a-f]*\]  *::  *[1-9][0-9]*  *\[0x[0-9a-f]*\]  *::  *0x[0-9a-f]*
+# Check Freeze, expect frozen
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -source -freeze'==
+Instance Freeze: ON
+ Freeze Comment: gtm8177
+TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
+# Check Passive Source Health, expect no hang
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replicate -source -checkhealth'==
+Warning: Instance Freeze is ON
+   Freeze Comment: gtm8177
+TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
+# Check Freeze, expect no hang
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -source -freeze'==
+Instance Freeze: ON
+ Freeze Comment: gtm8177
+TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
+# Unfreeze
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -source -freeze=off'==
+# Stop Receiver
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -receiv -shutdown -timeout=0'==
+##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating shut down
+##FILTERED##... ... .. ..:..:.. 20.. : Receive pool shared memory removed
+##FILTERED##... ... .. ..:..:.. 20.. : Receive pool semaphore removed
+# Restart Receiver
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##TEST_AWK##TEST_HOST_SHORT##:##REMOTE_TEST_PATH##/instance2/(SUPP_SRC|passive)_[0-9_]*\.log
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
+##TEST_AWK##TEST_HOST_SHORT##:##REMOTE_TEST_PATH##/instance2/RCVR_[0-9_]*\.log\.updproc
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP

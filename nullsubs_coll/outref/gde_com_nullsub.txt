@@ -1,0 +1,735 @@
+
+default value for null_subscripts should be never
+
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ A*                                 AREG
+ a*                                 AREG
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ ASEG                            a.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               A                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ A                               B                                REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ B                               a                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ a                               b                                REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ b                               ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+null_subscript value modified to ALWAYS using GDE add command
+
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ BREG                            BSEG                               0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+null_subscripts values are changed using GDE change command
+
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 EXISTING   N    N   DISABLED DISABLED ENABLED
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+null_subscripts modified using template command
+
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+GDE> 
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+GDE> 
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 EXISTING   N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ CREG                            CSEG                               0      256    64 EXISTING   N    N   DISABLED DISABLED ENABLED
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+null_subs modified with illegeal values.should error out
+
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-E-VALUEBAD, TRUER is not a valid NULL_SUBSCRIPTS
+
+GDE> 
+%GDE-E-VALUEBAD, ALWAYSEVER is not a valid NULL_SUBSCRIPTS
+
+GDE> 
+%GDE-E-VALUEBAD, ALLOWME is not a valid NULL_SUBSCRIPTS
+
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+null_subs modified with old values & -nonull_subscript qualifier without value.Should pass
+
+-null_subscript qualifier without value should fail
+
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+GDE> 
+%GDE-E-VALUEREQD, Qualifier NULL_SUBSCRIPTS requires a value
+
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+Now create the databases
+
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/mumps.dat
+
+modify null_subscripts using DSE CHANGE commands
+
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File            ##TEST_PATH##/a.dat
+Region          AREG
+##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
+  Access method                          BG  Global Buffers                1024
+  Reserved Bytes                          0  Block size (in bytes)         1024
+  Maximum record size                   256  Starting VBN                   513
+  Maximum key size                       64  Total blocks            0x00000065
+  Null subscripts                    ALWAYS  Free blocks             0x00000062
+  Standard Null Collation             FALSE  Free space              0x00000000
+  Last Record Backup     0x0000000000000001  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             1
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  In critical section            0x00000000  Timers pending                   0
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Freeze match                   0x00000000  Flush trigger                  960
+  Current transaction    0x0000000000000001  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+  Create in progress                  FALSE  Modified cache blocks            0
+  Reference count                         1  Wait Disk                        0
+  Journal State                    DISABLED
+  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
+  Mutex Queue Slots                    1024  KILLs in progress                0
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
+  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
+  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+DSE> DSE> 
+File            ##TEST_PATH##/a.dat
+Region          AREG
+##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
+  Access method                          BG  Global Buffers                1024
+  Reserved Bytes                          0  Block size (in bytes)         1024
+  Maximum record size                   256  Starting VBN                   513
+  Maximum key size                       64  Total blocks            0x00000065
+  Null subscripts                    ALWAYS  Free blocks             0x00000062
+  Standard Null Collation             FALSE  Free space              0x00000000
+  Last Record Backup     0x0000000000000001  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             1
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  In critical section            0x00000000  Timers pending                   0
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Freeze match                   0x00000000  Flush trigger                  960
+  Current transaction    0x0000000000000001  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+  Create in progress                  FALSE  Modified cache blocks            0
+  Reference count                         1  Wait Disk                        0
+  Journal State                    DISABLED
+  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
+  Mutex Queue Slots                    1024  KILLs in progress                0
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
+  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
+  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+DSE> DSE> 
+File            ##TEST_PATH##/a.dat
+Region          AREG
+##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
+  Access method                          BG  Global Buffers                1024
+  Reserved Bytes                          0  Block size (in bytes)         1024
+  Maximum record size                   256  Starting VBN                   513
+  Maximum key size                       64  Total blocks            0x00000065
+  Null subscripts                     NEVER  Free blocks             0x00000062
+  Standard Null Collation             FALSE  Free space              0x00000000
+  Last Record Backup     0x0000000000000001  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             1
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  In critical section            0x00000000  Timers pending                   0
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Freeze match                   0x00000000  Flush trigger                  960
+  Current transaction    0x0000000000000001  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+  Create in progress                  FALSE  Modified cache blocks            0
+  Reference count                         1  Wait Disk                        0
+  Journal State                    DISABLED
+  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
+  Mutex Queue Slots                    1024  KILLs in progress                0
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
+  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
+  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+DSE> DSE> 
+File            ##TEST_PATH##/a.dat
+Region          AREG
+##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
+  Access method                          BG  Global Buffers                1024
+  Reserved Bytes                          0  Block size (in bytes)         1024
+  Maximum record size                   256  Starting VBN                   513
+  Maximum key size                       64  Total blocks            0x00000065
+  Null subscripts                     NEVER  Free blocks             0x00000062
+  Standard Null Collation             FALSE  Free space              0x00000000
+  Last Record Backup     0x0000000000000001  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             1
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  In critical section            0x00000000  Timers pending                   0
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Freeze match                   0x00000000  Flush trigger                  960
+  Current transaction    0x0000000000000001  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+  Create in progress                  FALSE  Modified cache blocks            0
+  Reference count                         1  Wait Disk                        0
+  Journal State                    DISABLED
+  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
+  Mutex Queue Slots                    1024  KILLs in progress                0
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
+  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
+  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+DSE> DSE> 
+File            ##TEST_PATH##/a.dat
+Region          AREG
+##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
+  Access method                          BG  Global Buffers                1024
+  Reserved Bytes                          0  Block size (in bytes)         1024
+  Maximum record size                   256  Starting VBN                   513
+  Maximum key size                       64  Total blocks            0x00000065
+  Null subscripts                  EXISTING  Free blocks             0x00000062
+  Standard Null Collation             FALSE  Free space              0x00000000
+  Last Record Backup     0x0000000000000001  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             1
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  In critical section            0x00000000  Timers pending                   0
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Freeze match                   0x00000000  Flush trigger                  960
+  Current transaction    0x0000000000000001  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+  Create in progress                  FALSE  Modified cache blocks            0
+  Reference count                         1  Wait Disk                        0
+  Journal State                    DISABLED
+  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
+  Mutex Queue Slots                    1024  KILLs in progress                0
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
+  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
+  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+DSE> 
+set global variables when null_subscripts=existing
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+use of $incr function , value = 1002
+GTM>
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Existing null subscripts can be  read but a new one cannot be set
+
+GTM>
+1_null
+GTM>
+^a(1,"")="1_null"
+
+GTM>
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: AREG
+%GTM-I-GVIS, 		Global variable: ^a("")
+
+GTM>
+use of $incr function , should error out
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: AREG
+%GTM-I-GVIS, 		Global variable: ^a("",2)
+
+GTM>
+^a(1,"")="1_null"
+^a(1,"",1)="one_null_one"
+^a(2,"")="two_null"
+^a(2,"",1)="two_null_one"
+^a(2,"",1,2)="two_null_one_two"
+^a("",2)=1002
+
+GTM>
+11
+GTM>
+
+GTM>
+10
+GTM>
+
+GTM>
+^a(1,"",1)="one_null_one"
+^a(2,"")="two_null"
+^a("",2)=1002
+
+GTM>
+
+GTM>
+%GTM-E-GVUNDEF, Global variable undefined: ^a
+
+GTM>
+
+check for view  undef/noundef scenario when null_subs=existing
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+%GTM-E-GVUNDEF, Global variable undefined: ^a(1,2,3,"")
+
+GTM>
+0
+GTM>
+default
+GTM>
+
+create a new 6 region gld mapping with null_sub states as follows
+
+AREG -- > NEVER , BREG --> ALWAYS , CREG --> EXISTING , DREG --> TRUE , EREG --> FALSE
+
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/multplreg.gde
+
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+ BREG                            BSEG                               0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+ CREG                            CSEG                               0      256    64 EXISTING   N    N   DISABLED DISABLED ENABLED
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ DREG                            DSEG                               0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+ EREG                            ESEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+create the databases
+
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/c.dat
+Created file ##TEST_PATH##/mumps.dat
+Created file ##TEST_PATH##/d.dat
+Created file ##TEST_PATH##/e.dat
+AREG PASSED
+BREG PASSED
+CREG PASSED
+DREG PASSED
+EREG PASSED
+DEFAULT PASSED
+AREG PASSED for NULCOLLATION
+CREG PASSED for NULCOLLATION
+
+check naked reference for BREG (ALWAYS) & CREG (EXISTING)
+
+
+GTM>
+set  breg  globals with null_subs,naked reference should pass
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Increment function used for BREG(ALWAYS),value is 101
+GTM>
+^bglobalvar(1,"",2,3)="1NULL23"
+^bglobalvar(1,"",2,"hi")="Iam naked referenced for bglobalvar"
+^bglobalvar(4,5,6)="to use later"
+^bglobalvar("",2)=101
+
+GTM>
+set creg globals with null_subs,naked reference should error out
+
+GTM>
+
+GTM>
+
+GTM>
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: CREG
+%GTM-I-GVIS, 		Global variable: ^cregglobalvariable("",2)
+
+GTM>
+Increment function used for CREG(EXISTING),should error out
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: CREG
+%GTM-I-GVIS, 		Global variable: ^cregglobalvariable("",2)
+
+GTM>
+^cregglobalvariable(1,3)=100
+^cregglobalvariable(1,45,"stringme")="I should be set"
+
+GTM>
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+File  	##TEST_PATH##/b.dat
+Region	BREG
+
+DSE> DSE> 
+GTM>
+1NULL23
+GTM>
+set breg globals which is now EXISTING with null_subs,naked reference should error out
+
+GTM>
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: BREG
+%GTM-I-GVIS, 		Global variable: ^bglobalvar(1,"",2,7)
+
+GTM>
+to use later
+GTM>
+set breg globals which is now EXISTING with null_subs,naked reference should error out
+
+GTM>
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: BREG
+%GTM-I-GVIS, 		Global variable: ^bglobalvar(4,5,"")
+
+GTM>
+
+check extended references
+
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/extended.gld
+
+GDE> 
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                            0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/extended.gld
+Created file ##TEST_PATH##/extended.dat
+
+GTM>
+set some null subscripted globals to extended.dat
+
+GTM>
+
+GTM>
+
+GTM>
+Increment function used for extended gld(ALWAYS),value = 201
+GTM>
+
+File  	##TEST_PATH##/extended.dat
+Region	DEFAULT
+
+DSE> DSE> 
+GTM>
+set  null subscripts to extended.dat which is existing. Should Error out
+
+GTM>
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: DEFAULT
+%GTM-I-GVIS, 		Global variable: ^defaultregvariable("")
+
+GTM>
+set  without null subscripts to extended.dat.This should pass
+
+GTM>
+
+GTM>
+201
+GTM>
+Increment function used for extended gld(EXISTING),Should error out
+%GTM-E-NULSUBSC, Null subscripts are not allowed for region: DEFAULT
+%GTM-I-GVIS, 		Global variable: ^defaultregvariable("","extended")
+
+GTM>
+
+GTM>
+zwrite the globals in extended.dat
+
+GTM>
+^defaultregvariable(89,123)="I should be set properly"
+^defaultregvariable("")="iam null"
+^defaultregvariable("","extended")=201
+
+GTM>

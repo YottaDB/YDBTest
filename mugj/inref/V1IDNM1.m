@@ -1,0 +1,68 @@
+V1IDNM1	;NAME LEVEL INDIRECTION -1-;KO-TS,V1IDNM,VALIDATION VERSION 7.1;31-AUG-1987;
+	;COPYRIGHT MUMPS SYSTEM LABORATORY 1978
+	S PASS=0,FAIL=0
+	W !!,"V1IDNM1: TEST OF NAME LEVEL INDIRECTION -1-"
+FOR	W !!,"FOR command",!
+489	W !,"I-489  indirection of lvn"
+	S ITEM="I-489  ",VCOMP=""
+	S A="B",B=0 F @A=1:1:3 S VCOMP=VCOMP_B
+	S VCOMP=VCOMP_" " K B F @A=4:1:6 S VCOMP=VCOMP_B
+	S VCORR="123 456" D EXAMINER
+	;
+490	W !,"I-490  indirection of forparameters"
+	S ITEM="I-490  ",VCOMP=""
+	S C="D1",D="D2",E="D3",D1=4,D2=1,D3=6
+	F B=@C:@D:@E S VCOMP=VCOMP_B
+	S VCOMP=VCOMP_" ",A="B",C="D1",D="D2",E="D3",D1=7,D2=1,D3=10
+	FOR @A=@C:@D:@E SET VCOMP=VCOMP_B
+	S VCORR="456 78910" D EXAMINER
+	;
+491	W !,"I-491  indirection of subscript of lvn"
+	S ITEM="I-491  ",VCOMP="" K A
+	S A(2)="A3",A3=4 F A(@A(2))=1:1:3 S VCOMP=VCOMP_A(4),B(A(4))=A(4)*10
+	S VCOMP=VCOMP_A(4)_" ",A(4)="A(22)" F @A(@A(2))=4:1:7 S VCOMP=VCOMP_A(22)
+	S VCOMP=VCOMP_A(22)_" "
+	S BN1="B(1)",BN3="B(3)" F @A(@A(2))=@BN1:10:@BN3 S VCOMP=VCOMP_A(22)
+	S VCOMP=VCOMP_A(22),VCORR="1233 45677 10203030" D EXAMINER K A,B,BN
+	;
+492	W !,"I-492  value of indirection contains function"
+	S ITEM="I-492  ",VCOMP="",A="@$E(""ABCDEF"",3)",B="@$E(""ABCDEF"",4)",D=4
+	F @A=1:1:@B S VCOMP=VCOMP_C
+	S VCORR="1234" D EXAMINER
+	;
+493	W !,"I-493  value of indirection is gvn"
+	S ITEM="I-493  ",VCOMP=""
+	S A="^V1A(2)",^V1A(2)=100,B="^V1B(C)",^V1B(2)=400,C=00002
+	F I=@A:100:@B S VCOMP=VCOMP_I
+	S VCORR="100200300400" D EXAMINER
+	;
+494	W !,"I-494  value of indirection is lvn"
+	S ITEM="I-494  ",VCOMP=""
+	S A="A(A(1))",A(1)=2,A(2)="20:10:40",B="@A(AA)",AA=11,A(11)="D"
+	F @B=@A,@A:10:$P(A(2),":",3) S VCOMP=VCOMP_D
+	S VCORR="20:10:40203040" D EXAMINER
+	;
+495	W !,"I-495  2 levels of indirection"
+	S ITEM="I-495  ",VCOMP=""
+	S A="B",B="C",C="" F @@A=1:1:5 S VCOMP=VCOMP_C
+	S VCOMP=VCOMP_C_A_B_" "
+	S A(1)="@B(2)",B(2)="D",D=1 FOR @A(1)=6:1:10 S VCOMP=VCOMP_D
+	S VCOMP=VCOMP_D_A(1)_B(2)
+	S VCORR="123455BC 67891010@B(2)D" D EXAMINER
+	;
+496	W !,"I-496  3 levels of indirection"
+	S ITEM="I-496  ",VCOMP=""
+	S A="B",B="C",C="D",D=9 F @@@A=1:1:5 S VCOMP=VCOMP_D
+	S VCOMP=VCOMP_D_A_B_C_" "
+	S A(1)="@B(2)",B(2)="@D",D="E",E=0 FOR @A(1)=6:1:10 S VCOMP=VCOMP_E
+	S VCOMP=VCOMP_E_A(1)_B(2)_D
+	S VCORR="123455BCD 67891010@B(2)@DE" D EXAMINER
+	;
+END	W !!,"END OF V1IDNM1",!
+	S ROUTINE="V1IDNM1",TESTS=8,AUTO=8,VISUAL=0 D ^VREPORT
+	K  K ^V1A,^V1B Q
+	;
+EXAMINER	I VCORR=VCOMP S PASS=PASS+1 W !,"   PASS  ",ITEM W:$Y>55 # Q
+	S FAIL=FAIL+1 W !,"** FAIL  ",ITEM W:$Y>55 #
+	W !,"           COMPUTED =""",VCOMP,"""" W:$Y>55 #
+	W !,"           CORRECT  =""",VCORR,"""" W:$Y>55 #

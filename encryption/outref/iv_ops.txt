@@ -1,0 +1,340 @@
+TEST 1
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Encryption-related fields:
+File  	##TEST_PATH##/mumps.dat
+File            ##TEST_PATH##/mumps.dat
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  DB is (re)encryptable               FALSE
+  DB encryption null IV mode          FALSE
+  DB encryption hash cutoff              -1
+  DB encr hash2 start TN 0x0000000000000000
+##TEST_AWK  Database file encryption hash           [0-9A-F]*
+  Database file encryption hash2          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+# Record decrypted by OpenSSL:
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000    0   8   0  ..  61   0   0  31
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000.*0. 0. 00 .. 61 00 00 31
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+0000010
+
+# Record decrypted by MUPIP CRYPT:
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000    0   8   0  ..  61   0   0  31   a
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000.*0. 0. 00 .. 61 00 00 31 0a
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+0000011
+
+# Do the integrity check:
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+##SUSPEND_OUTPUT HOST_AIX_RS6000
+TEST 2
+# Randomly choose a prior V5 version to create the database first
+
+# Switch to current version
+
+# Update limits and database file header
+
+# Try updating the database
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip downgrade started
+%GTM-I-MUINFOUINT4, V5 supportable record size for current DB configuration  : 1008 [0x000003F0]
+%GTM-I-MUINFOUINT4, V5 supportable max key size for current DB configuration : 255 [0x000000FF]
+%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V5
+
+# Do the integrity check:
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+##ALLOW_OUTPUT HOST_AIX_RS6000
+TEST 3
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Do an extract
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+##TEST_AWK000000..*G   D   S       B   I   N   A   R   Y       E   X   T   R   A
+##TEST_AWK00000...*C   T       L   E   V   E   L       9
+##TEST_AWK00000..
+
+# Record decrypted by OpenSSL:
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000    0   8   0  ..  61   0   0  31
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000.*0. 0. 00 .. 61 00 00 31
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+0000010
+
+# Randomly choose any version prior to V62003
+
+# Attempt a load
+##TEST_AWK%GTM-E-L.*
+
+# Switch to current version
+
+# Do the integrity check:
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+TEST 4
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Do an extract
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+##TEST_AWK000000..*G   D   S       B   I   N   A   R   Y       E   X   T   R   A
+##TEST_AWK00000...*C   T       L   E   V   E   L       8
+##TEST_AWK00000..
+
+# Record decrypted by OpenSSL:
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000    0   8   0  ..  61   0   0  31
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000.*0. 0. 00 .. 61 00 00 31
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+0000010
+
+# Set prior version to V62002
+
+# Attempt a load
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................GT.M MUPIP EXTRACT              
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 3  Max Data Len: 1
+Last LOAD record number: 2
+
+# Switch to current version
+
+# Do the integrity check:
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+TEST 5
+# Randomly choose any version prior to V62003
+
+# Encryption-related fields:
+File  	##TEST_PATH##/mumps.dat
+File            ##TEST_PATH##/mumps.dat
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  DB is (re)encryptable               FALSE
+  DB encryption null IV mode           TRUE
+  DB encryption hash cutoff              -1
+  DB encr hash2 start TN 0x0000000000000000
+##TEST_AWK  Database file encryption hash           [0-9A-F]*
+  Database file encryption hash2          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+# Record decrypted by OpenSSL:
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000    0   8   0  ..  61   0   0  31
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000.*0. 0. 00 .. 61 00 00 31
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+0000010
+
+# Record decrypted by MUPIP CRYPT:
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000    0   8   0  ..  61   0   0  31   a
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000.*0. 0. 00 .. 61 00 00 31 0a
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+0000011
+
+# Do the integrity check:
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+TEST 6
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................GT.M MUPIP EXTRACT              
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 3  Max Data Len: 1
+Last LOAD record number: 2
+
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+
+# Randomly choose any version prior to V62003
+
+# Switch to current version
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................GT.M MUPIP EXTRACT              
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 3  Max Data Len: 1
+Last LOAD record number: 2
+
+# Do the integrity check:
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+TEST 7
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+MUPIP backup of database file ##TEST_PATH##/mumps.dat to mumps.dat.bak
+DB file ##TEST_PATH##/mumps.dat incrementally backed up in file mumps.dat.bak
+5 blocks saved.
+Transactions from 0x0000000000000001 to 0x0000000000000002 are backed up.
+
+
+BACKUP COMPLETED.
+
+##TEST_AWK0000000.*G   D   S   V   7               I   N   C   R   E   M   E   N
+##TEST_AWK0000020.*T   A   L       B   A   C   K   U   P
+0000032
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+
+RESTORE COMPLETED
+5 blocks restored
+
+# Do the integrity check:
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+# Randomly choose any version prior to V62003
+
+# Switch to current version
+##TEST_AWKMinor DB version in the extract \(GDSMV[A-Z0-9]*\) is different from that in the database \(GDSMV[A-Z0-9]*\)
+%GTM-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
+
+# Do the integrity check:
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+# Record decrypted by OpenSSL:
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000    0   8   0  ..  61   0   0  31
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000.*0. 0. 00 .. 61 00 00 31
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+0000010
+
+TEST 8
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+ Journal file encrypted               ##FILTERED##
+ Journal file uses null IV                   FALSE
+
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+# Record decrypted by OpenSSL:
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000    0   0   0   2  61   0   0   0   0   1  31   0
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000.*0. 00 00 0. 61 00 0. 00 00 0. 31 00
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+0000014
+
+# Record decrypted by MUPIP CRYPT:
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000    0   0   0   2  61   0   0   0   0   1  31   0   a
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000.*0. 00 00 0. 61 00 0. 00 00 0. 31 00 0a
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+0000015
+
+# Record decrypted by OpenSSL:
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000    0   8   0  ..  61   0   0  31
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000.*0. 0. 00 .. 61 00 00 31
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+0000010
+
+# Record decrypted by MUPIP CRYPT:
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000    0   8   0  ..  61   0   0  31 .*
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_HP-UX_IA64
+##TEST_AWK0000000.*0. 0. 00 .. 61 00 00 31 .. .. .. .. 0a
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+0000015
+
+# Do the integrity check:
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

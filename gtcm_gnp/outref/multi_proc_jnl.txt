@@ -1,0 +1,148 @@
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
+##GT.CM##mumps.gld
+##GT.CM##Using: ##SOURCE_PATH##/mupip
+Create local (client) database...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+The database layout is:
+ASEG	a.dat
+BSEG	##TEST_REMOTE_NODE_PATH_GTCM##/b.dat
+CSEG	##TEST_REMOTE_NODE_PATH_GTCM##/c.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
+DSEG	##TEST_REMOTE_NODE_PATH_GTCM##/d.dat
+ESEG	##TEST_REMOTE_NODE_PATH_GTCM##/e.dat
+Starting the GT.CM Servers...
+# Start imptp updates
+# independant dbfill program has started in local client, and two remote gtcm servers
+# Switch the journals in the local client
+# Switch the journals on the remote gtcm server 1
+# Switch the journals on the remote gtcm server 2
+# Invoke pini_pfini.csh
+# Now stop all dbfill processes
+# Check the application integrity
+Checking database on ##TEST_PATH##
+
+GTM>
+Verify Pass
+
+GTM>
+Checking database on ##TEST_REMOTE_PATH_GTCM_1##
+
+GTM>
+Verify Pass
+
+GTM>
+Checking database on ##TEST_REMOTE_PATH_GTCM_2##
+
+GTM>
+Verify Pass
+
+GTM>
+# Check the database integrity
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####SOURCE_PATH##/mupip
+##GT.CM####SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ a.dat
+No errors detected by integ.
+# Do Database extract after stopping GTCM servers:
+# Local: ##SOURCE_PATH##/mupip extract back_extr_fail.glo
+%GTM-E-UNIMPLOP, Unimplemented construct encountered
+%GTM-I-TEXT, This utility does not support remote database operations
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/local.gld
+
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/local.gld
+# Local: ##SOURCE_PATH##/mupip extract db_extract.glo
+# Remote: db_extract.csh
+##SUSPEND_OUTPUT JNL_NOBEFORE
+# Local: Do ##SOURCE_PATH##/mupip journal -recover -back '*' :: will fail
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-FILENOTFND, File ##TEST_REMOTE_NODE_PATH_GTCM_2##/b.dat not found
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Remote1: Recover -back
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Remote2: Recover -back
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Do Database extract after recover -back:
+# Local: ##SOURCE_PATH##/mupip extract back.glo
+# Remote: db_extract.csh
+# Local: diff back.glo db_extract.glo
+##ALLOW_OUTPUT JNL_NOBEFORE
+# Local : ##SOURCE_PATH##/mupip create
+Created file ##TEST_PATH##/a.dat
+# Remote1: ##SOURCE_PATH##/mupip create
+# Remote2: ##SOURCE_PATH##/mupip create
+# Local: ##SOURCE_PATH##/mupip journal -recover -forward a_curr.mjl
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+# Remote1: Do ##SOURCE_PATH##/mupip journal -recover -forward c_curr.mjl,e_curr.mjl,mumps_curr.mjl
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+# Remote2: Do ##SOURCE_PATH##/mupip journal -recover -forward b_curr.mjl,d_curr.mjl,mumps_curr.mjl
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+# Do Database extract after recover -forward:
+# Local: ##SOURCE_PATH##/mupip extract forward.glo
+# Remote: db_extract.csh
+Local: diff forward.glo db_extract.glo
+# Remote: diff forward.glo db_extract.glo
+# Now do dbcheck again:
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ a.dat
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Test Finished

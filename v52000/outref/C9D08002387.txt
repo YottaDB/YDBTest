@@ -1,0 +1,53 @@
+##TEST_AWKRandomly chosen prior V5 version is : \[##FILTERED##PRIORVER##\]
+----------------------------------------------------------------------
+# Switch to prior version
+# Start a background job that accesses the db and randomly choose to kill it
+
+Files Created in ##TEST_PATH##:
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/.*
+mumps.gld
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/.*
+mumps.dat
+
+GTM>
+##TEST_AWKRandom choice to kill child process is : [01]
+
+GTM>
+----------------------------------------------------------------------
+# Check if jobbed off child has to be killed (written to the file killchild.choice)
+# If yes, kill the child and wait for it to die
+
+----------------------------------------------------------------------
+# Switch to current version
+# Start a foreground job that accesses the db using the new GT.M version
+# Starting GT.M. Expect a VERMISMATCH error
+
+
+GTM>
+##TEST_AWK%GTM-E-VERMISMATCH, Attempt to access ##TEST_PATH##/mumps.dat with version GT.M V.*
+		At M source location newver+1^c002387
+
+GTM>
+----------------------------------------------------------------------
+# Starting LKE. Expect a VERMISMATCH error
+
+##TEST_AWK%GTM-E-VERMISMATCH, Attempt to access ##TEST_PATH##/mumps.dat with version GT.M V.*
+%GTM-E-DBNOREGION, None of the database regions accessible
+----------------------------------------------------------------------
+# Starting DSE. Expect a VERMISMATCH error
+
+##TEST_AWK%GTM-E-VERMISMATCH, Attempt to access ##TEST_PATH##/mumps.dat with version GT.M V.*
+----------------------------------------------------------------------
+# Starting MUPIP BACKUP. Expect a VERMISMATCH error
+
+##TEST_AWK%GTM-E-VERMISMATCH, Attempt to access ##TEST_PATH##/mumps.dat with version GT.M V.*
+----------------------------------------------------------------------
+# Switch back to prior version
+# Stop background job and cleanup shared memory
+
+----------------------------------------------------------------------
+# Check database integs clean
+
+##TEST_AWK##GTM_LIBRARY_PATH##/.*
+##TEST_AWK##GTM_LIBRARY_PATH##/.*
+No errors detected by integ.

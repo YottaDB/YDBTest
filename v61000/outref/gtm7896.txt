@@ -1,0 +1,57 @@
+###################################################################
+Generating test routine
+###################################################################
+
+
+###################################################################
+Driving generated test routine gtm7896a
+###################################################################
+PASS
+
+
+###################################################################
+Driving test routine gtm7896b
+###################################################################
+		set x="This is a sour"_$ZCH(252)_"e line" set $PIECE(x,"O"_$ZCH(252),1)="*"
+		                                                                      ^-----
+		At column 72, line 24, source module ##IN_TEST_PATH##/inref/gtm7896b.m
+%GTM-W-BADCHAR, $ZCHAR(252) is not a valid character in the UTF-8 encoding form
+		set x="This is a source line" set $PIECE(x,$ZCH(128),1)="*"
+		                                                      ^-----
+		At column 56, line 25, source module ##IN_TEST_PATH##/inref/gtm7896b.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+		set x="This"_$ZCH(253)_"is a source line" set $PIECE(x,$ZCH(252),1)="*"
+		                                                                  ^-----
+		At column 68, line 26, source module ##IN_TEST_PATH##/inref/gtm7896b.m
+%GTM-W-BADCHAR, $ZCHAR(252) is not a valid character in the UTF-8 encoding form
+		set x=$PIECE("This is a source lin"_$ZCH(214),"U"_$ZCH(190),1)
+		                                                             ^-----
+		At column 63, line 35, source module ##IN_TEST_PATH##/inref/gtm7896b.m
+%GTM-W-BADCHAR, $ZCHAR(190) is not a valid character in the UTF-8 encoding form
+		set x=$PIECE("This is a source lin"_$ZCH(214),"U"_$ZCH(190),1)
+		                                                             ^-----
+		At column 63, line 35, source module ##IN_TEST_PATH##/inref/gtm7896b.m
+%GTM-W-BADCHAR, $ZCHAR(214) is not a valid character in the UTF-8 encoding form
+		set x=$PIECE("This is a source line",$ZCH(128),1)
+		                                                ^-----
+		At column 50, line 36, source module ##IN_TEST_PATH##/inref/gtm7896b.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+		set x=$PIECE("This is a source"_$ZCH(137)_"line",$ZCH(135),1)
+		                                                            ^-----
+		At column 62, line 37, source module ##IN_TEST_PATH##/inref/gtm7896b.m
+%GTM-W-BADCHAR, $ZCHAR(135) is not a valid character in the UTF-8 encoding form
+		set x=$PIECE("This is a source"_$ZCH(137)_"line",$ZCH(135),1)
+		                                                            ^-----
+		At column 62, line 37, source module ##IN_TEST_PATH##/inref/gtm7896b.m
+%GTM-W-BADCHAR, $ZCHAR(137) is not a valid character in the UTF-8 encoding form
+		set:0 x=$PIECE("This is a source"_$ZCH(137)_"line",$ZCH(135),1) set pcmdseen=pcmdseen_" *2*"
+		                                                              ^-----
+		At column 64, line 42, source module ##IN_TEST_PATH##/inref/gtm7896b.m
+%GTM-W-BADCHAR, $ZCHAR(137) is not a valid character in the UTF-8 encoding form
+Error handler: $ZSTATUS=150381066,start+7^gtm7896b,%GTM-E-BADCHAR, $ZCHAR(252) is not a valid character in the UTF-8 encoding form
+Error handler: $ZSTATUS=150381066,start+8^gtm7896b,%GTM-E-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+Error handler: $ZSTATUS=150381066,start+9^gtm7896b,%GTM-E-BADCHAR, $ZCHAR(252) is not a valid character in the UTF-8 encoding form
+Error handler: $ZSTATUS=150381066,start+18^gtm7896b,%GTM-E-BADCHAR, $ZCHAR(190) is not a valid character in the UTF-8 encoding form
+Error handler: $ZSTATUS=150381066,start+19^gtm7896b,%GTM-E-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+Error handler: $ZSTATUS=150381066,start+20^gtm7896b,%GTM-E-BADCHAR, $ZCHAR(135) is not a valid character in the UTF-8 encoding form
+pcmdseen="*1* *2*"

@@ -1,0 +1,134 @@
+
+# Create Database
+
+
+# Replication Setup
+
+
+# Start Workers
+
+
+# Freeze
+
+
+# Start Additional Workers
+
+
+# Unfreeze
+
+
+# Stop Workers
+
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+
+# Start New Workers
+
+
+# Freeze for Source Restart
+
+
+# Stop Source Server
+
+----------
+Error REPLINSTFROZEN seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+##FILTERED##... ... .. ..:..:.. 20.. : %GTM-E-REPLINSTFROZEN, Instance INSTANCE1 is now Frozen
+##FILTERED##... ... .. ..:..:.. 20.. : %GTM-E-REPLINSTFROZEN, Instance INSTANCE1 is now Frozen
+----------
+
+# Start Source Server on Frozen Instance
+
+
+# Unfreeze
+
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+
+# Restart Workers
+
+
+# Freeze for Additional Tests
+
+
+# Make a filehader change using DSE
+
+
+# Shutdown Source
+
+----------
+Error REPLINSTFROZEN seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+##FILTERED##... ... .. ..:..:.. 20.. : %GTM-E-REPLINSTFROZEN, Instance INSTANCE1 is now Frozen
+##FILTERED##... ... .. ..:..:.. 20.. : %GTM-E-REPLINSTFROZEN, Instance INSTANCE1 is now Frozen
+----------
+
+# Crash Workers
+
+##TEST_AWKSTOP issued to process [0-9]*
+##TEST_AWKSTOP issued to process [0-9]*
+##TEST_AWKSTOP issued to process [0-9]*
+##TEST_AWKSTOP issued to process [0-9]*
+----------
+Error FORCEDHALT seen in impjob_imptp4.mje1 as expected:
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+----------
+Error FORCEDHALT seen in impjob_imptp4.mje2 as expected:
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+----------
+Error FORCEDHALT seen in impjob_imptp4.mje3 as expected:
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+----------
+Error FORCEDHALT seen in impjob_imptp4.mje4 as expected:
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+
+# Attempt mupip set on Frozen Instance
+
+
+# Unfreeze
+
+MUINSTFROZEN and MUINSTUNFROZEN message seen as expected
+
+# Rollback
+
+
+# Final Check
+
+##SUSPEND_OUTPUT	NON_REPLIC
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replicate -source -freeze'==
+Instance Freeze: ON
+ Freeze Comment: JustTesting
+TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replicate -source -checkhealth'==
+##TEST_AWK##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid \[##PID##\] for secondary instance name \[[^]]*\]
+##TEST_AWKPID ##FILTERED##\[##PID##\] Source server is alive in [A-Z]* mode
+Warning: Instance Freeze is ON
+   Freeze Comment: JustTesting
+TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replicate -source -freeze'==
+Instance Freeze: OFF
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replicate -source -checkhealth'==
+##TEST_AWK##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid \[##PID##\] for secondary instance name \[[^]]*\]
+##TEST_AWKPID ##FILTERED##\[##PID##\] Source server is alive in [A-Z]* mode
+##ALLOW_OUTPUT		NON_REPLIC
+
+# Done

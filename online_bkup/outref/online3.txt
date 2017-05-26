@@ -1,0 +1,108 @@
+ENTERING ONLINE3 basic multiregion and wildcard mapping
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+online3.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+online3.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+online3.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+b.dat
+online3.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+PASS from fill5^myfill("right")
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+
+
+##SUSPEND_OUTPUT  NON_REPLIC
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/online3.mjl is renamed to ##TEST_PATH##/online3.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with .*BEFORE_IMAGES
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/online3.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##ALLOW_OUTPUT  NON_REPLIC
+##SUSPEND_OUTPUT SPANNING_REGIONS
+8 blocks saved.
+8 blocks saved.
+8 blocks saved.
+##ALLOW_OUTPUT SPANNING_REGIONS
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat incrementally backed up in file online3a.inc
+DB file ##TEST_PATH##/b.dat incrementally backed up in file online3b.inc
+DB file ##TEST_PATH##/online3.dat incrementally backed up in file online3d.inc
+##ALLOW_OUTPUT  NON_REPLIC
+MUPIP backup of database file ##TEST_PATH##/a.dat to online3a.inc
+MUPIP backup of database file ##TEST_PATH##/b.dat to online3b.inc
+MUPIP backup of database file ##TEST_PATH##/online3.dat to online3d.inc
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Transactions from 0x0000000000000001 to 0x0000000000000066 are backed up.
+Transactions from 0x0000000000000001 to 0x0000000000000066 are backed up.
+Transactions from 0x0000000000000001 to 0x0000000000000066 are backed up.
+##ALLOW_OUTPUT SPANNING_REGIONS
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/online3.dat
+
+RESTORE COMPLETED
+##SUSPEND_OUTPUT SPANNING_REGIONS
+8 blocks restored
+##ALLOW_OUTPUT SPANNING_REGIONS
+
+GTM>
+^d="This should be in region DEFAULT"
+
+GTM>
+
+RESTORE COMPLETED
+##SUSPEND_OUTPUT SPANNING_REGIONS
+8 blocks restored
+##ALLOW_OUTPUT SPANNING_REGIONS
+
+GTM>
+^a="This should be in region AREG"
+
+GTM>
+
+RESTORE COMPLETED
+##SUSPEND_OUTPUT SPANNING_REGIONS
+8 blocks restored
+##ALLOW_OUTPUT SPANNING_REGIONS
+
+GTM>
+^b="This should be in region BREG"
+
+GTM>
+PASS from fill5^myfill("ver")
+
+GTM>
+LEAVING ONLINE3

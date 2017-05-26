@@ -1,0 +1,17 @@
+#### Test 1 - import_and_sign_key.sh ####
+Test 1 : Passed
+###################################################################
+#### Test 2 - gen_keypair.sh ####
+# Create a new public/private key-pair
+# Verify that the key-pair is usable by creating an encrypted database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# From dse dump output, check if the database is encrypted
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+TEST-I-PASS : Database file is encrypted as expected
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

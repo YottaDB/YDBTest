@@ -1,0 +1,265 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+--------- (a) Test viewfillfactor ------------
+
+Fill factor = 100
+Fill factor = 30
+Fill factor = 60
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+###### GT.M with RESERVED_BYTES=0. Should NOT issue RSVDBYTE2HIGH error ###### 
+
+GTM>
+
+--------- (b1) Test fillfactor -------------------
+
+GTM>
+
+--------- (b2) Test RSVDBYTE2HIGH error at the leaf level -------------------
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 910
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 910
+data1.glo
+^x(2)="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1"
+^x(3)="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1"
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+###### GT.M with RESERVED_BYTES=128. Should issue RSVDBYTE2HIGH error ###### 
+
+GTM>
+
+--------- (b2) Test RSVDBYTE2HIGH error at the leaf level -------------------
+
+GTM>
+
+GTM>
+
+--------- (b1) Test fillfactor -------------------
+
+GTM>
+
+--------- (b2) Test RSVDBYTE2HIGH error at the leaf level -------------------
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 880
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 880
+data2.glo
+^x(2)="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1"
+^x(3)="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1"
+
+###### MUPIP LOAD with RESERVED_BYTES=128. Should issue RSVDBYTE2HIGH error ###### 
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 6  Max Data Len: 900
+Last LOAD record number: 4
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 880
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 880
+
+###### MUPIP LOAD with RESERVED_BYTES=0 and FILLFACTOR=30. Should NOT issue RSVDBYTE2HIGH error ###### 
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 6  Max Data Len: 900
+Last LOAD record number: 4
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 910
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 910
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+GTM>
+
+--------- (b3) Test RSVDBYTE2HIGH error at the index level -------------------
+%GTM-E-RSVDBYTE2HIGH, Record size (260) is greater than the maximum allowed for region DEFAULT with Block size (1024) and Reserved bytes (768),%GTM-I-GVIS, 		Global variable: ^x("                                                                                                                                                                                                                                     2")
+		At M source location data4+8^d002587
+
+GTM>
+
+GTM>
+
+--------- (c) Test emptyrightblock ------------
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
+
+###### MUPIP LOAD with FILLFACTOR=60 ######
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 6  Max Data Len: 500
+Last LOAD record number: 4
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
+data6.glo
+^x(1)="                                                                                                   1"
+^x(2)="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1"
+
+GTM>
+
+--------- (d) Test copyextrarecord ------------
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
+
+GTM>
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 1  max subsc len: 6  max rec len: 500  max node len: 510
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 6  max rec len: 500  max node len: 510
+
+GTM>
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 1  max subsc len: 6  max rec len: 100  max node len: 110
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 6  max rec len: 100  max node len: 110
+
+###### MUPIP LOAD of DATA2 with FILLFACTOR=60 ######
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 6  Max Data Len: 500
+Last LOAD record number: 3
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+###### MUPIP LOAD of DATA1 with FILLFACTOR=30 ######
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 6  Max Data Len: 100
+Last LOAD record number: 3
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
+data8.glo
+^x(1)="                                                                                                   1"
+^x(2)="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1"
+
+GTM>
+
+--------- (e) Test leftsplitLEFTBLOCK ------------
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+GTM>
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+GTM>
+
+--------- (f) Test leftsplitRIGHTBLOCK ------------
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+GTM>
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+GTM>
+
+--------- (g) Test rightsplitLEFTBLOCK ------------
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+GTM>
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

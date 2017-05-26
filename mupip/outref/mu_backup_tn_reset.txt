@@ -1,0 +1,93 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Update some globals to database
+
+GTM>
+
+GTM>
+
+GTM>
+# DSE dump -file
+  Last Record Backup     0x0000000000000001  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             1
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  Current transaction    0x0000000000000003  No. of writes/flush              7
+# Reset transaction mumber
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               3           3.662            NA
+Index               2               2           2.343             2
+Data                2               2           2.929             2
+Free               94              NA              NA            NA
+Total             100               7              NA             4
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+  Last Record Backup     0x0000000000000001  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             1
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  Current transaction    0x0000000000000002  No. of writes/flush              7
+# Try incremental backup after tn_reset, it should take backup
+MUPIP backup of database file ##TEST_PATH##/mumps.dat to inc1.dat
+DB file ##TEST_PATH##/mumps.dat incrementally backed up in file inc1.dat
+7 blocks saved.
+Transactions from 0x0000000000000001 to 0x0000000000000002 are backed up.
+
+
+BACKUP COMPLETED.
+
+# Try incremental backup after immediate backup, it should fail
+
+TRANSACTION number is greater than or equal to current transaction,
+no blocks backed up from database ##TEST_PATH##/mumps.dat
+
+
+BACKUP COMPLETED.
+
+# Integrity check
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               3           3.662            NA
+Index               2               2           2.343             2
+Data                2               2           2.929             2
+Free               94              NA              NA            NA
+Total             100               7              NA             4
+
+GTM>
+
+GTM>
+  Last Record Backup     0x0000000000000002  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             1
+  Last Bytestream Backup 0x0000000000000002  Lock space              0x00000028
+  Current transaction    0x0000000000000003  No. of writes/flush              7
+# Try incremental backup after one more update, it should work
+MUPIP backup of database file ##TEST_PATH##/mumps.dat to inc3.dat
+DB file ##TEST_PATH##/mumps.dat incrementally backed up in file inc3.dat
+5 blocks saved.
+Transactions from 0x0000000000000002 to 0x0000000000000003 are backed up.
+
+
+BACKUP COMPLETED.
+
+# Restore from inc1.dat and inc2.dat
+Created file ##TEST_PATH##/mumps.dat
+
+RESTORE COMPLETED
+12 blocks restored
+
+GTM>
+valueA = 10 valueB =  20 valueC = 30
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# End of subtest

@@ -1,0 +1,182 @@
+#################################################################
+#								#
+# Copyright (c) 2013-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+################
+#IMPORTANT
+# As this file is processed, "check_setenv a b" becomes
+# if ( $?a == 0 ) setenv a b
+# so that already set environment variables are used in the test
+#
+#Also "check_number a x" becomes
+#if ($?a == 0 ) setenv  a x
+#if ( `echo $a | \sed -n '/[^0-9]/p'` != "" ) then
+# setenv  a x
+#endif
+# so that if the already set environment variable is not a number, it is set to x
+# (with the assumption x is a number a will be a number)
+#
+#Be careful about checking values of environment variables here,
+#the request file or the command line are not parsed when this is processed,
+#so values might not be effective yet
+################
+
+# hashed variable names are found in test.csh but not set here
+
+if ($?gtm_tools) then
+   if (-e $gtm_tools/gtm_env.csh) source $gtm_tools/gtm_env.csh  # to get the alias for version and other gt_cc* stuff
+else
+   $tst_awk -f $gtm_test_com_individual/process_defaults.awk $gtm_test_com_individual/gtm_env_missing_csh >! /tmp/__${USER}_test_suite_$$_gtm_env_missing.csh
+   if ($status ) exit $status
+   source /tmp/__${USER}_test_suite_$$_gtm_env_missing.csh
+   set stat = $status
+   if ($stat) exit $stat
+endif
+
+setenv TMP_FILE_PREFIX  "/tmp/__${USER}_test_suite_$$"
+setenv test_list  ${TMP_FILE_PREFIX}_test_list
+setenv test_list_1  ${TMP_FILE_PREFIX}_test_list_1
+setenv exclude_file  ${TMP_FILE_PREFIX}_exclude
+setenv submit_tests  ${TMP_FILE_PREFIX}_submit_tests
+setenv submit_tests_temp  ${TMP_FILE_PREFIX}_submit_tests_temp
+setenv tmpfile  ${TMP_FILE_PREFIX}_tmpfile
+setenv run_all  ${TMP_FILE_PREFIX}_run_all
+#touch $test_list might not be necessary, since rm -f
+#touch'ing some of the files is necessary after removing them,
+#if there is a chance they will not be created
+#actually, is rm necessary if filenames will have $$ in them#ND#
+\rm -f $test_list >& /dev/null
+\rm -f $test_list_1 >& /dev/null
+\rm -f $submit_tests >& /dev/null
+\rm -f $submit_tests_temp >& /dev/null
+\rm -f ${submit_tests_temp}_a >& /dev/null
+\rm -f ${TMP_FILE_PREFIX}_submit_tests_temp1 >& /dev/null
+\rm -f $tmpfile >& /dev/null
+\rm -f $exclude_file >& /dev/null
+\rm -f $run_all >& /dev/null
+\rm -f ${TMP_FILE_PREFIX}_buckets >& /dev/null
+\rm -f ${TMP_FILE_PREFIX}_option_default_1 >& /dev/null
+\rm -f ${TMP_FILE_PREFIX}_option_default_2 >& /dev/null
+\touch $submit_tests
+
+##Version variables
+check_setenv tst_ver $gtm_verno
+
+##Image variables
+if (!($?tst_image)) then
+   if ("$gtm_exe" == "") then
+    setenv tst_image "p" #default
+   else
+    setenv tst_image `basename $gtm_exe`
+   endif
+endif
+
+##Mail variables
+check_setenv mailing_list $USER
+
+## Output directory variables
+if (-e /testarea/$USER) then
+   check_setenv tst_dir "/testarea/$USER"
+else
+   # Cannot find /testarea, using $PWD as test output directory if not set
+   # set \$tst_dir to change
+   check_setenv tst_dir "$PWD"
+   #check_setenv tst_dir "NULL"
+endif
+
+##Test source directory
+check_setenv tst_def_src "T990"
+setenv gtm_tst $gtm_test/$tst_src
+
+###########################################
+#REPLICATION
+#test_repl should be by default non_replic
+#test_replic does not have a meaning at this point, it is set by the test system!
+#test_repl defined reset default_opt_bucket.csh
+
+## Remote user variables
+check_setenv tst_remote_user  $USER
+
+##Remote version
+check_setenv remote_ver "default"
+#test_remote_version this is in fact a better name
+
+
+##Remote image
+check_setenv remote_image $tst_image
+
+##Remote & Local machines
+check_setenv tst_org_host $HOST:r:r:r:r
+check_setenv tst_remote_host $tst_org_host
+check_setenv tst_gtcm_remote_host "default"
+check_setenv tst_gtcm_remote_dir "default"
+
+##Remote Output Dir
+check_setenv tst_remote_dir "default"
+
+##Buffer size, Log, Journaling, Recovery
+check_number tst_buffsize 33554432
+check_setenv tst_rf_log "log"
+
+check_number test_timeout 10800
+check_number gtm_test_disk_limit 524288		# Minimum necessary disk space to start test
+check_number tst_gtcm_trace 0
+check_setenv tst_jnldir "default"
+check_setenv tst_remote_jnldir "default"
+check_setenv tst_bakdir "default"
+check_setenv tst_remote_bakdir "default"
+
+###################################################
+
+#Number of Runs
+check_number test_num_runs "1"
+
+# test_no_background defined: run in the foreground, undefined: run in background
+check_setenv tst_stdout 0
+# test_no_background is background vs foreground process
+# tst_stdout 1 means write to stdout
+check_setenv test_want_concurrency "no"
+check_setenv test_load_dir
+
+# default nice level for tests
+check_setenv gtm_test_nice_level 15
+check_setenv gtm_test_nice_level_reorg 19
+
+#write all configurable options (for each individual test) here
+#LFE is taken care of specially, so that is not in the list
+setenv tst_options_all "test_gtm_gtcm test_reorg test_nice test_repl gtm_test_nolineentry"
+check_setenv bucket ""
+check_setenv LFE "E"
+# these variables are initialized in default_options_csh
+#so that they will be initialized in one place ( to make bucket submission easier)
+#test_gtm_gtcm "GT.M" test_reorg "NON_REORG" test_nice "NICE"
+echo "#check and set options at the beginning">! ${TMP_FILE_PREFIX}_option_default_1
+$tst_awk -f $gtm_test_com_individual/process.awk -f $gtm_test_com_individual/process_defaults.awk $gtm_test_com_individual/default_options_csh >>! ${TMP_FILE_PREFIX}_option_default_1
+source ${TMP_FILE_PREFIX}_option_default_1
+
+
+setenv path_base  "$path"
+
+#tst_updproc used for debugging in replic
+
+# for initial null value (corrected further, this is only for premature exit from EXIT_POINT)
+setenv gtm_tst_out ""
+check_setenv gtm_test_run_time "now"
+
+# Other environment and setup used by the test framework
+check_setenv ggdata $HOME
+check_setenv gtm_test_serverconf_file $gtm_tst/com/gg_servers.txt
+check_setenv gtm_procstuckexec $gtm_tst/com/gtmprocstuck_get_stack_trace.csh
+check_setenv gtm_linktmpdir /tmp/relinkdir/$USER
+
+setenv LC_COLLATE "C"
+setenv gtm_test_os_machtype_all "HOST_LINUX_IA64 HOST_HP-UX_IA64 HOST_AIX_RS6000 HOST_HP-UX_PA_RISC HOST_LINUX_IX86 HOST_LINUX_S390X HOST_LINUX_X86_64"
+setenv gtm_test_os_machtype_all "$gtm_test_os_machtype_all HOST_OS390_S390 HOST_OSF1_ALPHA HOST_SUNOS_SPARC HOST_CYGWIN_IX86"
+

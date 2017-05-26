@@ -1,0 +1,84 @@
+V1IE2	;IF, ELSE AND $TEST -2-;YS-KO-TS,V1IE,VALIDATION VERSION 7.1;31-AUG-1987;
+	;COPYRIGHT MUMPS SYSTEM LABORATORY 1978
+	S PASS=0,FAIL=0
+	W !!,"V1IE2: TEST OF IF, ELSE, $TEST -2-",!
+527	W !,"I-527  argumentless IF command, while $T=0"
+	S ITEM="I-527  ",VCOMP=""
+	I 0 S:1 VCOMP=VCOMP_" " I
+	I  S VCOMP=VCOMP_"!!"
+	I  S VCOMP=VCOMP_"//"_$TEST E  S VCOMP=VCOMP_"//"_$TEST
+	E  S VCOMP=VCOMP_"\\"_$TEST I  S VCOMP=VCOMP_"//"_$TEST
+	S VCORR="\\0" D EXAMINER
+	;
+528	W !,"I-528  equal operator (=) in ifargument"
+	S ITEM="I-528.1  IF $TEST=1",VCOMP="" I 0
+	IF $TEST=1 S VCOMP=VCOMP_"ERROR 530.4"
+	E  S VCOMP=VCOMP_"530.4"
+	S VCORR="530.4" D EXAMINER
+	;
+	S ITEM="I-528.2  ifargument list is true",VCOMP=""
+	I 1=1,2=2,3=3,4=4,-1=-1,0001.0100-1.01=0 S VCOMP=VCOMP_5
+	E  S VCOMP=VCOMP_"ERROR 5"
+	S VCORR="5" D EXAMINER
+	;
+	S ITEM="I-528.3  ifargument list is false",VCOMP=""
+	I 1=1,2=3,3=3,4=4,-1=-1 S VCOMP=VCOMP_"ERROR 6"
+	E  S VCOMP=VCOMP_6
+	S VCORR="6" D EXAMINER
+	;
+	S ITEM="I-528.4  ifargument is 0=""""",VCOMP=""
+	I 0="" S VCOMP=VCOMP_"ERROR 7"
+	E  S VCOMP=VCOMP_7
+	S VCORR="7" D EXAMINER
+	;
+	S ITEM="I-528.5  ifargument contains lvn; all ifargument are true",VCOMP=""
+	S A=1,B=999,C="ABC" I A=1,B=999,C="ABC" S VCOMP=VCOMP_8
+	E  S VCOMP=VCOMP_"ERROR 8"
+	S VCORR="8" D EXAMINER
+	;
+	S ITEM="I-528.6  ifargument contains lvn; a ifargument is false",VCOMP=""
+	S A=1,B=999,C="ABC" I A=1,B=999,C=0 S VCOMP=VCOMP_"ERROR 9"
+	E  S VCOMP=VCOMP_9
+	S VCORR="9" D EXAMINER
+	;
+529	W !,"I-529  effect on $TEST by executing IF command"
+	S ITEM="I-529.1  ifargument is true",VCOMP="" I 1 S VCOMP=VCOMP_$TEST
+	E  S VCOMP=VCOMP_"ERROR 10"
+	S VCORR="1" D EXAMINER
+	;
+	S ITEM="I-529.2  ifargument is false",VCOMP="" I 0 S VCOMP=VCOMP_"ERROR 11"
+	E  S VCOMP=VCOMP_$T
+	S VCORR="0" D EXAMINER
+	;
+530	W !,"I-530  $TEST included in ifargument"
+	S ITEM="I-530.1  $T=1",VCOMP=""
+	I 0
+	I 1,$T S VCOMP=VCOMP_"11"
+	E  S VCOMP=VCOMP_"ERROR 12"
+	S VCORR="11" D EXAMINER
+	;
+	S ITEM="I-530.2  $T=1 another",VCOMP=""
+	I 1
+	I $T,$T S VCOMP=VCOMP_13
+	E  S VCOMP=VCOMP_"ERROR 13"
+	S VCORR="13" D EXAMINER
+	;
+	S ITEM="I-530.3  $T=0",VCOMP=""
+	I 0
+	I '$T,$T,$T S VCOMP=VCOMP_12
+	E  S VCOMP=VCOMP_"ERROR 12"
+	S VCORR="12" D EXAMINER
+	;
+531	W !,"I-531  interpretation sequence of ifargument"
+	S ITEM="I-531  ",VCOMP="" K A I $D(A),A S VCOMP=VCOMP_"ERROR 15"
+	E  S VCOMP=VCOMP_14
+	S VCORR="14" D EXAMINER
+	;
+END	W !!,"END OF V1IE2",!
+	S ROUTINE="V1IE2",TESTS=13,AUTO=13,VISUAL=0 D ^VREPORT
+	K  Q
+	;
+EXAMINER	I VCORR=VCOMP S PASS=PASS+1 W !,"   PASS  ",ITEM W:$Y>55 # Q
+	S FAIL=FAIL+1 W !,"** FAIL  ",ITEM W:$Y>55 #
+	W !,"           COMPUTED =""",VCOMP,"""" W:$Y>55 #
+	W !,"           CORRECT  =""",VCORR,"""" W:$Y>55 #

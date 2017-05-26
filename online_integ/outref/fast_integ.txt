@@ -1,0 +1,42 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Step1: Generate snapshot file for normal integ
+###################################################################
+
+GTM>
+
+GTM>
+# Start the online integ while the background updaters are active
+start database update
+
+GTM>
+
+GTM>
+# Wait for background online integ to complete
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Step2: Generate snapshot file for fast integ
+###################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+start database update
+
+GTM>
+
+GTM>
+# Wait for background online integ to complete
+Correct: Fast integ results in smaller snapshot file
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

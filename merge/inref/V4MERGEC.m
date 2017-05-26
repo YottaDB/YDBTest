@@ -1,0 +1,41 @@
+V4MERGEC ;IW-KO-YS-TS,V4MERGE,MVTS V9.10;15/6/96;PART-94
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+ W !!,"86---V4MERGEC:  MERGE Command  -C-"
+ ;
+1 S ^ABSN="40589",^ITEM="IV-589  $d(gvn)=11 and $d(lvn)=0"
+ S ^NEXT="2^V4MERGEC,V4MERGED^V4MERGE,V4READ^VV4" D ^V4PRESET K  K ^V
+ S ^V(1,1)="V11 ",^V(1,1,1,1)="V1111 ",A(2,1)="A21 "
+ M ^V(1,1)=A(1)
+ S X=$$^V4MERE("^V"),Y=$$^V4MERE("A"),^VCOMP=X_"/"_Y
+ S ^VCORR="11:V11 1111:V1111 /21:A21 " D ^VEXAMINE K ^V
+ ;
+2 S ^ABSN="40590",^ITEM="IV-590  $d(gvn)=11 and $d(lvn)=1"
+ S ^NEXT="3^V4MERGEC,V4MERGED^V4MERGE,V4READ^VV4" D ^V4PRESET K  K ^V
+ S ^V(1)="V1 ",^V(1,1,1)="V111 ",^V(1,1,1,1)="V1111 "
+ S A="A ",A(2,1,1)="A211 "
+ M ^V(1,1,1)=A(2,1,1)
+ S X=$$^V4MERE("^V"),Y=$$^V4MERE("A"),^VCOMP=X_"/"_Y
+ S ^VCORR="1:V1 111:A211 1111:V1111 /:A 211:A211 " D ^VEXAMINE K ^V
+ ;
+3 S ^ABSN="40591",^ITEM="IV-591  $d(gvn)=11 and $d(lvn)=10"
+ S ^NEXT="4^V4MERGEC,V4MERGED^V4MERGE,V4READ^VV4" D ^V4PRESET K  K ^V
+ S ^V(2)="V2 ",^V(2,1)="V21 ",^V(3,1)="V31 ",^V("A")="VA "
+ S A(1)="A1 ",A(1,1,1)="A111 ",A(2)="A2 "
+ m ^V(2)=A(1,1)
+ S X=$$^V4MERE("^V"),Y=$$^V4MERE("A"),^VCOMP=X_"/"_Y
+ S ^VCORR="2:V2 21:A111 31:V31 A:VA /1:A1 111:A111 2:A2 " D ^VEXAMINE K ^V
+ ;
+4 S ^ABSN="40592",^ITEM="IV-592  $d(gvn)=11 and $d(lvn)=11"
+ S ^NEXT="V4MERGED^V4MERGE,V4READ^VV4" D ^V4PRESET K  K ^V
+ S ^V(2)="V2 ",^V(2,1)="V21 ",^V(3,1)="V31 ",^V("A")="VA "
+ S A(1)="A1 ",A(1,1)="A11 ",A(1,1,1)="A111 ",A(2)="A2 "
+ m ^V(2)=A(1,1)
+ S X=$$^V4MERE("^V"),Y=$$^V4MERE("A"),^VCOMP=X_"/"_Y
+ S ^VCORR="2:A11 21:A111 31:V31 A:VA /1:A1 11:A11 111:A111 2:A2 " D ^VEXAMINE K ^V
+ ;
+END W !!,"End of 86 --- V4MERGEC",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

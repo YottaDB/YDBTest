@@ -1,0 +1,15 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Enable replication
+# Start passive source server
+# Start 34000 processes
+# Wait for NOMORESEMCNT message
+# Stop all the processes and wait for them to die
+# Shutdown passive source server
+# Rollback to reset the counter overflow flags
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

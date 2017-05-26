@@ -1,0 +1,61 @@
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+-> OPEN "example_1.txt":(NEWVERSION:RECORDSIZE=100000)
+
+GTM>
+ZSHOW "D" output: example_1.txt OPEN RMS REC=100000 
+
+GTM>
+-> OPEN "example_1.txt":(NEWVERSION:RECORDSIZE=1000000:BIGRECORD)
+
+GTM>
+ZSHOW "D" output: example_1.txt OPEN RMS REC=1000000 
+
+GTM>
+-> OPEN "example_1.txt":(NEWVERSION:RECORDSIZE=5000)
+
+GTM>
+ZSHOW "D" output: example_1.txt OPEN RMS REC=5000 
+
+GTM>
+
+GTM>
+-> OPEN "example_2.txt":(NEWVERSION:RECORDSIZE=50000000)
+%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+		At M source location open+10^io
+
+GTM>
+
+GTM>
+-> OPEN "example_2.txt":(NEWVERSION:RECORDSIZE=1000000)
+
+GTM>
+-> OPEN "example_2.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=1000000)
+
+GTM>
+ZSHOW "D" output: example_2.txt OPEN RMS REC=1000000 
+
+GTM>
+
+GTM>
+-> OPEN "example_3.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=1048576)
+
+GTM>
+ZSHOW "D" output: example_3.txt OPEN RMS REC=1048576 
+
+GTM>
+
+GTM>
+-> OPEN "example_7.txt":(BADDEVPARAM)
+%GTM-E-DEVPARUNK, Deviceparameter unknown
+		At M source location open+10^io
+
+GTM>

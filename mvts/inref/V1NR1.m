@@ -1,0 +1,59 @@
+V1NR1 ;IW-YS-TS,V1NR,MVTS V9.10;15/6/96;NAKED REFERENCE -1-
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1978-1996
+ W !!,"116---V1NR1: Naked references on gvn -1-",!
+648 W !,"I-648  Interpretation sequence of SET command"
+ S ^ABSN="11530",^ITEM="I-648  Interpretation sequence of SET command",^NEXT="649^V1NR1,V1NR2^V1NR,V1NX^VV1" D ^V1PRESET
+ K ^V1A,^V1B
+ S ^V1A(1)=100,^(2)=^(1)+100,^(2,3)=^(1)+130,^(4)=^(3)+10
+ S VCOMP=^V1A(1)_" "_^V1A(2)_" "_^V1A(2,3)_" "_^V1A(2,4)_" "
+ S ^V1B(1)=10000,^(1,2)=^(1)+2000,^(2,3)=^(2)+300,^(3,4)=^(3)+40
+ S VCOMP=VCOMP_^V1B(1)_" "_^V1B(1,2)_" "_^V1B(1,2,3)_" "_^V1B(1,2,3,4)
+ S ^VCOMP=VCOMP,^VCORR="100 200 230 240 10000 12000 12300 12340" D ^VEXAMINE
+ ;
+649 W !,"I-649  Interpretation sequence of subscripted variable"
+6491 S ^ABSN="11531",^ITEM="I-649.1  Local variable's subscript",^NEXT="6492^V1NR1,V1NR2^V1NR,V1NX^VV1" D ^V1PRESET
+ K ^V1A,^V1B
+ S ^V1A(1)=100,^V1B(1,200)=12000,^V1A(2)=200
+ S ^(3)=^V1A(2)+100 S X(^(1))=^V1B(1,^(2))
+ S ^VCOMP=^V1A(3)_" "_X(100),^VCORR="300 12000" D ^VEXAMINE
+ ;
+6492 S ^ABSN="11532",^ITEM="I-649.2  glvn is naked reference",^NEXT="6493^V1NR1,V1NR2^V1NR,V1NX^VV1" D ^V1PRESET
+ K ^V1C
+ S ^V1C(1)=2,^(1,2)=3,^(2,3)=4,^VCOMP=^V1C(1,2,3)_" "_^V1C(1,2)_" "_^V1C(1)
+ S ^VCORR="4 3 2" D ^VEXAMINE
+ ;
+6493 S ^ABSN="11533",^ITEM="I-649.3  Subscripts are naked reference",^NEXT="6494^V1NR1,V1NR2^V1NR,V1NX^VV1" D ^V1PRESET
+ K ^V1CC K ^V1C S ^V1C(1,2)=3,^V1C(1,2,3)=4,^V1C(1)=2
+ S ^V1CC(1)=^(^(1),^(1,2)) S ^VCOMP=^V1CC(1),^VCORR="4" D ^VEXAMINE
+ ;
+6494 S ^ABSN="11534",^ITEM="I-649.4  Nesting naked reference",^NEXT="6495^V1NR1,V1NR2^V1NR,V1NX^VV1" D ^V1PRESET
+ K ^V1C,^V1CC S ^V1C(1)=2,^(1,2)=3,^(2,3)=4,^(4,1)=10 S ^(3,4)=^(2,^(1,^V1C(1)))+^(4,1)
+ S ^VCOMP=^V1C(1,2,4,3,4)_" "
+ S ^V1CC(1)=4,^V1C(1)=2 S ^V1CC(2)="TWO",^V1C(2)="ONE" S ^(^(1))=^V1CC(1)
+ S ^VCOMP=^VCOMP_^V1CC(2) S ^VCORR="14 4" D ^VEXAMINE
+ ;
+6495 S ^ABSN="11535",^ITEM="I-649.5  6 level subscripts",^NEXT="650^V1NR1,V1NR2^V1NR,V1NX^VV1" D ^V1PRESET
+ K ^V1A S ^V1A(1)=1,^(2,3)=23,^(1,2,3,4,5)=^(3)
+ S ^VCOMP=^V1A(1)_" "_^V1A(2,3)_" "_^V1A(2,1,2,3,4,5)
+ S ^VCORR="1 23 23" D ^VEXAMINE
+ ;
+650 W !,"I-650  Effect of global reference in $DATA on naked indicator"
+6501 S ^ABSN="11536",^ITEM="I-650.1  2 level subscripts",^NEXT="6502^V1NR1,V1NR2^V1NR,V1NX^VV1" D ^V1PRESET
+ S VCOMP=""
+ K ^V1A S ^V1A(1,1)=2 S VCOMP=VCOMP_$D(^V1A(1,2)) S ^(3)="B" S VCOMP=VCOMP_^V1A(1,3)
+ K ^V1A S ^V1A(1,1)=1 S VCOMP=VCOMP_$D(^(2)) S ^(3)="A" S VCOMP=VCOMP_^V1A(1,3)
+ S ^VCOMP=VCOMP,^VCORR="0B0A" D ^VEXAMINE
+ ;
+6502 S ^ABSN="11537",^ITEM="I-650.2  A subscript",^NEXT="6503^V1NR1,V1NR2^V1NR,V1NX^VV1" D ^V1PRESET
+ K ^V1A S ^V1A(1,1)=3 S VCOMP=$D(^V1A(0)) S ^(3)="C" S VCOMP=VCOMP_^V1A(3)
+ S ^VCOMP=VCOMP,^VCORR="0C" D ^VEXAMINE
+ ;
+6503 S ^ABSN="11538",^ITEM="I-650.3  2 globals using",^NEXT="V1NR2^V1NR,V1NX^VV1" D ^V1PRESET
+ K ^V1A,^V1B S ^V1A(1,1)=8,^V1B(1,3)="#"
+ S VCOMP=$D(^V1A(1,2)) S ^(3)="I" S VCOMP=VCOMP_^V1B(1,3)_^V1A(1,3)
+ S ^VCOMP=VCOMP,^VCORR="0#I" D ^VEXAMINE
+ ;
+END W !!,"End of 116---V1NR1",!
+ K ^V1A,^V1B,^V1C,^V1CC K  Q
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

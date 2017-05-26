@@ -1,0 +1,36 @@
+V1UO2A	;UNARY OPERATOR -3-;YS-TS,V1UO,VALIDATION VERSION 7.1;31-AUG-1987;
+	;COPYRIGHT MUMPS SYSTEM LABORATORY 1978
+	S PASS=0,FAIL=0
+	W !!,"V1UO2A: TEST OF UNARY OPERATOR -3-",!
+799	W !,"I-799  negate unary operator",!
+7991	W !,"I-799.1  negate unary operator and a numlit"
+	S ITEM="I-799.1.1  -0",VCOMP=-0 S VCORR="0" D EXAMINER
+	S ITEM="I-799.1.2  -1",VCOMP=-1 S VCORR="-1" D EXAMINER
+	S ITEM="I-799.1.3  -intlit",VCOMP=-2 S VCORR="-2" D EXAMINER
+	S ITEM="I-799.1.4  -.intlit",VCOMP=-.2 S VCORR="-.2" D EXAMINER
+	S ITEM="I-799.1.5  -intlit.intlit",VCOMP=-2.2 S VCORR="-2.2" D EXAMINER
+	S ITEM="I-799.1.6  -mantEintlit",VCOMP=-2.2E2 S VCORR="-220" D EXAMINER
+	S ITEM="I-799.1.7  -mantE+intlit",VCOMP=-2.2E+2 S VCORR="-220" D EXAMINER
+	S ITEM="I-799.1.8  -mantE-intlit",VCOMP=-2.2E-2 S VCORR="-.022" D EXAMINER
+	;
+7992	W !,"I-799.2  negate unary operator and a strlit"
+	S ITEM="I-799.2.1  -""0""",VCOMP=-"0",VCORR="0" D EXAMINER
+	S ITEM="I-799.2.2  -""1""",VCOMP=-"1",VCORR="-1" D EXAMINER
+	S ITEM="I-799.2.3  -""intlit""",VCOMP=-"2AB",VCORR="-2" D EXAMINER
+	S ITEM="I-799.2.4  -"".intlit""",VCOMP=-".2ZZZ",VCORR="-.2" D EXAMINER
+	S ITEM="I-799.2.5  -""intlit.intlit""",VCOMP=-"2.2E+FGH",VCORR="-2.2" D EXAMINER
+	S ITEM="I-799.2.6  -""mantEintlit""",VCOMP=-"2.2E2.24S",VCORR="-220" D EXAMINER
+	S ITEM="I-799.2.7  -""mantE+intlit""",VCOMP=-"2.2E+2E45",VCORR="-220" D EXAMINER
+	S ITEM="I-799.2.8  -""mantE-intlit""",VCOMP=-"2.2E-2,000",VCORR="-.022" D EXAMINER
+	S ITEM="I-799.2.9  -empty string",VCOMP=-"",VCORR="0" D EXAMINER
+	S ITEM="I-799.2.10  -""AB2""",VCOMP=-"AB2",VCORR="0" D EXAMINER
+	S ITEM="I-799.2.11  -""2A2B""",VCOMP=-"2A2B",VCORR="-2" D EXAMINER
+	;
+END	W !!,"END OF V1UO2A",!
+	S ROUTINE="V1UO2A",TESTS=19,AUTO=19,VISUAL=0 D ^VREPORT
+	K  Q
+EXAMINER	I VCORR=VCOMP S PASS=PASS+1 W !,"   PASS  ",ITEM W:$Y>55 # Q
+	S FAIL=FAIL+1 W !,"** FAIL  ",ITEM W:$Y>55 #
+	W !,"           COMPUTED =""",VCOMP,"""" W:$Y>55 #
+	W !,"           CORRECT  =""",VCORR,"""" W:$Y>55 #
+	Q

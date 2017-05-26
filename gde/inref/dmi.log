@@ -1,0 +1,212 @@
+	show -all
+!
+!
+!                              *** TEMPLATES ***
+!                                            Def   Rec   Key Null       Standard              Anticipatory
+!Region                                     Coll  Size  Size Subs       NullColl  Journaling  Freeze
+!----------------------------------------------------------------------------------------------------------
+!<default>                                     0   400    64 NEVER      N         N           N
+!
+!Segment          Active              Acc Typ Block      Alloc Exten Options
+!------------------------------------------------------------------------------
+!<default>          *                 BG  DYN  2048        400   100 GLOB = 64
+!                                                                    LOCK = 40
+##TEST_AWK!                                                                    RES  = *[0-9]*
+!                                                                    ENCR = ON
+!                                                                    MSLT =1024
+!<default>                            MM  DYN  1024        100   100 DEFER
+!                                                                    LOCK = 40
+!                                                                    MSLT =1024
+!
+!
+!        *** NAMES ***
+!Global                             Region
+!------------------------------------------------------------------------------
+!*                                  DEFAULT
+!TMP                                MAX_TMP_REG
+!TW*                                MAX_TW_REG
+!arx                                MAX_XRF_REG
+!cd*                                MAX_CD_REG
+!cm*                                MAX_CM_REG
+!jb*                                MAX_CM_REG
+!job*                               MAX_CM_REG
+!mi*                                MAX_CD_REG
+!mm*                                MAX_CD_REG
+!mx                                 MAX_CD_REG
+!or*                                MAX_CM_REG
+!prds                               MAX_TW_REG
+!ptx                                MAX_XRF_REG
+!qu                                 MAX_CM_REG
+!sc*                                MAX_CD_REG
+!sh*                                MAX_CM_REG
+!so*                                MAX_CM_REG
+!tmp                                MAX_TMP_REG
+!tr*                                MAX_TW_REG
+!
+!
+!                               *** REGIONS ***
+!                                Dynamic                          Def    Rec   Key Null       Standard              Anticipatory
+!Region                          Segment                         Coll   Size  Size Subs       NullColl  Journaling  Freeze
+!--------------------------------------------------------------------------------------------------------------------------------
+!DEFAULT                         DEFAULT                            0    400    64 NEVER      N         N           N
+!MAX_CD_REG                      MAX_CD                             0    400    64 NEVER      N         N           N
+!MAX_CM_REG                      MAX_CM                             0    400    64 NEVER      N         N           N
+!MAX_TMP_REG                     MAX_TMP                            0    400   128 NEVER      N         N           N
+!MAX_TW_REG                      MAX_TW                             0    400    64 NEVER      N         N           N
+!MAX_XRF_REG                     MAX_XRF                            0    400   128 NEVER      N         N           N
+!
+!
+!                               *** SEGMENTS ***
+!Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+!-------------------------------------------------------------------------------------------
+!DEFAULT                         max_db.dat          BG  DYN  2048        400   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+!                                                                                   MSLT=1024
+!MAX_CD                          MAX_CD.DAT          BG  DYN  2048        400   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+!                                                                                   MSLT=1024
+!MAX_CM                          MAX_CM.DAT          BG  DYN  2048        400   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+!                                                                                   MSLT=1024
+!MAX_TMP                         MAX_TMP.DAT         BG  DYN  2048        400   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+!                                                                                   MSLT=1024
+!MAX_TW                          MAX_TW.DAT          BG  DYN  2048        400   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+!                                                                                   MSLT=1024
+!MAX_XRF                         MAX_XRF.DAT         BG  DYN  2048        400   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+!                                                                                   MSLT=1024
+!
+!
+!                                 *** MAP ***
+!  -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+!From                            Up to                            Region / Segment / File(def ext: .dat)
+!-----------------------------------------------------------------------------------------------------------------------------------
+!%                               TMP                              REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!TMP                             TMP0                             REG = MAX_TMP_REG
+!                                                                 SEG = MAX_TMP
+!                                                                 FILE = MAX_TMP.DAT
+!TMP0                            TW                               REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!TW                              TX                               REG = MAX_TW_REG
+!                                                                 SEG = MAX_TW
+!                                                                 FILE = MAX_TW.DAT
+!TX                              arx                              REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!arx                             arx0                             REG = MAX_XRF_REG
+!                                                                 SEG = MAX_XRF
+!                                                                 FILE = MAX_XRF.DAT
+!arx0                            cd                               REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!cd                              ce                               REG = MAX_CD_REG
+!                                                                 SEG = MAX_CD
+!                                                                 FILE = MAX_CD.DAT
+!ce                              cm                               REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!cm                              cn                               REG = MAX_CM_REG
+!                                                                 SEG = MAX_CM
+!                                                                 FILE = MAX_CM.DAT
+!cn                              jb                               REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!jb                              jc                               REG = MAX_CM_REG
+!                                                                 SEG = MAX_CM
+!                                                                 FILE = MAX_CM.DAT
+!jc                              job                              REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!job                             joc                              REG = MAX_CM_REG
+!                                                                 SEG = MAX_CM
+!                                                                 FILE = MAX_CM.DAT
+!joc                             mi                               REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!mi                              mj                               REG = MAX_CD_REG
+!                                                                 SEG = MAX_CD
+!                                                                 FILE = MAX_CD.DAT
+!mj                              mm                               REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!mm                              mn                               REG = MAX_CD_REG
+!                                                                 SEG = MAX_CD
+!                                                                 FILE = MAX_CD.DAT
+!mn                              mx                               REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!mx                              mx0                              REG = MAX_CD_REG
+!                                                                 SEG = MAX_CD
+!                                                                 FILE = MAX_CD.DAT
+!mx0                             or                               REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!or                              os                               REG = MAX_CM_REG
+!                                                                 SEG = MAX_CM
+!                                                                 FILE = MAX_CM.DAT
+!os                              prds                             REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!prds                            prds0                            REG = MAX_TW_REG
+!                                                                 SEG = MAX_TW
+!                                                                 FILE = MAX_TW.DAT
+!prds0                           ptx                              REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!ptx                             ptx0                             REG = MAX_XRF_REG
+!                                                                 SEG = MAX_XRF
+!                                                                 FILE = MAX_XRF.DAT
+!ptx0                            qu                               REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!qu                              qu0                              REG = MAX_CM_REG
+!                                                                 SEG = MAX_CM
+!                                                                 FILE = MAX_CM.DAT
+!qu0                             sc                               REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!sc                              sd                               REG = MAX_CD_REG
+!                                                                 SEG = MAX_CD
+!                                                                 FILE = MAX_CD.DAT
+!sd                              sh                               REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!sh                              si                               REG = MAX_CM_REG
+!                                                                 SEG = MAX_CM
+!                                                                 FILE = MAX_CM.DAT
+!si                              so                               REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!so                              sp                               REG = MAX_CM_REG
+!                                                                 SEG = MAX_CM
+!                                                                 FILE = MAX_CM.DAT
+!sp                              tmp                              REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!tmp                             tmp0                             REG = MAX_TMP_REG
+!                                                                 SEG = MAX_TMP
+!                                                                 FILE = MAX_TMP.DAT
+!tmp0                            tr                               REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!tr                              ts                               REG = MAX_TW_REG
+!                                                                 SEG = MAX_TW
+!                                                                 FILE = MAX_TW.DAT
+!ts                              ...                              REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+!LOCAL LOCKS                                                      REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = max_db.dat
+	ex

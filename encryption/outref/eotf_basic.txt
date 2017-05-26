@@ -1,0 +1,31 @@
+Case 1. Reencrypting an encrypted database.
+
+Creating a database.
+
+##TEST_AWKSetting regions encryptable \([0-1]\).
+
+(Re)encrypt regions.
+
+Verify decryption with old and new keys.
+
+Verify decryption with new keys only.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Case 2. Encrypting an unencrypted database.
+
+Creating a database.
+
+##TEST_AWKSetting regions encryptable \([0-1]\).
+
+Encrypt regions.
+
+Verify decryption with old and new keys.
+
+Verify decryption with new keys only.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

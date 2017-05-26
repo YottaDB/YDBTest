@@ -1,0 +1,49 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+acct.gld
+Using: ##SOURCE_PATH##/mupip
+acct.dat
+acnm.dat
+jnl.dat
+mumps.dat
+
+GTM>
+d ^mrtstbld
+ Initializing database
+.. processed 10000 accounts..
+ Initialization complete
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+##SUSPEND_OUTPUT  NON_TP
+d ^mrtptst
+ Spawning tasks and waiting..
+Releasing tasks and waiting..
+ Test complete (PASS)
+##ALLOW_OUTPUT  NON_TP
+
+GTM>
+##SUSPEND_OUTPUT  TP
+d ^mrtst
+ Spawning tasks and waiting..
+Releasing tasks and waiting..
+ Test complete (PASS)
+##ALLOW_OUTPUT  TP
+
+GTM>
+d ^mrverify
+ PBank verify started
+.. processed 10000 accounts..
+ PBank verify ended
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

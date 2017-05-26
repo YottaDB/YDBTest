@@ -1,0 +1,143 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+###################################################################
+Invalid trigger names
+##SUSPEND_OUTPUT UNICODE_MODE
+###################################################################
+Test -name for each -name=$c(i)
+###################################################################
+Test -name for each -name=A_$c(i)
+TFILE FAILED:  9	+'AX'
+ZTR   FAILED:  9	+'AX'
+TFILE FAILED:  10	+'AX'
+TFILE FAILED:  10	-'AX'
+TFILE FAILED:  11	+'AX'
+ZTR   FAILED:  11	+'AX'
+TFILE FAILED:  12	+'AX'
+ZTR   FAILED:  12	+'AX'
+TFILE FAILED:  13	+'AX'
+ZTR   FAILED:  13	+'AX'
+TFILE FAILED:  32	+'A '
+ZTR   FAILED:  32	+'A '
+###################################################################
+Test -name for each -name=A_$c(i)_a
+###################################################################
+Test -name for each -name=$c(i)_a
+###################################################################
+Total triggers:1536
+badleadcheck10add.trg FAIL
+; Testing $char(10) lead=[A] trail=[]
+badleadcheck10rm.trg FAIL
+; Testing removal $char(10) lead=[A] trail=[]
+badleadcheck11add.trg FAIL
+; Testing $char(11) lead=[A] trail=[]
+badleadcheck12add.trg FAIL
+; Testing $char(12) lead=[A] trail=[]
+badleadcheck13add.trg FAIL
+; Testing $char(13) lead=[A] trail=[]
+badleadcheck32add.trg FAIL
+; Testing $char(32) lead=[A] trail=[]
+badleadcheck9add.trg FAIL
+; Testing $char(9) lead=[A] trail=[]
+Failures 7
+Number of times MUPIP rejected invalid names 1529
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+###################################################################
+Test -name for each -name=$c(i)
+###################################################################
+Test -name for each -name=A_$c(i)
+TFILE FAILED:  9	+'AX'
+ZTR   FAILED:  9	+'AX'
+TFILE FAILED:  10	+'AX'
+TFILE FAILED:  10	-'AX'
+TFILE FAILED:  11	+'AX'
+ZTR   FAILED:  11	+'AX'
+TFILE FAILED:  12	+'AX'
+ZTR   FAILED:  12	+'AX'
+TFILE FAILED:  13	+'AX'
+ZTR   FAILED:  13	+'AX'
+TFILE FAILED:  28	+'AX'
+ZTR   FAILED:  28	+'AX'
+TFILE FAILED:  29	+'AX'
+ZTR   FAILED:  29	+'AX'
+TFILE FAILED:  30	+'AX'
+ZTR   FAILED:  30	+'AX'
+TFILE FAILED:  31	+'AX'
+ZTR   FAILED:  31	+'AX'
+TFILE FAILED:  32	+'A '
+ZTR   FAILED:  32	+'A '
+TFILE FAILED:  133	+'AX'
+ZTR   FAILED:  133	+'AX'
+TFILE FAILED:  160	+'A '
+ZTR   FAILED:  160	+'A '
+###################################################################
+Test -name for each -name=A_$c(i)_a
+###################################################################
+Test -name for each -name=$c(i)_a
+###################################################################
+Total triggers:1536
+badleadcheck10add.trg FAIL
+; Testing $char(10) lead=[A] trail=[]
+badleadcheck10rm.trg FAIL
+; Testing removal $char(10) lead=[A] trail=[]
+badleadcheck11add.trg FAIL
+; Testing $char(11) lead=[A] trail=[]
+badleadcheck12add.trg FAIL
+; Testing $char(12) lead=[A] trail=[]
+badleadcheck133add.trg FAIL
+; Testing $char(133) lead=[A] trail=[]
+badleadcheck13add.trg FAIL
+; Testing $char(13) lead=[A] trail=[]
+badleadcheck160add.trg FAIL
+; Testing $char(160) lead=[A] trail=[]
+badleadcheck28add.trg FAIL
+; Testing $char(28) lead=[A] trail=[]
+badleadcheck29add.trg FAIL
+; Testing $char(29) lead=[A] trail=[]
+badleadcheck30add.trg FAIL
+; Testing $char(30) lead=[A] trail=[]
+badleadcheck31add.trg FAIL
+; Testing $char(31) lead=[A] trail=[]
+badleadcheck32add.trg FAIL
+; Testing $char(32) lead=[A] trail=[]
+badleadcheck9add.trg FAIL
+; Testing $char(9) lead=[A] trail=[]
+Failures 13
+Number of times MUPIP rejected invalid names 1523
+##ALLOW_OUTPUT HOST_ALL
+##ALLOW_OUTPUT NONUNICODE_MODE
+###################################################################
+Execute every installed trigger
+###################################################################
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

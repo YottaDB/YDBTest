@@ -1,0 +1,194 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+do ^lkebas
+simple locks
+0   GTM PASS 
+0   LKE PASS
+1   GTM PASS 
+1   LKE PASS
+2   GTM PASS 
+2   LKE PASS
+3   GTM PASS 
+3   LKE PASS
+4   GTM PASS 
+4   LKE PASS
+5   GTM PASS 
+5   LKE PASS
+incremental locks
+1   GTM PASS 
+1   LKE PASS
+2   GTM PASS 
+2   LKE PASS
+3   GTM PASS 
+3   LKE PASS
+4   GTM PASS 
+4   LKE PASS
+5   GTM PASS 
+5   LKE PASS
+decremental locks
+1   GTM PASS 
+1   LKE PASS
+2   GTM PASS 
+2   LKE PASS
+3   GTM PASS 
+3   LKE PASS
+4   GTM PASS 
+4   LKE PASS
+5   GTM PASS 
+5   LKE PASS
+timed locks
+1   GTM PASS 
+1   LKE PASS
+2   GTM PASS 
+2   LKE PASS
+3   GTM PASS 
+3   LKE PASS
+4   GTM PASS 
+4   LKE PASS
+5   GTM PASS 
+5   LKE PASS
+incremental timed locks
+1   GTM PASS 
+1   LKE PASS
+2   GTM PASS 
+2   LKE PASS
+3   GTM PASS 
+3   LKE PASS
+4   GTM PASS 
+4   LKE PASS
+5   GTM PASS 
+5   LKE PASS
+decremental timed locks
+1   GTM PASS 
+1   LKE PASS
+2   GTM PASS 
+2   LKE PASS
+3   GTM PASS 
+3   LKE PASS
+4   GTM PASS 
+4   LKE PASS
+5   GTM PASS 
+5   LKE PASSEnd of lock test
+##SUSPEND_OUTPUT  L
+do ^lkeindr
+
+Test indirection in lock
+
+0   LKE PASS
+0   GTM PASS
+1   LKE PASS
+1   GTM PASS
+2   LKE PASS
+2   GTM PASS
+3   GTM PASS
+4   GTM PASS
+5   LKE PASS
+5   GTM PASS
+6   LKE PASS
+6   GTM PASS
+7   LKE PASS
+7   GTM PASS
+8   LKE PASS
+8   GTM PASS
+9   LKE PASS
+9   GTM PASS
+10   GTM PASS
+11   LKE PASS
+11   GTM PASS
+12   GTM PASS
+13   LKE PASS
+13   GTM PASS
+14   GTM PASS
+15   LKE PASS
+15   GTM PASS
+16   LKE PASS
+16   GTM PASS
+17   LKE PASS
+17   GTM PASS
+18   GTM PASS
+19   GTM PASS
+20   LKE PASS
+20   GTM PASS
+21   LKE PASS
+21   GTM PASS
+22   LKE PASS
+22   GTM PASS
+23   LKE PASS
+23   GTM PASS
+do ^lkesub0
+
+LKE PASS from lkesub0
+LKE PASS from lkesub0
+GTM PASS from lkesub0
+do ^lkewaitp
+
+Test lke wait:
+
+^a, ^b owned by main
+Step 1: LKE will check that parent owns ^a,^b, Job2 waits for ^a
+
+   PASS
+   PASS
+   PASS
+   PASS
+Step 2: ^a is released by main, wait for 2nd process to get it...
+Job2 acquired lock ^a
+Step 3: LKE will check that parent owns ^b, Job2 owns for ^a
+
+   PASS
+   PASS
+   PASS
+   PASS
+2nd Pass of lke wait/clear test:
+Step 4: LKE will check that parent owns ^b, Job2 owns for ^a and Job3 waits for ^a,^b,^c
+
+   PASS
+   PASS
+   PASS
+   PASS
+   PASS
+   PASS
+lke show -all -wait
+
+   PASS
+DEFAULT
+Lock removed : ^b
+
+DEFAULT
+Lock removed : ^a
+Step 5: Cleared all locks of Parent and Job2...
+Step 5: LKE will check that Job3 got all locks on ^a,^b,^c 
+
+   PASS
+   PASS
+   PASS
+   PASS
+   PASS
+   PASS
+Start analyzing *.mjo* and *.mje* files...
+End analyzing *.mjo* and *.mje* files.
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  L
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

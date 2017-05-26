@@ -1,0 +1,87 @@
+PERCENT8	write !,"Test of differentiation between short and long routines",!
+	set unix=$zv'["VMS"
+	set routname="routsmoke"
+	if 'unix set routname=$$FUNC^%UCASE(routname)
+	do LABEL678,^examine(VCOMP,"LABEL678^"_routname,"local short label at "_$ZPOSITION)
+	do LABEL6789,^examine(VCOMP,"LABEL6789^"_routname,"long short label at "_$ZPOSITION)
+	do LABELa789,^examine(VCOMP,"LABELa789^"_routname,"long local short label at "_$ZPOSITION)
+	do LaBeL6789012345678901234,^examine(VCOMP,"LaBeL6789012345678901234^"_routname,"local long label at "_$ZPOSITION)
+	do LABEL67890123456789012345,^examine(VCOMP,"LABEL67890123456789012345^"_routname,"local long label at "_$ZPOSITION)
+	do LABEL678901234567890123456,^examine(VCOMP,"LABEL678901234567890123456^"_routname,"local long label at "_$ZPOSITION)
+	do LABEL6789012345678901234567,^examine(VCOMP,"LABEL6789012345678901234567^"_routname,"local long label at "_$ZPOSITION)
+	do LABEL67890123456789012345678,^examine(VCOMP,"LABEL67890123456789012345678^"_routname,"local long label at "_$ZPOSITION)
+	do LABEL678901234567890123456789,^examine(VCOMP,"LABEL678901234567890123456789^"_routname,"local long label at "_$ZPOSITION)
+	do LABEL6789012345678901234567890,^examine(VCOMP,"LABEL6789012345678901234567890^"_routname,"local long label at "_$ZPOSITION)
+	do LABEL67890123456789012345678901,^examine(VCOMP,"LABEL67890123456789012345678901^"_routname,"local long label at "_$ZPOSITION)
+
+	set routname="rout5678"
+	if 'unix set routname=$$FUNC^%UCASE(routname)
+	do LABEL^rout5678,^examine(VCOMP,"LABEL^"_routname,"short label in short routine at "_$ZPOSITION)
+	do LABEL678^rout5678,^examine(VCOMP,"LABEL678^"_routname,"short label in short routine at "_$ZPOSITION)
+	do LABEL678901234567890121^rout5678,^examine(VCOMP,"LABEL678901234567890121^"_routname,"global long label in short routine at "_$ZPOSITION)
+	do LaBeL6789012345678901234^rout5678,^examine(VCOMP,"LaBeL6789012345678901234^"_routname,"global long label in short routine at "_$ZPOSITION)
+	do LABEL67890123456789012345^rout5678,^examine(VCOMP,"LABEL67890123456789012345^"_routname,"global long label in short routine at "_$ZPOSITION)
+	do LABEL678901234567890123456^rout5678,^examine(VCOMP,"LABEL678901234567890123456^"_routname,"global long label in short routine at "_$ZPOSITION)
+	do LABEL6789012345678901234567^rout5678,^examine(VCOMP,"LABEL6789012345678901234567^"_routname,"global long label in short routine at "_$ZPOSITION)
+	do LABEL67890123456789012345678^rout5678,^examine(VCOMP,"LABEL67890123456789012345678^"_routname,"global long label in short routine at "_$ZPOSITION)
+	do LABEL678901234567890123456789^rout5678,^examine(VCOMP,"LABEL678901234567890123456789^"_routname,"global long label in short routine at "_$ZPOSITION)
+	do LABEL6789012345678901234567890^rout5678,^examine(VCOMP,"LABEL6789012345678901234567890^"_routname,"global long label in short routine at "_$ZPOSITION)
+	do LABEL67890123456789012345678901^rout5678,^examine(VCOMP,"LABEL67890123456789012345678901^"_routname,"global long label in short routine at "_$ZPOSITION)
+
+	set routname="rout56789"
+	if 'unix set routname=$$FUNC^%UCASE(routname)
+	do LABEL^rout56789,^examine(VCOMP,"LABEL^"_routname,"short label in long routine at "_$ZPOSITION)
+	do LABEL678^rout56789,^examine(VCOMP,"LABEL678^"_routname,"short label in long routine at "_$ZPOSITION)
+	do LABEL678901234567890121^rout56789,^examine(VCOMP,"LABEL678901234567890121^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LaBeL6789012345678901234^rout56789,^examine(VCOMP,"LaBeL6789012345678901234^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL67890123456789012345^rout56789,^examine(VCOMP,"LABEL67890123456789012345^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL678901234567890123456^rout56789,^examine(VCOMP,"LABEL678901234567890123456^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL6789012345678901234567^rout56789,^examine(VCOMP,"LABEL6789012345678901234567^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL67890123456789012345678^rout56789,^examine(VCOMP,"LABEL67890123456789012345678^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL678901234567890123456789^rout56789,^examine(VCOMP,"LABEL678901234567890123456789^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL6789012345678901234567890^rout56789,^examine(VCOMP,"LABEL6789012345678901234567890^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL67890123456789012345678901^rout56789,^examine(VCOMP,"LABEL67890123456789012345678901^"_routname,"global long label in long routine at "_$ZPOSITION)
+
+	set routname="rout567890123456789012345678901"
+	if 'unix set routname=$$FUNC^%UCASE(routname)
+	do LABEL^rout567890123456789012345678901,^examine(VCOMP,"LABEL^"_routname,"long label in long routine at "_$ZPOSITION)
+	do LABEL678^rout567890123456789012345678901,^examine(VCOMP,"LABEL678^"_routname,"long label in long routine at "_$ZPOSITION)
+	do LABEL678901234567890121^rout567890123456789012345678901,^examine(VCOMP,"LABEL678901234567890121^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LaBeL6789012345678901234^rout567890123456789012345678901,^examine(VCOMP,"LaBeL6789012345678901234^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL67890123456789012345^rout567890123456789012345678901,^examine(VCOMP,"LABEL67890123456789012345^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL678901234567890123456^rout567890123456789012345678901,^examine(VCOMP,"LABEL678901234567890123456^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL6789012345678901234567^rout567890123456789012345678901,^examine(VCOMP,"LABEL6789012345678901234567^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL67890123456789012345678^rout567890123456789012345678901,^examine(VCOMP,"LABEL67890123456789012345678^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL678901234567890123456789^rout567890123456789012345678901,^examine(VCOMP,"LABEL678901234567890123456789^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL6789012345678901234567890^rout567890123456789012345678901,^examine(VCOMP,"LABEL6789012345678901234567890^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL67890123456789012345678901^rout567890123456789012345678901,^examine(VCOMP,"LABEL67890123456789012345678901^"_routname,"global long label in long routine at "_$ZPOSITION)
+
+	set routname="rout56789012345678901234567890"
+	if 'unix set routname=$$FUNC^%UCASE(routname)
+	do LABEL^rout56789012345678901234567890,^examine(VCOMP,"LABEL^"_routname,"long label in long routine at "_$ZPOSITION)
+	do LABEL678^rout56789012345678901234567890,^examine(VCOMP,"LABEL678^"_routname,"long label in long routine at "_$ZPOSITION)
+	do LABEL678901234567890121^rout56789012345678901234567890,^examine(VCOMP,"LABEL678901234567890121^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LaBeL6789012345678901234^rout56789012345678901234567890,^examine(VCOMP,"LaBeL6789012345678901234^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL67890123456789012345^rout56789012345678901234567890,^examine(VCOMP,"LABEL67890123456789012345^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL678901234567890123456^rout56789012345678901234567890,^examine(VCOMP,"LABEL678901234567890123456^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL6789012345678901234567^rout56789012345678901234567890,^examine(VCOMP,"LABEL6789012345678901234567^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL67890123456789012345678^rout56789012345678901234567890,^examine(VCOMP,"LABEL67890123456789012345678^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL678901234567890123456789^rout56789012345678901234567890,^examine(VCOMP,"LABEL678901234567890123456789^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL6789012345678901234567890^rout56789012345678901234567890,^examine(VCOMP,"LABEL6789012345678901234567890^"_routname,"global long label in long routine at "_$ZPOSITION)
+	do LABEL67890123456789012345678901^rout56789012345678901234567890,^examine(VCOMP,"LABEL67890123456789012345678901^"_routname,"global long label in long routine at "_$ZPOSITION)
+	
+	if ""=$GET(errcnt) write "PASS",!
+
+LABELa7890123456789012345678901 set VCOMP="LABELa7890123456789012345678901^"_routname quit
+LABEL67890123456789012345678901 set VCOMP=$ZPOSITION quit
+LABEL6789012345678901234567890	set VCOMP="LABEL6789012345678901234567890^"_routname quit
+LABEL678901234567890123456789	set VCOMP="LABEL678901234567890123456789^"_routname quit
+LABEL67890123456789012345678	set VCOMP="LABEL67890123456789012345678^"_routname quit
+LABEL6789012345678901234567	set VCOMP="LABEL6789012345678901234567^"_routname quit
+LABEL678901234567890123456	set VCOMP="LABEL678901234567890123456^"_routname quit
+LABEL67890123456789012345	set VCOMP="LABEL67890123456789012345^"_routname quit
+LaBeL6789012345678901234	set VCOMP="LaBeL6789012345678901234^"_routname quit
+LABEL6789		        set VCOMP="LABEL6789^"_routname quit
+LABELa789		        set VCOMP=$ZPOSITION quit
+LABEL678		        set VCOMP=$ZPOSITION quit
+	quit

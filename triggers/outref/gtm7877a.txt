@@ -1,0 +1,104 @@
+# Have span.gld with the mappings below - to be used by all the test cases below
+# GBL -> REG1 ; GBL(1) -> REG1 ; GBL(2) -> REG2
+###################################################################
+# Test 1 :
+# Install a trigger with name gblname1 using a nonspanning gld pointing GBL to REG3
+# Using spanning gld that has REG3 but GBL does not span to REG3, install a different trigger with same name
+# Expect it to error out since a different trigger with same name already exisits in one of the regions
+# Have nonspan.gld with GBL -> REG3
+# Using nonspan.gld install a trigger for ^GBL with the name gblname1
+File gblname1.trg, Line 1: Added SET trigger on ^GBL named gblname1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Using span.gld, try intalling the same trigger with the same name
+File gblname2.trg, Line 1: Error : SET trigger on ^GBL (region REG1) not added as another trigger named gblname1 already exists
+File gblname2.trg, Line 1: Error : SET trigger on ^GBL (region REG2) not added as another trigger named gblname1 already exists
+=========================================
+1 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+Output File: 
+;trigger name: gblname1 (region REG3)  cycle: 1
++^GBL(1) -name=gblname1 -commands=S -xecute="do ^nothing"
+###################################################################
+# Test 2 :
+# Same as Test 1 above, but install the exact same trigger with spanning regions
+# Expect it to work this time, as the trigger signature is the same
+# Using nonspan.gld install a trigger for ^GBL with the name gblname1
+File gblname1.trg, Line 1: Added SET trigger on ^GBL named gblname1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Using span.gld, try intalling the same trigger with the same name
+File gblname1.trg, Line 1: Added SET trigger on ^GBL (region REG1) named gblname1
+File gblname1.trg, Line 1: Added SET trigger on ^GBL (region REG2) named gblname1
+=========================================
+2 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+Output File: 
+;trigger name: gblname1 (region REG1)  cycle: 1
++^GBL(1) -name=gblname1 -commands=S -xecute="do ^nothing"
+;trigger name: gblname1 (region REG2)  cycle: 1
++^GBL(1) -name=gblname1 -commands=S -xecute="do ^nothing"
+;trigger name: gblname1 (region REG3)  cycle: 1
++^GBL(1) -name=gblname1 -commands=S -xecute="do ^nothing"
+###################################################################
+# Test 3 :
+# With ^GBL spanning REG1,REG2 in span.gld and ^GBL mapped to REG2 in nonspan.gld
+# Install T1 using span.gld and a different trigger T2 using nonspan.gld
+# Do sets to see if the triggers are fired properly
+# Install different set triggers for ^GBL(1:3) using span.gld and nonspan.gld
+File span.trg, Line 1: Added SET and/or Non-SET trigger on ^GBL (region REG1) named T1
+File span.trg, Line 1: Added SET and/or Non-SET trigger on ^GBL (region REG2) named T1
+=========================================
+2 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+File nonspan.trg, Line 1: Added SET and/or Non-SET trigger on ^GBL named T2
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Using span.gld set ^GBL(1), which maps to REG1 - Expect only T1 to be fired
+REG1
+This is spanning trigger - T1
+# Using span.gld set ^GBL(2), which maps to REG2 - Expect both T1 and T2 to be fired
+REG2
+This is non-spanning trigger - T2
+This is spanning trigger - T1
+# Using span.gld set ^GBL(3,1-2), which does not have any triggers defined
+###################################################################
+# Test 4:
+# With the same setup, do different KILLs and check if the right triggers are fired
+# Using span.gld kill ^GBL(1), which maps to REG1 - Expect only T1 to be fired
+REG1
+This is spanning trigger - T1
+# Using span.gld kill ^GBL(2), which maps to REG2 - Expect both T1 and T2 to be fired
+REG2
+This is non-spanning trigger - T2
+This is spanning trigger - T1
+# Using span.gld kill ^GBL(3), which maps to both REG1 and REG2 - Expect T1 to be fired for REG1 and T1,T2 for REG2
+REG1,REG2
+This is non-spanning trigger - T2
+This is spanning trigger - T1
+This is spanning trigger - T1

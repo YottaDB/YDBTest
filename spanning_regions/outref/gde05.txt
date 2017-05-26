@@ -1,0 +1,73 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gde05.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gde05.cmd
+%GDE-I-MAPBAD, Region XREG for Name X does not exist
+%GDE-I-MAPBAD, Region X32REG for Name X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,"ef") does not exist
+%GDE-I-MAPBAD, Region X31REG for Name X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,0:"mm") does not exist
+%GDE-I-MAPBAD, Region X31REG for Name X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31) does not exist
+%GDE-I-STDNULLCOLLREQ, Region XREG needs Standard Null Collation enabled because global ^X spans through it
+%GDE-I-STDNULLCOLLREQ, Region X31REG needs Standard Null Collation enabled because global ^X spans through it
+%GDE-I-STDNULLCOLLREQ, Region X32REG needs Standard Null Collation enabled because global ^X spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-I-NOEXIT, Cannot exit because of verification failure
+
+
+         *** NAMES ***
+ Global                                                                                      Region
+ -----------------------------------------------------------------------------------------------------------------------------
+ *                                                                                           DEFAULT
+ X                                                                                           XREG
+ X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,0:"mm")  X31REG
+ X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,"ef")    X32REG
+ X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31)         X31REG
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                                                                                        Up to                                                                                        Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ %                                                                                           X                                                                                            REG = DEFAULT
+                                                                                                                                                                                          SEG = DEFAULT
+                                                                                                                                                                                          FILE = mumps.dat
+ X                                                                                           X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,0)        REG = XREG
+                                                                                                                                                                                          SEG = XREG
+                                                                                                                                                                                          FILE = XREG.dat
+ X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,0)       X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,"ef")     REG = X31REG
+                                                                                                                                                                                          SEG = X31REG
+                                                                                                                                                                                          FILE = X31REG.dat
+ X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,"ef")    X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,"ef")++   REG = X32REG
+                                                                                                                                                                                          SEG = X32REG
+                                                                                                                                                                                          FILE = X32REG.dat
+ X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,"ef")++  X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,"mm")     REG = X31REG
+                                                                                                                                                                                          SEG = X31REG
+                                                                                                                                                                                          FILE = X31REG.dat
+ X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,"mm")    X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31)          REG = XREG
+                                                                                                                                                                                          SEG = XREG
+                                                                                                                                                                                          FILE = XREG.dat
+ X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31)         X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31)++        REG = X31REG
+                                                                                                                                                                                          SEG = X31REG
+                                                                                                                                                                                          FILE = X31REG.dat
+ X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31)++       X0                                                                                           REG = XREG
+                                                                                                                                                                                          SEG = XREG
+                                                                                                                                                                                          FILE = XREG.dat
+ X0                                                                                          ...                                                                                          REG = DEFAULT
+                                                                                                                                                                                          SEG = DEFAULT
+                                                                                                                                                                                          FILE = mumps.dat
+ LOCAL LOCKS                                                                                                                                                                              REG = DEFAULT
+                                                                                                                                                                                          SEG = DEFAULT
+                                                                                                                                                                                          FILE = mumps.dat
+
+                         *** MAP for region X32REG ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                                                                                        Up to                                                                                        Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,"ef")    X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,"ef")++   REG = X32REG
+                                                                                                                                                                                          SEG = X32REG
+                                                                                                                                                                                          FILE = X32REG.dat
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gde05.gld

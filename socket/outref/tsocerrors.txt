@@ -1,0 +1,351 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+
+TEST CASE 1a: Both certificate and key in the same file should work.
+			both cert and key name the same file.
+
+
+GTM>
+  PASSED: 1a
+
+GTM>
+
+TEST CASE 1b: Both certificate and key in the same file should work.
+			just cert specified and no key.
+
+
+GTM>
+  PASSED: 1b
+
+GTM>
+
+TEST CASE 1c: Private key without cert should issue an appropriate error.
+
+
+GTM>
+  PASSED: 1c
+
+GTM>
+
+TEST CASE 1d: Unable to open private key should issue an appropriate error.
+
+
+GTM>
+  PASSED: 1d
+
+GTM>
+
+TEST CASE 2: Check cipher-list option by excluding cipher from server list which is only one for client.
+
+
+GTM>
+  PASSED: 2
+
+GTM>
+
+TEST CASE 3: Test server without cert, missing tlsid in config, no tlsid
+
+
+GTM>
+  PASSED: 3a
+
+GTM>
+
+GTM>
+  PASSED: 3b
+
+GTM>
+
+GTM>
+  PASSED: 3c
+
+GTM>
+
+GTM>
+  PASSED: 3d
+
+GTM>
+
+GTM>
+  PASSED: 3e
+
+GTM>
+
+GTM>
+  PASSED: 3f
+
+GTM>
+
+TEST CASE 4: Test length of tlsid.
+
+
+GTM>
+  PASSED: 4
+
+GTM>
+
+TEST CASE 5: Test WRITE /TLS command formats and socket state.
+
+
+GTM>
+  PASSED: servererrors
+
+GTM>
+
+GTM>
+  PASSED: 5b
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 5c
+
+GTM>
+
+GTM>
+
+TEST CASE 6: Test client without config file.
+
+
+GTM>
+  PASSED: 6a.cunset
+
+GTM>
+
+GTM>
+  PASSED: 6b.cunset
+
+GTM>
+
+TEST CASE 7: Test config file options.
+
+
+GTM>
+  PASSED: 7a
+
+GTM>
+
+GTM>
+  PASSED: 7b
+
+GTM>
+
+GTM>
+  PASSED: 7c
+
+GTM>
+
+GTM>
+  PASSED: 7d
+
+GTM>
+
+GTM>
+  PASSED: 7e
+
+GTM>
+
+TEST CASE 8: Test providing password on WRITE /TLS.
+
+
+GTM>
+
+GTM>
+  PASSED: 8a
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 8b
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 8c
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 8d
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 8e
+
+GTM>
+
+TEST CASE 9: Test providing config file options on WRITE /TLS.
+
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 9a
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 9b
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 9c
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 9d
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 9e
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 9f
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 9g
+
+GTM>
+
+TEST CASE 10: Test WRITE /TLS RENEGOTIATION.
+
+
+GTM>
+
+GTM>
+  PASSED: 10a
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 10b
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 10c
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 10d
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 10e
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 10f
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 10g
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+  PASSED: 10h
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

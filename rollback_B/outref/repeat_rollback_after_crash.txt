@@ -1,0 +1,92 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+# Multi-Process GTM Process starts in background... : ##FILTERED##GTM_TEST_DEBUGINFO.*
+
+GTM>
+
+GTM>
+set PASS
+
+GTM>
+set PASS
+
+GTM>
+# Multi-Process GTM Process starts in background... : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# First Switch ... : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# Second Switch ... : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# Secondary Crash ... : ##FILTERED##GTM_TEST_DEBUGINFO.*
+Simulating crash on receiver in ##REMOTE_TEST_PATH##
+Receiver crashed!
+# Primary Crash ... : ##FILTERED##GTM_TEST_DEBUGINFO.*
+Simulating crash on primary in ##TEST_PATH##
+Primary crashed!
+# ROLLBACK1 process starts : ##FILTERED##GTM_TEST_DEBUGINFO.*
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+# ROLLBACK1 process ends : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# ROLLBACK2 process starts : ##FILTERED##GTM_TEST_DEBUGINFO.*
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+# ROLLBACK2 process ends : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# ROLLBACK3 process starts : ##FILTERED##GTM_TEST_DEBUGINFO.*
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+# ROLLBACK3 process ends : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# ROLLBACK4 process starts : ##FILTERED##GTM_TEST_DEBUGINFO.*
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+# ROLLBACK4 process ends : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# ROLLBACK5 process starts : ##FILTERED##GTM_TEST_DEBUGINFO.*
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+# ROLLBACK5 process ends : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# ROLLBACK5B process starts : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# ROLLBACK5B process ends : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# ROLLBACK6 process starts : ##FILTERED##GTM_TEST_DEBUGINFO.*
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+# ROLLBACK6 process ends : ##FILTERED##GTM_TEST_DEBUGINFO.*
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>

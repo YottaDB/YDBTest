@@ -1,0 +1,22 @@
+#!/usr/local/bin/tcsh -f
+cp $gtm_tst/$tst/inref/validtriggersutf8.trg testxecuteunicode.trg
+setenv test_specific_trig_file "$PWD/testxecuteunicode.trg"
+$gtm_tst/com/dbcreate.csh mumps 5 255 4096 8192
+
+# this test sets the same trigger with and without the above env var
+# unset gtm_gvdupsetnoop to allow duplicate sets
+unsetenv gtm_gvdupsetnoop
+
+# set this so that unicode numbers are matched by numeric pattern matches
+setenv gtm_patnumeric UTF-8
+
+$echoline
+echo "Unicode subscript matching"
+$gtm_exe/mumps -run testxecuteunicode
+
+# do this so that the compound pattern matches for numerics don't work
+echo "Disable Unicode numeric pattern matching"
+unsetenv gtm_patnumeric
+$gtm_exe/mumps -run patterns^testxecuteunicode
+
+$gtm_tst/com/dbcheck.csh -extract

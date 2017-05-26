@@ -1,0 +1,57 @@
+C9E11002657 subtest begins...
+# Run zbtest.m. Should only see GTM-E-LOADRUNNING and not sig-11 or ASSERT failures
+# Set zbreak at zbmain+lineno and xecute lab1^zblab1
+# Call zbmain - Should break and xecute zblab1
+# In zblab1 : Force zlink of zbmain
+# Expect it to error out
+# In error trap routine
+$zstatus : 150373234,lab1+6^zblab1,%GTM-E-LOADRUNNING, Cannot ZLINK an active routine zbmain
+# Stack information
+ERROR+4^zbtest
+zbmain+2^zbmain    (ZBREAK)
+initlab+15^zbtest
+# Breakpoints
+zbmain+2^zbmain
+# Local variables
+A=1
+B=1
+C=1
+D=1
+E=1
+F=1
+G=1
+H=1
+I=1
+begline=2
+##SUSPEND_OUTPUT HOST_OS390_S390
+chset=""
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+chset=":chset=""BINARY"""
+##ALLOW_OUTPUT HOST_ALL
+lineno=2
+maxline=2
+objfile="zbmain.o"
+zbcnt(2)=1
+# End of routine. Check the values of locals - zwrite :
+A=1
+B=1
+C=1
+D=1
+E=1
+F=1
+G=1
+H=1
+I=1
+begline=2
+##SUSPEND_OUTPUT HOST_OS390_S390
+chset=""
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+chset=":chset=""BINARY"""
+##ALLOW_OUTPUT HOST_ALL
+lineno=2
+maxline=2
+objfile="zbmain.o"
+zbcnt(2)=1
+End of subtest C9E11002657

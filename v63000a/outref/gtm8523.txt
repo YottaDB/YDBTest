@@ -1,0 +1,24 @@
+# This test requires MM (it tries to exercise concurrent-db-file-extension-logic in wcs_mm_recover).
+# So force MM and therefore disable encryption as well (since that does not run with MM).
+# Since we need specific allocations/extension values for multiple regions, use a custom gde file.
+# Create two regions DEFAULT and AREG
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+# Populate nodes in database
+# Verify that DEFAULT region has NO free blocks (needed by parent^gtm8523). Exit test if verification fails
+Free Blocks in DEFAULT region is 0 : Expecting 0. Continuing...
+# Initialize white-box variables
+# Run backup in background
+# Set gtm_wbox_mrtn to child^gtm8523 so this is spawned off by parent^gtm8523 when it reaches gdsfilext()
+# Run TP transaction which in turn spawns off a child to do the concurrent db file extension
+# Without the code fix for GTM-8523, we expect a SIG-11 from this parent process inside gvcst_blk_build()
+# Clear white-box variables
+# Wait for background backup to finish
+# Check db integrity
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

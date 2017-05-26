@@ -1,0 +1,1149 @@
+Pass 1: no auto-relink
+
+Case a1: No extension, both .o and .m present, but .o is newer
+Expected behavior = link only
+testbasename=pass1objnewernoext
+Pass
+
+Case a2: No extension, both .o and .m present, but .o is newer with intermediate zlink
+Expected behavior = link only
+testbasename=pass1objnewernoextzlink
+Pass
+
+Case b1: No extension, both .o and .m present, but .o is older
+Expected behavior = compile and link
+testbasename=pass1srcnewernoext
+Pass
+
+Case b2: No extension, both .o and .m present, but .o is older with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass1srcnewernoextzlink
+Pass
+
+Case b5: No extension, both .o and .m present, source newer but unchanged
+Expected behavior = compile and link
+testbasename=pass1srcnewernoextunch
+Pass
+
+Case c: No extension, only .m is found
+Expected behavior = compile and link
+testbasename=pass1srconlynoext
+Pass
+
+Case d1: No extension, only .o is found
+Expected behavior = link only
+testbasename=pass1objonlynoext
+Pass
+
+Case d2: No extension, only .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass1objonlynoextzlink
+Pass
+
+Case e. No extension, neither .o nor .m is found
+Expected behavior = error
+testbasename=pass1nonothing
+%GTM-E-ZLINKFILE
+Pass
+
+Case f1. With .o extension, .o is found (and .m exists)
+Expected behavior = link only
+testbasename=pass1useobjobjext
+Pass
+
+Case f2. With .o extension, .o is found (and .m exists) with intermediate zlink
+Expected behavior = link only
+testbasename=pass1useobjobjextzlink
+Pass
+
+Case f3. With .o extension, .o is found
+Expected behavior = link only
+testbasename=pass1objonlyobjext
+Pass
+
+Case f4. With .o extension, .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass1objonlyobjext
+Pass
+
+Case g1. With .o extension, .o is missing
+Expected behavior = error
+testbasename=pass1noobj
+%GTM-E-ZLINKFILE
+Pass
+
+Case g2. With .o extension, .o is missing (and .m exists)
+Expected behavior = error
+testbasename=pass1srconlyobjext
+%GTM-E-ZLINKFILE
+Pass
+
+Case h1. With .m extension, .m is found (and .o exists)
+Expected behavior = compile and link
+testbasename=pass1usesrcmext
+Pass
+
+Case h2. With .m extension, .m is found (and .o exists) with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass1usesrcmextzlink
+Pass
+
+Case h3. With .m extension, .m is found
+Expected behavior = compile and link
+testbasename=pass1srconlysrcext
+Pass
+
+Case i1. With .m extension, .m is missing
+Expected behavior = error
+testbasename=pass1nosrc
+%GTM-E-ZLINKFILE
+Pass
+
+Case i2. With .m extension, .m is missing (and .o exists)
+Expected behavior = error
+testbasename=pass1objonlysrcext
+%GTM-E-ZLINKFILE
+Pass
+
+Case i3. With .m extension, .m is missing (and .o exists) with intermediate zlink
+Expected behavior = error
+testbasename=pass1objonlysrcextzlink
+%GTM-E-ZLINKFILE
+Pass
+
+rselcnt=12
+
+Pass 2: auto-relink
+
+Case a1: No extension, both .o and .m present, but .o is newer
+Expected behavior = link only
+testbasename=pass2objnewernoext
+Pass
+
+Case a2: No extension, both .o and .m present, but .o is newer with intermediate zlink
+Expected behavior = link only
+testbasename=pass2objnewernoextzlink
+Pass
+
+Case b1: No extension, both .o and .m present, but .o is older
+Expected behavior = compile and link
+testbasename=pass2srcnewernoext
+Pass
+
+Case b2: No extension, both .o and .m present, but .o is older with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass2srcnewernoextzlink
+Pass
+
+Case b5: No extension, both .o and .m present, source newer but unchanged
+Expected behavior = compile and link
+testbasename=pass2srcnewernoextunch
+Pass
+
+Case c: No extension, only .m is found
+Expected behavior = compile and link
+testbasename=pass2srconlynoext
+Pass
+
+Case d1: No extension, only .o is found
+Expected behavior = link only
+testbasename=pass2objonlynoext
+Pass
+
+Case d2: No extension, only .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass2objonlynoextzlink
+Pass
+
+Case e. No extension, neither .o nor .m is found
+Expected behavior = error
+testbasename=pass2nonothing
+%GTM-E-ZLINKFILE
+Pass
+
+Case f1. With .o extension, .o is found (and .m exists)
+Expected behavior = link only
+testbasename=pass2useobjobjext
+Pass
+
+Case f2. With .o extension, .o is found (and .m exists) with intermediate zlink
+Expected behavior = link only
+testbasename=pass2useobjobjextzlink
+Pass
+
+Case f3. With .o extension, .o is found
+Expected behavior = link only
+testbasename=pass2objonlyobjext
+Pass
+
+Case f4. With .o extension, .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass2objonlyobjext
+Pass
+
+Case g1. With .o extension, .o is missing
+Expected behavior = error
+testbasename=pass2noobj
+%GTM-E-ZLINKFILE
+Pass
+
+Case g2. With .o extension, .o is missing (and .m exists)
+Expected behavior = error
+testbasename=pass2srconlyobjext
+%GTM-E-ZLINKFILE
+Pass
+
+Case h1. With .m extension, .m is found (and .o exists)
+Expected behavior = compile and link
+testbasename=pass2usesrcmext
+Pass
+
+Case h2. With .m extension, .m is found (and .o exists) with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass2usesrcmextzlink
+Pass
+
+Case h3. With .m extension, .m is found
+Expected behavior = compile and link
+testbasename=pass2srconlysrcext
+Pass
+
+Case i1. With .m extension, .m is missing
+Expected behavior = error
+testbasename=pass2nosrc
+%GTM-E-ZLINKFILE
+Pass
+
+Case i2. With .m extension, .m is missing (and .o exists)
+Expected behavior = error
+testbasename=pass2objonlysrcext
+%GTM-E-ZLINKFILE
+Pass
+
+Case i3. With .m extension, .m is missing (and .o exists) with intermediate zlink
+Expected behavior = error
+testbasename=pass2objonlysrcextzlink
+%GTM-E-ZLINKFILE
+Pass
+
+rselcnt=12
+
+Pass 3: auto-relink with zlink using full path
+Case a1: No extension, both .o and .m present, but .o is newer
+Expected behavior = link only
+testbasename=pass3objnewernoext
+Pass
+
+Case a2: No extension, both .o and .m present, but .o is newer with intermediate zlink
+Expected behavior = link only
+testbasename=pass3objnewernoextzlink
+Pass
+
+Case b1: No extension, both .o and .m present, but .o is older
+Expected behavior = compile and link
+testbasename=pass3srcnewernoext
+Pass
+
+Case b2: No extension, both .o and .m present, but .o is older with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass3srcnewernoextzlink
+Pass
+
+Case b5: No extension, both .o and .m present, source newer but unchanged
+Expected behavior = compile and link
+testbasename=pass3srcnewernoextunch
+Pass
+
+Case c: No extension, only .m is found
+Expected behavior = compile and link
+testbasename=pass3srconlynoext
+Pass
+
+Case d1: No extension, only .o is found
+Expected behavior = link only
+testbasename=pass3objonlynoext
+Pass
+
+Case d2: No extension, only .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass3objonlynoextzlink
+Pass
+
+Case e. No extension, neither .o nor .m is found
+Expected behavior = error
+testbasename=pass3nonothing
+%GTM-E-ZLINKFILE
+Pass
+
+Case f1. With .o extension, .o is found (and .m exists)
+Expected behavior = link only
+testbasename=pass3useobjobjext
+Pass
+
+Case f2. With .o extension, .o is found (and .m exists) with intermediate zlink
+Expected behavior = link only
+testbasename=pass3useobjobjextzlink
+Pass
+
+Case f3. With .o extension, .o is found
+Expected behavior = link only
+testbasename=pass3objonlyobjext
+Pass
+
+Case f4. With .o extension, .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass3objonlyobjext
+Pass
+
+Case g1. With .o extension, .o is missing
+Expected behavior = error
+testbasename=pass3noobj
+%GTM-E-ZLINKFILE
+Pass
+
+Case g2. With .o extension, .o is missing (and .m exists)
+Expected behavior = error
+testbasename=pass3srconlyobjext
+%GTM-E-ZLINKFILE
+Pass
+
+Case h1. With .m extension, .m is found (and .o exists)
+Expected behavior = compile and link
+testbasename=pass3usesrcmext
+Pass
+
+Case h2. With .m extension, .m is found (and .o exists) with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass3usesrcmextzlink
+Pass
+
+Case h3. With .m extension, .m is found
+Expected behavior = compile and link
+testbasename=pass3srconlysrcext
+Pass
+
+Case i1. With .m extension, .m is missing
+Expected behavior = error
+testbasename=pass3nosrc
+%GTM-E-ZLINKFILE
+Pass
+
+Case i2. With .m extension, .m is missing (and .o exists)
+Expected behavior = error
+testbasename=pass3objonlysrcext
+%GTM-E-ZLINKFILE
+Pass
+
+Case i3. With .m extension, .m is missing (and .o exists) with intermediate zlink
+Expected behavior = error
+testbasename=pass3objonlysrcextzlink
+%GTM-E-ZLINKFILE
+Pass
+
+rselcnt=12
+
+Pass 4: auto-relink with bogus directory
+
+Case a1: No extension, both .o and .m present, but .o is newer
+Expected behavior = link only
+testbasename=pass4objnewernoext
+Pass
+
+Case a2: No extension, both .o and .m present, but .o is newer with intermediate zlink
+Expected behavior = link only
+testbasename=pass4objnewernoextzlink
+Pass
+
+Case b1: No extension, both .o and .m present, but .o is older
+Expected behavior = compile and link
+testbasename=pass4srcnewernoext
+Pass
+
+Case b2: No extension, both .o and .m present, but .o is older with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass4srcnewernoextzlink
+Pass
+
+Case b5: No extension, both .o and .m present, source newer but unchanged
+Expected behavior = compile and link
+testbasename=pass4srcnewernoextunch
+Pass
+
+Case c: No extension, only .m is found
+Expected behavior = compile and link
+testbasename=pass4srconlynoext
+Pass
+
+Case d1: No extension, only .o is found
+Expected behavior = link only
+testbasename=pass4objonlynoext
+Pass
+
+Case d2: No extension, only .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass4objonlynoextzlink
+Pass
+
+Case e. No extension, neither .o nor .m is found
+Expected behavior = error
+testbasename=pass4nonothing
+%GTM-E-ZLINKFILE
+Pass
+
+Case f1. With .o extension, .o is found (and .m exists)
+Expected behavior = link only
+testbasename=pass4useobjobjext
+Pass
+
+Case f2. With .o extension, .o is found (and .m exists) with intermediate zlink
+Expected behavior = link only
+testbasename=pass4useobjobjextzlink
+Pass
+
+Case f3. With .o extension, .o is found
+Expected behavior = link only
+testbasename=pass4objonlyobjext
+Pass
+
+Case f4. With .o extension, .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass4objonlyobjext
+Pass
+
+Case g1. With .o extension, .o is missing
+Expected behavior = error
+testbasename=pass4noobj
+%GTM-E-ZLINKFILE
+Pass
+
+Case g2. With .o extension, .o is missing (and .m exists)
+Expected behavior = error
+testbasename=pass4srconlyobjext
+%GTM-E-ZLINKFILE
+Pass
+
+Case h1. With .m extension, .m is found (and .o exists)
+Expected behavior = compile and link
+testbasename=pass4usesrcmext
+Pass
+
+Case h2. With .m extension, .m is found (and .o exists) with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass4usesrcmextzlink
+Pass
+
+Case h3. With .m extension, .m is found
+Expected behavior = compile and link
+testbasename=pass4srconlysrcext
+Pass
+
+Case i1. With .m extension, .m is missing
+Expected behavior = error
+testbasename=pass4nosrc
+%GTM-E-ZLINKFILE
+Pass
+
+Case i2. With .m extension, .m is missing (and .o exists)
+Expected behavior = error
+testbasename=pass4objonlysrcext
+%GTM-E-ZLINKFILE
+Pass
+
+Case i3. With .m extension, .m is missing (and .o exists) with intermediate zlink
+Expected behavior = error
+testbasename=pass4objonlysrcextzlink
+%GTM-E-ZLINKFILE
+Pass
+
+rselcnt=12
+
+Pass 5: auto-relink with three subdirs target in first
+
+Case a1: No extension, both .o and .m present, but .o is newer
+Expected behavior = link only
+testbasename=pass5objnewernoext
+Pass
+
+Case a2: No extension, both .o and .m present, but .o is newer with intermediate zlink
+Expected behavior = link only
+testbasename=pass5objnewernoextzlink
+Pass
+
+Case b1: No extension, both .o and .m present, but .o is older
+Expected behavior = compile and link
+testbasename=pass5srcnewernoext
+Pass
+
+Case b2: No extension, both .o and .m present, but .o is older with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass5srcnewernoextzlink
+Pass
+
+Case b5: No extension, both .o and .m present, source newer but unchanged
+Expected behavior = compile and link
+testbasename=pass5srcnewernoextunch
+Pass
+
+Case c: No extension, only .m is found
+Expected behavior = compile and link
+testbasename=pass5srconlynoext
+Pass
+
+Case d1: No extension, only .o is found
+Expected behavior = link only
+testbasename=pass5objonlynoext
+Pass
+
+Case d2: No extension, only .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass5objonlynoextzlink
+Pass
+
+Case e. No extension, neither .o nor .m is found
+Expected behavior = error
+testbasename=pass5nonothing
+%GTM-E-ZLINKFILE
+Pass
+
+Case f1. With .o extension, .o is found (and .m exists)
+Expected behavior = link only
+testbasename=pass5useobjobjext
+Pass
+
+Case f2. With .o extension, .o is found (and .m exists) with intermediate zlink
+Expected behavior = link only
+testbasename=pass5useobjobjextzlink
+Pass
+
+Case f3. With .o extension, .o is found
+Expected behavior = link only
+testbasename=pass5objonlyobjext
+Pass
+
+Case f4. With .o extension, .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass5objonlyobjext
+Pass
+
+Case g1. With .o extension, .o is missing
+Expected behavior = error
+testbasename=pass5noobj
+%GTM-E-ZLINKFILE
+Pass
+
+Case g2. With .o extension, .o is missing (and .m exists)
+Expected behavior = error
+testbasename=pass5srconlyobjext
+%GTM-E-ZLINKFILE
+Pass
+
+Case h1. With .m extension, .m is found (and .o exists)
+Expected behavior = compile and link
+testbasename=pass5usesrcmext
+Pass
+
+Case h2. With .m extension, .m is found (and .o exists) with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass5usesrcmextzlink
+Pass
+
+Case h3. With .m extension, .m is found
+Expected behavior = compile and link
+testbasename=pass5srconlysrcext
+Pass
+
+Case i1. With .m extension, .m is missing
+Expected behavior = error
+testbasename=pass5nosrc
+%GTM-E-ZLINKFILE
+Pass
+
+Case i2. With .m extension, .m is missing (and .o exists)
+Expected behavior = error
+testbasename=pass5objonlysrcext
+%GTM-E-ZLINKFILE
+Pass
+
+Case i3. With .m extension, .m is missing (and .o exists) with intermediate zlink
+Expected behavior = error
+testbasename=pass5objonlysrcextzlink
+%GTM-E-ZLINKFILE
+Pass
+
+rselcnt=12
+
+Pass 6: auto-relink with three subdirs; target in the first with full paths on zlink
+
+Case a1: No extension, both .o and .m present, but .o is newer
+Expected behavior = link only
+testbasename=pass6objnewernoext
+Pass
+
+Case a2: No extension, both .o and .m present, but .o is newer with intermediate zlink
+Expected behavior = link only
+testbasename=pass6objnewernoextzlink
+Pass
+
+Case b1: No extension, both .o and .m present, but .o is older
+Expected behavior = compile and link
+testbasename=pass6srcnewernoext
+Pass
+
+Case b2: No extension, both .o and .m present, but .o is older with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass6srcnewernoextzlink
+Pass
+
+Case b5: No extension, both .o and .m present, source newer but unchanged
+Expected behavior = compile and link
+testbasename=pass6srcnewernoextunch
+Pass
+
+Case c: No extension, only .m is found
+Expected behavior = compile and link
+testbasename=pass6srconlynoext
+Pass
+
+Case d1: No extension, only .o is found
+Expected behavior = link only
+testbasename=pass6objonlynoext
+Pass
+
+Case d2: No extension, only .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass6objonlynoextzlink
+Pass
+
+Case e. No extension, neither .o nor .m is found
+Expected behavior = error
+testbasename=pass6nonothing
+%GTM-E-ZLINKFILE
+Pass
+
+Case f1. With .o extension, .o is found (and .m exists)
+Expected behavior = link only
+testbasename=pass6useobjobjext
+Pass
+
+Case f2. With .o extension, .o is found (and .m exists) with intermediate zlink
+Expected behavior = link only
+testbasename=pass6useobjobjextzlink
+Pass
+
+Case f3. With .o extension, .o is found
+Expected behavior = link only
+testbasename=pass6objonlyobjext
+Pass
+
+Case f4. With .o extension, .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass6objonlyobjext
+Pass
+
+Case g1. With .o extension, .o is missing
+Expected behavior = error
+testbasename=pass6noobj
+%GTM-E-ZLINKFILE
+Pass
+
+Case g2. With .o extension, .o is missing (and .m exists)
+Expected behavior = error
+testbasename=pass6srconlyobjext
+%GTM-E-ZLINKFILE
+Pass
+
+Case h1. With .m extension, .m is found (and .o exists)
+Expected behavior = compile and link
+testbasename=pass6usesrcmext
+Pass
+
+Case h2. With .m extension, .m is found (and .o exists) with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass6usesrcmextzlink
+Pass
+
+Case h3. With .m extension, .m is found
+Expected behavior = compile and link
+testbasename=pass6srconlysrcext
+Pass
+
+Case i1. With .m extension, .m is missing
+Expected behavior = error
+testbasename=pass6nosrc
+%GTM-E-ZLINKFILE
+Pass
+
+Case i2. With .m extension, .m is missing (and .o exists)
+Expected behavior = error
+testbasename=pass6objonlysrcext
+%GTM-E-ZLINKFILE
+Pass
+
+Case i3. With .m extension, .m is missing (and .o exists) with intermediate zlink
+Expected behavior = error
+testbasename=pass6objonlysrcextzlink
+%GTM-E-ZLINKFILE
+Pass
+
+rselcnt=12
+
+Pass 7: auto-relink with three subdirs target in the second
+
+Case a1: No extension, both .o and .m present, but .o is newer
+Expected behavior = link only
+testbasename=pass7objnewernoext
+Pass
+
+Case a2: No extension, both .o and .m present, but .o is newer with intermediate zlink
+Expected behavior = link only
+testbasename=pass7objnewernoextzlink
+Pass
+
+Case b1: No extension, both .o and .m present, but .o is older
+Expected behavior = compile and link
+testbasename=pass7srcnewernoext
+Pass
+
+Case b2: No extension, both .o and .m present, but .o is older with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass7srcnewernoextzlink
+Pass
+
+Case b5: No extension, both .o and .m present, source newer but unchanged
+Expected behavior = compile and link
+testbasename=pass7srcnewernoextunch
+Pass
+
+Case c: No extension, only .m is found
+Expected behavior = compile and link
+testbasename=pass7srconlynoext
+Pass
+
+Case d1: No extension, only .o is found
+Expected behavior = link only
+testbasename=pass7objonlynoext
+Pass
+
+Case d2: No extension, only .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass7objonlynoextzlink
+Pass
+
+Case e. No extension, neither .o nor .m is found
+Expected behavior = error
+testbasename=pass7nonothing
+%GTM-E-ZLINKFILE
+Pass
+
+Case f1. With .o extension, .o is found (and .m exists)
+Expected behavior = link only
+testbasename=pass7useobjobjext
+Pass
+
+Case f2. With .o extension, .o is found (and .m exists) with intermediate zlink
+Expected behavior = link only
+testbasename=pass7useobjobjextzlink
+Pass
+
+Case f3. With .o extension, .o is found
+Expected behavior = link only
+testbasename=pass7objonlyobjext
+Pass
+
+Case f4. With .o extension, .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass7objonlyobjext
+Pass
+
+Case g1. With .o extension, .o is missing
+Expected behavior = error
+testbasename=pass7noobj
+%GTM-E-ZLINKFILE
+Pass
+
+Case g2. With .o extension, .o is missing (and .m exists)
+Expected behavior = error
+testbasename=pass7srconlyobjext
+%GTM-E-ZLINKFILE
+Pass
+
+Case h1. With .m extension, .m is found (and .o exists)
+Expected behavior = compile and link
+testbasename=pass7usesrcmext
+Pass
+
+Case h2. With .m extension, .m is found (and .o exists) with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass7usesrcmextzlink
+Pass
+
+Case h3. With .m extension, .m is found
+Expected behavior = compile and link
+testbasename=pass7srconlysrcext
+Pass
+
+Case i1. With .m extension, .m is missing
+Expected behavior = error
+testbasename=pass7nosrc
+%GTM-E-ZLINKFILE
+Pass
+
+Case i2. With .m extension, .m is missing (and .o exists)
+Expected behavior = error
+testbasename=pass7objonlysrcext
+%GTM-E-ZLINKFILE
+Pass
+
+Case i3. With .m extension, .m is missing (and .o exists) with intermediate zlink
+Expected behavior = error
+testbasename=pass7objonlysrcextzlink
+%GTM-E-ZLINKFILE
+Pass
+
+rselcnt=12
+
+Pass 8: auto-relink with three subdirs; target in the second with full paths on zlink
+
+Case a1: No extension, both .o and .m present, but .o is newer
+Expected behavior = link only
+testbasename=pass8objnewernoext
+Pass
+
+Case a2: No extension, both .o and .m present, but .o is newer with intermediate zlink
+Expected behavior = link only
+testbasename=pass8objnewernoextzlink
+Pass
+
+Case b1: No extension, both .o and .m present, but .o is older
+Expected behavior = compile and link
+testbasename=pass8srcnewernoext
+Pass
+
+Case b2: No extension, both .o and .m present, but .o is older with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass8srcnewernoextzlink
+Pass
+
+Case b5: No extension, both .o and .m present, source newer but unchanged
+Expected behavior = compile and link
+testbasename=pass8srcnewernoextunch
+Pass
+
+Case c: No extension, only .m is found
+Expected behavior = compile and link
+testbasename=pass8srconlynoext
+Pass
+
+Case d1: No extension, only .o is found
+Expected behavior = link only
+testbasename=pass8objonlynoext
+Pass
+
+Case d2: No extension, only .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass8objonlynoextzlink
+Pass
+
+Case e. No extension, neither .o nor .m is found
+Expected behavior = error
+testbasename=pass8nonothing
+%GTM-E-ZLINKFILE
+Pass
+
+Case f1. With .o extension, .o is found (and .m exists)
+Expected behavior = link only
+testbasename=pass8useobjobjext
+Pass
+
+Case f2. With .o extension, .o is found (and .m exists) with intermediate zlink
+Expected behavior = link only
+testbasename=pass8useobjobjextzlink
+Pass
+
+Case f3. With .o extension, .o is found
+Expected behavior = link only
+testbasename=pass8objonlyobjext
+Pass
+
+Case f4. With .o extension, .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass8objonlyobjext
+Pass
+
+Case g1. With .o extension, .o is missing
+Expected behavior = error
+testbasename=pass8noobj
+%GTM-E-ZLINKFILE
+Pass
+
+Case g2. With .o extension, .o is missing (and .m exists)
+Expected behavior = error
+testbasename=pass8srconlyobjext
+%GTM-E-ZLINKFILE
+Pass
+
+Case h1. With .m extension, .m is found (and .o exists)
+Expected behavior = compile and link
+testbasename=pass8usesrcmext
+Pass
+
+Case h2. With .m extension, .m is found (and .o exists) with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass8usesrcmextzlink
+Pass
+
+Case h3. With .m extension, .m is found
+Expected behavior = compile and link
+testbasename=pass8srconlysrcext
+Pass
+
+Case i1. With .m extension, .m is missing
+Expected behavior = error
+testbasename=pass8nosrc
+%GTM-E-ZLINKFILE
+Pass
+
+Case i2. With .m extension, .m is missing (and .o exists)
+Expected behavior = error
+testbasename=pass8objonlysrcext
+%GTM-E-ZLINKFILE
+Pass
+
+Case i3. With .m extension, .m is missing (and .o exists) with intermediate zlink
+Expected behavior = error
+testbasename=pass8objonlysrcextzlink
+%GTM-E-ZLINKFILE
+Pass
+
+rselcnt=12
+
+Pass 9: auto-relink with three subdirs target in the last
+
+Case a1: No extension, both .o and .m present, but .o is newer
+Expected behavior = link only
+testbasename=pass9objnewernoext
+Pass
+
+Case a2: No extension, both .o and .m present, but .o is newer with intermediate zlink
+Expected behavior = link only
+testbasename=pass9objnewernoextzlink
+Pass
+
+Case b1: No extension, both .o and .m present, but .o is older
+Expected behavior = compile and link
+testbasename=pass9srcnewernoext
+Pass
+
+Case b2: No extension, both .o and .m present, but .o is older with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass9srcnewernoextzlink
+Pass
+
+Case b5: No extension, both .o and .m present, source newer but unchanged
+Expected behavior = compile and link
+testbasename=pass9srcnewernoextunch
+Pass
+
+Case c: No extension, only .m is found
+Expected behavior = compile and link
+testbasename=pass9srconlynoext
+Pass
+
+Case d1: No extension, only .o is found
+Expected behavior = link only
+testbasename=pass9objonlynoext
+Pass
+
+Case d2: No extension, only .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass9objonlynoextzlink
+Pass
+
+Case e. No extension, neither .o nor .m is found
+Expected behavior = error
+testbasename=pass9nonothing
+%GTM-E-ZLINKFILE
+Pass
+
+Case f1. With .o extension, .o is found (and .m exists)
+Expected behavior = link only
+testbasename=pass9useobjobjext
+Pass
+
+Case f2. With .o extension, .o is found (and .m exists) with intermediate zlink
+Expected behavior = link only
+testbasename=pass9useobjobjextzlink
+Pass
+
+Case f3. With .o extension, .o is found
+Expected behavior = link only
+testbasename=pass9objonlyobjext
+Pass
+
+Case f4. With .o extension, .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass9objonlyobjext
+Pass
+
+Case g1. With .o extension, .o is missing
+Expected behavior = error
+testbasename=pass9noobj
+%GTM-E-ZLINKFILE
+Pass
+
+Case g2. With .o extension, .o is missing (and .m exists)
+Expected behavior = error
+testbasename=pass9srconlyobjext
+%GTM-E-ZLINKFILE
+Pass
+
+Case h1. With .m extension, .m is found (and .o exists)
+Expected behavior = compile and link
+testbasename=pass9usesrcmext
+Pass
+
+Case h2. With .m extension, .m is found (and .o exists) with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass9usesrcmextzlink
+Pass
+
+Case h3. With .m extension, .m is found
+Expected behavior = compile and link
+testbasename=pass9srconlysrcext
+Pass
+
+Case i1. With .m extension, .m is missing
+Expected behavior = error
+testbasename=pass9nosrc
+%GTM-E-ZLINKFILE
+Pass
+
+Case i2. With .m extension, .m is missing (and .o exists)
+Expected behavior = error
+testbasename=pass9objonlysrcext
+%GTM-E-ZLINKFILE
+Pass
+
+Case i3. With .m extension, .m is missing (and .o exists) with intermediate zlink
+Expected behavior = error
+testbasename=pass9objonlysrcextzlink
+%GTM-E-ZLINKFILE
+Pass
+
+rselcnt=12
+
+Pass 10: auto-relink with three subdirs; target in the last with full paths on zlink
+
+Case a1: No extension, both .o and .m present, but .o is newer
+Expected behavior = link only
+testbasename=pass10objnewernoext
+Pass
+
+Case a2: No extension, both .o and .m present, but .o is newer with intermediate zlink
+Expected behavior = link only
+testbasename=pass10objnewernoextzlink
+Pass
+
+Case b1: No extension, both .o and .m present, but .o is older
+Expected behavior = compile and link
+testbasename=pass10srcnewernoext
+Pass
+
+Case b2: No extension, both .o and .m present, but .o is older with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass10srcnewernoextzlink
+Pass
+
+Case b5: No extension, both .o and .m present, source newer but unchanged
+Expected behavior = compile and link
+testbasename=pass10srcnewernoextunch
+Pass
+
+Case c: No extension, only .m is found
+Expected behavior = compile and link
+testbasename=pass10srconlynoext
+Pass
+
+Case d1: No extension, only .o is found
+Expected behavior = link only
+testbasename=pass10objonlynoext
+Pass
+
+Case d2: No extension, only .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass10objonlynoextzlink
+Pass
+
+Case e. No extension, neither .o nor .m is found
+Expected behavior = error
+testbasename=pass10nonothing
+%GTM-E-ZLINKFILE
+Pass
+
+Case f1. With .o extension, .o is found (and .m exists)
+Expected behavior = link only
+testbasename=pass10useobjobjext
+Pass
+
+Case f2. With .o extension, .o is found (and .m exists) with intermediate zlink
+Expected behavior = link only
+testbasename=pass10useobjobjextzlink
+Pass
+
+Case f3. With .o extension, .o is found
+Expected behavior = link only
+testbasename=pass10objonlyobjext
+Pass
+
+Case f4. With .o extension, .o is found with intermediate zlink
+Expected behavior = link only
+testbasename=pass10objonlyobjext
+Pass
+
+Case g1. With .o extension, .o is missing
+Expected behavior = error
+testbasename=pass10noobj
+%GTM-E-ZLINKFILE
+Pass
+
+Case g2. With .o extension, .o is missing (and .m exists)
+Expected behavior = error
+testbasename=pass10srconlyobjext
+%GTM-E-ZLINKFILE
+Pass
+
+Case h1. With .m extension, .m is found (and .o exists)
+Expected behavior = compile and link
+testbasename=pass10usesrcmext
+Pass
+
+Case h2. With .m extension, .m is found (and .o exists) with intermediate zlink
+Expected behavior = compile and link
+testbasename=pass10usesrcmextzlink
+Pass
+
+Case h3. With .m extension, .m is found
+Expected behavior = compile and link
+testbasename=pass10srconlysrcext
+Pass
+
+Case i1. With .m extension, .m is missing
+Expected behavior = error
+testbasename=pass10nosrc
+%GTM-E-ZLINKFILE
+Pass
+
+Case i2. With .m extension, .m is missing (and .o exists)
+Expected behavior = error
+testbasename=pass10objonlysrcext
+%GTM-E-ZLINKFILE
+Pass
+
+Case i3. With .m extension, .m is missing (and .o exists) with intermediate zlink
+Expected behavior = error
+testbasename=pass10objonlysrcextzlink
+%GTM-E-ZLINKFILE
+Pass
+
+rselcnt=12
+

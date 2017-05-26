@@ -1,0 +1,456 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+###################################################################
+Pre-load some data
+###################################################################
+Load triggers
+###################################################################
+;trigger name: CIF#1 (region DEFAULT)  cycle: 2
++^CIF(*) -commands=S -xecute="do TRIGa^isvstacking"
+;trigger name: CIF#2 (region DEFAULT)  cycle: 2
++^CIF(*) -commands=S -xecute="do chain^isvstacking"
+;trigger name: DIF#1 (region DEFAULT)  cycle: 1
++^DIF(*) -commands=S -xecute="do TRIGb^isvstacking"
+;trigger name: EIF#1 (region DEFAULT)  cycle: 1
++^EIF(*) -commands=S -xecute="do TRIGc^isvstacking"
+;trigger name: FIF#1 (region DEFAULT)  cycle: 1
++^FIF(*) -commands=K -xecute="do TRIGd^isvstacking"
+;trigger name: GIF#1 (region DEFAULT)  cycle: 1
++^GIF(*) -commands=ZK -xecute="do TRIGd^isvstacking"
+;trigger name: HIF#1 (region DEFAULT)  cycle: 2
++^HIF(*) -commands=K -xecute="do KILL1^isvstacking"
+;trigger name: HIF#2 (region DEFAULT)  cycle: 2
++^HIF(*) -commands=K -xecute="do KILL2^isvstacking"
+;trigger name: JACK#1 (region DEFAULT)  cycle: 1
++^JACK(*) -commands=S -xecute="do jacktrig^isvstacking"
+;trigger name: JILL#1 (region DEFAULT)  cycle: 1
++^JILL(*) -commands=S -xecute="do jilltrig^isvstacking"
+;trigger name: ZKIF#1 (region DEFAULT)  cycle: 2
++^ZKIF(*) -commands=ZK -xecute="do ZKILL1^isvstacking"
+;trigger name: ZKIF#2 (region DEFAULT)  cycle: 2
++^ZKIF(*) -commands=ZK -xecute="do ZKILL2^isvstacking"
+;trigger name: a#1 (region DEFAULT)  cycle: 1
++^a -commands=S -zdelim="|" -pieces=1:2;4 -xecute="do TRIGe^isvstacking"
+;trigger name: b#1 (region DEFAULT)  cycle: 2
++^b -commands=S -zdelim="|" -pieces=1:2 -xecute="do UPDATE1^isvstacking"
+;trigger name: b#2 (region DEFAULT)  cycle: 2
++^b -commands=S -zdelim="|" -pieces=1:2 -xecute="do UPDATE2^isvstacking"
+###################################################################
+ISVSTACKING Test
+^CIF(2)=11
+^DIF(1)=15
+^EIF(1)=6
+^EIF(1,1)=16
+^FIF(1)=8
+^FIF(2)=9
+^GIF(1)=13
+^GIF(1,1)=14
+^GIF(2)=23
+BEGIN Trigger CIF#X# invoked for ^CIF(1)
+$ztslate=
+$ztoldval=
+$ztval=6
+$test=1
+$ztdata=0
+$ztriggerop=S
+$ztwormhole=initial value
+naked reference=6
+$ztwormhole=ztlevel:1
+ BEGIN Trigger CIF#X# invoked for ^CIF(2)
+ $ztslate=
+ $ztoldval=11
+ $ztval=12
+ $test=0
+ $ztdata=1
+ $ztriggerop=S
+ $ztwormhole=ztlevel:1
+ naked reference=12
+ $ztwormhole=ztlevel:2
+ End Trigger CIF#X# invoked for ^CIF(2)
+ BEGIN Trigger CIF#X# invoked for ^CIF(2)
+ $ztslate=
+ $ztoldval=11
+ $ztval=12
+ $test=0
+ $ztdata=1
+ $ztriggerop=S
+ $ztwormhole=ztlevel:2
+ naked reference=12
+ $ztwormhole=ztlevel:2
+ End Trigger CIF#X# invoked for ^CIF(2)
+ BEGIN Trigger DIF#1# invoked for ^DIF(1)
+ $ztslate=
+ $ztoldval=15
+ $ztval=16
+ $test=1
+ $ztdata=1
+ $ztriggerop=S
+ $ztwormhole=ztlevel:2
+ naked reference=16
+ $ztwormhole=ztlevel:2
+  BEGIN Trigger EIF#1# invoked for ^EIF(1)
+  $ztslate=
+  $ztoldval=6
+  $ztval=7
+  $test=1
+  $ztdata=1
+  $ztriggerop=S
+  $ztwormhole=ztlevel:2
+  naked reference=7
+  $ztwormhole=ztlevel:3
+   BEGIN Trigger FIF#1# invoked for ^FIF(1)
+   $ztwormhole=ztlevel:3
+   $ztslate=
+   $ztoldval=8
+   $ztval=
+   $test=1
+   $ztdata=1
+   $ztriggerop=K
+   $ztwormhole=ztlevel:4
+   naked reference=8
+   force $test to 0
+   $test=0
+   End Trigger FIF#1# invoked for ^FIF(1)
+  $ztslate=
+  $ztoldval=6
+  $ztval=7
+  $test=1
+  $ztdata=1
+  $ztriggerop=S
+  $ztwormhole=ztlevel:4
+  naked reference=9
+  force $test to 0
+   BEGIN Trigger GIF#1# invoked for ^GIF(1)
+   $ztwormhole=ztlevel:4
+   $ztslate=
+   $ztoldval=13
+   $ztval=
+   $test=1
+   $ztdata=11
+   $ztriggerop=ZK
+   $ztwormhole=ztlevel:4
+   naked reference=13
+   force $test to 0
+   $test=0
+   End Trigger GIF#1# invoked for ^GIF(1)
+  $ztslate=
+  $ztoldval=6
+  $ztval=7
+  $test=1
+  $ztdata=1
+  $ztriggerop=S
+  $ztwormhole=ztlevel:4
+  naked reference=23
+  force $test to 0
+  $test=0
+  End Trigger EIF#1# invoked for ^GIF(2)
+ $ztslate=
+ $ztoldval=15
+ $ztval=16
+ $test=1
+ $ztdata=1
+ $ztriggerop=S
+ $ztwormhole=ztlevel:4
+ force $test to 0
+ $test=0
+ End Trigger DIF#1# invoked for ^EIF(1)
+$ztslate=
+$ztoldval=
+$ztval=6
+$test=1
+$ztdata=0
+$ztriggerop=S
+$ztwormhole=ztlevel:4
+End Trigger CIF#X# invoked for ^DIF(1)
+BEGIN Trigger CIF#X# invoked for ^CIF(1)
+$ztslate=
+$ztoldval=
+$ztval=6
+$test=1
+$ztdata=0
+$ztriggerop=S
+$ztwormhole=ztlevel:4
+naked reference=6
+$ztwormhole=ztlevel:1
+ BEGIN Trigger CIF#X# invoked for ^CIF(2)
+ $ztslate=
+ $ztoldval=12
+ $ztval=13
+ $test=0
+ $ztdata=1
+ $ztriggerop=S
+ $ztwormhole=ztlevel:1
+ naked reference=13
+ $ztwormhole=ztlevel:2
+ End Trigger CIF#X# invoked for ^CIF(2)
+ BEGIN Trigger CIF#X# invoked for ^CIF(2)
+ $ztslate=
+ $ztoldval=12
+ $ztval=13
+ $test=0
+ $ztdata=1
+ $ztriggerop=S
+ $ztwormhole=ztlevel:2
+ naked reference=13
+ $ztwormhole=ztlevel:2
+ End Trigger CIF#X# invoked for ^CIF(2)
+ BEGIN Trigger DIF#1# invoked for ^DIF(1)
+ $ztslate=
+ $ztoldval=16
+ $ztval=17
+ $test=1
+ $ztdata=1
+ $ztriggerop=S
+ $ztwormhole=ztlevel:2
+ naked reference=17
+ $ztwormhole=ztlevel:2
+  BEGIN Trigger EIF#1# invoked for ^EIF(1)
+  $ztslate=
+  $ztoldval=7
+  $ztval=8
+  $test=1
+  $ztdata=1
+  $ztriggerop=S
+  $ztwormhole=ztlevel:2
+  naked reference=8
+  $ztwormhole=ztlevel:3
+  $ztslate=
+  $ztoldval=7
+  $ztval=8
+  $test=1
+  $ztdata=1
+  $ztriggerop=S
+  $ztwormhole=ztlevel:3
+  naked reference=9
+  force $test to 0
+  $ztslate=
+  $ztoldval=7
+  $ztval=8
+  $test=1
+  $ztdata=1
+  $ztriggerop=S
+  $ztwormhole=ztlevel:3
+  naked reference=23
+  force $test to 0
+  $test=0
+  End Trigger EIF#1# invoked for ^GIF(2)
+ $ztslate=
+ $ztoldval=16
+ $ztval=17
+ $test=1
+ $ztdata=1
+ $ztriggerop=S
+ $ztwormhole=ztlevel:3
+ force $test to 0
+ $test=0
+ End Trigger DIF#1# invoked for ^EIF(1)
+$ztslate=
+$ztoldval=
+$ztval=6
+$test=1
+$ztdata=0
+$ztriggerop=S
+$ztwormhole=ztlevel:3
+End Trigger CIF#X# invoked for ^DIF(1)
+^CIF(1)=6
+^CIF(2)=13
+^DIF(1)=17
+^EIF(1)=8
+^EIF(1,1)=16
+^FIF(2)=9
+^GIF(1,1)=14
+^GIF(2)=23
+$test=1
+$ztwormhole=ztlevel:3
+###################################################################
+$ZTUPDATE Test
+INITIAL VALUES:
+^a="a|b|c|d"
+
+BEGIN Trigger a#1# invoked for ^a
+$ztoldval=a|b|c|d
+$ztval=a|b|c|4
+$ztupdate=4
+ BEGIN Trigger a#1# invoked for ^a
+ $ztoldval=a|b|c|4
+ $ztval=a|5|c|4
+ $ztupdate=2
+  BEGIN Trigger a#1# invoked for ^a
+  $ztoldval=a|5|c|4
+  $ztval=6|7|c|8
+  $ztupdate=1,2,4
+  End Trigger a#1# invoked for ^a
+ $ztoldval=a|b|c|4
+ $ztval=a|5|c|4
+ $ztupdate=2
+ End Trigger a#1# invoked for ^a
+$ztoldval=a|b|c|d
+$ztval=a|b|c|4
+$ztupdate=4
+End Trigger a#1# invoked for ^a
+^a="6|7|c|8"
+###################################################################
+$ZTUPDATE Chain Test
+INITIAL VALUES:
+^b="a|b|c|d"
+
+BEGIN Trigger b#X# invoked for ^b
+$ztoldval=a|b|c|d
+$ztval=1|b|c|d
+$ztupdate=1
+$ztoldval=a|b|c|d
+$ztval=1|2|c|d
+$ztupdate=1
+End Trigger b#X# invoked for ^b
+BEGIN Trigger b#X# invoked for ^b
+$ztoldval=a|b|c|d
+$ztval=1|2|c|d
+$ztupdate=1,2
+End Trigger b#X# invoked for ^b
+^b="1|2|c|d"
+###################################################################
+KILL Chain Test
+INITIAL VALUES:
+^HIF(1)=1
+^HIF(2)=1
+
+BEGIN Trigger HIF#X# invoked for ^HIF(1)
+$ztslate=
+$ztoldval=1
+$ztval=
+$test=1
+$ztdata=1
+$ztriggerop=K
+$ztwormhole=initial value
+naked reference=1
+$ztwormhole=ztlevel:1
+$test=0
+End Trigger HIF#X# invoked for ^HIF(1)
+BEGIN Trigger HIF#X# invoked for ^HIF(1)
+$ztslate=
+$ztoldval=1
+$ztval=
+$test=1
+$ztdata=1
+$ztriggerop=K
+$ztwormhole=ztlevel:1
+naked reference=1
+$ztwormhole=ztlevel:1
+$test=0
+End Trigger HIF#X# invoked for ^HIF(1)
+^HIF(2)=1
+$test=1
+$ztwormhole=ztlevel:1
+###################################################################
+ZKILL Chain Test
+INITIAL VALUES:
+^ZKIF(1)=1
+^ZKIF(2)=1
+
+BEGIN Trigger ZKIF#X# invoked for ^ZKIF(1)
+$ztslate=
+$ztoldval=1
+$ztval=
+$test=1
+$ztdata=1
+$ztriggerop=ZK
+$ztwormhole=initial value
+naked reference=1
+$ztwormhole=ztlevel:1
+$test=0
+End Trigger ZKIF#X# invoked for ^ZKIF(1)
+BEGIN Trigger ZKIF#X# invoked for ^ZKIF(1)
+$ztslate=
+$ztoldval=1
+$ztval=
+$test=1
+$ztdata=1
+$ztriggerop=ZK
+$ztwormhole=ztlevel:1
+naked reference=1
+$ztwormhole=ztlevel:1
+$test=0
+End Trigger ZKIF#X# invoked for ^ZKIF(1)
+^ZKIF(2)=1
+$test=1
+$ztwormhole=ztlevel:1
+###################################################################
+BEGIN Trigger JACK#1# invoked for ^JACK("hill")
+$ztslate=
+$ztoldval=
+$ztval=This is gonna hurt
+$test=1
+$ztdata=0
+$ztriggerop=S
+$ztwormhole=initial value
+$ztslate=trancendental euphemism
+$ztoldval=
+$ztval=This is gonna hurt
+$test=1
+$ztdata=0
+$ztriggerop=S
+$ztwormhole=internal reference
+stack popped - $ZTWOmhole should revert
+$ztslate=trancendental euphemism
+$ztoldval=
+$ztval=This is gonna hurt
+$test=1
+$ztdata=0
+$ztriggerop=S
+$ztwormhole=initial value
+ BEGIN Trigger JILL#1# invoked for ^JILL(1)
+ $ztslate=trancendental euphemism
+ $ztoldval=
+ $ztval=trigger me
+ $test=1
+ $ztdata=0
+ $ztriggerop=S
+ $ztwormhole=initial value
+ $ztslate=And broke his tookus
+ $ztoldval=
+ $ztval=trigger me
+ $test=1
+ $ztdata=0
+ $ztriggerop=S
+ $ztwormhole=Jack fell down
+ End Trigger JILL#1# invoked for ^JILL(1)
+$ztslate=And broke his tookus
+$ztoldval=
+$ztval=This is gonna hurt
+$test=1
+$ztdata=0
+$ztriggerop=S
+$ztwormhole=Jack fell down
+End Trigger JACK#1# invoked for ^JILL(1)
+^JACK("hill")="This is gonna hurt"
+^JILL(1)="trigger me"
+$test=1
+$ztwormhole=Jack fell down
+
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT REPLIC
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,383 @@
+setenv gtm_chset UTF-8
+unset echo
+
+GTM>
+do ^varstr("UTF-8")
+
+GTM>
+20  30１２３４５６７８９０
+11  20В чащах юга
+26  37나는 유리를 먹을 수 있어요
+20
+37
+11
+26
+-> OPEN "UTF-8_varstr1.txt":(NEWVERSION:STREAM:NOWRAP:RECORDSIZE=19:CHSET="UTF-8")
+-> OPEN "UTF-8_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=19:CHSET="UTF-8")
+-> USE "UTF-8_varstr1.txt":(NOWRAP)
+-> OPEN "UTF-8_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=20:CHSET="UTF-8")
+-> USE "UTF-8_varstr1.txt":(NOWRAP)
+-> OPEN "UTF-8_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=36:CHSET="UTF-8")
+-> USE "UTF-8_varstr1.txt":(NOWRAP)
+-> OPEN "UTF-8_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=38:CHSET="UTF-8")
+-> USE "UTF-8_varstr1.txt":(NOWRAP)
+
+### Now read ###
+57:36:87    １２３４５６７８９０В чащах юга나는 유리를 먹을 수 있어요
+57:36:87    １２３４５６７８９０В чащах юга나는 유리를 먹을 수 있어요
+57:36:87    １２３４５６７８９０В чащах юга나는 유리를 먹을 수 있어요
+57:36:87    １２３４５６７８９０В чащах юга나는 유리를 먹을 수 있어요
+0:0:0       
+-> OPEN "UTF-8_varstr2.txt":(NEWVERSION:VARIABLE:RECORDSIZE=32000:CHSET="UTF-8")
+-> USE "UTF-8_varstr2.txt":(NOWRAP:WIDTH=27)
+-> OPEN "UTF-8_varstr2.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=0:CHSET="UTF-8")
+-> USE "UTF-8_varstr2.txt":(NOWRAP:WIDTH=10)
+-> OPEN "UTF-8_varstr2.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=1:CHSET="UTF-8")
+-> USE "UTF-8_varstr2.txt":(NOWRAP:WIDTH=11)
+-> OPEN "UTF-8_varstr2.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=2:CHSET="UTF-8")
+-> USE "UTF-8_varstr2.txt":(NOWRAP:WIDTH=25)
+-> OPEN "UTF-8_varstr2.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=3:CHSET="UTF-8")
+-> USE "UTF-8_varstr2.txt":(NOWRAP:WIDTH=27)
+
+### Now read ###
+27:17:43    １２３４５６７８９０В чащах
+26:17:38     юга나는 유리를 먹을 수 있
+4:2:6       어요
+10:5:15     １２３４５
+10:5:15     ６７８９０
+10:10:18    В чащах юг
+10:6:15     а나는 유리
+10:6:14     를 먹을 수
+7:4:10       있어요
+10:5:15     １２３４５
+11:6:17     ６７８９０В
+10:10:18     чащах юга
+11:6:16     나는 유리를
+11:7:15      먹을 수 있
+4:2:6       어요
+25:15:39    １２３４５６７８９０В чащ
+25:17:38    ах юга나는 유리를 먹을 수
+7:4:10       있어요
+27:17:43    １２３４５６７８９０В чащах
+26:17:38     юга나는 유리를 먹을 수 있
+4:2:6       어요
+0:0:0       
+
+-> OPEN "UTF-8_varstr3.txt":(NEWVERSION:VARIABLE:RECORDSIZE=32000:PAD=127:CHSET="UTF-8")
+-> OPEN "UTF-8_varstr3.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=127:CHSET="UTF-8")
+-> USE "UTF-8_varstr3.txt":(WRAP:WIDTH=10)
+-> OPEN "UTF-8_varstr3.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=127:CHSET="UTF-8")
+-> USE "UTF-8_varstr3.txt":(WRAP:WIDTH=27)
+
+### Now read ###
+10:5:15     １２３４５
+10:5:15     ６７８９０
+10:10:18    В чащах юг
+1:1:2       а
+9:5:13      나는 유리
+10:6:14     를 먹을 수
+7:4:10       있어요
+20:10:30    １２３４５６７８９０
+11:11:20    В чащах юга
+26:15:37    나는 유리를 먹을 수 있어요
+0:0:0       
+
+-> OPEN "UTF-8_varstr4.txt":(NEWVERSION:VARIABLE:NOWRAP:RECORDSIZE=19:CHSET="UTF-8")
+-> OPEN "UTF-8_varstr4.txt":(APPEND:VARIABLE:NOWRAP:RECORDSIZE=18:CHSET="UTF-8")
+-> USE "UTF-8_varstr4.txt":(NOWRAP)
+-> OPEN "UTF-8_varstr4.txt":(APPEND:VARIABLE:NOWRAP:RECORDSIZE=19:CHSET="UTF-8")
+-> USE "UTF-8_varstr4.txt":(NOWRAP)
+-> OPEN "UTF-8_varstr4.txt":(APPEND:VARIABLE:NOWRAP:RECORDSIZE=37:CHSET="UTF-8")
+-> USE "UTF-8_varstr4.txt":(NOWRAP)
+-> OPEN "UTF-8_varstr4.txt":(APPEND:VARIABLE:NOWRAP:RECORDSIZE=38:CHSET="UTF-8")
+-> USE "UTF-8_varstr4.txt":(NOWRAP)
+
+
+## Now read ##
+12:6:18     １２３４５６
+12:6:18     １２３４５６
+24:14:37    １２３４５６７８９０В ча
+24:14:37    １２３４５６７８９０В ча
+0:0:0       
+
+
+GTM>
+do ^varstr("UTF-16")
+
+GTM>
+-> OPEN "UTF-16_varstr1.txt":(NEWVERSION:STREAM:NOWRAP:RECORDSIZE=18:CHSET="UTF-16")
+-> OPEN "UTF-16_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=18:CHSET="UTF-16")
+-> USE "UTF-16_varstr1.txt":(NOWRAP)
+-> OPEN "UTF-16_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=20:CHSET="UTF-16")
+-> USE "UTF-16_varstr1.txt":(NOWRAP)
+-> OPEN "UTF-16_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=36:CHSET="UTF-16")
+-> USE "UTF-16_varstr1.txt":(NOWRAP)
+-> OPEN "UTF-16_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=38:CHSET="UTF-16")
+-> USE "UTF-16_varstr1.txt":(NOWRAP)
+
+### Now read ###
+57:36:87    １２３４５６７８９０В чащах юга나는 유리를 먹을 수 있어요
+57:36:87    １２３４５６７８９０В чащах юга나는 유리를 먹을 수 있어요
+57:36:87    １２３４５６７８９０В чащах юга나는 유리를 먹을 수 있어요
+57:36:87    １２３４５６７８９０В чащах юга나는 유리를 먹을 수 있어요
+0:0:0       
+-> OPEN "UTF-16_varstr2.txt":(NEWVERSION:VARIABLE:RECORDSIZE=32000:CHSET="UTF-16")
+-> USE "UTF-16_varstr2.txt":(NOWRAP:WIDTH=27)
+-> OPEN "UTF-16_varstr2.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=0:CHSET="UTF-16")
+-> USE "UTF-16_varstr2.txt":(NOWRAP:WIDTH=10)
+-> OPEN "UTF-16_varstr2.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=1:CHSET="UTF-16")
+-> USE "UTF-16_varstr2.txt":(NOWRAP:WIDTH=11)
+-> OPEN "UTF-16_varstr2.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=2:CHSET="UTF-16")
+-> USE "UTF-16_varstr2.txt":(NOWRAP:WIDTH=25)
+-> OPEN "UTF-16_varstr2.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=3:CHSET="UTF-16")
+-> USE "UTF-16_varstr2.txt":(NOWRAP:WIDTH=27)
+
+### Now read ###
+27:17:43    １２３４５６７８９０В чащах
+26:17:38     юга나는 유리를 먹을 수 있
+4:2:6       어요
+10:5:15     １２３４５
+10:5:15     ６７８９０
+10:10:18    В чащах юг
+10:6:15     а나는 유리
+10:6:14     를 먹을 수
+7:4:10       있어요
+10:5:15     １２３４５
+11:6:17     ６７８９０В
+10:10:18     чащах юга
+11:6:16     나는 유리를
+11:7:15      먹을 수 있
+4:2:6       어요
+25:15:39    １２３４５６７８９０В чащ
+25:17:38    ах юга나는 유리를 먹을 수
+7:4:10       있어요
+27:17:43    １２３４５６７８９０В чащах
+26:17:38     юга나는 유리를 먹을 수 있
+4:2:6       어요
+0:0:0       
+
+-> OPEN "UTF-16_varstr3.txt":(NEWVERSION:VARIABLE:RECORDSIZE=32000:PAD=127:CHSET="UTF-16")
+-> OPEN "UTF-16_varstr3.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=127:CHSET="UTF-16")
+-> USE "UTF-16_varstr3.txt":(WRAP:WIDTH=10)
+-> OPEN "UTF-16_varstr3.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=127:CHSET="UTF-16")
+-> USE "UTF-16_varstr3.txt":(WRAP:WIDTH=27)
+
+### Now read ###
+10:5:15     １２３４５
+10:5:15     ６７８９０
+10:10:18    В чащах юг
+1:1:2       а
+9:5:13      나는 유리
+10:6:14     를 먹을 수
+7:4:10       있어요
+20:10:30    １２３４５６７８９０
+11:11:20    В чащах юга
+26:15:37    나는 유리를 먹을 수 있어요
+0:0:0       
+
+-> OPEN "UTF-16_varstr4.txt":(NEWVERSION:VARIABLE:NOWRAP:RECORDSIZE=18:CHSET="UTF-16")
+-> OPEN "UTF-16_varstr4.txt":(APPEND:VARIABLE:NOWRAP:RECORDSIZE=18:CHSET="UTF-16")
+-> USE "UTF-16_varstr4.txt":(NOWRAP)
+-> OPEN "UTF-16_varstr4.txt":(APPEND:VARIABLE:NOWRAP:RECORDSIZE=18:CHSET="UTF-16")
+-> USE "UTF-16_varstr4.txt":(NOWRAP)
+-> OPEN "UTF-16_varstr4.txt":(APPEND:VARIABLE:NOWRAP:RECORDSIZE=36:CHSET="UTF-16")
+-> USE "UTF-16_varstr4.txt":(NOWRAP)
+-> OPEN "UTF-16_varstr4.txt":(APPEND:VARIABLE:NOWRAP:RECORDSIZE=38:CHSET="UTF-16")
+-> USE "UTF-16_varstr4.txt":(NOWRAP)
+
+
+## Now read ##
+18:9:27     １２３４５６７８９
+18:9:27     １２３４５６７８９
+28:18:44    １２３４５６７８９０В чащах 
+29:19:46    １２３４５６７８９０В чащах ю
+0:0:0       
+
+
+GTM>
+do ^varstr("UTF-16LE")
+
+GTM>
+-> OPEN "UTF-16LE_varstr1.txt":(NEWVERSION:STREAM:NOWRAP:RECORDSIZE=18:CHSET="UTF-16LE")
+-> OPEN "UTF-16LE_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=18:CHSET="UTF-16LE")
+-> USE "UTF-16LE_varstr1.txt":(NOWRAP)
+-> OPEN "UTF-16LE_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=20:CHSET="UTF-16LE")
+-> USE "UTF-16LE_varstr1.txt":(NOWRAP)
+-> OPEN "UTF-16LE_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=36:CHSET="UTF-16LE")
+-> USE "UTF-16LE_varstr1.txt":(NOWRAP)
+-> OPEN "UTF-16LE_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=38:CHSET="UTF-16LE")
+-> USE "UTF-16LE_varstr1.txt":(NOWRAP)
+
+### Now read ###
+57:36:87    １２３４５６７８９０В чащах юга나는 유리를 먹을 수 있어요
+57:36:87    １２３４５６７８９０В чащах юга나는 유리를 먹을 수 있어요
+57:36:87    １２３４５６７８９０В чащах юга나는 유리를 먹을 수 있어요
+57:36:87    １２３４５６７８９０В чащах юга나는 유리를 먹을 수 있어요
+0:0:0       
+-> OPEN "UTF-16LE_varstr2.txt":(NEWVERSION:VARIABLE:RECORDSIZE=32000:CHSET="UTF-16LE")
+-> USE "UTF-16LE_varstr2.txt":(NOWRAP:WIDTH=27)
+-> OPEN "UTF-16LE_varstr2.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=0:CHSET="UTF-16LE")
+-> USE "UTF-16LE_varstr2.txt":(NOWRAP:WIDTH=10)
+-> OPEN "UTF-16LE_varstr2.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=1:CHSET="UTF-16LE")
+-> USE "UTF-16LE_varstr2.txt":(NOWRAP:WIDTH=11)
+-> OPEN "UTF-16LE_varstr2.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=2:CHSET="UTF-16LE")
+-> USE "UTF-16LE_varstr2.txt":(NOWRAP:WIDTH=25)
+-> OPEN "UTF-16LE_varstr2.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=3:CHSET="UTF-16LE")
+-> USE "UTF-16LE_varstr2.txt":(NOWRAP:WIDTH=27)
+
+### Now read ###
+27:17:43    １２３４５６７８９０В чащах
+26:17:38     юга나는 유리를 먹을 수 있
+4:2:6       어요
+10:5:15     １２３４５
+10:5:15     ６７８９０
+10:10:18    В чащах юг
+10:6:15     а나는 유리
+10:6:14     를 먹을 수
+7:4:10       있어요
+10:5:15     １２３４５
+11:6:17     ６７８９０В
+10:10:18     чащах юга
+11:6:16     나는 유리를
+11:7:15      먹을 수 있
+4:2:6       어요
+25:15:39    １２３４５６７８９０В чащ
+25:17:38    ах юга나는 유리를 먹을 수
+7:4:10       있어요
+27:17:43    １２３４５６７８９０В чащах
+26:17:38     юга나는 유리를 먹을 수 있
+4:2:6       어요
+0:0:0       
+
+-> OPEN "UTF-16LE_varstr3.txt":(NEWVERSION:VARIABLE:RECORDSIZE=32000:PAD=127:CHSET="UTF-16LE")
+-> OPEN "UTF-16LE_varstr3.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=127:CHSET="UTF-16LE")
+-> USE "UTF-16LE_varstr3.txt":(WRAP:WIDTH=10)
+-> OPEN "UTF-16LE_varstr3.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=127:CHSET="UTF-16LE")
+-> USE "UTF-16LE_varstr3.txt":(WRAP:WIDTH=27)
+
+### Now read ###
+10:5:15     １２３４５
+10:5:15     ６７８９０
+10:10:18    В чащах юг
+1:1:2       а
+9:5:13      나는 유리
+10:6:14     를 먹을 수
+7:4:10       있어요
+20:10:30    １２３４５６７８９０
+11:11:20    В чащах юга
+26:15:37    나는 유리를 먹을 수 있어요
+0:0:0       
+
+-> OPEN "UTF-16LE_varstr4.txt":(NEWVERSION:VARIABLE:NOWRAP:RECORDSIZE=18:CHSET="UTF-16LE")
+-> OPEN "UTF-16LE_varstr4.txt":(APPEND:VARIABLE:NOWRAP:RECORDSIZE=18:CHSET="UTF-16LE")
+-> USE "UTF-16LE_varstr4.txt":(NOWRAP)
+-> OPEN "UTF-16LE_varstr4.txt":(APPEND:VARIABLE:NOWRAP:RECORDSIZE=18:CHSET="UTF-16LE")
+-> USE "UTF-16LE_varstr4.txt":(NOWRAP)
+-> OPEN "UTF-16LE_varstr4.txt":(APPEND:VARIABLE:NOWRAP:RECORDSIZE=36:CHSET="UTF-16LE")
+-> USE "UTF-16LE_varstr4.txt":(NOWRAP)
+-> OPEN "UTF-16LE_varstr4.txt":(APPEND:VARIABLE:NOWRAP:RECORDSIZE=38:CHSET="UTF-16LE")
+-> USE "UTF-16LE_varstr4.txt":(NOWRAP)
+
+
+## Now read ##
+18:9:27     １２３４５６７８９
+18:9:27     １２３４５６７８９
+28:18:44    １２３４５６７８９０В чащах 
+29:19:46    １２３４５６７８９０В чащах ю
+0:0:0       
+
+
+GTM>
+do ^varstr("UTF-16BE")
+
+GTM>
+-> OPEN "UTF-16BE_varstr1.txt":(NEWVERSION:STREAM:NOWRAP:RECORDSIZE=18:CHSET="UTF-16BE")
+-> OPEN "UTF-16BE_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=18:CHSET="UTF-16BE")
+-> USE "UTF-16BE_varstr1.txt":(NOWRAP)
+-> OPEN "UTF-16BE_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=20:CHSET="UTF-16BE")
+-> USE "UTF-16BE_varstr1.txt":(NOWRAP)
+-> OPEN "UTF-16BE_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=36:CHSET="UTF-16BE")
+-> USE "UTF-16BE_varstr1.txt":(NOWRAP)
+-> OPEN "UTF-16BE_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=38:CHSET="UTF-16BE")
+-> USE "UTF-16BE_varstr1.txt":(NOWRAP)
+
+### Now read ###
+57:36:87    １２３４５６７８９０В чащах юга나는 유리를 먹을 수 있어요
+57:36:87    １２３４５６７８９０В чащах юга나는 유리를 먹을 수 있어요
+57:36:87    １２３４５６７８９０В чащах юга나는 유리를 먹을 수 있어요
+57:36:87    １２３４５６７８９０В чащах юга나는 유리를 먹을 수 있어요
+0:0:0       
+-> OPEN "UTF-16BE_varstr2.txt":(NEWVERSION:VARIABLE:RECORDSIZE=32000:CHSET="UTF-16BE")
+-> USE "UTF-16BE_varstr2.txt":(NOWRAP:WIDTH=27)
+-> OPEN "UTF-16BE_varstr2.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=0:CHSET="UTF-16BE")
+-> USE "UTF-16BE_varstr2.txt":(NOWRAP:WIDTH=10)
+-> OPEN "UTF-16BE_varstr2.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=1:CHSET="UTF-16BE")
+-> USE "UTF-16BE_varstr2.txt":(NOWRAP:WIDTH=11)
+-> OPEN "UTF-16BE_varstr2.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=2:CHSET="UTF-16BE")
+-> USE "UTF-16BE_varstr2.txt":(NOWRAP:WIDTH=25)
+-> OPEN "UTF-16BE_varstr2.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=3:CHSET="UTF-16BE")
+-> USE "UTF-16BE_varstr2.txt":(NOWRAP:WIDTH=27)
+
+### Now read ###
+27:17:43    １２３４５６７８９０В чащах
+26:17:38     юга나는 유리를 먹을 수 있
+4:2:6       어요
+10:5:15     １２３４５
+10:5:15     ６７８９０
+10:10:18    В чащах юг
+10:6:15     а나는 유리
+10:6:14     를 먹을 수
+7:4:10       있어요
+10:5:15     １２３４５
+11:6:17     ６７８９０В
+10:10:18     чащах юга
+11:6:16     나는 유리를
+11:7:15      먹을 수 있
+4:2:6       어요
+25:15:39    １２３４５６７８９０В чащ
+25:17:38    ах юга나는 유리를 먹을 수
+7:4:10       있어요
+27:17:43    １２３４５６７８９０В чащах
+26:17:38     юга나는 유리를 먹을 수 있
+4:2:6       어요
+0:0:0       
+
+-> OPEN "UTF-16BE_varstr3.txt":(NEWVERSION:VARIABLE:RECORDSIZE=32000:PAD=127:CHSET="UTF-16BE")
+-> OPEN "UTF-16BE_varstr3.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=127:CHSET="UTF-16BE")
+-> USE "UTF-16BE_varstr3.txt":(WRAP:WIDTH=10)
+-> OPEN "UTF-16BE_varstr3.txt":(APPEND:VARIABLE:RECORDSIZE=32000:PAD=127:CHSET="UTF-16BE")
+-> USE "UTF-16BE_varstr3.txt":(WRAP:WIDTH=27)
+
+### Now read ###
+10:5:15     １２３４５
+10:5:15     ６７８９０
+10:10:18    В чащах юг
+1:1:2       а
+9:5:13      나는 유리
+10:6:14     를 먹을 수
+7:4:10       있어요
+20:10:30    １２３４５６７８９０
+11:11:20    В чащах юга
+26:15:37    나는 유리를 먹을 수 있어요
+0:0:0       
+
+-> OPEN "UTF-16BE_varstr4.txt":(NEWVERSION:VARIABLE:NOWRAP:RECORDSIZE=18:CHSET="UTF-16BE")
+-> OPEN "UTF-16BE_varstr4.txt":(APPEND:VARIABLE:NOWRAP:RECORDSIZE=18:CHSET="UTF-16BE")
+-> USE "UTF-16BE_varstr4.txt":(NOWRAP)
+-> OPEN "UTF-16BE_varstr4.txt":(APPEND:VARIABLE:NOWRAP:RECORDSIZE=18:CHSET="UTF-16BE")
+-> USE "UTF-16BE_varstr4.txt":(NOWRAP)
+-> OPEN "UTF-16BE_varstr4.txt":(APPEND:VARIABLE:NOWRAP:RECORDSIZE=36:CHSET="UTF-16BE")
+-> USE "UTF-16BE_varstr4.txt":(NOWRAP)
+-> OPEN "UTF-16BE_varstr4.txt":(APPEND:VARIABLE:NOWRAP:RECORDSIZE=38:CHSET="UTF-16BE")
+-> USE "UTF-16BE_varstr4.txt":(NOWRAP)
+
+
+## Now read ##
+18:9:27     １２３４５６７８９
+18:9:27     １２３４５６７８９
+28:18:44    １２３４５６７８９０В чащах 
+29:19:46    １２３４５６７８９０В чащах ю
+0:0:0       
+
+
+GTM>

@@ -1,0 +1,95 @@
+Case 1. Start a GT.M process after a crash with wc_blocked.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+###################################################################
+Case 2. Remove shared memory and start a GT.M process after a crash with wc_blocked but no journaling.
+
+%GTM-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+###################################################################
+Case 3. Remove shared memory and start a GT.M process after a crash with wc_blocked and journaling.
+
+%GTM-E-REQRECOV, Error accessing database ##TEST_PATH##/mumps.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+###################################################################
+Case 4. Remove shared memory and start a GT.M process after a crash with wc_blocked, journaling, and replication.
+
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+==Executing MULTISITE_REPLIC 'CRASH INST2'==
+Simulating crash on Instance INSTANCE2 in ##FILTERED##_REMOTE_TEST_PATH_
+Instance INSTANCE2 crashed!
+
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
+----------
+Error REPLREQROLLBACK seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##TIMESTAMP##.out as expected:
+%GTM-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+%GTM-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+----------
+----------
+Error ENO seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##TIMESTAMP##.out as expected:
+##TEST_AWK%SYSTEM-E-ENO(22|43), .*
+##TEST_AWK%SYSTEM-E-ENO(22|43), .*
+----------
+----------
+Error JNL_ON-E-MUPIP seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##TIMESTAMP##.out as expected:
+##TEST_AWKJNL_ON-E-MUPIP, mupip set .* returned status 10. Please check jnl.log
+----------
+----------
+Error REQROLLBACK seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
+%GTM-E-REQROLLBACK, Error accessing database ##REMOTE_TEST_PATH##/instance2/mumps.dat.  Run MUPIP JOURNAL ROLLBACK on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+----------
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_exe/mumps -run %XCMD "set ^c=1" >&! gtm4c.out'==
+TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
+----------
+Error REQROLLBACK seen in ##REMOTE_TEST_PATH##/instance2/gtm4c.out as expected:
+%GTM-E-REQROLLBACK, Error accessing database ##REMOTE_TEST_PATH##/instance2/mumps.dat.  Run MUPIP JOURNAL ROLLBACK on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+----------
+----------
+Error ENO seen in ##REMOTE_TEST_PATH##/instance2/gtm4c.out as expected:
+##TEST_AWK%SYSTEM-E-ENO(22|43), .*
+----------
+----------
+Error ENO seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
+##TEST_AWK%SYSTEM-E-ENO(22|43), .*
+----------
+----------
+Error MUNOFINISH seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+----------
+----------
+Error JNL_ON-E-MUPIP seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
+JNL_ON-E-MUPIP, the previous mupip set command returned status 10
+----------
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo "*" >>&! rollback4.outx'==
+
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_exe/mumps -run %XCMD "set ^c=1" >&! gtm4d.outx'==
+TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
+
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

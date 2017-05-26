@@ -1,0 +1,41 @@
+#
+#################################################################
+#								#
+#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# rrp/dmi 4/18/96
+# bpl/gst 10/18/96
+# lidral/gst 97/11/03
+#
+# Run each sub-process in its own directory so the core files don't over-write each other.
+setenv gtmroutines "$cwd $gtmroutines"
+set dbloadjobs = ""
+foreach i ( 1 2 3 4 5 6 7 8 )
+	mkdir ./tmp_$i
+	cd ./tmp_$i
+	echo '$gtmroutines' "= $gtmroutines"
+	$gtm_exe/mumps -r dbload $gtm_test/big_files/$tst/tape$i.dat >& ../tape$i.log &
+	set dbloadjobs = ($dbloadjobs $!)
+	cd ..
+end
+#
+# Wait for each subprocess to finish before terminating.
+# Instead of a wait for each of the 8 processes, have a total wait time for all the processes to exit
+# In the past, some slow servers have taken upto 2 hours to complete. So have little over 2 hours as the wait time
+set format="%Y %m %d %H %M %S %Z"
+set starttime=`date +"$format"` # Start time
+set waittime = 7800
+foreach jobid ($dbloadjobs)
+	$gtm_tst/com/wait_for_proc_to_die.csh $jobid $waittime
+	set nowtime=`date +"$format"`   # Time now
+	@ elapsedtime = `echo $starttime " " $nowtime | $tst_awk -f $gtm_tst/com/diff_time.awk`
+	@ waittime = $waittime - $elapsedtime
+	set starttime = "$nowtime"	# Reset starttime to calculate elapsed time from now
+	if ($waittime < 1) set waittime = 1
+end

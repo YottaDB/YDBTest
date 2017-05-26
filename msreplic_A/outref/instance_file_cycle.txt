@@ -1,0 +1,1178 @@
+## ## multisite_replic/instance_file_cycle -- design tests -- Final Example			###4###Kishore
+## Implement the "Final Example" (Section 6.1.2.3) from the design spec.
+## Details:
+## --------------
+## This is to illustrate the need for the cycle field in the triple.
+##         ------------------------------------------------------
+##                INST1/A      INST2/B      INST3/C      INST4/D
+##         ------------------------------------------------------
+## Step 1:      (P)  1-100   (S)  1-100        X             X
+## Step 2:      (S)  1             X      (P) 1-100          X
+## Step 3:      (P)  1-110         X           X       (S)  1-100
+## Step 4:            X      (P)101            X       (S)101
+##
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance4:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+######### STEP 1 #############
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simpleinstanceupdate.csh 100'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'START INST1 INST3 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP INST1 INST3'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Shutting down Primary Source Server Server in ##TEST_PATH##
+==Executing MULTISITE_REPLIC 'RUN SRC=INST3 $gtm_tst/com/mupip_rollback.csh -resync=1 -losttrans=ignore.glo "*" >&! rollback_fetchresync_1.out ; $grep -E "RLBKJNSEQ|JNLSUCCESS" rollback_fetchresync_1.out'==
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 1 [0x0000000000000001]
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+==========================================================
+The instance file contents on INST1 (instancefile_1.out):
+GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+
+----------------------------------------------------------
+File Header
+----------------------------------------------------------
+HDR Label (contains Major Version)             GDSRPLUNX05
+HDR Minor Version                                        1
+HDR Endian Format      ##FILTERED####ENDIAN##
+##SUSPEND_OUTPUT 32BIT_GTM
+HDR 64-bit Format                                     TRUE
+##ALLOW_OUTPUT 32BIT_GTM
+##SUSPEND_OUTPUT 64BIT_GTM
+HDR 64-bit Format                                    FALSE
+##ALLOW_OUTPUT 64BIT_GTM
+HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+HDR Receive Pool Sem Id                            INVALID
+HDR Receive Pool Shm Id                            INVALID
+HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+HDR Receive Pool Sem Create Time                         0
+HDR Receive Pool Shm Create Time                         0
+HDR Instance File Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR Instance Name                                INSTANCE1
+HDR Instance File Create Time          ..../../.. ..:..:..
+HDR Instance File Creator Pid                 PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR LMS Group Instance Name                      INSTANCE1
+HDR LMS Group Creator Pid                     PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Create Time              ..../../.. ..:..:..
+HDR Journal Sequence Number                              1 [0x0000000000000001]
+HDR Root Primary Cycle                                   1 [0x00000001]
+HDR Number of used history records                       1 [0x00000001]
+HDR Allocated history records                            1 [0x00000001]
+HDR Crash                                             TRUE
+HDR Root Primary                                      TRUE
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HDR Supplementary Instance                           FALSE
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HDR Supplementary Instance                            TRUE
+HDR STRM  0: Last history record number                  0 [0x00000000]
+HDR STRM  0: Journal Sequence Number                     1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HDR Corrupt                                          FALSE
+HDR Quick database rundown is active                 .....
+
+----------------------------------------------------------
+Source Server Slots
+----------------------------------------------------------
+SLT # 0 : Secondary Instance Name                INSTANCE2
+SLT # 0 : Resync Sequence Number                       101 [0x0000000000000065]
+SLT # 0 : Connect Sequence Number                        1 [0x0000000000000001]
+----------------------------------------------------------
+SLT # 1 : Secondary Instance Name                INSTANCE3
+SLT # 1 : Resync Sequence Number                       101 [0x0000000000000065]
+SLT # 1 : Connect Sequence Number                      101 [0x0000000000000065]
+
+----------------------------------------------------------
+History Records (histinfo structures)
+----------------------------------------------------------
+HST #      0 : Root Primary Instance Name        INSTANCE1
+HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HST #      0 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Root Primary Cycle                        1 [0x00000001]
+HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      0 : Creation Time           ..../../.. ..:..:..
+HST #      0 : History Number                            0 [0x00000000]
+HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      0 : History record type                       1 [0x00000001]
+==========================================================
+==========================================================
+The instance file contents on INST2 (instancefile_1.out):
+GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+
+----------------------------------------------------------
+File Header
+----------------------------------------------------------
+HDR Label (contains Major Version)             GDSRPLUNX05
+HDR Minor Version                                        1
+HDR Endian Format      ##FILTERED####ENDIAN##
+##TEST_AWKHDR 64-bit Format                                    .....
+HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+HDR ##FILTERED##Receive Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Receive Pool Shm Id             .......... [0x........]
+HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+HDR Receive Pool Sem Create Time       ..../../.. ..:..:..
+HDR Receive Pool Shm Create Time       ..../../.. ..:..:..
+##TEST_AWKHDR Instance File Created Nodename.*
+HDR Instance Name                                INSTANCE2
+HDR Instance File Create Time          ..../../.. ..:..:..
+HDR Instance File Creator Pid                 PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR LMS Group Instance Name                      INSTANCE1
+HDR LMS Group Creator Pid                     PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Create Time              ..../../.. ..:..:..
+HDR Journal Sequence Number                              1 [0x0000000000000001]
+HDR Root Primary Cycle                                   0 [0x00000000]
+HDR Number of used history records                       1 [0x00000001]
+HDR Allocated history records                            1 [0x00000001]
+HDR Crash                                             TRUE
+HDR Root Primary                                     FALSE
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HDR Supplementary Instance                           FALSE
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HDR Supplementary Instance                            TRUE
+HDR STRM  0: Last history record number                  0 [0x00000000]
+HDR STRM  0: Journal Sequence Number                     1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HDR Corrupt                                          FALSE
+HDR Quick database rundown is active                 .....
+
+----------------------------------------------------------
+Source Server Slots
+----------------------------------------------------------
+SLT # 0 : Secondary Instance Name                INSTANCE1
+SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
+
+----------------------------------------------------------
+History Records (histinfo structures)
+----------------------------------------------------------
+HST #      0 : Root Primary Instance Name        INSTANCE1
+HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HST #      0 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Root Primary Cycle                        1 [0x00000001]
+HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      0 : Creation Time           ..../../.. ..:..:..
+HST #      0 : History Number                            0 [0x00000000]
+HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      0 : History record type                       1 [0x00000001]
+==========================================================
+##   RUN RCV=INST1 SRC=INST3 'mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=fetch.glo "*"'
+##   	--> INST1 should rollback all transactions (i.e. fetch.glo should have seqno's 1-100).
+##   Perform 100 transactions on INST3 (seqnos: 1-100).
+##   CRASH INST3
+######### STEP 2 #############
+==Executing MULTISITE_REPLIC 'CRASH INST1'==
+Simulating crash on Instance INSTANCE1 in ##TEST_PATH##
+Instance INSTANCE1 crashed!
+==Executing MULTISITE_REPLIC 'CRASH INST2'==
+Simulating crash on Instance INSTANCE2 in ##FILTERED##_REMOTE_TEST_PATH_
+Instance INSTANCE2 crashed!
+==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST1 RP'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST3 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=fetch.glo "*" >&! rollback_fetchresync_1.out ; $grep -E "RLBKJNSEQ|JNLSUCCESS" rollback_fetchresync_1.out'==
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 1 [0x0000000000000001]
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+PASS from lost transaction analysis
+==Executing MULTISITE_REPLIC 'STARTRCV INST3 INST1'==
+==Executing MULTISITE_REPLIC 'CRASH INST1'==
+Simulating crash on Instance INSTANCE1 in ##TEST_PATH##
+Instance INSTANCE1 crashed!
+==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/simpleinstanceupdate.csh 100'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'CRASH INST3'==
+Simulating crash on Instance INSTANCE3 in ##FILTERED##_REMOTE_TEST_PATH_
+Instance INSTANCE3 crashed!
+==========================================================
+The instance file contents on INST1 (instancefile_2.out):
+GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+
+----------------------------------------------------------
+File Header
+----------------------------------------------------------
+HDR Label (contains Major Version)             GDSRPLUNX05
+HDR Minor Version                                        1
+HDR Endian Format      ##FILTERED####ENDIAN##
+##SUSPEND_OUTPUT 32BIT_GTM
+HDR 64-bit Format                                     TRUE
+##ALLOW_OUTPUT 32BIT_GTM
+##SUSPEND_OUTPUT 64BIT_GTM
+HDR 64-bit Format                                    FALSE
+##ALLOW_OUTPUT 64BIT_GTM
+HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+HDR ##FILTERED##Receive Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Receive Pool Shm Id             .......... [0x........]
+HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+HDR Receive Pool Sem Create Time       ..../../.. ..:..:..
+HDR Receive Pool Shm Create Time       ..../../.. ..:..:..
+HDR Instance File Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR Instance Name                                INSTANCE1
+HDR Instance File Create Time          ..../../.. ..:..:..
+HDR Instance File Creator Pid                 PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR LMS Group Instance Name                      INSTANCE1
+HDR LMS Group Creator Pid                     PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Create Time              ..../../.. ..:..:..
+HDR Journal Sequence Number                              1 [0x0000000000000001]
+HDR Root Primary Cycle                                   1 [0x00000001]
+HDR Number of used history records                       1 [0x00000001]
+HDR Allocated history records                            1 [0x00000001]
+HDR Crash                                             TRUE
+HDR Root Primary                                     FALSE
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HDR Supplementary Instance                           FALSE
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HDR Supplementary Instance                            TRUE
+HDR STRM  0: Last history record number                  0 [0x00000000]
+HDR STRM  0: Journal Sequence Number                     1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HDR Corrupt                                          FALSE
+HDR Quick database rundown is active                 .....
+
+----------------------------------------------------------
+Source Server Slots
+----------------------------------------------------------
+SLT # 0 : Secondary Instance Name                INSTANCE2
+SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 0 : Connect Sequence Number                        1 [0x0000000000000001]
+----------------------------------------------------------
+SLT # 1 : Secondary Instance Name                INSTANCE3
+SLT # 1 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 1 : Connect Sequence Number                        1 [0x0000000000000001]
+
+----------------------------------------------------------
+History Records (histinfo structures)
+----------------------------------------------------------
+HST #      0 : Root Primary Instance Name        INSTANCE3
+HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HST #      0 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Root Primary Cycle                        1 [0x00000001]
+HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      0 : Creation Time           ..../../.. ..:..:..
+HST #      0 : History Number                            0 [0x00000000]
+HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      0 : History record type                       1 [0x00000001]
+==========================================================
+==========================================================
+The instance file contents on INST2 (instancefile_2.out):
+GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+
+----------------------------------------------------------
+File Header
+----------------------------------------------------------
+HDR Label (contains Major Version)             GDSRPLUNX05
+HDR Minor Version                                        1
+HDR Endian Format      ##FILTERED####ENDIAN##
+##TEST_AWKHDR 64-bit Format                                    .....
+HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+HDR ##FILTERED##Receive Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Receive Pool Shm Id             .......... [0x........]
+HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+HDR Receive Pool Sem Create Time       ..../../.. ..:..:..
+HDR Receive Pool Shm Create Time       ..../../.. ..:..:..
+##TEST_AWKHDR Instance File Created Nodename.*
+HDR Instance Name                                INSTANCE2
+HDR Instance File Create Time          ..../../.. ..:..:..
+HDR Instance File Creator Pid                 PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR LMS Group Instance Name                      INSTANCE1
+HDR LMS Group Creator Pid                     PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Create Time              ..../../.. ..:..:..
+HDR Journal Sequence Number                              1 [0x0000000000000001]
+HDR Root Primary Cycle                                   0 [0x00000000]
+HDR Number of used history records                       1 [0x00000001]
+HDR Allocated history records                            1 [0x00000001]
+HDR Crash                                             TRUE
+HDR Root Primary                                     FALSE
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HDR Supplementary Instance                           FALSE
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HDR Supplementary Instance                            TRUE
+HDR STRM  0: Last history record number                  0 [0x00000000]
+HDR STRM  0: Journal Sequence Number                     1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HDR Corrupt                                          FALSE
+HDR Quick database rundown is active                 .....
+
+----------------------------------------------------------
+Source Server Slots
+----------------------------------------------------------
+SLT # 0 : Secondary Instance Name                INSTANCE1
+SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
+
+----------------------------------------------------------
+History Records (histinfo structures)
+----------------------------------------------------------
+HST #      0 : Root Primary Instance Name        INSTANCE1
+HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HST #      0 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Root Primary Cycle                        1 [0x00000001]
+HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      0 : Creation Time           ..../../.. ..:..:..
+HST #      0 : History Number                            0 [0x00000000]
+HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      0 : History record type                       1 [0x00000001]
+==========================================================
+==========================================================
+The instance file contents on INST3 (instancefile_2.out):
+GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+
+----------------------------------------------------------
+File Header
+----------------------------------------------------------
+HDR Label (contains Major Version)             GDSRPLUNX05
+HDR Minor Version                                        1
+HDR Endian Format      ##FILTERED####ENDIAN##
+##TEST_AWKHDR 64-bit Format                                    .....
+HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+HDR Receive Pool Sem Id                            INVALID
+HDR Receive Pool Shm Id                            INVALID
+HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+HDR Receive Pool Sem Create Time                         0
+HDR Receive Pool Shm Create Time                         0
+##TEST_AWKHDR Instance File Created Nodename.*
+HDR Instance Name                                INSTANCE3
+HDR Instance File Create Time          ..../../.. ..:..:..
+HDR Instance File Creator Pid                 PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR LMS Group Instance Name                      INSTANCE1
+HDR LMS Group Creator Pid                     PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Create Time              ..../../.. ..:..:..
+HDR Journal Sequence Number                              1 [0x0000000000000001]
+HDR Root Primary Cycle                                   1 [0x00000001]
+HDR Number of used history records                       1 [0x00000001]
+HDR Allocated history records                            1 [0x00000001]
+HDR Crash                                             TRUE
+HDR Root Primary                                      TRUE
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HDR Supplementary Instance                           FALSE
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HDR Supplementary Instance                            TRUE
+HDR STRM  0: Last history record number                  0 [0x00000000]
+HDR STRM  0: Journal Sequence Number                     1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HDR Corrupt                                          FALSE
+HDR Quick database rundown is active                 .....
+
+----------------------------------------------------------
+Source Server Slots
+----------------------------------------------------------
+SLT # 0 : Secondary Instance Name                INSTANCE1
+SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 0 : Connect Sequence Number                        1 [0x0000000000000001]
+
+----------------------------------------------------------
+History Records (histinfo structures)
+----------------------------------------------------------
+HST #      0 : Root Primary Instance Name        INSTANCE3
+HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HST #      0 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Root Primary Cycle                        1 [0x00000001]
+HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      0 : Creation Time           ..../../.. ..:..:..
+HST #      0 : History Number                            0 [0x00000000]
+HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      0 : History record type                       1 [0x00000001]
+==========================================================
+##   RUN INST1 'mupip_rollback.csh -losttrans=lost1.glo "*"'
+## 	--> There should not be any rollback (i.e. lost1.glo should be empty)
+##   START INST1 INST4 RP
+##   Perform 110 transactions on INST1 (seqnos: 1-110).
+##   SYNC ALL_LINKS
+######### STEP 3 #############
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo "*"'==
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 1 [0x0000000000000001]
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+%GTM-I-FILENOTCREATE, Lost transactions extract file lost1.glo not created
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+==Executing MULTISITE_REPLIC 'START INST1 INST4 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simpleinstanceupdate.csh 110'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==========================================================
+The instance file contents on INST1 (instancefile_3.out):
+GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+
+----------------------------------------------------------
+File Header
+----------------------------------------------------------
+HDR Label (contains Major Version)             GDSRPLUNX05
+HDR Minor Version                                        1
+HDR Endian Format      ##FILTERED####ENDIAN##
+##SUSPEND_OUTPUT 32BIT_GTM
+HDR 64-bit Format                                     TRUE
+##ALLOW_OUTPUT 32BIT_GTM
+##SUSPEND_OUTPUT 64BIT_GTM
+HDR 64-bit Format                                    FALSE
+##ALLOW_OUTPUT 64BIT_GTM
+HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+HDR Receive Pool Sem Id                            INVALID
+HDR Receive Pool Shm Id                            INVALID
+HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+HDR Receive Pool Sem Create Time                         0
+HDR Receive Pool Shm Create Time                         0
+HDR Instance File Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR Instance Name                                INSTANCE1
+HDR Instance File Create Time          ..../../.. ..:..:..
+HDR Instance File Creator Pid                 PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR LMS Group Instance Name                      INSTANCE1
+HDR LMS Group Creator Pid                     PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Create Time              ..../../.. ..:..:..
+HDR Journal Sequence Number                              1 [0x0000000000000001]
+HDR Root Primary Cycle                                   2 [0x00000002]
+HDR Number of used history records                       1 [0x00000001]
+HDR Allocated history records                            1 [0x00000001]
+HDR Crash                                             TRUE
+HDR Root Primary                                      TRUE
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HDR Supplementary Instance                           FALSE
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HDR Supplementary Instance                            TRUE
+HDR STRM  0: Last history record number                  0 [0x00000000]
+HDR STRM  0: Journal Sequence Number                     1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HDR Corrupt                                          FALSE
+HDR Quick database rundown is active                 .....
+
+----------------------------------------------------------
+Source Server Slots
+----------------------------------------------------------
+SLT # 0 : Secondary Instance Name                INSTANCE2
+SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 0 : Connect Sequence Number                        1 [0x0000000000000001]
+----------------------------------------------------------
+SLT # 1 : Secondary Instance Name                INSTANCE3
+SLT # 1 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 1 : Connect Sequence Number                        1 [0x0000000000000001]
+----------------------------------------------------------
+SLT # 2 : Secondary Instance Name                INSTANCE4
+SLT # 2 : Resync Sequence Number                       111 [0x000000000000006F]
+SLT # 2 : Connect Sequence Number                        1 [0x0000000000000001]
+
+----------------------------------------------------------
+History Records (histinfo structures)
+----------------------------------------------------------
+HST #      0 : Root Primary Instance Name        INSTANCE1
+HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HST #      0 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Root Primary Cycle                        2 [0x00000002]
+HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      0 : Creation Time           ..../../.. ..:..:..
+HST #      0 : History Number                            0 [0x00000000]
+HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      0 : History record type                       1 [0x00000001]
+==========================================================
+==========================================================
+The instance file contents on INST2 (instancefile_3.out):
+GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+
+----------------------------------------------------------
+File Header
+----------------------------------------------------------
+HDR Label (contains Major Version)             GDSRPLUNX05
+HDR Minor Version                                        1
+HDR Endian Format      ##FILTERED####ENDIAN##
+##TEST_AWKHDR 64-bit Format                                    .....
+HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+HDR ##FILTERED##Receive Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Receive Pool Shm Id             .......... [0x........]
+HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+HDR Receive Pool Sem Create Time       ..../../.. ..:..:..
+HDR Receive Pool Shm Create Time       ..../../.. ..:..:..
+##TEST_AWKHDR Instance File Created Nodename.*
+HDR Instance Name                                INSTANCE2
+HDR Instance File Create Time          ..../../.. ..:..:..
+HDR Instance File Creator Pid                 PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR LMS Group Instance Name                      INSTANCE1
+HDR LMS Group Creator Pid                     PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Create Time              ..../../.. ..:..:..
+HDR Journal Sequence Number                              1 [0x0000000000000001]
+HDR Root Primary Cycle                                   0 [0x00000000]
+HDR Number of used history records                       1 [0x00000001]
+HDR Allocated history records                            1 [0x00000001]
+HDR Crash                                             TRUE
+HDR Root Primary                                     FALSE
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HDR Supplementary Instance                           FALSE
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HDR Supplementary Instance                            TRUE
+HDR STRM  0: Last history record number                  0 [0x00000000]
+HDR STRM  0: Journal Sequence Number                     1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HDR Corrupt                                          FALSE
+HDR Quick database rundown is active                 .....
+
+----------------------------------------------------------
+Source Server Slots
+----------------------------------------------------------
+SLT # 0 : Secondary Instance Name                INSTANCE1
+SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
+
+----------------------------------------------------------
+History Records (histinfo structures)
+----------------------------------------------------------
+HST #      0 : Root Primary Instance Name        INSTANCE1
+HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HST #      0 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Root Primary Cycle                        1 [0x00000001]
+HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      0 : Creation Time           ..../../.. ..:..:..
+HST #      0 : History Number                            0 [0x00000000]
+HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      0 : History record type                       1 [0x00000001]
+==========================================================
+==========================================================
+The instance file contents on INST3 (instancefile_3.out):
+GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+
+----------------------------------------------------------
+File Header
+----------------------------------------------------------
+HDR Label (contains Major Version)             GDSRPLUNX05
+HDR Minor Version                                        1
+HDR Endian Format      ##FILTERED####ENDIAN##
+##TEST_AWKHDR 64-bit Format                                    .....
+HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+HDR Receive Pool Sem Id                            INVALID
+HDR Receive Pool Shm Id                            INVALID
+HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+HDR Receive Pool Sem Create Time                         0
+HDR Receive Pool Shm Create Time                         0
+##TEST_AWKHDR Instance File Created Nodename.*
+HDR Instance Name                                INSTANCE3
+HDR Instance File Create Time          ..../../.. ..:..:..
+HDR Instance File Creator Pid                 PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR LMS Group Instance Name                      INSTANCE1
+HDR LMS Group Creator Pid                     PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Create Time              ..../../.. ..:..:..
+HDR Journal Sequence Number                              1 [0x0000000000000001]
+HDR Root Primary Cycle                                   1 [0x00000001]
+HDR Number of used history records                       1 [0x00000001]
+HDR Allocated history records                            1 [0x00000001]
+HDR Crash                                             TRUE
+HDR Root Primary                                      TRUE
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HDR Supplementary Instance                           FALSE
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HDR Supplementary Instance                            TRUE
+HDR STRM  0: Last history record number                  0 [0x00000000]
+HDR STRM  0: Journal Sequence Number                     1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HDR Corrupt                                          FALSE
+HDR Quick database rundown is active                 .....
+
+----------------------------------------------------------
+Source Server Slots
+----------------------------------------------------------
+SLT # 0 : Secondary Instance Name                INSTANCE1
+SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 0 : Connect Sequence Number                        1 [0x0000000000000001]
+
+----------------------------------------------------------
+History Records (histinfo structures)
+----------------------------------------------------------
+HST #      0 : Root Primary Instance Name        INSTANCE3
+HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HST #      0 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Root Primary Cycle                        1 [0x00000001]
+HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      0 : Creation Time           ..../../.. ..:..:..
+HST #      0 : History Number                            0 [0x00000000]
+HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      0 : History record type                       1 [0x00000001]
+==========================================================
+==========================================================
+The instance file contents on INST4 (instancefile_3.out):
+GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+
+----------------------------------------------------------
+File Header
+----------------------------------------------------------
+HDR Label (contains Major Version)             GDSRPLUNX05
+HDR Minor Version                                        1
+HDR Endian Format      ##FILTERED####ENDIAN##
+##TEST_AWKHDR 64-bit Format                                    .....
+HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+HDR ##FILTERED##Receive Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Receive Pool Shm Id             .......... [0x........]
+HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+HDR Receive Pool Sem Create Time       ..../../.. ..:..:..
+HDR Receive Pool Shm Create Time       ..../../.. ..:..:..
+##TEST_AWKHDR Instance File Created Nodename.*
+HDR Instance Name                                INSTANCE4
+HDR Instance File Create Time          ..../../.. ..:..:..
+HDR Instance File Creator Pid                 PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR LMS Group Instance Name                      INSTANCE1
+HDR LMS Group Creator Pid                     PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Create Time              ..../../.. ..:..:..
+HDR Journal Sequence Number                              1 [0x0000000000000001]
+HDR Root Primary Cycle                                   0 [0x00000000]
+HDR Number of used history records                       1 [0x00000001]
+HDR Allocated history records                            1 [0x00000001]
+HDR Crash                                             TRUE
+HDR Root Primary                                     FALSE
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HDR Supplementary Instance                           FALSE
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HDR Supplementary Instance                            TRUE
+HDR STRM  0: Last history record number                  0 [0x00000000]
+HDR STRM  0: Journal Sequence Number                     1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HDR Corrupt                                          FALSE
+HDR Quick database rundown is active                 .....
+
+----------------------------------------------------------
+Source Server Slots
+----------------------------------------------------------
+SLT # 0 : Secondary Instance Name                INSTANCE1
+SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
+
+----------------------------------------------------------
+History Records (histinfo structures)
+----------------------------------------------------------
+HST #      0 : Root Primary Instance Name        INSTANCE1
+HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HST #      0 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Root Primary Cycle                        2 [0x00000002]
+HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      0 : Creation Time           ..../../.. ..:..:..
+HST #      0 : History Number                            0 [0x00000000]
+HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      0 : History record type                       1 [0x00000001]
+==========================================================
+==Executing MULTISITE_REPLIC 'CRASH INST1'==
+Simulating crash on Instance INSTANCE1 in ##TEST_PATH##
+Instance INSTANCE1 crashed!
+##   RUN INST2 'mupip_rollback.csh -losttrans=lost2.glo "*"'
+## 	--> There should not be any rollback (i.e. lost2.glo should be empty)
+##   RUN RCV=INST4 SRC=INST2 'mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=fetch.glo "*"'
+##   	--> INST4 should rollback to 1 since the seqno's it has are from A, but cycle=1, not cycle=2.
+##   START INST2 INST4 RP
+##   Perform 1 transaction on INST2 (seqno: 101).
+######### STEP 4 #############
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST4'==
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/mupip_rollback.csh -losttrans=lost2.glo "*" >&! rollback_losttrans.out ; $grep -E "RLBKJNSEQ|JNLSUCCESS" rollback_losttrans.out'==
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 101 [0x0000000000000065]
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST4 RP'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST4 SRC=INST2 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=fetch.glo "*" >&! rollback_fetchresync_2.out ; $grep -E "RLBKJNSEQ|JNLSUCCESS" rollback_fetchresync_2.out'==
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 1 [0x0000000000000001]
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/analyze_jnl_extract.csh fetch.glo 1 110 >&! analyze_jnl_extract_fetch_glo.out ; $grep PASS analyze_jnl_extract_fetch_glo.out'==
+PASS from lost transaction analysis
+==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST4 waitforconnect'==
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simpleinstanceupdate.csh 1'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST2 INST4'==
+==========================================================
+The instance file contents on INST1 (instancefile_4.out):
+GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+
+----------------------------------------------------------
+File Header
+----------------------------------------------------------
+HDR Label (contains Major Version)             GDSRPLUNX05
+HDR Minor Version                                        1
+HDR Endian Format      ##FILTERED####ENDIAN##
+##SUSPEND_OUTPUT 32BIT_GTM
+HDR 64-bit Format                                     TRUE
+##ALLOW_OUTPUT 32BIT_GTM
+##SUSPEND_OUTPUT 64BIT_GTM
+HDR 64-bit Format                                    FALSE
+##ALLOW_OUTPUT 64BIT_GTM
+HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+HDR Receive Pool Sem Id                            INVALID
+HDR Receive Pool Shm Id                            INVALID
+HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+HDR Receive Pool Sem Create Time                         0
+HDR Receive Pool Shm Create Time                         0
+HDR Instance File Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR Instance Name                                INSTANCE1
+HDR Instance File Create Time          ..../../.. ..:..:..
+HDR Instance File Creator Pid                 PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR LMS Group Instance Name                      INSTANCE1
+HDR LMS Group Creator Pid                     PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Create Time              ..../../.. ..:..:..
+HDR Journal Sequence Number                              1 [0x0000000000000001]
+HDR Root Primary Cycle                                   2 [0x00000002]
+HDR Number of used history records                       1 [0x00000001]
+HDR Allocated history records                            1 [0x00000001]
+HDR Crash                                             TRUE
+HDR Root Primary                                      TRUE
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HDR Supplementary Instance                           FALSE
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HDR Supplementary Instance                            TRUE
+HDR STRM  0: Last history record number                  0 [0x00000000]
+HDR STRM  0: Journal Sequence Number                     1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HDR Corrupt                                          FALSE
+HDR Quick database rundown is active                 .....
+
+----------------------------------------------------------
+Source Server Slots
+----------------------------------------------------------
+SLT # 0 : Secondary Instance Name                INSTANCE2
+SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 0 : Connect Sequence Number                        1 [0x0000000000000001]
+----------------------------------------------------------
+SLT # 1 : Secondary Instance Name                INSTANCE3
+SLT # 1 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 1 : Connect Sequence Number                        1 [0x0000000000000001]
+----------------------------------------------------------
+SLT # 2 : Secondary Instance Name                INSTANCE4
+SLT # 2 : Resync Sequence Number                       111 [0x000000000000006F]
+SLT # 2 : Connect Sequence Number                        1 [0x0000000000000001]
+
+----------------------------------------------------------
+History Records (histinfo structures)
+----------------------------------------------------------
+HST #      0 : Root Primary Instance Name        INSTANCE1
+HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HST #      0 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Root Primary Cycle                        2 [0x00000002]
+HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      0 : Creation Time           ..../../.. ..:..:..
+HST #      0 : History Number                            0 [0x00000000]
+HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      0 : History record type                       1 [0x00000001]
+==========================================================
+==========================================================
+The instance file contents on INST2 (instancefile_4.out):
+GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+
+----------------------------------------------------------
+File Header
+----------------------------------------------------------
+HDR Label (contains Major Version)             GDSRPLUNX05
+HDR Minor Version                                        1
+HDR Endian Format      ##FILTERED####ENDIAN##
+##TEST_AWKHDR 64-bit Format                                    .....
+HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+HDR Receive Pool Sem Id                            INVALID
+HDR Receive Pool Shm Id                            INVALID
+HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+HDR Receive Pool Sem Create Time                         0
+HDR Receive Pool Shm Create Time                         0
+##TEST_AWKHDR Instance File Created Nodename.*
+HDR Instance Name                                INSTANCE2
+HDR Instance File Create Time          ..../../.. ..:..:..
+HDR Instance File Creator Pid                 PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR LMS Group Instance Name                      INSTANCE1
+HDR LMS Group Creator Pid                     PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Create Time              ..../../.. ..:..:..
+HDR Journal Sequence Number                            101 [0x0000000000000065]
+HDR Root Primary Cycle                                   1 [0x00000001]
+HDR Number of used history records                       2 [0x00000002]
+HDR Allocated history records                            2 [0x00000002]
+HDR Crash                                             TRUE
+HDR Root Primary                                      TRUE
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HDR Supplementary Instance                           FALSE
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HDR Supplementary Instance                            TRUE
+HDR STRM  0: Last history record number                  1 [0x00000001]
+HDR STRM  0: Journal Sequence Number                   101 [0x0000000000000065]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HDR Corrupt                                          FALSE
+HDR Quick database rundown is active                 .....
+
+----------------------------------------------------------
+Source Server Slots
+----------------------------------------------------------
+SLT # 0 : Secondary Instance Name                INSTANCE1
+SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
+----------------------------------------------------------
+SLT # 1 : Secondary Instance Name                INSTANCE4
+SLT # 1 : Resync Sequence Number                       102 [0x0000000000000066]
+SLT # 1 : Connect Sequence Number                      101 [0x0000000000000065]
+
+----------------------------------------------------------
+History Records (histinfo structures)
+----------------------------------------------------------
+HST #      0 : Root Primary Instance Name        INSTANCE1
+HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HST #      0 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Root Primary Cycle                        1 [0x00000001]
+HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      0 : Creation Time           ..../../.. ..:..:..
+HST #      0 : History Number                            0 [0x00000000]
+HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      0 : History record type                       1 [0x00000001]
+----------------------------------------------------------
+HST #      1 : Root Primary Instance Name        INSTANCE2
+HST #      1 : Start Sequence Number                   101 [0x0000000000000065]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HST #      1 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HST #      1 : Stream Sequence Number                  101 [0x0000000000000065]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HST #      1 : Root Primary Cycle                        1 [0x00000001]
+HST #      1 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      1 : Creation Time           ..../../.. ..:..:..
+HST #      1 : History Number                            1 [0x00000001]
+HST #      1 : Previous History Number                   0 [0x00000000]
+HST #      1 : Stream #                                  0 [0x00000000]
+HST #      1 : History record type                       1 [0x00000001]
+HST #      1 : Stream  0: Last History Number            0 [0x00000000]
+==========================================================
+==========================================================
+The instance file contents on INST3 (instancefile_4.out):
+GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+
+----------------------------------------------------------
+File Header
+----------------------------------------------------------
+HDR Label (contains Major Version)             GDSRPLUNX05
+HDR Minor Version                                        1
+HDR Endian Format      ##FILTERED####ENDIAN##
+##TEST_AWKHDR 64-bit Format                                    .....
+HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+HDR Receive Pool Sem Id                            INVALID
+HDR Receive Pool Shm Id                            INVALID
+HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+HDR Receive Pool Sem Create Time                         0
+HDR Receive Pool Shm Create Time                         0
+##TEST_AWKHDR Instance File Created Nodename.*
+HDR Instance Name                                INSTANCE3
+HDR Instance File Create Time          ..../../.. ..:..:..
+HDR Instance File Creator Pid                 PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR LMS Group Instance Name                      INSTANCE1
+HDR LMS Group Creator Pid                     PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Create Time              ..../../.. ..:..:..
+HDR Journal Sequence Number                              1 [0x0000000000000001]
+HDR Root Primary Cycle                                   1 [0x00000001]
+HDR Number of used history records                       1 [0x00000001]
+HDR Allocated history records                            1 [0x00000001]
+HDR Crash                                             TRUE
+HDR Root Primary                                      TRUE
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HDR Supplementary Instance                           FALSE
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HDR Supplementary Instance                            TRUE
+HDR STRM  0: Last history record number                  0 [0x00000000]
+HDR STRM  0: Journal Sequence Number                     1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HDR Corrupt                                          FALSE
+HDR Quick database rundown is active                 .....
+
+----------------------------------------------------------
+Source Server Slots
+----------------------------------------------------------
+SLT # 0 : Secondary Instance Name                INSTANCE1
+SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 0 : Connect Sequence Number                        1 [0x0000000000000001]
+
+----------------------------------------------------------
+History Records (histinfo structures)
+----------------------------------------------------------
+HST #      0 : Root Primary Instance Name        INSTANCE3
+HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HST #      0 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Root Primary Cycle                        1 [0x00000001]
+HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      0 : Creation Time           ..../../.. ..:..:..
+HST #      0 : History Number                            0 [0x00000000]
+HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      0 : History record type                       1 [0x00000001]
+==========================================================
+==========================================================
+The instance file contents on INST4 (instancefile_4.out):
+GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+
+----------------------------------------------------------
+File Header
+----------------------------------------------------------
+HDR Label (contains Major Version)             GDSRPLUNX05
+HDR Minor Version                                        1
+HDR Endian Format      ##FILTERED####ENDIAN##
+##TEST_AWKHDR 64-bit Format                                    .....
+HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+HDR ##FILTERED##Receive Pool Sem Id             .......... [0x........]
+HDR ##FILTERED##Receive Pool Shm Id             .......... [0x........]
+HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+HDR Receive Pool Sem Create Time       ..../../.. ..:..:..
+HDR Receive Pool Shm Create Time       ..../../.. ..:..:..
+##TEST_AWKHDR Instance File Created Nodename.*
+HDR Instance Name                                INSTANCE4
+HDR Instance File Create Time          ..../../.. ..:..:..
+HDR Instance File Creator Pid                 PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HDR LMS Group Instance Name                      INSTANCE1
+HDR LMS Group Creator Pid                     PIDINDECIMAL [0xPIDINHEX]
+HDR LMS Group Create Time              ..../../.. ..:..:..
+HDR Journal Sequence Number                            101 [0x0000000000000065]
+HDR Root Primary Cycle                                   0 [0x00000000]
+HDR Number of used history records                       2 [0x00000002]
+HDR Allocated history records                            2 [0x00000002]
+HDR Crash                                             TRUE
+HDR Root Primary                                     FALSE
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HDR Supplementary Instance                           FALSE
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HDR Supplementary Instance                            TRUE
+HDR STRM  0: Last history record number                  1 [0x00000001]
+HDR STRM  0: Journal Sequence Number                   101 [0x0000000000000065]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HDR Corrupt                                          FALSE
+HDR Quick database rundown is active                 .....
+
+----------------------------------------------------------
+Source Server Slots
+----------------------------------------------------------
+SLT # 0 : Secondary Instance Name                INSTANCE1
+SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
+----------------------------------------------------------
+SLT # 1 : Secondary Instance Name                INSTANCE2
+SLT # 1 : Resync Sequence Number                         1 [0x0000000000000001]
+SLT # 1 : Connect Sequence Number                        0 [0x0000000000000000]
+
+----------------------------------------------------------
+History Records (histinfo structures)
+----------------------------------------------------------
+HST #      0 : Root Primary Instance Name        INSTANCE1
+HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HST #      0 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HST #      0 : Root Primary Cycle                        1 [0x00000001]
+HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      0 : Creation Time           ..../../.. ..:..:..
+HST #      0 : History Number                            0 [0x00000000]
+HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      0 : History record type                       1 [0x00000001]
+----------------------------------------------------------
+HST #      1 : Root Primary Instance Name        INSTANCE2
+HST #      1 : Start Sequence Number                   101 [0x0000000000000065]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+HST #      1 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+HST #      1 : Stream Sequence Number                  101 [0x0000000000000065]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+HST #      1 : Root Primary Cycle                        1 [0x00000001]
+HST #      1 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      1 : Creation Time           ..../../.. ..:..:..
+HST #      1 : History Number                            1 [0x00000001]
+HST #      1 : Previous History Number                   0 [0x00000000]
+HST #      1 : Stream #                                  0 [0x00000000]
+HST #      1 : History record type                       1 [0x00000001]
+HST #      1 : Stream  0: Last History Number            0 [0x00000000]
+==========================================================
+==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP rundown -region "*" -override'==
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+==Executing MULTISITE_REPLIC 'RUN INST3 $MUPIP rundown -region "*" -override'==
+%GTM-I-MUFILRNDWNSUC, File ##TEST_AWK.*/instance3/mumps.dat successfully rundown
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT INST2 INST4'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

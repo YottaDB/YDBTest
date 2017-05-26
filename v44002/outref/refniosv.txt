@@ -1,0 +1,92 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+Do cmmit^refniosv
+
+Transaction Starts....
+$ZTEXIT -> 1
+Interrupt signal sent....
+
+SIGUSR1 sent to process
+
+
+
+***************************
+Interrupt issued to process
+
+***************************
+
+$test in intr -> 0
+$reference -> ^bbb
+gbl var ^aaa set
+$reference -> ^aaa
+$test -> 1
+Before rethrow...
+$reference -> ^aaa
+$test -> 1
+$ZTEXIT -> 1
+
+
+
+***************************
+Interrupt issued to process
+
+***************************
+
+$test in intr -> 0
+$reference -> ^bbb
+End of transaction....
+
+After rethrow...
+$reference -> ^aaa
+$test -> 1
+$ZTEXIT -> 1
+GTM>
+
+GTM>
+
+Do rollbck^refniosv
+
+gbl var ^aaa set
+$reference -> ^aaa
+$test -> 1
+Transaction Starts....
+$ZTEXIT -> 1
+Interrupt signal sent....
+
+SIGUSR1 sent to process
+
+
+
+***************************
+Interrupt issued to process
+
+***************************
+
+$test in intr -> 0
+$reference -> ^bbb
+
+
+
+***************************
+Interrupt issued to process
+
+***************************
+
+$test in intr -> 0
+$reference -> ^bbb
+End of transaction....
+
+After rethrow...
+$reference -> 
+$test -> 1
+$ZTEXIT -> 1
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

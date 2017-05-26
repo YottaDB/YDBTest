@@ -1,0 +1,32 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+DEFAULT
+##TEST_AWKlocal1 Owned by PID= [0-9][0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+
+DEFAULT
+##TEST_AWKlocal1 Owned by PID= [0-9][0-9]* which is an existing process
+##TEST_AWKlocal3 Owned by PID= [0-9][0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+
+DEFAULT
+##TEST_AWKlocal2 Owned by PID= [0-9][0-9]* which is an existing process
+##TEST_AWKlocal3 Owned by PID= [0-9][0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+
+DEFAULT
+##TEST_AWKlocal3 Owned by PID= [0-9][0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

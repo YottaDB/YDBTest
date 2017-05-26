@@ -1,0 +1,62 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance4:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST3 INST4 RP'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+==Executing MULTISITE_REPLIC 'START INST2 INST3 RP'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+==Executing MULTISITE_REPLIC 'SYNC INST2 INST3'==
+==Executing MULTISITE_REPLIC 'STOP INST2 INST3'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3 RP'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST3 updateresync=INSTANCE1.repl -reuse=INSTANCE2'==
+TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
+==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##START_##TIMESTAMP##.out INITORRESUME'==
+----------
+Error INITORRESUME seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
+%GTM-E-INITORRESUME, UPDATERESYNC on a Supplementary Instance must additionally specify INITIALIZE or RESUME
+----------
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST3 updateresync=INSTANCE1.repl -initialize -reuse=INSTANCE2'==
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log.updproc -message "New History Content" -duration 30'==
+# Check the Stream number in history records of INSTANCE 3
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      1 : Stream #                                  1 [0x00000001]
+HST #      2 : Stream #                                  1 [0x00000001]
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

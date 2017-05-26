@@ -1,0 +1,1086 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+init
+
+GTM>
+
+GTM>
+#####################1###################
+
+GTM>
+
+Output device: <terminal>: 
+
+List ^
+^%XXX="XXa"_$C(9)_"aXX"
+^A(-11)=-11
+^A(1)="abcdefghi"
+^A(2)="defghijkl"
+^A(3)="ijklmnopq"
+^A(4)="pqrstuvwx"
+^A(5)="yz"
+^ATMP="ATMP"
+^B(1)="abcdefghi"
+^B(2)="defghijkl"
+^B(3)="ijklmnopq"
+^B(4)="pqrstuvwx"
+^B(5)="yz"
+^BTMP="BTMP"
+^C="CLASS"
+^C(1)="MARY"
+^C(1,2)="MATH"
+^C(1,2,1)=80
+^C(1,3)="BIO"
+^C(1,3,1)=90
+^C(2)="JOHN"
+^C(3)="PETER"
+^CTMP("RICK")="..."
+^CTMP("Z123")="..."
+^CTMP("ZZZZ")="..."
+^D(1)="abcdef"
+^D(2)="bcdefg"
+^D(3)="cdefgh"
+^D(4)="defghi"
+^D(5)="efghij"
+^X123(599,"X")="tmp"
+^X123("RICK")="..."
+^a(2)="abcdefghi"
+^a(4)="defghijkl"
+^a(6)="ijklmnopq"
+^a(8)="pqrstuvwx"
+^a(10)="yz"
+^abcd="^abcd"
+^b(1)="a"
+^b(4)="ab"
+^b(9)="abc"
+^b(16)="abcd"
+^b(25)="abcde"
+^bcde="^bcde"
+^c(1)="abcdefghi"
+^c(2)="defghijkl"
+^c(3)="ijklmnopq"
+^c(4)="pqrstuvwx"
+^c(5)="yz"
+^cdef="^cdef"
+^defg="^defg"
+^efgh="^efgh"
+^fghi="^fghi"
+^ghij="^ghij"
+^name5678="short name5678"
+^name567890123456789012345678901="Long name5678901..."
+
+List ^
+
+GTM>
+#####################2###################
+help
+
+GTM>
+
+Output device: <terminal>: 
+
+
+Select the device you want for output
+If you wish to exit enter a carat (^)
+
+Output device: <terminal>: 
+
+List ^
+
+VALID INPUT
+
+
+   <RET>        to leave the %G utility 
+
+    ?D          to display existing globals in your directory 
+
+[global name]   the MUMPS name for the global e.g. ABC, or
+                a MUMPS pattern to match selected globals e.g. ?1"A".E, or
+                "*" as a wildcard for all globals
+                the global name may be followed by: 
+                subscript(s) in parentheses
+                a subscript is a MUMPS expression e.g. "joe",10,$e(a,1),
+                a "*" as a subscript causes all descendents to be included,
+                or by a range of subscripts in parentheses
+                expressed as [expr]:[expr] e.g 1:10 "a":"d"
+
+List ^
+
+Global Directory
+
+Global ^
+^%XXX     ^A        ^ATMP     ^B        ^BTMP     ^C        ^CTMP     ^D        
+^X123     ^a        ^abcd     ^b        ^bcde     ^c        ^cdef     ^defg     
+^efgh     ^fghi     ^ghij     ^name5678 ^name567890123456789012345678901        
+Total of 21 globals.
+
+List ^
+
+Global Directory
+
+Global ^
+^a        
+Total of 1 global.
+
+Global ^
+^A        
+Total of 1 global.
+
+Global ^
+^a        ^abcd     
+Total of 2 globals.
+
+Global ^
+
+List ^
+
+GTM>
+#####################3###################
+
+GTM>
+
+GTM>
+
+GTM>
+
+Output device: <terminal>: 
+
+List ^
+^A(-11)=-11
+^A(1)="abcdefghi"
+^A(2)="defghijkl"
+^A(3)="ijklmnopq"
+^A(4)="pqrstuvwx"
+^A(5)="yz"
+^ATMP="ATMP"
+
+List ^
+^ATMP="ATMP"
+^BTMP="BTMP"
+^CTMP("RICK")="..."
+^CTMP("Z123")="..."
+^CTMP("ZZZZ")="..."
+
+List ^
+^CTMP("RICK")="..."
+^X123("RICK")="..."
+
+List ^
+^X123(599,"X")="tmp"
+
+List ^
+^X123(599,"X")="tmp"
+
+List ^
+^X123(599,"X")="tmp"
+
+List ^
+^A(1)="abcdefghi"
+^A(2)="defghijkl"
+^A(3)="ijklmnopq"
+^A(4)="pqrstuvwx"
+^A(5)="yz"
+
+List ^
+^CTMP("RICK")="..."
+
+List ^
+^CTMP("Z123")="..."
+
+List ^
+^X123(599,"X")="tmp"
+^X123("RICK")="..."
+
+List ^
+
+GTM>
+
+GTM>
+
+Output device: <terminal>: 
+
+List ^
+^CTMP("RICK")="..."
+
+List ^
+^CTMP("RICK")="..."
+
+List ^
+^CTMP("Z123")="..."
+^CTMP("ZZZZ")="..."
+
+List ^
+
+GTM>
+
+GTM>
+#####################4###################
+
+GTM>
+
+Output device: <terminal>: 
+
+List ^
+^C="CLASS"
+^C(1)="MARY"
+^C(1,2)="MATH"
+^C(1,2,1)=80
+^C(1,3)="BIO"
+^C(1,3,1)=90
+^C(2)="JOHN"
+^C(3)="PETER"
+
+List ^
+^C(1)="MARY"
+
+List ^
+^C(1)="MARY"
+^C(1,2)="MATH"
+^C(1,2,1)=80
+^C(1,3)="BIO"
+^C(1,3,1)=90
+
+List ^
+
+GTM>
+#####################5###################
+
+GTM>
+
+Global copy
+
+Show copied nodes <Yes>? 
+From global ^
+
+This routine copies a node and all its descendents
+from one global variable to another
+"From global" requests the source for the copy,
+"To global" requests the destination
+Use standard MUMPS gvn syntax to specify the node names
+?D invokes %GD to get a global directory
+<RETURN> drops you back to the prior prompt or out of %GC
+
+From global ^
+To global   ^
+^g(1)="a"
+^g(4)="ab"
+^g(9)="abc"
+^g(16)="abcd"
+^g(25)="abcde"
+Total 5 nodes copied.
+
+From global ^
+GTM>
+
+GTM>
+^g(1)="a"
+^g(4)="ab"
+^g(9)="abc"
+^g(16)="abcd"
+^g(25)="abcde"
+
+GTM>
+#####################6###################
+
+GTM>
+
+Global Change Every occurrence
+
+Global ^
+
+  <RET>                  to leave
+  "*"                    for all
+  global                 for 1 global
+  global1:global2        for a range
+  "*" as a wildcard      permitting any number of characters
+  "%" as a wildcard      for a single character in positions other than the first
+  "?" as a wildcard      for a single character in positions other than the first
+  "'" as the 1st character
+                         to remove globals from the list
+  ?D                     for the currently selected globals
+
+Global ^
+^a        ^abcd     ^b        
+Current total of 3 globals.
+
+Global ^
+
+^a        ^abcd     ^b        
+Global ^
+
+Old string: 
+New string: 
+Show changed nodes <Yes>? 
+
+Answer No to this prompt if you do not wish a trail of the changes
+Show changed nodes <Yes>? 
+
+Output device: <terminal>: 
+
+
+Select the device you want for output
+If you wish to exit enter a carat (^)
+
+Output device: <terminal>: 
+^a        
+^a(2)
+Was : abcdefghi
+Now : aBCDefghi
+
+
+1 changes made in total 5 nodes.
+^abcd     
+^abcd
+Was : ^abcd
+Now : ^aBCD
+
+
+1 changes made in total 1 nodes.
+^b        
+^b(16)
+Was : abcd
+Now : aBCD
+
+^b(25)
+Was : abcde
+Now : aBCDe
+
+
+2 changes made in total 5 nodes.
+
+Global ^
+
+GTM>
+#####################7###################
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+Global Change Every occurrence
+
+Global ^
+^bb       
+Current total of 1 global.
+
+Global ^
+
+Old string: 
+New string: 
+Show changed nodes <Yes>? 
+
+Output device: <terminal>: 
+^bb       
+^bb(12)
+Was : 12
+Now : 35
+
+^bb(122)
+Was : 122
+Now : 352
+
+^bb(1212)
+Was : 12212
+Now : 35235
+
+
+4 changes made in total 5 nodes.
+
+Global ^
+
+GTM>
+
+Output device: <terminal>: 
+
+List ^
+^bb(12)=35
+^bb(30)=656
+^bb(45)=344
+^bb(122)=352
+^bb(1212)=35235
+
+List ^
+
+GTM>
+#####################8###################
+
+GTM>
+
+GTM>
+#####################9###################
+
+GTM>
+
+Global Directory
+
+Global ^
+
+  <RET>                  to leave
+  "*"                    for all
+  global                 for 1 global
+  global1:global2        for a range
+  "*" as a wildcard      permitting any number of characters
+  "%" as a wildcard      for a single character in positions other than the first
+  "?" as a wildcard      for a single character in positions other than the first
+Global ^
+^%XXX     ^A        ^ATMP     ^B        ^BTMP     ^C        ^CTMP     ^D        
+^X123     ^a        ^abcd     ^b        ^bb       ^bcde     ^c        ^cdef     
+^defg     ^efgh     ^fghi     ^g        ^ghij     ^name5678 ^name567890123456789012345678901        
+Total of 23 globals.
+
+GTM>
+
+Global Directory
+
+Global ^
+^%XXX     ^A        ^ATMP     ^B        ^BTMP     ^C        ^CTMP     ^D        
+^X123     ^a        ^abcd     ^b        ^bb       ^bcde     ^c        ^cdef     
+^defg     ^efgh     ^fghi     ^g        ^ghij     ^name5678 ^name567890123456789012345678901        
+Total of 23 globals.
+
+Global ^
+
+GTM>
+
+Global Directory
+
+Global ^
+^a        
+Total of 1 global.
+
+Global ^
+^c        ^cdef     ^defg     ^efgh     ^fghi     ^g        ^ghij     ^name5678 
+^name567890123456789012345678901        
+Total of 9 globals.
+
+Global ^
+^bb       
+Total of 1 global.
+
+Global ^
+^b        ^bb       ^bcde     
+Total of 3 globals.
+
+Global ^
+^%XXX     ^A        ^ATMP     ^B        ^BTMP     ^C        ^CTMP     ^D        
+^X123     ^a        ^abcd     ^b        ^bb       ^bcde     ^c        ^cdef     
+^defg     ^efgh     ^fghi     ^g        ^ghij     ^name5678 ^name567890123456789012345678901        
+Total of 23 globals.
+
+Global ^
+
+GTM>
+#####################10###################
+
+GTM>
+
+Global Output Utility
+
+Global ^
+^A        
+Current total of 1 global.
+
+Global ^
+^B        
+Current total of 2 globals.
+
+Global ^
+
+  <RET>                  to leave
+  "*"                    for all
+  global                 for 1 global
+  global1:global2        for a range
+  "*" as a wildcard      permitting any number of characters
+  "%" as a wildcard      for a single character in positions other than the first
+  "?" as a wildcard      for a single character in positions other than the first
+  "'" as the 1st character
+                         to remove globals from the list
+  ?D                     for the currently selected globals
+
+Global ^
+
+^A        ^B        
+Global ^
+^b        
+Current total of 3 globals.
+
+Global ^
+^b        
+Current total of 2 globals.
+
+Global ^
+
+Header Label: 
+
+Output Format: GO or ZWR: 
+
+Output device: <terminal>: 
+
+
+^A        ^B        
+
+Total of 11 nodes in 2 globals.
+
+
+GTM>
+
+GTM>
+file.zwr
+#####################11###################
+
+GTM>
+
+GTM>
+
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+##TEST_AWKLABEL.*
+##TEST_AWKGT.M .* ZWR
+
+OK <Yes>? 
+
+^A        ^B        
+
+Restored 11 nodes in 2 globals.
+GTM>
+
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+%GO
+GT.M 09-JUL-2015 08:42:35
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+OK <Yes>? 
+
+^FALSE    
+
+Restored 5 nodes in 1 global.
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+%GO
+GT.M 09-JUL-2015 08:41:37 ZWR
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+OK <Yes>? 
+
+^FALSE    
+
+Restored 5 nodes in 1 global.
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+GT.M MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:..
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+OK <Yes>? 
+
+^FALSE    
+
+Restored 5 nodes in 1 global.
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+GT.M MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:.. ZWR
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+OK <Yes>? 
+
+^FALSE    
+
+Restored 5 nodes in 1 global.
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+LABEL
+; GLO
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+OK <Yes>? 
+
+^FALSE    
+
+Restored 5 nodes in 1 global.
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+LABEL
+; ZWR
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+OK <Yes>? 
+
+^FALSE    
+
+Restored 5 nodes in 1 global.
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+LABEL
+some random stuff GLO
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+OK <Yes>? 
+
+^FALSE    
+
+Restored 5 nodes in 1 global.
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+LABEL
+some random stuff ZWR
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+OK <Yes>? 
+
+^FALSE    
+
+Restored 5 nodes in 1 global.
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+LABEL
+juicy baloney
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+OK <Yes>? 
+
+^FALSE    
+
+Restored 5 nodes in 1 global.
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+LABEL
+juicy baloney
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+OK <Yes>? 
+
+^FALSE    
+
+Restored 5 nodes in 1 global.
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+a
+b
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+OK <Yes>? 
+
+^c        ^d        ^e        ^f        ^g        ^h        
+
+Restored 6 nodes in 6 globals.
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+a
+b
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+OK <Yes>? 
+
+^c        ^d        ^e        ^f        
+
+Restored 4 nodes in 4 globals.
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+GT.M MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:..
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+OK <Yes>? 
+
+^x        
+
+Restored 1 node in 1 global.
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+GT.M MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:.. ZWR
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+OK <Yes>? 
+
+^x        
+
+Restored 1 node in 1 global.
+##TEST_AWKLABEL.*
+##TEST_AWKGT.M .* ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 11  Max Subsc Len: 7  Max Data Len: 9
+Last LOAD record number: 15
+
+#####################12###################
+
+GTM>
+
+Global Search for Every Occurrence
+
+Output device: <terminal>: 
+
+
+Select the device you want for output
+If you wish to exit enter a carat (^)
+
+Output device: <terminal>: 
+
+Global ^
+^a        
+Current total of 1 global.
+
+Global ^
+
+  <RET>                  to leave
+  "*"                    for all
+  global                 for 1 global
+  global1:global2        for a range
+  "*" as a wildcard      permitting any number of characters
+  "%" as a wildcard      for a single character in positions other than the first
+  "?" as a wildcard      for a single character in positions other than the first
+  "'" as the 1st character
+                         to remove globals from the list
+  ?D                     for the currently selected globals
+
+Global ^
+
+^a        
+Global ^
+^b        
+Current total of 2 globals.
+
+Global ^
+^a        
+Current total of 1 global.
+
+Global ^
+^%XXX     
+Current total of 2 globals.
+
+Global ^
+^abcd     
+Current total of 3 globals.
+
+Global ^
+
+^%XXX     ^abcd     ^b        
+Global ^
+^A        ^ATMP     
+Current total of 5 globals.
+
+Global ^
+^c        
+Current total of 6 globals.
+
+Global ^
+Find string: 
+
+^%XXX     
+No matches found in 1 nodes.
+^A        
+^A(1)           abcdefghi
+                 ^^^
+
+Total 1 matches found in 6 nodes.
+^ATMP     
+No matches found in 1 nodes.
+^abcd     
+No matches found in 1 nodes.
+^b        
+No matches found in 5 nodes.
+^c        
+^c(1)           abcdefghi
+                 ^^^
+
+Total 1 matches found in 6 nodes.
+
+Global ^
+^%XXX     
+Current total of 1 global.
+
+Global ^
+^A        
+Current total of 2 globals.
+
+Global ^
+Find string: 
+
+
+The Find string contains control characters^%XXX  
+^%XXX           XXa	aXX
+                  ^^^
+
+Total 1 matches found in 1 nodes.
+^A        
+No matches found in 6 nodes.
+
+Global ^
+
+GTM>
+#####################13###################
+
+GTM>
+
+Global ^
+
+  <RET>                  to leave
+  "*"                    for all
+  global                 for 1 global
+  global1:global2        for a range
+  "*" as a wildcard      permitting any number of characters
+  "%" as a wildcard      for a single character in positions other than the first
+  "?" as a wildcard      for a single character in positions other than the first
+  "'" as the 1st character
+                         to remove globals from the list
+  ?D                     for the currently selected globals
+
+Global ^
+^a        
+Current total of 1 global.
+
+Global ^
+^b        
+Current total of 2 globals.
+
+Global ^
+^A        
+Current total of 3 globals.
+
+Global ^
+^%XXX     
+Current total of 4 globals.
+
+Global ^
+^ATMP     
+Current total of 5 globals.
+
+Global ^
+^efgh     
+Current total of 6 globals.
+
+Global ^
+^bb       ^bcde     ^c        ^cdef     ^d        ^defg     ^e        ^f        
+^fghi     ^g        ^ghij     ^h        
+Current total of 18 globals.
+
+Global ^
+^f        ^fghi     
+Current total of 16 globals.
+
+Global ^
+
+^%XXX     ^A        ^ATMP     ^a        ^b        ^bb       ^bcde     ^c        
+^cdef     ^d        ^defg     ^e        ^efgh     ^g        ^ghij     ^h        
+Global ^
+
+GTM>
+%ZG=16
+%ZG("^%XXX")=""
+%ZG("^A")=""
+%ZG("^ATMP")=""
+%ZG("^a")=""
+%ZG("^b")=""
+%ZG("^bb")=""
+%ZG("^bcde")=""
+%ZG("^c")=""
+%ZG("^cdef")=""
+%ZG("^d")=""
+%ZG("^defg")=""
+%ZG("^e")=""
+%ZG("^efgh")=""
+%ZG("^g")=""
+%ZG("^ghij")=""
+%ZG("^h")=""
+
+GTM>
+#####################14###################
+
+GTM>
+
+Global ^
+^A        
+Current total of 1 global.
+
+Global ^
+
+GTM>
+%ZG=1
+%ZG("^A")=""
+
+GTM>
+
+Global ^
+
+^A        
+Global ^
+^B        
+Current total of 2 globals.
+
+Global ^
+
+GTM>
+%ZG=2
+%ZG("^A")=""
+%ZG("^B")=""
+
+GTM>
+#####################15###################
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+Global ^
+^qqqzzzzzzzzzzzzzzzzzzzzzz67  ^qqqzzzzzzzzzzzzzzzzzzzzzz6789          ^qqqzzzzzzzzzzzzzzzzzzzzzzzzzzzz        
+Current total of 3 globals.
+
+Global ^
+^qqzzzzzzzzzzzzzzzzzzzzzzzzzzzzz        
+Current total of 4 globals.
+
+Global ^
+^qqqzzzzzzzzzzzzzzzzzzzzzzzzzzzz        
+Current total of 3 globals.
+
+Global ^
+^qqqzzzzzzzzzzzzzzzzzzzzzzzzzzzz        ^qqzzzzzz ^qqzzzzzzz          ^qqzzzzzzzzzzzzzzzzz          
+Current total of 7 globals.
+
+Global ^
+^qqqzzzzzzzzzzzzzzzzzzzzzz67  ^qqqzzzzzzzzzzzzzzzzzzzzzz6789          
+Current total of 5 globals.
+
+Global ^
+
+GTM>
+%ZG=5
+%ZG("^qqqzzzzzzzzzzzzzzzzzzzzzzzzzzzz")=""
+%ZG("^qqzzzzzz")=""
+%ZG("^qqzzzzzzz")=""
+%ZG("^qqzzzzzzzzzzzzzzzzz")=""
+%ZG("^qqzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")=""
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,87 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+=== STEP 1 ===
+Huge SETs on primary...
+
+GTM>
+set PASS
+
+GTM>
+
+GTM>
+Multiple M Processes starts in the background...
+=== STEP 2 ===
+Simulating crash on mupip reorg process in ##REMOTE_TEST_PATH##
+MUPIP REORG crashed!
+0
+Simulating crash on receiver in ##REMOTE_TEST_PATH##
+Receiver crashed!
+0
+Simulating crash on mupip reorg process in ##TEST_PATH##
+MUPIP REORG crashed!
+Simulating crash on primary in ##TEST_PATH##
+Primary crashed!
+=== STEP 3 ===
+DOING FAIL OVER...
+ROLLBACK on SIDE (B)...
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+Restarting (B) as primary...
+Multi-process Multi-region GTM restarts on primary (B)...
+mupip_rollback.csh -fetchresync=portno -losttrans=fetch.glo *
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+=== STEP 4 ===
+Now GTM process ends
+Shutting down Passive Source Server and Receiver Server in ##TEST_PATH##
+Shutting down Primary Source Server Server in ##REMOTE_TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+Application level Verification Starts...
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Application level Verification Ends
+
+GTM>

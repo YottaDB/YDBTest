@@ -1,0 +1,79 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance4:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+===>Start replication A->B, P->Q and A->P
+
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_exe/mumps -run updinstA1^gtm8074'==
+==Executing MULTISITE_REPLIC 'START INST3 INST4 RP'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+==Executing MULTISITE_REPLIC 'START INST1 INST3 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_exe/mumps -run updinstP1^gtm8074'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_exe/mumps -run updinstA2^gtm8074'==
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_exe/mumps -run updinstP2^gtm8074'==
+==Executing MULTISITE_REPLIC 'RUN INST3 $MUPIP set -journal="enable,on,before" -reg "*" >&! cutnewjnlfiles.out'==
+# Wait for ZERO backlog on A->P side
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST3'==
+# Shut receiver side of A->P connection
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST3'==
+# Shut source side of P->Q connection
+==Executing MULTISITE_REPLIC 'STOPSRC INST3 INST4'==
+# Break previous journal link on P before ROLLBACK
+# Shut source side of A->P connection
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST3 RESERVEPORT'==
+# Start fetchresync rollback. This should hang due to no source server. And then kill the hung rollback.
+==Executing MULTISITE_REPLIC 'RUN RCV=INST3 SRC=INST1 $gtm_tst/$tst/u_inref/gtm8074_rollback_bg.csh __RCV_PORTNO__ >&! rollback_hangkill.out'==
+# Restart source side of A->P connection
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3 RP'==
+# Redo fetchresync rollback. This should work fine. And exercise INTERRUPTED ROLLBACK code
+# Log interesting portions of rollback2.log
+%GTM-I-MUINFOUINT4, Gtmrecv_fetchresync returned strm_index : 1 [0x00000001]
+%GTM-I-MUINFOUINT8, Gtmrecv_fetchresync returned resync_seqno : 10012 [0x000000000000271C]
+%GTM-I-RESOLVESEQSTRM, Resolving until stream sequence number Stream  1 : Seqno 10012 [0x000000000000271C]
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 31 [0x000000000000001F]
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 21 [0x0000000000000015]
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  1 : Seqno 10012 [0x000000000000271C]
+%GTM-S-JNLSUCCESS, Rollback successful
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT ALL'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

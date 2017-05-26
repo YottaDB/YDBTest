@@ -1,0 +1,131 @@
+##SUSPEND_OUTPUT  REPLIC GT.M
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
+##GT.CM##second.gld
+##GT.CM##Using: ##SOURCE_PATH##/mupip
+Create local (client) database...
+##ALLOW_OUTPUT  REPLIC GT.M
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+second.gld
+Using: ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  REPLIC GT.M
+The database layout is:
+ASEG	a.dat
+BSEG	##TEST_REMOTE_NODE_PATH_GTCM##/b.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/second.dat
+Starting the GT.CM Servers...
+##SUSPEND_OUTPUT  GT.CM
+##ALLOW_OUTPUT  REPLIC GT.M
+a.dat
+b.dat
+second.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+second.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+second.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  GT.CM NON_REPLIC
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+setenv gtmgbldir mumps.gld
+
+Output device: <terminal>: 
+
+List ^
+^a=12
+^a(1,1)=1
+^a(1,2)=2
+^a(2,1)=2
+^a(2,2)=4
+^aa=12
+^aa(1,1)=1
+^aa(1,2)=2
+^aa(2,1)=2
+^aa(2,2)=4
+^b=12
+^b(1,1)=11
+^b(1,2)=12
+^b(2,1)=21
+^b(2,2)=22
+^bb=12
+^bb(1,1)=11
+^bb(1,2)=12
+^bb(2,1)=21
+^bb(2,2)=22
+^c=12
+^c(1,1)=2
+^c(1,2)=3
+^c(2,1)=3
+^c(2,2)=4
+^cc=12
+^cc(1,1)=2
+^cc(1,2)=3
+^cc(2,1)=3
+^cc(2,2)=4
+
+List ^
+setenv gtmgbldir second.gld
+
+Output device: <terminal>: 
+
+List ^
+^asecond=12
+^asecond(1,1)=1
+^asecond(1,2)=2
+^asecond(2,1)=2
+^asecond(2,2)=4
+^bsecond=12
+^bsecond(1,1)=11
+^bsecond(1,2)=12
+^bsecond(2,1)=21
+^bsecond(2,2)=22
+^csecond=12
+^csecond(1,1)=2
+^csecond(1,2)=3
+^csecond(2,1)=3
+^csecond(2,2)=4
+
+List ^
+##SUSPEND_OUTPUT  REPLIC GT.M
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####SOURCE_PATH##/mupip
+##GT.CM####SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##SUSPEND_OUTPUT  NON_REPLIC GT.CM
+##ALLOW_OUTPUT  REPLIC GT.M
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  GT.CM NON_REPLIC
+##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  REPLIC GT.M
+##SOURCE_PATH##/mupip integ a.dat
+##SUSPEND_OUTPUT  GT.CM
+##ALLOW_OUTPUT  REPLIC GT.M
+##SOURCE_PATH##/mupip integ -REG *
+##ALLOW_OUTPUT  GT.CM
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  NON_REPLIC GT.CM
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##ALLOW_OUTPUT  GT.CM NON_REPLIC
+##SOURCE_PATH##/mupip integ mumps.dat
+No errors detected by integ.

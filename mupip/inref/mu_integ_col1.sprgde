@@ -1,0 +1,66 @@
+change -segment DEFAULT -file_name=integ.dat
+change -segment DEFAULT -block_size=1024
+change -segment DEFAULT -allocation=100
+change -segment DEFAULT -global_buffer_count=256
+change -region DEFAULT -record_size=256
+change -region DEFAULT -key_size=128
+change -region DEFAULT -inst_freeze_on_error
+change -region DEFAULT -collation_default=1
+add -name a* -region=areg
+add -name A* -region=areg
+add -region areg -dyn=aseg
+add -segment aseg -file=a.dat
+change -segment aseg -block_size=1024
+change -segment aseg -allocation=100
+change -segment aseg -global_buffer_count=256
+change -region areg -record_size=256
+change -region areg -key_size=128
+change -region areg -inst_freeze_on_error
+add -name b* -region=breg
+add -name B* -region=breg
+add -region breg -dyn=bseg
+add -segment bseg -file=b.dat
+change -segment bseg -block_size=1024
+change -segment bseg -allocation=100
+change -segment bseg -global_buffer_count=256
+change -region breg -record_size=256
+change -region breg -key_size=128
+change -region breg -inst_freeze_on_error
+change -region breg -collation_default=1
+add -name c* -region=creg
+add -name C* -region=creg
+add -region creg -dyn=cseg
+add -segment cseg -file=c.dat
+change -segment cseg -block_size=1024
+change -segment cseg -allocation=100
+change -segment cseg -global_buffer_count=256
+change -region creg -record_size=256
+change -region creg -key_size=128
+change -region creg -inst_freeze_on_error
+change -region creg -collation_default=1
+! Use this spanning regions configuration instead of creating one dynamically
+! Number of included regions is 3
+!    Region 1 = AREG
+!    Region 2 = CREG
+!    Region 3 = DEFAULT
+! Number of sections randomly chosen is 8
+! Map : ^aingfillingdatabase("hijklmnop(29)") maps to CREG
+add -name aingfillingdatabase("hijklmnop(29)":"hijklmnop(79)") -region=CREG
+! Map : ^aingfillingdatabase("hijklmnop(79)") maps to AREG
+add -name aingfillingdatabase("hijklmnop(79)":"ijklmnopqr(180)") -region=AREG
+! Map : ^aingfillingdatabase("ijklmnopqr(180)") maps to CREG
+add -name aingfillingdatabase("ijklmnopqr(180)":"mnop(84)") -region=CREG
+! Map : ^aingfillingdatabase("mnop(84)") maps to DEFAULT
+add -name aingfillingdatabase("mnop(84)":"nopqr(135)") -region=DEFAULT
+! Map : ^aingfillingdatabase("nopqr(135)") maps to CREG
+add -name aingfillingdatabase("nopqr(135)":"opqrst(186)") -region=CREG
+! Map : ^aingfillingdatabase("opqrst(186)") maps to DEFAULT
+add -name aingfillingdatabase("opqrst(186)":"rstuvwxyz(39)") -region=DEFAULT
+! Map : ^aingfillingdatabase("rstuvwxyz(39)") maps to AREG
+add -name aingfillingdatabase("rstuvwxyz(39)":"stuvwxyzAB(40)") -region=AREG
+! Map : ^aingfillingdatabase("stuvwxyzAB(40)") maps to DEFAULT
+add -name aingfillingdatabase("stuvwxyzAB(40)":) -region=DEFAULT
+change -region AREG -std
+change -region BREG -std
+change -region CREG -std
+change -region DEFAULT -std

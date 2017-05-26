@@ -1,0 +1,162 @@
+TEST DSE - ADD  COMMAND
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SUSPEND_OUTPUT   NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT   NON_REPLIC
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> DSE> 
+Rec:1  Blk 30  Off 10  Size 16  Cmpc 0  Key ^aglobal(23)
+
+DSE> Error: last record in blk is 2
+DSE> Error: record too large for remaining space in block.
+DSE> DSE> DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> Error:  invalid key.
+DSE> Error:  invalid key.
+DSE> Error:  invalid key.
+DSE> DSE> 
+Rec:1  Blk 30  Off 10  Size 18  Cmpc 0  Key ^aglobal("str")
+
+DSE> DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> DSE> 
+Rec:1  Blk 30  Off 10  Size 1A  Cmpc 0  Key ^aglobal("str")
+
+DSE> DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> DSE> 
+Rec:1  Blk 4  Off 10  Size 14  Cmpc 0  Ptr 50  Key ^aglobal(27)
+
+DSE> DSE> Error: block pointer must be specified for this index block record.
+DSE> Error: last record in blk is 25
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> Error: ordered search fail.
+DSE> DSE> DSE> Error: last record in blk is 2
+DSE> 
+Rec:1  Blk 29  Off 10  Size 16  Cmpc 0  Key ^aglobal(31)
+
+DSE> DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+    Directory path
+    Path--blk:off
+	1
+
+DSE> DSE> DSE> 
+Rec:1  Blk 1  Off 10  Size 14  Cmpc 0  Ptr 50  Key ^aglobal(33)
+
+DSE> DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> Warning:  removed a star record from the end of this block.
+DSE> DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> DSE> DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> Error: offset less than blk header
+DSE> DSE> 
+Rec:1  Blk 38  Off 10  Size 16  Cmpc 0  Key ^aglobal(35)
+
+DSE> DSE> Error: offset greater than blk size of 10
+DSE> DSE> DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> Error: key must be specified.
+DSE> Error:  data must be specified for this data block record.
+DSE> Error: key must be specified.
+DSE> Error:  must specify a record number or offset for the record to be added.
+DSE> Error: key must be specified.
+DSE> DSE> Error: key must be specified.
+DSE> Error: key must be specified.
+DSE> Error:  data must be specified for this data block record.
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> Error:  invalid key.
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> DSE> DSE> DSE> DSE> 
+Rec:1  Blk 29  Off 10  Size 1B2  Cmpc 0  Key ^aglobal("xyz")
+
+DSE> DSE> DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> Error:  Null subscripts not allowed
+DSE> DSE> DSE> 
+Rec:2  Blk 3  Off 45  Size A  Cmpc 8  Key ^aglobal("")
+
+DSE> DSE> DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Block 0  Size 90  Level -1  TN 4C5 V6   Master Status: Free Space
+
+DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+DSE> 
+Block 0  Size 90  Level -1  TN 4C5 V6   Master Status: Free Space
+
+##SUSPEND_OUTPUT  REPLIC
+DSE> DSE> ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT   NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+DSE> DSE> Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##ALLOW_OUTPUT   NON_REPLIC
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT   NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

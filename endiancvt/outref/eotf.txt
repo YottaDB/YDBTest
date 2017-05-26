@@ -1,0 +1,63 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Partially encrypt with key1 (white box test case) and endian convert the database
+# Expect the set -encryptioncomplete to fail, since re-encryption is not complete due to the whitebox test case
+Region DEFAULT : MUPIP REORG ENCRYPT started
+Region DEFAULT : MUPIP REORG ENCRYPT incomplete. See above messages.
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+Cannot mark encryption complete on database file ##TEST_PATH##/mumps.dat due to an ongoing MUPIP REORG -ENCRYPT operation
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+TEST-I-INTEG check of mumps.dat passed
+##FILTERED##Converting database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+Converting in place - database will be damaged by an abnormal termination
+You must have a backup before proceeding
+Proceed [yes/no] ?
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+# Ship the db to the remote side and try to continue reencryption with key1
+TEST-I-INTEG check of mumps.dat passed
+Region DEFAULT : MUPIP REORG ENCRYPT started
+Region DEFAULT : Database is now FULLY ENCRYPTED with the following key: mumps_dat_key_2
+Region DEFAULT : MUPIP REORG ENCRYPT finished
+Database file ##REMOTE_TEST_PATH##/mumps.dat now has encryption marked complete
+TEST-I-INTEG check of mumps.dat passed
+# Now attempt to re-encrypt with key2
+Region DEFAULT : MUPIP REORG ENCRYPT started
+Region DEFAULT : Database is now FULLY ENCRYPTED with the following key: mumps_dat_key
+Region DEFAULT : MUPIP REORG ENCRYPT finished
+Database file ##REMOTE_TEST_PATH##/mumps.dat now has encryption marked complete
+TEST-I-INTEG check of mumps.dat passed
+# Ship the db to the primary side and endian convert
+##FILTERED##Converting database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+Converting in place - database will be damaged by an abnormal termination
+You must have a backup before proceeding
+Proceed [yes/no] ?
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+# Attempt re-encryption with key2 - Expect already encrypted with the desired key message
+Region DEFAULT : MUPIP REORG ENCRYPT started
+Region DEFAULT : Data already encrypted with the desired key - no change made
+# Attempt re-encryption with key1 - Expect it to succeed
+Region DEFAULT : MUPIP REORG ENCRYPT started
+Region DEFAULT : Database is now FULLY ENCRYPTED with the following key: mumps_dat_key_2
+Region DEFAULT : MUPIP REORG ENCRYPT finished
+Database file ##TEST_PATH##/mumps.dat now has encryption marked complete
+1
+11
+21
+31
+41
+51
+61
+71
+81
+91
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

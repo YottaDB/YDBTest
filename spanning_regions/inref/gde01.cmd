@@ -1,0 +1,70 @@
+! Test basic subscripted names work
+add -name DIVISION("Australia") -region=AUSTRALIA
+add -name DIVISION("Europe","a":"m") -region=EUROPEAL
+add -name DIVISION("Europe","m":"z") -region=EUROPEM
+add -name DIVISION("USA","MidWest","a":"e") -region=USMWAD
+add -name DIVISION("USA","MidWest","e":"m") -region=USMWEL
+add -name DIVISION("USA","MidWest","m":"{") -region=USMWMZ
+add -name DIVISION("USA","Northeast","a":"h") -region=USNEAG
+add -name DIVISION("USA","Northeast","h":"m") -region=USNEHL
+add -name DIVISION("USA","Northeast","m":"s") -region=USNEMR
+add -name DIVISION("USA","Northeast","s":"{") -region=USNESZ
+add -name DIVISION("USA","South","a":"m") -region=USSAL
+add -name DIVISION("USA","South","m":"{") -region=USSMZ
+add -name DIVISION("USA","WestCoast") -region=USWC
+add -name IMPL -region=MISCMUMPS
+add -name IMPL("GT.M") -region=MYMUMPS
+add -name MODELNUM -region=NUMERIC
+add -name MODELNUM("") -region=STRING
+add -name MODELNUM($char(0):) -region=STRING
+add -name PRODAGE(10:20) -region=DECADE1
+add -name PRODAGE(20:) -region=DECADE2
+add -name PRODAGE(:10) -region=DECADE0
+exit
+add -region USNEHL -dyn=USNEHL -stdnullcoll
+add -segment USNEHL -file=USNEHL.dat
+add -region USNEAG -dyn=USNEAG -stdnullcoll
+add -segment USNEAG -file=USNEAG.dat
+add -region USMWEL -dyn=USMWEL -stdnullcoll
+add -segment USMWEL -file=USMWEL.dat
+add -region USMWAD -dyn=USMWAD -stdnullcoll
+add -segment USMWAD -file=USMWAD.dat
+add -region DECADE0 -dyn=DECADE0 -stdnullcoll
+add -segment DECADE0 -file=DECADE0.dat
+add -region DECADE1 -dyn=DECADE1 -stdnullcoll
+add -segment DECADE1 -file=DECADE1.dat
+add -region EUROPEAL -dyn=EUROPEAL -stdnullcoll
+add -segment EUROPEAL -file=EUROPEAL.dat
+add -region DECADE2 -dyn=DECADE2 -stdnullcoll
+add -segment DECADE2 -file=DECADE2.dat
+add -region STRING -dyn=STRING -stdnullcoll
+add -segment STRING -file=STRING.dat
+add -region USSMZ -dyn=USSMZ -stdnullcoll
+add -segment USSMZ -file=USSMZ.dat
+add -region USSAL -dyn=USSAL -stdnullcoll
+add -segment USSAL -file=USSAL.dat
+add -region AUSTRALIA -dyn=AUSTRALIA -stdnullcoll
+add -segment AUSTRALIA -file=AUSTRALIA.dat
+add -region USWC -dyn=USWC -stdnullcoll
+add -segment USWC -file=USWC.dat
+add -region USMWMZ -dyn=USMWMZ -stdnullcoll
+add -segment USMWMZ -file=USMWMZ.dat
+add -region USNEMR -dyn=USNEMR -stdnullcoll
+add -segment USNEMR -file=USNEMR.dat
+add -region EUROPEM -dyn=EUROPEM -stdnullcoll
+add -segment EUROPEM -file=EUROPEM.dat
+add -region NUMERIC -dyn=NUMERIC -stdnullcoll
+add -segment NUMERIC -file=NUMERIC.dat
+add -region MYMUMPS -dyn=MYMUMPS -stdnullcoll
+add -segment MYMUMPS -file=MYMUMPS.dat
+add -region MISCMUMPS -dyn=MISCMUMPS -stdnullcoll
+add -segment MISCMUMPS -file=MISCMUMPS.dat
+add -region USNESZ -dyn=USNESZ -stdnullcoll
+add -segment USNESZ -file=USNESZ.dat
+change -region DEFAULT -stdnullcoll
+show -name
+show -map
+show -map -reg=EUROPEAL
+show -map -reg=STRING
+show -map -reg=NUMERIC
+

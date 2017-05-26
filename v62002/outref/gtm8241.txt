@@ -1,0 +1,18 @@
+Create database file mumps.dat
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+test1 : Verify that blocked processes mostly sleep (no crit activity) if holder process is alive
+test1 : Test PASS
+
+test2 : Verify that blocked processes dont sleep but instead acquire lock if holder process dies while holding the lock
+Killed
+test2 : Test PASS
+
+Do a dbcheck to ensure db integs clean
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

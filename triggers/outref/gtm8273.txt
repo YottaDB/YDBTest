@@ -1,0 +1,35 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+Execute ztrigger @^zpmeONE and the triggers will exercise zprint
+Compare 'zprint ^zpmeONE#' 'write $text(^zpmeONE#)' line by line 
+###################################################################
+Execute ztrigger @^dtmeONE and the triggers will exercise $text()
+Compare 'zprint ^dtmeONE#' 'write $text(^dtmeONE#)' line by line 
+###################################################################
+Execute ztrigger @^zpmeMUL and the triggers will exercise zprint
+Compare 'zprint ^zpmeMUL#' 'write $text(^zpmeMUL#)' line by line 
+###################################################################
+Execute ztrigger @^dtmeMUL and the triggers will exercise $text()
+Compare 'zprint ^dtmeMUL#' 'write $text(^dtmeMUL#)' line by line 
+###################################################################
+###################################################################
++1^zbONE#    (ZBREAK)
++1^zbONE#
+zpme+29^zpme
++2^zbMUL#    (ZBREAK)
+zpme+29^zpme
+line 2
+x^zbMUL#    (ZBREAK)
+zpme+29^zpme
+$ZTNAME="zbMUL#"
+x+1^zbMUL#    (ZBREAK)
+zpme+29^zpme
+line 4
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

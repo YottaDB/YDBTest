@@ -1,0 +1,67 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumpsdefault.dat
+mumpsnonrepl.dat
+mumpsrepl.dat
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+other.gld
+Using: ##SOURCE_PATH##/mupip
+otherdefault.dat
+othernonrepl.dat
+otherrepl.dat
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [mumps_secondary]
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [other_secondary]
+
+GTM>
+##TEST_AWK.GTM.E.REPLINSTMISMTCH, Process has replication instance file ##TEST_PATH##/mumps.repl \(jnlpool shmid = [0-9]*\) open but database ##TEST_PATH##/otherrepl.dat is bound to instance file ##TEST_PATH##/other.repl \(jnlpool shmid = [0-9]*\)
+		At M source location mumpsfirst+4^d002599
+
+GTM>
+
+GTM>
+
+GTM>
+##TEST_AWK.GTM.E.REPLINSTMISMTCH, Process has replication instance file ##TEST_PATH##/mumps.repl \(jnlpool shmid = [0-9]*\) open but database ##TEST_PATH##/otherrepl.dat is bound to instance file ##TEST_PATH##/other.repl \(jnlpool shmid = [0-9]*\)
+		At M source location otherfirst+2^d002599
+
+GTM>
+
+GTM>
+
+GTM>
+##TEST_AWK.GTM.E.REPLINSTMISMTCH, Process has replication instance file ##TEST_PATH##/other.repl \(jnlpool shmid = [0-9]*\) open but database ##TEST_PATH##/mumpsrepl.dat is bound to instance file ##TEST_PATH##/mumps.repl \(jnlpool shmid = [0-9]*\)
+		At M source location mumpsfirst+2^d002599
+
+GTM>
+
+GTM>
+
+GTM>
+##TEST_AWK.GTM.E.REPLINSTMISMTCH, Process has replication instance file ##TEST_PATH##/other.repl \(jnlpool shmid = [0-9]*\) open but database ##TEST_PATH##/mumpsrepl.dat is bound to instance file ##TEST_PATH##/mumps.repl \(jnlpool shmid = [0-9]*\)
+		At M source location otherfirst+5^d002599
+
+GTM>
+
+GTM>
+
+Checking mumps environment
+$grep last transaction written to journal pool mumps_showbacklog.log
+1 : sequence number of last transaction written to journal pool
+$grep repl mumpsrepl.mjf
+1\\^repl="2"
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Checking other environment
+$grep last transaction written to journal pool other_showbacklog.log
+2 : sequence number of last transaction written to journal pool
+$grep repl otherrepl.mjf
+1\\^repl="9992"
+2\\^repl
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

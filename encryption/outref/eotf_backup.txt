@@ -1,0 +1,61 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+Case 1. Starting (re)encryption while MUPIP BACKUP is underway
+
+##TEST_AWK0000000.*G   D   S   V   7               I   N   C   R   E   M   E   N
+##TEST_AWK0000020.*T   A   L       B   A   C   K   U   P
+0000032
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Case 2. Ensuring that backup can be restored with one key in configuration file
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT PRO
+
+Case 3. Starting MUPIP BACKUP while (re)encryption is underway
+
+##TEST_AWK0000000.*G   D   S   V   7               I   N   C   R   E   M   E   N
+##TEST_AWK0000020.*T   A   L       B   A   C   K   U   P
+0000032
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Case 4. Ensuring that backup needs both keys in configuration file to be restored
+----------
+Error CRYPTKEYFETCHFAILED seen in mupip_restore1.out as expected:
+##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat.bak. .*
+----------
+----------
+Error MUPRESTERR seen in mupip_restore1.out as expected:
+%GTM-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
+----------
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Case 5. RESTORE cannot start while the database is being (re)encrypted
+----------
+Error MUPRESTERR seen in mupip_restore.out as expected:
+%GTM-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
+----------
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT PRO

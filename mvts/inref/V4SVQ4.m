@@ -1,0 +1,60 @@
+V4SVQ4 ;IW-KO-YS-TS,V4SVQ,MVTS V9.10;15/6/96;PART-94
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+ W !!,"72---V4SVQ4:  Special variable $QUIT  -4-"
+ ;
+ W !!,"DO with parameters",!
+ ;
+1 S ^ABSN="40527",^ITEM="IV-527  extrinsic special variable"
+ S ^NEXT="2^V4SVQ4,V4SVQ5^V4SVQ,V4MERGE^VV4" D ^V4PRESET K
+ S V=""
+ D DOWESV^V4SVQE("A")
+ S ^VCOMP=V
+ S ^VCORR="010" D ^VEXAMINE
+ ;
+2 S ^ABSN="40528",^ITEM="IV-528  extrinsic function"
+ S ^NEXT="3^V4SVQ4,V4SVQ5^V4SVQ,V4MERGE^VV4" D ^V4PRESET K
+ S V=""
+ D DOWEF^V4SVQE(1,2)
+ S ^VCOMP=V
+ S ^VCORR="010" D ^VEXAMINE
+ ;
+3 W !!,"FOR scope",!
+ ;
+ S ^ABSN="40529",^ITEM="IV-529  extrinsic special variable"
+ S ^NEXT="4^V4SVQ4,V4SVQ5^V4SVQ,V4MERGE^VV4" D ^V4PRESET K
+ ;(test fixed in V9.02;7/10/95)
+ S V=""
+ F N="A","B" S V=V_$$ESV^V4SVQE
+ S ^VCOMP=V
+ S ^VCORR="111" D ^VEXAMINE
+ ;
+4 S ^ABSN="40530",^ITEM="IV-530  extrinsic function"
+ S ^NEXT="5^V4SVQ4,V4SVQ5^V4SVQ,V4MERGE^VV4" D ^V4PRESET K
+ ;(test fixed in V9.02;7/10/95)
+ S V=""
+ F N="A","B" S V=V_$$EF^V4SVQE(N)
+ S ^VCOMP=V
+ S ^VCORR="111" D ^VEXAMINE
+ ;
+5 W !!,"GOTO",!
+ ;
+ S ^ABSN="40531",^ITEM="IV-531  extrinsic special variable"
+ S ^NEXT="6^V4SVQ4,V4SVQ5^V4SVQ,V4MERGE^VV4" D ^V4PRESET K
+ S V="" G ^V4SVQGO
+ S V=123
+10 S ^VCOMP=V
+ S ^VCORR="010" D ^VEXAMINE
+ ;
+6 S ^ABSN="40532",^ITEM="IV-532  extrinsic function"
+ S ^NEXT="V4SVQ5^V4SVQ,V4MERGE^VV4" D ^V4PRESET K
+ S V="" G ABC^V4SVQGO
+ S V=321
+20 S ^VCOMP=V
+ S ^VCORR="010" D ^VEXAMINE
+ ;
+END W !!,"End of 72 --- V4SVQ4",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

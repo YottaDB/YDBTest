@@ -1,0 +1,125 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+###################################################################
+Pre-load some data
+###################################################################
+
+byte by byte
+1	०|१|२|३|४	19
+2	०þ१þ२þ३þ४	23
+###################################################################
+
+byte by char
+3	०þþ१þþ२þþ३þþ४	31
+###################################################################
+
+char by char
+4	૦|૧|૨|૩|૪|૫|૬|૭|૮|૯	39
+5	।।।।F।G।H।I।J	29
+6	।।।।।।४।।५।।६।।७।।८	57
+###################################################################
+
+char by byte
+7	0|૧|૨|3|૪|5|૬|૭|૮|9	31
+###################################################################
+Run the pieces/delim tests
+###################################################################
+
+byte by byte
+^fired("+1^BbyB0zd#")=3
+^fired("+1^BbyB0zd#",1)="^delim(""zchar"",1).|.1"
+^fired("+1^BbyB0zd#",2)="^delim(""zchar"",1).|.4,5,6"
+^fired("+1^BbyB0zd#",3)="^delim(""zchar"",2).|.1"
+^fired("+1^BbyB0zd0inv#")=3
+^fired("+1^BbyB0zd0inv#",1)="^delim(""zchar"",1).þ.1"
+^fired("+1^BbyB0zd0inv#",2)="^delim(""zchar"",1).þ.1"
+^fired("+1^BbyB0zd0inv#",3)="^delim(""zchar"",2).þ.3,4"
+^fired("+1^BbyB0zd0inv2#")=3
+^fired("+1^BbyB0zd0inv2#",1)="^delim(""zchar"",1).þþ.1"
+^fired("+1^BbyB0zd0inv2#",2)="^delim(""zchar"",1).þþ.1"
+^fired("+1^BbyB0zd0inv2#",3)="^delim(""zchar"",2).þþ.1"
+^fired("+1^BbyB0zd0zp#")=2
+^fired("+1^BbyB0zd0zp#",1)="^delim(""zchar"",1).|.1"
+^fired("+1^BbyB0zd0zp#",2)="^delim(""zchar"",2).|.1"
+^fired("+1^BbyC0d0p#")=1
+^fired("+1^BbyC0d0p#",1)="^delim(""zchar"",1).|.4"
+^fired("+1^BbyC0d0p0inv#")=1
+^fired("+1^BbyC0d0p0inv#",1)="^delim(""zchar"",2).þ.4"
+###################################################################
+
+byte by char
+^fired("+1^BbyB0zd#")=2
+^fired("+1^BbyB0zd#",1)="^delim(""zchar"",3).|.1"
+^fired("+1^BbyB0zd#",2)="^delim(""zchar"",3).|.1"
+^fired("+1^BbyB0zd0inv#")=2
+^fired("+1^BbyB0zd0inv#",1)="^delim(""zchar"",3).þ.3,5,7"
+^fired("+1^BbyB0zd0inv#",2)="^delim(""zchar"",3).þ.9,10,11,12,13"
+^fired("+1^BbyB0zd0inv2#")=2
+^fired("+1^BbyB0zd0inv2#",1)="^delim(""zchar"",3).þþ.2,3,4"
+^fired("+1^BbyB0zd0inv2#",2)="^delim(""zchar"",3).þþ.5,6,7"
+^fired("+1^BbyB0zd0zp#")=2
+^fired("+1^BbyB0zd0zp#",1)="^delim(""zchar"",3).|.1"
+^fired("+1^BbyB0zd0zp#",2)="^delim(""zchar"",3).|.1"
+^fired("+1^BbyB0zd0zp0inv#")=2
+^fired("+1^BbyB0zd0zp0inv#",1)="^delim(""zchar"",3).þ.5,7"
+^fired("+1^BbyB0zd0zp0inv#",2)="^delim(""zchar"",3).þ.9,10"
+^fired("+1^BbyB0zd0zp0inv2#")=1
+^fired("+1^BbyB0zd0zp0inv2#",1)="^delim(""zchar"",3).þþ.5,6,7"
+^fired("+1^BbyC0d0p0inv2#")=1
+^fired("+1^BbyC0d0p0inv2#",1)="^delim(""zchar"",3).þþ.4"
+###################################################################
+
+char by char
++1^CbyB0zd#	$reference=^delim("unichar",5)	lvn=5	delim=$zchar(124,224)	$ztupdate=1
+^fired("+1^BbyB0zd#")=2
+^fired("+1^BbyB0zd#",1)="^delim(""char"",4).|.1,2,5,7"
+^fired("+1^BbyB0zd#",2)="^delim(""char"",4).|.3,4,6,8,9,10"
+^fired("+1^BbyB0zd0inv#")=2
+^fired("+1^BbyB0zd0inv#",1)="^delim(""char"",4).þ.1"
+^fired("+1^BbyB0zd0inv#",2)="^delim(""char"",4).þ.1"
+^fired("+1^BbyB0zd0inv2#")=2
+^fired("+1^BbyB0zd0inv2#",1)="^delim(""char"",4).þþ.1"
+^fired("+1^BbyB0zd0inv2#",2)="^delim(""char"",4).þþ.1"
+^fired("+1^BbyB0zd0zp#")=1
+^fired("+1^BbyB0zd0zp#",1)="^delim(""char"",4).|.1,2"
+^fired("+1^BbyC0d0p#")=1
+^fired("+1^BbyC0d0p#",1)="^delim(""char"",4).|.4"
+^fired("+1^CbyC0d#")=1
+^fired("+1^CbyC0d#",1)="^delim(""unichar"",5).।.1,2,3,4"
+^fired("+1^CbyC0d0p#")=1
+^fired("+1^CbyC0d0p#",1)="^delim(""unichar"",5).।.1,2,4"
+###################################################################
+
+char by byte
++1^CbyB0zd#	$reference=^delim("unichar",7)	lvn=7	delim=$zchar(124,224)	$ztupdate=1,3,4,5,6,7,8,9,10
+૦|૧|૨|૩|૪|૫|૬|૭|૮|૯
+૦|૧|२|३|४|५|६|७|८|९
+^fired("+1^CbyC0d#")=1
+^fired("+1^CbyC0d#",1)="^delim(""unichar"",7).।.1"
+^fired("+1^CbyC0d0p#")=1
+^fired("+1^CbyC0d0p#",1)="^delim(""unichar"",7).।.1"
+###################################################################
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT NON_REPLIC

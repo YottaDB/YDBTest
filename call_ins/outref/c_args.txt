@@ -1,0 +1,41 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+M1 -> C -> M2
+M2: $ZLEVEL = 2
+ Do ^CUST 
+M1 -> C -> M2 -> M3
+M3: $ZLEVEL = 3
+M1 -> C -> M2 -> M3
+M3: $ZLEVEL = 3
+Balance is: 22210.010000
+New rates are: 0.060000
+New balance is: 23542.610653
+Int accrued YTD is: 23542.611328
+Balance is: 22210.010000
+New rates are: 0.060000
+New balance is: 23542.610653
+Int accrued YTD is: 23542.611328
+Balance is: 22210.040000
+New rates are: 0.100000
+New balance is: 24431.044033
+Int accrued YTD is: 24431.042969
+Balance is: 22210.040000
+New rates are: 0.100000
+New balance is: 24431.044033
+Int accrued YTD is: 24431.042969
+##SUSPEND_OUTPUT NOTRIGGER
+firedtrig("ACCT")=78
+firedtrig("customerdata")=42
+##ALLOW_OUTPUT NOTRIGGER
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

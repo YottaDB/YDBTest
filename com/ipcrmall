@@ -1,0 +1,22 @@
+#!/usr/local/bin/tcsh 
+if ($HOSTOS == "Linux") then 
+ #ensure $gtm_tst is defined (test system defines it, but if called on its own) -- Nergis
+ if !($?gtm_tst) setenv gtm_tst $gtm_test/T990
+ setenv ipcs $gtm_tst/com/ipcs
+ else setenv ipcs ipcs
+endif
+$ipcs | grep $USER
+if  ($status == 0) then
+#ipcs
+foreach i (`$ipcs | grep $USER | awk -Fm '{print  $2}'|awk '{print $1}'`)
+echo ipcrm -m $i
+$ipcrm -m $i
+end
+foreach i (`$ipcs | grep $USER | awk -Fs '{print  $2}'|awk '{print $1}'`)
+echo ipcrm -s $i
+$ipcrm -s $i
+end
+
+else 
+echo There is nothing to remove
+endif

@@ -1,0 +1,64 @@
+--------------------------------------------------------------------------------
+TEST: Referenced label not specified in call-in table: 
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+ 150379666,%GTM-E-CINOENTRY, No entry specified for getcode in the call-in table
+--------------------------------------------------------------------------------
+TEST: Invalid direction for passed parameters: 
+%GTM-I-EXTSRCLIN, 	getc: gtm_char_t* ccode^getrec2(gtm_long_t)
+
+						     ^-----
+%GTM-I-EXTSRCLOC, 		At column 29, line 1, source module dirctv.tab
+ 150379642,%GTM-E-CIDIRECTIVE, Invalid directive parameter passing.  Expected I, O or IO.
+--------------------------------------------------------------------------------
+TEST: Missing/Invalid C identifier in call-in table: 
+%GTM-I-EXTSRCLIN, 	    :  void ^bldrecs()
+
+			    ^-----
+%GTM-I-EXTSRCLOC, 		At column 4, line 1, source module errors.tab
+ 150379626,%GTM-E-CIRCALLNAME, Call-in routine name expected but not found
+--------------------------------------------------------------------------------
+TEST: Wrong type specification for O/IO, pointer type expected: 
+%GTM-I-EXTSRCLIN, 	get: gtm_char_t*  ccode^getrec2(O:gtm_long_t)
+
+							       ^-----
+%GTM-I-EXTSRCLOC, 		At column 39, line 1, source module partyp.tab
+ 150379650,%GTM-E-CIPARTYPE, Invalid type specification for O/IO directive - expected pointer type
+--------------------------------------------------------------------------------
+TEST: Syntax errors in parameter specifications in call-in table: 
+%GTM-I-EXTSRCLIN, 	get: gtm_char_t*  ccode^getrec2(I:gtm_long_t,)
+
+							       ^-----
+%GTM-I-EXTSRCLOC, 		At column 39, line 1, source module parnam.tab
+ 150379642,%GTM-E-CIDIRECTIVE, Invalid directive parameter passing.  Expected I, O or IO.
+--------------------------------------------------------------------------------
+TEST: Unknown parameter type specifcation:  
+%GTM-I-EXTSRCLIN, 	get: gtm_char_t*  ccode^getrec2(O:gtm_invalid_t)
+
+								  ^-----
+%GTM-I-EXTSRCLOC, 		At column 42, line 1, source module untype.tab
+ 150379658,%GTM-E-CIUNTYPE, Unknown parameter type encountered
+--------------------------------------------------------------------------------
+TEST: Invalid return type specifcation:  
+%GTM-I-EXTSRCLIN, 	getcode: gtm_char_t  ccode^getrec2(I:gtm_long_t)
+
+					    ^-----
+%GTM-I-EXTSRCLOC, 		At column 20, line 1, source module rtntyp.tab
+ 150379618,%GTM-E-CIRTNTYP, Invalid return type
+--------------------------------------------------------------------------------
+TEST: Environment variable for call table:
+GTMCI: Undefined variable.
+ 150379594,%GTM-E-CITABENV, Environment variable for call-in table GTMCI not set
+--------------------------------------------------------------------------------
+TEST: Unable to open call table:
+ 150379602,%GTM-E-CITABOPN, Unable to open call-in table: call.tab,%GTM-E-SYSCALL, Error received from system call fopen -- called from module ##SOURCE_SRC_PATH##/exttab_parse.c at line ##TEST_AWK[0-9]*
+--------------------------------------------------------------------------------
+TEST: Multiple caret:
+ 150375994,%GTM-E-RUNPARAMERR, Error accessing parameter for run command
+--------------------------------------------------------------------------------

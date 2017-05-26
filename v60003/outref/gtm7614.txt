@@ -1,0 +1,9 @@
+# Creating database with 5 regions
+# Launching crit holder process (holding BREG crit)
+# Launching crit waiter process (will hold CREG and wait on BREG crit)
+# Waiting for MUTEXRELEASED message on the syslog
+##TEST_AWKINTRPT issued to process [0-9]*
+# Waiting for processes to die
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

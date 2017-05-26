@@ -1,0 +1,76 @@
+V1IDDOA	;INDIRECTION IN DO COMMAND -1-;KO-TS,V1IDDO,VALIDATION VERSION 7.1;31-AUG-1987;
+	;COPYRIGHT MUMPS SYSTEM LABORATORY 1978
+	S PASS=0,FAIL=0
+	W !!,"V1IDDOA: TEST OF INDIRECTION IN DO ARGUMENTS -1-",!
+461	W !,"I-461  indirection of dlabel"
+	S ITEM="I-461  ",VCOMP=""
+	S A=1 DO @A
+	S VCORR="1 " D EXAMINER
+	;
+462	W !,"I-462  indirection of dlabel, while dlabel contains indirection"
+	S ITEM="I-462  ",VCOMP=""
+	S L="@L(1)",L(1)="@$P(""ONE/TWO/THREE"",""/"",2)"
+	D @L
+	S VCORR="TWO " D EXAMINER
+	;
+463	W !,"I-463  indirection of dlabel+intexpr"
+	S ITEM="I-463  ",VCOMP=""
+	S A="ENTRY" DO @A+00002+(2+3)-04 ;ENTRY+3
+	S VCORR="ENTRY3 " D EXAMINER
+	;
+464	W !,"I-464  indirection of dlabel+intexpr, while intexpr contains indirection"
+	S ITEM="I-464  ",VCOMP=""
+	S A=1,B="A" DO @A+@B  ;1+1
+	S VCORR="2 " D EXAMINER
+	;
+465	W !,"I-465  indirection of dlabel+intexpr, while dlabel and intexpr contains"
+	S ITEM="I-465  ",VCOMP=""
+	S A="A(I)",I=02,A(2)="000001",^V1A="@B^@B(1)",B="0098",B(1)="V1IDDO1"
+	D @@A+A(2),@^V1A
+	S VCORR="000001+1 0098 " D EXAMINER
+	;
+466	W !,"I-466  indirection of routine name"
+	S ITEM="I-466  ",VCOMP=""
+	S A="V1IDDO1" D ^@A
+	S B="^V1IDDO1" D @B
+	S A="^V1IDDO1,^@B",B="V1IDDO1" D @A
+	S VCORR="^V1IDDO1 ^V1IDDO1 ^V1IDDO1 ^V1IDDO1 " D EXAMINER
+	;
+467	W !,"I-467  indirection of routine name, while routine name contains indirection"
+	S ITEM="I-467  ",VCOMP=""
+	S ^V1IDDO1="A",A=10,C="V1IDDO1",V1IDDO1="V1IDDO1"
+	D @A^@C,V1IDDO+-5+@^V1IDDO1^@@C
+	S VCORR="10 98 " D EXAMINER
+	;
+END	W !!,"END OF V1IDDOA",!
+	S ROUTINE="V1IDDOA",TESTS=7,AUTO=7,VISUAL=0 D ^VREPORT
+	K  K ^V1A,^V1IDO1 Q
+	;
+EXAMINER	I VCORR=VCOMP S PASS=PASS+1 W !,"   PASS  ",ITEM W:$Y>55 # Q
+	S FAIL=FAIL+1 W !,"** FAIL  ",ITEM W:$Y>55 #
+	W !,"           COMPUTED =""",VCOMP,"""" W:$Y>55 #
+	W !,"           CORRECT  =""",VCORR,"""" W:$Y>55 #
+	Q
+98	S VCOMP=VCOMP_"98 " Q
+00980	S VCOMP=VCOMP_"00980 " Q  ;470
+0098	S VCOMP=VCOMP_"0098 " Q  ;470
+ROUTINE	S VCOMP=VCOMP_"ROUTINE " Q  ;474
+1	S VCOMP=VCOMP_"1 " Q  ;461,473
+	S VCOMP=VCOMP_"2 " Q  ;464,473
+DREI	S VCOMP=VCOMP_"3 " Q  ;473
+SIEBEN7	S VCOMP=VCOMP_7 Q
+	S VCOMP=VCOMP_"SIEBEN7+1 " Q  ;472
+%BREAK	S VCOMP=VCOMP_"%BREAK " Q  ;472
+ENTRY	S VCOMP=VCOMP_"ENTRY " Q
+	S VCOMP=VCOMP_"ENTRY1 " Q
+ENTRY2	S VCOMP=VCOMP_"ENTRY2 " Q
+	S VCOMP=VCOMP_"ENTRY3 " Q  ;463
+	QUIT
+ONE	S VCOMP=VCOMP_"ONE " Q
+TWO	S VCOMP=VCOMP_"TWO " Q  ;462
+THREE	S VCOMP=VCOMP_"THREE " Q
+%	S VCOMP=VCOMP_"% " Q
+0123	S VCOMP=VCOMP_"0123 " Q
+012	S VCOMP=VCOMP_"012 " Q
+000001	S VCOMP=VCOMP_"000001 " Q
+	S VCOMP=VCOMP_"000001+1 " Q  ;465

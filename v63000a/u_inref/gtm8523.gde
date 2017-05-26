@@ -1,0 +1,22 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!								!
+! Copyright (c) 2016 Fidelity National Information		!
+! Services, Inc. and/or its subsidiaries. All rights reserved.	!
+!								!
+!	This source code contains the intellectual property	!
+!	of its copyright holder(s), and is made available	!
+!	under a license.  If you do not know the terms of	!
+!	the license, please stop and do not read further.	!
+!								!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+change -segment DEFAULT -file=mumps.dat
+change -segment DEFAULT -access_method=mm
+change -segment DEFAULT -block_size=1024
+change -region DEFAULT -record_size=1000
+change -segment DEFAULT -allocation=1020
+change -segment DEFAULT -ext=1000
+add -name a -region=areg
+add -region areg -dyn=aseg
+add -segment aseg -file=a
+change -region areg -record_size=1000
+change -segment aseg -access_method=mm

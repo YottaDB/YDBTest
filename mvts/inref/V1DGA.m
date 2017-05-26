@@ -1,0 +1,64 @@
+V1DGA ;IW-YS-TS,VV1,MVTS V9.10;15/6/96;$DATA AFTER SETTING AND KILLING UNSUBSCRIPT GVN
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1978-1996
+ W !!,"113---V1DGA: $DATA after SETting and KILLing unsubscript gvn",!
+822 S ^ABSN="11510",^ITEM="I-822  KILLing undefined unsubscripted global variables",^NEXT="192^V1DGA,V1DGB^VV1" W !,^ITEM D ^V1PRESET
+ S VCOMP="" KILL ^V1A,^V1B,^V1C,^V1D,^V1E,^V1F,^V1G D DATA
+ K ^V1A D DATA K ^V1A,^V1B,^V1C,^V1D,^V1E,^V1F,^V1G D DATA
+ S ^VCOMP=VCOMP,^VCORR="0 0 0 0 0 0 0 ********/0 0 0 0 0 0 0 ********/0 0 0 0 0 0 0 ********/" D ^VEXAMINE
+ ;
+192 S ^ABSN="11511",^ITEM="I-191/192  The value of $DATA of SET unsubscripted global variables",^NEXT="193^V1DGA,V1DGB^VV1" W !,^ITEM D ^V1PRESET
+ K ^V1A,^V1B,^V1C,^V1D,^V1E,^V1F,^V1G
+ S VCOMP="" S ^V1A=1 D DATA S ^V1A=1,^V1D="A",^V1B=2 D DATA
+ S ^VCOMP=VCOMP,^VCORR="1 0 0 0 0 0 0 *1*******/1 1 0 1 0 0 0 *1*2**A****/" D ^VEXAMINE
+ ;
+193 S ^ABSN="11512",^ITEM="I-193/194  The value of $DATA of KILLing unsubscripted global variables",^NEXT="195^V1DGA,V1DGB^VV1" W !,^ITEM D ^V1PRESET
+ S VCOMP="" K ^V1A D DATA K ^V1B,^V1D D DATA
+ S ^VCOMP=VCOMP,^VCORR="0 1 0 1 0 0 0 **2**A****/0 0 0 0 0 0 0 ********/" D ^VEXAMINE
+ ;
+195 S ^ABSN="11513",^ITEM="I-195  Assign numeric literal to unsubscripted global variables",^NEXT="196^V1DGA,V1DGB^VV1" W !,^ITEM D ^V1PRESET
+ S VCOMP=""
+ S ^V1A=111,^V1D=0009800,^V1B=12345678,^V1C=987.654,^V1F=0.00,^V1E=000.8900 D DATA
+ K ^V1A,^V1B,^V1C D DATA
+ S ^VCOMP=VCOMP,^VCORR="1 1 1 1 1 1 0 *111*12345678*987.654*9800*.89*0**/0 0 0 1 1 1 0 ****9800*.89*0**/"
+ D ^VEXAMINE
+ ;
+196 S ^ABSN="11514",^ITEM="I-196  Assign string literal to unsubscripted global variables",^NEXT="197^V1DGA,V1DGB^VV1" W !,^ITEM D ^V1PRESET
+ S VCOMP="" S ^V1A="ABC",^V1D="  ",^V1B="",^V1C="00234.00" D DATA
+ K ^V1B,^V1E,^V1F D DATA
+ S ^VCOMP=VCOMP,^VCORR="1 1 1 1 1 1 0 *ABC**00234.00*  *.89*0**/1 0 1 1 0 0 0 *ABC**00234.00*  ****/" D ^VEXAMINE
+ ;
+197 S ^ABSN="11515",^ITEM="I-197  Effect on global variables by killing local variables",^NEXT="198^V1DGA,V1DGB^VV1" W !,^ITEM D ^V1PRESET
+ S VCOMP="" K A,B,C,D,E,F,G K V1A,V1B,V1C,V1D,V1E,V1F,V1G D DATA
+ S ^VCOMP=VCOMP,^VCORR="1 0 1 1 0 0 0 *ABC**00234.00*  ****/" D ^VEXAMINE
+ ;
+198 S ^ABSN="11516",^ITEM="I-198  Effect on global variables by executing exclusive kill",^NEXT="199^V1DGA,V1DGB^VV1" W !,^ITEM D ^V1PRESET
+ K (X,Y,Z,V1A,V1B) S VCOMP="" D DATA
+ S ^VCOMP=VCOMP S ^VCORR="1 0 1 1 0 0 0 *ABC**00234.00*  ****/"
+ D ^VEXAMINE
+ ;
+199 S ^ABSN="11517",^ITEM="I-199  Effect on global variables by executing kill all local variable",^NEXT="200^V1DGA,V1DGB^VV1" W !,^ITEM D ^V1PRESET
+ K  ;kill all local variable
+ S VCOMP="" D DATA
+ S ^VCOMP=VCOMP,^VCORR="1 0 1 1 0 0 0 *ABC**00234.00*  ****/" D ^VEXAMINE
+ ;
+200 ;(title corrected in V7.4;16/9/89)
+ S ^ABSN="11518",^ITEM="I-200  $DATA for allowed global variable name",^NEXT="V1DGB^VV1" W !,^ITEM D ^V1PRESET
+ S ^GLOBAL00=" ^GLOBAL00 ",^Z0000000=" ^Z0000000 "
+ S ^VCOMP=$D(^GLOBAL00)_^GLOBAL00_$D(^Z0000000)_^Z0000000
+ KILL ^GLOBAL00,^Z0000000
+ S ^VCORR="1 ^GLOBAL00 1 ^Z0000000 " D ^VEXAMINE
+ ;
+END W !!,"End of 113---V1DGA",!
+ K  K ^V1A,^V1B,^V1C,^V1D,^V1E,^V1F,^V1G
+ Q
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q
+DATA S VCOMP=VCOMP_$D(^V1A)_" "_$D(^V1B)_" "_$D(^V1C)_" "_$D(^V1D)_" "_$D(^V1E)_" "_$D(^V1F)_" "_$D(^V1G)_" "
+ S VCOMP=VCOMP_"*" I $D(^V1A)#10=1 S VCOMP=VCOMP_^V1A
+ S VCOMP=VCOMP_"*" I $D(^V1B)#10=1 S VCOMP=VCOMP_^V1B
+ S VCOMP=VCOMP_"*" I $D(^V1C)#10=1 S VCOMP=VCOMP_^V1C
+ S VCOMP=VCOMP_"*" I $D(^V1D)#10=1 S VCOMP=VCOMP_^V1D
+ S VCOMP=VCOMP_"*" I $D(^V1E)#10=1 S VCOMP=VCOMP_^V1E
+ S VCOMP=VCOMP_"*" I $D(^V1F)#10=1 S VCOMP=VCOMP_^V1F
+ S VCOMP=VCOMP_"*" I $D(^V1G)#10=1 S VCOMP=VCOMP_^V1G
+ S VCOMP=VCOMP_"*/" Q

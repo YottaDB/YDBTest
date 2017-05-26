@@ -1,0 +1,503 @@
+setenv gtm_chset M
+unset echo
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+**************************** followtimeout ****************************
+###################################################################
+initialize timeoutfile
+Output of reader_timeout.mjo:
+setting ^a to a1 to have sendintr start sending interrupts
+**********************************
+READ FOLLOW WITH TIMEOUT
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+timeoutfile OPEN RMS FOLLOW READ 
+##TEST_AWKPASSED: timeout disk read=.*
+##TEST_AWKPASSED: timeout disk read=.*
+setting ^a to b to have writer add chars to timeoutfile after a 5 sec delay
+##TEST_AWKPASSED: timeout disk read=.*
+x= ABCDEFG length(x)= 7
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+timeoutfile OPEN RMS READ 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $zeof= 1
+**********************************
+READ FOLLOW FIXED WITH TIMEOUT
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+timeoutfile OPEN RMS FOLLOW FIXED READ 
+##TEST_AWKPASSED: timeout disk read=.*
+##TEST_AWKPASSED: timeout disk read=.*
+setting ^a to c to have writer add chars to timeoutfile after a 5 sec delay
+##TEST_AWKPASSED: timeout disk read=.*
+x= HIJKLMN length(x)= 7
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+timeoutfile OPEN RMS FIXED READ 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $zeof= 1
+setting ^a to k
+###################################################################
+**************************** gtm8109 in M mode ****************************
+###################################################################
+x= ABCDEFGHI0ABCDEFGHI1ABCDEFGHI2ABCDEFGHI3 length(x)= 40 $test= 1
+x= ABCDEFGHI4 length(x)= 10 $test= 1
+x= ABCDEFGHI0ABCDEFGHI1ABCDEFGHI2ABCDEFGHI3ABCDEFGHI4 length(x)= 50 $test= 0
+x= 65 length(x)= 2 $test= 1
+x= -1 length(x)= 2 $test= 0
+##SUSPEND_OUTPUT NON_UTF8
+###################################################################
+**************************** utffollowtimeout ****************************
+###################################################################
+setenv gtm_chset UTF-8
+unset echo
+setting ^a to a
+Output of utfreader_timeout.mjo:
+**********************************
+NON-FIXED MODE READ FOLLOW WITH TIMEOUT UTF TESTS
+**********************************
+
+**********************************
+READ FOLLOW WITH TIMEOUT UTF-8 NULL FILE
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW (KEY=key IV=[a-zA-Z0-9]* )?
+##TEST_AWKPASSED: timeout disk read=.*
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+##TEST_AWKPASSED: timeout disk read=.*
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+##TEST_AWKPASSED: timeout disk read=.*
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READ FOLLOW WITH TIMEOUT UTF-16 NULL FILE
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW READ ICHSET=UTF-16 (KEY=key IV=[a-zA-Z0-9]* )?
+##TEST_AWKPASSED: timeout disk read=.*
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+##TEST_AWKPASSED: timeout disk read=.*
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+##TEST_AWKPASSED: timeout disk read=.*
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS READ ICHSET=UTF-16(B|L)E (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READ FOLLOW WITH TIMEOUT UTF-8 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW READ (KEY=key IV=[a-zA-Z0-9]* )?
+setting ^a to td1 to have writer add utf8_timeout_no_bom to utftimeoutfile after a 5 sec delay
+##TEST_AWKPASSED: timeout disk read=.*
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS READ (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READ FOLLOW WITH TIMEOUT UTF-8 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW READ (KEY=key IV=[a-zA-Z0-9]* )?
+setting ^a to td2 to have writer add utf8_timeout_just_bom to utftimeoutfile after a 5 sec delay
+then add utf8_timeout_no_bom to utftimeoutfile after a 5 sec delay
+##TEST_AWKPASSED: timeout disk read=.*
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS READ (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READ FOLLOW WITH TIMEOUT UTF-16 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW READ ICHSET=UTF-16 (KEY=key IV=[a-zA-Z0-9]* )?
+setting ^a to td3 to have writer add utf16_timeout_just_bom to utftimeoutfile after a 5 sec delay
+then add utf16_timeout_no_bom to utftimeoutfile after a 5 sec delay
+##TEST_AWKPASSED: timeout disk read=.*
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS READ ICHSET=UTF-16(B|L)E (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READ FOLLOW WITH TIMEOUT UTF-8 WITH NO DELAY BETWEEN BOM AND DATA
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW READ (KEY=key IV=[a-zA-Z0-9]* )?
+setting ^a to cp1 to have writer copy utf8_timeout_with_bom to utftimeoutfile
+##TEST_AWKPASSED: timeout disk read=.*
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS READ (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READ FOLLOW WITH TIMEOUT UTF-16 WITH NO DELAY BETWEEN BOM AND DATA
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW READ ICHSET=UTF-16 (KEY=key IV=[a-zA-Z0-9]* )?
+setting ^a to cp2 to have writer copy utf16_timeout_with_bom to utftimeoutfile
+##TEST_AWKPASSED: timeout disk read=.*
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS READ ICHSET=UTF-16(B|L)E (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READ FOLLOW WITH TIMEOUT UTF-8 WITH BOM ONLY
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW READ (KEY=key IV=[a-zA-Z0-9]* )?
+setting ^a to cp3 to have writer copy utf8_timeout_just_bom to utftimeoutfile
+##TEST_AWKPASSED: timeout disk read=.*
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS READ (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READ FOLLOW WITH TIMEOUT UTF-16 WITH BOM ONLY
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW READ ICHSET=UTF-16 (KEY=key IV=[a-zA-Z0-9]* )?
+setting ^a to cp4 to have writer copy utf16_timeout_just_bom to utftimeoutfile
+##TEST_AWKPASSED: timeout disk read=.*
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS READ ICHSET=UTF-16(B|L)E (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+
+**********************************
+FIXED MODE READ FOLLOW WITH TIMEOUT UTF TESTS
+**********************************
+
+**********************************
+FIXED MODE READ FOLLOW WITH TIMEOUT UTF-8 NULL FILE
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW FIXED READ (KEY=key IV=[a-zA-Z0-9]* )?
+##TEST_AWKPASSED: timeout disk read=.*
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+##TEST_AWKPASSED: timeout disk read=.*
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+##TEST_AWKPASSED: timeout disk read=.*
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FIXED READ (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+FIXED MODE READ FOLLOW WITH TIMEOUT UTF-16 NULL FILE
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW FIXED READ ICHSET=UTF-16 (KEY=key IV=[a-zA-Z0-9]* )?
+##TEST_AWKPASSED: timeout disk read=.*
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+##TEST_AWKPASSED: timeout disk read=.*
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+##TEST_AWKPASSED: timeout disk read=.*
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FIXED READ ICHSET=UTF-16(B|L)E (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+FIXED MODE READ FOLLOW WITH TIMEOUT UTF-8 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW FIXED READ (KEY=key IV=[a-zA-Z0-9]* )?
+setting ^a to td4 to have writer add utf8_timeout_no_bom to utftimeoutfile after a 5 sec delay
+##TEST_AWKPASSED: timeout disk read=.*
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FIXED READ (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+FIXED MODE READ FOLLOW WITH TIMEOUT UTF-8 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW FIXED READ (KEY=key IV=[a-zA-Z0-9]* )?
+setting ^a to td5 to have writer add utf8_timeout_just_bom to utftimeoutfile after a 5 sec delay
+then add utf8_timeout_no_bom to utftimeoutfile after a 5 sec delay
+##TEST_AWKPASSED: timeout disk read=.*
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FIXED READ (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+FIXED MODE READ FOLLOW WITH TIMEOUT UTF-16 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW FIXED READ ICHSET=UTF-16 (KEY=key IV=[a-zA-Z0-9]* )?
+setting ^a to td6 to have writer add utf16_timeout_just_bom to utftimeoutfile after a 5 sec delay
+then add utf16_timeout_no_bom to utftimeoutfile after a 5 sec delay
+##TEST_AWKPASSED: timeout disk read=.*
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FIXED READ ICHSET=UTF-16(B|L)E (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+FIXED MODE READ FOLLOW WITH TIMEOUT UTF-8 WITH NO DELAY BETWEEN BOM AND DATA
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW FIXED READ (KEY=key IV=[a-zA-Z0-9]* )?
+setting ^a to cp5 to have writer copy utf8_timeout_with_bom to utftimeoutfile
+##TEST_AWKPASSED: timeout disk read=.*
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FIXED READ (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+FIXED MODE READ FOLLOW WITH TIMEOUT UTF-16 WITH NO DELAY BETWEEN BOM AND DATA
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW FIXED READ ICHSET=UTF-16 (KEY=key IV=[a-zA-Z0-9]* )?
+setting ^a to cp6 to have writer copy utf16_timeout_with_bom to utftimeoutfile
+##TEST_AWKPASSED: timeout disk read=.*
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FIXED READ ICHSET=UTF-16(B|L)E (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+FIXED MODE READ FOLLOW WITH TIMEOUT UTF-8 WITH BOM ONLY
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW FIXED READ (KEY=key IV=[a-zA-Z0-9]* )?
+setting ^a to cp7 to have writer copy utf8_timeout_just_bom to utftimeoutfile
+##TEST_AWKPASSED: timeout disk read=.*
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FIXED READ (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+FIXED MODE READ FOLLOW WITH TIMEOUT UTF-16 WITH BOM ONLY
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FOLLOW FIXED READ ICHSET=UTF-16 (KEY=key IV=[a-zA-Z0-9]* )?
+setting ^a to cp8 to have writer copy utf16_timeout_just_bom to utftimeoutfile
+##TEST_AWKPASSED: timeout disk read=.*
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##TEST_AWKutftimeoutfile OPEN RMS FIXED READ ICHSET=UTF-16(B|L)E (KEY=key IV=[a-zA-Z0-9]* )?
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+setting ^a to timeoutrdone
+###################################################################
+**************************** gtm8109 in UTF mode ****************************
+###################################################################
+UTF-8 data:
+x= ABCDEFGHIՇABCDEFGHIՇABCDEFGHIՇABCDEFGHIՇ length(x)= 40 $test= 1
+x= ABCDEFGHIՇ length(x)= 10 $test= 1
+x= ABCDEFGHIՇABCDEFGHIՇABCDEFGHIՇABCDEFGHIՇABCDEFGHIՇ length(x)= 50 $test= 0
+x= 65 length(x)= 2 $test= 1
+x= -1 length(x)= 2 $test= 0
+UTF-16 data:
+x= ABCDEFGHIՇABCDEFGHIՇABCDEFGHIՇABCDEFGHIՇ length(x)= 40 $test= 1
+x= ABCDEFGHIՇ length(x)= 10 $test= 1
+x= ABCDEFGHIՇABCDEFGHIՇABCDEFGHIՇABCDEFGHIՇABCDEFGHIՇ length(x)= 50 $test= 0
+x= 16640 length(x)= 5 $test= 1
+x= -1 length(x)= 2 $test= 0
+##ALLOW_OUTPUT NON_UTF8
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

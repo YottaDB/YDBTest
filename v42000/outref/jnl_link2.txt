@@ -1,0 +1,98 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+First Journal file names are:
+a.mjl
+mumps.mjl
+
+GTM>
+
+GTM>
+
+GTM>
+Enable journaling for mumps.dat with : file=defjnl2.mjl
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+Enable journaling for a.dat with : file=ajnl2.mjl
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/a.dat is now ON
+
+GTM>
+
+GTM>
+
+GTM>
+Enable journaling for region DEFAULT with : file=defjnl3.mjl
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+Enable journaling for region AREG with : file=ajnl3.mjl
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+
+GTM>
+
+GTM>
+
+GTM>
+Verify link:
+ Prev journal file name ##TEST_PATH##/defjnl2.mjl
+ Prev journal file name ##TEST_PATH##/ajnl2.mjl
+ Prev journal file name ##TEST_PATH##/mumps.mjl
+ Prev journal file name ##TEST_PATH##/a.mjl
+ Prev journal file name 
+ Prev journal file name 
+
+GTM>
+
+GTM>
+
+GTM>
+prev_jnl_file name changed from ##TEST_PATH##/defjnl2.mjl to NULL
+
+GTM>
+prev_jnl_file name changed from ##TEST_PATH##/ajnl2.mjl to NULL
+
+GTM>
+Verify link:
+ Prev journal file name 
+ Prev journal file name 
+ Prev journal file name ##TEST_PATH##/mumps.mjl
+ Prev journal file name ##TEST_PATH##/a.mjl
+ Prev journal file name 
+ Prev journal file name 
+
+GTM>
+
+GTM>
+
+GTM>
+%GTM-I-PREVJNLLINKSET, Previous generation journal file name is changed from NULL to ##TEST_PATH##/mumps.mjl
+
+GTM>
+%GTM-I-PREVJNLLINKSET, Previous generation journal file name is changed from NULL to ##TEST_PATH##/a.mjl
+
+GTM>
+Verify link:
+ Prev journal file name ##TEST_PATH##/mumps.mjl
+ Prev journal file name ##TEST_PATH##/a.mjl
+ Prev journal file name ##TEST_PATH##/mumps.mjl
+ Prev journal file name ##TEST_PATH##/a.mjl
+ Prev journal file name 
+ Prev journal file name 
+Enable journaling for mumps.dat with : file=./jnl1.jnl2/jnl1.jnl2
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+Check the "Prev journal" value in the  journal header
+ Prev journal file name ##TEST_PATH##/defjnl3.mjl
+Enable journaling for mumps.dat with : file=./jnl1.jnl2/jnl1.mjl
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+Check the "Prev journal" value in the  journal header
+ Prev journal file name ##TEST_PATH##/jnl1.jnl2/jnl1.jnl2
+Enable journaling for mumps.dat with : file=##TEST_PATH##/jnl1.jnl2/jnl1.mjl
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/jnl1.jnl2/jnl1.mjl is renamed to ##TEST_PATH##/jnl1.jnl2/jnl1.mjl_##TIMESTAMP##
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+Check the "Prev journal" value in the  journal header
+##TEST_AWK Prev journal file name ##TEST_PATH##/jnl1.jnl2/jnl1.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

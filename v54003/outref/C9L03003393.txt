@@ -1,0 +1,46 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+
+###################################################################
+Increase the maximum key size in AREG, BREG and CREG
+###################################################################
+
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> Error:  already in region: AREG
+DSE> DSE> 
+File  	##TEST_PATH##/b.dat
+Region	BREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/c.dat
+Region	CREG
+
+DSE> DSE> 
+
+Testing WRITE...
+
+Testing $GET...
+
+Testing KILL...
+
+Testing $order...
+
+Testing $zprevious...
+!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGH
+
+Testing $DATA...
+
+Testing SET...
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

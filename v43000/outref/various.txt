@@ -1,0 +1,340 @@
+Beginning 'various' tests
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+c6010103 beginning
+
+PASS from c6010103
+GTM>
+maxindr1 starting
+X1="vara"
+X10="@X9"
+X100="@X99"
+X101="@X100"
+X11="@X10"
+X12="@X11"
+X13="@X12"
+X14="@X13"
+X15="@X14"
+X16="@X15"
+X17="@X16"
+X18="@X17"
+X19="@X18"
+X2="@X1"
+X20="@X19"
+X21="@X20"
+X22="@X21"
+X23="@X22"
+X24="@X23"
+X25="@X24"
+X26="@X25"
+X27="@X26"
+X28="@X27"
+X29="@X28"
+X3="@X2"
+X30="@X29"
+X31="@X30"
+X32="@X31"
+X33="@X32"
+X34="@X33"
+X35="@X34"
+X36="@X35"
+X37="@X36"
+X38="@X37"
+X39="@X38"
+X4="@X3"
+X40="@X39"
+X41="@X40"
+X42="@X41"
+X43="@X42"
+X44="@X43"
+X45="@X44"
+X46="@X45"
+X47="@X46"
+X48="@X47"
+X49="@X48"
+X5="@X4"
+X50="@X49"
+X51="@X50"
+X52="@X51"
+X53="@X52"
+X54="@X53"
+X55="@X54"
+X56="@X55"
+X57="@X56"
+X58="@X57"
+X59="@X58"
+X6="@X5"
+X60="@X59"
+X61="@X60"
+X62="@X61"
+X63="@X62"
+X64="@X63"
+X65="@X64"
+X66="@X65"
+X67="@X66"
+X68="@X67"
+X69="@X68"
+X7="@X6"
+X70="@X69"
+X71="@X70"
+X72="@X71"
+X73="@X72"
+X74="@X73"
+X75="@X74"
+X76="@X75"
+X77="@X76"
+X78="@X77"
+X79="@X78"
+X8="@X7"
+X80="@X79"
+X81="@X80"
+X82="@X81"
+X83="@X82"
+X84="@X83"
+X85="@X84"
+X86="@X85"
+X87="@X86"
+X88="@X87"
+X89="@X88"
+X9="@X8"
+X90="@X89"
+X91="@X90"
+X92="@X91"
+X93="@X92"
+X94="@X93"
+X95="@X94"
+X96="@X95"
+X97="@X96"
+X98="@X97"
+X99="@X98"
+fltmax=5
+i=100
+intmax=5
+j=101
+lhs="X101"
+newa="ROOT"
+newa(1)="VAL1"
+newa(2)="VAL2"
+newa(3)="VAL3"
+newa(4)="VAL4"
+newa(5)="VAL5"
+newa(6)=63
+newa(7)=73.5
+newa(8)=84
+newa(9)=94.5
+newa(10)=105
+newa(11)=11
+newa(12)=12
+newa(13)=13
+newa(14)=14
+newa(15)=15
+nummax=5
+rhs="@X100"
+vara="ROOT"
+vara(1)="VAL1"
+vara(2)="VAL2"
+vara(3)="VAL3"
+vara(4)="VAL4"
+vara(5)="VAL5"
+vara(6)=63
+vara(7)=73.5
+vara(8)=84
+vara(9)=94.5
+vara(10)=105
+vara(11)=11
+vara(12)=12
+vara(13)=13
+vara(14)=14
+vara(15)=15
+
+GTM>
+testack starting
+Ground zero level:
+ .. $stack: 1  $estack: 1
+Entering Routine A
+ .. $stack: 2  $estack: 2
+Newing $ESTACK in A
+ .. $stack: 2  $estack: 0
+Entering Routine B
+ .. $stack: 3  $estack: 1
+Newing $ESTACK in B
+ .. $stack: 3  $estack: 0
+Back from B in A:
+ .. $stack: 2  $estack: 0
+Back in main - zero level:
+ .. $stack: 1  $estack: 1
+
+GTM>
+%GTM-E-LABELMISSING, Label referenced but not defined: flob
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/trterr.m
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+%GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: fail
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/trterr.m
+%GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: pass
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/trterr.m
+##ALLOW_OUTPUT HOST_ALL
+%GTM-E-LABELMISSING, Label referenced but not defined: flob
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/trterr.m
+trterr starting
+
+150373202,trterr+11^trterr,%GTM-E-LABELUNKNOWN, Label referenced but not defined
+,M13,Z150373202,
+
+GTM>
+tstidev starting
+Done!
+
+GTM>
+Writing new file
+Beginning reading of file
+Everything worked
+
+GTM>
+setdole starting
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+
+GTM>
+tstsfex starting
+Passed all tests
+
+GTM>
+
+GTM>
+tstoflow starting
+150373738,A+1^tstoflow,%GTM-E-STACKCRIT, Stack space critical
+%GTM-F-STACKOFLOW, Stack overflow
+'various' tests complete
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

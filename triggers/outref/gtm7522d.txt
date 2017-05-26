@@ -1,0 +1,26 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+----------------------------------------------------------------
+# Test for MREP <imptp_process_terminates> (spurious trigger-already-exists error from trigger inserts)
+Added SET trigger on ^SAMPLE named myname1
+Added SET trigger on ^SAMPLE named myname2
+Added SET trigger on ^SAMPLE named myname3
+Added SET trigger on ^SAMPLE named myname4
+Added SET trigger on ^SAMPLE named myname5
+Added SET trigger on ^SAMPLE named myname6
+Added SET trigger on ^SAMPLE named myname7
+Added SET trigger on ^SAMPLE named myname8
+Added SET trigger on ^SAMPLE named myname9
+Added SET trigger on ^SAMPLE named myname10

@@ -1,0 +1,45 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+d ^%GI
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+; DSE EXTRACT
+; GLO
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+OK <Yes>? 
+
+^word     ^word2    ^word3    ^word4    ^word5    ^word6    
+
+Restored 7 nodes in 6 globals.
+GTM>
+
+Verifying globals:
+GTM>
+
+d ^%GD
+
+Global Directory
+
+Global ^
+^word     ^word2    ^word3    ^word4    ^word5    ^word6    
+Total of 6 globals.
+
+Global ^
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

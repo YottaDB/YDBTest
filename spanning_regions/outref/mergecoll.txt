@@ -1,0 +1,93 @@
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/c.dat
+Created file ##TEST_PATH##/mumps.dat
+----------------------------------
+Testing with ^a coll = 0 : ^b coll = 0,!
+----------------------------------
+----------------------------------
+Testing with ^a coll = 0 : ^b coll = 2,!
+----------------------------------
+----------------------------------
+Testing with ^a coll = 1 : ^b coll = 0,!
+----------------------------------
+----------------------------------
+Testing with ^a coll = 1 : ^b coll = 2,!
+----------------------------------
+Cat output of mergecoll_0_0.txt
+zwrite ^a
+^a(1)=900
+^a(1,"")=100
+^a(1,2,3,"dfg")=300
+^a(1,2,"abc")=200
+^a("efgh")=1000
+
+# kill ^b ; merge ^b=^a ; zwrite ^b
+^b(1)=900
+^b(1,"")=100
+^b(1,2,3,"dfg")=300
+^b(1,2,"abc")=200
+^b("efgh")=1000
+
+# kill ^c ; merge ^c=^a ; zwrite ^c
+# Since CREG does not allow null subscripts, the below merge shoud error out
+STAT=mergecoll+16^mergecoll,%GTM-E-NULSUBSC, Null subscripts are not allowed for region: CREG,%GTM-I-GVIS, 		Global variable: ^c(1,"")
+^c(1)=900
+
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+# kill ^c ; merge ^c(1,2)=^a ; zwrite ^c
+# ^c(1,2) maps to DEFAULT, which allows null subscripts. So the below merge should be fine
+^c(1,2,1)=900
+^c(1,2,1,"")=100
+^c(1,2,1,2,3,"dfg")=300
+^c(1,2,1,2,"abc")=200
+^c(1,2,"efgh")=1000
+
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+# kill ^b ; merge ^b("xyz")=^a ; zwrite ^b
+^b("xyz",1)=900
+^b("xyz",1,"")=100
+^b("xyz",1,2,3,"dfg")=300
+^b("xyz",1,2,"abc")=200
+^b("xyz","efgh")=1000
+
+# kill ^b ; merge ^b("xyz")=^a(1) ; zwrite ^b
+^b("xyz")=900
+^b("xyz","")=100
+^b("xyz",2,3,"dfg")=300
+^b("xyz",2,"abc")=200
+
+# kill ^a ; merge ^a("efgh")=^b ; zwrite ^a
+^a("efgh","xyz")=900
+^a("efgh","xyz","")=100
+^a("efgh","xyz",2,3,"dfg")=300
+^a("efgh","xyz",2,"abc")=200
+
+# kill ^a ; merge ^a("efgh")=^b("xyz",2) ; zwrite ^a
+^a("efgh",3,"dfg")=300
+^a("efgh","abc")=200
+# Expect ZERO diff in the below
+diff mergecoll_0_0.txt mergecoll_0_2.txt
+diff mergecoll_0_0.txt mergecoll_1_0.txt
+diff mergecoll_0_0.txt mergecoll_1_2.txt
+unset echo
+# At this point c.dat has collation 2 and ^col is already set above.
+# gde add -gblname c -col=1 followed by set ^col should fail with  ACTCOLLMISMTCH
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+GTM>
+%GTM-E-ACTCOLLMISMTCH, Global ^col inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/c.dat contains different collation sequence #2 for this global
+
+GTM>
+%GTM-E-ACTCOLLMISMTCH, Global ^col inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/c.dat contains different collation sequence #2 for this global
+
+GTM>
+%GTM-E-ACTCOLLMISMTCH, Global ^col inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/c.dat contains different collation sequence #2 for this global
+
+GTM>

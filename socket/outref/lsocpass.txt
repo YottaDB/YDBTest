@@ -1,0 +1,179 @@
+Got TCP connections
+##SUSPEND_OUTPUT HOST_HP-UX_IA64
+Test ACCEPT badpid
+Got LOCAL connection
+%GTM-E-SOCKPASS, Socket pass failed
+##TEST_AWK%SYSTEM-E-ENO[0-9]*, .*
+Invalid PID on /accept produced SOCKPASS, as expected
+Test PASS badpid
+Got LOCAL connection
+Invalid PID on /pass produced PEERPIDMISMATCH, as expected
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+Test no badpid
+Got LOCAL connection
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+passersockdev OPEN SOCKET TOTAL=2 CURRENT=1 
+##TEST_AWK        SOCKET\[0\]=llistener DESC=[0-9]+ LISTENING PASSIVE  TRAP  REMOTE= LOCAL=local.socket 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[1\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE= LOCAL=local.socket 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 
+                DELIMITER $C(10) 
+socketpool OPEN SOCKET TOTAL=22 CURRENT=21 
+##TEST_AWK        SOCKET\[0\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[1\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[2\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[3\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[4\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[5\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[6\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[7\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[8\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[9\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[10\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[11\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[12\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[13\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[14\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[15\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[16\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[17\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[18\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[19\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[20\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE= LOCAL=local.socket 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[21\]=ssh DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@22 LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ NODELIMITER 
+Passed TCP sockets
+Clients done
+
+Testing Accept Timeout
+Got LOCAL connection
+Accepter done
+
+lsocaccept.out:
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+acceptersockdev OPEN SOCKET TOTAL=1 CURRENT=0 
+##TEST_AWK        SOCKET\[0\]=accepter DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE= LOCAL=local.socket 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 
+                DELIMITER $C(10) 
+##TEST_AWKhandles="passed1\|h[0-9]+\|passed3\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+|h[0-9]+|ssh"
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+acceptersockdev OPEN SOCKET TOTAL=1 CURRENT=0 
+##TEST_AWK        SOCKET\[0\]=accepter DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE= LOCAL=local.socket 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 
+                DELIMITER $C(10) 
+socketpool OPEN SOCKET TOTAL=22 CURRENT=21 
+##TEST_AWK        SOCKET\[0\]=passed1 DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[1\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[2\]=passed3 DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[3\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[4\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[5\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[6\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[7\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[8\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[9\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[10\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[11\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[12\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[13\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[14\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[15\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[16\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[17\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[18\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[19\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[20\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE= LOCAL=local.socket 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[21\]=ssh DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@22 LOCAL=[^@]+@[0-9]+ 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWKSSH Server Id: SSH-([^-]*)-([^ ]*).*
+Correct messages received from all clients
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+acceptersockdev OPEN SOCKET TOTAL=1 CURRENT=0 
+##TEST_AWK        SOCKET\[0\]=accepter DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE= LOCAL=local.socket 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 
+                DELIMITER $C(10) 
+socketpool OPEN SOCKET TOTAL=0 CURRENT=-1 
+
+##SUSPEND_OUTPUT HOST_HP-UX_IA64
+----------
+Error PEERPIDMISMATCH seen in lsocaccept_abad.out as expected:
+Invalid PID on /accept produced PEERPIDMISMATCH, as expected
+----------
+----------
+Error TEST-E-NOTPASSED seen in lsocaccept_pbad.out as expected:
+TEST-E-NOTPASSED, got SOCKACCEPT, SOCKNOTPASSED, or CREDNOTPASSED, giving up
+----------
+##ALLOW_OUTPUT HOST_HP-UX_IA64
+----------
+Error accept timeout in accepter seen in lsocaccept_to.out as expected:
+TEST-E-timeout, accept timeout in accepter
+----------
+Done.

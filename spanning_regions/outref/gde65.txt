@@ -1,0 +1,46 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gde65.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gde65.cmd
+
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ MODELNUM($C(0):"")                 STRING
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               MODELNUM($C(0))                  REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ MODELNUM($C(0))                 MODELNUM0                        REG = STRING
+                                                                  SEG = NONE
+                                                                  FILE = NONE
+ MODELNUM0                       ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+%GDE-E-OBJDUP, Name MODELNUM($C(0):"") already exists
+
+GDE> 
+%GDE-I-MAPBAD, Region STRING for Name MODELNUM($C(0):"") does not exist
+%GDE-I-STDNULLCOLLREQ, Region STRING needs Standard Null Collation enabled because global ^MODELNUM spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^MODELNUM spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-I-NOEXIT, Cannot exit because of verification failure
+
+GDE> 
+%GDE-I-MAPBAD, Region STRING for Name MODELNUM($C(0):"") does not exist
+%GDE-I-STDNULLCOLLREQ, Region STRING needs Standard Null Collation enabled because global ^MODELNUM spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^MODELNUM spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-E-VERIFY, Verification FAILED

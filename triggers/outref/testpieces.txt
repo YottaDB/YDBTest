@@ -1,0 +1,192 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+###################################################################
+The trigger pdmatch#1# is doing S
+	$Reference:^pdmatch(1)	$Test:1
+	$ZTDAta :0	$ZTVAlue:a|b|c	$ZTDElim:|	$ZTUPdate:1,2,3
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^pdmatch#1#	init+5^testpieces	testpieces+2^testpieces
+The trigger pdmatch#2# is doing S
+	$Reference:^pdmatch(2)	$Test:1
+	$ZTDAta :0	$ZTVAlue:a|b|c	$ZTDElim:|	$ZTUPdate:1,3
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^pdmatch#2#	init+6^testpieces	testpieces+2^testpieces
+The trigger pdmatch#1# is doing S
+	$Reference:^pdmatch(3)	$Test:1
+	$ZTDAta :0	$ZTVAlue:a|b|c	$ZTDElim:|	$ZTUPdate:1,2,3
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^pdmatch#1#	init+7^testpieces	testpieces+2^testpieces
+The trigger pdmatch#1# is doing S
+	$Reference:^pdmatch(4)	$Test:1
+	$ZTDAta :0	$ZTVAlue:a|b|c|||	$ZTDElim:|	$ZTUPdate:1,2,3,4,5,6
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^pdmatch#1#	init+8^testpieces	testpieces+2^testpieces
+The trigger pdmatch#1# is doing S
+	$Reference:^pdmatch(5)	$Test:1
+	$ZTDAta :0	$ZTVAlue:a||	$ZTDElim:|	$ZTUPdate:1,2,3
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^pdmatch#1#	init+9^testpieces	testpieces+2^testpieces
+The trigger pdmatch#3# is doing S
+	$Reference:^pdmatch(6)	$Test:1
+	$ZTDAta :0	$ZTVAlue:a|b|c|d	$ZTDElim:|	$ZTUPdate:3,4
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^pdmatch#3#	init+10^testpieces	testpieces+2^testpieces
+The trigger pdmatch#3# is doing S
+	$Reference:^pdmatch(7)	$Test:1
+	$ZTDAta :0	$ZTVAlue:a|b|c|d	$ZTDElim:|	$ZTUPdate:3,4
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^pdmatch#3#	init+11^testpieces	testpieces+2^testpieces
+###################################################################
+^pdmatch(1)="a|b|c"
+^pdmatch(2)="a|b|c"
+^pdmatch(3)="a|b|c"
+^pdmatch(4)="a|b|c|||"
+^pdmatch(5)="a||"
+^pdmatch(6)="a|b|c|d"
+^pdmatch(7)="a|b|c|d"
+Show non-firing of triggers because pieces are not matched
+^pdmatch(1)="a|b|c"
+^pdmatch(2)="a|101|c"
+^pdmatch(3)="a|b|c"
+^pdmatch(4)="a|b|c|||"
+^pdmatch(5)="a||"
+^pdmatch(6)="101|b|c|d"
+^pdmatch(7)="a|101|c|d"
+Show firing of triggers because pieces are matcheed
+The trigger pdmatch#1# is doing S
+	$Reference:^pdmatch(1)	$Test:1
+	$ZTDAta :1	$ZTOLdval:a|b|c	$ZTVAlue:a|e|c	$ZTDElim:|	$ZTUPdate:2
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^pdmatch#1#	matchpiece2delim+9^testpieces	testpieces+3^testpieces
+The trigger pdmatch#4# is doing ZK
+	$Reference:^pdmatch(1)	$Test:1
+	$ZTDAta :1	$ZTOLdval:a|e|c
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^pdmatch#4#	matchpiece2delim+10^testpieces	testpieces+3^testpieces
+The trigger pdmatch#1# is doing S
+	$Reference:^pdmatch(1)	$Test:1
+	$ZTDAta :0	$ZTVAlue:a|b|c	$ZTDElim:|	$ZTUPdate:1,2,3
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^pdmatch#1#	matchpiece2delim+12^testpieces	testpieces+3^testpieces
+The trigger pdmatch#2# is doing S
+	$Reference:^pdmatch(2)	$Test:1
+	$ZTDAta :1	$ZTOLdval:a|101|c	$ZTVAlue:a|1|2|d	$ZTDElim:|	$ZTUPdate:3,4
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^pdmatch#2#	matchpiece2delim+13^testpieces	testpieces+3^testpieces
+The trigger pdmatch#1# is doing S
+	$Reference:^pdmatch(3)	$Test:1
+	$ZTDAta :1	$ZTOLdval:a|b|c	$ZTVAlue:a|1|2|d	$ZTDElim:|	$ZTUPdate:2,3,4
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^pdmatch#1#	matchpiece2delim+14^testpieces	testpieces+3^testpieces
+The trigger pdmatch#1# is doing S
+	$Reference:^pdmatch(4)	$Test:1
+	$ZTDAta :1	$ZTOLdval:a|b|c|||	$ZTVAlue:a|||e||	$ZTDElim:|	$ZTUPdate:2,3,4
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^pdmatch#1#	matchpiece2delim+15^testpieces	testpieces+3^testpieces
+The trigger pdmatch#1# is doing S
+	$Reference:^pdmatch(5)	$Test:1
+	$ZTDAta :1	$ZTOLdval:a||	$ZTVAlue:|b|	$ZTDElim:|	$ZTUPdate:1,2
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^pdmatch#1#	matchpiece2delim+16^testpieces	testpieces+3^testpieces
+The trigger pdmatch#3# is doing S
+	$Reference:^pdmatch(6)	$Test:1
+	$ZTDAta :1	$ZTOLdval:101|b|c|d	$ZTVAlue:1|2|3|4	$ZTDElim:|	$ZTUPdate:3,4
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^pdmatch#3#	matchpiece2delim+17^testpieces	testpieces+3^testpieces
+The trigger pdmatch#3# is doing S
+	$Reference:^pdmatch(7)	$Test:1
+	$ZTDAta :1	$ZTOLdval:a|101|c|d	$ZTVAlue:a|b|c|d||	$ZTDElim:|	$ZTUPdate:5,6
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^pdmatch#3#	matchpiece2delim+18^testpieces	testpieces+3^testpieces
+^pdmatch(1)="a|b|c"
+^pdmatch(2)="a|1|2|d"
+^pdmatch(3)="a|1|2|d"
+^pdmatch(4)="a|||e||"
+^pdmatch(5)="|b|"
+^pdmatch(6)="1|2|3|4"
+^pdmatch(7)="a|b|c|d||"
+###################################################################
+Testing piece and delim via ZTUPdate
+^ztupdate="1026.2.3.unexpected.this.is.50.6.7.8.9.10.11"
+^fired("allrange#")=4
+^fired("allrange#",1,"$ZTOL")=""
+^fired("allrange#",1,"$ZTUP")="1,2,3,4,5,6,7,8,9,10,11"
+^fired("allrange#",1,"$ZTVA")="2.2.3.4.5.6.7.8.9.10.11"
+^fired("allrange#",1,"zzzzz")="================================"
+^fired("allrange#",2,"$ZTOL")="2.2.3.4.5.6.7.8.9.10.11"
+^fired("allrange#",2,"$ZTUP")=5
+^fired("allrange#",2,"$ZTVA")="3.2.3.4.50.6.7.8.9.10.11"
+^fired("allrange#",2,"zzzzz")="================================"
+^fired("allrange#",3,"$ZTOL")="3.2.3.4.50.6.7.8.9.10.11"
+^fired("allrange#",3,"$ZTUP")=1
+^fired("allrange#",3,"$ZTVA")="1025.2.3.4.50.6.7.8.9.10.11"
+^fired("allrange#",3,"zzzzz")="================================"
+^fired("allrange#",4,"$ZTOL")="1025.2.3.4.50.6.7.8.9.10.11"
+^fired("allrange#",4,"$ZTUP")="4,5,6,7,8,9,10,11,12,13"
+^fired("allrange#",4,"$ZTVA")="1026.2.3.unexpected.this.is.50.6.7.8.9.10.11"
+^fired("allrange#",4,"zzzzz")="================================"
+^fired("highrange#")=2
+^fired("highrange#",1,"$ZTOL")=""
+^fired("highrange#",1,"$ZTUP")="10,11"
+##TEST_AWK.fired."highrange#",1,".ZTVA".="..2.3.4.5.6.7.8.9.10.11"
+^fired("highrange#",1,"zzzzz")="================================"
+^fired("highrange#",2,"$ZTOL")="1025.2.3.4.50.6.7.8.9.10.11"
+^fired("highrange#",2,"$ZTUP")="10,11,12,13"
+##TEST_AWK.fired."highrange#",2,".ZTVA".="102..2.3.unexpected.this.is.50.6.7.8.9.10.11"
+^fired("highrange#",2,"zzzzz")="================================"
+^fired("limitedrange#")=2
+^fired("limitedrange#",1,"$ZTOL")=""
+^fired("limitedrange#",1,"$ZTUP")="2,3,7,8,9"
+##TEST_AWK.fired."limitedrange#",1,".ZTVA".="..2.3.4.5.6.7.8.9.10.11"
+^fired("limitedrange#",1,"zzzzz")="================================"
+^fired("limitedrange#",2,"$ZTOL")="1025.2.3.4.50.6.7.8.9.10.11"
+^fired("limitedrange#",2,"$ZTUP")="7,8,9"
+##TEST_AWK.fired."limitedrange#",2,".ZTVA".="102..2.3.unexpected.this.is.50.6.7.8.9.10.11"
+^fired("limitedrange#",2,"zzzzz")="================================"
+PASS
+###################################################################
+Any trigger named 'nofire*' should not fire
+PASS
+Reset - kill ^a and test again
+PASS
+###################################################################
+^fired("willfire#")=6
+^fired("willfire#",1)="willfire#.executions=1.$reference=^a.$ZLEVEL=4.$TLEVEL=1.$ZTLEVEL=1.$ZTVALUE=56.$ZTDElim=|.$ZTVALUE=1"
+^fired("willfire#",2)="willfire#.executions=2.$reference=^a.$ZLEVEL=4.$TLEVEL=1.$ZTLEVEL=1.$ZTVALUE=5|6.$ZTDElim=|.$ZTVALUE=1,2"
+^fired("willfire#",3)="willfire#.executions=3.$reference=^a.$ZLEVEL=4.$TLEVEL=1.$ZTLEVEL=1.$ZTVALUE=5.$ZTDElim=|.$ZTVALUE=2"
+^fired("willfire#",4)="willfire#.executions=4.$reference=^a.$ZLEVEL=4.$TLEVEL=1.$ZTLEVEL=1.$ZTVALUE=99.$ZTDElim=|.$ZTVALUE=1"
+^fired("willfire#",5)="willfire#.executions=5.$reference=^a.$ZLEVEL=4.$TLEVEL=1.$ZTLEVEL=1.$ZTVALUE=5|6.$ZTDElim=|.$ZTVALUE=1,2"
+^fired("willfire#",6)="willfire#.executions=6.$reference=^a.$ZLEVEL=4.$TLEVEL=1.$ZTLEVEL=1.$ZTVALUE=5|6.$ZTDElim=|.$ZTVALUE=1,2"
+^fired("willfire2#")=6
+^fired("willfire2#",1)="willfire2#.executions=1.$reference=^a.$ZLEVEL=4.$TLEVEL=1.$ZTLEVEL=1.$ZTVALUE=56.$ZTDElim=:.$ZTVALUE=1"
+^fired("willfire2#",2)="willfire2#.executions=2.$reference=^a.$ZLEVEL=4.$TLEVEL=1.$ZTLEVEL=1.$ZTVALUE=5|6.$ZTDElim=:.$ZTVALUE=1"
+^fired("willfire2#",3)="willfire2#.executions=3.$reference=^a.$ZLEVEL=4.$TLEVEL=1.$ZTLEVEL=1.$ZTVALUE=5.$ZTDElim=:.$ZTVALUE=1"
+^fired("willfire2#",4)="willfire2#.executions=4.$reference=^a.$ZLEVEL=4.$TLEVEL=1.$ZTLEVEL=1.$ZTVALUE=99.$ZTDElim=:.$ZTVALUE=1"
+^fired("willfire2#",5)="willfire2#.executions=5.$reference=^a.$ZLEVEL=4.$TLEVEL=1.$ZTLEVEL=1.$ZTVALUE=5|6.$ZTDElim=:.$ZTVALUE=1"
+^fired("willfire2#",6)="willfire2#.executions=6.$reference=^a.$ZLEVEL=4.$TLEVEL=1.$ZTLEVEL=1.$ZTVALUE=5|6.$ZTDElim=:.$ZTVALUE=1"
+###################################################################
+###################################################################
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT NON_REPLIC

@@ -1,0 +1,3193 @@
+GDE Commands for standard null collation
+Default value of standard null collation is false
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 ALWAYS     Y    N   DISABLED DISABLED ENABLED
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ BREG                            BSEG                               0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 ALWAYS     Y    N   DISABLED DISABLED ENABLED
+ BREG                            BSEG                               0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ CREG                            CSEG                               0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+GDE> 
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Now create databases
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/c.dat
+Created file ##TEST_PATH##/mumps.dat
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File            ##TEST_PATH##/a.dat
+Region          AREG
+##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
+  Access method                          BG  Global Buffers                1024
+  Reserved Bytes                          0  Block size (in bytes)         1024
+  Maximum record size                   256  Starting VBN                   513
+  Maximum key size                       64  Total blocks            0x00000065
+  Null subscripts                    ALWAYS  Free blocks             0x00000062
+  Standard Null Collation             FALSE  Free space              0x00000000
+  Last Record Backup     0x0000000000000001  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             1
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  In critical section            0x00000000  Timers pending                   0
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Freeze match                   0x00000000  Flush trigger                  960
+  Current transaction    0x0000000000000001  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+  Create in progress                  FALSE  Modified cache blocks            0
+  Reference count                         1  Wait Disk                        0
+  Journal State                    DISABLED
+  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
+  Mutex Queue Slots                    1024  KILLs in progress                0
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
+  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
+  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+DSE> DSE> 
+File            ##TEST_PATH##/a.dat
+Region          AREG
+##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
+  Access method                          BG  Global Buffers                1024
+  Reserved Bytes                          0  Block size (in bytes)         1024
+  Maximum record size                   256  Starting VBN                   513
+  Maximum key size                       64  Total blocks            0x00000065
+  Null subscripts                    ALWAYS  Free blocks             0x00000062
+  Standard Null Collation              TRUE  Free space              0x00000000
+  Last Record Backup     0x0000000000000001  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             1
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  In critical section            0x00000000  Timers pending                   0
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Freeze match                   0x00000000  Flush trigger                  960
+  Current transaction    0x0000000000000001  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+  Create in progress                  FALSE  Modified cache blocks            0
+  Reference count                         1  Wait Disk                        0
+  Journal State                    DISABLED
+  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
+  Mutex Queue Slots                    1024  KILLs in progress                0
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
+  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
+  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+DSE> DSE  dump output 
+
+GTM>
+
+GTM>
+  Null subscripts                    ALWAYS  Free blocks             0x00000060
+  Standard Null Collation              TRUE  Free space              0x00000000
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+Block 3   Size 72   Level 0   TN 5 V6
+
+Rec:1  Blk 3  Off 10  Size 11  Cmpc 0  Key ^aglobalv("")
+##TEST_AWK      10 : . .*  0 .* 61 67 6C 6F 62 61 6C 76  0  1  0  0 31         .
+##TEST_AWK           .  .  . .* a  g  l  o  b  a  l  v  .  .  .  .  1         .
+
+Rec:2  Blk 3  Off 21  Size D  Cmpc 9  Key ^aglobalv(1)
+##TEST_AWK      21 : . .*  9 .* BF 11  0  0 39 34 37 35 36                     .
+##TEST_AWK           .  .  .  .  .  .  .  .  .  9  4  7  5  6                     .
+
+Rec:3  Blk 3  Off 2E  Size 16  Cmpc C  Key ^aglobalv(1,"","str")
+##TEST_AWK      2E : . .* C .*  1  0 FF 73 74 72  0  0 6D 69 78 65 64 20 66 69.
+##TEST_AWK           .  .  .  .  .  .  .  .  s  t  r  .  .  m  i  x  e  d     f  i.
+      42 : | 6C 6C                                                      |
+           |  l  l                                                      |
+
+Rec:4  Blk 3  Off 44  Size E  Cmpc C  Key ^aglobalv(1,"hi")
+##TEST_AWK      44 : .* C .* FF 68 69  0  0 68 65 6C 6C 6F                  .
+##TEST_AWK           .  .  .  .  .  .  h  i  .  .  h  e  l  l  o                  .
+
+Rec:5  Blk 3  Off 52  Size 20  Cmpc 9  Key ^aglobalv("str")
+##TEST_AWK      52 : .*  9 67 FF 73 74 72  0  0 69 61 6D 20 61 20 73 74 72 69.
+##TEST_AWK           .* .  .  g  .  s  t  r  .  .  i  a  m     a     s  t  r  i.
+      66 : | 6E 67 20 73 75 62 73 63 72 69 70 74                        |
+           |  n  g     s  u  b  s  c  r  i  p  t                        |
+
+DSE> TESTING $ORDER/$NEXT/$ZPREVIOUS/$QUERY functions
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                            0      256    64 ALWAYS     Y    N   DISABLED DISABLED ENABLED
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+1
+
+GTM>
+
+GTM>
+
+GLOBALS COLLATE IN stdnullcoll WITH NCT 0 & WITH ACT 0
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+EXECUTING $ORDERon ^aregionvar
+
+executing $ORDER in FORWARD direction
+1
+565
+abc
+dgh
+efg
+iamAREG
+executing $ORDER in REVERSE direction
+iamAREG
+efg
+dgh
+abc
+565
+1
+set s1=null for  set s1=$ORDER(^aregionvar(s1)) quit:s1=s2  write s1,!
+1
+565
+abc
+dgh
+efg
+iamAREG
+
+GTM>
+
+GLOBALS COLLATE IN stdnullcoll WITH NCT 0 & WITH ACT 0
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+EXECUTING $ZPREVIOUSon ^aregionvar
+
+set s1=null for  set s1=$ZPREVIOUS(^aregionvar(s1)) quit:s1=s2  write s1,!
+iamAREG
+efg
+dgh
+abc
+565
+1
+
+GTM>
+
+GLOBALS COLLATE IN stdnullcoll WITH NCT 0 & WITH ACT 0
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+EXECUTING $QUERYon ^aregionvar
+
+^aregionvar("")
+^aregionvar("",4)
+^aregionvar(1,"")
+^aregionvar(1,"",2,3)
+^aregionvar(565,90,76)
+^aregionvar("abc","")
+^aregionvar("abc","","hi",2)
+^aregionvar("dgh")
+^aregionvar("efg",2,"",4)
+^aregionvar("iamAREG",2)
+
+GTM>
+
+GLOBALS COLLATE IN stdnullcoll WITH NCT 0 & WITH ACT 0
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+EXECUTING $NEXTon ^aregionvar
+
+set s1=null for  set s1=$NEXT(^aregionvar(s1)) quit:s1=s2  write s1,!
+1
+565
+abc
+dgh
+efg
+iamAREG
+
+GTM>
+
+GTM>
+1
+GTM>
+
+LOCALS COLLATE WITH NCT 0 & WITH ACT 0 FOR stdnullcoll DATABASE
+zwriting the local collation order
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+localvariable("dgh")="lc_string"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("iamAREG",2)="lc_string_two"
+
+EXECUTING $ORDERon localvariable
+
+executing $ORDER in FORWARD direction
+1
+565
+executing $ORDER in REVERSE direction
+iamAREG
+efg
+dgh
+abc
+set s1=null FOR  set s1=$ORDER(localvariable(s1)) quit:s1=s2  write s1,!
+1
+565
+
+GTM>
+
+LOCALS COLLATE WITH NCT 0 & WITH ACT 0 FOR stdnullcoll DATABASE
+zwriting the local collation order
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+localvariable("dgh")="lc_string"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("iamAREG",2)="lc_string_two"
+
+EXECUTING $ZPREVIOUSon localvariable
+
+set s1=null FOR  set s1=$ZPREVIOUS(localvariable(s1)) quit:s1=s2  write s1,!
+iamAREG
+efg
+dgh
+abc
+
+GTM>
+
+LOCALS COLLATE WITH NCT 0 & WITH ACT 0 FOR stdnullcoll DATABASE
+zwriting the local collation order
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+localvariable("dgh")="lc_string"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("iamAREG",2)="lc_string_two"
+
+EXECUTING $QUERYon localvariable
+
+localvariable(1,"")
+localvariable(1,"",2,3)
+localvariable(565,90,76)
+localvariable("")
+localvariable("",4)
+localvariable("abc","")
+localvariable("abc","","hi",2)
+localvariable("dgh")
+localvariable("efg",2,"",4)
+localvariable("iamAREG",2)
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+1
+
+GTM>
+
+GTM>
+
+GLOBALS COLLATE IN stdnullcoll WITH NCT 1 & WITH ACT 0
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("","4")="null_four"
+^aregionvar("1","")="one_null"
+^aregionvar("1","","2","3")="one_null_two_three"
+^aregionvar("565","90","76")=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi","2")="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg","2","","4")="string_two_four"
+^aregionvar("iamAREG","2")="string_two"
+
+EXECUTING $ORDERon ^aregionvar
+
+executing $ORDER in FORWARD direction
+1
+565
+abc
+dgh
+efg
+iamAREG
+executing $ORDER in REVERSE direction
+iamAREG
+efg
+dgh
+abc
+565
+1
+set s1=null for  set s1=$ORDER(^aregionvar(s1)) quit:s1=s2  write s1,!
+1
+565
+abc
+dgh
+efg
+iamAREG
+
+GTM>
+
+GLOBALS COLLATE IN stdnullcoll WITH NCT 1 & WITH ACT 0
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("","4")="null_four"
+^aregionvar("1","")="one_null"
+^aregionvar("1","","2","3")="one_null_two_three"
+^aregionvar("565","90","76")=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi","2")="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg","2","","4")="string_two_four"
+^aregionvar("iamAREG","2")="string_two"
+
+EXECUTING $ZPREVIOUSon ^aregionvar
+
+set s1=null for  set s1=$ZPREVIOUS(^aregionvar(s1)) quit:s1=s2  write s1,!
+iamAREG
+efg
+dgh
+abc
+565
+1
+
+GTM>
+
+GLOBALS COLLATE IN stdnullcoll WITH NCT 1 & WITH ACT 0
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("","4")="null_four"
+^aregionvar("1","")="one_null"
+^aregionvar("1","","2","3")="one_null_two_three"
+^aregionvar("565","90","76")=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi","2")="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg","2","","4")="string_two_four"
+^aregionvar("iamAREG","2")="string_two"
+
+EXECUTING $QUERYon ^aregionvar
+
+^aregionvar("")
+^aregionvar("","4")
+^aregionvar("1","")
+^aregionvar("1","","2","3")
+^aregionvar("565","90","76")
+^aregionvar("abc","")
+^aregionvar("abc","","hi","2")
+^aregionvar("dgh")
+^aregionvar("efg","2","","4")
+^aregionvar("iamAREG","2")
+
+GTM>
+
+GLOBALS COLLATE IN stdnullcoll WITH NCT 1 & WITH ACT 0
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("","4")="null_four"
+^aregionvar("1","")="one_null"
+^aregionvar("1","","2","3")="one_null_two_three"
+^aregionvar("565","90","76")=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi","2")="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg","2","","4")="string_two_four"
+^aregionvar("iamAREG","2")="string_two"
+
+EXECUTING $NEXTon ^aregionvar
+
+set s1=null for  set s1=$NEXT(^aregionvar(s1)) quit:s1=s2  write s1,!
+1
+565
+abc
+dgh
+efg
+iamAREG
+
+GTM>
+
+GTM>
+1
+GTM>
+
+LOCALS COLLATE WITH NCT 1 & WITH ACT 0 FOR stdnullcoll DATABASE
+zwriting the local collation order
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+localvariable("dgh")="lc_string"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("iamAREG",2)="lc_string_two"
+
+EXECUTING $ORDERon localvariable
+
+executing $ORDER in FORWARD direction
+1
+565
+abc
+dgh
+efg
+iamAREG
+executing $ORDER in REVERSE direction
+iamAREG
+efg
+dgh
+abc
+565
+1
+set s1=null FOR  set s1=$ORDER(localvariable(s1)) quit:s1=s2  write s1,!
+1
+565
+abc
+dgh
+efg
+iamAREG
+
+GTM>
+
+LOCALS COLLATE WITH NCT 1 & WITH ACT 0 FOR stdnullcoll DATABASE
+zwriting the local collation order
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+localvariable("dgh")="lc_string"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("iamAREG",2)="lc_string_two"
+
+EXECUTING $ZPREVIOUSon localvariable
+
+set s1=null FOR  set s1=$ZPREVIOUS(localvariable(s1)) quit:s1=s2  write s1,!
+iamAREG
+efg
+dgh
+abc
+565
+1
+
+GTM>
+
+LOCALS COLLATE WITH NCT 1 & WITH ACT 0 FOR stdnullcoll DATABASE
+zwriting the local collation order
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+localvariable("dgh")="lc_string"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("iamAREG",2)="lc_string_two"
+
+EXECUTING $QUERYon localvariable
+
+localvariable("")
+localvariable("",4)
+localvariable(1,"")
+localvariable(1,"",2,3)
+localvariable(565,90,76)
+localvariable("abc","")
+localvariable("abc","","hi",2)
+localvariable("dgh")
+localvariable("efg",2,"",4)
+localvariable("iamAREG",2)
+
+GTM>
+
+LOCALS COLLATE WITH NCT 1 & WITH ACT 0 FOR stdnullcoll DATABASE
+zwriting the local collation order
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+localvariable("dgh")="lc_string"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("iamAREG",2)="lc_string_two"
+
+EXECUTING $NEXTon localvariable
+
+set s1=null FOR  set s1=$NEXT(localvariable(s1)) quit:s1=s2  write s1,!
+1
+565
+abc
+dgh
+efg
+iamAREG
+
+GTM>
+
+GTM>
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                           10      256    64 ALWAYS     Y    N   DISABLED DISABLED ENABLED
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+1
+
+GTM>
+
+GTM>
+
+GLOBALS COLLATE IN stdnullcoll WITH NCT 0 & WITH ACT 10
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("iamAREG",2)="string_two"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("dgh")="string"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+
+EXECUTING $ORDERon ^aregionvar
+
+executing $ORDER in FORWARD direction
+1
+565
+iamAREG
+efg
+dgh
+abc
+executing $ORDER in REVERSE direction
+abc
+dgh
+efg
+iamAREG
+565
+1
+set s1=null for  set s1=$ORDER(^aregionvar(s1)) quit:s1=s2  write s1,!
+1
+565
+iamAREG
+efg
+dgh
+abc
+
+GTM>
+
+GLOBALS COLLATE IN stdnullcoll WITH NCT 0 & WITH ACT 10
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("iamAREG",2)="string_two"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("dgh")="string"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+
+EXECUTING $ZPREVIOUSon ^aregionvar
+
+set s1=null for  set s1=$ZPREVIOUS(^aregionvar(s1)) quit:s1=s2  write s1,!
+abc
+dgh
+efg
+iamAREG
+565
+1
+
+GTM>
+
+GLOBALS COLLATE IN stdnullcoll WITH NCT 0 & WITH ACT 10
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("iamAREG",2)="string_two"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("dgh")="string"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+
+EXECUTING $QUERYon ^aregionvar
+
+^aregionvar("")
+^aregionvar("",4)
+^aregionvar(1,"")
+^aregionvar(1,"",2,3)
+^aregionvar(565,90,76)
+^aregionvar("iamAREG",2)
+^aregionvar("efg",2,"",4)
+^aregionvar("dgh")
+^aregionvar("abc","")
+^aregionvar("abc","","hi",2)
+
+GTM>
+
+GLOBALS COLLATE IN stdnullcoll WITH NCT 0 & WITH ACT 10
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("iamAREG",2)="string_two"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("dgh")="string"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+
+EXECUTING $NEXTon ^aregionvar
+
+set s1=null for  set s1=$NEXT(^aregionvar(s1)) quit:s1=s2  write s1,!
+1
+565
+iamAREG
+efg
+dgh
+abc
+
+GTM>
+
+GTM>
+1
+GTM>
+
+LOCALS COLLATE WITH NCT 0 & WITH ACT 10 FOR stdnullcoll DATABASE
+zwriting the local collation order
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable("iamAREG",2)="lc_string_two"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("dgh")="lc_string"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+
+EXECUTING $ORDERon localvariable
+
+executing $ORDER in FORWARD direction
+1
+565
+executing $ORDER in REVERSE direction
+abc
+dgh
+efg
+iamAREG
+set s1=null FOR  set s1=$ORDER(localvariable(s1)) quit:s1=s2  write s1,!
+1
+565
+
+GTM>
+
+LOCALS COLLATE WITH NCT 0 & WITH ACT 10 FOR stdnullcoll DATABASE
+zwriting the local collation order
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable("iamAREG",2)="lc_string_two"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("dgh")="lc_string"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+
+EXECUTING $ZPREVIOUSon localvariable
+
+set s1=null FOR  set s1=$ZPREVIOUS(localvariable(s1)) quit:s1=s2  write s1,!
+abc
+dgh
+efg
+iamAREG
+
+GTM>
+
+LOCALS COLLATE WITH NCT 0 & WITH ACT 10 FOR stdnullcoll DATABASE
+zwriting the local collation order
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable("iamAREG",2)="lc_string_two"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("dgh")="lc_string"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+
+EXECUTING $QUERYon localvariable
+
+localvariable(1,"")
+localvariable(1,"",2,3)
+localvariable(565,90,76)
+localvariable("")
+localvariable("",4)
+localvariable("iamAREG",2)
+localvariable("efg",2,"",4)
+localvariable("dgh")
+localvariable("abc","")
+localvariable("abc","","hi",2)
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+1
+
+GTM>
+
+GTM>
+
+GLOBALS COLLATE IN stdnullcoll WITH NCT 1 & WITH ACT 10
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("","4")="null_four"
+^aregionvar("iamAREG","2")="string_two"
+^aregionvar("efg","2","","4")="string_two_four"
+^aregionvar("dgh")="string"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi","2")="string_null_string_two"
+^aregionvar("565","90","76")=222
+^aregionvar("1","")="one_null"
+^aregionvar("1","","2","3")="one_null_two_three"
+
+EXECUTING $ORDERon ^aregionvar
+
+executing $ORDER in FORWARD direction
+iamAREG
+efg
+dgh
+abc
+565
+1
+executing $ORDER in REVERSE direction
+1
+565
+abc
+dgh
+efg
+iamAREG
+set s1=null for  set s1=$ORDER(^aregionvar(s1)) quit:s1=s2  write s1,!
+iamAREG
+efg
+dgh
+abc
+565
+1
+
+GTM>
+
+GLOBALS COLLATE IN stdnullcoll WITH NCT 1 & WITH ACT 10
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("","4")="null_four"
+^aregionvar("iamAREG","2")="string_two"
+^aregionvar("efg","2","","4")="string_two_four"
+^aregionvar("dgh")="string"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi","2")="string_null_string_two"
+^aregionvar("565","90","76")=222
+^aregionvar("1","")="one_null"
+^aregionvar("1","","2","3")="one_null_two_three"
+
+EXECUTING $ZPREVIOUSon ^aregionvar
+
+set s1=null for  set s1=$ZPREVIOUS(^aregionvar(s1)) quit:s1=s2  write s1,!
+1
+565
+abc
+dgh
+efg
+iamAREG
+
+GTM>
+
+GLOBALS COLLATE IN stdnullcoll WITH NCT 1 & WITH ACT 10
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("","4")="null_four"
+^aregionvar("iamAREG","2")="string_two"
+^aregionvar("efg","2","","4")="string_two_four"
+^aregionvar("dgh")="string"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi","2")="string_null_string_two"
+^aregionvar("565","90","76")=222
+^aregionvar("1","")="one_null"
+^aregionvar("1","","2","3")="one_null_two_three"
+
+EXECUTING $QUERYon ^aregionvar
+
+^aregionvar("")
+^aregionvar("","4")
+^aregionvar("iamAREG","2")
+^aregionvar("efg","2","","4")
+^aregionvar("dgh")
+^aregionvar("abc","")
+^aregionvar("abc","","hi","2")
+^aregionvar("565","90","76")
+^aregionvar("1","")
+^aregionvar("1","","2","3")
+
+GTM>
+
+GLOBALS COLLATE IN stdnullcoll WITH NCT 1 & WITH ACT 10
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("","4")="null_four"
+^aregionvar("iamAREG","2")="string_two"
+^aregionvar("efg","2","","4")="string_two_four"
+^aregionvar("dgh")="string"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi","2")="string_null_string_two"
+^aregionvar("565","90","76")=222
+^aregionvar("1","")="one_null"
+^aregionvar("1","","2","3")="one_null_two_three"
+
+EXECUTING $NEXTon ^aregionvar
+
+set s1=null for  set s1=$NEXT(^aregionvar(s1)) quit:s1=s2  write s1,!
+iamAREG
+efg
+dgh
+abc
+565
+1
+
+GTM>
+
+GTM>
+1
+GTM>
+
+LOCALS COLLATE WITH NCT 1 & WITH ACT 10 FOR stdnullcoll DATABASE
+zwriting the local collation order
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("iamAREG",2)="lc_string_two"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("dgh")="lc_string"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+
+EXECUTING $ORDERon localvariable
+
+executing $ORDER in FORWARD direction
+1
+565
+iamAREG
+efg
+dgh
+abc
+executing $ORDER in REVERSE direction
+abc
+dgh
+efg
+iamAREG
+565
+1
+set s1=null FOR  set s1=$ORDER(localvariable(s1)) quit:s1=s2  write s1,!
+1
+565
+iamAREG
+efg
+dgh
+abc
+
+GTM>
+
+LOCALS COLLATE WITH NCT 1 & WITH ACT 10 FOR stdnullcoll DATABASE
+zwriting the local collation order
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("iamAREG",2)="lc_string_two"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("dgh")="lc_string"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+
+EXECUTING $ZPREVIOUSon localvariable
+
+set s1=null FOR  set s1=$ZPREVIOUS(localvariable(s1)) quit:s1=s2  write s1,!
+abc
+dgh
+efg
+iamAREG
+565
+1
+
+GTM>
+
+LOCALS COLLATE WITH NCT 1 & WITH ACT 10 FOR stdnullcoll DATABASE
+zwriting the local collation order
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("iamAREG",2)="lc_string_two"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("dgh")="lc_string"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+
+EXECUTING $QUERYon localvariable
+
+localvariable("")
+localvariable("",4)
+localvariable(1,"")
+localvariable(1,"",2,3)
+localvariable(565,90,76)
+localvariable("iamAREG",2)
+localvariable("efg",2,"",4)
+localvariable("dgh")
+localvariable("abc","")
+localvariable("abc","","hi",2)
+
+GTM>
+
+GTM>
+
+GTM>
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                            0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+1
+
+GTM>
+
+GTM>
+
+GLOBALS COLLATE IN nostdnullcoll WITH NCT 0 & WITH ACT 0
+zwriting the collation order
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+EXECUTING $ORDERon ^aregionvar
+
+executing $ORDER in FORWARD direction
+1
+565
+executing $ORDER in REVERSE direction
+iamAREG
+efg
+dgh
+abc
+set s1=null for  set s1=$ORDER(^aregionvar(s1)) quit:s1=s2  write s1,!
+1
+565
+
+GTM>
+
+GLOBALS COLLATE IN nostdnullcoll WITH NCT 0 & WITH ACT 0
+zwriting the collation order
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+EXECUTING $ZPREVIOUSon ^aregionvar
+
+set s1=null for  set s1=$ZPREVIOUS(^aregionvar(s1)) quit:s1=s2  write s1,!
+iamAREG
+efg
+dgh
+abc
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+1
+GTM>
+
+LOCALS COLLATE WITH NCT 0 & WITH ACT 0 FOR nostdnullcoll DATABASE
+zwriting the local collation order
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+localvariable("dgh")="lc_string"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("iamAREG",2)="lc_string_two"
+
+EXECUTING $ORDERon localvariable
+
+executing $ORDER in FORWARD direction
+1
+565
+executing $ORDER in REVERSE direction
+iamAREG
+efg
+dgh
+abc
+set s1=null FOR  set s1=$ORDER(localvariable(s1)) quit:s1=s2  write s1,!
+1
+565
+
+GTM>
+
+LOCALS COLLATE WITH NCT 0 & WITH ACT 0 FOR nostdnullcoll DATABASE
+zwriting the local collation order
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+localvariable("dgh")="lc_string"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("iamAREG",2)="lc_string_two"
+
+EXECUTING $ZPREVIOUSon localvariable
+
+set s1=null FOR  set s1=$ZPREVIOUS(localvariable(s1)) quit:s1=s2  write s1,!
+iamAREG
+efg
+dgh
+abc
+
+GTM>
+
+LOCALS COLLATE WITH NCT 0 & WITH ACT 0 FOR nostdnullcoll DATABASE
+zwriting the local collation order
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+localvariable("dgh")="lc_string"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("iamAREG",2)="lc_string_two"
+
+EXECUTING $QUERYon localvariable
+
+localvariable(1,"")
+localvariable(1,"",2,3)
+localvariable(565,90,76)
+localvariable("")
+localvariable("",4)
+localvariable("abc","")
+localvariable("abc","","hi",2)
+localvariable("dgh")
+localvariable("efg",2,"",4)
+localvariable("iamAREG",2)
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+1
+
+GTM>
+
+GTM>
+
+GLOBALS COLLATE IN nostdnullcoll WITH NCT 1 & WITH ACT 0
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("","4")="null_four"
+^aregionvar("1","")="one_null"
+^aregionvar("1","","2","3")="one_null_two_three"
+^aregionvar("565","90","76")=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi","2")="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg","2","","4")="string_two_four"
+^aregionvar("iamAREG","2")="string_two"
+
+EXECUTING $ORDERon ^aregionvar
+
+executing $ORDER in FORWARD direction
+executing $ORDER in REVERSE direction
+iamAREG
+efg
+dgh
+abc
+565
+1
+set s1=null for  set s1=$ORDER(^aregionvar(s1)) quit:s1=s2  write s1,!
+
+GTM>
+
+GLOBALS COLLATE IN nostdnullcoll WITH NCT 1 & WITH ACT 0
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("","4")="null_four"
+^aregionvar("1","")="one_null"
+^aregionvar("1","","2","3")="one_null_two_three"
+^aregionvar("565","90","76")=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi","2")="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg","2","","4")="string_two_four"
+^aregionvar("iamAREG","2")="string_two"
+
+EXECUTING $ZPREVIOUSon ^aregionvar
+
+set s1=null for  set s1=$ZPREVIOUS(^aregionvar(s1)) quit:s1=s2  write s1,!
+iamAREG
+efg
+dgh
+abc
+565
+1
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+1
+GTM>
+
+LOCALS COLLATE WITH NCT 1 & WITH ACT 0 FOR nostdnullcoll DATABASE
+zwriting the local collation order
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+localvariable("dgh")="lc_string"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("iamAREG",2)="lc_string_two"
+
+EXECUTING $ORDERon localvariable
+
+executing $ORDER in FORWARD direction
+1
+565
+abc
+dgh
+efg
+iamAREG
+executing $ORDER in REVERSE direction
+iamAREG
+efg
+dgh
+abc
+565
+1
+set s1=null FOR  set s1=$ORDER(localvariable(s1)) quit:s1=s2  write s1,!
+1
+565
+abc
+dgh
+efg
+iamAREG
+
+GTM>
+
+LOCALS COLLATE WITH NCT 1 & WITH ACT 0 FOR nostdnullcoll DATABASE
+zwriting the local collation order
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+localvariable("dgh")="lc_string"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("iamAREG",2)="lc_string_two"
+
+EXECUTING $ZPREVIOUSon localvariable
+
+set s1=null FOR  set s1=$ZPREVIOUS(localvariable(s1)) quit:s1=s2  write s1,!
+iamAREG
+efg
+dgh
+abc
+565
+1
+
+GTM>
+
+LOCALS COLLATE WITH NCT 1 & WITH ACT 0 FOR nostdnullcoll DATABASE
+zwriting the local collation order
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+localvariable("dgh")="lc_string"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("iamAREG",2)="lc_string_two"
+
+EXECUTING $QUERYon localvariable
+
+localvariable("")
+localvariable("",4)
+localvariable(1,"")
+localvariable(1,"",2,3)
+localvariable(565,90,76)
+localvariable("abc","")
+localvariable("abc","","hi",2)
+localvariable("dgh")
+localvariable("efg",2,"",4)
+localvariable("iamAREG",2)
+
+GTM>
+
+LOCALS COLLATE WITH NCT 1 & WITH ACT 0 FOR nostdnullcoll DATABASE
+zwriting the local collation order
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+localvariable("dgh")="lc_string"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("iamAREG",2)="lc_string_two"
+
+EXECUTING $NEXTon localvariable
+
+set s1=null FOR  set s1=$NEXT(localvariable(s1)) quit:s1=s2  write s1,!
+1
+565
+abc
+dgh
+efg
+iamAREG
+
+GTM>
+
+GTM>
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                           10      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+1
+
+GTM>
+
+GTM>
+
+GLOBALS COLLATE IN nostdnullcoll WITH NCT 0 & WITH ACT 10
+zwriting the collation order
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("iamAREG",2)="string_two"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("dgh")="string"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+
+EXECUTING $ORDERon ^aregionvar
+
+executing $ORDER in FORWARD direction
+1
+565
+executing $ORDER in REVERSE direction
+abc
+dgh
+efg
+iamAREG
+set s1=null for  set s1=$ORDER(^aregionvar(s1)) quit:s1=s2  write s1,!
+1
+565
+
+GTM>
+
+GLOBALS COLLATE IN nostdnullcoll WITH NCT 0 & WITH ACT 10
+zwriting the collation order
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("iamAREG",2)="string_two"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("dgh")="string"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+
+EXECUTING $ZPREVIOUSon ^aregionvar
+
+set s1=null for  set s1=$ZPREVIOUS(^aregionvar(s1)) quit:s1=s2  write s1,!
+abc
+dgh
+efg
+iamAREG
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+1
+GTM>
+
+LOCALS COLLATE WITH NCT 0 & WITH ACT 10 FOR nostdnullcoll DATABASE
+zwriting the local collation order
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable("iamAREG",2)="lc_string_two"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("dgh")="lc_string"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+
+EXECUTING $ORDERon localvariable
+
+executing $ORDER in FORWARD direction
+1
+565
+executing $ORDER in REVERSE direction
+abc
+dgh
+efg
+iamAREG
+set s1=null FOR  set s1=$ORDER(localvariable(s1)) quit:s1=s2  write s1,!
+1
+565
+
+GTM>
+
+LOCALS COLLATE WITH NCT 0 & WITH ACT 10 FOR nostdnullcoll DATABASE
+zwriting the local collation order
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable("iamAREG",2)="lc_string_two"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("dgh")="lc_string"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+
+EXECUTING $ZPREVIOUSon localvariable
+
+set s1=null FOR  set s1=$ZPREVIOUS(localvariable(s1)) quit:s1=s2  write s1,!
+abc
+dgh
+efg
+iamAREG
+
+GTM>
+
+LOCALS COLLATE WITH NCT 0 & WITH ACT 10 FOR nostdnullcoll DATABASE
+zwriting the local collation order
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable("iamAREG",2)="lc_string_two"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("dgh")="lc_string"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+
+EXECUTING $QUERYon localvariable
+
+localvariable(1,"")
+localvariable(1,"",2,3)
+localvariable(565,90,76)
+localvariable("")
+localvariable("",4)
+localvariable("iamAREG",2)
+localvariable("efg",2,"",4)
+localvariable("dgh")
+localvariable("abc","")
+localvariable("abc","","hi",2)
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+1
+
+GTM>
+
+GTM>
+
+GLOBALS COLLATE IN nostdnullcoll WITH NCT 1 & WITH ACT 10
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("","4")="null_four"
+^aregionvar("iamAREG","2")="string_two"
+^aregionvar("efg","2","","4")="string_two_four"
+^aregionvar("dgh")="string"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi","2")="string_null_string_two"
+^aregionvar("565","90","76")=222
+^aregionvar("1","")="one_null"
+^aregionvar("1","","2","3")="one_null_two_three"
+
+EXECUTING $ORDERon ^aregionvar
+
+executing $ORDER in FORWARD direction
+executing $ORDER in REVERSE direction
+1
+565
+abc
+dgh
+efg
+iamAREG
+set s1=null for  set s1=$ORDER(^aregionvar(s1)) quit:s1=s2  write s1,!
+
+GTM>
+
+GLOBALS COLLATE IN nostdnullcoll WITH NCT 1 & WITH ACT 10
+zwriting the collation order
+^aregionvar("")="iam null aregionvar"
+^aregionvar("","4")="null_four"
+^aregionvar("iamAREG","2")="string_two"
+^aregionvar("efg","2","","4")="string_two_four"
+^aregionvar("dgh")="string"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi","2")="string_null_string_two"
+^aregionvar("565","90","76")=222
+^aregionvar("1","")="one_null"
+^aregionvar("1","","2","3")="one_null_two_three"
+
+EXECUTING $ZPREVIOUSon ^aregionvar
+
+set s1=null for  set s1=$ZPREVIOUS(^aregionvar(s1)) quit:s1=s2  write s1,!
+1
+565
+abc
+dgh
+efg
+iamAREG
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+1
+GTM>
+
+LOCALS COLLATE WITH NCT 1 & WITH ACT 10 FOR nostdnullcoll DATABASE
+zwriting the local collation order
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("iamAREG",2)="lc_string_two"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("dgh")="lc_string"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+
+EXECUTING $ORDERon localvariable
+
+executing $ORDER in FORWARD direction
+1
+565
+iamAREG
+efg
+dgh
+abc
+executing $ORDER in REVERSE direction
+abc
+dgh
+efg
+iamAREG
+565
+1
+set s1=null FOR  set s1=$ORDER(localvariable(s1)) quit:s1=s2  write s1,!
+1
+565
+iamAREG
+efg
+dgh
+abc
+
+GTM>
+
+LOCALS COLLATE WITH NCT 1 & WITH ACT 10 FOR nostdnullcoll DATABASE
+zwriting the local collation order
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("iamAREG",2)="lc_string_two"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("dgh")="lc_string"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+
+EXECUTING $ZPREVIOUSon localvariable
+
+set s1=null FOR  set s1=$ZPREVIOUS(localvariable(s1)) quit:s1=s2  write s1,!
+abc
+dgh
+efg
+iamAREG
+565
+1
+
+GTM>
+
+LOCALS COLLATE WITH NCT 1 & WITH ACT 10 FOR nostdnullcoll DATABASE
+zwriting the local collation order
+localvariable("")="iam null localvariable"
+localvariable("",4)="lc_null_four"
+localvariable(1,"")="lc_one_null"
+localvariable(1,"",2,3)="lc_one_null_two_three"
+localvariable(565,90,76)=402
+localvariable("iamAREG",2)="lc_string_two"
+localvariable("efg",2,"",4)="lc_string_two_four"
+localvariable("dgh")="lc_string"
+localvariable("abc","")="lc_string_null"
+localvariable("abc","","hi",2)="lc_string_null_string_two"
+
+EXECUTING $QUERYon localvariable
+
+localvariable("")
+localvariable("",4)
+localvariable(1,"")
+localvariable(1,"",2,3)
+localvariable(565,90,76)
+localvariable("iamAREG",2)
+localvariable("efg",2,"",4)
+localvariable("dgh")
+localvariable("abc","")
+localvariable("abc","","hi",2)
+
+GTM>
+
+GTM>
+
+GTM>
+#######################################################################
+%GBLDEF CHECK BEGINS HERE
+#######################################################################
+
+%gbldef check for single region database
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                           10      256    64 ALWAYS     Y    N   DISABLED DISABLED ENABLED
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+^aregionvar collates with nct=1 & act=10
+
+
+1
+^aregionvar("")="iam null aregionvar"
+^aregionvar("","4")="null_four"
+^aregionvar("iamAREG","2")="string_two"
+^aregionvar("efg","2","","4")="string_two_four"
+^aregionvar("dgh")="string"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi","2")="string_null_string_two"
+^aregionvar("565","90","76")=222
+^aregionvar("1","")="one_null"
+^aregionvar("1","","2","3")="one_null_two_three"
+
+^defregvar collates in stdnullcoll & act=10
+
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+
+merge of ^aregionvar with ^defregvar would give error here due to different nct
+
+%GTM-E-NCTCOLLDIFF, Source and destination for MERGE cannot have different numerical collation type
+		At M source location chkgbldef+15^chkgbldef
+
+GTM>
+^aregionvar now collates with nct=0 & act=0
+
+
+1
+zwrite ^aregionvar =
+
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+zwrite ^defregvar =
+
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+merge should be successful now even though aregionvar & defregvar have different act
+
+
+MERGING ^aregionvar("")=^defregvar("abc","")
+
+
+BEFORE MERGE ^aregionvar ^defregvar
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+AFTER MERGE ^aregionvar ^defregvar
+^aregionvar("")=100
+^aregionvar("",4)="null_four"
+^aregionvar("","hi",2)=1002
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+MERGING ^aregionvar(1,"")=^defregvar(907)
+
+
+BEFORE MERGE ^aregionvar ^defregvar
+^aregionvar("")=100
+^aregionvar("",4)="null_four"
+^aregionvar("","hi",2)=1002
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+AFTER MERGE ^aregionvar ^defregvar
+^aregionvar("")=100
+^aregionvar("",4)="null_four"
+^aregionvar("","hi",2)=1002
+^aregionvar(1,"")=333
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+MERGING, ^aregionvar=^defregvar
+
+
+BEFORE MERGE ^aregionvar ^defregvar
+^aregionvar("")=100
+^aregionvar("",4)="null_four"
+^aregionvar("","hi",2)=1002
+^aregionvar(1,"")=333
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+AFTER MERGE ^aregionvar ^defregvar
+^aregionvar("")=1
+^aregionvar("",4)=40
+^aregionvar("","hi",2)=1002
+^aregionvar(1,"")=10
+^aregionvar(1,"",2,3)=1023
+^aregionvar(565,90,76)=222
+^aregionvar(907)=333
+^aregionvar("abc","")=100
+^aregionvar("abc","","hi",2)=1002
+^aregionvar("dgh")=50
+^aregionvar("efg",2,"",4)=1204
+^aregionvar("iamAREG",2)="string_two"
+^aregionvar("iamdefault")=60
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+GTM>
+MERGING ^defregvar("abc","")=^aregionvar("")
+
+
+BEFORE MERGE ^defregvar ^aregionvar
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+AFTER MERGE ^defregvar ^aregionvar
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")="iam null aregionvar"
+^defregvar("abc","",4)="null_four"
+^defregvar("abc","","hi",2)=1002
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+MERGING ^defregvar(907)=^aregionvar(1,"")
+
+
+BEFORE MERGE ^defregvar ^aregionvar
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")="iam null aregionvar"
+^defregvar("abc","",4)="null_four"
+^defregvar("abc","","hi",2)=1002
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+AFTER MERGE ^defregvar ^aregionvar
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)="one_null"
+^defregvar(907,2,3)="one_null_two_three"
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")="iam null aregionvar"
+^defregvar("abc","",4)="null_four"
+^defregvar("abc","","hi",2)=1002
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+MERGING, ^defregvar=^aregionvar
+
+
+BEFORE MERGE ^defregvar ^aregionvar
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)="one_null"
+^defregvar(907,2,3)="one_null_two_three"
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")="iam null aregionvar"
+^defregvar("abc","",4)="null_four"
+^defregvar("abc","","hi",2)=1002
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+AFTER MERGE ^defregvar ^aregionvar
+^defregvar("")="iam null aregionvar"
+^defregvar("",4)="null_four"
+^defregvar(1,"")="one_null"
+^defregvar(1,"",2,3)="one_null_two_three"
+^defregvar(565,90,76)=222
+^defregvar(907)="one_null"
+^defregvar(907,2,3)="one_null_two_three"
+^defregvar("iamdefault")=60
+^defregvar("iamAREG",2)="string_two"
+^defregvar("efg",2,"",4)="string_two_four"
+^defregvar("dgh")="string"
+^defregvar("abc","")="string_null"
+^defregvar("abc","",4)="null_four"
+^defregvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+GTM>
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                           10      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+^aregionvar collates with nct=1 & act=10
+
+
+1
+^aregionvar("")="iam null aregionvar"
+^aregionvar("","4")="null_four"
+^aregionvar("iamAREG","2")="string_two"
+^aregionvar("efg","2","","4")="string_two_four"
+^aregionvar("dgh")="string"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi","2")="string_null_string_two"
+^aregionvar("565","90","76")=222
+^aregionvar("1","")="one_null"
+^aregionvar("1","","2","3")="one_null_two_three"
+
+^defregvar collates in nostdnullcoll & act=10
+
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+
+merge of ^aregionvar with ^defregvar would give error here due to different nct
+
+%GTM-E-NCTCOLLDIFF, Source and destination for MERGE cannot have different numerical collation type
+		At M source location chkgbldef+15^chkgbldef
+
+GTM>
+^aregionvar now collates with nct=0 & act=0
+
+
+1
+zwrite ^aregionvar =
+
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+zwrite ^defregvar =
+
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+merge should be successful now even though aregionvar & defregvar have different act
+
+
+MERGING ^aregionvar("")=^defregvar("abc","")
+
+
+BEFORE MERGE ^aregionvar ^defregvar
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+AFTER MERGE ^aregionvar ^defregvar
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")=100
+^aregionvar("",4)="null_four"
+^aregionvar("","hi",2)=1002
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+MERGING ^aregionvar(1,"")=^defregvar(907)
+
+
+BEFORE MERGE ^aregionvar ^defregvar
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")=100
+^aregionvar("",4)="null_four"
+^aregionvar("","hi",2)=1002
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+AFTER MERGE ^aregionvar ^defregvar
+^aregionvar(1,"")=333
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")=100
+^aregionvar("",4)="null_four"
+^aregionvar("","hi",2)=1002
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+MERGING, ^aregionvar=^defregvar
+
+
+BEFORE MERGE ^aregionvar ^defregvar
+^aregionvar(1,"")=333
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")=100
+^aregionvar("",4)="null_four"
+^aregionvar("","hi",2)=1002
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+AFTER MERGE ^aregionvar ^defregvar
+^aregionvar(1,"")=10
+^aregionvar(1,"",2,3)=1023
+^aregionvar(565,90,76)=222
+^aregionvar(907)=333
+^aregionvar("")=1
+^aregionvar("",4)=40
+^aregionvar("","hi",2)=1002
+^aregionvar("abc","")=100
+^aregionvar("abc","","hi",2)=1002
+^aregionvar("dgh")=50
+^aregionvar("efg",2,"",4)=1204
+^aregionvar("iamAREG",2)="string_two"
+^aregionvar("iamdefault")=60
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+GTM>
+MERGING ^defregvar("abc","")=^aregionvar("")
+
+
+BEFORE MERGE ^defregvar ^aregionvar
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+AFTER MERGE ^defregvar ^aregionvar
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")="iam null aregionvar"
+^defregvar("abc","",4)="null_four"
+^defregvar("abc","","hi",2)=1002
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+MERGING ^defregvar(907)=^aregionvar(1,"")
+
+
+BEFORE MERGE ^defregvar ^aregionvar
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")="iam null aregionvar"
+^defregvar("abc","",4)="null_four"
+^defregvar("abc","","hi",2)=1002
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+AFTER MERGE ^defregvar ^aregionvar
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)="one_null"
+^defregvar(907,2,3)="one_null_two_three"
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")="iam null aregionvar"
+^defregvar("abc","",4)="null_four"
+^defregvar("abc","","hi",2)=1002
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+MERGING, ^defregvar=^aregionvar
+
+
+BEFORE MERGE ^defregvar ^aregionvar
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)="one_null"
+^defregvar(907,2,3)="one_null_two_three"
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")="iam null aregionvar"
+^defregvar("abc","",4)="null_four"
+^defregvar("abc","","hi",2)=1002
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+AFTER MERGE ^defregvar ^aregionvar
+^defregvar(1,"")="one_null"
+^defregvar(1,"",2,3)="one_null_two_three"
+^defregvar(565,90,76)=222
+^defregvar(907)="one_null"
+^defregvar(907,2,3)="one_null_two_three"
+^defregvar("")="iam null aregionvar"
+^defregvar("",4)="null_four"
+^defregvar("iamdefault")=60
+^defregvar("iamAREG",2)="string_two"
+^defregvar("efg",2,"",4)="string_two_four"
+^defregvar("dgh")="string"
+^defregvar("abc","")="string_null"
+^defregvar("abc","",4)="null_four"
+^defregvar("abc","","hi",2)="string_null_string_two"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+GTM>
+
+%gbldef check for multiple region database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+AREG GLOBALS COLLATES IN NOSTDNULLCOLL
+
+GTM>
+DEFAULT GLOBALS COLLATES IN STDNULLCOLL
+
+GTM>
+^aregionvar collates with nct=1 & act=10
+
+
+1
+^aregionvar("")="iam null aregionvar"
+^aregionvar("","4")="null_four"
+^aregionvar("iamAREG","2")="string_two"
+^aregionvar("efg","2","","4")="string_two_four"
+^aregionvar("dgh")="string"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi","2")="string_null_string_two"
+^aregionvar("565","90","76")=222
+^aregionvar("1","")="one_null"
+^aregionvar("1","","2","3")="one_null_two_three"
+
+^defregvar collates in stdnullcoll & act=10
+
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+
+merge of ^aregionvar with ^defregvar would give error here due to different nct
+
+%GTM-E-NCTCOLLDIFF, Source and destination for MERGE cannot have different numerical collation type
+		At M source location chkgbldef+15^chkgbldef
+
+GTM>
+^aregionvar now collates with nct=0 & act=0
+
+
+1
+zwrite ^aregionvar =
+
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+zwrite ^defregvar =
+
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+merge should be successful now even though aregionvar & defregvar have different act
+
+
+MERGING ^aregionvar("")=^defregvar("abc","")
+
+
+BEFORE MERGE ^aregionvar ^defregvar
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+AFTER MERGE ^aregionvar ^defregvar
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")=100
+^aregionvar("",4)="null_four"
+^aregionvar("","hi",2)=1002
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+MERGING ^aregionvar(1,"")=^defregvar(907)
+
+
+BEFORE MERGE ^aregionvar ^defregvar
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")=100
+^aregionvar("",4)="null_four"
+^aregionvar("","hi",2)=1002
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+AFTER MERGE ^aregionvar ^defregvar
+^aregionvar(1,"")=333
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")=100
+^aregionvar("",4)="null_four"
+^aregionvar("","hi",2)=1002
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+MERGING, ^aregionvar=^defregvar
+
+
+BEFORE MERGE ^aregionvar ^defregvar
+^aregionvar(1,"")=333
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")=100
+^aregionvar("",4)="null_four"
+^aregionvar("","hi",2)=1002
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+AFTER MERGE ^aregionvar ^defregvar
+^aregionvar(1,"")=10
+^aregionvar(1,"",2,3)=1023
+^aregionvar(565,90,76)=222
+^aregionvar(907)=333
+^aregionvar("")=1
+^aregionvar("",4)=40
+^aregionvar("","hi",2)=1002
+^aregionvar("abc","")=100
+^aregionvar("abc","","hi",2)=1002
+^aregionvar("dgh")=50
+^aregionvar("efg",2,"",4)=1204
+^aregionvar("iamAREG",2)="string_two"
+^aregionvar("iamdefault")=60
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+
+GTM>
+MERGING ^defregvar("abc","")=^aregionvar("")
+
+
+BEFORE MERGE ^defregvar ^aregionvar
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")=100
+^defregvar("abc","","hi",2)=1002
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+AFTER MERGE ^defregvar ^aregionvar
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")="iam null aregionvar"
+^defregvar("abc","",4)="null_four"
+^defregvar("abc","","hi",2)=1002
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+MERGING ^defregvar(907)=^aregionvar(1,"")
+
+
+BEFORE MERGE ^defregvar ^aregionvar
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)=333
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")="iam null aregionvar"
+^defregvar("abc","",4)="null_four"
+^defregvar("abc","","hi",2)=1002
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+AFTER MERGE ^defregvar ^aregionvar
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)="one_null"
+^defregvar(907,2,3)="one_null_two_three"
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")="iam null aregionvar"
+^defregvar("abc","",4)="null_four"
+^defregvar("abc","","hi",2)=1002
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+MERGING, ^defregvar=^aregionvar
+
+
+BEFORE MERGE ^defregvar ^aregionvar
+^defregvar("")=1
+^defregvar("",4)=40
+^defregvar(1,"")=10
+^defregvar(1,"",2,3)=1023
+^defregvar(907)="one_null"
+^defregvar(907,2,3)="one_null_two_three"
+^defregvar("iamdefault")=60
+^defregvar("efg",2,"",4)=1204
+^defregvar("dgh")=50
+^defregvar("abc","")="iam null aregionvar"
+^defregvar("abc","",4)="null_four"
+^defregvar("abc","","hi",2)=1002
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+AFTER MERGE ^defregvar ^aregionvar
+^defregvar("")="iam null aregionvar"
+^defregvar("",4)="null_four"
+^defregvar(1,"")="one_null"
+^defregvar(1,"",2,3)="one_null_two_three"
+^defregvar(565,90,76)=222
+^defregvar(907)="one_null"
+^defregvar(907,2,3)="one_null_two_three"
+^defregvar("iamdefault")=60
+^defregvar("iamAREG",2)="string_two"
+^defregvar("efg",2,"",4)="string_two_four"
+^defregvar("dgh")="string"
+^defregvar("abc","")="string_null"
+^defregvar("abc","",4)="null_four"
+^defregvar("abc","","hi",2)="string_null_string_two"
+^aregionvar(1,"")="one_null"
+^aregionvar(1,"",2,3)="one_null_two_three"
+^aregionvar(565,90,76)=222
+^aregionvar("")="iam null aregionvar"
+^aregionvar("",4)="null_four"
+^aregionvar("abc","")="string_null"
+^aregionvar("abc","","hi",2)="string_null_string_two"
+^aregionvar("dgh")="string"
+^aregionvar("efg",2,"",4)="string_two_four"
+^aregionvar("iamAREG",2)="string_two"
+
+GTM>
+#######################################################################
+%LCLCOL CHECK BEGINS HERE
+#######################################################################
+
+GTM>
+
+GTM>
+env. variable set to M std. null collation
+
+GTM>
+lcl("")=1
+lcl(1)=1
+lcl("y")=1
+lcl("x")=1
+
+GTM>
+getncol should return 1 here
+
+GTM>
+1
+GTM>
+
+GTM>
+change local collation order to GT.M null collation
+
+GTM>
+1
+GTM>
+getncol should return 0 here
+
+GTM>
+0
+GTM>
+
+GTM>
+collating order should be GT.M null collation here
+
+GTM>
+lcl(1)=1
+lcl("")=1
+lcl("x")=1
+lcl("y")=1
+
+GTM>
+
+GTM>
+change local collation order to M std. again
+
+GTM>
+1
+GTM>
+getncol should return 1 here
+
+GTM>
+1
+GTM>
+1
+GTM>
+getncol should return 1 here
+
+GTM>
+1
+GTM>
+
+GTM>
+collating order should be M std. here
+
+GTM>
+lcl("")=1
+lcl(1)=1
+lcl("x")=1
+lcl("y")=1
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

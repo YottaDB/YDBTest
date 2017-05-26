@@ -1,0 +1,25 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+
+Integ of region DEFAULT
+
+Free blocks counter in file header:  60 is incorrect, should be FFFFFFFE00000064
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory  4294967296      4294967296           2.[0-9][0-9][0-9]+            NA
+Index      2147483648      2147483648           2.343             1
+Data       2147483648     10737418240           5.761             1
+Free     206158430208              NA              NA            NA
+Total      8589934592     17179869184              NA             2
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 10737418240  max subsc len: 6  max rec len: 1  max node len: 11
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

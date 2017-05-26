@@ -1,0 +1,32 @@
+##TEST_AWKrandom value is: [0-9]* 
+##TEST_AWKpri_ver = .*
+##TEST_AWKsec_ver = .*
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/helper.gde
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+##TEST_AWK[0-9]*
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##REMOTE_TEST_PATH##/mumps.gld
+%GDE-I-EXECOM, Executing command file ##REMOTE_TEST_PATH##/helper.gde
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##REMOTE_TEST_PATH##/mumps.gld
+Created file ##REMOTE_TEST_PATH##/mumps.dat
+Starting GTM processes...
+Receiver shut down ....
+===================================================
+Backup started
+Backup completed
+============ Secondary side,  copy backed up  database from Primary ===============
+Wait some more time to create backlog in primary side
+Upgrade/downgrade secondary side
+Start secondary with refreshed database
+========= Version in primary side =========================
+Stopping GTM processes
+End of test

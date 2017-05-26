@@ -1,0 +1,43 @@
+V1PRGD	;-PR- GOTO, DO AND QUIT COMMAND;YS-TS,V1PRGD,VALIDATION VERSION 7.1;31-AUG-1987;
+	;COPYRIGHT MUMPS SYSTEM LABORATORY 1978
+	S PASS=0,FAIL=0
+	W !!,"V1PRGD: PRELIMINARY TEST OF GOTO, DO AND QUIT COMMAND",!
+	W !,"I-726  GOTO label"
+726	GOTO ABCD
+	S FAIL=FAIL+1 W !,"** FAIL  I-726.1  ABCD" W:$Y>55 #
+	;
+ABCD	S PASS=PASS+1 W !,"   PASS  I-726.1  ABCD" W:$Y>55 #
+	G 3 S FAIL=FAIL+1 W !,"** FAIL  I-726.2  3" W:$Y>55 #
+	S FAIL=FAIL+1 W !,"** FAIL  I-726.2  3 next line" W:$Y>55 #
+	;
+3	S PASS=PASS+1 W !,"   PASS  I-726.2  3" W:$Y>55 #
+	GOTO FOUR4 S FAIL=FAIL+1 W !,"** FAIL  I-726.3  FOUR4" W:$Y>55 #
+	S FAIL=FAIL+1 W !,"** FAIL  I-726.3  FOUR4 next line" W:$Y>55 #
+	;
+FOUR4	S PASS=PASS+1 W !,"   PASS  I-726.3  FOUR4" W:$Y>55 #
+	;
+	W !,"I-727/729/730  DO label"
+727	DO 2 W "; explicit quit" W:$Y>55 #
+	D YON W "; explicit quit" W:$Y>55 # DO SIX66 W "; implicit quit" W:$Y>55 #
+	;
+	W !,"I-728/729/730  DO ^routineref"
+728	DO ^V1PRGD1 W "; explicit quit" W:$Y>55 #
+	D ^V1PRGD2 W "; implicit quit" W:$Y>55 #
+	S VCOMP="" D ^V1PRGD3
+	I VCOMP=1234 S PASS=PASS+1 W !,"   PASS  I-728/729/730.3  ^V1PRGD3; implicit quit" W:$Y>55 #
+	E  S FAIL=FAIL+1 W !,"** FAIL  I-728/729/730.3  ^V1PRGD3; implicit quit" W:$Y>55 #
+	;
+END	W !!,"END OF V1PRGD",!
+	S ROUTINE="V1PRGD",TESTS=9,AUTO=9,VISUAL=0 D ^VREPORT
+	K  Q
+	;
+2	S PASS=PASS+1 W !,"   PASS  I-727/729/730.1  2"
+	QUIT  S FAIL=FAIL+1 W !,"** FAIL  I-727/729/730.1  2" W:$Y>55 #
+	S FAIL=FAIL+1 W !,"** FAIL  I-727/729/730.1  2 next line" W:$Y>55 # Q
+	Q
+YON	S PASS=PASS+1 W !,"   PASS  I-727/729/730.2  YOU" Q  ;explicit quit
+	S FAIL=FAIL+1 W !,"** FAIL  I-727/729/730.2  YOU next line" W:$Y>55 # Q
+	QUIT
+SIX66	;
+	S PASS=PASS+1 W !,"   PASS  I-727/729/730.3  SIX66"
+	;IMPLICIT QUIT

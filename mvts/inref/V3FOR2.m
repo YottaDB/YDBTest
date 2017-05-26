@@ -1,0 +1,70 @@
+V3FOR2 ;IW-KO-YS-TS,V3FOR,MVTS V9.10;15/6/96;PART-90
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1990-1996
+ ;
+ W !!,"22---V3FOR2: argumentless FOR command -2-"
+ ;
+1 S ^ABSN="30305",^ITEM="III-305  XECUTE command argument has duplicated argumentless FOR"
+ S ^NEXT="2^V3FOR2,V3HANG^VV3" D ^V3PRESET k
+ S ^VCOMP="",E=0
+ x "for  s ^VCOMP=^VCOMP_"" f"",E=E+1,N=0 q:E=4  f  s N=N+1,^VCOMP=^VCOMP_N q:N>4"
+ S ^VCORR=" f12345 f12345 f12345 f" D ^VEXAMINE
+ ;
+2 S ^ABSN="30306",^ITEM="III-306  FOR scope has XECUTE argument containing argumentless FOR"
+ S ^NEXT="3^V3FOR2,V3HANG^VV3" D ^V3PRESET
+ S ^VCOMP="",B=1
+ FOR  S N=0 X "F  S N=N+1 G:N=5 XECGOTO S ^VCOMP=^VCOMP_N"  S B=B+1 Q:B>3
+ S ^VCORR="1234 GOTO 1234 GOTO 1234 GOTO " D ^VEXAMINE
+ ;
+3 S ^ABSN="30307",^ITEM="III-307  FOR scope has FOR with parameters"
+ S ^NEXT="4^V3FOR2,V3HANG^VV3" D ^V3PRESET
+ S ^VCOMP="",N=0
+ F   S ^VCOMP=^VCOMP_" ",N=N+1 Q:N=4  F K="A","B",10:-1:5 S ^VCOMP=^VCOMP_K
+ S ^VCORR=" AB1098765 AB1098765 AB1098765 " D ^VEXAMINE
+ ;
+4 S ^ABSN="30308",^ITEM="III-308  FOR scope has IF command"
+ S ^NEXT="5^V3FOR2,V3HANG^VV3" D ^V3PRESET
+ S ^VCOMP="",N=1 if 0
+ for  S ^VCOMP=^VCOMP_N_$T_" ",N=N+1 if N=5 quit
+ S ^VCOMP=^VCOMP_"/"_$T
+ S ^VCORR="10 20 30 40 /1" D ^VEXAMINE
+ ;
+5 S ^ABSN="30309",^ITEM="III-309  Subroutine has argumentless FOR"
+ S ^NEXT="6^V3FOR2,V3HANG^VV3" D ^V3PRESET
+ S ^VCOMP="",N=1 D FORSUB
+ S ^VCORR="1 2 3 4 END" D ^VEXAMINE
+ ;
+6 S ^ABSN="30310",^ITEM="III-310  Nested FOR scope having internal GOTO command"
+ S ^NEXT="7^V3FOR2,V3HANG^VV3" D ^V3PRESET
+ S ^VCOMP="",N=1
+ for  S ^VCOMP=^VCOMP_N_"/",N=N+1 f  S ^VCOMP=^VCOMP_N_" ",N=N+1 Q:N#4=0  G:N>10 NESTG
+ S ^VCOMP=^VCOMP_"* error"
+NESTG ;
+ S ^VCORR="1/2 3 4/5 6 7 8/9 10 " D ^VEXAMINE
+ ;
+7 S ^ABSN="30311",^ITEM="III-311  Nested FOR scope having external GOTO command"
+ S ^NEXT="8^V3FOR2,V3HANG^VV3" D ^V3PRESET
+ S ^VCOMP="",N=1
+ for  S ^VCOMP=^VCOMP_N_"/",N=N+1 f  S ^VCOMP=^VCOMP_N_" ",N=N+1 Q:N#4=0  G:N>10 NESTG^V3FOREX
+ S ^VCOMP=^VCOMP_"* error"
+NESTGEX ;
+ S ^VCORR="1/2 3 4/5 6 7 8/9 10 " D ^VEXAMINE
+ ;
+8 S ^ABSN="30312",^ITEM="III-312  Nested FOR scope"
+ S ^NEXT="V3HANG^VV3" D ^V3PRESET
+ S ^VCOMP="",M=1
+ F  S N=0,^VCOMP=^VCOMP_"/"_M_" " Q:M>3  S M=M+1 F  S N=N+1 Q:N>3  S ^VCOMP=^VCOMP_N
+ S ^VCORR="/1 123/2 123/3 123/4 " D ^VEXAMINE
+ ;
+END W !!,"End of 22 --- V3FOR2",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q
+ ;
+FORSUB ;
+ for  s ^VCOMP=^VCOMP_N_" ",N=N+1 g:N=5 FORSUBG
+ s ^VCOMP=^VCOMP_"ERROR "
+FORSUBG s ^VCOMP=^VCOMP_"END" q
+ ;
+XECGOTO S ^VCOMP=^VCOMP_" GOTO " Q
+ ;

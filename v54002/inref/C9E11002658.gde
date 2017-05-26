@@ -1,0 +1,18 @@
+! C9E11002658.gde
+add -name a23456789012345678901234567890y -region=a
+add -region a -dynamic=a
+add -segment a -file=a.dat
+add -name a23456789012345678901234567890z -region=b
+add -region b -dynamic=b
+add -segment b -file=b.dat
+add -name b* -region=b
+verify
+log -on=C9E11002658_create.log
+show -map
+log -off
+setgd -File=other.gld
+setgd -quit -file=$gtmgbldir
+log -on=C9E11002658_reload.log
+show -map
+log -off
+exit

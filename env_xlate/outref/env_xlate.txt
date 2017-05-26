@@ -1,0 +1,374 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+a.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+gtm_env_translate is not defined
+
+GTM>
+
+GTM>
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+b.gld
+Using: ##SOURCE_PATH##/mupip
+b.dat
+
+GTM>
+
+GTM>
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+#########################################################################################
+gtm_env_translate is not defined. No environment translation.
+
+mumps.gld: THIS IS MUMPS
+a.gld: THIS IS A
+b.gld: THIS IS B
+a.gld: THIS IS A
+#########################################################################################
+gtm_env_translate is defined, but library does not exist.
+
+gtm_env_translate = ##TEST_PATH##/foo.bad
+PASSED
+#########################################################################################
+gtm_env_translate is defined, but there is no gtm_env_xlate function in it.
+
+##TEST_AWKgtm_env_translate = ##TEST_PATH##/liboops.(s.|dll)
+PASSED
+#########################################################################################
+A good DLL at last...
+
+##TEST_AWKgtm_env_translate = ##TEST_PATH##/libxlate.(s.|dll)
+0
+mumps.gld : THIS IS MUMPS
+a.gld     : THIS IS A
+a.gld     : THIS IS A
+a.gld     : THIS IS A
+mumps.gld : THIS IS MUMPS
+b.gld     : THIS IS B
+b.gld     : THIS IS B
+$ORDER(extref):1
+Try empty strings (should default to $ZGBLDIR
+$ZGBLDIR = ##TEST_PATH##/mumps.gld
+THIS IS MUMPS
+$ZGBLDIR = a
+THIS IS A
+Try $ZDIR
+$ZGBLDIR = a
+THIS IS MUMPS
+$ZGBLDIR = a
+THIS IS MUMPS
+Try a kill:
+Try empty strings (should default to $ZGBLDIR
+$ZGBLDIR = ##TEST_PATH##/mumps.gld
+THIS IS MUMPS
+$ZGBLDIR = a
+THIS IS A
+This will error: 
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$b.gld.  Retaining ##TEST_PATH##/mumps.gld.,%SYSTEM-E-ENO2, No such file or directory
+		At M source location err1^basic
+
+GTM>
+This will error: 
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/badgld.gld.  Retaining ##TEST_PATH##/mumps.gld.,%SYSTEM-E-ENO2, No such file or directory
+		At M source location err2^basic
+
+GTM>
+This will error with a message:
+%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, This is an error from gtm_env_xlate
+		At M source location err3+2^basic
+
+GTM>
+This will error without a message:
+%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm
+		At M source location err4+2^basic
+
+GTM>
+This will error with too long a return string (and success):  
+%GTM-E-XTRNRETVAL, Length of return value (33333) from extended reference translation algorithm is not in the range [0,32767]
+		At M source location err5+3^basic
+
+GTM>
+This will error without too long a return string (and error): 
+%GTM-E-XTRNRETVAL, Length of return value (33333) from extended reference translation algorithm is not in the range [0,32767]
+		At M source location err6^basic
+
+GTM>
+#########################################################################################
+Now the SQ translation routine
+
+##TEST_AWKgtm_env_translate = ##TEST_PATH##/libxlatesq.(s.|dll)
+mumps.gld
+The status of the link is:  0
+undefined environment variable (gtm_gblxlate)...
+^["/a/b/c","beowulf"]GBL= 
+%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot translate environment variable gtm_gblxlate
+		At M source location tsq+3^sq
+
+GTM>
+
+bad file name for gtm_gblxlate...
+gtm_gblxlate = ##IN_TEST_PATH##/inref/notthere.dat
+^["/a/b/c","beowulf"]GBL= 
+##SUSPEND_OUTPUT HOST_OS390_S390
+%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (2) - No such file or directory
+		At M source location tsq+3^sq
+
+GTM>
+^["/a/b/c","beowulf"]GBL= 
+%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (2) - No such file or directory
+		At M source location tsq+3^sq
+
+GTM>
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (129) - No such file or directory
+		At M source location tsq+3^sq
+
+GTM>
+^["/a/b/c","beowulf"]GBL= 
+%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (129) - No such file or directory
+		At M source location tsq+3^sq
+
+GTM>
+##ALLOW_OUTPUT HOST_ALL
+
+Now the correct gtm_gblxlate...
+gtm_gblxlate = ##IN_TEST_PATH##/inref/table.dat
+^["/a/b/c","emotehost"]GBL= 
+%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  No translation available
+		At M source location tsq+3^sq
+
+GTM>
+^["/b/c","beowulf"]GBL= 
+%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  No translation available
+		At M source location tsq+3^sq
+
+GTM>
+^["a/a/b/c","beowulf"]GBL= 
+%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  No translation available
+		At M source location tsq+3^sq
+
+GTM>
+^["/a/b/c","beowulf"]GBL= 
+THIS IS A
+^["/a/b/c","beowulf"]GBL= 
+THIS IS A
+===========================================
+string:
+THIS IS A
+variables:
+THIS IS A
+vara:/this/sample;var:lespaul
+indirection:
+THIS IS A
+functions:
+THIS IS A
+===========================================
+
+Now let's test an error - no-existent host
+
+gtm_gblxlate = ##IN_TEST_PATH##/inref/table_bad.dat
+^["/a/b/c","beowulf"]GBL= 
+%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Can't get IP address for host in /not/here
+		At M source location tsq+3^sq
+
+GTM>
+
+gtm_gblxlate = ##IN_TEST_PATH##/inref/table.dat
+Now let's test LOCKS...
+--LOCKS TESTING--
+$ZGBLDIR is: ##TEST_PATH##/mumps.gld
+.................TEST1.....................
+L +^["/a/b/c","beowulf"]GBL1:5
+$T=1
+L +["/a/b/c","beowulf"]LCL1:5
+$T=1
+ZSHOW "L":
+MLG:2,MLT:0
+LOCK LCL1 LEVEL=1
+LOCK ^GBL1 LEVEL=1
+Check with LKE...
+--------------
+mumps.gld
+%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+--------------
+a.gld
+
+DEFAULT
+##TEST_AWKLCL1 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.GBL1 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+--------------
+..done with lke...
+...........................................
+L +^GBL1:5
+$T:1
+L +LCL1:5
+$T:1
+ZSHOW should distinguish!!!!
+ZSHOW "L":
+MLG:4,MLT:0
+LOCK LCL1 LEVEL=1
+LOCK ^GBL1 LEVEL=1
+LOCK LCL1 LEVEL=1
+LOCK ^GBL1 LEVEL=1
+Check with LKE...
+--------------
+mumps.gld
+
+DEFAULT
+##TEST_AWKLCL1 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.GBL1 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+--------------
+a.gld
+
+DEFAULT
+##TEST_AWKLCL1 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.GBL1 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+--------------
+..done with lke...
+..............END OF TEST1.................
+Now start ^othloc...
+Waiting for ^othloc to finish step 1...
+^othloc finished step 1.
+.................TEST2.....................
+l
+ZSHOW "L":
+##TEST_AWKMLG.[0-9]*,MLT.[0-9]*
+..............END OF TEST2.................
+Released locks, waiting for ^othloc to finish step 2...
+.................TEST1.....................
+L +^["/a/b/c","beowulf"]GBL1:5
+$T=0
+L +["/a/b/c","beowulf"]LCL1:5
+$T=0
+ZSHOW "L":
+##TEST_AWKMLG.[0-9]*,MLT.[0-9]*
+LOCK ^locks2 LEVEL=1
+Check with LKE...
+--------------
+mumps.gld
+
+DEFAULT
+##TEST_AWKLCL1 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.GBL1 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.locks2 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.othloc1 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.othloc2 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+--------------
+a.gld
+
+DEFAULT
+##TEST_AWKLCL1 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.GBL1 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+--------------
+..done with lke...
+...........................................
+L +^GBL1:5
+$T:0
+L +LCL1:5
+$T:0
+ZSHOW should distinguish!!!!
+ZSHOW "L":
+##TEST_AWKMLG.[0-9]*,MLT.[0-9]*
+LOCK ^locks2 LEVEL=1
+Check with LKE...
+--------------
+mumps.gld
+
+DEFAULT
+##TEST_AWKLCL1 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.GBL1 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.locks2 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.othloc1 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.othloc2 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+--------------
+a.gld
+
+DEFAULT
+##TEST_AWKLCL1 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.GBL1 Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+--------------
+..done with lke...
+..............END OF TEST1.................
+--LOCKS TESTING END--
+
+#####################################################################################
+Output of the job (othloc.mjo):
+#####################################################################################
+Step 1 (I should not be able to get the locks)...
+.................TEST......................
+$ZGBLDIR: ##TEST_PATH##/mumps.gld
+ZSHOW:MLG:0,MLT:0
+-------------------
+l +^GBL1:5
+$T=0
+l +LCL1:5
+$T=0
+MLG:0,MLT:2
+L +^["/a/b/c","beowulf"]GBL1:5
+$T=0
+L +["/a/b/c","beowulf"]LCL1:5
+$T=0
+MLG:0,MLT:4
+..............END OF TEST..................
+step 1 finished
+Step 2 (I should get the locks)...
+.................TEST......................
+$ZGBLDIR: ##TEST_PATH##/mumps.gld
+##TEST_AWKZSHOW.MLG.[0-9]*,MLT.[0-9]*
+LOCK ^othloc1 LEVEL=1
+-------------------
+l +^GBL1:5
+$T=1
+l +LCL1:5
+$T=1
+##TEST_AWKMLG.[0-9]*,MLT.[0-9]*
+LOCK LCL1 LEVEL=1
+LOCK ^GBL1 LEVEL=1
+LOCK ^othloc1 LEVEL=1
+L +^["/a/b/c","beowulf"]GBL1:5
+$T=1
+L +["/a/b/c","beowulf"]LCL1:5
+$T=1
+##TEST_AWKMLG.[0-9]*,MLT.[0-9]*
+LOCK LCL1 LEVEL=1
+LOCK ^GBL1 LEVEL=1
+LOCK LCL1 LEVEL=1
+LOCK ^GBL1 LEVEL=1
+LOCK ^othloc1 LEVEL=1
+..............END OF TEST..................
+step 2 finished
+waiting for ^locks to finish step 3 (he should not get the locks)
+^othloc done.
+#####################################################################################
+^b=1
+^b(1)=11
+^b(1,1)=111
+^b(1,2)=112
+^b(2)=12
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ a.dat
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ b.dat
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ mumps.dat
+No errors detected by integ.

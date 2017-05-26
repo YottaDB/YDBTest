@@ -1,0 +1,1135 @@
+===============================================================
+--> itera("ALLOCATION=100:EXTENSION=100","WIDTH=50","",70)
+Test file: test1.txt 
+OPEN parameters:  ALLOCATION=100:EXTENSION=100
+USE parameters:   WIDTH=50
+CLOSE parameters: 
+write strings of length: 70
+-> OPEN "test1.txt":(NEWVERSION:ALLOCATION=100:EXTENSION=100)
+ZSHOW "D" output: test1.txt OPEN RMS 
+-> USE "test1.txt":(WIDTH=50)
+-> CLOSE "test1.txt"
+-> OPEN "test1.txt":(APPEND:ALLOCATION=100:EXTENSION=100)
+-> USE "test1.txt":(WIDTH=50)
+-> OPEN "test1.txt":(REWIND:ALLOCATION=100:EXTENSION=100)
+==== File information for file test1.txt:
+-rw-rw-r--   test1.txt
+===============================================================
+--> itera("ALLOCATION=1000:EXTENSION=1000","","",70)
+Test file: test2.txt 
+OPEN parameters:  ALLOCATION=1000:EXTENSION=1000
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 70
+-> OPEN "test2.txt":(NEWVERSION:ALLOCATION=1000:EXTENSION=1000)
+ZSHOW "D" output: test2.txt OPEN RMS 
+-> USE "test2.txt"
+-> CLOSE "test2.txt"
+-> OPEN "test2.txt":(APPEND:ALLOCATION=1000:EXTENSION=1000)
+-> USE "test2.txt"
+-> OPEN "test2.txt":(REWIND:ALLOCATION=1000:EXTENSION=1000)
+==== File information for file test2.txt:
+-rw-rw-r--   test2.txt
+===============================================================
+--> itera("ALLOCATION=100000:EXTENSION=100000","","",70)
+Test file: test3.txt 
+OPEN parameters:  ALLOCATION=100000:EXTENSION=100000
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 70
+-> OPEN "test3.txt":(NEWVERSION:ALLOCATION=100000:EXTENSION=100000)
+ZSHOW "D" output: test3.txt OPEN RMS 
+-> USE "test3.txt"
+-> CLOSE "test3.txt"
+-> OPEN "test3.txt":(APPEND:ALLOCATION=100000:EXTENSION=100000)
+-> USE "test3.txt"
+-> OPEN "test3.txt":(REWIND:ALLOCATION=100000:EXTENSION=100000)
+==== File information for file test3.txt:
+-rw-rw-r--   test3.txt
+===============================================================
+--> itera("EXTENSION=65535","WIDTH=50","",70)
+Test file: test4.txt 
+OPEN parameters:  EXTENSION=65535
+USE parameters:   WIDTH=50
+CLOSE parameters: 
+write strings of length: 70
+-> OPEN "test4.txt":(NEWVERSION:EXTENSION=65535)
+ZSHOW "D" output: test4.txt OPEN RMS 
+-> USE "test4.txt":(WIDTH=50)
+-> CLOSE "test4.txt"
+-> OPEN "test4.txt":(APPEND:EXTENSION=65535)
+-> USE "test4.txt":(WIDTH=50)
+-> OPEN "test4.txt":(REWIND:EXTENSION=65535)
+==== File information for file test4.txt:
+-rw-rw-r--   test4.txt
+===============================================================
+--> itera("EXTENSION=65536","WIDTH=50","",70)
+Test file: test5.txt 
+OPEN parameters:  EXTENSION=65536
+USE parameters:   WIDTH=50
+CLOSE parameters: 
+write strings of length: 70
+-> OPEN "test5.txt":(NEWVERSION:EXTENSION=65536)
+ZSHOW "D" output: test5.txt OPEN RMS 
+-> USE "test5.txt":(WIDTH=50)
+-> CLOSE "test5.txt"
+-> OPEN "test5.txt":(APPEND:EXTENSION=65536)
+-> USE "test5.txt":(WIDTH=50)
+-> OPEN "test5.txt":(REWIND:EXTENSION=65536)
+==== File information for file test5.txt:
+-rw-rw-r--   test5.txt
+===============================================================
+--> itera("EXTENSION=-1","","",70)
+Test file: test6.txt 
+OPEN parameters:  EXTENSION=-1
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 70
+-> OPEN "test6.txt":(NEWVERSION:EXTENSION=-1)
+ZSHOW "D" output: test6.txt OPEN RMS 
+-> USE "test6.txt"
+-> CLOSE "test6.txt"
+-> OPEN "test6.txt":(APPEND:EXTENSION=-1)
+-> USE "test6.txt"
+-> OPEN "test6.txt":(REWIND:EXTENSION=-1)
+==== File information for file test6.txt:
+-rw-rw-r--   test6.txt
+===============================================================
+--> itera("CONTIGUOUS","","",100)
+Test file: test7.txt 
+OPEN parameters:  CONTIGUOUS
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 100
+-> OPEN "test7.txt":(NEWVERSION:CONTIGUOUS)
+ZSHOW "D" output: test7.txt OPEN RMS 
+-> USE "test7.txt"
+-> CLOSE "test7.txt"
+-> OPEN "test7.txt":(APPEND:CONTIGUOUS)
+-> USE "test7.txt"
+-> OPEN "test7.txt":(REWIND:CONTIGUOUS)
+==== File information for file test7.txt:
+-rw-rw-r--   test7.txt
+===============================================================
+--> itera("RECORDSIZE=-1","","",1,FAIL)
+Test file: test8.txt 
+OPEN parameters:  RECORDSIZE=-1
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 1
+-> OPEN "test8.txt":(NEWVERSION:RECORDSIZE=-1)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
+--> itera("NEWVERSION:RECORDSIZE=-1","","",1,FAIL)
+150375962,open+10^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+9^filetest
+open+10^io
+    ($ZTRAP)
+itera+28^filetest
+filetest+23^filetest
+==== File information for file test8.txt:
+TEST-I-FNF, file is not found
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+===============================================================
+--> itera("RECORDSIZE=0","","",1,FAIL)
+Test file: test9.txt 
+OPEN parameters:  RECORDSIZE=0
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 1
+-> OPEN "test9.txt":(NEWVERSION:RECORDSIZE=0)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
+--> itera("NEWVERSION:RECORDSIZE=0","","",1,FAIL)
+150375962,open+10^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+9^filetest
+open+10^io
+    ($ZTRAP)
+itera+28^filetest
+filetest+24^filetest
+==== File information for file test9.txt:
+TEST-I-FNF, file is not found
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+===============================================================
+--> itera("RECORDSIZE=32767","","",1)
+Test file: test10.txt 
+OPEN parameters:  RECORDSIZE=32767
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 1
+-> OPEN "test10.txt":(NEWVERSION:RECORDSIZE=32767)
+ZSHOW "D" output: test10.txt OPEN RMS 
+-> USE "test10.txt"
+-> CLOSE "test10.txt"
+-> OPEN "test10.txt":(APPEND:RECORDSIZE=32767)
+-> USE "test10.txt"
+-> OPEN "test10.txt":(REWIND:RECORDSIZE=32767)
+==== File information for file test10.txt:
+-rw-rw-r--   test10.txt
+===============================================================
+--> itera("BIGRECORD:RECORDSIZE=32767","","",1)
+Test file: test11.txt 
+OPEN parameters:  BIGRECORD:RECORDSIZE=32767
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 1
+-> OPEN "test11.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=32767)
+ZSHOW "D" output: test11.txt OPEN RMS 
+-> USE "test11.txt"
+-> CLOSE "test11.txt"
+-> OPEN "test11.txt":(APPEND:BIGRECORD:RECORDSIZE=32767)
+-> USE "test11.txt"
+-> OPEN "test11.txt":(REWIND:BIGRECORD:RECORDSIZE=32767)
+==== File information for file test11.txt:
+-rw-rw-r--   test11.txt
+===============================================================
+--> itera("BIGRECORD:RECORDSIZE=1048576","","",1)
+Test file: test12.txt 
+OPEN parameters:  BIGRECORD:RECORDSIZE=1048576
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 1
+-> OPEN "test12.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=1048576)
+ZSHOW "D" output: test12.txt OPEN RMS REC=1048576 
+-> USE "test12.txt"
+-> CLOSE "test12.txt"
+-> OPEN "test12.txt":(APPEND:BIGRECORD:RECORDSIZE=1048576)
+-> USE "test12.txt"
+-> OPEN "test12.txt":(REWIND:BIGRECORD:RECORDSIZE=1048576)
+==== File information for file test12.txt:
+-rw-rw-r--   test12.txt
+===============================================================
+--> itera("BIGRECORD:RECORDSIZE=1048580","","",1,FAIL)
+Test file: test13.txt 
+OPEN parameters:  BIGRECORD:RECORDSIZE=1048580
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 1
+-> OPEN "test13.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=1048580)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
+--> itera("NEWVERSION:BIGRECORD:RECORDSIZE=1048580","","",1,FAIL)
+150376194,open+10^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+error+9^filetest
+open+10^io
+    ($ZTRAP)
+itera+28^filetest
+filetest+28^filetest
+==== File information for file test13.txt:
+TEST-I-FNF, file is not found
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+===============================================================
+--> itera("","LENGTH=-1","",1,FAIL)
+Test file: test14.txt 
+OPEN parameters:  
+USE parameters:   LENGTH=-1
+CLOSE parameters: 
+write strings of length: 1
+-> OPEN "test14.txt":(NEWVERSION)
+ZSHOW "D" output: test14.txt OPEN RMS 
+-> USE "test14.txt":(LENGTH=-1)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
+--> itera("","LENGTH=-1","",1,FAIL)
+150372658,use+6^io,%GTM-E-DEVPARMNEG, Deviceparameter must be a positive value
+error+9^filetest
+use+6^io
+    ($ZTRAP)
+itera+31^filetest
+filetest+29^filetest
+==== File information for file test14.txt:
+-rw-rw-r--   test14.txt
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+===============================================================
+--> itera("","LENGTH=0","",1)
+Test file: test15.txt 
+OPEN parameters:  
+USE parameters:   LENGTH=0
+CLOSE parameters: 
+write strings of length: 1
+-> OPEN "test15.txt":(NEWVERSION)
+ZSHOW "D" output: test15.txt OPEN RMS 
+-> USE "test15.txt":(LENGTH=0)
+-> CLOSE "test15.txt"
+-> OPEN "test15.txt":(APPEND)
+-> USE "test15.txt":(LENGTH=0)
+-> OPEN "test15.txt":(REWIND)
+==== File information for file test15.txt:
+-rw-rw-r--   test15.txt
+===============================================================
+--> itera("","LENGTH=32767","",1)
+Test file: test16.txt 
+OPEN parameters:  
+USE parameters:   LENGTH=32767
+CLOSE parameters: 
+write strings of length: 1
+-> OPEN "test16.txt":(NEWVERSION)
+ZSHOW "D" output: test16.txt OPEN RMS 
+-> USE "test16.txt":(LENGTH=32767)
+-> CLOSE "test16.txt"
+-> OPEN "test16.txt":(APPEND)
+-> USE "test16.txt":(LENGTH=32767)
+-> OPEN "test16.txt":(REWIND)
+==== File information for file test16.txt:
+-rw-rw-r--   test16.txt
+===============================================================
+--> itera("","LENGTH=1048576","",1)
+Test file: test17.txt 
+OPEN parameters:  
+USE parameters:   LENGTH=1048576
+CLOSE parameters: 
+write strings of length: 1
+-> OPEN "test17.txt":(NEWVERSION)
+ZSHOW "D" output: test17.txt OPEN RMS 
+-> USE "test17.txt":(LENGTH=1048576)
+-> CLOSE "test17.txt"
+-> OPEN "test17.txt":(APPEND)
+-> USE "test17.txt":(LENGTH=1048576)
+-> OPEN "test17.txt":(REWIND)
+==== File information for file test17.txt:
+-rw-rw-r--   test17.txt
+===============================================================
+--> itera("","LENGTH=1048580","",1)
+Test file: test18.txt 
+OPEN parameters:  
+USE parameters:   LENGTH=1048580
+CLOSE parameters: 
+write strings of length: 1
+-> OPEN "test18.txt":(NEWVERSION)
+ZSHOW "D" output: test18.txt OPEN RMS 
+-> USE "test18.txt":(LENGTH=1048580)
+-> CLOSE "test18.txt"
+-> OPEN "test18.txt":(APPEND)
+-> USE "test18.txt":(LENGTH=1048580)
+-> OPEN "test18.txt":(REWIND)
+==== File information for file test18.txt:
+-rw-rw-r--   test18.txt
+===============================================================
+--> itera("","WIDTH=-1","",1,FAIL)
+Test file: test19.txt 
+OPEN parameters:  
+USE parameters:   WIDTH=-1
+CLOSE parameters: 
+write strings of length: 1
+-> OPEN "test19.txt":(NEWVERSION)
+ZSHOW "D" output: test19.txt OPEN RMS 
+-> USE "test19.txt":(WIDTH=-1)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
+--> itera("","WIDTH=-1","",1,FAIL)
+150375962,use+6^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+9^filetest
+use+6^io
+    ($ZTRAP)
+itera+31^filetest
+filetest+34^filetest
+==== File information for file test19.txt:
+-rw-rw-r--   test19.txt
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+===============================================================
+--> itera("","WIDTH=0","",1,FAIL)
+Test file: test20.txt 
+OPEN parameters:  
+USE parameters:   WIDTH=0
+CLOSE parameters: 
+write strings of length: 1
+-> OPEN "test20.txt":(NEWVERSION)
+ZSHOW "D" output: test20.txt OPEN RMS 
+-> USE "test20.txt":(WIDTH=0)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
+--> itera("","WIDTH=0","",1,FAIL)
+150375962,use+6^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+9^filetest
+use+6^io
+    ($ZTRAP)
+itera+31^filetest
+filetest+35^filetest
+==== File information for file test20.txt:
+-rw-rw-r--   test20.txt
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+===============================================================
+--> itera("","WIDTH=32767","",1)
+Test file: test21.txt 
+OPEN parameters:  
+USE parameters:   WIDTH=32767
+CLOSE parameters: 
+write strings of length: 1
+-> OPEN "test21.txt":(NEWVERSION)
+ZSHOW "D" output: test21.txt OPEN RMS 
+-> USE "test21.txt":(WIDTH=32767)
+-> CLOSE "test21.txt"
+-> OPEN "test21.txt":(APPEND)
+-> USE "test21.txt":(WIDTH=32767)
+-> OPEN "test21.txt":(REWIND)
+==== File information for file test21.txt:
+-rw-rw-r--   test21.txt
+===============================================================
+--> itera("","WIDTH=1048576","",1)
+Test file: test22.txt 
+OPEN parameters:  
+USE parameters:   WIDTH=1048576
+CLOSE parameters: 
+write strings of length: 1
+-> OPEN "test22.txt":(NEWVERSION)
+ZSHOW "D" output: test22.txt OPEN RMS 
+-> USE "test22.txt":(WIDTH=1048576)
+-> CLOSE "test22.txt"
+-> OPEN "test22.txt":(APPEND)
+-> USE "test22.txt":(WIDTH=1048576)
+-> OPEN "test22.txt":(REWIND)
+==== File information for file test22.txt:
+-rw-rw-r--   test22.txt
+===============================================================
+--> itera("","WIDTH=1048580","",1,FAIL)
+Test file: test23.txt 
+OPEN parameters:  
+USE parameters:   WIDTH=1048580
+CLOSE parameters: 
+write strings of length: 1
+-> OPEN "test23.txt":(NEWVERSION)
+ZSHOW "D" output: test23.txt OPEN RMS 
+-> USE "test23.txt":(WIDTH=1048580)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
+--> itera("","WIDTH=1048580","",1,FAIL)
+150376194,use+6^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+error+9^filetest
+use+6^io
+    ($ZTRAP)
+itera+31^filetest
+filetest+38^filetest
+==== File information for file test23.txt:
+-rw-rw-r--   test23.txt
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+===============================================================
+--> itera("ALLOCATION=0:EXTENSION=0","","",1048)
+Test file: test24.txt 
+OPEN parameters:  ALLOCATION=0:EXTENSION=0
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 1048
+-> OPEN "test24.txt":(NEWVERSION:ALLOCATION=0:EXTENSION=0)
+ZSHOW "D" output: test24.txt OPEN RMS 
+-> USE "test24.txt"
+-> CLOSE "test24.txt"
+-> OPEN "test24.txt":(APPEND:ALLOCATION=0:EXTENSION=0)
+-> USE "test24.txt"
+-> OPEN "test24.txt":(REWIND:ALLOCATION=0:EXTENSION=0)
+File: test24.txt
+#l   $L(l)   l
+1    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2    46      ;;;;file open'd with: ALLOCATION=0:EXTENSION=0
+3    16      ;;;;use'd with: 
+4    1048    <20_ALPHABETalphabets>ABCDEFGH
+5    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+6    18      ;;;;append to file
+7    1048    <20_ALPHABETalphabets>ABCDEFGH
+8    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+==== File information for file test24.txt:
+-rw-rw-r--   test24.txt
+===============================================================
+--> itera("FIXED:RECORDSIZE=50","WIDTH=70","",70)
+Test file: test25.txt 
+OPEN parameters:  FIXED:RECORDSIZE=50
+USE parameters:   WIDTH=70
+CLOSE parameters: 
+write strings of length: 70
+-> OPEN "test25.txt":(NEWVERSION:FIXED:RECORDSIZE=50)
+ZSHOW "D" output: test25.txt OPEN RMS FIXED REC=50 
+-> USE "test25.txt":(WIDTH=70)
+-> CLOSE "test25.txt"
+-> OPEN "test25.txt":(APPEND:FIXED:RECORDSIZE=50)
+-> USE "test25.txt":(WIDTH=70)
+-> OPEN "test25.txt":(REWIND:FIXED:RECORDSIZE=50)
+File: test25.txt
+#l   $L(l)   l
+1    560     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                 ;;;;file o<...length=498...> 
+==== File information for file test25.txt:
+-rw-rw-r--   test25.txt
+===============================================================
+--> itera("FIXED:RECORDSIZE=70","WIDTH=50","",70)
+Test file: test26.txt 
+OPEN parameters:  FIXED:RECORDSIZE=70
+USE parameters:   WIDTH=50
+CLOSE parameters: 
+write strings of length: 70
+-> OPEN "test26.txt":(NEWVERSION:FIXED:RECORDSIZE=70)
+ZSHOW "D" output: test26.txt OPEN RMS FIXED REC=70 
+-> USE "test26.txt":(WIDTH=50)
+-> CLOSE "test26.txt"
+-> OPEN "test26.txt":(APPEND:FIXED:RECORDSIZE=70)
+-> USE "test26.txt":(WIDTH=50)
+-> OPEN "test26.txt":(REWIND:FIXED:RECORDSIZE=70)
+File: test26.txt
+#l   $L(l)   l
+1    650     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                           <...length=588...> 
+==== File information for file test26.txt:
+-rw-rw-r--   test26.txt
+===============================================================
+--> itera("FIXED:RECORDSIZE=100","WIDTH=100","",100)
+Test file: test27.txt 
+OPEN parameters:  FIXED:RECORDSIZE=100
+USE parameters:   WIDTH=100
+CLOSE parameters: 
+write strings of length: 100
+-> OPEN "test27.txt":(NEWVERSION:FIXED:RECORDSIZE=100)
+ZSHOW "D" output: test27.txt OPEN RMS FIXED REC=100 
+-> USE "test27.txt":(WIDTH=100)
+-> CLOSE "test27.txt"
+-> OPEN "test27.txt":(APPEND:FIXED:RECORDSIZE=100)
+-> USE "test27.txt":(WIDTH=100)
+-> OPEN "test27.txt":(REWIND:FIXED:RECORDSIZE=100)
+File: test27.txt
+#l   $L(l)   l
+1    800     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                           <...length=738...> 
+==== File information for file test27.txt:
+-rw-rw-r--   test27.txt
+===============================================================
+--> itera("FIXED:BIGRECORD:RECORDSIZE=1048576","WIDTH=1048576","",1048576)
+Test file: test28.txt 
+OPEN parameters:  FIXED:BIGRECORD:RECORDSIZE=1048576
+USE parameters:   WIDTH=1048576
+CLOSE parameters: 
+write strings of length: 1048576
+-> OPEN "test28.txt":(NEWVERSION:FIXED:BIGRECORD:RECORDSIZE=1048576)
+ZSHOW "D" output: test28.txt OPEN RMS FIXED REC=1048576 
+-> USE "test28.txt":(WIDTH=1048576)
+-> CLOSE "test28.txt"
+-> OPEN "test28.txt":(APPEND:FIXED:BIGRECORD:RECORDSIZE=1048576)
+-> USE "test28.txt":(WIDTH=1048576)
+-> OPEN "test28.txt":(REWIND:FIXED:BIGRECORD:RECORDSIZE=1048576)
+File: test28.txt
+#l   $L(l)   l
+1    1048576 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                           <...length=1048576...> 
+2    1048576 ;;;;file open'd with: FIXED:BIGRECORD:RECORDSIZE=1048576                        <...length=1048576...> 
+3    1048576 ;;;;use'd with: WIDTH=1048576                                                   <...length=1048576...> 
+4    1048576 <20164_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv
+5    1048576 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                           <...length=1048576...> 
+6    1048576 ;;;;append to file                                                              <...length=1048576...> 
+7    1048576 <20164_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv
+8    1048576 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                           <...length=1048576...> 
+==== File information for file test28.txt:
+-rw-rw-r--   test28.txt
+===============================================================
+--> itera("BIGRECORD:RECORDSIZE=32768","WIDTH=32768","",32768)
+Test file: test29.txt 
+OPEN parameters:  BIGRECORD:RECORDSIZE=32768
+USE parameters:   WIDTH=32768
+CLOSE parameters: 
+write strings of length: 32768
+-> OPEN "test29.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=32768)
+ZSHOW "D" output: test29.txt OPEN RMS REC=32768 
+-> USE "test29.txt":(WIDTH=32768)
+-> CLOSE "test29.txt"
+-> OPEN "test29.txt":(APPEND:BIGRECORD:RECORDSIZE=32768)
+-> USE "test29.txt":(WIDTH=32768)
+-> OPEN "test29.txt":(REWIND:BIGRECORD:RECORDSIZE=32768)
+File: test29.txt
+#l   $L(l)   l
+1    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2    48      ;;;;file open'd with: BIGRECORD:RECORDSIZE=32768
+3    27      ;;;;use'd with: WIDTH=32768
+4    32768   <630_ALPHABETalphabets>ABCDEFGH
+5    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+6    18      ;;;;append to file
+7    32768   <630_ALPHABETalphabets>ABCDEFGH
+8    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+==== File information for file test29.txt:
+-rw-rw-r--   test29.txt
+===============================================================
+--> itera("RECORDSIZE=1048576","WIDTH=1048576","",1048576)
+Test file: test30.txt 
+OPEN parameters:  RECORDSIZE=1048576
+USE parameters:   WIDTH=1048576
+CLOSE parameters: 
+write strings of length: 1048576
+-> OPEN "test30.txt":(NEWVERSION:RECORDSIZE=1048576)
+ZSHOW "D" output: test30.txt OPEN RMS REC=1048576 
+-> USE "test30.txt":(WIDTH=1048576)
+-> CLOSE "test30.txt"
+-> OPEN "test30.txt":(APPEND:RECORDSIZE=1048576)
+-> USE "test30.txt":(WIDTH=1048576)
+-> OPEN "test30.txt":(REWIND:RECORDSIZE=1048576)
+File: test30.txt
+#l   $L(l)   l
+1    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2    40      ;;;;file open'd with: RECORDSIZE=1048576
+3    29      ;;;;use'd with: WIDTH=1048576
+4    1048576 <20164_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv
+5    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+6    18      ;;;;append to file
+7    1048576 <20164_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv
+8    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+===============================================================
+--> itera("BIGRECORD:RECORDSIZE=1048576","WIDTH=1048576","",1048576)
+Test file: test31.txt 
+OPEN parameters:  BIGRECORD:RECORDSIZE=1048576
+USE parameters:   WIDTH=1048576
+CLOSE parameters: 
+write strings of length: 1048576
+-> OPEN "test31.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=1048576)
+ZSHOW "D" output: test31.txt OPEN RMS REC=1048576 
+-> USE "test31.txt":(WIDTH=1048576)
+-> CLOSE "test31.txt"
+-> OPEN "test31.txt":(APPEND:BIGRECORD:RECORDSIZE=1048576)
+-> USE "test31.txt":(WIDTH=1048576)
+-> OPEN "test31.txt":(REWIND:BIGRECORD:RECORDSIZE=1048576)
+File: test31.txt
+#l   $L(l)   l
+1    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2    50      ;;;;file open'd with: BIGRECORD:RECORDSIZE=1048576
+3    29      ;;;;use'd with: WIDTH=1048576
+4    1048576 <20164_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv
+5    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+6    18      ;;;;append to file
+7    1048576 <20164_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv
+8    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+===============================================================
+--> itera("RECORDSIZE=32767","WIDTH=32767","",32767)
+Test file: test32.txt 
+OPEN parameters:  RECORDSIZE=32767
+USE parameters:   WIDTH=32767
+CLOSE parameters: 
+write strings of length: 32767
+-> OPEN "test32.txt":(NEWVERSION:RECORDSIZE=32767)
+ZSHOW "D" output: test32.txt OPEN RMS 
+-> USE "test32.txt":(WIDTH=32767)
+-> CLOSE "test32.txt"
+-> OPEN "test32.txt":(APPEND:RECORDSIZE=32767)
+-> USE "test32.txt":(WIDTH=32767)
+-> OPEN "test32.txt":(REWIND:RECORDSIZE=32767)
+File: test32.txt
+#l   $L(l)   l
+1    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2    38      ;;;;file open'd with: RECORDSIZE=32767
+3    27      ;;;;use'd with: WIDTH=32767
+4    32767   <630_ALPHABETalphabets>ABCDEFG
+5    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+6    18      ;;;;append to file
+7    32767   <630_ALPHABETalphabets>ABCDEFG
+8    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+===============================================================
+--> itera("BIGRECORD:RECORDSIZE=1048576","WIDTH=1048576","",1048576)
+Test file: test33.txt 
+OPEN parameters:  BIGRECORD:RECORDSIZE=1048576
+USE parameters:   WIDTH=1048576
+CLOSE parameters: 
+write strings of length: 1048576
+-> OPEN "test33.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=1048576)
+ZSHOW "D" output: test33.txt OPEN RMS REC=1048576 
+-> USE "test33.txt":(WIDTH=1048576)
+-> CLOSE "test33.txt"
+-> OPEN "test33.txt":(APPEND:BIGRECORD:RECORDSIZE=1048576)
+-> USE "test33.txt":(WIDTH=1048576)
+-> OPEN "test33.txt":(REWIND:BIGRECORD:RECORDSIZE=1048576)
+File: test33.txt
+#l   $L(l)   l
+1    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2    50      ;;;;file open'd with: BIGRECORD:RECORDSIZE=1048576
+3    29      ;;;;use'd with: WIDTH=1048576
+4    1048576 <20164_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv
+5    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+6    18      ;;;;append to file
+7    1048576 <20164_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv
+8    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+===============================================================
+--> itera("VARIABLE:RECORDSIZE=70","WIDTH=50","",70)
+Test file: test34.txt 
+OPEN parameters:  VARIABLE:RECORDSIZE=70
+USE parameters:   WIDTH=50
+CLOSE parameters: 
+write strings of length: 70
+-> OPEN "test34.txt":(NEWVERSION:VARIABLE:RECORDSIZE=70)
+ZSHOW "D" output: test34.txt OPEN RMS REC=70 
+-> USE "test34.txt":(WIDTH=50)
+-> CLOSE "test34.txt"
+-> OPEN "test34.txt":(APPEND:VARIABLE:RECORDSIZE=70)
+-> USE "test34.txt":(WIDTH=50)
+-> OPEN "test34.txt":(REWIND:VARIABLE:RECORDSIZE=70)
+File: test34.txt
+#l   $L(l)   l
+1    50      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2    3       ;;;
+3    44      ;;;;file open'd with: VARIABLE:RECORDSIZE=70
+4    24      ;;;;use'd with: WIDTH=50
+5    50      ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx
+6    20      yzABCDEFGHIJKLMNOPQR
+7    50      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+8    3       ;;;
+9    18      ;;;;append to file
+10   50      ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx
+11   20      yzABCDEFGHIJKLMNOPQR
+12   50      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+13   3       ;;;
+===============================================================
+--> itera("RECORDSIZE=70","WIDTH=50","",70)
+Test file: test35.txt 
+OPEN parameters:  RECORDSIZE=70
+USE parameters:   WIDTH=50
+CLOSE parameters: 
+write strings of length: 70
+-> OPEN "test35.txt":(NEWVERSION:RECORDSIZE=70)
+ZSHOW "D" output: test35.txt OPEN RMS REC=70 
+-> USE "test35.txt":(WIDTH=50)
+-> CLOSE "test35.txt"
+-> OPEN "test35.txt":(APPEND:RECORDSIZE=70)
+-> USE "test35.txt":(WIDTH=50)
+-> OPEN "test35.txt":(REWIND:RECORDSIZE=70)
+File: test35.txt
+#l   $L(l)   l
+1    50      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2    3       ;;;
+3    35      ;;;;file open'd with: RECORDSIZE=70
+4    24      ;;;;use'd with: WIDTH=50
+5    50      ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx
+6    20      yzABCDEFGHIJKLMNOPQR
+7    50      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+8    3       ;;;
+9    18      ;;;;append to file
+10   50      ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx
+11   20      yzABCDEFGHIJKLMNOPQR
+12   50      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+13   3       ;;;
+===============================================================
+--> itera("BIGRECORD:RECORDSIZE=1048576","WIDTH=50","",60)
+Test file: test36.txt 
+OPEN parameters:  BIGRECORD:RECORDSIZE=1048576
+USE parameters:   WIDTH=50
+CLOSE parameters: 
+write strings of length: 60
+-> OPEN "test36.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=1048576)
+ZSHOW "D" output: test36.txt OPEN RMS REC=1048576 
+-> USE "test36.txt":(WIDTH=50)
+-> CLOSE "test36.txt"
+-> OPEN "test36.txt":(APPEND:BIGRECORD:RECORDSIZE=1048576)
+-> USE "test36.txt":(WIDTH=50)
+-> OPEN "test36.txt":(REWIND:BIGRECORD:RECORDSIZE=1048576)
+File: test36.txt
+#l   $L(l)   l
+1    50      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2    3       ;;;
+3    50      ;;;;file open'd with: BIGRECORD:RECORDSIZE=1048576
+4    24      ;;;;use'd with: WIDTH=50
+5    50      ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx
+6    10      yzABCDEFGH
+7    50      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+8    3       ;;;
+9    18      ;;;;append to file
+10   50      ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx
+11   10      yzABCDEFGH
+12   50      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+13   3       ;;;
+===============================================================
+--> itera("RECORDSIZE=70","WIDTH=50","",70)
+Test file: test37.txt 
+OPEN parameters:  RECORDSIZE=70
+USE parameters:   WIDTH=50
+CLOSE parameters: 
+write strings of length: 70
+-> OPEN "test37.txt":(NEWVERSION:RECORDSIZE=70)
+ZSHOW "D" output: test37.txt OPEN RMS REC=70 
+-> USE "test37.txt":(WIDTH=50)
+-> CLOSE "test37.txt"
+-> OPEN "test37.txt":(APPEND:RECORDSIZE=70)
+-> USE "test37.txt":(WIDTH=50)
+-> OPEN "test37.txt":(REWIND:RECORDSIZE=70)
+File: test37.txt
+#l   $L(l)   l
+1    50      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2    3       ;;;
+3    35      ;;;;file open'd with: RECORDSIZE=70
+4    24      ;;;;use'd with: WIDTH=50
+5    50      ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx
+6    20      yzABCDEFGHIJKLMNOPQR
+7    50      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+8    3       ;;;
+9    18      ;;;;append to file
+10   50      ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx
+11   20      yzABCDEFGHIJKLMNOPQR
+12   50      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+13   3       ;;;
+===============================================================
+--> itera("RECORDSIZE=70:RECORDSIZE=60","WRAP:NOWRAP","",80)
+Test file: test38.txt 
+OPEN parameters:  RECORDSIZE=70:RECORDSIZE=60
+USE parameters:   WRAP:NOWRAP
+CLOSE parameters: 
+write strings of length: 80
+-> OPEN "test38.txt":(NEWVERSION:RECORDSIZE=70:RECORDSIZE=60)
+ZSHOW "D" output: test38.txt OPEN RMS REC=60 
+-> USE "test38.txt":(WRAP:NOWRAP)
+-> CLOSE "test38.txt"
+-> OPEN "test38.txt":(APPEND:RECORDSIZE=70:RECORDSIZE=60)
+-> USE "test38.txt":(WRAP:NOWRAP)
+-> OPEN "test38.txt":(REWIND:RECORDSIZE=70:RECORDSIZE=60)
+File: test38.txt
+#l   $L(l)   l
+1    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2    49      ;;;;file open'd with: RECORDSIZE=70:RECORDSIZE=60
+3    27      ;;;;use'd with: WRAP:NOWRAP
+4    60      <1_ALPHABETalphabets>ABCDEFGH
+5    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+6    18      ;;;;append to file
+7    60      <1_ALPHABETalphabets>ABCDEFGH
+8    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+===============================================================
+--> itera("RECORDSIZE=70:WRAP","WIDTH=70","",80)
+Test file: test39.txt 
+OPEN parameters:  RECORDSIZE=70:WRAP
+USE parameters:   WIDTH=70
+CLOSE parameters: 
+write strings of length: 80
+-> OPEN "test39.txt":(NEWVERSION:RECORDSIZE=70:WRAP)
+ZSHOW "D" output: test39.txt OPEN RMS REC=70 
+-> USE "test39.txt":(WIDTH=70)
+-> CLOSE "test39.txt"
+-> OPEN "test39.txt":(APPEND:RECORDSIZE=70:WRAP)
+-> USE "test39.txt":(WIDTH=70)
+-> OPEN "test39.txt":(REWIND:RECORDSIZE=70:WRAP)
+File: test39.txt
+#l   $L(l)   l
+1    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2    40      ;;;;file open'd with: RECORDSIZE=70:WRAP
+3    24      ;;;;use'd with: WIDTH=70
+4    70      <1_ALPHABETalphabets>ABCDEFGHIJKLMNOPQR
+5    10      STUVWXYZab
+6    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+7    18      ;;;;append to file
+8    70      <1_ALPHABETalphabets>ABCDEFGHIJKLMNOPQR
+9    10      STUVWXYZab
+10   53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+===============================================================
+--> itera("RECORDSIZE=70:NOWRAP","WIDTH=70","",80)
+Test file: test40.txt 
+OPEN parameters:  RECORDSIZE=70:NOWRAP
+USE parameters:   WIDTH=70
+CLOSE parameters: 
+write strings of length: 80
+-> OPEN "test40.txt":(NEWVERSION:RECORDSIZE=70:NOWRAP)
+ZSHOW "D" output: test40.txt OPEN RMS REC=70 NOWRAP 
+-> USE "test40.txt":(WIDTH=70)
+-> CLOSE "test40.txt"
+-> OPEN "test40.txt":(APPEND:RECORDSIZE=70:NOWRAP)
+-> USE "test40.txt":(WIDTH=70)
+-> OPEN "test40.txt":(REWIND:RECORDSIZE=70:NOWRAP)
+File: test40.txt
+#l   $L(l)   l
+1    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2    42      ;;;;file open'd with: RECORDSIZE=70:NOWRAP
+3    24      ;;;;use'd with: WIDTH=70
+4    70      <1_ALPHABETalphabets>ABCDEFGHIJKLMNOPQR
+5    10      STUVWXYZab
+6    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+7    18      ;;;;append to file
+8    70      <1_ALPHABETalphabets>ABCDEFGHIJKLMNOPQR
+9    10      STUVWXYZab
+10   53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+===============================================================
+--> itera("RECORDSIZE=70:WRAP","WIDTH=70:WRAP","",80)
+Test file: test41.txt 
+OPEN parameters:  RECORDSIZE=70:WRAP
+USE parameters:   WIDTH=70:WRAP
+CLOSE parameters: 
+write strings of length: 80
+-> OPEN "test41.txt":(NEWVERSION:RECORDSIZE=70:WRAP)
+ZSHOW "D" output: test41.txt OPEN RMS REC=70 
+-> USE "test41.txt":(WIDTH=70:WRAP)
+-> CLOSE "test41.txt"
+-> OPEN "test41.txt":(APPEND:RECORDSIZE=70:WRAP)
+-> USE "test41.txt":(WIDTH=70:WRAP)
+-> OPEN "test41.txt":(REWIND:RECORDSIZE=70:WRAP)
+File: test41.txt
+#l   $L(l)   l
+1    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2    40      ;;;;file open'd with: RECORDSIZE=70:WRAP
+3    29      ;;;;use'd with: WIDTH=70:WRAP
+4    70      <1_ALPHABETalphabets>ABCDEFGHIJKLMNOPQR
+5    10      STUVWXYZab
+6    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+7    18      ;;;;append to file
+8    70      <1_ALPHABETalphabets>ABCDEFGHIJKLMNOPQR
+9    10      STUVWXYZab
+10   53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+===============================================================
+--> itera("RECORDSIZE=70","WIDTH=70:NOWRAP","",80)
+Test file: test42.txt 
+OPEN parameters:  RECORDSIZE=70
+USE parameters:   WIDTH=70:NOWRAP
+CLOSE parameters: 
+write strings of length: 80
+-> OPEN "test42.txt":(NEWVERSION:RECORDSIZE=70)
+ZSHOW "D" output: test42.txt OPEN RMS REC=70 
+-> USE "test42.txt":(WIDTH=70:NOWRAP)
+-> CLOSE "test42.txt"
+-> OPEN "test42.txt":(APPEND:RECORDSIZE=70)
+-> USE "test42.txt":(WIDTH=70:NOWRAP)
+-> OPEN "test42.txt":(REWIND:RECORDSIZE=70)
+File: test42.txt
+#l   $L(l)   l
+1    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2    35      ;;;;file open'd with: RECORDSIZE=70
+3    31      ;;;;use'd with: WIDTH=70:NOWRAP
+4    70      <1_ALPHABETalphabets>ABCDEFGHIJKLMNOPQR
+5    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+6    18      ;;;;append to file
+7    70      <1_ALPHABETalphabets>ABCDEFGHIJKLMNOPQR
+8    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+===============================================================
+--> itera("BIGRECORD:RECORDSIZE=1048575","WIDTH=1048575","",1048576)
+Test file: test43.txt 
+OPEN parameters:  BIGRECORD:RECORDSIZE=1048575
+USE parameters:   WIDTH=1048575
+CLOSE parameters: 
+write strings of length: 1048576
+-> OPEN "test43.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=1048575)
+ZSHOW "D" output: test43.txt OPEN RMS REC=1048575 
+-> USE "test43.txt":(WIDTH=1048575)
+-> CLOSE "test43.txt"
+-> OPEN "test43.txt":(APPEND:BIGRECORD:RECORDSIZE=1048575)
+-> USE "test43.txt":(WIDTH=1048575)
+-> OPEN "test43.txt":(REWIND:BIGRECORD:RECORDSIZE=1048575)
+File: test43.txt
+#l   $L(l)   l
+1    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2    50      ;;;;file open'd with: BIGRECORD:RECORDSIZE=1048575
+3    29      ;;;;use'd with: WIDTH=1048575
+4    1048575 <20164_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstu
+5    1       v
+6    53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+7    18      ;;;;append to file
+8    1048575 <20164_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstu
+9    1       v
+10   53      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+===============================================================
+--> itera("GROUP","","",10,FAIL)
+Test file: test44.txt 
+OPEN parameters:  GROUP
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 10
+-> OPEN "test44.txt":(NEWVERSION:GROUP)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
+--> itera("NEWVERSION:GROUP","","",10,FAIL)
+150372650,open+10^io,%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+error+9^filetest
+open+10^io
+    ($ZTRAP)
+itera+28^filetest
+filetest+69^filetest
+==== File information for file test44.txt:
+TEST-I-FNF, file is not found
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+===============================================================
+--> itera("SYSTEM=badperm","","",10,FAIL)
+Test file: test45.txt 
+OPEN parameters:  SYSTEM=badperm
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 10
+-> OPEN "test45.txt":(NEWVERSION:SYSTEM=badperm)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
+--> itera("NEWVERSION:SYSTEM=badperm","","",10,FAIL)
+150372610,open+10^io,%GTM-E-DEVPARPROT, The protection specification is invalid
+error+9^filetest
+open+10^io
+    ($ZTRAP)
+itera+28^filetest
+filetest+71^filetest
+==== File information for file test45.txt:
+TEST-I-FNF, file is not found
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+===============================================================
+--> itera("OWNER=badperm","","",10,FAIL)
+Test file: test46.txt 
+OPEN parameters:  OWNER=badperm
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 10
+-> OPEN "test46.txt":(NEWVERSION:OWNER=badperm)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
+--> itera("NEWVERSION:OWNER=badperm","","",10,FAIL)
+150372610,open+10^io,%GTM-E-DEVPARPROT, The protection specification is invalid
+error+9^filetest
+open+10^io
+    ($ZTRAP)
+itera+28^filetest
+filetest+72^filetest
+==== File information for file test46.txt:
+TEST-I-FNF, file is not found
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+===============================================================
+--> itera("GROUP=badperm","","",10,FAIL)
+Test file: test47.txt 
+OPEN parameters:  GROUP=badperm
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 10
+-> OPEN "test47.txt":(NEWVERSION:GROUP=badperm)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
+--> itera("NEWVERSION:GROUP=badperm","","",10,FAIL)
+150372610,open+10^io,%GTM-E-DEVPARPROT, The protection specification is invalid
+error+9^filetest
+open+10^io
+    ($ZTRAP)
+itera+28^filetest
+filetest+73^filetest
+==== File information for file test47.txt:
+TEST-I-FNF, file is not found
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+===============================================================
+--> itera("WORLD=badperm","","",10,FAIL)
+Test file: test48.txt 
+OPEN parameters:  WORLD=badperm
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 10
+-> OPEN "test48.txt":(NEWVERSION:WORLD=badperm)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
+--> itera("NEWVERSION:WORLD=badperm","","",10,FAIL)
+150372610,open+10^io,%GTM-E-DEVPARPROT, The protection specification is invalid
+error+9^filetest
+open+10^io
+    ($ZTRAP)
+itera+28^filetest
+filetest+74^filetest
+==== File information for file test48.txt:
+TEST-I-FNF, file is not found
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+===============================================================
+--> itera("SYSTEM="r":OWNER=ro:GROUP=ro:WORLD=ro","","",10,FAIL)
+Test file: test49.txt 
+OPEN parameters:  SYSTEM="r":OWNER=ro:GROUP=ro:WORLD=ro
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 10
+-> OPEN "test49.txt":(NEWVERSION:SYSTEM="r":OWNER=ro:GROUP=ro:WORLD=ro)
+ZSHOW "D" output: test49.txt OPEN RMS 
+-> USE "test49.txt"
+-> CLOSE "test49.txt"
+-> OPEN "test49.txt":(APPEND:SYSTEM="r":OWNER=ro:GROUP=ro:WORLD=ro)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
+--> itera("APPEND:SYSTEM="r":OWNER=ro:GROUP=ro:WORLD=ro","","",10,FAIL)
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+111,open+10^io,%SYSTEM-E-ENO111, EDC5111I Permission denied.
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+13,open+10^io,%SYSTEM-E-ENO13, Permission denied
+##ALLOW_OUTPUT HOST_OS390_S390
+error+9^filetest
+open+10^io
+    ($ZTRAP)
+itera+38^filetest
+filetest+76^filetest
+==== File information for file test49.txt:
+-r--r--r--   test49.txt
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+===============================================================
+--> itera("","","SYSTEM="r":OWNER="rw":GROUP=ro:WORLD=ro",10)
+Test file: test50.txt 
+OPEN parameters:  
+USE parameters:   
+CLOSE parameters: SYSTEM="r":OWNER="rw":GROUP=ro:WORLD=ro
+write strings of length: 10
+-> OPEN "test50.txt":(NEWVERSION)
+ZSHOW "D" output: test50.txt OPEN RMS 
+-> USE "test50.txt"
+-> CLOSE "test50.txt":(SYSTEM="r":OWNER="rw":GROUP=ro:WORLD=ro)
+-> OPEN "test50.txt":(APPEND)
+-> USE "test50.txt"
+-> OPEN "test50.txt":(REWIND)
+==== File information for file test50.txt:
+-rw-r--r--   test50.txt
+===============================================================
+--> itera("SYSTEM=rwxd:OWNER=rwxd:GROUP=rwxd:WORLD=rwxd","","SYSTEM=rwxd:OWNER=rwxd:GROUP=rwxd:WORLD=rwxd",10)
+Test file: test51.txt 
+OPEN parameters:  SYSTEM=rwxd:OWNER=rwxd:GROUP=rwxd:WORLD=rwxd
+USE parameters:   
+CLOSE parameters: SYSTEM=rwxd:OWNER=rwxd:GROUP=rwxd:WORLD=rwxd
+write strings of length: 10
+-> OPEN "test51.txt":(NEWVERSION:SYSTEM=rwxd:OWNER=rwxd:GROUP=rwxd:WORLD=rwxd)
+ZSHOW "D" output: test51.txt OPEN RMS 
+-> USE "test51.txt"
+-> CLOSE "test51.txt":(SYSTEM=rwxd:OWNER=rwxd:GROUP=rwxd:WORLD=rwxd)
+-> OPEN "test51.txt":(APPEND:SYSTEM=rwxd:OWNER=rwxd:GROUP=rwxd:WORLD=rwxd)
+-> USE "test51.txt"
+-> OPEN "test51.txt":(REWIND:SYSTEM=rwxd:OWNER=rwxd:GROUP=rwxd:WORLD=rwxd)
+==== File information for file test51.txt:
+-rwxrwxrwx   test51.txt
+===============================================================
+--> itera("OWNER="rw"","","GROUP="r":WORLD="rwx"",10)
+Test file: test52.txt 
+OPEN parameters:  OWNER="rw"
+USE parameters:   
+CLOSE parameters: GROUP="r":WORLD="rwx"
+write strings of length: 10
+-> OPEN "test52.txt":(NEWVERSION:OWNER="rw")
+ZSHOW "D" output: test52.txt OPEN RMS 
+-> USE "test52.txt"
+-> CLOSE "test52.txt":(GROUP="r":WORLD="rwx")
+-> OPEN "test52.txt":(APPEND:OWNER="rw")
+-> USE "test52.txt"
+-> OPEN "test52.txt":(REWIND:OWNER="rw")
+==== File information for file test52.txt:
+-rw-r--rwx   test52.txt
+===============================================================
+--> itera("READONLY","","",10,FAIL)
+Test file: test53.txt 
+OPEN parameters:  READONLY
+USE parameters:   
+CLOSE parameters: 
+write strings of length: 10
+-> OPEN "test53.txt":(NEWVERSION:READONLY)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
+--> itera("NEWVERSION:READONLY","","",10,FAIL)
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+121,open+10^io,%SYSTEM-E-ENO121, EDC5121I Invalid argument.
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+2,open+10^io,%SYSTEM-E-ENO2, No such file or directory
+##ALLOW_OUTPUT HOST_OS390_S390
+error+9^filetest
+open+10^io
+    ($ZTRAP)
+itera+28^filetest
+filetest+83^filetest
+==== File information for file test53.txt:
+TEST-I-FNF, file is not found
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

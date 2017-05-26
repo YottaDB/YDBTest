@@ -1,0 +1,2970 @@
+##SUSPEND_OUTPUT UNICODE_MODE
+######################################################################
+------------------------ Compiling profile1.m ------------------------
+
+------------------------ Checking if .o file was created profile1.m ------------------------
+profile1.o
+
+------------------------ Running   profile1.m ------------------------
+150373850,+2^profile1,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile2.m ------------------------
+
+------------------------ Checking if .o file was created profile2.m ------------------------
+profile2.o
+
+------------------------ Running   profile2.m ------------------------
+150373850,+2^profile2,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile3.m ------------------------
+
+------------------------ Checking if .o file was created profile3.m ------------------------
+profile3.o
+
+------------------------ Running   profile3.m ------------------------
+150373850,+2^profile3,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile4.m ------------------------
+
+------------------------ Checking if .o file was created profile4.m ------------------------
+profile4.o
+
+------------------------ Running   profile4.m ------------------------
+150373850,+2^profile4,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile5.m ------------------------
+
+------------------------ Checking if .o file was created profile5.m ------------------------
+profile5.o
+
+------------------------ Running   profile5.m ------------------------
+150373850,+2^profile5,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile6.m ------------------------
+
+------------------------ Checking if .o file was created profile6.m ------------------------
+profile6.o
+
+------------------------ Running   profile6.m ------------------------
+150373850,+2^profile6,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile7.m ------------------------
+
+------------------------ Checking if .o file was created profile7.m ------------------------
+profile7.o
+
+------------------------ Running   profile7.m ------------------------
+150373850,+2^profile7,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile8.m ------------------------
+
+------------------------ Checking if .o file was created profile8.m ------------------------
+profile8.o
+
+------------------------ Running   profile8.m ------------------------
+150373850,+2^profile8,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile9.m ------------------------
+%GTM-E-LABELMISSING, Label referenced but not defined: VP1
+%GTM-I-SRCNAM, in source module ##TEST_PATH##/profile9.m
+
+------------------------ Checking if .o file was created profile9.m ------------------------
+profile9.o
+
+------------------------ Running   profile9.m ------------------------
+150373850,+2^profile9,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile10.m ------------------------
+
+------------------------ Checking if .o file was created profile10.m ------------------------
+profile10.o
+
+------------------------ Running   profile10.m ------------------------
+150373850,+2^profile10,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile11.m ------------------------
+
+------------------------ Checking if .o file was created profile11.m ------------------------
+profile11.o
+
+------------------------ Running   profile11.m ------------------------
+150373850,+2^profile11,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile12.m ------------------------
+
+------------------------ Checking if .o file was created profile12.m ------------------------
+profile12.o
+
+------------------------ Running   profile12.m ------------------------
+150373850,+2^profile12,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc1.m ------------------------
+	 write $x+$l(bb,2E22222222222222222222222233))
+	               ^-----
+		At column 16, line 2, source module ##TEST_PATH##/misc1.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc1.m ------------------------
+misc1.o
+
+------------------------ Running   misc1.m ------------------------
+150373506,+2^misc1,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc2.m ------------------------
+	 set VL=""_$J($piece(T(T),2E22222222222222222222222233,6),"")
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc2.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc2.m ------------------------
+misc2.o
+
+------------------------ Running   misc2.m ------------------------
+150373506,+2^misc2,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc3.m ------------------------
+	 set V="M"?@($MN("A",2E22222222222222222222222233)?.N)
+	              ^-----
+		At column 15, line 2, source module ##TEST_PATH##/misc3.m
+%GTM-E-INVFCN, Invalid function name
+	 set V="M"?@($MN("A",2E22222222222222222222222233)?.N)
+	                    ^-----
+		At column 21, line 2, source module ##TEST_PATH##/misc3.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc3.m ------------------------
+misc3.o
+
+------------------------ Running   misc3.m ------------------------
+150373506,+2^misc3,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc4.m ------------------------
+	 set V="M"?@($piece("A",2E22222222222222222222222233,$MN)?.N)
+	                       ^-----
+		At column 24, line 2, source module ##TEST_PATH##/misc4.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc4.m ------------------------
+misc4.o
+
+------------------------ Running   misc4.m ------------------------
+150373506,+2^misc4,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc5.m ------------------------
+	 set %=$x do $$^zu(x(x),@($piece($MN("A",2E22222222222222222222222233)?.N))
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc5.m
+%GTM-E-LABELEXPECTED, Label expected in this context
+
+------------------------ Checking if .o file was created misc5.m ------------------------
+misc5.o
+
+------------------------ Running   misc5.m ------------------------
+150373186,+2^misc5,%GTM-E-LABELEXPECTED, Label expected in this context
+
+######################################################################
+------------------------ Compiling misc6.m ------------------------
+	 set %=$x do @($piece($MN("A",2E22222222222222222222222233)?.N))
+	                       ^-----
+		At column 24, line 2, source module ##TEST_PATH##/misc6.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x do @($piece($MN("A",2E22222222222222222222222233)?.N))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc6.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc6.m ------------------------
+misc6.o
+
+------------------------ Running   misc6.m ------------------------
+150373506,+2^misc6,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc7.m ------------------------
+	 set %=$x do $zu(x(x),@($piece(2E22222222222222222222222233,2E22222222222222222222222233,$MN)?.N))
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc7.m
+%GTM-E-LABELEXPECTED, Label expected in this context
+
+------------------------ Checking if .o file was created misc7.m ------------------------
+misc7.o
+
+------------------------ Running   misc7.m ------------------------
+150373186,+2^misc7,%GTM-E-LABELEXPECTED, Label expected in this context
+
+######################################################################
+------------------------ Compiling misc8.m ------------------------
+	 set %=$x goto @($piece($MN("A",2E22222222222222222222222233)?.N))
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc8.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x goto @($piece($MN("A",2E22222222222222222222222233)?.N))
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc8.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc8.m ------------------------
+misc8.o
+
+------------------------ Running   misc8.m ------------------------
+150373506,+2^misc8,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc9.m ------------------------
+	 set %=$x goto @($piece($MN(2E22222222222222222222222233,2E22222222222222222222222233)?.N))
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc9.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x goto @($piece($MN(2E22222222222222222222222233,2E22222222222222222222222233)?.N))
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc9.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc9.m ------------------------
+misc9.o
+
+------------------------ Running   misc9.m ------------------------
+150373506,+2^misc9,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc10.m ------------------------
+	 set %=$x zgoto @($piece($MN("A",2E22222222222222222222222233)?.N))
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc10.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x zgoto @($piece($MN("A",2E22222222222222222222222233)?.N))
+	                                ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc10.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc10.m ------------------------
+misc10.o
+
+------------------------ Running   misc10.m ------------------------
+150373506,+2^misc10,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc11.m ------------------------
+	 set %=$x zgoto @($piece($MN(2E22222222222222222222222233,2E22222222222222222222222233)?.N))
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc11.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x zgoto @($piece($MN(2E22222222222222222222222233,2E22222222222222222222222233)?.N))
+	                            ^-----
+		At column 29, line 2, source module ##TEST_PATH##/misc11.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc11.m ------------------------
+misc11.o
+
+------------------------ Running   misc11.m ------------------------
+150373506,+2^misc11,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc12.m ------------------------
+	 set %=$x do $$^zu(x(x),@($piece("A",2E22222222222222222222222233,$MN)?.N))
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc12.m
+%GTM-E-LABELEXPECTED, Label expected in this context
+
+------------------------ Checking if .o file was created misc12.m ------------------------
+misc12.o
+
+------------------------ Running   misc12.m ------------------------
+150373186,+2^misc12,%GTM-E-LABELEXPECTED, Label expected in this context
+
+######################################################################
+------------------------ Compiling misc13.m ------------------------
+	 write $data(@($piece(x(x),2E22222222222222222222222233,$MN)?.N))
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc13.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc13.m ------------------------
+misc13.o
+
+------------------------ Running   misc13.m ------------------------
+150373506,+2^misc13,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc14.m ------------------------
+	 write $data(@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
+	                            ^-----
+		At column 29, line 2, source module ##TEST_PATH##/misc14.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $data(@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
+	                              ^-----
+		At column 31, line 2, source module ##TEST_PATH##/misc14.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc14.m ------------------------
+misc14.o
+
+------------------------ Running   misc14.m ------------------------
+150373506,+2^misc14,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc15.m ------------------------
+	 write $get(@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc15.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $get(@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc15.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc15.m ------------------------
+misc15.o
+
+------------------------ Running   misc15.m ------------------------
+150373506,+2^misc15,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc16.m ------------------------
+	 write $get(@($piece(x(x),2E22222222222222222222222233,$MN)?.N))
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc16.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc16.m ------------------------
+misc16.o
+
+------------------------ Running   misc16.m ------------------------
+150373506,+2^misc16,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc17.m ------------------------
+	 write $incr(x(x),$piece(x(x),2E22222222222222222222222233,$MN)?.N)
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc17.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc17.m ------------------------
+misc17.o
+
+------------------------ Running   misc17.m ------------------------
+150373506,+2^misc17,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc18.m ------------------------
+	 write $incr(x(x),$piece(x(x),$MN,2E22222222222222222222222233)?.N)
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc18.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $incr(x(x),$piece(x(x),$MN,2E22222222222222222222222233)?.N)
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc18.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc18.m ------------------------
+misc18.o
+
+------------------------ Running   misc18.m ------------------------
+150373506,+2^misc18,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc19.m ------------------------
+	 write $incr(x(x),@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc19.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $incr(x(x),@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
+	                                   ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc19.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc19.m ------------------------
+misc19.o
+
+------------------------ Running   misc19.m ------------------------
+150373506,+2^misc19,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc20.m ------------------------
+	 write $incr(x(x),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc20.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $incr(x(x),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
+	                                     ^-----
+		At column 38, line 2, source module ##TEST_PATH##/misc20.m
+%GTM-E-INVFCN, Invalid function name
+	 write $incr(x(x),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
+	                                       ^-----
+		At column 40, line 2, source module ##TEST_PATH##/misc20.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc20.m ------------------------
+misc20.o
+
+------------------------ Running   misc20.m ------------------------
+150373506,+2^misc20,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc21.m ------------------------
+	 write $order(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc21.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $order(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc21.m
+%GTM-E-INVFCN, Invalid function name
+	 write $order(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                   ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc21.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc21.m ------------------------
+misc21.o
+
+------------------------ Running   misc21.m ------------------------
+150373506,+2^misc21,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc22.m ------------------------
+	 write $zprevious(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc22.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $zprevious(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                     ^-----
+		At column 38, line 2, source module ##TEST_PATH##/misc22.m
+%GTM-E-INVFCN, Invalid function name
+	 write $zprevious(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                       ^-----
+		At column 40, line 2, source module ##TEST_PATH##/misc22.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc22.m ------------------------
+misc22.o
+
+------------------------ Running   misc22.m ------------------------
+150373506,+2^misc22,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc23.m ------------------------
+	 write $zqgblmod(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc23.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $zqgblmod(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                    ^-----
+		At column 37, line 2, source module ##TEST_PATH##/misc23.m
+%GTM-E-INVFCN, Invalid function name
+	 write $zqgblmod(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                      ^-----
+		At column 39, line 2, source module ##TEST_PATH##/misc23.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc23.m ------------------------
+misc23.o
+
+------------------------ Running   misc23.m ------------------------
+150373506,+2^misc23,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc24.m ------------------------
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc24.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc24.m
+%GTM-E-INVFCN, Invalid function name
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
+	                                                           ^-----
+		At column 60, line 2, source module ##TEST_PATH##/misc24.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
+	                                                               ^-----
+		At column 64, line 2, source module ##TEST_PATH##/misc24.m
+%GTM-E-INVFCN, Invalid function name
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
+	                                                                 ^-----
+		At column 66, line 2, source module ##TEST_PATH##/misc24.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc24.m ------------------------
+misc24.o
+
+------------------------ Running   misc24.m ------------------------
+150373506,+2^misc24,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc25.m ------------------------
+	 write $query(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc25.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $query(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc25.m
+%GTM-E-INVFCN, Invalid function name
+	 write $query(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                   ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc25.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc25.m ------------------------
+misc25.o
+
+------------------------ Running   misc25.m ------------------------
+150373506,+2^misc25,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc26.m ------------------------
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc26.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                    ^-----
+		At column 37, line 2, source module ##TEST_PATH##/misc26.m
+%GTM-E-INVFCN, Invalid function name
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                                                ^-----
+		At column 65, line 2, source module ##TEST_PATH##/misc26.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                                                    ^-----
+		At column 69, line 2, source module ##TEST_PATH##/misc26.m
+%GTM-E-INVFCN, Invalid function name
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                                                      ^-----
+		At column 71, line 2, source module ##TEST_PATH##/misc26.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc26.m ------------------------
+misc26.o
+
+------------------------ Running   misc26.m ------------------------
+150373506,+2^misc26,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc27.m ------------------------
+	 xecute @($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N))
+	                       ^-----
+		At column 24, line 2, source module ##TEST_PATH##/misc27.m
+%GTM-E-INVSVN, Invalid special variable name
+	 xecute @($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N))
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc27.m
+%GTM-E-INVFCN, Invalid function name
+	 xecute @($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc27.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc27.m ------------------------
+misc27.o
+
+------------------------ Running   misc27.m ------------------------
+150373506,+2^misc27,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc28.m ------------------------
+	 write $x+$l(bb,"€"))
+	                    ^-----
+		At column 21, line 2, source module ##TEST_PATH##/misc28.m
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+
+------------------------ Checking if .o file was created misc28.m ------------------------
+misc28.o
+
+------------------------ Running   misc28.m ------------------------
+150373706,+2^misc28,%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+
+######################################################################
+------------------------ Compiling misc29.m ------------------------
+
+------------------------ Checking if .o file was created misc29.m ------------------------
+misc29.o
+
+------------------------ Running   misc29.m ------------------------
+150373850,+2^misc29,%GTM-E-UNDEF, Undefined local variable: T
+
+######################################################################
+------------------------ Compiling misc30.m ------------------------
+	 set V="M"?@($MN("A","€")?.N)
+	              ^-----
+		At column 15, line 2, source module ##TEST_PATH##/misc30.m
+%GTM-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc30.m ------------------------
+misc30.o
+
+------------------------ Running   misc30.m ------------------------
+150373058,+2^misc30,%GTM-E-INVFCN, Invalid function name
+
+######################################################################
+------------------------ Compiling misc31.m ------------------------
+	 set V="M"?@($piece("A","€",$MN)?.N)
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc31.m
+%GTM-E-INVSVN, Invalid special variable name
+
+------------------------ Checking if .o file was created misc31.m ------------------------
+misc31.o
+
+------------------------ Running   misc31.m ------------------------
+150373074,+2^misc31,%GTM-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc32.m ------------------------
+	 set %=$x do $$^zu(x(x),@($piece($MN("A","€")?.N))
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc32.m
+%GTM-E-LABELEXPECTED, Label expected in this context
+
+------------------------ Checking if .o file was created misc32.m ------------------------
+misc32.o
+
+------------------------ Running   misc32.m ------------------------
+150373186,+2^misc32,%GTM-E-LABELEXPECTED, Label expected in this context
+
+######################################################################
+------------------------ Compiling misc33.m ------------------------
+	 set %=$x do @($piece($MN("A","€")?.N))
+	                       ^-----
+		At column 24, line 2, source module ##TEST_PATH##/misc33.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x do @($piece($MN("A","€")?.N))
+	                                     ^-----
+		At column 38, line 2, source module ##TEST_PATH##/misc33.m
+%GTM-E-COMMA, Comma expected in this context
+
+------------------------ Checking if .o file was created misc33.m ------------------------
+misc33.o
+
+------------------------ Running   misc33.m ------------------------
+150372474,+2^misc33,%GTM-E-COMMA, Comma expected in this context
+
+######################################################################
+------------------------ Compiling misc34.m ------------------------
+	 set %=$x do $zu(x(x),@($piece(2E22222222222222222222222233,"€",$MN)?.N))
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc34.m
+%GTM-E-LABELEXPECTED, Label expected in this context
+
+------------------------ Checking if .o file was created misc34.m ------------------------
+misc34.o
+
+------------------------ Running   misc34.m ------------------------
+150373186,+2^misc34,%GTM-E-LABELEXPECTED, Label expected in this context
+
+######################################################################
+------------------------ Compiling misc35.m ------------------------
+	 set %=$x goto @($piece($MN("A","€")?.N))
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc35.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x goto @($piece($MN("A","€")?.N))
+	                                       ^-----
+		At column 40, line 2, source module ##TEST_PATH##/misc35.m
+%GTM-E-COMMA, Comma expected in this context
+
+------------------------ Checking if .o file was created misc35.m ------------------------
+misc35.o
+
+------------------------ Running   misc35.m ------------------------
+150372474,+2^misc35,%GTM-E-COMMA, Comma expected in this context
+
+######################################################################
+------------------------ Compiling misc36.m ------------------------
+	 set %=$x goto @($piece($MN(2E22222222222222222222222233,"€")?.N))
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc36.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x goto @($piece($MN(2E22222222222222222222222233,"€")?.N))
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc36.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc36.m ------------------------
+misc36.o
+
+------------------------ Running   misc36.m ------------------------
+150373506,+2^misc36,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc37.m ------------------------
+	 set %=$x zgoto @($piece($MN("A","€")?.N))
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc37.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x zgoto @($piece($MN("A","€")?.N))
+	                                        ^-----
+		At column 41, line 2, source module ##TEST_PATH##/misc37.m
+%GTM-E-COMMA, Comma expected in this context
+
+------------------------ Checking if .o file was created misc37.m ------------------------
+misc37.o
+
+------------------------ Running   misc37.m ------------------------
+150372474,+2^misc37,%GTM-E-COMMA, Comma expected in this context
+
+######################################################################
+------------------------ Compiling misc38.m ------------------------
+	 set %=$x zgoto @($piece($MN(2E22222222222222222222222233,"€")?.N))
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc38.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x zgoto @($piece($MN(2E22222222222222222222222233,"€")?.N))
+	                            ^-----
+		At column 29, line 2, source module ##TEST_PATH##/misc38.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc38.m ------------------------
+misc38.o
+
+------------------------ Running   misc38.m ------------------------
+150373506,+2^misc38,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc39.m ------------------------
+	 set %=$x do $$^zu(x(x),@($piece("A","€",$MN)?.N))
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc39.m
+%GTM-E-LABELEXPECTED, Label expected in this context
+
+------------------------ Checking if .o file was created misc39.m ------------------------
+misc39.o
+
+------------------------ Running   misc39.m ------------------------
+150373186,+2^misc39,%GTM-E-LABELEXPECTED, Label expected in this context
+
+######################################################################
+------------------------ Compiling misc40.m ------------------------
+	 write $data(@($piece(x(x),"€",$MN)?.N))
+	                                ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc40.m
+%GTM-E-INVSVN, Invalid special variable name
+
+------------------------ Checking if .o file was created misc40.m ------------------------
+misc40.o
+
+------------------------ Running   misc40.m ------------------------
+150373850,+2^misc40,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc41.m ------------------------
+	 write $data(@($piece(x(x),$MN,"€")?.N))
+	                            ^-----
+		At column 29, line 2, source module ##TEST_PATH##/misc41.m
+%GTM-E-INVSVN, Invalid special variable name
+
+------------------------ Checking if .o file was created misc41.m ------------------------
+misc41.o
+
+------------------------ Running   misc41.m ------------------------
+150373850,+2^misc41,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc42.m ------------------------
+	 write $get(@($piece(x(x),$MN,"€")?.N))
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc42.m
+%GTM-E-INVSVN, Invalid special variable name
+
+------------------------ Checking if .o file was created misc42.m ------------------------
+misc42.o
+
+------------------------ Running   misc42.m ------------------------
+150373850,+2^misc42,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc43.m ------------------------
+	 write $get(@($piece(x(x),"€",$MN)?.N))
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc43.m
+%GTM-E-INVSVN, Invalid special variable name
+
+------------------------ Checking if .o file was created misc43.m ------------------------
+misc43.o
+
+------------------------ Running   misc43.m ------------------------
+150373850,+2^misc43,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc44.m ------------------------
+	 write $incr(x(x),$piece(x(x),"€",$MN)?.N)
+	                                   ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc44.m
+%GTM-E-INVSVN, Invalid special variable name
+
+------------------------ Checking if .o file was created misc44.m ------------------------
+misc44.o
+
+------------------------ Running   misc44.m ------------------------
+150373850,+2^misc44,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc45.m ------------------------
+	 write $incr(x(x),$piece(x(x),$MN,"€")?.N)
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc45.m
+%GTM-E-INVSVN, Invalid special variable name
+
+------------------------ Checking if .o file was created misc45.m ------------------------
+misc45.o
+
+------------------------ Running   misc45.m ------------------------
+150373850,+2^misc45,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc46.m ------------------------
+	 write $incr(x(x),@($piece(x(x),$MN,"€")?.N))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc46.m
+%GTM-E-INVSVN, Invalid special variable name
+
+------------------------ Checking if .o file was created misc46.m ------------------------
+misc46.o
+
+------------------------ Running   misc46.m ------------------------
+150373850,+2^misc46,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc47.m ------------------------
+	 write $incr(x(x),@($piece(x(x),$MN,$MN("€"))?.N))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc47.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $incr(x(x),@($piece(x(x),$MN,$MN("€"))?.N))
+	                                     ^-----
+		At column 38, line 2, source module ##TEST_PATH##/misc47.m
+%GTM-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc47.m ------------------------
+misc47.o
+
+------------------------ Running   misc47.m ------------------------
+150373850,+2^misc47,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc48.m ------------------------
+	 write $order(@($piece(x(x),$MN,$MN("€")?.N)))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc48.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $order(@($piece(x(x),$MN,$MN("€")?.N)))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc48.m
+%GTM-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc48.m ------------------------
+misc48.o
+
+------------------------ Running   misc48.m ------------------------
+150373850,+2^misc48,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc49.m ------------------------
+	 write $zprevious(@($piece(x(x),$MN,$MN("€")?.N)))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc49.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $zprevious(@($piece(x(x),$MN,$MN("€")?.N)))
+	                                     ^-----
+		At column 38, line 2, source module ##TEST_PATH##/misc49.m
+%GTM-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc49.m ------------------------
+misc49.o
+
+------------------------ Running   misc49.m ------------------------
+150373850,+2^misc49,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc50.m ------------------------
+	 write $zqgblmod(@($piece(x(x),$MN,$MN("€")?.N)))
+	                                ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc50.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $zqgblmod(@($piece(x(x),$MN,$MN("€")?.N)))
+	                                    ^-----
+		At column 37, line 2, source module ##TEST_PATH##/misc50.m
+%GTM-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc50.m ------------------------
+misc50.o
+
+------------------------ Running   misc50.m ------------------------
+150373850,+2^misc50,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc51.m ------------------------
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN("€"))?.N))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc51.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN("€"))?.N))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc51.m
+%GTM-E-INVFCN, Invalid function name
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN("€"))?.N))
+	                                                           ^-----
+		At column 60, line 2, source module ##TEST_PATH##/misc51.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN("€"))?.N))
+	                                                               ^-----
+		At column 64, line 2, source module ##TEST_PATH##/misc51.m
+%GTM-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc51.m ------------------------
+misc51.o
+
+------------------------ Running   misc51.m ------------------------
+150373850,+2^misc51,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc52.m ------------------------
+	 write $query(@($piece(x(x),$MN,$MN("€")?.N)))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc52.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $query(@($piece(x(x),$MN,$MN("€")?.N)))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc52.m
+%GTM-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc52.m ------------------------
+misc52.o
+
+------------------------ Running   misc52.m ------------------------
+150373850,+2^misc52,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc53.m ------------------------
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(€"")?.N)))
+	                                ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc53.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(€"")?.N)))
+	                                    ^-----
+		At column 37, line 2, source module ##TEST_PATH##/misc53.m
+%GTM-E-INVFCN, Invalid function name
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(€"")?.N)))
+	                                                                ^-----
+		At column 65, line 2, source module ##TEST_PATH##/misc53.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(€"")?.N)))
+	                                                                    ^-----
+		At column 69, line 2, source module ##TEST_PATH##/misc53.m
+%GTM-E-INVFCN, Invalid function name
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(€"")?.N)))
+	                                                                       ^-----
+		At column 72, line 2, source module ##TEST_PATH##/misc53.m
+%GTM-E-EXPR, Expression expected but not found
+
+------------------------ Checking if .o file was created misc53.m ------------------------
+misc53.o
+
+------------------------ Running   misc53.m ------------------------
+150372778,+2^misc53,%GTM-E-EXPR, Expression expected but not found
+
+######################################################################
+------------------------ Compiling misc54.m ------------------------
+	 xecute @($piece(x(x),$MN,$MN(€"")?.N))
+	                       ^-----
+		At column 24, line 2, source module ##TEST_PATH##/misc54.m
+%GTM-E-INVSVN, Invalid special variable name
+	 xecute @($piece(x(x),$MN,$MN(€"")?.N))
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc54.m
+%GTM-E-INVFCN, Invalid function name
+	 xecute @($piece(x(x),$MN,$MN(€"")?.N))
+	                              ^-----
+		At column 31, line 2, source module ##TEST_PATH##/misc54.m
+%GTM-E-EXPR, Expression expected but not found
+
+------------------------ Checking if .o file was created misc54.m ------------------------
+misc54.o
+
+------------------------ Running   misc54.m ------------------------
+150372778,+2^misc54,%GTM-E-EXPR, Expression expected but not found
+
+######################################################################
+------------------------ Compiling misc55.m ------------------------
+	 set (x,$ZY,z(2E22222222222222222222222233))=($piece($h,"","",2)*0)+15
+	         ^-----
+		At column 10, line 2, source module ##TEST_PATH##/misc55.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set (x,$ZY,z(2E22222222222222222222222233))=($piece($h,"","",2)*0)+15
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc55.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc55.m ------------------------
+misc55.o
+
+------------------------ Running   misc55.m ------------------------
+150373506,+2^misc55,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc56.m ------------------------
+	 set (x,$ZY,z(x))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	         ^-----
+		At column 10, line 2, source module ##TEST_PATH##/misc56.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set (x,$ZY,z(x))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc56.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc56.m ------------------------
+misc56.o
+
+------------------------ Running   misc56.m ------------------------
+150373506,+2^misc56,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc57.m ------------------------
+	 set ($ZY,z(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc57.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,z(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	           ^-----
+		At column 12, line 2, source module ##TEST_PATH##/misc57.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc57.m ------------------------
+misc57.o
+
+------------------------ Running   misc57.m ------------------------
+150373506,+2^misc57,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc58.m ------------------------
+	 set ($ZY,^z(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc58.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,^z(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	            ^-----
+		At column 13, line 2, source module ##TEST_PATH##/misc58.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc58.m ------------------------
+misc58.o
+
+------------------------ Running   misc58.m ------------------------
+150373506,+2^misc58,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc59.m ------------------------
+	 set ($ZY,@y(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc59.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,@y(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	            ^-----
+		At column 13, line 2, source module ##TEST_PATH##/misc59.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc59.m ------------------------
+misc59.o
+
+------------------------ Running   misc59.m ------------------------
+150373506,+2^misc59,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc60.m ------------------------
+	 set ($ZY,$$x(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc60.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$$x(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	           ^-----
+		At column 12, line 2, source module ##TEST_PATH##/misc60.m
+%GTM-E-VAREXPECTED, Variable expected in this context
+
+------------------------ Checking if .o file was created misc60.m ------------------------
+misc60.o
+
+------------------------ Running   misc60.m ------------------------
+150373866,+2^misc60,%GTM-E-VAREXPECTED, Variable expected in this context
+
+######################################################################
+------------------------ Compiling misc61.m ------------------------
+	 set ($ZY,$order(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc61.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$order(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	           ^-----
+		At column 12, line 2, source module ##TEST_PATH##/misc61.m
+%GTM-E-VAREXPECTED, Variable expected in this context
+
+------------------------ Checking if .o file was created misc61.m ------------------------
+misc61.o
+
+------------------------ Running   misc61.m ------------------------
+150373866,+2^misc61,%GTM-E-VAREXPECTED, Variable expected in this context
+
+######################################################################
+------------------------ Compiling misc62.m ------------------------
+	 set ($ZY,$piece(x(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc62.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece(x(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                  ^-----
+		At column 19, line 2, source module ##TEST_PATH##/misc62.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc62.m ------------------------
+misc62.o
+
+------------------------ Running   misc62.m ------------------------
+150373506,+2^misc62,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc63.m ------------------------
+	 set ($ZY,$piece(^z(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc63.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece(^z(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                   ^-----
+		At column 20, line 2, source module ##TEST_PATH##/misc63.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc63.m ------------------------
+misc63.o
+
+------------------------ Running   misc63.m ------------------------
+150373506,+2^misc63,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc64.m ------------------------
+	 set ($ZY,$piece(@y(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc64.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece(@y(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                   ^-----
+		At column 20, line 2, source module ##TEST_PATH##/misc64.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc64.m ------------------------
+misc64.o
+
+------------------------ Running   misc64.m ------------------------
+150373506,+2^misc64,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc65.m ------------------------
+	 set ($ZY,$piece($$x(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc65.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece($$x(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                 ^-----
+		At column 18, line 2, source module ##TEST_PATH##/misc65.m
+%GTM-E-VAREXPECTED, Variable expected in this context
+
+------------------------ Checking if .o file was created misc65.m ------------------------
+misc65.o
+
+------------------------ Running   misc65.m ------------------------
+150373866,+2^misc65,%GTM-E-VAREXPECTED, Variable expected in this context
+
+######################################################################
+------------------------ Compiling misc66.m ------------------------
+	 set ($ZY,$piece(x(y)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc66.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece(x(y)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                     ^-----
+		At column 22, line 2, source module ##TEST_PATH##/misc66.m
+%GTM-E-COMMA, Comma expected in this context
+
+------------------------ Checking if .o file was created misc66.m ------------------------
+misc66.o
+
+------------------------ Running   misc66.m ------------------------
+150372474,+2^misc66,%GTM-E-COMMA, Comma expected in this context
+
+######################################################################
+------------------------ Compiling misc67.m ------------------------
+	 set ($ZY,$piece(x(y),2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc67.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece(x(y),2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                     ^-----
+		At column 22, line 2, source module ##TEST_PATH##/misc67.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc67.m ------------------------
+misc67.o
+
+------------------------ Running   misc67.m ------------------------
+150373506,+2^misc67,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc68.m ------------------------
+	 set ($ZY,$piece(x(y),"x",2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc68.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece(x(y),"x",2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc68.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc68.m ------------------------
+misc68.o
+
+------------------------ Running   misc68.m ------------------------
+150373506,+2^misc68,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc69.m ------------------------
+	 set ($ZY,$extract(x(y)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc69.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$extract(x(y)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                       ^-----
+		At column 40, line 2, source module ##TEST_PATH##/misc69.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc69.m ------------------------
+misc69.o
+
+------------------------ Running   misc69.m ------------------------
+150373506,+2^misc69,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc70.m ------------------------
+	 set ($ZY,$extract(x(y),2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc70.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$extract(x(y),2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                       ^-----
+		At column 24, line 2, source module ##TEST_PATH##/misc70.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc70.m ------------------------
+misc70.o
+
+------------------------ Running   misc70.m ------------------------
+150373506,+2^misc70,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc71.m ------------------------
+	 set ($ZY,$piece(x(y),"x")=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc71.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece(x(y),"x")=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc71.m
+%GTM-E-RPARENMISSING, Right parenthesis expected
+
+------------------------ Checking if .o file was created misc71.m ------------------------
+misc71.o
+
+------------------------ Running   misc71.m ------------------------
+150373642,+2^misc71,%GTM-E-RPARENMISSING, Right parenthesis expected
+
+######################################################################
+------------------------ Compiling misc72.m ------------------------
+	 set ($ZY,$$x(y))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc72.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$$x(y))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	           ^-----
+		At column 12, line 2, source module ##TEST_PATH##/misc72.m
+%GTM-E-VAREXPECTED, Variable expected in this context
+
+------------------------ Checking if .o file was created misc72.m ------------------------
+misc72.o
+
+------------------------ Running   misc72.m ------------------------
+150373866,+2^misc72,%GTM-E-VAREXPECTED, Variable expected in this context
+
+######################################################################
+------------------------ Compiling misc73.m ------------------------
+	 set ($ZY,$$x(y))($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc73.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$$x(y))($piece($h,"",2E22222222222222222222222233)*0)+15
+	           ^-----
+		At column 12, line 2, source module ##TEST_PATH##/misc73.m
+%GTM-E-VAREXPECTED, Variable expected in this context
+
+------------------------ Checking if .o file was created misc73.m ------------------------
+misc73.o
+
+------------------------ Running   misc73.m ------------------------
+150373866,+2^misc73,%GTM-E-VAREXPECTED, Variable expected in this context
+
+######################################################################
+------------------------ Compiling misc74.m ------------------------
+	 set ($ZY,$piece(x(y),"x"))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc74.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece(x(y),"x"))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                         ^-----
+		At column 42, line 2, source module ##TEST_PATH##/misc74.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc74.m ------------------------
+misc74.o
+
+------------------------ Running   misc74.m ------------------------
+150373506,+2^misc74,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc75.m ------------------------
+
+------------------------ Checking if .o file was created misc75.m ------------------------
+misc75.o
+
+------------------------ Running   misc75.m ------------------------
+150373850,+2^misc75,%GTM-E-UNDEF, Undefined local variable: X
+
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+######################################################################
+------------------------ Compiling profile1.m ------------------------
+	 set $x=$x_$J("",48-$L($x))_$J($FN($piece(x(x),".",2),",",2),18)
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/profile1.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set $x=$x_$J("",48-$L($x))_$J($FN($piece(x(x),".",2),",",2),18)
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/profile1.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created profile1.m ------------------------
+profile1.o
+
+------------------------ Running   profile1.m ------------------------
+150373850,+2^profile1,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile2.m ------------------------
+	 set $x=$x_$J("",68-$L($x))_$J($FN($piece(x(x),".",3),",",2),18)
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/profile2.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set $x=$x_$J("",68-$L($x))_$J($FN($piece(x(x),".",3),",",2),18)
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/profile2.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created profile2.m ------------------------
+profile2.o
+
+------------------------ Running   profile2.m ------------------------
+150373850,+2^profile2,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile3.m ------------------------
+	 set $x=$x_$J("",88-$L($x))_$J($FN($piece(x(x),".",1),",",2),18)
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/profile3.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set $x=$x_$J("",88-$L($x))_$J($FN($piece(x(x),".",1),",",2),18)
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/profile3.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created profile3.m ------------------------
+profile3.o
+
+------------------------ Running   profile3.m ------------------------
+150373850,+2^profile3,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile4.m ------------------------
+	 set $x="       "_$J($$^vdat2str(($piece(x(x),".",6)),"MM/DD/YEAR"),10)
+	                                               ^-----
+		At column 48, line 2, source module ##TEST_PATH##/profile4.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set $x="       "_$J($$^vdat2str(($piece(x(x),".",6)),"MM/DD/YEAR"),10)
+	                                               ^-----
+		At column 48, line 2, source module ##TEST_PATH##/profile4.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created profile4.m ------------------------
+profile4.o
+
+------------------------ Running   profile4.m ------------------------
+150373850,+2^profile4,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile5.m ------------------------
+	 set $x=$x_$J("",18-$L($x))_$J($$^vdat2str(($piece(x(x),".",1)),"MM/DD/YEAR"),10)
+	                                                         ^-----
+		At column 58, line 2, source module ##TEST_PATH##/profile5.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set $x=$x_$J("",18-$L($x))_$J($$^vdat2str(($piece(x(x),".",1)),"MM/DD/YEAR"),10)
+	                                                         ^-----
+		At column 58, line 2, source module ##TEST_PATH##/profile5.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created profile5.m ------------------------
+profile5.o
+
+------------------------ Running   profile5.m ------------------------
+150373850,+2^profile5,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile6.m ------------------------
+	 set $x=$x_$J("",31-$L($x))_$E(($piece(x(x),".",2)),1,12)
+	                                             ^-----
+		At column 46, line 2, source module ##TEST_PATH##/profile6.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set $x=$x_$J("",31-$L($x))_$E(($piece(x(x),".",2)),1,12)
+	                                             ^-----
+		At column 46, line 2, source module ##TEST_PATH##/profile6.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created profile6.m ------------------------
+profile6.o
+
+------------------------ Running   profile6.m ------------------------
+150373850,+2^profile6,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile7.m ------------------------
+	 set $x=$x_$J("",48-$L($x))_$J($FN($piece(x(x),".",3),",",2),18)
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/profile7.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set $x=$x_$J("",48-$L($x))_$J($FN($piece(x(x),".",3),",",2),18)
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/profile7.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created profile7.m ------------------------
+profile7.o
+
+------------------------ Running   profile7.m ------------------------
+150373850,+2^profile7,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile8.m ------------------------
+	 set $x=$x_$J("",68-$L($x))_$J($FN($piece(x(x),".",4),",",2),18)
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/profile8.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set $x=$x_$J("",68-$L($x))_$J($FN($piece(x(x),".",4),",",2),18)
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/profile8.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created profile8.m ------------------------
+profile8.o
+
+------------------------ Running   profile8.m ------------------------
+150373850,+2^profile8,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile9.m ------------------------
+	 set V=$E(($piece(x(x),".",5)),1,40) D VP1 Q:VFMQ!$get(verror) 
+	                        ^-----
+		At column 25, line 2, source module ##TEST_PATH##/profile9.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set V=$E(($piece(x(x),".",5)),1,40) D VP1 Q:VFMQ!$get(verror) 
+	                        ^-----
+		At column 25, line 2, source module ##TEST_PATH##/profile9.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+%GTM-E-LABELMISSING, Label referenced but not defined: VP1
+%GTM-I-SRCNAM, in source module ##TEST_PATH##/profile9.m
+
+------------------------ Checking if .o file was created profile9.m ------------------------
+profile9.o
+
+------------------------ Running   profile9.m ------------------------
+150373850,+2^profile9,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile10.m ------------------------
+	 set $x=$x_$J("",48-$L($x))_$J($FN($piece(x(x),".",2),",",2),18)
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/profile10.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set $x=$x_$J("",48-$L($x))_$J($FN($piece(x(x),".",2),",",2),18)
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/profile10.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created profile10.m ------------------------
+profile10.o
+
+------------------------ Running   profile10.m ------------------------
+150373850,+2^profile10,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile11.m ------------------------
+	 set $x=$x_$J("",68-$L($x))_$J($FN($piece(x(x),".",3),",",2),18)
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/profile11.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set $x=$x_$J("",68-$L($x))_$J($FN($piece(x(x),".",3),",",2),18)
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/profile11.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created profile11.m ------------------------
+profile11.o
+
+------------------------ Running   profile11.m ------------------------
+150373850,+2^profile11,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling profile12.m ------------------------
+	 set $x=$x_$J("",88-$L($x))_$J($FN($piece(x(x),".",1),",",2),18)
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/profile12.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set $x=$x_$J("",88-$L($x))_$J($FN($piece(x(x),".",1),",",2),18)
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/profile12.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created profile12.m ------------------------
+profile12.o
+
+------------------------ Running   profile12.m ------------------------
+150373850,+2^profile12,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc1.m ------------------------
+	 write $x+$l(bb,2E22222222222222222222222233))
+	               ^-----
+		At column 16, line 2, source module ##TEST_PATH##/misc1.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc1.m ------------------------
+misc1.o
+
+------------------------ Running   misc1.m ------------------------
+150373506,+2^misc1,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc2.m ------------------------
+	 set VL=""_$J($piece(T(T),2E22222222222222222222222233,6),"")
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc2.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc2.m ------------------------
+misc2.o
+
+------------------------ Running   misc2.m ------------------------
+150373506,+2^misc2,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc3.m ------------------------
+	 set V="M"?@($MN("A",2E22222222222222222222222233)?.N)
+	              ^-----
+		At column 15, line 2, source module ##TEST_PATH##/misc3.m
+%GTM-E-INVFCN, Invalid function name
+	 set V="M"?@($MN("A",2E22222222222222222222222233)?.N)
+	                    ^-----
+		At column 21, line 2, source module ##TEST_PATH##/misc3.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc3.m ------------------------
+misc3.o
+
+------------------------ Running   misc3.m ------------------------
+150373506,+2^misc3,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc4.m ------------------------
+	 set V="M"?@($piece("A",2E22222222222222222222222233,$MN)?.N)
+	                       ^-----
+		At column 24, line 2, source module ##TEST_PATH##/misc4.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc4.m ------------------------
+misc4.o
+
+------------------------ Running   misc4.m ------------------------
+150373506,+2^misc4,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc5.m ------------------------
+	 set %=$x do $$^zu(x(x),@($piece($MN("A",2E22222222222222222222222233)?.N))
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc5.m
+%GTM-E-LABELEXPECTED, Label expected in this context
+
+------------------------ Checking if .o file was created misc5.m ------------------------
+misc5.o
+
+------------------------ Running   misc5.m ------------------------
+150373186,+2^misc5,%GTM-E-LABELEXPECTED, Label expected in this context
+
+######################################################################
+------------------------ Compiling misc6.m ------------------------
+	 set %=$x do @($piece($MN("A",2E22222222222222222222222233)?.N))
+	                       ^-----
+		At column 24, line 2, source module ##TEST_PATH##/misc6.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x do @($piece($MN("A",2E22222222222222222222222233)?.N))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc6.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc6.m ------------------------
+misc6.o
+
+------------------------ Running   misc6.m ------------------------
+150373506,+2^misc6,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc7.m ------------------------
+	 set %=$x do $zu(x(x),@($piece(2E22222222222222222222222233,2E22222222222222222222222233,$MN)?.N))
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc7.m
+%GTM-E-LABELEXPECTED, Label expected in this context
+
+------------------------ Checking if .o file was created misc7.m ------------------------
+misc7.o
+
+------------------------ Running   misc7.m ------------------------
+150373186,+2^misc7,%GTM-E-LABELEXPECTED, Label expected in this context
+
+######################################################################
+------------------------ Compiling misc8.m ------------------------
+	 set %=$x goto @($piece($MN("A",2E22222222222222222222222233)?.N))
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc8.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x goto @($piece($MN("A",2E22222222222222222222222233)?.N))
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc8.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc8.m ------------------------
+misc8.o
+
+------------------------ Running   misc8.m ------------------------
+150373506,+2^misc8,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc9.m ------------------------
+	 set %=$x goto @($piece($MN(2E22222222222222222222222233,2E22222222222222222222222233)?.N))
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc9.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x goto @($piece($MN(2E22222222222222222222222233,2E22222222222222222222222233)?.N))
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc9.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc9.m ------------------------
+misc9.o
+
+------------------------ Running   misc9.m ------------------------
+150373506,+2^misc9,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc10.m ------------------------
+	 set %=$x zgoto @($piece($MN("A",2E22222222222222222222222233)?.N))
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc10.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x zgoto @($piece($MN("A",2E22222222222222222222222233)?.N))
+	                                ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc10.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc10.m ------------------------
+misc10.o
+
+------------------------ Running   misc10.m ------------------------
+150373506,+2^misc10,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc11.m ------------------------
+	 set %=$x zgoto @($piece($MN(2E22222222222222222222222233,2E22222222222222222222222233)?.N))
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc11.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x zgoto @($piece($MN(2E22222222222222222222222233,2E22222222222222222222222233)?.N))
+	                            ^-----
+		At column 29, line 2, source module ##TEST_PATH##/misc11.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc11.m ------------------------
+misc11.o
+
+------------------------ Running   misc11.m ------------------------
+150373506,+2^misc11,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc12.m ------------------------
+	 set %=$x do $$^zu(x(x),@($piece("A",2E22222222222222222222222233,$MN)?.N))
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc12.m
+%GTM-E-LABELEXPECTED, Label expected in this context
+
+------------------------ Checking if .o file was created misc12.m ------------------------
+misc12.o
+
+------------------------ Running   misc12.m ------------------------
+150373186,+2^misc12,%GTM-E-LABELEXPECTED, Label expected in this context
+
+######################################################################
+------------------------ Compiling misc13.m ------------------------
+	 write $data(@($piece(x(x),2E22222222222222222222222233,$MN)?.N))
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc13.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc13.m ------------------------
+misc13.o
+
+------------------------ Running   misc13.m ------------------------
+150373506,+2^misc13,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc14.m ------------------------
+	 write $data(@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
+	                            ^-----
+		At column 29, line 2, source module ##TEST_PATH##/misc14.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $data(@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
+	                              ^-----
+		At column 31, line 2, source module ##TEST_PATH##/misc14.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc14.m ------------------------
+misc14.o
+
+------------------------ Running   misc14.m ------------------------
+150373506,+2^misc14,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc15.m ------------------------
+	 write $get(@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc15.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $get(@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc15.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc15.m ------------------------
+misc15.o
+
+------------------------ Running   misc15.m ------------------------
+150373506,+2^misc15,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc16.m ------------------------
+	 write $get(@($piece(x(x),2E22222222222222222222222233,$MN)?.N))
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc16.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc16.m ------------------------
+misc16.o
+
+------------------------ Running   misc16.m ------------------------
+150373506,+2^misc16,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc17.m ------------------------
+	 write $incr(x(x),$piece(x(x),2E22222222222222222222222233,$MN)?.N)
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc17.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc17.m ------------------------
+misc17.o
+
+------------------------ Running   misc17.m ------------------------
+150373506,+2^misc17,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc18.m ------------------------
+	 write $incr(x(x),$piece(x(x),$MN,2E22222222222222222222222233)?.N)
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc18.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $incr(x(x),$piece(x(x),$MN,2E22222222222222222222222233)?.N)
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc18.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc18.m ------------------------
+misc18.o
+
+------------------------ Running   misc18.m ------------------------
+150373506,+2^misc18,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc19.m ------------------------
+	 write $incr(x(x),@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc19.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $incr(x(x),@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
+	                                   ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc19.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc19.m ------------------------
+misc19.o
+
+------------------------ Running   misc19.m ------------------------
+150373506,+2^misc19,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc20.m ------------------------
+	 write $incr(x(x),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc20.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $incr(x(x),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
+	                                     ^-----
+		At column 38, line 2, source module ##TEST_PATH##/misc20.m
+%GTM-E-INVFCN, Invalid function name
+	 write $incr(x(x),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
+	                                       ^-----
+		At column 40, line 2, source module ##TEST_PATH##/misc20.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc20.m ------------------------
+misc20.o
+
+------------------------ Running   misc20.m ------------------------
+150373506,+2^misc20,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc21.m ------------------------
+	 write $order(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc21.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $order(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc21.m
+%GTM-E-INVFCN, Invalid function name
+	 write $order(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                   ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc21.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc21.m ------------------------
+misc21.o
+
+------------------------ Running   misc21.m ------------------------
+150373506,+2^misc21,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc22.m ------------------------
+	 write $zprevious(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc22.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $zprevious(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                     ^-----
+		At column 38, line 2, source module ##TEST_PATH##/misc22.m
+%GTM-E-INVFCN, Invalid function name
+	 write $zprevious(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                       ^-----
+		At column 40, line 2, source module ##TEST_PATH##/misc22.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc22.m ------------------------
+misc22.o
+
+------------------------ Running   misc22.m ------------------------
+150373506,+2^misc22,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc23.m ------------------------
+	 write $zqgblmod(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc23.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $zqgblmod(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                    ^-----
+		At column 37, line 2, source module ##TEST_PATH##/misc23.m
+%GTM-E-INVFCN, Invalid function name
+	 write $zqgblmod(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                      ^-----
+		At column 39, line 2, source module ##TEST_PATH##/misc23.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc23.m ------------------------
+misc23.o
+
+------------------------ Running   misc23.m ------------------------
+150373506,+2^misc23,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc24.m ------------------------
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc24.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc24.m
+%GTM-E-INVFCN, Invalid function name
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
+	                                                           ^-----
+		At column 60, line 2, source module ##TEST_PATH##/misc24.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
+	                                                               ^-----
+		At column 64, line 2, source module ##TEST_PATH##/misc24.m
+%GTM-E-INVFCN, Invalid function name
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
+	                                                                 ^-----
+		At column 66, line 2, source module ##TEST_PATH##/misc24.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc24.m ------------------------
+misc24.o
+
+------------------------ Running   misc24.m ------------------------
+150373506,+2^misc24,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc25.m ------------------------
+	 write $query(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc25.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $query(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc25.m
+%GTM-E-INVFCN, Invalid function name
+	 write $query(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                   ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc25.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc25.m ------------------------
+misc25.o
+
+------------------------ Running   misc25.m ------------------------
+150373506,+2^misc25,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc26.m ------------------------
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc26.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                    ^-----
+		At column 37, line 2, source module ##TEST_PATH##/misc26.m
+%GTM-E-INVFCN, Invalid function name
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                                                ^-----
+		At column 65, line 2, source module ##TEST_PATH##/misc26.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                                                    ^-----
+		At column 69, line 2, source module ##TEST_PATH##/misc26.m
+%GTM-E-INVFCN, Invalid function name
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                                                      ^-----
+		At column 71, line 2, source module ##TEST_PATH##/misc26.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc26.m ------------------------
+misc26.o
+
+------------------------ Running   misc26.m ------------------------
+150373506,+2^misc26,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc27.m ------------------------
+	 xecute @($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N))
+	                       ^-----
+		At column 24, line 2, source module ##TEST_PATH##/misc27.m
+%GTM-E-INVSVN, Invalid special variable name
+	 xecute @($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N))
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc27.m
+%GTM-E-INVFCN, Invalid function name
+	 xecute @($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc27.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc27.m ------------------------
+misc27.o
+
+------------------------ Running   misc27.m ------------------------
+150373506,+2^misc27,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc28.m ------------------------
+	 write $x+$l(bb,"."))
+	                 ^-----
+		At column 18, line 2, source module ##TEST_PATH##/misc28.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 write $x+$l(bb,"."))
+	                 ^-----
+		At column 18, line 2, source module ##TEST_PATH##/misc28.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+	 write $x+$l(bb,"."))
+	                   ^-----
+		At column 21, line 2, source module ##TEST_PATH##/misc28.m
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+
+------------------------ Checking if .o file was created misc28.m ------------------------
+misc28.o
+
+------------------------ Running   misc28.m ------------------------
+150373706,+2^misc28,%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+
+######################################################################
+------------------------ Compiling misc29.m ------------------------
+	 set VL=""_$J($piece(T(T),".",6),"")
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc29.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set VL=""_$J($piece(T(T),".",6),"")
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc29.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created misc29.m ------------------------
+misc29.o
+
+------------------------ Running   misc29.m ------------------------
+150373850,+2^misc29,%GTM-E-UNDEF, Undefined local variable: T
+
+######################################################################
+------------------------ Compiling misc30.m ------------------------
+	 set V="M"?@($MN("A",".")?.N)
+	              ^-----
+		At column 15, line 2, source module ##TEST_PATH##/misc30.m
+%GTM-E-INVFCN, Invalid function name
+	 set V="M"?@($MN("A",".")?.N)
+	                      ^-----
+		At column 23, line 2, source module ##TEST_PATH##/misc30.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set V="M"?@($MN("A",".")?.N)
+	                      ^-----
+		At column 23, line 2, source module ##TEST_PATH##/misc30.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created misc30.m ------------------------
+misc30.o
+
+------------------------ Running   misc30.m ------------------------
+150373058,+2^misc30,%GTM-E-INVFCN, Invalid function name
+
+######################################################################
+------------------------ Compiling misc31.m ------------------------
+	 set V="M"?@($piece("A",".",$MN)?.N)
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc31.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set V="M"?@($piece("A",".",$MN)?.N)
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc31.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+	 set V="M"?@($piece("A",".",$MN)?.N)
+	                            ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc31.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set V="M"?@($piece("A",".",$MN)?.N)
+	                              ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc31.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created misc31.m ------------------------
+misc31.o
+
+------------------------ Running   misc31.m ------------------------
+150373074,+2^misc31,%GTM-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc32.m ------------------------
+	 set %=$x do $$^zu(x(x),@($piece($MN("A",".")?.N))
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc32.m
+%GTM-E-LABELEXPECTED, Label expected in this context
+
+------------------------ Checking if .o file was created misc32.m ------------------------
+misc32.o
+
+------------------------ Running   misc32.m ------------------------
+150373186,+2^misc32,%GTM-E-LABELEXPECTED, Label expected in this context
+
+######################################################################
+------------------------ Compiling misc33.m ------------------------
+	 set %=$x do @($piece($MN("A",".")?.N))
+	                       ^-----
+		At column 24, line 2, source module ##TEST_PATH##/misc33.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x do @($piece($MN("A",".")?.N))
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc33.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set %=$x do @($piece($MN("A",".")?.N))
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc33.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+	 set %=$x do @($piece($MN("A",".")?.N))
+	                                    ^-----
+		At column 38, line 2, source module ##TEST_PATH##/misc33.m
+%GTM-E-COMMA, Comma expected in this context
+
+------------------------ Checking if .o file was created misc33.m ------------------------
+misc33.o
+
+------------------------ Running   misc33.m ------------------------
+150372474,+2^misc33,%GTM-E-COMMA, Comma expected in this context
+
+######################################################################
+------------------------ Compiling misc34.m ------------------------
+	 set %=$x do $zu(x(x),@($piece(2E22222222222222222222222233,".",$MN)?.N))
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc34.m
+%GTM-E-LABELEXPECTED, Label expected in this context
+
+------------------------ Checking if .o file was created misc34.m ------------------------
+misc34.o
+
+------------------------ Running   misc34.m ------------------------
+150373186,+2^misc34,%GTM-E-LABELEXPECTED, Label expected in this context
+
+######################################################################
+------------------------ Compiling misc35.m ------------------------
+	 set %=$x goto @($piece($MN("A",".")?.N))
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc35.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x goto @($piece($MN("A",".")?.N))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc35.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set %=$x goto @($piece($MN("A",".")?.N))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc35.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+	 set %=$x goto @($piece($MN("A",".")?.N))
+	                                      ^-----
+		At column 40, line 2, source module ##TEST_PATH##/misc35.m
+%GTM-E-COMMA, Comma expected in this context
+
+------------------------ Checking if .o file was created misc35.m ------------------------
+misc35.o
+
+------------------------ Running   misc35.m ------------------------
+150372474,+2^misc35,%GTM-E-COMMA, Comma expected in this context
+
+######################################################################
+------------------------ Compiling misc36.m ------------------------
+	 set %=$x goto @($piece($MN(2E22222222222222222222222233,".")?.N))
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc36.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x goto @($piece($MN(2E22222222222222222222222233,".")?.N))
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc36.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc36.m ------------------------
+misc36.o
+
+------------------------ Running   misc36.m ------------------------
+150373506,+2^misc36,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc37.m ------------------------
+	 set %=$x zgoto @($piece($MN("A",".")?.N))
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc37.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x zgoto @($piece($MN("A",".")?.N))
+	                                  ^-----
+		At column 35, line 2, source module ##TEST_PATH##/misc37.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set %=$x zgoto @($piece($MN("A",".")?.N))
+	                                  ^-----
+		At column 35, line 2, source module ##TEST_PATH##/misc37.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+	 set %=$x zgoto @($piece($MN("A",".")?.N))
+	                                       ^-----
+		At column 41, line 2, source module ##TEST_PATH##/misc37.m
+%GTM-E-COMMA, Comma expected in this context
+
+------------------------ Checking if .o file was created misc37.m ------------------------
+misc37.o
+
+------------------------ Running   misc37.m ------------------------
+150372474,+2^misc37,%GTM-E-COMMA, Comma expected in this context
+
+######################################################################
+------------------------ Compiling misc38.m ------------------------
+	 set %=$x zgoto @($piece($MN(2E22222222222222222222222233,".")?.N))
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc38.m
+%GTM-E-INVFCN, Invalid function name
+	 set %=$x zgoto @($piece($MN(2E22222222222222222222222233,".")?.N))
+	                            ^-----
+		At column 29, line 2, source module ##TEST_PATH##/misc38.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc38.m ------------------------
+misc38.o
+
+------------------------ Running   misc38.m ------------------------
+150373506,+2^misc38,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc39.m ------------------------
+	 set %=$x do $$^zu(x(x),@($piece("A",".",$MN)?.N))
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc39.m
+%GTM-E-LABELEXPECTED, Label expected in this context
+
+------------------------ Checking if .o file was created misc39.m ------------------------
+misc39.o
+
+------------------------ Running   misc39.m ------------------------
+150373186,+2^misc39,%GTM-E-LABELEXPECTED, Label expected in this context
+
+######################################################################
+------------------------ Compiling misc40.m ------------------------
+	 write $data(@($piece(x(x),".",$MN)?.N))
+	                            ^-----
+		At column 29, line 2, source module ##TEST_PATH##/misc40.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 write $data(@($piece(x(x),".",$MN)?.N))
+	                            ^-----
+		At column 29, line 2, source module ##TEST_PATH##/misc40.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+	 write $data(@($piece(x(x),".",$MN)?.N))
+	                               ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc40.m
+%GTM-E-INVSVN, Invalid special variable name
+
+------------------------ Checking if .o file was created misc40.m ------------------------
+misc40.o
+
+------------------------ Running   misc40.m ------------------------
+150373850,+2^misc40,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc41.m ------------------------
+	 write $data(@($piece(x(x),$MN,".")?.N))
+	                            ^-----
+		At column 29, line 2, source module ##TEST_PATH##/misc41.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $data(@($piece(x(x),$MN,".")?.N))
+	                                ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc41.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 write $data(@($piece(x(x),$MN,".")?.N))
+	                                ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc41.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created misc41.m ------------------------
+misc41.o
+
+------------------------ Running   misc41.m ------------------------
+150373850,+2^misc41,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc42.m ------------------------
+	 write $get(@($piece(x(x),$MN,".")?.N))
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc42.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $get(@($piece(x(x),$MN,".")?.N))
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc42.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 write $get(@($piece(x(x),$MN,".")?.N))
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc42.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created misc42.m ------------------------
+misc42.o
+
+------------------------ Running   misc42.m ------------------------
+150373850,+2^misc42,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc43.m ------------------------
+	 write $get(@($piece(x(x),".",$MN)?.N))
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc43.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 write $get(@($piece(x(x),".",$MN)?.N))
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc43.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+	 write $get(@($piece(x(x),".",$MN)?.N))
+	                              ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc43.m
+%GTM-E-INVSVN, Invalid special variable name
+
+------------------------ Checking if .o file was created misc43.m ------------------------
+misc43.o
+
+------------------------ Running   misc43.m ------------------------
+150373850,+2^misc43,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc44.m ------------------------
+	 write $incr(x(x),$piece(x(x),".",$MN)?.N)
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc44.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 write $incr(x(x),$piece(x(x),".",$MN)?.N)
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc44.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+	 write $incr(x(x),$piece(x(x),".",$MN)?.N)
+	                                  ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc44.m
+%GTM-E-INVSVN, Invalid special variable name
+
+------------------------ Checking if .o file was created misc44.m ------------------------
+misc44.o
+
+------------------------ Running   misc44.m ------------------------
+150373850,+2^misc44,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc45.m ------------------------
+	 write $incr(x(x),$piece(x(x),$MN,".")?.N)
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc45.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $incr(x(x),$piece(x(x),$MN,".")?.N)
+	                                   ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc45.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 write $incr(x(x),$piece(x(x),$MN,".")?.N)
+	                                   ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc45.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created misc45.m ------------------------
+misc45.o
+
+------------------------ Running   misc45.m ------------------------
+150373850,+2^misc45,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc46.m ------------------------
+	 write $incr(x(x),@($piece(x(x),$MN,".")?.N))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc46.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $incr(x(x),@($piece(x(x),$MN,".")?.N))
+	                                     ^-----
+		At column 38, line 2, source module ##TEST_PATH##/misc46.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 write $incr(x(x),@($piece(x(x),$MN,".")?.N))
+	                                     ^-----
+		At column 38, line 2, source module ##TEST_PATH##/misc46.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created misc46.m ------------------------
+misc46.o
+
+------------------------ Running   misc46.m ------------------------
+150373850,+2^misc46,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc47.m ------------------------
+	 write $incr(x(x),@($piece(x(x),$MN,$MN("."))?.N))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc47.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $incr(x(x),@($piece(x(x),$MN,$MN("."))?.N))
+	                                     ^-----
+		At column 38, line 2, source module ##TEST_PATH##/misc47.m
+%GTM-E-INVFCN, Invalid function name
+	 write $incr(x(x),@($piece(x(x),$MN,$MN("."))?.N))
+	                                         ^-----
+		At column 42, line 2, source module ##TEST_PATH##/misc47.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 write $incr(x(x),@($piece(x(x),$MN,$MN("."))?.N))
+	                                         ^-----
+		At column 42, line 2, source module ##TEST_PATH##/misc47.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created misc47.m ------------------------
+misc47.o
+
+------------------------ Running   misc47.m ------------------------
+150373850,+2^misc47,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc48.m ------------------------
+	 write $order(@($piece(x(x),$MN,$MN(".")?.N)))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc48.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $order(@($piece(x(x),$MN,$MN(".")?.N)))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc48.m
+%GTM-E-INVFCN, Invalid function name
+	 write $order(@($piece(x(x),$MN,$MN(".")?.N)))
+	                                     ^-----
+		At column 38, line 2, source module ##TEST_PATH##/misc48.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 write $order(@($piece(x(x),$MN,$MN(".")?.N)))
+	                                     ^-----
+		At column 38, line 2, source module ##TEST_PATH##/misc48.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created misc48.m ------------------------
+misc48.o
+
+------------------------ Running   misc48.m ------------------------
+150373850,+2^misc48,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc49.m ------------------------
+	 write $zprevious(@($piece(x(x),$MN,$MN(".")?.N)))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc49.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $zprevious(@($piece(x(x),$MN,$MN(".")?.N)))
+	                                     ^-----
+		At column 38, line 2, source module ##TEST_PATH##/misc49.m
+%GTM-E-INVFCN, Invalid function name
+	 write $zprevious(@($piece(x(x),$MN,$MN(".")?.N)))
+	                                         ^-----
+		At column 42, line 2, source module ##TEST_PATH##/misc49.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 write $zprevious(@($piece(x(x),$MN,$MN(".")?.N)))
+	                                         ^-----
+		At column 42, line 2, source module ##TEST_PATH##/misc49.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created misc49.m ------------------------
+misc49.o
+
+------------------------ Running   misc49.m ------------------------
+150373850,+2^misc49,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc50.m ------------------------
+	 write $zqgblmod(@($piece(x(x),$MN,$MN(".")?.N)))
+	                                ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc50.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $zqgblmod(@($piece(x(x),$MN,$MN(".")?.N)))
+	                                    ^-----
+		At column 37, line 2, source module ##TEST_PATH##/misc50.m
+%GTM-E-INVFCN, Invalid function name
+	 write $zqgblmod(@($piece(x(x),$MN,$MN(".")?.N)))
+	                                        ^-----
+		At column 41, line 2, source module ##TEST_PATH##/misc50.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 write $zqgblmod(@($piece(x(x),$MN,$MN(".")?.N)))
+	                                        ^-----
+		At column 41, line 2, source module ##TEST_PATH##/misc50.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created misc50.m ------------------------
+misc50.o
+
+------------------------ Running   misc50.m ------------------------
+150373850,+2^misc50,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc51.m ------------------------
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN("."))?.N))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc51.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN("."))?.N))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc51.m
+%GTM-E-INVFCN, Invalid function name
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN("."))?.N))
+	                                                           ^-----
+		At column 60, line 2, source module ##TEST_PATH##/misc51.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN("."))?.N))
+	                                                               ^-----
+		At column 64, line 2, source module ##TEST_PATH##/misc51.m
+%GTM-E-INVFCN, Invalid function name
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN("."))?.N))
+	                                                                   ^-----
+		At column 68, line 2, source module ##TEST_PATH##/misc51.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN("."))?.N))
+	                                                                   ^-----
+		At column 68, line 2, source module ##TEST_PATH##/misc51.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created misc51.m ------------------------
+misc51.o
+
+------------------------ Running   misc51.m ------------------------
+150373850,+2^misc51,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc52.m ------------------------
+	 write $query(@($piece(x(x),$MN,$MN(".")?.N)))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc52.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $query(@($piece(x(x),$MN,$MN(".")?.N)))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc52.m
+%GTM-E-INVFCN, Invalid function name
+	 write $query(@($piece(x(x),$MN,$MN(".")?.N)))
+	                                     ^-----
+		At column 38, line 2, source module ##TEST_PATH##/misc52.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 write $query(@($piece(x(x),$MN,$MN(".")?.N)))
+	                                     ^-----
+		At column 38, line 2, source module ##TEST_PATH##/misc52.m
+%GTM-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+------------------------ Checking if .o file was created misc52.m ------------------------
+misc52.o
+
+------------------------ Running   misc52.m ------------------------
+150373850,+2^misc52,%GTM-E-UNDEF, Undefined local variable: x
+
+######################################################################
+------------------------ Compiling misc53.m ------------------------
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(."")?.N)))
+	                                ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc53.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(."")?.N)))
+	                                    ^-----
+		At column 37, line 2, source module ##TEST_PATH##/misc53.m
+%GTM-E-INVFCN, Invalid function name
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(."")?.N)))
+	                                                                ^-----
+		At column 65, line 2, source module ##TEST_PATH##/misc53.m
+%GTM-E-INVSVN, Invalid special variable name
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(."")?.N)))
+	                                                                    ^-----
+		At column 69, line 2, source module ##TEST_PATH##/misc53.m
+%GTM-E-INVFCN, Invalid function name
+	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(."")?.N)))
+	                                                                       ^-----
+		At column 72, line 2, source module ##TEST_PATH##/misc53.m
+%GTM-E-EXPR, Expression expected but not found
+
+------------------------ Checking if .o file was created misc53.m ------------------------
+misc53.o
+
+------------------------ Running   misc53.m ------------------------
+150372778,+2^misc53,%GTM-E-EXPR, Expression expected but not found
+
+######################################################################
+------------------------ Compiling misc54.m ------------------------
+	 xecute @($piece(x(x),$MN,$MN(."")?.N))
+	                       ^-----
+		At column 24, line 2, source module ##TEST_PATH##/misc54.m
+%GTM-E-INVSVN, Invalid special variable name
+	 xecute @($piece(x(x),$MN,$MN(."")?.N))
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc54.m
+%GTM-E-INVFCN, Invalid function name
+	 xecute @($piece(x(x),$MN,$MN(."")?.N))
+	                              ^-----
+		At column 31, line 2, source module ##TEST_PATH##/misc54.m
+%GTM-E-EXPR, Expression expected but not found
+
+------------------------ Checking if .o file was created misc54.m ------------------------
+misc54.o
+
+------------------------ Running   misc54.m ------------------------
+150372778,+2^misc54,%GTM-E-EXPR, Expression expected but not found
+
+######################################################################
+------------------------ Compiling misc55.m ------------------------
+	 set (x,$ZY,z(2E22222222222222222222222233))=($piece($h,"","",2)*0)+15
+	         ^-----
+		At column 10, line 2, source module ##TEST_PATH##/misc55.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set (x,$ZY,z(2E22222222222222222222222233))=($piece($h,"","",2)*0)+15
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc55.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc55.m ------------------------
+misc55.o
+
+------------------------ Running   misc55.m ------------------------
+150373506,+2^misc55,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc56.m ------------------------
+	 set (x,$ZY,z(x))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	         ^-----
+		At column 10, line 2, source module ##TEST_PATH##/misc56.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set (x,$ZY,z(x))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc56.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc56.m ------------------------
+misc56.o
+
+------------------------ Running   misc56.m ------------------------
+150373506,+2^misc56,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc57.m ------------------------
+	 set ($ZY,z(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc57.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,z(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	           ^-----
+		At column 12, line 2, source module ##TEST_PATH##/misc57.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc57.m ------------------------
+misc57.o
+
+------------------------ Running   misc57.m ------------------------
+150373506,+2^misc57,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc58.m ------------------------
+	 set ($ZY,^z(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc58.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,^z(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	            ^-----
+		At column 13, line 2, source module ##TEST_PATH##/misc58.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc58.m ------------------------
+misc58.o
+
+------------------------ Running   misc58.m ------------------------
+150373506,+2^misc58,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc59.m ------------------------
+	 set ($ZY,@y(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc59.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,@y(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	            ^-----
+		At column 13, line 2, source module ##TEST_PATH##/misc59.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc59.m ------------------------
+misc59.o
+
+------------------------ Running   misc59.m ------------------------
+150373506,+2^misc59,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc60.m ------------------------
+	 set ($ZY,$$x(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc60.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$$x(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	           ^-----
+		At column 12, line 2, source module ##TEST_PATH##/misc60.m
+%GTM-E-VAREXPECTED, Variable expected in this context
+
+------------------------ Checking if .o file was created misc60.m ------------------------
+misc60.o
+
+------------------------ Running   misc60.m ------------------------
+150373866,+2^misc60,%GTM-E-VAREXPECTED, Variable expected in this context
+
+######################################################################
+------------------------ Compiling misc61.m ------------------------
+	 set ($ZY,$order(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc61.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$order(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	           ^-----
+		At column 12, line 2, source module ##TEST_PATH##/misc61.m
+%GTM-E-VAREXPECTED, Variable expected in this context
+
+------------------------ Checking if .o file was created misc61.m ------------------------
+misc61.o
+
+------------------------ Running   misc61.m ------------------------
+150373866,+2^misc61,%GTM-E-VAREXPECTED, Variable expected in this context
+
+######################################################################
+------------------------ Compiling misc62.m ------------------------
+	 set ($ZY,$piece(x(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc62.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece(x(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                  ^-----
+		At column 19, line 2, source module ##TEST_PATH##/misc62.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc62.m ------------------------
+misc62.o
+
+------------------------ Running   misc62.m ------------------------
+150373506,+2^misc62,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc63.m ------------------------
+	 set ($ZY,$piece(^z(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc63.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece(^z(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                   ^-----
+		At column 20, line 2, source module ##TEST_PATH##/misc63.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc63.m ------------------------
+misc63.o
+
+------------------------ Running   misc63.m ------------------------
+150373506,+2^misc63,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc64.m ------------------------
+	 set ($ZY,$piece(@y(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc64.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece(@y(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                   ^-----
+		At column 20, line 2, source module ##TEST_PATH##/misc64.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc64.m ------------------------
+misc64.o
+
+------------------------ Running   misc64.m ------------------------
+150373506,+2^misc64,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc65.m ------------------------
+	 set ($ZY,$piece($$x(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc65.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece($$x(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                 ^-----
+		At column 18, line 2, source module ##TEST_PATH##/misc65.m
+%GTM-E-VAREXPECTED, Variable expected in this context
+
+------------------------ Checking if .o file was created misc65.m ------------------------
+misc65.o
+
+------------------------ Running   misc65.m ------------------------
+150373866,+2^misc65,%GTM-E-VAREXPECTED, Variable expected in this context
+
+######################################################################
+------------------------ Compiling misc66.m ------------------------
+	 set ($ZY,$piece(x(y)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc66.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece(x(y)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                     ^-----
+		At column 22, line 2, source module ##TEST_PATH##/misc66.m
+%GTM-E-COMMA, Comma expected in this context
+
+------------------------ Checking if .o file was created misc66.m ------------------------
+misc66.o
+
+------------------------ Running   misc66.m ------------------------
+150372474,+2^misc66,%GTM-E-COMMA, Comma expected in this context
+
+######################################################################
+------------------------ Compiling misc67.m ------------------------
+	 set ($ZY,$piece(x(y),2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc67.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece(x(y),2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                     ^-----
+		At column 22, line 2, source module ##TEST_PATH##/misc67.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc67.m ------------------------
+misc67.o
+
+------------------------ Running   misc67.m ------------------------
+150373506,+2^misc67,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc68.m ------------------------
+	 set ($ZY,$piece(x(y),"x",2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc68.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece(x(y),"x",2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc68.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc68.m ------------------------
+misc68.o
+
+------------------------ Running   misc68.m ------------------------
+150373506,+2^misc68,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc69.m ------------------------
+	 set ($ZY,$extract(x(y)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc69.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$extract(x(y)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                       ^-----
+		At column 40, line 2, source module ##TEST_PATH##/misc69.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc69.m ------------------------
+misc69.o
+
+------------------------ Running   misc69.m ------------------------
+150373506,+2^misc69,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc70.m ------------------------
+	 set ($ZY,$extract(x(y),2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc70.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$extract(x(y),2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                       ^-----
+		At column 24, line 2, source module ##TEST_PATH##/misc70.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc70.m ------------------------
+misc70.o
+
+------------------------ Running   misc70.m ------------------------
+150373506,+2^misc70,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc71.m ------------------------
+	 set ($ZY,$piece(x(y),"x")=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc71.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece(x(y),"x")=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc71.m
+%GTM-E-RPARENMISSING, Right parenthesis expected
+
+------------------------ Checking if .o file was created misc71.m ------------------------
+misc71.o
+
+------------------------ Running   misc71.m ------------------------
+150373642,+2^misc71,%GTM-E-RPARENMISSING, Right parenthesis expected
+
+######################################################################
+------------------------ Compiling misc72.m ------------------------
+	 set ($ZY,$$x(y))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc72.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$$x(y))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	           ^-----
+		At column 12, line 2, source module ##TEST_PATH##/misc72.m
+%GTM-E-VAREXPECTED, Variable expected in this context
+
+------------------------ Checking if .o file was created misc72.m ------------------------
+misc72.o
+
+------------------------ Running   misc72.m ------------------------
+150373866,+2^misc72,%GTM-E-VAREXPECTED, Variable expected in this context
+
+######################################################################
+------------------------ Compiling misc73.m ------------------------
+	 set ($ZY,$$x(y))($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc73.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$$x(y))($piece($h,"",2E22222222222222222222222233)*0)+15
+	           ^-----
+		At column 12, line 2, source module ##TEST_PATH##/misc73.m
+%GTM-E-VAREXPECTED, Variable expected in this context
+
+------------------------ Checking if .o file was created misc73.m ------------------------
+misc73.o
+
+------------------------ Running   misc73.m ------------------------
+150373866,+2^misc73,%GTM-E-VAREXPECTED, Variable expected in this context
+
+######################################################################
+------------------------ Compiling misc74.m ------------------------
+	 set ($ZY,$piece(x(y),"x"))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/misc74.m
+%GTM-E-INVSVN, Invalid special variable name
+	 set ($ZY,$piece(x(y),"x"))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                         ^-----
+		At column 42, line 2, source module ##TEST_PATH##/misc74.m
+%GTM-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc74.m ------------------------
+misc74.o
+
+------------------------ Running   misc74.m ------------------------
+150373506,+2^misc74,%GTM-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc75.m ------------------------
+
+------------------------ Checking if .o file was created misc75.m ------------------------
+misc75.o
+
+------------------------ Running   misc75.m ------------------------
+150373850,+2^misc75,%GTM-E-UNDEF, Undefined local variable: X
+
+##ALLOW_OUTPUT NONUNICODE_MODE

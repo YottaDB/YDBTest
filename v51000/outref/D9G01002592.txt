@@ -1,0 +1,567 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+######################################################################################
+                           Testing format=zwr
+######################################################################################
+$MUPIP extract -format=$fmt all.$fmt
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 10  max subsc len: 6  max rec len: 400  max node len: 410
+%GTM-I-RECORDSTAT, ^y:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 11  max subsc len: 6  max rec len: 400  max node len: 410
+if ( $fmt == bin ) then
+
+set fmtstr = ""
+endif
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=1 -end=1 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+Last LOAD record number: 0
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=1 -end=2 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+Last LOAD record number: 0
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=2 -end=2 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+Last LOAD record number: 0
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=1 -end=3 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 3
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=2 -end=10 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 8  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 10
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=3 -end=10 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 8  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 10
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=3 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 11  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 13
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -end=9 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 7  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 9
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=9 -end=19 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 9
+
+LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 13
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=3 -end=5 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 5
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4 -end=4 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 4
+
+LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 4
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=5 -end=4 all.$fmt
+%GTM-E-LOADEDBG, Load error: END smaller than BEGIN.  No records loaded.
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=1000000000 -end=1000000000 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 1000000000.  No records loaded.
+Error reading record number: 14
+
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=2000000000 -end=2000000000 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 2000000000.  No records loaded.
+Error reading record number: 14
+
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=3000000000 -end=3000000000 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 3000000000.  No records loaded.
+Error reading record number: 14
+
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4000000000 -end=4000000000 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4000000000.  No records loaded.
+Error reading record number: 14
+
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4294967295 -end=4294967295 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967295.  No records loaded.
+Error reading record number: 14
+
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4294967295 -end=4294967296 all.$fmt
+%GTM-E-LOADEDSZ2, Load error: END too large.  No records loaded.
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4294967296 -end=4294967295 all.$fmt
+%GTM-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4294967296 -end=4294967296 all.$fmt
+%GTM-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+unset verbose
+
+######################################################################################
+                           Testing format=go
+######################################################################################
+$MUPIP extract -format=$fmt all.$fmt
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 10  max subsc len: 6  max rec len: 400  max node len: 410
+%GTM-I-RECORDSTAT, ^y:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 11  max subsc len: 6  max rec len: 400  max node len: 410
+if ( $fmt == bin ) then
+
+set fmtstr = ""
+endif
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=1 -end=1 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+Last LOAD record number: 0
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=1 -end=2 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+Last LOAD record number: 0
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=2 -end=2 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+Last LOAD record number: 0
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=1 -end=3 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 6  Max Data Len: 0
+Last LOAD record number: 0
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=2 -end=10 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 4  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 10
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=3 -end=10 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 4  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 10
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=3 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 11  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 24
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -end=9 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 8
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=9 -end=19 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+Beginning LOAD at record number: 9
+
+LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 18
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=3 -end=5 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 4
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4 -end=4 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+Beginning LOAD at record number: 4
+
+%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^):                                                                                                                                                                                                                                                                                                                                                                                                                1
+		Global variable : 
+%GTM-E-RECLOAD, Error loading record number: 4
+
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+Last LOAD record number: 0
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=5 -end=4 all.$fmt
+%GTM-E-LOADEDBG, Load error: END smaller than BEGIN.  No records loaded.
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=1000000000 -end=1000000000 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 1000000000.  No records loaded.
+Error reading record number: 25
+
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=2000000000 -end=2000000000 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 2000000000.  No records loaded.
+Error reading record number: 25
+
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=3000000000 -end=3000000000 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 3000000000.  No records loaded.
+Error reading record number: 25
+
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4000000000 -end=4000000000 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4000000000.  No records loaded.
+Error reading record number: 25
+
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4294967295 -end=4294967295 all.$fmt
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967295.  No records loaded.
+Error reading record number: 25
+
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4294967295 -end=4294967296 all.$fmt
+%GTM-E-LOADEDSZ2, Load error: END too large.  No records loaded.
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4294967296 -end=4294967295 all.$fmt
+%GTM-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4294967296 -end=4294967296 all.$fmt
+%GTM-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+unset verbose
+
+######################################################################################
+                           Testing format=bin
+######################################################################################
+$MUPIP extract -format=$fmt all.$fmt
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 10  max subsc len: 6  max rec len: 400  max node len: 410
+%GTM-I-RECORDSTAT, ^y:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 11  max subsc len: 6  max rec len: 400  max node len: 410
+if ( $fmt == bin ) then
+set fmtstr = "-format=bin"
+else
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=1 -end=1 all.$fmt
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+Last LOAD record number: 0
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=1 -end=2 all.$fmt
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 2
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=2 -end=2 all.$fmt
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 2
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=1 -end=3 all.$fmt
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 3
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=2 -end=10 all.$fmt
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 9  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 10
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=3 -end=10 all.$fmt
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 8  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 10
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=3 all.$fmt
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 12
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -end=9 all.$fmt
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 8  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 9
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=9 -end=19 all.$fmt
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+Beginning LOAD at record number: 9
+
+LOAD TOTAL		Key Cnt: 4  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 12
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=3 -end=5 all.$fmt
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 5
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4 -end=4 all.$fmt
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+Beginning LOAD at record number: 4
+
+LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 6  Max Data Len: 400
+Last LOAD record number: 4
+
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=5 -end=4 all.$fmt
+%GTM-E-LOADEDBG, Load error: END smaller than BEGIN.  No records loaded.
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=1000000000 -end=1000000000 all.$fmt
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 1000000000.  No records loaded.
+Error reading record number: 13
+
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=2000000000 -end=2000000000 all.$fmt
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 2000000000.  No records loaded.
+Error reading record number: 13
+
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=3000000000 -end=3000000000 all.$fmt
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 3000000000.  No records loaded.
+Error reading record number: 13
+
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4000000000 -end=4000000000 all.$fmt
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4000000000.  No records loaded.
+Error reading record number: 13
+
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4294967295 -end=4294967295 all.$fmt
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967295.  No records loaded.
+Error reading record number: 13
+
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4294967295 -end=4294967296 all.$fmt
+%GTM-E-LOADEDSZ2, Load error: END too large.  No records loaded.
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4294967296 -end=4294967295 all.$fmt
+%GTM-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+$echoline
+-----------------------------------------------------------------
+$MUPIP load $fmtstr -begin=4294967296 -end=4294967296 all.$fmt
+%GTM-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+unset verbose
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

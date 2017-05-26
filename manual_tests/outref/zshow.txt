@@ -1,0 +1,84 @@
+-------------------Test 1---------------------------------------------
+Test: terminal
+USE -> WIDTH=-1
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150372658,test+8^terminal,%GTM-E-DEVPARMNEG, Deviceparameter must be a positive value
+error+7^terminal
+test+8^terminal    ($ZTRAP)
+test1+10^terminal
+^GTM$DMOD    (Direct mode) 
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-------------------Test 2---------------------------------------------
+Test: terminal
+USE -> WIDTH=0
+/dev/pts/12 OPEN TERMINAL NOPAST NOESCA NOREADS TYPE NOWRAP WIDTH=255 LENG=71 
+zshow.out OPEN RMS 
+-------------------Test 3---------------------------------------------
+Test: terminal
+USE -> WIDTH=2
+/dev/pts/12 OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=2 LENG=71 
+zshow.out OPEN RMS 
+-------------------Test 4---------------------------------------------
+Test: terminal
+USE -> WIDTH=32767
+/dev/pts/12 OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=32767 LENG=71 
+zshow.out OPEN RMS 
+-------------------Test 5---------------------------------------------
+Test: terminal
+USE -> WIDTH=1048576
+/dev/pts/12 OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=1048576 LENG=71 
+zshow.out OPEN RMS 
+-------------------Test 6---------------------------------------------
+Test: terminal
+USE -> WIDTH=1048580
+/dev/pts/12 OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=1048580 LENG=71 
+zshow.out OPEN RMS 
+-------------------Test 7---------------------------------------------
+Test: terminal
+USE -> LENGTH=-1
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150372658,test+8^terminal,%GTM-E-DEVPARMNEG, Deviceparameter must be a positive value
+error+7^terminal
+test+8^terminal    ($ZTRAP)
+test1+17^terminal
+^GTM$DMOD    (Direct mode) 
+Will continue with the rest of the tests...
+TEST-I-OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-------------------Test 8---------------------------------------------
+Test: terminal
+USE -> (LENGTH=0:WIDTH=100)
+/dev/pts/12 OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=100 LENG=0 
+zshow.out OPEN RMS 
+-------------------Test 9---------------------------------------------
+Test: terminal
+USE -> (LENGTH=2:WIDTH=30)
+/dev/pts/12 OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=2 
+zshow.out OPEN RMS 
+-------------------Test 10---------------------------------------------
+Test: terminal
+USE -> (WIDTH=30:LENGTH=255)
+/dev/pts/12 OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=255 
+zshow.out OPEN RMS 
+-------------------Test 11---------------------------------------------
+Test: terminal
+USE -> (LENGTH=256)
+/dev/pts/12 OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=256 
+zshow.out OPEN RMS 
+-------------------Test 12---------------------------------------------
+Test: terminal
+USE -> LENGTH=32767
+/dev/pts/12 OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=32767 
+zshow.out OPEN RMS 
+-------------------Test 13---------------------------------------------
+Test: terminal
+USE -> LENGTH=1048576
+/dev/pts/12 OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=1048576 
+zshow.out OPEN RMS 
+-------------------Test 14---------------------------------------------
+Test: terminal
+USE -> LENGTH=1048580
+/dev/pts/12 OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=1048580 
+zshow.out OPEN RMS 

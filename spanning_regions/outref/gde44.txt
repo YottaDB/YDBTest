@@ -1,0 +1,88 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gde44.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gde44.cmd
+%GDE-I-MAPBAD, Region AREG for Name b(1) does not exist
+%GDE-I-MAPBAD, Region BREG for Name b(1,1:2) does not exist
+%GDE-I-MAPBAD, Region CREG for Name b(1,2:3) does not exist
+%GDE-I-MAPBAD, Region BREG for Name b(1,3:7) does not exist
+%GDE-I-MAPBAD, Region AREG for Name b(1,4,1) does not exist
+%GDE-I-MAPBAD, Region CREG for Name b(1,4,100:"z") does not exist
+%GDE-I-MAPBAD, Region BREG for Name b(1,4,2:88) does not exist
+%GDE-I-MAPBAD, Region BREG for Name b(1,5) does not exist
+%GDE-I-MAPBAD, Region CREG for Name b(1,7:8) does not exist
+%GDE-I-MAPBAD, Region BREG for Name b(1,8:9) does not exist
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^b spans through it
+%GDE-I-STDNULLCOLLREQ, Region AREG needs Standard Null Collation enabled because global ^b spans through it
+%GDE-I-STDNULLCOLLREQ, Region BREG needs Standard Null Collation enabled because global ^b spans through it
+%GDE-I-STDNULLCOLLREQ, Region CREG needs Standard Null Collation enabled because global ^b spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-I-NOEXIT, Cannot exit because of verification failure
+
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ b(1)                               AREG
+ b(1,1:2)                           BREG
+ b(1,2:3)                           CREG
+ b(1,3:7)                           BREG
+ b(1,4,1)                           AREG
+ b(1,4,100:"z")                     CREG
+ b(1,7:8)                           CREG
+ b(1,8:9)                           BREG
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               b(1)                             REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ b(1)                            b(1,1)                           REG = AREG
+                                                                  SEG = AREG
+                                                                  FILE = AREG.dat
+ b(1,1)                          b(1,2)                           REG = BREG
+                                                                  SEG = BREG
+                                                                  FILE = BREG.dat
+ b(1,2)                          b(1,3)                           REG = CREG
+                                                                  SEG = CREG
+                                                                  FILE = CREG.dat
+ b(1,3)                          b(1,4,1)                         REG = BREG
+                                                                  SEG = BREG
+                                                                  FILE = BREG.dat
+ b(1,4,1)                        b(1,4,1)++                       REG = AREG
+                                                                  SEG = AREG
+                                                                  FILE = AREG.dat
+ b(1,4,1)++                      b(1,4,100)                       REG = BREG
+                                                                  SEG = BREG
+                                                                  FILE = BREG.dat
+ b(1,4,100)                      b(1,4,"z")                       REG = CREG
+                                                                  SEG = CREG
+                                                                  FILE = CREG.dat
+ b(1,4,"z")                      b(1,7)                           REG = BREG
+                                                                  SEG = BREG
+                                                                  FILE = BREG.dat
+ b(1,7)                          b(1,8)                           REG = CREG
+                                                                  SEG = CREG
+                                                                  FILE = CREG.dat
+ b(1,8)                          b(1,9)                           REG = BREG
+                                                                  SEG = BREG
+                                                                  FILE = BREG.dat
+ b(1,9)                          b(1)++                           REG = AREG
+                                                                  SEG = AREG
+                                                                  FILE = AREG.dat
+ b(1)++                          ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gde44.gld

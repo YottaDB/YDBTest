@@ -1,0 +1,122 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+
+GTM>
+do ^manygbls
+GTM>
+do in0^dbfill("set")set PASS
+
+GTM>
+do in0^dbfill("ver")ver PASS
+
+GTM>
+do in0^dbfill("kill")kill PASS
+
+GTM>
+do in1^dbfill("set")set PASS
+
+GTM>
+do in1^dbfill("ver")ver PASS
+
+GTM>
+do in1^dbfill("kill")kill PASS
+
+GTM>
+do in2^dbfill("set")set PASS
+
+GTM>
+do in2^dbfill("ver")ver PASS
+
+GTM>
+do ^rinttp(1)Non-TP and TP-Rollback
+Releasing jobs...
+Starting verification...
+ver PASS
+
+PASS from rinttp
+GTM>
+do ^rinttp(2)Transaction Commit and TP-Rollback
+Releasing jobs...
+Starting verification...
+ver PASS
+
+PASS from rinttp
+GTM>
+do ^rinttp(3)non-TP and Transaction Commit and TP-Rollback
+Releasing jobs...
+Starting verification...
+ver PASS
+
+PASS from rinttp
+GTM>
+do in0^pfill("kill",1)kill PASS
+
+GTM>
+do in2^dbfill("kill")kill PASS
+
+GTM>
+do fill3^myfill("set")PASS from fill3^myfill("set")
+
+GTM>
+do fill3^myfill("ver")PASS from fill3^myfill("ver")
+
+GTM>
+do fill3^myfill("kill")PASS from fill3^myfill("kill")
+
+GTM>
+do fill4^myfill("set")PASS from fill4^myfill("set")
+
+GTM>
+do fill4^myfill("ver")PASS from fill4^myfill("ver")
+
+GTM>
+do fill4^myfill("kill")PASS from fill4^myfill("kill")
+
+GTM>
+do in4^sfill("set",1,8)set PASS
+
+GTM>
+do in4^sfill("ver",1,8)ver PASS
+
+GTM>
+do in4^sfill("kill",1,8)kill PASS
+
+GTM>
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

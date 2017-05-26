@@ -1,0 +1,16 @@
+#!/usr/bin/expect -f
+# Use a relaxed pattern match expectation for a more successful execution
+set timeout -1
+match_max 100000
+
+# Execute the routine directly to avoid start up and shutdown
+spawn $env(gtm_dist)/mumps -run test2^terminal
+
+# Wait for the GTM prompt and then do your routine
+expect "Hit any key to continue, q to quit"
+send -- "\r"
+expect "Hit any key to continue"
+send -- "\r"
+
+# Expect should wait until MUMPS exits
+expect eof

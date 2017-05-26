@@ -1,0 +1,3660 @@
+# create a small database
+
+GTM>
+
+GTM>
+
+GTM>
+
+######################################################################################
+**** test1 ****
+** database is world writeable
+** process uid $tst_user is a member of database group $tst_group
+** database group $tst_group is unchanged.  and 666 with default database permission of 666
+
+# Check the permissions of ipcs. Expect the below
+# 269287425  666        $tst_user   $tst_group        $tst_user   $tst_group       
+TEST-I-PASS ipcs permission check passed for the file ipcs_full_1.out
+
+# Check permissions of libgtmshr. Expect the below
+# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libgtmshr.xx
+TEST-I-PASS file permissions of libgtmshr##TEST_SHL_SUFFIX## is as expected
+
+# Check the permissions of database file. Expect the below
+# -rw-rw-rw- 1 $tst_user $tst_group 169472 Jun 18 05:29 mumps.dat
+TEST-I-PASS file permissions of mumps.dat is as expected
+
+# Check the permissions of journal file. Expect the below
+# -rw-rw-rw- 1 $tst_user $tst_group .... ... .. ..... mumps.mjl
+TEST-I-PASS file permissions of mumps.mjl is as expected
+
+**** show gtmsecshr client socket for group unrestricted distribution, libgtmshr.xx mode = 775 ****
+# Check the permissions of gtm_secshr* file. Expect the below
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+# crw-rw---- 1 $tst_user   $tst_group  0 Jun  5 13:54 /tmp/gtm_secshr0000669C
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+# srwxrwxrwx 1 $tst_user   $tst_group  0 Jun  5 13:54 /tmp/gtm_secshr0000669C
+##ALLOW_OUTPUT HOST_OS390_S390
+TEST-I-PASS file permissions of gtm_secshr are as expected
+
+# Perform mupip backup and check file permissions
+# Expect same ownership and permissions as for the mumps.mjl above
+
+# Check the permissions of the backed-up file
+TEST-I-PASS file permissions of mumps.dat is as expected
+
+
+######################################################################################
+**** test2 ****
+** database uid $tst_user is a member of database group $tst_group
+** process uid $tst_user is a member of database group $tst_group
+** set group to database group $tst_group, and 770 with database permission 644
+
+# Check the permissions of ipcs. Expect the below
+# 269615105  666        $tst_user   $tst_group        $tst_user   $tst_group       
+TEST-I-PASS ipcs permission check passed for the file ipcs_full_2.out
+
+# Check permissions of libgtmshr. Expect the below
+# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libgtmshr.xx
+TEST-I-PASS file permissions of libgtmshr##TEST_SHL_SUFFIX## is as expected
+
+# Check the permissions of database file. Expect the below
+# -rw-r--r-- 1 $tst_user $tst_group 169472 Jun 18 05:29 mumps.dat
+TEST-I-PASS file permissions of mumps.dat is as expected
+
+# Check the permissions of journal file. Expect the below
+# -rw-r--r-- 1 $tst_user $tst_group .... ... .. ..... mumps.mjl
+TEST-I-PASS file permissions of mumps.mjl is as expected
+
+# Perform mupip backup and check file permissions
+# Expect same ownership and permissions as for the mumps.mjl above
+
+# Check the permissions of the backed-up file
+TEST-I-PASS file permissions of mumps.dat is as expected
+
+
+######################################################################################
+**** test3 ****
+** database is not world writeable
+** database uid $tst_user is not a member of database group $tst_group1
+** database uid $tst_user is a member of distribution group $tst_group
+** process uid $tst_user is a member of distribution group $tst_group
+** set group to distribution group $tst_group, set database permission to 644
+
+# Check the permissions of ipcs. Expect the below
+# 269713409  666        $tst_user   $tst_group        $tst_user   $tst_group       
+TEST-I-PASS ipcs permission check passed for the file ipcs_full_3.out
+
+# Check permissions of libgtmshr. Expect the below
+# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libgtmshr.xx
+TEST-I-PASS file permissions of libgtmshr##TEST_SHL_SUFFIX## is as expected
+
+# Check the permissions of database file. Expect the below
+# -rw-r--r-- 1 $tst_user $tst_group1 169472 Jun 18 05:30 mumps.dat
+TEST-I-PASS file permissions of mumps.dat is as expected
+
+# Check the permissions of journal file. Expect the below
+# -rw-r--r-- 1 $tst_user $tst_group .... ... .. ..... mumps.mjl
+TEST-I-PASS file permissions of mumps.mjl is as expected
+
+# Perform mupip backup and check file permissions
+# Expect same ownership and permissions as for the mumps.mjl above
+
+# Check the permissions of the backed-up file
+TEST-I-PASS file permissions of mumps.dat is as expected
+
+
+######################################################################################
+**** test4 ****
+** database is not world writeable
+** database uid $tst_user is a member of database group $tst_group3
+** process uid $tst_user is a member of database group $tst_group3
+** set group to database group $tst_group3, and 770 with database permission 664
+
+# Check the permissions of ipcs. Expect the below
+# 269811713  666        $tst_user   $tst_group        $tst_user   $tst_group3 
+TEST-I-PASS ipcs permission check passed for the file ipcs_full_4.out
+
+# Check permissions of libgtmshr. Expect the below
+# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libgtmshr.xx
+TEST-I-PASS file permissions of libgtmshr##TEST_SHL_SUFFIX## is as expected
+
+# Check the permissions of database file. Expect the below
+# -rw-rw-r-- 1 $tst_user $tst_group3 169472 Jun 18 05:30 mumps.dat
+TEST-I-PASS file permissions of mumps.dat is as expected
+
+# Check the permissions of journal file. Expect the below
+# -rw-rw-r-- 1 $tst_user $tst_group3 .... ... .. ..... mumps.mjl
+TEST-I-PASS file permissions of mumps.mjl is as expected
+
+# Perform mupip backup and check file permissions
+# Expect same ownership and permissions as for the mumps.mjl above
+
+# Check the permissions of the backed-up file
+TEST-I-PASS file permissions of mumps.dat is as expected
+
+
+######################################################################################
+**** test5 ****
+** database is not world writeable
+** database uid $tst_user is not a member of database group $tst_group1
+** database uid $tst_user is a member of distribution group $tst_group3
+** process uid $tst_user is a member of distribution group $tst_group3
+** set group to distribution group $tst_group3, set database permission to 664
+
+# Check the permissions of ipcs. Expect the below
+#269910017  666        $tst_user   $tst_group        $tst_user   $tst_group3 
+TEST-I-PASS ipcs permission check passed for the file ipcs_full_5.out
+
+# Check permissions of libgtmshr. Expect the below
+# -rwxrwxr-x 1 $tst_user $tst_group3 14740547 Jun 17 11:25 libgtmshr.xx
+TEST-I-PASS file permissions of libgtmshr##TEST_SHL_SUFFIX## is as expected
+
+# Check the permissions of database file. Expect the below
+# -rw-rw-r-- 1 $tst_user $tst_group1 169472 Jun 18 05:30 mumps.dat
+TEST-I-PASS file permissions of mumps.dat is as expected
+
+# Check the permissions of journal file. Expect the below
+# -rw-rw-rw- 1 $tst_user $tst_group .... ... .. ..... mumps.mjl
+TEST-I-PASS file permissions of mumps.mjl is as expected
+
+# Perform mupip backup and check file permissions
+# Expect same ownership and permissions as for the mumps.mjl above
+
+# Check the permissions of the backed-up file
+TEST-I-PASS file permissions of mumps.dat is as expected
+
+**** show gtmsecshr client socket for group restricted distribution, libgtmshr.xx mode = 770 ****
+# Check the permissions of gtm_secshr* file. Expect the below
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+# crw-rw---- 1 $tst_user   $tst_group3  0 Jun  5 13:54 /tmp/gtm_secshr0000669C
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+# srw-rw---- 1 $tst_user   $tst_group3  0 Jun  5 13:54 /tmp/gtm_secshr0000669C
+##ALLOW_OUTPUT HOST_OS390_S390
+TEST-I-PASS file permissions of gtm_secshr are as expected
+
+# set the permissions of libgtmshr right
+
+
+######################################################################################
+**** test6 ****
+** This test verifies that the system does not crash if the setuid bit
+** is missing on gtmsecshrdir and gtmsecshrdir/gtmsecshr itself.
+** The reason for including this test in the security-related test suite is
+** that we already do a newincver, and there is no point in wasting extra space.
+
+# Check the content of gtm_6.outx. Expect the below
+# GTM> DBPRIVERR, No privilege for attempted update operation for file: ${curdir}/mumps.dat GTM>
+TEST-I-PASS the system gave us the correct warning message
+
+
+######################################################################################
+**** test7 ****
+** This test verifies that the system does not crash if the setuid bit
+** is missing on gtmsecshr, gtmsecshrdir, and gtmsecshrdir/gtmsecshr itself.
+** The reason for including this test in the security-related test suite is
+** that we already do a newincver, and there is no point in wasting extra space.
+
+# Check the content of gtm_7.outx. Expect the below
+# GTM> GTMSECSHRPERM, The gtmsecshr module in $gtm_dist does not have the correct permission and uid GTM>
+TEST-I-PASS the system gave us the correct warning message
+
+
+##TEST_AWK.*
+##TEST_AWK.*
+No errors detected by integ.
+######################################################################################
+**** test8 ****
+** This test verifies the correct ipc and file permissions for all factors. (GTM-7122)
+
+setenv gtm_chset M
+unset echo
+#
+# DB Perm      isowner oingroup ingroup restrict  Result Group                        IPC Perm       File Perm
+# -r--r--rw-      N       Y       N       N       Current group of process           -rw-rw-rw-      -rw-rw-rw-
+#
+Options:              perm=446 isroot owneringroup
+DB File Permissions:  -r--r--rw-,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -r--r--rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xrwx,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=446 owneringroup
+DB File Permissions:  -r--r--rw-,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xrwx,nidguser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+#
+# DB Perm      isowner oingroup ingroup restrict  Result Group                        IPC Perm       File Perm
+# -*--rw----      N       Y       Y       -       Group of database file             -rw-rw----      -rw-rw----
+#
+Options:              perm=060 gtmrestrict isroot owneringroup ingroup
+DB File Permissions:  ----rw----,defuser,gtc
+IPC Permissions:      shmperm=-----rw----,gtc;semperm=-----ra----,gtc
+New File Permissions: ----rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xrwx--x,defuser,gtc
+Relink Control File Permissions: ----rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=-----rw----,gtc;objshmperm=-----rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=060 gtmrestrict isroot owneringroup setgid
+DB File Permissions:  ----rw----,defuser,gtc
+IPC Permissions:      shmperm=-----rw----,gtc;semperm=-----ra----,gtc
+New File Permissions: ----rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xrwx--x,defuser,gtc
+Relink Control File Permissions: ----rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=-----rw----,gtc;objshmperm=-----rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=060 gtmrestrict owneringroup ingroup
+DB File Permissions:  ----rw----,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xrwx--x,idguser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=060 gtmrestrict owneringroup setgid
+DB File Permissions:  ----rw----,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtcnot;semperm=--ra-ra----,gtcnot
+New File Permissions: -rw-rw----,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xrwx--x,nidguser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtcnot;objshmperm=--rw(x|-)rw(x|-)---,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=060 isroot owneringroup ingroup
+DB File Permissions:  ----rw----,defuser,gtc
+IPC Permissions:      shmperm=-----rw----,gtc;semperm=-----ra----,gtc
+New File Permissions: ----rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xrwx--x,defuser,gtc
+Relink Control File Permissions: ----rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=-----rw----,gtc;objshmperm=-----rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=060 isroot owneringroup setgid
+DB File Permissions:  ----rw----,defuser,gtc
+IPC Permissions:      shmperm=-----rw----,gtc;semperm=-----ra----,gtc
+New File Permissions: ----rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xrwx--x,defuser,gtc
+Relink Control File Permissions: ----rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=-----rw----,gtc;objshmperm=-----rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=060 owneringroup ingroup
+DB File Permissions:  ----rw----,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xrwx--x,idguser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=060 owneringroup setgid
+DB File Permissions:  ----rw----,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtcnot;semperm=--ra-ra----,gtcnot
+New File Permissions: -rw-rw----,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xrwx--x,nidguser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtcnot;objshmperm=--rw(x|-)rw(x|-)---,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=460 gtmrestrict isroot owneringroup ingroup
+DB File Permissions:  -r--rw----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -r--rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xrwx--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=460 gtmrestrict isroot owneringroup setgid
+DB File Permissions:  -r--rw----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -r--rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xrwx--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=460 gtmrestrict owneringroup ingroup
+DB File Permissions:  -r--rw----,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xrwx--x,idguser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=460 gtmrestrict owneringroup setgid
+DB File Permissions:  -r--rw----,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtcnot;semperm=--ra-ra----,gtcnot
+New File Permissions: -rw-rw----,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xrwx--x,nidguser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtcnot;objshmperm=--rw(x|-)rw(x|-)---,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=460 isroot owneringroup ingroup
+DB File Permissions:  -r--rw----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -r--rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xrwx--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=460 isroot owneringroup setgid
+DB File Permissions:  -r--rw----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -r--rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xrwx--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=460 owneringroup ingroup
+DB File Permissions:  -r--rw----,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xrwx--x,idguser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=460 owneringroup setgid
+DB File Permissions:  -r--rw----,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtcnot;semperm=--ra-ra----,gtcnot
+New File Permissions: -rw-rw----,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xrwx--x,nidguser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtcnot;objshmperm=--rw(x|-)rw(x|-)---,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+#
+# DB Perm      isowner oingroup ingroup restrict  Result Group                        IPC Perm       File Perm
+# -r*-r*-r*-      -       -       Y       -       Group of database file             -rw-rw-rw-      -r*-r*-r*-
+#
+Options:              perm=666 gtmrestrict isroot isowner owneringroup ingroup
+DB File Permissions:  -rw-rw-rw-,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-rw-rw-,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict isroot isowner ingroup
+DB File Permissions:  -rw-rw-rw-,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-rw-rw-,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict isroot owneringroup ingroup
+DB File Permissions:  -rw-rw-rw-,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict isroot ingroup
+DB File Permissions:  -rw-rw-rw-,defuser,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-rw-rw-,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict isroot isowner owneringroup setgid
+DB File Permissions:  -rw-rw-rw-,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-rw-rw-,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict isroot isowner setgid
+DB File Permissions:  -rw-rw-rw-,root,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,root,gtc
+Relink Control File Permissions: -rw-rw-rw-,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict isroot owneringroup setgid
+DB File Permissions:  -rw-rw-rw-,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict isroot setgid
+DB File Permissions:  -rw-rw-rw-,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-rw-rw-,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict isowner owneringroup ingroup
+DB File Permissions:  -rw-rw-rw-,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict isowner ingroup
+DB File Permissions:  -rw-rw-rw-,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict owneringroup ingroup
+DB File Permissions:  -rw-rw-rw-,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,idguser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict ingroup
+DB File Permissions:  -rw-rw-rw-,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,nidguser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict isowner owneringroup setgid
+DB File Permissions:  -rw-rw-rw-,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict isowner setgid
+DB File Permissions:  -rw-rw-rw-,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-rw-rw-,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict owneringroup setgid
+DB File Permissions:  -rw-rw-rw-,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-rw-rw-,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,nidguser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict setgid
+DB File Permissions:  -rw-rw-rw-,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,idguser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 isroot isowner owneringroup ingroup
+DB File Permissions:  -rw-rw-rw-,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-rw-rw-,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 isroot isowner ingroup
+DB File Permissions:  -rw-rw-rw-,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-rw-rw-,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 isroot owneringroup ingroup
+DB File Permissions:  -rw-rw-rw-,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 isroot ingroup
+DB File Permissions:  -rw-rw-rw-,defuser,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-rw-rw-,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 isroot isowner owneringroup setgid
+DB File Permissions:  -rw-rw-rw-,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-rw-rw-,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 isroot isowner setgid
+DB File Permissions:  -rw-rw-rw-,root,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,root,gtc
+Relink Control File Permissions: -rw-rw-rw-,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 isroot owneringroup setgid
+DB File Permissions:  -rw-rw-rw-,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 isroot setgid
+DB File Permissions:  -rw-rw-rw-,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-rw-rw-,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 isowner owneringroup ingroup
+DB File Permissions:  -rw-rw-rw-,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 isowner ingroup
+DB File Permissions:  -rw-rw-rw-,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 owneringroup ingroup
+DB File Permissions:  -rw-rw-rw-,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,idguser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 ingroup
+DB File Permissions:  -rw-rw-rw-,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,nidguser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 isowner owneringroup setgid
+DB File Permissions:  -rw-rw-rw-,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 isowner setgid
+DB File Permissions:  -rw-rw-rw-,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-rw-rw-,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 owneringroup setgid
+DB File Permissions:  -rw-rw-rw-,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-rw-rw-,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,nidguser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 setgid
+DB File Permissions:  -rw-rw-rw-,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-rw-rw-,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,idguser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict isroot isowner owneringroup ingroup
+DB File Permissions:  -rw-rw-r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-rw-r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict isroot isowner ingroup
+DB File Permissions:  -rw-rw-r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-rw-r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict isroot owneringroup ingroup
+DB File Permissions:  -rw-rw-r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict isroot ingroup
+DB File Permissions:  -rw-rw-r--,defuser,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-rw-r--,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict isroot isowner owneringroup setgid
+DB File Permissions:  -rw-rw-r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-rw-r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict isroot isowner setgid
+DB File Permissions:  -rw-rw-r--,root,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-r--,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,root,gtc
+Relink Control File Permissions: -rw-rw-rw-,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict isroot owneringroup setgid
+DB File Permissions:  -rw-rw-r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict isroot setgid
+DB File Permissions:  -rw-rw-r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-rw-r--,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict isowner owneringroup ingroup
+DB File Permissions:  -rw-rw-r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict isowner ingroup
+DB File Permissions:  -rw-rw-r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict owneringroup ingroup
+DB File Permissions:  -rw-rw-r--,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,idguser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict ingroup
+DB File Permissions:  -rw-rw-r--,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,nidguser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict isowner owneringroup setgid
+DB File Permissions:  -rw-rw-r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict isowner setgid
+DB File Permissions:  -rw-rw-r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-rw-r--,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict owneringroup setgid
+DB File Permissions:  -rw-rw-r--,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-rw-r--,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,nidguser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict setgid
+DB File Permissions:  -rw-rw-r--,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,idguser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 isroot isowner owneringroup ingroup
+DB File Permissions:  -rw-rw-r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-rw-r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 isroot isowner ingroup
+DB File Permissions:  -rw-rw-r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-rw-r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 isroot owneringroup ingroup
+DB File Permissions:  -rw-rw-r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 isroot ingroup
+DB File Permissions:  -rw-rw-r--,defuser,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-rw-r--,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 isroot isowner owneringroup setgid
+DB File Permissions:  -rw-rw-r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-rw-r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 isroot isowner setgid
+DB File Permissions:  -rw-rw-r--,root,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-r--,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,root,gtc
+Relink Control File Permissions: -rw-rw-rw-,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 isroot owneringroup setgid
+DB File Permissions:  -rw-rw-r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 isroot setgid
+DB File Permissions:  -rw-rw-r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-rw-r--,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 isowner owneringroup ingroup
+DB File Permissions:  -rw-rw-r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 isowner ingroup
+DB File Permissions:  -rw-rw-r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 owneringroup ingroup
+DB File Permissions:  -rw-rw-r--,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,idguser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 ingroup
+DB File Permissions:  -rw-rw-r--,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,nidguser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 isowner owneringroup setgid
+DB File Permissions:  -rw-rw-r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 isowner setgid
+DB File Permissions:  -rw-rw-r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-rw-r--,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 owneringroup setgid
+DB File Permissions:  -rw-rw-r--,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-rw-r--,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,nidguser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 setgid
+DB File Permissions:  -rw-rw-r--,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-rw-rw-,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,idguser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict isroot isowner owneringroup ingroup
+DB File Permissions:  -rw-r--r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-r--r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict isroot isowner ingroup
+DB File Permissions:  -rw-r--r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-r--r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict isroot owneringroup ingroup
+DB File Permissions:  -rw-r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-r--r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict isroot ingroup
+DB File Permissions:  -rw-r--r--,defuser,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-r--r--,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict isroot isowner owneringroup setgid
+DB File Permissions:  -rw-r--r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-r--r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict isroot isowner setgid
+DB File Permissions:  -rw-r--r--,root,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-r--r--,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,root,gtc
+Relink Control File Permissions: -rw-rw-rw-,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict isroot owneringroup setgid
+DB File Permissions:  -rw-r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-r--r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict isroot setgid
+DB File Permissions:  -rw-r--r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-r--r--,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict isowner owneringroup ingroup
+DB File Permissions:  -rw-r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-r--r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict isowner ingroup
+DB File Permissions:  -rw-r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-r--r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict owneringroup ingroup
+DB File Permissions:  -rw-r--r--,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict ingroup
+DB File Permissions:  -rw-r--r--,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict isowner owneringroup setgid
+DB File Permissions:  -rw-r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-r--r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict isowner setgid
+DB File Permissions:  -rw-r--r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-r--r--,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict owneringroup setgid
+DB File Permissions:  -rw-r--r--,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict setgid
+DB File Permissions:  -rw-r--r--,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 isroot isowner owneringroup ingroup
+DB File Permissions:  -rw-r--r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-r--r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 isroot isowner ingroup
+DB File Permissions:  -rw-r--r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-r--r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 isroot owneringroup ingroup
+DB File Permissions:  -rw-r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-r--r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 isroot ingroup
+DB File Permissions:  -rw-r--r--,defuser,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-r--r--,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 isroot isowner owneringroup setgid
+DB File Permissions:  -rw-r--r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -rw-r--r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 isroot isowner setgid
+DB File Permissions:  -rw-r--r--,root,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-r--r--,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,root,gtc
+Relink Control File Permissions: -rw-rw-rw-,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 isroot owneringroup setgid
+DB File Permissions:  -rw-r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-r--r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 isroot setgid
+DB File Permissions:  -rw-r--r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-r--r--,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 isowner owneringroup ingroup
+DB File Permissions:  -rw-r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-r--r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 isowner ingroup
+DB File Permissions:  -rw-r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-r--r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 owneringroup ingroup
+DB File Permissions:  -rw-r--r--,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 ingroup
+DB File Permissions:  -rw-r--r--,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 isowner owneringroup setgid
+DB File Permissions:  -rw-r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-r--r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 isowner setgid
+DB File Permissions:  -rw-r--r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-r--r--,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 owneringroup setgid
+DB File Permissions:  -rw-r--r--,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 setgid
+DB File Permissions:  -rw-r--r--,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict isroot isowner owneringroup ingroup
+DB File Permissions:  -r--r--r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -r--r--r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict isroot isowner ingroup
+DB File Permissions:  -r--r--r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -r--r--r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict isroot owneringroup ingroup
+DB File Permissions:  -r--r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -r--r--r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict isroot ingroup
+DB File Permissions:  -r--r--r--,defuser,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -r--r--r--,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,defuser,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict isroot isowner owneringroup setgid
+DB File Permissions:  -r--r--r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -r--r--r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict isroot isowner setgid
+DB File Permissions:  -r--r--r--,root,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -r--r--r--,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,root,gtc
+Relink Control File Permissions: -rw-rw-rw-,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict isroot owneringroup setgid
+DB File Permissions:  -r--r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -r--r--r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict isroot setgid
+DB File Permissions:  -r--r--r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -r--r--r--,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict isowner owneringroup ingroup
+DB File Permissions:  -r--r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict isowner ingroup
+DB File Permissions:  -r--r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict owneringroup ingroup
+DB File Permissions:  -r--r--r--,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict ingroup
+DB File Permissions:  -r--r--r--,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict isowner owneringroup setgid
+DB File Permissions:  -r--r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict isowner setgid
+DB File Permissions:  -r--r--r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict owneringroup setgid
+DB File Permissions:  -r--r--r--,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict setgid
+DB File Permissions:  -r--r--r--,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 isroot isowner owneringroup ingroup
+DB File Permissions:  -r--r--r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -r--r--r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 isroot isowner ingroup
+DB File Permissions:  -r--r--r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -r--r--r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 isroot owneringroup ingroup
+DB File Permissions:  -r--r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -r--r--r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 isroot ingroup
+DB File Permissions:  -r--r--r--,defuser,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -r--r--r--,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,defuser,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 isroot isowner owneringroup setgid
+DB File Permissions:  -r--r--r--,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw-rw-,rootgroup;semperm=--ra-ra-ra-,rootgroup
+New File Permissions: -r--r--r--,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,root,rootgroup
+Relink Control File Permissions: -rw-rw-rw-,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,rootgroup;objshmperm=--rw(x|-)rw(x|-)rw(x|-),rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 isroot isowner setgid
+DB File Permissions:  -r--r--r--,root,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -r--r--r--,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,root,gtc
+Relink Control File Permissions: -rw-rw-rw-,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 isroot owneringroup setgid
+DB File Permissions:  -r--r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -r--r--r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,defuser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 isroot setgid
+DB File Permissions:  -r--r--r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -r--r--r--,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 isowner owneringroup ingroup
+DB File Permissions:  -r--r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 isowner ingroup
+DB File Permissions:  -r--r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 owneringroup ingroup
+DB File Permissions:  -r--r--r--,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 ingroup
+DB File Permissions:  -r--r--r--,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 isowner owneringroup setgid
+DB File Permissions:  -r--r--r--,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 isowner setgid
+DB File Permissions:  -r--r--r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 owneringroup setgid
+DB File Permissions:  -r--r--r--,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 setgid
+DB File Permissions:  -r--r--r--,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+#
+# DB Perm      isowner oingroup ingroup restrict  Result Group                        IPC Perm       File Perm
+# -rw-rw-r*-      -       -       N       -       Current group of process           -rw-rw-rw-      -rw-rw-rw-
+#
+Options:              perm=666 gtmrestrict isroot isowner
+DB File Permissions:  -rw-rw-rw-,root,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,root,gtc
+Relink Control File Permissions: -rw-rw-rw-,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict isowner
+DB File Permissions:  -rw-rw-rw-,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict owneringroup
+DB File Permissions:  -rw-rw-rw-,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,nidguser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 gtmrestrict
+DB File Permissions:  -rw-rw-rw-,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,idguser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 isroot isowner
+DB File Permissions:  -rw-rw-rw-,root,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,root,gtc
+Relink Control File Permissions: -rw-rw-rw-,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 isowner
+DB File Permissions:  -rw-rw-rw-,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666 owneringroup
+DB File Permissions:  -rw-rw-rw-,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,nidguser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=666
+DB File Permissions:  -rw-rw-rw-,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxrwx,idguser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict isroot isowner
+DB File Permissions:  -rw-rw-r--,root,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-r--,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,root,gtc
+Relink Control File Permissions: -rw-rw-rw-,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict isowner
+DB File Permissions:  -rw-rw-r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict owneringroup
+DB File Permissions:  -rw-rw-r--,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 gtmrestrict
+DB File Permissions:  -rw-rw-r--,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 isroot isowner
+DB File Permissions:  -rw-rw-r--,root,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-r--,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,root,gtc
+Relink Control File Permissions: -rw-rw-rw-,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 isowner
+DB File Permissions:  -rw-rw-r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwxr-x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664 owneringroup
+DB File Permissions:  -rw-rw-r--,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=664
+DB File Permissions:  -rw-rw-r--,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+#
+# DB Perm      isowner oingroup ingroup restrict  Result Group                        IPC Perm       File Perm
+# -r*-r--r--      -       -       N       -       Current group of process           -rw-rw-rw-      -r*-r--r--
+#
+Options:              perm=644 gtmrestrict isroot isowner
+DB File Permissions:  -rw-r--r--,root,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-r--r--,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,root,gtc
+Relink Control File Permissions: -rw-rw-rw-,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict isowner
+DB File Permissions:  -rw-r--r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-r-----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict owneringroup
+DB File Permissions:  -rw-r--r--,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 gtmrestrict
+DB File Permissions:  -rw-r--r--,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 isroot isowner
+DB File Permissions:  -rw-r--r--,root,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-r--r--,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,root,gtc
+Relink Control File Permissions: -rw-rw-rw-,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 isowner
+DB File Permissions:  -rw-r--r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-r--r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-xr-x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644 owneringroup
+DB File Permissions:  -rw-r--r--,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=644
+DB File Permissions:  -rw-r--r--,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict isroot isowner
+DB File Permissions:  -r--r--r--,root,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -r--r--r--,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,root,gtc
+Relink Control File Permissions: -rw-rw-rw-,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict isowner
+DB File Permissions:  -r--r--r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict owneringroup
+DB File Permissions:  -r--r--r--,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 gtmrestrict
+DB File Permissions:  -r--r--r--,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 isroot isowner
+DB File Permissions:  -r--r--r--,root,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -r--r--r--,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-xr-x,root,gtc
+Relink Control File Permissions: -rw-rw-rw-,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 isowner
+DB File Permissions:  -r--r--r--,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444 owneringroup
+DB File Permissions:  -r--r--r--,nidguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=444
+DB File Permissions:  -r--r--r--,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+#
+# DB Perm      isowner oingroup ingroup restrict  Result Group                        IPC Perm       File Perm
+# -r*-r*----      Y       Y       -       -       Group of database file             -rw-rw----      -r*-r*----
+#
+Options:              perm=660 gtmrestrict isroot isowner owneringroup ingroup
+DB File Permissions:  -rw-rw----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -rw-rw----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 gtmrestrict isroot isowner owneringroup setgid
+DB File Permissions:  -rw-rw----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -rw-rw----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 gtmrestrict isroot isowner owneringroup
+DB File Permissions:  -rw-rw----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -rw-rw----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 gtmrestrict isowner owneringroup ingroup
+DB File Permissions:  -rw-rw----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 gtmrestrict isowner owneringroup setgid
+DB File Permissions:  -rw-rw----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 gtmrestrict isowner owneringroup
+DB File Permissions:  -rw-rw----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 isroot isowner owneringroup ingroup
+DB File Permissions:  -rw-rw----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -rw-rw----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 isroot isowner owneringroup setgid
+DB File Permissions:  -rw-rw----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -rw-rw----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 isroot isowner owneringroup
+DB File Permissions:  -rw-rw----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -rw-rw----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 isowner owneringroup ingroup
+DB File Permissions:  -rw-rw----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 isowner owneringroup setgid
+DB File Permissions:  -rw-rw----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 isowner owneringroup
+DB File Permissions:  -rw-rw----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 gtmrestrict isroot isowner owneringroup ingroup
+DB File Permissions:  -rw-r-----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -rw-r-----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 gtmrestrict isroot isowner owneringroup setgid
+DB File Permissions:  -rw-r-----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -rw-r-----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 gtmrestrict isroot isowner owneringroup
+DB File Permissions:  -rw-r-----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -rw-r-----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 gtmrestrict isowner owneringroup ingroup
+DB File Permissions:  -rw-r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-r-----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 gtmrestrict isowner owneringroup setgid
+DB File Permissions:  -rw-r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-r-----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 gtmrestrict isowner owneringroup
+DB File Permissions:  -rw-r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-r-----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 isroot isowner owneringroup ingroup
+DB File Permissions:  -rw-r-----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -rw-r-----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 isroot isowner owneringroup setgid
+DB File Permissions:  -rw-r-----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -rw-r-----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 isroot isowner owneringroup
+DB File Permissions:  -rw-r-----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -rw-r-----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 isowner owneringroup ingroup
+DB File Permissions:  -rw-r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-r-----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 isowner owneringroup setgid
+DB File Permissions:  -rw-r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-r-----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 isowner owneringroup
+DB File Permissions:  -rw-r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-r-----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 gtmrestrict isroot isowner owneringroup ingroup
+DB File Permissions:  -r--r-----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -r--r-----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-x--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 gtmrestrict isroot isowner owneringroup setgid
+DB File Permissions:  -r--r-----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -r--r-----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-x--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 gtmrestrict isroot isowner owneringroup
+DB File Permissions:  -r--r-----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -r--r-----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-x--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 gtmrestrict isowner owneringroup ingroup
+DB File Permissions:  -r--r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 gtmrestrict isowner owneringroup setgid
+DB File Permissions:  -r--r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 gtmrestrict isowner owneringroup
+DB File Permissions:  -r--r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 isroot isowner owneringroup ingroup
+DB File Permissions:  -r--r-----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -r--r-----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-x--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 isroot isowner owneringroup setgid
+DB File Permissions:  -r--r-----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -r--r-----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-x--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 isroot isowner owneringroup
+DB File Permissions:  -r--r-----,root,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -r--r-----,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-x--x,root,rootgroup
+Relink Control File Permissions: -rw-rw----,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 isowner owneringroup ingroup
+DB File Permissions:  -r--r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 isowner owneringroup setgid
+DB File Permissions:  -r--r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 isowner owneringroup
+DB File Permissions:  -r--r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+#
+# DB Perm      isowner oingroup ingroup restrict  Result Group                        IPC Perm       File Perm
+# -r*-r*----      Y       N       -       N       Current group of process           -rw-rw-rw-      -rw-rw-rw-
+#
+Options:              perm=660 isroot isowner
+DB File Permissions:  -rw-rw----,root,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,root,gtc
+Relink Control File Permissions: -rw-rw----,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 isowner
+DB File Permissions:  -rw-rw----,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 isroot isowner
+DB File Permissions:  -rw-r-----,root,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-r-----,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,root,gtc
+Relink Control File Permissions: -rw-rw----,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 isowner
+DB File Permissions:  -rw-r-----,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-r--r--,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 isroot isowner
+DB File Permissions:  -r--r-----,root,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -r--r-----,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-x--x,root,gtc
+Relink Control File Permissions: -rw-rw----,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 isowner
+DB File Permissions:  -r--r-----,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+#
+# DB Perm      isowner oingroup ingroup restrict  Result Group                        IPC Perm       File Perm
+# -r*-r*----      Y       N       -       Y       Group to which GT.M is restricted  -rw-rw----      -rw-rw----
+#
+Options:              perm=660 gtmrestrict isroot isowner
+DB File Permissions:  -rw-rw----,root,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,root,gtc
+Relink Control File Permissions: -rw-rw----,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 gtmrestrict isowner
+DB File Permissions:  -rw-rw----,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 gtmrestrict isroot isowner
+DB File Permissions:  -rw-r-----,root,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-r-----,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,root,gtc
+Relink Control File Permissions: -rw-rw----,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 gtmrestrict isowner
+DB File Permissions:  -rw-r-----,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-r-----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 gtmrestrict isroot isowner
+DB File Permissions:  -r--r-----,root,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -r--r-----,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-x--x,root,gtc
+Relink Control File Permissions: -rw-rw----,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 gtmrestrict isowner
+DB File Permissions:  -r--r-----,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+#
+# DB Perm      isowner oingroup ingroup restrict  Result Group                        IPC Perm       File Perm
+# -r*-r*----      N       Y       Y       -       Group of database file             -rw-rw----      -r*-r*----
+#
+Options:              perm=660 gtmrestrict isroot owneringroup ingroup ingroup
+DB File Permissions:  -rw-rw----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 gtmrestrict isroot owneringroup ingroup setgid
+DB File Permissions:  -rw-rw----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 gtmrestrict owneringroup ingroup ingroup
+DB File Permissions:  -rw-rw----,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,idguser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 gtmrestrict owneringroup ingroup setgid
+DB File Permissions:  -rw-rw----,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,idguser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 isroot owneringroup ingroup ingroup
+DB File Permissions:  -rw-rw----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 isroot owneringroup ingroup setgid
+DB File Permissions:  -rw-rw----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 owneringroup ingroup ingroup
+DB File Permissions:  -rw-rw----,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,idguser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 owneringroup ingroup setgid
+DB File Permissions:  -rw-rw----,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,idguser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 gtmrestrict isroot owneringroup ingroup ingroup
+DB File Permissions:  -rw-r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-r-----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 gtmrestrict isroot owneringroup ingroup setgid
+DB File Permissions:  -rw-r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-r-----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 gtmrestrict owneringroup ingroup ingroup
+DB File Permissions:  -rw-r-----,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 gtmrestrict owneringroup ingroup setgid
+DB File Permissions:  -rw-r-----,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 isroot owneringroup ingroup ingroup
+DB File Permissions:  -rw-r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-r-----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 isroot owneringroup ingroup setgid
+DB File Permissions:  -rw-r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-r-----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 owneringroup ingroup ingroup
+DB File Permissions:  -rw-r-----,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 owneringroup ingroup setgid
+DB File Permissions:  -rw-r-----,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 gtmrestrict isroot owneringroup ingroup ingroup
+DB File Permissions:  -r--r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -r--r-----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-x--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 gtmrestrict isroot owneringroup ingroup setgid
+DB File Permissions:  -r--r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -r--r-----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-x--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 gtmrestrict owneringroup ingroup ingroup
+DB File Permissions:  -r--r-----,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 gtmrestrict owneringroup ingroup setgid
+DB File Permissions:  -r--r-----,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 isroot owneringroup ingroup ingroup
+DB File Permissions:  -r--r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -r--r-----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-x--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 isroot owneringroup ingroup setgid
+DB File Permissions:  -r--r-----,defuser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -r--r-----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-x--x,defuser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 owneringroup ingroup ingroup
+DB File Permissions:  -r--r-----,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 owneringroup ingroup setgid
+DB File Permissions:  -r--r-----,idguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+#
+# DB Perm      isowner oingroup ingroup restrict  Result Group                        IPC Perm       File Perm
+# -r*-r*----      N       N       Y       N       Group of database file             -rw-rw-rw-      -rw-rw-rw-
+#
+Options:              perm=660 isroot ingroup
+DB File Permissions:  -rw-rw----,defuser,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -rw-rw----,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,defuser,rootgroup
+Relink Control File Permissions: -rw-rw----,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 isroot setgid
+DB File Permissions:  -rw-rw----,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtcnot;semperm=--ra-ra----,gtcnot
+New File Permissions: -rw-rw----,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtcnot;objshmperm=--rw(x|-)rw(x|-)---,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 ingroup
+DB File Permissions:  -rw-rw----,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: -rw-rw-rw-,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,nidguser,gtc
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtc;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 setgid
+DB File Permissions:  -rw-rw----,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: -rw-rw-rw-,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,idguser,gtcnot
+Relink Control File Permissions: -rw-rw-rw-,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw-rw-,gtcnot;objshmperm=--rw(x|-)rw(x|-)rw(x|-),gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 isroot ingroup
+DB File Permissions:  -rw-r-----,defuser,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -rw-r-----,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,defuser,rootgroup
+Relink Control File Permissions: -rw-rw----,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 isroot setgid
+DB File Permissions:  -rw-r-----,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtcnot;semperm=--ra-ra----,gtcnot
+New File Permissions: -rw-r-----,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtcnot;objshmperm=--rw(x|-)rw(x|-)---,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 ingroup
+DB File Permissions:  -rw-r-----,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 setgid
+DB File Permissions:  -rw-r-----,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 isroot ingroup
+DB File Permissions:  -r--r-----,defuser,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -r--r-----,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-x--x,defuser,rootgroup
+Relink Control File Permissions: -rw-rw----,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 isroot setgid
+DB File Permissions:  -r--r-----,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtcnot;semperm=--ra-ra----,gtcnot
+New File Permissions: -r--r-----,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-x--x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtcnot;objshmperm=--rw(x|-)rw(x|-)---,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 ingroup
+DB File Permissions:  -r--r-----,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw-rw-,gtc;semperm=--ra-ra-ra-,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 setgid
+DB File Permissions:  -r--r-----,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw-rw-,gtcnot;semperm=--ra-ra-ra-,gtcnot
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+#
+# DB Perm      isowner oingroup ingroup restrict  Result Group                        IPC Perm       File Perm
+# -r*-r*----      N       N       Y       Y       Group to which GT.M is restricted  -rw-rw----      -rw-rw----
+#
+Options:              perm=660 gtmrestrict isroot ingroup
+DB File Permissions:  -rw-rw----,defuser,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -rw-rw----,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,defuser,rootgroup
+Relink Control File Permissions: -rw-rw----,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 gtmrestrict isroot setgid
+DB File Permissions:  -rw-rw----,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtcnot;semperm=--ra-ra----,gtcnot
+New File Permissions: -rw-rw----,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtcnot;objshmperm=--rw(x|-)rw(x|-)---,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 gtmrestrict ingroup
+DB File Permissions:  -rw-rw----,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,nidguser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=660 gtmrestrict setgid
+DB File Permissions:  -rw-rw----,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxrwx--x,idguser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 gtmrestrict isroot ingroup
+DB File Permissions:  -rw-r-----,defuser,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -rw-r-----,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,defuser,rootgroup
+Relink Control File Permissions: -rw-rw----,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 gtmrestrict isroot setgid
+DB File Permissions:  -rw-r-----,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtcnot;semperm=--ra-ra----,gtcnot
+New File Permissions: -rw-r-----,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwxr-x--x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtcnot;objshmperm=--rw(x|-)rw(x|-)---,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 gtmrestrict ingroup
+DB File Permissions:  -rw-r-----,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=640 gtmrestrict setgid
+DB File Permissions:  -rw-r-----,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 gtmrestrict isroot ingroup
+DB File Permissions:  -r--r-----,defuser,rootgroup
+IPC Permissions:      shmperm=--rw-rw----,rootgroup;semperm=--ra-ra----,rootgroup
+New File Permissions: -r--r-----,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-x--x,defuser,rootgroup
+Relink Control File Permissions: -rw-rw----,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,rootgroup;objshmperm=--rw(x|-)rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 gtmrestrict isroot setgid
+DB File Permissions:  -r--r-----,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtcnot;semperm=--ra-ra----,gtcnot
+New File Permissions: -r--r-----,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-xr-x--x,defuser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtcnot;objshmperm=--rw(x|-)rw(x|-)---,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 gtmrestrict ingroup
+DB File Permissions:  -r--r-----,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=440 gtmrestrict setgid
+DB File Permissions:  -r--r-----,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+#
+# DB Perm      isowner oingroup ingroup restrict  Result Group                        IPC Perm       File Perm
+# ----r*----      N       N       Y       -       Group of database file             -rw-rw----      ----r*----
+#
+Options:              perm=060 gtmrestrict isroot ingroup
+DB File Permissions:  ----rw----,defuser,rootgroup
+IPC Permissions:      shmperm=-----rw----,rootgroup;semperm=-----ra----,rootgroup
+New File Permissions: ----rw----,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xrwx--x,defuser,rootgroup
+Relink Control File Permissions: ----rw----,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=-----rw----,rootgroup;objshmperm=-----rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=060 gtmrestrict isroot setgid
+DB File Permissions:  ----rw----,defuser,gtcnot
+IPC Permissions:      shmperm=-----rw----,gtcnot;semperm=-----ra----,gtcnot
+New File Permissions: ----rw----,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xrwx--x,defuser,gtcnot
+Relink Control File Permissions: ----rw----,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=-----rw----,gtcnot;objshmperm=-----rw(x|-)---,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=060 gtmrestrict ingroup
+DB File Permissions:  ----rw----,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xrwx--x,nidguser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=060 gtmrestrict setgid
+DB File Permissions:  ----rw----,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtcnot;semperm=--ra-ra----,gtcnot
+New File Permissions: -rw-rw----,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xrwx--x,idguser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtcnot;objshmperm=--rw(x|-)rw(x|-)---,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=060 isroot ingroup
+DB File Permissions:  ----rw----,defuser,rootgroup
+IPC Permissions:      shmperm=-----rw----,rootgroup;semperm=-----ra----,rootgroup
+New File Permissions: ----rw----,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xrwx--x,defuser,rootgroup
+Relink Control File Permissions: ----rw----,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=-----rw----,rootgroup;objshmperm=-----rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=060 isroot setgid
+DB File Permissions:  ----rw----,defuser,gtcnot
+IPC Permissions:      shmperm=-----rw----,gtcnot;semperm=-----ra----,gtcnot
+New File Permissions: ----rw----,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xrwx--x,defuser,gtcnot
+Relink Control File Permissions: ----rw----,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=-----rw----,gtcnot;objshmperm=-----rw(x|-)---,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=060 ingroup
+DB File Permissions:  ----rw----,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: -rw-rw----,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xrwx--x,nidguser,gtc
+Relink Control File Permissions: -rw-rw----,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtc;objshmperm=--rw(x|-)rw(x|-)---,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=060 setgid
+DB File Permissions:  ----rw----,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtcnot;semperm=--ra-ra----,gtcnot
+New File Permissions: -rw-rw----,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xrwx--x,idguser,gtcnot
+Relink Control File Permissions: -rw-rw----,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-rw----,gtcnot;objshmperm=--rw(x|-)rw(x|-)---,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=040 gtmrestrict isroot ingroup
+DB File Permissions:  ----r-----,defuser,rootgroup
+IPC Permissions:      shmperm=-----rw----,rootgroup;semperm=-----ra----,rootgroup
+New File Permissions: ----r-----,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xr-x--x,defuser,rootgroup
+Relink Control File Permissions: ----rw----,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=-----rw----,rootgroup;objshmperm=-----rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=040 gtmrestrict isroot setgid
+DB File Permissions:  ----r-----,defuser,gtcnot
+IPC Permissions:      shmperm=-----rw----,gtcnot;semperm=-----ra----,gtcnot
+New File Permissions: ----r-----,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xr-x--x,defuser,gtcnot
+Relink Control File Permissions: ----rw----,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=-----rw----,gtcnot;objshmperm=-----rw(x|-)---,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=040 gtmrestrict ingroup
+DB File Permissions:  ----r-----,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=040 gtmrestrict setgid
+DB File Permissions:  ----r-----,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtcnot;semperm=--ra-ra----,gtcnot
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=040 isroot ingroup
+DB File Permissions:  ----r-----,defuser,rootgroup
+IPC Permissions:      shmperm=-----rw----,rootgroup;semperm=-----ra----,rootgroup
+New File Permissions: ----r-----,defuser,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xr-x--x,defuser,rootgroup
+Relink Control File Permissions: ----rw----,defuser,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=-----rw----,rootgroup;objshmperm=-----rw(x|-)---,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=040 isroot setgid
+DB File Permissions:  ----r-----,defuser,gtcnot
+IPC Permissions:      shmperm=-----rw----,gtcnot;semperm=-----ra----,gtcnot
+New File Permissions: ----r-----,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       d--xr-x--x,defuser,gtcnot
+Relink Control File Permissions: ----rw----,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=-----rw----,gtcnot;objshmperm=-----rw(x|-)---,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=040 ingroup
+DB File Permissions:  ----r-----,nidguser,gtc
+IPC Permissions:      shmperm=--rw-rw----,gtc;semperm=--ra-ra----,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=040 setgid
+DB File Permissions:  ----r-----,idguser,gtcnot
+IPC Permissions:      shmperm=--rw-rw----,gtcnot;semperm=--ra-ra----,gtcnot
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+#
+# DB Perm      isowner oingroup ingroup restrict  Result Group                        IPC Perm       File Perm
+# -r*-------      Y       -       -       -       Current group of process           -rw-------      -rw-------
+#
+Options:              perm=600 gtmrestrict isroot isowner owneringroup ingroup
+DB File Permissions:  -rw-------,root,rootgroup
+IPC Permissions:      shmperm=--rw-------,rootgroup;semperm=--ra-------,rootgroup
+New File Permissions: -rw-------,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,root,rootgroup
+Relink Control File Permissions: -rw-------,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,rootgroup;objshmperm=--rw(x|-)------,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 gtmrestrict isroot isowner ingroup
+DB File Permissions:  -rw-------,root,rootgroup
+IPC Permissions:      shmperm=--rw-------,rootgroup;semperm=--ra-------,rootgroup
+New File Permissions: -rw-------,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,root,rootgroup
+Relink Control File Permissions: -rw-------,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,rootgroup;objshmperm=--rw(x|-)------,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 gtmrestrict isroot isowner owneringroup setgid
+DB File Permissions:  -rw-------,root,rootgroup
+IPC Permissions:      shmperm=--rw-------,rootgroup;semperm=--ra-------,rootgroup
+New File Permissions: -rw-------,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,root,rootgroup
+Relink Control File Permissions: -rw-------,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,rootgroup;objshmperm=--rw(x|-)------,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 gtmrestrict isroot isowner setgid
+DB File Permissions:  -rw-------,root,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -rw-------,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,root,gtc
+Relink Control File Permissions: -rw-------,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 gtmrestrict isroot isowner owneringroup
+DB File Permissions:  -rw-------,root,rootgroup
+IPC Permissions:      shmperm=--rw-------,rootgroup;semperm=--ra-------,rootgroup
+New File Permissions: -rw-------,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,root,rootgroup
+Relink Control File Permissions: -rw-------,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,rootgroup;objshmperm=--rw(x|-)------,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 gtmrestrict isroot isowner
+DB File Permissions:  -rw-------,root,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -rw-------,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,root,gtc
+Relink Control File Permissions: -rw-------,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 gtmrestrict isowner owneringroup ingroup
+DB File Permissions:  -rw-------,defuser,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -rw-------,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,defuser,gtc
+Relink Control File Permissions: -rw-------,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 gtmrestrict isowner ingroup
+DB File Permissions:  -rw-------,defuser,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -rw-------,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,defuser,gtc
+Relink Control File Permissions: -rw-------,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 gtmrestrict isowner owneringroup setgid
+DB File Permissions:  -rw-------,defuser,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -rw-------,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,defuser,gtc
+Relink Control File Permissions: -rw-------,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 gtmrestrict isowner setgid
+DB File Permissions:  -rw-------,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-------,gtcnot;semperm=--ra-------,gtcnot
+New File Permissions: -rw-------,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,defuser,gtcnot
+Relink Control File Permissions: -rw-------,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtcnot;objshmperm=--rw(x|-)------,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 gtmrestrict isowner owneringroup
+DB File Permissions:  -rw-------,defuser,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -rw-------,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,defuser,gtc
+Relink Control File Permissions: -rw-------,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 gtmrestrict isowner
+DB File Permissions:  -rw-------,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -rw-------,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,defuser,gtcnot
+Relink Control File Permissions: -rw-------,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 isroot isowner owneringroup ingroup
+DB File Permissions:  -rw-------,root,rootgroup
+IPC Permissions:      shmperm=--rw-------,rootgroup;semperm=--ra-------,rootgroup
+New File Permissions: -rw-------,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,root,rootgroup
+Relink Control File Permissions: -rw-------,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,rootgroup;objshmperm=--rw(x|-)------,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 isroot isowner ingroup
+DB File Permissions:  -rw-------,root,rootgroup
+IPC Permissions:      shmperm=--rw-------,rootgroup;semperm=--ra-------,rootgroup
+New File Permissions: -rw-------,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,root,rootgroup
+Relink Control File Permissions: -rw-------,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,rootgroup;objshmperm=--rw(x|-)------,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 isroot isowner owneringroup setgid
+DB File Permissions:  -rw-------,root,rootgroup
+IPC Permissions:      shmperm=--rw-------,rootgroup;semperm=--ra-------,rootgroup
+New File Permissions: -rw-------,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,root,rootgroup
+Relink Control File Permissions: -rw-------,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,rootgroup;objshmperm=--rw(x|-)------,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 isroot isowner setgid
+DB File Permissions:  -rw-------,root,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -rw-------,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,root,gtc
+Relink Control File Permissions: -rw-------,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 isroot isowner owneringroup
+DB File Permissions:  -rw-------,root,rootgroup
+IPC Permissions:      shmperm=--rw-------,rootgroup;semperm=--ra-------,rootgroup
+New File Permissions: -rw-------,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,root,rootgroup
+Relink Control File Permissions: -rw-------,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,rootgroup;objshmperm=--rw(x|-)------,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 isroot isowner
+DB File Permissions:  -rw-------,root,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -rw-------,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,root,gtc
+Relink Control File Permissions: -rw-------,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 isowner owneringroup ingroup
+DB File Permissions:  -rw-------,defuser,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -rw-------,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,defuser,gtc
+Relink Control File Permissions: -rw-------,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 isowner ingroup
+DB File Permissions:  -rw-------,defuser,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -rw-------,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,defuser,gtc
+Relink Control File Permissions: -rw-------,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 isowner owneringroup setgid
+DB File Permissions:  -rw-------,defuser,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -rw-------,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,defuser,gtc
+Relink Control File Permissions: -rw-------,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 isowner setgid
+DB File Permissions:  -rw-------,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-------,gtcnot;semperm=--ra-------,gtcnot
+New File Permissions: -rw-------,defuser,gtcnot
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,defuser,gtcnot
+Relink Control File Permissions: -rw-------,defuser,gtcnot
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtcnot;objshmperm=--rw(x|-)------,gtcnot
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 isowner owneringroup
+DB File Permissions:  -rw-------,defuser,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -rw-------,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,defuser,gtc
+Relink Control File Permissions: -rw-------,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=600 isowner
+DB File Permissions:  -rw-------,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -rw-------,defuser,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       drwx--x--x,defuser,gtcnot
+Relink Control File Permissions: -rw-------,defuser,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 gtmrestrict isroot isowner owneringroup ingroup
+DB File Permissions:  -r--------,root,rootgroup
+IPC Permissions:      shmperm=--rw-------,rootgroup;semperm=--ra-------,rootgroup
+New File Permissions: -r--------,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-x--x--x,root,rootgroup
+Relink Control File Permissions: -rw-------,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,rootgroup;objshmperm=--rw(x|-)------,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 gtmrestrict isroot isowner ingroup
+DB File Permissions:  -r--------,root,rootgroup
+IPC Permissions:      shmperm=--rw-------,rootgroup;semperm=--ra-------,rootgroup
+New File Permissions: -r--------,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-x--x--x,root,rootgroup
+Relink Control File Permissions: -rw-------,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,rootgroup;objshmperm=--rw(x|-)------,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 gtmrestrict isroot isowner owneringroup setgid
+DB File Permissions:  -r--------,root,rootgroup
+IPC Permissions:      shmperm=--rw-------,rootgroup;semperm=--ra-------,rootgroup
+New File Permissions: -r--------,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-x--x--x,root,rootgroup
+Relink Control File Permissions: -rw-------,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,rootgroup;objshmperm=--rw(x|-)------,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 gtmrestrict isroot isowner setgid
+DB File Permissions:  -r--------,root,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -r--------,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-x--x--x,root,gtc
+Relink Control File Permissions: -rw-------,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 gtmrestrict isroot isowner owneringroup
+DB File Permissions:  -r--------,root,rootgroup
+IPC Permissions:      shmperm=--rw-------,rootgroup;semperm=--ra-------,rootgroup
+New File Permissions: -r--------,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-x--x--x,root,rootgroup
+Relink Control File Permissions: -rw-------,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,rootgroup;objshmperm=--rw(x|-)------,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 gtmrestrict isroot isowner
+DB File Permissions:  -r--------,root,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -r--------,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-x--x--x,root,gtc
+Relink Control File Permissions: -rw-------,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 gtmrestrict isowner owneringroup ingroup
+DB File Permissions:  -r--------,defuser,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 gtmrestrict isowner ingroup
+DB File Permissions:  -r--------,defuser,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 gtmrestrict isowner owneringroup setgid
+DB File Permissions:  -r--------,defuser,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 gtmrestrict isowner setgid
+DB File Permissions:  -r--------,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-------,gtcnot;semperm=--ra-------,gtcnot
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 gtmrestrict isowner owneringroup
+DB File Permissions:  -r--------,defuser,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 gtmrestrict isowner
+DB File Permissions:  -r--------,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 isroot isowner owneringroup ingroup
+DB File Permissions:  -r--------,root,rootgroup
+IPC Permissions:      shmperm=--rw-------,rootgroup;semperm=--ra-------,rootgroup
+New File Permissions: -r--------,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-x--x--x,root,rootgroup
+Relink Control File Permissions: -rw-------,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,rootgroup;objshmperm=--rw(x|-)------,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 isroot isowner ingroup
+DB File Permissions:  -r--------,root,rootgroup
+IPC Permissions:      shmperm=--rw-------,rootgroup;semperm=--ra-------,rootgroup
+New File Permissions: -r--------,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-x--x--x,root,rootgroup
+Relink Control File Permissions: -rw-------,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,rootgroup;objshmperm=--rw(x|-)------,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 isroot isowner owneringroup setgid
+DB File Permissions:  -r--------,root,rootgroup
+IPC Permissions:      shmperm=--rw-------,rootgroup;semperm=--ra-------,rootgroup
+New File Permissions: -r--------,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-x--x--x,root,rootgroup
+Relink Control File Permissions: -rw-------,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,rootgroup;objshmperm=--rw(x|-)------,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 isroot isowner setgid
+DB File Permissions:  -r--------,root,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -r--------,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-x--x--x,root,gtc
+Relink Control File Permissions: -rw-------,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 isroot isowner owneringroup
+DB File Permissions:  -r--------,root,rootgroup
+IPC Permissions:      shmperm=--rw-------,rootgroup;semperm=--ra-------,rootgroup
+New File Permissions: -r--------,root,rootgroup
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-x--x--x,root,rootgroup
+Relink Control File Permissions: -rw-------,root,rootgroup
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,rootgroup;objshmperm=--rw(x|-)------,rootgroup
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 isroot isowner
+DB File Permissions:  -r--------,root,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: -r--------,root,gtc
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       dr-x--x--x,root,gtc
+Relink Control File Permissions: -rw-------,root,gtc
+##TEST_AWKRelink IPC Permissions:          ctlshmperm=--rw-------,gtc;objshmperm=--rw(x|-)------,gtc
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 isowner owneringroup ingroup
+DB File Permissions:  -r--------,defuser,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 isowner ingroup
+DB File Permissions:  -r--------,defuser,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 isowner owneringroup setgid
+DB File Permissions:  -r--------,defuser,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 isowner setgid
+DB File Permissions:  -r--------,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-------,gtcnot;semperm=--ra-------,gtcnot
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 isowner owneringroup
+DB File Permissions:  -r--------,defuser,gtc
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+Options:              perm=400 isowner
+DB File Permissions:  -r--------,defuser,gtcnot
+IPC Permissions:      shmperm=--rw-------,gtc;semperm=--ra-------,gtc
+New File Permissions: mumps.mjl not created
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Relink ObjDir Permissions:       No object module was produced
+Relink Control File Permissions: No object module was produced
+Relink IPC Permissions:          No object module was produced
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+=====
+######################################################################################
+# *** GTM-8296 %PEEKBYNAME test starts ***
+# Take away gtmhelp.dat read permission to trigger an error
+
+GTM>
+##TEST_AWK%GTM-E-DBFILERR, Error with database file.*
+%SYSTEM-E-ENO13, Permission denied
+
+GTM>
+##TEST_PATH##/mumps.gld
+GTM>
+# *** GTM-8296 %PEEKBYNAME test ends ***
+# End of C9C12002191 testing

@@ -1,0 +1,147 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+----------------------------------------------------------------------
+# Test that endiancvt is not affected by csd->wc_blocked
+# Test that csd->wc_blocked gets reset to 0 in endian-converted db
+Currently it is not easily possible to set wc_blocked to a non-zero value in a standalone database. So this is not tested
+
+----------------------------------------------------------------------
+# Turn ON freeze
+Region DEFAULT is now FROZEN
+All requested regions frozen
+# Test that endiancvt is not affected by csd->freeze
+# Test that csd->freeze gets reset to 0 in endian-converted db
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Freeze match                   0x00000000  Flush trigger                  960
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+# Turn OFF freeze before proceeding to next test
+Region DEFAULT is now UNFROZEN
+All requested regions unfrozen
+
+----------------------------------------------------------------------
+# Set kill_in_prog to non-zero value
+  Mutex Queue Slots                    1024  KILLs in progress               10
+# Test that endiancvt does not proceed if kill_in_prog is non-zero
+%GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to kills in progress
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+# Test that endiancvt proceeds even if kill_in_prog is non-zero as long as OVERRIDE is specified
+# Test that endiancvt preserves the kill_in_prog value as part of the conversion
+  Mutex Queue Slots                    1024  KILLs in progress               10
+# Set kill_in_prog back to 0 before proceeding to next test
+  Mutex Queue Slots                    1024  KILLs in progress                0
+
+----------------------------------------------------------------------
+# Test that endiancvt does not proceed if rc_srv_cnt is non-zero
+# Currently there is no way of verifying that rc_srv_cnt is indeed non-zero in file header so no DSE DUMP command here
+%GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to a GT.CM server accessing the database
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+# Test that endiancvt proceeds even if rc_srv_cnt is non-zero as long as OVERRIDE is specified
+# Test that endiancvt preserves the rc_srv_cnt value as part of the conversion
+# Currently there is no way of verifying that rc_srv_cnt is indeed non-zero in file header so no DSE DUMP command here
+# Set rc_srv_cnt back to 0 before proceeding to next test
+# Currently there is no way of verifying that rc_srv_cnt is indeed zero in file header so no DSE DUMP command here
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+----------------------------------------------------------------------
+##SUSPEND_OUTPUT PLATFORM_NO_PRIORGTM
+# Test that endiancvt does not proceed if minor-dbver is not same as current version
+# We know that any version <= V53002 has a minor db-ver different from the current or any future version
+# So create database using that older version and try to endiancvt it using the current version
+# Randomly choose a prior V5 version that is <= V53002 to create the database first.
+Randomly chosen prior V5 version is : ##FILTERED##GTM_TEST_DEBUGINFO.*
+
+# Switch to prior version
+Creating database using prior V5 version
+Files Created in ##TEST_PATH##:
+##TEST_AWKUsing: .*
+mumps.gld
+##TEST_AWKUsing: .*
+mumps.dat
+# Switch to current version
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+# Test that endiancvt does not proceed if minor_dbver is different
+%GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to minor database format is not the current version
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+# Test that endiancvt proceeds even if minor_dbver is different as long as OVERRIDE is specified
+# Test that endiancvt preserves the minor_dbver value as part of the conversion
+
+Find the offset of minor_dbver in file header
+Minor db version is the same
+----------------------------------------------------------------------
+# Set desired_db_format to V4
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V4
+  Maximum TN Warn        0x00000000D7FFFFFF  Desired DB Format               V4
+# Test that endiancvt does not proceed if desired_db_format is V4
+%GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to database format is not the current version
+%GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+# Test that endiancvt does not proceed even if desired_db_format is V4 and OVERRIDE is specified
+%GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to database format is not the current version
+%GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+  Maximum TN Warn        0x00000000D7FFFFFF  Desired DB Format               V4
+# Set desired_db_format back to V6 before proceeding to next test
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
+
+----------------------------------------------------------------------
+# Set fully_upgraded to FALSE
+
+Region DEFAULT : MUPIP REORG DOWNGRADE started
+Region DEFAULT : Desired DB Format set to V4 by MUPIP REORG DOWNGRADE
+Region DEFAULT : Started processing from block number [0x00000000]
+Region DEFAULT : Stopped processing at block number [0x00000065]
+Region DEFAULT : Statistics : Blocks Read From Disk (Bitmap)     : 0x00000001
+Region DEFAULT : Statistics : Blocks Skipped (Free)              : 0x00000062
+Region DEFAULT : Statistics : Blocks Read From Disk (Non-Bitmap) : 0x00000002
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in disk)   : 0x00000000
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in cache)  : 0x00000000
+Region DEFAULT : Statistics : Blocks Converted (Bitmap)          : 0x00000001
+Region DEFAULT : Statistics : Blocks Converted (Non-Bitmap)      : 0x00000002
+Region DEFAULT : Total Blocks = [0x00000065] : Free Blocks = [0x00000062] : Blocks to upgrade = [0x00000003]
+Region DEFAULT : MUPIP REORG DOWNGRADE finished
+
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
+  Database is Fully Upgraded                : FALSE
+  Database WAS ONCE Fully Upgraded from V4  :  TRUE
+# Test that endiancvt does not proceed if fully_upgraded is FALSE
+%GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+# Test that endiancvt does not proceed even if fully_upgraded is FALSE and OVERRIDE is specified
+%GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+  Database is Fully Upgraded                : FALSE
+  Database WAS ONCE Fully Upgraded from V4  :  TRUE
+# Set fully_upgraded back to TRUE before proceeding to next test
+
+Region DEFAULT : MUPIP REORG UPGRADE started
+Region DEFAULT : Desired DB Format remains at V6 after MUPIP REORG UPGRADE
+Region DEFAULT : Started processing from block number [0x00000000]
+Region DEFAULT : Stopped processing at block number [0x00000065]
+Region DEFAULT : Statistics : Blocks Read From Disk (Bitmap)     : 0x00000001
+Region DEFAULT : Statistics : Blocks Skipped (Free)              : 0x00000062
+Region DEFAULT : Statistics : Blocks Read From Disk (Non-Bitmap) : 0x00000002
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in disk)   : 0x00000000
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in cache)  : 0x00000000
+Region DEFAULT : Statistics : Blocks Converted (Bitmap)          : 0x00000001
+Region DEFAULT : Statistics : Blocks Converted (Non-Bitmap)      : 0x00000002
+Region DEFAULT : Total Blocks = [0x00000065] : Free Blocks = [0x00000062] : Blocks to upgrade = [0x00000000]
+Region DEFAULT : Database is now FULLY UPGRADED
+Region DEFAULT : MUPIP REORG UPGRADE finished
+
+  Database is Fully Upgraded                :  TRUE
+  Database WAS ONCE Fully Upgraded from V4  :  TRUE
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT PLATFORM_NO_PRIORGTM

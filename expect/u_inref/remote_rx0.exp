@@ -1,0 +1,104 @@
+#!/usr/bin/expect -f
+# expect $gtm_test/T999/expect/u_inref/remote_rx0.exp sagaloo $gtm_test/T999 V990
+
+proc debug {switch} {
+	exp_internal $switch
+}
+
+set tst "expect"
+set subtst "rx0"
+
+set host [lindex $argv 0]
+if {$host == ""} {
+	puts "No host"
+	exit
+}
+
+set gtm_tst [lindex $argv 1]
+if {$gtm_tst == ""} {
+	set gtm_tst "/gtc/staff/gtm_test/current/T990"
+}
+
+set gtm_verno [lindex $argv 2]
+if {$gtm_verno == ""} {
+	set gtm_verno "V990"
+}
+
+# -1 timeout means the expect match must occur
+# up the time out to 10 seconds so that the expect script won't hang
+set timeout 10
+
+###################
+# Start a shell on the remote host
+spawn ssh $host
+match_max 100000
+
+# wait for remote shell to start
+# some slow machines really test the sleep timeout
+sleep 2
+
+# clean up the prompt
+expect "*"
+send -- "set prompt=\"$host $gtm_tst > \"\r"
+expect "$host $gtm_tst > "
+
+# set GT.M version
+send "set setactive_parms=($gtm_verno p);source \$gtm_tools/setactive.csh >&! /dev/null\r"
+
+# avoid copying M routines by setting gtmroutines correctly
+expect -exact "$host $gtm_tst > "
+send -- "setenv gtmroutines \".(. $gtm_tst/com $gtm_tst/$tst/inref) \$gtm_dist\"\r"
+
+# Temp directory setup
+expect "$host $gtm_tst > "
+send "rm -rf /testarea1/\$user/$gtm_verno/$tst/$subtst\r"
+expect "$host $gtm_tst > "
+send "mkdir -p /testarea1/\$user/$gtm_verno/$tst/$subtst\r"
+expect "$host $gtm_tst > "
+send "cd /testarea1/\$user/$gtm_verno/$tst/$subtst\r"
+send "clear\n"
+
+# Enable logging
+log_file -noappend $host.$subtst.log
+
+# Execute GT.M
+expect "$host $gtm_tst > "
+send -- "\$gtm_exe/mumps -run %XCMD 'do ^rx0'\r"
+expect "ready"
+
+expect {
+	"FAIL from rx0" {set status "FAIL"}
+	"PASS from rx0" {set status "PASS"}
+}
+
+# log off
+expect "$host $gtm_tst > "
+send "logout\r"
+
+# Disable logging
+log_file
+expect eof
+
+###################
+# spawn shell on local host to send mail if not in the test system
+puts ""
+puts "#######################################################"
+spawn $env(SHELL)
+
+expect "*>"
+send "printenv gtm_tst\r"
+expect {
+	"$gtm_tst" {set inside 1}
+	"*>" {set inside 0}
+}
+
+# message
+if {$inside == 0} {
+	set msg "SUBSET $host $status $gtm_verno  expect/$subtst /testarea1/\$user/$gtm_verno/expect/$subtst"
+	send -- "cat $host.$subtst.log | mailx -s \"$msg\" \$user\r"
+}
+
+# Kill the shell
+send -- "exit\r"
+
+expect eof

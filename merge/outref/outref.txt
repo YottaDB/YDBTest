@@ -1,0 +1,31 @@
+MERGE COMMAND IMPLEMENTATION test Starts...
+PASS from MVTS_MERGE
+PASS from gbl2gbl
+PASS from gbl2lcl
+PASS from lcl2gbl
+PASS from indirection
+##SUSPEND_OUTPUT  L
+PASS from errors
+##SUSPEND_OUTPUT  F
+PASS from extgbl1
+PASS from extgbl2
+##SUSPEND_OUTPUT  NON_UTF8
+PASS from ugbl2gbl
+PASS from ugbl2lcl
+PASS from ulcl2gbl
+PASS from ulcl2lcl
+##ALLOW_OUTPUT  NON_UTF8
+##SUSPEND_OUTPUT  GT.CM
+PASS from tp_stress
+PASS from misclv
+##ALLOW_OUTPUT  F L
+PASS from gblcol
+PASS from lcl2lcl
+PASS from falsedsc
+PASS from nullsubs
+PASS from mrgclnup
+##SUSPEND_OUTPUT  L
+PASS from tp_simple
+PASS from lclcol
+##ALLOW_OUTPUT  L GT.CM
+MERGE COMMAND IMPLEMENTATION test Ends...

@@ -1,0 +1,161 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+
+GTM>
+
+GTM>
+^avar = 1
+
+GTM>
+Test for ^#var
+
+Rec:1  Blk 2  Off 10  Size 12  Cmpc 0  Ptr 4  Key ^#var
+Rec:1  Blk 3  Off 10  Size B  Cmpc 0  Key ^#var
+
+
+GTM>
+^avar = 
+%GTM-E-GVUNDEF, Global variable undefined: ^avar
+
+GTM>
+
+Block:Offset Level
+%GTM-E-DBBADKYNM, 
+       2:10     0  Bad key name
+                   Directory Path:  1:10, 2:10
+Keys from ^#var to the end are suspect.
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.832            NA
+Index               1               1           2.343             1
+Data                1               1           2.636             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+
+Test for ^#tar
+
+Rec:1  Blk 2  Off 10  Size 12  Cmpc 0  Ptr 4  Key ^#tar
+Rec:1  Blk 3  Off 10  Size B  Cmpc 0  Key ^#tar
+
+
+Block:Offset Level
+%GTM-E-DBBADKYNM, 
+       2:10     0  Bad key name
+                   Directory Path:  1:10, 2:10
+Keys from ^#tar to the end are suspect.
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.832            NA
+Index               1               1           2.343             1
+Data                1               1           2.636             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+
+Test for ^%t%r
+
+Rec:1  Blk 2  Off 10  Size 12  Cmpc 0  Ptr 4  Key ^%t%r
+Rec:1  Blk 3  Off 10  Size B  Cmpc 0  Key ^%t%r
+
+
+Block:Offset Level
+%GTM-E-DBBADKYNM, 
+       2:10     0  Bad key name
+                   Directory Path:  1:10, 2:10
+Keys from ^%t%r to the end are suspect.
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.832            NA
+Index               1               1           2.343             1
+Data                1               1           2.636             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+GTM>
+^%t = 1
+
+GTM>
+Test for ^%t
+
+Rec:1  Blk 2  Off 10  Size 10  Cmpc 0  Ptr 4  Key ^%t
+Rec:1  Blk 3  Off 10  Size 9  Cmpc 0  Key ^%t
+
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.734            NA
+Index               1               1           2.343             1
+Data                1               1           2.441             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+
+Test for ^#a
+
+Rec:1  Blk 2  Off 10  Size 10  Cmpc 0  Ptr 4  Key ^#a
+Rec:1  Blk 3  Off 10  Size 9  Cmpc 0  Key ^#a
+
+
+Block:Offset Level
+%GTM-E-DBBADKYNM, 
+       2:10     0  Bad key name
+                   Directory Path:  1:10, 2:10
+Keys from ^#a to the end are suspect.
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.734            NA
+Index               1               1           2.343             1
+Data                1               1           2.441             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+
+Test for ^#t
+
+Rec:1  Blk 2  Off 10  Size 10  Cmpc 0  Ptr 4  Key ^#t
+Rec:1  Blk 3  Off 10  Size 9  Cmpc 0  Key ^#t
+
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.734            NA
+Index               1               1           2.343             1
+Data                1               1           2.441             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

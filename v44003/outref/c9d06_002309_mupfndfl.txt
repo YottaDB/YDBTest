@@ -1,0 +1,376 @@
+\mkdir ./back1 ; \mkdir ./back2 ; \mkdir ./back3
+echo "#"
+#
+echo "Test case 1 : Global directory not present : database not present : directory not present"
+Test case 1 : Global directory not present : database not present : directory not present
+echo "#"
+#
+$MUPIP create
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+$MUPIP set -journal=enable,on,before -reg "*"
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+$MUPIP reorg
+Fill Factor:: Index blocks 100%: Data blocks 100%
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+$MUPIP backup "*" backup.dat
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+$MUPIP integ -r "*"
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+$MUPIP set -reg DEFAULT -exten=100
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+$MUPIP rundown -reg "*"
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+cp $gtm_tst/$tst/inref/extr.glo .
+unset verbose
+$MUPIP load extr.glo
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+$MUPIP extr extr.gbl1
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+$MUPIP fr -on "*"
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+$MUPIP fr -off "*"
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+echo "#"
+#
+echo "Test case 2 : Global directory present : database not present : dir1 not present but dir2 present"
+Test case 2 : Global directory present : database not present : dir1 not present but dir2 present
+echo "#"
+#
+\mkdir ./dir2
+$GDE << xyz
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+$MUPIP create
+Created file ##TEST_PATH##/dir2/a.dat
+Error opening file ##TEST_PATH##/dir1/mumps.dat
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+: No such file or directory (errno2=0x0594003D)
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+: No such file or directory
+##ALLOW_OUTPUT HOST_OS390_S390
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+$MUPIP set -journal=enable,on,before -reg "*"
+REGION DEFAULT's file ./dir1/mumps.dat cannot be found.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-NOREGION, REGION not found: DEFAULT
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP reorg
+Fill Factor:: Index blocks 100%: Data blocks 100%
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/dir1/mumps.dat
+%SYSTEM-E-ENO2, No such file or directory
+$MUPIP backup "*" ./back1
+REGION DEFAULT's file ./dir1/mumps.dat cannot be found.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-NOREGION, REGION not found: DEFAULT
+
+MUPIP cannot start backup with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP integ -r "*"
+REGION DEFAULT's file ./dir1/mumps.dat cannot be found.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-NOREGION, REGION not found: DEFAULT
+
+
+Integ of region AREG
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+%GTM-E-INTEGERRS, Database integrity errors
+$MUPIP set -reg DEFAULT -exten=100
+REGION DEFAULT's file ./dir1/mumps.dat cannot be found.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-NOREGION, REGION not found: DEFAULT
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP rundown -reg "*"
+REGION DEFAULT's file ./dir1/mumps.dat cannot be found.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-NOREGION, REGION not found: DEFAULT
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/dir2/a.dat successfully rundown
+%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+
+
+$MUPIP extr extr.gbl2
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/dir1/mumps.dat
+%SYSTEM-E-ENO2, No such file or directory
+$MUPIP fr -on "*"
+REGION DEFAULT's file ./dir1/mumps.dat cannot be found.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-NOREGION, REGION not found: DEFAULT
+
+MUPIP cannot start freeze with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP fr -off "*"
+REGION DEFAULT's file ./dir1/mumps.dat cannot be found.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-NOREGION, REGION not found: DEFAULT
+
+MUPIP cannot start freeze with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+echo "#"
+#
+echo "Test case 3 : Global directory present : database not present : dir2 was present and now dir1 present"
+Test case 3 : Global directory present : database not present : dir2 was present and now dir1 present
+echo "#"
+#
+mkdir ./dir1
+$MUPIP create
+##SUSPEND_OUTPUT HOST_OS390_S390
+Error opening file ##TEST_PATH##/dir2/a.dat
+: File exists
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+Error opening file ##TEST_PATH##/dir2/a.dat
+: EDC5117I File exists. (errno2=0x05620063)
+##ALLOW_OUTPUT HOST_ALL
+Created file ##TEST_PATH##/dir1/mumps.dat
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+$MUPIP set -journal=enable,on,before -reg "*" > & mupip_set_jnl.out
+sort -f mupip_set_jnl.out
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/dir1/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/dir2/a.mjl created for region AREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+$GTM << xyz
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+$MUPIP reorg
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a (region AREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: b (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP backup "*" -nonewj ./back2 > & mupip_backup_nonewj.out
+sort -f mupip_backup_nonewj.out
+
+
+
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/dir1/mumps.dat backed up in file ./back2/mumps.dat
+DB file ##TEST_PATH##/dir2/a.dat backed up in file ./back2/a.dat
+Transactions up to 0x000000000000000B are backed up.
+Transactions up to 0x0000000000000015 are backed up.
+$MUPIP integ -r "*" > & mupip_integ_r.out
+sort -f mupip_integ_r.out
+
+
+
+
+
+
+
+
+
+
+Data                1              10           9.863             1
+Data                2              20           9.863             2
+##TEST_AWKDirectory           2               2           2....            NA
+##TEST_AWKDirectory           2               3           3....            NA
+Free               94              NA              NA            NA
+Free               96              NA              NA            NA
+Index               1               1           2.343             1
+Index               2               2           2.343             2
+Integ of region AREG
+Integ of region DEFAULT
+No errors detected by integ.
+No errors detected by integ.
+Total             100              13              NA             2
+Total             100              25              NA             4
+Type           Blocks         Records          % Used      Adjacent
+Type           Blocks         Records          % Used      Adjacent
+$MUPIP set -reg DEFAULT -exten=100
+Database file ##TEST_PATH##/dir1/mumps.dat now has extension count 100
+$MUPIP rundown -reg "*" > & mupip_rundown_r.out
+sort -f mupip_rundown_r.out
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/dir1/mumps.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/dir2/a.dat successfully rundown
+$MUPIP load extr.glo
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 10  Max Data Len: 1
+Last LOAD record number: 7
+
+$MUPIP extr extr.gbl3
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
+%GTM-I-RECORDSTAT, ^aload:	  Key cnt: 2  max subsc len: 10  max rec len: 1  max node len: 12
+%GTM-I-RECORDSTAT, ^b:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
+%GTM-I-RECORDSTAT, ^bload:	  Key cnt: 2  max subsc len: 10  max rec len: 1  max node len: 12
+%GTM-I-RECORDSTAT, ^c:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
+%GTM-I-RECORDSTAT, ^cload:	  Key cnt: 1  max subsc len: 7  max rec len: 1  max node len: 12
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 35  max subsc len: 10  max rec len: 2  max node len: 12
+$MUPIP freeze -on "*" > & mupip_freeze_on.out
+sort -f mupip_freeze_on.out
+All requested regions frozen
+Region AREG is now FROZEN
+Region DEFAULT is now FROZEN
+$MUPIP freeze -off "*" > & mupip_freeze_off.out
+sort -f mupip_freeze_off.out
+All requested regions unfrozen
+Region AREG is now UNFROZEN
+Region DEFAULT is now UNFROZEN
+$GTM << xyz
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+echo "#"
+#
+echo "Test case 4 : File specification related"
+Test case 4 : File specification related
+echo "#"
+#
+$MUPIP integ a''d/mumps.dat
+%GTM-E-DBOPNERR, Error opening database file ad/mumps.dat
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-I-MUSTANDALONE, Could not get exclusive access to ad/mumps.dat
+%GTM-E-INTEGERRS, Database integrity errors
+
+set nonomatch
+$MUPIP backup "*" -nonewj .a..?..b.c/backup.dat
+
+Do not have full access to directory for temporary files: .a..?..b.c/
+%SYSTEM-E-ENO2, No such file or directory
+
+MUPIP cannot start backup with above errors
+
+unset nonomatch
+setenv GTM_BAKTMPDIR ./bo'$'goue_name
+$MUPIP backup "*" -nonewj ./back3
+
+Do not have full access to directory for temporary files: ./bo$goue_name
+%SYSTEM-E-ENO2, No such file or directory
+
+MUPIP cannot start backup with above errors
+
+setenv GTM_BAKTMPDIR ./back3/mumps'$$'
+$MUPIP backup "*" -nonewj ./back3 > & mupip_backup_nonewj_1.outx
+sort -f mupip_backup_nonewj_1.outx
+
+
+
+%SYSTEM-E-ENO2, No such file or directory
+Do not have full access to directory for temporary files: ./back3/mumps$$
+MUPIP cannot start backup with above errors
+echo "#"
+#
+echo "Test Case 5: MUPIP JOURNAL"
+Test Case 5: MUPIP JOURNAL
+echo "#"
+#
+rm -f ./dir1/*.dat
+rm -f ./dir2/*.dat
+$MUPIP journal -recover -for ./dir2/a.mjl,./dir1/mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-FILENOTFND, File ##TEST_PATH##/dir2/a.dat not found
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+$MUPIP crea
+Created file ##TEST_PATH##/dir2/a.dat
+Created file ##TEST_PATH##/dir1/mumps.dat
+rm -f ./dir1/*.dat ;
+$MUPIP journal -recover -for ./dir2/a.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+$GTM << xyz
+
+GTM>
+^a(1)=1
+^a(2)=2
+^a(3)=3
+^a(4)=4
+^a(5)=5
+^a(6)=6
+^a(7)=7
+^a(8)=8
+^a(9)=9
+^a(10)=10
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/dir1/mumps.dat
+%SYSTEM-E-ENO2, No such file or directory
+
+GTM>
+$MUPIP integ ./dir2/a.dat
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory           2               3           3....            NA
+Index               2               2           2.343             2
+Data                2              12           6.738             2
+Free               94              NA              NA            NA
+Total             100              17              NA             4
+unset verbose

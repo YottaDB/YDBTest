@@ -1,0 +1,47 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+
+###################################################################
+Run M Program to do an update and wait for a Kill -9 to be issued
+###################################################################
+
+
+###################################################################
+Wait for the update to complete and harden to disk
+###################################################################
+
+
+###################################################################
+While the GT.M process is still attached to the shared memory, issue kill -9
+###################################################################
+
+
+###################################################################
+Remove the shared memory so that the next attempt on database initialization would cause REQRUNDOWN error
+###################################################################
+
+
+###################################################################
+Attempt attaching to AREG would issue REQRUNDOWN error.
+###################################################################
+
+
+###################################################################
+Issue MUPIP STOP to the process and see if it gets interrupted
+###################################################################
+##TEST_AWKSTOP issued to process .*
+----------
+Error FORCEDHALT seen in c003298_2.outx as expected:
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+
+
+##TEST_AWK%GTM-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

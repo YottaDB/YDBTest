@@ -1,0 +1,67 @@
+#!/usr/bin/expect -f
+set timeout 30
+
+set newpasswd [lrange $argv 0 0]
+set oldpasswd [lrange $argv 1 1]
+set USER [lrange $argv 2 2]
+set gpg [lrange $argv 3 3]
+
+puts $env(GNUPGHOME)
+
+spawn /bin/sh
+expect "*"
+send -- "PS1=\"ENCR>\"\r"
+expect {
+	"\"ENCR>\"" {}
+	timeout {puts "TEST-E-FAIL, Did not see echo of the command\r"; exit 1}
+}
+expect {
+	"ENCR>" {send -- "$gpg --homedir=$env(GNUPGHOME) --edit-key $USER\r"}
+	timeout {puts "TEST-E-FAIL, Did not see a proper prompt\r"; exit 1}
+}
+expect {
+	"gpg>" {send "passwd\r"}
+	"Command>" {send -- "passwd\r"}
+	timeout {puts "TEST-E-FAIL, Did not see a proper prompt\r"; exit 1}
+}
+expect {
+	"ancel" {send -- "$oldpasswd\r"}
+	"assphrase:" {send -- "$oldpasswd\r"}
+	timeout {puts "TEST-E-FAIL, Did not see a proper prompt\r"; exit 1}
+}
+expect {
+	"ancel" {send -- "$newpasswd\r"}
+	"assphrase:" {send -- "$newpasswd\r"}
+	timeout {puts "TEST-E-FAIL, Did not see a proper prompt\r"; exit 1}
+}
+expect {
+	"ancel" {send -- "$newpasswd\r"}
+	"assphrase:" {send -- "$newpasswd\r"}
+	timeout {puts "TEST-E-FAIL, Did not see a proper prompt\r"; exit 1}
+}
+expect {
+	"gpg>" {send -- "save\r"}
+	"Command>" {send -- "save\r"}
+	timeout {puts "TEST-E-FAIL, Did not see a proper prompt\r"; exit 1}
+}
+expect {
+	"ENCR>" {send -- "export LC_ALL=C\r"}
+	timeout {puts "TEST-E-FAIL, Did not see a proper prompt\r"; exit 1}
+}
+expect {
+	"ENCR>" {send -- "$gpg --homedir=$env(GNUPGHOME) -d mumps_dat_key | wc -c\r"}
+	timeout {puts "TEST-E-FAIL, Did not see a proper prompt\r"; exit 1}
+}
+expect {
+	"passphrase:" {send -- "$newpasswd\r"}
+	timeout {puts "TEST-E-FAIL, Did not see a proper prompt\r;" exit 1}
+}
+expect {
+	"32" {}
+	timeout {puts "TEST-E-FAIL, New password did not work\r"; exit 1}
+}
+expect {
+	"ENCR>" {send -- "exit\r"}
+	timeout {puts "TEST-E-FAIL, Did not see a proper prompt\r"; exit 1}
+}
+expect eof

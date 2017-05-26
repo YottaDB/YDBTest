@@ -1,0 +1,2612 @@
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test01.gde
+ ----------------------------------------------------------------------------
+Using 2_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test01.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz*    BREG
+ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz1    AREG
+ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz2    AREG
+ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz3    AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz*    BREG
+ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz1    AREG
+ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz2    AREG
+ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz3    AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz   REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz  zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz1  REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz1 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz4  REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz4 ...                              REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test02.gde
+ ----------------------------------------------------------------------------
+Using 3_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test02.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ XY                                 CREG
+ XY1*                               AREG
+ XY2                                BREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ XY                                 CREG
+ XY1*                               AREG
+ XY2                                BREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               XY                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ XY                              XY0                              REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ XY0                             XY1                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ XY1                             XY2                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ XY2                             XY20                             REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ XY20                            ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test03.gde
+ ----------------------------------------------------------------------------
+Using 3_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test03.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ XY                                 CREG
+ XY1                                AREG
+ XY2                                BREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ XY                                 CREG
+ XY1                                AREG
+ XY2                                BREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               XY                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ XY                              XY0                              REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ XY0                             XY1                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ XY1                             XY10                             REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ XY10                            XY2                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ XY2                             XY20                             REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ XY20                            ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test04.gde
+ ----------------------------------------------------------------------------
+Using 1_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test04.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ XY1*                               AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ XY1*                               AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               XY1                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ XY1                             XY2                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ XY2                             ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test05.gde
+ ----------------------------------------------------------------------------
+Using 3_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test05.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ XY                                 CREG
+ XY1*                               AREG
+ XY2*                               BREG
+ XY3*                               BREG
+ XY4*                               AREG
+ XY5                                BREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ XY                                 CREG
+ XY1*                               AREG
+ XY2*                               BREG
+ XY3*                               BREG
+ XY4*                               AREG
+ XY5                                BREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               XY                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ XY                              XY0                              REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ XY0                             XY1                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ XY1                             XY2                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ XY2                             XY4                              REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ XY4                             XY5                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ XY5                             XY50                             REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ XY50                            ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test06.gde
+ ----------------------------------------------------------------------------
+Using 3_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test06.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ X*                                 BREG
+ XY                                 CREG
+ XY1*                               AREG
+ XY2*                               AREG
+ XY34*                              CREG
+ XY4*                               AREG
+ XY45*                              BREG
+ XY456*                             AREG
+ XY5                                CREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ X*                                 BREG
+ XY                                 CREG
+ XY1*                               AREG
+ XY2*                               AREG
+ XY34*                              CREG
+ XY4*                               AREG
+ XY45*                              BREG
+ XY456*                             AREG
+ XY5                                CREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               X                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ X                               XY                               REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ XY                              XY0                              REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ XY0                             XY1                              REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ XY1                             XY3                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ XY3                             XY34                             REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ XY34                            XY35                             REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ XY35                            XY4                              REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ XY4                             XY45                             REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ XY45                            XY456                            REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ XY456                           XY457                            REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ XY457                           XY46                             REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ XY46                            XY5                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ XY5                             XY50                             REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ XY50                            Y                                REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ Y                               ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test07.gde
+ ----------------------------------------------------------------------------
+Using 3_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test07.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ X*                                 CREG
+ XW*                                AREG
+ XW2*                               BREG
+ XX*                                AREG
+ XY*                                AREG
+ XY2*                               BREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ X*                                 CREG
+ XW*                                AREG
+ XW2*                               BREG
+ XX*                                AREG
+ XY*                                AREG
+ XY2*                               BREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               X                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ X                               XW                               REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ XW                              XW2                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ XW2                             XW3                              REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ XW3                             XY2                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ XY2                             XY3                              REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ XY3                             XZ                               REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ XZ                              Y                                REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ Y                               ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test08.gde
+ ----------------------------------------------------------------------------
+Using 2_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test08.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ XW*                                AREG
+ XX*                                BREG
+ XY*                                AREG
+ XZ*                                BREG
+ Xa*                                AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ XW*                                AREG
+ XX*                                BREG
+ XY*                                AREG
+ XZ*                                BREG
+ Xa*                                AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               XW                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ XW                              XX                               REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ XX                              XY                               REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ XY                              XZ                               REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ XZ                              Xa                               REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ Xa                              Xb                               REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ Xb                              ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test09.gde
+ ----------------------------------------------------------------------------
+Using 2_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test09.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ zu*                                BREG
+ zv*                                AREG
+ zw*                                BREG
+ zx*                                AREG
+ zy*                                BREG
+ zz*                                AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ zu*                                BREG
+ zv*                                AREG
+ zw*                                BREG
+ zx*                                AREG
+ zy*                                BREG
+ zz*                                AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               zu                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ zu                              zv                               REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ zv                              zw                               REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ zw                              zx                               REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ zx                              zy                               REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ zy                              zz                               REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ zz                              ...                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test10.gde
+ ----------------------------------------------------------------------------
+Using 3_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test10.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ aa*                                BREG
+ ab*                                AREG
+ ac*                                AREG
+ ad*                                AREG
+ ae*                                BREG
+ af*                                CREG
+ ag*                                AREG
+ ah*                                AREG
+ ai*                                AREG
+ aj*                                BREG
+ ak*                                CREG
+ al*                                AREG
+ am*                                AREG
+ an*                                AREG
+ ao*                                BREG
+ ap*                                CREG
+ aq*                                AREG
+ ar*                                AREG
+ as*                                AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ aa*                                BREG
+ ab*                                AREG
+ ac*                                AREG
+ ad*                                AREG
+ ae*                                BREG
+ af*                                CREG
+ ag*                                AREG
+ ah*                                AREG
+ ai*                                AREG
+ aj*                                BREG
+ ak*                                CREG
+ al*                                AREG
+ am*                                AREG
+ an*                                AREG
+ ao*                                BREG
+ ap*                                CREG
+ aq*                                AREG
+ ar*                                AREG
+ as*                                AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               aa                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ aa                              ab                               REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ ab                              ae                               REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ ae                              af                               REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ af                              ag                               REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ ag                              aj                               REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ aj                              ak                               REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ ak                              al                               REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ al                              ao                               REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ ao                              ap                               REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ ap                              aq                               REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ aq                              at                               REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ at                              ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test11.gde
+ ----------------------------------------------------------------------------
+Using 4_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test11.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag                                 DREG
+ ag*                                CREG
+ aga*                               DREG
+ agb*                               BREG
+ agc*                               BREG
+ agd*                               BREG
+ age*                               BREG
+ agf*                               BREG
+ agg*                               BREG
+ agh*                               BREG
+ agi*                               BREG
+ agj*                               BREG
+ agk*                               BREG
+ agl*                               BREG
+ agm*                               BREG
+ agn*                               BREG
+ ago*                               BREG
+ agp*                               BREG
+ agq*                               BREG
+ agr*                               BREG
+ ags*                               BREG
+ agt*                               BREG
+ agu*                               BREG
+ agv*                               BREG
+ agw*                               BREG
+ agx                                CREG
+ agx*                               AREG
+ agxb*                              BREG
+ agxc*                              BREG
+ agxd*                              BREG
+ agxe*                              BREG
+ agxf*                              BREG
+ agxg*                              BREG
+ agxh*                              BREG
+ agxi*                              BREG
+ agxj*                              BREG
+ agxk*                              BREG
+ agxl*                              BREG
+ agxm*                              BREG
+ agxn*                              BREG
+ agxo*                              BREG
+ agxp*                              BREG
+ agxq*                              BREG
+ agxr*                              BREG
+ agxs*                              BREG
+ agxt*                              BREG
+ agxu*                              BREG
+ agxv*                              BREG
+ agxw*                              BREG
+ agxx*                              BREG
+ agy*                               AREG
+ agz*                               AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag                                 DREG
+ ag*                                CREG
+ aga*                               DREG
+ agb*                               BREG
+ agc*                               BREG
+ agd*                               BREG
+ age*                               BREG
+ agf*                               BREG
+ agg*                               BREG
+ agh*                               BREG
+ agi*                               BREG
+ agj*                               BREG
+ agk*                               BREG
+ agl*                               BREG
+ agm*                               BREG
+ agn*                               BREG
+ ago*                               BREG
+ agp*                               BREG
+ agq*                               BREG
+ agr*                               BREG
+ ags*                               BREG
+ agt*                               BREG
+ agu*                               BREG
+ agv*                               BREG
+ agw*                               BREG
+ agx                                CREG
+ agx*                               AREG
+ agxb*                              BREG
+ agxc*                              BREG
+ agxd*                              BREG
+ agxe*                              BREG
+ agxf*                              BREG
+ agxg*                              BREG
+ agxh*                              BREG
+ agxi*                              BREG
+ agxj*                              BREG
+ agxk*                              BREG
+ agxl*                              BREG
+ agxm*                              BREG
+ agxn*                              BREG
+ agxo*                              BREG
+ agxp*                              BREG
+ agxq*                              BREG
+ agxr*                              BREG
+ agxs*                              BREG
+ agxt*                              BREG
+ agxu*                              BREG
+ agxv*                              BREG
+ agxw*                              BREG
+ agxx*                              BREG
+ agy*                               AREG
+ agz*                               AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               ag                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ag                              ag0                              REG = DREG
+                                                                  SEG = DSEG
+                                                                  FILE = d
+ ag0                             aga                              REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c
+ aga                             agb                              REG = DREG
+                                                                  SEG = DSEG
+                                                                  FILE = d
+ agb                             agx                              REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ agx                             agx0                             REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c
+ agx0                            agxb                             REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ agxb                            agxy                             REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ agxy                            ah                               REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ ah                              ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test12.gde
+ ----------------------------------------------------------------------------
+Using 1_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test12.gde
+
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaag      DEFAULT
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaag*     AREG
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaag      DEFAULT
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaag*     AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaag      DEFAULT
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaag*     AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               aaaaaaaaaaaaaaaaaaaaaaaaaaaag0   REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaag0  aaaaaaaaaaaaaaaaaaaaaaaaaaaah    REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaah   ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test13.gde
+ ----------------------------------------------------------------------------
+Using 1_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test13.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag                                 DEFAULT
+ ag*                                AREG
+ ah                                 AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag                                 DEFAULT
+ ag*                                AREG
+ ah                                 AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               ag0                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ag0                             ah0                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ ah0                             ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test14.gde
+ ----------------------------------------------------------------------------
+Using 2_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test14.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag                                 DEFAULT
+ ag*                                AREG
+ ah                                 AREG
+ ah*                                BREG
+ ai                                 BREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag                                 DEFAULT
+ ag*                                AREG
+ ah                                 AREG
+ ah*                                BREG
+ ai                                 BREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               ag0                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ag0                             ah0                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ ah0                             ai0                              REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ ai0                             ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test15.gde
+ ----------------------------------------------------------------------------
+Using 1_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test15.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag                                 DEFAULT
+ ag*                                AREG
+ ah*                                AREG
+ ai                                 AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag                                 DEFAULT
+ ag*                                AREG
+ ah*                                AREG
+ ai                                 AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               ag0                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ag0                             ai0                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ ai0                             ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test16.gde
+ ----------------------------------------------------------------------------
+Using 4_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test16.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaag      DEFAULT
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaag*     CREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaaga*    DREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagb*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagc*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagd*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaage*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagf*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagg*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagh*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagi*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagj*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagk*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagl*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagm*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagn*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaago*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagp*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagq*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagr*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaags*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagt*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagu*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagv*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagw*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagx     CREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagx*    AREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxb    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxc    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxd    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxe    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxf    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxg    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxh    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxi    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxj    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxk    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxl    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxm    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxn    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxo    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxp    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxq    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxr    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxs    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxt    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxu    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxv    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxw    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxx    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagy*    AREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagz*    AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaag      DEFAULT
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaag*     CREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaaga*    DREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagb*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagc*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagd*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaage*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagf*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagg*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagh*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagi*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagj*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagk*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagl*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagm*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagn*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaago*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagp*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagq*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagr*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaags*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagt*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagu*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagv*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagw*    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagx     CREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagx*    AREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxb    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxc    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxd    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxe    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxf    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxg    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxh    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxi    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxj    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxk    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxl    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxm    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxn    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxo    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxp    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxq    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxr    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxs    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxt    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxu    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxv    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxw    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxx    BREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagy*    AREG
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagz*    AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               aaaaaaaaaaaaaaaaaaaaaaaaaaaag0   REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaag0  aaaaaaaaaaaaaaaaaaaaaaaaaaaaga   REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaaga  aaaaaaaaaaaaaaaaaaaaaaaaaaaagb   REG = DREG
+                                                                  SEG = DSEG
+                                                                  FILE = d
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagb  aaaaaaaaaaaaaaaaaaaaaaaaaaaagx   REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagx  aaaaaaaaaaaaaaaaaaaaaaaaaaaagx0  REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagx0 aaaaaaaaaaaaaaaaaaaaaaaaaaaagxb  REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxb aaaaaaaaaaaaaaaaaaaaaaaaaaaagxy  REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaagxy aaaaaaaaaaaaaaaaaaaaaaaaaaaah    REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ aaaaaaaaaaaaaaaaaaaaaaaaaaaah   ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test17.gde
+ ----------------------------------------------------------------------------
+Using 1_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test17.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ x1*                                AREG
+ x123*                              DEFAULT
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ x1*                                AREG
+ x123*                              DEFAULT
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               x1                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ x1                              x123                             REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ x123                            x124                             REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ x124                            x2                               REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ x2                              ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test18.gde
+ ----------------------------------------------------------------------------
+Using 3_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test18.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ x1*                                AREG
+ x123*                              DEFAULT
+ x12342*                            BREG
+ x12345*                            BREG
+ x1234567*                          CREG
+ x12345678                          BREG
+ x12345678*                         DEFAULT
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ x1*                                AREG
+ x123*                              DEFAULT
+ x12342*                            BREG
+ x12345*                            BREG
+ x1234567*                          CREG
+ x12345678                          BREG
+ x12345678*                         DEFAULT
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               x1                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ x1                              x123                             REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ x123                            x12342                           REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ x12342                          x12343                           REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ x12343                          x12345                           REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ x12345                          x1234567                         REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ x1234567                        x12345678                        REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ x12345678                       x123456780                       REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ x123456780                      x12345679                        REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ x12345679                       x1234568                         REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ x1234568                        x12346                           REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ x12346                          x124                             REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ x124                            x2                               REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ x2                              ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test19.gde
+ ----------------------------------------------------------------------------
+Using 2_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test19.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag*                                AREG
+ agz                                AREG
+ agz*                               BREG
+ ah*                                AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag*                                AREG
+ agz                                AREG
+ agz*                               BREG
+ ah*                                AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               ag                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ag                              agz0                             REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ agz0                            ah                               REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ ah                              ai                               REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ ai                              ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test20.gde
+ ----------------------------------------------------------------------------
+Using 2_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test20.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag*                                AREG
+ agz                                AREG
+ agz*                               BREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag*                                AREG
+ agz                                AREG
+ agz*                               BREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               ag                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ag                              agz0                             REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ agz0                            ah                               REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ ah                              ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test21.gde
+ ----------------------------------------------------------------------------
+Using 2_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test21.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ agz                                AREG
+ agz*                               BREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ agz                                AREG
+ agz*                               BREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               agz                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ agz                             agz0                             REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ agz0                            ah                               REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ ah                              ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test22.gde
+ ----------------------------------------------------------------------------
+Using 1_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test22.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ agz*                               AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ agz*                               AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               agz                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ agz                             ah                               REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ ah                              ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test23.gde
+ ----------------------------------------------------------------------------
+Using 1_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test23.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ agz*                               AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ agz*                               AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               agz                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ agz                             ah                               REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ ah                              ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test24.gde
+ ----------------------------------------------------------------------------
+Using 2_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test24.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag*                                AREG
+ agy                                AREG
+ agy*                               BREG
+ agz*                               BREG
+ ah*                                BREG
+ ai*                                BREG
+ aj*                                BREG
+ ajk*                               AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag*                                AREG
+ agy                                AREG
+ agy*                               BREG
+ agz*                               BREG
+ ah*                                BREG
+ ai*                                BREG
+ aj*                                BREG
+ ajk*                               AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               ag                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ag                              agy0                             REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ agy0                            ajk                              REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ ajk                             ajl                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ ajl                             ak                               REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ ak                              ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test25.gde
+ ----------------------------------------------------------------------------
+Using 2_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test25.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag*                                AREG
+ ag0*                               BREG
+ ag1                                BREG
+ agy                                AREG
+ agy*                               BREG
+ agz*                               BREG
+ ah*                                BREG
+ ai*                                BREG
+ aj*                                BREG
+ ajk*                               AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag*                                AREG
+ ag0*                               BREG
+ ag1                                BREG
+ agy                                AREG
+ agy*                               BREG
+ agz*                               BREG
+ ah*                                BREG
+ ai*                                BREG
+ aj*                                BREG
+ ajk*                               AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               ag                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ag                              ag0                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ ag0                             ag10                             REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ ag10                            agy0                             REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ agy0                            ajk                              REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ ajk                             ajl                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ ajl                             ak                               REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ ak                              ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test26.gde
+ ----------------------------------------------------------------------------
+Using 2_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test26.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag*                                AREG
+ ag0*                               BREG
+ ag1                                BREG
+ agy                                AREG
+ agy*                               BREG
+ agz*                               BREG
+ ah*                                BREG
+ ai*                                BREG
+ aj*                                BREG
+ ajx*                               AREG
+ ajy*                               AREG
+ ajz*                               AREG
+ ak*                                AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ ag*                                AREG
+ ag0*                               BREG
+ ag1                                BREG
+ agy                                AREG
+ agy*                               BREG
+ agz*                               BREG
+ ah*                                BREG
+ ai*                                BREG
+ aj*                                BREG
+ ajx*                               AREG
+ ajy*                               AREG
+ ajz*                               AREG
+ ak*                                AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               ag                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ag                              ag0                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ ag0                             ag10                             REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ ag10                            agy0                             REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ agy0                            ajx                              REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ ajx                             al                               REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ al                              ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test27.gde
+ ----------------------------------------------------------------------------
+Using 3_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test27.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ xy1*                               AREG
+ xy123*                             DEFAULT
+ xy1234                             DEFAULT
+ xy1234*                            BREG
+ xy1234567*                         CREG
+ xy12345678                         BREG
+ xy12345678*                        DEFAULT
+ xy2*                               AREG
+ xy234*                             BREG
+ xy3*                               AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ xy1*                               AREG
+ xy123*                             DEFAULT
+ xy1234                             DEFAULT
+ xy1234*                            BREG
+ xy1234567*                         CREG
+ xy12345678                         BREG
+ xy12345678*                        DEFAULT
+ xy2*                               AREG
+ xy234*                             BREG
+ xy3*                               AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               xy1                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ xy1                             xy123                            REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ xy123                           xy12340                          REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ xy12340                         xy1234567                        REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ xy1234567                       xy12345678                       REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ xy12345678                      xy123456780                      REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ xy123456780                     xy12345679                       REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ xy12345679                      xy1234568                        REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ xy1234568                       xy1235                           REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ xy1235                          xy124                            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ xy124                           xy234                            REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ xy234                           xy235                            REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ xy235                           xy4                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ xy4                             ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test28.gde
+ ----------------------------------------------------------------------------
+Using 3_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test28.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ xy1*                               AREG
+ xy123*                             DEFAULT
+ xy12340*                           BREG
+ xy12341*                           BREG
+ xy12342*                           BREG
+ xy12343*                           BREG
+ xy12344*                           BREG
+ xy12345*                           BREG
+ xy1234567*                         CREG
+ xy12345678                         BREG
+ xy12345678*                        DEFAULT
+ xy12346*                           BREG
+ xy12347*                           BREG
+ xy12348*                           BREG
+ xy12349*                           BREG
+ xy1234A*                           BREG
+ xy1234B*                           BREG
+ xy1234C*                           BREG
+ xy1234D*                           BREG
+ xy1234E*                           BREG
+ xy1234F*                           BREG
+ xy1234G*                           BREG
+ xy1234H*                           BREG
+ xy1234I*                           BREG
+ xy1234J*                           BREG
+ xy1234K*                           BREG
+ xy1234L*                           BREG
+ xy1234M*                           BREG
+ xy1234N*                           BREG
+ xy1234O*                           BREG
+ xy1234P*                           BREG
+ xy1234Q*                           BREG
+ xy1234R*                           BREG
+ xy1234S*                           BREG
+ xy1234T*                           BREG
+ xy1234U*                           BREG
+ xy1234V*                           BREG
+ xy1234W*                           BREG
+ xy1234X*                           BREG
+ xy1234Y*                           BREG
+ xy1234Z*                           BREG
+ xy1234a*                           BREG
+ xy1234b*                           BREG
+ xy1234c*                           BREG
+ xy1234d*                           BREG
+ xy1234e*                           BREG
+ xy1234f*                           BREG
+ xy1234g*                           BREG
+ xy1234h*                           BREG
+ xy1234i*                           BREG
+ xy1234j*                           BREG
+ xy1234k*                           BREG
+ xy1234l*                           BREG
+ xy1234m*                           BREG
+ xy1234n*                           BREG
+ xy1234o*                           BREG
+ xy1234p*                           BREG
+ xy1234q*                           BREG
+ xy1234r*                           BREG
+ xy1234s*                           BREG
+ xy1234t*                           BREG
+ xy1234u*                           BREG
+ xy1234v*                           BREG
+ xy1234w*                           BREG
+ xy1234x*                           BREG
+ xy1234y*                           BREG
+ xy1234z*                           BREG
+ xy2*                               AREG
+ xy234*                             BREG
+ xy3*                               AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ xy1*                               AREG
+ xy123*                             DEFAULT
+ xy12340*                           BREG
+ xy12341*                           BREG
+ xy12342*                           BREG
+ xy12343*                           BREG
+ xy12344*                           BREG
+ xy12345*                           BREG
+ xy1234567*                         CREG
+ xy12345678                         BREG
+ xy12345678*                        DEFAULT
+ xy12346*                           BREG
+ xy12347*                           BREG
+ xy12348*                           BREG
+ xy12349*                           BREG
+ xy1234A*                           BREG
+ xy1234B*                           BREG
+ xy1234C*                           BREG
+ xy1234D*                           BREG
+ xy1234E*                           BREG
+ xy1234F*                           BREG
+ xy1234G*                           BREG
+ xy1234H*                           BREG
+ xy1234I*                           BREG
+ xy1234J*                           BREG
+ xy1234K*                           BREG
+ xy1234L*                           BREG
+ xy1234M*                           BREG
+ xy1234N*                           BREG
+ xy1234O*                           BREG
+ xy1234P*                           BREG
+ xy1234Q*                           BREG
+ xy1234R*                           BREG
+ xy1234S*                           BREG
+ xy1234T*                           BREG
+ xy1234U*                           BREG
+ xy1234V*                           BREG
+ xy1234W*                           BREG
+ xy1234X*                           BREG
+ xy1234Y*                           BREG
+ xy1234Z*                           BREG
+ xy1234a*                           BREG
+ xy1234b*                           BREG
+ xy1234c*                           BREG
+ xy1234d*                           BREG
+ xy1234e*                           BREG
+ xy1234f*                           BREG
+ xy1234g*                           BREG
+ xy1234h*                           BREG
+ xy1234i*                           BREG
+ xy1234j*                           BREG
+ xy1234k*                           BREG
+ xy1234l*                           BREG
+ xy1234m*                           BREG
+ xy1234n*                           BREG
+ xy1234o*                           BREG
+ xy1234p*                           BREG
+ xy1234q*                           BREG
+ xy1234r*                           BREG
+ xy1234s*                           BREG
+ xy1234t*                           BREG
+ xy1234u*                           BREG
+ xy1234v*                           BREG
+ xy1234w*                           BREG
+ xy1234x*                           BREG
+ xy1234y*                           BREG
+ xy1234z*                           BREG
+ xy2*                               AREG
+ xy234*                             BREG
+ xy3*                               AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               xy1                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ xy1                             xy123                            REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ xy123                           xy12340                          REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ xy12340                         xy1234567                        REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ xy1234567                       xy12345678                       REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ xy12345678                      xy123456780                      REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ xy123456780                     xy12345679                       REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ xy12345679                      xy1234568                        REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = c.dat
+ xy1234568                       xy1235                           REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ xy1235                          xy124                            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ xy124                           xy234                            REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ xy234                           xy235                            REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b.dat
+ xy235                           xy4                              REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a.dat
+ xy4                             ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+ ----------------------------------------------------------------------------
+ --> Running GDE with input file test29.gde
+ ----------------------------------------------------------------------------
+Using 2_reg_complete.gde as input file for gde
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/test29.gde
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ a234567890123456789012345678g*     AREG
+ a234567890123456789012345678gz     AREG
+ a234567890123456789012345678gz*    BREG
+ a234567890123456789012345678h*     AREG
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/complete.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ a234567890123456789012345678g*     AREG
+ a234567890123456789012345678gz     AREG
+ a234567890123456789012345678gz*    BREG
+ a234567890123456789012345678h*     AREG
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               a234567890123456789012345678g    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ a234567890123456789012345678g   a234567890123456789012345678gz0  REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ a234567890123456789012345678gz0 a234567890123456789012345678h    REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = b
+ a234567890123456789012345678h   a234567890123456789012345678i    REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = a
+ a234567890123456789012345678i   ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld

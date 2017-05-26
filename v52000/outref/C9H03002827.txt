@@ -1,0 +1,114 @@
+###################################################################
+C9H03002827 -- Test for REPLINSTNOSHM error
+This is to test that even though having the source server die when at an inconvenient time might result
+	in a REPLINSTNOSHM error, the error stops once the source server is restarted.
+1.	Create two primary instances and start source servers
+2.	Start GTM process and do an update to each region, AREG and BREG. Do not halt the GTM process.
+3.	Start another GTM process. Do not halt the GTM process.
+4.	$kill -15 the source server.
+5.	Halt the GTM process started in Step 2.
+6.	Update region BREG.  This will cause a REPLINSTNOSHM error if gtm_custom_errors env var is not set and not otherwise.
+	Now restart the source server. And try another update. This should NOT cause a REPLINSTNOSHM error.
+	The update should work fine now onwards. Let this GTM process run to completion.
+7.	Try to create primary instance A without gtm_repl_instance defined.  Should cause a REPLINSTUNDEF error.
+8.	Clean up from previous test.
+
+###################################################################
+#- Step 1:
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+###################################################################
+#- Step 2:
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+###################################################################
+#- Step 3:
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+###################################################################
+#- Step 4:
+#  kill -15 source server for INSTANCE1.
+###################################################################
+#- Step 5:
+# signal Step 2 process to stop
+
+GTM>
+
+GTM>
+
+GTM>
+###################################################################
+#- Step 6:
+# signal Step 3 process to continue and unsuccessfully update region BREG
+# Now we need to wait until the second update that results in a potential REPLINSTNOSHM error is finished
+# Now restart source server
+# signal Step 3 process to continue and successfully update region BREG
+# Now we need to wait until the third update that does NOT result in a potential REPLINSTNOSHM error is finished
+
+GTM>
+
+GTM>
+
+GTM>
+# Now that Step 3 process is done, dump its output
+lock +^%jobwait(2,1)
+##TEST_AWKlock ..jobgtm2.1,[0-9]*.
+d gtm2^c9h03002827
+##SUSPEND_OUTPUT CUSTOM_ERRORS
+##TEST_AWKZSTATUS=gtm2.4.c9h03002827,%GTM-E-REPLINSTNOSHM, Database ##TEST_PATH##/b.dat has no active connection to a replication journal pool
+##ALLOW_OUTPUT CUSTOM_ERRORS
+^b=6
+###################################################################
+#- Step 7:
+# Try to cause a REPLINSTUNDEF error
+%GTM-E-REPLINSTUNDEF, Replication instance environment variable $gtm_repl_instance is undefined
+^a=5
+$ZSTATUS=""
+$ZSTATUS="150379386,c9h03002827+7^c9h03002827,%GTM-E-REPLINSTUNDEF, Replication instance environment variable $gtm_repl_instance is undefined"
+###################################################################
+#- Step 8:
+# Clean up and exit
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##TEST_HOST_SHORT##:##TEST_PATH##/SRC##TEST_AWK[0-9_]*.log
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
+##SUSPEND_OUTPUT CUSTOM_ERRORS
+##TEST_HOST_SHORT##:##TEST_PATH##/gtm2_c9h030028272.mjo1
+##TEST_AWKZSTATUS=gtm2.4.c9h03002827,%GTM-E-REPLINSTNOSHM, Database ##TEST_PATH##/b.dat has no active connection to a replication journal pool
+##ALLOW_OUTPUT CUSTOM_ERRORS

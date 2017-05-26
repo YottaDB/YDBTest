@@ -1,0 +1,114 @@
+Terminal I/O:
+-----------------------------------------------
+
+Copy terminal.m and longstr.m into current directory
+On VMS:
+  copy gtm$troot:[T990.manual_tests.inref]terminal.m []
+  copy gtm$troot:[T990.common]longstr.m []
+
+On UNIX:
+  cp $gtm_test/T990/manual_tests/inref/terminal.m .
+  cp $gtm_test/T990/com/longstr.m .
+
+1. Run:
+
+(set terminal emulator to autowrap, 132 columns)
+stty cols 132 ; stty -a
+
+gtm
+GTM>do ^terminal
+
+(On VMS, do a set term/inquire before to reset terminal characteristics)
+-----------------------------------------------
+2. cut-and-paste the output into a file (terminal.out)
+   capturing a log using script, set host, or the
+   emulator's logging facility will not work.
+
+Notes :
+   * Sometimes cut and paste will leave out an extra space at the end of the line.
+     For e.g at line 7 where "B" must be followed by a space. So watch out while copying and comparing the output to terminal.txt
+   * Highlighting(copy) and pasting in vim of VMS might not sometimes work. In such cases, paste it to a text editor
+     like "Text Editor" or "Kwrite" etc and then rcp it back to VMS
+-----------------------------------------------
+3. diff $gtm_test/TXXX/manual_tests/outref/terminal.txt terminal.out
+  diff terminal.out gtm$troot:[T990.manual_tests.outref]terminal.txt
+
+   There may be some differences in the zshow "D" output
+   such as "IN" vs "NOINSE".
+
+   There will also be differences in dev terminal name like dev /pts 2 against
+   dev /pts 12. This can be ignored
+
+   In HP-UX there's an extra diff of GTM$DMOD against +1^GTM$DMOD which we ignore.
+
+-----------------------------------------------
+4. diff $gtm_test/TXXX/manual_tests/zshow.txt zshow.out
+   diff zshow.out gtm$troot:[T990.manual_tests.outref]zshow.txt
+(note that in VMS doing a diff other way round will not work)
+
+-----------------------------------------------
+5. run the following (note output to terminal will occur while typing:)
+
+GTM>use $PRINCIPAL:(X=0:Y=0:CLEARSCREEN) write "HERE: ",$X,",",$Y,! use $PRINCIPAL:(X=8:y=2) write "HERE: ",$X,",",$Y,!
+
+Your screen should look like (at the top of the screen):
+HERE: 6,0
+
+        HERE: 14,2
+
+GTM>
+
+now do:
+
+GTM>use $PRINCIPAL:(X=1:Y=1) write "HERE: ",$X,",",$Y,!
+
+Screen should be:
+HERE: 6,0
+ HERE: 7,1
+        HERE: 14,2
+GTM>
+
+(On VMS, do a set term/inquire before to reset terminal characteristics)
+-----------------------------------------------
+6. Run:
+gtm
+GTM>do test2^terminal
+
+The output is self-explanatory.
+
+(On VMS, do a set term/inquire before to reset terminal characteristics)
+-----------------------------------------------
+7. Run:
+(assuming longstr.m is already copied - the very first step of this manual test)
+gtm
+GTM>write $$^longstr(35000)
+This should produce a lot of output (many alphabets), but should not error out.
+-----------------------------------------------
+
+
+
+-----------------------------------------------
+You can now run this test in an automated fashion from a desktop PC using
+expect. You should be able to cut and paste the entire block below.
+
+Requirements: unix2dos or fromdos (tofrodos package)
+
+tcsh
+set prompt="terminal `hostname`:$PWD >"
+set gtm_tst=$gtm_test/T990
+set tst=manual_tests
+mkdir -p /testarea1/$user/${gtm_verno}/drive_terminal
+cd /testarea1/$user/${gtm_verno}/drive_terminal
+which dos2unix
+which fromdos && alias dos2unix fromdos
+foreach host ( `$cms_tools/expand_serverlist.csh all` )
+echo $host
+expect -f $gtm_tst/$tst/u_inref/remote_terminal.exp $host $gtm_tst manual_tests ${gtm_verno} p > & ! terminal_${host}.log
+if !(-e terminal_${host}.log) continue
+awk '{while(getline){if($0 ~/^2/){pf=1};if($0 ~/GTM/){pf=0} if(pf){print}}}' terminal_${host}.log > terminal_${host}.out
+dos2unix terminal_${host}.out && diff -u $gtm_tst/$tst/outref/terminal.txt terminal_${host}.out && rm terminal_${host}.out
+end
+exit
+
+-- Amul Shah 2013/07/12
+

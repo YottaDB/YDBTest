@@ -1,0 +1,20 @@
+Begin C9D06002318
+Start: in testzgoto main
+In tzg1 - calling zgoto indirection test tzgindir1 - $zlevel=2
+In tzgindir1 subrtn with $zlevel=3
+Testing zgoto $zlevel-1:@x^@y
+In dummy subrtn with $zlevel=2
+Returned to testzgoto main with $zlevel=1
+
+In tzg2 - calling zgoto indirection test tzgindir2 - $zlevel=2
+In tzgindir2 subrtn with $zlevel=3
+Testing zgoto $zlevel-1:@x
+In dummy subrtn with $zlevel=2
+Returned to testzgoto main with $zlevel=1
+
+In tzg3 - calling zgoto w/o indirection tzgdir3 - $zlevel=2
+In tzgdir3 subrtn with $zlevel=3
+Testing zgoto $zlevel-1:dummy
+In dummy subrtn with $zlevel=2
+Completed: in testzgoto main with $zlevel=1
+End C9D06002318

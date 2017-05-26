@@ -1,0 +1,33 @@
+V1SVS ;IW-YS-KO-TS,VV1,MVTS V9.10;15/6/96;SPECIAL VARIABLE $STORAGE
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1978-1996
+ W !!,"177---V1SVS: Special variable $STORAGE",!
+795 W !,"I-795  Format of $S"
+ S ^ABSN="12029",^ITEM="I-795  Format of $S",^NEXT="796^V1SVS,V1MAX^VV1" D ^V1PRESET
+ S ^VCOMP=$S?1N.N,^VCOMP=^VCOMP_($S?1"0"."0".N)
+ S ^VCORR="10" D ^VEXAMINE
+ ;
+796 W !,"I-796  Effect on $STORAGE by setting local variables"
+7961 S ^ABSN="12030",^ITEM="I-796.1  ""KILL ALL""",^NEXT="7962^V1SVS,V1MAX^VV1" D ^V1PRESET
+ ;S ^PASS=PASS,^FAIL=FAIL K  S ^VCOMP=$STORAGE?1N.N
+ ;S PASS=^PASS,FAIL=^FAIL,^VCORR=1 D ^VEXAMINE
+ K  S ^VCOMP=$STORAGE?1N.N
+ S ^VCORR=1 D ^VEXAMINE
+ ;
+7962 S ^ABSN="12031",^ITEM="I-796.2  ""SET A=1234567""",^NEXT="7963^V1SVS,V1MAX^VV1" D ^V1PRESET
+ S A=1234567
+ S ^VCOMP=$S?1N.N
+ S ^VCORR=1 D ^VEXAMINE
+ ;
+7963 S ^ABSN="12032",^ITEM="I-796.3  ""SET B=$S""",^NEXT="797^V1SVS,V1MAX^VV1" D ^V1PRESET
+ S B=$S S B=$S
+ S ^VCOMP=B'<$S S ^VCORR=1 D ^VEXAMINE ;(test corrected in V7.2;24/2/88)
+ ;
+797 W !,"I-797  Partition size for assurance of routine transferability (4000 Byte)"
+ S ^ABSN="12033",^ITEM="I-797  Partition size for assurance of routine transferability (4000 Byte)",^NEXT="V1MAX^VV1" D ^V1PRESET
+ W !,"       (This test I-797 was withdrawn in 1992 on X11.1-1990, MSL)"
+ S ^VREPORT("Part-77",^ABSN)="*WITHDR*"
+ ;
+END W !!,"End of 177---V1SVS",!
+ K  Q
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

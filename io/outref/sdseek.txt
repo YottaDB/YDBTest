@@ -1,0 +1,1425 @@
+setenv gtm_chset M
+unset echo
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+**************************** mseek ****************************
+###################################################################
+**********************************
+NON-FIXED SEEK FOLLOW AND NOFOLLOW
+**********************************
+
+** open a zero length file followed by a use:REWIND to show a WRITE can be done
+x= This output written after a use:REWIND on a zero length file $device= 0 $zkey= 61
+
+** open a zero length file with SEEK=10 just to show nothing changes
+** also do a use with SEEK=-5 on the zero length file
+** then do a read to show value of $zkey and $display
+
+x=  $device= 1,Device detected EOF $zkey= 0
+STAT=mseek+34^mseek,%GTM-E-SDSEEKERR, Sequential device seek error - SEEK value 5b invalid.
+STAT=mseek+38^mseek,%GTM-E-SDSEEKERR, Sequential device seek error - SEEK value - 5 invalid.
+STAT=mseek+40^mseek,%GTM-E-SDSEEKERR, Sequential device seek error - SEEK value 9999999999999999999 invalid.
+STAT=mseek+42^mseek,%GTM-E-SDSEEKERR, Sequential device seek error - SEEK value 5k invalid.
+STAT=mseek+44^mseek,%GTM-E-SDSEEKERR, Sequential device seek error - SEEK value "" invalid.
+
+** write line 1001 at end to test relative SEEK=-60 after a write
+
+x= 1001 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 60060
+
+** write line 1002 at end, write line 1003 in background with 5 sec delay, then do a read with follow to read 1003
+
+x= 1003 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 60180
+
+** do all 3 seek types in a row with the final offset to read being 1800
+
+x=   31 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 1860
+
+set values of $x=44 and $y=55 before close with nodestroy:
+
+$x= 44 $y= 55
+
+** close with nodestroy, reopen restored and read a line to make sure $ZKEY is correct
+
+value of $x and $y after reopen restored:
+
+$x= 44 $y= 55
+
+x=   32 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 1920
+
+set values of $x=44 and $y=55 before close with nodestroy:
+
+$x= 44 $y= 55
+
+** close with nodestroy, reopen non-restored and read a line to make sure $ZKEY is correct
+
+value of $x and $y after reopen non-restored:
+
+$x= 0 $y= 0
+
+x=    1 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 60
+
+** try to seek before the beginning to verify offset is beginning of file
+
+x=    1 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 60
+
+** do a use p:rewind to verify same result
+
+x=    1 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 60
+
+** write lines 1004 and 1005 at the end then seek="-120" to beginning of 1004
+
+x= 1004 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 60240
+
+** truncate the last line and seek="-60" to the beginning of 1004, again
+
+x= 1004 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 60240
+
+** Open with SEEK to 240
+
+x=    5 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 300
+
+** Open with SEEK to saved value of zkey - 300
+
+x=    6 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 360
+
+** open append:seek="-360" to read 5th from last line
+x=  999 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 59940
+
+** close nodestroy then reopen seek="-60" to read same line again
+x=  999 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 59940
+
+** close nodestroy then reopen seek="+60" to skip a line
+x= 1001 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 60060
+
+** close nodestroy then reopen append:seek="-60" to output last line
+x= 1004 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 60240
+
+** seek to EOF and read with nofollow to get the EOF
+
+x=  $device= 1,Device detected EOF $zkey= 60240
+**********************************
+FIXED SEEK FOLLOW AND NOFOLLOW
+**********************************
+
+** write line 1000 at end to test relative SEEK=-1 after a write
+
+x=  1000 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 1001,0
+
+** write line 1001 at end, write line 1002 in background with 5 sec delay, then do a read with follow to read 1002
+
+x=  1002 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 1003,0
+
+** do all 3 seek types in a row with the final offset to read being 780
+
+x=   780 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 781,0
+
+** read x#20 to show record offset in bytes in record 781
+
+x=   781 - abcdefghijkl $device= 0 $zkey= 781,20
+
+** close with nodestroy, reopen restored and read the rest of the record x#40 to make sure $ZKEY is correct
+
+$x= 20 $y= 1
+
+$x= 20 $y= 1
+
+x= mnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 782,0
+
+** close with nodestroy, reopen non-restored and read the record to make sure $ZKEY is correct
+
+x=     0 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 1,0
+
+** seek to the beginning of record 781 and read x#20 again
+
+x=   781 - abcdefghijkl $device= 0 $zkey= 781,20
+
+** seek to beginning of record 781 and read the entire record
+
+x=   781 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 782,0
+
+** try to seek before the beginning to verify offset is beginning of file
+
+x=     0 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 1,0
+
+** do a use p:rewind to verify same result
+
+x=     0 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 1,0
+
+** write lines 1003 and 1004 at the end then seek="-2" to beginning of 1003
+
+x=  1003 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 1004,0
+
+** truncate the last line and seek="-1" to the beginning of 1003, again
+
+x=  1003 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 1004,0
+
+** Open with recordsize set to 60 and SEEK to record offset 5
+
+x=     5 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 6,0
+
+** Open with default recordsize, set width to 60 in USE and seek to offset 5
+
+x=     5 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 6,0
+
+** Open with SEEK to saved value of zkey - 6
+
+x=     6 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 7,0
+
+** open fixed:recordsize=60:append:seek="-6" to read 5th from last line
+x=   998 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 999,0
+
+** close nodestroy then reopen seek="-1" to read same record again
+x=   998 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 999,0
+
+** close nodestroy then reopen seek="+1" to skip a record
+x=  1000 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 1001,0
+
+** close nodestroy then reopen append:seek="-1" to output last line
+x=  1003 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz $device= 0 $zkey= 1004,0
+
+** seek to EOF and read with nofollow to get the EOF
+
+x=  $device= 1,Device detected EOF $zkey= 1004,0
+###################################################################
+**************************** seek on PRINCIPAL in heredoc ****************************
+###################################################################
+
+GTM>
+
+GTM>
+
+GTM>
+secnd output
+
+GTM>
+
+GTM>
+
+GTM>
+1
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+2
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+3
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+4
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+###################################################################
+**************************** test1 seek on PRINCIPAL with redirected in/out ****************************
+###################################################################
+input from a file and output to a file
+   5 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   3 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   7 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+input from a pipe and output to a pipe ignores seeks
+   1 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   2 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   3 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   4 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+###################################################################
+**************************** test2 inseek/outseek ignored for null/empty files  ****************************
+###################################################################
+###################################################################
+**************************** rewind PRINCIPAL in heredoc ****************************
+###################################################################
+
+GTM>
+
+GTM>
+
+GTM>
+secnd output
+
+GTM>
+1
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+2
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+3
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+4
+
+GTM>
+
+GTM>
+###################################################################
+**************************** rewind1 rewind on PRINCIPAL with redirected in/out ****************************
+###################################################################
+input from a file and output to a file
+   3 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   1 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   7 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+input from a pipe and output to a pipe ignores rewinds
+   1 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   2 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   3 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   4 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   5 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+###################################################################
+**************************** rewind2 inrewind/outrewind ignored for null/empty files  ****************************
+###################################################################
+###################################################################
+**************************** truncate output of PRINCIPAL in heredoc ****************************
+###################################################################
+
+GTM>
+
+GTM>
+Line 1 - abcdefdhijklmnopqrstuvwxyz
+Line 2 - abcdefdhijklmnopqrstuvwxyz
+GTM>
+After truncate Line 3 - abcdefdhijklmnopqrstuvwxyz
+After truncate Line 4 - abcdefdhijklmnopqrstuvwxyz
+
+GTM>
+###################################################################
+**************************** truncate1 truncate output on PRINCIPAL with redirected in/out *********************
+###################################################################
+input from a file and output to a file
+   5 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   6 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   1 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   2 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+input from a pipe and output to a pipe ignores truncates
+   1 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   2 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   3 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   4 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   5 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+   6 - abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+###################################################################
+**************************** truncate2 truncate ignored for null/empty files  ****************************
+###################################################################
+##SUSPEND_OUTPUT NON_UTF8
+###################################################################
+**************************** utfseek ****************************
+###################################################################
+setenv gtm_chset UTF-8
+unset echo
+**********************************
+UTF-8 WITH BOM NON-FIXED SEEK FOLLOW AND NOFOLLOW
+**********************************
+
+** write line 100 at end to test relative SEEK=-47 after a write
+
+x=   99 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4703
+x=  100 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4750
+
+** write line 101 at end, write line 102 in background with 2 sec delay, then do a read with follow to read 102
+
+x=  102 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4844
+
+** do all 3 seek types in a row with the final offset to read being 755
+
+x=   16 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 802
+
+** close with nodestroy, reopen restored and read 20 lines to test data and $ZKEY
+
+Before CLOSE p:NODESTROY
+$x= 0 $y= 1
+
+After OPEN with restored state
+$x= 0 $y= 1
+
+x=   17 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 849
+x=   18 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 896
+x=   19 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 943
+x=   20 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 990
+x=   21 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1037
+x=   22 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1084
+x=   23 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1131
+x=   24 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1178
+x=   25 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1225
+x=   26 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1272
+x=   27 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1319
+x=   28 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1366
+x=   29 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1413
+x=   30 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1460
+x=   31 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1507
+x=   32 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1554
+x=   33 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1601
+x=   34 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1648
+x=   35 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1695
+x=   36 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1742
+
+** close with nodestroy, reopen non-restored and read 20 lines to test data and $ZKEY
+
+x=    0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 50
+x=    1 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 97
+x=    2 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 144
+x=    3 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 191
+x=    4 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 238
+x=    5 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 285
+x=    6 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 332
+x=    7 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 379
+x=    8 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 426
+x=    9 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 473
+x=   10 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 520
+x=   11 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 567
+x=   12 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 614
+x=   13 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 661
+x=   14 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 708
+x=   15 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 755
+x=   16 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 802
+x=   17 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 849
+x=   18 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 896
+x=   19 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 943
+
+** try to seek before the beginning to verify offset is beginning of file
+
+x=    0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 50
+
+** do a use p:rewind to verify same result
+
+x=    0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 50
+
+** write lines 103 and 104 at the end then seek="-94" to beginning of 103
+
+x=  103 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4891
+
+** truncate the last line and seek="-47" to the beginning of 103, again
+
+x=  103 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4891
+
+** read with nofollow to get the EOF
+
+x=  $device= 1,Device detected EOF $zkey= 4891
+
+** open with a seek to 755 again
+
+x=   16 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 802
+
+** open append:seek="-282" to read 5th from last line
+x=   98 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4656
+
+** close nodestroy then reopen seek="-47" to read same line again
+x=   98 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4656
+
+** close nodestroy then reopen seek="+47" to skip a line
+x=  100 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4750
+
+** close nodestroy then reopen append:seek="-47" to output last line
+x=  103 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4891
+**********************************
+UTF-8 WITH NO BOM NON-FIXED SEEK FOLLOW AND NOFOLLOW
+**********************************
+
+** write line 100 at end to test relative SEEK=-47 after a write
+
+x=   99 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4700
+x=  100 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4747
+
+** write line 101 at end, write line 102 in background with 2 sec delay, then do a read with follow to read 102
+
+x=  102 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4841
+
+** do all 3 seek types in a row with the final offset to read being 752
+
+x=   16 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 799
+
+** close with nodestroy, reopen restored and read 20 lines to test data and $ZKEY
+
+Before CLOSE p:NODESTROY
+$x= 0 $y= 1
+
+After OPEN with restored state
+$x= 0 $y= 1
+
+x=   17 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 846
+x=   18 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 893
+x=   19 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 940
+x=   20 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 987
+x=   21 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1034
+x=   22 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1081
+x=   23 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1128
+x=   24 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1175
+x=   25 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1222
+x=   26 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1269
+x=   27 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1316
+x=   28 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1363
+x=   29 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1410
+x=   30 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1457
+x=   31 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1504
+x=   32 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1551
+x=   33 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1598
+x=   34 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1645
+x=   35 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1692
+x=   36 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1739
+
+** close with nodestroy, reopen non-restored and read 20 lines to test data and $ZKEY
+
+x=    0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 47
+x=    1 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 94
+x=    2 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 141
+x=    3 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 188
+x=    4 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 235
+x=    5 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 282
+x=    6 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 329
+x=    7 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 376
+x=    8 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 423
+x=    9 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 470
+x=   10 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 517
+x=   11 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 564
+x=   12 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 611
+x=   13 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 658
+x=   14 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 705
+x=   15 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 752
+x=   16 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 799
+x=   17 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 846
+x=   18 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 893
+x=   19 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 940
+
+** try to seek before the beginning to verify offset is beginning of file
+
+x=    0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 47
+
+** do a use p:rewind to verify same result
+
+x=    0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 47
+
+** write lines 103 and 104 at the end then seek="-94" to beginning of 103
+
+x=  103 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4888
+
+** truncate the last line and seek="-47" to the beginning of 103, again
+
+x=  103 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4888
+
+** read with nofollow to get the EOF
+
+x=  $device= 1,Device detected EOF $zkey= 4888
+
+** open with a seek to 752 again
+
+x=   16 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 799
+
+** open append:seek="-282" to read 5th from last line
+x=   98 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4653
+
+** close nodestroy then reopen seek="-47" to read same line again
+x=   98 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4653
+
+** close nodestroy then reopen seek="+47" to skip a line
+x=  100 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4747
+
+** close nodestroy then reopen append:seek="-47" to output last line
+x=  103 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4888
+**********************************
+UTF-16 WITH BOM NON-FIXED SEEK FOLLOW AND NOFOLLOW
+**********************************
+
+** write line 100 at end to test relative SEEK=-52 after a write
+
+x= ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4002
+x= 100 - ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4054
+
+** write line 101 at end, write line 102 in background with 2 sec delay, then do a read with follow to read 102
+
+x= 102 - ւՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4158
+
+** do all 3 seek types in a row with the final offset to read being 3242
+
+x= կՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3282
+
+** close with nodestroy, reopen restored and read 20 lines to test data and $ZKEY
+
+Before CLOSE p:NODESTROY
+$x= 0 $y= 1
+
+After OPEN with restored state
+$x= 0 $y= 1
+
+x= հՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3322
+x= ձՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3362
+x= ղՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3402
+x= ճՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3442
+x= մՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3482
+x= յՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3522
+x= նՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3562
+x= շՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3602
+x= ոՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3642
+x= չՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3682
+x= պՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3722
+x= ջՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3762
+x= ռՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3802
+x= սՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3842
+x= վՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3882
+x= տՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3922
+x= րՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3962
+x= ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4002
+x= 100 - ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4054
+x= 101 - ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4106
+
+** close with nodestroy, reopen non-restored and read 20 lines to test data and $ZKEY
+
+x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 42
+x= ԟՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 82
+x= ԠՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 122
+x= ԡՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 162
+x= ԢՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 202
+x= ԣՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 242
+x= ԤՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 282
+x= ԥՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 322
+x= ԦՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 362
+x= ԧՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 402
+x= ԨՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 442
+x= ԩՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 482
+x= ԪՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 522
+x= ԫՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 562
+x= ԬՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 602
+x= ԭՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 642
+x= ԮՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 682
+x= ԯՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 722
+x= ԰ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 762
+x= ԱՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 802
+
+** try to seek before the beginning to verify offset is beginning of file
+
+x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 42
+
+** do a use p:rewind to verify same result
+
+x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 42
+
+** write lines 103 and 104 at the end then seek="-104" to beginning of 103
+
+x= 103 - ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4210
+
+** truncate the last line and seek="-52" to the beginning of 103, again
+
+x= 103 - ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4210
+
+** read with nofollow to get the EOF
+
+x=  $device= 1,Device detected EOF $zkey= 4210
+
+** open with a seek to 3242 again
+
+x= կՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3282
+
+** open ICHSET="UTF-16":OCHSET="UTF-16BE":append:seek="-288" to read 5th from last line
+x= րՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3962
+
+** close nodestroy then reopen seek="-40" to read same line again
+x= րՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3962
+
+** close nodestroy then reopen seek="+40" to skip a line
+x= 100 - ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4054
+
+** close nodestroy then reopen append:seek="-52" to output last line
+x= 103 - ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4210
+
+** open ICHSET="UTF-16":OCHSET="UTF-16BE" and read first line
+
+zshow "d" output for useek16withbom:
+useek16withbom OPEN RMS ICHSET=UTF-16BE OCHSET=UTF-16BE 
+
+x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 42
+
+** close nodestroy then reopen CHSET="M" to read and expect an error
+
+zshow "d" output for useek16withbom:
+useek16withbom OPEN RMS REC=32764 ICHSET=M OCHSET=M 
+
+x= STAT=results+4^utfseek,%GTM-E-BADCHAR, $ZCHAR(254,255) is not a valid character in the UTF-8 encoding form
+
+** close nodestroy then reopen ICHSET="UTF-16":OCHSET="UTF-16BE":append:seek="-52" to read last line
+
+zshow "d" output for useek16withbom:
+useek16withbom OPEN RMS ICHSET=UTF-16 OCHSET=UTF-16BE 
+
+x= 103 - ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4210
+
+** close nodestroy then reopen CHSET="M":append to write a line in M chset to end of file
+
+zshow "d" output for useek16withbom:
+useek16withbom OPEN RMS REC=32764 ICHSET=M OCHSET=M 
+
+
+** seek to the beginning of the line and read in M chset
+x= This is some text in M character set at the end of the file $device= 0 $zkey= 4270
+
+** close nodestroy then reopen CHSET="UTF-8" and try to read first line and expect an error
+
+zshow "d" output for useek16withbom:
+useek16withbom OPEN RMS 
+
+STAT=utfseek+387^utfseek,%GTM-E-BADCHAR, $ZCHAR(254) is not a valid character in the UTF-8 encoding form
+
+** close nodestroy then reopen append and write savex in UTF-8 mode to end of file
+
+zshow "d" output for useek16withbom:
+useek16withbom OPEN RMS 
+
+
+** seek to the beginning of the line and read in UTF-8 chset
+x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4309
+
+** close nodestroy then reopen ICHSET="UTF-16":OCHSET="UTF-16BE":seek="4270" to read line expecting an error
+
+zshow "d" output for useek16withbom:
+useek16withbom OPEN RMS ICHSET=UTF-16 OCHSET=UTF-16BE 
+
+STAT=utfseek+404^utfseek,%GTM-E-BADCHAR, $ZCHAR(10) is not a valid character in the UTF-16BE encoding form
+
+** rewind file and read first line again in UTF-16 chset
+x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 42
+
+** seek to original end of file and truncate
+
+** read to show original file size after truncate and zeof is 1
+ $zeof= 1 $zkey= 4210
+**********************************
+UTF-16 WITH NO BOM NON-FIXED SEEK FOLLOW AND NOFOLLOW
+**********************************
+
+** write line 100 at end to test relative SEEK=-52 after a write
+
+x= ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4000
+x= 100 - ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4052
+
+** write line 101 at end, write line 102 in background with 2 sec delay, then do a read with follow to read 102
+
+x= 102 - ւՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4156
+
+** do all 3 seek types in a row with the final offset to read being 3240
+
+x= կՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3280
+
+** close with nodestroy, reopen restored and read 20 lines to test data and $ZKEY
+
+Before CLOSE p:NODESTROY
+$x= 0 $y= 1
+
+After OPEN with restored state
+$x= 0 $y= 1
+
+x= հՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3320
+x= ձՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3360
+x= ղՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3400
+x= ճՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3440
+x= մՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3480
+x= յՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3520
+x= նՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3560
+x= շՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3600
+x= ոՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3640
+x= չՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3680
+x= պՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3720
+x= ջՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3760
+x= ռՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3800
+x= սՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3840
+x= վՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3880
+x= տՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3920
+x= րՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3960
+x= ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4000
+x= 100 - ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4052
+x= 101 - ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4104
+
+** close with nodestroy, reopen non-restored and read 20 lines to test data and $ZKEY
+
+x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 40
+x= ԟՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 80
+x= ԠՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 120
+x= ԡՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 160
+x= ԢՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 200
+x= ԣՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 240
+x= ԤՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 280
+x= ԥՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 320
+x= ԦՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 360
+x= ԧՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 400
+x= ԨՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 440
+x= ԩՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 480
+x= ԪՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 520
+x= ԫՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 560
+x= ԬՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 600
+x= ԭՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 640
+x= ԮՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 680
+x= ԯՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 720
+x= ԰ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 760
+x= ԱՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 800
+
+** try to seek before the beginning to verify offset is beginning of file
+
+x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 40
+
+** do a use p:rewind to verify same result
+
+x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 40
+
+** write lines 103 and 104 at the end then seek="-104" to beginning of 103
+
+x= 103 - ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4208
+
+** truncate the last line and seek="-52" to the beginning of 103, again
+
+x= 103 - ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4208
+
+** read with nofollow to get the EOF
+
+x=  $device= 1,Device detected EOF $zkey= 4208
+
+** open with a seek to 3240 again
+
+x= կՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3280
+
+** open ICHSET="UTF-16":OCHSET="UTF-16BE":append:seek="-288" to read 5th from last line
+x= րՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3960
+
+** close nodestroy then reopen seek="-40" to read same line again
+x= րՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3960
+
+** close nodestroy then reopen seek="+40" to skip a line
+x= 100 - ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4052
+
+** close nodestroy then reopen append:seek="-52" to output last line
+x= 103 - ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4208
+**********************************
+UTF-8 WITH NO BOM FIXED SEEK FOLLOW AND NOFOLLOW
+**********************************
+
+** write line 100 at end to test relative SEEK=-1 after a write
+
+x=   99 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 100,0
+x=  100 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 101,0
+
+** write line 101 at end, write line 102 in background with 2 sec delay, then do a read with follow to read 102
+
+x=  102 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 103,0
+
+** do all 3 seek types in a row with the final offset to read being record 49
+
+x=   49 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 50,0
+
+** read a partial record to test seek="-1"
+
+x=   50 - ՇՈՉ $device= 0 $zkey= 50,13
+x=   49 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 50,0
+
+** read a partial record to test seek="+1"
+
+x=   50 - ՇՈՉ $device= 0 $zkey= 50,13
+x=   51 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 52,0
+
+** read a partial record to test seek="52"
+
+x=   52 - ՇՈՉ $device= 0 $zkey= 52,13
+x=   52 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 53,0
+
+** read a partial record, close nodestroy, reopen restored and read rest of record and 19 more to test data and $ZKEY
+
+x=   53 - ՇՈՉ $device= 0 $zkey= 53,13
+Before CLOSE p:NODESTROY
+$x= 10 $y= 1
+
+After OPEN with restored state
+$x= 10 $y= 1
+
+x= ABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 54,0
+x=   54 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 55,0
+x=   55 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 56,0
+x=   56 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 57,0
+x=   57 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 58,0
+x=   58 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 59,0
+x=   59 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 60,0
+x=   60 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 61,0
+x=   61 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 62,0
+x=   62 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 63,0
+x=   63 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 64,0
+x=   64 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 65,0
+x=   65 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 66,0
+x=   66 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 67,0
+x=   67 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 68,0
+x=   68 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 69,0
+x=   69 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 70,0
+x=   70 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 71,0
+x=   71 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 72,0
+x=   72 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 73,0
+
+** close with nodestroy, reopen non-restored and read 20 lines to test data and $ZKEY
+
+x=    0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1,0
+x=    1 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 2,0
+x=    2 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 3,0
+x=    3 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4,0
+x=    4 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 5,0
+x=    5 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 6,0
+x=    6 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 7,0
+x=    7 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 8,0
+x=    8 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 9,0
+x=    9 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 10,0
+x=   10 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 11,0
+x=   11 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 12,0
+x=   12 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 13,0
+x=   13 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 14,0
+x=   14 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 15,0
+x=   15 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 16,0
+x=   16 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 17,0
+x=   17 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 18,0
+x=   18 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 19,0
+x=   19 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 20,0
+
+** try to seek before the beginning to verify offset is beginning of file
+
+x=    0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1,0
+
+** do a use p:rewind to verify same result
+
+x=    0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1,0
+
+** write lines 103 and 104 at the end then seek="-2" to beginning of 103
+
+x=  103 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 104,0
+
+** truncate the last line and seek="-1" to the beginning of 103, again
+
+x=  103 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 104,0
+
+** read with nofollow to get the EOF
+
+x=  $device= 1,Device detected EOF $zkey= 104,0
+Before CLOSE p:NODESTROY
+$x= 0 $y= 2
+
+
+** open with a seek to 49 again
+
+After OPEN with restored state then SEEK
+$x= 0 $y= 0
+
+x=   49 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 50,0
+
+** open, read first record and then seek to 49 again
+
+x=    0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1,0
+x=   49 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 50,0
+
+** close nodestroy then reopen seek="-1" to read same record again
+x=   49 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 50,0
+
+** close nodestroy then reopen seek="+1" to skip a record
+x=   51 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 52,0
+close nodestroy then reopen append:seek="-1" to read last record
+x=  103 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 104,0
+**********************************
+UTF-16 WITH NO BOM FIXED SEEK FOLLOW AND NOFOLLOW
+**********************************
+
+** write line with first char 1 at end to test relative SEEK=-1 after a write
+
+x= ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 100,0
+x= 1ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 101,0
+
+** write line 2 at end, write line 3 in background with 2 sec delay, then do a read with follow to read 3
+
+x= 3ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 103,0
+
+** do all 3 seek types in a row with the final offset to read being record 49
+
+x= ՏՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 50,0
+
+** read a partial record to test seek="-1"
+
+x= ՐՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 50,20
+x= ՏՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 50,0
+
+** read a partial record to test seek="+1"
+
+x= ՐՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 50,20
+x= ՑՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 52,0
+
+** read a partial record to test seek="52"
+
+x= ՒՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 52,20
+x= ՒՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 53,0
+
+** read a partial record, close nodestroy, reopen restored and read rest of record and 19 more to test data and $ZKEY
+
+x= ՓՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 53,20
+Before CLOSE p:NODESTROY
+$x= 10 $y= 1
+
+After OPEN with restored state
+$x= 10 $y= 1
+
+x= ՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 54,0
+x= ՔՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 55,0
+x= ՕՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 56,0
+x= ՖՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 57,0
+x= ՗ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 58,0
+x= ՘ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 59,0
+x= ՙՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 60,0
+x= ՚ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 61,0
+x= ՛ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 62,0
+x= ՜ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 63,0
+x= ՝ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 64,0
+x= ՞ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 65,0
+x= ՟ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 66,0
+x= ՠՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 67,0
+x= աՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 68,0
+x= բՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 69,0
+x= գՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 70,0
+x= դՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 71,0
+x= եՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 72,0
+x= զՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 73,0
+
+** close with nodestroy, reopen non-restored and read 20 lines to test data and $ZKEY
+
+x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 1,0
+x= ԟՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 2,0
+x= ԠՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3,0
+x= ԡՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4,0
+x= ԢՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 5,0
+x= ԣՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 6,0
+x= ԤՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 7,0
+x= ԥՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 8,0
+x= ԦՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 9,0
+x= ԧՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 10,0
+x= ԨՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 11,0
+x= ԩՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 12,0
+x= ԪՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 13,0
+x= ԫՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 14,0
+x= ԬՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 15,0
+x= ԭՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 16,0
+x= ԮՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 17,0
+x= ԯՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 18,0
+x= ԰ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 19,0
+x= ԱՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 20,0
+
+** try to seek before the beginning to verify offset is beginning of file
+
+x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 1,0
+
+** do a use p:rewind to verify same result
+
+x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 1,0
+
+** write record 103 and 104 at the end then seek="-2" to beginning of 103
+
+x= 4ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 104,0
+
+** truncate the last line and seek="-1" to the beginning of 103, again
+
+x= 4ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 104,0
+
+** read with nofollow to get the EOF
+
+x=  $device= 1,Device detected EOF $zkey= 104,0
+Before CLOSE p:NODESTROY
+$x= 0 $y= 2
+
+
+** close p:nodestroy to open with a seek to 49 again
+
+After OPEN with restored state then SEEK
+$x= 0 $y= 0
+
+x= ՏՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 50,0
+
+** open, read first record and then seek to 49 again
+
+x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 1,0
+x= ՏՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 50,0
+
+** close nodestroy then reopen seek="-1" to read same record again
+x= ՏՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 50,0
+
+** close nodestroy then reopen seek="+1" to skip a record
+x= ՑՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 52,0
+close nodestroy then reopen append:seek="-1" to read last record
+x= 4ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 104,0
+**********************************
+UTF-8 WITH BOM FIXED SEEK FOLLOW AND NOFOLLOW
+**********************************
+
+** write line 100 at end to test relative SEEK=-1 after a write
+
+x=   99 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 100,0
+x=  100 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 101,0
+
+** write line 101 at end, write line 102 in background with 2 sec delay, then do a read with follow to read 102
+
+x=  102 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 103,0
+
+** do all 3 seek types in a row with the final offset to read being record 49
+
+x=   49 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 50,0
+
+** read a partial record to test seek="-1"
+
+x=   50 - ՇՈՉ $device= 0 $zkey= 50,13
+x=   49 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 50,0
+
+** read a partial record to test seek="+1"
+
+x=   50 - ՇՈՉ $device= 0 $zkey= 50,13
+x=   51 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 52,0
+
+** read a partial record to test seek="52"
+
+x=   52 - ՇՈՉ $device= 0 $zkey= 52,13
+x=   52 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 53,0
+
+** read a partial record, close nodestroy, reopen restored and read rest of record and 19 more to test data and $ZKEY
+
+x=   53 - ՇՈՉ $device= 0 $zkey= 53,13
+Before CLOSE p:NODESTROY
+$x= 10 $y= 1
+
+After OPEN with restored state
+$x= 10 $y= 1
+
+x= ABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 54,0
+x=   54 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 55,0
+x=   55 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 56,0
+x=   56 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 57,0
+x=   57 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 58,0
+x=   58 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 59,0
+x=   59 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 60,0
+x=   60 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 61,0
+x=   61 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 62,0
+x=   62 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 63,0
+x=   63 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 64,0
+x=   64 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 65,0
+x=   65 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 66,0
+x=   66 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 67,0
+x=   67 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 68,0
+x=   68 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 69,0
+x=   69 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 70,0
+x=   70 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 71,0
+x=   71 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 72,0
+x=   72 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 73,0
+
+** close with nodestroy, reopen non-restored and read 20 lines to test data and $ZKEY
+
+x=    0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1,0
+x=    1 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 2,0
+x=    2 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 3,0
+x=    3 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 4,0
+x=    4 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 5,0
+x=    5 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 6,0
+x=    6 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 7,0
+x=    7 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 8,0
+x=    8 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 9,0
+x=    9 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 10,0
+x=   10 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 11,0
+x=   11 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 12,0
+x=   12 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 13,0
+x=   13 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 14,0
+x=   14 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 15,0
+x=   15 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 16,0
+x=   16 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 17,0
+x=   17 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 18,0
+x=   18 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 19,0
+x=   19 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 20,0
+
+** try to seek before the beginning to verify offset is beginning of file
+
+x=    0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1,0
+
+** do a use p:rewind to verify same result
+
+x=    0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1,0
+
+** write lines 103 and 104 at the end then seek="-2" to beginning of 103
+
+x=  103 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 104,0
+
+** truncate the last line and seek="-1" to the beginning of 103, again
+
+x=  103 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 104,0
+
+** read with nofollow to get the EOF
+
+x=  $device= 1,Device detected EOF $zkey= 104,0
+Before CLOSE p:NODESTROY
+$x= 0 $y= 2
+
+
+** open with a seek to 49 again
+
+After OPEN with restored state then SEEK
+$x= 0 $y= 0
+
+x=   49 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 50,0
+
+** open, read first record and then seek to 49 again
+
+x=    0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 1,0
+x=   49 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 50,0
+
+** close nodestroy then reopen seek="-1" to read same record again
+x=   49 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 50,0
+
+** close nodestroy then reopen seek="+1" to skip a record
+x=   51 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 52,0
+close nodestroy then reopen append:seek="-1" to read last record
+x=  103 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ $device= 0 $zkey= 104,0
+**********************************
+UTF-16 WITH BOM FIXED SEEK FOLLOW AND NOFOLLOW
+**********************************
+
+** write line with first char 1 at end to test relative SEEK=-1 after a write
+
+x= ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 100,0
+x= 1ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 101,0
+
+** write line 2 at end, write line 3 in background with 2 sec delay, then do a read with follow to read 3
+
+x= 3ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 103,0
+
+** do all 3 seek types in a row with the final offset to read being record 49
+
+x= ՏՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 50,0
+
+** read a partial record to test seek="-1"
+
+x= ՐՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 50,20
+x= ՏՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 50,0
+
+** read a partial record to test seek="+1"
+
+x= ՐՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 50,20
+x= ՑՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 52,0
+
+** read a partial record to test seek="52"
+
+x= ՒՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 52,20
+x= ՒՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 53,0
+
+** read a partial record, close nodestroy, reopen restored and read rest of record and 19 more to test data and $ZKEY
+
+x= ՓՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 53,20
+Before CLOSE p:NODESTROY
+$x= 10 $y= 1
+
+After OPEN with restored state
+$x= 10 $y= 1
+
+x= ՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 54,0
+x= ՔՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 55,0
+x= ՕՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 56,0
+x= ՖՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 57,0
+x= ՗ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 58,0
+x= ՘ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 59,0
+x= ՙՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 60,0
+x= ՚ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 61,0
+x= ՛ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 62,0
+x= ՜ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 63,0
+x= ՝ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 64,0
+x= ՞ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 65,0
+x= ՟ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 66,0
+x= ՠՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 67,0
+x= աՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 68,0
+x= բՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 69,0
+x= գՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 70,0
+x= դՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 71,0
+x= եՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 72,0
+x= զՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 73,0
+
+** close with nodestroy, reopen non-restored and read 20 lines to test data and $ZKEY
+
+x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 1,0
+x= ԟՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 2,0
+x= ԠՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 3,0
+x= ԡՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4,0
+x= ԢՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 5,0
+x= ԣՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 6,0
+x= ԤՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 7,0
+x= ԥՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 8,0
+x= ԦՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 9,0
+x= ԧՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 10,0
+x= ԨՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 11,0
+x= ԩՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 12,0
+x= ԪՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 13,0
+x= ԫՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 14,0
+x= ԬՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 15,0
+x= ԭՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 16,0
+x= ԮՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 17,0
+x= ԯՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 18,0
+x= ԰ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 19,0
+x= ԱՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 20,0
+
+** try to seek before the beginning to verify offset is beginning of file
+
+x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 1,0
+
+** do a use p:rewind to verify same result
+
+x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 1,0
+
+** write record 103 and 104 at the end then seek="-2" to beginning of 103
+
+x= 4ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 104,0
+
+** truncate the last line and seek="-1" to the beginning of 103, again
+
+x= 4ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 104,0
+
+** read with nofollow to get the EOF
+
+x=  $device= 1,Device detected EOF $zkey= 104,0
+Before CLOSE p:NODESTROY
+$x= 0 $y= 2
+
+
+** close p:nodestroy to open with a seek to 49 again
+
+After OPEN with restored state then SEEK
+$x= 0 $y= 0
+
+x= ՏՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 50,0
+
+** open, read first record and then seek to 49 again
+
+x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 1,0
+x= ՏՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 50,0
+
+** close nodestroy then reopen seek="-1" to read same record again
+x= ՏՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 50,0
+
+** close nodestroy then reopen seek="+1" to skip a record
+x= ՑՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 52,0
+close nodestroy then reopen append:seek="-1" to read last record
+x= 4ՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 104,0
+###################################################################
+**************************** utest1 seek on PRINCIPAL with redirected in/out ****************************
+###################################################################
+utf-8 no bom - input from a file and output to a file
+   4 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   2 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   6 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+utf-8 no bom - input from a pipe and output to a pipe ignores seeks
+   0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   1 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   2 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   3 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+utf-8 with bom - input from a file and output to a file
+   4 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   2 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   6 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+utf-8 with bom - input from a pipe and output to a pipe ignores seeks
+   0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   1 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   2 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   3 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+**************************** utest2 inseek/outseek ignored for null/empty files  ****************************
+###################################################################
+###################################################################
+**************************** urewind1 rewind PRINCIPAL with redirected in/out ****************************
+###################################################################
+utf-8 no bom - input from a file and output to a file
+   2 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   6 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+utf-8 no bom - input from a pipe and output to a pipe ignores rewinds
+   0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   1 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   2 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   3 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   4 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+utf-8 with bom - input from a file and output to a file
+   2 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   6 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+utf-8 with bom - input from a pipe and output to a pipe ignores rewinds
+   0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   1 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   2 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   3 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   4 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+###################################################################
+**************************** urewind2 inrewind/outrewind ignored for null/empty files  ****************************
+###################################################################
+###################################################################
+**************************** utruncate1 truncate PRINCIPAL with redirected in/out ****************************
+###################################################################
+utf-8 no bom - input from a file and output to a file
+   0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   1 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   1 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+utf-8 no bom - input from a pipe and output to a pipe ignores truncatess
+   0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   1 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   2 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   3 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   4 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   5 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+utf-8 with bom - input from a file and output to a file
+   0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   1 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   1 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+utf-8 with bom - input from a pipe and output to a pipe ignores truncates
+   0 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   1 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   2 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   3 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   4 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+   5 - ՇՈՉABCՏՐՇՈՉABCՏՐՇՈՉABCՏՐ
+###################################################################
+**************************** utruncate2 truncate ignored for null/empty files  ****************************
+###################################################################
+##ALLOW_OUTPUT NON_UTF8
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

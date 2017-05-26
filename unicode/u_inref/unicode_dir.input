@@ -1,0 +1,16 @@
+write "zcompile ""udbfill.m""",!
+zcompile "udbfill.m"
+w "$zcstatus = ",$zcstatus,!
+write "zlink ""udbfill.m"""
+zlink "udbfill.m"
+write "zcompile ""$msrc_dir/udbfill.m"""
+zcompile "$msrc_dir/udbfill.m"
+w "$zcstatus = ",$zcstatus,!
+write "zlink ""$msrc_dir/udbfill.m"""
+zlink "$msrc_dir/udbfill.m"
+;
+write "do in1^udbfill(""set"")",!
+do in1^udbfill("set")
+write "do in1^udbfill(""ver"")",!
+do in1^udbfill("ver")
+h

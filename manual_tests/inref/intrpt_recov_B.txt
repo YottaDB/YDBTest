@@ -1,0 +1,240 @@
+# This is the manual test for interrupted recovery (orphaned journal and others)
+# The test steps here are based on Layek post in public folder.
+# 2003/C9C02-001922 Revisit MUPIP JOURNAL RECOVER/ROLLBACK
+
+	TEST B)
+
+# this part has a script int_rec.csh to set up the database and journal files, 
+# and a script int_chk.csh to check the result after exiting from debugger
+
+    a.  source int_rec.csh to create the database and populate it
+	then:
+
+	gtm
+        gtm> F i=1:1:10000000 s ^f(i)=i  h 0.1
+
+        Wait few secoonds and crash the gtm process
+ 
+
+    b.  Now do mupip journal -recover -back "*" using debugger.
+	1) start debugger with mupip as executable
+	2) set break point in cre_jnl_file_common in cre_jnl_file.c
+        3) run journal -recover -back "*"
+        4) when it stops in cre_jnl_file_common, run till exit from cre_jnl_file_common ("return" in dbx)
+	5) quit from debugger
+
+	Sample Output for 1) to 5)::
+	[lespaul-alim]:>!dbx
+	dbx $gtm_exe/mupip
+	Type 'help' for help.
+	reading symbolic information ...
+	(/usr/bin/dbx) stop in cre_jnl_file_common
+	[1] stop in cre_jnl_file_common
+	(/usr/bin/dbx) r  journal -recover -back "*"
+	%GTM-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:43:52 2004
+	%GTM-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:43:52 2004
+	%GTM-I-MUJNLSTAT, Before image applying started at Wed Mar 31 10:43:52 2004
+	[1] stopped in cre_jnl_file_common at line 169 in file "##GTM_LIBRARY_PATH##/V44004/src/cre_jnl_file.c"
+	169           jrecbuf = NULL;
+	(/usr/bin/dbx) return
+	%GTM-I-FILERENAME, File /testarea1/alim/work/misc/manual_test/mumps3.mjl is renamed to /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104328
+	stopped in mur_process_intrpt_recov at line 228 in file "##GTM_LIBRARY_PATH##/V44004/src/mur_process_intrpt_recov.c"
+	228                   if (EXIT_NRM != cre_jnl_file_common(&jnl_info, rename_fn, rename_fn_len))
+	(/usr/bin/dbx) q
+
+
+	6) source int_chk.csh
+		i) check the Prev journal link for each journal file. It should look like this:
+		 mumps3.mjl => mumps3.mjl_timestamp => mumps2.mjl = > mumps1.mjl
+		ii) check the Turn Around point for each journal file. It should be in mumps3.mjl_timestamp
+		iii) check the Recover interrupted status for each journal file. It should be TRUE for mumps3.mjl
+	Sample Output here:
+	Previous generation of mumps3.mjl is mumps3.mjl_2004091104328
+	 Turn Around Point Offset                      0 [0x00000000]
+	 Turn Around Point Time                        0
+	 Recover interrupted                        TRUE
+	Previous generation of mumps3.mjl_2004091104328 is mumps2.mjl
+	 Turn Around Point Offset                  50752 [0x0000C640]
+	 Turn Around Point Time     2004/03/31 10:43:09
+	 Recover interrupted                       FALSE
+	Previous generation of mumps2.mjl is mumps1.mjl
+	 Turn Around Point Offset                      0 [0x00000000]
+	 Turn Around Point Time                        0
+	 Recover interrupted                       FALSE
+	Previous generation of mumps1.mjl is
+	 Turn Around Point Offset                      0 [0x00000000]
+	 Turn Around Point Time                        0
+	 Recover interrupted                       FALSE
+
+    c.  Now do mupip journal -recover -back "*" -since=time2 using debugger. 
+	Get time2 from time2.txt created by int_rec.csh.
+
+	1) start debugger with mupip
+        2) set break point in cre_jnl_file_common in cre_jnl_file.c
+        3) run journal -recover -back "*" -since="time2"
+	4) when it stops, exit from the debugger
+	5) check the Turn Around point for each journal file. It should be in mumps2.mjl
+
+	Sample Outout here:
+	[lespaul-alim]:>dbx $gtm_exe/mupip
+	Type 'help' for help.
+	reading symbolic information ...
+	(/usr/bin/dbx) stop in cre_jnl_file_common
+	[1] stop in cre_jnl_file_common
+	(/usr/bin/dbx) r
+	MUPIP> journal -recover -back "*" -since="31-Mar-2004 10:47:42"
+	%GTM-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:50:08 2004
+	%GTM-I-MUJNLSTAT, Interrupted recovery processing started at Wed Mar 31 10:50:08 2004
+	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104759 included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%GTM-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:50:08 2004
+	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps2.mjl included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%GTM-I-MUJNLSTAT, Before image applying started at Wed Mar 31 10:50:08 2004
+	[1] stopped in cre_jnl_file_common at line 169 in file "##GTM_LIBRARY_PATH##/V44004/src/cre_jnl_file.c"
+	  169           jrecbuf = NULL;
+	(/usr/bin/dbx) q
+	
+	[lespaul-alim]:>int_chk.csh
+	Previous generation of mumps3.mjl is mumps3.mjl_2004091104759
+	 Turn Around Point Offset                      0 [0x00000000]
+	 Turn Around Point Time                        0
+	 Recover interrupted                        TRUE
+	Previous generation of mumps3.mjl_2004091104759 is mumps2.mjl
+	 Turn Around Point Offset                      0 [0x00000000]
+	 Turn Around Point Time                        0
+	 Recover interrupted                       FALSE
+	Previous generation of mumps2.mjl is mumps1.mjl
+	 Turn Around Point Offset                   2248 [0x000008C8]
+	 Turn Around Point Time     2004/03/31 10:47:41
+	 Recover interrupted                       FALSE
+	Previous generation of mumps1.mjl is
+	 Turn Around Point Offset                      0 [0x00000000]
+	 Turn Around Point Time                        0
+	 Recover interrupted                       FALSE
+	[lespaul-alim]:>
+
+
+    d.  Now do mupip journal -recover -back "*" -since=time1 using debugger. 
+	Get time1 from time1.txt created by int_rec.csh.
+
+	1) start debugger with mupip
+	2) set break point in cre_jnl_file_common in cre_jnl_file.c
+        3) run journal -recover -back "*" -since="time1"
+        4) when it stops, exit from the debugger
+        5) check the Turn Around point for each journal file. It should be in mumps1.mjl
+
+	Sample Output here:
+	dbx $gtm_exe/mupip
+	Type 'help' for help.
+	reading symbolic information ...
+	(/usr/bin/dbx) stop in cre_jnl_file_common
+	[1] stop in cre_jnl_file_common
+	(/usr/bin/dbx) r
+	MUPIP>  journal -recover -back "*" -since="31-Mar-2004 10:47:41"
+	%GTM-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:52:48 2004
+	%GTM-I-MUJNLSTAT, Interrupted recovery processing started at Wed Mar 31 10:52:48 2004
+	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104759 included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps2.mjl included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%GTM-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:52:48 2004
+	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps1.mjl included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%GTM-I-MUJNLSTAT, Before image applying started at Wed Mar 31 10:52:48 2004
+	[1] stopped in cre_jnl_file_common at line 169 in file "##GTM_LIBRARY_PATH##/V44004/src/cre_jnl_file.c"
+	  169           jrecbuf = NULL;
+	(/usr/bin/dbx) q
+	[lespaul-alim]:>
+
+	[lespaul-alim]:>int_chk.csh
+	Previous generation of mumps3.mjl is mumps3.mjl_2004091104759
+	 Turn Around Point Offset                      0 [0x00000000]
+	 Turn Around Point Time                        0
+	 Recover interrupted                        TRUE
+	Previous generation of mumps3.mjl_2004091104759 is mumps2.mjl
+	 Turn Around Point Offset                      0 [0x00000000]
+	 Turn Around Point Time                        0
+	 Recover interrupted                       FALSE
+	Previous generation of mumps2.mjl is mumps1.mjl
+	 Turn Around Point Offset                      0 [0x00000000]
+	 Turn Around Point Time                        0
+	 Recover interrupted                       FALSE
+	Previous generation of mumps1.mjl is
+	 Turn Around Point Offset                   2248 [0x000008C8]
+	 Turn Around Point Time     2004/03/31 10:47:40
+	 Recover interrupted                       FALSE
+	[lespaul-alim]:>
+
+
+
+    e. Now run following command:
+    	mupip journal -recover -back "*" -since=\"'cat time1.txt'\"
+
+	[lespaul-alim]:>mupip
+	MUPIP>  journal -recover -back "*" -since="31-Mar-2004 10:47:41"
+	%GTM-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:55:31 2004
+	%GTM-I-MUJNLSTAT, Interrupted recovery processing started at Wed Mar 31 10:55:31 2004
+	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104759 included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps2.mjl included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps1.mjl included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%GTM-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:55:31 2004
+	%GTM-I-MUJNLSTAT, Before image applying started at Wed Mar 31 10:55:31 2004
+	%GTM-I-FILERENAME, File /testarea1/alim/work/misc/manual_test/mumps3.mjl is renamed to /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104904
+	%GTM-I-FILEDEL, File /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104904 successfully deleted
+	%GTM-I-MUJNLSTAT, Forward processing started at Wed Mar 31 10:55:31 2004
+	%GTM-I-FILERENAME, File /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104759 is renamed to /testarea1/alim/work/misc/manual_test/rolled_bak_mumps3.mjl_2004091104759
+	%GTM-I-FILERENAME, File /testarea1/alim/work/misc/manual_test/mumps2.mjl is renamed to /testarea1/alim/work/misc/manual_test/rolled_bak_mumps2.mjl
+	%GTM-S-JNLSUCCESS, Show successful
+	%GTM-S-JNLSUCCESS, Verify successful
+	%GTM-S-JNLSUCCESS, Recover successful
+	%GTM-I-MUJNLSTAT, End processing at Wed Mar 31 10:55:32 2004
+	[lespaul-alim]:>
+
+
+    f. Verify following for the above messages:
+	1) journal file deletion
+	2) rename of journal files to be rolled_bak_*.mjl
+	3) success messages
+	
+    g. Verify the data the journal files
+	1) mupip extract data.glo
+	%GTM-I-RECORDSTAT, ^a:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%GTM-I-RECORDSTAT, ^b:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%GTM-I-RECORDSTAT, ^c:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%GTM-I-RECORDSTAT, ^d:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%GTM-I-RECORDSTAT, ^e:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%GTM-I-RECORDSTAT, ^f:    Key cnt: 130  max subsc len: 7  max rec len: 3  max node len: 14
+	%GTM-I-RECORDSTAT, TOTAL:         Key cnt: 5130  max subsc len: 7  max rec len: 4  max node len: 14
+
+	2) rm *.dat
+	   mupip crea
+	Created file /$testpath/mumps.dat
+	[lespaul-alim]:>mupip journal -extract -detail -for mumps1.mjl,mumps3.mjl
+	%GTM-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:58:16 2004
+	%GTM-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:58:16 2004
+	%GTM-I-MUJNLSTAT, Forward processing started at Wed Mar 31 10:58:16 2004
+	%GTM-I-FILECREATE, Journal extract file /testarea1/alim/work/misc/manual_test/mumps1.mjf created
+	%GTM-S-JNLSUCCESS, Extract successful
+	%GTM-S-JNLSUCCESS, Verify successful
+	%GTM-I-MUJNLSTAT, End processing at Wed Mar 31 10:58:16 2004
+
+	3) mupip journal -recover -for mumps1.mjl,mumps3.mjl
+	%GTM-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:59:32 2004
+	%GTM-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:59:32 2004
+	%GTM-I-MUJNLSTAT, Forward processing started at Wed Mar 31 10:59:32 2004
+	%GTM-S-JNLSUCCESS, Show successful
+	%GTM-S-JNLSUCCESS, Verify successful
+	%GTM-S-JNLSUCCESS, Recover successful
+	%GTM-I-MUJNLSTAT, End processing at Wed Mar 31 10:59:32 2004
+
+	4) mupip extract for.glo
+	%GTM-I-RECORDSTAT, ^a:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%GTM-I-RECORDSTAT, ^b:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%GTM-I-RECORDSTAT, ^c:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%GTM-I-RECORDSTAT, ^d:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%GTM-I-RECORDSTAT, ^e:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%GTM-I-RECORDSTAT, ^f:    Key cnt: 130  max subsc len: 7  max rec len: 3  max node len: 14
+	%GTM-I-RECORDSTAT, TOTAL:         Key cnt: 5130  max subsc len: 7  max rec len: 4  max node len: 14
+
+	5)
+	[lespaul-alim]:>diff forw.glo data.glo
+	2c2
+	< 31-MAR-2004  10:59:42 ZWR
+	---
+	> 31-MAR-2004  10:56:13 ZWR

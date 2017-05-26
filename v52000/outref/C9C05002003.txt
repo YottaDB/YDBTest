@@ -1,0 +1,307 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+Stepping STARTED
+c002003+8^c002003   :	write echostr,!
+----------------------------------------------------------------------
+c002003+9^c002003   :	set tststr="Test 1 : Compound SET with a setleft target that is a subscript in ONE other target"
+c002003+10^c002003  :	set a=0,(a,array(a))=1
+c002003+11^c002003  :	zwrite a,array
+a=1
+array(0)=1
+c002003+12^c002003  :	kill a,array
+c002003+13^c002003  :	set ^a=0,(^a,^array(^a))=1
+c002003+14^c002003  :	zwrite ^a,^array
+^a=1
+^array(0)=1
+c002003+15^c002003  :	kill ^a,^array
+c002003+17^c002003  :	write echostr,!
+----------------------------------------------------------------------
+c002003+18^c002003  :	set tststr="Test 2 : Compound SET with a setleft target that is a subscript in TWO other targets"
+c002003+19^c002003  :	set a=0,(a,array1(a),array2(a))=2
+c002003+20^c002003  :	zwrite a,array1,array2
+a=2
+array1(0)=2
+array2(0)=2
+c002003+21^c002003  :	kill a,array1,array2
+c002003+22^c002003  :	set ^a=0,(^a,^array1(^a),^array2(^a))=2
+c002003+23^c002003  :	zwrite ^a,^array1,^array2
+^a=2
+^array1(0)=2
+^array2(0)=2
+c002003+24^c002003  :	kill ^a,^array1,^array2
+c002003+26^c002003  :	write echostr,!
+----------------------------------------------------------------------
+c002003+27^c002003  :	set tststr="Test 3 : Compound SET with subscripted setleft target that is a subscript in multiple targets"
+c002003+28^c002003  :	set (a,b,c,d)=1,a(a,b)=1,a(c,d)=1,d(1)=2
+c002003+29^c002003  :	set (a,b,a(a,b),c,d,a(c,d),d(a(c,d)))=3
+c002003+30^c002003  :	zwrite a,b,c,d
+a=3
+a(1,1)=3
+b=3
+c=3
+d=3
+d(1)=3
+c002003+31^c002003  :	kill a,b,c,d
+c002003+32^c002003  :	set (^a,^b,^c,^d)=1,^a(^a,^b)=1,^a(^c,^d)=1,^d(1)=2
+c002003+33^c002003  :	set (^a,^b,^a(^a,^b),^c,^d,^a(^c,^d),^d(^a(^c,^d)))=3
+c002003+34^c002003  :	zwrite ^a,^b,^c,^d
+^a=3
+^a(1,1)=3
+^b=3
+^c=3
+^d=3
+^d(1)=3
+c002003+35^c002003  :	kill ^a,^b,^c,^d
+c002003+37^c002003  :	write echostr,!
+----------------------------------------------------------------------
+c002003+38^c002003  :	set tststr="Test 4 : Compound SET with $PIECE/$EXTRACT as a setleft target"
+c002003+39^c002003  :  	set a=0,b="a|b|c|d",(a,$piece(b,"|",2))=1
+c002003+40^c002003  :	zwrite a,b
+a=1
+b="a|1|c|d"
+c002003+41^c002003  :	kill a,b
+c002003+42^c002003  :  	set a=0,^b="a|b|c|d",(a,$piece(^b,"|",2))=1
+c002003+43^c002003  :	zwrite a,^b
+a=1
+^b="a|1|c|d"
+c002003+44^c002003  :	kill a,^b
+c002003+45^c002003  :  	set a=0,b="a|b|c|d",(a,$extract(b,2))=1
+c002003+46^c002003  :	zwrite a,b
+a=1
+b="a1b|c|d"
+c002003+47^c002003  :	kill a,b
+c002003+48^c002003  :  	set a=0,^b="a|b|c|d",(a,$extract(^b,2))=1
+c002003+49^c002003  :	zwrite a,^b
+a=1
+^b="a1b|c|d"
+c002003+50^c002003  :	kill a,^b
+c002003+52^c002003  :	write echostr,!
+----------------------------------------------------------------------
+c002003+53^c002003  :	set tststr="Test 5 : Compound SET with $PIECE/$EXTRACT as a setleft using a subscript that is yet another setleft target"
+c002003+54^c002003  :  	set a=0,b(0)="a|b|c|d",(a,$piece(b(a),"|",2))=1
+c002003+55^c002003  :	zwrite a,b
+a=1
+b(0)="a|1|c|d"
+c002003+56^c002003  :	kill a,b
+c002003+57^c002003  :  	set ^a=0,^b(0)="a|b|c|d",(^a,$piece(^b(^a),"|",2))=1
+c002003+58^c002003  :	zwrite ^a,^b
+^a=1
+^b(0)="a|1|c|d"
+c002003+59^c002003  :	kill ^a,^b
+c002003+60^c002003  :  	set a=0,b(0)="a|b|c|d",(a,$extract(b(a),2))=1
+c002003+61^c002003  :	zwrite a,b
+a=1
+b(0)="a1b|c|d"
+c002003+62^c002003  :	kill a,b
+c002003+63^c002003  :  	set ^a=0,^b(0)="a|b|c|d",(^a,$extract(^b(^a),2))=1
+c002003+64^c002003  :	zwrite ^a,^b
+^a=1
+^b(0)="a1b|c|d"
+c002003+65^c002003  :	kill ^a,^b
+c002003+67^c002003  :	write echostr,!
+----------------------------------------------------------------------
+c002003+68^c002003  :	set tststr="Test 6 : Compound SET with $PIECE/$EXTRACT as a setleft having last argument that is in turn a setleft target"
+c002003+69^c002003  :	set delim="b",x=1,y="abcd",(x,$piece(y,delim,x))=2
+c002003+70^c002003  :	zwrite delim,x,y
+delim="b"
+x=2
+y="2bcd"
+c002003+71^c002003  :	kill delim,x,y
+c002003+72^c002003  :	set ^delim="b",^x=1,^y="abcd",(^x,$piece(^y,^delim,^x))=2
+c002003+73^c002003  :	zwrite ^delim,^x,^y
+^delim="b"
+^x=2
+^y="2bcd"
+c002003+74^c002003  :	kill ^delim,^x,^y
+c002003+75^c002003  :	set delim="b",x=1,y="abcd",(x,$extract(y,x))=2
+c002003+76^c002003  :	zwrite delim,x,y
+delim="b"
+x=2
+y="2bcd"
+c002003+77^c002003  :	kill delim,x,y
+c002003+78^c002003  :	set ^delim="b",^x=1,^y="abcd",(^x,$extract(^y,^x))=2
+c002003+79^c002003  :	zwrite ^delim,^x,^y
+^delim="b"
+^x=2
+^y="2bcd"
+c002003+80^c002003  :	kill ^delim,^x,^y
+c002003+82^c002003  :	write echostr,!
+----------------------------------------------------------------------
+c002003+83^c002003  :	set tststr="Test 7 : Compound SET with $PIECE/$EXTRACT as a setleft having subscripted last argument that is in turn a setleft target"
+c002003+84^c002003  :	set delim="b",x=1,x(1)=1,x(2)=2,y="abcd",(x,$piece(y,delim,x(x)))=2
+c002003+85^c002003  :	zwrite delim,x,y
+delim="b"
+x=2
+x(1)=1
+x(2)=2
+y="2bcd"
+c002003+86^c002003  :	kill delim,x,y
+c002003+87^c002003  :	set ^delim="b",^x=1,^x(1)=1,^x(2)=2,^y="abcd",(^x,$piece(^y,^delim,^x(^x)))=2
+c002003+88^c002003  :	zwrite ^delim,^x,^y
+^delim="b"
+^x=2
+^x(1)=1
+^x(2)=2
+^y="2bcd"
+c002003+89^c002003  :	kill ^delim,^x,^y
+c002003+90^c002003  :	set delim="b",x=1,x(1)=1,x(2)=2,y="abcd",(x,$extract(y,x(x)))=2
+c002003+91^c002003  :	zwrite delim,x,y
+delim="b"
+x=2
+x(1)=1
+x(2)=2
+y="2bcd"
+c002003+92^c002003  :	kill delim,x,y
+c002003+93^c002003  :	set ^delim="b",^x=1,^x(1)=1,^x(2)=2,^y="abcd",(^x,$extract(^y,^x(^x)))=2
+c002003+94^c002003  :	zwrite ^delim,^x,^y
+^delim="b"
+^x=2
+^x(1)=1
+^x(2)=2
+^y="2bcd"
+c002003+95^c002003  :	kill ^delim,^x,^y
+c002003+97^c002003  :	write echostr,!
+----------------------------------------------------------------------
+c002003+98^c002003  :	set tststr="Test 8 : Compound SET with $PIECE/$EXTRACT as setleft using global variable target should not touch naked indicator if first > last"
+c002003+99^c002003  :	set ^y="efgh",^x="abcd"
+c002003+100^c002003 :	set $piece(^x,"2",3,2)=^y	; should set $reference to ^y and not ^x 
+c002003+101^c002003 :	write "$reference=",$reference,!
+$reference=^y
+c002003+102^c002003 :	zwrite ^x,^y
+^x="abcd"
+^y="efgh"
+c002003+103^c002003 :	kill ^x,^y
+c002003+104^c002003 :	set ^y="efgh",^x="abcd"
+c002003+105^c002003 :	set $extract(^x,3,2)=^y		; should set $reference to ^y and not ^x 
+c002003+106^c002003 :	write "$reference=",$reference,!
+$reference=^y
+c002003+107^c002003 :	zwrite ^x,^y
+^x="abcd"
+^y="efgh"
+c002003+108^c002003 :	kill ^x,^y
+c002003+110^c002003 :	write echostr,!
+----------------------------------------------------------------------
+c002003+111^c002003 :	set tststr="Test 9 : Compound SET with $PIECE/$EXTRACT as setleft using global variables in all arguments should not touch naked indicator if first > last"
+c002003+112^c002003 :	set ^a=5,^b=2,^y=2
+c002003+113^c002003 :	set $piece(^x,"a",^a,^b)=^y	; should set $reference to ^y and not ^x 
+c002003+114^c002003 :	write "$reference=",$reference,!
+$reference=^y
+c002003+115^c002003 :	zwrite ^a,^b,^y
+^a=5
+^b=2
+^y=2
+c002003+116^c002003 :	kill ^a,^b,^y
+c002003+117^c002003 :	set ^a=5,^b=2,^y=2
+c002003+118^c002003 :	set $extract(^x,^a,^b)=^y	; should set $reference to ^y and not ^x 
+c002003+119^c002003 :	write "$reference=",$reference,!
+$reference=^y
+c002003+120^c002003 :	zwrite ^a,^b,^y
+^a=5
+^b=2
+^y=2
+c002003+121^c002003 :	kill ^a,^b,^y
+c002003+123^c002003 :	write echostr,!
+----------------------------------------------------------------------
+c002003+124^c002003 :	set tststr="Test 10 : Compound SET with null $PIECE/$EXTRACT as setleft should branch around to next LHS target in the compound SET"
+c002003+125^c002003 :	set (x,$piece(y," ",3,2),z)=3	; this $piece is null because 3 > 2 so it should not change y at all.
+c002003+126^c002003 :	zwrite x,z
+x=3
+z=3
+c002003+127^c002003 :	kill x,z
+c002003+128^c002003 :	set (^x,$piece(^y," ",3,2),^z)=3 ; this $piece is null because 3 > 2 so it should not change ^y at all.
+c002003+129^c002003 :	zwrite ^x,^z
+^x=3
+^z=3
+c002003+130^c002003 :	kill ^x,^z
+c002003+131^c002003 :	set (x,$extract(y,3,2),z)=3	; this $extract is null because 3 > 2 so it should not change y at all.
+c002003+132^c002003 :	zwrite x,z
+x=3
+z=3
+c002003+133^c002003 :	kill x,z
+c002003+134^c002003 :	set (^x,$extract(^y,3,2),^z)=3	; this $extract is null because 3 > 2 so it should not change ^y at all.
+c002003+135^c002003 :	zwrite ^x,^z
+^x=3
+^z=3
+c002003+136^c002003 :	kill ^x,^z
+c002003+138^c002003 :	write echostr,!
+----------------------------------------------------------------------
+c002003+139^c002003 :	set tststr="Test 11 : Same as Test 10 but with global variables instead so naked indicator is checked as well"
+c002003+140^c002003 :	set ^a=1,(^x,$piece(^y," ",3,2),z)=^a	; this $piece is null because 3 > 2 so it should not touch ^y at all.
+c002003+141^c002003 :	write "$reference=",$reference,!	; should set $reference to ^x
+$reference=^x
+c002003+142^c002003 :	zwrite ^a,^x,z
+^a=1
+^x=1
+z=1
+c002003+143^c002003 :	kill ^a,^x,z
+c002003+144^c002003 :	set ^a=1,(^x,$extract(^y,3,2),z)=^a	; this $extract is null because 3 > 2 so it should not touch ^y at all.
+c002003+145^c002003 :	write "$reference=",$reference,!	; should set $reference to ^x
+$reference=^x
+c002003+146^c002003 :	zwrite ^a,^x,z
+^a=1
+^x=1
+z=1
+c002003+147^c002003 :	kill ^a,^x,z
+c002003+149^c002003 :	write echostr,!
+----------------------------------------------------------------------
+c002003+150^c002003 :	set tststr="Test 12 : Variation on Test 10 with multiple $PIECE/$EXTRACT within a compound SET"
+c002003+151^c002003 :	set (x,$piece(y," ",3,2),z,$piece(k," ",5,3),m)=3
+c002003+152^c002003 :	zwrite x,z,m
+x=3
+z=3
+m=3
+c002003+153^c002003 :	kill x,z,m
+c002003+154^c002003 :	set (x,$extract(y,3,2),z,$extract(k,5,3),m)=3
+c002003+155^c002003 :	zwrite x,z,m
+x=3
+z=3
+m=3
+c002003+156^c002003 :	kill x,z,m
+c002003+157^c002003 :	set (x,$piece(y,3,2),z,$extract(k,5,3),m)=3
+c002003+158^c002003 :	zwrite x,z,m
+x=3
+z=3
+m=3
+c002003+159^c002003 :	kill x,z,m
+c002003+160^c002003 :	set x=1,z(1)=2,(x,$extract(y,3,2),z(x),$piece(k,5,3),m(z(x)))=3
+c002003+161^c002003 :	zwrite x,z,m
+x=3
+z(1)=3
+m(2)=3
+c002003+162^c002003 :	kill x,z,m
+c002003+163^c002003 :	set (^x,$piece(^y," ",3,2),^z,$piece(^k," ",5,3),^m)=3
+c002003+164^c002003 :	zwrite ^x,^z,^m
+^x=3
+^z=3
+^m=3
+c002003+165^c002003 :	kill ^x,^z,^m
+c002003+166^c002003 :	set (^x,$extract(^y,3,2),^z,$extract(^k,5,3),^m)=3
+c002003+167^c002003 :	zwrite ^x,^z,^m
+^x=3
+^z=3
+^m=3
+c002003+168^c002003 :	kill ^x,^z,^m
+c002003+169^c002003 :	set (^x,$piece(^y,3,2),^z,$extract(^k,5,3),^m)=3
+c002003+170^c002003 :	zwrite ^x,^z,^m
+^x=3
+^z=3
+^m=3
+c002003+171^c002003 :	kill ^x,^z,^m
+c002003+172^c002003 :	set ^x=1,^z(1)=2,(^x,$extract(^y,3,2),^z(^x),$piece(^k,5,3),^m(^z(^x)))=3
+c002003+173^c002003 :	zwrite ^x,^z,^m
+^x=3
+^z(1)=3
+^m(2)=3
+c002003+174^c002003 :	kill ^x,^z,^m
+c002003+176^c002003 :	quit
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

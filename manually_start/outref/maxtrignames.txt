@@ -1,0 +1,21 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+###################################################################
+;trigger name: %000000 (region DREG)    	;+^someglobal(1000000) -name=%000000 -commands=ZTR -xecute="set x=1000000"
+##TEST_AWK;trigger name: A .region ([A-Z]+).*;..someVeryLongGlobalVariableNameA.1. -name=A -commands=S -xecute="set x=.increment..fired..ZTName.."
+##TEST_AWK;trigger name: B .region ([A-Z]+).*;..someVeryLongGlobalVariableNameB.1. -name=B -commands=S -xecute="set x=.increment..fired..ZTName.."
+##TEST_AWK;trigger name: C .region ([A-Z]+).*;..someVeryLongGlobalVariableNameC.1. -name=C -commands=S -xecute="set x=.increment..fired..ZTName.."
+##TEST_AWK;trigger name: D .region ([A-Z]+).*;..someVeryLongGlobalVariableNameD.1. -name=D -commands=S -xecute="set x=.increment..fired..ZTName.."
+##TEST_AWK;trigger name: someVeryLongGlobalVar#1 .region ([A-Z]+).  	;..someVeryLongGlobalVariableName[A-D].(999|999999). -commands=ZTR -xecute="set x=(999|999999)"
+;trigger name: someglobal#1 (region DREG)  	;+^someglobal(1) -commands=S -xecute="set x=$increment(^fired($ZTName))"
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

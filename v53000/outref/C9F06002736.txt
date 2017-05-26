@@ -1,0 +1,33 @@
+# Create two-region gld and associated .dat files
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+# Remove mumps.dat and recreate it using a single-region gld
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Make gtmgbldir point to single-region gld
+# Create replication instance file and set replic on
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
+# Start the passive source server
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTB]
+# Now switch to a two-region gld file (AREG and DEFAULT) and turn journaling ON (but not replication) on AREG
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+# Run c002736 and expect GTM-E-REPLOFFJNLON
+150380314,c002736+31^c002736,%GTM-E-REPLOFFJNLON, Replication state for database file ##TEST_PATH##/a.dat is OFF but journaling state is enabled
+# Shutdown the passive source server
+##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHUTDOWN operation on source server pid [##PID##] for secondary instance [INSTB]
+##FILTERED##... ... .. ..:..:.. 20.. : Waiting for upto XXX seconds for the source server to shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool shared memory removed
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool semaphore removed
+# dbcheck
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

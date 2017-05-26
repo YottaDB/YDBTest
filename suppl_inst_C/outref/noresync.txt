@@ -1,0 +1,236 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance4:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'START INST3 INST4 RP'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+==Executing MULTISITE_REPLIC 'START INST1 INST3 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simplegblupd.csh -instance INST1 -count 8 -internal'==
+
+GTM>
+set ^GBLA(1)=1_<...>
+set ^GBLA(2)=1_<...>
+set ^GBLA(3)=1_<...>
+set ^GBLA(4)=1_<...>
+set ^GBLA(5)=1_<...>
+set ^GBLA(6)=1_<...>
+set ^GBLA(7)=1_<...>
+set ^GBLA(8)=1_<...>
+
+GTM>
+8,1
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simplegblupd.csh -instance INST1 -count 2 -internal'==
+
+GTM>
+set ^GBLA(9)=1_<...>
+set ^GBLA(10)=1_<...>
+
+GTM>
+10,1
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==========================================================
+History records for INST3 at instancefile_1.out
+----------------------------------------------------------
+HST #      0 : Root Primary Instance Name        INSTANCE3
+HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+HST #      0 : Root Primary Cycle                        1 [0x00000001]
+HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      0 : Creation Time           ..../../.. ..:..:..
+HST #      0 : History Number                            0 [0x00000000]
+HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      0 : History record type                       1 [0x00000001]
+----------------------------------------------------------
+HST #      1 : Root Primary Instance Name        INSTANCE1
+HST #      1 : Start Sequence Number                     1 [0x0000000000000001]
+HST #      1 : Stream Sequence Number                    1 [0x0000000000000001]
+HST #      1 : Root Primary Cycle                        1 [0x00000001]
+HST #      1 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      1 : Creation Time           ..../../.. ..:..:..
+HST #      1 : History Number                            1 [0x00000001]
+HST #      1 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      1 : Stream #                                  1 [0x00000001]
+HST #      1 : History record type                       2 [0x00000002]
+HST #      1 : LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HST #      1 : LMS Group Instance Name           INSTANCE1
+HST #      1 : LMS Group Creation Time ..../../.. ..:..:..
+HST #      1 : LMS Group Creator PID          PIDINDECIMAL [0xPIDINHEX]
+HST #      1 : Stream  0: Last History Number            0 [0x00000000]
+==========================================================
+# Now bring up B(INST2) as primary and connect P (INST3) to it
+==Executing MULTISITE_REPLIC 'STOP INST1 INST3'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Shutting down Primary Source Server Server in ##TEST_PATH##
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST3 RP'==
+# The receiver should error out and exit with REPL_ROLLBACK_FIRST
+==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST3'==
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message "Received REPL_ROLLBACK_FIRST"'==
+# Now start the receiver with -noresync. The Source shouldnt have exited and the connection should happen
+==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST3 noresync'==
+==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log.updproc -message 'New History Content''==
+# A new history record with strm_index of 1 and strm_seqno of 9 should be written in P indicating this is a -noresync type of history record
+==========================================================
+History records for INST3 at instancefile_1.out
+----------------------------------------------------------
+HST #      0 : Root Primary Instance Name        INSTANCE3
+HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+HST #      0 : Root Primary Cycle                        1 [0x00000001]
+HST #      0 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      0 : Creation Time           ..../../.. ..:..:..
+HST #      0 : History Number                            0 [0x00000000]
+HST #      0 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      0 : Stream #                                  0 [0x00000000]
+HST #      0 : History record type                       1 [0x00000001]
+----------------------------------------------------------
+HST #      1 : Root Primary Instance Name        INSTANCE1
+HST #      1 : Start Sequence Number                     1 [0x0000000000000001]
+HST #      1 : Stream Sequence Number                    1 [0x0000000000000001]
+HST #      1 : Root Primary Cycle                        1 [0x00000001]
+HST #      1 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      1 : Creation Time           ..../../.. ..:..:..
+HST #      1 : History Number                            1 [0x00000001]
+HST #      1 : Previous History Number                  -1 [0xFFFFFFFF]
+HST #      1 : Stream #                                  1 [0x00000001]
+HST #      1 : History record type                       2 [0x00000002]
+HST #      1 : LMS Group Created Nodename          ##TEST_HOST_SHORT####FILTERED##
+HST #      1 : LMS Group Instance Name           INSTANCE1
+HST #      1 : LMS Group Creation Time ..../../.. ..:..:..
+HST #      1 : LMS Group Creator PID          PIDINDECIMAL [0xPIDINHEX]
+HST #      1 : Stream  0: Last History Number            0 [0x00000000]
+----------------------------------------------------------
+HST #      2 : Root Primary Instance Name        INSTANCE2
+HST #      2 : Start Sequence Number                    11 [0x000000000000000B]
+HST #      2 : Stream Sequence Number                    9 [0x0000000000000009]
+HST #      2 : Root Primary Cycle                        1 [0x00000001]
+HST #      2 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+HST #      2 : Creation Time           ..../../.. ..:..:..
+HST #      2 : History Number                            2 [0x00000002]
+HST #      2 : Previous History Number                   1 [0x00000001]
+HST #      2 : Stream #                                  1 [0x00000001]
+HST #      2 : History record type                       3 [0x00000003]
+HST #      2 : Stream  0: Last History Number            0 [0x00000000]
+HST #      2 : Stream  1: Last History Number            1 [0x00000001]
+==========================================================
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+# EPOCH record gets written in the journal file by the update process with a strm_seqno of 9 for strm_num=1
+==Executing MULTISITE_REPLIC 'RUN INST3 ##SOURCE_PATH##/mumps -run jnlflush'==
+==Executing MULTISITE_REPLIC 'RUN INST3 setenv gtm_extract_nocol 1 ; set files = `ls mumps.mjl*`;set mjls = `echo $files | sed "s/ /,/g"` ;$MUPIP journal -extract=mumps.mjf -detail -forward $mjls >&! jnl_extr.out'==
+1 9
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simplegblupd.csh -instance INST2 -count 5 -internal'==
+
+GTM>
+set ^GBLA(11)=1_<...>
+set ^GBLA(12)=1_<...>
+set ^GBLA(13)=1_<...>
+set ^GBLA(14)=1_<...>
+set ^GBLA(15)=1_<...>
+
+GTM>
+15,1
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_exe/mumps -run printglobals'==
+^GBLA(1)
+^GBLA(2)
+^GBLA(3)
+^GBLA(4)
+^GBLA(5)
+^GBLA(6)
+^GBLA(7)
+^GBLA(8)
+^GBLA(9)
+^GBLA(10)
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_exe/mumps -run printglobals'==
+^GBLA(1)
+^GBLA(2)
+^GBLA(3)
+^GBLA(4)
+^GBLA(5)
+^GBLA(6)
+^GBLA(7)
+^GBLA(8)
+^GBLA(11)
+^GBLA(12)
+^GBLA(13)
+^GBLA(14)
+^GBLA(15)
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_exe/mumps -run printglobals'==
+^GBLA(1)
+^GBLA(2)
+^GBLA(3)
+^GBLA(4)
+^GBLA(5)
+^GBLA(6)
+^GBLA(7)
+^GBLA(8)
+^GBLA(9)
+^GBLA(10)
+^GBLA(11)
+^GBLA(12)
+^GBLA(13)
+^GBLA(14)
+^GBLA(15)
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS'==
+# Check if it is possible to rollback prior to a -noresync point
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3 RP'==
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 11 [0x000000000000000B]
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 1 [0x0000000000000001]
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  1 : Seqno 9 [0x0000000000000009]
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_exe/mumps -run printglobals'==
+^GBLA(1)
+^GBLA(2)
+^GBLA(3)
+^GBLA(4)
+^GBLA(5)
+^GBLA(6)
+^GBLA(7)
+^GBLA(8)
+^GBLA(9)
+^GBLA(10)
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

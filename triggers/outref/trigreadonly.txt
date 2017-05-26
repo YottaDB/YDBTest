@@ -1,0 +1,420 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+
+Case 1 - MUPIP TRIGGER - Adding a trigger to a read-only database
+%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+
+Case 2 - MUPIP TRIGGER - Delete all triggers in a read-only database (first add a trigger to attempt to 'delete')
+File ##IN_TEST_PATH##/inref/readonlyadd1.trg, Line 1: Added SET and/or Non-SET trigger on ^C named addedtrig
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+File ##IN_TEST_PATH##/inref/readonlydall.trg, Line 1: This operation will delete all triggers.
+Proceed? [Y/N]: 
+%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+
+Case 3 - MUPIP TRIGGER - Modifying a trigger in a read-only database
+%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+
+Case 4 - MUPIP TRIGGER - Deleting a specific trigger in a read-only database
+%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+
+Case 5 - MUPIP TRIGGER - multi-region - verify can add trigger to AREG if BREG is R/O
+File ##IN_TEST_PATH##/inref/readonlyadd2.trg, Line 1: Added SET and/or Non-SET trigger on ^A named addedtrig2
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+
+Case 6 - MUPIP TRIGGER - multi-region - verify we can modify trigger in AREG while DEFAULT region is R/O
+File ##IN_TEST_PATH##/inref/readonlymod2.trg, Line 1: Modified SET and/or Non-SET trigger on ^A named addedtrig2
+=========================================
+0 triggers added
+0 triggers deleted
+1 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+
+Case 7 - MUPIP TRIGGER - multi-region - verify we can delete trigger in AREG with DEFAULT and BREG R/O
+File ##IN_TEST_PATH##/inref/readonlydel2.trg, Line 1: Deleted SET and/or Non-SET trigger on ^A named addedtrig2
+=========================================
+0 triggers added
+1 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+
+Case 8 - MUPIP TRIGGER - multi-region - verify we can add trigger in AREG if with DEFAULT and BREG R/O
+File ##IN_TEST_PATH##/inref/readonlyadd2.trg, Line 1: Added SET and/or Non-SET trigger on ^A named addedtrig2
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+
+Case 9 - MUPIP TRIGGER - multi-region - verify we can delete all triggers if only BREG is R/O (no triggers there)
+File ##IN_TEST_PATH##/inref/readonlydall.trg, Line 1: This operation will delete all triggers.
+Proceed? [Y/N]: 
+All existing triggers (count = 2) deleted
+=========================================
+0 triggers added
+2 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Case GTM6901A - Trigger delete name* should work even if one region is read-only,
+# as long as the region does not have a matching name* trigger
+# Install triggers in AREG, BREG and DEFAULT
+# Delete triggers with -readwrite*
+Deleted trigger named 'readwritebreg' for global ^b (region BREG)
+Deleted trigger named 'readwritedef' for global ^c (region DEFAULT)
+All existing triggers named readwrite* (count = 2) now deleted
+1
+# Case GTM6901B - Trigger add/delete name* should not work if one of the regions that have a matching trigger is read-only
+# Install triggers in AREG, BREG and DEFAULT - with AREG read-only
+%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region AREG is read-only
+# Install triggers in AREG, BREG and DEFAULT with all regions read-write
+# Select name* should work if one of the regions that have a matching trigger is read-only
+;trigger name: readonlyareg (region AREG)  cycle: 1
++^a -name=readonlyareg -commands=S -xecute="set ^readwritetrg=^a"
+;trigger name: readwritebreg (region BREG)  cycle: 3
++^b -name=readwritebreg -commands=S -xecute="set ^readwritetrg=^b"
+;trigger name: readwritedef (region DEFAULT)  cycle: 3
++^c -name=readwritedef -commands=S -xecute="set ^readwritetrg=^c"
+1
+# Delete triggers with -readwrite*
+%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region BREG is read-only
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Delete all triggers before attempting the next case
+All existing triggers (count = 3) deleted
+1
+# Case GTM6901C - If the only journaled region is read-only, a -* when no triggers exist should work even if TLGTRIG cannot be written
+# Enable journaling only for AREG
+# Delete all triggers with -*
+No matching triggers found for deletion
+1
+# Check journal extract - do not expect TLGRIG in AREG, as it is read-only
+a.mjf
+-------------------------------------------------------------
+# Case GTM6901D - If the only journaled region is read-write, a -* should write A TLGTRIG jnl record in that region even if no triggers exist there
+# Install triggers in BREG and DEFAULT
+# Delete all triggers with -*
+All existing triggers (count = 2) deleted
+1
+# Check journal extract - expect TLGTRIG in AREG
+a.mjf
+TLGTRIG/"-*"
+-------------------------------------------------------------
+# Case GTM6901E - If the only journaled region is read-only, a -name* should work fine as long as a matching trigger does not exist in AREG
+# Install triggers in AREG, BREG and DEFAULT
+# Delete -readwrite* triggers, which matches triggers in BREG and DEFAULT
+Deleted trigger named 'readwritebreg' for global ^b (region BREG)
+Deleted trigger named 'readwritedef' for global ^c (region DEFAULT)
+All existing triggers named readwrite* (count = 2) now deleted
+1
+# Check journal extract - Do not expect new TLGTRIG in AREG
+a.mjf
+TLGTRIG/"-*"
+TLGTRIG/"+^a -name=readonlyareg -command=s -xecute=""set ^readwritetrg=^a"""
+USET   /8/^#t("#TNAME","readonlyareg")="a"_$C(0)_"1"
+USET   /8/^#t("a","#COUNT")="1"
+USET   /8/^#t("a",1,"TRIGNAME")="readonlyareg#"
+USET   /8/^#t("a",1,"CMD")="S"
+USET   /8/^#t("a",1,"XECUTE")=" set ^readwritetrg=^a"
+USET   /8/^#t("a","#CYCLE")="3"
+-------------------------------------------------------------
+# Case GTM6901F - If the only journaled region is read-write, a -name* should write a TLGTRIG jnl record even if it does not have a matching trigger in that region
+# Install triggers in AREG, BREG and DEFAULT
+# Delete all triggers with -readwrite*
+Deleted trigger named 'readwritebreg' for global ^b (region BREG)
+Deleted trigger named 'readwritedef' for global ^c (region DEFAULT)
+All existing triggers named readwrite* (count = 2) now deleted
+1
+# Check journal extract - expect TLGTRIG in AREG
+a.mjf
+TLGTRIG/"-*"
+TLGTRIG/"+^a -name=readonlyareg -command=s -xecute=""set ^readwritetrg=^a"""
+USET   /8/^#t("#TNAME","readonlyareg")="a"_$C(0)_"1"
+USET   /8/^#t("a","#COUNT")="1"
+USET   /8/^#t("a",1,"TRIGNAME")="readonlyareg#"
+USET   /8/^#t("a",1,"CMD")="S"
+USET   /8/^#t("a",1,"XECUTE")=" set ^readwritetrg=^a"
+USET   /8/^#t("a","#CYCLE")="3"
+TLGTRIG/"+^a -name=readonlyareg -command=s -xecute=""set ^readwritetrg=^a"""
+TLGTRIG/"-readwrite*"
+-------------------------------------------------------------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Cases 10-18 - $ZTRIGGER("FILE")
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+
+GTM>
+Case 10 - $ZTrigger(FILE) - Adding a trigger to a read-only database
+
+GTM>
+%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+
+GTM>
+Case 11 - $ZTrigger(FILE) - Delete all triggers in a read-only database (first add a trigger to attempt to 'delete')
+
+GTM>
+
+GTM>
+File ##IN_TEST_PATH##/inref/readonlyadd1.trg, Line 1: Added SET and/or Non-SET trigger on ^C named addedtrig
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+
+GTM>
+
+GTM>
+%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+
+GTM>
+Case 12 - $ZTrigger(FILE) - Modifying a trigger in a read-only database
+
+GTM>
+%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+
+GTM>
+Case 13 - $ZTrigger(FILE) - Deleting a specific trigger in a read-only database
+
+GTM>
+%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+
+GTM>
+Case 14 - $ZTrigger(FILE) - multi-region - verify can add trigger to AREG if BREG is R/O
+
+GTM>
+
+GTM>
+File ##IN_TEST_PATH##/inref/readonlyadd2.trg, Line 1: Added SET and/or Non-SET trigger on ^A named addedtrig2
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+
+
+GTM>
+Case 15 - $ZTrigger(FILE) - multi-region - verify we can modify trigger in AREG while DEFAULT region is R/O
+
+GTM>
+
+GTM>
+File ##IN_TEST_PATH##/inref/readonlymod2.trg, Line 1: Modified SET and/or Non-SET trigger on ^A named addedtrig2
+=========================================
+0 triggers added
+0 triggers deleted
+1 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+
+
+GTM>
+Case 16 - $ZTrigger(FILE) - multi-region - verify we can delete trigger in AREG with DEFAULT and BREG R/O
+
+GTM>
+File ##IN_TEST_PATH##/inref/readonlydel2.trg, Line 1: Deleted SET and/or Non-SET trigger on ^A named addedtrig2
+=========================================
+0 triggers added
+1 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+
+
+GTM>
+Case 17 - $ZTrigger(FILE) - multi-region - verify we can also delete trigger in AREG if only BREG is R/O
+
+GTM>
+
+GTM>
+File ##IN_TEST_PATH##/inref/readonlydel2.trg, Line 1: Deleted SET and/or Non-SET trigger on ^A named addedtrig2
+=========================================
+0 triggers added
+1 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+
+
+GTM>
+Case 18 - $ZTrigger(FILE) - multi-region - verify we can delete all trigges if only BREF is R/O (no triggers there)
+
+GTM>
+File ##IN_TEST_PATH##/inref/readonlydall.trg, Line 1: All existing triggers (count = 1) deleted
+=========================================
+0 triggers added
+1 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Cases 10-27 - $ZTrigger("ITEM")
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+
+GTM>
+Case 19 - $ZTrigger(ITEM) - Adding a trigger to a read-only database
+
+GTM>
+%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+
+GTM>
+Case 20 - $ZTrigger(ITEM) - Delete all triggers in a read-only database (first add a trigger to attempt to 'delete')
+
+GTM>
+
+GTM>
+Added SET and/or Non-SET trigger on ^C named addedtrig
+1
+
+GTM>
+
+GTM>
+%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+
+GTM>
+Case 21 - $ZTrigger(ITEM) - Modifying a trigger in a read-only database
+
+GTM>
+%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+
+GTM>
+Case 22 - $ZTrigger(ITEM) - Deleting a specific trigger in a read-only database
+
+GTM>
+%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+
+GTM>
+Case 23 - $ZTrigger(ITEM) - multi-region - verify can add trigger to AREG if BREG is R/O
+
+GTM>
+
+GTM>
+Added SET and/or Non-SET trigger on ^A named addedtrig2
+1
+
+
+GTM>
+Case 24 - $ZTrigger(ITEM) - multi-region - verify we can modify trigger in AREG while DEFAULT region is R/O
+
+GTM>
+
+GTM>
+Modified SET and/or Non-SET trigger on ^A named addedtrig2
+1
+
+
+GTM>
+Case 25 - $ZTrigger(ITEM) - multi-region - verify we can delete trigger in AREG with DEFAULT and BREG R/O
+
+GTM>
+Deleted SET and/or Non-SET trigger on ^A named addedtrig2
+1
+
+
+GTM>
+Case 26 - $ZTrigger(ITEM) - multi-region - verify we can also delete trigger in AREG if only BREG is R/O
+
+GTM>
+
+GTM>
+Deleted SET and/or Non-SET trigger on ^A named addedtrig2
+1
+
+
+GTM>
+Case 27 - $ZTrigger(FILE) - multi-region - verify we can delete all trigges if only BREF is R/O (no triggers there)
+
+GTM>
+All existing triggers (count = 1) deleted
+1
+
+
+GTM>
+
+Case 28-29 - ZTRIGGER command (adding 1 trigger back in)
+File ##IN_TEST_PATH##/inref/readonlyadd1.trg, Line 1: Added SET and/or Non-SET trigger on ^C named addedtrig
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+
+GTM>
+Case 28 - Drive trigger for non-existant global in a read-only database
+
+GTM>
+%GTM-E-ZTRIGNOTRW, ZTRIGGER cannot operate on read-only region DEFAULT
+
+GTM>
+
+
+GTM>
+Case 29 - Drive trigger for existing global in a read-only database
+
+GTM>
+%GTM-E-ZTRIGNOTRW, ZTRIGGER cannot operate on read-only region DEFAULT
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

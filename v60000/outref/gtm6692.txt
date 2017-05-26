@@ -1,0 +1,16 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+#launching ##TEST_AWK[0-9]* processes to do an update and hang
+#Launching 1 processes to hang
+#Wait for 1 process to hang
+#Launching DSE to hold access control semaphore
+#Signaling 1 MUMPS process to go
+#Wait for bypassers to pass and DSE to quit
+#Sending interrupts to the rest of the processes
+#Now waiting for all MUMPS processes to die
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

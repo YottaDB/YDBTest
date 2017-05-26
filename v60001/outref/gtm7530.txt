@@ -1,0 +1,46 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Database file ##TEST_PATH##/mumps.dat now has inst freeze on fail flag set to TRUE
+%GTM-I-JNLALLOCGROW, Increased Journal ALLOCATION from [2048 blocks] to [16584 blocks] to match AUTOSWITCHLIMIT for database file ##TEST_PATH##/mumps.dat
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+----------
+Error JNLFILRDOPN seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+##TEST_AWK%GTM-E-JNLFILRDOPN, Error opening journal file ##TEST_PATH##/mumps.mjl_[^ ]+ for read for database file ##TEST_PATH##/mumps.dat
+----------
+----------
+Error ENO2 seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%SYSTEM-E-ENO2, No such file or directory
+----------
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

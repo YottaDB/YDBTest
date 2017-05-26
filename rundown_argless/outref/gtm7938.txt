@@ -1,0 +1,14 @@
+# Launching a source and a receiver with V61000
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Simulating crash on Instance INSTANCE1 in ##TEST_PATH##
+Instance INSTANCE1 crashed!
+# Switch to the current version now
+# Taking away write permissions from mumps.repl so that we get an additional error after the version mismatch error
+# MUPIP RUNDOWN will generate two errors: A version mismatch error followed by a file permission error (when trying to write to mumps.repl)
+# This should not crash with SIGSEGV
+# The test is over. Give the write permissions back
+# Switch to the older version so that we can shutdown receiver
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+# Do a MUPIP RUNDOWN to cleanup the shared resources created by crashed source server

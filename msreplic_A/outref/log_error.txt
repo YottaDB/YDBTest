@@ -1,0 +1,216 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'START INST2 INST3 PP'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS'==
+## Tests replication log failure for various replication operations
+##   $MULTISITE_REPLIC_PREPARE 3
+##   INST1 --> INST2 --> INST3
+ 
+###################################################################
+Test 1-5: Test for source (active and passive) and receiver starts
+###################################################################
+ 
+# Test 1: The INST1 starts active source server with unwritable log file 
+###################################################################
+# Attempt 1: to start source server for INST1 with a general log, but the directory containing the log file does not exist
+#         --> We expect a REPLLOGOPN error
+----------
+Error REPLLOGOPN seen in src_log_dir_not_exist1.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test/gen_source1.log: No such file or directory.  Logging done to /dev/null.
+----------
+# Attempt 2: to start source server for INST1 with a log, but the directory containing the log file is not writable
+==Executing MULTISITE_REPLIC 'RUN INST1 mkdir test1; chmod =r test1'==
+#         --> We expect a REPLLOGOPN error
+----------
+Error REPLLOGOPN seen in src_log_dir_unwritable1.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test1/gen_source1.log: Permission denied.  Logging done to /dev/null.
+----------
+# Attempt 3: to start source server for INST1 with a log not accessible
+==Executing MULTISITE_REPLIC 'RUN INST1 touch mumps.dat.log; chmod og-rwx mumps.dat.log; $gtm_com/IGS mumps.dat.log CHOWN gtmtest1 gtc'==
+#         --> We expect a REPLLOGOPN error
+----------
+Error REPLLOGOPN seen in src_log_unwritable1.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
+----------
+============Test1 ends==========
+ 
+# Test 2: The INST1 starts active source server with writable log file
+###################################################################
+# Attemp to start an active source server with writable log file. Expect no failure
+============Test2 ends==========
+ 
+# Test 3: The INST2 starts passive source server with unwritable log file
+###################################################################
+# Attempt 1: to start passive server for INST2, but the directory containing the log file does not exist
+#  	--> We expect a REPLLOGOPN error
+----------
+Error REPLLOGOPN seen in src_log_dir_not_exist3.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test/passive3.log: No such file or directory.  Logging done to /dev/null.
+----------
+# Attempt 2: to start passive server for INST2, but the directory containing the log file is not writable
+==Executing MULTISITE_REPLIC 'RUN INST2  mkdir test2; chmod =r test2'==
+#         --> We expect a REPLLOGOPN error
+----------
+Error REPLLOGOPN seen in src_log_dir_unwritable3.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test2/passive3.log: Permission denied.  Logging done to /dev/null.
+----------
+# Attempt 3: to start passive server for INST2 with a log not accessible
+==Executing MULTISITE_REPLIC 'RUN INST2 touch mumps.dat.log; chmod og-rwx mumps.dat.log; $gtm_com/IGS mumps.dat.log CHOWN gtmtest1 gtc'==
+#         --> We expect a REPLLOGOPN error
+----------
+Error REPLLOGOPN seen in src_log_unwritable3.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
+----------
+============Test3 ends==========
+ 
+# Test 4: The INST2 starts passive source server with writable log file
+###################################################################
+#- Attempt to start passive source server of INST2 with writable log file. Expect no failure
+============Test4 ends==========
+ 
+# Test 5: The INST2 starts the receiver server with unwritable log file
+###################################################################
+#- Attempt 1: to start receiver server of INST2, but the directory containing the log file does not exist
+#         --> We expect a REPLLOGOPN error
+----------
+Error REPLLOGOPN seen in rcv_log_dir_not_exist5.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test/receiver.log: No such file or directory.  Logging done to /dev/null.
+----------
+# Attempt 2: to start receiver server of INST2, but the directory containing the log file is not writable
+#         --> We expect a REPLLOGOPN error
+----------
+Error REPLLOGOPN seen in rcv_log_dir_unwritable5.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test2/receiver.log: Permission denied.  Logging done to /dev/null.
+----------
+# Attempt 3: to start receiver server of INST2 with a log not accessible
+#         --> We expect a REPLLOGOPN error
+----------
+Error REPLLOGOPN seen in rcv_log_unwritable5.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
+----------
+============Test5 ends==========
+ 
+###################################################################
+Test 6-10: Test for activating, changing log
+## which will affect the server process running background #####
+###################################################################
+ 
+# Test 6: Activate passive server of INST2 with logfile not writable
+# Note: if there are other servers besides passive receiver running on INST2, they must be shut down first
+###################################################################
+#- Attempt 1: Directory containing the log file does not exist
+#         --> We expect a REPLLOGOPN error
+----------
+Error REPLLOGOPN seen in src_activ_log_dir_not_exist6.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test/activate.log: No such file or directory.  Logging done to /dev/null.
+----------
+# Attempt 2: Directory containing the log file is not writable
+#         --> We expect a REPLLOGOPN error
+----------
+Error REPLLOGOPN seen in src_activ_log_dir_unwritable6.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test2/activate.log: Permission denied.  Logging done to /dev/null.
+----------
+# Attempt 3: The log is not accessible
+#         --> We expect a REPLLOGOPN error
+----------
+Error REPLLOGOPN seen in src_activ_log_unwritable6.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
+----------
+#Now activate passive server of INST2 with writable log file. Expect no failure
+============Test6 ends==========
+ 
+# Test 7: Turn on the detailed logging on source server
+# This test is removed for gtm-7296 change
+============Test7 ends==========
+ 
+# Test 8: INST2 turns on the detailed logging on receiver server
+# This test is removed for gtm-7296 change
+============Test8 ends==========
+ 
+# Test 9: INST1 changes its log on the source server
+###################################################################
+#- Attempt 1: The directory containing the log file does not exist
+#         --> We expect a REPLLOGOPN error 
+----------
+Error REPLLOGOPN seen in src_chang_log_dir_not_exist9.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test/source_new.log: No such file or directory.  Logging done to /dev/null.
+----------
+# Attempt 2: Directory containing the log file is not writable
+#         --> We expect a REPLLOGOPN error
+----------
+Error REPLLOGOPN seen in src_chang_log_dir_unwritable9.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test1/source_new.log: Permission denied.  Logging done to /dev/null.
+----------
+# Attempt 3: New log not accessible
+#         --> We expect a REPLLOGOPN error
+----------
+Error REPLLOGOPN seen in src_chang_log_unwritable9.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
+----------
+ 
+#Now change the log to a writable log. Expect no failure
+src_chang_log9.out:
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 set msr_dont_chk_stat; $MUPIP replic -source -changelog -log=source_new.log -inst=__RCV_INSTNAME__'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHANGELOG operation on source server pid [##PID##] for secondary instance [INSTANCE2]
+Change log initiated with file source_new.log
+============Test9 ends==========
+ 
+# Test 10: INST2 changes its log on the receiver server
+###################################################################
+#- Attempt 1: The directory containing the log file does not exist
+#         --> We expect a REPLLOGOPN error 
+----------
+Error REPLLOGOPN seen in rcv_chang_log_dir_not_exist10.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test/receiver_new.log: No such file or directory.  Logging done to /dev/null.
+----------
+# Attempt 2: Directory containing the log file is not writable
+#         --> We expect a REPLLOGOPN error
+----------
+Error REPLLOGOPN seen in rcv_chang_log_dir_unwritable10.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test2/receiver_new.log: Permission denied.  Logging done to /dev/null.
+----------
+# Attempt 3: New log not accessible
+#         --> We expect a REPLLOGOPN error
+----------
+Error REPLLOGOPN seen in rcv_chang_log_unwritable10.out as expected:
+%GTM-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
+----------
+ 
+# Now change the log to a writable log. Expect no failure
+rcv_chang_log10.out:
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 set msr_dont_chk_stat; $MUPIP replic -receiv -changelog -log=receiver_new.log'==
+Change log initiated with file receiver_new.log
+============Test10 ends==========
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

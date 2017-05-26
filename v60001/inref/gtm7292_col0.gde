@@ -1,0 +1,56 @@
+change -segment DEFAULT -file_name=mumps.dat
+add -name a* -region=areg
+add -name A* -region=areg
+add -region areg -dyn=aseg
+add -segment aseg -file=a.dat
+add -name b* -region=breg
+add -name B* -region=breg
+add -region breg -dyn=bseg
+add -segment bseg -file=b.dat
+add -name c* -region=creg
+add -name C* -region=creg
+add -region creg -dyn=cseg
+add -segment cseg -file=c.dat
+! Use this static spanning regions configuration as the output is data dependant
+! Exclude region BREG, as the test expects no other globals to be in BREG (except^b)
+! Number of included regions is 3
+!    Region 1 = AREG
+!    Region 2 = CREG
+!    Region 3 = DEFAULT
+! Number of sections randomly chosen is 16
+! Map : ^a(18387) maps to CREG
+add -name a(18387:19503) -region=CREG
+! Map : ^a(19503) maps to DEFAULT
+add -name a(19503:28312) -region=DEFAULT
+! Map : ^a(28312) maps to AREG
+add -name a(28312:32093) -region=AREG
+! Map : ^a(32093) maps to DEFAULT
+add -name a(32093:37026) -region=DEFAULT
+! Map : ^a(37026) maps to AREG
+add -name a(37026:44621) -region=AREG
+! Map : ^a(44621) maps to DEFAULT
+add -name a(44621:45955) -region=DEFAULT
+! Map : ^a(45955) maps to AREG
+add -name a(45955:58183) -region=AREG
+! Map : ^a(58183) maps to DEFAULT
+add -name a(58183:60427) -region=DEFAULT
+! Map : ^a(60427) maps to CREG
+add -name a(60427:65621) -region=CREG
+! Map : ^a(65621) maps to AREG
+add -name a(65621:88104) -region=AREG
+! Map : ^a(88104) maps to CREG
+add -name a(88104:88617) -region=CREG
+! Map : ^a(88617) maps to AREG
+add -name a(88617:89359) -region=AREG
+! Map : ^a(89359) maps to DEFAULT
+add -name a(89359:) -region=DEFAULT
+! Map : ^c(8717) maps to AREG
+add -name c(8717:) -region=AREG
+! Map : ^c2(3255) maps to DEFAULT
+add -name c2(3255:) -region=DEFAULT
+! Map : ^c3(10082) maps to AREG
+add -name c3(10082:) -region=AREG
+change -region AREG -std
+change -region BREG -std
+change -region CREG -std
+change -region DEFAULT -std

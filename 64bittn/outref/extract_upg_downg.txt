@@ -1,0 +1,63 @@
+The GTM version is switched to ##FILTERED##PRIORVER##
+
+MUPIP extract -format=zwr v4.zwr
+MUPIP extract -format=binary v4.bin
+
+The GTM version is switched to V5
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+MUPIP load v4.zwr
+GT.M MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL:         Key cnt: ##KEYCOUNT## max subsc len: ##MAX_SUBSC_LEN## max data len: ##MAX_DATA_LEN##
+##TEST_AWKLast LOAD record number: [0-9]*
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+ --> Verify Directory Tree : PASS
+ --> Verify all Global Variable Tree : PASS
+MUPIP load -format=bin v4.bin
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................GT.M MUPIP EXTRACT              
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL:         Key cnt: ##KEYCOUNT## max subsc len: ##MAX_SUBSC_LEN## max data len: ##MAX_DATA_LEN##
+##TEST_AWKLast LOAD record number: [0-9]*
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+ --> Verify Directory Tree : PASS
+ --> Verify all Global Variable Tree : PASS
+MUPIP extract -format=zwr v5.zwr
+MUPIP extract -format=binary v5.bin
+The GTM version is switched to ##FILTERED##PRIORVER##
+
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/v4.gde
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+MUPIP load v5.zwr
+GT.M MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:.. ZWR
+LOAD TOTAL:         Key cnt: ##KEYCOUNT## max subsc len: ##MAX_SUBSC_LEN## max data len: ##MAX_DATA_LEN##
+##TEST_AWKLast LOAD record number: [0-9]*
+
+MUPIP load -format=bin v5.bin
+The expected error (LDBINFMT) was issued (V44 versions)
+##V4VER##/mupip
+##V4VER##/mupip integ -REG *
+No errors detected by integ.
+ --> Verify Directory Tree : PASS
+ --> Verify all Global Variable Tree : PASS

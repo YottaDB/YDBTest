@@ -1,0 +1,46 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gde59.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gde59.cmd
+%GDE-I-MAPBAD, Region DECADE2 for Name PRODAGE("20":"") does not exist
+%GDE-I-MAPBAD, Region D2 for Name PRODAGE(20:"20") does not exist
+%GDE-I-STDNULLCOLLREQ, Region DECADE2 needs Standard Null Collation enabled because global ^PRODAGE spans through it
+%GDE-I-STDNULLCOLLREQ, Region D2 needs Standard Null Collation enabled because global ^PRODAGE spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^PRODAGE spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-I-NOEXIT, Cannot exit because of verification failure
+
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ PRODAGE(20:"20")                   D2
+ PRODAGE("20":"")                   DECADE2
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               PRODAGE(20)                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ PRODAGE(20)                     PRODAGE("20")                    REG = D2
+                                                                  SEG = D2
+                                                                  FILE = D2.dat
+ PRODAGE("20")                   PRODAGE0                         REG = DECADE2
+                                                                  SEG = DECADE2
+                                                                  FILE = DECADE2.dat
+ PRODAGE0                        ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gde59.gld

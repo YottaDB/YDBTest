@@ -1,0 +1,227 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps1.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+Time written into time1:##FILTERED##GTM_TEST_DEBUGINFO.*
+start second process...
+Wait for second process to finish its processing...
+
+GTM>
+$H = ##FILTERED##GTM_TEST_DEBUGINFO.*
+
+GTM>
+
+GTM>
+
+GTM>
+second process should have finished
+
+GTM>
+$H = ##FILTERED##GTM_TEST_DEBUGINFO.*
+
+GTM>
+Updates done, test...
+
+echo Before crash:
+Before crash:
+##SOURCE_PATH##/mumps -direct
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip journal -extract=ext1b.mjf -detail -forward mumps1.mjl -fences=none
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ext1b.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+unset echo
+#Number of records of type (in the order of appearance):
+PINI	3
+PFIN	2
+PBLK	2
+ZTSTART	1
+FSET	1
+GSET	3
+EOF	1
+#Globals set (in the order of appearance):
+^aact1	1
+^bact1	1
+^cact1	1
+^dact1	1
+##SOURCE_PATH##/mupip journal -extract=ext2b.mjf -detail -forward mumps2.mjl -fences=none
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ext2b.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+unset echo
+#Number of records of type (in the order of appearance):
+PINI	2
+PFIN	1
+PBLK	2
+GSET	5
+#Globals set (in the order of appearance):
+^aact2	1
+^bact2	1
+^cact2	1
+^dact2	1
+^sema1	1
+unset echo
+##SOURCE_PATH##/mupip journal -recover -extract=norecov.mjf -detail -lost=norecov.lost -broken=norecov.broken -back mumps2.mjl
+Simulating kill of GTM Processes in ##TEST_PATH##
+GTM processes Killed!
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+################ SECOND PROCESS OUTPUT ###################
+Check second_process.log for the following output:
+##SOURCE_PATH##
+##TEST_PATH##
+
+GTM>
+$ZV = ##FILTERED##GTM_TEST_DEBUGINFO.*
+
+GTM>
+start...
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+in active ztp...
+
+GTM>
+
+GTM>
+
+GTM>
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps2.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Killed
+End of second_process job!
+############ END SECOND PROCESS OUTPUT ###################
+$MUPIP journal -recover -extract=recov.mjf -detail -lost=recov.lost -broken=recov.broken -back mumps2.mjl -since=$time1
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps1.mjl included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Lookback processing started at ... ... .. ..:..:.. ....
+%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps1.mjl has a null previous link
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps2.mjl is renamed to ##TEST_PATH##/mumps2.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file recov.mjf created
+%GTM-I-FILECREATE, Broken transactions extract file recov.broken created
+%GTM-I-FILECREATE, Lost transactions extract file recov.lost created
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps1.mjl
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+-------------------------------------------------------------------------------
+##FILTERED##SHOW output for journal file ##TEST_PATH##/mumps2.mjl_##TIMESTAMP##
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps2.mjl_##TIMESTAMP## is renamed to ##TEST_PATH##/rolled_bak_mumps2.mjl_##TIMESTAMP##
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#Number of records of type (in the order of appearance):
+PFIN	1
+PINI	1
+PBLK	2
+unset echo
+#Number of records of type (in the order of appearance):
+ZTSTART	1
+FSET	1
+GSET	8
+#Globals set (in the order of appearance):
+^aact1	1
+^bact1	1
+^cact1	1
+^dact1	1
+^aact2	1
+^bact2	1
+^cact2	1
+^dact2	1
+^sema1	1
+unset echo
+#Number of records of type (in the order of appearance):
+PINI	3
+PFIN	2
+EOF	1
+PBLK	2
+unset echo
+VERIFY PASSED
+$MUPIP journal -extract=ext1.mjf -detail -forward mumps1.mjl  -fences=none
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ext1.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#Number of records of type (in the order of appearance):
+PINI	1
+unset echo
+$MUPIP journal -extract=ext2.mjf -detail -forward *mumps2.mjl_*  -fences=none
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ext2.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#Number of records of type (in the order of appearance):
+PINI	2
+PFIN	1
+PBLK	2
+GSET	5
+#Globals set (in the order of appearance):
+^aact2	1
+^bact2	1
+^cact2	1
+^dact2	1
+^sema1	1
+##SOURCE_PATH##/mumps -direct
+
+GTM>
+
+GTM>
+##TEST_COM_PATH##/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

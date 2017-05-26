@@ -1,0 +1,19 @@
+# This file has a list of temporarily disabled tests, subtests or some (random) choices in tests
+# It should NOT have things that are disabled permanently for reasons (e.g whitebox tests on pro or some subtests in MM mode etc)
+# The syntax is the below
+# <test/subtest/filename> <reason for disabling> [<host>] [<when should it be checked for passing to be enabled again>]
+# There is no automated way (yet) to monitor this file
+# The "when can it be enabled again" column should be manually monitored periodically and see if the disabling can be removed
+<jnl/redirect_unicode>					<tcsh + unicode + aix issue> 				<aix>			<tcsh or icu upgrade on aix>
+<mupjnl/unicode_jnl_name>				<tcsh + unicode + aix issue> 				<aix>			<tcsh or icu upgrade on aix>
+<set_jnl/unicode_dir_autoswitch_replic>			<tcsh + unicode + aix issue> 				<aix>			<tcsh or icu upgrade on aix>
+<set_jnl/unicode_mupip_backup>				<tcsh + unicode + aix issue>				<aix>			<tcsh or icu upgrade on aix>
+<unicode/filenames>					<tcsh + unicode + aix issue>				<aix>			<tcsh or icu upgrade on aix>
+<xcall/basic - last section>				<tcsh + unicode + aix issue>				<aix>			<tcsh or icu upgrade on aix>
+<unicode/filenames>					<encryption + unicode + aix>				<aix>			<libconfig or icu upgrade on aix>
+<unicode/repl_log>					<encryption + unicode + aix>				<aix>			<libconfig or icu upgrade on aix>
+<com/do_randomsettings.csh>				<GTM-8344 + ext>					<jackal>		<enable OS after upgrade>
+<mem_stress/memleak>					<insufficient memory>					<base,charybdis,scylla> <enable when they have more memory>
+<stress/u_inref/concurr_settings.csh>			<limit alignsize to 16MB due to large no of jnl files>	<all>			<when GTM-4928 gets fixed>
+<overflow/jnlbuffer>					<limit alignsize to 16MB due to large no of jnl files>	<all>			<when GTM-4928 gets fixed>
+<v62003/gtm8394>					<libc6 cores under ENOMEM stress>			<thunder,bolt,charybdis,bahirs> <when https://sourceware.org/bugzilla/show_bug.cgi?id=13119 is fixed>

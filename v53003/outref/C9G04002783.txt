@@ -1,0 +1,58 @@
+# ENTERING C9G04002783
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# SCENARIO #1
+
+GTM>
+
+GTM>
+Setting inhibit_kills=1 using DSE
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+GTM>
+
+GTM>
+##TEST_AWK(NON-TP|TP)
+Finished killing
+
+GTM>
+Test if KILL of global variable a and b was successful. Expect write failure.
+GTM>
+%GTM-E-GVUNDEF, Global variable undefined: ^a(10,10,10)
+
+GTM>
+
+GTM>
+  Process(es) inhibiting KILLs            0
+##SUSPEND_OUTPUT DBG
+##ALLOW_OUTPUT PRO
+# SCENARIO #2 is disabled for PRO builds
+##SUSPEND_OUTPUT PRO
+##ALLOW_OUTPUT DBG
+# SCENARIO #2
+# Enable WHITE BOX TESTING
+# Set globals
+
+GTM>
+
+GTM>
+# Since the KILLs will be waiting when white box testing is enabled.Start them in background
+# Wait for kill process to create job.txt with its process id. Mupip wait will stop this process
+# Wait for log with message WBTEST_ABANDONEDKILL
+# Stop the kill process and display all kill related fields
+##TEST_AWKSTOP issued to process [0-9]*
+  Mutex Queue Slots                    1024  KILLs in progress                1
+  Actual kills in progress                0  Abandoned Kills                  1
+  Process(es) inhibiting KILLs            0
+##ALLOW_OUTPUT PRO
+# LEAVING C9G04002783
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

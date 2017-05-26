@@ -1,0 +1,118 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+PASS from fill1^myfill("set")
+
+GTM>
+PASS from fill1^myfill("ver")
+
+GTM>
+--------------------------------------------------------------------------------------------------
+Try extracting database without gtm_passwd and expect error message
+--------------------------------------------------------------------------------------------------
+unsetenv gtmpasswd
+##################################
+mupip extract -fo=bin ext1.bin
+%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%GTM-E-CRYPTBADCONFIG, Could not retrieve data from encrypted file ##TEST_PATH##/mumps.dat due to bad encryption configuration. Please look at prior messages related to encryption for more details
+##################################
+mupip extract -fo=zwr ext1.zwr
+%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%GTM-E-CRYPTBADCONFIG, Could not retrieve data from encrypted file ##TEST_PATH##/mumps.dat due to bad encryption configuration. Please look at prior messages related to encryption for more details
+##################################
+mupip extract -fo=go ext1.go
+%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%GTM-E-CRYPTBADCONFIG, Could not retrieve data from encrypted file ##TEST_PATH##/mumps.dat due to bad encryption configuration. Please look at prior messages related to encryption for more details
+Created file ##TEST_PATH##/mumps.dat
+--------------------------------------------------------------------------------------------------
+Try extracting while doing parallel GTM updates without gtm_passwd and expect error message
+--------------------------------------------------------------------------------------------------
+##################################
+mupip extract -fo=bin ext2.bin
+%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%GTM-E-CRYPTBADCONFIG, Could not retrieve data from encrypted file ##TEST_PATH##/mumps.dat due to bad encryption configuration. Please look at prior messages related to encryption for more details
+##################################
+mupip extract -fo=zwr ext2.zwr
+%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%GTM-E-CRYPTBADCONFIG, Could not retrieve data from encrypted file ##TEST_PATH##/mumps.dat due to bad encryption configuration. Please look at prior messages related to encryption for more details
+##################################
+mupip extract -fo=go ext2.go
+%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%GTM-E-CRYPTBADCONFIG, Could not retrieve data from encrypted file ##TEST_PATH##/mumps.dat due to bad encryption configuration. Please look at prior messages related to encryption for more details
+--------------------------------------------------------------------------------------------------
+Try extracting while doing parallel GTM updates with wrong gtm_passwd and expect error message
+--------------------------------------------------------------------------------------------------
+##################################
+mupip extract -fo=bin ext3.bin
+##TEST_AWK%GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
+%GTM-E-CRYPTBADCONFIG, Could not retrieve data from encrypted file ##TEST_PATH##/mumps.dat due to bad encryption configuration. Please look at prior messages related to encryption for more details
+##################################
+mupip extract -fo=zwr ext3.zwr
+##TEST_AWK%GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
+%GTM-E-CRYPTBADCONFIG, Could not retrieve data from encrypted file ##TEST_PATH##/mumps.dat due to bad encryption configuration. Please look at prior messages related to encryption for more details
+##################################
+mupip extract -fo=go ext3.go
+##TEST_AWK%GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
+%GTM-E-CRYPTBADCONFIG, Could not retrieve data from encrypted file ##TEST_PATH##/mumps.dat due to bad encryption configuration. Please look at prior messages related to encryption for more details
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+PASS from fill1^myfill("set")
+
+GTM>
+PASS from fill1^myfill("ver")
+
+GTM>
+-----------------------------------------------------------------------------------------
+Try binary extract with select qualifier to extract gloabl from unencrypted region (AREG)
+-----------------------------------------------------------------------------------------
+mupip extract -fo=bin -select=a* ext4.bin
+%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%GTM-E-CRYPTBADCONFIG, Could not retrieve data from encrypted file ##TEST_PATH##/mumps.dat due to bad encryption configuration. Please look at prior messages related to encryption for more details
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+--------------------------------------------------------------------------------------------
+Try binary extract with select qualifier to extract global from unencrypted region (DEFAULT)
+--------------------------------------------------------------------------------------------
+mupip extract -fo=bin -select=b* ext5.bin
+%GTM-I-RECORDSTAT, ^b:	  Key cnt: 1  max subsc len: 3  max rec len: 2  max node len: 9
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 2  max node len: 9
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

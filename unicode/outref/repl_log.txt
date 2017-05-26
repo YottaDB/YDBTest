@@ -1,0 +1,63 @@
+Files Created in ##TEST_PATH##/αβγδεdir我能吞下玻璃而傷:
+Using: ##SOURCE_PATH##/mumps -run GDE
+ＡＢＣＤＥＦＧ我能吞下玻璃而傷.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+ＡＢＣＤＥＦＧ我能吞下玻璃而傷.dat
+Files Created in ##REMOTE_TEST_PATH##/ⅠⅡⅢⅣいろはにほへどちりぬるを:
+Using: ##SOURCE_PATH##/mumps -run GDE
+ＡＢＣＤＥＦＧ我能吞下玻璃而傷.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+ＡＢＣＤＥＦＧ我能吞下玻璃而傷.dat
+On Primary Change Log: ##SOURCE_PATH##/mupip replicate -source -changelog -log=SRCａｂｃｄｅｆｇ.log
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHANGELOG operation on source server pid [##PID##] for secondary instance [INSTANCE2]
+Change log initiated with file SRCａｂｃｄｅｆｇ.log
+On Secondary Change Log: ##SOURCE_PATH##/mupip replicate -receiv -changelog -log=RCVRａｂｃｄｅｆｇ.log
+Change log initiated with file RCVRａｂｃｄｅｆｇ.log
+wait for log to change...
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+On Primary Change Log Again:##SOURCE_PATH##/mupip replicate -source -changelog -log=乴亐亯仑件伞佉佷.⒈⒉⒊⒋⒌⒍⒎⒏.out
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHANGELOG operation on source server pid [##PID##] for secondary instance [INSTANCE2]
+Change log initiated with file 乴亐亯仑件伞佉佷.⒈⒉⒊⒋⒌⒍⒎⒏.out
+On Secondary Change Log Again: ##SOURCE_PATH##/mupip replicate -receiv -changelog -log=蝉休露满枝永怀当此节.①②③④⑤⑥⑦⑧.out
+Change log initiated with file 蝉休露满枝永怀当此节.①②③④⑤⑥⑦⑧.out
+wait for log to change...
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

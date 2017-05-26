@@ -1,0 +1,88 @@
+TEST DSE - MAPS COMMAND
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Block 27 is marked busy in its local bit map.
+
+DSE> DSE> 
+Block 27 is marked free in its local bit map.
+
+DSE> DSE> 
+Block 27 is marked busy in its local bit map.
+
+DSE> 
+Block 28 is marked free in its local bit map.
+
+DSE> DSE> 
+Block 28 is marked busy in its local bit map.
+
+DSE> DSE> 
+Block 28 is marked free in its local bit map.
+
+DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> DSE> 
+Block 28 is marked free in its local bit map.
+
+DSE> DSE> 
+Block 27 is marked busy in its local bit map.
+
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> DSE> 
+Block 28 is marked busy in its local bit map.
+
+DSE> DSE> 
+Block 28 is marked free in its local bit map.
+
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Block 0 is marked busy in its local bit map.
+
+DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+DSE> DSE> 
+Block 0 is marked busy in its local bit map.
+
+##SUSPEND_OUTPUT  NON_REPLIC
+DSE> DSE> Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  REPLIC
+##ALLOW_OUTPUT  NON_REPLIC
+DSE> DSE> ##SOURCE_PATH##/mupip
+##ALLOW_OUTPUT  REPLIC
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

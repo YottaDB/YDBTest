@@ -1,0 +1,28 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+###################################################################
+# Extend the database to a considerable size so that unnecessary file extensions won't happen. This helps in calculating
+# how many updates need to be done.
+###################################################################
+Extension successful, file ##TEST_PATH##/mumps.dat extended by 12000 blocks.  Total blocks = 12100.
+
+###################################################################
+# Find out the size of one update
+Autoswitchlimit = ##FILTERED##GTM_TEST_DEBUGINFO.*
+Size of one update = ##FILTERED##GTM_TEST_DEBUGINFO.*
+###################################################################
+
+###################################################################
+# Now, fire up the updates and continue until the Journal File is almost full
+###################################################################
+
+###################################################################
+# Now, do MUPIP EXTENDs each of which writes PINI, INCTN and PFIN records. Journal File should have no trouble extending.
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

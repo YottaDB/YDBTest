@@ -1,0 +1,101 @@
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> Error:  already in region: AREG
+DSE> 
+Block 3   Size 13C   Level 0   TN B V6
+
+Rec:1  Blk 3  Off 10  Size 1E  Cmpc 0  Key ^a("A")
+
+Rec:2  Blk 3  Off 2E  Size 1B  Cmpc 3  Key ^a("B")
+
+Rec:3  Blk 3  Off 49  Size 1B  Cmpc 3  Key ^a("C")
+
+Rec:4  Blk 3  Off 64  Size 1B  Cmpc 3  Key ^a("D")
+
+Rec:5  Blk 3  Off 7F  Size 1B  Cmpc 3  Key ^a("E")
+
+Rec:6  Blk 3  Off 9A  Size 1B  Cmpc 3  Key ^a("F")
+
+Rec:7  Blk 3  Off B5  Size 1B  Cmpc 3  Key ^a("G")
+
+Rec:8  Blk 3  Off D0  Size 1B  Cmpc 3  Key ^a("H")
+
+Rec:9  Blk 3  Off EB  Size 1B  Cmpc 3  Key ^a("I")
+
+Rec:A  Blk 3  Off 106  Size 1B  Cmpc 3  Key ^a("J")
+
+Rec:B  Blk 3  Off 121  Size 1B  Cmpc 3  Key ^a("K")
+
+DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Block 2   Size 2E   Level 0   TN 2A V6
+
+Rec:1  Blk 2  Off 10  Size F  Cmpc 0  Ptr 7  Key ^a
+
+Rec:2  Blk 2  Off 1F  Size F  Cmpc 0  Ptr 4  Key ^x
+
+DSE> 
+Block 5   Size 7F   Level 0   TN 29 V6
+
+Rec:1  Blk 5  Off 10  Size 1E  Cmpc 0  Key ^x("i")
+
+Rec:2  Blk 5  Off 2E  Size 1B  Cmpc 3  Key ^x("h")
+
+Rec:3  Blk 5  Off 49  Size 1B  Cmpc 3  Key ^x("g")
+
+Rec:4  Blk 5  Off 64  Size 1B  Cmpc 3  Key ^x("f")
+
+DSE> 
+File            ##TEST_PATH##/mumps.dat
+Region          DEFAULT
+##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
+DSE> 
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Rec:5  Blk 5  Off 7F  Size A  Cmpc 4  Key ^x("ff")
+      7F : |##FILTERED## 99  0  0 39 39 39                              |
+           |##FILTERED##           9  9  9                              |
+
+DSE> 
+Key found in block  5.
+    Directory path
+    Path--blk:off
+	1:10,	2:1F,
+    Global tree path
+    Path--blk:off
+	4:10,	5:7F,
+DSE> 

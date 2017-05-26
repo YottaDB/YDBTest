@@ -1,0 +1,118 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+reg1.dat
+reg2.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+reg1.dat
+reg2.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+do ^lkereg
+
+0   GTM PASS 
+0   LKE PASS
+0   LKE PASS
+0   LKE PASS
+1   GTM PASS 
+1   LKE PASS
+1   LKE PASS
+1   LKE PASS
+2   GTM PASS 
+2   LKE PASS
+2   LKE PASS
+2   LKE PASS
+3   LKE PASS
+3   LKE PASS
+3   LKE PASS
+0   GTM PASS 
+4   LKE PASS
+4   LKE PASS
+4   LKE PASS
+5   LKE PASS
+5   LKE PASS
+5   LKE PASS
+6   LKE PASS
+6   LKE PASS
+6   LKE PASS
+7   GTM PASS 
+7   LKE PASS
+7   LKE PASS
+7   LKE PASS
+8   LKE PASS
+8   LKE PASS
+8   LKE PASS
+GTM>
+
+GTM>
+do ^lkespace
+Show only one lock with embedded = and quote
+
+DEFAULT
+^global("embedded = and""")
+##TEST_AWK                         Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in REG1
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+%GTM-I-NOLOCKMATCH, No matching locks were found in REG2
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+Remove only one lock with embedded = and quote witout space
+
+DEFAULT
+Lock removed : ^global("embed=and""nospace")
+%GTM-I-NOLOCKMATCH, No matching locks were found in REG1
+%GTM-I-NOLOCKMATCH, No matching locks were found in REG2
+
+Remove only one lock ^global(two words)
+
+DEFAULT
+Lock removed : ^global("two words")
+%GTM-I-NOLOCKMATCH, No matching locks were found in REG1
+%GTM-I-NOLOCKMATCH, No matching locks were found in REG2
+
+Remove only one lock ^global(embedded = equals)
+
+DEFAULT
+Lock removed : ^global("embedded = equals")
+%GTM-I-NOLOCKMATCH, No matching locks were found in REG1
+%GTM-I-NOLOCKMATCH, No matching locks were found in REG2
+
+Clear all locks
+
+DEFAULT
+Lock removed : ^global(1)
+Lock removed : ^global("embedded = and""")
+Lock removed : ^global("embedded"" quote")
+Lock removed : ^global("string")
+Lock removed : ^global("three words here","two here")
+
+REG1
+Lock removed : ^A1
+
+REG2
+Lock removed : ^B2
+
+GTM>
+%GTM-E-CLIERR, Unrecognized option : INVALID
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,50 @@
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+#
+# Start mumps in background
+#
+##TEST_AWK\[1\] +[0-9]+
+#
+# Stop source
+#
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+#
+# Stop mumps but make sure db shm is leftover
+#
+##TEST_AWK\[1\] +\+ +Killed +##SOURCE_PATH##/mumps .*
+#
+# Freeze
+#
+#
+# Checkhealth on a frozen instance with no source server running and leftover db shm. Should not hang
+#
+Warning: Instance Freeze is ON
+   Freeze Comment: 
+# Run down db shm but temporarily unfreeze to let rundown do its job
+#
+# Redo Checkhealth on a frozen instance with no source server running and no leftover db shm. This should hang
+#
+##TEST_AWK\[1\] +[0-9]+
+#
+# Unfreeze
+#
+##TEST_AWK\[1\] +\+ Done +##SOURCE_PATH##/mupip .*
+# Capture full checkhealth output
+#
+# Checkhealth on an unfrozen instance with no source server running
+#
+#
+# Rundown
+#
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

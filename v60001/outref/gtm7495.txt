@@ -1,0 +1,20 @@
+Begin gtm7495
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Added SET trigger on ^SAMPLE named myname0
+Executing ^SAMPLE=1
+1
+Executing ^SAMPLE=2
+2
+Executing ^SAMPLE=3
+3
+Executing ^SAMPLE=4
+Executing ^SAMPLE=5
+Executing ^SAMPLE=6
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+End gtm7495

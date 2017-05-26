@@ -1,0 +1,69 @@
+setenv gtm_chset UTF-8
+unset echo
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+----TEST1 ----
+
+150373522,TEST1+12^c001953,%GTM-E-PATCLASS, Illegal character class for pattern code
+
+----TEST2 ----
+1
+1
+0
+0
+1
+1
+1
+0
+1
+
+----TEST3 ----
+0
+1
+1
+1
+1
+0
+1
+1
+1
+1
+0
+1
+1
+1
+1
+0
+1
+1
+1
+1
+0
+1
+1
+
+----TEST4 ----
+1
+
+----TEST5 ----
+0
+0
+
+----TEST6 ----
+1
+0
+0
+
+----TEST7 ----
+1
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

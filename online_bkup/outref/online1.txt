@@ -1,0 +1,275 @@
+ENTERING ONLINE1
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+online1.gld
+Using: ##SOURCE_PATH##/mupip
+online1.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+online1.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+online1.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+Do fill1^myfill("set")
+
+GTM>
+PASS from fill1^myfill("set")
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##ALLOW_OUTPUT  NON_REPLIC
+DB file ##TEST_PATH##/online1.dat backed up in file ##TEST_PATH##/online1/online1.dat
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions up to 0x0000000000000402 are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions up to 0x0000000000000400 are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+
+
+BACKUP COMPLETED.
+
+
+GTM>
+Do fill2^myfill("set")
+
+GTM>
+PASS from fill2^myfill("set")
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##ALLOW_OUTPUT  NON_REPLIC
+MUPIP backup of database file ##TEST_PATH##/online1.dat to ##TEST_PATH##/online1/backup.bak2
+DB file ##TEST_PATH##/online1.dat incrementally backed up in file ##TEST_PATH##/online1/backup.bak2
+##SUSPEND_OUTPUT COLLATION
+44 blocks saved.
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+40 blocks saved.
+##ALLOW_OUTPUT NON_COLLATION
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions from 0x0000000000000402 to 0x0000000000000C02 are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions from 0x0000000000000400 to 0x0000000000000BFF are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+
+
+BACKUP COMPLETED.
+
+
+GTM>
+Do fill3^myfill("set")
+GTM>
+PASS from fill3^myfill("set")
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##ALLOW_OUTPUT  NON_REPLIC
+MUPIP backup of database file ##TEST_PATH##/online1.dat to ##TEST_PATH##/online1/backup.bak3
+DB file ##TEST_PATH##/online1.dat incrementally backed up in file ##TEST_PATH##/online1/backup.bak3
+##SUSPEND_OUTPUT COLLATION
+232 blocks saved.
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+226 blocks saved.
+##ALLOW_OUTPUT NON_COLLATION
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions from 0x0000000000000C02 to 0x0000000000002C03 are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions from 0x0000000000000BFF to 0x0000000000002BFE are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+
+
+BACKUP COMPLETED.
+
+##SUSPEND_OUTPUT  NON_REPLIC
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##ALLOW_OUTPUT  NON_REPLIC
+MUPIP backup of database file ##TEST_PATH##/online1.dat to ##TEST_PATH##/online1/backup.bak33
+DB file ##TEST_PATH##/online1.dat incrementally backed up in file ##TEST_PATH##/online1/backup.bak33
+##SUSPEND_OUTPUT COLLATION
+233 blocks saved.
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+227 blocks saved.
+##ALLOW_OUTPUT NON_COLLATION
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions from 0x0000000000000402 to 0x0000000000002C03 are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions from 0x0000000000000400 to 0x0000000000002BFE are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+
+
+BACKUP COMPLETED.
+
+##SUSPEND_OUTPUT  NON_REPLIC
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##ALLOW_OUTPUT  NON_REPLIC
+MUPIP backup of database file ##TEST_PATH##/online1.dat to ##TEST_PATH##/online1/backup.bak333
+DB file ##TEST_PATH##/online1.dat incrementally backed up in file ##TEST_PATH##/online1/backup.bak333
+##SUSPEND_OUTPUT COLLATION
+525 blocks saved.
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+519 blocks saved.
+##ALLOW_OUTPUT NON_COLLATION
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+Transactions from 0x0000000000000001 to 0x0000000000002C03 are backed up.
+##ALLOW_OUTPUT   MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+Transactions from 0x0000000000000001 to 0x0000000000002BFE are backed up.
+##ALLOW_OUTPUT   MM_FILE_EXT
+
+
+BACKUP COMPLETED.
+
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+Do fill1^myfill("ver")
+
+GTM>
+PASS from fill1^myfill("ver")
+
+GTM>
+
+RESTORE COMPLETED
+##SUSPEND_OUTPUT COLLATION
+44 blocks restored
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+40 blocks restored
+##ALLOW_OUTPUT NON_COLLATION
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+Do fill2^myfill("ver")
+
+GTM>
+PASS from fill2^myfill("ver")
+
+GTM>
+
+RESTORE COMPLETED
+##SUSPEND_OUTPUT COLLATION
+44 blocks restored
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+40 blocks restored
+##ALLOW_OUTPUT NON_COLLATION
+
+RESTORE COMPLETED
+##SUSPEND_OUTPUT COLLATION
+232 blocks restored
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+226 blocks restored
+##ALLOW_OUTPUT NON_COLLATION
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+Do fill3^myfill("ver")
+
+GTM>
+PASS from fill3^myfill("ver")
+
+GTM>
+
+RESTORE COMPLETED
+##SUSPEND_OUTPUT COLLATION
+233 blocks restored
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+227 blocks restored
+##ALLOW_OUTPUT NON_COLLATION
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+Do fill3^myfill("ver")
+
+GTM>
+PASS from fill3^myfill("ver")
+
+GTM>
+Created file ##TEST_PATH##/online1.dat
+
+RESTORE COMPLETED
+##SUSPEND_OUTPUT COLLATION
+525 blocks restored
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+519 blocks restored
+##ALLOW_OUTPUT NON_COLLATION
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+Do fill3^myfill("ver")
+
+GTM>
+PASS from fill3^myfill("ver")
+
+GTM>
+LEAVING ONLINE1

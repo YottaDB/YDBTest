@@ -1,0 +1,80 @@
+V3NEWI7 ;IW-KO-YS-TS,V3NEW,MVTS V9.10;15/6/96;
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1990-1996
+ W !!,"121---V3NEWI7: NEW -51-"
+ ;
+120 S ^ABSN="31027",^ITEM="III-1027  @A"
+ S ^NEXT="121^V3NEWI7,V3NEWN1^V3NEW,V3ALDO^VV3" D ^V3PRESET K
+ S ^VCOMP="" D NEW1,CHECK
+ S ^VCORR="1 0 11 1 1 0 1 0 (C,B),@B@B(2)BCD#0 0 0 0 1 0 0 0 C#11 1 1 0 11 1 0 0 aa(2)bCc(2)#1 0 11 1 11 1 1 0 (C,B),@B@B(2)BCc(2)D#"
+ D ^VEXAMINE
+ ;
+121 S ^ABSN="31028",^ITEM="III-1028  @B"
+ S ^NEXT="122^V3NEWI7,V3NEWN1^V3NEW,V3ALDO^VV3" D ^V3PRESET K
+ S ^VCOMP="" D NEW2,CHECK
+ S ^VCORR="10 1 1 0 10 1 10 1 A(2)(A,B),(B,C)C(2)D(2)#0 0 1 0 0 0 0 0 (A,B),(B,C)#11 1 1 0 10 1 0 0 aa(2)bc(2)#10 1 1 0 10 1 10 1 A(2)bC(2)D(2)#"
+ D ^VEXAMINE
+ ;
+122 S ^ABSN="31029",^ITEM="III-1029  @@A,(@@B,@@C)"
+ S ^NEXT="123^V3NEWI7,V3NEWN1^V3NEW,V3ALDO^VV3" D ^V3PRESET K
+ S ^VCOMP="" D NEW3 D CHECK
+ S ^VCORR="11 1 11 1 11 1 11 1 A(2)AB(2)BC(2)CD(2)D#0 0 11 1 11 1 0 0 B(2)BC(2)C#11 1 11 1 11 1 0 0 aa(2)bBC(2)c(2)#11 1 11 1 11 1 11 1 A(2)AbBC(2)c(2)D(2)D#"
+ D ^VEXAMINE
+ ;
+123 S ^ABSN="31030",^ITEM="III-1030  A,@^VVA"
+ S ^NEXT="^V3NEWN1,V3NEWN2^V3NEW,V3ALDO^VV3" D ^V3PRESET K
+ S ^VCOMP="" D NEW4,CHECK
+ S ^VCORR="1 0 11 1 11 1 10 1 ABBCCD#0 0 0 0 0 0 10 1 D#11 1 1 0 10 1 10 1 aa(2)bc(2)D#1 0 11 1 11 1 10 1 ABBCCD#"
+ D ^VEXAMINE K ^VVA
+ ;
+END W !!,"End of 121 --- V3NEWI7",!
+ K  Q
+ ;
+NEW1 S A="(C,B),@B",B="@B(2)",B(2)="B",C="C",D="D"
+ D CHECK NEW @A
+ D CHECK S A="a",A(2)="a(2)",B="b",C(2)="c(2)"
+ D CHECK Q
+ ;
+NEW2 ;
+ S A(2)="A(2)",B="(A,B),(B,C)",C(2)="C(2)",D(2)="D(2)"
+ D CHECK
+ N @B
+ D CHECK
+ S A="a",A(2)="a(2)",B="b",C(2)="c(2)"
+ D CHECK
+ Q
+ ;
+NEW3 ;
+ S A="A(2)",A(2)="A",B="B(2)",B(2)="B",C="C(2)",C(2)="C",D="D(2)",D(2)="D"
+ D CHECK
+ new @@A,(@@B,@@C)
+ D CHECK
+ S A="a",A(2)="a(2)",B="b",C(2)="c(2)"
+ D CHECK
+ Q
+ ;
+NEW4 ;
+ S A="A",B="B",C="C",B(2)="B",C(2)="C",D(2)="D"
+ S ^VVA="@B($D(A)+2),@C($D(B)+2),(@D($D(C)+2))"
+ D CHECK
+ NEW A,@^VVA
+ D CHECK
+ S A="a",A(2)="a(2)",B="b",C(2)="c(2)"
+ D CHECK
+ Q
+ ;
+CHECK S ^VCOMP=^VCOMP_$D(A)_" "_$D(A(2))_" "
+ S ^VCOMP=^VCOMP_$D(B)_" "_$D(B(2))_" "
+ S ^VCOMP=^VCOMP_$D(C)_" "_$D(C(2))_" "
+ S ^VCOMP=^VCOMP_$D(D)_" "_$D(D(2))_" "
+ I $D(A)#10=1    S ^VCOMP=^VCOMP_A
+ I $D(A(2))#10=1 S ^VCOMP=^VCOMP_A(2)
+ I $D(B)#10=1    S ^VCOMP=^VCOMP_B
+ I $D(B(2))#10=1 S ^VCOMP=^VCOMP_B(2)
+ I $D(C)#10=1    S ^VCOMP=^VCOMP_C
+ I $D(C(2))#10=1 S ^VCOMP=^VCOMP_C(2)
+ I $D(D)#10=1    S ^VCOMP=^VCOMP_D
+ I $D(D(2))#10=1 S ^VCOMP=^VCOMP_D(2)
+ S ^VCOMP=^VCOMP_"#" Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

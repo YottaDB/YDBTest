@@ -1,0 +1,106 @@
+# This is the manual test for interrupted recovery (orphaned journal and others)
+# The test steps here are based on Layek post in public folder
+# 2003/C9C02-001922 Revisit MUPIP JOURNAL RECOVER/ROLLBACK
+
+# PART A) will fail so no need to run until
+# C9D08-002382 Interrupted recovery creates orphaned journal files
+# is fixed.
+
+    a.  source int_rec.csh to create the database and populate it
+
+	F i=1:1:10000000 s ^f(i)=i  h 0.1
+	Wait few secoonds and crash the gtm system
+
+    b.  Now do mupip journal -recover -back "*" using debugger.
+	Just creating the journal file in cre_jnl_file_common exit from debugger
+	Here we have mumps3.mjl_xxxx => mumps3.mjl => mumps2.mjl = > mumps1.mjl
+
+    c. Repeat step b 
+	We will have mumps3.mjl_yyyy => mumps3.mjl => mumps2.mjl = > mumps1.mjl
+
+    d. Repeat step c
+	We will have mumps3.mjl_zzzz => mumps3.mjl => mumps2.mjl = > mumps1.mjl
+
+	Sample Output at this point:
+	[lespaul-alim]:>int_chk.csh
+	Previous generation of mumps3.mjl is mumps3.mjl_2004091110411
+	 Turn Around Point Offset                      0 [0x00000000]
+	 Turn Around Point Time                        0
+	 Recover interrupted                        TRUE
+	Previous generation of mumps3.mjl_2004091110411 is mumps2.mjl
+	 Turn Around Point Offset                  50752 [0x0000C640]
+	 Turn Around Point Time     2004/03/31 11:04:00
+	 Recover interrupted                       FALSE
+	Previous generation of mumps2.mjl is mumps1.mjl
+	 Turn Around Point Offset                      0 [0x00000000]
+	 Turn Around Point Time                        0
+	 Recover interrupted                       FALSE
+	Previous generation of mumps1.mjl is
+	 Turn Around Point Offset                      0 [0x00000000]
+	 Turn Around Point Time                        0
+	 Recover interrupted                       FALSE
+	[lespaul-alim]:>ll mumps*
+	-rw-rw-rw-   1 alim     gtc       128512 Mar 31 11:05 mumps.dat
+	-rw-rw-r--   1 alim     gtc         1024 Mar 31 11:03 mumps.gld
+	-rw-rw-rw-   1 alim     gtc        99320 Mar 31 11:03 mumps1.mjl
+	-rw-rw-rw-   1 alim     gtc        99368 Mar 31 11:03 mumps2.mjl
+	-rw-rw-rw-   1 alim     gtc         2336 Mar 31 11:05 mumps3.mjl
+	-rw-rw-rw-   1 alim     gtc        53192 Mar 31 11:05 mumps3.mjl_2004091110411
+	-rw-rw-rw-   1 alim     gtc         2336 Mar 31 11:04 mumps3.mjl_2004091110435
+	-rw-rw-rw-   1 alim     gtc         2336 Mar 31 11:04 mumps3.mjl_2004091110458
+
+    e. Now do mupip journal -recover -back "*" . It leaves orphaned journal files mums3.mjl_xxxx, mumps3.mjl_yyyy. It should not.
+	Sample Output at this point:
+	[lespaul-alim]:> mupip journal -recover -back "*"
+	%GTM-I-MUJNLSTAT, Initial processing started at Wed Mar 31 11:06:39 2004
+	%GTM-I-MUJNLSTAT, Interrupted recovery processing started at Wed Mar 31 11:06:39 2004
+	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091110411 included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%GTM-I-MUJNLSTAT, Backward processing started at Wed Mar 31 11:06:39 2004
+	%GTM-I-MUJNLSTAT, Before image applying started at Wed Mar 31 11:06:39 2004
+	%GTM-I-FILERENAME, File /testarea1/alim/work/misc/manual_test/mumps3.mjl is renamed to /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091110515
+	%GTM-I-FILEDEL, File /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091110515 successfully deleted
+	%GTM-I-MUJNLSTAT, Forward processing started at Wed Mar 31 11:06:39 2004
+	%GTM-S-JNLSUCCESS, Show successful
+	%GTM-S-JNLSUCCESS, Verify successful
+	%GTM-S-JNLSUCCESS, Recover successful
+	%GTM-I-MUJNLSTAT, End processing at Wed Mar 31 11:06:39 2004
+
+
+	[lespaul-alim]:>int_chk.csh
+	Previous generation of mumps3.mjl is mumps3.mjl_2004091110411
+	 Turn Around Point Offset                      0 [0x00000000]
+	 Turn Around Point Time                        0
+	 Recover interrupted                       FALSE
+	Previous generation of mumps3.mjl_2004091110411 is mumps2.mjl
+	 Turn Around Point Offset                      0 [0x00000000]
+	 Turn Around Point Time                        0
+	 Recover interrupted                       FALSE
+	Previous generation of mumps2.mjl is mumps1.mjl
+	 Turn Around Point Offset                      0 [0x00000000]
+	 Turn Around Point Time                        0
+	 Recover interrupted                       FALSE
+	Previous generation of mumps1.mjl is
+	 Turn Around Point Offset                      0 [0x00000000]
+	 Turn Around Point Time                        0
+	 Recover interrupted                       FALSE
+	[lespaul-alim]:>ll
+	total 888
+	drwxrwxr-x   2 alim     gtc          512 Mar 31 11:06 .
+	drwxrwxrwx  10 alim     gtc         5120 Mar 31 10:28 ..
+	-rw-------   1 alim     gtc        28672 Mar 31 11:06 .intrpt_recov.txt.swp
+	-rw-rw-r--   1 alim     gtc          308 Mar 31 11:03 dbcreate.out
+	-rw-rw-r--   1 alim     gtc          308 Mar 31 11:02 dbcreate.out_11_03_55
+	-rwxr-xr-x   1 alim     gtc          419 Mar 31 10:35 int_chk.csh
+	-rwxr-xr-x   1 alim     gtc          656 Mar 31 10:28 int_rec.csh
+	-rw-r--r--   1 alim     gtc        14724 Mar 31 11:06 intrpt_recov.txt
+	-rw-rw-rw-   1 alim     gtc       128512 Mar 31 11:06 mumps.dat
+	-rw-rw-r--   1 alim     gtc         1024 Mar 31 11:03 mumps.gld
+	-rw-rw-rw-   1 alim     gtc        99320 Mar 31 11:03 mumps1.mjl
+	-rw-rw-rw-   1 alim     gtc        99368 Mar 31 11:03 mumps2.mjl
+	-rw-rw-rw-   1 alim     gtc         4976 Mar 31 11:06 mumps3.mjl
+	-rw-rw-rw-   1 alim     gtc        53192 Mar 31 11:06 mumps3.mjl_2004091110411
+	-rw-rw-rw-   1 alim     gtc         2336 Mar 31 11:04 mumps3.mjl_2004091110435
+	-rw-rw-rw-   1 alim     gtc         2336 Mar 31 11:04 mumps3.mjl_2004091110458
+	-rw-rw-r--   1 alim     gtc           21 Mar 31 11:03 time1.txt
+	-rw-rw-r--   1 alim     gtc           21 Mar 31 11:03 time2.txt
+	-rw-rw-r--   1 alim     gtc          236 Mar 31 11:03 tmp.com

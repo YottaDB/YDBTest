@@ -1,0 +1,571 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##TEST_AWKTime written into .*
+##TEST_AWKTime written into .*
+SET,TSET,USET,GSET,FSET
+##TEST_AWKTime written into .*
+##TEST_AWKTime written into .*
+KILL,TKILL,UKILL,GKILL,FKILL
+Passed SET and KILL
+SET,TSET,USET,GSET,FSET
+##TEST_AWKTime written into .*
+ZKILL,TZKILL,UZKILL,GZKILL,FZKILL
+##TEST_AWKTime written into .*
+Check that only ^acn(11,11),^acn(12,12),^acn(13,13),^acn(14,14) are present
+^acn(11,11)="this is USET"
+^acn(12,12)="this is USET"
+^acn(13,13)="this is GSET"
+^acn(14,14)="this is GSET"
+
+GTM>
+
+Output device: <terminal>: 
+
+List ^
+^acn(11,11)="this is USET"
+^acn(12,12)="this is USET"
+^acn(13,13)="this is GSET"
+^acn(14,14)="this is GSET"
+^bcn(11,11)="this is USET"
+^bcn(12,12)="this is USET"
+^bcn(13,13)="this is GSET"
+^bcn(14,14)="this is GSET"
+^ccn(11,11)="this is USET"
+^ccn(12,12)="this is USET"
+^ccn(13,13)="this is GSET"
+^ccn(14,14)="this is GSET"
+^cn(1)="this is SET"
+^dcn(11,11)="this is USET"
+^dcn(12,12)="this is USET"
+^dcn(13,13)="this is GSET"
+^dcn(14,14)="this is GSET"
+
+List ^
+
+GTM>
+PASSED VERIFY
+GTM>
+##TEST_AWK##SOURCE_PATH##/mupip journal -recov -back mumps.mjl -since=".*" -verbose
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record Offset : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*##TEST_AWK%GTM-I-MUINFOSTR, Module : mur_back_processing:save_turn_around_point at .*
+##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65744 .0x000100D0.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
+##TEST_AWK.*%GTM-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*.[0-9]*
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 8 .0x00000008.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+##TEST_AWK.*##TEST_AWK%GTM-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
+##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65744 .0x000100D0.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
+##TEST_AWK.*.GTM-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*,[0-9]*
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 8 .0x00000008.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+%GTM-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_apply_blk:start at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
+##TEST_AWK.*GTM-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*.[0-9]*
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 0 .0x00000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_apply_blk:end at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65744 .0x000100D0.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
+##TEST_AWK.*GTM-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*.[0-9]*
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 0 .0x00000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the start at .*
+##TEST_AWK%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+%GTM-I-MUINFOUINT4,     Record Offset : 65744 [0x000100D0]
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
+##TEST_AWK%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+%GTM-I-MUINFOUINT4,     Record Offset : 75024 [0x00012510]
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the end at .*
+##TEST_AWK%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##TEST_AWK%GTM-I-MUINFOUINT4,     Record Offset : [0-9]* .0x[0-9a-fA-F]*.
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##SOURCE_PATH##/mumps -direct
+
+GTM>
+
+Output device: <terminal>: 
+
+List ^
+^acn(11,11)="this is USET"
+^acn(12,12)="this is USET"
+^acn(13,13)="this is GSET"
+^acn(14,14)="this is GSET"
+^bcn(11,11)="this is USET"
+^bcn(12,12)="this is USET"
+^bcn(13,13)="this is GSET"
+^bcn(14,14)="this is GSET"
+^ccn(11,11)="this is USET"
+^ccn(12,12)="this is USET"
+^ccn(13,13)="this is GSET"
+^ccn(14,14)="this is GSET"
+^cn(1)="this is SET"
+^dcn(11,11)="this is USET"
+^dcn(12,12)="this is USET"
+^dcn(13,13)="this is GSET"
+^dcn(14,14)="this is GSET"
+
+List ^
+
+GTM>
+PASSED VERIFY
+GTM>
+rm mumps.dat
+unset echo
+##SOURCE_PATH##/mupip journal -extract=forward_nv.mjf -for mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file forward_nv.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##SOURCE_PATH##/mupip journal -extract=forward.mjf -for mumps.mjl -verbose
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
+##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65536 .0x00010000.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 0 .0x00000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : 0 .0x00000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 0 .0x0000000000000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 0 .0x0000000000000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT6,     Tp_resolve_time : 0 .0x00000000. ; \$H=47116,68400
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 8 .0x00000008.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+%GTM-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the start at .*
+%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%GTM-I-MUINFOUINT4,     Record Offset : 65536 [0x00010000]
+%GTM-I-FILECREATE, Journal extract file forward.mjf created
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
+%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the end at .*
+%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+unset echo
+##TEST_AWK##SOURCE_PATH##/mupip journal -extract=backward.mjf -back mumps.mjl -since=".*" -verbose
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_back_processing:save_turn_around_point at .*
+##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65744 .0x000100D0.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
+##TEST_AWK.*.GTM-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*.[0-9]*
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 8 .0x00000008.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
+##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65744 .0x000100D0.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
+##TEST_AWK.*.GTM-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*.[0-9]*
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 8 .0x00000008.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+%GTM-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the start at .*
+%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%GTM-I-MUINFOUINT4,     Record Offset : 65744 [0x000100D0]
+%GTM-I-FILECREATE, Journal extract file backward.mjf created
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
+%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the end at .*
+%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##SOURCE_PATH##/mupip journal -show=all -back mumps.mjl -verbose
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+##TEST_AWK Prev journal file name ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                       FALSE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ End of Data                             ##FILTERED##
+ Prev Recovery End of Data                       0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+ End Transaction                                68 [0x0000000000000044]
+##TEST_AWK Align size  *[1-9][0-9]* \[0x[0-9A-F]*\] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      0 [0x0000000000000000]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           0
+   PFIN           0
+   ZTCOM          0
+   KILL           0
+   FKILL          0
+   GKILL          0
+   SET            0
+   FSET           0
+   GSET           0
+   PBLK           0
+   EPOCH          0
+   EOF            0
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           0
+   ALIGN          0
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          0
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##SOURCE_PATH##/mupip create
+Created file ##TEST_PATH##/mumps.dat
+##SOURCE_PATH##/mupip journal -recov -for mumps.mjl -verbose -verify
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
+##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65536 .0x00010000.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 0 .0x00000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : 0 .0x00000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 0 .0x0000000000000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 0 .0x0000000000000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT6,     Tp_resolve_time : 0 .0x00000000. ; \$H=47116,68400
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 8 .0x00000008.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+%GTM-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the start at .*
+%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%GTM-I-MUINFOUINT4,     Record Offset : 65536 [0x00010000]
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
+%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the end at .*
+%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##SOURCE_PATH##/mumps -direct
+
+GTM>
+
+Output device: <terminal>: 
+
+List ^
+^acn(11,11)="this is USET"
+^acn(12,12)="this is USET"
+^acn(13,13)="this is GSET"
+^acn(14,14)="this is GSET"
+^bcn(11,11)="this is USET"
+^bcn(12,12)="this is USET"
+^bcn(13,13)="this is GSET"
+^bcn(14,14)="this is GSET"
+^ccn(11,11)="this is USET"
+^ccn(12,12)="this is USET"
+^ccn(13,13)="this is GSET"
+^ccn(14,14)="this is GSET"
+^cn(1)="this is SET"
+^dcn(11,11)="this is USET"
+^dcn(12,12)="this is USET"
+^dcn(13,13)="this is GSET"
+^dcn(14,14)="this is GSET"
+
+List ^
+
+GTM>
+PASSED VERIFY
+GTM>
+rm mumps.dat
+unset echo
+##SOURCE_PATH##/mupip journal -extract=forward2_nv.mjf -for mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file forward2_nv.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##SOURCE_PATH##/mupip journal -extract=forward2.mjf -for mumps.mjl -verbose
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
+##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65536 .0x00010000.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 0 .0x00000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : 0 .0x00000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 0 .0x0000000000000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 0 .0x0000000000000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT6,     Tp_resolve_time : 0 .0x00000000. ; \$H=47116,68400
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 8 .0x00000008.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+%GTM-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the start at .*
+%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%GTM-I-MUINFOUINT4,     Record Offset : 65536 [0x00010000]
+%GTM-I-FILECREATE, Journal extract file forward2.mjf created
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
+%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the end at .*
+%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+unset echo
+##SOURCE_PATH##/mupip journal -show=all -for mumps.mjl -verbose
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
+##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65536 .0x00010000.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 0 .0x00000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : 0 .0x00000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 0 .0x0000000000000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 0 .0x0000000000000000.
+##TEST_AWK.*%GTM-I-MUINFOUINT6,     Tp_resolve_time : 0 .0x00000000. ; \$H=47116,68400
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 8 .0x00000008.
+##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+%GTM-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the start at .*
+%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%GTM-I-MUINFOUINT4,     Record Offset : 65536 [0x00010000]
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
+%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the end at .*
+%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+##TEST_AWK Prev journal file name ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                       FALSE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ End of Data                             ##FILTERED##
+ Prev Recovery End of Data                       0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+ End Transaction                                68 [0x0000000000000044]
+##TEST_AWK Align size  *[1-9][0-9]* \[0x[0-9A-F]*\] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      0 [0x0000000000000000]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+Process(es) that are COMPLETE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           3
+   PFIN           3
+   ZTCOM          4
+   KILL           3
+   FKILL          1
+   GKILL          7
+   SET            8
+   FSET           2
+   GSET          26
+   PBLK           2
+   EPOCH          2
+   EOF            1
+   TKILL          1
+   UKILL          7
+   TSET           2
+   USET          26
+   TCOM           4
+   ALIGN          0
+   NULL           0
+   ZKILL          4
+   FZKIL          1
+   GZKIL          7
+   TZKIL          1
+   UZKIL          7
+   INCTN          4
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+unset echo
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,23 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+----------------------------------------------------------------------------------------------------
+Test 1 : Unexpired TPTIMEOUT timer cancellation in TCOMMIT does not reset pending MUPIP INTRPT event
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+Test 2 : After a TPTIMEOUT error, HANG command works fine
+----------------------------------------------------------------------------------------------------
+Should see TPTIMEOUT error below
+ZSTATUS=hangtest+15^d002477,%GTM-E-TPTIMEOUT, Transaction timeout
+Test PASSED : HANG command works fine even after a TPTIMEOUT event
+
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

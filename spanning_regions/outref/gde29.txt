@@ -1,0 +1,48 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gde29.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gde29.cmd
+%GDE-I-MAPBAD, Region XREG for Name XY("b":"d") does not exist
+%GDE-I-MAPBAD, Region XREG for Name XY("g":"h") does not exist
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^XY spans through it
+%GDE-I-STDNULLCOLLREQ, Region XREG needs Standard Null Collation enabled because global ^XY spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-I-NOEXIT, Cannot exit because of verification failure
+
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ XY("b":"d")                        XREG
+ XY("g":"h")                        XREG
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               XY("b")                          REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ XY("b")                         XY("d")                          REG = XREG
+                                                                  SEG = XREG
+                                                                  FILE = XREG.dat
+ XY("d")                         XY("g")                          REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ XY("g")                         XY("h")                          REG = XREG
+                                                                  SEG = XREG
+                                                                  FILE = XREG.dat
+ XY("h")                         ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gde29.gld

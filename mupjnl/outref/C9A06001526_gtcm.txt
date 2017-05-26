@@ -1,0 +1,25 @@
+Testing that GT.CM callers of jnl_ensure_open() handle non-return success
+On error, journaling should be ##TEST_AWK.*
+Testing for sr_port_cm/gtcmd_rundown.c
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
+##GT.CM##mumps.gld
+##GT.CM##Using: ##SOURCE_PATH##/mupip
+Create local (client) database...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+The database layout is:
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
+Starting the GT.CM Servers...
+%GTM-I-JNLCREATE, Journal file ##TEST_REMOTE_PATH_GTCM_1##/mumps.mjl created for database file ##TEST_REMOTE_PATH_GTCM_1##/mumps.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_REMOTE_PATH_GTCM_1##/mumps.dat is now ON
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,136 @@
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+# Start GT.M updates in the background for the entire duration of the test
+
+GTM>
+
+GTM>
+# Allocate a portno to be used for gtcm-gnp and gtcm-omi servers
+# Now determine list of environment variables used by GT.M from the header file gtm_logicals.h
+-------------------------------------------------------------------------------------------
+Testing buffer overflow for environment variable : <gtm_dist>
+Testing buffer overflow for environment variable : <gtm_blkupgrade_flag>
+Testing buffer overflow for environment variable : <gtm_dbfilext_syslog_disable>
+Testing buffer overflow for environment variable : <gtm_env_translate>
+Testing buffer overflow for environment variable : <gtm_fullblockwrites>
+Testing buffer overflow for environment variable : <gtm_gdscert>
+Testing buffer overflow for environment variable : <gtm_gvdupsetnoop>
+Testing buffer overflow for environment variable : <gtmgbldir>
+Testing buffer overflow for environment variable : <gtm_gvundef_fatal>
+Testing buffer overflow for environment variable : <gtm_poollimit>
+Testing buffer overflow for environment variable : <gtm_tp_allocation_clue>
+Testing buffer overflow for environment variable : <gtm_tpnotacidtime>
+Testing buffer overflow for environment variable : <gtm_tprestart_log_delta>
+Testing buffer overflow for environment variable : <gtm_tprestart_log_first>
+Testing buffer overflow for environment variable : <gtm_nontprestart_log_delta>
+Testing buffer overflow for environment variable : <gtm_nontprestart_log_first>
+Testing buffer overflow for environment variable : <gtm_zmaxtptime>
+Testing buffer overflow for environment variable : <gtm_white_box_test_case_count>
+Testing buffer overflow for environment variable : <gtm_white_box_test_case_enable>
+Testing buffer overflow for environment variable : <gtm_white_box_test_case_number>
+Testing buffer overflow for environment variable : <gtm_max_indrcache_count>
+Testing buffer overflow for environment variable : <gtm_max_indrcache_memory>
+Testing buffer overflow for environment variable : <gtm_baktmpdir>
+Testing buffer overflow for environment variable : <GTM_BAKTMPDIR>
+Testing buffer overflow for environment variable : <gtm_pattern_file>
+Testing buffer overflow for environment variable : <gtm_pattern_table>
+Testing buffer overflow for environment variable : <gtm_collate_>
+Testing buffer overflow for environment variable : <gtm_local_collate>
+Testing buffer overflow for environment variable : <gtm_lct_stdnull>
+Testing buffer overflow for environment variable : <gtm_stdxkill>
+Testing buffer overflow for environment variable : <gtmcompile>
+Testing buffer overflow for environment variable : <gtmdbglvl>
+Testing buffer overflow for environment variable : <gtmroutines>
+Testing buffer overflow for environment variable : <gtm_boolean>
+Testing buffer overflow for environment variable : <gtm_disable_alignstr>
+Testing buffer overflow for environment variable : <gtm_max_sockets>
+Testing buffer overflow for environment variable : <gtm_memory_reserve>
+Testing buffer overflow for environment variable : <gtm_noundef>
+Testing buffer overflow for environment variable : <gtm_principal>
+Testing buffer overflow for environment variable : <gtm_prompt>
+Testing buffer overflow for environment variable : <gtm_side_effects>
+Testing buffer overflow for environment variable : <gtm_sysid>
+Testing buffer overflow for environment variable : <gtm_trace_gbl_name>
+Testing buffer overflow for environment variable : <gtm_trace_groups>
+Testing buffer overflow for environment variable : <gtm_trace_table_size>
+Testing buffer overflow for environment variable : <gtm_zdate_form>
+Testing buffer overflow for environment variable : <gtm_zinterrupt>
+Testing buffer overflow for environment variable : <gtm_zquit_anyway>
+Testing buffer overflow for environment variable : <gtm_ztrap_form>
+Testing buffer overflow for environment variable : <gtm_ztrap_new>
+Testing buffer overflow for environment variable : <gtm_zyerror>
+Testing buffer overflow for environment variable : <gtm_zstep>
+Testing buffer overflow for environment variable : <gtm_tmp>
+Testing buffer overflow for environment variable : <gtm_trigger_etrap>
+Testing buffer overflow for environment variable : <gtm_snaptmpdir>
+Testing buffer overflow for environment variable : <gtm_db_startup_max_wait>
+Testing buffer overflow for environment variable : <gtm_repl_instance>
+Testing buffer overflow for environment variable : <gtm_repl_instname>
+Testing buffer overflow for environment variable : <gtm_repl_instsecondary>
+Testing buffer overflow for environment variable : <gtm_zlib_cmp_level>
+Testing buffer overflow for environment variable : <gtm_event_log_libpath>
+Testing buffer overflow for environment variable : <gtm_event_log_rtn>
+Testing buffer overflow for environment variable : <gtm_jnl_release_timeout>
+Testing buffer overflow for environment variable : <gtm_custom_errors>
+Testing buffer overflow for environment variable : <gtm_chset>
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+Testing buffer overflow for environment variable : <gtm_chset_locale>
+Testing buffer overflow for environment variable : <gtm_dont_tag_UTF8_ASCII>
+##ALLOW_OUTPUT HOST_ALL
+Testing buffer overflow for environment variable : <gtm_patnumeric>
+Testing buffer overflow for environment variable : <gtm_badchar>
+Testing buffer overflow for environment variable : <gtm_icu_version>
+Testing buffer overflow for environment variable : <gtm_link>
+Testing buffer overflow for environment variable : <gtm_linktmpdir>
+Testing buffer overflow for environment variable : <gtm_autorelink_shm>
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Testing buffer overflow for environment variable : <gtm_autorelink_keeprtn>
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Testing buffer overflow for environment variable : <gtm_autorelink_ctlmax>
+Testing buffer overflow for environment variable : <gtm_error_on_jnl_file_lost>
+Testing buffer overflow for environment variable : <gtm_etrap>
+Testing buffer overflow for environment variable : <gtm_log>
+Testing buffer overflow for environment variable : <gtm_lvnullsubs>
+Testing buffer overflow for environment variable : <gtm_nocenable>
+Testing buffer overflow for environment variable : <gtm_non_blocked_write_retries>
+Testing buffer overflow for environment variable : <gtm_principal_editing>
+Testing buffer overflow for environment variable : <gtm_procstuckexec>
+Testing buffer overflow for environment variable : <gtm_quiet_halt>
+Testing buffer overflow for environment variable : <gtm_extract_nocol>
+Testing buffer overflow for environment variable : <gtmdbgflags>
+Testing buffer overflow for environment variable : <gtmdbgflags_freq>
+Testing buffer overflow for environment variable : <gtm_max_storalloc>
+Testing buffer overflow for environment variable : <gtm_ipv4_only>
+Testing buffer overflow for environment variable : <gtm_dmterm>
+Testing buffer overflow for environment variable : <gtm_mupjnl_parallel>
+Testing buffer overflow for environment variable : <gtm_locale>
+Testing buffer overflow for environment variable : <gtm_utfcgr_strings>
+Testing buffer overflow for environment variable : <gtm_utfcgr_string_groups>
+# Stop background GT.M updates
+
+GTM>
+
+GTM>
+# Remove portno allocation file
+# Do dbcheck
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

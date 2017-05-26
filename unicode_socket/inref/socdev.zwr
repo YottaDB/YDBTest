@@ -1,0 +1,117 @@
+GT.M MUPIP EXTRACT UTF-8
+04-SEP-2006  19:19:13 ZWR
+^data(1,"read")="u tcpdev r x#4  s t=$T  u 0"
+^data(1,"read","x","ref")="ａｂｃ胞"
+^data(1,"write")="h 10  u tcpdev:zff=$C(32990) w ""ａｂｃ"",#  u 0"
+^data(2,"read")="u tcpdev r x#4  s t=$T  u 0"
+^data(2,"read","x","ref")="ａｂｃ胞"
+^data(2,"write")="h 10  u tcpdev w ""ａｂｃ"",#  u 0"
+^data(3,"read")="u tcpdev r x#3  s t=$T  u 0"
+^data(3,"read","x","ref")="ａｂｃ"
+^data(3,"write")="h 10  u tcpdev:znoff w ""ａｂｃ"",#  u 0"
+^data(4,"read")="u tcpdev r x#3  s t=$T  u 0"
+^data(4,"read","x","ref")="ａｂｃ"
+^data(4,"write")="h 10  u tcpdev w ""ａｂｃ"",#  u 0"
+^data(5,"read")="u tcpdev r x#4  s t=$T  u 0"
+^data(5,"read","x","ref")="ａｂｃ胞"
+^data(5,"write")="h 10  u tcpdev:zff=$C(32990) w ""ａｂｃ"",#  u 0"
+^data(6,"read")="u tcpdev r x#7  s t=$T  u 0"
+^data(6,"read","x","ref")="１２３４５６胞"
+^data(6,"write")="h 10  u tcpdev:(zwidth=5:znowrap) w ""１２３４５６"",# s x=$x,y=$y u 0"
+^data(6,"write","x","xref")=0
+^data(6,"write","y","yref")=0
+^data(7,"read")="u tcpdev r x#7  s t=$T  u 0"
+^data(7,"read","x","ref")="０１２３４５６"
+^data(7,"write")="h 10  u tcpdev:(zwidth=5:znowrap:zlength=3) w ""０１２３４５６"",! s x=$x,y=$y u 0"
+^data(7,"write","x","xref")=0
+^data(7,"write","y","yref")=1
+^data(8,"read")="u tcpdev r x#7  s t=$T  u 0"
+^data(8,"read","x","ref")="０１２３４５６"
+^data(8,"write")="h 10  u tcpdev:(zwidth=5:znowrap) w ""０１２３４５６"",! s x=$x,y=$y u 0"
+^data(8,"write","y","yref")=2
+^data(9,"read")="u tcpdev r x#7  s t=$T  u 0"
+^data(9,"read","x","ref")="０１２３４５６"
+^data(9,"write")="h 10  u tcpdev:(znowrap:zwidth=5) w ""０１２３４５６"" s x=$x,y=$y u 0"
+^data(9,"write","x","xref")=2
+^data(9,"write","y","yref")=3
+^data(10,"read")="u tcpdev r x#7  s t=$T  u 0"
+^data(10,"read","x","ref")="０１２３４５６"
+^data(10,"write")="h 10  u tcpdev:(zwidth=80:znoff:zlength=24) w ""０１２３４５６"",# s x=$x,y=$y u 0"
+^data(10,"write","x","xref")=0
+^data(10,"write","y","yref")=0
+^data(11,"read")="u tcpdev r x#8  s t=$T  u 0"
+^data(11,"read","x","ref")="０１２３４５６"_$C(8)
+^data(11,"write")="h 10 u tcpdev:filter=""CHARACTERS"" w ""０１２３４５６"",$C(8) s x=$x,y=$y u 0"
+^data(11,"write","x","xref")=6
+^data(11,"write","y","yref")=0
+^data(12,"read")="u tcpdev r x#8  s t=$T  u 0"
+^data(12,"read","x","ref")="０１２３４５６"_$C(10)
+^data(12,"write")="h 10  u tcpdev w ""０１２３４５６"",$C(10) s x=$x,y=$y u 0"
+^data(12,"write","x","xref")=13
+^data(12,"write","y","yref")=1
+^data(13,"read")="u tcpdev r x#8  s t=$T  u 0"
+^data(13,"read","x","ref")="０１２３４５６"_$C(13)
+^data(13,"write")="h 10  u tcpdev w ""０１２３４５６"",$C(13) s x=$x,y=$y u 0"
+^data(13,"write","x","xref")=0
+^data(13,"write","y","yref")=1
+^data(14,"read")="u tcpdev r x#9  s t=$T  u 0"
+^data(14,"read","x","ref")="０１２３４５６"_$C(10,13)
+^data(14,"write")="h 10  u tcpdev w ""０１２３４５６"",$C(10,13) s x=$x,y=$y u 0"
+^data(14,"write","x","xref")=0
+^data(14,"write","y","yref")=2
+^data(15,"read")="u tcpdev r x#9  s t=$T  u 0"
+^data(15,"read","x","ref")="０１２３４５６"_$C(13,10)
+^data(15,"write")="h 10  u tcpdev w ""０１２３４５６"",$C(13,10) s x=$x,y=$y u 0"
+^data(15,"write","x","xref")=0
+^data(15,"write","y","yref")=3
+^data(16,"read")="u tcpdev r x#10  s t=$T  u 0"
+^data(16,"read","x","ref")="０１２３４５６"_$C(65536,255,65538)
+^data(16,"write")="h 10  u tcpdev w ""０１２３４５６""_$C(65536,255,65538) s x=$x,y=$y u 0"
+^data(16,"write","x","xref")=10
+^data(16,"write","y","yref")=3
+^data(17,"read")="u tcpdev r x#8  s t=$T  u 0"
+^data(17,"read","x","ref")="０１２３４５６"_$C(12)
+^data(17,"write")="h 10  u tcpdev w ""０１２３４５６"",$C(12) s x=$x,y=$y u 0"
+^data(17,"write","x","xref")=0
+^data(17,"write","y","yref")=0
+^data(18,"read")="u tcpdev r x#3  s t=$T  u 0"
+^data(18,"read","x","ref")="０１"_$C(8)
+^data(18,"write")="h 10  u tcpdev:filter=""NOCHARACTERS"" w ""０１"",$C(8) s x=$x,y=$y u 0"
+^data(18,"write","x","xref")=3
+^data(18,"write","y","yref")=0
+^data(19,"read")="u tcpdev r x#3  s t=$T  u 0"
+^data(19,"read","x","ref")="０１"_$C(10)
+^data(19,"write")="h 10  u tcpdev w ""０１"",$C(10) s x=$x,y=$y u 0"
+^data(19,"write","x","xref")=6
+^data(19,"write","y","yref")=0
+^data(20,"read")="u tcpdev r x#3  s t=$T  u 0"
+^data(20,"read","x","ref")="０１"_$C(13)
+^data(20,"write")="h 10  u tcpdev w ""０１"",$C(13) s x=$x,y=$y u 0"
+^data(20,"write","x","xref")=9
+^data(20,"write","y","yref")=0
+^data(21,"read")="u tcpdev r x#3  s t=$T  u 0"
+^data(21,"read","x","ref")="０１"_$C(12)
+^data(21,"write")="h 10  u tcpdev w ""０１"",$C(12) s x=$x,y=$y u 0"
+^data(21,"write","x","xref")=12
+^data(21,"write","y","yref")=0
+^data(22,"read")="u tcpdev r x#3  s t=$T  u 0"
+^data(22,"read","x","ref")="０１"_$C(8)
+^data(22,"write")="h 10  u tcpdev:nofilter w ""０１"",$C(8) s x=$x,y=$y u 0"
+^data(22,"write","x","xref")=15
+^data(22,"write","y","yref")=0
+^data(23,"read")="u tcpdev r x#3  s t=$T  u 0"
+^data(23,"read","x","ref")="０１"_$C(12)
+^data(23,"write")="h 10  u tcpdev w ""０１"",$C(12) s x=$x,y=$y u 0"
+^data(23,"write","x","xref")=18
+^data(23,"write","y","yref")=0
+^data(24,"read")="u tcpdev r x  s t=$T  u 0"
+^data(24,"read","x","ref")=$C(27)_"[H"_$C(27)_"[2J"
+^data(24,"write")="h 10  u tcpdev:filter=""ESCAPE"" w *27,*91,*72,*27,*91,*50,*74 s x=$x,y=$y u 0"
+^data(24,"write","x","xref")=18
+^data(24,"write","y","yref")=0
+^data(25,"read")="u tcpdev r x  s t=$T  u 0"
+^data(25,"read","x","ref")=$C(27)_"[H"_$C(27)_"[2J"
+^data(25,"write")="h 10  u tcpdev:filter=""NOESCAPE"" w *27,*91,*72,*27,*91,*50,*74 s x=$x,y=$y u 0"
+^data(25,"write","x","xref")=25
+^data(25,"write","y","yref")=0
+^data("total")="25"

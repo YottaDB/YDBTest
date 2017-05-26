@@ -1,0 +1,39 @@
+# This is part B of test for TR C9D07-002353. For the large transaction number, we need to set it in debugger,
+# so this part is manual test
+# steps as follows:
+1. set up the primary side
+	goto primary dir
+ 	setenv gtmgbldir mumps.gld
+	gde exit
+	mupip create
+	setenv gtm_repl_instance mumps.repl
+	mupip replic -instance_create
+	mupip set -replication=on -reg "*"
+	mupip replic -source -start -second=localhost:5000 -log=src.log -buff=1 -instsecondary=INSTANCE2
+2. set up the secondary side
+	go to  secondary dir
+	setenv gtmgbldir mumps.gld
+	gde exit
+	mupip create
+	setenv gtm_repl_instance mumps.repl
+	mupip replic -instance_create
+	mupip set -replication=on -reg "*"
+	mupip replic -source -start -passive -buff=1 -log=passive.log -instsecondary=INSTANCE2
+	mupip replic -receiv -start -log=recv.log -buff=1 -listen=5000
+3. attach debugger to primary source server
+	go to primary dir
+	mupip replic -source -checkhealth
+	get the PID from the above command
+	gdb $gtm_exe/mupip
+	gdb> attach PID
+	gdb> set variable repl_source_data_sent=2147480648
+	gdb> set variable repl_source_msg_sent=2147480648
+	gdb> detach
+	gdb> quit
+	Optional:
+	  you can attach the debugger to receiver server to set repl_recv_data_recvd and repl_recv_data_processed to the above value, then detach and quit from debugger
+	gtm
+	gtm> f i=1:1:3000 s ^a(i)="c"_i
+	gtm> haul
+4. check src.log to verify that Jnl Total and Msg Total show positive numbers
+	

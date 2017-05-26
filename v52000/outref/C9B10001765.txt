@@ -1,0 +1,26 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+Test $Order() gives correct result if 2nd arg is an extrinsic that manipulates LOCAL 1st arg
+$order(V(2,-1),$$ordlcl) (Expected=2) is = 2
+
+Test $Order() gives correct result if 2nd arg is an extrinsic that manipulates GLOBAL 1st arg
+$order(^V(2,-1),$$ordgbl) (Expected=2) is = 2
+$reference (Expected=^V(2,2)) is = ^V(2,2)
+
+Test $Get() gives correct result if 2nd arg is an extrinsic that manipulates LOCAL 1st arg
+$get(V(2,2),$$getlcl) (Expected="bar") is = bar
+
+Test $Get() gives correct result if 2nd arg is an extrinsic that manipulates GLOBAL 1st arg
+$get(^V(2,2),$$getgbl) (Expected="^bar") is = ^bar
+$reference (Expected=^bar) is = ^bar
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

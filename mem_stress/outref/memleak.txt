@@ -1,0 +1,73 @@
+##SUSPEND_OUTPUT  GT.M REPLIC
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
+##GT.CM##mumps.gld
+##GT.CM##Using: ##SOURCE_PATH##/mupip
+Create local (client) database...
+##ALLOW_OUTPUT  GT.M REPLIC
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  GT.CM
+a.dat
+b.dat
+c.dat
+mumps.dat
+##SUSPEND_OUTPUT  REPLIC
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##SUSPEND_OUTPUT  GT.M REPLIC
+##ALLOW_OUTPUT  NON_REPLIC NON_TP GT.CM
+The database layout is:
+ASEG	a.dat
+BSEG	##TEST_REMOTE_NODE_PATH_GTCM##/b.dat
+CSEG	##TEST_REMOTE_NODE_PATH_GTCM##/c.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
+Starting the GT.CM Servers...
+##ALLOW_OUTPUT  GT.M REPLIC
+Memory stress test starts
+Memory stress test ends
+##SUSPEND_OUTPUT  NON_REPLIC GT.CM
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SUSPEND_OUTPUT  GT.M REPLIC
+##ALLOW_OUTPUT  NON_REPLIC GT.CM
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####SOURCE_PATH##/mupip
+##GT.CM####SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##ALLOW_OUTPUT  GT.M REPLIC
+##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  GT.CM
+##SOURCE_PATH##/mupip integ -REG *
+##SUSPEND_OUTPUT  GT.M REPLIC
+##ALLOW_OUTPUT  GT.CM
+##SOURCE_PATH##/mupip integ a.dat
+##ALLOW_OUTPUT  GT.M REPLIC
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC GT.CM
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

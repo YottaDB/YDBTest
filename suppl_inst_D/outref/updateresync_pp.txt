@@ -1,0 +1,68 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Start A->P replication and do 10 updates each on A and P
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message "New History Content"'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_dist/mumps -run %XCMD "for i=1:1:10 set ^INST1(i)=i"'==
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_dist/mumps -run %XCMD "for i=1:1:10 set ^INST2(i)=i"'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+# Take backup of P and restore on Q. Do 10 more updates on A and P
+==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST3 $gtm_tst/com/cp_remote_file.csh __SRC_DIR__/bak_20/*.{dat,repl} _REMOTEINFO___RCV_DIR__/'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_dist/mumps -run %XCMD "for i=11:1:20 set ^INST1(i)=i"'==
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_dist/mumps -run %XCMD "for i=11:1:20 set ^INST2(i)=i"'==
+# Start P->Q replication with -updatreresync=<backupfromP.repl>
+==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST3'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST3 updateresync=inst2.repl'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+# The history records of INST2 and INST3 should be identical, but for the sequence numbers
+2,3c2,3
+< HST #      0 : Start Sequence Number                     1 [0x0000000000000001]
+< HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+---
+> HST #      0 : Start Sequence Number                    21 [0x0000000000000015]
+> HST #      0 : Stream Sequence Number                   11 [0x000000000000000B]
+12,13c12,13
+< HST #      1 : Start Sequence Number                     1 [0x0000000000000001]
+< HST #      1 : Stream Sequence Number                    1 [0x0000000000000001]
+---
+> HST #      1 : Start Sequence Number                    21 [0x0000000000000015]
+> HST #      1 : Stream Sequence Number                   11 [0x000000000000000B]
+# Now bring down P completely and do 10 more updates on A
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2 RESERVEPORT'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST2 INST3'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_dist/mumps -run %XCMD "for i=21:1:30 set ^INST1(i)=i"'==
+# Now bring up P and do 10 more updates on P. The new 20 updates should stream across Q
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST3'==
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_dist/mumps -run %XCMD "for i=21:1:30 set ^INST2(i)=i"'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT ALL'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

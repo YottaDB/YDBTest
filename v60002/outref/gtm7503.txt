@@ -1,0 +1,13 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+----------
+Error GTM-E-HOSTCONFLICT seen in gtm7503.mje as expected:
+%GTM-E-HOSTCONFLICT, Host ##TEST_HOST_SHORT####TEST_AWK(\.[a-zA-Z0-9]+)* could not open database file ##TEST_PATH##/mumps.dat because it is marked as already open on node s_i_l_l_y
+----------
+Renaming gtm7503.mjex to errout.txtx
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

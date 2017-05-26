@@ -1,0 +1,1763 @@
+
+GTM>
+d ^nodb
+
+I do not have a database...
+I said, I do not have a database...
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.,%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-MPROFRUNDOWN, Error during M-profiling rundown
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+%GTM-E-TRACEON, Missing global name (with optional subscripts) for recording M-tracing information
+
+GTM>
+
+GTM>
+%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): LCL
+
+GTM>
+
+GTM>
+d ^badprof
+
+GTM>
+
+GTM>
+d ^examin ^TRACE
+The number of executions:
+^TRACE("GTM$DMOD","^"): 1
+^TRACE("badprof","badprof"): 1
+^TRACE("badprof","badprof",2): 1
+^TRACE("badprof","badprof",3): 1
+^TRACE("badprof","badprof",4): 1
+
+GTM>
+
+GTM>
+
+GTM>
+d ^examin ^TRACE
+The number of executions:
+^TRACE("badprof","badprof"): 1
+^TRACE("badprof","badprof",2): 1
+^TRACE("badprof","badprof",3): 1
+^TRACE("badprof","badprof",4): 1
+
+GTM>
+
+GTM>
+
+GTM>
+d ^out1
+
+GTM>
+d ^examin ^TRACE
+The number of executions:
+^TRACE("badprof","badprof"): 1
+^TRACE("badprof","badprof",2): 1
+^TRACE("badprof","badprof",3): 1
+^TRACE("badprof","badprof",4): 1
+^TRACE("one","one"): 10
+^TRACE("one","one",0): 10
+^TRACE("one","one",1): 10
+^TRACE("out1","out",2): 1
+^TRACE("out1","out",3): 1
+^TRACE("out1","out",4): 1
+^TRACE("out1","out",4,"FOR_LOOP",1): 10
+^TRACE("out1","out",5): 1
+
+GTM>
+
+GTM>
+d ^out2
+
+GTM>
+d ^examin ^TRACE
+The number of executions:
+
+GTM>
+
+GTM>
+d ^smoke
+
+GTM>
+d ^examin ^TRACE
+The number of executions:
+^TRACE("END","smoke","end",0): 1
+^TRACE("END","smoke","smoke",2): 1
+^TRACE("END","smoke","smoke",3): 1
+^TRACE("END","smoke","smoke",3,"FOR_LOOP",1): 3
+^TRACE("END","smoke","smoke",4): 1
+^TRACE("END","smoke","smoke",4,"FOR_LOOP",1): 3
+^TRACE("END","smoke","smoke",4,"FOR_LOOP",2): 6
+
+GTM>
+
+GTM>
+d ^examin ^TRACE
+The number of executions:
+^TRACE("ZMPROF15","lev1","lev1",3): 1
+^TRACE("ZMPROF15","lev1","lev1",4): 1
+^TRACE("ZMPROF15","lev1","lev1",5): 1
+^TRACE("ZMPROF15","lev1","x"): 1
+^TRACE("ZMPROF15","lev1","x",1): 1
+d ^examin ^TRACE
+The number of executions:
+^TRACE("ZMPROF15","lev2","lev2"): 1
+^TRACE("ZMPROF15","lev2","lev2",3): 1
+^TRACE("ZMPROF15","lev2","lev2",4): 1
+^TRACE("ZMPROF15","lev2","lev2",5): 1
+^TRACE("ZMPROF15","lev2","x"): 1
+^TRACE("ZMPROF15","lev2","x",1): 1
+d ^examin ^TRACE
+The number of executions:
+^TRACE("ZMPROF15","lev3","lev3"): 1
+^TRACE("ZMPROF15","lev3","lev3",4): 1
+^TRACE("ZMPROF15","lev3","x"): 1
+^TRACE("ZMPROF15","lev3","x",2): 1
+^TRACE("ZMPROF15","lev3","y"): 1
+^TRACE("ZMPROF15","lev3","y",2): 1
+^TRACE("ZMPROF15","lev3","y",3): 1
+^TRACE("ZMPROF15","lev3","z"): 1
+^TRACE("ZMPROF15","lev3","z",1): 1
+d ^examin ^TRACE
+The number of executions:
+^TRACE("ZMPROF15","lev4","lev4",4): 1
+^TRACE("ZMPROF15","lev4","x"): 1
+^TRACE("ZMPROF15","lev4","x",2): 1
+^TRACE("ZMPROF15","lev4","y"): 1
+^TRACE("ZMPROF15","lev4","y",2): 1
+^TRACE("ZMPROF15","lev4","y",3): 1
+^TRACE("ZMPROF15","lev4","z"): 1
+^TRACE("ZMPROF15","lev4","z",1): 1
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+d ^extin
+
+Testing external and internal extrinsic functions...
+
+Processing External extrinsic function 
+
+Processing Internal extrinsic function 
+
+GTM>
+d ^examin ^TRACE
+The number of executions:
+^TRACE("ZMPROF1","exf","lab1"): 10
+^TRACE("ZMPROF1","exf","lab1",0): 10
+^TRACE("ZMPROF1","exf","lab1",0,"FOR_LOOP",1): 10000
+^TRACE("ZMPROF1","exf","lab1",1): 10
+^TRACE("ZMPROF1","extin","extin",3): 1
+^TRACE("ZMPROF1","extin","extin",4): 1
+^TRACE("ZMPROF1","testei","lab"): 1
+^TRACE("ZMPROF1","testei","lab",0): 1
+^TRACE("ZMPROF1","testei","lab",1): 1
+^TRACE("ZMPROF1","testei","lab",1,"FOR_LOOP",1): 10
+^TRACE("ZMPROF1","testei","lab",2): 1
+^TRACE("ZMPROF1","testei","lab",3): 1
+^TRACE("ZMPROF1","testei","lab",3,"FOR_LOOP",1): 10
+^TRACE("ZMPROF1","testei","lab",4): 1
+^TRACE("ZMPROF1","testei","lab1"): 10
+^TRACE("ZMPROF1","testei","lab1",0): 10
+^TRACE("ZMPROF1","testei","lab1",0,"FOR_LOOP",1): 1000
+^TRACE("ZMPROF1","testei","lab1",1): 10
+^TRACE("ZMPROF1","testei","testei"): 1
+^TRACE("ZMPROF1","testei","testei",0): 1
+^TRACE("ZMPROF1","testei","testei",1): 1
+^TRACE("ZMPROF1","testei","testei",2): 1
+^TRACE("ZMPROF1","testei","testei",3): 1
+
+GTM>
+
+GTM>
+d ^direct
+
+Testing direct routine calls...
+
+Processing External routine
+
+Processing Internal routine
+
+GTM>
+d ^examin ^TRACE
+The number of executions:
+^TRACE("ZMPROF13","direct","direct",3): 1
+^TRACE("ZMPROF13","direct","direct",4): 1
+^TRACE("ZMPROF13","exr","lab1"): 10
+^TRACE("ZMPROF13","exr","lab1",0): 10
+^TRACE("ZMPROF13","exr","lab1",0,"FOR_LOOP",1): 100000
+^TRACE("ZMPROF13","exr","lab1",1): 10
+^TRACE("ZMPROF13","testdir","lab"): 1
+^TRACE("ZMPROF13","testdir","lab",0): 1
+^TRACE("ZMPROF13","testdir","lab",1): 1
+^TRACE("ZMPROF13","testdir","lab",2): 1
+^TRACE("ZMPROF13","testdir","lab",2,"FOR_LOOP",1): 10
+^TRACE("ZMPROF13","testdir","lab",3): 1
+^TRACE("ZMPROF13","testdir","lab",4): 1
+^TRACE("ZMPROF13","testdir","lab",5): 1
+^TRACE("ZMPROF13","testdir","lab",5,"FOR_LOOP",1): 10
+^TRACE("ZMPROF13","testdir","lab",6): 1
+^TRACE("ZMPROF13","testdir","lab1"): 10
+^TRACE("ZMPROF13","testdir","lab1",0): 10
+^TRACE("ZMPROF13","testdir","lab1",0,"FOR_LOOP",1): 1000
+^TRACE("ZMPROF13","testdir","lab1",1): 10
+^TRACE("ZMPROF13","testdir","testdir"): 1
+^TRACE("ZMPROF13","testdir","testdir",0): 1
+^TRACE("ZMPROF13","testdir","testdir",1): 1
+^TRACE("ZMPROF13","testdir","testdir",2): 1
+^TRACE("ZMPROF13","testdir","testdir",3): 1
+
+GTM>
+
+GTM>
+d ^indirect
+
+Testing indirection...
+
+Processing External routine
+
+Processing Internal routine
+
+GTM>
+d ^examin ^TRACE
+The number of executions:
+^TRACE("ZMPROF2","exr","lab1"): 10
+^TRACE("ZMPROF2","exr","lab1",0): 10
+^TRACE("ZMPROF2","exr","lab1",0,"FOR_LOOP",1): 100000
+^TRACE("ZMPROF2","exr","lab1",1): 10
+^TRACE("ZMPROF2","indirect","indirect",3): 1
+^TRACE("ZMPROF2","indirect","indirect",4): 1
+^TRACE("ZMPROF2","testind","lab"): 1
+^TRACE("ZMPROF2","testind","lab",0): 1
+^TRACE("ZMPROF2","testind","lab",1): 1
+^TRACE("ZMPROF2","testind","lab",2): 1
+^TRACE("ZMPROF2","testind","lab",2,"FOR_LOOP",1): 10
+^TRACE("ZMPROF2","testind","lab",3): 1
+^TRACE("ZMPROF2","testind","lab",4): 1
+^TRACE("ZMPROF2","testind","lab",5): 1
+^TRACE("ZMPROF2","testind","lab",5,"FOR_LOOP",1): 10
+^TRACE("ZMPROF2","testind","lab",6): 1
+^TRACE("ZMPROF2","testind","lab1"): 10
+^TRACE("ZMPROF2","testind","lab1",0): 10
+^TRACE("ZMPROF2","testind","lab1",0,"FOR_LOOP",1): 1000
+^TRACE("ZMPROF2","testind","lab1",1): 10
+^TRACE("ZMPROF2","testind","testind"): 1
+^TRACE("ZMPROF2","testind","testind",0): 1
+^TRACE("ZMPROF2","testind","testind",1): 1
+^TRACE("ZMPROF2","testind","testind",2): 1
+^TRACE("ZMPROF2","testind","testind",3): 1
+
+GTM>
+
+GTM>
+d ^label
+
+Testing routine calls without labels, and variable in TRACE:0:var ...
+DUMMY
+DUMMY
+DUMMY
+I have a labelNo I do not have a label
+GTM>
+d ^examin ^TRACE
+The number of executions:
+^TRACE("NAME","dummy","^"): 1
+^TRACE("NAME","dummy","^",1): 1
+^TRACE("NAME","dummy","^",3): 1
+^TRACE("NAME","dummy","dum",0): 1
+^TRACE("NAME","dummy","dum",1): 1
+^TRACE("NAME","dummy","dum",1,"FOR_LOOP",1): 10
+^TRACE("NAME","dummy","dum",1,"FOR_LOOP",2): 10010
+^TRACE("NAME","dummy","dum",4): 1
+^TRACE("NAME","label","mylbl",1): 1
+^TRACE("NAME","label","mylbl",2): 1
+^TRACE("ZMPROF10","label","mylbl",5): 1
+^TRACE("ZMPROF10","label","mylbl",6): 1
+^TRACE("ZMPROF10","label","mylbl",7): 1
+^TRACE("ZMPROF10","nolbl","^"): 1
+^TRACE("ZMPROF10","nolbl","^",1): 1
+^TRACE("ZMPROF10","nolbl","^",2): 1
+^TRACE("ZMPROF10","yeslbl","yeslbl"): 1
+^TRACE("ZMPROF10","yeslbl","yeslbl",0): 1
+^TRACE("ZMPROF10","yeslbl","yeslbl",1): 1
+^TRACE("ZMPROF4","dummy","^"): 1
+^TRACE("ZMPROF4","dummy","^",1): 1
+^TRACE("ZMPROF4","dummy","^",3): 1
+^TRACE("ZMPROF4","dummy","dum",0): 1
+^TRACE("ZMPROF4","dummy","dum",1): 1
+^TRACE("ZMPROF4","dummy","dum",1,"FOR_LOOP",1): 10
+^TRACE("ZMPROF4","dummy","dum",1,"FOR_LOOP",2): 10010
+^TRACE("ZMPROF4","dummy","dum",4): 1
+^TRACE("ZMPROF4","label","label",9): 1
+^TRACE("ZMPROF4","label","label",10): 1
+
+GTM>
+d ^examin ^TRACEN
+The number of executions:
+^TRACEN("dummy","^"): 1
+^TRACEN("dummy","^",1): 1
+^TRACEN("dummy","^",3): 1
+^TRACEN("dummy","dum",0): 1
+^TRACEN("dummy","dum",1): 1
+^TRACEN("dummy","dum",1,"FOR_LOOP",1): 10
+^TRACEN("dummy","dum",1,"FOR_LOOP",2): 10010
+^TRACEN("dummy","dum",4): 1
+^TRACEN("label","label",4): 1
+^TRACEN("label","label",5): 1
+
+GTM>
+
+GTM>
+d ^multilvl
+
+Testing multilevel m routines, internal and external, and various command/comment/local/global variations...
+another line hereI am still hereanother line hereI am still hereanother line hereI am still hereNest 3 levels
+1 2 3 
+
+GTM>
+d ^examin ^TRACE
+The number of executions:
+^TRACE("ZMPROF6","lvls","lvl1"): 1
+^TRACE("ZMPROF6","lvls","lvl1",1): 3
+^TRACE("ZMPROF6","lvls","lvl1",1,"FOR_LOOP",1): 87
+^TRACE("ZMPROF6","lvls","lvl1",1,"FOR_LOOP",2): 17139
+^TRACE("ZMPROF6","lvls","lvl1",2): 3
+^TRACE("ZMPROF6","lvls","lvl1",3): 3
+^TRACE("ZMPROF6","lvls","lvl1",4): 3
+^TRACE("ZMPROF6","lvls","lvl1",5): 3
+^TRACE("ZMPROF6","lvls","lvl2"): 1
+^TRACE("ZMPROF6","lvls","lvl2",1): 2
+^TRACE("ZMPROF6","lvls","lvl3"): 1
+^TRACE("ZMPROF6","lvls","lvl3",1): 1
+^TRACE("ZMPROF6","multilvl","lvl1"): 1
+^TRACE("ZMPROF6","multilvl","lvl1",1): 1
+^TRACE("ZMPROF6","multilvl","lvl1",2): 1
+^TRACE("ZMPROF6","multilvl","lvl2"): 1
+^TRACE("ZMPROF6","multilvl","lvl2",1): 1
+^TRACE("ZMPROF6","multilvl","lvl2",2): 1
+^TRACE("ZMPROF6","multilvl","lvl2",3): 1
+^TRACE("ZMPROF6","multilvl","lvl2",4): 1
+^TRACE("ZMPROF6","multilvl","lvl3"): 1
+^TRACE("ZMPROF6","multilvl","lvl3",1): 1
+^TRACE("ZMPROF6","multilvl","lvl3",2): 1
+^TRACE("ZMPROF6","multilvl","lvl3",3): 1
+^TRACE("ZMPROF6","multilvl","lvl3",4): 1
+^TRACE("ZMPROF6","multilvl","multilvl",3): 1
+^TRACE("ZMPROF6","multilvl","multilvl",4): 1
+^TRACE("ZMPROF6","multilvl","multilvl",5): 1
+^TRACE("ZMPROF6","multilvl","multilvl",6): 1
+^TRACE("ZMPROF6","multilvl","multilvl",7): 1
+^TRACE("ZMPROF6","multilvl","multilvl",7,"FOR_LOOP",1): 4
+^TRACE("ZMPROF6","multilvl","multilvl",8): 1
+^TRACE("ZMPROF6","multilvl","multilvl",9): 1
+^TRACE("ZMPROF6","one","one"): 17139
+^TRACE("ZMPROF6","one","one",0): 17139
+^TRACE("ZMPROF6","one","one",1): 17139
+^TRACE("ZMPROF6","pow","pow"): 1
+^TRACE("ZMPROF6","pow","pow",0): 1
+^TRACE("ZMPROF6","pow","pow",1): 1
+
+GTM>
+
+GTM>
+d ^comm
+
+Testing commands/comments/local/global variations and jobbed processes...
+postpostpostpostpostpostpostComments
+,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
+12
+k is:4
+ sdf 0,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42
+do you count jobs?
+tell me
+a
+GTM>
+d ^examin ^TRACE
+The number of executions:
+^TRACE("ZMPROF10","comm","comm",19): 1
+^TRACE("ZMPROF10","comm","comm",20): 1
+^TRACE("ZMPROF10","comm","comm",21): 1
+^TRACE("ZMPROF10","comm","comm",21,"FOR_LOOP",1): 4
+^TRACE("ZMPROF10","comm","comm",22): 1
+^TRACE("ZMPROF10","comm","comm",23): 1
+^TRACE("ZMPROF10","comm","comm",24): 1
+^TRACE("ZMPROF10","comm","comm",25): 1
+^TRACE("ZMPROF7","comm","comm",3): 1
+^TRACE("ZMPROF7","comm","comm",4): 1
+^TRACE("ZMPROF7","comms","comment"): 1
+^TRACE("ZMPROF7","comms","comment",1): 1
+^TRACE("ZMPROF7","comms","comment",3): 1
+^TRACE("ZMPROF7","comms","comment",5): 1
+^TRACE("ZMPROF7","comms","comment",7): 1
+^TRACE("ZMPROF7","comms","comment",9): 1
+^TRACE("ZMPROF7","comms","comment",11): 1
+^TRACE("ZMPROF7","comms","comment",11,"FOR_LOOP",1): 3
+^TRACE("ZMPROF7","comms","comment",13): 1
+^TRACE("ZMPROF7","comms","comment",13,"FOR_LOOP",1): 3
+^TRACE("ZMPROF7","comms","comment",15): 1
+^TRACE("ZMPROF7","comms","comment",15,"FOR_LOOP",1): 3
+^TRACE("ZMPROF7","comms","comment",16): 3
+^TRACE("ZMPROF7","comms","comment",23): 1
+^TRACE("ZMPROF7","comms","comms"): 1
+^TRACE("ZMPROF7","comms","comms",1): 1
+^TRACE("ZMPROF7","comms","comms",2): 1
+^TRACE("ZMPROF7","comms","comms",3): 1
+^TRACE("ZMPROF7","comms","comms",4): 1
+^TRACE("ZMPROF7","comms","fg1"): 1
+^TRACE("ZMPROF7","comms","fg1",0): 1
+^TRACE("ZMPROF7","comms","fg1",1): 1
+^TRACE("ZMPROF7","comms","fg1",2): 1
+^TRACE("ZMPROF7","comms","file",0): 1
+^TRACE("ZMPROF7","comms","file",1): 1
+^TRACE("ZMPROF7","comms","file",2): 1
+^TRACE("ZMPROF7","comms","file",3): 1
+^TRACE("ZMPROF7","comms","file",4): 1
+^TRACE("ZMPROF7","comms","file",5): 1
+^TRACE("ZMPROF7","comms","file",6): 1
+^TRACE("ZMPROF7","comms","fl0"): 1
+^TRACE("ZMPROF7","comms","fl0",1): 1
+^TRACE("ZMPROF7","comms","fl0",2): 1
+^TRACE("ZMPROF7","comms","fl0",3): 1
+^TRACE("ZMPROF7","comms","fl1"): 1
+^TRACE("ZMPROF7","comms","fl1",0): 1
+^TRACE("ZMPROF7","comms","fl1",1): 1
+^TRACE("ZMPROF7","comms","fl1",2): 1
+^TRACE("ZMPROF7","comms","fl1",3): 1
+^TRACE("ZMPROF7","comms","for0"): 1
+^TRACE("ZMPROF7","comms","for0",0): 1
+^TRACE("ZMPROF7","comms","for0",0,"FOR_LOOP",1): 7
+^TRACE("ZMPROF7","comms","for0",1): 7
+^TRACE("ZMPROF7","comms","for0",1,"FOR_LOOP",1): 77
+^TRACE("ZMPROF7","comms","for0",2): 77
+^TRACE("ZMPROF7","comms","for0",3): 77
+^TRACE("ZMPROF7","comms","for0",4): 77
+^TRACE("ZMPROF7","comms","for0",4,"FOR_LOOP",1): 2233
+^TRACE("ZMPROF7","comms","for0",5): 7
+^TRACE("ZMPROF7","comms","for0",6): 7
+^TRACE("ZMPROF7","comms","for0",7): 1
+^TRACE("ZMPROF7","comms","for0",8): 1
+^TRACE("ZMPROF7","comms","for0",9): 1
+^TRACE("ZMPROF7","comms","for0",10): 1
+^TRACE("ZMPROF7","comms","for0",11): 1
+^TRACE("ZMPROF7","comms","for0",11,"FOR_LOOP",1): 7
+^TRACE("ZMPROF7","comms","for0",11,"FOR_LOOP",2): 21
+^TRACE("ZMPROF7","comms","for0",12): 1
+^TRACE("ZMPROF7","comms","for0",13): 1
+^TRACE("ZMPROF7","comms","for0",13,"FOR_LOOP",1): 3
+^TRACE("ZMPROF7","comms","for0",14): 1
+^TRACE("ZMPROF7","comms","for0",15): 1
+^TRACE("ZMPROF7","comms","for0",16): 1
+^TRACE("ZMPROF7","comms","for0",16,"FOR_LOOP",1): 3
+^TRACE("ZMPROF7","comms","for0",16,"FOR_LOOP",2): 4
+^TRACE("ZMPROF7","comms","for0",17): 1
+^TRACE("ZMPROF7","comms","for0",18): 1
+^TRACE("ZMPROF7","comms","k0"): 1
+^TRACE("ZMPROF7","comms","k0",1): 1
+^TRACE("ZMPROF7","comms","k0",2): 1
+^TRACE("ZMPROF7","comms","k0",3): 1
+^TRACE("ZMPROF7","comms","k0",4): 1
+^TRACE("ZMPROF7","comms","k1"): 1
+^TRACE("ZMPROF7","comms","k1",0): 1
+^TRACE("ZMPROF7","comms","k1",1): 1
+^TRACE("ZMPROF7","comms","k1",2): 1
+^TRACE("ZMPROF7","comms","k1",2,"FOR_LOOP",1): 3
+^TRACE("ZMPROF7","comms","k1",3): 1
+^TRACE("ZMPROF7","comms","lock",0): 1
+^TRACE("ZMPROF7","comms","lock",1): 1
+^TRACE("ZMPROF7","comms","thru",0): 1
+^TRACE("ZMPROF7","comms","thru",0,"FOR_LOOP",1): 2
+^TRACE("ZMPROF7","comms","thru",0,"FOR_LOOP",2): 2
+^TRACE("ZMPROF7","comms","thru",1): 1
+^TRACE("ZMPROF7","comms","thru",2): 1
+^TRACE("ZMPROF7","comms","thru0",0): 1
+^TRACE("ZMPROF7","comms","thru0",0,"FOR_LOOP",1): 3
+^TRACE("ZMPROF7","comms","thru0",0,"FOR_LOOP",2): 4
+^TRACE("ZMPROF7","comms","thru0",1): 1
+^TRACE("ZMPROF7","comms","thru1",0): 1
+^TRACE("ZMPROF7","comms","thru1",0,"FOR_LOOP",1): 3
+^TRACE("ZMPROF7","comms","thru1",0,"FOR_LOOP",2): 6
+^TRACE("ZMPROF7","comms","thru1",1): 1
+^TRACE("ZMPROF7","comms","thru2",0): 1
+^TRACE("ZMPROF7","comms","thru2",0,"FOR_LOOP",1): 7
+^TRACE("ZMPROF7","comms","thru2",0,"FOR_LOOP",2): 21
+^TRACE("ZMPROF7","comms","thru2",1): 1
+^TRACE("ZMPROF7","comms","thru3",0): 1
+^TRACE("ZMPROF7","comms","thru4",0): 1
+^TRACE("ZMPROF7","comms","thru4",0,"FOR_LOOP",1): 3
+^TRACE("ZMPROF7","comms","thru4",0,"FOR_LOOP",2): 6
+^TRACE("ZMPROF7","comms","thru4",1): 1
+^TRACE("ZMPROF7","comms","thru5",0): 1
+^TRACE("ZMPROF7","comms","thru5",0,"FOR_LOOP",1): 7
+^TRACE("ZMPROF7","comms","thru5",0,"FOR_LOOP",2): 21
+^TRACE("ZMPROF8","comm","comm",7): 1
+^TRACE("ZMPROF8","comm","comm",8): 1
+^TRACE("ZMPROF8","one","one"): 1
+^TRACE("ZMPROF8","one","one",0): 1
+^TRACE("ZMPROF8","one","one",1): 1
+^TRACE("ZMPROF9","comm","comm",11): 1
+^TRACE("ZMPROF9","comm","comm",12): 1
+^TRACE("ZMPROF9","comm","comm",13): 1
+^TRACE("ZMPROF9","comm","comm",14): 1
+^TRACE("ZMPROF9","comm","comm",15): 1
+^TRACE("ZMPROF9","comm","comm",16): 1
+
+GTM>
+
+GTM>
+
+GTM>
+d ^mnylvl
+##TEST_AWK\^TRACE\([0-9A-Za-z\*",_]*\).[":0-9]*
+##TEST_AWK\^TRACE\([0-9A-Za-z\*",_]*\).[":0-9]*
+##TEST_AWK\^TRACE\([0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^TRACE\([0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^TRACE\([0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^TRACE\([0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^TRACE\([0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^TRACE\([0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^TRACE\([0-9A-Za-z",_]*\).[":0-9]*
+
+GTM>
+d ^examin ^TRACE
+The number of executions:
+^TRACE("ZMPROF17","mnylvl","loop",3): 1
+^TRACE("ZMPROF17","mnylvl","loop",4): 1
+^TRACE("ZMPROF17","mnylvl","loop",5): 1
+^TRACE("ZMPROF17","mnylvl","x"): 1026
+^TRACE("ZMPROF17","mnylvl","x",1): 1026
+^TRACE("ZMPROF17","mnylvl","x",2): 1026
+^TRACE("ZMPROF17","mnylvl","x",3): 1026
+##SUSPEND_OUTPUT  L
+
+GTM>
+
+GTM>
+
+GTM>
+d ^fors
+
+Testing fors...
+GTM>
+d ^examin ^TRACE
+The number of executions:
+^TRACE("ZMPROF14","fors","fors",3): 1
+^TRACE("ZMPROF14","fors","fors",4): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor"): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",0): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",0,"FOR_LOOP",1): 1000
+^TRACE("ZMPROF14","lotsfor","alotsfor",0,"FOR_LOOP",2): 100000
+^TRACE("ZMPROF14","lotsfor","alotsfor",0,"FOR_LOOP",3): 1000000
+^TRACE("ZMPROF14","lotsfor","alotsfor",1): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",1,"FOR_LOOP",1): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",1,"FOR_LOOP",2): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",1,"FOR_LOOP",3): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",1,"FOR_LOOP",4): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",1,"FOR_LOOP",5): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",1,"FOR_LOOP",6): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",1,"FOR_LOOP",7): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",1,"FOR_LOOP",8): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",1,"FOR_LOOP",9): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",1,"FOR_LOOP",10): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",1,"FOR_LOOP",11): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",1,"FOR_LOOP",12): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",1,"FOR_LOOP",13): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",1,"FOR_LOOP",14): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",1,"FOR_LOOP",15): 1
+^TRACE("ZMPROF14","lotsfor","alotsfor",1,"FOR_LOOP",16): 1
+^TRACE("ZMPROF14","lotsfor","boneone",0): 1
+^TRACE("ZMPROF14","lotsfor","boneone",0,"FOR_LOOP",1): 1
+^TRACE("ZMPROF14","lotsfor","boneone",0,"FOR_LOOP",2): 1
+^TRACE("ZMPROF14","lotsfor","boneone",0,"FOR_LOOP",3): 1
+^TRACE("ZMPROF14","lotsfor","boneone",0,"FOR_LOOP",4): 1
+^TRACE("ZMPROF14","lotsfor","boneone",0,"FOR_LOOP",5): 1
+^TRACE("ZMPROF14","lotsfor","cquits",0): 1
+^TRACE("ZMPROF14","lotsfor","cquits",0,"FOR_LOOP",1): 5
+^TRACE("ZMPROF14","lotsfor","cquits",0,"FOR_LOOP",2): 40
+^TRACE("ZMPROF14","lotsfor","cquits",0,"FOR_LOOP",3): 400
+^TRACE("ZMPROF14","lotsfor","cquits",1): 1
+^TRACE("ZMPROF14","lotsfor","cquits",1,"FOR_LOOP",1): 10
+^TRACE("ZMPROF14","lotsfor","cquits",1,"FOR_LOOP",2): 50
+^TRACE("ZMPROF14","lotsfor","cquits",1,"FOR_LOOP",3): 400
+^TRACE("ZMPROF14","lotsfor","cquits",2): 1
+^TRACE("ZMPROF14","lotsfor","cquits",2,"FOR_LOOP",1): 10
+^TRACE("ZMPROF14","lotsfor","cquits",2,"FOR_LOOP",2): 100
+^TRACE("ZMPROF14","lotsfor","cquits",2,"FOR_LOOP",3): 500
+^TRACE("ZMPROF14","lotsfor","dmulti",0): 1
+^TRACE("ZMPROF14","lotsfor","dmulti",0,"FOR_LOOP",1): 10
+^TRACE("ZMPROF14","lotsfor","dmulti",1): 10
+^TRACE("ZMPROF14","lotsfor","dmulti",1,"FOR_LOOP",1): 100
+^TRACE("ZMPROF14","lotsfor","dmulti",2): 100
+^TRACE("ZMPROF14","lotsfor","dmulti",2,"FOR_LOOP",1): 1000
+^TRACE("ZMPROF14","lotsfor","dmulti",3): 1000
+^TRACE("ZMPROF14","lotsfor","dmulti",3,"FOR_LOOP",1): 10000
+^TRACE("ZMPROF14","lotsfor","dmulti",4): 1000
+^TRACE("ZMPROF14","lotsfor","dmulti",4,"FOR_LOOP",1): 10000
+^TRACE("ZMPROF14","lotsfor","dmulti",5): 10000
+^TRACE("ZMPROF14","lotsfor","dmulti",6): 10000
+^TRACE("ZMPROF14","lotsfor","dmulti",7): 1000
+^TRACE("ZMPROF14","lotsfor","dmulti",8): 100
+^TRACE("ZMPROF14","lotsfor","dmulti",9): 10
+^TRACE("ZMPROF14","lotsfor","dmulti",10): 1
+^TRACE("ZMPROF14","lotsfor","dmulti",11): 1
+^TRACE("ZMPROF14","lotsfor","dmulti",12): 1
+^TRACE("ZMPROF14","lotsfor","dmulti",12,"FOR_LOOP",1): 2
+^TRACE("ZMPROF14","lotsfor","dmulti",13): 1
+^TRACE("ZMPROF14","lotsfor","smulti"): 2
+^TRACE("ZMPROF14","lotsfor","smulti",0): 2
+^TRACE("ZMPROF14","lotsfor","smulti",0,"FOR_LOOP",1): 20
+^TRACE("ZMPROF14","lotsfor","smulti",1): 20
+^TRACE("ZMPROF14","lotsfor","smulti",1,"FOR_LOOP",1): 200
+^TRACE("ZMPROF14","lotsfor","smulti",2): 200
+^TRACE("ZMPROF14","lotsfor","smulti",2,"FOR_LOOP",1): 2000
+^TRACE("ZMPROF14","lotsfor","smulti",3): 200
+^TRACE("ZMPROF14","lotsfor","smulti",4): 2
+^TRACE("ZMPROF14","lotsfor","smulti",4,"FOR_LOOP",1): 20
+^TRACE("ZMPROF14","lotsfor","smulti",5): 2
+^TRACE("ZMPROF14","lotsfor","smulti",5,"FOR_LOOP",1): 6
+^TRACE("ZMPROF14","lotsfor","smulti1"): 2
+^TRACE("ZMPROF14","lotsfor","smulti1",0): 2
+^TRACE("ZMPROF14","lotsfor","smulti1",1): 2
+^TRACE("ZMPROF14","lotsfor","zmany",0): 2
+^TRACE("ZMPROF14","lotsfor","zmany",0,"FOR_LOOP",1): 60
+^TRACE("ZMPROF14","lotsfor","zmany",0,"FOR_LOOP",2): 120000
+^TRACE("ZMPROF14","lotsfor","zmany",0,"FOR_LOOP",3): 3600000
+^TRACE("ZMPROF14","lotsfor","zminfor",0): 2
+^TRACE("ZMPROF14","lotsfor","zminfor",0,"FOR_LOOP",1): 20
+^TRACE("ZMPROF14","lotsfor","zminfor",1): 20
+^TRACE("ZMPROF14","lotsfor","zminfor",1,"FOR_LOOP",1): 200
+^TRACE("ZMPROF14","lotsfor","zminfor",2): 200
+^TRACE("ZMPROF14","lotsfor","zminfor",3): 2
+^TRACE("ZMPROF14","lotsfor","zminfor",3,"FOR_LOOP",1): 16
+^TRACE("ZMPROF14","lotsfor","zminfor",4): 2
+##ALLOW_OUTPUT  L
+
+GTM>
+
+GTM>
+
+##SUSPEND_OUTPUT  L
+GTM>
+##ALLOW_OUTPUT  L
+
+
+
+
+
+##SUSPEND_OUTPUT  L
+
+##ALLOW_OUTPUT  L
+GTM>
+GTM>
+GTM>
+GTM>
+GTM>
+GTM>
+GTM>
+##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_\*]*\).[":0-9]*
+##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_\*]*\).[":0-9]*
+##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+another line hereI am still here
+##SUSPEND_OUTPUT  L
+
+
+
+
+
+
+
+GTM>
+GTM>
+GTM>
+GTM>
+GTM>
+GTM>
+GTM>
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_\*]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_\*]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
+##ALLOW_OUTPUT  L
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  L
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+d ^fact(18)
+Factorial test 
+  PASS
+
+GTM>
+d ^arith(18)
+Numeric Test 
+  unary operators 
+u  PASS
+  addition - subtraction
+a  PASS
+  multiplication 
+m  PASS
+
+GTM>
+d ^ebmuldiv(0)
+## BEGIN PROGRAM - ebmuldiv
+   PASS - PER 002137
+   PASS - PER 002412
+   PASS - PER 002541
+   PASS - Division tests
+   PASS - Multiplication tests
+## END   PROGRAM - ebmuldiv
+
+GTM>
+d ^barith
+## BEGIN PROGRAM - barith
+   PASS
+## END   PROGRAM - barith
+
+GTM>
+d ^bool
+
+Test of Boolean operators
+c  PASS
+u  PASS
+b  PASS
+
+GTM>
+d ^relation
+
+Test of relational operations
+a  PASS
+b  PASS
+c  PASS
+d  PASS
+
+GTM>
+d ^pattst
+## BEGIN PROGRAM - pattst
+Test of MUMPS pattern match operator
+a  PASS
+b  PASS
+c  PASS
+0  PASS - PER 002579
+## END   PROGRAM - pattst
+
+GTM>
+d ^sortsaft
+## BEGIN PROGRAM - sortsaft
+   PASS
+## END   PROGRAM - sortsaft
+
+GTM>
+d ^text4
+In text4 beginning calls to other routines
+
+
+ W $T(STS+-1),!,!
+
+OUT
+
+texttst
+
+STS W "$TEXT TEST",!,!
+
+IN W $T(OUT+1),!,!
+
+ W $T(STS+2),!,!
+
+FINISHED
+in text1
+ W $T(ST+1),!
+text1
+text1
+
+you should not get this in text2
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+leaving text1
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+IN TEXT3
+ W $T(+2),!
+ D ^text1
+in text1
+ W $T(ST+1),!
+text1
+text1
+
+you should not get this in text2
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+leaving text1
+LEAVING TEXT3
+in text1
+ W $T(ST+1),!
+text1
+text1
+
+you should not get this in text2
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+leaving text1
+
+returned from call to texttest at entryref out
+
+
+$TEXT TEST
+
+ W $T(OUT+-1),!,!
+
+ W $T(STS+2),!,!
+
+texttst
+
+ W $T(STS+-1),!,!
+
+OUT
+
+texttst
+
+STS W "$TEXT TEST",!,!
+
+IN W $T(OUT+1),!,!
+
+ W $T(STS+2),!,!
+
+FINISHED
+in text1
+ W $T(ST+1),!
+text1
+text1
+
+you should not get this in text2
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+leaving text1
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+IN TEXT3
+ W $T(+2),!
+ D ^text1
+in text1
+ W $T(ST+1),!
+text1
+text1
+
+you should not get this in text2
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+leaving text1
+LEAVING TEXT3
+in text1
+ W $T(ST+1),!
+text1
+text1
+
+you should not get this in text2
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+leaving text1
+
+returned after accessing texttst at sts+10
+
+calling text2
+
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+
+GTM>
+d ^per02457
+## BEGIN PROGRAM - per02457
+   PASS - PER 002457
+## END   PROGRAM - per02457
+
+GTM>
+d ^ascii
+******* ASCII TEST ********
+
+GTM>
+d ^char
+******** CHAR TEST *******
+
+GTM>
+d ^fnextr
+-1 -1 ''
+-1 0 ''
+-1 1 'A'
+-1 2 'AB'
+-1 3 'ABC'
+-1 4 'ABC'
+0 -1 ''
+0 0 ''
+0 1 'A'
+0 2 'AB'
+0 3 'ABC'
+0 4 'ABC'
+1 -1 ''
+1 0 ''
+1 1 'A'
+1 2 'AB'
+1 3 'ABC'
+1 4 'ABC'
+2 -1 ''
+2 0 ''
+2 1 ''
+2 2 'B'
+2 3 'BC'
+2 4 'BC'
+3 -1 ''
+3 0 ''
+3 1 ''
+3 2 ''
+3 3 'C'
+3 4 'C'
+4 -1 ''
+4 0 ''
+4 1 ''
+4 2 ''
+4 3 ''
+4 4 ''
+
+GTM>
+d ^length
+
+Test of $length function
+l  PASS
+
+GTM>
+d ^piece
+
+Test of $piece
+a  PASS
+b  PASS
+c  PASS
+d  PASS
+e  PASS
+
+GTM>
+d ^setpiece
+## BEGIN PROGRAM - setpiece
+   PASS
+## END   PROGRAM - setpiece
+
+GTM>
+d ^query
+## BEGIN PROGRAM - query
+   PASS - PER 001897
+## END   PROGRAM - query
+
+GTM>
+d ^extcall
+ENTERED ^extcall2
+ENTERED LAB1^extcall1
+ABOUT TO DO A
+I AM AT LABEL A
+A IS DONE
+DOING LAB1^extcall AGAINENTERED LAB1^extcall1
+ENTERED LAB1^extcall1
+I AM AT LABEL A
+ENTERED ^extcall2
+ENTERED LAB1^extcall1
+ABOUT TO DO A
+I AM AT LABEL A
+A IS DONE
+DOING LAB1^extcall AGAINENTERED LAB1^extcall1
+
+GTM>
+d ^locals
+
+Test of access to MUMPS locals
+d  PASS
+i  PASS
+A(0)="A(0)"
+A(.0005)="A(.0005)"
+A(.001)="A(.001)"
+A(1)="A(1)"
+A(1.0005)="A(1.0005)"
+A(1.001)="A(1.001)"
+A(2)="A(2)"
+A(2.0005)="A(2.0005)"
+A(2.001)="A(2.001)"
+u  PASS
+k  PASS
+s  PASS
+
+GTM>
+d ^cmptst
+1
+0
+1234567.89+
+1234568+
+1234567.89+
+1234568+
+ 1234567.89 
+(121,234,567.9)
+(1,234,567.891)
+
+GTM>
+d ^expr2
+str= 1
+1
+str= 12
+12
+str= 123
+123
+str= 1234
+1234
+str= 12345
+12345
+str= 123456
+123456
+str= 1234567
+1234567
+str= 12345678
+12345678
+str= 123456789
+123456789
+str= 12345678910
+12345678910
+
+GTM>
+d ^for
+
+Test of for loop
+q  PASS
+g  PASS
+l  PASS
++x PASS
+-x PASS
++m PASS
+-m PASS
++c PASS
+-c PASS
+
+GTM>
+d ^forloop
+1000005
+1000001
+1000001
+-1000005
+-1000001
+-1000001
+
+GTM>
+d ^log
+0000001100010110001100001001100000010001000011000010100001000000
+
+0011011111111111011111111111111111111111111111111111111111111111
+
+1011111111111111011111111111111111111111111111111111111111111111
+
+1111111111111111111111111111111111111111111111111111111111111111
+
+0000000000000000000000000000000000000000000000000000000000000000
+
+0000000000000000000000000000000000000000000000000000000000000000
+
+0011011111111111011111111111111111111111111111111111111111111111
+
+1100100001000000100001000000001001001000001000000100001010000001
+
+
+GTM>
+d ^new
+ind="x"
+ind2="y"
+x=1
+xx=2
+y=2
+yy=3
+z=3
+zz=5
+n (@ind,@ind2,xx,yy)
+x=1 ;*
+xx=2 ;*
+y=2 ;*
+yy=3 ;*
+
+
+n x,y
+xx=2 ;*
+yy=3 ;*
+
+
+n 
+
+GTM>
+d ^select
+<begin>
+<enter>
+<start>
+<finished>
+<enter>
+<begin>
+<begin>
+
+GTM>
+d ^xecute
+help
+write "help",!
+
+help
+write "help",!
+
+help
+help
+write "help",!
+x
+
+GTM>
+d ^larray
+## BEGIN PROGRAM - larray
+   PASS  1
+   PASS  2a
+   PASS  2b
+   PASS  2c
+## END   PROGRAM - larray
+
+GTM>
+d ^view
+## BEGIN PROGRAM - view
+   PASS - PER 002184
+   PASS - PER 002277
+## END   PROGRAM - view
+
+GTM>
+d ^view2(0)
+## BEGIN PROGRAM - view2
+   PASS
+## END   PROGRAM - view2
+
+GTM>
+d ^zbits
+## BEGIN PROGRAM - zbits
+   PASS - $ZBITSTR $ZBITLEN
+   PASS - $ZBITSET
+   PASS - $ZBITGET
+   PASS - $ZBITCOUNT
+   PASS - $ZBITFIND
+   PASS - $ZBITNOT
+   PASS - $ZBITAND
+   PASS - $ZBITOR
+   PASS - $ZBITXOR
+## END   PROGRAM - zbits
+
+GTM>
+d ^per2586a(0)
+$ZTRAP on entry to ^%X, before New $ZTRAP = B
+
+   PASS
+
+GTM>
+d ^per2586b(0)
+$ZTRAP on entry to ^%X, before New $ZTRAP = B
+
+   PASS
+
+GTM>
+d ^per2586c(0)
+$ZTRAP on entry to ^%X, before New $ZTRAP = B
+
+   PASS
+
+GTM>
+d ^per2968
+This is the calling routine
+This is foo^per2968b
+This is the calling routine
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+%GTM-E-LABELMISSING, Label referenced but not defined: foo
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+%GTM-E-LABELUNKNOWN, Label referenced but not defined
+##ALLOW_OUTPUT HOST_ALL
+		At M source location per2968a+1^per2968a
+
+GTM>
+d ^tstp
+All tests passed
+
+GTM>
+
+GTM>
+ZTRAP testing starts...
+
+GTM>
+
+GTM>
+Testing valid ZTRAP cases...
+
+GTM>
+do ^ztvref1
+Testing Ztrap Label...done(SUB2)
+Testing Ztrap Lable+offset...done(SUB3+1)
+Testing Ztrap Label+offset+module...done(lab+1^ztleaf)
+end ztleaf
+Testing Ztrap Label+module...done(lab^ztleaf)
+end ztleaf
+
+GTM>
+do ^ztvref2
+Testing Ztrap @Label...done(IND2)
+Testing Ztrap @Label+offest...done(IND3+1)
+Testing Ztrap @Label+offset+@module...done(lab+1^ztleaf)
+end ztleaf
+Testing Ztrap @Label+@module...done(lab^ztleaf)
+end ztleaf
+
+GTM>
+do ^ztvref3
+Testing Recursive Ztrap to find the sum
+Sum of first 100 numbers = 5050
+
+GTM>
+do ^ztvcmd1
+This is main function
+this is SUB1
+this is SUB2
+exiting main function
+stack level: 2
+
+GTM>
+do ^ztvcmd2
+This is main function
+
+error handler
+25
+value of a = 10
+value of b = 15
+value of x(a+b) = 25
+150
+value of a = 10
+value of b = 15
+value of x(a*b) = 150
+
+GTM>
+do ^ztvcmd3
+This is main function
+Before SUB1
+this is SUB1
+zlevel = 3
+After SUB1
+Before SUB2
+this is SUB2
+end of valid ZTRAP cases...
+Testing invalid ZTRAP cases...
+
+GTM>
+
+GTM>
+do NOLAB^ztiref
+Testing 'ZTRAP label' with no label present
+%GTM-E-LABELMISSING, Label referenced but not defined: lab
+
+GTM>
+do OFF^ztiref
+Testing Ztrap Lable+offset with invalid offset
+%GTM-E-OFFSETINV, Entry point OFF+1000 not valid
+
+GTM>
+do MOD^ztiref
+Testing Ztrap ^module with no module
+%GTM-E-ZLINKFILE, Error while zlinking "nowhere"
+%GTM-E-FILENOTFND, File nowhere not found
+
+GTM>
+do SUB4^ztiref
+Testing Ztrap containing erroneous indirection
+%GTM-E-LABELEXPECTED, Label expected in this context
+
+GTM>
+do IND^ztiref
+Testing invalid indirection @(lab+off)^mod)
+%GTM-E-LABELMISSING, Label referenced but not defined: lab+0
+
+GTM>
+do TST1^zticmd3
+Testing syntax error...zlevel = 3
+done
+
+GTM>
+do TST2^zticmd3
+Testing quit as label...zlevel = 3
+
+GTM>
+do TST3^zticmd3
+Testing syntax error in set command...zlevel = 3
+%GTM-E-INDEXTRACHARS, Indirection string contains extra trailing characters
+
+GTM>
+do TST4^zticmd3
+Testing indirect arg with syntax error...zlevel = 3
+%GTM-E-EXPR, Expression expected but not found
+
+GTM>
+
+GTM>
+
+GTM>
+do ^zticmd1
+
+This is main function
+
+GTM>
+
+GTM>
+do ^zticmd2
+This is main function
+%GTM-E-STACKCRIT, Stack space critical
+
+GTM>
+end of invalid ZTRAP cases...
+...end of ZTRAP testing
+Testing of ZYERROR/ZERROR starts...
+
+GTM>
+
+GTM>
+do ^zevref1
+Testing ZYERROR Label...
+done(SUB2)
+ZSTATUS = 150373850,SUB1+4^zevref1,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+end of SUB2
+Testing ZYERROR Label+offset...done(SUB3+1)
+ZSTATUS = 150373210,SUB1+8^zevref1,%GTM-E-DIVZERO, Attempt to divide by zero  ZERROR = GTM-E-DIVZERO, Attempt to divide by zero
+end of SUB3
+1Testing ZYERROR Label+module...done(lab^zeleaf)
+ZSTATUS = 150372778,SUB1+12^zevref1,%GTM-E-EXPR, Expression expected but not found  ZERROR = GTM-E-EXPR, Expression expected but not found
+1
+Testing ZYERROR Label+offset+module...done(lab+1^zeleaf)
+ZSTATUS = 150373850,SUB1+16^zevref1,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+end of SUB1
+
+GTM>
+do ^zevref2
+Testing ZYERROR Label^module...done(SUB2)
+ZSTATUS = 150373850,SUB1+4^zevref2,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+end of SUB2
+end of SUB1
+
+GTM>
+do ^zevref3
+Testing ZYERROR @Label...
+done(SUB2)
+ZSTATUS = 150373850,SUB1+4^zevref3,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+end of SUB2
+Testing ZYERROR @Lable+offset...done(SUB3+1)
+ZSTATUS = 150373210,SUB1+9^zevref3,%GTM-E-DIVZERO, Attempt to divide by zero  ZERROR = GTM-E-DIVZERO, Attempt to divide by zero
+end of SUB3
+1
+Testing ZYERROR @Label+@module...done(lab^zeleaf)
+ZSTATUS = 150372778,SUB1+14^zevref3,%GTM-E-EXPR, Expression expected but not found  ZERROR = GTM-E-EXPR, Expression expected but not found
+1
+Testing ZYERROR @(Label+offset+module)...
+done(lab+1^zeleaf)
+ZSTATUS = 150373850,SUB1+19^zevref3,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+Testing ZYERROR with no quit cmd in its handler...
+ZSTATUS = 150373850,SUB1+24^zevref3,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+end of SUB1
+
+GTM>
+
+GTM>
+do NOLAB^zeiref1
+Testing 'ZYERROR label' with no label present
+
+GTM>
+do OFF^zeiref1
+Testing ZYERROR Lable+offset with invalid offset
+1
+
+GTM>
+do MOD^zeiref1
+Testing ZYERROR ^module with no module
+1
+
+GTM>
+do IND^zeiref1
+Testing ZYERROR containing erroneous indirection
+1
+
+GTM>
+do ZTERR^zeiref1
+Testing ZYERROR with syntactically erroneous ZTRAP value
+%GTM-E-INDEXTRACHARS, Indirection string contains extra trailing characters
+
+GTM>
+do TST1^zeiref2
+Testing ZYERROR Label...
+done(SUB2)
+ZSTATUS = 150373850,TST1+4^zeiref2,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+Testing ZYERROR Label+offset...
+done(SUB3+1)
+ZSTATUS = 150373210,TST1+8^zeiref2,%GTM-E-DIVZERO, Attempt to divide by zero  ZERROR = GTM-E-DIVZERO, Attempt to divide by zero
+1
+end of TST1
+
+GTM>
+do TST2^zeiref2
+Testing ZYERROR with command...
+1
+
+GTM>
+do TST3^zeiref2
+Testing ZYERROR @(Label+offset)...
+
+GTM>
+do TST4^zeiref2
+Testing ZYERROR @(offset^module)...
+
+GTM>
+Begin of ZYERROR environement test cases...
+
+GTM>
+
+GTM>
+do TST1^zevref4
+Testing ZYERROR Label...
+done(SUB2)
+ZSTATUS = 150373850,TST1+3^zevref4,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+end of SUB2
+
+GTM>
+
+GTM>
+
+GTM>
+do TST2^zevref4
+Testing ZYERROR Label+offset...done(SUB3+1)
+ZSTATUS = 150373210,TST2+3^zevref4,%GTM-E-DIVZERO, Attempt to divide by zero  ZERROR = GTM-E-DIVZERO, Attempt to divide by zero
+end of SUB3
+1
+GTM>
+
+GTM>
+
+GTM>
+do TST3^zevref4
+Testing ZYERROR Label+module...done(lab^zeleaf)
+ZSTATUS = 150372778,TST3+3^zevref4,%GTM-E-EXPR, Expression expected but not found  ZERROR = GTM-E-EXPR, Expression expected but not found
+1
+GTM>
+
+GTM>
+
+GTM>
+do TST4^zevref4
+Testing ZYERROR Label+offset+module...done(lab+1^zeleaf)
+ZSTATUS = 150373850,TST4+3^zevref4,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+
+GTM>
+
+GTM>
+
+GTM>
+do TST1^zevref4
+Testing ZYERROR Label...
+
+GTM>
+...end of ZYERROR as environment variable
+...end of ZYERROR testing
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+
+GTM>
+
+GTM>
+d ^kill1
+tty=1
+tty2=3
+
+GTM>
+d ^set
+2
+test
+test
+test
+  23   3
+12
+w=0
+x=2
+y=3
+z=2
+
+GTM>
+d ^globals
+
+Test of access to MUMPS globals
+d  PASS
+i  PASS
+u  PASS
+
+GTM>
+
+GTM>
+
+GTM>
+d ^zprev
+## BEGIN PROGRAM - zprev
+   PASS - PER 002320
+   PASS
+## END   PROGRAM - zprev
+
+GTM>
+
+GTM>
+
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+Data for PER 002397 test
+GT.M 18-NOV-1992 09:06:17
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+OK <Yes>? 
+
+^ASW      
+
+Restored 15 nodes in 1 global.
+GTM>
+d ^per02397
+## BEGIN PROGRAM - per02397
+   PASS - PER 002397
+## END   PROGRAM - per02397
+
+GTM>
+d ^miscdb
+## BEGIN PROGRAM - miscdb
+   PASS - PER 002209
+## END   PROGRAM - miscdb
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+d ^per02276
+## BEGIN PROGRAM - per02276
+   PASS - PER 002276,002416
+## END   PROGRAM - per02276
+
+GTM>
+d ^stpfail
+Execute/Set test PASSED
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+d ^putfail
+## BEGIN PROGRAM - putfail
+   PASS - putfail1
+   PASS - putfail2
+   PASS - putfail3
+   PASS - putfail4
+   PASS - putfail5
+   PASS - putfail6
+   PASS - putfail7
+   PASS - putfail8
+   PASS - putfail9
+   PASS - putfail
+## END   PROGRAM - putfail
+
+GTM>
+d ^fifo
+## BEGIN PROGRAM - fifo
+  ** fifo output **
+   PASS
+  ** fifo2 output **
+   PASS
+## END   PROGRAM - fifo
+
+GTM>
+d ^stream
+## BEGIN PROGRAM - stream
+   PASS
+## END   PROGRAM - stream
+
+GTM>
+d ^iowrite
+
+GTM>
+R   I   C   K   S       T   E   S   T                        
+
+
+\n   A   B                                                    
+
+
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

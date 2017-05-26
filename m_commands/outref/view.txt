@@ -1,0 +1,333 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+*********************************
+test view LVNULLSUBS
+----------------------------------
+
+GTM>
+view "LVNULLSUBS"
+
+-----> zwrite LVNULLSUBS 1 <------
+abcdefgh(1)=12
+abcdefgh(1,"",2)=123
+abcdefgh("")=1
+lvnullsubs="LVNULLSUBS"
+
+
+-----> zwrite LVNULLSUBS 2 <------
+abcdefgh(1)=12
+abcdefgh(1,"",2)=123
+abcdefgh("")=1
+abcdefghi(1)=912
+abcdefghi(1,"",2)=9123
+abcdefghi("")=91
+lvnullsubs="LVNULLSUBS"
+
+
+-----> zwrite LVNULLSUBS 3 <------
+abcdefgh(1)=12
+abcdefgh(1,"",2)=123
+abcdefgh("")=1
+abcdefghi(1)=912
+abcdefghi(1,"",2)=9123
+abcdefghi("")=91
+abcdefghi0123456789012345678901(1)=312
+abcdefghi0123456789012345678901(1,"",2)=3123
+abcdefghi0123456789012345678901("")=31
+lvnullsubs="LVNULLSUBS"
+
+
+-----> zwrite LVNULLSUBS 4 <------
+abcdefgh(1)=12
+abcdefgh(1,"",2)=123
+abcdefgh("")=1
+abcdefghi(1)=912
+abcdefghi(1,"",2)=9123
+abcdefghi("")=91
+abcdefghi0123456789012345678901(1)=312
+abcdefghi0123456789012345678901(1,"",2)=3123
+abcdefghi0123456789012345678901("")=31
+i=31
+len=31
+lvnullsubs="LVNULLSUBS"
+n=1
+var="var4567890123456789012345678901"
+var4567("")="var7"
+var45678("")="var8"
+var456789("")="var9"
+var4567890123456789012345678901("")="var31"
+
+
+GTM>
+view "NOLVNULLSUBS"
+--> ERROR (expected) : $ZSTATUS=nolvnull+4^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+--> ERROR (expected) : $ZSTATUS=nolvnull+6^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+
+-----> zwrite NOLVNULLSUBS 1 <------
+abcdefgh(1)=12
+abcdefgh(1,"",2)=123
+abcdefgh("")=1
+abcdefghi(1)=912
+abcdefghi(1,"",2)=9123
+abcdefghi("")=91
+abcdefghi0123456789012345678901(1)="xx312"
+abcdefghi0123456789012345678901(1,"",2)=3123
+abcdefghi0123456789012345678901("")=31
+i=31
+len=31
+lvnullsubs="LVNULLSUBS"
+n=1
+newprog="2:nolvnull+7^viewnull"
+savestat="150375938,nolvnull+6^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables"
+var="var4567890123456789012345678901"
+var4567("")="var7"
+var45678("")="var8"
+var456789("")="var9"
+var4567890123456789012345678901("")="var31"
+
+--> ERROR (expected) : $ZSTATUS=nolvnull+9^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+--> ERROR (expected) : $ZSTATUS=nolvnull+11^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+
+-----> zwrite NOLVNULLSUBS 2 <------
+abcdefgh(1)="xx12"
+abcdefgh(1,"",2)=123
+abcdefgh("")=1
+abcdefghi(1)=912
+abcdefghi(1,"",2)=9123
+abcdefghi("")=91
+abcdefghi0123456789012345678901(1)="xx312"
+abcdefghi0123456789012345678901(1,"",2)=3123
+abcdefghi0123456789012345678901("")=31
+i=31
+len=31
+lvnullsubs="LVNULLSUBS"
+n=1
+newprog="2:nolvnull+12^viewnull"
+savestat="150375938,nolvnull+11^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables"
+var="var4567890123456789012345678901"
+var4567("")="var7"
+var45678("")="var8"
+var456789("")="var9"
+var4567890123456789012345678901("")="var31"
+
+--> ERROR (expected) : $ZSTATUS=nolvnull+14^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+--> ERROR (expected) : $ZSTATUS=nolvnull+16^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+
+-----> zwrite NOLVNULLSUBS 3 <------
+abcdefgh(1)="xx12"
+abcdefgh(1,"",2)=123
+abcdefgh("")=1
+abcdefghi(1)="xx912"
+abcdefghi(1,"",2)=9123
+abcdefghi("")=91
+abcdefghi0123456789012345678901(1)="xx312"
+abcdefghi0123456789012345678901(1,"",2)=3123
+abcdefghi0123456789012345678901("")=31
+i=31
+len=31
+lvnullsubs="LVNULLSUBS"
+n=1
+newprog="2:nolvnull+17^viewnull"
+savestat="150375938,nolvnull+16^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables"
+var="var4567890123456789012345678901"
+var4567("")="var7"
+var45678("")="var8"
+var456789("")="var9"
+var4567890123456789012345678901("")="var31"
+
+--> ERROR (expected) : $ZSTATUS=nolvnull+22^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+--> ERROR (expected) : $ZSTATUS=nolvnull+26^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+--> ERROR (expected) : $ZSTATUS=nolvnull+30^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+--> ERROR (expected) : $ZSTATUS=nolvnull+34^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+
+-----> zwrite NOLVNULLSUBS 4 <------
+abcdefgh(1)="xx12"
+abcdefgh(1,"",2)=123
+abcdefgh("")=1
+abcdefghi(1)="xx912"
+abcdefghi(1,"",2)=9123
+abcdefghi("")=91
+abcdefghi0123456789012345678901(1)="xx312"
+abcdefghi0123456789012345678901(1,"",2)=3123
+abcdefghi0123456789012345678901("")=31
+i=31
+len=31
+lvnullsubs="LVNULLSUBS"
+n=1
+newprog="2:nolvnull+35^viewnull"
+savestat="150375938,nolvnull+34^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables"
+var="var4567890123456789012345678901"
+var4567("")="var7"
+var45678("")="var8"
+var456789("")="var9"
+var4567890123456789012345678901("")="var31"
+
+
+GTM>
+*********************************
+test view LABELS
+----------------------------------
+DEFAULT
+
+GTM>
+%GTM-E-LABELMISSING, Label referenced but not defined: LOWERCASEONLYLABEL111111111111
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/viewlab.m
+%GTM-E-LABELMISSING, Label referenced but not defined: uppercaseonlylabel111111111111
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/viewlab.m
+$VIEW("LABELS") is 1
+Those lines marked with an [X] are not expected to work when case sensitivity is enabled,
+Those lines marked with a [Y] are expected to error with LABELMISSING at compile time
+calling longLABelloweranduppercase2222^vlabels       : longLABelloweranduppercase2222^vlabels:->longLABelloweranduppercase2222 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling LONGLABElloweRANDUPPERCASE2222^vlabels    [Z]: LONGLABElloweRANDUPPERCASE2222^vlabels:->LONGLABElloweRANDUPPERCASE2222 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling lowercaseonlylabel222222222222^vlabels      : lowercaseonlylabel222222222222^vlabels:->lowercaseonlylabel222222222222 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+calling LOWERCASEONLYLABEL222222222222^vlabels   [X]: ERROR (LABELMISSING) at line: t4^viewlab:t4 write "calling LOWERCASEONLYLABEL222222222222^vlabels   [X]: " do LOWERCASEONLYLABEL222222222222^vlabels quit
+calling uppercaseonlylabel222222222222^vlabels   [X]: ERROR (LABELMISSING) at line: t5^viewlab:t5 write "calling uppercaseonlylabel222222222222^vlabels   [X]: " do uppercaseonlylabel222222222222^vlabels quit
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+calling LOWERCASEONLYLABEL222222222222^vlabels   [X]: ERROR (LABELUNKNOWN) at line: t4^viewlab:t4 write "calling LOWERCASEONLYLABEL222222222222^vlabels   [X]: " do LOWERCASEONLYLABEL222222222222^vlabels quit
+calling uppercaseonlylabel222222222222^vlabels   [X]: ERROR (LABELUNKNOWN) at line: t5^viewlab:t5 write "calling uppercaseonlylabel222222222222^vlabels   [X]: " do uppercaseonlylabel222222222222^vlabels quit
+##ALLOW_OUTPUT HOST_ALL
+calling UPPERCASEONLYLABEL222222222222^vlabels      : UPPERCASEONLYLABEL222222222222^vlabels:->UPPERCASEONLYLABEL222222222222 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling longLABelloweranduppercase1111         : longLABelloweranduppercase1111^viewlab:->longLABelloweranduppercase1111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling LONGLABElloweRANDUPPERCASE1111      [Z]: LONGLABElloweRANDUPPERCASE1111^viewlab:->LONGLABElloweRANDUPPERCASE1111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling lowercaseonlylabel111111111111        : lowercaseonlylabel111111111111^viewlab:->lowercaseonlylabel111111111111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling LOWERCASEONLYLABEL111111111111   [X,Y]: ERROR (LABELUNKNOWN) at line: t10^viewlab:t10 write "calling LOWERCASEONLYLABEL111111111111   [X,Y]: " do LOWERCASEONLYLABEL111111111111 quit
+calling uppercaseonlylabel111111111111   [X,Y]: ERROR (LABELUNKNOWN) at line: t11^viewlab:t11 write "calling uppercaseonlylabel111111111111   [X,Y]: " do uppercaseonlylabel111111111111 quit
+calling UPPERCASEONLYLABEL111111111111        : UPPERCASEONLYLABEL111111111111^viewlab:->UPPERCASEONLYLABEL111111111111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+
+GTM>
+----------------------------------
+UPPER - i.e. disable case sensitivity
+
+GTM>
+
+GTM>
+	LONGLABElloweRANDUPPERCASE1111	write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+	^-----
+		At column 0, line 43, source module ##IN_TEST_PATH##/inref/viewlab.m
+%GTM-E-MULTLAB, This label has been previously defined
+$VIEW("LABELS") is 0
+Those lines marked with an [X] are expected to work when case sensitivity is disabled,
+However, this time round, the labels marked with a [Z] are expected to error with MULTLAB
+calling longLABelloweranduppercase2222^vlabels       : 
+	LONGLABElloweRANDUPPERCASE2222	write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+	^-----
+		At column 0, line 2, source module ##IN_TEST_PATH##/inref/vlabels.m
+%GTM-E-MULTLAB, This label has been previously defined
+LONGLABELLOWERANDUPPERCASE2222^vlabels:->longLABelloweranduppercase2222 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling LONGLABElloweRANDUPPERCASE2222^vlabels    [Z]: LONGLABELLOWERANDUPPERCASE2222^vlabels:->longLABelloweranduppercase2222 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling lowercaseonlylabel222222222222^vlabels      : LOWERCASEONLYLABEL222222222222^vlabels:->lowercaseonlylabel222222222222 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling LOWERCASEONLYLABEL222222222222^vlabels   [X]: LOWERCASEONLYLABEL222222222222^vlabels:->lowercaseonlylabel222222222222 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling uppercaseonlylabel222222222222^vlabels   [X]: UPPERCASEONLYLABEL222222222222^vlabels:->UPPERCASEONLYLABEL222222222222 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling UPPERCASEONLYLABEL222222222222^vlabels      : UPPERCASEONLYLABEL222222222222^vlabels:->UPPERCASEONLYLABEL222222222222 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling longLABelloweranduppercase1111         : LONGLABELLOWERANDUPPERCASE1111^viewlab:->longLABelloweranduppercase1111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling LONGLABElloweRANDUPPERCASE1111      [Z]: LONGLABELLOWERANDUPPERCASE1111^viewlab:->longLABelloweranduppercase1111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling lowercaseonlylabel111111111111        : LOWERCASEONLYLABEL111111111111^viewlab:->lowercaseonlylabel111111111111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling LOWERCASEONLYLABEL111111111111   [X,Y]: LOWERCASEONLYLABEL111111111111^viewlab:->lowercaseonlylabel111111111111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling uppercaseonlylabel111111111111   [X,Y]: UPPERCASEONLYLABEL111111111111^viewlab:->UPPERCASEONLYLABEL111111111111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling UPPERCASEONLYLABEL111111111111        : UPPERCASEONLYLABEL111111111111^viewlab:->UPPERCASEONLYLABEL111111111111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+
+GTM>
+----------------------------------
+LOWER - i.e. enable case sensitivity
+
+GTM>
+
+GTM>
+%GTM-E-LABELMISSING, Label referenced but not defined: LOWERCASEONLYLABEL111111111111
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/viewlab.m
+%GTM-E-LABELMISSING, Label referenced but not defined: uppercaseonlylabel111111111111
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/viewlab.m
+$VIEW("LABELS") is 1
+Those lines marked with an [X] are not expected to work when case sensitivity is enabled,
+Those lines marked with a [Y] are expected to error with LABELMISSING at compile time
+calling longLABelloweranduppercase2222^vlabels       : longLABelloweranduppercase2222^vlabels:->longLABelloweranduppercase2222 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling LONGLABElloweRANDUPPERCASE2222^vlabels    [Z]: LONGLABElloweRANDUPPERCASE2222^vlabels:->LONGLABElloweRANDUPPERCASE2222 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling lowercaseonlylabel222222222222^vlabels      : lowercaseonlylabel222222222222^vlabels:->lowercaseonlylabel222222222222 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+calling LOWERCASEONLYLABEL222222222222^vlabels   [X]: ERROR (LABELMISSING) at line: t4^viewlab:t4 write "calling LOWERCASEONLYLABEL222222222222^vlabels   [X]: " do LOWERCASEONLYLABEL222222222222^vlabels quit
+calling uppercaseonlylabel222222222222^vlabels   [X]: ERROR (LABELMISSING) at line: t5^viewlab:t5 write "calling uppercaseonlylabel222222222222^vlabels   [X]: " do uppercaseonlylabel222222222222^vlabels quit
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+calling LOWERCASEONLYLABEL222222222222^vlabels   [X]: ERROR (LABELUNKNOWN) at line: t4^viewlab:t4 write "calling LOWERCASEONLYLABEL222222222222^vlabels   [X]: " do LOWERCASEONLYLABEL222222222222^vlabels quit
+calling uppercaseonlylabel222222222222^vlabels   [X]: ERROR (LABELUNKNOWN) at line: t5^viewlab:t5 write "calling uppercaseonlylabel222222222222^vlabels   [X]: " do uppercaseonlylabel222222222222^vlabels quit
+##ALLOW_OUTPUT HOST_ALL
+calling UPPERCASEONLYLABEL222222222222^vlabels      : UPPERCASEONLYLABEL222222222222^vlabels:->UPPERCASEONLYLABEL222222222222 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling longLABelloweranduppercase1111         : longLABelloweranduppercase1111^viewlab:->longLABelloweranduppercase1111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling LONGLABElloweRANDUPPERCASE1111      [Z]: LONGLABElloweRANDUPPERCASE1111^viewlab:->LONGLABElloweRANDUPPERCASE1111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling lowercaseonlylabel111111111111        : lowercaseonlylabel111111111111^viewlab:->lowercaseonlylabel111111111111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+calling LOWERCASEONLYLABEL111111111111   [X,Y]: ERROR (LABELUNKNOWN) at line: t10^viewlab:t10 write "calling LOWERCASEONLYLABEL111111111111   [X,Y]: " do LOWERCASEONLYLABEL111111111111 quit
+calling uppercaseonlylabel111111111111   [X,Y]: ERROR (LABELUNKNOWN) at line: t11^viewlab:t11 write "calling uppercaseonlylabel111111111111   [X,Y]: " do uppercaseonlylabel111111111111 quit
+calling UPPERCASEONLYLABEL111111111111        : UPPERCASEONLYLABEL111111111111^viewlab:->UPPERCASEONLYLABEL111111111111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+
+GTM>
+*********************************
+test view JNLERROR
+----------------------------------
+DEFAULT
+
+GTM>
+
+GTM>
+0
+GTM>
+----------------------------------
+RTSERROR
+
+GTM>
+
+GTM>
+1
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> *********************************
+test view UNDEF
+----------------------------------
+
+GTM>
+In test...
+ --> Testing aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+ --> Testing %aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+ --> Testing aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa(1,2,3,"some subscripts")
+ --> Testing %aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa(1,2,3,"some subscripts")
+ --> Testing ^aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+ --> Testing ^%aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+ --> Testing ^aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa(1,2,3,"some subscripts")
+ --> Testing ^%aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa(1,2,3,"some subscripts")
+will now test VIEW "NOUNDEF"
+In test...
+ --> Testing aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+ --> Testing %aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+ --> Testing aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa(1,2,3,"some subscripts")
+ --> Testing %aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa(1,2,3,"some subscripts")
+ --> Testing ^aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+ --> Testing ^%aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+ --> Testing ^aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa(1,2,3,"some subscripts")
+ --> Testing ^%aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa(1,2,3,"some subscripts")
+
+GTM>
+*********************************
+test view NOISOLATION:^
+----------------------------------
+
+GTM>
+
+GTM>
+%GTM-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): 
+
+GTM>
+
+GTM>
+%GTM-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): 
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

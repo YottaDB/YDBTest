@@ -1,0 +1,310 @@
+MUPIP LOAD
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+load.gld
+Using: ##SOURCE_PATH##/mupip
+load.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+load.gld
+Using: ##SOURCE_PATH##/mupip
+load.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+
+Caution: Database Block Certification Has Been Enabled
+
+GTM>
+do in0^dbfill("set")
+
+GTM>
+set PASS
+
+GTM>
+%GTM-I-RECORDSTAT, ^bc:	  Key cnt: 2  max subsc len: 8  max rec len: 16  max node len: 24
+%GTM-I-RECORDSTAT, ^bcd:	  Key cnt: 1  max subsc len: 9  max rec len: 14  max node len: 27
+%GTM-I-RECORDSTAT, ^bcde:	  Key cnt: 2  max subsc len: 9  max rec len: 7  max node len: 17
+%GTM-I-RECORDSTAT, ^bcdef:	  Key cnt: 2  max subsc len: 11  max rec len: 7  max node len: 19
+%GTM-I-RECORDSTAT, ^bcdefgh:	  Key cnt: 1  max subsc len: 12  max rec len: 10  max node len: 26
+%GTM-I-RECORDSTAT, ^bcdefghijklmno:	  Key cnt: 1  max subsc len: 20  max rec len: 9  max node len: 33
+%GTM-I-RECORDSTAT, ^bcdefghijklmnop:	  Key cnt: 2  max subsc len: 21  max rec len: 22  max node len: 47
+%GTM-I-RECORDSTAT, ^bcdefghijklmnopqr:	  Key cnt: 1  max subsc len: 22  max rec len: 18  max node len: 44
+%GTM-I-RECORDSTAT, ^bcdefghijklmnopqrst:	  Key cnt: 2  max subsc len: 25  max rec len: 23  max node len: 40
+%GTM-I-RECORDSTAT, ^bcdefghijklmnopqrstuv:	  Key cnt: 4  max subsc len: 27  max rec len: 23  max node len: 47
+%GTM-I-RECORDSTAT, ^bcdefghijklmnopqrstuvwxy:	  Key cnt: 2  max subsc len: 30  max rec len: 23  max node len: 56
+%GTM-I-RECORDSTAT, ^bcdefghijklmnopqrstuvwxyz:	  Key cnt: 3  max subsc len: 31  max rec len: 23  max node len: 42
+%GTM-I-RECORDSTAT, ^bcdefghijklmnopqrstuvwxyzAB:	  Key cnt: 1  max subsc len: 32  max rec len: 11  max node len: 47
+%GTM-I-RECORDSTAT, ^bcdefghijklmnopqrstuvwxyzABCDEF:	  Key cnt: 5  max subsc len: 37  max rec len: 23  max node len: 60
+%GTM-I-RECORDSTAT, ^de:	  Key cnt: 1  max subsc len: 7  max rec len: 16  max node len: 27
+%GTM-I-RECORDSTAT, ^def:	  Key cnt: 2  max subsc len: 9  max rec len: 20  max node len: 33
+%GTM-I-RECORDSTAT, ^defg:	  Key cnt: 1  max subsc len: 10  max rec len: 13  max node len: 27
+%GTM-I-RECORDSTAT, ^defghij:	  Key cnt: 1  max subsc len: 13  max rec len: 13  max node len: 30
+%GTM-I-RECORDSTAT, ^defghijkl:	  Key cnt: 1  max subsc len: 15  max rec len: 23  max node len: 42
+%GTM-I-RECORDSTAT, ^defghijklm:	  Key cnt: 3  max subsc len: 16  max rec len: 18  max node len: 29
+%GTM-I-RECORDSTAT, ^defghijklmn:	  Key cnt: 1  max subsc len: 16  max rec len: 20  max node len: 40
+%GTM-I-RECORDSTAT, ^defghijklmno:	  Key cnt: 1  max subsc len: 18  max rec len: 11  max node len: 33
+%GTM-I-RECORDSTAT, ^defghijklmnopq:	  Key cnt: 2  max subsc len: 20  max rec len: 16  max node len: 40
+%GTM-I-RECORDSTAT, ^defghijklmnopqrst:	  Key cnt: 1  max subsc len: 23  max rec len: 11  max node len: 38
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstu:	  Key cnt: 1  max subsc len: 24  max rec len: 12  max node len: 40
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvw:	  Key cnt: 3  max subsc len: 26  max rec len: 12  max node len: 41
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwx:	  Key cnt: 2  max subsc len: 27  max rec len: 19  max node len: 50
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxy:	  Key cnt: 1  max subsc len: 28  max rec len: 11  max node len: 43
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzA:	  Key cnt: 1  max subsc len: 30  max rec len: 11  max node len: 45
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzABC:	  Key cnt: 1  max subsc len: 32  max rec len: 18  max node len: 54
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzABCD:	  Key cnt: 1  max subsc len: 32  max rec len: 21  max node len: 57
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzABCDEFG:	  Key cnt: 2  max subsc len: 36  max rec len: 9  max node len: 49
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzABCDEFGH:	  Key cnt: 1  max subsc len: 37  max rec len: 17  max node len: 58
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 56  max subsc len: 37  max rec len: 23  max node len: 60
+
+GTM>
+
+Caution: Database Block Certification Has Been Enabled
+
+GTM>
+do in1^dbfill("set")
+
+GTM>
+set PASS
+
+GTM>
+$MUPIP extract -format=binary -label=YX -sel="YX*","d*" yx.bin
+
+GTM>
+##SUSPEND_OUTPUT NON_COLLATION
+%GTM-I-RECORDSTAT, ^data:	  Key cnt: 2050  max subsc len: 42  max rec len: 66  max node len: 108
+##ALLOW_OUTPUT NON_COLLATION
+##SUSPEND_OUTPUT COLLATION
+%GTM-I-RECORDSTAT, ^data:	  Key cnt: 2050  max subsc len: 42  max rec len: 66  max node len: 111
+##ALLOW_OUTPUT COLLATION
+%GTM-I-RECORDSTAT, ^de:	  Key cnt: 1  max subsc len: 7  max rec len: 16  max node len: 27
+%GTM-I-RECORDSTAT, ^def:	  Key cnt: 2  max subsc len: 9  max rec len: 20  max node len: 33
+%GTM-I-RECORDSTAT, ^defg:	  Key cnt: 1  max subsc len: 10  max rec len: 13  max node len: 27
+%GTM-I-RECORDSTAT, ^defghij:	  Key cnt: 1  max subsc len: 13  max rec len: 13  max node len: 30
+%GTM-I-RECORDSTAT, ^defghijkl:	  Key cnt: 1  max subsc len: 15  max rec len: 23  max node len: 42
+%GTM-I-RECORDSTAT, ^defghijklm:	  Key cnt: 3  max subsc len: 16  max rec len: 18  max node len: 29
+%GTM-I-RECORDSTAT, ^defghijklmn:	  Key cnt: 1  max subsc len: 16  max rec len: 20  max node len: 40
+%GTM-I-RECORDSTAT, ^defghijklmno:	  Key cnt: 1  max subsc len: 18  max rec len: 11  max node len: 33
+%GTM-I-RECORDSTAT, ^defghijklmnopq:	  Key cnt: 2  max subsc len: 20  max rec len: 16  max node len: 40
+%GTM-I-RECORDSTAT, ^defghijklmnopqrst:	  Key cnt: 1  max subsc len: 23  max rec len: 11  max node len: 38
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstu:	  Key cnt: 1  max subsc len: 24  max rec len: 12  max node len: 40
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvw:	  Key cnt: 3  max subsc len: 26  max rec len: 12  max node len: 41
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwx:	  Key cnt: 2  max subsc len: 27  max rec len: 19  max node len: 50
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxy:	  Key cnt: 1  max subsc len: 28  max rec len: 11  max node len: 43
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzA:	  Key cnt: 1  max subsc len: 30  max rec len: 11  max node len: 45
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzABC:	  Key cnt: 1  max subsc len: 32  max rec len: 18  max node len: 54
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzABCD:	  Key cnt: 1  max subsc len: 32  max rec len: 21  max node len: 57
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzABCDEFG:	  Key cnt: 2  max subsc len: 36  max rec len: 9  max node len: 49
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzABCDEFGH:	  Key cnt: 1  max subsc len: 37  max rec len: 17  max node len: 58
+##SUSPEND_OUTPUT NON_COLLATION
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2077  max subsc len: 42  max rec len: 66  max node len: 108
+##ALLOW_OUTPUT NON_COLLATION
+##SUSPEND_OUTPUT COLLATION
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2077  max subsc len: 42  max rec len: 66  max node len: 111
+##ALLOW_OUTPUT COLLATION
+
+GTM>
+k ^bcde
+
+GTM>
+
+GTM>
+Loading b-c.glo was successful
+Loading yx.bin was successful
+
+GTM>
+
+Caution: Database Block Certification Has Been Enabled
+
+GTM>
+do in0^dbfill("ver")
+
+GTM>
+ver PASS
+
+GTM>
+do in1^dbfill("ver")
+
+GTM>
+ver PASS
+
+GTM>
+h
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+%GTM-I-RECORDSTAT, ^aaaa:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
+%GTM-I-RECORDSTAT, ^aaaaa:	  Key cnt: 1  max subsc len: 7  max rec len: 5  max node len: 16
+%GTM-I-RECORDSTAT, ^aaaaaa:	  Key cnt: 1  max subsc len: 8  max rec len: 5  max node len: 17
+%GTM-I-RECORDSTAT, ^ab:	  Key cnt: 1  max subsc len: 8  max rec len: 15  max node len: 27
+%GTM-I-RECORDSTAT, ^abc:	  Key cnt: 2  max subsc len: 9  max rec len: 22  max node len: 35
+%GTM-I-RECORDSTAT, ^abcd:	  Key cnt: 1  max subsc len: 10  max rec len: 20  max node len: 34
+%GTM-I-RECORDSTAT, ^abcde:	  Key cnt: 3  max subsc len: 11  max rec len: 22  max node len: 37
+%GTM-I-RECORDSTAT, ^abcdefg:	  Key cnt: 2  max subsc len: 13  max rec len: 21  max node len: 30
+%GTM-I-RECORDSTAT, ^abcdefghi:	  Key cnt: 3  max subsc len: 15  max rec len: 23  max node len: 31
+%GTM-I-RECORDSTAT, ^abcdefghijk:	  Key cnt: 2  max subsc len: 17  max rec len: 23  max node len: 32
+%GTM-I-RECORDSTAT, ^abcdefghijkl:	  Key cnt: 1  max subsc len: 18  max rec len: 14  max node len: 36
+%GTM-I-RECORDSTAT, ^abcdefghijklm:	  Key cnt: 1  max subsc len: 19  max rec len: 17  max node len: 40
+%GTM-I-RECORDSTAT, ^abcdefghijklmnopq:	  Key cnt: 1  max subsc len: 23  max rec len: 9  max node len: 36
+%GTM-I-RECORDSTAT, ^abcdefghijklmnopqrs:	  Key cnt: 1  max subsc len: 25  max rec len: 23  max node len: 52
+%GTM-I-RECORDSTAT, ^abcdefghijklmnopqrst:	  Key cnt: 1  max subsc len: 25  max rec len: 9  max node len: 38
+%GTM-I-RECORDSTAT, ^abcdefghijklmnopqrstuvwx:	  Key cnt: 2  max subsc len: 30  max rec len: 19  max node len: 48
+%GTM-I-RECORDSTAT, ^abcdefghijklmnopqrstuvwxyz:	  Key cnt: 2  max subsc len: 32  max rec len: 17  max node len: 53
+%GTM-I-RECORDSTAT, ^abcdefghijklmnopqrstuvwxyzA:	  Key cnt: 1  max subsc len: 33  max rec len: 21  max node len: 58
+%GTM-I-RECORDSTAT, ^abcdefghijklmnopqrstuvwxyzABC:	  Key cnt: 1  max subsc len: 35  max rec len: 8  max node len: 47
+%GTM-I-RECORDSTAT, ^abcdefghijklmnopqrstuvwxyzABCD:	  Key cnt: 1  max subsc len: 35  max rec len: 20  max node len: 59
+%GTM-I-RECORDSTAT, ^abcdefghijklmnopqrstuvwxyzABCDE:	  Key cnt: 2  max subsc len: 37  max rec len: 14  max node len: 54
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 31  max subsc len: 37  max rec len: 23  max node len: 59
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+##TEST_AWK.*
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 31  Max Subsc Len: 37  Max Data Len: 23
+Last LOAD record number: 22
+
+
+GTM>
+right right right
+
+GTM>
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 8  max rec len: 5  max node len: 17
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+right right right
+
+GTM>
+
+GTM>
+PASS from fill5^myfill("right")
+
+GTM>
+%GTM-I-RECORDSTAT, ^aaaa:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
+%GTM-I-RECORDSTAT, ^aaaaa:	  Key cnt: 1  max subsc len: 7  max rec len: 5  max node len: 16
+%GTM-I-RECORDSTAT, ^aaaaaa:	  Key cnt: 1  max subsc len: 8  max rec len: 5  max node len: 17
+%GTM-I-RECORDSTAT, ^aaaaaaaaaa:	  Key cnt: 100  max subsc len: 15  max rec len: 5  max node len: 24
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 103  max subsc len: 15  max rec len: 5  max node len: 24
+%GTM-I-RECORDSTAT, ^bbbbbbbbbb:	  Key cnt: 100  max subsc len: 15  max rec len: 5  max node len: 24
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 100  max subsc len: 15  max rec len: 5  max node len: 24
+
+GTM>
+
+GTM>
+PASS from fill5^myfill("wrong")
+
+GTM>
+
+GTM>
+
+GTM>
+PASS from fill5^myfill("ver")
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+load2.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+load2.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+load2.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+load2.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+PASS from fill4^myfill("set")
+
+GTM>
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT COLLATION
+%GTM-I-RECORDSTAT, ^bing (region BREG):	  Key cnt: 916  max subsc len: 24  max rec len: 10  max node len: 38
+%GTM-I-RECORDSTAT, ^bing (region DEFAULT):	  Key cnt: 83  max subsc len: 24  max rec len: 10  max node len: 32
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+%GTM-I-RECORDSTAT, ^bing (region AREG):	  Key cnt: 87  max subsc len: 24  max rec len: 10  max node len: 37
+%GTM-I-RECORDSTAT, ^bing (region BREG):	  Key cnt: 912  max subsc len: 24  max rec len: 10  max node len: 38
+##ALLOW_OUTPUT NON_COLLATION
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+%GTM-I-RECORDSTAT, ^bing:	  Key cnt: 999  max subsc len: 24  max rec len: 10  max node len: 38
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT COLLATION
+%GTM-I-RECORDSTAT, ^cing (region AREG):	  Key cnt: 32  max subsc len: 18  max rec len: 4  max node len: 22
+%GTM-I-RECORDSTAT, ^cing (region DEFAULT):	  Key cnt: 967  max subsc len: 24  max rec len: 10  max node len: 38
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+%GTM-I-RECORDSTAT, ^cing (region AREG):	  Key cnt: 78  max subsc len: 24  max rec len: 10  max node len: 38
+%GTM-I-RECORDSTAT, ^cing (region DEFAULT):	  Key cnt: 921  max subsc len: 24  max rec len: 10  max node len: 36
+##ALLOW_OUTPUT NON_COLLATION
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+%GTM-I-RECORDSTAT, ^cing:	  Key cnt: 999  max subsc len: 24  max rec len: 10  max node len: 38
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1998  max subsc len: 24  max rec len: 10  max node len: 38
+
+GTM>
+PASS from mupip extract freeze.
+
+GTM>
+PASS from fill4^myfill("kill")
+
+GTM>
+loading big.glo successful.
+
+GTM>
+PASS from fill4^myfill("ver")
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

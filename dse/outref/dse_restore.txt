@@ -1,0 +1,203 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+
+GTM>
+TEST DSE - RESTORE COMMAND
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Saving version 1 of block 3
+DSE> 
+Saving version 2 of block 3
+DSE> Error:  no such version.
+DSE> 
+Restoring block 3 from version 1
+
+DSE> Error:  save version number must be specified.
+DSE> Error: Version 3 of block 00000003 not found in set of saved blocks
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> Error: Version 1 of block 00000000 not found in set of saved blocks
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Saving version 1 of block 2
+DSE> 
+Saving version 1 of block 3
+DSE> 
+Restoring block 2 from version 1 of block 3
+
+DSE> 
+Block 3   Size 61   Level 0   TN 7 V6
+
+DSE> 
+Block 2   Size 61   Level 0   TN 7 V6
+
+DSE> 
+Restoring block 2 from version 1
+
+DSE> 
+Block 2   Size 1F   Level 0   TN 1 V6
+
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> Error: Version 1 of block 00000004 not found in set of saved blocks
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> %GTM-E-BLKINVALID, 00000232 is not a valid block as database file ##TEST_PATH##/mumps.dat has 00000065 total blocks
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> Error: Version 4 of block 00000003 not found in set of saved blocks
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Saving version 1 of block 3
+DSE> 
+Saving version 1 of block 0
+DSE> 
+Restoring block 0 from version 1 of block 3
+
+DSE> 
+Checking integrity of block 0:
+%GTM-I-DBLVLINC,        0:       0  Local bitmap block level incorrect
+
+DSE> 
+Restoring block 0 from version 1
+
+DSE> 
+Checking integrity of block 0:
+
+  No errors detected.
+
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Saving version 1 of block 2
+DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Saving version 1 of block 3
+DSE> 
+Restoring block 3 from version 1 of block 2 in region AREG
+
+DSE> 
+##TEST_AWKBlock 3   Size 25   Level 0   TN 1 V[0-9][0-9]*
+
+DSE> 
+Restoring block 3 from version 1
+
+DSE> 
+##TEST_AWKBlock 3   Size 61   Level 0   TN 7 V[0-9][0-9]*
+
+DSE> %GTM-E-NOREGION, REGION not found: FREELUNCH
+DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Saving version 1 of block 0
+DSE> 
+Restoring block 0 from version 1
+
+DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Saving version 1 of block 4
+DSE> 
+Saving version 1 of block 64
+DSE> DSE> 
+Restoring block 4 from version 1 of block 64
+
+%GTM-E-AIMGBLKFAIL, After image build for block 00000004 in region ##TEST_PATH##/a.dat failed in DSE or MUPIP
+DSE> 
+Removing version 1 of block 64
+DSE> DSE> 
+Restoring block 4 from version 1
+
+##SUSPEND_OUTPUT  REPLIC
+DSE> ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+DSE> Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
+%SYSTEM-E-ENO2, No such file or directory
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> %GTM-E-DSENOTOPEN, DSE could not open region DEFAULT - see DSE startup error message for cause
+DSE> 

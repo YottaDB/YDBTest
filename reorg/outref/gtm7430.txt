@@ -1,0 +1,111 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+145
+
+GTM>
+SELECT and EXCLUDE for ^a is fine
+Fill Factor:: Index blocks 100%: Data blocks 100%
+##SUSPEND_OUTPUT PRO
+GTMPOOLLIMIT used for mupip reorg : ##FILTERED##
+##ALLOW_OUTPUT PRO
+   
+Global: a (region DEFAULT)
+%GTM-W-EXCLUDEREORG, Global: a is present in the EXCLUDE option.  REORG will skip the global.
+##SUSPEND_OUTPUT PRO
+GTMPOOLLIMIT used for mupip reorg : ##FILTERED##
+##ALLOW_OUTPUT PRO
+   
+Global: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+##SUSPEND_OUTPUT PRO
+GTMPOOLLIMIT used for mupip reorg : ##FILTERED##
+##ALLOW_OUTPUT PRO
+   
+Global: yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+Fill Factor:: Index blocks 100%: Data blocks 100%
+##SUSPEND_OUTPUT PRO
+GTMPOOLLIMIT used for mupip reorg : ##FILTERED##
+##ALLOW_OUTPUT PRO
+   
+Global: a (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+EXCLUDE is fine... and so is SELECT
+Fill Factor:: Index blocks 100%: Data blocks 100%
+##SUSPEND_OUTPUT PRO
+GTMPOOLLIMIT used for mupip reorg : ##FILTERED##
+##ALLOW_OUTPUT PRO
+   
+Global: a (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+##SUSPEND_OUTPUT PRO
+GTMPOOLLIMIT used for mupip reorg : ##FILTERED##
+##ALLOW_OUTPUT PRO
+   
+Global: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (region DEFAULT)
+%GTM-W-EXCLUDEREORG, Global: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx is present in the EXCLUDE option.  REORG will skip the global.
+##SUSPEND_OUTPUT PRO
+GTMPOOLLIMIT used for mupip reorg : ##FILTERED##
+##ALLOW_OUTPUT PRO
+   
+Global: yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+Fill Factor:: Index blocks 100%: Data blocks 100%
+##SUSPEND_OUTPUT PRO
+GTMPOOLLIMIT used for mupip reorg : ##FILTERED##
+##ALLOW_OUTPUT PRO
+   
+Global: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

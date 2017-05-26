@@ -1,0 +1,21 @@
+###################################################################
+************************* non-split $P unix domain socket ***************************
+###################################################################
+##TEST_AWKparent:-->0 OPEN SOCKET NOWRAP TOTAL=1 CURRENT=0 
+##TEST_AWK        SOCKET\[0\]=h[0-9]+ DESC=0 CONNECTED ACTIVE  NOTRAP  REMOTE= LOCAL= 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+##TEST_AWK                DELIMITER \$C\(10\) 
+ 
+###################################################################
+************************* split $P unix domain socket ***************************
+###################################################################
+parent:-->(From parent.)
+##TEST_AWK0 OPEN SOCKET NOWRAP TOTAL=1 CURRENT=0 
+##TEST_AWK        SOCKET\[0\]=h[0-9]+ DESC=0 CONNECTED ACTIVE  NOTRAP  REMOTE= LOCAL= 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+##TEST_AWK                DELIMITER \$C\(10\) 
+##TEST_AWK0-out OPEN SOCKET NOWRAP TOTAL=1 CURRENT=0 
+##TEST_AWK        SOCKET\[0\]=h[0-9]+ DESC=1 CONNECTED ACTIVE  NOTRAP  REMOTE= LOCAL= 
+##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
+##TEST_AWK                DELIMITER \$C\(10\) 
+ 

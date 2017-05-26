@@ -1,0 +1,7 @@
+#!/usr/local/bin/tcsh -f
+
+$DSE << DSE_EOF
+	change -f -key=$1
+	change -f -rec=$2
+	exit
+DSE_EOF

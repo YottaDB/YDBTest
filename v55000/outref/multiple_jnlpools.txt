@@ -1,0 +1,98 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+# The below update should be successful
+
+GTM>
+
+GTM>
+# Change gtmgbldir to other.gld and create other.dat
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/other.gld
+
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/other.gld
+Created file ##TEST_PATH##/other.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/other.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
+# The below update should error out with GTM-E-REPLINSTNOSHM
+
+GTM>
+%GTM-E-REPLINSTNOSHM, Database ##TEST_PATH##/other.dat has no active connection to a replication journal pool
+
+GTM>
+# Start background updates
+# Get the jnlpool shmid of mumps.repl
+# For the sake of completeness, make sure the three ipcs exist now (and will not exist after mupip rundown below)
+# Shutdown source server and remove mumps.repl
+# Restart source server with new replication instance file
+# The source server should error out with REPLINSTMISMTCH though the name of replication instance file is the same
+# Check if the error message prints the shmid of the old mumps.repl correctly
+----------
+Error REPLINSTMISMTCH seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%GTM-E-REPLINSTMISMTCH, Process has replication instance file ##TEST_PATH##/mumps.repl (jnlpool shmid = ##NEW_SHMID##) open but database ##TEST_PATH##/mumps.dat is bound to instance file ##TEST_PATH##/mumps.repl (jnlpool shmid = ##OLD_SHMID##)
+----------
+----------
+Error GTM-E-DBNOREGION seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%GTM-E-DBNOREGION, None of the database regions accessible
+----------
+# The below should error out with NOJNLPOOL error because source server startup failed
+
+GTM>
+
+GTM>
+%GTM-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
+
+GTM>
+# The below shutdown command should issue NOJNLPOOL error because source server did not start at all
+##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
+%GTM-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
+# Kill the background mumps process
+$MUPIP rundown
+# Check that NONE of the orphaned ipcs exist after argument-less mupip rundown
+$MUPIP rundown again
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/user1.gld
+
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/user1.gld
+Created file ##TEST_PATH##/user1.dat
+
+GTM>
+
+GTM>
+
+GTM>
+Killed
+# Notedown the shared memory and semaphore id
+# The database has 600 permission. An argumentless mupip rundown as $gtmtest1 should not remove the shared memory, as it does not have write permission to the database
+# Should not see any of the shm or sem noted down above
+# Check that the orphaned ipcs exist after argument-less mupip rundown as another user
+# $MUPIP rundown as same user
+# Check that NONE of the orphaned ipcs exist after argument-less mupip rundown
+##TEST_HOST_SHORT##:##TEST_PATH##/one_updates1.mje1
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP

@@ -1,0 +1,74 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+
+          Should see two triggers fire
+ABC Executed!
+abc+2^chainVnest
++1^A#1#
+chainVnest+7^chainVnest
+ABC Executed!
+abc+2^chainVnest
++1^A#2#
++1^A#1#
+chainVnest+7^chainVnest
+Stacking=2
+PASS
+###################################################################
+
+          Should again see two triggers fire
+ABC Executed!
+abc+2^chainVnest
++1^A#1#
+chainVnest+15^chainVnest
+ABC Executed!
+abc+2^chainVnest
++1^A#2#
++1^A#1#
+chainVnest+15^chainVnest
+Stacking=2
+PASS
+###################################################################
+
+          Should see one trigger fire
+ABC Executed!
+abc+2^chainVnest
++1^A#2#
+chainVnest+23^chainVnest
+Stacking=1
+PASS
+###################################################################
+
+          Should yet again see two triggers fire
+ABC Executed!
+abc+2^chainVnest
++1^A#1#
+chainVnest+31^chainVnest
+ABC Executed!
+abc+2^chainVnest
++1^A#2#
++1^A#1#
+chainVnest+31^chainVnest
+Stacking=2
+PASS
+###################################################################
+
+          Kill ^A and we should still see two trigger fire
+ABC Executed!
+abc+2^chainVnest
++1^A#1#
+chainVnest+39^chainVnest
+ABC Executed!
+abc+2^chainVnest
++1^A#2#
++1^A#1#
+chainVnest+39^chainVnest
+Stacking=2
+PASS
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,65 @@
+V1FNF1	;FUNCTION $FIND -1-;YS-TS,V1FN,VALIDATION VERSION 7.1;31-AUG-1987;
+	;COPYRIGHT MUMPS SYSTEM LABORATORY 1978
+	S PASS=0,FAIL=0
+	W !!,"V1FNF1: TEST OF $FIND FUNCTION -1-"
+	W !!,"$FIND(expr1,expr2)",!
+287	W !,"I-287  expr1 is string literal and contains expr2"
+	S ITEM="I-287.1  $L(expr2)=1" S VCOMP=$FIND("ABC","B") S VCORR=3 D EXAMINER
+	;
+	S ITEM="I-287.2  $L(expr2)=2" S VCOMP=$FIND("ABCD","BC") S VCORR=4 D EXAMINER
+	;
+	S ITEM="I-287.3  expr1=expr2",VCOMP=$F("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890","ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
+	S VCORR=37 D EXAMINER
+	;
+	S ITEM="I-287.4  $L(expr1,expr2)=2 and $E(expr1,1,$L(expr2))=expr2"
+	S VCOMP=$F("ABCEFGHABCEFGHAB","ABCEFGHA") S VCORR=9 D EXAMINER
+	;
+	S ITEM="I-287.5  $L(expr1,expr2)>2 and $E(expr1,1,$L(expr2))=expr2"
+	S VCOMP=$F("@@@@@@@@ASCII","@@") S VCORR=3 D EXAMINER
+	;
+	S ITEM="I-287.6  $E(expr1,$L(expr1)-$L(expr2)+1,$L(expr1))=expr2"
+	S VCOMP=$F("ABCEFGHABCEFGHA^^","ABCEFGHA^^") S VCORR=18 D EXAMINER
+	;
+	S ITEM="I-287.7  $L(expr1,expr2)=2 and $E(expr1,1,$L(expr2))'=expr2"
+	S VCOMP=$F("^A^B^C^D^E^F^G^","^C^") S VCORR=8 D EXAMINER
+	;
+	S ITEM="I-287.8  $L(expr1,expr2)>2 and $E(expr1,1,$L(expr2))'=expr2"
+	S VCOMP=$F("^A^C^C^D^C^F^G^","^C^") S VCORR=6 D EXAMINER
+	;
+	S ITEM="I-287.9  expr2 is "".""",VCOMP=$F("123.456000E+2","."),VCORR=5 D EXAMINER
+	;
+288	W !,"I-288  expr1 is numeric literal and contains expr2"
+	S ITEM="I-288.1  expr1 is numlit" S VCOMP=$F(3E1,3E0) S VCORR=2 D EXAMINER
+	S ITEM="I-288.2  expr1 is another numlit" S VCOMP=$F(-0045.94E-02,"59") S VCORR=6 D EXAMINER
+	;
+289	W !,"I-289  expr1 is string literal and does not contains expr2"
+	S ITEM="I-289.1  expr1 does not contains expr2 character"
+	S VCOMP=$FIND("ABC","E") S VCORR=0 D EXAMINER
+	;
+	S ITEM="I-289.2  expr2 is lvn"
+	S A="TAYBZD",VCOMP=$F("ABCDEFGHIJKLMNOPQRSTUVWXYZ",A) S VCORR=0 D EXAMINER
+	;
+	S ITEM="I-289.3  $L(expr1)=$L(expr2) and expr1'=expr2"
+	S VCOMP=$FIND("ABC","AB3") S VCORR=0 D EXAMINER
+	;
+	S ITEM="I-289.4  $L(expr1)<$L(expr2)"
+	S VCOMP=$FIND("ABCDEFGHIJKLMNOPQRSTUVWXY","ABCDEFGHIJKLMNOPQRSTUVWXYZ") S VCORR=0 D EXAMINER
+	;
+	S ITEM="I-289.5  $L(expr1,$E(expr2,1,$L(expr2)-1))>1"
+	S VCOMP=$F("ABCDEFABCDEFABCDEFABCDEFABCDEF"," ABCDEF"),VCORR=0 D EXAMINER
+	;
+	S ITEM="I-289.6  $L(expr1,$E(expr2,2,$L(expr2)))>1"
+	S VCOMP=$F("ABCDEFABCDEFABCDEFABCDEFABCDEF","ABCDEFG") S VCORR=0 D EXAMINER
+	;
+	S ITEM="I-289.7  $L(expr1,$E(expr2,2,$L(expr2)-1))>1"
+	S VCOMP=$F("ABCDEFABCDEFABCDEFABCDEFABCDEF","@ABCDEFG") S VCORR=0 D EXAMINER
+	;
+END	W !!,"END OF V1FNF1",!
+	S ROUTINE="V1FNF1",TESTS=18,AUTO=18,VISUAL=0 D ^VREPORT
+	K  Q
+	;
+EXAMINER	I VCORR=VCOMP S PASS=PASS+1 W !,"   PASS  ",ITEM W:$Y>55 # Q
+	S FAIL=FAIL+1 W !,"** FAIL  ",ITEM W:$Y>55 #
+	W !,"           COMPUTED =""",VCOMP,"""" W:$Y>55 #
+	W !,"           CORRECT  =""",VCORR,"""" W:$Y>55 #
+	Q

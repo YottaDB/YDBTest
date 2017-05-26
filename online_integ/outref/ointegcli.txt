@@ -1,0 +1,72 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+###################################################################
+# regular integ - file specified and -online
+# mupip integ -file -online mumps.dat
+###################################################################
+###################################################################
+# Verify CLIERR error is present.
+###################################################################
+----------
+Error CLIERR seen in mupip_log1.log as expected:
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ONLINE TN_RESET FILE
+----------
+###################################################################
+# regular integ -online and -tn_reset
+# mupip integ -online -tn_reset -r DEFAULT
+###################################################################
+###################################################################
+# Verify CLIERR error is present.
+###################################################################
+----------
+Error CLIERR seen in mupip_log2.log as expected:
+##TEST_AWK%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TN_RESET.*
+----------
+###################################################################
+# regular integ - file specified
+# mupip integ -file mumps.dat
+###################################################################
+###################################################################
+# regular integ
+# mupip integ -noonline -r DEFAULT
+###################################################################
+###################################################################
+# regular integ
+# mupip integ -r DEFAULT
+###################################################################
+###################################################################
+# online integ
+# mupip integ -online -r DEFAULT
+###################################################################
+###################################################################
+# online integ with preserve
+# mupip integ -online -preserve -r DEFAULT
+###################################################################
+##TEST_AWKgtm.snapshot.*
+###################################################################
+# online integ analyze
+# mupip integ -online -analyze
+###################################################################
+###################################################################
+# regular integ - all regions
+# mupip integ -r *
+###################################################################
+###################################################################
+# regular integ - multiple listed regions
+# mupip integ -r AREG BREG CREG
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

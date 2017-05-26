@@ -1,0 +1,54 @@
+
+
+Passed params from C: called from label long from routine ciargs
+
+do ^verifyargs(32)
+Verify Done 
+
+
+called from label Morethan from routine ciargs
+
+do ^verifyargs(31)
+Verify Done 
+100
+
+
+called from label Morethan8char from routine ciargs
+
+do ^verifyargs(31)
+Verify Done 
+200
+
+
+called from label Morethan8charlabel from routine morethan8charciargs.m
+
+Correct behavior
+
+300
+do ^verifyargs(31)
+Verify Done 
+
+
+called from label P31CharLabel0000000000000000000 from routine morethan8charciargs.m
+
+Correct behavior
+
+400
+do ^verifyargs(31)
+Verify Done 
+
+
+called from label 12345678 from routine morethan8charciargs.m
+
+Correct behavior
+
+400
+do ^verifyargs(31)
+Verify Done 
+called from label Morethan8charlabel from routine greaterThan31charfileshouldnotbecalled.m
+
+A 38 length M routine name is called after pre-compilation
+Correct behavior
+
+do ^verifyargs(32)
+Verify Done 

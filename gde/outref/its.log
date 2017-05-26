@@ -1,0 +1,1031 @@
+	show -all
+!
+!
+!                              *** TEMPLATES ***
+!                                                                         Std      Inst
+!                                            Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+!Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+!-----------------------------------------------------------------------------------------------------------
+!<default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+!
+!Segment          Active              Acc Typ Block      Alloc Exten Options
+!------------------------------------------------------------------------------
+!<default>          *                 BG  DYN  1024        100   100 GLOB =1024
+!                                                                    LOCK = 40
+##TEST_AWK!                                                                    RES  = *[0-9]*
+!                                                                    ENCR = OFF
+!                                                                    MSLT =1024
+!<default>                            MM  DYN  1024        100   100 DEFER
+!                                                                    LOCK = 40
+!                                                                    MSLT =1024
+!
+!
+!        *** NAMES ***
+!Global                             Region
+!------------------------------------------------------------------------------
+!%*                                 COMMON
+!%ACCESS                            TABLES
+!%E                                 TABLES
+!%IAR                               TABLES
+!%TRACE                             TABLES
+!%USER                              CTS
+!%USERH                             CTS
+!%USERX                             CTS
+!%VMSCOM                            SCRATCH
+!%ZL                                TABLES
+!*                                  MISC
+!ACC                                CTS
+!ACCH                               CTS
+!ACCX                               CTS
+!AGD                                TABLES
+!AGE                                TABLES
+!AGI                                TABLES
+!AGT                                TABLES
+!ARC                                LIB
+!ARCH                               LIB
+!ARD                                TABLES
+!ARDD                               TABLES
+!ARN                                SCRATCH
+!ARQ                                TABLES
+!ARRG                               TABLES
+!ARS                                TABLES
+!ARSH                               TABLES
+!ARSX                               TABLES
+!CDD                                CTS
+!CMS                                LIB
+!CTL                                CTS
+!CTN                                SCRATCH
+!CUS                                CTS
+!CUSH                               CTS
+!CUST                               TABLES
+!CUSX                               CTS
+!DAD                                LIB
+!DOC                                CTS
+!DOCH                               CTS
+!DOCX                               CTS
+!DTD                                CTS
+!EDU                                CTS
+!EDUH                               CTS
+!ERM                                TABLES
+!EXL                                CTS
+!EXP                                CTS
+!EXPX                               CTS
+!EXQ                                CTS
+!EXTMP                              SCRATCH
+!FPT                                LIB
+!FPTX                               LIB
+!GBL                                LIB
+!GBLH                               LIB
+!GBLX                               LIB
+!GENCOD                             TABLES
+!HELP                               TABLES
+!HIS                                LIB
+!HISX                               LIB
+!ITS                                CTS
+!J                                  SCRATCH
+!LDS*                               SCRATCH
+!LIB                                LIB
+!LIBX                               LIB
+!LRM                                LIB
+!LRQ                                LIB
+!LRQH                               LIB
+!LRQX                               LIB
+!MAP                                LIB
+!MENU                               TABLES
+!MENU1                              TABLES
+!MENUFP                             TABLES
+!MENUFPX                            TABLES
+!MENUT                              TABLES
+!OBS                                LIB
+!OBSH                               LIB
+!OBSX                               LIB
+!PAK                                CTS
+!PAKH                               CTS
+!PAKX                               CTS
+!PAT                                LIB
+!PEX                                CTS
+!PRD                                LIB
+!PRDH                               LIB
+!PRDX                               LIB
+!PRE                                CTS
+!PREX                               CTS
+!PRL                                CTS
+!PRLX                               CTS
+!QAD                                LIB
+!QAR                                TABLES
+!QARX                               TABLES
+!RED                                LIB
+!REG                                CTS
+!REGX                               CTS
+!REL                                LIB
+!RELH                               LIB
+!RELX                               LIB
+!RES                                LIB
+!RESX                               LIB
+!RP                                 SCRATCH
+!RTN                                LIB
+!S                                  CTS
+!SDL                                CTS
+!SERR                               TABLES
+!SHR                                LIB
+!SHRH                               LIB
+!SHRX                               LIB
+!SMN                                SCRATCH
+!SRL                                LIB
+!SRLH                               LIB
+!SRLX                               LIB
+!SUB                                LIB
+!SUBH                               LIB
+!SUBX                               LIB
+!SUPFP                              TABLES
+!SUPFPX                             TABLES
+!T                                  CTS
+!TB                                 TABLES
+!TCL                                CTS
+!TD                                 TABLES
+!TMP                                SCRATCH
+!TSHT                               TABLES
+!UTILITY                            SCRATCH
+!WDWTB                              TABLES
+!ZLOG                               TABLES
+!a*                                 SCRATCH
+!b*                                 SCRATCH
+!c*                                 SCRATCH
+!d*                                 SCRATCH
+!e*                                 SCRATCH
+!f*                                 SCRATCH
+!g*                                 SCRATCH
+!h*                                 SCRATCH
+!i*                                 SCRATCH
+!j*                                 SCRATCH
+!k*                                 SCRATCH
+!l*                                 SCRATCH
+!m*                                 SCRATCH
+!n*                                 SCRATCH
+!o*                                 SCRATCH
+!p*                                 SCRATCH
+!q*                                 SCRATCH
+!r*                                 SCRATCH
+!s*                                 SCRATCH
+!t*                                 SCRATCH
+!u*                                 SCRATCH
+!v*                                 SCRATCH
+!w*                                 SCRATCH
+!x*                                 SCRATCH
+!y*                                 SCRATCH
+!z*                                 SCRATCH
+!
+!
+!                               *** REGIONS ***
+!                                                                                               Std      Inst
+!                                Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+!Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+!----------------------------------------------------------------------------------------------------------------------------------
+!COMMON                          COMMON                             0      256    64 NEVER      N    Y   DISABLED DISABLED ENABLED
+!CTS                             CTS                                0      600    72 NEVER      N    Y   DISABLED DISABLED ENABLED
+!LIB                             LIB                                0      600    72 NEVER      N    Y   DISABLED DISABLED ENABLED
+!MISC                            MISC                               0      600    72 NEVER      N    Y   DISABLED DISABLED ENABLED
+!SCRATCH                         SCRATCH                            0      800   255 NEVER      N    N   DISABLED DISABLED ENABLED
+!TABLES                          TABLES                             0      600    72 NEVER      N    Y   DISABLED DISABLED ENABLED
+!
+!                         *** JOURNALING INFORMATION ***
+!Region                          Jnl File (def ext: .mjl)  Before Buff      Alloc      Exten   AutoSwitch
+!--------------------------------------------------------------------------------------------------------
+!COMMON                          jnl_COMMON                Y      2308       2048       2048      8386560
+!
+!CTS                             jnl_CTS                   Y      2308       2048       2048      8386560
+!
+!LIB                             jnl_LIB                   Y      2308       2048       2048      8386560
+!
+!MISC                            jnl_MISC                  Y      2308       2048       2048      8386560
+!
+!TABLES                          jnl_TABLES                Y      2308       2048       2048      8386560
+!
+!
+!
+!                               *** SEGMENTS ***
+!Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+!-------------------------------------------------------------------------------------------
+!COMMON                          MUMPS_COMM          BG  DYN  2048        100   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+!                                                                                   ENCR=OFF
+##ALLOW_OUTPUT ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+!                                                                                   ENCR=ON
+##ALLOW_OUTPUT NON_ENCRYPT
+!                                                                                   MSLT=1024
+!                                                                                   DALL=YES
+!CTS                             MUMPS_CTS           BG  DYN  2048        100   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+!                                                                                   ENCR=OFF
+##ALLOW_OUTPUT ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+!                                                                                   ENCR=ON
+##ALLOW_OUTPUT NON_ENCRYPT
+!                                                                                   MSLT=1024
+!                                                                                   DALL=YES
+!LIB                             MUMPS_LIB           BG  DYN  2048        100   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+!                                                                                   ENCR=OFF
+##ALLOW_OUTPUT ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+!                                                                                   ENCR=ON
+##ALLOW_OUTPUT NON_ENCRYPT
+!                                                                                   MSLT=1024
+!                                                                                   DALL=YES
+!MISC                            MUMPS_MISC          BG  DYN  2048        500   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+!                                                                                   ENCR=OFF
+##ALLOW_OUTPUT ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+!                                                                                   ENCR=ON
+##ALLOW_OUTPUT NON_ENCRYPT
+!                                                                                   MSLT=1024
+!                                                                                   DALL=YES
+!SCRATCH                         MUMPS_SCRA          BG  DYN  2048        100   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+!                                                                                   ENCR=OFF
+##ALLOW_OUTPUT ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+!                                                                                   ENCR=ON
+##ALLOW_OUTPUT NON_ENCRYPT
+!                                                                                   MSLT=1024
+!                                                                                   DALL=YES
+!TABLES                          MUMPS_TABL          BG  DYN  2048        100   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+!                                                                                   ENCR=OFF
+##ALLOW_OUTPUT ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+!                                                                                   ENCR=ON
+##ALLOW_OUTPUT NON_ENCRYPT
+!                                                                                   MSLT=1024
+!                                                                                   DALL=YES
+!
+!
+!                                 *** MAP ***
+!  -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+!From                            Up to                            Region / Segment / File(def ext: .dat)
+!--------------------------------------------------------------------------------------------------------------------------
+!%                               %ACCESS                          REG = COMMON
+!                                                                 SEG = COMMON
+!                                                                 FILE = MUMPS_COMM
+!%ACCESS                         %ACCESS0                         REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!%ACCESS0                        %E                               REG = COMMON
+!                                                                 SEG = COMMON
+!                                                                 FILE = MUMPS_COMM
+!%E                              %E0                              REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!%E0                             %IAR                             REG = COMMON
+!                                                                 SEG = COMMON
+!                                                                 FILE = MUMPS_COMM
+!%IAR                            %IAR0                            REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!%IAR0                           %TRACE                           REG = COMMON
+!                                                                 SEG = COMMON
+!                                                                 FILE = MUMPS_COMM
+!%TRACE                          %TRACE0                          REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!%TRACE0                         %USER                            REG = COMMON
+!                                                                 SEG = COMMON
+!                                                                 FILE = MUMPS_COMM
+!%USER                           %USER0                           REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!%USER0                          %USERH                           REG = COMMON
+!                                                                 SEG = COMMON
+!                                                                 FILE = MUMPS_COMM
+!%USERH                          %USERH0                          REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!%USERH0                         %USERX                           REG = COMMON
+!                                                                 SEG = COMMON
+!                                                                 FILE = MUMPS_COMM
+!%USERX                          %USERX0                          REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!%USERX0                         %VMSCOM                          REG = COMMON
+!                                                                 SEG = COMMON
+!                                                                 FILE = MUMPS_COMM
+!%VMSCOM                         %VMSCOM0                         REG = SCRATCH
+!                                                                 SEG = SCRATCH
+!                                                                 FILE = MUMPS_SCRA
+!%VMSCOM0                        %ZL                              REG = COMMON
+!                                                                 SEG = COMMON
+!                                                                 FILE = MUMPS_COMM
+!%ZL                             %ZL0                             REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!%ZL0                            A                                REG = COMMON
+!                                                                 SEG = COMMON
+!                                                                 FILE = MUMPS_COMM
+!A                               ACC                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!ACC                             ACC0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!ACC0                            ACCH                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!ACCH                            ACCH0                            REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!ACCH0                           ACCX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!ACCX                            ACCX0                            REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!ACCX0                           AGD                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!AGD                             AGD0                             REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!AGD0                            AGE                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!AGE                             AGE0                             REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!AGE0                            AGI                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!AGI                             AGI0                             REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!AGI0                            AGT                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!AGT                             AGT0                             REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!AGT0                            ARC                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!ARC                             ARC0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!ARC0                            ARCH                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!ARCH                            ARCH0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!ARCH0                           ARD                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!ARD                             ARD0                             REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!ARD0                            ARDD                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!ARDD                            ARDD0                            REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!ARDD0                           ARN                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!ARN                             ARN0                             REG = SCRATCH
+!                                                                 SEG = SCRATCH
+!                                                                 FILE = MUMPS_SCRA
+!ARN0                            ARQ                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!ARQ                             ARQ0                             REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!ARQ0                            ARRG                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!ARRG                            ARRG0                            REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!ARRG0                           ARS                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!ARS                             ARS0                             REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!ARS0                            ARSH                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!ARSH                            ARSH0                            REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!ARSH0                           ARSX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!ARSX                            ARSX0                            REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!ARSX0                           CDD                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!CDD                             CDD0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!CDD0                            CMS                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!CMS                             CMS0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!CMS0                            CTL                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!CTL                             CTL0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!CTL0                            CTN                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!CTN                             CTN0                             REG = SCRATCH
+!                                                                 SEG = SCRATCH
+!                                                                 FILE = MUMPS_SCRA
+!CTN0                            CUS                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!CUS                             CUS0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!CUS0                            CUSH                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!CUSH                            CUSH0                            REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!CUSH0                           CUST                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!CUST                            CUST0                            REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!CUST0                           CUSX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!CUSX                            CUSX0                            REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!CUSX0                           DAD                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!DAD                             DAD0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!DAD0                            DOC                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!DOC                             DOC0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!DOC0                            DOCH                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!DOCH                            DOCH0                            REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!DOCH0                           DOCX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!DOCX                            DOCX0                            REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!DOCX0                           DTD                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!DTD                             DTD0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!DTD0                            EDU                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!EDU                             EDU0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!EDU0                            EDUH                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!EDUH                            EDUH0                            REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!EDUH0                           ERM                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!ERM                             ERM0                             REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!ERM0                            EXL                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!EXL                             EXL0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!EXL0                            EXP                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!EXP                             EXP0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!EXP0                            EXPX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!EXPX                            EXPX0                            REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!EXPX0                           EXQ                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!EXQ                             EXQ0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!EXQ0                            EXTMP                            REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!EXTMP                           EXTMP0                           REG = SCRATCH
+!                                                                 SEG = SCRATCH
+!                                                                 FILE = MUMPS_SCRA
+!EXTMP0                          FPT                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!FPT                             FPT0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!FPT0                            FPTX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!FPTX                            FPTX0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!FPTX0                           GBL                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!GBL                             GBL0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!GBL0                            GBLH                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!GBLH                            GBLH0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!GBLH0                           GBLX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!GBLX                            GBLX0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!GBLX0                           GENCOD                           REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!GENCOD                          GENCOD0                          REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!GENCOD0                         HELP                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!HELP                            HELP0                            REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!HELP0                           HIS                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!HIS                             HIS0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!HIS0                            HISX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!HISX                            HISX0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!HISX0                           ITS                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!ITS                             ITS0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!ITS0                            J                                REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!J                               J0                               REG = SCRATCH
+!                                                                 SEG = SCRATCH
+!                                                                 FILE = MUMPS_SCRA
+!J0                              LDS                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!LDS                             LDT                              REG = SCRATCH
+!                                                                 SEG = SCRATCH
+!                                                                 FILE = MUMPS_SCRA
+!LDT                             LIB                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!LIB                             LIB0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!LIB0                            LIBX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!LIBX                            LIBX0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!LIBX0                           LRM                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!LRM                             LRM0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!LRM0                            LRQ                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!LRQ                             LRQ0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!LRQ0                            LRQH                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!LRQH                            LRQH0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!LRQH0                           LRQX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!LRQX                            LRQX0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!LRQX0                           MAP                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!MAP                             MAP0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!MAP0                            MENU                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!MENU                            MENU0                            REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!MENU0                           MENU1                            REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!MENU1                           MENU10                           REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!MENU10                          MENUFP                           REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!MENUFP                          MENUFP0                          REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!MENUFP0                         MENUFPX                          REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!MENUFPX                         MENUFPX0                         REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!MENUFPX0                        MENUT                            REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!MENUT                           MENUT0                           REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!MENUT0                          OBS                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!OBS                             OBS0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!OBS0                            OBSH                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!OBSH                            OBSH0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!OBSH0                           OBSX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!OBSX                            OBSX0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!OBSX0                           PAK                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!PAK                             PAK0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!PAK0                            PAKH                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!PAKH                            PAKH0                            REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!PAKH0                           PAKX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!PAKX                            PAKX0                            REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!PAKX0                           PAT                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!PAT                             PAT0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!PAT0                            PEX                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!PEX                             PEX0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!PEX0                            PRD                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!PRD                             PRD0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!PRD0                            PRDH                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!PRDH                            PRDH0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!PRDH0                           PRDX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!PRDX                            PRDX0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!PRDX0                           PRE                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!PRE                             PRE0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!PRE0                            PREX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!PREX                            PREX0                            REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!PREX0                           PRL                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!PRL                             PRL0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!PRL0                            PRLX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!PRLX                            PRLX0                            REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!PRLX0                           QAD                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!QAD                             QAD0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!QAD0                            QAR                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!QAR                             QAR0                             REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!QAR0                            QARX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!QARX                            QARX0                            REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!QARX0                           RED                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!RED                             RED0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!RED0                            REG                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!REG                             REG0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!REG0                            REGX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!REGX                            REGX0                            REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!REGX0                           REL                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!REL                             REL0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!REL0                            RELH                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!RELH                            RELH0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!RELH0                           RELX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!RELX                            RELX0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!RELX0                           RES                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!RES                             RES0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!RES0                            RESX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!RESX                            RESX0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!RESX0                           RP                               REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!RP                              RP0                              REG = SCRATCH
+!                                                                 SEG = SCRATCH
+!                                                                 FILE = MUMPS_SCRA
+!RP0                             RTN                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!RTN                             RTN0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!RTN0                            S                                REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!S                               S0                               REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!S0                              SDL                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!SDL                             SDL0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!SDL0                            SERR                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!SERR                            SERR0                            REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!SERR0                           SHR                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!SHR                             SHR0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!SHR0                            SHRH                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!SHRH                            SHRH0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!SHRH0                           SHRX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!SHRX                            SHRX0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!SHRX0                           SMN                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!SMN                             SMN0                             REG = SCRATCH
+!                                                                 SEG = SCRATCH
+!                                                                 FILE = MUMPS_SCRA
+!SMN0                            SRL                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!SRL                             SRL0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!SRL0                            SRLH                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!SRLH                            SRLH0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!SRLH0                           SRLX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!SRLX                            SRLX0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!SRLX0                           SUB                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!SUB                             SUB0                             REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!SUB0                            SUBH                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!SUBH                            SUBH0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!SUBH0                           SUBX                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!SUBX                            SUBX0                            REG = LIB
+!                                                                 SEG = LIB
+!                                                                 FILE = MUMPS_LIB
+!SUBX0                           SUPFP                            REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!SUPFP                           SUPFP0                           REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!SUPFP0                          SUPFPX                           REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!SUPFPX                          SUPFPX0                          REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!SUPFPX0                         T                                REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!T                               T0                               REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!T0                              TB                               REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!TB                              TB0                              REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!TB0                             TCL                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!TCL                             TCL0                             REG = CTS
+!                                                                 SEG = CTS
+!                                                                 FILE = MUMPS_CTS
+!TCL0                            TD                               REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!TD                              TD0                              REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!TD0                             TMP                              REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!TMP                             TMP0                             REG = SCRATCH
+!                                                                 SEG = SCRATCH
+!                                                                 FILE = MUMPS_SCRA
+!TMP0                            TSHT                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!TSHT                            TSHT0                            REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!TSHT0                           UTILITY                          REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!UTILITY                         UTILITY0                         REG = SCRATCH
+!                                                                 SEG = SCRATCH
+!                                                                 FILE = MUMPS_SCRA
+!UTILITY0                        WDWTB                            REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!WDWTB                           WDWTB0                           REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!WDWTB0                          ZLOG                             REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!ZLOG                            ZLOG0                            REG = TABLES
+!                                                                 SEG = TABLES
+!                                                                 FILE = MUMPS_TABL
+!ZLOG0                           a                                REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+!a                               ...                              REG = SCRATCH
+!                                                                 SEG = SCRATCH
+!                                                                 FILE = MUMPS_SCRA
+!LOCAL LOCKS                                                      REG = MISC
+!                                                                 SEG = MISC
+!                                                                 FILE = MUMPS_MISC
+	ex

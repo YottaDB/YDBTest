@@ -1,0 +1,39 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Checking if the database is fully allocated after the database creation
+TEST-I-PASS database has been fully allocated.
+# Triggering an auto extend and checking if the database is fully allocated
+TEST-I-PASS database has been fully allocated.
+# Create mumps.dat with -defer_allocate
+Created file ##TEST_PATH##/mumps.dat
+TEST-I-PASS The mumps.dat is sparse as expected during database creation with defer_allocate.
+# Fill the database, trigger autoextend
+TEST-I-PASS The mumps.dat is sparse as expected after filling the database with defer_allocate.
+# Extend by 0 blocks should cause an error when defer_allocate is TRUE
+
+BLOCKS too small, no extension done
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+Database file ##TEST_PATH##/mumps.dat now has defer allocation flag set to FALSE
+# Fully allocate the database
+Extension successful, file ##TEST_PATH##/mumps.dat extended by 0 blocks.  Total blocks = 1525.
+TEST-I-PASS database has been fully allocated as expected with nodefer_allocate.
+# Verify the data is correct
+TEST-I-PASS Data OK
+# Extend by 100 blocks and verfiy the data is still OK
+Extension successful, file ##TEST_PATH##/mumps.dat extended by 100 blocks.  Total blocks = 1625.
+TEST-I-PASS database has been fully allocated with nodefer_allocate.
+TEST-I-PASS Data OK
+Created file ##TEST_PATH##/mumps.dat
+# Fill the database, trigger autoextend
+TEST-I-PASS The mumps.dat is fully allocated after filling the database with nodefer_allocate.
+Database file ##TEST_PATH##/mumps.dat now has defer allocation flag set to  TRUE
+# Extend by 100 blocks and verfiy the data is still OK
+Extension successful, file ##TEST_PATH##/mumps.dat extended by 100 blocks.  Total blocks = 1625.
+TEST-I-PASS database has been sparse with defer_allocate.
+TEST-I-PASS Data OK
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

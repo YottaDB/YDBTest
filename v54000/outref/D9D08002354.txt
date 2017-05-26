@@ -1,0 +1,18 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+PASS from d002354
+test2 : NOUNDEF testcase
+j=""
+test2 : UNDEF testcase
+%GTM-E-UNDEF, Undefined local variable: k
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

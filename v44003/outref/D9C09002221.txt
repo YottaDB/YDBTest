@@ -1,0 +1,579 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+MUPIP set -version=V4 -region DEFAULT
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V4
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+---------------------------------------------------------
+Test TN_RESET and MUTNWARN error with curr_tn = AE6B2780
+---------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+
+------- MUPIP INTEG without TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+------- MUPIP INTEG with    TN_RESET -------------
+%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000003, found 0x00000000
+%GTM-I-DBBTUFIXED, The blocks-to-upgrade file-header field has been changed to the correct value
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+---------------------------------------------------------
+Test TN_RESET and MUTNWARN error with curr_tn = BE6B27FE
+---------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+
+------- MUPIP INTEG without TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+------- MUPIP INTEG with    TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+---------------------------------------------------------
+Test TN_RESET and MUTNWARN error with curr_tn = CE6B27FF
+---------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+
+------- MUPIP INTEG without TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+------- MUPIP INTEG with    TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+---------------------------------------------------------
+Test TN_RESET and MUTNWARN error with curr_tn = D7FFFFFF
+---------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+
+------- MUPIP INTEG without TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+------- MUPIP INTEG with    TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+---------------------------------------------------------
+Test TN_RESET and MUTNWARN error with curr_tn = EE6B2801
+---------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+
+------- MUPIP INTEG without TN_RESET -------------
+%GTM-W-MUTNWARN, Database file mumps.dat has 0x000000001194D7FE more transactions to go before reaching the transaction number limit (0x00000000FFFFFFFF). Renew database with MUPIP INTEG TN_RESET
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+%GTM-E-INTEGERRS, Database integrity errors
+
+------- MUPIP INTEG with    TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+---------------------------------------------------------
+Test TN_RESET and MUTNWARN error with curr_tn = F0000000
+---------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+
+------- MUPIP INTEG without TN_RESET -------------
+%GTM-W-MUTNWARN, Database file mumps.dat has 0x000000000FFFFFFF more transactions to go before reaching the transaction number limit (0x00000000FFFFFFFF). Renew database with MUPIP INTEG TN_RESET
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+%GTM-E-INTEGERRS, Database integrity errors
+
+------- MUPIP INTEG with    TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+---------------------------------------------------------
+Test TN_RESET and MUTNWARN error with curr_tn = FFFFFFFF
+---------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+
+------- MUPIP INTEG without TN_RESET -------------
+%GTM-W-MUTNWARN, Database file mumps.dat has 0x0000000000000000 more transactions to go before reaching the transaction number limit (0x00000000FFFFFFFF). Renew database with MUPIP INTEG TN_RESET
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+%GTM-E-INTEGERRS, Database integrity errors
+
+------- MUPIP INTEG with    TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+MUPIP set -version=V6 -region DEFAULT
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+---------------------------------------------------------
+Test TN_RESET and MUTNWARN error with curr_tn = AE6B2780
+---------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+
+------- MUPIP INTEG without TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+------- MUPIP INTEG with    TN_RESET -------------
+%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000003
+%GTM-I-DBBTUFIXED, The blocks-to-upgrade file-header field has been changed to the correct value
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+---------------------------------------------------------
+Test TN_RESET and MUTNWARN error with curr_tn = BE6B27FE
+---------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+
+------- MUPIP INTEG without TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+------- MUPIP INTEG with    TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+---------------------------------------------------------
+Test TN_RESET and MUTNWARN error with curr_tn = CE6B27FFCE6B27FF
+---------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+
+------- MUPIP INTEG without TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+------- MUPIP INTEG with    TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+---------------------------------------------------------
+Test TN_RESET and MUTNWARN error with curr_tn = FFFFFFFDFFFFFFFF
+---------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+
+------- MUPIP INTEG without TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+------- MUPIP INTEG with    TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+---------------------------------------------------------
+Test TN_RESET and MUTNWARN error with curr_tn = FFFFFFFFA0000000
+---------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+
+------- MUPIP INTEG without TN_RESET -------------
+%GTM-W-MUTNWARN, Database file mumps.dat has 0x000000005FFFFFFF more transactions to go before reaching the transaction number limit (0xFFFFFFFFFFFFFFFF). Renew database with MUPIP INTEG TN_RESET
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+%GTM-E-INTEGERRS, Database integrity errors
+
+------- MUPIP INTEG with    TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+---------------------------------------------------------
+Test TN_RESET and MUTNWARN error with curr_tn = FFFFFFFFF0000000
+---------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+
+------- MUPIP INTEG without TN_RESET -------------
+%GTM-W-MUTNWARN, Database file mumps.dat has 0x000000000FFFFFFF more transactions to go before reaching the transaction number limit (0xFFFFFFFFFFFFFFFF). Renew database with MUPIP INTEG TN_RESET
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+%GTM-E-INTEGERRS, Database integrity errors
+
+------- MUPIP INTEG with    TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+---------------------------------------------------------
+Test TN_RESET and MUTNWARN error with curr_tn = FFFFFFFFFFFFFFFF
+---------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+
+------- MUPIP INTEG without TN_RESET -------------
+%GTM-W-MUTNWARN, Database file mumps.dat has 0x0000000000000000 more transactions to go before reaching the transaction number limit (0xFFFFFFFFFFFFFFFF). Renew database with MUPIP INTEG TN_RESET
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+%GTM-E-INTEGERRS, Database integrity errors
+
+------- MUPIP INTEG with    TN_RESET -------------
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+------------------------------------------------
+Test issue of DBMBTNSIZMX error from MUPIP INTEG
+------------------------------------------------
+
+
+------- MUPIP INTEG without TN_RESET -------------
+
+Block:Offset Level
+%GTM-I-DBMBTNSIZMX, 
+       0:0     FF  Map block transaction number too large
+%GTM-I-DBTN, Block TN is 0x0000000000000801
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+
+Largest transaction number found in database was 801
+Current transaction number is                    801
+%GTM-E-INTEGERRS, Database integrity errors
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+Total error count from integ:		1.
+##TEST_AWK... ... .. ..:..:.. ... 20..
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%GTM-I-DBMBTNSIZMX, 
+       0:0     FF  Map block transaction number too large
+%GTM-I-DBTN, Block TN is 0x0000000000000801
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+
+Largest transaction number found in database was 801
+Current transaction number is                    801
+%GTM-E-INTEGERRS, Database integrity errors
+##TEST_PATH##/mupip.err_##TEST_AWK[0-9_][0-9_]*
+%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+%GTM-E-INTEGERRS, Database integrity errors

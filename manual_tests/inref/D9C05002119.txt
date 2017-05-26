@@ -1,0 +1,127 @@
+D9C05-002119 TCP device not recognised by OPEN/USE when GT.M started by inetd
+
+There are three modes to be tested:  [x]inetd,
+rshd, and sshd.
+
+For [x]inetd, copy u_inref/gtminetd.{,ba}sh
+to a work area and modify it for the version
+to be tested and the work area.  The .bash
+version is for Linux, .sh for others.
+
+On Linux which uses xinetd, a file such
+as u_inref/gtmxinetd needs to be placed in
+/etc/xinetd.d then kill -HUP <pid of xinetd>.
+The file needs to be modified for both the
+the user doing the testing (i.e. "user=") and
+the location of the work area which will
+contain the modified script (i.e. "server=".)
+
+On the other systems which use inetd, an
+entry in /etc/services needs to be added
+or modified to define a service (called
+gtmserver in u_inref/gtminetd.conf) to
+match what is specified in /etc/inetd.conf.
+See u_inref/gtmservices for an example.
+u_inref/gtminetd.conf is an example of
+what should be added to /etc/inetd.conf
+replacing gtmtest with the username to run
+as and /testarea/gtmtest/V990/gtminetd.sh
+with the full path to the script (or
+executable) to run.  Both the service name
+and port are arbitrary as long as they
+don't conflict with other services.
+
+After changing /etc/services and /etc/inetd.conf,
+kill -HUP <pid of inetd>.
+
+On both cases, any errors in configuration
+will be reported via syslog.  Some systems
+already have the /etc/xinetd.d, /etc/services,
+and/or /etc/inetd.conf entries for gtmserver.
+If so, modify them as required.
+
+After [x]inetd is ready and the script they
+call is adjusted, d002119client.m can be used
+to invoke the service.  After prompting for
+the host and port to use, it will connect to
+the service and then prompt for input which
+will be written to a file rms.txt in the
+directory where the service is running.
+
+lespaul.sanchez.com:weiner 71: gtm
+
+GTM>d ^d002119client
+What host [localhost]: 
+What port [7777]: 
+connected to localhost:7777
+/dev/pts/2 OPEN TERMINAL NOPAST NOESCA NOREADS TYPE NOWRAP WIDTH=80 LENG=24 
+sock1 OPEN SOCKET TOTAL=1 CURRENT=0
+        SOCKET[0]=h11199046680 DESC=3 CONNECTED ACTIVE  TRAP  REMOTE=127.0.0.1@7
+          777  
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=16384 
+                DELIMITER $C(13,10) 
+Please respond to localhost - say something :something
+success
+
+GTM>h
+
+You can also use "telnet hostname 7777" to
+invoke the service.
+
+dingo:weiner 44: telnet localhost 7777
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+0 OPEN SOCKET NOWRAP TOTAL=1 CURRENT=0
+        SOCKET[0]=h11139589870 DESC=0 CONNECTED ACTIVE  NOTRAP  REMOTE=127.0.0.1
+@34610 LOCAL=127.0.0.1@7777 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 
+                DELIMITER $C(13,10) 
+say something :
+something
+a="something"
+dev=0
+dollarkey="ESTABLISHED|h11139589870|127.0.0.1"
+wrote file rms.txt
+0 OPEN SOCKET NOWRAP TOTAL=1 CURRENT=0
+        SOCKET[0]=h11139589870 DESC=0 CONNECTED ACTIVE  NOTRAP  REMOTE=127.0.0.1
+@34610 LOCAL=127.0.0.1@7777 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 
+                DELIMITER $C(13,10) 
+the end
+Connection closed by foreign host.
+Exit 1
+
+Since "rsh host /path/to/scriptcallinggtm.sh"
+will also have stdin and stdout connected to
+sockets, a special case was needed to retain
+the current behavior.  gtmrshd.sh can be used
+to test this after it is modified in the same
+manner as gtminetd.sh:
+
+dingo:weiner 46: rsh dingo /path/to/workingdir/gtmrshd.sh
+0 OPEN RMS 
+say something :
+else
+a="else"
+dev=""
+dollarkey=""
+wrote file rms.txt
+0 OPEN RMS 
+the end
+
+Note that device 0 (aka $principal) is shown
+as a normal file and not as a socket.
+
+"ssh host /path/to/workingdir/gtmrshd.sh"
+uses a fifo which is considered as a regular
+file but it should also be tested and should
+have the same output as for rsh.
+
+In all cases, check the server process is a
+child of the appropriate daemon ([x]inetd,
+rshd, or sshd) and the connection between
+the client and server systems with
+"ps -fu <user>" and "netstat -an" while the
+server process is waiting for the response
+to "say something."

@@ -1,0 +1,74 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/dbcreate.gde
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
+Created file ##TEST_PATH##/mumps.dat
+----------
+Error GTM-W-MUNOSTRMBKUP seen in redirected_dbcreate.out as expected:
+%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
+----------
+----------
+Error TEST-E-DBCREATE seen in redirected_dbcreate.out as expected:
+TEST-E-DBCREATE, errors seen in the log file dbcreate.out:
+----------
+----------
+Error GTM-W-MUNOSTRMBKUP seen in dbcreate.out as expected:
+%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
+----------
+###################################################################
+---- Expected Error on ¨ exceeding 1MB at I = 24577 ----
+---- Expected Error on 夁 exceeding 1MB at I = 12289 ----
+---- Expected Error on 𝔹 exceeding 1MB at I = 8193 ----
+###################################################################
+----------
+Error GTM-E-LSEXPECTED seen in str2byteerror.out as expected:
+%GTM-E-LSEXPECTED, A line separator is expected here
+----------
+----------
+Error GTM-E-EXPR seen in str2byteerror.out as expected:
+%GTM-E-EXPR, Expression expected but not found
+%GTM-E-EXPR, Expression expected but not found
+----------
+----------
+Error GTM-E-LSEXPECTED seen in str3byteerror.out as expected:
+%GTM-E-LSEXPECTED, A line separator is expected here
+----------
+----------
+Error GTM-E-EXPR seen in str3byteerror.out as expected:
+%GTM-E-EXPR, Expression expected but not found
+%GTM-E-EXPR, Expression expected but not found
+----------
+----------
+Error GTM-E-LSEXPECTED seen in str4byteerror.out as expected:
+%GTM-E-LSEXPECTED, A line separator is expected here
+----------
+----------
+Error GTM-E-EXPR seen in str4byteerror.out as expected:
+%GTM-E-EXPR, Expression expected but not found
+%GTM-E-EXPR, Expression expected but not found
+----------
+----------
+Error GTM-E-LSEXPECTED seen in strunicode1error.out as expected:
+%GTM-E-LSEXPECTED, A line separator is expected here
+----------
+----------
+Error GTM-E-EXPR seen in strunicode1error.out as expected:
+%GTM-E-EXPR, Expression expected but not found
+%GTM-E-EXPR, Expression expected but not found
+----------
+----------
+Error GTM-E-REC2BIG seen in rec_error.out as expected:
+%GTM-E-REC2BIG, Record size (32770) is greater than maximum (32767) for region: DEFAULT
+----------
+----------
+Error GTM-E-GVSUBOFLOW seen in key_error.out as expected:
+%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
+%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
+----------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

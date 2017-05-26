@@ -1,0 +1,793 @@
+setenv gtm_chset UTF-8
+unset echo
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+do ^unicodefifo("UTF-8")
+
+GTM>
+unicodefifo3("unicodefifoUTF-8.pipe","UTF-8"):(output="fifojob1UTF-8.out":error="fifojob1UTF-8.err")
+---------------------------------------------
+Test: unicodefifoUTF-8.pipe
+-> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-8"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+18^unicodefifo
++1^GTM$DMOD    (Direct mode) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+TEST-I-FNF, file is not found
+unicodefifo2("unicodefifoUTF-8.pipe","UTF-8"):(output="fifojobUTF-8.out":error="fifojobUTF-8.err")
+---------------------------------------------
+Test: unicodefifoUTF-8.pipe
+-> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-8"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+29^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-8.pipe
+-> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:RECORDSIZE=0:CHSET="UTF-8"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+30^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-8.pipe
+-> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:RECORDSIZE=1:CHSET="UTF-8"):60
+-> USE "unicodefifoUTF-8.pipe"
+ZSHOW "D" output: unicodefifoUTF-8.pipe OPEN FIFO REC=1 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-8.pipe
+-> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:RECORDSIZE=32768:CHSET="UTF-8"):60
+-> USE "unicodefifoUTF-8.pipe"
+ZSHOW "D" output: unicodefifoUTF-8.pipe OPEN FIFO REC=32768 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-8.pipe
+-> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="UTF-8"):60
+-> USE "unicodefifoUTF-8.pipe"
+ZSHOW "D" output: unicodefifoUTF-8.pipe OPEN FIFO REC=1048576 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-8.pipe
+-> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:RECORDSIZE=1048580:CHSET="UTF-8"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150376194,open+13^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+35^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-8.pipe
+-> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:CHSET="UTF-8"):60
+-> USE "unicodefifoUTF-8.pipe":(WIDTH=-1)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,use+5^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+use+5^io
+    ($ZTRAP)
+test+4^unicodefifo
+unicodefifo+37^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-8.pipe
+-> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:CHSET="UTF-8"):60
+-> USE "unicodefifoUTF-8.pipe":(WIDTH=0)
+ZSHOW "D" output: unicodefifoUTF-8.pipe OPEN FIFO WIDTH=32767 NOWRAP 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-8.pipe
+-> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:CHSET="UTF-8"):60
+-> USE "unicodefifoUTF-8.pipe":(WIDTH=1)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150381138,use+5^io,%GTM-E-WIDTHTOOSMALL, WIDTH should be at least 2 when device ICHSET or OCHSET is UTF-8 or UTF-16
+error+6^unicodefifo
+use+5^io
+    ($ZTRAP)
+test+4^unicodefifo
+unicodefifo+41^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-8.pipe
+-> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:CHSET="UTF-8"):60
+-> USE "unicodefifoUTF-8.pipe":(WIDTH=32767)
+ZSHOW "D" output: unicodefifoUTF-8.pipe OPEN FIFO WIDTH=32767 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-8.pipe
+-> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:CHSET="UTF-8"):60
+-> USE "unicodefifoUTF-8.pipe":(WIDTH=1048576)
+ZSHOW "D" output: unicodefifoUTF-8.pipe OPEN FIFO WIDTH=1048576 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-8.pipe
+-> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:CHSET="UTF-8"):60
+-> USE "unicodefifoUTF-8.pipe":(WIDTH=1048580)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150376194,use+5^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+error+6^unicodefifo
+use+5^io
+    ($ZTRAP)
+test+4^unicodefifo
+unicodefifo+44^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Now try writing a large record
+-> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="UTF-8")
+-> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:CHSET="UTF-8"):60
+
+GTM>
+
+GTM>
+do ^unicodefifo("UTF-16")
+
+GTM>
+unicodefifo3("unicodefifoUTF-16.pipe","UTF-16"):(output="fifojob1UTF-16.out":error="fifojob1UTF-16.err")
+---------------------------------------------
+Test: unicodefifoUTF-16.pipe
+-> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-16"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+18^unicodefifo
++1^GTM$DMOD    (Direct mode) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+TEST-I-FNF, file is not found
+unicodefifo2("unicodefifoUTF-16.pipe","UTF-16"):(output="fifojobUTF-16.out":error="fifojobUTF-16.err")
+---------------------------------------------
+Test: unicodefifoUTF-16.pipe
+-> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-16"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+29^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16.pipe
+-> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:RECORDSIZE=0:CHSET="UTF-16"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+30^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16.pipe
+-> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:RECORDSIZE=1:CHSET="UTF-16"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150377658,open+13^io,%GTM-E-RECSIZENOTEVEN, RECORDSIZE [1] needs to be a multiple of 2 if ICHSET or OCHSET is UTF-16, UTF-16LE or UTF-16BE
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+31^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16.pipe
+-> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:RECORDSIZE=32768:CHSET="UTF-16"):60
+-> USE "unicodefifoUTF-16.pipe"
+ZSHOW "D" output: unicodefifoUTF-16.pipe OPEN FIFO REC=32768 ICHSET=UTF-16 OCHSET=UTF-16 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-16.pipe
+-> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="UTF-16"):60
+-> USE "unicodefifoUTF-16.pipe"
+ZSHOW "D" output: unicodefifoUTF-16.pipe OPEN FIFO REC=1048576 ICHSET=UTF-16 OCHSET=UTF-16 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-16.pipe
+-> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:RECORDSIZE=1048580:CHSET="UTF-16"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150376194,open+13^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+35^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16.pipe
+-> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:CHSET="UTF-16"):60
+-> USE "unicodefifoUTF-16.pipe":(WIDTH=-1)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,use+5^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+use+5^io
+    ($ZTRAP)
+test+4^unicodefifo
+unicodefifo+37^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16.pipe
+-> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:CHSET="UTF-16"):60
+-> USE "unicodefifoUTF-16.pipe":(WIDTH=0)
+ZSHOW "D" output: unicodefifoUTF-16.pipe OPEN FIFO WIDTH=32764 NOWRAP ICHSET=UTF-16 OCHSET=UTF-16 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-16.pipe
+-> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:CHSET="UTF-16"):60
+-> USE "unicodefifoUTF-16.pipe":(WIDTH=1)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150381138,use+5^io,%GTM-E-WIDTHTOOSMALL, WIDTH should be at least 2 when device ICHSET or OCHSET is UTF-8 or UTF-16
+error+6^unicodefifo
+use+5^io
+    ($ZTRAP)
+test+4^unicodefifo
+unicodefifo+41^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16.pipe
+-> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:CHSET="UTF-16"):60
+-> USE "unicodefifoUTF-16.pipe":(WIDTH=32767)
+ZSHOW "D" output: unicodefifoUTF-16.pipe OPEN FIFO WIDTH=32767 ICHSET=UTF-16 OCHSET=UTF-16 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-16.pipe
+-> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:CHSET="UTF-16"):60
+-> USE "unicodefifoUTF-16.pipe":(WIDTH=1048576)
+ZSHOW "D" output: unicodefifoUTF-16.pipe OPEN FIFO WIDTH=1048576 ICHSET=UTF-16 OCHSET=UTF-16 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-16.pipe
+-> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:CHSET="UTF-16"):60
+-> USE "unicodefifoUTF-16.pipe":(WIDTH=1048580)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150376194,use+5^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+error+6^unicodefifo
+use+5^io
+    ($ZTRAP)
+test+4^unicodefifo
+unicodefifo+44^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Now try writing a large record
+-> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="UTF-16")
+-> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:CHSET="UTF-16"):60
+
+GTM>
+
+GTM>
+do ^unicodefifo("UTF-16LE")
+
+GTM>
+unicodefifo3("unicodefifoUTF-16LE.pipe","UTF-16LE"):(output="fifojob1UTF-16LE.out":error="fifojob1UTF-16LE.err")
+---------------------------------------------
+Test: unicodefifoUTF-16LE.pipe
+-> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-16LE"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+18^unicodefifo
++1^GTM$DMOD    (Direct mode) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+TEST-I-FNF, file is not found
+unicodefifo2("unicodefifoUTF-16LE.pipe","UTF-16LE"):(output="fifojobUTF-16LE.out":error="fifojobUTF-16LE.err")
+---------------------------------------------
+Test: unicodefifoUTF-16LE.pipe
+-> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-16LE"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+29^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16LE.pipe
+-> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:RECORDSIZE=0:CHSET="UTF-16LE"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+30^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16LE.pipe
+-> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:RECORDSIZE=1:CHSET="UTF-16LE"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150377658,open+13^io,%GTM-E-RECSIZENOTEVEN, RECORDSIZE [1] needs to be a multiple of 2 if ICHSET or OCHSET is UTF-16, UTF-16LE or UTF-16BE
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+31^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16LE.pipe
+-> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:RECORDSIZE=32768:CHSET="UTF-16LE"):60
+-> USE "unicodefifoUTF-16LE.pipe"
+ZSHOW "D" output: unicodefifoUTF-16LE.pipe OPEN FIFO REC=32768 ICHSET=UTF-16LE OCHSET=UTF-16LE 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-16LE.pipe
+-> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="UTF-16LE"):60
+-> USE "unicodefifoUTF-16LE.pipe"
+ZSHOW "D" output: unicodefifoUTF-16LE.pipe OPEN FIFO REC=1048576 ICHSET=UTF-16LE OCHSET=UTF-16LE 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-16LE.pipe
+-> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:RECORDSIZE=1048580:CHSET="UTF-16LE"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150376194,open+13^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+35^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16LE.pipe
+-> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:CHSET="UTF-16LE"):60
+-> USE "unicodefifoUTF-16LE.pipe":(WIDTH=-1)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,use+5^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+use+5^io
+    ($ZTRAP)
+test+4^unicodefifo
+unicodefifo+37^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16LE.pipe
+-> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:CHSET="UTF-16LE"):60
+-> USE "unicodefifoUTF-16LE.pipe":(WIDTH=0)
+ZSHOW "D" output: unicodefifoUTF-16LE.pipe OPEN FIFO WIDTH=32764 NOWRAP ICHSET=UTF-16LE OCHSET=UTF-16LE 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-16LE.pipe
+-> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:CHSET="UTF-16LE"):60
+-> USE "unicodefifoUTF-16LE.pipe":(WIDTH=1)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150381138,use+5^io,%GTM-E-WIDTHTOOSMALL, WIDTH should be at least 2 when device ICHSET or OCHSET is UTF-8 or UTF-16
+error+6^unicodefifo
+use+5^io
+    ($ZTRAP)
+test+4^unicodefifo
+unicodefifo+41^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16LE.pipe
+-> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:CHSET="UTF-16LE"):60
+-> USE "unicodefifoUTF-16LE.pipe":(WIDTH=32767)
+ZSHOW "D" output: unicodefifoUTF-16LE.pipe OPEN FIFO WIDTH=32767 ICHSET=UTF-16LE OCHSET=UTF-16LE 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-16LE.pipe
+-> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:CHSET="UTF-16LE"):60
+-> USE "unicodefifoUTF-16LE.pipe":(WIDTH=1048576)
+ZSHOW "D" output: unicodefifoUTF-16LE.pipe OPEN FIFO WIDTH=1048576 ICHSET=UTF-16LE OCHSET=UTF-16LE 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-16LE.pipe
+-> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:CHSET="UTF-16LE"):60
+-> USE "unicodefifoUTF-16LE.pipe":(WIDTH=1048580)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150376194,use+5^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+error+6^unicodefifo
+use+5^io
+    ($ZTRAP)
+test+4^unicodefifo
+unicodefifo+44^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Now try writing a large record
+-> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="UTF-16LE")
+-> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:CHSET="UTF-16LE"):60
+
+GTM>
+
+GTM>
+do ^unicodefifo("UTF-16BE")
+
+GTM>
+unicodefifo3("unicodefifoUTF-16BE.pipe","UTF-16BE"):(output="fifojob1UTF-16BE.out":error="fifojob1UTF-16BE.err")
+---------------------------------------------
+Test: unicodefifoUTF-16BE.pipe
+-> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-16BE"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+18^unicodefifo
++1^GTM$DMOD    (Direct mode) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+TEST-I-FNF, file is not found
+unicodefifo2("unicodefifoUTF-16BE.pipe","UTF-16BE"):(output="fifojobUTF-16BE.out":error="fifojobUTF-16BE.err")
+---------------------------------------------
+Test: unicodefifoUTF-16BE.pipe
+-> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-16BE"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+29^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16BE.pipe
+-> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:RECORDSIZE=0:CHSET="UTF-16BE"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+30^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16BE.pipe
+-> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:RECORDSIZE=1:CHSET="UTF-16BE"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150377658,open+13^io,%GTM-E-RECSIZENOTEVEN, RECORDSIZE [1] needs to be a multiple of 2 if ICHSET or OCHSET is UTF-16, UTF-16LE or UTF-16BE
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+31^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16BE.pipe
+-> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:RECORDSIZE=32768:CHSET="UTF-16BE"):60
+-> USE "unicodefifoUTF-16BE.pipe"
+ZSHOW "D" output: unicodefifoUTF-16BE.pipe OPEN FIFO REC=32768 ICHSET=UTF-16BE OCHSET=UTF-16BE 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-16BE.pipe
+-> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="UTF-16BE"):60
+-> USE "unicodefifoUTF-16BE.pipe"
+ZSHOW "D" output: unicodefifoUTF-16BE.pipe OPEN FIFO REC=1048576 ICHSET=UTF-16BE OCHSET=UTF-16BE 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-16BE.pipe
+-> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:RECORDSIZE=1048580:CHSET="UTF-16BE"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150376194,open+13^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+35^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16BE.pipe
+-> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:CHSET="UTF-16BE"):60
+-> USE "unicodefifoUTF-16BE.pipe":(WIDTH=-1)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,use+5^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+use+5^io
+    ($ZTRAP)
+test+4^unicodefifo
+unicodefifo+37^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16BE.pipe
+-> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:CHSET="UTF-16BE"):60
+-> USE "unicodefifoUTF-16BE.pipe":(WIDTH=0)
+ZSHOW "D" output: unicodefifoUTF-16BE.pipe OPEN FIFO WIDTH=32764 NOWRAP ICHSET=UTF-16BE OCHSET=UTF-16BE 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-16BE.pipe
+-> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:CHSET="UTF-16BE"):60
+-> USE "unicodefifoUTF-16BE.pipe":(WIDTH=1)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150381138,use+5^io,%GTM-E-WIDTHTOOSMALL, WIDTH should be at least 2 when device ICHSET or OCHSET is UTF-8 or UTF-16
+error+6^unicodefifo
+use+5^io
+    ($ZTRAP)
+test+4^unicodefifo
+unicodefifo+41^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoUTF-16BE.pipe
+-> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:CHSET="UTF-16BE"):60
+-> USE "unicodefifoUTF-16BE.pipe":(WIDTH=32767)
+ZSHOW "D" output: unicodefifoUTF-16BE.pipe OPEN FIFO WIDTH=32767 ICHSET=UTF-16BE OCHSET=UTF-16BE 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-16BE.pipe
+-> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:CHSET="UTF-16BE"):60
+-> USE "unicodefifoUTF-16BE.pipe":(WIDTH=1048576)
+ZSHOW "D" output: unicodefifoUTF-16BE.pipe OPEN FIFO WIDTH=1048576 ICHSET=UTF-16BE OCHSET=UTF-16BE 
+PASS
+---------------------------------------------
+Test: unicodefifoUTF-16BE.pipe
+-> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:CHSET="UTF-16BE"):60
+-> USE "unicodefifoUTF-16BE.pipe":(WIDTH=1048580)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150376194,use+5^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+error+6^unicodefifo
+use+5^io
+    ($ZTRAP)
+test+4^unicodefifo
+unicodefifo+44^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Now try writing a large record
+-> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="UTF-16BE")
+-> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:CHSET="UTF-16BE"):60
+
+GTM>
+
+GTM>
+do ^unicodefifo("M")
+
+GTM>
+unicodefifo3("unicodefifoM.pipe","M"):(output="fifojob1M.out":error="fifojob1M.err")
+---------------------------------------------
+Test: unicodefifoM.pipe
+-> OPEN "unicodefifoM.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="M"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+18^unicodefifo
++1^GTM$DMOD    (Direct mode) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+TEST-I-FNF, file is not found
+unicodefifo2("unicodefifoM.pipe","M"):(output="fifojobM.out":error="fifojobM.err")
+---------------------------------------------
+Test: unicodefifoM.pipe
+-> OPEN "unicodefifoM.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="M"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+29^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoM.pipe
+-> OPEN "unicodefifoM.pipe":(FIFO:WRITE:RECORDSIZE=0:CHSET="M"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+30^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoM.pipe
+-> OPEN "unicodefifoM.pipe":(FIFO:WRITE:RECORDSIZE=1:CHSET="M"):60
+-> USE "unicodefifoM.pipe"
+ZSHOW "D" output: unicodefifoM.pipe OPEN FIFO REC=1 ICHSET=M OCHSET=M 
+PASS
+---------------------------------------------
+Test: unicodefifoM.pipe
+-> OPEN "unicodefifoM.pipe":(FIFO:WRITE:RECORDSIZE=32768:CHSET="M"):60
+-> USE "unicodefifoM.pipe"
+ZSHOW "D" output: unicodefifoM.pipe OPEN FIFO REC=32768 ICHSET=M OCHSET=M 
+PASS
+---------------------------------------------
+Test: unicodefifoM.pipe
+-> OPEN "unicodefifoM.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="M"):60
+-> USE "unicodefifoM.pipe"
+ZSHOW "D" output: unicodefifoM.pipe OPEN FIFO REC=1048576 ICHSET=M OCHSET=M 
+PASS
+---------------------------------------------
+Test: unicodefifoM.pipe
+-> OPEN "unicodefifoM.pipe":(FIFO:WRITE:RECORDSIZE=1048580:CHSET="M"):60
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150376194,open+13^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+35^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoM.pipe
+-> OPEN "unicodefifoM.pipe":(FIFO:WRITE:CHSET="M"):60
+-> USE "unicodefifoM.pipe":(WIDTH=-1)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,use+5^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+use+5^io
+    ($ZTRAP)
+test+4^unicodefifo
+unicodefifo+37^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoM.pipe
+-> OPEN "unicodefifoM.pipe":(FIFO:WRITE:CHSET="M"):60
+-> USE "unicodefifoM.pipe":(WIDTH=0)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150375962,use+5^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+error+6^unicodefifo
+use+5^io
+    ($ZTRAP)
+test+4^unicodefifo
+unicodefifo+38^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------
+Test: unicodefifoM.pipe
+-> OPEN "unicodefifoM.pipe":(FIFO:WRITE:CHSET="M"):60
+-> USE "unicodefifoM.pipe":(WIDTH=1)
+ZSHOW "D" output: unicodefifoM.pipe OPEN FIFO REC=1 ICHSET=M OCHSET=M 
+PASS
+---------------------------------------------
+Test: unicodefifoM.pipe
+-> OPEN "unicodefifoM.pipe":(FIFO:WRITE:CHSET="M"):60
+-> USE "unicodefifoM.pipe":(WIDTH=32767)
+ZSHOW "D" output: unicodefifoM.pipe OPEN FIFO ICHSET=M OCHSET=M 
+PASS
+---------------------------------------------
+Test: unicodefifoM.pipe
+-> OPEN "unicodefifoM.pipe":(FIFO:WRITE:CHSET="M"):60
+-> USE "unicodefifoM.pipe":(WIDTH=1048576)
+ZSHOW "D" output: unicodefifoM.pipe OPEN FIFO REC=1048576 ICHSET=M OCHSET=M 
+PASS
+---------------------------------------------
+Test: unicodefifoM.pipe
+-> OPEN "unicodefifoM.pipe":(FIFO:WRITE:CHSET="M"):60
+-> USE "unicodefifoM.pipe":(WIDTH=1048580)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150376194,use+5^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+error+6^unicodefifo
+use+5^io
+    ($ZTRAP)
+test+4^unicodefifo
+unicodefifo+44^unicodefifo
+##TEST_AWK.*\^GTM\$DMOD    \(Direct mode\) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Now try writing a large record
+-> OPEN "unicodefifoM.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="M")
+-> OPEN "unicodefifoM.pipe":(FIFO:WRITE:CHSET="M"):60
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

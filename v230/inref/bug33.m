@@ -1,0 +1,3 @@
+MAIN	N (A,B) D PROC
+	Q
+PROC	N (A,B) S A(1)=0

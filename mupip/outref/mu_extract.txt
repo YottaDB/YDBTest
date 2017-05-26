@@ -1,0 +1,1379 @@
+======
+Part 1
+======
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+##SUSPEND_OUTPUT  REPLIC
+DSE> DSE> ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+DSE> DSE> Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+TEST-E-DB_EXTRACT, MUPIP extract failed
+%GTM-E-EXTRFAIL, Extract failed for the global ^dupkey. MUPIP INTEG should be run.
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 13  max rec len: 1  max node len: 18
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+Either primary extract file or the secondary extract file does not exist
+TEST-E-FAILED : DATABASE EXTRACT FAILED
+##SOURCE_PATH##/mupip
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip integ -REG *
+Total error count from integ:		1.
+##TEST_AWK... ... .. ..:..:.. ... ....
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%GTM-E-DBCOMPTOOLRG, 
+       3:22     0  Record has too large compression count
+                   Directory Path:  1:10, 2:10
+                   Path:  4:10, 3:22
+Keys from ^dupkey("one") to the end are suspect.
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.929            NA
+Index               1               1           2.343             1
+Data                1               2           3.808             1
+Free               96              NA              NA            NA
+Total             100               5              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+##SUSPEND_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%GTM-E-DBCOMPTOOLRG, 
+       3:22     0  Record has too large compression count
+                   Directory Path:  1:10, 2:10
+                   Path:  4:10, 3:22
+Keys from ^dupkey("one") to the end are suspect.
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.929            NA
+Index               1               1           2.343             1
+Data                1               2           3.808             1
+Free               96              NA              NA            NA
+Total             100               5              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+%GTM-E-EXTRFAIL, Extract failed for the global ^dupkey. MUPIP INTEG should be run.
+%GTM-I-RECORDSTAT, ^dupkey:	  Key cnt: 1  max subsc len: 13  max rec len: 1  max node len: 18
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 13  max rec len: 1  max node len: 18
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+^dupkey("one")="1"
+======
+Part 2
+======
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+##SUSPEND_OUTPUT  REPLIC
+DSE> DSE> ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+DSE> DSE> Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+TEST-E-DB_EXTRACT, MUPIP extract failed
+%GTM-E-EXTRFAIL, Extract failed for the global ^dupkey. MUPIP INTEG should be run.
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+Either primary extract file or the secondary extract file does not exist
+TEST-E-FAILED : DATABASE EXTRACT FAILED
+##SOURCE_PATH##/mupip
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip integ -REG *
+Total error count from integ:		1.
+##TEST_AWK... ... .. ..:..:.. ... ....
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%GTM-E-DBKEYORD, 
+       3:2A     0  Keys out of order
+                   Directory Path:  1:10, 2:10
+                   Path:  4:10, 3:2A
+Keys from ^dupkey("one1") to the end are suspect.
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.929            NA
+Index               1               1           2.343             1
+Data                1               3           4.785             1
+Free               96              NA              NA            NA
+Total             100               6              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+##SUSPEND_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%GTM-E-DBKEYORD, 
+       3:2A     0  Keys out of order
+                   Directory Path:  1:10, 2:10
+                   Path:  4:10, 3:2A
+Keys from ^dupkey("one1") to the end are suspect.
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.929            NA
+Index               1               1           2.343             1
+Data                1               3           4.785             1
+Free               96              NA              NA            NA
+Total             100               6              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+### -format=zwr ###
+%GTM-E-EXTRFAIL, Extract failed for the global ^dupkey. MUPIP INTEG should be run.
+%GTM-I-RECORDSTAT, ^dupkey:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+^dupkey("one")="1"
+^dupkey("one1")="2"
+### -format=go ###
+%GTM-E-EXTRFAIL, Extract failed for the global ^dupkey. MUPIP INTEG should be run.
+%GTM-I-RECORDSTAT, ^dupkey:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+^dupkey("one")
+1
+^dupkey("one1")
+2
+### -format=bin ###
+%GTM-E-EXTRFAIL, Extract failed for the global ^dupkey. MUPIP INTEG should be run.
+%GTM-I-RECORDSTAT, ^dupkey:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+Created file ##TEST_PATH##/mumps.dat
+MUPIP load extr2.bin -format=bin
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................GT.M MUPIP EXTRACT              
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 14  Max Data Len: 1
+Last LOAD record number: 2
+
+
+GTM>
+
+GTM>
+^dupkey("one")=1
+^dupkey("one1")=2
+
+GTM>
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.929            NA
+Index               1               1           2.343             1
+Data                1               2           4.101             1
+Free               96              NA              NA            NA
+Total             100               5              NA             2
+======
+Part 3
+======
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+##SUSPEND_OUTPUT  REPLIC
+DSE> DSE> ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+DSE> DSE> Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+TEST-E-DB_EXTRACT, MUPIP extract failed
+%GTM-E-EXTRFAIL, Extract failed for the global ^var. MUPIP INTEG should be run.
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 66
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+Either primary extract file or the secondary extract file does not exist
+TEST-E-FAILED : DATABASE EXTRACT FAILED
+##SOURCE_PATH##/mupip
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip integ -REG *
+Total error count from integ:		1.
+##TEST_AWK... ... .. ..:..:.. ... ....
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%GTM-E-DBKEYORD, 
+       6:366    0  Keys out of order
+                   Directory Path:  1:10, 2:10
+                   Path:  4:53, 6:366
+Keys from ^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",841) to ^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",911.1) are suspect.
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.783            NA
+Index               1               5          12.500             1
+Data                5             384          87.519             5
+Free               92              NA              NA            NA
+Total             100             391              NA             6
+%GTM-E-INTEGERRS, Database integrity errors
+##SUSPEND_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%GTM-E-DBKEYORD, 
+       6:366    0  Keys out of order
+                   Directory Path:  1:10, 2:10
+                   Path:  4:53, 6:366
+Keys from ^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",841) to ^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",911.1) are suspect.
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.783            NA
+Index               1               5          12.500             1
+Data                5             384          87.519             5
+Free               92              NA              NA            NA
+Total             100             391              NA             6
+%GTM-E-INTEGERRS, Database integrity errors
+### -format=zwr ###
+%GTM-E-EXTRFAIL, Extract failed for the global ^var. MUPIP INTEG should be run.
+%GTM-I-RECORDSTAT, ^var:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 66
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 66
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",1)="1"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",6)="6"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",11)="11"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",16)="16"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",21)="21"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",26)="26"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",31)="31"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",36)="36"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",41)="41"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",46)="46"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",51)="51"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",56)="56"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",61)="61"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",66)="66"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",71)="71"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",76)="76"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",81)="81"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",86)="86"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",91)="91"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",96)="96"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",101)="101"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",106)="106"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",111)="111"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",116)="116"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",121)="121"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",126)="126"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",131)="131"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",136)="136"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",141)="141"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",146)="146"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",151)="151"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",156)="156"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",161)="161"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",166)="166"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",171)="171"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",176)="176"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",181)="181"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",186)="186"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",191)="191"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",196)="196"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",201)="201"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",206)="206"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",211)="211"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",216)="216"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",221)="221"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",226)="226"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",231)="231"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",236)="236"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",241)="241"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",246)="246"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",251)="251"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",256)="256"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",261)="261"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",266)="266"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",271)="271"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",276)="276"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",281)="281"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",286)="286"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",291)="291"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",296)="296"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",301)="301"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",306)="306"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",311)="311"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",316)="316"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",321)="321"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",326)="326"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",331)="331"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",336)="336"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",341)="341"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",346)="346"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",351)="351"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",356)="356"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",361)="361"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",366)="366"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",371)="371"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",376)="376"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",381)="381"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",386)="386"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",391)="391"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",396)="396"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",401)="401"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",406)="406"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",411)="411"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",416)="416"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",421)="421"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",426)="426"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",431)="431"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",436)="436"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",441)="441"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",446)="446"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",451)="451"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",456)="456"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",461)="461"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",466)="466"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",471)="471"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",476)="476"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",481)="481"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",486)="486"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",491)="491"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",496)="496"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",501)="501"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",506)="506"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",511)="511"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",516)="516"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",521)="521"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",526)="526"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",531)="531"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",536)="536"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",541)="541"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",546)="546"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",551)="551"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",556)="556"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",561)="561"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",566)="566"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",571)="571"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",576)="576"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",581)="581"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",586)="586"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",591)="591"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",596)="596"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",601)="601"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",606)="606"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",611)="611"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",616)="616"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",621)="621"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",626)="626"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",631)="631"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",636)="636"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",641)="641"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",646)="646"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",651)="651"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",656)="656"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",661)="661"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",666)="666"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",671)="671"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",676)="676"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",681)="681"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",686)="686"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",691)="691"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",696)="696"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",701)="701"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",706)="706"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",711)="711"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",716)="716"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",721)="721"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",726)="726"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",731)="731"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",736)="736"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",741)="741"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",746)="746"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",751)="751"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",756)="756"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",761)="761"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",766)="766"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",771)="771"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",776)="776"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",781)="781"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",786)="786"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",791)="791"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",796)="796"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",801)="801"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",806)="806"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",811)="811"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",816)="816"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",821)="821"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",826)="826"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",831)="831"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",836)="836"
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",841)="841"
+### -format=go ###
+%GTM-E-EXTRFAIL, Extract failed for the global ^var. MUPIP INTEG should be run.
+%GTM-I-RECORDSTAT, ^var:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 66
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 66
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",1)
+1
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",6)
+6
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",11)
+11
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",16)
+16
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",21)
+21
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",26)
+26
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",31)
+31
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",36)
+36
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",41)
+41
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",46)
+46
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",51)
+51
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",56)
+56
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",61)
+61
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",66)
+66
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",71)
+71
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",76)
+76
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",81)
+81
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",86)
+86
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",91)
+91
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",96)
+96
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",101)
+101
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",106)
+106
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",111)
+111
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",116)
+116
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",121)
+121
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",126)
+126
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",131)
+131
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",136)
+136
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",141)
+141
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",146)
+146
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",151)
+151
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",156)
+156
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",161)
+161
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",166)
+166
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",171)
+171
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",176)
+176
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",181)
+181
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",186)
+186
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",191)
+191
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",196)
+196
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",201)
+201
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",206)
+206
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",211)
+211
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",216)
+216
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",221)
+221
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",226)
+226
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",231)
+231
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",236)
+236
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",241)
+241
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",246)
+246
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",251)
+251
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",256)
+256
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",261)
+261
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",266)
+266
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",271)
+271
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",276)
+276
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",281)
+281
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",286)
+286
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",291)
+291
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",296)
+296
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",301)
+301
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",306)
+306
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",311)
+311
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",316)
+316
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",321)
+321
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",326)
+326
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",331)
+331
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",336)
+336
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",341)
+341
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",346)
+346
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",351)
+351
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",356)
+356
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",361)
+361
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",366)
+366
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",371)
+371
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",376)
+376
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",381)
+381
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",386)
+386
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",391)
+391
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",396)
+396
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",401)
+401
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",406)
+406
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",411)
+411
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",416)
+416
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",421)
+421
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",426)
+426
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",431)
+431
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",436)
+436
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",441)
+441
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",446)
+446
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",451)
+451
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",456)
+456
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",461)
+461
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",466)
+466
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",471)
+471
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",476)
+476
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",481)
+481
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",486)
+486
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",491)
+491
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",496)
+496
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",501)
+501
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",506)
+506
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",511)
+511
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",516)
+516
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",521)
+521
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",526)
+526
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",531)
+531
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",536)
+536
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",541)
+541
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",546)
+546
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",551)
+551
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",556)
+556
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",561)
+561
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",566)
+566
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",571)
+571
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",576)
+576
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",581)
+581
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",586)
+586
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",591)
+591
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",596)
+596
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",601)
+601
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",606)
+606
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",611)
+611
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",616)
+616
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",621)
+621
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",626)
+626
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",631)
+631
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",636)
+636
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",641)
+641
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",646)
+646
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",651)
+651
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",656)
+656
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",661)
+661
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",666)
+666
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",671)
+671
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",676)
+676
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",681)
+681
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",686)
+686
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",691)
+691
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",696)
+696
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",701)
+701
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",706)
+706
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",711)
+711
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",716)
+716
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",721)
+721
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",726)
+726
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",731)
+731
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",736)
+736
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",741)
+741
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",746)
+746
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",751)
+751
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",756)
+756
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",761)
+761
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",766)
+766
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",771)
+771
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",776)
+776
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",781)
+781
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",786)
+786
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",791)
+791
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",796)
+796
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",801)
+801
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",806)
+806
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",811)
+811
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",816)
+816
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",821)
+821
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",826)
+826
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",831)
+831
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",836)
+836
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",841)
+841
+### -format=bin ###
+%GTM-E-EXTRFAIL, Extract failed for the global ^var. MUPIP INTEG should be run.
+%GTM-I-RECORDSTAT, ^var:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 66
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 66
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+Created file ##TEST_PATH##/mumps.dat
+MUPIP load extr3.bin -format=bin
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................GT.M MUPIP EXTRACT              
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 171  Max Subsc Len: 59  Max Data Len: 3
+Last LOAD record number: 3
+
+
+GTM>
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",1)=1
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",6)=6
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",11)=11
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",16)=16
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",21)=21
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",26)=26
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",31)=31
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",36)=36
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",41)=41
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",46)=46
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",51)=51
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",56)=56
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",61)=61
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",66)=66
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",71)=71
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",76)=76
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",81)=81
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",86)=86
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",91)=91
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",96)=96
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",101)=101
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",106)=106
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",111)=111
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",116)=116
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",121)=121
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",126)=126
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",131)=131
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",136)=136
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",141)=141
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",146)=146
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",151)=151
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",156)=156
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",161)=161
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",166)=166
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",171)=171
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",176)=176
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",181)=181
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",186)=186
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",191)=191
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",196)=196
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",201)=201
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",206)=206
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",211)=211
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",216)=216
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",221)=221
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",226)=226
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",231)=231
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",236)=236
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",241)=241
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",246)=246
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",251)=251
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",256)=256
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",261)=261
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",266)=266
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",271)=271
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",276)=276
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",281)=281
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",286)=286
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",291)=291
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",296)=296
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",301)=301
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",306)=306
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",311)=311
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",316)=316
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",321)=321
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",326)=326
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",331)=331
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",336)=336
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",341)=341
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",346)=346
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",351)=351
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",356)=356
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",361)=361
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",366)=366
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",371)=371
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",376)=376
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",381)=381
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",386)=386
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",391)=391
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",396)=396
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",401)=401
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",406)=406
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",411)=411
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",416)=416
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",421)=421
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",426)=426
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",431)=431
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",436)=436
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",441)=441
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",446)=446
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",451)=451
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",456)=456
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",461)=461
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",466)=466
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",467)=1
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",471)=471
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",476)=476
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",481)=481
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",486)=486
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",491)=491
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",496)=496
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",501)=501
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",506)=506
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",511)=511
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",516)=516
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",521)=521
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",526)=526
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",531)=531
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",536)=536
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",541)=541
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",546)=546
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",551)=551
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",556)=556
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",561)=561
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",566)=566
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",571)=571
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",576)=576
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",581)=581
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",586)=586
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",591)=591
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",596)=596
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",601)=601
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",606)=606
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",611)=611
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",616)=616
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",621)=621
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",626)=626
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",631)=631
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",636)=636
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",641)=641
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",646)=646
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",651)=651
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",656)=656
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",661)=661
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",666)=666
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",671)=671
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",676)=676
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",681)=681
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",686)=686
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",691)=691
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",696)=696
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",701)=701
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",706)=706
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",711)=711
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",716)=716
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",721)=721
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",726)=726
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",731)=731
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",736)=736
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",741)=741
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",746)=746
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",751)=751
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",756)=756
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",761)=761
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",766)=766
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",771)=771
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",776)=776
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",781)=781
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",786)=786
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",791)=791
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",796)=796
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",801)=801
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",806)=806
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",811)=811
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",816)=816
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",821)=821
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",826)=826
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",831)=831
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",836)=836
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",841)=841
+^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",846)=846
+
+GTM>
+======
+Part 4
+======
+# mupip extract of spanning global might not be in sequential order in extract file
+# [GTM-7856] Secondary db is out of sync with primary in case one side uses standard null collation and other does not
+# Create mumps.gld with ^a going to AREG (a.dat) and ^a(1:6) going to DEFAULT (mumps.dat)
+# Set standard null collation only for the primary side
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+# With mumps.gld : set ^a(1-10)=mumps.gld_i
+# set ^b("")=1
+# Create second.gld where ^a(1-10) goes to DEFAULT (mumps.dat) and set ^a(6-10)=second.gld_i
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/second.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/second.gld
+# With mumps.gld do a zwrite ^a
+^a(1)="mumps.gld1"
+^a(2)="mumps.gld2"
+^a(3)="mumps.gld3"
+^a(4)="mumps.gld4"
+^a(5)="mumps.gld5"
+^a(6)="mumps.gld6"
+^a(7)="mumps.gld7"
+^a(8)="mumps.gld8"
+^a(9)="mumps.gld9"
+^a(10)="mumps.gld10"
+##SUSPEND_OUTPUT  NON_REPLIC
+# On the secondary side do a zwrite ^b
+^b("")=1
+##ALLOW_OUTPUT  NON_REPLIC
+# With mumps.gld do mupip extract
+%GTM-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 11  max node len: 20
+%GTM-I-RECORDSTAT, ^a (region DEFAULT):	  Key cnt: 10  max subsc len: 6  max rec len: 12  max node len: 20
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 15  max subsc len: 6  max rec len: 12  max node len: 20
+%GTM-I-RECORDSTAT, ^b:	  Key cnt: 1  max subsc len: 5  max rec len: 1  max node len: 10
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 16  max subsc len: 6  max rec len: 12  max node len: 20
+GT.M MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:.. ZWR
+^a(6)="mumps.gld6"
+^a(7)="mumps.gld7"
+^a(8)="mumps.gld8"
+^a(9)="mumps.gld9"
+^a(10)="mumps.gld10"
+^a(1)="mumps.gld1"
+^a(2)="mumps.gld2"
+^a(3)="mumps.gld3"
+^a(4)="mumps.gld4"
+^a(5)="mumps.gld5"
+^a(6)="second.gld6"
+^a(7)="second.gld7"
+^a(8)="second.gld8"
+^a(9)="second.gld9"
+^a(10)="second.gld10"
+^b("")="1"
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  REPLIC
+======
+Part 5
+======
+# [GTM-7990] MUPIP EXTRACT now accepts -R[EGION] qualifier with comma separated region names to extract globals
+# mapped to those specific regions.
+# Create the database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+# set ^a(1-15)=i
+# set ^b(1-5)=i, set ^c(1-5)=i and set ^d(1-5)=i
+# 1. Run the following to unit test the addition of new -REGION qualifier in mupip_cmd.c
+# 1a. mupip extract mext1a.zwr -region (prompt for region(s))
+Region(s): %GTM-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+# 1b. mupip extract mext1b.zwr -region=AREG (accept a value for region qualifier)
+%GTM-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+# 1c. mupip extract mext1c.zwr -region=AREG,CREG (accept comma seperated region list)
+%GTM-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, ^c:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 10  max subsc len: 6  max rec len: 1  max node len: 11
+# 1d. mupip extract mext1d.zwr -region=NOREG (Show error, region not found)
+%GTM-E-NOREGION, REGION not found: NOREG
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+# 1e. mupip extract mext1e.zwr -region BREG (Show error, Too many parameters)
+%GTM-E-CLIERR, Too many parameters
+# 2. Run the following to test the extracted file
+# 2a. mupip extract mext2a.zwr (file have all the globals extracted)
+%GTM-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, ^a (region BREG):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
+%GTM-I-RECORDSTAT, ^a (region DEFAULT):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 12
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 12
+%GTM-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, ^c:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, ^d:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 30  max subsc len: 6  max rec len: 2  max node len: 12
+GT.M MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:.. ZWR
+^a(1)="1"
+^a(2)="2"
+^a(3)="3"
+^a(4)="4"
+^a(5)="5"
+^a(6)="6"
+^a(7)="7"
+^a(8)="8"
+^a(9)="9"
+^a(10)="10"
+^a(11)="11"
+^a(12)="12"
+^a(13)="13"
+^a(14)="14"
+^a(15)="15"
+^b(1)="1"
+^b(2)="2"
+^b(3)="3"
+^b(4)="4"
+^b(5)="5"
+^c(1)="1"
+^c(2)="2"
+^c(3)="3"
+^c(4)="4"
+^c(5)="5"
+^d(1)="1"
+^d(2)="2"
+^d(3)="3"
+^d(4)="4"
+^d(5)="5"
+# 2b. mupip extract mext2b.zwr -region=AREG (file will only have global ^a(1:5))
+%GTM-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+GT.M MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:.. ZWR
+^a(1)="1"
+^a(2)="2"
+^a(3)="3"
+^a(4)="4"
+^a(5)="5"
+# 2c. mupip extract mext2c.zwr -region=brEG,CReg (file will have global ^b, ^a(6:10) and ^c)
+%GTM-I-RECORDSTAT, ^a (region BREG):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
+%GTM-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, ^c:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 11
+GT.M MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:.. ZWR
+^a(6)="6"
+^a(7)="7"
+^a(8)="8"
+^a(9)="9"
+^a(10)="10"
+^b(1)="1"
+^b(2)="2"
+^b(3)="3"
+^b(4)="4"
+^b(5)="5"
+^c(1)="1"
+^c(2)="2"
+^c(3)="3"
+^c(4)="4"
+^c(5)="5"
+# 2d. mupip extract mext2d.zwr -region=BREG,AREG,DEFAULT (file will have global all the values in global ^a(1:15), ^b and ^d)
+%GTM-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, ^a (region BREG):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
+%GTM-I-RECORDSTAT, ^a (region DEFAULT):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 12
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 12
+%GTM-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, ^d:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 25  max subsc len: 6  max rec len: 2  max node len: 12
+GT.M MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:.. ZWR
+^a(1)="1"
+^a(2)="2"
+^a(3)="3"
+^a(4)="4"
+^a(5)="5"
+^a(6)="6"
+^a(7)="7"
+^a(8)="8"
+^a(9)="9"
+^a(10)="10"
+^a(11)="11"
+^a(12)="12"
+^a(13)="13"
+^a(14)="14"
+^a(15)="15"
+^b(1)="1"
+^b(2)="2"
+^b(3)="3"
+^b(4)="4"
+^b(5)="5"
+^d(1)="1"
+^d(2)="2"
+^d(3)="3"
+^d(4)="4"
+^d(5)="5"
+# 2e. mupip extract mext2e.go -region=BREG,CREG -format=go (file will have global ^b, ^a(6:10) and ^c)
+%GTM-I-RECORDSTAT, ^a (region BREG):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
+%GTM-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, ^c:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 11
+GT.M MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:..
+^a(6)
+6
+^a(7)
+7
+^a(8)
+8
+^a(9)
+9
+^a(10)
+10
+^b(1)
+1
+^b(2)
+2
+^b(3)
+3
+^b(4)
+4
+^b(5)
+5
+^c(1)
+1
+^c(2)
+2
+^c(3)
+3
+^c(4)
+4
+^c(5)
+5
+# 3. Run the following to test the 'same null collation check' for binary format only for selected regions.
+#    Note: Region CREG is having Std Null Coll set to N unlike all other regions.
+# 3a. mupip extract mext3a.bin -format=bin (Show error, Null collation order must be the same for all regions)
+%GTM-E-NULLCOLLDIFF, Null collation order must be the same for all regions
+# 3b. mupip extract mext3b.bin -format=bin -region=BREG,CREG (Show error, Null collation order must be the same
+#     for all regions)
+%GTM-E-NULLCOLLDIFF, Null collation order must be the same for all regions
+# 3c. mupip extract mext3c.bin -format=bin -region=AREG,BREG (file will be generated successfully, further load
+#     the file into new database and check its content)
+%GTM-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, ^a (region BREG):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
+%GTM-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 11
+mext3c.bin
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# create a new database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+# load the mext3c.bin file to new database
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................GT.M MUPIP EXTRACT              
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 15  Max Subsc Len: 6  Max Data Len: 2
+Last LOAD record number: 4
+
+# extract the data from new database and print the content on stderr
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
+%GTM-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 11
+GT.M MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:.. ZWR
+^a(1)="1"
+^a(2)="2"
+^a(3)="3"
+^a(4)="4"
+^a(5)="5"
+^a(6)="6"
+^a(7)="7"
+^a(8)="8"
+^a(9)="9"
+^a(10)="10"
+^b(1)="1"
+^b(2)="2"
+^b(3)="3"
+^b(4)="4"
+^b(5)="5"
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  REPLIC
+=== End of mu_extract ===
+##SUSPEND_OUTPUT  REPLIC
+##TEST_AWK##TEST_PATH##/mupip.err_[0-9_]*
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+##TEST_HOST_SHORT##:##TEST_PATH##/rf_extr.out
+%GTM-E-EXTRFAIL, Extract failed for the global ^var. MUPIP INTEG should be run.
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+##TEST_AWK##TEST_HOST_SHORT##:##TEST_PATH##/mupip.err_[0-9_]*
+##ALLOW_OUTPUT  NON_REPLIC
+%GTM-E-DBCOMPTOOLRG, 
+%GTM-E-INTEGERRS, Database integrity errors
+##TEST_AWK.*##TEST_PATH##/mupip.err_[0-9_]*
+%GTM-E-DBKEYORD, 
+%GTM-E-INTEGERRS, Database integrity errors
+##TEST_AWK.*##TEST_PATH##/mupip.err_[0-9_]*
+%GTM-E-DBKEYORD, 
+%GTM-E-INTEGERRS, Database integrity errors

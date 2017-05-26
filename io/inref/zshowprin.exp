@@ -1,0 +1,34 @@
+set timeout 1
+match_max 100000
+
+
+# Start up a TCSH shell first.
+spawn /usr/local/bin/tcsh
+
+# Capture and sanitze the prompt. Note that expect uses \r to send carriage
+# returns like a keyboard. It is a good idea to preceed SENDs with the expected
+# output when writing scripts.
+expect "*"
+send -- "set prompt=\"Shell2M>\"\r"
+
+set timeout 100
+########
+# Execute a zshowprin.csh to do the real work
+# set columns and rows here so lines don't wrap in zshowprin.csh
+expect "Shell2M>"
+send "stty columns 110\r"
+expect "Shell2M>"
+send "stty rows 34\r"
+expect "Shell2M>"
+
+send "\$gtm_tst/\$tst/u_inref/zshowprin.csh\r"
+
+# Wait for the shell prompt and exit
+expect "Shell2M>"
+send "exit\r"
+
+#########
+# All scripts must end with expect eof
+
+# Expect should wait until TCSH exits
+expect eof

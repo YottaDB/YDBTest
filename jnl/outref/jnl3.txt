@@ -1,0 +1,70 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+myjnl3.gld
+Using: ##SOURCE_PATH##/mupip
+myjnl3.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/myjnl3.mjl created for database file ##TEST_PATH##/myjnl3.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/myjnl3.dat is now ON
+
+GTM>
+s pass=16,start=1,commit=0
+
+GTM>
+d ^jnlbasf0
+
+
+JNLBASF0 test
+Caution: Database Block Certification Has Been Enabled
+
+JNLBASF0 test - unfenced transactions, 16 passes .... .... .... .... 
+JNLBASF0 test 1 fences on transactions, 16 passes .... .... .... ...
+File  	##TEST_PATH##/myjnl3.dat
+Region	DEFAULT
+
+. 
+
+JNLBASF0 COMPLETE 
+GTM>
+h
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ myjnl3.dat
+No errors detected by integ.
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+
+GTM>
+s pass=16
+
+GTM>
+d ^jnlbasf1
+
+
+JNLBASF1 check of data after recovery 
+PASS 
+
+GTM>
+h
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ myjnl3.dat
+No errors detected by integ.
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/myjnl3.dat is now OFF
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+
+GTM>
+s pass=16
+
+GTM>
+d ^jnlbasf1
+
+
+JNLBASF1 check of data after recovery 
+PASS 
+
+GTM>
+h
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ myjnl3.dat
+No errors detected by integ.

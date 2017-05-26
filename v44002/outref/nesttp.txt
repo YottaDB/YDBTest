@@ -1,0 +1,148 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+Do cmmit^nesttp
+
+Transaction Starts, $TLEVEL = 1
+
+nested transaction, $TLEVEL = 2
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : thrint+5^thrint
+
+TCommit #1: $TLEVEL = 1
+
+$ZTEXIT = 1
+interrupt occurred at : cmmit+19^nesttp
+
+TCommit #2: $TLEVEL = 0
+
+            $ZTEXIT = 1
+
+End of transaction....
+
+----------------------------------------------------
+
+
+GTM>
+
+GTM>
+
+cmmit
+GTM>
+
+GTM>
+
+Do rollbck1^nesttp
+
+Transaction Starts....
+
+nested transaction, $TLEVEL = 2
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : thrint+5^thrint
+
+trollback:$tlevel=2 
+interrupt occurred at : rollbck1+13^nesttp
+
+nested transaction, $TLEVEL = 0
+
+$ZTEXIT = 1
+
+TCommit at $TLEVEL = 0
+
+            $ZTEXIT = 1
+
+End of transaction....
+
+$ZTEXIT = 1
+
+----------------------------------------------------
+
+
+GTM>
+
+GTM>
+
+cmmit
+rollbck1
+GTM>
+
+GTM>
+
+Do rollbck2^nesttp
+
+Transaction Starts....
+
+nested transaction, $TLEVEL = 2
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : thrint+5^thrint
+
+tcommit:$tlevel=2 
+
+nested transaction, $TLEVEL = 1
+
+$ZTEXIT = 1
+
+trollback:$tlevel 
+interrupt occurred at : rollbck2+21^nesttp
+
+Trollback at $TLEVEL = 0
+
+            $ZTEXIT = 1
+
+End of transaction....
+
+----------------------------------------------------
+
+
+GTM>
+
+GTM>
+
+cmmit
+rollbck1
+GTM>
+
+GTM>
+
+Do rollbck3^nesttp
+
+Transaction Starts....
+
+nested transaction, $TLEVEL = 2
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : thrint+5^thrint
+
+trollback 0 
+interrupt occurred at : rollbck3+15^nesttp
+
+nested transaction, $TLEVEL = 0
+
+$ZTEXIT = 1
+
+----------------------------------------------------
+
+
+GTM>
+
+GTM>
+
+cmmit
+rollbck1
+rollbck3
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

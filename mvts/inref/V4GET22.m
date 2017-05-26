@@ -1,0 +1,55 @@
+V4GET22 ;IW-KO-YS-TS,V4GET2,MVTS V9.10;15/6/96;PART-94
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+ W !!,"24---V4GET22:  $GET function  -2-"
+ ;
+1 S ^ABSN="40185",^ITEM="IV-185  @VV@(12,456)"
+ S ^NEXT="2^V4GET22,V4GET23^V4GET2,V4NAME^VV4" D ^V4PRESET K
+ S V(12)=12000,VV="V"
+ S ^VCOMP=$g(@VV@(12,456),V(12))
+ S ^VCORR="12000" D ^VEXAMINE
+ ;
+2 S ^ABSN="40186",^ITEM="IV-186  @@VV(0)@(12,456)"
+ S ^NEXT="3^V4GET22,V4GET23^V4GET2,V4NAME^VV4" D ^V4PRESET K
+ S VV(0)="V(""A"",34.4E-1)",V("A",3.44)="V(00.344,5.6)"
+ S V("A",00.344000E1,12,456)="VV(1)"
+ S ^VCOMP=$get(@@VV(0)@(12,45600E-2),@VV(0))
+ S ^VCORR="V(00.344,5.6)" D ^VEXAMINE
+ ;
+3 S ^ABSN="40187",^ITEM="IV-187  nesting"
+ S ^NEXT="4^V4GET22,V4GET23^V4GET2,V4NAME^VV4" D ^V4PRESET K
+ S VV(0)="V(""A"",34.4E-1)",V("A",3.44)="V(003.44,5.6)"
+ S V(003.44000,0005.600)="VV(""A"",3.44)"
+ S V("A",3.44,12,456)="@V(003.44,5.6)"
+ S V(03.44,5.6)="V(-456,67)",V(-456,67)="NEST"
+ S ^VCOMP=$get(@@VV(0)@(12,456),@VV(0))
+ S ^VCORR="NEST" D ^VEXAMINE
+ ;
+ ;
+4 S ^ABSN="40188",^ITEM="IV-188  lvn contains extrinsic special variable"
+ S ^NEXT="5^V4GET22,V4GET23^V4GET2,V4NAME^VV4" D ^V4PRESET K
+ s A(1)="##"
+ S ^VCOMP=$g(@$$GETNAME,"abc")
+ S ^VCORR="##" D ^VEXAMINE
+ ;
+5 S ^ABSN="40189",^ITEM="IV-189  lvn contains extrinsic function"
+ S ^NEXT="6^V4GET22,V4GET23^V4GET2,V4NAME^VV4" D ^V4PRESET K
+ S ABC="abc"
+ S ^VCOMP=$G(@$$ABC^V4GETE(ABC,.ABC,"X"),ABC)
+ S ^VCORR="abc/abc/" D ^VEXAMINE
+ ;
+6 S ^ABSN="40190",^ITEM="IV-190  lvn contains nesting functions"
+ S ^NEXT="V4GET23^V4GET2,V4NAME^VV4" D ^V4PRESET K  K ^VV
+ s ^VV(123)=$c(66),C(1,2,3,4,5,6)="C(1)"
+ S ^VCOMP=$get(@@$p($c(65,66,67),^VV(123),$f("abc","a"))@(1,2,3,4,5,6),9)
+ S ^VCORR="9" D ^VEXAMINE
+ ;
+END W !!,"End of 24 --- V4GET22",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q
+GETNAME() K VV,V Q "A(1)"
+ ;
+GETDATA() Q "##"
+ ;

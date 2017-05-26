@@ -1,0 +1,71 @@
+change -segment DEFAULT -file_name=load2.dat
+change -segment DEFAULT -block_size=1536
+change -segment DEFAULT -allocation=100
+change -segment DEFAULT -global_buffer_count=256
+change -region DEFAULT -record_size=700
+change -region DEFAULT -key_size=125
+change -region DEFAULT -inst_freeze_on_error
+change -region DEFAULT -collation_default=1
+add -name a* -region=areg
+add -name A* -region=areg
+add -region areg -dyn=aseg
+add -segment aseg -file=a.dat
+change -segment aseg -block_size=1536
+change -segment aseg -allocation=100
+change -segment aseg -global_buffer_count=256
+change -region areg -record_size=700
+change -region areg -key_size=125
+change -region areg -inst_freeze_on_error
+add -name b* -region=breg
+add -name B* -region=breg
+add -region breg -dyn=bseg
+add -segment bseg -file=b.dat
+change -segment bseg -block_size=1536
+change -segment bseg -allocation=100
+change -segment bseg -global_buffer_count=256
+change -region breg -record_size=700
+change -region breg -key_size=125
+change -region breg -inst_freeze_on_error
+change -region breg -collation_default=1
+! Number of included regions is 3
+!    Region 1 = AREG
+!    Region 2 = BREG
+!    Region 3 = DEFAULT
+! Number of sections randomly chosen is 16
+add -gblname bing -coll=1
+! Map : ^bing("CDEFGHIJKL(1000)") maps to AREG
+add -name bing("CDEFGHIJKL(1000)":"EF(502)") -region=AREG
+! Map : ^bing("EF(502)") maps to BREG
+add -name bing("EF(502)":"EF(902)") -region=BREG
+! Map : ^bing("EF(902)") maps to BREG
+add -name bing("EF(902)":"GHIJ(454)") -region=BREG
+! Map : ^bing("GHIJ(454)") maps to BREG
+add -name bing("GHIJ(454)":"hijklmnop(879)") -region=BREG
+! Map : ^bing("hijklmnop(879)") maps to BREG
+add -name bing("hijklmnop(879)":"KLMNOPQR(708)") -region=BREG
+! Map : ^bing("KLMNOPQR(708)") maps to BREG
+add -name bing("KLMNOPQR(708)":"opqrst(636)") -region=BREG
+! Map : ^bing("opqrst(636)") maps to BREG
+add -name bing("opqrst(636)":"stuvwxyzAB(490)") -region=BREG
+! Map : ^bing("stuvwxyzAB(490)") maps to BREG
+add -name bing("stuvwxyzAB(490)":"WXYZ012345(270)") -region=BREG
+! Map : ^bing("WXYZ012345(270)") maps to BREG
+add -name bing("WXYZ012345(270)":"zABCDEF(597)") -region=BREG
+! Map : ^bing("zABCDEF(597)") maps to BREG
+add -name bing("zABCDEF(597)":) -region=BREG
+add -gblname cing -coll=1
+! Map : ^cing("DEFGHIJKLMN(201)") maps to AREG
+add -name cing("DEFGHIJKLMN(201)":"FGH(153)") -region=AREG
+! Map : ^cing("FGH(153)") maps to DEFAULT
+add -name cing("FGH(153)":"IJKLMN(556)") -region=DEFAULT
+! Map : ^cing("IJKLMN(556)") maps to DEFAULT
+add -name cing("IJKLMN(556)":"NOPQRSTUVWX(261)") -region=DEFAULT
+! Map : ^cing("NOPQRSTUVWX(261)") maps to DEFAULT
+add -name cing("NOPQRSTUVWX(261)":"qrstuvwx(588)") -region=DEFAULT
+! Map : ^cing("qrstuvwx(588)") maps to DEFAULT
+add -name cing("qrstuvwx(588)":"tuvwxyzABCD(391)") -region=DEFAULT
+! Map : ^cing("tuvwxyzABCD(391)") maps to DEFAULT
+add -name cing("tuvwxyzABCD(391)":) -region=DEFAULT
+change -region AREG -std
+change -region BREG -std
+change -region DEFAULT -std

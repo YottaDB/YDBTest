@@ -1,0 +1,164 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/alt.gld
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/alt.gld
+Created file ##TEST_PATH##/alt.dat
+# Using alt.gld ^x goes to : AREG
+Added SET trigger on ^x named xyz
+1
+# Using mumps.gld ^x goes to : DEFAULT
+Adding a non-matching trigger with the same name as a visible trigger (in mumps.gld) should error out
+Error : SET trigger on ^x not added as another trigger named xyz already exists
+0
+Adding a matching trigger with the same name as a visible trigger (in mumps.gld) should NOT error out
+Added SET trigger on ^x named xyz
+1
+# if trigger spec matches but name does not, it should not be deleted and a helpful error message should be printed
+SET trigger on ^x matches trigger named xyz but not with specified name xyz2 - no action taken
+1
+;trigger name: xyz (region AREG)  cycle: 1
++^x -name=xyz -commands=S -xecute="do alttrig^gtm6901"
+;trigger name: xyz (region DEFAULT)  cycle: 1
++^x -name=xyz -commands=S -xecute="do alttrig^gtm6901"
+1
+# Using alt.gld ^a goes to : DEFAULT
+Added SET and/or Non-SET trigger on ^a named atrig
+1
+# Using mumps.gld ^a goes to : AREG
+Added SET and/or Non-SET trigger on ^a named atrig
+1
+# Using alt.gld ^a goes to : DEFAULT
+# DEFAULT too has a ^a trigger that was set by mumps.gld
+;trigger name: atrig (region AREG)  cycle: 1
++^a(sub=*) -name=atrig -commands=S,K -xecute="do mumpstrig^gtm6901"
+;trigger name: xyz (region AREG)  cycle: 1
++^x -name=xyz -commands=S -xecute="do alttrig^gtm6901"
+;trigger name: atrig (region DEFAULT)  cycle: 1
++^a(sub=*) -name=atrig -commands=S,K -xecute="do alttrig^gtm6901"
+1
+# Using alt.gld set ^a - check the fired trigger
+# In trigger code  : alttrig^gtm6901   ; Level : 1
+# Set ^a(1) without changing $zgbldir
+# In trigger code  : alttrig^gtm6901   ; Level : 2
+# Set ^a(2) after changing $zgbldir to mumps.gld
+# In trigger code  : mumpstrig^gtm6901 ; Level : 3
+# Extended reference of alt.gld 
+# In trigger code  : alttrig^gtm6901   ; Level : 4
+# Naked reference without changing $zgbldir : mumps.gld
+# In trigger code  : mumpstrig^gtm6901 ; Level : 5
+# End trigger code : mumpstrig^gtm6901 ; Level : 5
+# In trigger code  : mumpstrig^gtm6901 ; Level : 5
+# End trigger code : mumpstrig^gtm6901 ; Level : 5
+# End trigger code : alttrig^gtm6901   ; Level : 4
+# End trigger code : mumpstrig^gtm6901 ; Level : 3
+# End trigger code : alttrig^gtm6901   ; Level : 2
+# End trigger code : alttrig^gtm6901   ; Level : 1
+# Using mumps.gld set ^a - check the fired trigger
+# In trigger code  : mumpstrig^gtm6901 ; Level : 1
+# Naked reference after changing $zgbldir to : alt.gld
+# In trigger code  : alttrig^gtm6901   ; Level : 2
+# set ^(5) here i.e naked reference
+# In trigger code  : alttrig^gtm6901   ; Level : 3
+# Should have been called by naked reference
+# End trigger code : alttrig^gtm6901   ; Level : 3
+# End trigger code : alttrig^gtm6901   ; Level : 2
+# kill ^(5) here i.e naked reference
+# In trigger code  : alttrig^gtm6901   ; Level : 2
+# Should have been called by naked reference
+# End trigger code : alttrig^gtm6901   ; Level : 2
+# End trigger code : mumpstrig^gtm6901 ; Level : 1
+Deleted trigger named 'atrig' for global ^a (region AREG)
+Deleted trigger named 'atrig' for global ^a (region DEFAULT)
+1
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# CASE B: Test cases for removing the reloading-trigger logic (in trigger_source_read_andor_verify.c) as part of a ZPRINT ^x#
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+# Test 1 : zprint should not assert fail when the same trigger is loaded twice
+# Test 2 : zprint should print previously loaded M-source for a trigger even if it is deleted concurrently
+# Run trigreload.m to load same triggers using two different global directories
+Added SET trigger on ^a named x
+Added SET trigger on ^a named x
+NON-SPANNING trigger on ^a user-named x in a.dat
+NON-SPANNING trigger on ^a user-named x in b.dat
+rtn = x#    :  write "NON-SPANNING trigger on ^a user-named x in a.dat",!
+rtn = x#A   :  write "NON-SPANNING trigger on ^a user-named x in b.dat",!
+# Run testreload^trigreload and expect it to
+#  a) print error messages and not assert fail
+#  b) print previously loaded M-source when ^x# is concurrently deleted
+SET trigger on ^a already present in trigger named x - no action taken
+SET trigger on ^a already present in trigger named x - no action taken
+NON-SPANNING trigger on ^a user-named x in a.dat
+NON-SPANNING trigger on ^a user-named x in b.dat
+rtn = x#    :  write "NON-SPANNING trigger on ^a user-named x in a.dat",!
+rtn = x#A   :  write "NON-SPANNING trigger on ^a user-named x in b.dat",!
+# zprint,$text of ^x#A and ^x# should print the corresponding M routine
+# zprint ^x#A :  write "NON-SPANNING trigger on ^a user-named x in b.dat",!
+# zprint ^x#  :  write "NON-SPANNING trigger on ^a user-named x in a.dat",!
+# $text(^x#A) :  write "NON-SPANNING trigger on ^a user-named x in b.dat",!
+# $text(^x#)  :  write "NON-SPANNING trigger on ^a user-named x in b.dat",!
+# zbreak should work fine
+# zbreak ^x#  : 
+# using zsystem, run another routine that deletes trigger ^x#
+Deleted SET trigger on ^a named x
+NON-SPANNING trigger on ^a user-named x in b.dat
+# Though ^x# is deleted, zprint and $text of ^x# should still print the previously loaded M routine
+# zprint ^x#  :  write "NON-SPANNING trigger on ^a user-named x in a.dat",!
+# $text(^x#)  :  write "NON-SPANNING trigger on ^a user-named x in a.dat",!
+# setting zbreak should work fine
+# zbreak ^x#  : 
+# set ^a and do zprint/$text/zbreak
+NON-SPANNING trigger on ^a user-named x in b.dat
+# zprint ^x#  :  write "NON-SPANNING trigger on ^a user-named x in a.dat",!
+# $text(^x#)  :  write "NON-SPANNING trigger on ^a user-named x in a.dat",!
+# zbreak ^x#  : 
+
+# Do the same after setting $zgbldir to a.gld
+# zprint ^x#  :  write "NON-SPANNING trigger on ^a user-named x in a.dat",!
+# $text(^x#)  :  write "NON-SPANNING trigger on ^a user-named x in a.dat",!
+# zbreak ^x#  : 
+# set ^a and do zprint/$text/zbreak
+# zprint ^x#  : 
+STAT=testreload+29^trigreload,%GTM-E-TRIGNAMENF, Trigger name x# not found with the current default global directory
+# $text(^x#)  : 
+# zbreak ^x#  : 
+STAT=testreload+31^trigreload,%GTM-E-TRIGNAMENF, Trigger name x# not found with the current default global directory
+# CASE C: having a fresh a.dat after installing triggers in a multi-region db
+          should not throw GVGETFAIL error due to residual information in DEFAULT region
+# Create a multi-region database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+# Save a.dat to be restored later
+# Install trigger ^A with name triga
+Added SET trigger on ^A named triga
+1
+;trigger name: triga (region AREG)  cycle: 1
++^A -name=triga -commands=S -xecute="write 123,!"
+1
+# Restored the saved (fresh) a.dat
+# write $ztrigger("select","triga") should not core with GVGETFAIL error, but simply not print anything
+1
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

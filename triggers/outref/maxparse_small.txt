@@ -1,0 +1,138 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+Testing triggers with 31 and more subscripts
+^bmaxcolon trigger added with index 1
+PASS
+^bmaxcolon trigger deleted
+Too many subscripts
+ : :,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:,:) -commands=set -xecute="do ^maxrtn" 
+
+PASS
+###################################################################
+Testing triggers with 8192 charactes and more subscripts
+Key size is 3
+subscript length 8192
+subscripts 28
+overlong 8283
+ztrigger load the acceptably long trigger
+ztrigger load the unacceptably long trigger
+All existing triggers deleted
+###################################################################
+Testing LONG lines
+Load with mupip trigger and ztrigger by file
+###################################################################
+< %GTM-E-MUNOACTION, MUPIP unable to perform requested action
+###################################################################
+Load with ztrigger in one big M program and individual M programs
+###################################################################
+25783
+32767
+65535
+###################################################################
+Testing triggers with GVN 28,31 characters and longer
+28 and 31 character GVNs which overlap to the same trigger name
+^BCDEFGHIJKLMNOPQRSTUVWXYZABC trigger added with index 1
+PASS
+^BCDEFGHIJKLMNOPQRSTUVWXYZABCDEF trigger added with index 1
+PASS
+;trigger name: BCDEFGHIJKLMNOPQRSTUV#1#  cycle: 1
++^BCDEFGHIJKLMNOPQRSTUVWXYZABC -commands=S -xecute="do ^maxrtn"
+;trigger name: BCDEFGHIJKLMNOPQRSTUV#2#  cycle: 1
++^BCDEFGHIJKLMNOPQRSTUVWXYZABCDEF -commands=S -xecute="do ^maxrtn"
+;trigger name: fail#  cycle: 5
++^a -name=fail -commands=S,K -delim="=" -pieces=1 -xecute="set x=$ztvalue"
+
+32+ character GVNs which overlap to the same trigger name
+Warning: global name truncated to ^oBCDEFGHIJKLMNOPQRSTUVWXYZABCDE
+^oBCDEFGHIJKLMNOPQRSTUVWXYZABCDE trigger added with index 1
+PASS
+Warning: global name truncated to ^oBCDEFGHIJKLMNOPQRSTUVWXYZABCDE
+^oBCDEFGHIJKLMNOPQRSTUVWXYZABCDE trigger already present -- same as trigger at index 1
+PASS
+;trigger name: BCDEFGHIJKLMNOPQRSTUV#1#  cycle: 1
++^BCDEFGHIJKLMNOPQRSTUVWXYZABC -commands=S -xecute="do ^maxrtn"
+;trigger name: BCDEFGHIJKLMNOPQRSTUV#2#  cycle: 1
++^BCDEFGHIJKLMNOPQRSTUVWXYZABCDEF -commands=S -xecute="do ^maxrtn"
+;trigger name: fail#  cycle: 5
++^a -name=fail -commands=S,K -delim="=" -pieces=1 -xecute="set x=$ztvalue"
+;trigger name: oBCDEFGHIJKLMNOPQRSTU#1#  cycle: 1
++^oBCDEFGHIJKLMNOPQRSTUVWXYZABCDE -commands=S -xecute="do ^maxrtn"
+All existing triggers deleted
+
+###################################################################
+
+Test maximum number of subscripts
+Trigger load for maxsubs.trg PASSED
+Trigger load for overmaxsubs.trg PASSED
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+
+###################################################################
+Test maximum length of subscripts
+Trigger load for maxsubslen.trg PASSED
+File maxsubslen.trg, Line 1: Entry too large to properly index : ^Z("00";"01";"02";"03";"04";"05";"06";"07";"08";"09";"0A";"0B";"0C";"0D";"0E";"0F";"0G";"0H";"0I";"0J";"0K";"0L";"0M";"0N";"0O";"0P";"0Q";"0R";"0S";"0T";"0U";"0V";"0W";"0X";"0Y";"0Z";"0a";"0b";"0c";"0d";"0e";"0f";"0g";"0h";"0i";"0j";"0k";"0l";"0m";"0n";"0o";"0p";"0q";"0r";"0s";"0t";"0u";"0v";"0w";"0x";"0y";"0z","10";"11";"12";"13";"14";"15";"16";"17";"18";"19";"1A";"1B";"1C";"1D";"1E";"1F";"1G";"1H";"1I";"1J";"1K";"1L";"1M";"1N";"1O";"1P";"1Q";"1R";"1S";"1T";"1U";"1V";"1W";"1X";"1Y";"1Z";"1a";"1b";"1c";"1d";"1e";"1f";"1g";"1h";"1i";"1j";"1k";"1l";"1m";"1n";"1o";"1p";"1q";"1r";"1s";"1t";"1u";"1v";"1w";"1x";"1y";"1z","20";"21";"22";"23";"24";"25";"26";"27";"28";"29";"2A";"2B";"2C";"2D";"2E";"2F";"2G";"2H";"2I";"2J";"2K";"2L";"2M";"2N";"2O";"2P";"2Q";"2R";"2S";"2T";"2U";"2V";"2W";"2X";"2Y";"2Z";"2a";"2b";"2c";"2d";"2e";"2f";"2g";"2h";"2i";"2j";"2k";"2l";"2m";"2n";"2o";"2p";"2q";"2r";"2s";"2t";"2u";"2v";"2w";"2x";"2y";"2z","30";"31";"32";"33";"34";"35";"36";"37";"38";"39";"3A";"3B";"3C";"3D";"3E";"3F";"3G";"3H";"3I";"3J";"3K";"3L";"3M";"3N";"3O";"3P";"3Q";"3R";"3S";"3T";"3U";"3V";"3W";"3X";"3Y";"3Z";"3a";"3b";"3c";"3d";"3e";"3f";"3g";"3h";"3i";"3j";"3k";"3l";"3m";"3n";"3o";"3p";"3q";"3r";"3s";"3t";"3u";"3v";"3w";"3x";"3y";"3z","40";"41";"42";"43";"44";"45";"46";"47";"48";"49";"4A";"4B";"4C";"4D";"4E";"4F";"4G";"4H";"4I";"4J";"4K";"4L";"4M";"4N";"4O";"4P";"4Q";"4R";"4S";"4T";"4U";"4V";"4W";"4X";"4Y";"4Z";"4a";"4b";"4c";"4d";"4e";"4f";"4g";"4h";"4i";"4j";"4k";"4l";"4m";"4n";"4o";"4p";"4q";"4r";"4s";"4t";"4u";"4v";"4w";"4x";"4y";"4z","50";"51";"52";"53";"54";"55";"56";"57";"58";"59";"5A";"5B";"5C";"5D";"5E";"5F";"5G";"5H";"5I";"5J";"5K";"5L";"5M";"5N";"5O";"5P";"5Q";"5R";"5S";"5T";"5U";"5V";"5W";"5X";"5Y";"5Z";"5a";"5b";"5c";"5d";"5e";"5f";"5g";"5h";"5i";"5j";"5k";"5l";"5m";"5n";"5o";"5p";"5q";"5r";"5s";"5t";"5u";"5v";"5w";"5x";"5y";"5z","60";"61";"62";"63";"64";"65";"66";"67";"68";"69";"6A";"6B";"6C";"6D";"6E";"6F";"6G";"6H";"6I";"6J";"6K";"6L";"6
+Trigger load for overmaxsubslen.trg PASSED
+File overmaxsubslen.trg, Line 1: Entry too large to properly index : ^Z("00";"01";"02";"03";"04";"05";"06";"07";"08";"09";"0A";"0B";"0C";"0D";"0E";"0F";"0G";"0H";"0I";"0J";"0K";"0L";"0M";"0N";"0O";"0P";"0Q";"0R";"0S";"0T";"0U";"0V";"0W";"0X";"0Y";"0Z";"0a";"0b";"0c";"0d";"0e";"0f";"0g";"0h";"0i";"0j";"0k";"0l";"0m";"0n";"0o";"0p";"0q";"0r";"0s";"0t";"0u";"0v";"0w";"0x";"0y";"0z","10";"11";"12";"13";"14";"15";"16";"17";"18";"19";"1A";"1B";"1C";"1D";"1E";"1F";"1G";"1H";"1I";"1J";"1K";"1L";"1M";"1N";"1O";"1P";"1Q";"1R";"1S";"1T";"1U";"1V";"1W";"1X";"1Y";"1Z";"1a";"1b";"1c";"1d";"1e";"1f";"1g";"1h";"1i";"1j";"1k";"1l";"1m";"1n";"1o";"1p";"1q";"1r";"1s";"1t";"1u";"1v";"1w";"1x";"1y";"1z","20";"21";"22";"23";"24";"25";"26";"27";"28";"29";"2A";"2B";"2C";"2D";"2E";"2F";"2G";"2H";"2I";"2J";"2K";"2L";"2M";"2N";"2O";"2P";"2Q";"2R";"2S";"2T";"2U";"2V";"2W";"2X";"2Y";"2Z";"2a";"2b";"2c";"2d";"2e";"2f";"2g";"2h";"2i";"2j";"2k";"2l";"2m";"2n";"2o";"2p";"2q";"2r";"2s";"2t";"2u";"2v";"2w";"2x";"2y";"2z","30";"31";"32";"33";"34";"35";"36";"37";"38";"39";"3A";"3B";"3C";"3D";"3E";"3F";"3G";"3H";"3I";"3J";"3K";"3L";"3M";"3N";"3O";"3P";"3Q";"3R";"3S";"3T";"3U";"3V";"3W";"3X";"3Y";"3Z";"3a";"3b";"3c";"3d";"3e";"3f";"3g";"3h";"3i";"3j";"3k";"3l";"3m";"3n";"3o";"3p";"3q";"3r";"3s";"3t";"3u";"3v";"3w";"3x";"3y";"3z","40";"41";"42";"43";"44";"45";"46";"47";"48";"49";"4A";"4B";"4C";"4D";"4E";"4F";"4G";"4H";"4I";"4J";"4K";"4L";"4M";"4N";"4O";"4P";"4Q";"4R";"4S";"4T";"4U";"4V";"4W";"4X";"4Y";"4Z";"4a";"4b";"4c";"4d";"4e";"4f";"4g";"4h";"4i";"4j";"4k";"4l";"4m";"4n";"4o";"4p";"4q";"4r";"4s";"4t";"4u";"4v";"4w";"4x";"4y";"4z","50";"51";"52";"53";"54";"55";"56";"57";"58";"59";"5A";"5B";"5C";"5D";"5E";"5F";"5G";"5H";"5I";"5J";"5K";"5L";"5M";"5N";"5O";"5P";"5Q";"5R";"5S";"5T";"5U";"5V";"5W";"5X";"5Y";"5Z";"5a";"5b";"5c";"5d";"5e";"5f";"5g";"5h";"5i";"5j";"5k";"5l";"5m";"5n";"5o";"5p";"5q";"5r";"5s";"5t";"5u";"5v";"5w";"5x";"5y";"5z","60";"61";"62";"63";"64";"65";"66";"67";"68";"69";"6A";"6B";"6C";"6D";"6E";"6F";"6G";"6H";"6I";"6J";"6K";"6L";"6
+
+###################################################################
+Test maximum gvn length
+Trigger load for maxgvnlength.trg PASSED
+Trigger load for overmaxgvnlength.trg PASSED
+File overmaxgvnlength.trg, Line 1: Warning: global name truncated to ^oBCDEFGHIJKLMNOPQRSTUVWXYZABCDE
+File overmaxgvnlength.trg, Line 2: Warning: global name truncated to ^oBCDEFGHIJKLMNOPQRSTUVWXYZABCDE
+;trigger name: BCDEFGHIJKLMNOPQRSTUV#1#  cycle: 3
++^BCDEFGHIJKLMNOPQRSTUVWXYZABC -commands=S -xecute="do ^maxrtn"
+;trigger name: BCDEFGHIJKLMNOPQRSTUV#2#  cycle: 3
++^BCDEFGHIJKLMNOPQRSTUVWXYZABCDEF -commands=S -xecute="do ^maxrtn"
+;trigger name: bmaxcolon#1#  cycle: 3
++^bmaxcolon(*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*) -commands=S -xecute="do ^maxrtn"
+;trigger name: oBCDEFGHIJKLMNOPQRSTU#1#  cycle: 3
++^oBCDEFGHIJKLMNOPQRSTUVWXYZABCDE -commands=S -xecute="do ^maxrtn"
+Output File: 
+
+###################################################################
+Test maximum delimiter length
+Trigger load for maxdelim.trg PASSED
+Trigger load for overmaxdelim.trg PASSED
+File overmaxdelim.trg, Line 1: Delimiter too long
+###################################################################
+Run the ztr^maxdelim test twice because that produced a core once upon a time
+Number of 'Entry too large to properly index' errors 0
+For delimiter of length 1023	Delimiter too long
+For delimiter of length 1024	Delimiter too long
+For delimiter of length 1025	Delimiter too long
+For delimiter of length 1026	Delimiter too long
+###################################################################
+Number of 'Entry too large to properly index' errors 0
+For delimiter of length 1023	Delimiter too long
+For delimiter of length 1024	Delimiter too long
+For delimiter of length 1025	Delimiter too long
+For delimiter of length 1026	Delimiter too long
+
+###################################################################
+Test maximum trigger name length
+Trigger load for maxname.trg PASSED
+Trigger load for overmaxname.trg PASSED
+File overmaxname.trg, Line 2: NAME string longer than 28 characters
+Error parsing NAME string : AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+File overmaxname.trg, Line 5: NAME string longer than 28 characters
+Error parsing NAME string : AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+###################################################################
+Test maximum trigger lines
+
+###################################################################
+Reload Test
+0 triggers added
+5 triggers deleted
+0 trigger file entries not changed
+0 triggers modified
+=========================================
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

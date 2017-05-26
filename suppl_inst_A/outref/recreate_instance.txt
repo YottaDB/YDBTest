@@ -1,0 +1,54 @@
+##SUSPEND_OUTPUT PLATFORM_NO_PRIORGTM
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [nobody]
+%GTM-E-REPLINSTFMT, Format error encountered while reading replication instance file ##TEST_PATH##/mumps.repl. Expected GDSRPLUNX##TEST_AWK[0-9]*. Found GDSRPLUNX[0-9]*.
+##ALLOW_OUTPUT PLATFORM_NO_PRIORGTM
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+# Randomly crash or control shutdown INST1
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
+# Rollback if crashed
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+# Randomly crash or control shutdown INST1
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
+# Rollback if crashed
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+# Start the receiver with -updateresync and expect the source server to throw REPLINSTNOHIST and the receiver should exit
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##SRC_##TIMESTAMP##.log -message REPLINSTNOHIST'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $msr_err_chk ##FILTERED##SRC_##TIMESTAMP##.log E-REPLINSTNOHIST'==
+----------
+Error E-REPLINSTNOHIST seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%GTM-E-REPLINSTNOHIST, History information for seqno 200 [0xc8] not found in replication instance file ##TEST_PATH##/mumps.repl
+----------
+# The receiver would have exited with the above error. Manually shutdown the passive server
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 $MUPIP replic -source -shutdown -timeout=0 >&! passivesrc_shut.out'==
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/mupip_rollback.csh -losttrans=lost3.glo "*" >&! rollback3.out ;$grep -q JNLSUCCESS rollback3.out ;if ($status) echo "Rollback Failed"'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,689 @@
+====================   DSE DUMP -BLOCK   ====================
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block 1   Size 18   Level 1   TN 0 V6
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block 2   Size 1F   Level 0   TN 123456789ABF V6
+
+Current transaction 0x0000123456789AC0
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+
+Region DEFAULT : MUPIP REORG DOWNGRADE started
+Region DEFAULT : Desired DB Format set to V4 by MUPIP REORG DOWNGRADE
+Region DEFAULT : Started processing from block number [0x00000000]
+Region DEFAULT : Stopped processing at block number [0x00000065]
+Region DEFAULT : Statistics : Blocks Read From Disk (Bitmap)     : 0x00000001
+Region DEFAULT : Statistics : Blocks Skipped (Free)              : 0x00000060
+Region DEFAULT : Statistics : Blocks Read From Disk (Non-Bitmap) : 0x00000004
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in disk)   : 0x00000000
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in cache)  : 0x00000000
+Region DEFAULT : Statistics : Blocks Converted (Bitmap)          : 0x00000001
+Region DEFAULT : Statistics : Blocks Converted (Non-Bitmap)      : 0x00000004
+Region DEFAULT : Total Blocks = [0x00000065] : Free Blocks = [0x00000060] : Blocks to upgrade = [0x00000005]
+Region DEFAULT : MUPIP REORG DOWNGRADE finished
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block 1   Size 18   Level 1   TN 4 V4
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block 2   Size 1F   Level 0   TN 5 V4
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+====================   DSE CHANGE -BLOCK   ====================
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block 4   Size 18   Level 1   TN ABCDEF123456789 V6
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Region DEFAULT : MUPIP REORG DOWNGRADE started
+Region DEFAULT : Desired DB Format set to V4 by MUPIP REORG DOWNGRADE
+Region DEFAULT : Started processing from block number [0x00000000]
+Region DEFAULT : Stopped processing at block number [0x00000065]
+Region DEFAULT : Statistics : Blocks Read From Disk (Bitmap)     : 0x00000001
+Region DEFAULT : Statistics : Blocks Skipped (Free)              : 0x00000060
+Region DEFAULT : Statistics : Blocks Read From Disk (Non-Bitmap) : 0x00000004
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in disk)   : 0x00000000
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in cache)  : 0x00000000
+Region DEFAULT : Statistics : Blocks Converted (Bitmap)          : 0x00000001
+Region DEFAULT : Statistics : Blocks Converted (Non-Bitmap)      : 0x00000004
+Region DEFAULT : Total Blocks = [0x00000065] : Free Blocks = [0x00000060] : Blocks to upgrade = [0x00000005]
+Region DEFAULT : MUPIP REORG DOWNGRADE finished
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+Block 4   Size 18   Level 1   TN ABCDEF123456789 V4
+
+DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block 4   Size 18   Level 1   TN 23456789 V4
+
+=================== Section moved from v44003/u_inref/D9D07002349.csh ========================
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+Block 0  Size 90  Level -1  TN 0 V4   Master Status: Free Space
+
+DSE> DSE> 
+Block 0  Size 90  Level -1  TN 1 V4   Master Status: Free Space
+
+DSE> DSE> 
+Block 0  Size 90  Level -1  TN 7FFFFFFF V4   Master Status: Free Space
+
+DSE> DSE> 
+Block 0  Size 90  Level -1  TN 80000000 V4   Master Status: Free Space
+
+DSE> DSE> 
+Block 0  Size 90  Level -1  TN FFFFFFFF80000001 V4   Master Status: Free Space
+
+DSE> DSE> 
+Block 0  Size 90  Level -1  TN FFFFFFFFFFFFFFFE V4   Master Status: Free Space
+
+DSE> DSE> 
+Block 0  Size 90  Level -1  TN FFFFFFFFFFFFFFFF V4   Master Status: Free Space
+
+DSE> =================== Section from v44003/u_inref/D9D07002349.csh ends =========================
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+Total error count from integ:		2.
+##TEST_AWK... ... ([ ]|[1-3]). ..:..:.. ... 20..
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%GTM-I-DBTNTOOLG, 
+       4:0      1  Block transaction number too large
+                   Directory Path:  1:10, 2:10
+                   Path:  4:0
+Keys from ^x to the end are suspect.
+%GTM-I-DBTN, Block TN is 0x0000000023456789
+%GTM-I-DBMBTNSIZMX, 
+       0:0     FF  Map block transaction number too large
+%GTM-I-DBTN, Block TN is 0x00000000FFFFFFFF
+
+Total error count from integ:		2.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               1           2.343             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+
+Largest transaction number found in database was FFFFFFFF
+Current transaction number is                    12
+%GTM-E-INTEGERRS, Database integrity errors
+====================   DSE CHANGE -FILEHEADER   ====================
+
+====================   BLKS_TO_UPGRADE   ====================
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Blocks to Upgrade 0xABCDEF12
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+====================   CERT_DB_VER   ====================
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Certified for Upgrade to V4
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Certified for Upgrade to V6
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+%GTM-E-CLIERR, Unrecognized option : V7
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+%GTM-E-CLIERR, Unrecognized option : V3
+Certified for Upgrade to V6
+====================   DB_WRITE_FMT   ====================
+
+Desired DB Format V6
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Desired DB Format V4
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Desired DB Format V6
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+%GTM-E-CLIERR, Unrecognized option : V7
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+%GTM-E-CLIERR, Unrecognized option : V3
+====================   MBM_SIZE   ====================
+
+Master Bitmap Size 496
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+%GTM-E-CLIERR, Unrecognized value: abe0, Decimal number expected
+Master Bitmap Size 496
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Master Bitmap Size 32
+====================   MAX_TN and WARN_MAX_TN in V6 mode   ====================
+
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+MAX_TN value cannot be less than the current/specified value of WARN_MAX_TN
+  Maximum TN             0xFFFFFFFFF0000000  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+  Current transaction    0xFFFFFFFD00000000  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFFEFFFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+MAX_TN value cannot be less than the current/specified value of WARN_MAX_TN
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+MAX_TN value cannot be less than the current/specified value of WARN_MAX_TN
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+  Current transaction    0x0000000000000001  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFFEFFFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFE000000000  Desired DB Format               V6
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+MAX_TN value cannot be less than the current/specified value of WARN_MAX_TN
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+  Current transaction    0x0000000000000001  No. of writes/flush              7
+  Maximum TN             0xFFFFFFE000000000  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFE000000000  Desired DB Format               V6
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+WARN_MAX_TN value cannot be greater than the current/specified value of MAX_TN
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+WARN_MAX_TN value cannot be less than the current/specified value of CURRENT_TN
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+  Current transaction    0xFFFFFFD000000000  No. of writes/flush              7
+  Maximum TN             0xFFFFFFE000000000  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFD000000001  Desired DB Format               V6
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+CURRENT_TN value cannot be greater than the current/specified value of WARN_MAX_TN
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+  Current transaction    0xFFFFFFD000000000  No. of writes/flush              7
+  Maximum TN             0xFFFFFFE000000000  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFD000000000  Desired DB Format               V6
+
+GTM>
+
+GTM>
+  Current transaction    0xFFFFFFD000000001  No. of writes/flush              7
+  Maximum TN             0xFFFFFFE000000000  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFD800000000  Desired DB Format               V6
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+  Current transaction    0xFFFFFFEFFFFFFFFF  No. of writes/flush              7
+  Maximum TN             0xFFFFFFF000000000  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFEFFFFFFFFF  Desired DB Format               V6
+
+GTM>
+
+GTM>
+  Current transaction    0xFFFFFFF000000000  No. of writes/flush              7
+  Maximum TN             0xFFFFFFF000000000  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFF000000000  Desired DB Format               V6
+
+GTM>
+%GTM-E-TNTOOLARGE, Database file ##TEST_PATH##/mumps.dat has reached the transaction number limit (0xFFFFFFF000000000). Renew database with MUPIP INTEG TN_RESET
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+Number of regions does not match with number of *No errors* region count
+$error_free :  ; $no_regions = 1
+
+
+Integ of region DEFAULT
+%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x0000000000000000 more transactions to go before reaching the transaction number limit (0xFFFFFFF000000000). Renew database with MUPIP INTEG TN_RESET
+%GTM-E-DBHEADINV, 
+       0:0      0  Header size not valid for database
+%GTM-E-INTEGERRS, Database integrity errors
+====================   MAX_TN and WARN_MAX_TN in Compatibility mode   ====================
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V4
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V4
+  Maximum TN             0x00000000F7FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0x00000000D7FFFFFF  Desired DB Format               V4
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+  Current transaction    0x00000000F7FFFFFF  No. of writes/flush              7
+  Maximum TN             0x00000000F7FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0x00000000F7FFFFFF  Desired DB Format               V4
+
+GTM>
+%GTM-E-TNTOOLARGE, Database file ##TEST_PATH##/mumps.dat has reached the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+  Current transaction    0x00000000F5FFFFFF  No. of writes/flush              7
+  Maximum TN             0x00000000F7FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0x00000000F5FFFFFF  Desired DB Format               V4
+
+GTM>
+
+GTM>
+  Current transaction    0x00000000F6000000  No. of writes/flush              7
+  Maximum TN             0x00000000F7FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0x00000000F6FFFFFF  Desired DB Format               V4
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+GTM>
+
+GTM>
+  Current transaction    0x00000000F7000000  No. of writes/flush              7
+  Maximum TN             0x00000000F7FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0x00000000F77FFFFF  Desired DB Format               V4
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+MAX_TN value cannot be less than the current/specified value of WARN_MAX_TN
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+====================   MAX_TN, WARN_MAX_TN and CURRENT_TN mixed in the same command line   ====================
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+CURRENT_TN value cannot be greater than the current/specified value of WARN_MAX_TN
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+MAX_TN value cannot be less than the current/specified value of WARN_MAX_TN
+WARN_MAX_TN value cannot be less than the current/specified value of CURRENT_TN
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+MAX_TN value cannot be less than the current/specified value of WARN_MAX_TN
+CURRENT_TN value cannot be greater than the current/specified value of WARN_MAX_TN
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V4
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+  Current transaction    0x00000000F7FFFFF0  No. of writes/flush              7
+  Maximum TN             0x00000000F7FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0x00000000F7FFFFF0  Desired DB Format               V4
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+Total error count from integ:		1.
+##TEST_AWK... ... ([ ]|[1-3]). ..:..:.. ... 20..
+
+
+Integ of region DEFAULT
+%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000000000000F more transactions to go before reaching the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+%GTM-E-INTEGERRS, Database integrity errors
+====================   DSE CHANGE -FILEHEADER transaction fields  ====================
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Current transaction 0x0FEDCBA1FEDCBA35
+Zqgblmod Trans 0x00EDCBA1FEDCBA35
+Zqgblmod Seqno 0x000DCBA1FEDCBA35
+Last Bytestream Backup 0x0000CBA1FEDCBA35
+Last Database Backup 0x00000BA1FEDCBA35
+Last Record Backup 0xFFFFFFF7FEDCBA35
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Last Bytestream Backup 0x00000001FEDCBA35
+Last Database Backup 0x000000A1FEDCBA35
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Current transaction 0x00000000FFFFFFFF
+Zqgblmod Trans 0x00000000FFFFFFFF
+Zqgblmod Seqno 0x00000000FFFFFFFF
+Last Bytestream Backup 0x00000000FFFFFFFF
+Last Database Backup 0x00000000FFFFFFFF
+Last Record Backup 0x00000000FFFFFFFF
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Current transaction 0x0000000100000000
+Zqgblmod Trans 0x0000000100000001
+Zqgblmod Seqno 0x00000FFFFFFFFFFF
+Last Bytestream Backup 0x0FFFFFFFFFFFFFFF
+Last Database Backup 0xFFFFFFFFFFFFFFFF
+Last Record Backup 0x00FFFFFFFFFFFFFF
+====================   DSE EVAL   ====================
+
+Hex:  FFFFFFFFFFFFFFFF   Dec:  18446744073709551615
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Hex:  0   Dec:  0
+Hex:  FFFFFFFFFFFFFFFF   Dec:  18446744073709551615
+Hex:  FFFFFFFFF   Dec:  68719476735
+Hex:  FFFFFFFFFFFF   Dec:  281474976710655
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##TEST_PATH##/mupip.err_##TEST_AWK[0-9_]+
+%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+%GTM-E-INTEGERRS, Database integrity errors
+##TEST_PATH##/mupip.err_##TEST_AWK[0-9_]+
+%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x0000000000000000 more transactions to go before reaching the transaction number limit (0xFFFFFFF000000000). Renew database with MUPIP INTEG TN_RESET
+%GTM-E-DBHEADINV, 
+%GTM-E-INTEGERRS, Database integrity errors
+##TEST_PATH##/mupip.err_##TEST_AWK[0-9_]+
+%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000000000000F more transactions to go before reaching the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
+%GTM-E-INTEGERRS, Database integrity errors

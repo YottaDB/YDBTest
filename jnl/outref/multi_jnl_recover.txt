@@ -1,0 +1,63 @@
+##SUSPEND_OUTPUT  REPLIC
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+starting to switch journal files.
+
+GTM>
+
+GTM>
+starting to switch journal files.
+
+GTM>
+
+GTM>
+starting to switch journal files.
+
+GTM>
+
+GTM>
+starting to switch journal files.
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/c.dat
+Created file ##TEST_PATH##/mumps.dat
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+
+GTM>
+d ^sverify
+
+GTM>
+VERIFICATION PASSED
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+This subtest is not applicable for replication

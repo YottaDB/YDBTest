@@ -1,0 +1,147 @@
+MUPIP D9J02002719
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+integ.gld
+Using: ##SOURCE_PATH##/mupip
+integ.dat
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/integ.dat
+Region	DEFAULT
+
+DSE> 
+Saving version 1 of block 2
+DSE> 
+Block 20 is marked free in its local bit map.
+
+DSE> 
+Restoring block 20 from version 1 of block 2
+
+DSE> DSE> DSE> Warning:  removed a star record from the end of this block.
+DSE> DSE> 
+Saving version 1 of block 20
+DSE> 
+Restoring block 2 from version 1 of block 20
+
+DSE> 
+
+Integ of region DEFAULT
+
+No errors detected by fast integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.539            NA
+Index               1               1           2.343             1
+Data                1              NA              NA             1
+Free              296              NA              NA            NA
+Total             300              NA              NA             2
+DSE> 
+Restoring block 2 from version 1
+
+DSE> 
+Removing version 1 of block 20
+DSE> 
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/integ.dat
+Region	DEFAULT
+
+DSE> 
+Saving version 1 of block 2
+DSE> DSE> 
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%GTM-E-DBBDBALLOC, 
+       6:0      7  Block doubly allocated
+                   Directory Path:  1:10, 2:1F
+                   Path:  6:0
+Keys from ^b to the end are suspect.
+%GTM-W-DBLOCMBINC, 
+       0:0     FF  Local bit map incorrect
+%GTM-W-DBMRKBUSY, 
+       3:0     FF  Block incorrectly marked busy
+%GTM-W-DBMRKBUSY, 
+       4:0     FF  Block incorrectly marked busy
+
+Total error count from fast integ:		4.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               3           3.417            NA
+Index               1               1           2.343             1
+Data                1              NA              NA             1
+Free              296              NA              NA            NA
+Total             300              NA              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+DSE> 
+Restoring block 2 from version 1
+
+DSE> 
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/integ.dat
+Region	DEFAULT
+
+DSE> 
+Saving version 1 of block 4
+DSE> DSE> 
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%GTM-E-DBINVGBL, 
+       4:10     2  Invalid mixing of global names
+                   Directory Path:  1:10, 2:10
+                   Path:  4:10
+Keys from ^a to the end are suspect.
+%GTM-W-DBLOCMBINC, 
+       0:0     FF  Local bit map incorrect
+%GTM-W-DBMRKBUSY, 
+       3:0     FF  Block incorrectly marked busy
+%GTM-W-DBMRKBUSY, 
+       7:0     FF  Block incorrectly marked busy
+%GTM-W-DBMRKBUSY, 
+       8:0     FF  Block incorrectly marked busy
+%GTM-W-DBMRKBUSY, 
+       9:0     FF  Block incorrectly marked busy
+%GTM-W-DBMRKBUSY, 
+       A:0     FF  Block incorrectly marked busy
+%GTM-W-DBMRKBUSY, 
+       B:0     FF  Block incorrectly marked busy
+%GTM-W-DBMRKBUSY, 
+       C:0     FF  Block incorrectly marked busy
+%GTM-W-DBMRKBUSY, 
+       D:0     FF  Block incorrectly marked busy
+%GTM-W-DBMRKBUSY, 
+       E:0     FF  Block incorrectly marked busy
+%GTM-W-DBMRKBUSY, 
+       F:0     FF  Block incorrectly marked busy
+Maximum number of incorrectly busy errors to display:  10, has been exceeded
+203 incorrectly busy errors encountered
+
+Total error count from fast integ:		205.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               3           3.417            NA
+Index               1               1           2.343             1
+Data                1              NA              NA             1
+Free              296              NA              NA            NA
+Total             300              NA              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+DSE> 
+Restoring block 4 from version 1
+
+DSE> ##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

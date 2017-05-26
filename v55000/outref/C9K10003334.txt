@@ -1,0 +1,19 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+********* Test 1 ********
+Setting ^done in $ZInterrupt in jobintr2
+D9K07002782 PASS
+
+********* Test 2 ********
+##TEST_AWKINTRPT issued to process [0-9]*
+In jobint handler
+Error received: 150373210,JobintHandler+3^C9K10003334b,%GTM-E-DIVZERO, Attempt to divide by zero
+Error received: 150373210,JobintHandler+3^C9K10003334b,%GTM-E-DIVZERO, Attempt to divide by zero
+Pass
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

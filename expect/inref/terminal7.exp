@@ -1,0 +1,14 @@
+#!/usr/bin/expect -f
+# Use a relaxed pattern match expectation for a more successful execution
+set timeout 60
+match_max 100000
+
+# Execute the routine directly to avoid start up and shutdown
+spawn $env(gtm_dist)/mumps -run test7^terminal
+expect "START"
+send "\r"
+expect "DONE"
+send "\r"
+
+# Expect should wait until MUMPS exits
+expect eof

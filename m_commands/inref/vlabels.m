@@ -1,0 +1,4 @@
+longLABelloweranduppercase2222	write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+LONGLABElloweRANDUPPERCASE2222	write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+lowercaseonlylabel222222222222	write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
+UPPERCASEONLYLABEL222222222222	write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit

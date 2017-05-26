@@ -1,0 +1,23 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Starting GTM processes...
+Receiver shut down ....
+===================================================
+Backup started
+Backup completed
+============ Secondary side,  copy backed up  database from Primary ===============
+Wait some more time to create backlog in primary side
+Start secondary with refreshed database
+========= Version in primary side =========================
+Stopping GTM processes
+End of test

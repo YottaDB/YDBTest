@@ -1,0 +1,82 @@
+# CreateDatabase
+# Replication Setup
+##SUSPEND_OUTPUT MM
+# DBBMLCORRUPT
+Stopping:  ##TEST_AWK.*
+# Unfreezing
+# End of this test. Log number: 1
+# DBDANGER
+Stopping:  ##TEST_AWK.*
+# Unfreezing
+# End of this test. Log number: 2
+# DBFSYNCERR
+# Unfreezing
+# End of this test. Log number: 3
+##ALLOW_OUTPUT MM
+# GBLOFLOW
+Database file ##TEST_PATH##/mumps.dat now has extension count 0
+# Unfreezing
+Database file ##TEST_PATH##/mumps.dat now has extension count 100
+# End of this test. Log number: 4
+# GVDATAFAIL
+# Unfreezing
+# End of this test. Log number: 5
+# GVGETFAIL
+# Unfreezing
+# End of this test. Log number: 6
+# GVINCRFAIL
+# Unfreezing
+# End of this test. Log number: 7
+# GVPUTFAIL
+# Unfreezing
+# End of this test. Log number: 8
+# GVKILLFAIL
+# Unfreezing
+# End of this test. Log number: 9
+# GVORDERFAIL
+# Unfreezing
+# End of this test. Log number: 10
+# GVQUERYFAIL
+# Unfreezing
+# End of this test. Log number: 11
+# GVQUERYGETFAIL
+# Unfreezing
+# End of this test. Log number: 12
+##SUSPEND_OUTPUT MM
+# OUTOFSPACE
+# Unfreezing
+# End of this test. Log number: 13
+##ALLOW_OUTPUT MM
+# JNLCLOSE
+# Unfreezing
+# End of this test. Log number: 14
+##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHUTDOWN operation on source server pid [##PID##] for secondary instance [INSTANCE2]
+##FILTERED##... ... .. ..:..:.. 20.. : Waiting for upto XXX seconds for the source server to shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool shared memory removed
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool semaphore removed
+# CreateDatabase
+# Replication Setup
+# TRIGDEFBAD
+File test.trg, Line 1: Added SET trigger on ^a named a#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+# Unfreezing
+# End of this test. Log number: 15
+# JNLFILOPN
+# Unfreezing
+# End of this test. Log number: 16
+##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHUTDOWN operation on source server pid [##PID##] for secondary instance [INSTANCE2]
+##FILTERED##... ... .. ..:..:.. 20.. : Waiting for upto XXX seconds for the source server to shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool shared memory removed
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool semaphore removed

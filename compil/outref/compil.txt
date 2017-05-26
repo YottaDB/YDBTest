@@ -1,0 +1,84 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+do ^actundef
+
+OK from actundef.m
+
+GTM>
+do ^donargl
+		.. w !,"too many levels"
+		   ^-----
+		At column 5, line 15, source module ##IN_TEST_PATH##/inref/donargl.m
+%GTM-E-BLKTOODEEP, Block level too deep
+
+PASS from donargl
+GTM>
+do ^extgot1
+
+PASS from extgot1
+GTM>
+do ^newpara
+
+PASS from newpara
+GTM>
+do ^qt
+
+PASS from qt
+GTM>
+do ^undefi
+
+PASS from undefi
+GTM>
+do ^zgonolab
+
+PASS from zgonolab
+GTM>
+do ^zlirout
+
+PASS from zlirout
+GTM>
+do ^zstfor1
+
+PASS from zstfor1
+GTM>
+do ^compstress
+
+GTM>
+do ^compstrsA
+compstrsA.m started
+PASS
+
+GTM>
+do ^compstrsB
+compstrsB.m started
+PASS
+
+GTM>
+do ^C9L06003432
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

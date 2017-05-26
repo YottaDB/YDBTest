@@ -1,0 +1,42 @@
+>>> journal enable is done in this test. So let's not randomly enable journaling in dbcreate.csh
+>>> This test can only run with BG access method, so let's make sure that's what we have
+>>> This test requires BEFORE_IMAGE so set that unconditionally
+>>> Create databases for AREG BREG and DEFAULT
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+>>> Start passive source server and enable instance for local updates
+>>> Enable replication on AREG BREG and DEFAULT. Use minimum autoswitchlimit to exercise more journal switches
+>>> Do 100000 updates to BREG and DEFAULT but not AREG
+
+GTM>
+
+GTM>
+>>> Shut down passive source server
+>>> Save db/jnl to bak subdirectory
+>>> Find one value of <limit vmemoryuse> that will cause a GTM-F-MEMORY error in the forward phase of rollback
+>>> Induce out-of-memory error in first rollback by setting vmemoryuse to ##FILTERED##GTM_TEST_DEBUGINFO.*
+>>> Verify out-of-memory error in first rollback (logfile = rollback1.out)
+>> Move core file (from FATAL GTM-F-MEMORY) to avoid test framework from treating this as a test failure
+>>> Attempt journal switch in each region individually. Should be disallowed on ALL regions
+%GTM-E-DBFLCORRP, ##TEST_PATH##/a.dat Header indicates database file is corrupt
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%GTM-E-DBFLCORRP, ##TEST_PATH##/b.dat Header indicates database file is corrupt
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%GTM-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+>>> Induce out-of-memory error in second rollback by setting vmemoryuse to same value
+>>> Verify out-of-memory error in second rollback (logfile = rollback2.out)
+>> Move core file (from FATAL GTM-F-MEMORY) to avoid test framework from treating this as a test failure
+>>> Attempt third (and final) rollback without any GTM-F-MEMORY error. This should work fine
+>>> Verify third rollback ran fine (logfile = rollback3.out)
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

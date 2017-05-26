@@ -1,0 +1,6 @@
+;
+	S IO="TESTFILE.OUT"
+	O IO:(NEWVER:FIXED:REC=400)
+	S REC=$E("RICKS TEST"_$J(" ",400),1,400)
+	U IO W REC_$C(10)_$C(65)_$C(66) U 0
+	q

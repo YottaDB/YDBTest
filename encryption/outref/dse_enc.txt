@@ -1,0 +1,73 @@
+# Enable WHITE BOX TESTING
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+###################################################################
+Do computations to arrive at the new corrupted hash to exercise CRYPTKEYFETCHFAILED
+###################################################################
+
+
+###################################################################
+Encryption hash = ##FILTERED##GTM_TEST_DEBUGINFO.*
+###################################################################
+
+
+###################################################################
+Encryption hash offset = ##FILTERED##GTM_TEST_DEBUGINFO.*
+###################################################################
+
+
+###################################################################
+Randomly chosen encryption hash offset to be corrupted = ##FILTERED##GTM_TEST_DEBUGINFO.*
+###################################################################
+
+
+###################################################################
+Location to be corrupted: ##FILTERED##GTM_TEST_DEBUGINFO.*
+###################################################################
+
+
+###################################################################
+Current value at location ##FILTERED##GTM_TEST_DEBUGINFO.*
+###################################################################
+
+
+###################################################################
+Overwrite value = ##FILTERED##GTM_TEST_DEBUGINFO.*
+###################################################################
+
+
+###################################################################
+Verfied that hash is indeed corrupted
+###################################################################
+
+
+###################################################################
+Attempt to read global should issue CRYPTKEYFETCHFAILED error
+###################################################################
+%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Expected hash - ##FILTERED##. Verify encryption key in configuration file pointed to by $gtmcrypt_config
+
+
+###################################################################
+Fix the corrupt hash with DSE CHANGE -FILE -ENCRYPTION_HASH
+###################################################################
+%GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Expected hash - ##FILTERED##. Verify encryption key in configuration file pointed to by $gtmcrypt_config
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+###################################################################
+Read of global again should now work fine
+###################################################################
+KEY
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

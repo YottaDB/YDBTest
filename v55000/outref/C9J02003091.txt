@@ -1,0 +1,36 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Turn on journaling with -file= pointing to the database itself. Expect GTM-E-FILEEXISTS and GTM-E-JNLNOCREATE
+%GTM-E-FILEEXISTS, File ##TEST_PATH##/mumps.dat already exists
+%GTM-E-JNLNOCREATE, Journal file ##TEST_PATH##/mumps.dat not created
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# Now Turn on journaling normally
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Turn on journaling again with -file= pointing to the database itself. Expect GTM-E-FILEEXISTS and GTM-E-JNLNOCREATE
+%GTM-E-FILEEXISTS, File ##TEST_PATH##/mumps.dat already exists
+%GTM-E-JNLNOCREATE, Journal file ##TEST_PATH##/mumps.dat not created
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# Do some updates
+# Now backup the database using cp or mupip backup
+# In the backup directory, try some journal enabling commands
+# mupip set -journal=on -reg * should fail with GTM-E-FILEEXISTS and GTM-E-JNLNOCREATE
+%GTM-E-FILEEXISTS, File ##TEST_PATH##/mumps.mjl already exists
+%GTM-E-JNLNOCREATE, Journal file ##TEST_PATH##/mumps.mjl not created
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# mupip set -journal=on,file=<existing-file> -reg DEFAULT should fail with GTM-E-FILEEXISTS and GTM-E-JNLNOCREATE
+%GTM-E-FILEEXISTS, File ##TEST_PATH##/backup_dir/mumps.mjl already exists
+%GTM-E-JNLNOCREATE, Journal file ##TEST_PATH##/backup_dir/mumps.mjl not created
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# mupip set -journal=on,file=<new-file> -reg DEFAUT should work fine
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# The journal file shoud have NO previous links
+Journal file name       ##TEST_PATH##/backup_dir/newmumps.mjl
+Database file name      ##TEST_PATH##/backup_dir/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

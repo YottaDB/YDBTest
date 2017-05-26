@@ -1,0 +1,233 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/dbcreate_base.csh mumps 3 255 2048 4096'==
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+==Executing MULTISITE_REPLIC 'RUN INST2 unsetenv gtm_repl_instance; $MUPIP set -replication=on $tst_jnl_str -REG "*" >>& jnl.log'==
+==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/dbcreate_base.csh mumps 3 255 2048 4096'==
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+==Executing MULTISITE_REPLIC 'RUN INST3 unsetenv gtm_repl_instance; $MUPIP set -replication=on $tst_jnl_str -REG "*" >>& jnl.log'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2 helper'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST3 helper'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP integ -r "*"  >>& integ.out'==
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP integ -r "*"  >>& integ.out'==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 ##TEST_COM_PATH##/rfstatus.csh BEFORE'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 ##TEST_COM_PATH##/rfstatus.csh BEFORE: < /dev/null'==
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/ajnl/a.mjl created for region AREG with .*BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/bjnl/b.mjl created for region BREG with .*BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/cjnl/c.mjl created for region DEFAULT with .*BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+=>Get the pid of source server
+##TEST_AWK=>Source server PID = [0-9]*
+=>Waiting for AREG journal file to have switched at least once
+=>Get value of last seqno of the most recent previous generation a.mjl_* file
+=>Last seqno in prevjnl is ##FILTERED##GTM_TEST_DEBUGINFO.*
+=>Removing write permissions on ajnl subdirectory
+=>Flush journal buffer contents to journal file on disk so we have at least some sizable worth of updates in the file
+=>Check that AREG has replication state WAS_ON
+  Journal File: ##TEST_PATH##/ajnl/a.mjl
+##TEST_AWK  Replication State            .WAS_ON. OFF  Region Seqno    0x[0-9A-F]*
+  Journal File: ##TEST_PATH##/bjnl/b.mjl
+##TEST_AWK  Replication State                      ON  Region Seqno    0x[0-9A-F]*
+  Journal File: ##TEST_PATH##/cjnl/c.mjl
+##TEST_AWK  Replication State                      ON  Region Seqno    0x[0-9A-F]*
+=>Check for absence of REPLJNLCLOSED error in any *.mjo* has been deferred to the test framework at the end of the test
+=>Check that checkhealth now indicates REPLJNLCLOSED error
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 set msr_dont_chk_stat ; $MUPIP replic -source -checkhealth -instsecondary=__RCV_INSTNAME__'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid [##PID##] for secondary instance name [INSTANCE2]
+PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
+##TEST_AWK.GTM-E-REPLJNLCLOSED, Replication in jeopardy as journaling got closed for database file ##TEST_PATH##/a.dat.*
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/bkgrnd_reorg.csh >>& stress_reorg.out'==
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/bkgrnd_reorg.csh >>& stress_reorg.out'==
+=>Check that processes that newly attach to regions with repl_state=WAS_ON have no problems doing so
+
+GTM>
+
+GTM>
+=>Check that source server sends at least as much as it can from the journal files (even if WAS_ON state)
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3'==
+=>Determine the PID of the INST1->INST3 source server (used later)
+=>Check that source server after reaching the WAS_ON point has issued REPLBRKNTRANS error
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##SRC_##TIMESTAMP##.log -message "REPLBRKNTRANS" -duration 3600 -waitcreation'==
+----------
+Error REPLBRKNTRANS seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%GTM-E-REPLBRKNTRANS, Replication subsystem found seqno ##SEQNO## broken or missing in the journal files
+----------
+=>Turning permissions back on ajnl subdirectory before starting source server from INST1 to INST3
+=>Turning replication back ON those regions that lost them
+=>Check that AREG has replication state ON (not WAS_ON)
+  Journal File: ##TEST_PATH##/ajnl/a.mjl
+##TEST_AWK  Replication State                      ON  Region Seqno    0x[0-9A-F]*
+  Journal File: ##TEST_PATH##/bjnl/b.mjl
+##TEST_AWK  Replication State                      ON  Region Seqno    0x[0-9A-F]*
+  Journal File: ##TEST_PATH##/cjnl/c.mjl
+##TEST_AWK  Replication State                      ON  Region Seqno    0x[0-9A-F]*
+=>Wait for the FIRST INST1->INST3 source server to die before starting the SECOND source server
+=>Now start ANOTHER INST1->INST3 source server. This one will issue a REPLBRKNTRANS error (not NOPREVLINK)
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3'==
+=>Now wait for the REPLBRKNTRANS error to show up in the SECOND INST1->INST3 source server log
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##SRC_##TIMESTAMP##.log -message REPLBRKNTRANS -duration 3600 -waitcreation'==
+----------
+Error REPLBRKNTRANS seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%GTM-E-REPLBRKNTRANS, Replication subsystem found seqno ##SEQNO## broken or missing in the journal files
+----------
+=>Check that checkhealth of the INST1->INST2 source server at this point does NOT indicate any REPLJNLCLOSED error
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 $MUPIP replic -source -checkhealth -instsecondary=__RCV_INSTNAME__'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid [##PID##] for secondary instance name [INSTANCE2]
+PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
+=>Check that processes that attach to regions after repl_state transitioned from WAS_ON --> ON have no problems doing so
+
+GTM>
+
+GTM>
+=>Stop running GT.M processes
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 ##TEST_COM_PATH##/rfstatus.csh AFTER'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 ##TEST_COM_PATH##/rfstatus.csh AFTER: < /dev/null'==
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/close_reorg.csh >>& stress_reorg.out'==
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/close_reorg.csh >>& stress_reorg.out'==
+=>Last seqno received at INST3 is ##FILTERED##GTM_TEST_DEBUGINFO.*
+=>Checking that processed-seqno is greater than or equal to last goodseqno previously noted down
+Seqno check PASSED
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2 ON'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+==Executing MULTISITE_REPLIC 'STOP INST3 ON'==
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST3'==
+=>Doing database extract diff of INST1 and INST2
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/RF_EXTR.csh INST1 INST2'==
+DATABASE EXTRACT PASSED
+
+=>Doing dbcheck of INST1
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/dbcheck_base.csh'==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+=>Doing dbcheck of INST2
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/dbcheck_base.csh'==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+=>Doing dbcheck of INST3 (with partial updates)
+==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/dbcheck_base.csh'==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+=>Application level check on INST1 (and INST2) : Should PASS
+
+GTM>
+Verification PASS
+
+GTM>
+=>Application level check on INST3 : Should FAIL since replication from INST1 was incomplete due to jnl_file_lost error
+==Executing MULTISITE_REPLIC 'RUN INST3 ##SOURCE_PATH##/mumps -run allverify^replwason'==
+%GTM-E-GVUNDEF, Global variable undefined: ^jobindex(1)
+		At M source location verify+4^replwason
+
+GTM>
+
+=>Replicating post-jnl_file_lost seqnos from INST2 to INST3
+==Executing MULTISITE_REPLIC 'START INST2 INST3 PP'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+==Executing MULTISITE_REPLIC 'STOP INST2 INST3 ON'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+=>Doing dbcheck of INST3 (with complete updates)
+==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/dbcheck_base.csh'==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+=>Doing database extract diff of INST1 and INST3 (with complete updates)
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/RF_EXTR.csh INST1 INST3'==
+DATABASE EXTRACT PASSED
+
+=>Application level check on INST3 : Should PASS now that INST2 has propagated all remaining updates to INST3
+==Executing MULTISITE_REPLIC 'RUN INST3 ##SOURCE_PATH##/mumps -run allverify^replwason'==
+Verification PASS
+
+=>INST1 : Take a backup of the db and journal files into save2 before forward recovery
+=>Save extract from current database in INST1...
+
+=>Do forward recovery on INST2 and check that db extract matches between INST1 and INST2
+==Executing MULTISITE_REPLIC 'RUN INST2 rm -f *.dat*; ##SOURCE_PATH##/mupip create >& mupip_create2.out'==
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP set -journal="enable,off,nobefore" -reg "*" >& jnlon2.out'==
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP journal -recover -forward -verbose -fence=none  "*" >& forw_recover2.log; set stat1=$status; $grep successful forw_recover2.log'==
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+Doing database extract diff of INST1 and INST2 after forward recovery on INST2
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/RF_EXTR.csh INST1 INST2'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh -nosprgde'==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh -nosprgde'==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh -nosprgde'==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+=>Do forward recovery on INST1 and check that we get JNLDBTNNOMATCH error (due to induced jnl_file_lost error)
+==Executing MULTISITE_REPLIC 'RUN INST1 rm -f *.dat*; cp -p save1/*.dat .'==
+##SOURCE_PATH##/mupip journal -recover -forward -verbose -fence=none *
+TEST-E-RECOVFAIL Mupip recover -forw failed (as expected)
+JNLDBTNNOMATCH error found in forw_recover1.log (as expected)
+----------
+Error JNLDBTNNOMATCH seen in forw_recover1.log as expected:
+##TEST_AWK%GTM-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##/ajnl/a.mjl(_[0-9]*)? has beginning transaction number ##TRANSACTION_NO##, but database ##TEST_PATH##/a.dat has current transaction number \[0x0000000000000001\] and journal end transaction number \[0x0000000000000001\]
+----------
+----------
+Error NOPREVLINK seen in forw_recover1.log as expected:
+##TEST_AWK%GTM-E-NOPREVLINK, Journal file ##TEST_PATH##/ajnl/a.mjl(_[0-9]*)? has a null previous link
+----------
+----------
+Error MUNOACTION seen in forw_recover1.log as expected:
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+##SUSPEND_OUTPUT JNL_NOBEFORE
+=>INST1 : Restore db and journal files (from save2) to test backward recovery
+##SOURCE_PATH##/mupip journal -recover -backward -verbose '*' -since=0 0:0:1
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+=>Extact from database after backward recovery...
+=>diff origdata.glo backglo.glo (db after original set of updates with db after backward recovery)
+No diff found (as expected)
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

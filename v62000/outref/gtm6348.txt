@@ -1,0 +1,21 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# In DSE touch the database, spawn a GT.M process that creates a bunch of globals, using a bunch of blocks
+# save, then damage a block, which should cause DBDANGER, then restore the correct block contents
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+Saving version 1 of block 3
+DSE> DSE> 
+Restoring block 3 from version 1
+
+%GTM-I-DBRSIZMN,        3:18     0  Physical record too small
+DSE> 1
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,78 @@
+ENTERING D9H12002672
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+# Set kill_in_prog=1 for second region : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# Start backup process in background
+# Ensure that while backup process is waiting we dont hold any crits
+
+DSE> CRIT is currently unowned on all regions
+# The backup process is running in background and waiting for KIP to reset.
+# We test future kills are inhibited on all the regions. We also test that set should work normally on all regions.
+
+GTM>
+
+GTM>
+
+GTM>
+Start set in region : 
+End set in region : 
+Start Kill in region : 
+End Kill in region : 
+
+GTM>
+1
+GTM>
+# LEAVING D9H12002672
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+Total error count from integ:		1.
+##TEST_AWK... ... .. ..:..:.. ... 20..
+
+
+Integ of region ##TEST_AWK.*
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.##TEST_AWK...            NA
+Index               1               1           2.343             1
+Data                1               0           1.562             1
+Free               96              NA              NA            NA
+Total             100               3              NA             2
+
+
+Integ of region ##TEST_AWK.*
+%GTM-W-MUKILLIP, Kill in progress indicator is set for file ##TEST_PATH##/##TEST_AWK.*
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+
+Integ of region ##TEST_AWK.*
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+%GTM-E-INTEGERRS, Database integrity errors
+##TEST_PATH##/mupip.err_##TEST_AWK.._.._.._.._.._..
+%GTM-W-MUKILLIP, Kill in progress indicator is set for file ##TEST_PATH##/##TEST_AWK.*
+%GTM-E-INTEGERRS, Database integrity errors

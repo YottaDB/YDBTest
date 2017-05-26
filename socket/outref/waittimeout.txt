@@ -1,0 +1,41 @@
+ENTERING SOCKET WAITTIMEOUT
+
+listentimeout started
+listentimeout completed
+
+readtimeout started
+readtimeout completed
+
+readwaittimeout started
+readwaittimeout completed
+
+notimeout started
+notimeout completed
+
+notimeoutwait started
+notimeoutwait completed
+
+opentimeout started
+opentimeout completed
+
+Done.
+----------
+Error TEST-E-TIMEOUT on server connection wait seen in server_cwt.out as expected:
+##TEST_AWKTEST-E-TIMEOUT on server connection wait at server\+[0-9]+\^waittimeout
+----------
+----------
+Error TEST-E-TIMEOUT on read seen in client_rt.out as expected:
+##TEST_AWKTEST-E-TIMEOUT on read at readone\+[0-9]+\^waittimeout
+----------
+----------
+Error TEST-E-TIMEOUT on wait seen in client_rwt.out as expected:
+##TEST_AWKTEST-E-TIMEOUT on wait at wait\+[0-9]+\^waittimeout
+----------
+----------
+Error TEST-E-TIMEOUT on server open seen in server_ot_2.out as expected:
+##TEST_AWKTEST-E-TIMEOUT on server open at server\+[0-9]+\^waittimeout
+----------
+LEAVING SOCKET WAITTIMEOUT
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

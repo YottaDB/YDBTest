@@ -1,0 +1,340 @@
+#################################################################
+#								#
+# Copyright (c) 2014-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# # options not specified here are taken default (which is in com/default_options_csh
+# # which are (for now, at least) GT.M NON_REORG NICE NON_REPLIC
+# # you can, but do not need to write out each option
+basic L
+basic L REPLIC
+basic E
+basic E REPLIC
+call_ins  L
+call_ins  E
+compil L
+compil E
+compil E REPLIC
+dse L
+dse E
+dse E REPLIC
+disallow L
+disallow E
+gde L
+gde E
+io L
+io E
+collation L
+collation E
+collation E REPLIC
+gtcm_omi L
+gtcm_omi E
+java E
+jnl L
+jnl E
+jnl E REPLIC
+mupjnl L
+mupjnl L REPLIC
+mupjnl E
+mupjnl E REPLIC
+locks L
+locks E
+locks E REPLIC
+longstr L
+longstr E
+mpt L
+mpt E
+mpt E REPLIC
+mpt_extra L
+mpt_extra E
+met L
+met E
+mugj L
+mugj E
+mugj E REPLIC
+mupip L
+mupip E
+mupip E REPLIC
+read_only L
+read_only E
+env_xlate L
+env_xlate E
+mm L
+mm E
+v230 L
+v230 E
+v230 E REPLIC
+v234 L
+v234 E
+v234 E REPLIC
+v320  L GT.M
+v320  E GT.M
+v320  E GT.M REPLIC
+v42000 E
+v42000 L
+v43000 L
+v43000 E
+v43001 L
+v43001 E
+v43001 E REPLIC
+v43001b L
+v43001b E
+v43001b E REPLIC
+v43001d L
+v43001d E
+v43001e L
+v43001e E
+post_v43 L
+post_v43 E
+v44002 L
+v44002 E
+v44003 L
+v44003 E
+v44003 E REPLIC
+v44003a L
+v44003a E
+v44003a E REPLIC
+v44004  L
+v44004  E
+v44004  E REPLIC
+v50000  L
+v50000  E
+v50000  L REPLIC
+v50000  E REPLIC
+v51000  L
+v51000  E
+v52000  L
+v52000  E
+v52000  E REPLIC
+v53000  L
+v53000  E
+v53000  E REPLIC
+v53001	L
+v53001	E
+v53002	L
+v53002	E
+v53002	E REPLIC
+v53003	L
+v53003	E
+v53003	E REPLIC
+v53004	L
+v53004	E
+v53004  E REPLIC
+v54000	L
+v54000	E
+v54001	L
+v54001	E
+v54001	E REPLIC
+v54002	L
+v54002	E
+v54003	L
+v54003	E
+v54003	E REPLIC
+v55000	L
+v55000	E
+v55000	E REPLIC
+v60000	L
+v60000	E
+v60000	E REPLIC
+v60001	L
+v60001	E
+v60001	E REPLIC
+v60002	L
+v60002	E
+v60002	E REPLIC
+v60003	L
+v60003	E
+v61000	L
+v61000	E
+v61000	E REPLIC
+v62000	L
+v62000	E
+v62000	E REPLIC
+v62001	L
+v62001	E
+v62001	E REPLIC
+v62002	L
+v62002	E
+v62002	E REPLIC
+v62002a	L
+v62002a	E
+v63000	L
+v63000	E
+v63000	E REPLIC
+v63000a	E
+v63000a	E REPLIC
+spanning_nodes	L
+spanning_nodes	E
+spanning_nodes	E REPLIC
+secshr	L
+secshr	E
+64bittn E
+64bittn E REPLIC
+refresh_sec E REPLIC
+increment L
+increment E
+increment E REPLIC
+sharedlib L
+sharedlib E
+relink L
+relink E
+relink E REPLIC
+zsearch L
+zsearch E
+xcall L
+xcall E
+dollar L
+dollar E
+socket L
+socket E
+dbcompatibility E
+indirection E
+longname E
+m_commands E
+m_function E
+zgbldir E
+nullsubs_coll E
+mprof L
+mprof E
+fmtio E
+tp L
+tp E REORG
+tp E REPLIC
+tptime E
+tptime E REPLIC
+tprollbk L
+tprollbk E
+tprollbk E REPLIC
+online_bkup L
+online_bkup E
+online_bkup E REPLIC
+online_integ E REPLIC
+online_rollback L REPLIC
+online_rollback E REPLIC
+forw_rollback E REPLIC
+bank E
+set_jnl E
+set_jnl E REPLIC
+recov E
+merge E
+expect E
+seqno_64bit L REPLIC
+seqno_64bit E REPLIC
+lost_trans E REPLIC
+overflow E REPLIC
+stress E REPLIC
+upd_rest E REPLIC
+zqgblmod E REPLIC
+ext_filter E REPLIC
+burst_load E REPLIC
+mvts E
+known_issues L
+known_issues E
+errors L
+errors E
+pattern L
+pattern E
+unicode L
+unicode E
+unicode E REPLIC
+unicode_io L
+unicode_io E
+unicode_socket L
+unicode_socket E
+aliaslv L
+aliaslv E
+encryption L
+encryption E
+encryption E REPLIC
+triggers L
+triggers E
+triggers E REPLIC
+mem_stress E REPLIC
+merge E REPLIC REORG
+switch_over E REPLIC
+repl_misc_qual E REPLIC
+replic_compress E REPLIC
+resil L
+resil E REORG
+resil E REPLIC
+mdivis L
+mdivis E
+mdivis E REPLIC
+updown L REPLIC
+updown E REPLIC
+spanning_regions	L
+spanning_regions	E
+spanning_regions	E REPLIC
+########################################
+#### <Multi-Host> ####
+# GT.CM tests
+increment E GTCM
+gtcm_gnp E GTCM
+merge E GTCM
+mem_stress E GTCM
+# Randomly Multi-Host
+filter E REPLIC
+dualfail_ms E REPLIC
+dual_fail E REPLIC
+tcp_bkup E REPLIC
+endiancvt E REPLIC
+msreplic_A E REPLIC
+msreplic_B E REPLIC
+msreplic_C E REPLIC
+msreplic_D E REPLIC
+msreplic_E E REPLIC
+msreplic_F E REPLIC
+msreplic_G E REPLIC
+msreplic_H E REPLIC
+suppl_inst_A	E REPLIC
+suppl_inst_B	E REPLIC
+suppl_inst_C	E REPLIC
+suppl_inst_D	E REPLIC
+#### </Multi-Host> ####
+########################################
+tls E REPLIC
+tls L REPLIC
+########################################
+#### <replic_with_crash>
+crash_fail E REPLIC
+multisrv_crash E REPLIC
+dual_fail_extend E REPLIC
+#### <\replic_with_crash>
+########################################
+### Heavyweight Tests
+reorg L REORG
+reorg E REPLIC REORG
+rollback_A E REPLIC
+rollback_B E REPLIC
+split_recov E REPLIC
+########################################
+# Heavyweight single-host tests at the end so that if the order is reversed, no multi-host tests start sooner than the buld of slowest server completes
+# The below tests will take about 4 hours to complete on one of the fastest machines
+# The slowest build will take little over 2 1/2 hours to complete.
+dbload E
+jnl_crash E
+reorg E REORG
+online_integ L
+online_integ E
+ideminter_rolrec E
+########################################
+# Need some work before enabling this
+# manual_tests E REPLIC
+###########################################################
+# The M suite is for tests that are automated (hence can be run with the test system), but are not meant to run at every E_ALL cycle.
+manually_start M
+manually_start M REPLIC
+gtmpcat M
+rundown_argless	M
+rundown_argless	M REPLIC
+###########################################################
+# The following are the timing (performance) tests
+#speed T
+profile T
+profile T REPLIC

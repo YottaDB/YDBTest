@@ -1,0 +1,83 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+File trig_nest_err.trg, Line 1: Added SET trigger on ^a named a#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+Output File: 
+;trigger name: a#1 (region DEFAULT)  cycle: 1
++^a -commands=S -xecute="do ^trignsterror"
+
+GTM>
+set ^a to trigger trignsterror
+
+GTM>
+Nested calls: M1->C->M2
+
+M1:  $ZLEVEL = 3
+M1:  $STACK = 2
+M1:  $ESTACK = 2
+Passing:
+    123.349
+    654.321
+    "c"
+    "C-style string"
+    "String structure"
+to inmult
+
+##SUSPEND_OUTPUT 64BIT_GTM
+xc_inmult: sizeof(arg_floatp) = 4,	*arg_floatp = 123.349
+xc_inmult: sizeof(arg_doublep) = 4,	*arg_doublep = 654.321
+xc_inmult: sizeof(arg_charp) = 4,	*arg_charp = 'c'
+xc_inmult: sizeof(arg_charpp) = 4,	*arg_charpp = 'C-style string'
+xc_inmult: sizeof(arg_stringp) = 4,	arg_stringp->length = 16
+##ALLOW_OUTPUT 64BIT_GTM
+##SUSPEND_OUTPUT 32BIT_GTM
+xc_inmult: sizeof(arg_floatp) = 8,	*arg_floatp = 123.349
+xc_inmult: sizeof(arg_doublep) = 8,	*arg_doublep = 654.321
+xc_inmult: sizeof(arg_charp) = 8,	*arg_charp = 'c'
+xc_inmult: sizeof(arg_charpp) = 8,	*arg_charpp = 'C-style string'
+xc_inmult: sizeof(arg_stringp) = 8,	arg_stringp->length = 16
+##ALLOW_OUTPUT 32BIT_GTM
+	*arg_stringp = 'String structure'
+
+
+ 150380258,%GTM-E-CITPNESTED, Call-ins can not be used inside a TP transaction 
+
+Values returned from inmult:
+
+    123.349
+    654.321
+    "c"
+    "C-style string"
+    "String structure"
+
+Value of $ET in M1: 
+GTM>
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

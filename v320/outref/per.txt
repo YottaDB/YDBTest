@@ -1,0 +1,122 @@
+
+
+    1   per1831	; ; ; test of compiler listing of a very long line
+    2   	;
+    3   	write !,"The length of this line is ",$length($text(per1831+2))," characters." write !,"This is intended to be a very long 
+line which should appear properly formated on a MUMPS -LIST output." write !,"This is more output from the very long line which shou
+ld appear properly formated on a MUMPS -LIST output."  write !,"This is still more output from the very long line which should appea
+r properly formated on a MUMPS -LIST output."  write !,"This is even more output from the very long line which should appear properl
+y formated on a MUMPS -LIST output."  write !,"This is additional output from the very long line which should appear properly format
+ed on a MUMPS -LIST output."  write !,"This is boring additional output from the very long line which should appear properly formate
+d on a MUMPS -LIST output."  write !,"This is approaching the end of the ridiculous output from the very long line which should appe
+ar properly formated on a MUMPS -LIST output."  write !,"This is amost the end of the ridiculous output from the very long line whic
+h should appear properly formated on a MUMPS -LIST output."  write !,"This is nearly the end of the ridiculous output from the very 
+long line which should appear properly formated on a MUMPS -LIST output."  write !,"This is the end of the ridiculous output from th
+e very long line which should appear properly formated on a MUMPS -LIST output."
+    4   	Quit
+
+no errors
+
+GTM>
+Do ^per2482
+
+PASS from per2482
+GTM>
+Do ^per2733
+
+OK from per2733
+GTM>
+Do ^per2739
+
+OK from per2739
+GTM>
+Do ^per2745
+
+OK from per2745
+GTM>
+Do ^D000201
+
+PASS from D000201
+GTM>
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+per2416.gld
+Using: ##SOURCE_PATH##/mupip
+per2416.dat
+##SUSPEND_OUTPUT  L NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+per2416.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+per2416.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  L NON_REPLIC
+
+GTM>
+do ^per2416
+
+PASS from per2416
+GTM>
+##SUSPEND_OUTPUT  L NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##ALLOW_OUTPUT  L NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  L NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT L NON_REPLIC
+##SUSPEND_OUTPUT REPLIC
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+MUPIP journal  -extract ^a
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+MUPIP journal  -extract ^a,^b
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+MUPIP journal  -extract ^a*
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+MUPIP journal  -extract ~^a:
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..

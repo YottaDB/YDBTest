@@ -1,0 +1,84 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Multi-process Multi-region GTM starts on primary (A)...
+Simulating crash on primary in ##TEST_PATH##
+Primary crashed!
+mupip_rollback.csh *
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+Save current sequence numbers to be used later:
+DO QUICK FAIL OVER...
+Restarting (B) as primary...
+Multi-process Multi-region GTM starts on primary (B)...
+Simulating crash on primary in ##REMOTE_TEST_PATH##
+Primary crashed!
+ANOTHER SWITCH OVER # (A) is primary. (B) is receiver:
+Rollback on primary (A):
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+Restarting (A) as primary...
+Simulating crash on primary in ##TEST_PATH##
+Primary crashed!
+Rollback on primary (A):
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+Restarting (A) as primary...
+Simulating crash on primary in ##TEST_PATH##
+Primary crashed!
+Doing rollback on (B):
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+Restarting (B) as primary...
+Multi-process Multi-region GTM restarts on primary (B)...
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+PASSED rollback -fetchresync
+Restarting (B) as secondary...
+Now GTM process ends
+Shutting down Passive Source Server and Receiver Server in ##TEST_PATH##
+Shutting down Primary Source Server Server in ##REMOTE_TEST_PATH##
+DATABASE EXTRACT PASSED
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>

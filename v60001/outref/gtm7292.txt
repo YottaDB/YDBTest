@@ -1,0 +1,2944 @@
+Fill a database of height 3 in a random-ish manner to try to get a mix of record counts among index blocks
+Fill 5 other databases with various sizes in the same manner
+Filling ^a Filling ^b Filling ^c Filling ^c2 Filling ^c3 Filling ^d 
+###############################################
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Running MUPIP INTEG to get actual globals sizes
+$MUPIP integ -full mumps.dat
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               1           3.027           NA
+
+Global variable ^d
+Level          Blocks         Records          % Used      Adjacent
+    1               1              35          41.699             1
+    0              35             354          48.395            16
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1              35          41.699             1
+Data               35             354          48.395            16
+Free               62              NA              NA            NA
+Total             100             391              NA            17
+$MUPIP integ -full a.dat
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               1           3.027           NA
+
+Global variable ^a
+Level          Blocks         Records          % Used      Adjacent
+    3               1               4           6.347             1
+    2               4             113          35.400             1
+    1             113            4854          50.971             0
+    0            4854           57292          56.320             9
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index             118            4971          50.065             2
+Data             4854           57292          56.320             9
+Free               26              NA              NA            NA
+Total            5000           62265              NA            11
+$MUPIP integ -full b.dat
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               1           3.027           NA
+
+Global variable ^b
+Level          Blocks         Records          % Used      Adjacent
+    1               1              35          41.699             1
+    0              35             354          48.395            16
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1              35          41.699             1
+Data               35             354          48.395            16
+Free               62              NA              NA            NA
+Total             100             391              NA            17
+$MUPIP integ -full c.dat
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               3           5.957           NA
+
+Global variable ^c
+Level          Blocks         Records          % Used      Adjacent
+    2               1              13          16.992             1
+    1              13             523          46.589             0
+    0             523            6042          54.991            18
+
+Global variable ^c2
+Level          Blocks         Records          % Used      Adjacent
+    2               1               9          12.207             0
+    1               9             382          49.207             0
+    0             382            4583          57.136             9
+
+Global variable ^c3
+Level          Blocks         Records          % Used      Adjacent
+    2               1              15          19.628             0
+    1              15             686          53.287             1
+    0             686            8125          56.490            16
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               4           4.150            NA
+Index              40            1628          47.416             2
+Data             1591           18750          56.152            43
+Free               67              NA              NA            NA
+Total            1700           20382              NA            45
+unset verbose
+###############################################
+Testing -heuristic qualifier on A/R sampling method
+$MUPIP size -heuristic="arsample,samples"
+%GTM-E-CLIERR, Option : SAMPLES needs value
+
+
+$MUPIP size -heuristic="ar,sample=110" >> & heur_ar.log
+echo $status
+0
+$MUPIP size -heuristic="arsample,samples=0"
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.SAMPLES
+
+MUPIP SIZE cannot proceed with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="arsample,samples=-3"
+%GTM-E-CLIERR, Unrecognized value: -3, Decimal number expected
+$MUPIP size -heuristic="arsample,samples=34s"
+%GTM-E-CLIERR, Unrecognized value: 34s, Decimal number expected
+$MUPIP size -heuristic="arsample,dummy=110"
+%GTM-E-CLIERR, Unrecognized option : DUMMY
+$MUPIP size -heuristic="arsample,dummy"
+%GTM-E-CLIERR, Unrecognized option : DUMMY
+$MUPIP size -heuristic="arsample,samples=110,seed=$SEED"
+
+Global: a (region AREG)
+
+Number of generated samples = 459
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    3               1               0               0 ~   0%             100
+    2               4               0               1 ~   0%             100
+    1             113               7               0 ~   6%              24
+    0            4731              10             635 ~  13%             N/A
+Total            4849              11             635 ~  13%             N/A
+
+Global: b (region BREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              35              16               0 ~   0%             N/A
+Total              36              16               0 ~   0%             N/A
+
+Global: c (region CREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              13               0               0 ~   0%             100
+    0             521              16              62 ~  12%             N/A
+Total             535              16              62 ~  12%             N/A
+
+Global: c2 (region CREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               9               0               0 ~   0%             100
+    0             419              11              40 ~   9%             N/A
+Total             429              11              40 ~   9%             N/A
+
+Global: c3 (region CREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              15               0               1 ~   0%             100
+    0             685              16              60 ~   9%             N/A
+Total             701              17              60 ~   9%             N/A
+
+Global: d (region DEFAULT)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              35              16               0 ~   0%             N/A
+Total              36              16               0 ~   0%             N/A
+$MUPIP size -heuristic="arsample,samples=10000,seed=$SEED"
+
+Global: a (region AREG)
+
+Number of generated samples = 38766
+Number of accepted samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    3               1               0               0 ~   0%             100
+    2               4               0               1 ~   0%             100
+    1             113               1               0 ~   1%              26
+    0            4794               9              65 ~   1%             N/A
+Total            4912              10              65 ~   1%             N/A
+
+Global: b (region BREG)
+
+Number of generated samples = 10000
+Number of accepted samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              35              16               0 ~   0%             N/A
+Total              36              16               0 ~   0%             N/A
+
+Global: c (region CREG)
+
+Number of generated samples = 10000
+Number of accepted samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              13               0               0 ~   0%             100
+    0             522              18               7 ~   1%             N/A
+Total             536              18               7 ~   1%             N/A
+
+Global: c2 (region CREG)
+
+Number of generated samples = 10000
+Number of accepted samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               9               0               0 ~   0%             100
+    0             383               9               4 ~   1%             N/A
+Total             393               9               4 ~   1%             N/A
+
+Global: c3 (region CREG)
+
+Number of generated samples = 10000
+Number of accepted samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              15               0               1 ~   0%             100
+    0             688              17               6 ~   1%             N/A
+Total             704              18               6 ~   1%             N/A
+
+Global: d (region DEFAULT)
+
+Number of generated samples = 10000
+Number of accepted samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              35              16               0 ~   0%             N/A
+Total              36              16               0 ~   0%             N/A
+$MUPIP size -heuristic="arsample,seed=$SEED"
+
+Global: a (region AREG)
+
+Number of generated samples = 4019
+Number of accepted samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    3               1               0               0 ~   0%             100
+    2               4               0               1 ~   0%             100
+    1             111               2               0 ~   2%              25
+    0            4774               9             205 ~   4%             N/A
+Total            4890              10             205 ~   4%             N/A
+
+Global: b (region BREG)
+
+Number of generated samples = 1000
+Number of accepted samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              35              16               0 ~   0%             N/A
+Total              36              16               0 ~   0%             N/A
+
+Global: c (region CREG)
+
+Number of generated samples = 1000
+Number of accepted samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              13               0               0 ~   0%             100
+    0             538              18              21 ~   4%             N/A
+Total             552              18              21 ~   4%             N/A
+
+Global: c2 (region CREG)
+
+Number of generated samples = 1000
+Number of accepted samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               9               0               0 ~   0%             100
+    0             381               9              13 ~   3%             N/A
+Total             391               9              13 ~   3%             N/A
+
+Global: c3 (region CREG)
+
+Number of generated samples = 1000
+Number of accepted samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              15               0               1 ~   0%             100
+    0             695              16              18 ~   3%             N/A
+Total             711              17              18 ~   2%             N/A
+
+Global: d (region DEFAULT)
+
+Number of generated samples = 1000
+Number of accepted samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              35              16               0 ~   0%             N/A
+Total              36              16               0 ~   0%             N/A
+unset verbose
+###############################################
+Testing -heuristic qualifier on importance sampling method
+$MUPIP size -heuristic="impsample,samples"
+%GTM-E-CLIERR, Option : SAMPLES needs value
+$MUPIP size -heuristic="impsample,samples=0"
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.SAMPLES
+
+MUPIP SIZE cannot proceed with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="impsample,samples=-3"
+%GTM-E-CLIERR, Unrecognized value: -3, Decimal number expected
+$MUPIP size -heuristic="impsample,samples=34s"
+%GTM-E-CLIERR, Unrecognized value: 34s, Decimal number expected
+$MUPIP size -heuristic="impsample,dummy=110"
+%GTM-E-CLIERR, Unrecognized option : DUMMY
+$MUPIP size -heuristic="impsample,dummy"
+%GTM-E-CLIERR, Unrecognized option : DUMMY
+$MUPIP size -heuristic="impsample,samples=110,seed=$SEED"
+
+Global: a (region AREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    3               1               0               0 ~   0%
+    2               4               1               0 ~   0%
+    1             119               0              14 ~  12%
+    0            5208              18             907 ~  17%
+Total            5332              19             907 ~  17%
+
+Global: b (region BREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+
+Global: c (region CREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1              13               0               0 ~   0%
+    0             505              17              62 ~  12%
+Total             519              17              62 ~  12%
+
+Global: c2 (region CREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1               9               0               0 ~   0%
+    0             421              11              43 ~  10%
+Total             431              11              43 ~  10%
+
+Global: c3 (region CREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1              15               1               0 ~   0%
+    0             690              16              57 ~   8%
+Total             706              17              57 ~   8%
+
+Global: d (region DEFAULT)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               1               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+$MUPIP size -heuristic="impsample,samples=10000,seed=$SEED"
+
+Global: a (region AREG)
+Number of generated samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    3               1               0               0 ~   0%
+    2               4               1               0 ~   0%
+    1             113               0               2 ~   1%
+    0            4787              10              96 ~   2%
+Total            4905              11              96 ~   2%
+
+Global: b (region BREG)
+Number of generated samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+
+Global: c (region CREG)
+Number of generated samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1              13               0               0 ~   0%
+    0             524              18               7 ~   1%
+Total             538              18               7 ~   1%
+
+Global: c2 (region CREG)
+Number of generated samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1               9               0               0 ~   0%
+    0             383               9               4 ~   1%
+Total             393               9               4 ~   1%
+
+Global: c3 (region CREG)
+Number of generated samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1              15               1               0 ~   0%
+    0             684              16               6 ~   1%
+Total             700              17               6 ~   1%
+
+Global: d (region DEFAULT)
+Number of generated samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               1               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+$MUPIP size -heuristic="impsample,seed=$SEED"
+
+Global: a (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    3               1               0               0 ~   0%
+    2               4               1               0 ~   0%
+    1             113               0               5 ~   4%
+    0            4835              13             302 ~   6%
+Total            4954              14             302 ~   6%
+
+Global: b (region BREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+
+Global: c (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1              13               0               0 ~   0%
+    0             534              18              21 ~   4%
+Total             548              18              21 ~   4%
+
+Global: c2 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1               9               0               0 ~   0%
+    0             384               9              13 ~   3%
+Total             394               9              13 ~   3%
+
+Global: c3 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1              15               1               0 ~   0%
+    0             694              16              18 ~   3%
+Total             710              17              18 ~   3%
+
+Global: d (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               1               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+unset verbose
+###############################################
+Testing -heuristic qualifier on Scan method
+$MUPIP size -heuristic="scan,level"
+%GTM-E-CLIERR, Option : LEVEL needs value
+$MUPIP size -heuristic="scan,level=4"
+
+Global: a (region AREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: b (region BREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c (region CREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c2 (region CREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c3 (region CREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: d (region DEFAULT)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$MUPIP size -heuristic="scan,level=8"
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+MUPIP SIZE cannot proceed with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="scan,level=-19"
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+MUPIP SIZE cannot proceed with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="scan,level=-1s9"
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+MUPIP SIZE cannot proceed with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="scan,level=-9"
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+MUPIP SIZE cannot proceed with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="scan"
+
+Global: a (region AREG)
+Level          Blocks          Records         Adjacent
+    1             113             4854                9
+
+Global: b (region BREG)
+Level          Blocks          Records         Adjacent
+    1               1               35               25
+
+Global: c (region CREG)
+Level          Blocks          Records         Adjacent
+    1              13              523               43
+
+Global: c2 (region CREG)
+Level          Blocks          Records         Adjacent
+    1               9              382               52
+
+Global: c3 (region CREG)
+Level          Blocks          Records         Adjacent
+    1              15              686               68
+
+Global: d (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    1               1               35               84
+$MUPIP size -heuristic="scan,level=1"
+
+Global: a (region AREG)
+Level          Blocks          Records         Adjacent
+    1             113             4854                9
+
+Global: b (region BREG)
+Level          Blocks          Records         Adjacent
+    1               1               35               25
+
+Global: c (region CREG)
+Level          Blocks          Records         Adjacent
+    1              13              523               43
+
+Global: c2 (region CREG)
+Level          Blocks          Records         Adjacent
+    1               9              382               52
+
+Global: c3 (region CREG)
+Level          Blocks          Records         Adjacent
+    1              15              686               68
+
+Global: d (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    1               1               35               84
+$MUPIP size -heuristic="scan,level=2"
+
+Global: a (region AREG)
+Level          Blocks          Records         Adjacent
+    2               4              113                0
+
+Global: b (region BREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c (region CREG)
+Level          Blocks          Records         Adjacent
+    2               1               13                0
+
+Global: c2 (region CREG)
+Level          Blocks          Records         Adjacent
+    2               1                9                0
+
+Global: c3 (region CREG)
+Level          Blocks          Records         Adjacent
+    2               1               15                1
+
+Global: d (region DEFAULT)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$MUPIP size -heuristic="scan,level=0"
+
+Global: a (region AREG)
+Level          Blocks          Records         Adjacent
+    0            4854            57292                0
+
+Global: b (region BREG)
+Level          Blocks          Records         Adjacent
+    0              35              354                0
+
+Global: c (region CREG)
+Level          Blocks          Records         Adjacent
+    0             523             6042                0
+
+Global: c2 (region CREG)
+Level          Blocks          Records         Adjacent
+    0             382             4583                0
+
+Global: c3 (region CREG)
+Level          Blocks          Records         Adjacent
+    0             686             8125                0
+
+Global: d (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    0              35              354                0
+$MUPIP size -heuristic="scan,level=-1"
+
+Global: a (region AREG)
+Level          Blocks          Records         Adjacent
+    2               4              113                0
+
+Global: b (region BREG)
+Level          Blocks          Records         Adjacent
+    0              35              354                0
+
+Global: c (region CREG)
+Level          Blocks          Records         Adjacent
+    1              13              523               18
+
+Global: c2 (region CREG)
+Level          Blocks          Records         Adjacent
+    1               9              382               27
+
+Global: c3 (region CREG)
+Level          Blocks          Records         Adjacent
+    1              15              686               43
+
+Global: d (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    0              35              354               43
+$MUPIP size -heuristic="scan,level=-2"
+
+Global: a (region AREG)
+Level          Blocks          Records         Adjacent
+    1             113             4854                9
+
+Global: b (region BREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c (region CREG)
+Level          Blocks          Records         Adjacent
+    0             523             6042                9
+
+Global: c2 (region CREG)
+Level          Blocks          Records         Adjacent
+    0             382             4583                9
+
+Global: c3 (region CREG)
+Level          Blocks          Records         Adjacent
+    0             686             8125                9
+
+Global: d (region DEFAULT)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$MUPIP size -heuristic="scan,level=-3"
+
+Global: a (region AREG)
+Level          Blocks          Records         Adjacent
+    0            4854            57292                0
+
+Global: b (region BREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c (region CREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c2 (region CREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c3 (region CREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: d (region DEFAULT)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+unset verbose
+###############################################
+Testing -heuristic qualifier disallowed combinations
+$MUPIP size -heuristic="scan,arsample"
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN
+$MUPIP size -heuristic="scan,impsample"
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN
+$MUPIP size -heuristic="impsample,level=1"
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN LEVEL
+$MUPIP size -heuristic="arsample,level=1"
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE SCAN LEVEL
+$MUPIP size -heuristic="scan,samples=101"
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SAMPLES
+$MUPIP size -heuristic="scan,seed=5"
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SEED
+unset verbose
+###############################################
+Testing -heuristic default behavior
+$MUPIP size > & default_behavior.log
+unset verbose
+Global: a (region AREG)
+Global: b (region BREG)
+Global: c (region CREG)
+Global: c2 (region CREG)
+Global: c3 (region CREG)
+Global: c2 (region CREG)
+Global: c3 (region CREG)
+Global: d (region DEFAULT)
+###############################################
+Testing -select qualifier
+$MUPIP size -heuristic="impsample,samples=1000" -select="nonexistent"
+%GTM-W-NOSELECT, None of the selected variables exist -- halting
+
+MUPIP SIZE cannot proceed with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -select="a"
+
+Global: a (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    3               1               0               0 ~   0%
+    2               4               1               0 ~   0%
+    1             113               0               5 ~   4%
+    0            4835              13             302 ~   6%
+Total            4954              14             302 ~   6%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -select="b"
+
+Global: b (region BREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -select="a,b"
+
+Global: a (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    3               1               0               0 ~   0%
+    2               4               1               0 ~   0%
+    1             113               0               5 ~   4%
+    0            4835              13             302 ~   6%
+Total            4954              14             302 ~   6%
+
+Global: b (region BREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -select="c1:c3"
+
+Global: c2 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               9               0               0 ~   0%
+    0             384               9              13 ~   3%
+Total             394               9              13 ~   3%
+
+Global: c3 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              15               1               0 ~   0%
+    0             694              16              18 ~   3%
+Total             710              17              18 ~   3%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -select="c*"
+
+Global: c (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              13               0               0 ~   0%
+    0             534              18              21 ~   4%
+Total             548              18              21 ~   4%
+
+Global: c2 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               9               0               0 ~   0%
+    0             384               9              13 ~   3%
+Total             394               9              13 ~   3%
+
+Global: c3 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              15               1               0 ~   0%
+    0             694              16              18 ~   3%
+Total             710              17              18 ~   3%
+unset verbose
+###############################################
+Testing -region qualifier
+$MUPIP size -heuristic="impsample,samples=1000" -select="b" -region="nonexistent"
+%GTM-E-NOREGION, REGION not found: NONEXISTENT
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="impsample,samples=1000" -select="b" -region
+%GTM-E-CLIERR, Option : REGION needs value
+$MUPIP size -heuristic="impsample,samples=1000" -select="a" -region="BREG"
+%GTM-W-NOSELECT, None of the selected variables exist -- halting
+
+MUPIP SIZE cannot proceed with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -region="AREG"
+
+Global: a (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    3               1               0               0 ~   0%
+    2               4               1               0 ~   0%
+    1             113               0               5 ~   4%
+    0            4835              13             302 ~   6%
+Total            4954              14             302 ~   6%
+
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -region="Breg,CREG"
+
+Global: b (region BREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+
+Global: c (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              13               0               0 ~   0%
+    0             534              18              21 ~   4%
+Total             548              18              21 ~   4%
+
+Global: c2 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               9               0               0 ~   0%
+    0             384               9              13 ~   3%
+Total             394               9              13 ~   3%
+
+Global: c3 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              15               1               0 ~   0%
+    0             694              16              18 ~   3%
+Total             710              17              18 ~   3%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -region="*REG"
+
+Global: a (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    3               1               0               0 ~   0%
+    2               4               1               0 ~   0%
+    1             113               0               5 ~   4%
+    0            4835              13             302 ~   6%
+Total            4954              14             302 ~   6%
+
+Global: b (region BREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+
+Global: c (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1              13               0               0 ~   0%
+    0             534              18              21 ~   4%
+Total             548              18              21 ~   4%
+
+Global: c2 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1               9               0               0 ~   0%
+    0             384               9              13 ~   3%
+Total             394               9              13 ~   3%
+
+Global: c3 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1              15               1               0 ~   0%
+    0             694              16              18 ~   3%
+Total             710              17              18 ~   3%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -region="*"
+
+Global: a (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    3               1               0               0 ~   0%
+    2               4               1               0 ~   0%
+    1             113               0               5 ~   4%
+    0            4835              13             302 ~   6%
+Total            4954              14             302 ~   6%
+
+Global: b (region BREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+
+Global: c (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1              13               0               0 ~   0%
+    0             534              18              21 ~   4%
+Total             548              18              21 ~   4%
+
+Global: c2 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1               9               0               0 ~   0%
+    0             384               9              13 ~   3%
+Total             394               9              13 ~   3%
+
+Global: c3 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1              15               1               0 ~   0%
+    0             694              16              18 ~   3%
+Total             710              17              18 ~   3%
+
+Global: d (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               1               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -region="DEFAULT"
+
+Global: d (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -select="d" -region="DEF*"
+
+Global: d (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -select="a" -region="AREG"
+
+Global: a (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    3               1               0               0 ~   0%
+    2               4               1               0 ~   0%
+    1             113               0               5 ~   4%
+    0            4835              13             302 ~   6%
+Total            4954              14             302 ~   6%
+unset verbose
+###############################################
+Testing -adjacency qualifier
+$MUPIP size -heuristic="arsample,samples=110,seed=$SEED" -adjacency=200
+
+Global: a (region AREG)
+
+Number of generated samples = 459
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    3               1               0               0 ~   0%             100
+    2               4               0               1 ~   0%             100
+    1             113               7               7 ~   6%              24
+    0            4731             222             635 ~  13%             N/A
+Total            4849             230             635 ~  13%             N/A
+
+Global: b (region BREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              35              34               0 ~   0%             N/A
+Total              36              34               0 ~   0%             N/A
+
+Global: c (region CREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              13               0               8 ~   0%             100
+    0             521             294              62 ~  12%             N/A
+Total             535             302              62 ~  12%             N/A
+
+Global: c2 (region CREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               9               0               7 ~   0%             100
+    0             419             302              40 ~   9%             N/A
+Total             429             309              40 ~   9%             N/A
+
+Global: c3 (region CREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              15               0               5 ~   0%             100
+    0             685             280              60 ~   9%             N/A
+Total             701             285              60 ~   9%             N/A
+
+Global: d (region DEFAULT)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              35              34               0 ~   0%             N/A
+Total              36              34               0 ~   0%             N/A
+$MUPIP size -heuristic="impsample,samples=110,seed=$SEED" -adjacency=200
+
+Global: a (region AREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    3               1               0               0 ~   0%
+    2               4               1               0 ~   0%
+    1             119               7              14 ~  12%
+    0            5208             277             907 ~  17%
+Total            5332             285             907 ~  17%
+
+Global: b (region BREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               7               0 ~   0%
+    0              35              34               0 ~   0%
+Total              36              34               0 ~   0%
+
+Global: c (region CREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1              13               9               0 ~   0%
+    0             505             286              62 ~  12%
+Total             519             295              62 ~  12%
+
+Global: c2 (region CREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1               9               7               0 ~   0%
+    0             421             306              43 ~  10%
+Total             431             313              43 ~  10%
+
+Global: c3 (region CREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               1               0 ~   0%
+    1              15               5               0 ~   0%
+    0             690             282              57 ~   8%
+Total             706             287              57 ~   8%
+
+Global: d (region DEFAULT)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               5               0 ~   0%
+    0              35              34               0 ~   0%
+Total              36              34               0 ~   0%
+$MUPIP size -heuristic="scan" -adjacency=200
+
+Global: a (region AREG)
+Level          Blocks          Records         Adjacent
+    1             113             4854              238
+
+Global: b (region BREG)
+Level          Blocks          Records         Adjacent
+    1               1               35              273
+
+Global: c (region CREG)
+Level          Blocks          Records         Adjacent
+    1              13              523              568
+
+Global: c2 (region CREG)
+Level          Blocks          Records         Adjacent
+    1               9              382              845
+
+Global: c3 (region CREG)
+Level          Blocks          Records         Adjacent
+    1              15              686             1126
+
+Global: d (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    1               1               35             1160
+$MUPIP size -heuristic="scan" -adjacency=-200
+%GTM-E-CLIERR, Unrecognized value: -200, Decimal number expected
+$MUPIP size -heuristic="scan" -adjacency=foo
+%GTM-E-CLIERR, Unrecognized value: foo, Decimal number expected
+unset verbose
+Done!
+##ALLOW_OUTPUT SPANNING_REGIONS
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+Running MUPIP INTEG to get actual globals sizes
+$MUPIP integ -full mumps.dat
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               3           6.054           NA
+
+Global variable ^a
+Level          Blocks         Records          % Used      Adjacent
+    2               1              34          42.480             1
+    1              34            1359          47.670             0
+    0            1359           16038          56.331             9
+
+Global variable ^c2
+Level          Blocks         Records          % Used      Adjacent
+    2               1               5           7.421             0
+    1               5             231          53.066             0
+    0             231            2712          55.943            13
+
+Global variable ^d
+Level          Blocks         Records          % Used      Adjacent
+    1               1              35          41.699             0
+    0              35             354          48.395            16
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               4           4.199            NA
+Index              42            1664          47.088             1
+Data             1625           19104          56.105            38
+Free               31              NA              NA            NA
+Total            1700           20772              NA            39
+$MUPIP integ -full a.dat
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               3           5.957           NA
+
+Global variable ^a
+Level          Blocks         Records          % Used      Adjacent
+    2               1              69          84.472             1
+    1              69            3205          54.904             0
+    0            3205           37345          55.615            14
+
+Global variable ^c
+Level          Blocks         Records          % Used      Adjacent
+    1               1              62          71.093             0
+    0              62             769          58.889            16
+
+Global variable ^c3
+Level          Blocks         Records          % Used      Adjacent
+    2               1               4           6.542             0
+    1               4             224          66.259             2
+    0             224            2663          56.815             9
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               4           4.150            NA
+Index              76            3564          55.467             3
+Data             3491           40777          55.750            39
+Free               31              NA              NA            NA
+Total            3600           44345              NA            42
+$MUPIP integ -full b.dat
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               1           3.027           NA
+
+Global variable ^b
+Level          Blocks         Records          % Used      Adjacent
+    1               1              35          41.699             1
+    0              35             354          48.395            16
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1              35          41.699             1
+Data               35             354          48.395            16
+Free               62              NA              NA            NA
+Total             100             391              NA            17
+$MUPIP integ -full c.dat
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               4           7.421           NA
+
+Global variable ^a
+Level          Blocks         Records          % Used      Adjacent
+    2               1               7           9.863             1
+    1               7             323          54.715             1
+    0             323            3909          57.718            13
+
+Global variable ^c
+Level          Blocks         Records          % Used      Adjacent
+    2               1              11          14.257             0
+    1              11             456          48.046             1
+    0             456            5273          55.042            17
+
+Global variable ^c2
+Level          Blocks         Records          % Used      Adjacent
+    2               1               4           6.347             0
+    1               4             166          48.315             1
+    0             166            1871          53.813             9
+
+Global variable ^c3
+Level          Blocks         Records          % Used      Adjacent
+    2               1               9          12.207             0
+    1               9             476          60.796             0
+    0             476            5462          54.736            15
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               5           4.882            NA
+Index              35            1452          48.417             4
+Data             1421           16515          55.404            54
+Free               42              NA              NA            NA
+Total            1500           17972              NA            58
+unset verbose
+###############################################
+Testing -heuristic qualifier on A/R sampling method
+$MUPIP size -heuristic="arsample,samples"
+%GTM-E-CLIERR, Option : SAMPLES needs value
+
+
+$MUPIP size -heuristic="ar,sample=110" >> & heur_ar.log
+echo $status
+0
+$MUPIP size -heuristic="arsample,samples=0"
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.SAMPLES
+
+MUPIP SIZE cannot proceed with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="arsample,samples=-3"
+%GTM-E-CLIERR, Unrecognized value: -3, Decimal number expected
+$MUPIP size -heuristic="arsample,samples=34s"
+%GTM-E-CLIERR, Unrecognized value: 34s, Decimal number expected
+$MUPIP size -heuristic="arsample,dummy=110"
+%GTM-E-CLIERR, Unrecognized option : DUMMY
+$MUPIP size -heuristic="arsample,dummy"
+%GTM-E-CLIERR, Unrecognized option : DUMMY
+$MUPIP size -heuristic="arsample,samples=110,seed=$SEED"
+
+Global: a (region AREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              69               0               0 ~   0%             100
+    0            3091              11             318 ~  10%             N/A
+Total            3161              11             318 ~  10%             N/A
+
+Global: a (region CREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               7               0               1 ~   0%             100
+    0             341              13              31 ~   9%             N/A
+Total             349              14              31 ~   9%             N/A
+
+Global: a (region DEFAULT)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              34               0               0 ~   0%             100
+    0            1373               8             173 ~  13%             N/A
+Total            1408               8             173 ~  12%             N/A
+
+Global: b (region BREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              35              16               0 ~   0%             N/A
+Total              36              16               0 ~   0%             N/A
+
+Global: c (region AREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              62              16               0 ~   0%             N/A
+Total              63              16               0 ~   0%             N/A
+
+Global: c (region CREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              11               0               1 ~   0%             100
+    0             486              18              54 ~  11%             N/A
+Total             498              19              54 ~  11%             N/A
+
+Global: c2 (region CREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               4               0               1 ~   0%             100
+    0             159               7              16 ~  10%             N/A
+Total             164               8              16 ~   9%             N/A
+
+Global: c2 (region DEFAULT)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               5               0               0 ~   0%             100
+    0             214              12              23 ~  11%             N/A
+Total             220              12              23 ~  10%             N/A
+
+Global: c3 (region AREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               4               0               2 ~   0%             100
+    0             239               9              18 ~   8%             N/A
+Total             244              11              18 ~   7%             N/A
+
+Global: c3 (region CREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               9               0               0 ~   0%             100
+    0             492              14              34 ~   7%             N/A
+Total             502              14              34 ~   7%             N/A
+
+Global: d (region DEFAULT)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              35              16               0 ~   0%             N/A
+Total              36              16               0 ~   0%             N/A
+$MUPIP size -heuristic="arsample,samples=10000,seed=$SEED"
+
+Global: a (region AREG)
+
+Number of generated samples = 10000
+Number of accepted samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              69               0               0 ~   0%             100
+    0            3168              14              32 ~   1%             N/A
+Total            3238              14              32 ~   1%             N/A
+
+Global: a (region CREG)
+
+Number of generated samples = 10000
+Number of accepted samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               7               0               1 ~   0%             100
+    0             321              13               3 ~   1%             N/A
+Total             329              14               3 ~   1%             N/A
+
+Global: a (region DEFAULT)
+
+Number of generated samples = 10000
+Number of accepted samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              34               0               0 ~   0%             100
+    0            1363               9              18 ~   1%             N/A
+Total            1398               9              18 ~   1%             N/A
+
+Global: b (region BREG)
+
+Number of generated samples = 10000
+Number of accepted samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              35              16               0 ~   0%             N/A
+Total              36              16               0 ~   0%             N/A
+
+Global: c (region AREG)
+
+Number of generated samples = 10000
+Number of accepted samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              62              16               0 ~   0%             N/A
+Total              63              16               0 ~   0%             N/A
+
+Global: c (region CREG)
+
+Number of generated samples = 10000
+Number of accepted samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              11               0               1 ~   0%             100
+    0             454              16               6 ~   1%             N/A
+Total             466              17               6 ~   1%             N/A
+
+Global: c2 (region CREG)
+
+Number of generated samples = 10000
+Number of accepted samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               4               0               1 ~   0%             100
+    0             166               9               2 ~   1%             N/A
+Total             171              10               2 ~   1%             N/A
+
+Global: c2 (region DEFAULT)
+
+Number of generated samples = 10000
+Number of accepted samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               5               0               0 ~   0%             100
+    0             233              13               2 ~   1%             N/A
+Total             239              13               2 ~   1%             N/A
+
+Global: c3 (region AREG)
+
+Number of generated samples = 10000
+Number of accepted samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               4               0               2 ~   0%             100
+    0             221               8               2 ~   1%             N/A
+Total             226              10               2 ~   1%             N/A
+
+Global: c3 (region CREG)
+
+Number of generated samples = 10000
+Number of accepted samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               9               0               0 ~   0%             100
+    0             476              14               4 ~   1%             N/A
+Total             486              14               4 ~   1%             N/A
+
+Global: d (region DEFAULT)
+
+Number of generated samples = 10000
+Number of accepted samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              35              16               0 ~   0%             N/A
+Total              36              16               0 ~   0%             N/A
+$MUPIP size -heuristic="arsample,seed=$SEED"
+
+Global: a (region AREG)
+
+Number of generated samples = 1000
+Number of accepted samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              69               0               0 ~   0%             100
+    0            3201              13             100 ~   3%             N/A
+Total            3271              13             100 ~   3%             N/A
+
+Global: a (region CREG)
+
+Number of generated samples = 1000
+Number of accepted samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               7               0               1 ~   0%             100
+    0             310              13              10 ~   3%             N/A
+Total             318              14              10 ~   3%             N/A
+
+Global: a (region DEFAULT)
+
+Number of generated samples = 1000
+Number of accepted samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              34               0               0 ~   0%             100
+    0            1323               8              56 ~   4%             N/A
+Total            1358               8              56 ~   4%             N/A
+
+Global: b (region BREG)
+
+Number of generated samples = 1000
+Number of accepted samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              35              16               0 ~   0%             N/A
+Total              36              16               0 ~   0%             N/A
+
+Global: c (region AREG)
+
+Number of generated samples = 1000
+Number of accepted samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              62              16               0 ~   0%             N/A
+Total              63              16               0 ~   0%             N/A
+
+Global: c (region CREG)
+
+Number of generated samples = 1000
+Number of accepted samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              11               0               1 ~   0%             100
+    0             435              16              18 ~   4%             N/A
+Total             447              17              18 ~   4%             N/A
+
+Global: c2 (region CREG)
+
+Number of generated samples = 1000
+Number of accepted samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               4               0               1 ~   0%             100
+    0             167               8               5 ~   3%             N/A
+Total             172               9               5 ~   3%             N/A
+
+Global: c2 (region DEFAULT)
+
+Number of generated samples = 1000
+Number of accepted samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               5               0               0 ~   0%             100
+    0             230              12               7 ~   3%             N/A
+Total             236              12               7 ~   3%             N/A
+
+Global: c3 (region AREG)
+
+Number of generated samples = 1000
+Number of accepted samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               4               0               2 ~   0%             100
+    0             224               9               6 ~   3%             N/A
+Total             229              11               6 ~   3%             N/A
+
+Global: c3 (region CREG)
+
+Number of generated samples = 1000
+Number of accepted samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               9               0               0 ~   0%             100
+    0             474              14              12 ~   3%             N/A
+Total             484              14              12 ~   2%             N/A
+
+Global: d (region DEFAULT)
+
+Number of generated samples = 1000
+Number of accepted samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              35              16               0 ~   0%             N/A
+Total              36              16               0 ~   0%             N/A
+unset verbose
+###############################################
+Testing -heuristic qualifier on importance sampling method
+$MUPIP size -heuristic="impsample,samples"
+%GTM-E-CLIERR, Option : SAMPLES needs value
+$MUPIP size -heuristic="impsample,samples=0"
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.SAMPLES
+
+MUPIP SIZE cannot proceed with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="impsample,samples=-3"
+%GTM-E-CLIERR, Unrecognized value: -3, Decimal number expected
+$MUPIP size -heuristic="impsample,samples=34s"
+%GTM-E-CLIERR, Unrecognized value: 34s, Decimal number expected
+$MUPIP size -heuristic="impsample,dummy=110"
+%GTM-E-CLIERR, Unrecognized option : DUMMY
+$MUPIP size -heuristic="impsample,dummy"
+%GTM-E-CLIERR, Unrecognized option : DUMMY
+$MUPIP size -heuristic="impsample,samples=110,seed=$SEED"
+
+Global: a (region AREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              69               0               0 ~   0%
+    0            3409              15             309 ~   9%
+Total            3479              15             309 ~   9%
+
+Global: a (region CREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               7               1               0 ~   0%
+    0             346              13              30 ~   9%
+Total             354              14              30 ~   8%
+
+Global: a (region DEFAULT)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              34               0               0 ~   0%
+    0            1434               8             180 ~  13%
+Total            1469               8             180 ~  12%
+
+Global: b (region BREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+
+Global: c (region AREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              62              16               0 ~   0%
+Total              63              16               0 ~   0%
+
+Global: c (region CREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              11               1               0 ~   0%
+    0             470              18              53 ~  11%
+Total             482              19              53 ~  11%
+
+Global: c2 (region CREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               1               0 ~   0%
+    0             175               9              16 ~   9%
+Total             180              10              16 ~   9%
+
+Global: c2 (region DEFAULT)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               5               0               0 ~   0%
+    0             228              12              24 ~  10%
+Total             234              12              24 ~  10%
+
+Global: c3 (region AREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               2               0 ~   0%
+    0             219               9              20 ~   9%
+Total             224              11              20 ~   9%
+
+Global: c3 (region CREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               9               0               0 ~   0%
+    0             496              15              35 ~   7%
+Total             506              15              35 ~   7%
+
+Global: d (region DEFAULT)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+$MUPIP size -heuristic="impsample,samples=10000,seed=$SEED"
+
+Global: a (region AREG)
+Number of generated samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              69               0               0 ~   0%
+    0            3167              14              32 ~   1%
+Total            3237              14              32 ~   1%
+
+Global: a (region CREG)
+Number of generated samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               7               1               0 ~   0%
+    0             322              13               3 ~   1%
+Total             330              14               3 ~   1%
+
+Global: a (region DEFAULT)
+Number of generated samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              34               0               0 ~   0%
+    0            1351               9              18 ~   1%
+Total            1386               9              18 ~   1%
+
+Global: b (region BREG)
+Number of generated samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+
+Global: c (region AREG)
+Number of generated samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              62              16               0 ~   0%
+Total              63              16               0 ~   0%
+
+Global: c (region CREG)
+Number of generated samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              11               1               0 ~   0%
+    0             458              17               6 ~   1%
+Total             470              18               6 ~   1%
+
+Global: c2 (region CREG)
+Number of generated samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               1               0 ~   0%
+    0             166               9               2 ~   1%
+Total             171              10               2 ~   1%
+
+Global: c2 (region DEFAULT)
+Number of generated samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               5               0               0 ~   0%
+    0             232              13               2 ~   1%
+Total             238              13               2 ~   1%
+
+Global: c3 (region AREG)
+Number of generated samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               2               0 ~   0%
+    0             223               8               2 ~   1%
+Total             228              10               2 ~   1%
+
+Global: c3 (region CREG)
+Number of generated samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               9               0               0 ~   0%
+    0             476              14               4 ~   1%
+Total             486              14               4 ~   1%
+
+Global: d (region DEFAULT)
+Number of generated samples = 10000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+$MUPIP size -heuristic="impsample,seed=$SEED"
+
+Global: a (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              69               0               0 ~   0%
+    0            3181              13              99 ~   3%
+Total            3251              13              99 ~   3%
+
+Global: a (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               7               1               0 ~   0%
+    0             316              13              10 ~   3%
+Total             324              14              10 ~   3%
+
+Global: a (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              34               0               0 ~   0%
+    0            1325               8              57 ~   4%
+Total            1360               8              57 ~   4%
+
+Global: b (region BREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+
+Global: c (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              62              16               0 ~   0%
+Total              63              16               0 ~   0%
+
+Global: c (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              11               1               0 ~   0%
+    0             454              16              19 ~   4%
+Total             466              17              19 ~   4%
+
+Global: c2 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               1               0 ~   0%
+    0             168               9               5 ~   3%
+Total             173              10               5 ~   3%
+
+Global: c2 (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               5               0               0 ~   0%
+    0             229              12               7 ~   3%
+Total             235              12               7 ~   3%
+
+Global: c3 (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               2               0 ~   0%
+    0             223               9               6 ~   3%
+Total             228              11               6 ~   3%
+
+Global: c3 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               9               0               0 ~   0%
+    0             474              14              12 ~   2%
+Total             484              14              12 ~   2%
+
+Global: d (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+unset verbose
+###############################################
+Testing -heuristic qualifier on Scan method
+$MUPIP size -heuristic="scan,level"
+%GTM-E-CLIERR, Option : LEVEL needs value
+$MUPIP size -heuristic="scan,level=4"
+
+Global: a (region AREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: a (region CREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: a (region DEFAULT)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: b (region BREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c (region AREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c (region CREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c2 (region CREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c2 (region DEFAULT)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c3 (region AREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c3 (region CREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: d (region DEFAULT)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$MUPIP size -heuristic="scan,level=8"
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+MUPIP SIZE cannot proceed with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="scan,level=-19"
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+MUPIP SIZE cannot proceed with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="scan,level=-1s9"
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+MUPIP SIZE cannot proceed with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="scan,level=-9"
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+MUPIP SIZE cannot proceed with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="scan"
+
+Global: a (region AREG)
+Level          Blocks          Records         Adjacent
+    1              69             3205               14
+
+Global: a (region CREG)
+Level          Blocks          Records         Adjacent
+    1               7              323               27
+
+Global: a (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    1              34             1359               36
+
+Global: b (region BREG)
+Level          Blocks          Records         Adjacent
+    1               1               35               52
+
+Global: c (region AREG)
+Level          Blocks          Records         Adjacent
+    1               1               62               68
+
+Global: c (region CREG)
+Level          Blocks          Records         Adjacent
+    1              11              456               85
+
+Global: c2 (region CREG)
+Level          Blocks          Records         Adjacent
+    1               4              166               94
+
+Global: c2 (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    1               5              231              107
+
+Global: c3 (region AREG)
+Level          Blocks          Records         Adjacent
+    1               4              224              116
+
+Global: c3 (region CREG)
+Level          Blocks          Records         Adjacent
+    1               9              476              131
+
+Global: d (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    1               1               35              147
+$MUPIP size -heuristic="scan,level=1"
+
+Global: a (region AREG)
+Level          Blocks          Records         Adjacent
+    1              69             3205               14
+
+Global: a (region CREG)
+Level          Blocks          Records         Adjacent
+    1               7              323               27
+
+Global: a (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    1              34             1359               36
+
+Global: b (region BREG)
+Level          Blocks          Records         Adjacent
+    1               1               35               52
+
+Global: c (region AREG)
+Level          Blocks          Records         Adjacent
+    1               1               62               68
+
+Global: c (region CREG)
+Level          Blocks          Records         Adjacent
+    1              11              456               85
+
+Global: c2 (region CREG)
+Level          Blocks          Records         Adjacent
+    1               4              166               94
+
+Global: c2 (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    1               5              231              107
+
+Global: c3 (region AREG)
+Level          Blocks          Records         Adjacent
+    1               4              224              116
+
+Global: c3 (region CREG)
+Level          Blocks          Records         Adjacent
+    1               9              476              131
+
+Global: d (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    1               1               35              147
+$MUPIP size -heuristic="scan,level=2"
+
+Global: a (region AREG)
+Level          Blocks          Records         Adjacent
+    2               1               69                0
+
+Global: a (region CREG)
+Level          Blocks          Records         Adjacent
+    2               1                7                1
+
+Global: a (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    2               1               34                1
+
+Global: b (region BREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c (region AREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c (region CREG)
+Level          Blocks          Records         Adjacent
+    2               1               11                2
+
+Global: c2 (region CREG)
+Level          Blocks          Records         Adjacent
+    2               1                4                3
+
+Global: c2 (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    2               1                5                3
+
+Global: c3 (region AREG)
+Level          Blocks          Records         Adjacent
+    2               1                4                5
+
+Global: c3 (region CREG)
+Level          Blocks          Records         Adjacent
+    2               1                9                5
+
+Global: d (region DEFAULT)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$MUPIP size -heuristic="scan,level=0"
+
+Global: a (region AREG)
+Level          Blocks          Records         Adjacent
+    0            3205            37345                0
+
+Global: a (region CREG)
+Level          Blocks          Records         Adjacent
+    0             323             3909                0
+
+Global: a (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    0            1359            16038                0
+
+Global: b (region BREG)
+Level          Blocks          Records         Adjacent
+    0              35              354                0
+
+Global: c (region AREG)
+Level          Blocks          Records         Adjacent
+    0              62              769                0
+
+Global: c (region CREG)
+Level          Blocks          Records         Adjacent
+    0             456             5273                0
+
+Global: c2 (region CREG)
+Level          Blocks          Records         Adjacent
+    0             166             1871                0
+
+Global: c2 (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    0             231             2712                0
+
+Global: c3 (region AREG)
+Level          Blocks          Records         Adjacent
+    0             224             2663                0
+
+Global: c3 (region CREG)
+Level          Blocks          Records         Adjacent
+    0             476             5462                0
+
+Global: d (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    0              35              354                0
+$MUPIP size -heuristic="scan,level=-1"
+
+Global: a (region AREG)
+Level          Blocks          Records         Adjacent
+    1              69             3205               14
+
+Global: a (region CREG)
+Level          Blocks          Records         Adjacent
+    1               7              323               27
+
+Global: a (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    1              34             1359               36
+
+Global: b (region BREG)
+Level          Blocks          Records         Adjacent
+    0              35              354               36
+
+Global: c (region AREG)
+Level          Blocks          Records         Adjacent
+    0              62              769               36
+
+Global: c (region CREG)
+Level          Blocks          Records         Adjacent
+    1              11              456               53
+
+Global: c2 (region CREG)
+Level          Blocks          Records         Adjacent
+    1               4              166               62
+
+Global: c2 (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    1               5              231               75
+
+Global: c3 (region AREG)
+Level          Blocks          Records         Adjacent
+    1               4              224               84
+
+Global: c3 (region CREG)
+Level          Blocks          Records         Adjacent
+    1               9              476               99
+
+Global: d (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    0              35              354               99
+$MUPIP size -heuristic="scan,level=-2"
+
+Global: a (region AREG)
+Level          Blocks          Records         Adjacent
+    0            3205            37345                0
+
+Global: a (region CREG)
+Level          Blocks          Records         Adjacent
+    0             323             3909                0
+
+Global: a (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    0            1359            16038                0
+
+Global: b (region BREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c (region AREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c (region CREG)
+Level          Blocks          Records         Adjacent
+    0             456             5273                0
+
+Global: c2 (region CREG)
+Level          Blocks          Records         Adjacent
+    0             166             1871                0
+
+Global: c2 (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    0             231             2712                0
+
+Global: c3 (region AREG)
+Level          Blocks          Records         Adjacent
+    0             224             2663                0
+
+Global: c3 (region CREG)
+Level          Blocks          Records         Adjacent
+    0             476             5462                0
+
+Global: d (region DEFAULT)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$MUPIP size -heuristic="scan,level=-3"
+
+Global: a (region AREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: a (region CREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: a (region DEFAULT)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: b (region BREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c (region AREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c (region CREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c2 (region CREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c2 (region DEFAULT)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c3 (region AREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: c3 (region CREG)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+
+Global: d (region DEFAULT)
+%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+unset verbose
+###############################################
+Testing -heuristic qualifier disallowed combinations
+$MUPIP size -heuristic="scan,arsample"
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN
+$MUPIP size -heuristic="scan,impsample"
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN
+$MUPIP size -heuristic="impsample,level=1"
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN LEVEL
+$MUPIP size -heuristic="arsample,level=1"
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE SCAN LEVEL
+$MUPIP size -heuristic="scan,samples=101"
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SAMPLES
+$MUPIP size -heuristic="scan,seed=5"
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SEED
+unset verbose
+###############################################
+Testing -heuristic default behavior
+$MUPIP size > & default_behavior.log
+unset verbose
+Global: a (region AREG)
+Global: a (region CREG)
+Global: a (region DEFAULT)
+Global: b (region BREG)
+Global: c (region AREG)
+Global: c (region CREG)
+Global: c2 (region CREG)
+Global: c2 (region DEFAULT)
+Global: c3 (region AREG)
+Global: c3 (region CREG)
+Global: c2 (region CREG)
+Global: c2 (region DEFAULT)
+Global: c3 (region AREG)
+Global: c3 (region CREG)
+Global: d (region DEFAULT)
+###############################################
+Testing -select qualifier
+$MUPIP size -heuristic="impsample,samples=1000" -select="nonexistent"
+%GTM-W-NOSELECT, None of the selected variables exist -- halting
+
+MUPIP SIZE cannot proceed with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -select="a"
+
+Global: a (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              69               0               0 ~   0%
+    0            3181              13              99 ~   3%
+Total            3251              13              99 ~   3%
+
+Global: a (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               7               1               0 ~   0%
+    0             316              13              10 ~   3%
+Total             324              14              10 ~   3%
+
+Global: a (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              34               0               0 ~   0%
+    0            1325               8              57 ~   4%
+Total            1360               8              57 ~   4%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -select="b"
+
+Global: b (region BREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -select="a,b"
+
+Global: a (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              69               0               0 ~   0%
+    0            3181              13              99 ~   3%
+Total            3251              13              99 ~   3%
+
+Global: a (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               7               1               0 ~   0%
+    0             316              13              10 ~   3%
+Total             324              14              10 ~   3%
+
+Global: a (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              34               0               0 ~   0%
+    0            1325               8              57 ~   4%
+Total            1360               8              57 ~   4%
+
+Global: b (region BREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -select="c1:c3"
+
+Global: c2 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               1               0 ~   0%
+    0             168               9               5 ~   3%
+Total             173              10               5 ~   3%
+
+Global: c2 (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               5               0               0 ~   0%
+    0             229              12               7 ~   3%
+Total             235              12               7 ~   3%
+
+Global: c3 (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               2               0 ~   0%
+    0             223               9               6 ~   3%
+Total             228              11               6 ~   3%
+
+Global: c3 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               9               0               0 ~   0%
+    0             474              14              12 ~   2%
+Total             484              14              12 ~   2%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -select="c*"
+
+Global: c (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              62              16               0 ~   0%
+Total              63              16               0 ~   0%
+
+Global: c (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              11               1               0 ~   0%
+    0             454              16              19 ~   4%
+Total             466              17              19 ~   4%
+
+Global: c2 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               1               0 ~   0%
+    0             168               9               5 ~   3%
+Total             173              10               5 ~   3%
+
+Global: c2 (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               5               0               0 ~   0%
+    0             229              12               7 ~   3%
+Total             235              12               7 ~   3%
+
+Global: c3 (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               2               0 ~   0%
+    0             223               9               6 ~   3%
+Total             228              11               6 ~   3%
+
+Global: c3 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               9               0               0 ~   0%
+    0             474              14              12 ~   2%
+Total             484              14              12 ~   2%
+unset verbose
+###############################################
+Testing -region qualifier
+$MUPIP size -heuristic="impsample,samples=1000" -select="b" -region="nonexistent"
+%GTM-E-NOREGION, REGION not found: NONEXISTENT
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="impsample,samples=1000" -select="b" -region
+%GTM-E-CLIERR, Option : REGION needs value
+$MUPIP size -heuristic="impsample,samples=1000" -select="a" -region="BREG"
+%GTM-W-NOSELECT, None of the selected variables exist -- halting
+
+MUPIP SIZE cannot proceed with above errors
+
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -region="AREG"
+
+Global: a (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              69               0               0 ~   0%
+    0            3181              13              99 ~   3%
+Total            3251              13              99 ~   3%
+
+Global: c (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              62              16               0 ~   0%
+Total              63              16               0 ~   0%
+
+Global: c3 (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               2               0 ~   0%
+    0             223               9               6 ~   3%
+Total             228              11               6 ~   3%
+
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -region="Breg,CREG"
+
+Global: a (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               7               1               0 ~   0%
+    0             316              13              10 ~   3%
+Total             324              14              10 ~   3%
+
+Global: b (region BREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               1               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+
+Global: c (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              11               1               0 ~   0%
+    0             454              16              19 ~   4%
+Total             466              17              19 ~   4%
+
+Global: c2 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               1               0 ~   0%
+    0             168               9               5 ~   3%
+Total             173              10               5 ~   3%
+
+Global: c3 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               9               0               0 ~   0%
+    0             474              14              12 ~   2%
+Total             484              14              12 ~   2%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -region="*REG"
+
+Global: a (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              69               0               0 ~   0%
+    0            3181              13              99 ~   3%
+Total            3251              13              99 ~   3%
+
+Global: a (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               7               1               0 ~   0%
+    0             316              13              10 ~   3%
+Total             324              14              10 ~   3%
+
+Global: b (region BREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               1               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+
+Global: c (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               1               0 ~   0%
+    0              62              16               0 ~   0%
+Total              63              16               0 ~   0%
+
+Global: c (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              11               1               0 ~   0%
+    0             454              16              19 ~   4%
+Total             466              17              19 ~   4%
+
+Global: c2 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               1               0 ~   0%
+    0             168               9               5 ~   3%
+Total             173              10               5 ~   3%
+
+Global: c3 (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               2               0 ~   0%
+    0             223               9               6 ~   3%
+Total             228              11               6 ~   3%
+
+Global: c3 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               9               0               0 ~   0%
+    0             474              14              12 ~   2%
+Total             484              14              12 ~   2%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -region="*"
+
+Global: a (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              69               0               0 ~   0%
+    0            3181              13              99 ~   3%
+Total            3251              13              99 ~   3%
+
+Global: a (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               7               1               0 ~   0%
+    0             316              13              10 ~   3%
+Total             324              14              10 ~   3%
+
+Global: a (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              34               0               0 ~   0%
+    0            1325               8              57 ~   4%
+Total            1360               8              57 ~   4%
+
+Global: b (region BREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+
+Global: c (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              62              16               0 ~   0%
+Total              63              16               0 ~   0%
+
+Global: c (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              11               1               0 ~   0%
+    0             454              16              19 ~   4%
+Total             466              17              19 ~   4%
+
+Global: c2 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               1               0 ~   0%
+    0             168               9               5 ~   3%
+Total             173              10               5 ~   3%
+
+Global: c2 (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               5               0               0 ~   0%
+    0             229              12               7 ~   3%
+Total             235              12               7 ~   3%
+
+Global: c3 (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               2               0 ~   0%
+    0             223               9               6 ~   3%
+Total             228              11               6 ~   3%
+
+Global: c3 (region CREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               9               0               0 ~   0%
+    0             474              14              12 ~   2%
+Total             484              14              12 ~   2%
+
+Global: d (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -region="DEFAULT"
+
+Global: a (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              34               0               0 ~   0%
+    0            1325               8              57 ~   4%
+Total            1360               8              57 ~   4%
+
+Global: c2 (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               5               0               0 ~   0%
+    0             229              12               7 ~   3%
+Total             235              12               7 ~   3%
+
+Global: d (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -select="d" -region="DEF*"
+
+Global: d (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              35              16               0 ~   0%
+Total              36              16               0 ~   0%
+$MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -select="a" -region="AREG"
+
+Global: a (region AREG)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              69               0               0 ~   0%
+    0            3181              13              99 ~   3%
+Total            3251              13              99 ~   3%
+unset verbose
+###############################################
+Testing -adjacency qualifier
+$MUPIP size -heuristic="arsample,samples=110,seed=$SEED" -adjacency=200
+
+Global: a (region AREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              69               0               8 ~   0%             100
+    0            3091             285             318 ~  10%             N/A
+Total            3161             293             318 ~  10%             N/A
+
+Global: a (region CREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               7               0               6 ~   0%             100
+    0             341             277              31 ~   9%             N/A
+Total             349             283              31 ~   9%             N/A
+
+Global: a (region DEFAULT)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              34               0              10 ~   0%             100
+    0            1373             312             173 ~  13%             N/A
+Total            1408             322             173 ~  12%             N/A
+
+Global: b (region BREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              35              34               0 ~   0%             N/A
+Total              36              34               0 ~   0%             N/A
+
+Global: c (region AREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              62              61               0 ~   0%             N/A
+Total              63              61               0 ~   0%             N/A
+
+Global: c (region CREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1              11               0               6 ~   0%             100
+    0             486             306              54 ~  11%             N/A
+Total             498             312              54 ~  11%             N/A
+
+Global: c2 (region CREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               4               0               3 ~   0%             100
+    0             159             159              16 ~  10%             N/A
+Total             164             162              16 ~   9%             N/A
+
+Global: c2 (region DEFAULT)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               5               0               4 ~   0%             100
+    0             214             207              23 ~  11%             N/A
+Total             220             211              23 ~  10%             N/A
+
+Global: c3 (region AREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               4               0               3 ~   0%             100
+    0             239             233              18 ~   8%             N/A
+Total             244             236              18 ~   7%             N/A
+
+Global: c3 (region CREG)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    2               1               0               0 ~   0%             100
+    1               9               0               5 ~   0%             100
+    0             492             301              34 ~   7%             N/A
+Total             502             306              34 ~   7%             N/A
+
+Global: d (region DEFAULT)
+
+Number of generated samples = 110
+Number of accepted samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              35              34               0 ~   0%             N/A
+Total              36              34               0 ~   0%             N/A
+$MUPIP size -heuristic="impsample,samples=110,seed=$SEED" -adjacency=200
+
+Global: a (region AREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              69               8               0 ~   0%
+    0            3409             320             309 ~   9%
+Total            3479             328             309 ~   9%
+
+Global: a (region CREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               7               6               0 ~   0%
+    0             346             280              30 ~   9%
+Total             354             286              30 ~   8%
+
+Global: a (region DEFAULT)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              34              10               0 ~   0%
+    0            1434             326             180 ~  13%
+Total            1469             336             180 ~  12%
+
+Global: b (region BREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1              10               0 ~   0%
+    0              35              34               0 ~   0%
+Total              36              34               0 ~   0%
+
+Global: c (region AREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1              10               0 ~   0%
+    0              62              61               0 ~   0%
+Total              63              61               0 ~   0%
+
+Global: c (region CREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1              11               6               0 ~   0%
+    0             470             296              53 ~  11%
+Total             482             302              53 ~  11%
+
+Global: c2 (region CREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               3               0 ~   0%
+    0             175             174              16 ~   9%
+Total             180             177              16 ~   9%
+
+Global: c2 (region DEFAULT)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               5               4               0 ~   0%
+    0             228             221              24 ~  10%
+Total             234             225              24 ~  10%
+
+Global: c3 (region AREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               4               3               0 ~   0%
+    0             219             214              20 ~   9%
+Total             224             217              20 ~   9%
+
+Global: c3 (region CREG)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    2               1               0               0 ~   0%
+    1               9               5               0 ~   0%
+    0             496             305              35 ~   7%
+Total             506             310              35 ~   7%
+
+Global: d (region DEFAULT)
+Number of generated samples = 110
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               5               0 ~   0%
+    0              35              34               0 ~   0%
+Total              36              34               0 ~   0%
+$MUPIP size -heuristic="scan" -adjacency=200
+
+Global: a (region AREG)
+Level          Blocks          Records         Adjacent
+    1              69             3205              298
+
+Global: a (region CREG)
+Level          Blocks          Records         Adjacent
+    1               7              323              561
+
+Global: a (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    1              34             1359              866
+
+Global: b (region BREG)
+Level          Blocks          Records         Adjacent
+    1               1               35              901
+
+Global: c (region AREG)
+Level          Blocks          Records         Adjacent
+    1               1               62              962
+
+Global: c (region CREG)
+Level          Blocks          Records         Adjacent
+    1              11              456             1248
+
+Global: c2 (region CREG)
+Level          Blocks          Records         Adjacent
+    1               4              166             1413
+
+Global: c2 (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    1               5              231             1637
+
+Global: c3 (region AREG)
+Level          Blocks          Records         Adjacent
+    1               4              224             1856
+
+Global: c3 (region CREG)
+Level          Blocks          Records         Adjacent
+    1               9              476             2146
+
+Global: d (region DEFAULT)
+Level          Blocks          Records         Adjacent
+    1               1               35             2180
+$MUPIP size -heuristic="scan" -adjacency=-200
+%GTM-E-CLIERR, Unrecognized value: -200, Decimal number expected
+$MUPIP size -heuristic="scan" -adjacency=foo
+%GTM-E-CLIERR, Unrecognized value: foo, Decimal number expected
+unset verbose
+Done!
+##ALLOW_OUTPUT NONSPANNING_REGIONS

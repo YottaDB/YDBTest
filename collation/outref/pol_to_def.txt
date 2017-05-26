@@ -1,0 +1,79 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+
+GTM>
+
+GTM>
+set PASS
+
+GTM>
+set PASS
+
+GTM>
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+Checking ZWR output of globals for polish Collation
+Globals collation check PASSED
+Now verify data in application level
+
+GTM>
+ver PASS
+
+GTM>
+ver PASS
+
+GTM>
+##SOURCE_PATH##/mupip extract extr.bin -format=bin
+##TEST_AWK%GTM-I-RECORDSTAT, .AGLOBALVAR1:	  Key cnt: 15622  max subsc len: 57  max rec len: 15  max node len: 7[567]
+##TEST_AWK%GTM-I-RECORDSTAT, .BGLOBALVAR1:	  Key cnt: 15622  max subsc len: 57  max rec len: 15  max node len: 7[567]
+##TEST_AWK%GTM-I-RECORDSTAT, .CGLOBALVAR1:	  Key cnt: 502  max subsc len: 18  max rec len: 14  max node len: 3.
+##TEST_AWK%GTM-I-RECORDSTAT, .morefill:	  Key cnt: 20  max subsc len: 38  max rec len: 5  max node len: 4.
+%GTM-I-RECORDSTAT, ^prefix:	  Key cnt: 1  max subsc len: 8  max rec len: 1  max node len: 13
+##TEST_AWK%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 31767  max subsc len: 57  max rec len: 15  max node len: 7[567]
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SOURCE_PATH##/mupip load -format=bin extr.bin
+LOAD TOTAL		Key Cnt: 31767  Max Subsc Len: 57  Max Data Len: 15
+Checking ZWR output of globals for default Collation
+Globals collation check PASSED
+Now verify data in application level
+
+GTM>
+ver PASS
+
+GTM>
+ver PASS
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

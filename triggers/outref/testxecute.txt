@@ -1,0 +1,383 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+###################################################################
+###################################################################
+Matching simple triggers
+The trigger nakedkill# is doing K
+	$Reference:^tdata	$Test:1
+	$ZTDAta :1	$ZTOLdval:1|2|3|4|5|6|7|8|9|0
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^nakedkill#	simplematch+11^testxecute	testxecute+2^testxecute
+Should fireSET
+The trigger myS# is doing S
+	$Reference:^a	$Test:1
+	$ZTDAta :0	$ZTVAlue:99|red|balloons
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^myS#	simplematch+15^testxecute	testxecute+2^testxecute
+The trigger myS# is doing S
+	$Reference:^a	$Test:1
+	$ZTDAta :1	$ZTOLdval:99|red|balloons	$ZTVAlue:100
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^myS#	simplematch+20^testxecute	testxecute+2^testxecute
+The trigger myS# is doing S
+	$Reference:^a	$Test:1
+	$ZTDAta :1	$ZTOLdval:100	$ZTVAlue:99|blue|balloons
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^myS#	simplematch+21^testxecute	testxecute+2^testxecute
+I'm merging!
+I'm merging!
+The trigger incrementtest# is doing S
+	$Reference:^c	$Test:1
+	$ZTDAta :0	$ZTVAlue:1
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^incrementtest#	simplematch+23^testxecute	testxecute+2^testxecute
+The trigger incrementtest# is doing S
+	$Reference:^c	$Test:1
+	$ZTDAta :1	$ZTOLdval:1	$ZTVAlue:2
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^incrementtest#	simplematch+24^testxecute	testxecute+2^testxecute
+Should fire twiceZKILL
+The trigger myZK# is doing ZK
+	$Reference:^b("subscript")	$Test:1
+	$ZTDAta :11	$ZTOLdval:I am a subscript
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^myZK#	simplematch+32^testxecute	testxecute+2^testxecute
+The trigger myZW# is doing ZK
+	$Reference:^b("subscript",2)	$Test:1
+	$ZTDAta :1	$ZTOLdval:I am a subscript, node 2
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^myZW#	simplematch+33^testxecute	testxecute+2^testxecute
+Should fire twiceZWITHDRAW
+The trigger myZK# is doing ZK
+	$Reference:^b("subscript")	$Test:1
+	$ZTDAta :11	$ZTOLdval:I am a subscript
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^myZK#	simplematch+37^testxecute	testxecute+2^testxecute
+The trigger myZW# is doing ZK
+	$Reference:^b("subscript",2)	$Test:1
+	$ZTDAta :1	$ZTOLdval:I am a subscript, node 2
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^myZW#	simplematch+37^testxecute	testxecute+2^testxecute
+Should fireKILL
+The trigger myK# is doing K
+	$Reference:^b	$Test:1
+	$ZTDAta :11	$ZTOLdval:I am a global
+	$ZTLEvel:1	$ZLevel:5	$TLevel:1
+	twork+7^twork	+1^myK#	simplematch+39^testxecute	testxecute+2^testxecute
+I'm melting
+###################################################################
+###################################################################
+Subscript matching
+singles
+##TEST_AWKThe trigger singles... is doing S
+	$Reference:^singles(100)	$Test:1
+	$ZTDAta :0	$ZTVAlue:one two three four
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger singles... is doing S
+	$Reference:^singles("ape")	$Test:1
+	$ZTDAta :0	$ZTVAlue:one two three four
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger singles... is doing S
+	$Reference:^singles("FAST")	$Test:1
+	$ZTDAta :0	$ZTVAlue:a b c d
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger singles... is doing S
+	$Reference:^singles("m")	$Test:1
+	$ZTDAta :0	$ZTVAlue:MUMPS!
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger singles... is doing S
+	$Reference:^singles("martin")	$Test:1
+	$ZTDAta :0	$ZTVAlue:MUMPS!
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger singles... is doing S
+	$Reference:^singles("ursulla")	$Test:1
+	$ZTDAta :0	$ZTVAlue:GT.M!
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+^fired=17
+^fired("singles#2#")=1
+^fired("singles#3#")=4
+^fired("singles#4#")=5
+^fired("singles#5#")=4
+^fired("singles#6#")=1
+^fired("singles#7#")=2
+ranges
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(1)	$Test:1
+	$ZTDAta :0	$ZTVAlue:2
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(2)	$Test:1
+	$ZTDAta :0	$ZTVAlue:4
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(3)	$Test:1
+	$ZTDAta :0	$ZTVAlue:6
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(4)	$Test:1
+	$ZTDAta :0	$ZTVAlue:8
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(5)	$Test:1
+	$ZTDAta :0	$ZTVAlue:10
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(6)	$Test:1
+	$ZTDAta :0	$ZTVAlue:12
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(7)	$Test:1
+	$ZTDAta :0	$ZTVAlue:14
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(8)	$Test:1
+	$ZTDAta :0	$ZTVAlue:16
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(9)	$Test:1
+	$ZTDAta :0	$ZTVAlue:18
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(10)	$Test:1
+	$ZTDAta :0	$ZTVAlue:20
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(11)	$Test:1
+	$ZTDAta :0	$ZTVAlue:22
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(12)	$Test:1
+	$ZTDAta :0	$ZTVAlue:24
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(13)	$Test:1
+	$ZTDAta :0	$ZTVAlue:26
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(14)	$Test:1
+	$ZTDAta :0	$ZTVAlue:28
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(15)	$Test:1
+	$ZTDAta :0	$ZTVAlue:30
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(16)	$Test:1
+	$ZTDAta :0	$ZTVAlue:32
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(17)	$Test:1
+	$ZTDAta :0	$ZTVAlue:34
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(18)	$Test:1
+	$ZTDAta :0	$ZTVAlue:36
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing S
+	$Reference:^range(19)	$Test:1
+	$ZTDAta :0	$ZTVAlue:38
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+Will fire K even+prime trigger
+##TEST_AWKThe trigger [a-z]*# is doing K
+	$Reference:^range(4)	$Test:1
+	$ZTDAta :1	$ZTOLdval:8
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing K
+	$Reference:^range(8)	$Test:1
+	$ZTDAta :1	$ZTOLdval:16
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing K
+	$Reference:^range(12)	$Test:1
+	$ZTDAta :1	$ZTOLdval:24
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing K
+	$Reference:^range(16)	$Test:1
+	$ZTDAta :1	$ZTOLdval:32
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+Will fire ZK twentybelow trigger
+##TEST_AWKThe trigger [a-z]*# is doing ZK
+	$Reference:^range(2)	$Test:1
+	$ZTDAta :1	$ZTOLdval:4
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing ZK
+	$Reference:^range(6)	$Test:1
+	$ZTDAta :1	$ZTOLdval:12
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing ZK
+	$Reference:^range(10)	$Test:1
+	$ZTDAta :1	$ZTOLdval:20
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing ZK
+	$Reference:^range(14)	$Test:1
+	$ZTDAta :1	$ZTOLdval:28
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+##TEST_AWKThe trigger [a-z]*# is doing ZK
+	$Reference:^range(18)	$Test:1
+	$ZTDAta :1	$ZTOLdval:36
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger harer# is doing S
+	$Reference:^range(21)	$Test:1
+	$ZTDAta :0	$ZTVAlue:all above twenty
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger harer# is doing S
+	$Reference:^range(50)	$Test:1
+	$ZTDAta :0	$ZTVAlue:all above twenty
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger harer# is doing S
+	$Reference:^range(1001)	$Test:1
+	$ZTDAta :0	$ZTVAlue:all above twenty
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger killat# is doing K
+	$Reference:^range	$Test:1
+	$ZTDAta :10
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+^fired=60
+^fired("even#")=13
+^fired("harer#")=3
+^fired("killat#")=1
+^fired("prime#")=9
+^fired("twentybelow#")=34
+patterns
+The trigger A#1# is doing S
+	$Reference:^A("J","JackO","ThisIsAnAnimal")	$Test:1
+	$ZTDAta :0	$ZTVAlue:test first pattern match
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger A#1# is doing S
+	$Reference:^A("t","it","ornithopter")	$Test:1
+	$ZTDAta :0	$ZTVAlue:test first pattern match again
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger A#1# is doing ZK
+	$Reference:^A("t","it","ornithopter")	$Test:1
+	$ZTDAta :1	$ZTOLdval:test first pattern match again
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger A#1# is doing ZK
+	$Reference:^A("J","JackO","ThisIsAnAnimal")	$Test:1
+	$ZTDAta :1	$ZTOLdval:test first pattern match
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger C#1# is doing S
+	$Reference:^C($C(7))	$Test:1
+	$ZTDAta :0	$ZTVAlue:You can ring my bell
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger C#1# is doing K
+	$Reference:^C($C(7))	$Test:1
+	$ZTDAta :1	$ZTOLdval:You can ring my bell
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger E#1# is doing S
+	$Reference:^E("~",$C(1,2,3,4,5,6,7)_" `")	$Test:1
+	$ZTDAta :0	$ZTVAlue:I accept any inputs
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger U#1# is doing S
+	$Reference:^U("Z","UPPERCASE")	$Test:1
+	$ZTDAta :0	$ZTVAlue:should match the UPPERCASE trigger
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger N#1# is doing S
+	$Reference:^N(1)	$Test:1
+	$ZTDAta :0	$ZTVAlue:testing number matching, should fire for only ^N(1)
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger P#1# is doing S
+	$Reference:^P(",")	$Test:1
+	$ZTDAta :0	$ZTVAlue:comma trigger
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger P#1# is doing K
+	$Reference:^P(",")	$Test:1
+	$ZTDAta :11	$ZTOLdval:comma trigger
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+^fired=11
+^fired("A#1#")=4
+^fired("C#1#")=2
+^fired("E#1#")=1
+^fired("N#1#")=1
+^fired("P#1#")=2
+^fired("U#1#")=1
+compound
+The trigger a#1# is doing S
+	$Reference:^a("987-65-4321","Herb",1)	$Test:1
+	$ZTDAta :0	$ZTVAlue:Herb's first child
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger a#2# is doing S
+	$Reference:^a("987-65-4320","zorg",1)	$Test:1
+	$ZTDAta :0	$ZTVAlue:zorg's last child
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger a#2# is doing S
+	$Reference:^a("987-42-4320","fRODO",1)	$Test:1
+	$ZTDAta :0	$ZTVAlue:Baggins
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger b#1# is doing S
+	$Reference:^b("333-22-4444","Mumpsman",1)	$Test:1
+	$ZTDAta :0	$ZTVAlue:some data does fire
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+The trigger b#1# is doing S
+	$Reference:^b("22-7777777","MUMPSMan",1)	$Test:1
+	$ZTDAta :0	$ZTVAlue:some data does fire
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+^fired=5
+^fired("a#1#")=1
+^fired("a#2#")=2
+^fired("b#1#")=2
+###################################################################
+4. delim matching
+PASS
+###################################################################
+Local variable passing
+establish lvn1.31 in the current process space to prove stacking of LVNs
+Test trigger LVNs
+PASS:^sublvn("pat","D9I08-002695")
+        pat	D9I08-002695
+PASS:^sublvn("pat","nonalpanumeric",",./)")
+        pat	nonalpanumeric	,./)
+PASS:^sublvn("char","=")
+        char	=
+PASS:^sublvn("char","=")
+        char	=
+PASS:^sublvn("char"," ")
+        char	 
+PASS:^sublvn("char"," ")
+        char	 
+PASS:^sublvn("char","#")
+        char	#
+PASS:^sublvn("char","~")
+        char	~
+PASS:^sublvn("int",11,11,55)
+        int	11	11	55
+PASS:^sublvn("int",1,2,100)
+        int	1	2	100
+PASS:^sublvn("alpha","Alphard","beetleguesse","l")
+        alpha	Alphard	beetleguesse	l
+PASS:^sublvn("alpha","babcock","rhyme","K")
+        alpha	babcock	rhyme	K
+PASS:^sublvn(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)
+        1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16	17	18	19	20	21	22	23	24	25	26	27	28	29	30	31
+^sublvn("testing thirtyonecharacterlongvariable1")
+testing thirtyonecharacterlongvariable1
+###################################################################
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

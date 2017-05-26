@@ -1,0 +1,57 @@
+V4NAME23 ;IW-KO-YS-TS,V4NAME,MVTS V9.10;15/6/96;PART-94
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+ W !!,"42---V4NAME23:  $NAME function  -11-"
+ ;
+ W !!,"gvn",!
+ W !,"intexpr=0"
+ ;
+1 S ^ABSN="40311",^ITEM="IV-311  unsubscripted"
+ S ^NEXT="2^V4NAME23,V4NAME24^V4NAME,V4QLEN^VV4" D ^V4PRESET K  K ^V
+ S ^VCOMP=$NAME(^V,0)
+ S ^VCORR="^V" D ^VEXAMINE K ^V
+ ;
+2 S ^ABSN="40312",^ITEM="IV-312  1 subscript"
+ S ^NEXT="3^V4NAME23,V4NAME24^V4NAME,V4QLEN^VV4" D ^V4PRESET K  K ^V
+ S ^VCOMP=$NA(^V(1),0)
+ S ^VCORR="^V" D ^VEXAMINE K ^V
+ ;
+3 S ^ABSN="40313",^ITEM="IV-313  2 subscripts"
+ S ^NEXT="4^V4NAME23,V4NAME24^V4NAME,V4QLEN^VV4" D ^V4PRESET K  K ^V
+ S ^VCOMP=$NA(^V("A","B"),-0)
+ S ^VCORR="^V" D ^VEXAMINE K ^V
+ ;
+4 S ^ABSN="40314",^ITEM="IV-314  5 subscripts"
+ S ^NEXT="5^V4NAME23,V4NAME24^V4NAME,V4QLEN^VV4" D ^V4PRESET K  K ^V
+ S ^VCOMP=$na(^V("a","b","c","d","e"),1-1)
+ S ^VCORR="^V" D ^VEXAMINE K ^V
+ ;
+5 S ^ABSN="40315",^ITEM="IV-315  subscript is naked reference"
+ S ^NEXT="6^V4NAME23,V4NAME24^V4NAME,V4QLEN^VV4" D ^V4PRESET K  K ^V
+ S ^V(1)="1",^V(2)="2",^V(3)="3"
+ S ^V("a")="a"
+ S ^VCOMP=$NA(^V(^(1),^(2)),+"DON")
+ S ^VCORR="^V" D ^VEXAMINE K ^V
+ ;
+ W !,"$QL(gvn)>intexpr"
+ ;
+6 S ^ABSN="40316",^ITEM="IV-316  1 subscript"
+ S ^NEXT="7^V4NAME23,V4NAME24^V4NAME,V4QLEN^VV4" D ^V4PRESET K  K ^V
+ S ^VCOMP=$NA(^V(.00001),"E1")
+ S ^VCORR="^V" D ^VEXAMINE K ^V
+ ;
+7 S ^ABSN="40317",^ITEM="IV-317  2 subscripts"
+ S ^NEXT="8^V4NAME23,V4NAME24^V4NAME,V4QLEN^VV4" D ^V4PRESET K  K ^V
+ S ^VCOMP=$na(^V(-1,-2),'0)
+ S ^VCORR="^V(-1)" D ^VEXAMINE K ^V
+ ;
+8 S ^ABSN="40318",^ITEM="IV-318  5 subscripts"
+ S ^NEXT="V4NAME24^V4NAME,V4QLEN^VV4" D ^V4PRESET K  K ^V
+ S ^VCOMP=$na(^V("-1","-2","-3","-4","-5"),"1AC")
+ S ^VCORR="^V(-1)" D ^VEXAMINE K ^V
+ ;
+END W !!,"End of 42 --- V4NAME23",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

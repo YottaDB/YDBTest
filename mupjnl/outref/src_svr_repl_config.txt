@@ -1,0 +1,131 @@
+Test case 77 : Replication configuration
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+----------------------------------------------------------------------
+Journal State : a.dat->OFF, b->ON, Replic State: mumps->ON
+mupip set -journal=enable,off,nobefore -file a.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/a.dat is now OFF
+mupip set -journal=enable,on,before -file b.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for database file ##TEST_PATH##/b.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/b.dat is now ON
+mupip set -replication=on -file mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
+Now try to start source server  which should error out
+##SOURCE_PATH##/mupip replic -source -start -buffsize=$tst_buffsize -secondary=##TEST_HOST##:$portno -instsecondary=INSTANCE2 -log=SRC_LOG_FILE1
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE2]
+##FILTERED##... ... .. ..:..:.. 20.. : Source server startup failed. See source server log file
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool shared memory removed
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool semaphore removed
+%GTM-E-REPLOFFJNLON, Replication state for database file ##TEST_PATH##/a.dat is OFF but journaling state is enabled
+----------------------------------------------------------------------
+Journal State : a.dat->OFF, b->OFF, Replic State: mumps->ON
+mupip set -journal=enable,off,nobefore -file a.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/a.dat is now OFF
+mupip set -journal=enable,off,before -file b.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/b.dat is now OFF
+mupip set -replication=on -file mumps.dat
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
+Now try to start source server  which should error out
+##SOURCE_PATH##/mupip replic -source -start -buffsize=$tst_buffsize -secondary=##TEST_HOST##:$portno -instsecondary=INSTANCE2 -log=SRC_LOG_FILE2
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE2]
+##FILTERED##... ... .. ..:..:.. 20.. : Source server startup failed. See source server log file
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool shared memory removed
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool semaphore removed
+%GTM-E-REPLOFFJNLON, Replication state for database file ##TEST_PATH##/a.dat is OFF but journaling state is enabled
+----------------------------------------------------------------------
+Journal State : a.dat->OFF, b->DISABLED, Replic State: mumps->ON
+mupip set -journal=enable,off,nobefore -file a.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/a.dat is now OFF
+mupip set -journal=disable -file b.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/b.dat is now DISABLED
+mupip set -replication=on -file mumps.dat
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
+Now try to start source server  which should error out
+##SOURCE_PATH##/mupip replic -source -start -buffsize=$tst_buffsize -secondary=##TEST_HOST##:$portno -instsecondary=INSTANCE2 -log=SRC_LOG_FILE3
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE2]
+##FILTERED##... ... .. ..:..:.. 20.. : Source server startup failed. See source server log file
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool shared memory removed
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool semaphore removed
+%GTM-E-REPLOFFJNLON, Replication state for database file ##TEST_PATH##/a.dat is OFF but journaling state is enabled
+----------------------------------------------------------------------
+Journal State : a.dat->DISABLED, b->OFF, Replic State: mumps->ON
+mupip set -journal=disable -file a.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/a.dat is now DISABLED
+mupip set -journal=enable,off,before -file b.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/b.dat is now OFF
+mupip set -replication=on -file mumps.dat
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
+Now try to start source server  which should error out
+##SOURCE_PATH##/mupip replic -source -start -buffsize=$tst_buffsize -secondary=##TEST_HOST##:$portno -instsecondary=INSTANCE2 -log=SRC_LOG_FILE4
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE2]
+##FILTERED##... ... .. ..:..:.. 20.. : Source server startup failed. See source server log file
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool shared memory removed
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool semaphore removed
+%GTM-E-REPLOFFJNLON, Replication state for database file ##TEST_PATH##/b.dat is OFF but journaling state is enabled
+----------------------------------------------------------------------
+Journal State : a.dat->DISABLED, b->DISABLED, mumps->DISABLED
+mupip set -journal=disable -file a.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/a.dat is now DISABLED
+mupip set -journal=disable -file b.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/b.dat is now DISABLED
+mupip set -journal=disable -file mumps.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
+Now try to start source server which should not start
+##SOURCE_PATH##/mupip replic -source -start -buffsize=$tst_buffsize -secondary=##TEST_HOST##:$portno -instsecondary=INSTANCE2 -log=SRC_LOG_FILE5
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE2]
+##FILTERED##... ... .. ..:..:.. 20.. : Source server startup failed. See source server log file
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool shared memory removed
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool semaphore removed
+%GTM-W-NOREPLCTDREG, Replication subsystem found no region replicated for instance file ##TEST_PATH##/mumps.repl
+----------------------------------------------------------------------
+Journal State : a.dat->DISABLED, b->DISABLED, Replic State: mumps->ON
+mupip set -journal=disable -file a.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/a.dat is now DISABLED
+mupip set -journal=disable -file b.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/b.dat is now DISABLED
+mupip set -replication=on -file mumps.dat
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
+Now try to start source server  which should should start
+##SOURCE_PATH##/mupip replic -source -start -buffsize=$tst_buffsize -secondary=##TEST_HOST##:$portno -instsecondary=INSTANCE2 -log=SRC_LOG_FILE6
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE2]
+Shut down the source server
+----------------------------------------------------------------------
+Journal State : b->DISABLED, Replic State: a->ON,mumps->ON
+mupip set -replication=on -file a.dat
+%GTM-E-CLIERR, Too many parameters
+mupip set -journal=disable -file b.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/b.dat is now DISABLED
+mupip set -replication=on -file mumps.dat
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
+Now try to start source server  which should start
+##SOURCE_PATH##/mupip replic -source -start -buffsize=$tst_buffsize -secondary=##TEST_HOST##:$portno -instsecondary=INSTANCE2 -log=SRC_LOG_FILE7
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE2]
+Shut down the source server
+----------------------------------------------------------------------
+######## End of Test #############
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,64 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# now in the remote directory
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Copy the database from the remote machine.
+
+## Now the database is opposite endian. So none of the below command shoud work
+## The commands should issue GTM-E-DBENDIAN error
+
+# DSE dump
+----------
+Error GTM-E-DBENDIAN seen in dse_dump.out as expected:
+##FILTERED##%GTM-E-DBENDIAN, Database file ##TEST_PATH##/mumps.dat is ##ENDIAN## endian on a ##ENDIAN## endian system
+----------
+----------
+Error GTM-E-DBNOREGION seen in dse_dump.out as expected:
+%GTM-E-DBNOREGION, None of the database regions accessible
+----------
+# GTM -> write
+----------
+Error GTM-E-DBENDIAN seen in gtm.out as expected:
+##FILTERED##%GTM-E-DBENDIAN, Database file ##TEST_PATH##/mumps.dat is ##ENDIAN## endian on a ##ENDIAN## endian system
+----------
+# LKE show
+----------
+Error GTM-E-DBENDIAN seen in lke.out as expected:
+##FILTERED##%GTM-E-DBENDIAN, Database file ##TEST_PATH##/mumps.dat is ##ENDIAN## endian on a ##ENDIAN## endian system
+----------
+----------
+Error GTM-E-DBNOREGION seen in lke.out as expected:
+%GTM-E-DBNOREGION, None of the database regions accessible
+----------
+# MUPIP integ
+----------
+Error GTM-E-DBENDIAN seen in mupip_integ.out as expected:
+##FILTERED##%GTM-E-DBENDIAN, Database file ##TEST_PATH##/mumps.dat is ##ENDIAN## endian on a ##ENDIAN## endian system
+----------
+----------
+Error MUNOTALLINTEG seen in mupip_integ.out as expected:
+%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+----------
+# MUPIP freeze
+----------
+Error GTM-E-DBENDIAN seen in mupip_freeze.out as expected:
+##FILTERED##%GTM-E-DBENDIAN, Database file ##TEST_PATH##/mumps.dat is ##ENDIAN## endian on a ##ENDIAN## endian system
+----------
+# MUPIP backup
+----------
+Error GTM-E-DBENDIAN seen in mupip_backup.out as expected:
+##FILTERED##%GTM-E-DBENDIAN, Database file ##TEST_PATH##/mumps.dat is ##ENDIAN## endian on a ##ENDIAN## endian system
+----------
+# MUPIP extract
+----------
+Error GTM-E-DBENDIAN seen in mupip_extract.out as expected:
+##FILTERED##%GTM-E-DBENDIAN, Database file ##TEST_PATH##/mumps.dat is ##ENDIAN## endian on a ##ENDIAN## endian system
+----------
+End of test

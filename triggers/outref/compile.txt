@@ -1,0 +1,204 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+###################################################################
+Invalid M code in the Xecute string
+	 set $ZTRIggerop=99
+	      ^-----
+##TEST_AWK		At column 7, line 1, source module .*trgtmp.*
+%GTM-E-SVNOSET, Cannot SET this special variable
+	 for quit:x=0 set x=0
+	         ^-----
+##TEST_AWK		At column 10, line 1, source module .*trgtmp.*
+%GTM-E-EQUAL, Equal sign expected but not found
+	 set "=0
+	        ^-----
+##TEST_AWK		At column 9, line 1, source module .*trgtmp.*
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 set a=1 write a!
+	                 ^-----
+##TEST_AWK		At column 18, line 1, source module .*trgtmp.*
+%GTM-E-RHMISSING, Right-hand side of expression expected
+%GTM-E-LABELMISSING, Label referenced but not defined: DoesNotExist
+##TEST_AWK%GTM-I-SRCNAM, in source module .*trgtmp.*
+	 TPRestart
+	 ^-----
+##TEST_AWK		At column 2, line 1, source module .*trgtmp.*
+%GTM-E-INVCMD, Invalid command keyword encountered
+FAIL, see compile_fail.trg.trigout
+###################################################################
+Invalid code the will pass compilation
+	 TPRestart:(2>$TRestart)
+	 ^-----
+##TEST_AWK		At column 2, line 1, source module .*trgtmp.*
+%GTM-W-INVCMD, Invalid command keyword encountered
+;trigger name: b#1 (region DEFAULT)  cycle: 1
++^b -commands=S -xecute="xecute ""set $ZTRIggerop=99"""
+;trigger name: c#1 (region DEFAULT)  cycle: 1
++^c -commands=S -xecute="set a=""$ZTRIggerop"" xecute ""set @a=99"""
+;trigger name: d#1 (region DEFAULT)  cycle: 1
++^d -commands=S -xecute="do ^DoesNotExist"
+;trigger name: postconditionalbad (region DEFAULT)  cycle: 1
++^e -name=postconditionalbad -commands=S -xecute="TPRestart:(2>$TRestart)"
+;trigger name: z#1 (region DEFAULT)  cycle: 1
++^z -commands=K -xecute="do ^selflink"
+###################################################################
+Routines that will and won't pass compilation
+;trigger name: b#1 (region DEFAULT)  cycle: 1
++^b -commands=S -xecute="xecute ""set $ZTRIggerop=99"""
+;trigger name: c#1 (region DEFAULT)  cycle: 1
++^c -commands=S -xecute="set a=""$ZTRIggerop"" xecute ""set @a=99"""
+;trigger name: d#1 (region DEFAULT)  cycle: 1
++^d -commands=S -xecute="do ^DoesNotExist"
+;trigger name: postconditionalbad (region DEFAULT)  cycle: 1
++^e -name=postconditionalbad -commands=S -xecute="TPRestart:(2>$TRestart)"
+;trigger name: dobad (region DEFAULT)  cycle: 4
++^r(subs=*) -name=dobad -commands=S -xecute="set level=2 do ^badcompile"
+;trigger name: gotobad (region DEFAULT)  cycle: 4
++^r(subs=*) -name=gotobad -commands=S -xecute="set level=1 goto ^badcompile"
+;trigger name: dogood (region DEFAULT)  cycle: 4
++^r(subs=*) -name=dogood -commands=S -xecute="set level=2 do good^compile"
+;trigger name: gotogood (region DEFAULT)  cycle: 4
++^r(subs=*) -name=gotogood -commands=S -xecute="set level=1 goto good^compile"
+;trigger name: z#1 (region DEFAULT)  cycle: 1
++^z -commands=K -xecute="do ^selflink"
+###################################################################
+Valid M code in the Xecute string
+;trigger name: a#1 (region DEFAULT)  cycle: 2
++^a -commands=S -xecute="xecute ""write $ZTCOde,!"" ztrigger ^a"
+;trigger name: a#2 (region DEFAULT)  cycle: 2
++^a -commands=ZTR -xecute="set b=""$ztco"" xecute ""write @b,!"""
+;trigger name: b#1 (region DEFAULT)  cycle: 1
++^b -commands=S -xecute="xecute ""set $ZTRIggerop=99"""
+;trigger name: c#1 (region DEFAULT)  cycle: 1
++^c -commands=S -xecute="set a=""$ZTRIggerop"" xecute ""set @a=99"""
+;trigger name: d#1 (region DEFAULT)  cycle: 1
++^d -commands=S -xecute="do ^DoesNotExist"
+;trigger name: postconditionalbad (region DEFAULT)  cycle: 1
++^e -name=postconditionalbad -commands=S -xecute="TPRestart:(2>$TRestart)"
+;trigger name: dobad (region DEFAULT)  cycle: 4
++^r(subs=*) -name=dobad -commands=S -xecute="set level=2 do ^badcompile"
+;trigger name: gotobad (region DEFAULT)  cycle: 4
++^r(subs=*) -name=gotobad -commands=S -xecute="set level=1 goto ^badcompile"
+;trigger name: dogood (region DEFAULT)  cycle: 4
++^r(subs=*) -name=dogood -commands=S -xecute="set level=2 do good^compile"
+;trigger name: gotogood (region DEFAULT)  cycle: 4
++^r(subs=*) -name=gotogood -commands=S -xecute="set level=1 goto good^compile"
+;trigger name: z#1 (region DEFAULT)  cycle: 1
++^z -commands=K -xecute="do ^selflink"
+###################################################################
+###################################################################
+failing cases first
+	$ZSTATUS=150373866,+1^c#1#,%GTM-E-VAREXPECTED, Variable expected in this context
+	$ZSTATUS=150373770,+1^b#1#,%GTM-E-SVNOSET, Cannot SET this special variable
+	$ZSTATUS=150373978,+1^d#1#,%GTM-E-ZLINKFILE, Error while zlinking "DoesNotExist",%GTM-E-FILENOTFND, File DoesNotExist not found
+	 TPRestart:(2>$TRestart)
+	 ^-----
+##TEST_AWK		At column 2, line 1, source module .*trgtmp.*
+%GTM-W-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,+1^postconditionalbad#,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373866,+1^c#1#,%GTM-E-VAREXPECTED, Variable expected in this context
+	$ZSTATUS=150373770,+1^b#1#,%GTM-E-SVNOSET, Cannot SET this special variable
+	$ZSTATUS=150373978,+1^d#1#,%GTM-E-ZLINKFILE, Error while zlinking "DoesNotExist",%GTM-E-FILENOTFND, File DoesNotExist not found
+	$ZSTATUS=150373050,+1^postconditionalbad#,%GTM-E-INVCMD, Invalid command keyword encountered
+zlink myself
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_LINUX_IX86
+	$ZSTATUS=150373234,selflink+3^selflink,%GTM-E-LOADRUNNING, Cannot ZLINK an active routine selflink
+##ALLOW_OUTPUT HOST_ALL
+###################################################################
+###################################################################
+These will suceed
+a#1#
+a#2#
+###################################################################
+###################################################################
+Testing compilation failures in sub routines
+		badcommand
+		^-----
+		At column 2, line 16, source module ##IN_TEST_PATH##/inref/badcompile.m
+%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
+^fired("dobad#")=4
+^fired("dogood#")=4
+^fired("gotobad#")=4
+^fired("gotogood#")=4
+^r(1)=1
+^r(2)=",4"
+^r(3)=",,9"
+^r(4)=",,,16"
+^s(1,1)=1
+^s(2,1)=",4"
+^s(3,1)=",,9"
+^s(4,1)=",,,16"
+###################################################################
+###################################################################
+##ALLOW_OUTPUT NON_UTF8
+##SUSPEND_OUTPUT HOST_OSF1_ALPHA HOST_OS390_S390 HOST_LINUX_IX86
+###################################################################
+Checking what happens when GTM_DEFAULT_TMP / P_tmpdir don't exist
+
+Checking what happens with bad permissions on GTM_DEFAULT_TMP / P_tmpdir
+No perms at all
+
+No write perms
+
+Checking what happens when GTM_DEFAULT_TMP / P_tmpdir is a file
+##ALLOW_OUTPUT HOST_ALL
+###################################################################
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT NON_REPLIC
+##TEST_AWK##TEST_HOST_SHORT##:##REMOTE_TEST_PATH##/RCVR_[0-9][0-9]_[0-9][0-9]_[0-9][0-9].log.updproc
+%GTM-W-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373866,+1^c#1#,%GTM-E-VAREXPECTED, Variable expected in this context
+	$ZSTATUS=150373770,+1^b#1#,%GTM-E-SVNOSET, Cannot SET this special variable
+	$ZSTATUS=150373978,+1^d#1#,%GTM-E-ZLINKFILE, Error while zlinking "DoesNotExist",%GTM-E-FILENOTFND, File DoesNotExist not found
+%GTM-W-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,+1^postconditionalbad#,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373866,+1^c#1#,%GTM-E-VAREXPECTED, Variable expected in this context
+	$ZSTATUS=150373770,+1^b#1#,%GTM-E-SVNOSET, Cannot SET this special variable
+	$ZSTATUS=150373978,+1^d#1#,%GTM-E-ZLINKFILE, Error while zlinking "DoesNotExist",%GTM-E-FILENOTFND, File DoesNotExist not found
+	$ZSTATUS=150373050,+1^postconditionalbad#,%GTM-E-INVCMD, Invalid command keyword encountered
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_LINUX_IX86
+##SUSPEND_OUTPUT NON_REPLIC
+	$ZSTATUS=150373234,selflink+3^selflink,%GTM-E-LOADRUNNING, Cannot ZLINK an active routine selflink
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT NON_REPLIC
+%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered

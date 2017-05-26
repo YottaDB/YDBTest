@@ -1,0 +1,21 @@
+#################################################################
+#								#
+# Copyright (c) 2013-2015 Fidelity National Information 	#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#when (a) bucket submitted, these variables will be initialized again
+#test_region is not used anymore, it is kept here only for backward compatibility of reference files
+check_setenv_valid test_region "MULTI_REG"
+check_setenv_valid test_gtm_gtcm "GT.M"
+check_setenv_valid test_reorg "NON_REORG"
+check_setenv_valid test_nice "NICE"
+check_setenv_valid gtm_test_nolineentry "NON_NOLINE"
+
+check_setenv_valid test_repl NON_REPLIC
+setenv test_default_applicable "#NON_REORG#UNNICE#GT.M#NON_NOLINE#NOLINE"

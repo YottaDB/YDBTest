@@ -1,0 +1,962 @@
+setenv gtm_chset UTF-8
+unset echo
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+init
+
+########################################## 1 ########################################
+Testing %G 1
+
+GTM>
+
+GTM>
+
+Output device: <terminal>: 
+
+List ^
+^%uniYYY="ａｂｃｄｅ"_$C(9)_"♚♝"
+^mix1="我能 end here"
+^mix2="♋"
+^mix3="我能吞下玻璃而不伤身体 end here"
+^samplegbl("aづぎ")="oh very few hiraganas NOT meant to be matched by %G"
+^samplegbl("aづぎぬまめわ")="a with hiraganas"
+^samplegbl("aづぎめまぬまわ")="a with some more hiraganas"
+^samplegbl("combining-umlaut")="I have a combining umlaut ü"
+^samplegbl("levels","▄")="string levels folowed by block"
+^samplegbl("levels","▄","▍▌▋▊▉█")="ok string levels followed by various sized blocks"
+^samplegbl("levels","▄▄▄▄▄▄")="string levels followed by blocks"
+^samplegbl("u-and-umlaut")="I have a u and an umlaut separately u¨"
+^samplegbl("umlaut")="I have an umlaut ü"
+^samplegbl("¾")="three-fourth sign meant for %G"
+^samplegbl("¾",1)="three-fourth signs and number 1"
+^samplegbl("¾","½")="three-fourth and half signs"
+^samplegbl("¾","½,¼")="three-fourth half and quarter signs"
+^samplegbl("Τ")="Greek letter"
+^samplegbl("▄")="just a block and %G will NOT catch me"
+^samplegbl("づぎぬまめわ")="oh only hiraganas NOT meant to be matched by %G"
+^samplegbl("下")="start character 下meant to be matched by %G"
+^samplegbl("我")="end character 我meant to be matched by %G"
+^samplegbl("我能吞下玻璃而不伤身体")="whoami three bytes"
+^samplegbl("的编纂")="whoever iam %G is meant to catch me"
+^samplegbl("的编纂","abcd")="whoami with abcd"
+^samplegbl("的编纂","的编纂")="whoami"
+^samplegbl("２")="full-width number 2,%GO will catch me"
+^samplegbl("２","３,４","５","６")="many full-width numbers"
+^samplegbl("２","Ｍ,４")="not just full width numbers but full width alphabets too"
+^samplegbl("２３４５６")="full-width range numbers not for %G"
+^samplegbl("３４５６")="full-width range numbers for %G"
+^samplegbl("𐀃")="I am an invalid mix"
+^uniA(1)="ａ ｂ ｃ ｄ ｅ"
+^uniA(2)=" ｃ ｄ ｅ ｆ "
+^uniA(3)="ｅ ｆ ｇ ｈ ｉ"
+^uniA(4)=" ｉ ｊ ｋ ｌ "
+^uniA(5)="ｍ ｎ ｏ ｐ ｑ"
+^uniA(11)="ĀāĂăĄąĆćĈĉĊċČčĎď"
+^uniATMP="ΨΈẸẪΆΨ"
+^uniB(1)="ａ ｂ ｃ ｄ ｅ"
+^uniB(2)=" ｃ ｄ ｅ ｆ "
+^uniB(3)="ｅ ｆ ｇ ｈ ｉ"
+^uniB(4)=" ｉ ｊ ｋ ｌ "
+^uniB(5)="ｍ ｎ ｏ ｐ ｑ"
+^uniBTMP="۩۩"_$C(1757)_"۞"
+^uniC(1,4)="₉₀"
+^uniC(1,4,1)="₂₀"
+^uniC(1,4,2)="ａｂｃｄｅ"
+^uniCTMP("XXXX")="ĂȑƋ"
+^uniCTMP("uniX123")="ڦAΨמ"
+^uniCTMP("ＤＩＥＧＯ")="♚♝A♞♜"
+^uniD(1)="ａ ｂ ｃ "
+^uniD(2)=" ｂ ｃ ｄ"
+^uniD(3)="ｂ ｃ ｄ "
+^uniD(4)=" ｃ ｄ ｅ"
+^uniD(5)="ｃ ｄ ｅ "
+^uniX123(599,"Ｘ")="♚♝"
+^uniX123("ＤＩＥＧＯ")="ẙ۩Ÿ"
+^unia(2)="ａ ｂ ｃ ｄ ｅ"
+^unia(4)=" ｃ ｄ ｅ ｆ "
+^unia(6)="ｅ ｆ ｇ ｈ ｉ"
+^unia(8)=" ｉ ｊ ｋ ｌ "
+^unia(10)="ｍ ｎ ｏ ｐ ｑ"
+^unia(12)="ưƱƲƳƴƵƶƷƸƹƺƻƼƽƾƿ"
+^unib(1)="ａ"
+^unib(4)="ａ "
+^unib(9)="ａ ｂ"
+^unib(16)="ａ ｂ "
+^unib(25)="ａ ｂ ｃ"
+^unic(1)="ａ ｂ ｃ ｄ ｅ"
+^unic(2)=" ｃ ｄ ｅ ｆ "
+^unic(3)="ｅ ｆ ｇ ｈ ｉ"
+^unic(4)=" ｉ ｊ ｋ ｌ "
+^unic(5)="ｍ ｎ ｏ ｐ ｑ"
+^uniname5678="Some tamil அவர்கள் ஏன் தமிழில் பேசக்கூடாது ?"
+^uniname567890123456789012345678="Some telugu తెలుగులో ఎందుకు మాట్లాడరు?"
+
+List ^
+
+GTM>
+
+Output device: <terminal>: 
+
+List ^
+
+Global Directory
+
+Global ^
+^%uniYYY  ^mix1     ^mix2     ^mix3     ^samplegbl          ^uniA     ^uniATMP  
+^uniB     ^uniBTMP  ^uniC     ^uniCTMP  ^uniD     ^uniX123  ^unia     ^unib     
+^unic     ^uniname5678        ^uniname567890123456789012345678        
+Total of 18 globals.
+
+List ^
+
+Global Directory
+
+Global ^
+^unia     
+Total of 1 global.
+
+Global ^
+^uniA     
+Total of 1 global.
+
+Global ^
+^unia     
+Total of 1 global.
+
+Global ^
+
+List ^
+
+GTM>
+
+Global Directory
+
+Global ^
+^%uniYYY  ^mix1     ^mix2     ^mix3     ^samplegbl          ^uniA     ^uniATMP  
+^uniB     ^uniBTMP  ^uniC     ^uniCTMP  ^uniD     ^uniX123  ^unia     ^unib     
+^unic     ^uniname5678        ^uniname567890123456789012345678        
+Total of 18 globals.
+
+Global ^
+
+GTM>
+
+Global Directory
+
+Global ^
+^samplegbl          
+Total of 1 global.
+
+Global ^
+^uniA     ^uniATMP  ^uniB     ^uniBTMP  ^uniC     ^uniCTMP  ^uniD     ^uniX123  
+^unia     ^unib     ^unic     ^uniname5678        ^uniname567890123456789012345678        
+Total of 13 globals.
+
+Global ^
+^%uniYYY  
+Total of 1 global.
+
+Global ^
+^%uniYYY  ^mix1     ^mix2     ^mix3     ^samplegbl          ^uniA     ^uniATMP  
+^uniB     ^uniBTMP  ^uniC     ^uniCTMP  ^uniD     ^uniX123  ^unia     ^unib     
+^unic     ^uniname5678        ^uniname567890123456789012345678        
+Total of 18 globals.
+
+Global ^
+
+GTM>
+
+########################################## 2 ########################################
+Testing %G 2
+
+GTM>
+
+GTM>
+
+GTM>
+
+Output device: <terminal>: 
+
+List ^
+^uniA(1)="ａ ｂ ｃ ｄ ｅ"
+^uniA(2)=" ｃ ｄ ｅ ｆ "
+^uniA(3)="ｅ ｆ ｇ ｈ ｉ"
+^uniA(4)=" ｉ ｊ ｋ ｌ "
+^uniA(5)="ｍ ｎ ｏ ｐ ｑ"
+^uniA(11)="ĀāĂăĄąĆćĈĉĊċČčĎď"
+^uniATMP="ΨΈẸẪΆΨ"
+
+List ^
+^uniATMP="ΨΈẸẪΆΨ"
+^uniBTMP="۩۩"_$C(1757)_"۞"
+^uniCTMP("XXXX")="ĂȑƋ"
+^uniCTMP("uniX123")="ڦAΨמ"
+^uniCTMP("ＤＩＥＧＯ")="♚♝A♞♜"
+
+List ^
+^uniCTMP("ＤＩＥＧＯ")="♚♝A♞♜"
+^uniX123("ＤＩＥＧＯ")="ẙ۩Ÿ"
+
+List ^
+^uniX123(599,"Ｘ")="♚♝"
+
+List ^
+^uniX123(599,"Ｘ")="♚♝"
+
+List ^
+^uniX123(599,"Ｘ")="♚♝"
+
+List ^
+^uniA(1)="ａ ｂ ｃ ｄ ｅ"
+^uniA(2)=" ｃ ｄ ｅ ｆ "
+^uniA(3)="ｅ ｆ ｇ ｈ ｉ"
+^uniA(4)=" ｉ ｊ ｋ ｌ "
+^uniA(5)="ｍ ｎ ｏ ｐ ｑ"
+
+List ^
+^uniCTMP("ＤＩＥＧＯ")="♚♝A♞♜"
+
+List ^
+^uniCTMP("uniX123")="ڦAΨמ"
+
+List ^
+^uniX123(599,"Ｘ")="♚♝"
+^uniX123("ＤＩＥＧＯ")="ẙ۩Ÿ"
+
+List ^
+
+GTM>
+
+GTM>
+
+Output device: <terminal>: 
+
+List ^
+
+List ^
+^samplegbl("下")="start character 下meant to be matched by %G"
+^samplegbl("我")="end character 我meant to be matched by %G"
+
+List ^
+^samplegbl("３４５６")="full-width range numbers for %G"
+
+List ^
+^samplegbl("Τ")="Greek letter"
+
+List ^
+^samplegbl("２")="full-width number 2,%GO will catch me"
+^samplegbl("２","３,４","５","６")="many full-width numbers"
+^samplegbl("２","Ｍ,４")="not just full width numbers but full width alphabets too"
+
+List ^
+^samplegbl("levels","▄")="string levels folowed by block"
+^samplegbl("levels","▄▄▄▄▄▄")="string levels followed by blocks"
+
+List ^
+^samplegbl("𐀃")="I am an invalid mix"
+
+List ^
+^samplegbl("我能吞下玻璃而不伤身体")="whoami three bytes"
+
+List ^
+^samplegbl("的编纂")="whoever iam %G is meant to catch me"
+^samplegbl("的编纂","abcd")="whoami with abcd"
+^samplegbl("的编纂","的编纂")="whoami"
+
+List ^
+^samplegbl("¾")="three-fourth sign meant for %G"
+^samplegbl("¾",1)="three-fourth signs and number 1"
+^samplegbl("¾","½")="three-fourth and half signs"
+^samplegbl("¾","½,¼")="three-fourth half and quarter signs"
+
+List ^
+
+List ^
+
+GTM>
+
+GTM>
+
+########################################## 3 ########################################
+Testing %GC
+
+GTM>
+
+Global copy
+
+Show copied nodes <Yes>? 
+From global ^
+
+This routine copies a node and all its descendents
+from one global variable to another
+"From global" requests the source for the copy,
+"To global" requests the destination
+Use standard MUMPS gvn syntax to specify the node names
+?D invokes %GD to get a global directory
+<RETURN> drops you back to the prior prompt or out of %GC
+
+From global ^
+To global   ^
+^samplegblcp("aづぎ")="oh very few hiraganas NOT meant to be matched by %G"
+^samplegblcp("aづぎぬまめわ")="a with hiraganas"
+^samplegblcp("aづぎめまぬまわ")="a with some more hiraganas"
+^samplegblcp("combining-umlaut")="I have a combining umlaut ü"
+^samplegblcp("levels","▄")="string levels folowed by block"
+^samplegblcp("levels","▄","▍▌▋▊▉█")="ok string levels followed by various sized blocks"
+^samplegblcp("levels","▄▄▄▄▄▄")="string levels followed by blocks"
+^samplegblcp("u-and-umlaut")="I have a u and an umlaut separately u¨"
+^samplegblcp("umlaut")="I have an umlaut ü"
+^samplegblcp("¾")="three-fourth sign meant for %G"
+^samplegblcp("¾",1)="three-fourth signs and number 1"
+^samplegblcp("¾","½")="three-fourth and half signs"
+^samplegblcp("¾","½,¼")="three-fourth half and quarter signs"
+^samplegblcp("Τ")="Greek letter"
+^samplegblcp("▄")="just a block and %G will NOT catch me"
+^samplegblcp("づぎぬまめわ")="oh only hiraganas NOT meant to be matched by %G"
+^samplegblcp("下")="start character 下meant to be matched by %G"
+^samplegblcp("我")="end character 我meant to be matched by %G"
+^samplegblcp("我能吞下玻璃而不伤身体")="whoami three bytes"
+^samplegblcp("的编纂")="whoever iam %G is meant to catch me"
+^samplegblcp("的编纂","abcd")="whoami with abcd"
+^samplegblcp("的编纂","的编纂")="whoami"
+^samplegblcp("２")="full-width number 2,%GO will catch me"
+^samplegblcp("２","３,４","５","６")="many full-width numbers"
+^samplegblcp("２","Ｍ,４")="not just full width numbers but full width alphabets too"
+^samplegblcp("２３４５６")="full-width range numbers not for %G"
+^samplegblcp("３４５６")="full-width range numbers for %G"
+^samplegblcp("𐀃")="I am an invalid mix"
+Total 28 nodes copied.
+
+From global ^
+GTM>
+zwriting samplegbl
+
+GTM>
+^samplegbl("aづぎ")="oh very few hiraganas NOT meant to be matched by %G"
+^samplegbl("aづぎぬまめわ")="a with hiraganas"
+^samplegbl("aづぎめまぬまわ")="a with some more hiraganas"
+^samplegbl("combining-umlaut")="I have a combining umlaut ü"
+^samplegbl("levels","▄")="string levels folowed by block"
+^samplegbl("levels","▄","▍▌▋▊▉█")="ok string levels followed by various sized blocks"
+^samplegbl("levels","▄▄▄▄▄▄")="string levels followed by blocks"
+^samplegbl("u-and-umlaut")="I have a u and an umlaut separately u¨"
+^samplegbl("umlaut")="I have an umlaut ü"
+^samplegbl("¾")="three-fourth sign meant for %G"
+^samplegbl("¾",1)="three-fourth signs and number 1"
+^samplegbl("¾","½")="three-fourth and half signs"
+^samplegbl("¾","½,¼")="three-fourth half and quarter signs"
+^samplegbl("Τ")="Greek letter"
+^samplegbl("▄")="just a block and %G will NOT catch me"
+^samplegbl("づぎぬまめわ")="oh only hiraganas NOT meant to be matched by %G"
+^samplegbl("下")="start character 下meant to be matched by %G"
+^samplegbl("我")="end character 我meant to be matched by %G"
+^samplegbl("我能吞下玻璃而不伤身体")="whoami three bytes"
+^samplegbl("的编纂")="whoever iam %G is meant to catch me"
+^samplegbl("的编纂","abcd")="whoami with abcd"
+^samplegbl("的编纂","的编纂")="whoami"
+^samplegbl("２")="full-width number 2,%GO will catch me"
+^samplegbl("２","３,４","５","６")="many full-width numbers"
+^samplegbl("２","Ｍ,４")="not just full width numbers but full width alphabets too"
+^samplegbl("２３４５６")="full-width range numbers not for %G"
+^samplegbl("３４５６")="full-width range numbers for %G"
+^samplegbl("𐀃")="I am an invalid mix"
+
+GTM>
+zwriting samplegblcp, should be the same as above
+
+GTM>
+^samplegblcp("aづぎ")="oh very few hiraganas NOT meant to be matched by %G"
+^samplegblcp("aづぎぬまめわ")="a with hiraganas"
+^samplegblcp("aづぎめまぬまわ")="a with some more hiraganas"
+^samplegblcp("combining-umlaut")="I have a combining umlaut ü"
+^samplegblcp("levels","▄")="string levels folowed by block"
+^samplegblcp("levels","▄","▍▌▋▊▉█")="ok string levels followed by various sized blocks"
+^samplegblcp("levels","▄▄▄▄▄▄")="string levels followed by blocks"
+^samplegblcp("u-and-umlaut")="I have a u and an umlaut separately u¨"
+^samplegblcp("umlaut")="I have an umlaut ü"
+^samplegblcp("¾")="three-fourth sign meant for %G"
+^samplegblcp("¾",1)="three-fourth signs and number 1"
+^samplegblcp("¾","½")="three-fourth and half signs"
+^samplegblcp("¾","½,¼")="three-fourth half and quarter signs"
+^samplegblcp("Τ")="Greek letter"
+^samplegblcp("▄")="just a block and %G will NOT catch me"
+^samplegblcp("づぎぬまめわ")="oh only hiraganas NOT meant to be matched by %G"
+^samplegblcp("下")="start character 下meant to be matched by %G"
+^samplegblcp("我")="end character 我meant to be matched by %G"
+^samplegblcp("我能吞下玻璃而不伤身体")="whoami three bytes"
+^samplegblcp("的编纂")="whoever iam %G is meant to catch me"
+^samplegblcp("的编纂","abcd")="whoami with abcd"
+^samplegblcp("的编纂","的编纂")="whoami"
+^samplegblcp("２")="full-width number 2,%GO will catch me"
+^samplegblcp("２","３,４","５","６")="many full-width numbers"
+^samplegblcp("２","Ｍ,４")="not just full width numbers but full width alphabets too"
+^samplegblcp("２３４５６")="full-width range numbers not for %G"
+^samplegblcp("３４５６")="full-width range numbers for %G"
+^samplegblcp("𐀃")="I am an invalid mix"
+
+GTM>
+
+########################################## 4 ########################################
+Testing %GC
+
+GTM>
+
+Global Change Every occurrence
+
+Global ^
+
+  <RET>                  to leave
+  "*"                    for all
+  global                 for 1 global
+  global1:global2        for a range
+  "*" as a wildcard      permitting any number of characters
+  "%" as a wildcard      for a single character in positions other than the first
+  "?" as a wildcard      for a single character in positions other than the first
+  "'" as the 1st character
+                         to remove globals from the list
+  ?D                     for the currently selected globals
+
+Global ^
+^%uniYYY  ^mix1     ^mix2     ^mix3     ^samplegbl          ^samplegblcp        
+^uniA     ^uniATMP  ^uniB     ^uniBTMP  ^uniC     ^uniCTMP  ^uniD     ^uniX123  
+Current total of 14 globals.
+
+Global ^
+
+^%uniYYY  ^mix1     ^mix2     ^mix3     ^samplegbl          ^samplegblcp        
+^uniA     ^uniATMP  ^uniB     ^uniBTMP  ^uniC     ^uniCTMP  ^uniD     ^uniX123  
+Global ^
+
+Old string: 
+New string: 
+Show changed nodes <Yes>? 
+
+Answer No to this prompt if you do not wish a trail of the changes
+Show changed nodes <Yes>? 
+
+Output device: <terminal>: 
+
+
+Select the device you want for output
+If you wish to exit enter a carat (^)
+
+Output device: <terminal>: 
+^%uniYYY  
+^%uniYYY
+Was : ａｂｃｄｅ	♚♝
+Now : ａｂｃｄｅ	♞♘
+
+
+1 changes made in total 1 nodes.
+^mix1     
+
+No changes made in total 1 nodes.
+^mix2     
+
+No changes made in total 1 nodes.
+^mix3     
+
+No changes made in total 1 nodes.
+^samplegbl          
+
+No changes made in total 28 nodes.
+^samplegblcp        
+
+No changes made in total 28 nodes.
+^uniA     
+
+No changes made in total 6 nodes.
+^uniATMP  
+
+No changes made in total 1 nodes.
+^uniB     
+
+No changes made in total 5 nodes.
+^uniBTMP  
+
+No changes made in total 1 nodes.
+^uniC     
+
+No changes made in total 3 nodes.
+^uniCTMP  
+^uniCTMP("ＤＩＥＧＯ")
+Was : ♚♝A♞♜
+Now : ♞♘A♞♜
+
+
+1 changes made in total 3 nodes.
+^uniD     
+
+No changes made in total 5 nodes.
+^uniX123  
+^uniX123(599,"Ｘ")
+Was : ♚♝
+Now : ♞♘
+
+
+1 changes made in total 2 nodes.
+
+Global ^
+
+GTM>
+
+########################################## 5 ########################################
+Testing %GCE
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+Global Change Every occurrence
+
+Global ^
+^cc       
+Current total of 1 global.
+
+Global ^
+
+Old string: 
+New string: 
+Show changed nodes <Yes>? 
+
+Output device: <terminal>: 
+^cc       
+^cc("₁₂")
+Was : ₁₂
+Now : ₃₅
+
+^cc("₁₂2")
+Was : ₁₂2
+Now : ₃₅2
+
+^cc("₁₂₁₂")
+Was : 0₁₂2₁₂
+Now : 0₃₅2₃₅
+
+
+4 changes made in total 5 nodes.
+
+Global ^
+
+GTM>
+
+Output device: <terminal>: 
+
+List ^
+^cc(30)=65612
+^cc(45)=344
+^cc("₁₂")="₃₅"
+^cc("₁₂2")="₃₅2"
+^cc("₁₂₁₂")="0₃₅2₃₅"
+
+List ^
+
+GTM>
+
+########################################## 6 ########################################
+Testing %GO
+
+GTM>
+
+Global Output Utility
+
+Global ^
+^samplegbl          
+Current total of 1 global.
+
+Global ^
+
+  <RET>                  to leave
+  "*"                    for all
+  global                 for 1 global
+  global1:global2        for a range
+  "*" as a wildcard      permitting any number of characters
+  "%" as a wildcard      for a single character in positions other than the first
+  "?" as a wildcard      for a single character in positions other than the first
+  "'" as the 1st character
+                         to remove globals from the list
+  ?D                     for the currently selected globals
+
+Global ^
+
+^samplegbl          
+Global ^
+
+Header Label: 
+
+Output Format: GO or ZWR: 
+
+Output device: <terminal>: 
+
+
+^samplegbl          
+
+Total of 28 nodes in 1 global.
+
+
+GTM>
+
+GTM>
+
+Global Output Utility
+
+Global ^
+^samplegbl          
+Current total of 1 global.
+
+Global ^
+
+  <RET>                  to leave
+  "*"                    for all
+  global                 for 1 global
+  global1:global2        for a range
+  "*" as a wildcard      permitting any number of characters
+  "%" as a wildcard      for a single character in positions other than the first
+  "?" as a wildcard      for a single character in positions other than the first
+  "'" as the 1st character
+                         to remove globals from the list
+  ?D                     for the currently selected globals
+
+Global ^
+
+^samplegbl          
+Global ^
+
+Header Label: 
+
+Output Format: GO or ZWR: 
+
+Output device: <terminal>: 
+
+
+^samplegbl          
+
+Total of 28 nodes in 1 global.
+
+
+GTM>
+
+GTM>
+%GTM-I-RECORDSTAT, ^%uniYYY:	  Key cnt: 1  max subsc len: 9  max rec len: 22  max node len: 35
+%GTM-I-RECORDSTAT, ^cc:	  Key cnt: 5  max subsc len: 18  max rec len: 14  max node len: 26
+%GTM-I-RECORDSTAT, ^mix1:	  Key cnt: 1  max subsc len: 6  max rec len: 15  max node len: 25
+%GTM-I-RECORDSTAT, ^mix2:	  Key cnt: 1  max subsc len: 6  max rec len: 3  max node len: 13
+%GTM-I-RECORDSTAT, ^mix3:	  Key cnt: 1  max subsc len: 6  max rec len: 42  max node len: 52
+%GTM-I-RECORDSTAT, ^samplegbl:	  Key cnt: 28  max subsc len: 46  max rec len: 56  max node len: 75
+%GTM-I-RECORDSTAT, ^samplegblcp:	  Key cnt: 28  max subsc len: 48  max rec len: 56  max node len: 77
+%GTM-I-RECORDSTAT, ^uniA:	  Key cnt: 6  max subsc len: 9  max rec len: 32  max node len: 40
+%GTM-I-RECORDSTAT, ^uniATMP:	  Key cnt: 1  max subsc len: 9  max rec len: 14  max node len: 27
+%GTM-I-RECORDSTAT, ^uniB:	  Key cnt: 5  max subsc len: 9  max rec len: 19  max node len: 32
+%GTM-I-RECORDSTAT, ^uniBTMP:	  Key cnt: 1  max subsc len: 9  max rec len: 8  max node len: 21
+%GTM-I-RECORDSTAT, ^uniC:	  Key cnt: 3  max subsc len: 15  max rec len: 15  max node len: 22
+%GTM-I-RECORDSTAT, ^uniCTMP:	  Key cnt: 3  max subsc len: 26  max rec len: 13  max node len: 34
+%GTM-I-RECORDSTAT, ^uniD:	  Key cnt: 5  max subsc len: 9  max rec len: 12  max node len: 25
+%GTM-I-RECORDSTAT, ^uniX123:	  Key cnt: 2  max subsc len: 26  max rec len: 7  max node len: 29
+%GTM-I-RECORDSTAT, ^unia:	  Key cnt: 6  max subsc len: 9  max rec len: 32  max node len: 39
+%GTM-I-RECORDSTAT, ^unib:	  Key cnt: 5  max subsc len: 9  max rec len: 11  max node len: 18
+%GTM-I-RECORDSTAT, ^unic:	  Key cnt: 5  max subsc len: 9  max rec len: 19  max node len: 32
+%GTM-I-RECORDSTAT, ^uniname5678:	  Key cnt: 1  max subsc len: 13  max rec len: 100  max node len: 117
+%GTM-I-RECORDSTAT, ^uniname567890123456789012345678:	  Key cnt: 1  max subsc len: 33  max rec len: 84  max node len: 121
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 109  max subsc len: 48  max rec len: 100  max node len: 121
+
+GTM>
+
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+SINGLEBYTEＭＵＬＴＩＢＹＴＥ UTF-8
+##TEST_AWKGT.M .* ZWR
+
+OK <Yes>? 
+
+^samplegbl          
+
+Restored 28 nodes in 1 global.
+GTM>
+
+GTM>
+%GTM-I-RECORDSTAT, ^%uniYYY:	  Key cnt: 1  max subsc len: 9  max rec len: 22  max node len: 35
+%GTM-I-RECORDSTAT, ^cc:	  Key cnt: 5  max subsc len: 18  max rec len: 14  max node len: 26
+%GTM-I-RECORDSTAT, ^mix1:	  Key cnt: 1  max subsc len: 6  max rec len: 15  max node len: 25
+%GTM-I-RECORDSTAT, ^mix2:	  Key cnt: 1  max subsc len: 6  max rec len: 3  max node len: 13
+%GTM-I-RECORDSTAT, ^mix3:	  Key cnt: 1  max subsc len: 6  max rec len: 42  max node len: 52
+%GTM-I-RECORDSTAT, ^samplegbl:	  Key cnt: 28  max subsc len: 46  max rec len: 56  max node len: 75
+%GTM-I-RECORDSTAT, ^samplegblcp:	  Key cnt: 28  max subsc len: 48  max rec len: 56  max node len: 77
+%GTM-I-RECORDSTAT, ^uniA:	  Key cnt: 6  max subsc len: 9  max rec len: 32  max node len: 40
+%GTM-I-RECORDSTAT, ^uniATMP:	  Key cnt: 1  max subsc len: 9  max rec len: 14  max node len: 27
+%GTM-I-RECORDSTAT, ^uniB:	  Key cnt: 5  max subsc len: 9  max rec len: 19  max node len: 32
+%GTM-I-RECORDSTAT, ^uniBTMP:	  Key cnt: 1  max subsc len: 9  max rec len: 8  max node len: 21
+%GTM-I-RECORDSTAT, ^uniC:	  Key cnt: 3  max subsc len: 15  max rec len: 15  max node len: 22
+%GTM-I-RECORDSTAT, ^uniCTMP:	  Key cnt: 3  max subsc len: 26  max rec len: 13  max node len: 34
+%GTM-I-RECORDSTAT, ^uniD:	  Key cnt: 5  max subsc len: 9  max rec len: 12  max node len: 25
+%GTM-I-RECORDSTAT, ^uniX123:	  Key cnt: 2  max subsc len: 26  max rec len: 7  max node len: 29
+%GTM-I-RECORDSTAT, ^unia:	  Key cnt: 6  max subsc len: 9  max rec len: 32  max node len: 39
+%GTM-I-RECORDSTAT, ^unib:	  Key cnt: 5  max subsc len: 9  max rec len: 11  max node len: 18
+%GTM-I-RECORDSTAT, ^unic:	  Key cnt: 5  max subsc len: 9  max rec len: 19  max node len: 32
+%GTM-I-RECORDSTAT, ^uniname5678:	  Key cnt: 1  max subsc len: 13  max rec len: 100  max node len: 117
+%GTM-I-RECORDSTAT, ^uniname567890123456789012345678:	  Key cnt: 1  max subsc len: 33  max rec len: 84  max node len: 121
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 109  max subsc len: 48  max rec len: 100  max node len: 121
+
+GTM>
+
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+ＭＵＬＴＩＢＹＴＥSINGLEBYTE UTF-8
+##TEST_AWKGT.M .*
+
+OK <Yes>? 
+
+^samplegbl          
+
+Restored 28 nodes in 1 global.
+GTM>
+
+GTM>
+%GTM-I-RECORDSTAT, ^%uniYYY:	  Key cnt: 1  max subsc len: 9  max rec len: 22  max node len: 35
+%GTM-I-RECORDSTAT, ^cc:	  Key cnt: 5  max subsc len: 18  max rec len: 14  max node len: 26
+%GTM-I-RECORDSTAT, ^mix1:	  Key cnt: 1  max subsc len: 6  max rec len: 15  max node len: 25
+%GTM-I-RECORDSTAT, ^mix2:	  Key cnt: 1  max subsc len: 6  max rec len: 3  max node len: 13
+%GTM-I-RECORDSTAT, ^mix3:	  Key cnt: 1  max subsc len: 6  max rec len: 42  max node len: 52
+%GTM-I-RECORDSTAT, ^samplegbl:	  Key cnt: 28  max subsc len: 46  max rec len: 56  max node len: 75
+%GTM-I-RECORDSTAT, ^samplegblcp:	  Key cnt: 28  max subsc len: 48  max rec len: 56  max node len: 77
+%GTM-I-RECORDSTAT, ^uniA:	  Key cnt: 6  max subsc len: 9  max rec len: 32  max node len: 40
+%GTM-I-RECORDSTAT, ^uniATMP:	  Key cnt: 1  max subsc len: 9  max rec len: 14  max node len: 27
+%GTM-I-RECORDSTAT, ^uniB:	  Key cnt: 5  max subsc len: 9  max rec len: 19  max node len: 32
+%GTM-I-RECORDSTAT, ^uniBTMP:	  Key cnt: 1  max subsc len: 9  max rec len: 8  max node len: 21
+%GTM-I-RECORDSTAT, ^uniC:	  Key cnt: 3  max subsc len: 15  max rec len: 15  max node len: 22
+%GTM-I-RECORDSTAT, ^uniCTMP:	  Key cnt: 3  max subsc len: 26  max rec len: 13  max node len: 34
+%GTM-I-RECORDSTAT, ^uniD:	  Key cnt: 5  max subsc len: 9  max rec len: 12  max node len: 25
+%GTM-I-RECORDSTAT, ^uniX123:	  Key cnt: 2  max subsc len: 26  max rec len: 7  max node len: 29
+%GTM-I-RECORDSTAT, ^unia:	  Key cnt: 6  max subsc len: 9  max rec len: 32  max node len: 39
+%GTM-I-RECORDSTAT, ^unib:	  Key cnt: 5  max subsc len: 9  max rec len: 11  max node len: 18
+%GTM-I-RECORDSTAT, ^unic:	  Key cnt: 5  max subsc len: 9  max rec len: 19  max node len: 32
+%GTM-I-RECORDSTAT, ^uniname5678:	  Key cnt: 1  max subsc len: 13  max rec len: 100  max node len: 117
+%GTM-I-RECORDSTAT, ^uniname567890123456789012345678:	  Key cnt: 1  max subsc len: 33  max rec len: 84  max node len: 121
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 109  max subsc len: 48  max rec len: 100  max node len: 121
+
+########################################## 7 ########################################
+Testing %GSE
+
+GTM>
+
+Global Search for Every Occurrence
+
+Output device: <terminal>: 
+
+Global ^
+^samplegbl          ^samplegblcp        
+Current total of 2 globals.
+
+Global ^
+
+  <RET>                  to leave
+  "*"                    for all
+  global                 for 1 global
+  global1:global2        for a range
+  "*" as a wildcard      permitting any number of characters
+  "%" as a wildcard      for a single character in positions other than the first
+  "?" as a wildcard      for a single character in positions other than the first
+  "'" as the 1st character
+                         to remove globals from the list
+  ?D                     for the currently selected globals
+
+Global ^
+
+^samplegbl          ^samplegblcp        
+Global ^
+^samplegblcp        
+Current total of 1 global.
+
+Global ^
+^%uniYYY  
+Current total of 2 globals.
+
+Global ^
+
+Current total of 2 globals.
+
+Global ^
+
+^%uniYYY  ^samplegbl          
+Global ^
+
+Current total of 2 globals.
+
+Global ^
+
+Current total of 2 globals.
+
+Global ^
+Find string: 
+
+^%uniYYY  
+^%uniYYY        ａｂｃｄｅ ♞♘
+                           ^^
+
+Total 1 matches found in 1 nodes.
+^samplegbl          
+No matches found in 28 nodes.
+
+Global ^
+^%uniYYY  
+Current total of 1 global.
+
+Global ^
+
+Current total of 1 global.
+
+Global ^
+Find string: 
+
+
+The Find string contains control characters^%uniYYY         
+^%uniYYY        ａｂｃｄｅ	♞♘
+                        ^^^^^
+
+Total 1 matches found in 1 nodes.
+
+Global ^
+^samplegbl          ^samplegblcp        
+Current total of 2 globals.
+
+Global ^
+Find string: 
+
+^samplegbl          
+^samplegbl("umlaut")I have an umlaut ü
+                                     ^
+
+Total 1 matches found in 28 nodes.
+^samplegblcp        
+^samplegblcp("umlaut")I have an umlaut ü
+                                       ^
+
+Total 1 matches found in 28 nodes.
+
+Global ^
+^samplegbl          ^samplegblcp        
+Current total of 2 globals.
+
+Global ^
+Find string: 
+
+^samplegbl          
+^samplegbl("combining-umlaut")I have a combining umlaut ü
+                                                        ^
+
+Total 1 matches found in 28 nodes.
+^samplegblcp        
+^samplegblcp("combining-umlaut")I have a combining umlaut ü
+                                                          ^
+
+Total 1 matches found in 28 nodes.
+
+Global ^
+^samplegbl          ^samplegblcp        
+Current total of 2 globals.
+
+Global ^
+Find string: 
+
+^samplegbl          
+^samplegbl("u-and-umlaut")I have a u and an umlaut separately u¨
+                                                              ^^
+
+Total 1 matches found in 28 nodes.
+^samplegblcp        
+^samplegblcp("u-and-umlaut")I have a u and an umlaut separately u¨
+                                                                ^^
+
+Total 1 matches found in 28 nodes.
+
+Global ^
+^mix1     ^mix2     ^mix3     
+Current total of 3 globals.
+
+Global ^
+Find string: 
+
+^mix1     
+^mix1           我能 end here
+                ^^^^^^^^^^^^^
+
+Total 1 matches found in 1 nodes.
+^mix2     
+No matches found in 1 nodes.
+^mix3     
+No matches found in 1 nodes.
+
+Global ^
+^mix1     ^mix2     ^mix3     
+Current total of 3 globals.
+
+Global ^
+Find string: 
+
+^mix1     
+No matches found in 1 nodes.
+^mix2     
+^mix2           ♋
+                ^
+
+Total 1 matches found in 1 nodes.
+^mix3     
+No matches found in 1 nodes.
+
+Global ^
+^mix1     ^mix2     ^mix3     
+Current total of 3 globals.
+
+Global ^
+Find string: 
+
+^mix1     
+No matches found in 1 nodes.
+^mix2     
+No matches found in 1 nodes.
+^mix3     
+^mix3           我能吞下玻璃而不伤身体 end here
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Total 1 matches found in 1 nodes.
+
+Global ^
+^mix1     ^mix2     ^mix3     
+Current total of 3 globals.
+
+Global ^
+Find string: 
+
+^mix1     
+No matches found in 1 nodes.
+^mix2     
+No matches found in 1 nodes.
+^mix3     
+No matches found in 1 nodes.
+
+Global ^
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

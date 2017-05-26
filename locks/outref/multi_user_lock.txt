@@ -1,0 +1,78 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Multiple users trying to grab same lock
+
+GTM>
+-----------------------------
+-----------------------------
+P1, will now lock ^alongnamecheckingforlocks
+
+DEFAULT
+^alongnamecheckingforlocks
+##TEST_AWK                         Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+P1, will now release ^alongnamecheckingforlocks
+
+DEFAULT
+##TEST_AWK.alongnam Owned by PID= [0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+TEST PASSED
+-----------------------------
+
+GTM>
+
+
+GTM>
+The output from the second user is:
+#########################################################
+########
+
+GTM>
+--------------------------------------------
+P2, will now try to lock ^alongnam
+
+DEFAULT
+^alongnam Owned by PID= PID1 which is an existing process
+^alongnamecheckingforlocks
+                         Owned by PID= PID2 which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+P2, will now try to lock ^alongnamecheckingforlocks
+
+DEFAULT
+^alongnam Owned by PID= PID1 which is an existing process
+^alongnamecheckingforlocks
+                         Owned by PID= PID2 which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+P2, will now try to lock ^alongnam
+
+DEFAULT
+^alongnam Owned by PID= PID1 which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+P2, will now try to lock ^alongnamecheckingforlocks
+
+DEFAULT
+^alongnam Owned by PID= PID1 which is an existing process
+^alongnamecheckingforlocks
+                         Owned by PID= PID1 which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+--------------------------------------------
+
+GTM>
+
+GTM>
+End of user2 job!
+#########################################################
+End of Multiuser locks test
+# Test case for GTM-8157: GTMSECSHRPERM errors during process rundown (e.g. DSE QUIT) loop indefinitely
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> %GTM-E-GTMSECSHRPERM, The gtmsecshr module in $gtm_dist does not have the correct permission and uid
+%GTM-E-NOTALLDBRNDWN, Not all regions were successfully rundown
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,68 @@
+###################################################################
+Step 1 ===> Prepare a MSR configuration with two instances
+###################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+###################################################################
+Step 2 ===> Start some updates in the background...
+###################################################################
+
+###################################################################
+Step 3 ===> Get the PID of the update process and receiver server
+###################################################################
+=====> Receiver server PID = ##FILTERED##GTM_TEST_DEBUGINFO.*
+=====> Update process PID = ##FILTERED##GTM_TEST_DEBUGINFO.*
+
+###################################################################
+Step 4 ===> Stop IMPTP, Crash Update Process & MUPIP STOP Receiver Server
+###################################################################
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2 sync_to_disk'==
+Time before KILLing Update Process - ##FILTERED##GTM_TEST_DEBUGINFO.*
+Time after KILLing Update Process - ##FILTERED##GTM_TEST_DEBUGINFO.*
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replicate -source -freeze=off'==
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip stop ##FILTERED## >&! mupip_stop_receiver.out'==
+Time after MUPIP STOP Receiver Server - ##FILTERED##GTM_TEST_DEBUGINFO.*
+----------
+Error FORCEDHALT seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+----------
+Error GTM-F-FORCEDHALT seen in msr_execute_##FILTERED##NO.out as expected:
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+
+###################################################################
+Step 5 ===> Bring back the Receiver Server
+###################################################################
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -receiver -start -listen=__SRC_PORTNO__ -log=receiver_restart.log'==
+###################################################################
+Step 6 ===> SYNC/VERIFY/STOP both ends
+###################################################################
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT ALL'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

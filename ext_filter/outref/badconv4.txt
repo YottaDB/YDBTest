@@ -1,0 +1,43 @@
+External Filter test with second mini-transaction changed into a dummy wrapped transaction with 2 sets
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+----------
+Error FILTERBADCONV seen in ##REMOTE_TEST_PATH##/##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+%GTM-E-FILTERBADCONV, Bad conversion of seqno 0000000000000002 by filter
+----------
+Expect DATABASE EXTRACT to fail due to receiver dying
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+TEST-E-FAILED: DATABASE EXTRACTs on PRIMARY and SECONDARY are DIFFERENT. Check RF_EXTR_debuglog.out for details
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Globals on secondary after badconv4:
+^abc="1234"
+##TEST_AWK##TEST_HOST_SHORT##:##TEST_PATH##/rf_sync_.*
+RFSYNC-E-FAIL wait_until_rcvr_backlog_below.csh failed with the below
+RCVR_BACKLOG-E-NOTALIVE Receiver/Update process is not alive
+##TEST_AWK##TEST_REMOTE_HOST_SHORT##:##REMOTE_TEST_PATH##/rf_sync_.*
+RCVR_BACKLOG-E-NOTALIVE Receiver/Update process is not alive

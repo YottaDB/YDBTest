@@ -1,0 +1,91 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+STEP 1 ==> Create some V6 blocks (global ^a)
+###################################################################
+
+###################################################################
+STEP 2 ==> Set database to V4 format
+###################################################################
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V4
+
+###################################################################
+STEP 3 ==> Updates to global ^b. This will touch BLOCK 0 (BITMAP) and BLOCK 2 (DIRECTORY TREE) thereby downgrading them to V4
+###################################################################
+
+###################################################################
+STEP 4 ==> KILL ^b. This will create a lot of V4 reusable blocks
+###################################################################
+
+###################################################################
+STEP 5 ==> Bring the database back to V6
+###################################################################
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
+
+###################################################################
+STEP 6 ==> More updates: will touch the BITMAP and DIRECTORY TREE thereby upgrading them to V6 again
+###################################################################
+
+###################################################################
+STEP 7 ==> More updates to ^b which will touch the remanant TREE from KILL ^b and hence upgrading them to V6
+###################################################################
+
+###################################################################
+### At this point, we have NO V4 BUSY blocks, but some V4 REUSABLE blocks and database is NOT Fully Upgraded ###
+###################################################################
+  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+  Database is Fully Upgraded                : FALSE
+
+###################################################################
+STEP 8 ==> UPGRADE will touch all the REUSABLE blocks (remanant of KILL ^B) and will write their BEFORE IMAGES
+###################################################################
+
+Region DEFAULT : MUPIP REORG UPGRADE started
+Region DEFAULT : Desired DB Format remains at V6 after MUPIP REORG UPGRADE
+Region DEFAULT : Started processing from block number [0x00000000]
+Region DEFAULT : Stopped processing at block number [0x00000065]
+Region DEFAULT : Statistics : Blocks Read From Disk (Bitmap)     : 0x00000001
+Region DEFAULT : Statistics : Blocks Skipped (Free)              : 0x00000045
+Region DEFAULT : Statistics : Blocks Read From Disk (Non-Bitmap) : 0x0000001F
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in disk)   : 0x00000017
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in cache)  : 0x00000000
+Region DEFAULT : Statistics : Blocks Converted (Bitmap)          : 0x00000000
+Region DEFAULT : Statistics : Blocks Converted (Non-Bitmap)      : 0x00000009
+Region DEFAULT : Total Blocks = [0x00000065] : Free Blocks = [0x0000004E] : Blocks to upgrade = [0x00000000]
+Region DEFAULT : Database is now FULLY UPGRADED
+Region DEFAULT : MUPIP REORG UPGRADE finished
+
+
+###################################################################
+STEP 9 ==> Get the time of the last PBLK record. This will be our -SINCE and -BEFORE time for the forthcoming RECOVER command
+###################################################################
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+###################################################################
+STEP 10 ==> RECOVER the database with a SINCE time set to the LAST PBLK record so that all the updates by REORG are undone
+###################################################################
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+
+###################################################################
+### At this point, cs_data->fully_upgraded should be FALSE ###
+###################################################################
+  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+  Database is Fully Upgraded                : FALSE
+
+###################################################################
+STEP 11 ==> Do a few updates in the final retry which will cause a reusable block to be read. We should see no errors/asserts
+###################################################################
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,50 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+Do cmmit^nointrpt
+
+Transaction Starts....
+
+$ZTEXIT = 0
+
+End of transaction....
+
+$ZTEXIT = 0
+
+GTM>
+
+GTM>
+
+Do cmmitd^nointrpt
+
+Transaction Starts....
+
+$ZTEXIT = 1
+
+End of transaction....
+
+$ZTEXIT = 1
+
+GTM>
+
+GTM>
+
+Do rollbck^nointrpt
+
+Transaction Starts....
+
+$ZTEXIT = 0
+
+End of transaction....
+
+$ZTEXIT = 0
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

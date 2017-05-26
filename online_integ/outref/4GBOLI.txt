@@ -1,0 +1,39 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Let's get our large database which is an augmented version of the WorldVista db
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_LINUX_IX86 MM
+##SUSPEND_OUTPUT BG
+%GTM-E-MMFILETOOLARGE, Size of DEFAULT region (##TEST_PATH##/mumps.dat) is larger than maximum size supported for memory mapped I/O on this platform
+##ALLOW_OUTPUT HOST_ALL BG
+###################################################################
+# Multiple updater processes start in the background
+###################################################################
+# Start the online integ while the background updaters are active
+# Try to run another online integ in the background to verify only one can run at a time
+# Let's do a merge of a relatively large global to ensure we have plenty of realistic updates
+
+GTM>
+
+GTM>
+###################################################################
+# Stop the background updaters
+###################################################################
+# Wait for background online integs to complete
+###################################################################
+# Verify MAXSSREACHED error is present.
+###################################################################
+----------
+##TEST_AWKError MAXSSREACHED seen in online_integ..out as expected:
+%GTM-E-MAXSSREACHED, Maximum snapshots - 1 - for region DEFAULT reached. Please wait for the existing snapshots to complete before starting a new one.
+----------
+----------
+##TEST_AWKError MUNOTALLINTEG seen in online_integ..out as expected:
+%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+----------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

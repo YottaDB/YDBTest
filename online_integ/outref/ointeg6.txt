@@ -1,0 +1,34 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+###################################################################
+# Kick off online integ in the background and have it wait once the snapshot is started.
+###################################################################
+###################################################################
+# Now that snapshot is started, do some updates with ^alongvariable so that before image is written
+###################################################################
+
+GTM>
+
+GTM>
+###################################################################
+# Signal the online integ to proceed
+###################################################################
+###################################################################
+# Wait for background online integ to complete
+###################################################################
+###################################################################
+# Verify that ^alongvariable is not present in the snapshot file
+###################################################################
+# TEST PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

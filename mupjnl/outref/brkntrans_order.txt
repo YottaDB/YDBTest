@@ -1,0 +1,62 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Starting updates
+
+GTM>
+
+GTM>
+
+GTM>
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+##TEST_AWK##FILTERED##SHOW output for journal file ##TEST_PATH##/[ab].mjl_##TIMESTAMP##
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+-------------------------------------------------------------------------------
+##TEST_AWK##FILTERED##SHOW output for journal file ##TEST_PATH##/[ab].mjl_##TIMESTAMP##
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-I-FILECREATE, Broken transactions extract file a.broken created
+%GTM-I-FILECREATE, Lost transactions extract file a.lost created
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##TEST_AWKDB Extract.*
+%GTM-I-RECORDSTAT, ^c:	  Key cnt: 2  max subsc len: 6  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 1  max node len: 11
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+^c(1)="1"
+^c(2)="2"
+Check a(2) and b(1) are there in the broken file
+05\#TIMESTAMP#\1\##pid##\0\#TOKENSEQ1#\0\#STRMSEQNO#\1\#NODEFLAGS#\^b(1)="1"
+05\#TIMESTAMP#\1\##pid##\0\#TOKENSEQ2#\0\#STRMSEQNO#\1\#NODEFLAGS#\^a(2)="1"
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

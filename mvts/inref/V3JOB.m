@@ -1,0 +1,55 @@
+V3JOB ;IW-KO-YS-TS,VV3,MVTS V9.10;15/6/96;PART-90
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1990-1996
+ ;
+ W !!,"34---V3JOB: JOB command",!
+ ;
+1 S ^ABSN="30359",^ITEM="III-359  JOB ^routinename"
+ S ^NEXT="2^V3JOB,V3LOCK^VV3" D ^V3PRESET
+ K ^V3JOB S V3JOB=1
+ JOB ^V3JOBEXA
+ F I=1:1:100 Q:$D(^V3JOB)=1  H 1
+ I $D(^V3JOB)=0 S ^V3JOB="JOB ERROR"
+ S ^VCOMP=V3JOB_"/"_(^V3JOB=$J)
+ S ^VCORR="1/0" D ^VEXAMINE
+ ;
+2 S ^ABSN="30360",^ITEM="III-360  J label^routinename"
+ S ^NEXT="3^V3JOB,V3LOCK^VV3" D ^V3PRESET
+ K ^V3JOB S V3JOB=2
+ J B^V3JOBEXA
+ F I=1:1:100 Q:$D(^V3JOB)=1  H 1
+ I $D(^V3JOB)=0 S ^V3JOB="JOB ERROR"
+ S ^VCOMP=V3JOB_"/"_(^V3JOB="OK")
+ S ^VCORR="2/1" D ^VEXAMINE
+ ;
+3 S ^ABSN="30361",^ITEM="III-361  JOB label"
+ S ^NEXT="4^V3JOB,V3LOCK^VV3" D ^V3PRESET
+ K ^V3JOB S V3JOB=3
+ JOB B
+ F I=1:1:100 Q:$D(^V3JOB)=1  H 1
+ I $D(^V3JOB)=0 S ^V3JOB="JOB ERROR"
+ S ^VCOMP=V3JOB_"/"_(^V3JOB="OK")
+ S ^VCORR="3/1" D ^VEXAMINE
+ ;
+ W !!,"Simultaneous evoking of the same routine",!
+ ;
+4 S ^ABSN="30362",^ITEM="III-362  JOB ^V3A J ^V3A"
+ S ^NEXT="V3LOCK^VV3" D ^V3PRESET
+ K ^V3JOB S V3JOB=4 S ^VCOMP=1,^V3JOB=1 L
+ JOB ^V3A:(output="V3A1.mjo":error="V3A1.mje")
+ J ^V3A:(output="V3A2.mjo":error="V3A2.mje")
+ ; Increasing the time here as wait of 100 sec is not enough.
+ ; This will lead to ^V3JOB being killed and test failing.
+ F I=1:1:3600 L ^V3JOB  Q:^V3JOB>1000  L  H 1
+ S ^VCORR="12121212121212121212121212121212121212121" D ^VEXAMINE
+ Write "Exit with I=",I," ^V3JOB=",^V3JOB,!
+ K ^V3JOB  L
+ ;
+END W !!,"End of 34 --- V3JOB",!
+ K  Q
+ ;
+B S V3JOB="LVN ERROR"
+ S ^V3JOB="OK"
+ H
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

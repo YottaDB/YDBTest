@@ -1,0 +1,220 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+  Reserved Bytes                          0  Block size (in bytes)         2048
+  Maximum record size                  1500  Starting VBN                   513
+  Maximum key size                     1019  Total blocks            0x00000065
+#######################################################
+# Perform some simple operations with large keys
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               5           2.441            NA
+Index               4              37          29.101             1
+Data               37            2031          60.511            24
+Free               57              NA              NA            NA
+Total             100            2073              NA            25
+$reference: ^x("                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  1014")
+zwrite ^x
+^x("                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  1014")=1014
+^x("                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 1013")=1013
+sum ^x(i) = 514605
+merge ^y=^x
+sum ^y(i) = 514605
+^z(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              keyend")="val"
+#######################################################
+# Test DSE functionality
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Key found in block  2A.
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	2B:10,	2A:413,
+DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+##TEST_AWKBlock 2A   Size 41E   Level 0   TN .* V[46]
+
+Rec:1  Blk 2A  Off 10  Size 403  Cmpc 0  Key ^d("                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  1013")
+##TEST_AWK      10 : |  .*  .*  0  .* 64  0 FF 20 20 20 20 20 20 20 20 20 20 20 20 20|
+##TEST_AWK            |  .  .  .  .*  d  .  .                                       |
+      24 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+      38 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+      4C : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+      60 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+      74 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+      88 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+      9C : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+      B0 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+      C4 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+      D8 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+      EC : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     100 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     114 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     128 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     13C : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     150 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     164 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     178 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     18C : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     1A0 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     1B4 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     1C8 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     1DC : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     1F0 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     204 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     218 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     22C : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     240 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     254 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     268 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     27C : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     290 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     2A4 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     2B8 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     2CC : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     2E0 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     2F4 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     308 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     31C : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     330 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     344 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     358 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     36C : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     380 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     394 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     3A8 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     3BC : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     3D0 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     3E4 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20|
+           |                                                            |
+     3F8 : | 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 31 30 31|
+           |                                                     1  0  1|
+     40C : | 33  0  0 31 30 31 33                                       |
+           |  3  .  .  1  0  1  3                                       |
+
+Rec:2  Blk 2A  Off 413  Size B  Cmpc 3F8  Key ^d("                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  1014")
+##TEST_AWK     417 : |  .*  .* FF FF 34  0  0 31 30 31 34                           |
+           |  .  .  .  .  4  .  .  1  0  1  4                           |
+
+#######################################################
+# Test various errors that should show up
+# 1. Get some GVSUBOFLOW messages
+# 2. Get some integ errors
+No errors detected by integ.
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+#######################################################
+# Test MUPIP SET -KEY_SIZE and -RECORD_SIZE
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+  Reserved Bytes                          0  Block size (in bytes)         2048
+  Maximum record size                   100  Starting VBN                   513
+  Maximum key size                      255  Total blocks            0x00000065
+Database file ##TEST_PATH##/mumps.dat now has maximum key size 1019
+1018 smaller than current maximum key size 1019
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+%GTM-W-MUPIPSET2BIG, 1024 too large, maximum KEY_SIZE allowed is 1019
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+Database file ##TEST_PATH##/mumps.dat now has maximum record size 1500
+  Reserved Bytes                          0  Block size (in bytes)         2048
+  Maximum record size                  1500  Starting VBN                   513
+  Maximum key size                     1019  Total blocks            0x00000065
+#######################################################
+# Test MUPIP EXTRACT and LOAD
+### -format=zwr ###
+%GTM-I-RECORDSTAT, ^d:	  Key cnt: 2  max subsc len: 1019  max rec len: 4  max node len: 1027
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 1014  max subsc len: 1019  max rec len: 4  max node len: 1027
+%GTM-I-RECORDSTAT, ^y:	  Key cnt: 1014  max subsc len: 1019  max rec len: 4  max node len: 1025
+%GTM-I-RECORDSTAT, ^yy:	  Key cnt: 1  max subsc len: 7  max rec len: 1  max node len: 12
+%GTM-I-RECORDSTAT, ^z:	  Key cnt: 1  max subsc len: 595  max rec len: 3  max node len: 602
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2032  max subsc len: 1019  max rec len: 4  max node len: 1027
+### -format=bin ###
+%GTM-I-RECORDSTAT, ^d:	  Key cnt: 2  max subsc len: 1019  max rec len: 4  max node len: 1027
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 1014  max subsc len: 1019  max rec len: 4  max node len: 1027
+%GTM-I-RECORDSTAT, ^y:	  Key cnt: 1014  max subsc len: 1019  max rec len: 4  max node len: 1025
+%GTM-I-RECORDSTAT, ^yy:	  Key cnt: 1  max subsc len: 7  max rec len: 1  max node len: 12
+%GTM-I-RECORDSTAT, ^z:	  Key cnt: 1  max subsc len: 595  max rec len: 3  max node len: 602
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2032  max subsc len: 1019  max rec len: 4  max node len: 1027
+Created file ##TEST_PATH##/mumps.dat
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 2032  Max Subsc Len: 1019  Max Data Len: 4
+Last LOAD record number: 39
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

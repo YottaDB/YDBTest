@@ -1,0 +1,23 @@
+##TEST_AWK# Generating [0-9]* locals.
+# Saving the locals to parentlocals.out
+# Passing the locals to the child
+# Waiting for the child to finish writing and quit
+# Comparing the locals of the parent and child
+# Setting a pattern of locals in gtm4414b
+# Verified that the locals have passed in gtm4414b
+# Triggering the JOBLVN2LONG error
+JOBLVN2LONG is present in the file joblvnerror.outx
+# Wait for grandchild to quit
+----------
+Error JOBLVN2LONG seen in joblvn2longmsg.out as expected:
+%GTM-E-JOBLVN2LONG, The zwrite representation of a local variable transferred to a JOB'd process is too long. The zwrite representation cannot exceed 1048576. Encountered size: 1048577
+----------
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+Check that relinkctl ipcs are not left over in case of JOBLVN2LONG error (GTM-8224).
+Running mupip rctldump . and verifying # of routines is 0 and # of attached processes is 1
+# of routines / max      : 0 / 50000
+# of attached processes  : 1
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

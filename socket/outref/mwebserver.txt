@@ -1,0 +1,22 @@
+ENTERING mwebserver TLS Socket test
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+mwebserver ping PASSED
+mwebserver home PASSED
+##TEST_AWKmwebserver ping via curl (PASSED|MISSING)
+##TEST_AWKmwebserver home via curl (PASSED|MISSING)
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ mumps.dat
+No errors detected by integ.
+LEAVING mwebserver TLS Socket test

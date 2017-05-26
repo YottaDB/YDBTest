@@ -1,0 +1,57 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+------------------------------------
+List of tids in journal extract file
+------------------------------------
+05\^x="tp"
+09\
+05\^x(1)="tp1"
+09\
+05\^x(1)="tp1a"
+09\a
+05\^x(1)="tp1abcdefgh"
+09\abcdefgh
+05\^x(1)="tp2"
+05\^x(2)="tp2"
+09\
+05\^x(1)="tp2"
+05\^x(2)="tp2abc"
+09\
+05\^x(1)="tp27.5"
+05\^x(2)="tp2"
+09\7.5
+05\^x(1)="tp2efgh"
+05\^x(2)="tp2IJKLM"
+09\efgh
+05\^x(1)="tp2NOPQRS"
+05\^x(2)="tp2tuvwxyz"
+09\NOPQRS
+05\^x(1)="tp3"
+05\^x(2)="tp3a"
+05\^x(3)="tp3bc"
+09\
+05\^x(1)="tp3def"
+05\^x(2)="tp3"
+05\^x(3)="tp3gh"
+09\def
+05\^x(1)="tp3ijklm"
+05\^x(2)="tp3nopq"
+05\^x(3)="tp3"
+09\ijklm
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

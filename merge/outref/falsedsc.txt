@@ -1,0 +1,84 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+falsedsc test starts
+S9B12-002008 MERGE command gives false MERGEDESC error
+ZWR ^var2
+^var2("new",100)=100
+^var2("new",100,200)=300
+^var2("new","ind")="abc"
+^var2("new","ind1")="def"
+^var2("new","ind2")="ghi"
+^var2("new","ind2","ind4")="jkl"
+ZWR ^var(102)
+^var(102)=100
+ZWR ^var(100,209)
+^var(100,209)=300
+ZWR ^var(1000)
+^var(1000)=100
+ZWR ^var(10)
+^var(10)=100
+ZWR ^var("inda")
+^var("inda")="abc"
+ZWR ^var("ind3")
+^var("ind3")="ghi"
+ZWR ^var("ind")
+^var("ind")="ghi"
+GTM-6935 MERGE self c/should be a NOOP rather than an error
+ZWR ^var
+^var="Hello world"
+ZWR varlcl
+varlcl="Hello local world"
+i=1
+i=2
+i=3
+i=4
+i=5
+i=6
+i=7
+i=8
+i=9
+i=10
+j=1
+j=2
+j=3
+j=4
+j=5
+j=6
+j=7
+j=8
+j=9
+j=10
+GTM-3589 MERGE of an undefined value should be a NOOP rather than an error
+$data(^VAR)=0
+$data(^varlcl)=0
+Test of MERGE LVN1(1,2)=LVN2 where both src and dst are undef at time of merge
+$query(LVN1(1)) = 
+falsedsc test done
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

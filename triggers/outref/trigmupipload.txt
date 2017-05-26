@@ -1,0 +1,89 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+Output File: 
+;trigger name: a#1 (region DEFAULT)  cycle: 1
++^a(subs=*) -commands=S -xecute="set ^b(subs)=$ZTVALUE write $ztrig,$c(9),$reference,"" = "",$ZTVALUE,!"
+
+###################################################################
+output from trigmupipload M routine
+###################################################################
+
+Updates to ^a() trigger the following changes to ^b()
+S	^b(1) = 1
+S	^b(2) = 2
+S	^b(3) = 3
+S	^b(4) = 4
+S	^b(5) = 5
+S	^b(6) = 6
+S	^b(7) = 7
+S	^b(8) = 8
+S	^b(9) = 9
+S	^b(10) = 10
+
+###################################################################
+
+
+GTM>
+
+GTM>
+%GTM-E-GVUNDEF, Global variable undefined: ^b
+
+GTM>
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
+
+GTM>
+
+GTM>
+%GTM-E-GVUNDEF, Global variable undefined: ^a
+
+GTM>
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 6  Max Data Len: 2
+Last LOAD record number: 12
+
+
+GTM>
+^a(1)=1
+^a(2)=2
+^a(3)=3
+^a(4)=4
+^a(5)=5
+^a(6)=6
+^a(7)=7
+^a(8)=8
+^a(9)=9
+^a(10)=10
+%GTM-E-GVUNDEF, Global variable undefined: ^b
+
+GTM>
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT REPLIC
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

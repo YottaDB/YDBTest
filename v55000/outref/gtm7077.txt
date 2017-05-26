@@ -1,0 +1,28 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+GTM>
+%GTM-I-RECORDSTAT, ^test:	  Key cnt: 10000  max subsc len: 10  max rec len: 100  max node len: 114
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 10000  max subsc len: 10  max rec len: 100  max node len: 114
+
+GTM>
+
+GTM>
+##TEST_AWK.*        
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 10000  Max Subsc Len: 10  Max Data Len: 100
+Last LOAD record number: 18
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

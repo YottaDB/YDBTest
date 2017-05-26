@@ -1,0 +1,69 @@
+V4FN31 ;IW-KO-YS-TS,V4FNUM,MVTS V9.10;15/6/96;PART-94
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+ W !!,"16---V4FN31:  $FNUMBER function  -6-"
+ ;
+ W !!,"$FNUMBER(numexpr,fncodexpr,intexpr)"
+ W !,"fncodexpr is an empty string"
+ ;
+1 S ^ABSN="40134",^ITEM="IV-134  $FNUMBER(-00020000.00000,"""",0)"
+ S ^NEXT="2^V4FN31,V4FN32^V4FNUM,V4REV^VV4" D ^V4PRESET
+ ;S ^VCOMP=$FNUMBER(-00020000.00000,"",0)
+ ;S ^VCORR="-20000" D ^VEXAMINE
+ W !,"   ",^ITEM
+ W !,"     (This test IV-134 was withdrawn in 31/3/1995 on X11.1-1994, MSL)"
+ S ^VREPORT("Part-94",^ABSN)="*WITHDR*"
+ ;
+2 S ^ABSN="40135",^ITEM="IV-135  $FN(09878979.78E-2,"""",1)"
+ S ^NEXT="3^V4FN31,V4FN32^V4FNUM,V4REV^VV4" D ^V4PRESET
+ ;S ^VCOMP=$FN(09878979.78E-2,"",1)
+ ;S ^VCORR="98789.8" D ^VEXAMINE
+ W !,"   ",^ITEM
+ W !,"     (This test IV-135 was withdrawn in 31/3/1995 on X11.1-1994, MSL)"
+ S ^VREPORT("Part-94",^ABSN)="*WITHDR*"
+ ;
+3 S ^ABSN="40136",^ITEM="IV-136  $FN(-""0000.951200000"","""",1)"
+ S ^NEXT="4^V4FN31,V4FN32^V4FNUM,V4REV^VV4" D ^V4PRESET
+ ;S ^VCOMP=$FN(-"0000.951200000","",1)
+ ;S ^VCORR="-1.0" D ^VEXAMINE
+ W !,"   ",^ITEM
+ W !,"     (This test IV-136 was withdrawn in 31/3/1995 on X11.1-1994, MSL)"
+ S ^VREPORT("Part-94",^ABSN)="*WITHDR*"
+ ;
+4 S ^ABSN="40137",^ITEM="IV-137  $FN(""603.450000000E+4"","""",3)"
+ S ^NEXT="5^V4FN31,V4FN32^V4FNUM,V4REV^VV4" D ^V4PRESET
+ ;S ^VCOMP=$FN("603.450000000E+4","",3)
+ ;S ^VCORR="6034500.000" D ^VEXAMINE
+ W !,"   ",^ITEM
+ W !,"     (This test IV-137 was withdrawn in 31/3/1995 on X11.1-1994, MSL)"
+ S ^VREPORT("Part-94",^ABSN)="*WITHDR*"
+ ;
+5 S ^ABSN="40138",^ITEM="IV-138  $fn(9.999979,"""",4)"
+ S ^NEXT="6^V4FN31,V4FN32^V4FNUM,V4REV^VV4" D ^V4PRESET
+ ;S ^VCOMP=$fn(9.999979,"",4)
+ ;S ^VCORR="10.0000" D ^VEXAMINE
+ W !,"   ",^ITEM
+ W !,"     (This test IV-138 was withdrawn in 31/3/1995 on X11.1-1994, MSL)"
+ S ^VREPORT("Part-94",^ABSN)="*WITHDR*"
+ ;
+6 S ^ABSN="40139",^ITEM="IV-139  $fn(0000.00000951200000,"""",8)"
+ S ^NEXT="7^V4FN31,V4FN32^V4FNUM,V4REV^VV4" D ^V4PRESET
+ ;S ^VCOMP=$fn(0000.00000951200000,"",8)
+ ;S ^VCORR="0.00000951" D ^VEXAMINE
+ W !,"   ",^ITEM
+ W !,"     (This test IV-139 was withdrawn in 31/3/1995 on X11.1-1994, MSL)"
+ S ^VREPORT("Part-94",^ABSN)="*WITHDR*"
+ ;
+7 S ^ABSN="40140",^ITEM="IV-140  $FN(-0000.00000951200000,"""",8)"
+ S ^NEXT="V4FN32^V4FNUM,V4REV^VV4" D ^V4PRESET
+ ;S ^VCOMP=$FN(-0000.00000951200000,"",8)
+ ;S ^VCORR="-0.00000951" D ^VEXAMINE
+ W !,"   ",^ITEM
+ W !,"     (This test IV-140 was withdrawn in 31/3/1995 on X11.1-1994, MSL)"
+ S ^VREPORT("Part-94",^ABSN)="*WITHDR*"
+ ;
+END W !!,"End of 16 --- V4FN31",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

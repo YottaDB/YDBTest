@@ -1,0 +1,67 @@
+V4QSUB14 ;IW-KO-YS-TS,V4QSUB,MVTS V9.10;15/6/96;PART-94
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+ W !!,"67---V4QSUB14:  $QSUBSCRIPT function  -14-"
+ ;
+1 S ^ABSN="40498",^ITEM="IV-498  namevalue contains lvn"
+ S ^NEXT="2^V4QSUB14,V4QSUB15^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S GVN="^V(-.00345,345,""ABCDEFG"",345)"
+ S ^VCOMP=$QS(GVN,3)
+ S ^VCORR="ABCDEFG" D ^VEXAMINE
+ ;
+2 S ^ABSN="40499",^ITEM="IV-499  namevalue contains gvn"
+ S ^NEXT="3^V4QSUB14,V4QSUB15^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^V(123,456)="^V12345(123,456)"
+ S ^VCOMP=$QS(^V(123,456),0)
+ S ^VCORR="^V12345" D ^VEXAMINE
+ ;
+3 S ^ABSN="40500",^ITEM="IV-500  namevalue contains operators"
+ S ^NEXT="4^V4QSUB14,V4QSUB15^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^V(-4,1)="^V(1,2,3)",A=4
+ S ^VCOMP=$QS(^V(-A,1),4)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+4 S ^ABSN="40501",^ITEM="IV-501  namevalue contains naked refernce"
+ S ^NEXT="5^V4QSUB14,V4QSUB15^V4QSUB,V4SVQ^VV4" D ^V4PRESET K  K ^V
+ S ^V(1,2,3)="^V12345(11,22,33,44,55)",^V(1,2,2)=0,^V(1,2)=2
+ S ^VCOMP=$QS(^(2,3),^(2))_" "_^(2)
+ S ^VCORR="^V12345 0" D ^VEXAMINE K ^V
+ ;
+5 S ^ABSN="40502",^ITEM="IV-502  namevalue has indirections"
+ S ^NEXT="6^V4QSUB14,V4QSUB15^V4QSUB,V4SVQ^VV4" D ^V4PRESET K  K ^V
+ S NAME="^V(""Z"",""E"",""R"")",A=5,^V("Z","E","R")="^V(1,2,3,4,""000"")"
+ S ^VCOMP=$QS(@NAME,A)
+ S ^VCORR="000" D ^VEXAMINE
+ ;
+ W !!,"namevalue contains functions"
+ ;
+6 S ^ABSN="40503",^ITEM="IV-503  namevalue contains $GET function"
+ S ^NEXT="7^V4QSUB14,V4QSUB15^V4QSUB,V4SVQ^VV4" D ^V4PRESET K  K ^V
+ S ^V(1,2)="^V(""ZZZZZ"",""000999999"")",^V(1,1)="11",^V(1)="1"
+ S ^VCOMP=$QS($G(^V(1,2)),2)_" "_^(1)
+ S ^VCORR="000999999 11" D ^VEXAMINE K ^V
+ ;
+7 S ^ABSN="40504",^ITEM="IV-504  namevalue contains $ORDER function"
+ S ^NEXT="8^V4QSUB14,V4QSUB15^V4QSUB,V4SVQ^VV4" D ^V4PRESET K  K ^V
+ S ^V("I")="^V(-9939392,-23843,-283848,-2838)"
+ S ^VCOMP=$qs(^V($O(^V(99))),1)
+ S ^VCORR="-9939392" D ^VEXAMINE K ^V
+ ;
+8 S ^ABSN="40505",^ITEM="IV-505  namevalue contains $QUERY function"
+ S ^NEXT="9^V4QSUB14,V4QSUB15^V4QSUB,V4SVQ^VV4" D ^V4PRESET K  K ^V
+ S ^V(9,230)=""
+ S ^V(1110,2300)=""
+ S ^VCOMP=$QS($Q(^V(9)),23)
+ S ^VCORR="" D ^VEXAMINE K ^V
+ ;
+9 S ^ABSN="40506",^ITEM="IV-506  namevalue contains $SELECT function"
+ S ^NEXT="V4QSUB15^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S A=2,B="^V(1929,39848)",C="^V(""00000"",""-000012"")",D="^V(123,344)"
+ S ^VCOMP=$QS(@$S(A=1:"B",A=2:"C",1:"D"),2)
+ S ^VCORR="-000012" D ^VEXAMINE
+ ;
+END W !!,"End of 67 --- V4QSUB14",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

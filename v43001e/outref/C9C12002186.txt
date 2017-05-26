@@ -1,0 +1,55 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+zwrite ?1A
+x=1
+y=1
+z=1
+zwrite ?1A1E
+xy=1
+xz=1
+yz=1
+zwrite ?1A.E
+str="?1A.E"
+str1="zwrite ?1A.E"
+x=1
+xy=1
+xyz=1
+xz=1
+y=1
+yz=1
+z=1
+zwrite ^?1A
+^x=1
+^y=1
+^z=1
+zwrite ^?1A1E
+^xy=1
+^yz=1
+^zx=1
+zwrite ^?1A.E
+^x=1
+^xy=1
+^xyz=1
+^y=1
+^yz=1
+^z=1
+^zx=1
+
+##TEST_PATH##/c002186.o
+##TEST_PATH##/c002186.o
+##TEST_PATH##/c002186.o
+##TEST_PATH##/c002186.o
+##TEST_PATH##/c002186.o
+##TEST_PATH##/c002186.o
+##TEST_PATH##/c002186.o
+##TEST_PATH##/c002186.o
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

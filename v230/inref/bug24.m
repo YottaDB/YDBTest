@@ -1,0 +1,5 @@
+MAIN	F I=1:1:80 D PROC
+	Q
+PROC	W "TEST LINE"_I
+	F J=2:1:I F K=1:1:100 S X=K
+	W ?20,$J(I*20/20*.1,8,2),?34,$J(I*20/10,8,2),!

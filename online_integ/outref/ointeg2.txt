@@ -1,0 +1,28 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+###################################################################
+# Run online integ to verify it does not support V4 databases
+###################################################################
+###################################################################
+# Verify SSV4NOALLOW error is present.
+###################################################################
+----------
+Error SSV4NOALLOW seen in mupip_log1.log as expected:
+%GTM-E-SSV4NOALLOW, Database snapshots are supported only on fully upgraded V5 databases. ##TEST_PATH##/mumps.dat has V4 format blocks.
+----------
+----------
+Error MUNOTALLINTEG seen in mupip_log1.log as expected:
+%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+----------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

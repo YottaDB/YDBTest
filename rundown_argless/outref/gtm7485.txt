@@ -1,0 +1,51 @@
+##SUSPEND_OUTPUT PRO
+
+###################################################################
+Create database and start replication
+###################################################################
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+###################################################################
+Wait for connection to be established
+###################################################################
+
+
+###################################################################
+Shutdown Receiver Server and do a concurrent argument-less MUPIP RUNDOWN
+###################################################################
+
+##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating shut down
+GTMRECV_SHUTDOWN is about to start long sleep
+##FILTERED##... ... .. ..:..:.. 20.. : Receive pool shared memory removed
+##FILTERED##... ... .. ..:..:.. 20.. : Receive pool semaphore removed
+
+###################################################################
+Shutdown Primary Source Server and do a concurrent argument-less MUPIP RUNDOWN
+###################################################################
+
+##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHUTDOWN operation on source server pid [##PID##] for secondary instance [INSTANCE2]
+##FILTERED##... ... .. ..:..:.. 20.. : Waiting for upto XXX seconds for the source server to shutdown
+GTMSOURCE_SHUTDOWN is about to start long sleep
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool shared memory removed
+##FILTERED##... ... .. ..:..:.. 20.. : Journal pool semaphore removed
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT PRO

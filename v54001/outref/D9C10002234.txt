@@ -1,0 +1,23 @@
+Starting D9C10002234
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_UTF8
+setenv gtm_chset UTF-8
+unset echo
+
+PASS from D9C10002234
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ mumps.dat
+No errors detected by integ.
+##ALLOW_OUTPUT NON_UTF8
+setenv gtm_chset M
+unset echo
+
+PASS from D9C10002234
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ mumps.dat
+No errors detected by integ.
+Ending D9C10002234

@@ -1,0 +1,75 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+PASS from fill1^myfill("set")
+
+GTM>
+PASS from fill1^myfill("ver")
+
+GTM>
+-------------------------------------------------------------------------------
+Backup without gtm_passwd and expect to work
+-------------------------------------------------------------------------------
+unsetenv gtm_passwd
+#####################################################
+mupip backup -bytestream DEFAULT ./back1
+%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+MUPIP backup of database file ##TEST_PATH##/mumps.dat to ./back1/mumps.dat
+DB file ##TEST_PATH##/mumps.dat incrementally backed up in file ./back1/mumps.dat
+297 blocks saved.
+##TEST_AWKTransactions from 0x[0-9A-F]* to 0x[0-9A-F]* are backed up.
+
+
+BACKUP COMPLETED.
+
+#####################################################
+mupip backup -comprehensive DEFAULT ./back2
+%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+DB file ##TEST_PATH##/mumps.dat backed up in file ./back2/mumps.dat
+##TEST_AWKTransactions up to 0x[0-9A-F]* are backed up.
+
+
+BACKUP COMPLETED.
+
+-------------------------------------------------------------------------------
+Backup with bad gtm_passwd and expect to work
+-------------------------------------------------------------------------------
+#####################################################
+mupip backup -bytestream DEFAULT ./back3
+##TEST_AWK%GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
+
+TRANSACTION number is greater than or equal to current transaction,
+no blocks backed up from database ##TEST_PATH##/mumps.dat
+
+
+BACKUP COMPLETED.
+
+#####################################################
+mupip backup -comprehensive DEFAULT ./back4
+##TEST_AWK%GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
+DB file ##TEST_PATH##/mumps.dat backed up in file ./back4/mumps.dat
+##TEST_AWKTransactions up to 0x[0-9A-F]* are backed up.
+
+
+BACKUP COMPLETED.
+
+Created file ##TEST_PATH##/mumps.dat
+-------------------------------------------------------------------------------
+Backup while parallel GTM updates without gtm_passwd and expect to error out
+-------------------------------------------------------------------------------
+unsetenv gtm_passwd
+#####################################################
+mupip backup -bytestream -online DEFAULT ./back5
+%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%GTM-E-CRYPTOPFAILED, Encrypt/Decrypt operation failed for file ##TEST_PATH##/mumps.dat. Please look at prior messages related to encryption for more details
+#####################################################
+mupip backup -comprehensive DEFAULT ./back6
+%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%GTM-E-CRYPTOPFAILED, Encrypt/Decrypt operation failed for file ##TEST_PATH##/mumps.dat. Please look at prior messages related to encryption for more details
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

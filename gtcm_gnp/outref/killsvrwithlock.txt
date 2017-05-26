@@ -1,0 +1,75 @@
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+##GT.CM##mumps.gld
+##GT.CM##Using: ##REMOTE_SOURCE_PATH##/mupip
+Create local (client) database...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+The database layout is:
+ASEG	a.dat
+BSEG	##TEST_REMOTE_NODE_PATH_GTCM##/b.dat
+CSEG	##TEST_REMOTE_NODE_PATH_GTCM##/c.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
+Starting the GT.CM Servers...
+Lock status from remote host 2:
+
+BREG
+^b Owned by PID= <PID> which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+
+DEFAULT
+^d Owned by PID= <PID> which is an existing process
+a Owned by PID= <PID> which is an existing process
+b Owned by PID= <PID> which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK.1. [0-9]*
+##TEST_AWK.*Done.*##SOURCE_PATH##/mumps -run lbcl . /dev/null .. lockb_on_client.log
+##TEST_AWKI will now lock .b.*
+%GTM-E-NETLCKFAIL, Lock operation across Net failed
+##TEST_AWK.SYSTEM-E-.*
+,%GTM-E-LCKSCANCELLED, Error on remote node holding locks or zallocates.  All locks and zallocates cancelled.
+		At M source location lock+12^lbcl
+
+GTM>
+Re-start the server (on ##TEST_REMOTE_HOST_GTCM_2##)
+GT.CM Server up again, retry the lock (the lock is still held on the server side)...
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Could not get the lock, just as expected
+
+GTM>
+Release lock on the server side...
+Retry the lock on the client side now...
+
+GTM>
+
+GTM>
+
+GTM>
+I got the lock, as expected
+
+GTM>
+
+GTM>
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####REMOTE_SOURCE_PATH##/mupip
+##GT.CM####REMOTE_SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ a.dat
+No errors detected by integ.
+##TEST_REMOTE_HOST_SHORT##:##TEST_PATH##/lockb_on_client.log
+%GTM-E-NETLCKFAIL, Lock operation across Net failed
+##TEST_AWK.SYSTEM-E-.*
+,%GTM-E-LCKSCANCELLED, Error on remote node holding locks or zallocates.  All locks and zallocates cancelled.

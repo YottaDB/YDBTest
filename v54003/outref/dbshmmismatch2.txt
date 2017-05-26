@@ -1,0 +1,74 @@
+---------------------------------------------------------------------------------------
+BEGIN 1 :-) Create backup.dat and mumps.dat database:
+
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/backup.gld
+
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/backup.gld
+Created file ##TEST_PATH##/backup.dat
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+
+END 1
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 2 :-) Do MUPIP RUNDOWN on backup.dat while mumps.dat is still accessing shared memory:
+
+
+GTM>
+set ^m=1
+GTM>
+
+GTM>
+##TEST_AWK.GTM-E-REQRUNDOWN, Error accessing database ##TEST_PATH##.backup.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT##[A-Za-z.]*.,.GTM-E-DBSHMNAMEDIFF, Database file ##TEST_PATH##.backup.dat points to shared memory .id = [0-9]+. which points to a different database file ##TEST_PATH##/mumps.dat
+		At M source location backup+1^backup
+
+GTM>
+##TEST_AWK.GTM-I-DBSHMNAMEDIFF, Database file ##TEST_PATH##.backup.dat points to shared memory .id = [0-9]+. which points to a different database file ##TEST_PATH##.mumps.dat
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/backup.dat successfully rundown
+
+GTM>
+set ^n=1
+GTM>
+
+GTM>
+
+END 2
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 3 :-) Access to backup.dat should be fine:
+
+
+GTM>
+set ^b=1
+GTM>
+
+GTM>
+
+END 3
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 4 :-) Access to mumps.dat should be fine:
+
+
+GTM>
+write ^m
+GTM>
+1
+GTM>
+
+END 4
+---------------------------------------------------------------------------------------

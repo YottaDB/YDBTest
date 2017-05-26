@@ -1,0 +1,38 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+------------------------------------------------------------------
+i) gtm_tprestart_log_first and gtm_tprestart_log_delta are not defined.
+No message is seen in the operator log
+------------------------------------------------------------------
+ii) Only gtm_tprestart_log_first is defined.
+No message is seen in the operator log
+------------------------------------------------------------------
+iii) Only gtm_tprestart_log_delta is defined.
+no of messages = 6
+------------------------------------------------------------------
+iv) gtm_tprestart_log_first and gtm_tprestart_log_delta both are defined.
+no of messages = 9
+------------------------------------------------------------------
+v) gtm_tprestart_log_delta is not specified and VIEW command also did specify the value for logging frequency.
+no of messages = 3
+------------------------------------------------------------------
+vi) gtm_tprestart_log_delta is not specified but VIEW command specified the value for logging frequency.
+no of messages = 6
+------------------------------------------------------------------
+vii) gtm_tprestart_log_delta is specified but VIEW command did not specify the value for logging frequency.
+no of messages = 6
+------------------------------------------------------------------
+viii) gtm_tprestart_log_delta is specified and VIEW command specified the value for tprestart logging frequency.
+no of messages = 2
+------------------------------------------------------------------
+ix) Negative value for the LOGTPRESTART is specified.
+no of messages = 0
+------------------------------------------------------------------
+x) gtm_tprestart_log_first and gtm_tprestart_log_delta both are defined - looking for a bitmap conflict.
+Database file mumps.dat now has maximum record size 1000
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

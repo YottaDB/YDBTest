@@ -1,0 +1,34 @@
+set cnt=1
+f i=1001:1:1005 for j=1000:1:1005 set cnt=cnt+1 s ^var1(i,"ｉnd"_i,j)="αβγδε"_cnt
+set ^var1(1003,"ｉnd"_1003)="αβγδε"_1003
+zwr ^var1
+MERGE ^new2("NEWVAR")=^var1
+zwr ^new2
+MERGE ^new1("ａａa","ｂｂｂｂ","ｃｃｃｃ")=^var1(1003,"ｉnd1003")
+zwr ^new1
+MERGE ^new1("kkk")=^var1(1001,"ｉnd1001")
+zwr ^new1
+MERGE ^new1("ａａａ")=^var1(1004)
+zwr ^new1
+MERGE ^new1("ａａａ")=^var1(1005)
+zwr ^new1
+MERGE ^new1("我能吞下玻璃而不伤身体")=^var1(1001,"ｉnd1001")
+zwr ^new1
+MERGE ^new1("我能吞下玻璃而不伤身体"_$C(0))=^var1(1001,"ｉnd1001",1002)
+zwr ^new1
+MERGE ^new1("我能吞下玻璃而不伤身体")=^var1(1003,"ｉnd1003",1002)
+zwr ^new1
+set ^var1longnamevariableswork4merge(1,2,3)="long global to global"
+set ^var1long(1,2,3)="should  not use this shorter variable"
+MERGE ^new1longnamevariableswork4merge("aaa")=^var1longnamevariableswork4merge(1,2,3)
+MERGE:1 ^new1longnamevariableswork4merge("bbb")=^var1longnamevariableswork4merge(1,2,3)
+set longvar="^new1longnamevariableswork4merge"
+MERGE @longvar@("αβγδε.ＡＢＣＤＥＦＧ.我能吞下玻璃而傷")=^var1longnamevariableswork4merge(1,2,3)
+set localvar="naked reference into (1,2,""nakedx"")"
+set ^new1longnamevariableswork4merge(1,2,4)="tmp"
+MERGE ^("naked1")=localvar      ; into naked reference
+merge ^("naked2")=^("naked1")   ; from naked into naked reference
+merge ^("①②③④⑤⑥⑦⑧")=^("naked2")
+merge ^("我能吞下玻璃而不伤身体")=^("①②③④⑤⑥⑦⑧")
+zwr ^new1longnamevariableswork4merge
+halt

@@ -1,0 +1,31 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+# Extract in Binary format
+# Do bytestream backup of DEFAULT region
+# Recreate database
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/mumps.dat
+# Restore into encrypted database file with new key files
+RESTORE COMPLETED
+# Extract to check if globals are accesable
+# Loading into encrypted database file with new key files
+LOAD TOTAL		Key Cnt: 384  Max Subsc Len: 59  Max Data Len: 4
+# Extract to check if globals are accesable
+##TEST_AWK.GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 384  max subsc len: 59  max rec len: 4  max node len: [67].
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

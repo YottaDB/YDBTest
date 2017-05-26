@@ -1,0 +1,244 @@
+---------------------------------------------------------------
+TEST-E-DBCREATE, errors seen in the log file dbcreate.out:
+##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+---------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/d.mjl created for region DREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/e.mjl created for region EREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/f.mjl created for region FREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/g.mjl created for region GREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%GTM-I-JNLSTATE, Journaling state for region DREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region EREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region FREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region GREG is now ON
+****************************
+MUPIP set -glo=64000 -reg *
+
+Database file ##TEST_PATH##/a.dat now has 64000 global buffers
+Database file ##TEST_PATH##/b.dat now has 64000 global buffers
+Database file ##TEST_PATH##/c.dat now has 64000 global buffers
+Database file ##TEST_PATH##/d.dat now has 64000 global buffers
+Database file ##TEST_PATH##/e.dat now has 64000 global buffers
+Database file ##TEST_PATH##/f.dat now has 64000 global buffers
+Database file ##TEST_PATH##/g.dat now has 64000 global buffers
+Database file ##TEST_PATH##/mumps.dat now has 64000 global buffers
+****************************
+GTM updates all regions
+
+
+GTM>
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+
+GTM>
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+
+GTM>
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/c.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+
+GTM>
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/d.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+
+GTM>
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/e.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+
+GTM>
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/f.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+
+GTM>
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/g.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+
+GTM>
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+
+GTM>
+****************************
+MUPIP integ -reg *
+
+
+
+##TEST_AWKInteg of region .*
+##TEST_AWK%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/.*.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+
+
+##TEST_AWKInteg of region .*
+##TEST_AWK%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/.*.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+
+
+##TEST_AWKInteg of region .*
+##TEST_AWK%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/.*.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+
+
+##TEST_AWKInteg of region .*
+##TEST_AWK%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/.*.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+
+
+##TEST_AWKInteg of region .*
+##TEST_AWK%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/.*.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+
+
+##TEST_AWKInteg of region .*
+##TEST_AWK%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/.*.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+
+
+##TEST_AWKInteg of region .*
+##TEST_AWK%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/.*.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+
+
+##TEST_AWKInteg of region .*
+##TEST_AWK%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/.*.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+****************************
+DSE exit
+
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/c.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/d.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/e.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/f.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/g.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-DBNOREGION, None of the database regions accessible
+****************************
+LKE exit
+
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/c.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/d.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/e.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/f.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/g.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-DBNOREGION, None of the database regions accessible
+****************************
+MUPIP backup *
+
+##TEST_AWK%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/.*.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+****************************
+MUPIP journal -recov -back *
+
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+****************************
+MUPIP journal -recov -forw *
+
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+##TEST_AWK%GTM-I-TEXT, Error.*
+##TEST_AWK%SYSTEM-E-ENO[12][28].*
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/d.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/e.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/f.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/g.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+##TEST_PATH##/dbcreate.out
+##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup

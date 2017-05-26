@@ -1,0 +1,54 @@
+setenv gtm_chset UTF-8
+unset echo
+
+GTM>
+do ^bomtest
+
+GTM>
+do init
+Now Create Big and Little endian files with BOM
+Now Read
+======fileinfo=bom_big_end.txt|UTF-16BE=====
+
+-> OPEN "bom_big_end.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-8")
+-> USE "bom_big_end.txt"
+STAT=badFileReadRepeat+3^bomtest,%GTM-E-BADCHAR, $ZCHAR(254) is not a valid character in the UTF-8 encoding form
+str=""
+-> OPEN "bom_big_end.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16")
+-> USE "bom_big_end.txt"
+str="Some kanji 散りぬるを我 "
+-> OPEN "bom_big_end.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16LE")
+STAT=open+13^io,%GTM-E-BOMMISMATCH, UTF-16BE Byte Order Marker found when UTF-16LE character set specified
+-> OPEN "bom_big_end.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16BE")
+-> USE "bom_big_end.txt"
+str="Some kanji 散りぬるを我 "
+-> OPEN "bom_big_end.txt":(READONLY:RECORDSIZE=32000:CHSET="M")
+-> USE "bom_big_end.txt"
+str=$ZCH(254,255)_$C(0)_"S"_$C(0)_"o"_$C(0)_"m"_$C(0)_"e"_$C(0)_" "_$C(0)_"k"_$C(0)_"a"_$C(0)_"n"_$C(0)_"j"_$C(0)_"i"_$C(0)_" ec0"_$ZCH(138)_"0l0"_$ZCH(139)_"0"_$ZCH(146)_"b"_$C(17,0)_" "_$C(0)
+-> OPEN "bom_big_end.txt":(READONLY:RECORDSIZE=32000)
+-> USE "bom_big_end.txt"
+STAT=badFileReadRepeat+3^bomtest,%GTM-E-BADCHAR, $ZCHAR(254) is not a valid character in the UTF-8 encoding form
+str=""
+======fileinfo=bom_little_end.txt|UTF-16LE=====
+
+-> OPEN "bom_little_end.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-8")
+-> USE "bom_little_end.txt"
+STAT=badFileReadRepeat+3^bomtest,%GTM-E-BADCHAR, $ZCHAR(255) is not a valid character in the UTF-8 encoding form
+str=""
+-> OPEN "bom_little_end.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16")
+-> USE "bom_little_end.txt"
+str=$C(2560)_"Some kanji 散りぬるを我 "
+-> OPEN "bom_little_end.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16LE")
+-> USE "bom_little_end.txt"
+str=$C(2560)_"Some kanji 散りぬるを我 "
+-> OPEN "bom_little_end.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16BE")
+STAT=open+13^io,%GTM-E-BOMMISMATCH, UTF-16LE Byte Order Marker found when UTF-16BE character set specified
+-> OPEN "bom_little_end.txt":(READONLY:RECORDSIZE=32000:CHSET="M")
+-> USE "bom_little_end.txt"
+str=$ZCH(255,254)_$C(0)_"S"_$C(0)_"o"_$C(0)_"m"_$C(0)_"e"_$C(0)_" "_$C(0)_"k"_$C(0)_"a"_$C(0)_"n"_$C(0)_"j"_$C(0)_"i"_$C(0)_" "_$C(0)_"ce"_$ZCH(138)_"0l0"_$ZCH(139)_"0"_$ZCH(146)_"0"_$C(17)_"b "_$C(0,0)
+-> OPEN "bom_little_end.txt":(READONLY:RECORDSIZE=32000)
+-> USE "bom_little_end.txt"
+STAT=badFileReadRepeat+3^bomtest,%GTM-E-BADCHAR, $ZCHAR(255) is not a valid character in the UTF-8 encoding form
+str=""
+
+GTM>

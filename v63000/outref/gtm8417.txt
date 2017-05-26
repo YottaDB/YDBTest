@@ -1,0 +1,12 @@
+
+iStepping STARTED
+istep+4^gtm8417     :	quit
+gtm8417+4^gtm8417   :	set ^a(1)=$increment(^a(3))
++1^a#1#             : do ^nonzero zsystem:$trestart=1 "$gtm_dist/mumps -run a^gtm8417"
+nonzero+1^nonzero   :	zsystem "$gtm_dist/mumps -run b^gtm8417"
+nonzero+2^nonzero   :	set ^b(1)=$increment(^b(3))
++1^a#1#             : do ^nonzero zsystem:$trestart=1 "$gtm_dist/mumps -run a^gtm8417"
+^nonzero            :
++1^a#1#             : do ^nonzero zsystem:$trestart=1 "$gtm_dist/mumps -run a^gtm8417"
+^nonzero            :
+gtm8417+5^gtm8417   :	quit

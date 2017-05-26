@@ -1,0 +1,28 @@
+Test 1. Two MUMPS processes with the same uid.
+Creating the database
+##TEST_AWKFiles Created in .*
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/.*/mumps -run GDE
+mumps.gld
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/.*/mupip
+mumps.dat
+Starting the first MUMPS process
+Issuing a SIGSTOP to simulate a possibly stopped process and expect that the process waiting for the jnl_fsync_in_prog latch will attempt firing a SIGCONT at half-timeout.
+Starting the second MUMPS process
+##TEST_AWK##GTM_LIBRARY_PATH##/.*/mupip
+##TEST_AWK##GTM_LIBRARY_PATH##/.*/mupip integ -REG \*
+No errors detected by integ.
+
+
+Test 2. Two MUMPS processes with different uids.
+Creating the database
+##TEST_AWKFiles Created in .*
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/.*/mumps -run GDE
+mumps.gld
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/.*/mupip
+mumps.dat
+Starting the first MUMPS process
+Issuing a SIGSTOP to simulate a possibly stopped process and expect that the process waiting for the jnl_fsync_in_prog latch will attempt firing a SIGCONT at half-timeout.
+Launching remote process with different uid
+##TEST_AWK##GTM_LIBRARY_PATH##/.*/mupip
+##TEST_AWK##GTM_LIBRARY_PATH##/.*/mupip integ -REG \*
+No errors detected by integ.

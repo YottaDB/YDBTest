@@ -1,0 +1,77 @@
+#!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2011-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
+# dbnammismatch1:  Exercise DBNAMEMISMATCH error in mu_rndwn_file
+#
+
+@ section = 0
+set echoline = "echo ---------------------------------------------------------------------------------------"
+
+alias BEGIN "source $gtm_tst/com/BEGIN.csh"
+alias END "source $gtm_tst/com/END.csh"
+
+#TEST BEGINS#
+BEGIN "Choose randomly between -reg OR -file qualifier"
+        @ choice = `$gtm_exe/mumps -run rand 2`
+END
+
+BEGIN "create backup.dat and mumps.dat database"
+
+$gtm_tst/com/dbcreate.csh backup 1
+mv backup.dat backup.dat.orig
+$gtm_tst/com/dbcreate.csh mumps 1
+mv backup.dat.orig backup.dat
+cp mumps.dat mumps.dat.tmp
+
+END
+
+BEGIN "access database mumps.dat and crash it"
+# at this point, gtmgbldir points to mumps.gld
+$GTM << GTM_EOF
+        set ^x=1
+	zsy "dse all -buff"
+        zsy "$kill9 "_\$j
+GTM_EOF
+END
+
+BEGIN  "move mumps database to backup to trigger DBNAMEMISMATCH error"
+setenv gtmgbldir backup.gld
+mv mumps.dat backup.dat
+$GTM << GTM_EOF
+        set ^x=1
+GTM_EOF
+END
+
+BEGIN  "Do mupip rundown on backup.dat and then access it. Database access should be clean"
+if ( $choice == 0 ) then
+        echo 'mupip rundown -reg "*"'
+        $MUPIP rundown -reg "*"
+else
+        echo 'mupip rundown -file backup.dat'
+        $MUPIP rundown -file backup.dat
+endif
+$GTM << GTM_EOF
+	write "set ^x=1"
+        set ^x=1
+	write "Clean database access"
+GTM_EOF
+END
+
+BEGIN  "do mupip rundown on mumps.dat to remove leftover ipcs"
+setenv gtmgbldir mumps.gld
+cp mumps.dat.tmp mumps.dat
+echo 'mupip rundown -reg "*"'
+$MUPIP rundown -reg "*"
+END
+
+$gtm_tst/com/dbcheck.csh

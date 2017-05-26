@@ -1,0 +1,310 @@
+##########
+First Part
+##########
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> DSE> DSE> DSE> DSE> DSE> DSE> 
+Integ for corrupted bitmap
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%GTM-W-DBLOCMBINC, 
+       0:0     FF  Local bit map incorrect
+%GTM-E-DBMRKFREE, 
+      20:0     FF  Block incorrectly marked free
+%GTM-E-DBMRKFREE, 
+      22:0     FF  Block incorrectly marked free
+%GTM-W-DBMBPFRDLBM, 
+       0:0     FF  Master bit map shows this map has space, agreeing with disk local map
+%GTM-W-DBLOCMBINC, 
+     200:0     FF  Local bit map incorrect
+%GTM-E-DBMRKFREE, 
+     210:0     FF  Block incorrectly marked free
+%GTM-E-DBMRKFREE, 
+     212:0     FF  Block incorrectly marked free
+%GTM-W-DBMBPFRDLBM, 
+     200:0     FF  Master bit map shows this map has space, agreeing with disk local map
+%GTM-W-DBLOCMBINC, 
+     400:0     FF  Local bit map incorrect
+%GTM-E-DBMRKFREE, 
+     410:0     FF  Block incorrectly marked free
+%GTM-E-DBMRKFREE, 
+     411:0     FF  Block incorrectly marked free
+
+Total error count from integ:		11.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           1.790            NA
+Index              11            1210          81.989             1
+Data             1200            1200          54.356          1199
+Free               87              NA              NA            NA
+Total            1300            2412              NA          1200
+%GTM-E-INTEGERRS, Database integrity errors
+
+##SOURCE_PATH##/mupip journal -recov -backward mumps.mjl -NOAPPLY_AFTER_IMAGE -since=time1
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+No Integ Error Expected
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           1.790            NA
+Index              11            1210          81.989             1
+Data             1200            1200          54.356          1199
+Free               87              NA              NA            NA
+Total            1300            2412              NA          1200
+##SOURCE_PATH##/mupip journal -recov -backward mumps.mjl -since=time1
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+Integ Error Expected
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%GTM-W-DBLOCMBINC, 
+       0:0     FF  Local bit map incorrect
+%GTM-E-DBMRKFREE, 
+      20:0     FF  Block incorrectly marked free
+%GTM-E-DBMRKFREE, 
+      22:0     FF  Block incorrectly marked free
+%GTM-W-DBMBPFLINT, 
+       0:0     FF  Master bit map shows this map full, agreeing with MUPIP INTEG
+%GTM-W-DBLOCMBINC, 
+     200:0     FF  Local bit map incorrect
+%GTM-E-DBMRKFREE, 
+     210:0     FF  Block incorrectly marked free
+%GTM-E-DBMRKFREE, 
+     212:0     FF  Block incorrectly marked free
+%GTM-W-DBMBPFLINT, 
+     200:0     FF  Master bit map shows this map full, agreeing with MUPIP INTEG
+%GTM-W-DBLOCMBINC, 
+     400:0     FF  Local bit map incorrect
+%GTM-E-DBMRKFREE, 
+     410:0     FF  Block incorrectly marked free
+%GTM-E-DBMRKFREE, 
+     411:0     FF  Block incorrectly marked free
+
+Total error count from integ:		11.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           1.790            NA
+Index              11            1210          81.989             1
+Data             1200            1200          54.356          1199
+Free               87              NA              NA            NA
+Total            1300            2412              NA          1200
+%GTM-E-INTEGERRS, Database integrity errors
+Created file ##TEST_PATH##/mumps.dat
+Forward recovery does not apply AIMG by default
+##SOURCE_PATH##/mupip journal -recov -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+No Integ Error Expected
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           1.790            NA
+Index              11            1210          81.989             1
+Data             1200            1200          54.356          1199
+Free               87              NA              NA            NA
+Total            1300            2412              NA          1200
+##########
+Second Part
+##########
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> DSE> DSE> DSE> DSE> DSE> DSE> 
+Integ for corrupted bitmap
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%GTM-W-DBLOCMBINC, 
+       0:0     FF  Local bit map incorrect
+%GTM-E-DBMRKFREE, 
+      20:0     FF  Block incorrectly marked free
+%GTM-E-DBMRKFREE, 
+      22:0     FF  Block incorrectly marked free
+%GTM-W-DBMBPFRDLBM, 
+       0:0     FF  Master bit map shows this map has space, agreeing with disk local map
+%GTM-W-DBLOCMBINC, 
+     200:0     FF  Local bit map incorrect
+%GTM-E-DBMRKFREE, 
+     210:0     FF  Block incorrectly marked free
+%GTM-E-DBMRKFREE, 
+     212:0     FF  Block incorrectly marked free
+%GTM-W-DBMBPFRDLBM, 
+     200:0     FF  Master bit map shows this map has space, agreeing with disk local map
+%GTM-W-DBLOCMBINC, 
+     400:0     FF  Local bit map incorrect
+%GTM-E-DBMRKFREE, 
+     410:0     FF  Block incorrectly marked free
+%GTM-E-DBMRKFREE, 
+     411:0     FF  Block incorrectly marked free
+
+Total error count from integ:		11.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           1.790            NA
+Index              11            1210          81.989             1
+Data             1200            1200          54.356          1199
+Free               87              NA              NA            NA
+Total            1300            2412              NA          1200
+%GTM-E-INTEGERRS, Database integrity errors
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+Integ after map -restore
+No Integ Error Expected
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           1.790            NA
+Index              11            1210          81.989             1
+Data             1200            1200          54.356          1199
+Free               87              NA              NA            NA
+Total            1300            2412              NA          1200
+
+GTM>
+Application Level Check
+PASSED
+##SOURCE_PATH##/mupip journal -extract=dsemap.mjf -forward -detail mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file dsemap.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 1200  max subsc len: 16  max rec len: 800  max node len: 820
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1200  max subsc len: 16  max rec len: 800  max node len: 820
+##SOURCE_PATH##/mupip journal -recov -back mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+No Integ Error Expected
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           1.790            NA
+Index              11            1210          81.989             1
+Data             1200            1200          54.356          1199
+Free               87              NA              NA            NA
+Total            1300            2412              NA          1200
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 1200  max subsc len: 16  max rec len: 800  max node len: 820
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1200  max subsc len: 16  max rec len: 800  max node len: 820
+No Integ Error Expected
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           1.790            NA
+Index              11            1210          81.989             1
+Data             1200            1200          54.356          1199
+Free               87              NA              NA            NA
+Total            1300            2412              NA          1200
+Created file ##TEST_PATH##/mumps.dat
+##SOURCE_PATH##/mupip journal -recov -forward mumps.mjl -APPLY_AFTER_IMAGE
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+No Integ Error Expected
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           1.790            NA
+Index              11            1210          81.989             1
+Data             1200            1200          54.356          1199
+Free               87              NA              NA            NA
+Total            1300            2412              NA          1200
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 1200  max subsc len: 16  max rec len: 800  max node len: 820
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1200  max subsc len: 16  max rec len: 800  max node len: 820
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

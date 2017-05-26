@@ -1,0 +1,986 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+###################################################################
+;trigger name: setCB (region AREG)  cycle: 3
++^a(subs=*) -name=setCB -commands=S -xecute="do fired^replictrigger set (^c(subs),^b(subs))=$ZTVAlue ztrigger ^azt"
+;trigger name: setD (region AREG)  cycle: 3
++^a(subs=*) -name=setD -commands=S -xecute="do fired^replictrigger set ^d(subs)=$ZTVAlue ztrigger ^azt"
+;trigger name: setE (region AREG)  cycle: 3
++^a(subs=*) -name=setE -commands=S -xecute="do fired^replictrigger set ^e(subs)=$ZTVAlue ztrigger ^azt"
+;trigger name: ztrA (region AREG)  cycle: 1
++^azt -name=ztrA -commands=ZTR -xecute="do fired^replictrigger do needwrite^replictrigger"
+;trigger name: zkillAC (region BREG)  cycle: 3
++^b(subs=*) -name=zkillAC -commands=K,ZK -xecute="do fired^replictrigger zkill ^a(subs)"
+;trigger name: zkillD (region BREG)  cycle: 3
++^b(subs=:3;6:) -name=zkillD -commands=K,ZK -xecute="do fired^replictrigger zkill ^d(subs)"
+;trigger name: restart (region BREG)  cycle: 3
++^b(subs=*) -name=restart -commands=S -xecute="do fired^replictrigger do tlevelzero^replictrigger"
+;trigger name: killBsetB (region CREG)  cycle: 1
++^c -name=killBsetB -commands=K -xecute="do fired^replictrigger kill ^b set ^b=76"
+Updates to ^a in a transaction
+^fired("restart#",2,"S")=20
+^fired("restart#",2,"S","^b(1)")=2
+^fired("restart#",2,"S","^b(10)")=2
+^fired("restart#",2,"S","^b(2)")=2
+^fired("restart#",2,"S","^b(3)")=2
+^fired("restart#",2,"S","^b(4)")=2
+^fired("restart#",2,"S","^b(5)")=2
+^fired("restart#",2,"S","^b(6)")=2
+^fired("restart#",2,"S","^b(7)")=2
+^fired("restart#",2,"S","^b(8)")=2
+^fired("restart#",2,"S","^b(9)")=2
+^fired("setCB#",2,"S")=20
+^fired("setCB#",2,"S","^a(1)")=2
+^fired("setCB#",2,"S","^a(10)")=2
+^fired("setCB#",2,"S","^a(2)")=2
+^fired("setCB#",2,"S","^a(3)")=2
+^fired("setCB#",2,"S","^a(4)")=2
+^fired("setCB#",2,"S","^a(5)")=2
+^fired("setCB#",2,"S","^a(6)")=2
+^fired("setCB#",2,"S","^a(7)")=2
+^fired("setCB#",2,"S","^a(8)")=2
+^fired("setCB#",2,"S","^a(9)")=2
+^fired("setD#",2,"S")=20
+^fired("setD#",2,"S","^a(1)")=2
+^fired("setD#",2,"S","^a(10)")=2
+^fired("setD#",2,"S","^a(2)")=2
+^fired("setD#",2,"S","^a(3)")=2
+^fired("setD#",2,"S","^a(4)")=2
+^fired("setD#",2,"S","^a(5)")=2
+^fired("setD#",2,"S","^a(6)")=2
+^fired("setD#",2,"S","^a(7)")=2
+^fired("setD#",2,"S","^a(8)")=2
+^fired("setD#",2,"S","^a(9)")=2
+^fired("setE#",2,"S")=20
+^fired("setE#",2,"S","^a(1)")=2
+^fired("setE#",2,"S","^a(10)")=2
+^fired("setE#",2,"S","^a(2)")=2
+^fired("setE#",2,"S","^a(3)")=2
+^fired("setE#",2,"S","^a(4)")=2
+^fired("setE#",2,"S","^a(5)")=2
+^fired("setE#",2,"S","^a(6)")=2
+^fired("setE#",2,"S","^a(7)")=2
+^fired("setE#",2,"S","^a(8)")=2
+^fired("setE#",2,"S","^a(9)")=2
+^fired("ztrA#",2,"ZTR")=60
+^fired("ztrA#",2,"ZTR","^azt")=60
+Updates to ^a outside of a transaction
+^fired("restart#",2,"S")=2
+^fired("restart#",2,"S","^b(11)")=1
+^fired("restart#",2,"S","^b(12)")=1
+^fired("setCB#",2,"S")=2
+^fired("setCB#",2,"S","^a(11)")=1
+^fired("setCB#",2,"S","^a(12)")=1
+^fired("setD#",2,"S")=2
+^fired("setD#",2,"S","^a(11)")=1
+^fired("setD#",2,"S","^a(12)")=1
+^fired("setE#",2,"S")=2
+^fired("setE#",2,"S","^a(11)")=1
+^fired("setE#",2,"S","^a(12)")=1
+^fired("ztrA#",2,"ZTR")=6
+^fired("ztrA#",2,"ZTR","^azt")=6
+^a(1)="1,5"
+^a(2)="2,10"
+^a(3)="3,15"
+^a(4)="4,20"
+^a(5)="5,25"
+^a(6)="6,30"
+^a(7)="7,35"
+^a(8)="8,40"
+^a(9)="9,45"
+^a(10)="10,50"
+^a(11)="11,55"
+^a(12)="12,60"
+^b(1)="1,5"
+^b(2)="2,10"
+^b(3)="3,15"
+^b(4)="4,20"
+^b(5)="5,25"
+^b(6)="6,30"
+^b(7)="7,35"
+^b(8)="8,40"
+^b(9)="9,45"
+^b(10)="10,50"
+^b(11)="11,55"
+^b(12)="12,60"
+^c(1)="1,5"
+^c(2)="2,10"
+^c(3)="3,15"
+^c(4)="4,20"
+^c(5)="5,25"
+^c(6)="6,30"
+^c(7)="7,35"
+^c(8)="8,40"
+^c(9)="9,45"
+^c(10)="10,50"
+^c(11)="11,55"
+^c(12)="12,60"
+^d(1)="1,5"
+^d(2)="2,10"
+^d(3)="3,15"
+^d(4)="4,20"
+^d(5)="5,25"
+^d(6)="6,30"
+^d(7)="7,35"
+^d(8)="8,40"
+^d(9)="9,45"
+^d(10)="10,50"
+^d(11)="11,55"
+^d(12)="12,60"
+^e(1)="1,5"
+^e(2)="2,10"
+^e(3)="3,15"
+^e(4)="4,20"
+^e(5)="5,25"
+^e(6)="6,30"
+^e(7)="7,35"
+^e(8)="8,40"
+^e(9)="9,45"
+^e(10)="10,50"
+^e(11)="11,55"
+^e(12)="12,60"
+###################################################################
+ZKILL to ^b in a transaction
+^fired("zkillAC#",0,"ZK")=5
+^fired("zkillAC#",0,"ZK","^b(1)")=1
+^fired("zkillAC#",0,"ZK","^b(3)")=1
+^fired("zkillAC#",0,"ZK","^b(5)")=1
+^fired("zkillAC#",0,"ZK","^b(7)")=1
+^fired("zkillAC#",0,"ZK","^b(9)")=1
+^fired("zkillD#",0,"ZK")=4
+^fired("zkillD#",0,"ZK","^b(1)")=1
+^fired("zkillD#",0,"ZK","^b(3)")=1
+^fired("zkillD#",0,"ZK","^b(7)")=1
+^fired("zkillD#",0,"ZK","^b(9)")=1
+^a(2)="2,10"
+^a(4)="4,20"
+^a(6)="6,30"
+^a(8)="8,40"
+^a(10)="10,50"
+^a(11)="11,55"
+^a(12)="12,60"
+^b(2)="2,10"
+^b(4)="4,20"
+^b(6)="6,30"
+^b(8)="8,40"
+^b(10)="10,50"
+^b(11)="11,55"
+^b(12)="12,60"
+^c(1)="1,5"
+^c(2)="2,10"
+^c(3)="3,15"
+^c(4)="4,20"
+^c(5)="5,25"
+^c(6)="6,30"
+^c(7)="7,35"
+^c(8)="8,40"
+^c(9)="9,45"
+^c(10)="10,50"
+^c(11)="11,55"
+^c(12)="12,60"
+^d(2)="2,10"
+^d(4)="4,20"
+^d(5)="5,25"
+^d(6)="6,30"
+^d(8)="8,40"
+^d(10)="10,50"
+^d(11)="11,55"
+^d(12)="12,60"
+^e(1)="1,5"
+^e(2)="2,10"
+^e(3)="3,15"
+^e(4)="4,20"
+^e(5)="5,25"
+^e(6)="6,30"
+^e(7)="7,35"
+^e(8)="8,40"
+^e(9)="9,45"
+^e(10)="10,50"
+^e(11)="11,55"
+^e(12)="12,60"
+###################################################################
+KILL to ^c in a transaction
+^fired("killBsetB#",0,"K")=1
+^fired("killBsetB#",0,"K","^c")=1
+^a(2)="2,10"
+^a(4)="4,20"
+^a(6)="6,30"
+^a(8)="8,40"
+^a(10)="10,50"
+^a(11)="11,55"
+^a(12)="12,60"
+^b=76
+^d(2)="2,10"
+^d(4)="4,20"
+^d(5)="5,25"
+^d(6)="6,30"
+^d(8)="8,40"
+^d(10)="10,50"
+^d(11)="11,55"
+^d(12)="12,60"
+^e(1)="1,5"
+^e(2)="2,10"
+^e(3)="3,15"
+^e(4)="4,20"
+^e(5)="5,25"
+^e(6)="6,30"
+^e(7)="7,35"
+^e(8)="8,40"
+^e(9)="9,45"
+^e(10)="10,50"
+^e(11)="11,55"
+^e(12)="12,60"
+###################################################################
+Updates to ^e outside of a transaction
+^fired("setA#",0,"S")=11
+^fired("setA#",0,"S","^e(10)")=2
+^fired("setA#",0,"S","^e(12)")=1
+^fired("setA#",0,"S","^e(2)")=2
+^fired("setA#",0,"S","^e(4)")=2
+^fired("setA#",0,"S","^e(6)")=2
+^fired("setA#",0,"S","^e(8)")=2
+^fired("touchZTWO#",0,"S")=11
+^fired("touchZTWO#",0,"S","^e(10)")=2
+^fired("touchZTWO#",0,"S","^e(12)")=1
+^fired("touchZTWO#",0,"S","^e(2)")=2
+^fired("touchZTWO#",0,"S","^e(4)")=2
+^fired("touchZTWO#",0,"S","^e(6)")=2
+^fired("touchZTWO#",0,"S","^e(8)")=2
+
+Updates to ^e inside a transaction
+^fired("setA#",0,"S")=11
+^fired("setA#",0,"S","^e(1)")=2
+^fired("setA#",0,"S","^e(11)")=1
+^fired("setA#",0,"S","^e(3)")=2
+^fired("setA#",0,"S","^e(5)")=2
+^fired("setA#",0,"S","^e(7)")=2
+^fired("setA#",0,"S","^e(9)")=2
+^fired("touchZTWO#",0,"S")=11
+^fired("touchZTWO#",0,"S","^e(1)")=2
+^fired("touchZTWO#",0,"S","^e(11)")=1
+^fired("touchZTWO#",0,"S","^e(3)")=2
+^fired("touchZTWO#",0,"S","^e(5)")=2
+^fired("touchZTWO#",0,"S","^e(7)")=2
+^fired("touchZTWO#",0,"S","^e(9)")=2
+
+Kills of fictitious ^e variables should not show in journals even with replication
+
+Kills of fictitious ^e variables inside a transaction should not show in journals even with replication
+
+Kills outside transaction 
+^fired("a75x2#",0,"K")=2
+^fired("a75x2#",0,"K","^a(75,5,25)")=1
+^fired("a75x2#",0,"K","^a(75,6,30)")=1
+^fired("a75x3#",0,"ZK")=2
+^fired("a75x3#",0,"ZK","^a(75,5,25,15)")=1
+^fired("a75x3#",0,"ZK","^a(75,6,30,18)")=1
+^fired("a75x2#",0,"K")=2
+^fired("a75x2#",0,"K","^a(75,7,35)")=1
+^fired("a75x2#",0,"K","^a(75,8,40)")=1
+
+Kills inside transaction 
+^fired("a75x2#",0,"ZK")=2
+^fired("a75x2#",0,"ZK","^a(75,10,50)")=1
+^fired("a75x2#",0,"ZK","^a(75,9,45)")=1
+^fired("a75x3#",0,"K")=2
+^fired("a75x3#",0,"K","^a(75,10,50,30)")=1
+^fired("a75x3#",0,"K","^a(75,9,45,27)")=1
+^fired("a75x2#",0,"K")=4
+^fired("a75x2#",0,"K","^a(75,1,5)")=1
+^fired("a75x2#",0,"K","^a(75,2,10)")=1
+^fired("a75x2#",0,"K","^a(75,3,15)")=1
+^fired("a75x2#",0,"K","^a(75,4,20)")=1
+^fired("a75x3#",0,"ZK")=4
+^fired("a75x3#",0,"ZK","^a(75,1,5,3)")=1
+^fired("a75x3#",0,"ZK","^a(75,2,10,6)")=1
+^fired("a75x3#",0,"ZK","^a(75,3,15,9)")=1
+^fired("a75x3#",0,"ZK","^a(75,4,20,12)")=1
+^a(2)="2,10"
+^a(4)="4,20"
+^a(6)="6,30"
+^a(8)="8,40"
+^a(10)="10,50"
+^a(11)="11,55"
+^a(12)="12,60"
+^a(55,1)="2,10"
+^a(55,2)="2,10,6"
+^a(55,3)="4,20"
+^a(55,4)="4,20,12"
+^a(55,5)="6,30"
+^a(55,6)="6,30,18"
+^a(55,7)="8,40"
+^a(55,8)="8,40,24"
+^a(55,9)="10,50"
+^a(55,10)="10,50,30"
+^a(55,11)="10,60,30"
+^a(55,12)="1,5"
+^a(55,13)="1,5,3"
+^a(55,14)="3,15"
+^a(55,15)="3,15,9"
+^a(55,16)="5,25"
+^a(55,17)="5,25,15"
+^a(55,18)="7,35"
+^a(55,19)="7,35,21"
+^a(55,20)="9,45"
+^a(55,21)="9,45,27"
+^a(55,22)="9,55,27"
+^a(55,"count")=22
+^b=76
+^d(2)="2,10"
+^d(4)="4,20"
+^d(5)="5,25"
+^d(6)="6,30"
+^d(8)="8,40"
+^d(10)="10,50"
+^d(11)="11,55"
+^d(12)="12,60"
+^e(1)="1,5,3"
+^e(2)="2,10,6"
+^e(3)="3,15,9"
+^e(4)="4,20,12"
+^e(5)="5,25,15"
+^e(6)="6,30,18"
+^e(7)="7,35,21"
+^e(8)="8,40,24"
+^e(9)="9,45,27"
+^e(10)="10,50,30"
+^e(11)="9,55,27"
+^e(12)="10,60,30"
+###################################################################
+###################################################################
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+###################################################################
+
+< ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/jnl_extract.csh'==
+> ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/$tst/u_inref/jnl_extract.csh'==
+###################################################################
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/jnl_extract.csh'==
+a.mjf
+08
+05 ^#t("#TNAME","setCB")="a"_$C(0)_"1"
+05 ^#t("a","#COUNT")="1"
+05 ^#t("a",1,"TRIGNAME")="setCB#"
+05 ^#t("a",1,"GVSUBS")="subs=*"
+05 ^#t("a",1,"CMD")="S"
+05 ^#t("a",1,"XECUTE")=" do fired^replictrigger set (^c(subs),^b(subs))=$ZTVAlue ztrigger ^azt"
+05 ^#t("a","#CYCLE")="1"
+09
+08
+05 ^#t("#TNAME","setD")="a"_$C(0)_"2"
+05 ^#t("a","#COUNT")="2"
+05 ^#t("a",2,"TRIGNAME")="setD#"
+05 ^#t("a",2,"GVSUBS")="subs=*"
+05 ^#t("a",2,"CMD")="S"
+05 ^#t("a",2,"XECUTE")=" do fired^replictrigger set ^d(subs)=$ZTVAlue ztrigger ^azt"
+05 ^#t("a","#CYCLE")="2"
+09
+08
+05 ^#t("#TNAME","setE")="a"_$C(0)_"3"
+05 ^#t("a","#COUNT")="3"
+05 ^#t("a",3,"TRIGNAME")="setE#"
+05 ^#t("a",3,"GVSUBS")="subs=*"
+05 ^#t("a",3,"CMD")="S"
+05 ^#t("a",3,"XECUTE")=" do fired^replictrigger set ^e(subs)=$ZTVAlue ztrigger ^azt"
+05 ^#t("a","#CYCLE")="3"
+09
+08
+05 ^#t("#TNAME","ztrA")="azt"_$C(0)_"1"
+05 ^#t("azt","#COUNT")="1"
+05 ^#t("azt",1,"TRIGNAME")="ztrA#"
+05 ^#t("azt",1,"CMD")="ZTR"
+05 ^#t("azt",1,"XECUTE")=" do fired^replictrigger do needwrite^replictrigger"
+05 ^#t("azt","#CYCLE")="1"
+09
+08
+05 ^a(1)="1"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(1)="1,5"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(2)="2"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(2)="2,10"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(3)="3"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(3)="3,15"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(4)="4"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(4)="4,20"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(5)="5"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(5)="5,25"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(6)="6"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(6)="6,30"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(7)="7"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(7)="7,35"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(8)="8"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(8)="8,40"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(9)="9"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(9)="9,45"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(10)="10"
+12 ^azt
+12 ^azt
+12 ^azt
+05 ^a(10)="10,50"
+12 ^azt
+12 ^azt
+12 ^azt
+09
+08
+05 ^a(11)="11,55"
+12 ^azt
+12 ^azt
+12 ^azt
+09
+08
+05 ^a(12)="12,60"
+12 ^azt
+12 ^azt
+12 ^azt
+09
+08
+10 ^a(1)
+10 ^a(3)
+10 ^a(5)
+10 ^a(7)
+10 ^a(9)
+09
+08
+05 ^#t("#TNAME","a75x2")="a"_$C(0)_"4"
+05 ^#t("a","#COUNT")="4"
+05 ^#t("a",4,"TRIGNAME")="a75x2#"
+05 ^#t("a",4,"GVSUBS")="75,*,*"
+05 ^#t("a",4,"CMD")="K,ZK"
+05 ^#t("a",4,"XECUTE")=" do fired^replictrigger"
+05 ^#t("a","#CYCLE")="4"
+05 ^#t("#TNAME","a75x3")="a"_$C(0)_"5"
+05 ^#t("a","#COUNT")="5"
+05 ^#t("a",5,"TRIGNAME")="a75x3#"
+05 ^#t("a",5,"GVSUBS")="75,*,*,*"
+05 ^#t("a",5,"CMD")="K,ZK"
+05 ^#t("a",5,"XECUTE")=" do fired^replictrigger"
+05 ^#t("a","#CYCLE")="5"
+05 ^#t("#TNAME","a75x2ztwo")="a"_$C(0)_"6"
+05 ^#t("a","#COUNT")="6"
+05 ^#t("a",6,"TRIGNAME")="a75x2ztwo#"
+05 ^#t("a",6,"GVSUBS")="75,*,*"
+05 ^#t("a",6,"CMD")="ZK"
+05 ^#t("a",6,"XECUTE")=" set a=$ZTWOrmhole"
+05 ^#t("a","#CYCLE")="6"
+05 ^#t("#TNAME","a75x3ztwo")="a"_$C(0)_"7"
+05 ^#t("a","#COUNT")="7"
+05 ^#t("a",7,"TRIGNAME")="a75x3ztwo#"
+05 ^#t("a",7,"GVSUBS")="75,*,*,*"
+05 ^#t("a",7,"CMD")="ZK"
+05 ^#t("a",7,"XECUTE")=" set a=$ZTWOrmhole"
+05 ^#t("a","#CYCLE")="7"
+09
+08
+05 ^a(55,"count")="1"
+05 ^a(55,1)="2,10"
+05 ^a(75,"count")="1"
+05 ^a(75,2,10)="1"
+09
+08
+05 ^a(55,"count")="2"
+05 ^a(55,2)="2,10,6"
+05 ^a(75,"count")="2"
+05 ^a(75,2,10,6)="2"
+09
+08
+05 ^a(55,"count")="3"
+05 ^a(55,3)="4,20"
+05 ^a(75,"count")="3"
+05 ^a(75,4,20)="3"
+09
+08
+05 ^a(55,"count")="4"
+05 ^a(55,4)="4,20,12"
+05 ^a(75,"count")="4"
+05 ^a(75,4,20,12)="4"
+09
+08
+05 ^a(55,"count")="5"
+05 ^a(55,5)="6,30"
+05 ^a(75,"count")="5"
+05 ^a(75,6,30)="5"
+09
+08
+05 ^a(55,"count")="6"
+05 ^a(55,6)="6,30,18"
+05 ^a(75,"count")="6"
+05 ^a(75,6,30,18)="6"
+09
+08
+05 ^a(55,"count")="7"
+05 ^a(55,7)="8,40"
+05 ^a(75,"count")="7"
+05 ^a(75,8,40)="7"
+09
+08
+05 ^a(55,"count")="8"
+05 ^a(55,8)="8,40,24"
+05 ^a(75,"count")="8"
+05 ^a(75,8,40,24)="8"
+09
+08
+05 ^a(55,"count")="9"
+05 ^a(55,9)="10,50"
+05 ^a(75,"count")="9"
+05 ^a(75,10,50)="9"
+09
+08
+05 ^a(55,"count")="10"
+05 ^a(55,10)="10,50,30"
+05 ^a(75,"count")="10"
+05 ^a(75,10,50,30)="10"
+09
+08
+05 ^a(55,"count")="11"
+05 ^a(55,11)="10,60,30"
+05 ^a(75,"count")="11"
+05 ^a(75,10,60,30)="11"
+09
+08
+05 ^a(55,"count")="12"
+05 ^a(55,12)="1,5"
+05 ^a(75,"count")="12"
+05 ^a(75,1,5)="12"
+05 ^a(55,"count")="13"
+05 ^a(55,13)="1,5,3"
+05 ^a(75,"count")="13"
+05 ^a(75,1,5,3)="13"
+05 ^a(55,"count")="14"
+05 ^a(55,14)="3,15"
+05 ^a(75,"count")="14"
+05 ^a(75,3,15)="14"
+05 ^a(55,"count")="15"
+05 ^a(55,15)="3,15,9"
+05 ^a(75,"count")="15"
+05 ^a(75,3,15,9)="15"
+05 ^a(55,"count")="16"
+05 ^a(55,16)="5,25"
+05 ^a(75,"count")="16"
+05 ^a(75,5,25)="16"
+05 ^a(55,"count")="17"
+05 ^a(55,17)="5,25,15"
+05 ^a(75,"count")="17"
+05 ^a(75,5,25,15)="17"
+05 ^a(55,"count")="18"
+05 ^a(55,18)="7,35"
+05 ^a(75,"count")="18"
+05 ^a(75,7,35)="18"
+05 ^a(55,"count")="19"
+05 ^a(55,19)="7,35,21"
+05 ^a(75,"count")="19"
+05 ^a(75,7,35,21)="19"
+05 ^a(55,"count")="20"
+05 ^a(55,20)="9,45"
+05 ^a(75,"count")="20"
+05 ^a(75,9,45)="20"
+05 ^a(55,"count")="21"
+05 ^a(55,21)="9,45,27"
+05 ^a(75,"count")="21"
+05 ^a(75,9,45,27)="21"
+05 ^a(55,"count")="22"
+05 ^a(55,22)="9,55,27"
+05 ^a(75,"count")="22"
+05 ^a(75,9,55,27)="22"
+09
+08
+11 "1 Fires for ZKills to ^e but not Kills outside a transaction do not show up without replication"
+10 ^a(75,5,25,15)
+09
+08
+11 "1 Fires for ZKills to ^e but not Kills outside a transaction do not show up without replication"
+10 ^a(75,6,30,18)
+09
+08
+04 ^a(75,5,25)
+09
+08
+04 ^a(75,6,30)
+09
+08
+04 ^a(75,7,35)
+09
+08
+04 ^a(75,8,40)
+09
+08
+11 "Fires for ZKills to ^e but not Kills inside a transaction do not show up without replication"
+10 ^a(75,9,45)
+04 ^a(75,9,45,27)
+10 ^a(75,10,50)
+04 ^a(75,10,50,30)
+09
+08
+11 "Fires for ZKills to ^e but not Kills inside a transaction do not show up without replication"
+10 ^a(75,1,5,3)
+04 ^a(75,1,5)
+10 ^a(75,2,10,6)
+04 ^a(75,2,10)
+11 "Changes to ztwormhole in the middle of a transaction do not show up without replication"
+10 ^a(75,3,15,9)
+11 "Fires for ZKills to ^e but not Kills inside a transaction do not show up without replication"
+10 ^a(75,4,20,12)
+04 ^a(75,3,15)
+04 ^a(75,4,20)
+09
+08
+04 ^a(75)
+09
+-------------------------------------------------------------------
+b.mjf
+08
+05 ^#t("#TNAME","zkillAC")="b"_$C(0)_"1"
+05 ^#t("b","#COUNT")="1"
+05 ^#t("b",1,"TRIGNAME")="zkillAC#"
+05 ^#t("b",1,"GVSUBS")="subs=*"
+05 ^#t("b",1,"CMD")="K,ZK"
+05 ^#t("b",1,"XECUTE")=" do fired^replictrigger zkill ^a(subs)"
+05 ^#t("b","#CYCLE")="1"
+09
+08
+05 ^#t("#TNAME","zkillD")="b"_$C(0)_"2"
+05 ^#t("b","#COUNT")="2"
+05 ^#t("b",2,"TRIGNAME")="zkillD#"
+05 ^#t("b",2,"GVSUBS")="subs=:3;6:"
+05 ^#t("b",2,"CMD")="K,ZK"
+05 ^#t("b",2,"XECUTE")=" do fired^replictrigger zkill ^d(subs)"
+05 ^#t("b","#CYCLE")="2"
+09
+08
+05 ^#t("#TNAME","restart")="b"_$C(0)_"3"
+05 ^#t("b","#COUNT")="3"
+05 ^#t("b",3,"TRIGNAME")="restart#"
+05 ^#t("b",3,"GVSUBS")="subs=*"
+05 ^#t("b",3,"CMD")="S"
+05 ^#t("b",3,"XECUTE")=" do fired^replictrigger do tlevelzero^replictrigger"
+05 ^#t("b","#CYCLE")="3"
+09
+08
+05 ^b(1)="1"
+05 ^b(1)="1,5"
+05 ^b(2)="2"
+05 ^b(2)="2,10"
+05 ^b(3)="3"
+05 ^b(3)="3,15"
+05 ^b(4)="4"
+05 ^b(4)="4,20"
+05 ^b(5)="5"
+05 ^b(5)="5,25"
+05 ^b(6)="6"
+05 ^b(6)="6,30"
+05 ^b(7)="7"
+05 ^b(7)="7,35"
+05 ^b(8)="8"
+05 ^b(8)="8,40"
+05 ^b(9)="9"
+05 ^b(9)="9,45"
+05 ^b(10)="10"
+05 ^b(10)="10,50"
+09
+08
+05 ^b(11)="11,55"
+09
+08
+05 ^b(12)="12,60"
+09
+08
+10 ^b(1)
+10 ^b(3)
+10 ^b(5)
+10 ^b(7)
+10 ^b(9)
+09
+08
+04 ^b
+05 ^b="76"
+09
+-------------------------------------------------------------------
+c.mjf
+08
+05 ^#t("#TNAME","killBsetB")="c"_$C(0)_"1"
+05 ^#t("c","#COUNT")="1"
+05 ^#t("c",1,"TRIGNAME")="killBsetB#"
+05 ^#t("c",1,"CMD")="K"
+05 ^#t("c",1,"XECUTE")=" do fired^replictrigger kill ^b set ^b=76"
+05 ^#t("c","#CYCLE")="1"
+09
+08
+05 ^c(1)="1"
+05 ^c(1)="1,5"
+05 ^c(2)="2"
+05 ^c(2)="2,10"
+05 ^c(3)="3"
+05 ^c(3)="3,15"
+05 ^c(4)="4"
+05 ^c(4)="4,20"
+05 ^c(5)="5"
+05 ^c(5)="5,25"
+05 ^c(6)="6"
+05 ^c(6)="6,30"
+05 ^c(7)="7"
+05 ^c(7)="7,35"
+05 ^c(8)="8"
+05 ^c(8)="8,40"
+05 ^c(9)="9"
+05 ^c(9)="9,45"
+05 ^c(10)="10"
+05 ^c(10)="10,50"
+09
+08
+05 ^c(11)="11,55"
+09
+08
+05 ^c(12)="12,60"
+09
+08
+04 ^c
+09
+-------------------------------------------------------------------
+d.mjf
+08
+05 ^d(1)="1"
+05 ^d(1)="1,5"
+05 ^d(2)="2"
+05 ^d(2)="2,10"
+05 ^d(3)="3"
+05 ^d(3)="3,15"
+05 ^d(4)="4"
+05 ^d(4)="4,20"
+05 ^d(5)="5"
+05 ^d(5)="5,25"
+05 ^d(6)="6"
+05 ^d(6)="6,30"
+05 ^d(7)="7"
+05 ^d(7)="7,35"
+05 ^d(8)="8"
+05 ^d(8)="8,40"
+05 ^d(9)="9"
+05 ^d(9)="9,45"
+05 ^d(10)="10"
+05 ^d(10)="10,50"
+09
+08
+05 ^d(11)="11,55"
+09
+08
+05 ^d(12)="12,60"
+09
+08
+10 ^d(1)
+10 ^d(3)
+10 ^d(7)
+10 ^d(9)
+09
+-------------------------------------------------------------------
+mumps.mjf
+08
+05 ^e(1)="1"
+05 ^e(1)="1,5"
+05 ^e(2)="2"
+05 ^e(2)="2,10"
+05 ^e(3)="3"
+05 ^e(3)="3,15"
+05 ^e(4)="4"
+05 ^e(4)="4,20"
+05 ^e(5)="5"
+05 ^e(5)="5,25"
+05 ^e(6)="6"
+05 ^e(6)="6,30"
+05 ^e(7)="7"
+05 ^e(7)="7,35"
+05 ^e(8)="8"
+05 ^e(8)="8,40"
+05 ^e(9)="9"
+05 ^e(9)="9,45"
+05 ^e(10)="10"
+05 ^e(10)="10,50"
+09
+08
+05 ^e(11)="11,55"
+09
+08
+05 ^e(12)="12,60"
+09
+08
+09
+08
+09
+08
+05 ^#t("#TNAME","touchZTWO")="e"_$C(0)_"1"
+05 ^#t("e","#COUNT")="1"
+05 ^#t("e",1,"TRIGNAME")="touchZTWO#"
+05 ^#t("e",1,"GVSUBS")="*"
+05 ^#t("e",1,"CMD")="S"
+05 ^#t("e",1,"XECUTE")=" do fired^replictrigger set a=$ZTWOrmhole"
+05 ^#t("e","#CYCLE")="1"
+05 ^#t("#TNAME","setA")="e"_$C(0)_"2"
+05 ^#t("e","#COUNT")="2"
+05 ^#t("e",2,"TRIGNAME")="setA#"
+05 ^#t("e",2,"GVSUBS")="*"
+05 ^#t("e",2,"CMD")="S"
+05 ^#t("e",2,"XECUTE")=" do fired^replictrigger set ^a(55,$incr(^a(55,""count"")))=$ztva set target=""^a(75,""_$ztva_"")"" set @target=$incr(^a(75,""count""))"
+05 ^#t("e","#CYCLE")="2"
+09
+08
+11 "Updates to ^e in a transaction do not show up without replication"
+05 ^e(2)="2,10"
+09
+08
+11 "Updates to ^e in a transaction do not show up without replication"
+05 ^e(2)="2,10,6"
+09
+08
+11 "Updates to ^e in a transaction do not show up without replication"
+05 ^e(4)="4,20"
+09
+08
+11 "Updates to ^e in a transaction do not show up without replication"
+05 ^e(4)="4,20,12"
+09
+08
+11 "Updates to ^e in a transaction do not show up without replication"
+05 ^e(6)="6,30"
+09
+08
+11 "Updates to ^e in a transaction do not show up without replication"
+05 ^e(6)="6,30,18"
+09
+08
+11 "Updates to ^e in a transaction do not show up without replication"
+05 ^e(8)="8,40"
+09
+08
+11 "Updates to ^e in a transaction do not show up without replication"
+05 ^e(8)="8,40,24"
+09
+08
+11 "Updates to ^e in a transaction do not show up without replication"
+05 ^e(10)="10,50"
+09
+08
+11 "Updates to ^e in a transaction do not show up without replication"
+05 ^e(10)="10,50,30"
+09
+08
+11 "Updates to ^e in a transaction do not show up without replication"
+05 ^e(12)="10,60,30"
+09
+08
+11 "Updates to ^e at the start of a transaction do not show up without replication"
+05 ^e(1)="1,5"
+05 ^e(1)="1,5,3"
+05 ^e(3)="3,15"
+05 ^e(3)="3,15,9"
+05 ^e(5)="5,25"
+05 ^e(5)="5,25,15"
+05 ^e(7)="7,35"
+05 ^e(7)="7,35,21"
+11 "Updates to ^e show up in the middle of a transaction do not show up without replication"
+05 ^e(9)="9,45"
+05 ^e(9)="9,45,27"
+11 "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Updates to ^e should show up AGAIN in journal for replication only"
+05 ^e(11)="9,55,27"
+09
+08
+09
+08
+09
+08
+09
+08
+09
+08
+09
+08
+09
+08
+09
+08
+09
+-------------------------------------------------------------------
+###################################################################
+
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT ALL'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

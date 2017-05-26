@@ -1,0 +1,6 @@
+# Create mumps.dat with lock space of 10 pages.
+# Calculate maximum queue capacity
+# Calculated maximum lock queue capacitys is ##TEST_AWK.*
+##TEST_AWK# Fire off [0-9]* \+ 1 processes and expect LOCKSPACEINFO and LOCKSPACEFULL messages
+# Lock space overloaded and quit. Now checking syslog.
+# Verify that messages are not generated from another process

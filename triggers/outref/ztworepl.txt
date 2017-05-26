@@ -1,0 +1,981 @@
+Testing ZTWOrmhole with replication
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Testing ZTWOrmhole with replication
+Added SET and/or Non-SET trigger on ^a1 named a1#1
+Added SET and/or Non-SET trigger on ^b2 named b2#1
+Added Non-SET trigger on ^aztr named aztr#1
+Added Non-SET trigger on ^aztrNULL named aztrNULL#1
+Added Non-SET trigger on ^aztrSET named aztrSET#1
+Added Non-SET trigger on ^bstart named bstart#1
+Added Non-SET trigger on ^bstop named bstop#1
+###################################################################
+###################################################################
+###################################################################
+###################################################################
+###################################################################
+###################################################################
+###################################################################
+###################################################################
+###################################################################
+###################################################################
+###################################################################
+###################################################################
+###################################################################
+###################################################################
+###################################################################
+###################################################################
+###################################################################
+###################################################################
+###################################################################
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+< ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/jnl_extract.csh'==
+> ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/$tst/u_inref/jnl_extract.csh'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/jnl_extract.csh'==
+a.mjf
+08
+05 ^#t("#TNAME","a1","#SEQNUM")="1"
+05 ^#t("#TNAME","a1","#TNCOUNT")="1"
+05 ^#t("#TNAME","a1#1")="a1"_$C(0)_"1"
+05 ^#t("a1","#COUNT")="1"
+05 ^#t("a1",1,"TRIGNAME")="a1#1#"
+05 ^#t("a1",1,"GVSUBS")="*"
+05 ^#t("a1",1,"CMD")="S,K"
+05 ^#t("a1",1,"XECUTE")=" do ztworepltrig^ztworepl(1)"
+05 ^#t("a1","#CYCLE")="1"
+05 ^#t("#TNAME","aztr","#SEQNUM")="1"
+05 ^#t("#TNAME","aztr","#TNCOUNT")="1"
+05 ^#t("#TNAME","aztr#1")="aztr"_$C(0)_"1"
+05 ^#t("aztr","#COUNT")="1"
+05 ^#t("aztr",1,"TRIGNAME")="aztr#1#"
+05 ^#t("aztr",1,"GVSUBS")="*"
+05 ^#t("aztr",1,"CMD")="ZTR"
+05 ^#t("aztr",1,"XECUTE")=" do ztworepltrig^ztworepl(1)"
+05 ^#t("aztr","#CYCLE")="1"
+05 ^#t("#TNAME","aztrNULL","#SEQNUM")="1"
+05 ^#t("#TNAME","aztrNULL","#TNCOUNT")="1"
+05 ^#t("#TNAME","aztrNULL#1")="aztrNULL"_$C(0)_"1"
+05 ^#t("aztrNULL","#COUNT")="1"
+05 ^#t("aztrNULL",1,"TRIGNAME")="aztrNULL#1#"
+05 ^#t("aztrNULL",1,"CMD")="ZTR"
+05 ^#t("aztrNULL",1,"XECUTE")=" set $ztwormhole="""""
+05 ^#t("aztrNULL","#CYCLE")="1"
+05 ^#t("#TNAME","aztrSET","#SEQNUM")="1"
+05 ^#t("#TNAME","aztrSET","#TNCOUNT")="1"
+05 ^#t("#TNAME","aztrSET#1")="aztrSET"_$C(0)_"1"
+05 ^#t("aztrSET","#COUNT")="1"
+05 ^#t("aztrSET",1,"TRIGNAME")="aztrSET#1#"
+05 ^#t("aztrSET",1,"CMD")="ZTR"
+05 ^#t("aztrSET",1,"XECUTE")=" set $ztwormhole=""ZTRIGGER"""
+05 ^#t("aztrSET","#CYCLE")="1"
+09
+05 ^atest="Test (10) ZTWO with implicit transactions"
+08
+11 "abcd"
+05 ^a1(11)="a;$ztwo=abcd"
+09
+05 ^atest="Test (10) ZTWO with implicit transactions - switch ztwo to ALT"
+08
+11 "efgh"
+12 ^aztr(";$ztwo=efgh")
+09
+08
+11 "efgh"
+04 ^a1(11)
+09
+04 ^atest
+05 ^atest="Test (20) null ZTWO with implicit transactions - shouldn't see ztwo"
+08
+05 ^a1(21)="c;$ztwo="
+09
+08
+12 ^aztr(";$ztwo=")
+09
+08
+04 ^a1(21)
+09
+04 ^atest
+08
+05 ^atest="Test (30) null ZTWO with explicit transaction"
+05 ^a1(31)="f;$ztwo="
+05 ^a1(32)="g;$ztwo="
+05 ^a1(33)="h;$ztwo="
+12 ^aztr(";$ztwo=")
+04 ^atest
+09
+08
+05 ^atest="Test (40) ZTWO set inside explicit transaction after non-referencing update"
+11 "abcd"
+05 ^a1(41)="f;$ztwo=abcd"
+05 ^a1(42)="g;$ztwo=abcd"
+05 ^a1(43)="h;$ztwo=abcd"
+12 ^aztr(";$ztwo=abcd")
+04 ^atest
+09
+08
+05 ^atest="Test (50) ZTWO set inside explicit transaction after referencing update"
+12 ^aztr(";$ztwo=")
+11 "abcd"
+05 ^a1(51)="f;$ztwo=abcd"
+05 ^a1(52)="g;$ztwo=abcd"
+05 ^a1(53)="h;$ztwo=abcd"
+04 ^atest
+09
+08
+05 ^atest="Test (60) ZTWO set at the start of explicit transaction"
+11 "abcd"
+05 ^a1(61)="f;$ztwo=abcd"
+05 ^a1(62)="g;$ztwo=abcd"
+05 ^a1(63)="h;$ztwo=abcd"
+04 ^atest
+09
+08
+05 ^atest="Test (70) ZTWO set before explicit transaction"
+11 "abcd"
+05 ^a1(71)="f;$ztwo=abcd"
+05 ^a1(72)="g;$ztwo=abcd"
+05 ^a1(73)="h;$ztwo=abcd"
+12 ^aztr(";$ztwo=abcd")
+04 ^atest
+09
+05 ^atest="Test (80) ZTWO set before explicit transaction and changed inside the transaction"
+08
+11 "abcd"
+05 ^a1(81)="f;$ztwo=abcd"
+05 ^a1(82)="g;$ztwo=abcd"
+12 ^aztr(";$ztwo=abcd")
+11 "efgh"
+05 ^a1(83)="h;$ztwo=efgh"
+12 ^aztr(";$ztwo=efgh")
+04 ^atest
+09
+08
+05 ^atest="Test (90) ZTWO set before explicit transaction and changed inside the transaction"
+11 "abcd"
+05 ^a1(91)="e;$ztwo=abcd"
+05 ^a1(92)="f;$ztwo=abcd"
+11 "efgh"
+05 ^a1(93)="g;$ztwo=efgh"
+05 ^a1(94)="h;$ztwo=efgh"
+04 ^atest
+09
+08
+05 ^atest="Test (100) ZTWO set at start of explicit transaction and changed to NULL inside the transaction with intervening trigger references to ztwo and restored to the original inside the transaction"
+11 "abcd"
+12 ^aztr(";$ztwo=abcd")
+05 ^a1(101)="f;$ztwo=abcd"
+05 ^a1(102)="g;$ztwo=abcd"
+05 ^a1(103)="h;$ztwo="
+12 ^aztr(";$ztwo=")
+11 "abcd"
+12 ^aztr(";$ztwo=abcd")
+05 ^a1(104)="h;$ztwo=abcd"
+04 ^atest
+09
+05 ^atest="Test (110) ZTWO set before several implicit transactions"
+08
+11 "abcd"
+05 ^a1(111)="2"
+09
+08
+11 "abcd"
+05 ^a1(112)="3"
+09
+08
+11 "abcd"
+05 ^a1(113)="4"
+09
+08
+05 ^atest="Test (110) ZTWO set to same value as prior implicit transactions in an explicit transaction"
+11 "abcd"
+04 ^a1(111)
+04 ^a1(112)
+04 ^a1(113)
+12 ^aztr(";$ztwo=abcd")
+04 ^atest
+09
+05 ^atest="Test (120) ZTWO set before several implicit transactions"
+08
+11 "abcd"
+05 ^a1(121)="2"
+09
+08
+11 "abcd"
+05 ^a1(122)="3"
+09
+08
+11 "abcd"
+05 ^a1(123)="4"
+09
+08
+05 ^atest="Test (120) ZTWO set to alt value as prior implicit transactions in an explicit transaction"
+11 "abcd"
+12 ^aztr(";$ztwo=abcd")
+11 "efgh"
+04 ^a1(121)
+04 ^a1(122)
+04 ^a1(123)
+12 ^aztr(";$ztwo=efgh")
+09
+05 ^atest="Test (120) ZTWO unchanged for a new implicit transaction"
+08
+11 "efgh"
+12 ^aztr(";$ztwo=efgh")
+09
+04 ^atest
+05 ^atest="Test (130) ZTWO with implicit & explicit transactions. We expect ZTWO in only the first transaction"
+08
+11 "abcd"
+12 ^aztr(";$ztwo=abcd")
+09
+08
+11 "abcd"
+05 ^a1(131)="2"
+09
+08
+11 "abcd"
+05 ^a1(132)="3"
+09
+08
+11 "abcd"
+05 ^a1(133)="4"
+09
+05 ^atest="Test (130) ZTWO with implicit & explicit transactions. We expect ZTWO in only the first transaction"
+08
+11 "abcd"
+12 ^aztr(";$ztwo=abcd")
+04 ^a1(131)
+04 ^a1(132)
+04 ^a1(133)
+04 ^atest
+09
+05 ^atest="Test (140) ZTWO set before (im/ex)plicit transaction and (im/ex)plicitly changed inside the explicit transaction which includes a non ZTWO referencing zkill"
+08
+11 "abcd"
+05 ^a1(141)="2"
+09
+08
+11 "abcd"
+05 ^a1(142)="3"
+09
+08
+11 "abcd"
+05 ^a1(143)="4"
+09
+08
+11 "abcd"
+05 ^a1(144)="5"
+09
+08
+11 "abcd"
+04 ^a1(141)
+12 ^aztrSET
+11 "ZTRIGGER"
+04 ^a1(142)
+11 "efgh"
+04 ^a1(143)
+10 ^a1(144)
+04 ^atest
+09
+05 ^atest="Test (150) ZTWO changed between (im/ex)plicit transaction and changed to NULL inside the implicit transaction with intervening trigger references to ztwo and changed to non-NULL inside the transaction"
+08
+11 "abcd"
+05 ^a1(151)="2"
+09
+08
+11 "abcd"
+05 ^a1(152)="3"
+09
+08
+11 "abcd"
+05 ^a1(153)="4"
+09
+08
+11 "abcd"
+05 ^a1(154)="5"
+09
+08
+11 "abcd"
+12 ^aztr(";$ztwo=abcd")
+09
+08
+11 "abcd"
+04 ^a1(151)
+04 ^a1(152)
+12 ^aztrNULL
+04 ^a1(153)
+12 ^aztr(";$ztwo=")
+11 "abcd"
+04 ^a1(154)
+12 ^aztr(";$ztwo=abcd")
+12 ^aztrSET
+04 ^atest
+09
+05 ^atest="Test (160) same as before, but ZTWO should not change after being set to NULL"
+08
+11 "ZTRIGGER"
+12 ^aztr(";$ztwo=abcd")
+09
+08
+11 "ZTRIGGER"
+05 ^a1(161)="2"
+09
+08
+11 "ZTRIGGER"
+05 ^a1(162)="3"
+09
+08
+11 "ZTRIGGER"
+05 ^a1(163)="4"
+09
+05 ^a2(4)="5"
+08
+11 "abcd"
+04 ^a1(161)
+10 ^a1(162)
+12 ^aztr(";$ztwo=abcd")
+04 ^a1(163)
+12 ^aztr(";$ztwo=")
+11 "abcd"
+12 ^aztr(";$ztwo=abcd")
+04 ^atest
+09
+05 ^atest="Test (170) ZTWO set to null should not show up at all even after changing inside the transaction"
+08
+11 "abcd"
+05 ^a1(171)="2"
+09
+08
+11 "abcd"
+05 ^a1(172)="3"
+09
+08
+11 "abcd"
+05 ^a1(173)="4"
+09
+05 ^a2(4)="5"
+08
+12 ^aztr(";$ztwo=")
+10 ^a1(171)
+04 ^a1(172)
+04 ^a1(173)
+12 ^aztr(";$ztwo=")
+04 ^atest
+09
+05 ^atest="Test (180)"
+08
+11 "abcd"
+05 ^a1(181)="2"
+09
+08
+11 "abcd"
+05 ^a1(182)="3"
+09
+08
+11 "abcd"
+05 ^a1(183)="4"
+09
+05 ^a2(4)="5"
+08
+05 ^atest="Test (180)begin explicit updates;$ztwo=abcd"
+10 ^a1(181)
+11 "abcd"
+04 ^a1(182)
+12 ^aztr(";$ztwo=")
+05 ^atest="Test (180)inside explicit updates;$ztwo="
+04 ^a1(183)
+05 ^atest="Test (180)last explicit updates;$ztwo=abcd"
+04 ^atest
+09
+05 ^atest="Test (190) ZTWO set to $char(0) and changed during an explicit transaction"
+08
+11 $C(0)
+05 ^a1(191)="f$char(0)"
+12 ^aztr(";$ztwo=$char(0)")
+11 "abcd"
+05 ^a1(192)="g;$ztwo=abcd"
+05 ^a1(193)="h;$ztwo=abcd"
+12 ^aztr(";$ztwo=abcd")
+04 ^atest
+09
+-------------------------------------------------------------------
+b.mjf
+08
+05 ^#t("#TNAME","b2","#SEQNUM")="1"
+05 ^#t("#TNAME","b2","#TNCOUNT")="1"
+05 ^#t("#TNAME","b2#1")="b2"_$C(0)_"1"
+05 ^#t("b2","#COUNT")="1"
+05 ^#t("b2",1,"TRIGNAME")="b2#1#"
+05 ^#t("b2",1,"GVSUBS")="*"
+05 ^#t("b2",1,"CMD")="S,K"
+05 ^#t("b2",1,"XECUTE")=" do ztworepltrig^ztworepl(0)"
+05 ^#t("b2","#CYCLE")="1"
+05 ^#t("#TNAME","bstart","#SEQNUM")="1"
+05 ^#t("#TNAME","bstart","#TNCOUNT")="1"
+05 ^#t("#TNAME","bstart#1")="bstart"_$C(0)_"1"
+05 ^#t("bstart","#COUNT")="1"
+05 ^#t("bstart",1,"TRIGNAME")="bstart#1#"
+05 ^#t("bstart",1,"CMD")="ZTR"
+05 ^#t("bstart",1,"XECUTE")=" set x=1"
+05 ^#t("bstart","#CYCLE")="1"
+05 ^#t("#TNAME","bstop","#SEQNUM")="1"
+05 ^#t("#TNAME","bstop","#TNCOUNT")="1"
+05 ^#t("#TNAME","bstop#1")="bstop"_$C(0)_"1"
+05 ^#t("bstop","#COUNT")="1"
+05 ^#t("bstop",1,"TRIGNAME")="bstop#1#"
+05 ^#t("bstop",1,"CMD")="ZTR"
+05 ^#t("bstop",1,"XECUTE")=" set x=0"
+05 ^#t("bstop","#CYCLE")="1"
+09
+05 ^btest="Test (10) ZTWO with implicit transactions"
+08
+05 ^b2(1)="b;$ztwo=abcd"
+09
+05 ^btest="Test (10) ZTWO with implicit transactions - switch ztwo to ALT"
+08
+04 ^b2(1)
+09
+04 ^btest
+05 ^btest="Test (20) null ZTWO with implicit transactions - shouldn't see ztwo"
+08
+05 ^b2(1)="d;$ztwo="
+09
+08
+04 ^b2(1)
+09
+04 ^btest
+08
+05 ^btest="Test (30) null ZTWO with explicit transaction"
+05 ^b2(1)="e;$ztwo="
+04 ^btest
+09
+08
+05 ^btest="Test (40) ZTWO set inside explicit transaction after non-referencing update"
+05 ^b2(41)="e;$ztwo=abcd"
+04 ^btest
+09
+08
+05 ^btest="Test (50) ZTWO set inside explicit transaction after referencing update"
+05 ^b2(1)="e"
+04 ^btest
+09
+08
+05 ^btest="Test (60) ZTWO set at the start of explicit transaction"
+04 ^btest
+09
+08
+05 ^btest="Test (70) ZTWO set before explicit transaction"
+04 ^btest
+09
+05 ^btest="Test (80) ZTWO set before explicit transaction and changed inside the transaction"
+08
+05 ^b2(81)="e;$ztwo=abcd"
+05 ^b2(83)="e;$ztwo=efgh"
+04 ^btest
+09
+08
+05 ^btest="Test (90) ZTWO set before explicit transaction and changed inside the transaction"
+04 ^btest
+09
+08
+05 ^btest="Test (100) ZTWO set at start of explicit transaction and changed to NULL inside the transaction with intervening trigger references to ztwo and restored to the original inside the transaction"
+04 ^btest
+09
+05 ^btest="Test (110) ZTWO set before several implicit transactions"
+08
+05 ^b2(1)="1"
+09
+08
+05 ^btest="Test (110) ZTWO set to same value as prior implicit transactions in an explicit transaction"
+04 ^b2(1)
+04 ^btest
+09
+05 ^btest="Test (120) ZTWO set before several implicit transactions"
+08
+05 ^btest="Test (120) ZTWO set to alt value as prior implicit transactions in an explicit transaction"
+09
+05 ^btest="Test (120) ZTWO unchanged for a new implicit transaction"
+04 ^btest
+05 ^btest="Test (130) ZTWO with implicit & explicit transactions. We expect ZTWO in only the first transaction"
+05 ^btest="Test (130) ZTWO with implicit & explicit transactions. We expect ZTWO in only the first transaction"
+08
+04 ^btest
+09
+05 ^btest="Test (140) ZTWO set before (im/ex)plicit transaction and (im/ex)plicitly changed inside the explicit transaction which includes a non ZTWO referencing zkill"
+08
+04 ^btest
+09
+05 ^btest="Test (150) ZTWO changed between (im/ex)plicit transaction and changed to NULL inside the implicit transaction with intervening trigger references to ztwo and changed to non-NULL inside the transaction"
+08
+04 ^btest
+09
+05 ^btest="Test (160) same as before, but ZTWO should not change after being set to NULL"
+08
+04 ^btest
+09
+05 ^btest="Test (170) ZTWO set to null should not show up at all even after changing inside the transaction"
+08
+04 ^btest
+09
+05 ^btest="Test (180)"
+08
+05 ^btest="Test (180)begin explicit updates;$ztwo=abcd"
+05 ^btest="Test (180)inside explicit updates;$ztwo="
+05 ^btest="Test (180)last explicit updates;$ztwo=abcd"
+04 ^btest
+09
+05 ^btest="Test (190) ZTWO set to $char(0) and changed during an explicit transaction"
+08
+12 ^bstart
+05 ^b2(191)="e;$ztwo=$char(0)"
+12 ^bstop
+04 ^btest
+09
+-------------------------------------------------------------------
+mumps.mjf
+-------------------------------------------------------------------
+
+###################################################################
+Check the detailed extract
+< ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/jnl_extract_detailed.csh'==
+> ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/$tst/u_inref/jnl_extract_detailed.csh'==
+< UZKILL /2/^a1(181)
+> UZKILL /6/^a1(181)
+< TSET   /2/^b2(1)="b;$ztwo=abcd"
+> TSET   /6/^b2(1)="b;$ztwo=abcd"
+< TKILL  /2/^b2(1)
+> TKILL  /6/^b2(1)
+< TSET   /2/^b2(81)="e;$ztwo=abcd"
+> TSET   /6/^b2(81)="e;$ztwo=abcd"
+< TSET   /2/^b2(1)="1"
+> TSET   /6/^b2(1)="1"
+< UKILL  /2/^b2(1)
+> UKILL  /6/^b2(1)
+< TZTRIG /2/^bstart
+< USET   /2/^b2(191)="e;$ztwo=$char(0)"
+> TZTRIG /6/^bstart
+> USET   /6/^b2(191)="e;$ztwo=$char(0)"
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/jnl_extract_detailed.csh'==
+a.mjf
+TLGTRIG/"+^a1(:)    -commands=SET,KILL -xecute=""do ztworepltrig^ztworepl(1)"""
+USET   /0/^#t("#TNAME","a1","#SEQNUM")="1"
+USET   /0/^#t("#TNAME","a1","#TNCOUNT")="1"
+USET   /0/^#t("#TNAME","a1#1")="a1"_$C(0)_"1"
+USET   /0/^#t("a1","#COUNT")="1"
+USET   /0/^#t("a1",1,"TRIGNAME")="a1#1#"
+USET   /0/^#t("a1",1,"GVSUBS")="*"
+USET   /0/^#t("a1",1,"CMD")="S,K"
+USET   /0/^#t("a1",1,"XECUTE")=" do ztworepltrig^ztworepl(1)"
+USET   /0/^#t("a1","#CYCLE")="1"
+ULGTRIG/"+^aztr(:)  -commands=ZTR      -xecute=""do ztworepltrig^ztworepl(1)"""
+USET   /0/^#t("#TNAME","aztr","#SEQNUM")="1"
+USET   /0/^#t("#TNAME","aztr","#TNCOUNT")="1"
+USET   /0/^#t("#TNAME","aztr#1")="aztr"_$C(0)_"1"
+USET   /0/^#t("aztr","#COUNT")="1"
+USET   /0/^#t("aztr",1,"TRIGNAME")="aztr#1#"
+USET   /0/^#t("aztr",1,"GVSUBS")="*"
+USET   /0/^#t("aztr",1,"CMD")="ZTR"
+USET   /0/^#t("aztr",1,"XECUTE")=" do ztworepltrig^ztworepl(1)"
+USET   /0/^#t("aztr","#CYCLE")="1"
+ULGTRIG/"+^aztrNULL -commands=ZTR      -xecute=""set $ztwormhole="""""""""""
+USET   /0/^#t("#TNAME","aztrNULL","#SEQNUM")="1"
+USET   /0/^#t("#TNAME","aztrNULL","#TNCOUNT")="1"
+USET   /0/^#t("#TNAME","aztrNULL#1")="aztrNULL"_$C(0)_"1"
+USET   /0/^#t("aztrNULL","#COUNT")="1"
+USET   /0/^#t("aztrNULL",1,"TRIGNAME")="aztrNULL#1#"
+USET   /0/^#t("aztrNULL",1,"CMD")="ZTR"
+USET   /0/^#t("aztrNULL",1,"XECUTE")=" set $ztwormhole="""""
+USET   /0/^#t("aztrNULL","#CYCLE")="1"
+ULGTRIG/"+^aztrSET  -commands=ZTR      -xecute=""set $ztwormhole=""""ZTRIGGER"""""""
+USET   /0/^#t("#TNAME","aztrSET","#SEQNUM")="1"
+USET   /0/^#t("#TNAME","aztrSET","#TNCOUNT")="1"
+USET   /0/^#t("#TNAME","aztrSET#1")="aztrSET"_$C(0)_"1"
+USET   /0/^#t("aztrSET","#COUNT")="1"
+USET   /0/^#t("aztrSET",1,"TRIGNAME")="aztrSET#1#"
+USET   /0/^#t("aztrSET",1,"CMD")="ZTR"
+USET   /0/^#t("aztrSET",1,"XECUTE")=" set $ztwormhole=""ZTRIGGER"""
+USET   /0/^#t("aztrSET","#CYCLE")="1"
+SET    /0/^atest="Test (10) ZTWO with implicit transactions"
+TZTWORM/"abcd"
+USET   /2/^a1(11)="a;$ztwo=abcd"
+SET    /0/^atest="Test (10) ZTWO with implicit transactions - switch ztwo to ALT"
+TZTWORM/"efgh"
+UZTRIG /2/^aztr(";$ztwo=efgh")
+TZTWORM/"efgh"
+UKILL  /2/^a1(11)
+KILL   /0/^atest
+---------
+SET    /0/^atest="Test (20) null ZTWO with implicit transactions - shouldn't see ztwo"
+TSET   /6/^a1(21)="c;$ztwo="
+TZTRIG /6/^aztr(";$ztwo=")
+TKILL  /6/^a1(21)
+KILL   /0/^atest
+---------
+TSET   /0/^atest="Test (30) null ZTWO with explicit transaction"
+USET   /6/^a1(31)="f;$ztwo="
+USET   /6/^a1(32)="g;$ztwo="
+USET   /6/^a1(33)="h;$ztwo="
+UZTRIG /6/^aztr(";$ztwo=")
+UKILL  /0/^atest
+---------
+TSET   /0/^atest="Test (40) ZTWO set inside explicit transaction after non-referencing update"
+UZTWORM/"abcd"
+USET   /2/^a1(41)="f;$ztwo=abcd"
+USET   /2/^a1(42)="g;$ztwo=abcd"
+USET   /2/^a1(43)="h;$ztwo=abcd"
+UZTRIG /2/^aztr(";$ztwo=abcd")
+UKILL  /0/^atest
+---------
+TSET   /0/^atest="Test (50) ZTWO set inside explicit transaction after referencing update"
+UZTRIG /6/^aztr(";$ztwo=")
+UZTWORM/"abcd"
+USET   /2/^a1(51)="f;$ztwo=abcd"
+USET   /2/^a1(52)="g;$ztwo=abcd"
+USET   /2/^a1(53)="h;$ztwo=abcd"
+UKILL  /0/^atest
+---------
+TSET   /0/^atest="Test (60) ZTWO set at the start of explicit transaction"
+UZTWORM/"abcd"
+USET   /2/^a1(61)="f;$ztwo=abcd"
+USET   /2/^a1(62)="g;$ztwo=abcd"
+USET   /2/^a1(63)="h;$ztwo=abcd"
+UKILL  /0/^atest
+---------
+TSET   /0/^atest="Test (70) ZTWO set before explicit transaction"
+UZTWORM/"abcd"
+USET   /2/^a1(71)="f;$ztwo=abcd"
+USET   /2/^a1(72)="g;$ztwo=abcd"
+USET   /2/^a1(73)="h;$ztwo=abcd"
+UZTRIG /2/^aztr(";$ztwo=abcd")
+UKILL  /0/^atest
+---------
+SET    /0/^atest="Test (80) ZTWO set before explicit transaction and changed inside the transaction"
+TZTWORM/"abcd"
+USET   /2/^a1(81)="f;$ztwo=abcd"
+USET   /2/^a1(82)="g;$ztwo=abcd"
+UZTRIG /2/^aztr(";$ztwo=abcd")
+UZTWORM/"efgh"
+USET   /2/^a1(83)="h;$ztwo=efgh"
+UZTRIG /2/^aztr(";$ztwo=efgh")
+UKILL  /0/^atest
+---------
+TSET   /0/^atest="Test (90) ZTWO set before explicit transaction and changed inside the transaction"
+UZTWORM/"abcd"
+USET   /2/^a1(91)="e;$ztwo=abcd"
+USET   /2/^a1(92)="f;$ztwo=abcd"
+UZTWORM/"efgh"
+USET   /2/^a1(93)="g;$ztwo=efgh"
+USET   /2/^a1(94)="h;$ztwo=efgh"
+UKILL  /0/^atest
+---------
+TSET   /0/^atest="Test (100) ZTWO set at start of explicit transaction and changed to NULL inside the transaction with intervening trigger references to ztwo and restored to the original inside the transaction"
+UZTWORM/"abcd"
+UZTRIG /2/^aztr(";$ztwo=abcd")
+USET   /2/^a1(101)="f;$ztwo=abcd"
+USET   /2/^a1(102)="g;$ztwo=abcd"
+USET   /6/^a1(103)="h;$ztwo="
+UZTRIG /6/^aztr(";$ztwo=")
+UZTWORM/"abcd"
+UZTRIG /2/^aztr(";$ztwo=abcd")
+USET   /2/^a1(104)="h;$ztwo=abcd"
+UKILL  /0/^atest
+---------
+SET    /0/^atest="Test (110) ZTWO set before several implicit transactions"
+TZTWORM/"abcd"
+USET   /2/^a1(111)="2"
+TZTWORM/"abcd"
+USET   /2/^a1(112)="3"
+TZTWORM/"abcd"
+USET   /2/^a1(113)="4"
+TSET   /0/^atest="Test (110) ZTWO set to same value as prior implicit transactions in an explicit transaction"
+UZTWORM/"abcd"
+UKILL  /2/^a1(111)
+UKILL  /2/^a1(112)
+UKILL  /2/^a1(113)
+UZTRIG /2/^aztr(";$ztwo=abcd")
+UKILL  /0/^atest
+---------
+SET    /0/^atest="Test (120) ZTWO set before several implicit transactions"
+TZTWORM/"abcd"
+USET   /2/^a1(121)="2"
+TZTWORM/"abcd"
+USET   /2/^a1(122)="3"
+TZTWORM/"abcd"
+USET   /2/^a1(123)="4"
+TSET   /0/^atest="Test (120) ZTWO set to alt value as prior implicit transactions in an explicit transaction"
+UZTWORM/"abcd"
+UZTRIG /2/^aztr(";$ztwo=abcd")
+UZTWORM/"efgh"
+UKILL  /2/^a1(121)
+UKILL  /2/^a1(122)
+UKILL  /2/^a1(123)
+UZTRIG /2/^aztr(";$ztwo=efgh")
+SET    /0/^atest="Test (120) ZTWO unchanged for a new implicit transaction"
+TZTWORM/"efgh"
+UZTRIG /2/^aztr(";$ztwo=efgh")
+KILL   /0/^atest
+---------
+SET    /0/^atest="Test (130) ZTWO with implicit & explicit transactions. We expect ZTWO in only the first transaction"
+TZTWORM/"abcd"
+UZTRIG /2/^aztr(";$ztwo=abcd")
+TZTWORM/"abcd"
+USET   /2/^a1(131)="2"
+TZTWORM/"abcd"
+USET   /2/^a1(132)="3"
+TZTWORM/"abcd"
+USET   /2/^a1(133)="4"
+SET    /16/^atest="Test (130) ZTWO with implicit & explicit transactions. We expect ZTWO in only the first transaction"
+TZTWORM/"abcd"
+UZTRIG /2/^aztr(";$ztwo=abcd")
+UKILL  /2/^a1(131)
+UKILL  /2/^a1(132)
+UKILL  /2/^a1(133)
+UKILL  /0/^atest
+---------
+SET    /0/^atest="Test (140) ZTWO set before (im/ex)plicit transaction and (im/ex)plicitly changed inside the explicit transaction which includes a non ZTWO referencing zkill"
+TZTWORM/"abcd"
+USET   /2/^a1(141)="2"
+TZTWORM/"abcd"
+USET   /2/^a1(142)="3"
+TZTWORM/"abcd"
+USET   /2/^a1(143)="4"
+TZTWORM/"abcd"
+USET   /2/^a1(144)="5"
+TZTWORM/"abcd"
+UKILL  /2/^a1(141)
+UZTRIG /2/^aztrSET
+UZTWORM/"ZTRIGGER"
+UKILL  /2/^a1(142)
+UZTWORM/"efgh"
+UKILL  /2/^a1(143)
+UZKILL /2/^a1(144)
+UKILL  /0/^atest
+---------
+SET    /0/^atest="Test (150) ZTWO changed between (im/ex)plicit transaction and changed to NULL inside the implicit transaction with intervening trigger references to ztwo and changed to non-NULL inside the transaction"
+TZTWORM/"abcd"
+USET   /2/^a1(151)="2"
+TZTWORM/"abcd"
+USET   /2/^a1(152)="3"
+TZTWORM/"abcd"
+USET   /2/^a1(153)="4"
+TZTWORM/"abcd"
+USET   /2/^a1(154)="5"
+TZTWORM/"abcd"
+UZTRIG /2/^aztr(";$ztwo=abcd")
+TZTWORM/"abcd"
+UKILL  /2/^a1(151)
+UKILL  /2/^a1(152)
+UZTRIG /2/^aztrNULL
+UKILL  /6/^a1(153)
+UZTRIG /6/^aztr(";$ztwo=")
+UZTWORM/"abcd"
+UKILL  /2/^a1(154)
+UZTRIG /2/^aztr(";$ztwo=abcd")
+UZTRIG /2/^aztrSET
+UKILL  /0/^atest
+---------
+SET    /0/^atest="Test (160) same as before, but ZTWO should not change after being set to NULL"
+TZTWORM/"ZTRIGGER"
+UZTRIG /2/^aztr(";$ztwo=abcd")
+TZTWORM/"ZTRIGGER"
+USET   /2/^a1(161)="2"
+TZTWORM/"ZTRIGGER"
+USET   /2/^a1(162)="3"
+TZTWORM/"ZTRIGGER"
+USET   /2/^a1(163)="4"
+SET    /0/^a2(4)="5"
+TZTWORM/"abcd"
+UKILL  /2/^a1(161)
+UZKILL /2/^a1(162)
+UZTRIG /2/^aztr(";$ztwo=abcd")
+UKILL  /6/^a1(163)
+UZTRIG /6/^aztr(";$ztwo=")
+UZTWORM/"abcd"
+UZTRIG /2/^aztr(";$ztwo=abcd")
+UKILL  /0/^atest
+---------
+SET    /0/^atest="Test (170) ZTWO set to null should not show up at all even after changing inside the transaction"
+TZTWORM/"abcd"
+USET   /2/^a1(171)="2"
+TZTWORM/"abcd"
+USET   /2/^a1(172)="3"
+TZTWORM/"abcd"
+USET   /2/^a1(173)="4"
+SET    /16/^a2(4)="5"
+TZTRIG /6/^aztr(";$ztwo=")
+UZKILL /6/^a1(171)
+UKILL  /6/^a1(172)
+UKILL  /6/^a1(173)
+UZTRIG /6/^aztr(";$ztwo=")
+UKILL  /0/^atest
+---------
+SET    /0/^atest="Test (180)"
+TZTWORM/"abcd"
+USET   /2/^a1(181)="2"
+TZTWORM/"abcd"
+USET   /2/^a1(182)="3"
+TZTWORM/"abcd"
+USET   /2/^a1(183)="4"
+SET    /16/^a2(4)="5"
+TSET   /0/^atest="Test (180)begin explicit updates;$ztwo=abcd"
+UZKILL /2/^a1(181)
+UZTWORM/"abcd"
+UKILL  /2/^a1(182)
+UZTRIG /6/^aztr(";$ztwo=")
+USET   /0/^atest="Test (180)inside explicit updates;$ztwo="
+UKILL  /6/^a1(183)
+USET   /0/^atest="Test (180)last explicit updates;$ztwo=abcd"
+UKILL  /0/^atest
+---------
+SET    /0/^atest="Test (190) ZTWO set to $char(0) and changed during an explicit transaction"
+TZTWORM/$C(0)
+USET   /2/^a1(191)="f$char(0)"
+UZTRIG /2/^aztr(";$ztwo=$char(0)")
+UZTWORM/"abcd"
+USET   /2/^a1(192)="g;$ztwo=abcd"
+USET   /2/^a1(193)="h;$ztwo=abcd"
+UZTRIG /2/^aztr(";$ztwo=abcd")
+UKILL  /0/^atest
+---------
+-------------------------------------------------------------
+b.mjf
+TLGTRIG/"+^b2(:)    -commands=SET,KILL -xecute=""do ztworepltrig^ztworepl(0)"""
+USET   /0/^#t("#TNAME","b2","#SEQNUM")="1"
+USET   /0/^#t("#TNAME","b2","#TNCOUNT")="1"
+USET   /0/^#t("#TNAME","b2#1")="b2"_$C(0)_"1"
+USET   /0/^#t("b2","#COUNT")="1"
+USET   /0/^#t("b2",1,"TRIGNAME")="b2#1#"
+USET   /0/^#t("b2",1,"GVSUBS")="*"
+USET   /0/^#t("b2",1,"CMD")="S,K"
+USET   /0/^#t("b2",1,"XECUTE")=" do ztworepltrig^ztworepl(0)"
+USET   /0/^#t("b2","#CYCLE")="1"
+ULGTRIG/"+^bstart   -commands=ZTR      -xecute=""set x=1"""
+USET   /0/^#t("#TNAME","bstart","#SEQNUM")="1"
+USET   /0/^#t("#TNAME","bstart","#TNCOUNT")="1"
+USET   /0/^#t("#TNAME","bstart#1")="bstart"_$C(0)_"1"
+USET   /0/^#t("bstart","#COUNT")="1"
+USET   /0/^#t("bstart",1,"TRIGNAME")="bstart#1#"
+USET   /0/^#t("bstart",1,"CMD")="ZTR"
+USET   /0/^#t("bstart",1,"XECUTE")=" set x=1"
+USET   /0/^#t("bstart","#CYCLE")="1"
+ULGTRIG/"+^bstop    -commands=ZTR      -xecute=""set x=0"""
+USET   /0/^#t("#TNAME","bstop","#SEQNUM")="1"
+USET   /0/^#t("#TNAME","bstop","#TNCOUNT")="1"
+USET   /0/^#t("#TNAME","bstop#1")="bstop"_$C(0)_"1"
+USET   /0/^#t("bstop","#COUNT")="1"
+USET   /0/^#t("bstop",1,"TRIGNAME")="bstop#1#"
+USET   /0/^#t("bstop",1,"CMD")="ZTR"
+USET   /0/^#t("bstop",1,"XECUTE")=" set x=0"
+USET   /0/^#t("bstop","#CYCLE")="1"
+SET    /0/^btest="Test (10) ZTWO with implicit transactions"
+TSET   /2/^b2(1)="b;$ztwo=abcd"
+SET    /0/^btest="Test (10) ZTWO with implicit transactions - switch ztwo to ALT"
+TKILL  /2/^b2(1)
+KILL   /0/^btest
+---------
+SET    /0/^btest="Test (20) null ZTWO with implicit transactions - shouldn't see ztwo"
+TSET   /6/^b2(1)="d;$ztwo="
+TKILL  /6/^b2(1)
+KILL   /0/^btest
+---------
+TSET   /0/^btest="Test (30) null ZTWO with explicit transaction"
+USET   /6/^b2(1)="e;$ztwo="
+UKILL  /0/^btest
+---------
+TSET   /0/^btest="Test (40) ZTWO set inside explicit transaction after non-referencing update"
+USET   /6/^b2(41)="e;$ztwo=abcd"
+UKILL  /0/^btest
+---------
+TSET   /0/^btest="Test (50) ZTWO set inside explicit transaction after referencing update"
+USET   /6/^b2(1)="e"
+UKILL  /0/^btest
+---------
+TSET   /0/^btest="Test (60) ZTWO set at the start of explicit transaction"
+UKILL  /0/^btest
+---------
+TSET   /0/^btest="Test (70) ZTWO set before explicit transaction"
+UKILL  /0/^btest
+---------
+SET    /0/^btest="Test (80) ZTWO set before explicit transaction and changed inside the transaction"
+TSET   /2/^b2(81)="e;$ztwo=abcd"
+USET   /2/^b2(83)="e;$ztwo=efgh"
+UKILL  /0/^btest
+---------
+TSET   /0/^btest="Test (90) ZTWO set before explicit transaction and changed inside the transaction"
+UKILL  /0/^btest
+---------
+TSET   /0/^btest="Test (100) ZTWO set at start of explicit transaction and changed to NULL inside the transaction with intervening trigger references to ztwo and restored to the original inside the transaction"
+UKILL  /0/^btest
+---------
+SET    /0/^btest="Test (110) ZTWO set before several implicit transactions"
+TSET   /2/^b2(1)="1"
+TSET   /0/^btest="Test (110) ZTWO set to same value as prior implicit transactions in an explicit transaction"
+UKILL  /2/^b2(1)
+UKILL  /0/^btest
+---------
+SET    /0/^btest="Test (120) ZTWO set before several implicit transactions"
+TSET   /0/^btest="Test (120) ZTWO set to alt value as prior implicit transactions in an explicit transaction"
+SET    /0/^btest="Test (120) ZTWO unchanged for a new implicit transaction"
+KILL   /0/^btest
+---------
+SET    /0/^btest="Test (130) ZTWO with implicit & explicit transactions. We expect ZTWO in only the first transaction"
+SET    /16/^btest="Test (130) ZTWO with implicit & explicit transactions. We expect ZTWO in only the first transaction"
+TKILL  /0/^btest
+---------
+SET    /0/^btest="Test (140) ZTWO set before (im/ex)plicit transaction and (im/ex)plicitly changed inside the explicit transaction which includes a non ZTWO referencing zkill"
+TKILL  /0/^btest
+---------
+SET    /0/^btest="Test (150) ZTWO changed between (im/ex)plicit transaction and changed to NULL inside the implicit transaction with intervening trigger references to ztwo and changed to non-NULL inside the transaction"
+TKILL  /0/^btest
+---------
+SET    /0/^btest="Test (160) same as before, but ZTWO should not change after being set to NULL"
+TKILL  /0/^btest
+---------
+SET    /0/^btest="Test (170) ZTWO set to null should not show up at all even after changing inside the transaction"
+TKILL  /0/^btest
+---------
+SET    /0/^btest="Test (180)"
+TSET   /0/^btest="Test (180)begin explicit updates;$ztwo=abcd"
+USET   /0/^btest="Test (180)inside explicit updates;$ztwo="
+USET   /0/^btest="Test (180)last explicit updates;$ztwo=abcd"
+UKILL  /0/^btest
+---------
+SET    /0/^btest="Test (190) ZTWO set to $char(0) and changed during an explicit transaction"
+TZTRIG /2/^bstart
+USET   /2/^b2(191)="e;$ztwo=$char(0)"
+UZTRIG /2/^bstop
+UKILL  /0/^btest
+---------
+-------------------------------------------------------------
+mumps.mjf
+-------------------------------------------------------------
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT ALL'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

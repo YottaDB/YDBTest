@@ -1,0 +1,46 @@
+#!/usr/bin/expect -f
+#################################################################
+#								#
+# Copyright (c) 2012-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+set timeout 180
+spawn /usr/local/bin/tcsh -f
+match_max 100000
+
+# Expect the spawned prompt
+expect ">"
+# Set the prompt
+send -- "set prompt=\"termmumps > \"\r"
+# Expect the clean prompt
+expect "termmumps >"
+# SET, HANG and SET along with WHITE-BOX code change and EPOCH interval of 1 seconds ensures that
+# process gets suspended while holding the lock on JOURNAL buffer.
+send -- "\$gtm_exe/mumps -run %XCMD 'write \"proc1=\"_\$j,! set ^a=1 hang 1 set ^a=2'\r"
+expect "proc1=*\r"
+expect {
+	"*Suspended (signal)\r" {puts "Suspended (signal)"}
+	timeout                 {puts "TEST-W-WARN: suspend message not seen"}
+}
+# We dont want second process also to be suspended because of WHITE-BOX code change. Hence disable white-box test case
+# before starting second mumps process.
+expect "*termmumps >"
+send -- "unsetenv gtm_white_box_test_case_enable\r"
+expect "termmumps >"
+send -- "unsetenv gtm_white_box_test_case_number\r"
+expect "termmumps >"
+# Do set operation on ^a. This process will wait for the journal buffer lock to be released by proc1.
+# And envetually will send CONT signal to proc1 once realized that it is stuck.
+send -- "\$gtm_exe/mumps -run %XCMD 'write \"proc2=\"_\$j,! hang 1 set ^a=3'\r"
+expect "proc2=*\r"
+send -- "fg\r"
+expect "*"
+send -- "exit\r"
+expect eof

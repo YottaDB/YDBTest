@@ -1,0 +1,121 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/D9K02002754.gde
+
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               ZFDFM67890123456789012345678902  REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ZFDFM67890123456789012345678902 ZFDFM67890123456789012345678903  REG = OTHER
+                                                                  SEG = OTHER
+                                                                  FILE = other.dat
+ ZFDFM67890123456789012345678903 ZFDFM67890123456789012345678905  REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ZFDFM67890123456789012345678905 ZFDFM67890123456789012345678908  REG = OTHER
+                                                                  SEG = OTHER
+                                                                  FILE = other.dat
+ ZFDFM67890123456789012345678908 ZFDFM67890123456789012345678909  REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ZFDFM67890123456789012345678909 ZFDFM6789012345678901234567890A  REG = OTHER
+                                                                  SEG = OTHER
+                                                                  FILE = other.dat
+ ZFDFM6789012345678901234567890A ZFDFM6789012345678901234567890B  REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ZFDFM6789012345678901234567890B ZFDFM6789012345678901234567890C  REG = OTHER
+                                                                  SEG = OTHER
+                                                                  FILE = other.dat
+ ZFDFM6789012345678901234567890C ZFDFM6789012345678901234567890D  REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ZFDFM6789012345678901234567890D ZFDFM6789012345678901234567890G  REG = OTHER
+                                                                  SEG = OTHER
+                                                                  FILE = other.dat
+ ZFDFM6789012345678901234567890G ZFDFM6789012345678901234567890H  REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ZFDFM6789012345678901234567890H ZFDFM6789012345678901234567890I  REG = OTHER
+                                                                  SEG = OTHER
+                                                                  FILE = other.dat
+ ZFDFM6789012345678901234567890I ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/other.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               ZFDFM67890123456789012345678902  REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ZFDFM67890123456789012345678902 ZFDFM67890123456789012345678903  REG = OTHER
+                                                                  SEG = OTHER
+                                                                  FILE = other.dat
+ ZFDFM67890123456789012345678903 ZFDFM67890123456789012345678905  REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ZFDFM67890123456789012345678905 ZFDFM67890123456789012345678908  REG = OTHER
+                                                                  SEG = OTHER
+                                                                  FILE = other.dat
+ ZFDFM67890123456789012345678908 ZFDFM67890123456789012345678909  REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ZFDFM67890123456789012345678909 ZFDFM6789012345678901234567890A  REG = OTHER
+                                                                  SEG = OTHER
+                                                                  FILE = other.dat
+ ZFDFM6789012345678901234567890A ZFDFM6789012345678901234567890B  REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ZFDFM6789012345678901234567890B ZFDFM6789012345678901234567890C  REG = OTHER
+                                                                  SEG = OTHER
+                                                                  FILE = other.dat
+ ZFDFM6789012345678901234567890C ZFDFM6789012345678901234567890D  REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ZFDFM6789012345678901234567890D ZFDFM6789012345678901234567890G  REG = OTHER
+                                                                  SEG = OTHER
+                                                                  FILE = other.dat
+ ZFDFM6789012345678901234567890G ZFDFM6789012345678901234567890H  REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ ZFDFM6789012345678901234567890H ZFDFM6789012345678901234567890I  REG = OTHER
+                                                                  SEG = OTHER
+                                                                  FILE = other.dat
+ ZFDFM6789012345678901234567890I ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld

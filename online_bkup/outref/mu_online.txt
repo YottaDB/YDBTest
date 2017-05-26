@@ -1,0 +1,222 @@
+ONLINE BACKUP
+
+GTM>
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/online/tmp/online.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/online/tmp/tmp.com
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/online/tmp/online.gld
+Created file ##TEST_PATH##/online/tmp/online.dat
+
+GTM>
+Do fill1^myfill("set")
+
+GTM>
+PASS from fill1^myfill("set")
+
+GTM>
+DB file ##TEST_PATH##/online/tmp/online.dat backed up in file ##TEST_PATH##/online/tmp/online//online.dat
+
+
+BACKUP COMPLETED.
+
+
+GTM>
+Do fill2^myfill("set")
+
+GTM>
+PASS from fill2^myfill("set")
+
+GTM>
+MUPIP backup of database file ##TEST_PATH##/online/tmp/online.dat to ##TEST_PATH##/online/tmp/online/backup.bak2
+DB file ##TEST_PATH##/online/tmp/online.dat incrementally backed up in file ##TEST_PATH##/online/tmp/online/backup.bak2
+42 blocks saved.
+
+
+BACKUP COMPLETED.
+
+
+GTM>
+Do fill3^myfill("set")
+GTM>
+PASS from fill3^myfill("set")
+
+GTM>
+MUPIP backup of database file ##TEST_PATH##/online/tmp/online.dat to ##TEST_PATH##/online/tmp/online/backup.bak3
+DB file ##TEST_PATH##/online/tmp/online.dat incrementally backed up in file ##TEST_PATH##/online/tmp/online/backup.bak3
+227 blocks saved.
+
+
+BACKUP COMPLETED.
+
+MUPIP backup of database file ##TEST_PATH##/online/tmp/online.dat to ##TEST_PATH##/online/tmp/online/backup.bak33
+DB file ##TEST_PATH##/online/tmp/online.dat incrementally backed up in file ##TEST_PATH##/online/tmp/online/backup.bak33
+228 blocks saved.
+
+
+BACKUP COMPLETED.
+
+MUPIP backup of database file ##TEST_PATH##/online/tmp/online.dat to ##TEST_PATH##/online/tmp/online/backup.bak333
+DB file ##TEST_PATH##/online/tmp/online.dat incrementally backed up in file ##TEST_PATH##/online/tmp/online/backup.bak333
+328 blocks saved.
+
+
+BACKUP COMPLETED.
+
+##SOURCE_PATH##/mupip
+No errors detected by integ.
+
+GTM>
+Do fill1^myfill("ver")
+
+GTM>
+PASS from fill1^myfill("ver")
+
+GTM>
+
+RESTORE COMPLETED
+42 blocks restored
+##SOURCE_PATH##/mupip
+No errors detected by integ.
+
+GTM>
+Do fill2^myfill("ver")
+
+GTM>
+PASS from fill2^myfill("ver")
+
+GTM>
+
+RESTORE COMPLETED
+42 blocks restored
+
+RESTORE COMPLETED
+227 blocks restored
+##SOURCE_PATH##/mupip
+No errors detected by integ.
+
+GTM>
+Do fill3^myfill("ver")
+
+GTM>
+PASS from fill3^myfill("ver")
+
+GTM>
+
+RESTORE COMPLETED
+228 blocks restored
+##SOURCE_PATH##/mupip
+No errors detected by integ.
+
+GTM>
+Do fill3^myfill("ver")
+
+GTM>
+PASS from fill3^myfill("ver")
+
+GTM>
+Created file ##TEST_PATH##/online/tmp/online.dat
+
+RESTORE COMPLETED
+328 blocks restored
+##SOURCE_PATH##/mupip
+No errors detected by integ.
+
+GTM>
+Do fill3^myfill("ver")
+
+GTM>
+PASS from fill3^myfill("ver")
+
+GTM>
+Created file ##TEST_PATH##/online/tmp/online.dat
+
+GTM>
+PASSED
+GTM>
+
+GTM>
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/online/tmp/online.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/online/tmp/tempol.com
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/online/tmp/online.gld;1
+Created file ##TEST_PATH##/online/tmp/online.dat
+Created file ##TEST_PATH##/online/tmp/online1.dat
+Created file ##TEST_PATH##/online/tmp/online2.dat
+##SOURCE_PATH##/mupip
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+No errors detected by integ.
+
+GTM>
+PASS from fill5^myfill("right")
+
+GTM>
+
+
+
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/online/tmp/online.dat backed up in file ##TEST_PATH##/online/tmp/online//online.dat
+DB file ##TEST_PATH##/online/tmp/online1.dat backed up in file ##TEST_PATH##/online/tmp/online//online1.dat
+DB file ##TEST_PATH##/online/tmp/online2.dat backed up in file ##TEST_PATH##/online/tmp/online//online2.dat
+##SOURCE_PATH##/mupip
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+No errors detected by integ.
+
+GTM>
+PASS from fill5^myfill("ver")
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+DB file ##TEST_PATH##/online/tmp/online.dat backed up in file mapc.bak
+DB file ##TEST_PATH##/online/tmp/online1.dat backed up in file mapa.bak
+DB file ##TEST_PATH##/online/tmp/online2.dat backed up in file mapb.bak
+
+
+BACKUP COMPLETED.
+
+Created file ##TEST_PATH##/online/tmp/online.dat
+Created file ##TEST_PATH##/online/tmp/online1.dat
+Created file ##TEST_PATH##/online/tmp/online2.dat
+
+GTM>
+^c="This should be in region default"
+
+GTM>
+
+GTM>
+^b="This should be in region reg2"
+
+GTM>
+
+GTM>
+^a="This should be in region reg1"
+
+GTM>

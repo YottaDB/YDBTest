@@ -1,0 +1,40 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Create lots of globals (this way ensuring MUPIP REORG has lots of output to do)
+
+GTM>
+
+GTM>
+LOTSVAR-I-END_SET
+
+GTM>
+
+GTM>
+
+GTM>
+Find out time taken by 1 reorg on the current host
+
+GTM>
+
+GTM>
+##TEST_AWKTime taken by 1 reorg is . [0-9]* seconds
+##TEST_AWKAdjusted value of maxwait = [0-9]* seconds
+Start M program that does kills followed by global set/kill in the background (will run for 1 minute).
+# This ensures MUPIP REORG (started below) has lots of work to do.
+
+GTM>
+
+GTM>
+Start reorg in background and issue MUPIP STOP to it. Keep doing this until GT.M process signals us to stop.
+
+GTM>
+
+GTM>
+Checking how many FORCEDHALT message we see. We want it to be at least 1
+##TEST_AWKNumber of MUPIP REORGs that were successfully MUPIP STOPped is . [1-9][0-9]*
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

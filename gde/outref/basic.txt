@@ -1,0 +1,219 @@
+
+GTM>
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gdetst.gld
+
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/gdetst.gld
+
+GTM>
+
+GTM>
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/gdetst.gld
+%GDE-I-GDUNKNFMT, ##TEST_PATH##/gdetst.gld 
+	is not formatted as a Global Directory
+
+%GDE-E-INPINTEG, Input integrity error -- aborting load
+
+GTM>
+
+GTM>
+# test that setting subscripted variables inside mumps BEFORE invoking GDE results in COLLDATAEXISTS error
+GTM>
+
+GTM>
+
+%GTM-E-COLLDATAEXISTS, Collation type cannot be changed while data exists
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/gdetst.gld
+
+GTM>
+# kill x and expect the below GDE invocation to work
+GTM>
+
+GTM>
+
+GTM>
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gdetst.gld
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gdetst.gld
+
+GTM>
+
+GTM>
+# test that we are able to resume processing inside mumps AFTER exiting GDE
+GTM>
+
+GTM>
+i=1
+
+GTM>
+
+GTM>
+
+GTM>
+# test that after setting a different local variable alternate collation,null collation,numeric collation
+# GDE invocation exits gracefully and does not error with GDE-E-INPINTEG
+GTM>
+1
+GTM>
+
+GTM>
+
+%GTM-E-COLLDATAEXISTS, Collation type cannot be changed while data exists
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/gdetst.gld
+
+GTM>
+
+GTM>
+# test that we are able to set unsubscripted variables inside mumps BEFORE invoking GDE
+GTM>
+
+GTM>
+i=1
+
+GTM>
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/gdetst.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/gdebastst.com
+
+%GDE-E-KEYWRDBAD, BAD is not a valid verb in this context
+
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/gdetst.gld
+
+GTM>
+# test that we are able to resume processing inside mumps AFTER quitting GDE
+GTM>
+
+GTM>
+i=1
+i(3)=1
+
+GTM>
+	** gdemaptst
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gdetst.gld
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/gdemaptst.com
+%GDE-I-LOGON, Logging to file GDELOG.LOG
+%GDE-I-VERIFY, Verification OK
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gdetst.gld
+gdeshowdiff.csh oldgdegdemaptst.log newgdegdemaptst.log
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/gdetst.gld
+%GDE-I-VERIFY, Verification OK
+%GDE-I-LOGON, Logging to file ##TEST_PATH##/reload.log
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/gdetst.gld
+gdeshowdiff.csh gdemaptst.cmp gdemaptst.log
+Created file ##TEST_PATH##/maptst.dat
+Created file ##TEST_PATH##/name1.dat
+Created file ##TEST_PATH##/name2.dat
+Created file ##TEST_PATH##/star1.dat
+Created file ##TEST_PATH##/star2.dat
+
+GTM>
+
+OK from fullgd
+GTM>
+	** dmi
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gdetst.gld
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/dmi.com
+%GDE-I-LOGON, Logging to file GDELOG.LOG
+%GDE-I-VERIFY, Verification OK
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gdetst.gld
+gdeshowdiff.csh oldgdedmi.log newgdedmi.log
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/gdetst.gld
+%GDE-I-VERIFY, Verification OK
+%GDE-I-LOGON, Logging to file ##TEST_PATH##/reload.log
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/gdetst.gld
+gdeshowdiff.csh dmi.cmp dmi.log
+Created file ##TEST_PATH##/max_db.dat
+Created file ##TEST_PATH##/MAX_CD.DAT
+Created file ##TEST_PATH##/MAX_CM.DAT
+Created file ##TEST_PATH##/MAX_TMP.DAT
+Created file ##TEST_PATH##/MAX_TW.DAT
+Created file ##TEST_PATH##/MAX_XRF.DAT
+
+GTM>
+
+OK from fullgd
+GTM>
+	** tnt
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gdetst.gld
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/tnt.com
+%GDE-I-LOGON, Logging to file GDELOG.LOG
+%GDE-I-VERIFY, Verification OK
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gdetst.gld
+gdeshowdiff.csh oldgdetnt.log newgdetnt.log
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/gdetst.gld
+%GDE-I-VERIFY, Verification OK
+%GDE-I-LOGON, Logging to file ##TEST_PATH##/reload.log
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/gdetst.gld
+gdeshowdiff.csh tnt.cmp tnt.log
+Created file ##TEST_PATH##/ACCOUNT.dat
+Created file ##TEST_PATH##/ACCOUNT0.dat
+Created file ##TEST_PATH##/ARCHCER.dat
+Created file ##TEST_PATH##/ARCHCERT.dat
+Created file ##TEST_PATH##/ARCHGROT.dat
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+OK from fullgd
+GTM>
+	** its
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gdetst.gld
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/its.com
+%GDE-I-LOGON, Logging to file GDELOG.LOG
+%GDE-I-VERIFY, Verification OK
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gdetst.gld
+gdeshowdiff.csh oldgdeits.log newgdeits.log
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/gdetst.gld
+%GDE-I-VERIFY, Verification OK
+%GDE-I-LOGON, Logging to file ##TEST_PATH##/reload.log
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/gdetst.gld
+gdeshowdiff.csh its.cmp its.log
+Created file ##TEST_PATH##/MUMPS_COMM.dat
+Created file ##TEST_PATH##/MUMPS_CTS.dat
+Created file ##TEST_PATH##/MUMPS_LIB.dat
+Created file ##TEST_PATH##/MUMPS_MISC.dat
+Created file ##TEST_PATH##/MUMPS_SCRA.dat
+Created file ##TEST_PATH##/MUMPS_TABL.dat
+
+GTM>
+
+OK from fullgd
+GTM>
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/cryptmm.gld
+
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-CRYPTNOMM,  is an encrypted database. Cannot support MM access method.
+%GDE-I-SEGIS, in MM segment DEFAULT
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-I-NOEXIT, Cannot exit because of verification failure
+
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/cryptmm.gld

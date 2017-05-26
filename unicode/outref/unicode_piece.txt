@@ -1,0 +1,42 @@
+setenv gtm_chset UTF-8
+unset echo
+
+GTM>
+do ^unicodePiece
+
+GTM>
+do badcharpiece
+zwrite target3B=
+%U="EFBC90"
+set $piece(target3B,$ZCHAR($$FUNC^%HD("bc")))=$ZCHAR($$FUNC^%HD("FF"))
+zwrite target3B=
+%U="FF"
+
+zwrite target4B=
+%U="F09D8080"
+$piece(target4B,$ZCHAR($$FUNC^%HD("9D")))=𝀀
+zwrite res=
+%U="F09D8080"
+$piece(target4B,$ZCHAR($$FUNC^%HD("80")))=𝀀
+zwrite res=
+%U="F09D8080"
+zwrite target4B=
+%U="FC"
+zwrite target4B=
+%U="FB"
+do litpiece
+
+
+
+
+＠
+＠
+＠＾ＡＢＣ＾ＤＥＦ＾Ｇ＾ ＾
+＠＾ＡＢＣ＾ＤＥＦ＾Ｇ＾ 
+＠
+＠
+＠ ＡＢＣ ＤＥＦ Ｇ   
+＠ ＡＢＣ ＤＥＦ Ｇ 
+do extendedpiece
+
+GTM>

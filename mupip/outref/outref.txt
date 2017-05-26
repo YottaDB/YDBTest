@@ -1,0 +1,43 @@
+MUPIP test Starts...
+PASS from mu_backup
+PASS from mu_create
+##SUSPEND_OUTPUT MM_FILE_NO_EXT
+PASS from mu_extend
+##ALLOW_OUTPUT MM_FILE_NO_EXT
+##SUSPEND_OUTPUT MM_FILE_EXT
+##SUSPEND_OUTPUT REPLIC
+PASS from mu_extend
+##ALLOW_OUTPUT REPLIC
+##ALLOW_OUTPUT MM_FILE_EXT
+PASS from mu_freeze
+PASS from mu_integ
+PASS from mu_load
+##SUSPEND_OUTPUT PRO
+PASS from mu_load_no_leak
+##ALLOW_OUTPUT PRO
+##SUSPEND_OUTPUT HOST_SUNOS_SPARC HP-UX
+PASS from mu_set
+##ALLOW_OUTPUT HOST_SUNOS_SPARC HP-UX
+##SUSPEND_OUTPUT L
+PASS from mu_load2
+PASS from mu_extract
+##ALLOW_OUTPUT L
+##SUSPEND_OUTPUT REPLIC
+PASS from mu_rundown
+PASS from mu_backup_tn_reset
+PASS from mu_load_err
+PASS from D9J02002719
+##SUSPEND_OUTPUT HOST_OS390_S390
+PASS from D9J02002719_1
+##ALLOW_OUTPUT HOST_OS390_S390
+##SUSPEND_OUTPUT NON_UTF8
+PASS from mu_unicode_backup
+PASS from mu_unicode_extract_load
+PASS from mu_unicode_integ
+##ALLOW_OUTPUT NON_UTF8
+##ALLOW_OUTPUT REPLIC
+##SUSPEND_OUTPUT NON_REPLIC
+PASS from mu_rollback1
+PASS from mu_rundown_no_ipcrm1
+##ALLOW_OUTPUT NON_REPLIC
+MUPIP test DONE.

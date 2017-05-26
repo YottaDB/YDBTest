@@ -1,0 +1,80 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+Do singlec^restarts
+
+Transaction Starts....
+
+$ZTEXIT = 1
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : thrint+5^thrint
+
+Transaction Starts....
+
+$ZTEXIT = 1
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : thrint+5^thrint
+$trestart -> 1
+interrupt occurred at : singlec+19^restarts
+
+End of transaction....
+
+$ZTEXIT = 1
+
+GTM>
+
+GTM>
+
+Do singler^restarts
+
+Transaction Starts....
+
+$ZTEXIT = 1
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : thrint+5^thrint
+
+Transaction Starts....
+
+$ZTEXIT = 1
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : thrint+5^thrint
+$trestart -> 1
+interrupt occurred at : singler+18^restarts
+
+End of transaction....
+
+$ZTEXIT = 1
+
+GTM>
+
+GTM>
+
+Do nestedc^restarts
+
+Transaction Starts....$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=0
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : uthrint+5^uthrint
+$trestart -> 0
+ tcommit:1 
+
+tcommit 1 
+
+End of transaction....
+
+$ZTEXIT = 0
+
+GTM>

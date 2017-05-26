@@ -1,0 +1,35 @@
+# Verify NOEMBED_SOURCE (default) behaves as usual
+executing ^src... therefore compiled fine
+### $text begin
+
+### $text done
+executing ^src... therefore compiled fine
+
+GTM>
+
+GTM>
+### zprint begin
+%GTM-I-TXTSRCMAT, M object module and source file do not match
+
+lab2    ; ZPRINT should only find this with NOEMBED_SOURCE
+### zprint done
+
+GTM>
+
+
+
+# Repeat with EMBED_SOURCE
+executing ^src... therefore compiled fine
+### $text begin
+lab     ; $TEXT and ZPRINT oughta find this!
+### $text done
+executing ^src... therefore compiled fine
+
+GTM>
+
+GTM>
+### zprint begin
+lab     ; $TEXT and ZPRINT oughta find this!
+### zprint done
+
+GTM>

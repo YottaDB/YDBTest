@@ -1,0 +1,64 @@
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'START INST1 INST3'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST3'==
+File a.trg, Line 1: Added SET trigger on ^a named a#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+----------
+Error REPLNOHASHTREC seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%GTM-E-REPLNOHASHTREC, Sequence number 0x0000000000000002 contains trigger definition updates. Receiver side must be at least V6.2-000 for replication to continue
+----------
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST3'==
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST3'==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST4 $gtm_tst/com/cp_remote_file.csh __SRC_DIR__/b.trg _REMOTEINFO___RCV_DIR__/'==
+==Executing MULTISITE_REPLIC 'START INST4 INST5'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance5
+==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP trigger -triggerfile=b.trg'==
+File b.trg, Line 1: Added trigger on ^b named b#1#
+=========================================
+1 triggers added
+0 triggers deleted
+0 trigger file entries not changed
+0 triggers modified
+=========================================
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_exe/mumps -run %XCMD "set ^b(1)=1"'==
+==Executing MULTISITE_REPLIC 'SYNC INST4 INST5'==
+==Executing MULTISITE_REPLIC 'RUN INST5 $gtm_exe/mumps -run %XCMD "zwrite ^?.E"'==
+^b(1)=1
+^btrigged(1)=1
+==Executing MULTISITE_REPLIC 'STOP INST4 INST5'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance5
+Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST6 $gtm_tst/com/cp_remote_file.csh __SRC_DIR__/c.trg _REMOTEINFO___RCV_DIR__/'==
+==Executing MULTISITE_REPLIC 'START INST6 INST7'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance6
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance7
+==Executing MULTISITE_REPLIC 'RUN INST6 $gtm_exe/mumps -run %XCMD "set ^c(1)=1"'==
+==Executing MULTISITE_REPLIC 'SYNC INST6 INST7'==
+==Executing MULTISITE_REPLIC 'RUN INST7 $gtm_exe/mumps -run %XCMD "zwrite ^?.E"'==
+^c(1)=1
+==Executing MULTISITE_REPLIC 'RUN INST6 $MUPIP trigger -triggerfile=c.trg >& load_ctrig.out'==
+==Executing MULTISITE_REPLIC 'RUN INST7 ##TEST_COM_PATH##/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message REPLNOHASHTREC'==
+==Executing MULTISITE_REPLIC 'RUN INST7 set msr_dont_chk_stat ; ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log REPLNOHASHTREC'==
+----------
+Error REPLNOHASHTREC seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+%GTM-E-REPLNOHASHTREC, Sequence number 0x0000000000000002 contains trigger definition updates. Source side must be at least V6.2-000 for replication to continue
+----------
+# The receiver would have exited with the above error. Manually shutdown the update process and passive server
+==Executing MULTISITE_REPLIC 'RUN INST7 set msr_dont_chk_stat ;$MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut.out'==
+==Executing MULTISITE_REPLIC 'RUN INST7 $MUPIP replic -source -shutdown -timeout=0 >&! passive_shut.out'==
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST6 INST7'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST6 INST7'==

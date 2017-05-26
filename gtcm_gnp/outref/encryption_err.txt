@@ -1,0 +1,37 @@
+GT.CM ENCRYPTION TEST STARTS
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
+##GT.CM##mumps.gld
+##GT.CM##Using: ##SOURCE_PATH##/mupip
+Create local (client) database...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+The database layout is:
+ASEG	a.dat
+BSEG	##TEST_REMOTE_NODE_PATH_GTCM##/b.dat
+CSEG	##TEST_REMOTE_NODE_PATH_GTCM##/c.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
+Starting the GT.CM Servers...
+-------------------------------------------------------------------
+Stop already running GTCM SERVERS
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+After unsetting gtm_passwd on the remote hosts, restart the SERVERS
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+Do updates locally to reflect them in the remote GT.CM servers
+-------------------------------------------------------------------
+If there are no errors above, it means the error - GTM-E-CRYPTINIT was seen wherever it is supposed to occur
+GT.CM ENCRYPTION TEST ENDS
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####SOURCE_PATH##/mupip
+##GT.CM####SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ a.dat
+No errors detected by integ.

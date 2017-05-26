@@ -1,0 +1,23 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+dbload_gbl.gld
+Using: ##SOURCE_PATH##/mupip
+max_cd.dat
+max_cm.dat
+max_db.dat
+max_rp.dat
+max_sc.dat
+max_tmp.dat
+max_tr.dat
+max_tw.dat
+max_xrf.dat
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 153330  Max Subsc Len: 54  Max Data Len: 240
+Last LOAD record number: 306662
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

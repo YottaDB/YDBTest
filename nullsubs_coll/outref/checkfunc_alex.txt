@@ -1,0 +1,54 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                            0      256    64 ALWAYS     Y    N   DISABLED DISABLED ENABLED
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+set globals with null_subscripts
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> Null subscripts changed to EXISTING
+
+
+PASS! BEHAVIOR NOT CHANGED FOR M-FUNCTIONS $ORDER,$NEXT,$QUERY,$ZPREVIOUS FOR EXISTING NULL_SUBS
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+un-defined local var. errorexpected here as undef condition restored
+
+GTM>
+%GTM-E-GVUNDEF, Global variable undefined: ^aglobalvar("MOUSE")
+
+GTM>
+check for $DATA & $GET functions
+
+GTM>
+11
+GTM>
+4906
+GTM>

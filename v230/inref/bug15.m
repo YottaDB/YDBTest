@@ -1,0 +1,9 @@
+11 F J=1:1:5 D B11
+ Q
+B11 S A1=1,B1=A1+1,C1=B1_B1,D1=$E(C1,3,99),E1="ABCDEFG"
+ F I=2:1:5,8 S F(I)=$E("123456789",1,I)
+ K:$L($D(F(3))) F(3) S L=I*22/3,E=$J(L,6,2)
+B11B S L=$N(F(L)) G:L>-1 B11B
+ S A="AAA,",A=A_A_A_"XXXX" I A?3A1P.E S B=$P(A,",",2,3)
+ S:B["PPP" B=3 S C="D",@C=123
+ K A1,A,C1,C,F Q

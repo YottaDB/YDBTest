@@ -1,0 +1,49 @@
+ENTERING LOCAL C9G04002779 Socket and Mupip interrupt test
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+Spawning peer job
+##TEST_AWK\.[.]*
+Peer job active
+Spawning interrupter job
+##TEST_AWK\.[.]*
+Interrupter job active -- Spinning for a few seconds
+Connecting to peer
+Connection to peer established
+Random number list sent -- Beginning send of strings
+Write #50 complete
+Write #100 complete
+Write #150 complete
+Write #200 complete
+Write #250 complete
+Write #300 complete
+Write #350 complete
+Write #400 complete
+Write #450 complete
+Write #500 complete
+Write #550 complete
+Write #600 complete
+Write #650 complete
+Write #700 complete
+Write #750 complete
+Write #800 complete
+Write #850 complete
+Write #900 complete
+Write #950 complete
+Write #1000 complete
+String sends complete -- awaiting peer completion
+Total interrupts sent by interrupter job: ##TEST_AWK[0-9][0-9]*
+Interupts fielded by main process:        ##TEST_AWK[0-9][0-9]*
+Interrupts fielded by peer process:       ##TEST_AWK[0-9][0-9]*
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ mumps.dat
+No errors detected by integ.
+LEAVING LOCAL C9G04002779 Socket and Mupip interrupt test

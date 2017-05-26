@@ -1,0 +1,73 @@
+
+D9D04-002317 mprof and tptimeout
+make sure op_mprof routines restored
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+Testing for mprof
+
+GTM>
+
+Timed out as expected
+ZSTATUS:%GTM-E-TPTIMEOUT, Transaction timeout
+
+TEST PASSED
+The number of executions:
+^mproftp("mproftp","init"): 1
+^mproftp("mproftp","init",0): 1
+^mproftp("mproftp","init",1): 1
+^mproftp("mproftp","init",2): 1
+^mproftp("mproftp","init",3): 1
+^mproftp("mproftp","init",4): 1
+^mproftp("mproftp","init",5): 1
+^mproftp("mproftp","init",6): 1
+^mproftp("mproftp","mproftp",2): 1
+^mproftp("mproftp","mproftp",3): 1
+^mproftp("mproftp","mproftp",4): 1
+^mproftp("mproftp","mproftp",5): 1
+^mproftp("mproftp","mproftp",6): 1
+^mproftp("mproftp","mproftp",7): 1
+^mproftp("mproftp","mproftp",8): 1
+^mproftp("mproftp","mproftp",8,"FOR_LOOP",1): 1 FOR_LOOP
+^mproftp("mprtpzt","mprtpzt",1): 1
+^mproftp("mprtpzt","mprtpzt",2): 1
+^mproftp("mprtpzt","mprtpzt",3): 1
+^mproftp("mprtpzt","ztrapit"): 1
+^mproftp("mprtpzt","ztrapit",1): 1
+^mproftp("mprtpzt","ztrapit",2): 1
+^mproftp("mprtpzt","ztrapit",3): 1
+^mproftp("mprtpzt","ztrapit",4): 1
+^mproftp("mprtpzt","ztrapit",5): 1
+^mproftp("mprtpzt","ztrapit",6): 1
+^mproftp("mprtpzt","ztrapit",7): 1
+^mproftp("mprtpzt","ztrapit",8): 1
+^mproftp("mprtpzt","ztrapit",9): 1
+^mproftp("mprtpzt","ztrapit",23): 1
+
+GTM>
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

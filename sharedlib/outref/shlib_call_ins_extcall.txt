@@ -1,0 +1,295 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+gtm_ci to callInSharedLibDriver1:void sharedlib1^callInSharedLibDriver()
+
+At sharedlib1+2^callInSharedLibDriver
+
+List Object Files before shared lib call
+
+callInSharedLibDriver.o
+
+
+Now call sharedlib1^shlib which is in shared library
+
+
+At sharedlib1+1^shlib
+
+
+
+$zro=./shl_call_ins$gt_ld_shl_suffix .
+do ^verifyargs(32)
+Verify Done 
+do in1^lfill("set",5,1)
+set PASS
+List Object Files after shared lib call
+
+callInSharedLibDriver.o
+
+
+Verify result of sharedlib1^shlib call to shared library
+do in1^lfill("ver",5,1)
+ver PASS
+
+Returned from gtm_ci to callInSharedLibDriver1
+gtm_ci to callInSharedLibDriver2:void sharedlib2lablengthislong678901^callInSharedLibDriver()
+
+At sharedlib2lablengthislong678901+2^callInSharedLibDriver
+
+List Object Files before shared lib call
+
+callInSharedLibDriver.o
+
+
+Now call sharedlib2lablengthislong678901^shlib which is in shared library
+
+
+At sharedlib2lablengthislong678901+1^shlib
+
+
+
+$zro=./shl_call_ins$gt_ld_shl_suffix .
+do ^verifyargs(32)
+Verify Done 
+do set^lotsvar
+LOTSVAR-I-END_SET
+List Object Files after shared lib call
+
+callInSharedLibDriver.o
+
+
+Verify result of sharedlib2lablengthislong678901^shlib call to shared library
+do ver^lotsvar
+LOTSVAR-I-OK
+LOTSVAR-I-END_VER
+
+Returned from gtm_ci to callInSharedLibDriver2
+gtm_ci to callInSharedLibDriver3:void extmath^callInSharedLibDriver()
+
+At extmath+2^callInSharedLibDriver
+
+List Object Files before shared lib call
+
+callInSharedLibDriver.o
+
+
+Now call math^shlib which is in shared library
+
+
+At math+1^shlib
+
+
+
+$zro=./shl_call_ins$gt_ld_shl_suffix .
+
+Do External Calls to math library
+
+
+Doing EXP for 1
+EXP Value =       2.718282
+
+EXP of 1 =       2.718282
+
+
+Doing EXP for 3
+EXP Value =      20.085537
+
+EXP of 3 =      20.085537
+
+
+Doing EXP for 5
+EXP Value =     148.413159
+
+EXP of 5 =     148.413159
+
+
+Doing EXP for 7
+EXP Value =    1096.633158
+
+EXP of 7 =    1096.633158
+
+
+Doing EXP for 9
+EXP Value =    8103.083928
+
+EXP of 9 =    8103.083928
+
+
+Doing SQRT for 1
+SQRT Value =       1.000000
+
+SQRT of 1 =       1.000000
+
+
+Doing SQRT for 1001
+SQRT Value =      31.638584
+
+SQRT of 1001 =      31.638584
+
+
+Doing SQRT for 2001
+SQRT Value =      44.732538
+
+SQRT of 2001 =      44.732538
+
+
+Doing SQRT for 3001
+SQRT Value =      54.781384
+
+SQRT of 3001 =      54.781384
+
+
+Doing SQRT for 4001
+SQRT Value =      63.253458
+
+SQRT of 4001 =      63.253458
+
+
+Doing SQRT for 5001
+SQRT Value =      70.717749
+
+SQRT of 5001 =      70.717749
+
+
+Doing SQRT under label SQRTLONG calling ref:xsqrtlonglabelforsqaurerootchk 1
+SQRT Value =       1.000000
+
+SQRT of 1 =       1.000000
+
+
+Doing SQRT under label SQRTLONG calling ref:xsqrtlonglabelforsqaurerootchk 1001
+SQRT Value =      31.638584
+
+SQRT of 1001 =      31.638584
+
+
+Doing SQRT under label SQRTLONG calling ref:xsqrtlonglabelforsqaurerootchk 2001
+SQRT Value =      44.732538
+
+SQRT of 2001 =      44.732538
+
+
+Doing SQRT under label SQRTLONG calling ref:xsqrtlonglabelforsqaurerootchk 3001
+SQRT Value =      54.781384
+
+SQRT of 3001 =      54.781384
+
+
+Doing SQRT under label SQRTLONG calling ref:xsqrtlonglabelforsqaurerootchk 4001
+SQRT Value =      63.253458
+
+SQRT of 4001 =      63.253458
+
+
+Doing SQRT under label SQRTLONG calling ref:xsqrtlonglabelforsqaurerootchk 5001
+SQRT Value =      70.717749
+
+SQRT of 5001 =      70.717749
+
+
+Doing natural LOG for 10000
+LOGNAT Value =       9.210340
+
+Natural LOG of 10000 =       9.210340
+
+
+Doing natural LOG for 20000
+LOGNAT Value =       9.903488
+
+Natural LOG of 20000 =       9.903488
+
+
+Doing natural LOG for 30000
+LOGNAT Value =      10.308953
+
+Natural LOG of 30000 =      10.308953
+
+
+Doing natural LOG for 40000
+LOGNAT Value =      10.596635
+
+Natural LOG of 40000 =      10.596635
+
+
+Doing natural LOG for 50000
+LOGNAT Value =      10.819778
+
+Natural LOG of 50000 =      10.819778
+
+
+Doing LOGB10 for 10000
+LOGB10 Value =       4.000000
+
+LOGB10 of 10000 =       4.000000
+
+
+Doing LOGB10 for 20000
+LOGB10 Value =       4.301030
+
+LOGB10 of 20000 =       4.301030
+
+
+Doing LOGB10 for 30000
+LOGB10 Value =       4.477121
+
+LOGB10 of 30000 =       4.477121
+
+
+Doing LOGB10 for 40000
+LOGB10 Value =       4.602060
+
+LOGB10 of 40000 =       4.602060
+
+
+Doing LOGB10 for 50000
+LOGB10 Value =       4.698970
+
+LOGB10 of 50000 =       4.698970
+
+
+Doing LOGB10LongName for 10000
+LOGB10 Value inside function logb10forrealbignamesupto31=       4.000000
+
+LOGB10Longname of 10000 =       4.000000
+
+
+Doing LOGB10LongName for 20000
+LOGB10 Value inside function logb10forrealbignamesupto31=       4.301030
+
+LOGB10Longname of 20000 =       4.301030
+
+
+Doing LOGB10LongName for 30000
+LOGB10 Value inside function logb10forrealbignamesupto31=       4.477121
+
+LOGB10Longname of 30000 =       4.477121
+
+
+Doing LOGB10LongName for 40000
+LOGB10 Value inside function logb10forrealbignamesupto31=       4.602060
+
+LOGB10Longname of 40000 =       4.602060
+
+
+Doing LOGB10LongName for 50000
+LOGB10 Value inside function logb10forrealbignamesupto31=       4.698970
+
+LOGB10Longname of 50000 =       4.698970
+
+
+External Calls to math library Done
+
+List Object Files after shared lib call
+
+callInSharedLibDriver.o
+
+
+
+Returned from gtm_ci to callInSharedLibDriver3
+callInSharedLibDriver.o
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

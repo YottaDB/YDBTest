@@ -1,0 +1,34 @@
+D9E09-002493 File descriptor leak while reading from journal files in source server
+===================================================================================
+
+About D9E09-002493 (from TR)
+------------------------------
+
+KTB reported "GTM-E-JNLFILOPN, ...ENO24 too many files open" error in source server log file. KTB has low journal auto switch limit
+set to 256 MB. So, if source server were reading from journal files, it is likely to be reading from multiple generaitons.  However,
+a limit of 1024 should be sufficient to account for opening multiple generations.
+
+Vinaya 2004/23/09 (internal notes only) : If multiple generations of a journal file are opened by source server to read from files,
+when the transition to pool read occurs, the source server fails to close the oldest generation jnl file of each replicated region.
+The number of un-closed files increase for each transition from file read to pool read when multiple generations are involved -
+which would be the common case during Profile dayends. When the file limit is exceeded while reading from jnl files, source server
+issues "Too many open files" and exits. The issue is in gtmsource_ctl_close(), where csa->jnl->channel is closed and set to NOJNL.
+In the same code segment, we also set ctl->repl_buff->fc->fd also to NOJNL - this is done with the assumption that
+fc->fd == jnl->channel as the latest generation open (thru jnl_file_open()) is copied to fc structure. However, when multiple
+generations are involved, the source server orders from the oldest generation to the newest genration in ctl list. So, by setting
+fc->fd of older generation to NOJNL, we left that file un-closed and leading to the leak.
+
+How to test
+-----------
+We have to ensure that there are several switches back and forth between pool read and file read. For each transition there will
+be fd leak eventually leading to "too many files open" error.
+
+Start the source and receiver. Run updates at a fast rate on primary that will cause source server to read from jnl files. Keep
+switching journal files (multiple regions) as the source server transmits data. Control the update rate so that the source server
+catches up and switches to jnlpool. Increase the update rate at that time to force the source server back to jnlfile. Repeat such
+action until you hit "too many files open" from pre V5 (OR, notice that the output of lsof shows previous generation jnl files
+still open, OR, notice fuser <old-generation-files> still show source server keeping old files still open.
+
+Alternative: build mupip (specifically source server) with -DGTMSOURCE_ALWAYS_READ_FILES_STRESS. This will cause the source server
+to switch from pool-file-pool on every transaction. Keep the updates running, and you will very quickly notice "too many files open"
+V5 and later, no such error is reported. You can also verify using lsof and/or fuser output.

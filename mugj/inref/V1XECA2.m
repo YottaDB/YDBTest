@@ -1,0 +1,60 @@
+V1XECA2	;XECUTE COMMAND -1.2-;YS-TS,V1XECA,VALIDATION VERSION 7.1;31-AUG-1987;
+	;COPYRIGHT MUMPS SYSTEM LABORATORY 1978
+	S PASS=0,FAIL=0
+	W !!,"V1XECA2: TEST OF XECUTE COMMAND -1-",!
+810	W !,"I-810  Argument level indirection"
+	S ITEM="I-810.1  1 level",VCOMP="",X="Y",Y="S A=1 S VCOMP=A" X @X S VCORR="1" D EXAMINER
+	;
+	S ITEM="I-810.2  2 level",VCOMP="" S X="Y,Z",Y="S B=123,A=""B""",Z="S VCOMP=@A ;comment" X @X S VCORR=123 D EXAMINER
+	;
+	S ITEM="I-810.3  value of indirection contains postcondition",VCOMP=""
+	S P=1,X="W:P=0,Y:P=1,Z",Y="S A=3",Z="S VCOMP=VCOMP_A",W="S VCOMP=1" X @X S VCORR="3" D EXAMINER
+	;
+811	W !,"I-811  GOTO command in XECUTE command"
+	S ITEM="I-811.1  local branching",VCOMP="" X "G B","S VCOMP=VCOMP_7" S VCORR="67" D EXAMINER
+	S ITEM="I-811.2  overlay with external routine",VCOMP=""
+	X "S VCOMP=VCOMP_10 G ^V1XECAE S VCOMP=VCOMP_""ERROR 2 ""","S VCOMP=VCOMP_12" S VCORR="101112" D EXAMINER
+	;
+812	W !,"I-812  FOR command in XECUTE command"
+	S ITEM="I-812  ",VCOMP="" X "F I=1:1:3 S VCOMP=VCOMP_I","S VCOMP=VCOMP_4"
+	X "F I=5:1:7 D C","S VCOMP=VCOMP_8"
+	X "F I=9:1:11 G E","S VCOMP=VCOMP_10"
+	X "S VCOMP=VCOMP_11 F I=12:1:14 S VCOMP=VCOMP_I Q:I>12","S VCOMP=VCOMP_14"
+	S VCORR="1234567891011121314" D EXAMINER
+	;
+813	W !,"I-813  DO command in XECUTE command"
+	S ITEM="I-813.1  local branching",VCOMP="" X "D A","S VCOMP=VCOMP_5" S VCORR="45" D EXAMINER
+	S ITEM="I-813.2  call external routine",VCOMP="" X "D 13^V1XECAE","S VCOMP=VCOMP_14" S VCORR="1314" D EXAMINER
+	S ITEM="I-813.3  call external and local",VCOMP=""
+	S A="D A,EXTERN^V1XECAE S VCOMP=VCOMP_""1 "" D B,13^V1XECAE,A"
+	X A S VCORR="4EX 1 6134" D EXAMINER
+	;
+814	W !,"I-814  QUIT command in XECUTE command"
+	S ITEM="I-814  ",VCOMP=""
+	X "S VCOMP=8 Q  S VCOMP=VCOMP_""ERROR 1 ""","S VCOMP=VCOMP_9" S VCORR="89" D EXAMINER
+	;
+815	W !,"I-815  Nesting of XECUTE command"
+	S ITEM="I-815.1  2 level nesting",VCOMP=""
+	X "X ""S A=1""","S VCOMP=A" S VCORR="1" D EXAMINER
+	;
+	S ITEM="I-815.2  3 level nesting",VCOMP=""
+	X "X ""X """"S A=2"""""",""S VCOMP=A""" S VCORR="2" D EXAMINER
+	;
+	S ITEM="I-815.3  3 level nesting another",VCOMP=""
+	S X(1)="S A=3",X(2)="S VCOMP=VCOMP_A ;comment",X(3)="X X(2)",X(4)="X X(1),X(3)" X X(4) S VCORR="3" D EXAMINER
+	;
+END	W !!,"END OF V1XECA2",!
+	S ROUTINE="V1XECA2",TESTS=13,AUTO=13,VISUAL=0 D ^VREPORT
+	K  Q
+	;
+EXAMINER	I VCORR=VCOMP S PASS=PASS+1 W !,"  PASS  ",ITEM W:$Y>55 # Q
+	S FAIL=FAIL+1 W !,"** FAIL  ",ITEM W:$Y>55 #
+	W !,"           COMPUTED =""",VCOMP,"""" W:$Y>55 #
+	W !,"           CORRECT  =""",VCORR,"""" W:$Y>55 #
+	Q
+	;
+A	S VCOMP=VCOMP_4 Q
+B	S VCOMP=VCOMP_6 Q
+C	S VCOMP=VCOMP_I Q
+D	S VCOMP=VCOMP_I Q
+E	S VCOMP=VCOMP_I

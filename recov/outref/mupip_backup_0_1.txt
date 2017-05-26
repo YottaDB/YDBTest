@@ -1,0 +1,48 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+mumps.dat
+##SOURCE_PATH##/mupip set -journal=enable,off,before -reg *
+%GTM-I-JNLSTATE, Journaling state for region AREG is now OFF
+%GTM-I-JNLSTATE, Journaling state for region BREG is now OFF
+%GTM-I-JNLSTATE, Journaling state for region CREG is now OFF
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
+%GTM-I-JNLSTATE, Journaling state for region DREG is now OFF
+%GTM-I-JNLSTATE, Journaling state for region EREG is now OFF
+%GTM-I-JNLSTATE, Journaling state for region FREG is now OFF
+%GTM-I-JNLSTATE, Journaling state for region GREG is now OFF
+Multi-Process GTM Process starts in background...
+##SOURCE_PATH##/mupip backup * -newj ./backup
+BACKUP COMPLETED.
+Simulating kill of GTM Processes in ##TEST_PATH##
+GTM processes Killed!
+##SOURCE_PATH##/mupip journal -recover -backward *
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Extact from database...
+##SOURCE_PATH##/mupip journal -recover -forward a.mjl,b.mjl,c.mjl,d.mjl,e.mjl,f.mjl,g.mjl,mumps.mjl
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+diff data2.glo data3.glo

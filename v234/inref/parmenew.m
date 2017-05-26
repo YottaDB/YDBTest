@@ -1,0 +1,25 @@
+PARMENEW	;
+	;
+LAB0	W !
+	F I=65:1:66 F J=65:1:70 S @$C(I,J)=1
+	D LAB1(2,AA,AB,AC,.AD,.AE,.AF)
+	W !,"BACK FROM LCL DO LCL GO",! F I=65:1:66 F J=65:1:70 S X=$C(I,J) W:$X>70 ! W X,"=",@X,?$X\10+1*10
+	D LAB2(3,AA,AB,AC,.AD,.AE,.AF)
+	W !,"BACK FROM LCL DO EXT GO",! F I=65:1:66 F J=65:1:70 S X=$C(I,J) W:$X>70 ! W X,"=",@X,?$X\10+1*10
+	D LAB1^parmenew(4,AA,AB,AC,.AD,.AE,.AF)
+	W !,"BACK FROM EXT DO LCL GO",! F I=65:1:66 F J=65:1:70 S X=$C(I,J) W:$X>70 ! W X,"=",@X,?$X\10+1*10
+	D LAB2^parmenew(5,AA,AB,AC,.AD,.AE,.AF)
+	W !,"BACK FROM EXT DO EXT GO",! F I=65:1:66 F J=65:1:70 S X=$C(I,J) W:$X>70 ! W X,"=",@X,?$X\10+1*10
+	Q
+LAB1(X,BA,BB,BC,BD,BE,BF,BG,BH)
+	N (AA,BB,AC,BC,AD,BE,AF,BF,CC,X)
+	F I=65:1:66 F J=65:2:70 S @$C(I,J)=X
+	G LAB3
+LAB2(X,BA,BB,BC,BD,BE,BF,BG,BH)
+	N (AA,BB,AC,BC,AD,BE,AF,BF,CC,X)
+	F I=65:1:66 F J=65:2:70 S @$C(I,J)=X
+	G LAB3^parmenew
+	;
+LAB3	W !,"LAB3"
+	F I=65:1:66 F J=66:2:70 S @$C(I,J)=X*10
+	Q

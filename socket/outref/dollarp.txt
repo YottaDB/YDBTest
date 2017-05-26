@@ -1,0 +1,182 @@
+##TEST_AWK0 OPEN SOCKET NOWRAP TOTAL=1 CURRENT=0 +SOCKET\[0\]=h[0-9]+ DESC=0 CONNECTED ACTIVE +TRAP +REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ +ZDELAY +ZBFSIZE=1024 ZIBFSIZE=0 +DELIMITER \$C\(10\) 
+What is your favorite song?
+My bonnie lies over the ocean.
+
+Again with GT.M as inetd:
+##TEST_AWK0 OPEN SOCKET NOWRAP TOTAL=1 CURRENT=0 +SOCKET\[0\]=h[0-9]+ DESC=0 CONNECTED ACTIVE +TRAP +REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ +ZDELAY +ZBFSIZE=1024 ZIBFSIZE=0 +DELIMITER \$C\(10\) 
+What is your favorite song?
+My bonnie lies over the ocean.
+
+Again with GT.M and LOCAL socket:
+##TEST_AWK0 OPEN SOCKET NOWRAP TOTAL=1 CURRENT=0 +SOCKET\[0\]=h[0-9]+ DESC=0 CONNECTED ACTIVE +TRAP +REMOTE= +LOCAL=local.sock +ZDELAY +ZBFSIZE=1024 ZIBFSIZE=0 +DELIMITER \$C\(10\) 
+What is your favorite song?
+My bonnie lies over the ocean.
+
+And now some file descriptor checks:
+server read: data for tx server
+server read: data for te server
+server read: data for to server
+server read: data for toe server
+server read: data for ti server
+server read: data for tie server
+server read: data for tio server
+server read: data for tioe server
+worker read: file input for tx
+worker read: file input for te
+worker read: file input for to
+worker read: file input for toe
+worker read: data for ti worker
+worker read: data for tie worker
+worker read: data for tio worker
+worker read: data for tioe worker
+to
+-> to: "file input for to"
+toe
+-> toe: "file input for toe"
+tio
+-> tio: "data for tio worker"
+tioe
+-> tioe: "data for tioe worker"
+tx:
+##SUSPEND_OUTPUT INTI LIZA
+##TEST_AWK0[ur] V?REG [0-9]+ (\(.*\))?
+##TEST_AWK1[uw] V?REG [0-9]+ (\(.*\))?
+##TEST_AWK2[uw] V?REG [0-9]+ (\(.*\))?
+##ALLOW_OUTPUT INTI LIZA
+te:
+##SUSPEND_OUTPUT INTI LIZA
+##TEST_AWK0[ur] V?REG [0-9]+ (\(.*\))?
+##TEST_AWK1[uw] V?REG [0-9]+ (\(.*\))?
+##TEST_AWK2u IPv[46] TCP (\(CLOSE_WAIT\)|n/a)
+##ALLOW_OUTPUT INTI LIZA
+to:
+##SUSPEND_OUTPUT INTI LIZA
+##TEST_AWK0[ur] V?REG [0-9]+ (\(.*\))?
+##TEST_AWK1u IPv[46] TCP (\(ESTABLISHED\)|n/a)
+##TEST_AWK2[uw] V?REG [0-9]+ (\(.*\))?
+##ALLOW_OUTPUT INTI LIZA
+toe:
+##SUSPEND_OUTPUT INTI LIZA
+##TEST_AWK0[ur] V?REG [0-9]+ (\(.*\))?
+##TEST_AWK1u IPv[46] TCP (\(ESTABLISHED\)|n/a)
+##TEST_AWK2u IPv[46] TCP (\(ESTABLISHED\)|n/a)
+##ALLOW_OUTPUT INTI LIZA
+ti:
+##SUSPEND_OUTPUT INTI LIZA
+##TEST_AWK0u IPv[46] TCP (\(CLOSE_WAIT\)|n/a)
+##TEST_AWK1[uw] V?REG [0-9]+ (\(.*\))?
+##TEST_AWK2[uw] V?REG [0-9]+ (\(.*\))?
+##ALLOW_OUTPUT INTI LIZA
+tie:
+##SUSPEND_OUTPUT INTI LIZA
+##TEST_AWK0u IPv[46] TCP (\(CLOSE_WAIT\)|n/a)
+##TEST_AWK1[uw] V?REG [0-9]+ (\(.*\))?
+##TEST_AWK2u IPv[46] TCP (\(CLOSE_WAIT\)|n/a)
+##ALLOW_OUTPUT INTI LIZA
+tio:
+##SUSPEND_OUTPUT INTI LIZA
+##TEST_AWK0u IPv[46] TCP (\(ESTABLISHED\)|n/a)
+##TEST_AWK1u IPv[46] TCP (\(ESTABLISHED\)|n/a)
+##TEST_AWK2[uw] V?REG [0-9]+ (\(.*\))?
+##ALLOW_OUTPUT INTI LIZA
+tioe:
+##SUSPEND_OUTPUT INTI LIZA
+##TEST_AWK0u IPv[46] TCP (\(ESTABLISHED\)|n/a)
+##TEST_AWK1u IPv[46] TCP (\(ESTABLISHED\)|n/a)
+##TEST_AWK2u IPv[46] TCP (\(ESTABLISHED\)|n/a)
+##ALLOW_OUTPUT INTI LIZA
+server read: data for lx server
+server read: data for le server
+server read: data for lo server
+server read: data for loe server
+server read: data for li server
+server read: data for lie server
+server read: data for lio server
+server read: data for lioe server
+worker read: file input for lx
+worker read: file input for le
+worker read: file input for lo
+worker read: file input for loe
+worker read: data for li worker
+worker read: data for lie worker
+worker read: data for lio worker
+worker read: data for lioe worker
+lo
+-> lo: "file input for lo"
+loe
+-> loe: "file input for loe"
+lio
+-> lio: "data for lio worker"
+lioe
+-> lioe: "data for lioe worker"
+lx:
+##SUSPEND_OUTPUT INTI LIZA
+##TEST_AWK0[ur] V?REG [0-9]+ (\(.*\))?
+##TEST_AWK1[uw] V?REG [0-9]+ (\(.*\))?
+##TEST_AWK2[uw] V?REG [0-9]+ (\(.*\))?
+##ALLOW_OUTPUT INTI LIZA
+le:
+##SUSPEND_OUTPUT INTI LIZA
+##TEST_AWK0[ur] V?REG [0-9]+ (\(.*\))?
+##TEST_AWK1[uw] V?REG [0-9]+ (\(.*\))?
+##TEST_AWK2u unix
+##ALLOW_OUTPUT INTI LIZA
+lo:
+##SUSPEND_OUTPUT INTI LIZA
+##TEST_AWK0[ur] V?REG [0-9]+ (\(.*\))?
+##TEST_AWK1u unix
+##TEST_AWK2[uw] V?REG [0-9]+ (\(.*\))?
+##ALLOW_OUTPUT INTI LIZA
+loe:
+##SUSPEND_OUTPUT INTI LIZA
+##TEST_AWK0[ur] V?REG [0-9]+ (\(.*\))?
+##TEST_AWK1u unix
+##TEST_AWK2u unix
+##ALLOW_OUTPUT INTI LIZA
+li:
+##SUSPEND_OUTPUT INTI LIZA
+##TEST_AWK0u unix
+##TEST_AWK1[uw] V?REG [0-9]+ (\(.*\))?
+##TEST_AWK2[uw] V?REG [0-9]+ (\(.*\))?
+##ALLOW_OUTPUT INTI LIZA
+lie:
+##SUSPEND_OUTPUT INTI LIZA
+##TEST_AWK0u unix
+##TEST_AWK1[uw] V?REG [0-9]+ (\(.*\))?
+##TEST_AWK2u unix
+##ALLOW_OUTPUT INTI LIZA
+lio:
+##SUSPEND_OUTPUT INTI LIZA
+##TEST_AWK0u unix
+##TEST_AWK1u unix
+##TEST_AWK2[uw] V?REG [0-9]+ (\(.*\))?
+##ALLOW_OUTPUT INTI LIZA
+lioe:
+##SUSPEND_OUTPUT INTI LIZA
+##TEST_AWK0u unix
+##TEST_AWK1u unix
+##TEST_AWK2u unix
+##ALLOW_OUTPUT INTI LIZA
+
+And check heredoc:
+##TEST_AWKGTM>\$P=abcGTM>0 OPEN RMS STREAM NOWRAP 0-out OPEN SOCKET NOWRAP TOTAL=1 CURRENT=0         SOCKET\[0\]=h[0-9]+ DESC=1 CONNECTED ACTIVE  NOTRAP  REMOTE=[^ ]* LOCAL=[^ ]*                 ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER GTM>GTM>GTM>GTM>GTM>
+
+ZSHOW "D" output saved in A:
+A("D",1)="0 OPEN RMS STREAM NOWRAP "
+A("D",2)="0-out OPEN SOCKET NOWRAP TOTAL=1 CURRENT=0 "
+##TEST_AWKA\("D",3\)="        SOCKET\[0\]=h[0-9]+ DESC=1 CONNECTED ACTIVE  NOTRAP  REMOTE=[^ ]* LOCAL=[^ ]* "
+A("D",4)="                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER "
+
+Check ZSHOW "D" for split $PRINCIPAL with in being a socket and out being a file:
+$P=abc
+0 OPEN SOCKET NOWRAP TOTAL=1 CURRENT=0 
+##TEST_AWK        SOCKET\[0\]=h[0-9]+ DESC=0 CONNECTED ACTIVE  NOTRAP  REMOTE=[^ ]* LOCAL=[^ ]* 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+0-out OPEN RMS STREAM NOWRAP 
+
+ZSHOW "D" output saved in B:
+B("D",1)="0 OPEN SOCKET NOWRAP TOTAL=1 CURRENT=0 "
+##TEST_AWKB\("D",2\)="        SOCKET\[0\]=h[0-9]+ DESC=0 CONNECTED ACTIVE  NOTRAP  REMOTE=[^ ]* LOCAL=[^ ]* "
+B("D",3)="                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER "
+B("D",4)="0-out OPEN RMS STREAM NOWRAP "
+Done.

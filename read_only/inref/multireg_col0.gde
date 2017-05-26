@@ -1,0 +1,123 @@
+change -segment DEFAULT -file_name=mumps.dat
+change -region DEFAULT -inst_freeze_on_error
+add -name a* -region=areg
+add -name A* -region=areg
+add -region areg -dyn=aseg
+add -segment aseg -file=a.dat
+change -region areg -inst_freeze_on_error
+add -name b* -region=breg
+add -name B* -region=breg
+add -region breg -dyn=bseg
+add -segment bseg -file=b.dat
+change -region breg -inst_freeze_on_error
+add -name c* -region=creg
+add -name C* -region=creg
+add -region creg -dyn=cseg
+add -segment cseg -file=c.dat
+change -region creg -inst_freeze_on_error
+! Number of included regions is 4
+!    Region 1 = AREG
+!    Region 2 = BREG
+!    Region 3 = CREG
+!    Region 4 = DEFAULT
+! Number of sections randomly chosen is 16
+add -name afill(61) -region=AREG
+add -name afill(61,54) -region=AREG
+! Map : ^afill(61,54,228) maps to CREG
+add -name afill(61:) -region=CREG
+add -name afill(61,54:) -region=CREG
+add -name afill(61,54,228:) -region=CREG
+add -name bfill(154) -region=BREG
+add -name bfill(154,217) -region=BREG
+! Map : ^bfill(154,217,93) maps to DEFAULT
+add -name bfill(154:204) -region=DEFAULT
+add -name bfill(154,217:) -region=DEFAULT
+add -name bfill(154,217,93:) -region=DEFAULT
+add -name bfill(204) -region=DEFAULT
+add -name bfill(204,64) -region=DEFAULT
+! Map : ^bfill(204,64,100) maps to BREG
+add -name bfill(204:241) -region=BREG
+add -name bfill(204,64:) -region=BREG
+add -name bfill(204,64,100:) -region=BREG
+add -name bfill(241) -region=BREG
+add -name bfill(241,125) -region=BREG
+! Map : ^bfill(241,125,94) maps to BREG
+add -name bfill(241:) -region=BREG
+add -name bfill(241,125:) -region=BREG
+add -name bfill(241,125,94:) -region=BREG
+add -name cfill(53) -region=CREG
+add -name cfill(53,14) -region=CREG
+! Map : ^cfill(53,14,42) maps to AREG
+add -name cfill(53:118) -region=AREG
+add -name cfill(53,14:) -region=AREG
+add -name cfill(53,14,42:) -region=AREG
+add -name cfill(118) -region=AREG
+add -name cfill(118,227) -region=AREG
+! Map : ^cfill(118,227,122) maps to CREG
+add -name cfill(118:121) -region=CREG
+add -name cfill(118,227:) -region=CREG
+add -name cfill(118,227,122:) -region=CREG
+add -name cfill(121) -region=CREG
+add -name cfill(121,225) -region=CREG
+! Map : ^cfill(121,225,110) maps to CREG
+add -name cfill(121:180) -region=CREG
+add -name cfill(121,225:) -region=CREG
+add -name cfill(121,225,110:) -region=CREG
+add -name cfill(180) -region=CREG
+add -name cfill(180,218) -region=CREG
+! Map : ^cfill(180,218,221) maps to CREG
+add -name cfill(180:199) -region=CREG
+add -name cfill(180,218:) -region=CREG
+add -name cfill(180,218,221:) -region=CREG
+add -name cfill(199) -region=CREG
+add -name cfill(199,132) -region=CREG
+! Map : ^cfill(199,132,163) maps to CREG
+add -name cfill(199:221) -region=CREG
+add -name cfill(199,132:) -region=CREG
+add -name cfill(199,132,163:) -region=CREG
+add -name cfill(221) -region=CREG
+add -name cfill(221,3) -region=CREG
+! Map : ^cfill(221,3,38) maps to CREG
+add -name cfill(221:) -region=CREG
+add -name cfill(221,3:) -region=CREG
+add -name cfill(221,3,38:) -region=CREG
+add -name dfill(59) -region=DEFAULT
+add -name dfill(59,150) -region=DEFAULT
+! Map : ^dfill(59,150,76) maps to AREG
+add -name dfill(59:76) -region=AREG
+add -name dfill(59,150:) -region=AREG
+add -name dfill(59,150,76:) -region=AREG
+add -name dfill(76) -region=AREG
+add -name dfill(76,139) -region=AREG
+! Map : ^dfill(76,139,82) maps to DEFAULT
+add -name dfill(76:177) -region=DEFAULT
+add -name dfill(76,139:) -region=DEFAULT
+add -name dfill(76,139,82:) -region=DEFAULT
+add -name dfill(177) -region=DEFAULT
+add -name dfill(177,104) -region=DEFAULT
+! Map : ^dfill(177,104,239) maps to DEFAULT
+add -name dfill(177:185) -region=DEFAULT
+add -name dfill(177,104:) -region=DEFAULT
+add -name dfill(177,104,239:) -region=DEFAULT
+add -name dfill(185) -region=DEFAULT
+add -name dfill(185,165) -region=DEFAULT
+! Map : ^dfill(185,165,236) maps to DEFAULT
+add -name dfill(185:240) -region=DEFAULT
+add -name dfill(185,165:) -region=DEFAULT
+add -name dfill(185,165,236:) -region=DEFAULT
+add -name dfill(240) -region=DEFAULT
+add -name dfill(240,15) -region=DEFAULT
+! Map : ^dfill(240,15,232) maps to DEFAULT
+add -name dfill(240:) -region=DEFAULT
+add -name dfill(240,15:) -region=DEFAULT
+add -name dfill(240,15,232:) -region=DEFAULT
+add -name efill(111) -region=DEFAULT
+add -name efill(111,116) -region=DEFAULT
+! Map : ^efill(111,116,77) maps to CREG
+add -name efill(111:) -region=CREG
+add -name efill(111,116:) -region=CREG
+add -name efill(111,116,77:) -region=CREG
+change -region AREG -std
+change -region BREG -std
+change -region CREG -std
+change -region DEFAULT -std

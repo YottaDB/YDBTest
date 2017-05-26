@@ -1,0 +1,88 @@
+	SET %ds="11/22/2002"
+	DO INT^%DATE
+	ZWRITE
+	DO ^%D
+	DO INT^%D
+	ZWRITE
+	WRITE $$FUNC^%D
+	ZWRITE
+	DO INT^%DATE
+	ZWRITE
+	SET %DS="10/20/2002"
+	DO INT^%DATE
+	ZWRITE
+	WRITE $$FUNC^%DATE("10/20/2002")
+	WRITE $ZDATEFORM
+	WRITE $$FUNC^%DATE("10/20/80")
+	WRITE $ZDATE(51062)
+	WRITE $$FUNC^%DATE("10/20/10")
+	WRITE $ZDATE(62019)
+	SET %DT=+$H DO %CDS^%H
+	ZWRITE
+	SET %DT="10/20/2002" DO %CDN^%H
+	ZWRITE
+	SET %TM=$P($H,",",2) DO %CTS^%H
+	ZWRITE
+	SET %TM="17:41:18" DO %CTN^%H
+	ZWRITE
+	WRITE $$CDS^%H(59130)
+	WRITE $ZDATEFORM
+	WRITE $$CDN^%H("10/20/02")
+	WRITE $ZDATE(59097)
+	WRITE $$CDN^%H("10/20/92")
+	WRITE $ZDATE(55445)
+	DO ^%T
+	DO INT^%T
+	ZWRITE
+	WRITE $$FUNC^%T
+	ZWRITE
+	DO INT^%TI
+	ZWRITE
+	SET %TS="8:30AM"
+	DO INT^%TI
+	ZWRITE
+	WRITE $$FUNC^%TI("8:30AM")
+	DO INT^%TI,^%TO
+	ZWRITE
+	SET %DH=12
+	DO ^%DH
+	ZWRITE
+	WRITE "Hex value of decimal 12 is:",$$FUNC^%DH(12,4),!
+	SET %DO=12
+	DO ^%DO
+	ZWRITE
+	WRITE "Decimal value of ocatl 12 is:",$$FUNC^%DO(12,7),!
+	SET %HD="E"
+	DO ^%HD
+	ZWRITE
+	WRITE "Decimal value of hex 0xE is:",$$FUNC^%HD("E"),!
+	SET %HO="C3"
+	DO ^%HO
+	ZWRITE
+	WRITE "Octal value of hex 0xC3 is :",$$FUNC^%HO("C3"),!
+	SET %S="Hello"
+	do ^%LCASE
+	WRITE $$FUNC^%LCASE("MITANIUM ROCKS!"),!
+	s a="IN LOWER CASE"
+	WRITE "lower case of '",a,"' is:",$$FUNC^%LCASE(a),!
+	zwrite
+	SET ^X="Hello"
+	SET %OD=14
+	DO ^%OD
+	ZWRITE
+	WRITE "Decimal value of octal 14 is:",$$FUNC^%OD(14),!
+	SET %OH=16
+	DO ^%OH
+	ZWRITE
+	WRITE "Hex value of octal 16 is:",$$FUNC^%OH(16),!
+	SET ^X="hello"
+	WRITE "Upper case of ",^X," is:",$$FUNC^%UCASE(^X),!
+	SET %I=2,%J=9
+	DO ^%EXP
+	ZWRITE
+	WRITE "2 pow 9 = ",$$FUNC^%EXP(2,9),!
+	SET %X=81
+	DO ^%SQROOT
+	ZWRITE
+	WRITE "sqrt of 81:",$$FUNC^%SQROOT(81),!
+	DO ^%FREECNT

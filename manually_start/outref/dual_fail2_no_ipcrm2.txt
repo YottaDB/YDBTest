@@ -1,0 +1,66 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Multi-process Multi-region GTM starts on primary (A)...
+Simulating crash on receiver in ##REMOTE_TEST_PATH##
+Receiver crashed!
+Simulating crash on primary in ##TEST_PATH##
+Primary crashed!
+Doing Fail over.
+Do rundown on B:
+%GTM-I-MUFILRNDWNSUC, File ##REMOTE_TEST_PATH##/a.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##REMOTE_TEST_PATH##/b.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##REMOTE_TEST_PATH##/c.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##REMOTE_TEST_PATH##/mumps.dat successfully rundown
+%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section (id = xxx) belonging to the replication instance ##REMOTE_TEST_PATH##/mumps.repl successfully rundown
+%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section (id = xxx) belonging to the replication instance ##REMOTE_TEST_PATH##/mumps.repl successfully rundown
+Doing rollback on B:
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+Restarting (B) as primary...
+Doing rundown on (A):
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section (id = xxx) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
+%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section (id = xxx) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
+Doing rollback on (A):
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+Restarting (A) as secondary...
+Multi-process Multi-region GTM restarts on primary (B)...
+Now GTM process ends
+Shutting down Passive Source Server and Receiver Server in ##TEST_PATH##
+Shutting down Primary Source Server Server in ##REMOTE_TEST_PATH##
+DATABASE EXTRACT PASSED
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>

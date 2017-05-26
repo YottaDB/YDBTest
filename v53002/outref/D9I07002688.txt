@@ -1,0 +1,24 @@
+# D9I07-002688 test for warning only for non-graphic characters in a string literal at compile-time
+
+		Write !,"a	b","a	b" Write "a	b"
+		          ^-----
+		At column 12, line 4, source module ##IN_TEST_PATH##/inref/D9I07002688.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
+		Write !,"a	b","a	b" Write "a	b"
+		          	     ^-----
+		At column 18, line 4, source module ##IN_TEST_PATH##/inref/D9I07002688.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
+		Write !,"a	b","a	b" Write "a	b"
+		          	     	           ^-----
+		At column 30, line 4, source module ##IN_TEST_PATH##/inref/D9I07002688.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
+		Xecute ("Write !,""a"_"	b""")
+		                       ^-----
+		At column 25, line 5, source module ##IN_TEST_PATH##/inref/D9I07002688.m
+%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
+
+This is D9I07002688
+a	ba	ba	b
+a	b
+
+# End of test

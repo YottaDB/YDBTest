@@ -1,0 +1,15 @@
+# Set up small jnldir
+# Create database
+# Start updates
+# Stop receiver
+# Wait to overflow the journal pool significantly
+# Restart receiver
+# Wait until we are out of journal space (REPLJNLCLOSED)
+# Shut down replication
+# Switch from small jnldir to normal jnldir
+# Enable journaling
+# Ship database to secondary
+# Restart replication with updateresync
+# Allow some transactions to be generated while replication is back up
+# Stop updates
+# Final checks

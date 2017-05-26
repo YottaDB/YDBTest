@@ -1,0 +1,61 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gde13.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gde13.cmd
+%GDE-I-MAPBAD, Region MREG for Name Z(1) does not exist
+%GDE-I-MAPBAD, Region NREG for Name Z(1,2:"") does not exist
+%GDE-I-MAPBAD, Region NREG for Name Z(1:3) does not exist
+%GDE-I-MAPBAD, Region NREG for Name Z(3) does not exist
+%GDE-I-MAPBAD, Region NREG for Name Z(3,5,6) does not exist
+%GDE-I-MAPBAD, Region OREG for Name Z(3,5,6:"") does not exist
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^Z spans through it
+%GDE-I-STDNULLCOLLREQ, Region NREG needs Standard Null Collation enabled because global ^Z spans through it
+%GDE-I-STDNULLCOLLREQ, Region OREG needs Standard Null Collation enabled because global ^Z spans through it
+%GDE-I-STDNULLCOLLREQ, Region MREG needs Standard Null Collation enabled because global ^Z spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-I-NOEXIT, Cannot exit because of verification failure
+
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ Z(1)                               MREG
+ Z(1,2:"")                          NREG
+ Z(1:3)                             NREG
+ Z(3)                               NREG
+ Z(3,5,6)                           NREG
+ Z(3,5,6:"")                        OREG
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               Z(1)                             REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Z(1)                            Z(1,2)                           REG = MREG
+                                                                  SEG = MREG
+                                                                  FILE = MREG.dat
+ Z(1,2)                          Z(3,5,6)++                       REG = NREG
+                                                                  SEG = NREG
+                                                                  FILE = NREG.dat
+ Z(3,5,6)++                      Z(3,5)++                         REG = OREG
+                                                                  SEG = OREG
+                                                                  FILE = OREG.dat
+ Z(3,5)++                        Z(3)++                           REG = NREG
+                                                                  SEG = NREG
+                                                                  FILE = NREG.dat
+ Z(3)++                          ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gde13.gld

@@ -1,0 +1,40 @@
+ttyread:
+
+1) Copy ttyread.m and D9F05002548.csh into current directory. Do not run in cvs_root, or $gtm_test since ttyread.o needs to be created.
+
+	cp $gtm_test/T990/manual_tests/inref/ttyread.m .
+	cp $gtm_test/T990/manual_tests/u_inref/D9F05002548.csh .
+
+2) switch to the required version 
+
+	ver V990 d
+
+3) set the appropriate TERM environment value. The following values have been found to work in the corresponding servers. If these are not working, you may need to play around with the TERM setting.
+
+vt420: /atlhit1/atlhit2/beowulf/charybdis/jackal/lespaul/mlnlit1/pfloyd/scylla
+vt320: lester
+vt220: atlst200/irvhomer (arrow keys may not work unless your terminal emulator can do vt220, 
+			  but <ctrl-B> and <ctrl-F> can stand in for left and right respectively)
+
+	eg: setenv TERM vt420
+
+4) run D9F05002548.csh and follow the instructions. 
+If you need to restart, you can <ctrl-C> and, if the GTM> prompt comes up, halt to get out
+It's OK to skip through parts that have alread passed by just hitting <enter> and ignoring the FAIL messages
+watch out for "backspace" without the angle-brackets (<>) - it means type the work "backspace" 
+
+	./D9F05002548.csh
+
+* Be sure to set the TERM environment as specified in the instructions.
+
+***** READ THE INITIAL INSTRUCTIONS CAREFULLY *****
+
+5) If you are running the same copy in a different server (if the files are in NFS), make sure you delete .o before you run again.
+
+
+
+------------------------------------
+You can now run this test in an automated fashion from a desktop PC using
+expect. You Need to execute the following command on each server.
+
+expect -f $gtm_test/T990/manual_tests/u_inref/D9F05002548.exp V990 d T990 | tee D9F05002548.log && ( echo ; echo "Failures `grep -c FAIL D9F05002548.log`" ; echo "Passing `grep -c PASS D9F05002548.log`" )

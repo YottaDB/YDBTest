@@ -1,0 +1,34 @@
+1. Try followings manually in all platforms for all ctrlc.m ctrlc?.m
+
+[beowulf-alim]:>gtm
+d
+GTM>d ^ctrlc
+ 
+Stepping STARTED
+ q
+ S x=1
+ f i=1:1:10000000  SET x=x+1
+%GTM-I-CTRLC, CTRL_C encountered
+ 
+GTM>zc
+%GTM-I-CTRLC, CTRL_C encountered
+ 
+GTM>w i
+2016565
+GTM>zc
+%GTM-I-CTRLC, CTRL_C encountered
+ 
+GTM>zp
+ctrlc       ;
+ s x=0
+        d sstep^ctrlc
+ S x=1
+ f i=1:1:10000000  SET x=x+1
+        q
+sstep   ;
+        s $zstep="zprint @$zpos  zstep into"
+        zb sstep+3^ctrlc:"zstep i"
+        w !,"Stepping STARTED",!
+ q
+ 
+GTM>                                 

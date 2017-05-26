@@ -1,0 +1,197 @@
+GTM version is switched to ##FILTERED##PRIORVER##
+Files Created in ##TEST_PATH##:
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z]*/mumps -run GDE
+mumps.gld
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z]*/mupip
+mumps.dat
+Database file ##TEST_PATH##/mumps.dat now has 8 reserved bytes
+
+
+Total blocks in database  -------            101 [0x00000065]
+Total local bitmap blocks -------              1 [0x00000001]
+Blocks bypassed -----------------             98 [0x00000062]
+Blocks processed ----------------              3 [0x00000003]
+Blocks needing to be split ------              0 [0x00000000]
+- DT leaf (data) blocks ---------              0 [0x00000000]
+- DT index blocks ---------------              0 [0x00000000]
+- GVT leaf (data) blocks --------              0 [0x00000000]
+- GVT index blocks --------------              0 [0x00000000]
+--------------------------------------------------------------------------------
+You must have a backup of database ##TEST_PATH##/mumps.dat before you proceed!
+An abnormal termination can damage the database while doing the certification !
+Proceeding will also turn off replication and/or journaling if enabled
+--------------------------------------------------------------------------------
+Proceed? [y/n]:
+Certification phase for database ##TEST_PATH##/mumps.dat beginning
+
+%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+
+Total blocks in scan phase file --              0 [0x00000000]
+Blocks bypassed ------------------              0 [0x00000000]
+Blocks processed -----------------              0 [0x00000000]
+Blocks read ----------------------              0 [0x00000000]
+Blocks read from cache -----------              0 [0x00000000]
+Blocks updated -------------------              0 [0x00000000]
+Blocks created -------------------              0 [0x00000000]
+GVTROOT right children processed -              0 [0x00000000]
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip upgrade started
+%GTM-I-MUINFOUINT4, Old file header size : 24576 [0x00006000]
+%GTM-I-MUINFOUINT8, Old file length : 128512 [0x000000000001F600]
+%GTM-I-MUINFOUINT4, Old file start_vbn : 49 [0x00000031]
+%GTM-I-MUINFOUINT4, Old file gds blk_size : 1024 [0x00000400]
+%GTM-I-MUINFOUINT4, Old file total_blks : 101 [0x00000065]
+##TEST_AWK%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M .*
+GTM version is switched to V6
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V4
+Desired DB Format V4
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
+Desired DB Format V6
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V4
+
+GTM>
+%GTM-E-TNTOOLARGE, Database file ##TEST_PATH##/mumps.dat has reached the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
+
+GTM>
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+%GTM-E-MUDWNGRDTN, Transaction number 0x00000000F8000003 in database ##TEST_PATH##/mumps.dat is too big for MUPIP [REORG] DOWNGRADE. Renew database with MUPIP INTEG TN_RESET
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+MUPIP integ -tn_reset mumps.dat
+%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+%GTM-I-DBBTUFIXED, The blocks-to-upgrade file-header field has been changed to the correct value
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               4           4.150            NA
+Index               3               3           2.343             3
+Data                3               3           5.240             3
+Free               92              NA              NA            NA
+Total             100              10              NA             6
+
+
+WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
+MUPIP set -version=V6
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
+MUPIP reorg -downgrade
+
+Region DEFAULT : MUPIP REORG DOWNGRADE started
+Region DEFAULT : Desired DB Format set to V4 by MUPIP REORG DOWNGRADE
+Region DEFAULT : Started processing from block number [0x00000000]
+Region DEFAULT : Stopped processing at block number [0x00000065]
+Region DEFAULT : Statistics : Blocks Read From Disk (Bitmap)     : 0x00000001
+Region DEFAULT : Statistics : Blocks Skipped (Free)              : 0x0000005C
+Region DEFAULT : Statistics : Blocks Read From Disk (Non-Bitmap) : 0x00000008
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in disk)   : 0x00000000
+Region DEFAULT : Statistics : Blocks Skipped (new fmt in cache)  : 0x00000000
+Region DEFAULT : Statistics : Blocks Converted (Bitmap)          : 0x00000001
+Region DEFAULT : Statistics : Blocks Converted (Non-Bitmap)      : 0x00000008
+Region DEFAULT : Total Blocks = [0x00000065] : Free Blocks = [0x0000005C] : Blocks to upgrade = [0x00000009]
+Region DEFAULT : MUPIP REORG DOWNGRADE finished
+
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip downgrade started
+%GTM-I-MUINFOUINT4, Old file header size : 8192 [0x00002000]
+%GTM-I-MUINFOUINT8, Old file length : 128512 [0x000000000001F600]
+%GTM-I-MUINFOUINT4, Old file start_vbn : 49 [0x00000031]
+%GTM-I-MUINFOUINT4, Old file gds blk_size : 1024 [0x00000400]
+%GTM-I-MUINFOUINT4, Old file total_blks : 101 [0x00000065]
+%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V4
+MUPIP set -version=V4
+%GTM-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
+MUPIP set -version=V6
+%GTM-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+Number of regions does not match with number of *No errors* region count
+$error_free :  ; $no_regions = 1
+
+
+Integ of region DEFAULT
+%GTM-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
+%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+
+Check that VERSION and EXTENSION_COUNT work together
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
+Database file ##TEST_PATH##/mumps.dat now has extension count 10
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Test that CURR_TN <= WARN_MAX_TN <= MAX_TN inequality is maintained
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+  Current transaction    0x0000000000000001  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V4
+  Current transaction    0x0000000000000002  No. of writes/flush              7
+  Maximum TN             0x00000000F7FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0x00000000D7FFFFFF  Desired DB Format               V4
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
+  Current transaction    0x0000000000000003  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+  Current transaction    0x00000000EFFFFFFF  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V4
+  Current transaction    0x00000000F0000000  No. of writes/flush              7
+  Maximum TN             0x00000000F7FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0x00000000F3FFFFFF  Desired DB Format               V4
+
+GTM>
+
+GTM>
+  Current transaction    0x00000000F0000001  No. of writes/flush              7
+  Maximum TN             0x00000000F7FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0x00000000F3FFFFFF  Desired DB Format               V4
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
+  Current transaction    0x00000000F0000002  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##TEST_PATH##/mupip.err_##TEST_AWK.._.._.._.._.._..
+%GTM-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
+%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages

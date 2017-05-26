@@ -1,0 +1,75 @@
+Testing C9C04001977
+On error, journaling should be ##TEST_AWK.*
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+** Testing for sr_port/mupip_set_journal.c
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+** Ready to run test.
+%GTM-E-JNLNOCREATE, Journal file ##TEST_PATH##/mumps.mjl not created
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+** Checking journaling state **
+** Testing for sr_port/mupip_backup.c
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+** Ready to run test.
+%GTM-E-JNLNOCREATE, Journal file ##TEST_PATH##/mumps.mjl not created
+** Checking journaling state **
+** Testing for sr_port/jnl_file_open_switch.c
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+** Ready to run test.
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+** Checking journaling state **
+** Testing for sr_port/mur_process_intrpt_recov.c
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+** Ready to run test.
+
+GTM>
+
+GTM>
+
+GTM>
+Killed
+%GTM-E-JNLNOCREATE, Journal file ##TEST_PATH##/mumps.mjl not created
+** Checking journaling state **
+** Testing for sr_unix/jnl_file_extend.c
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+** Ready to run test.
+** Checking journaling state **
+** Testing for sr_unix/jnl_file_extend.c (empty custom errors, -noinst_freeze_on_error)
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+** Ready to run test.
+** Checking journaling state **
+** Testing for sr_unix/jnl_file_extend.c (default custom errors, -noinst_freeze_on_error)
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+** Ready to run test.
+** Checking journaling state **
+** Testing for sr_unix/jnl_file_extend.c (empty custom errors, -inst_freeze_on_error)
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+** Ready to run test.
+** Checking journaling state **
+** Testing for sr_unix/jnl_file_extend.c (default custom errors, -inst_freeze_on_error)
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+** Ready to run test.
+** Checking journaling state **
+----------
+Error JNLEXTEND seen in jnl_file_extend_jfe_dce_ifoe.out as expected:
+%GTM-E-JNLEXTEND, Journal file extension error for file ##TEST_PATH##/mumps.mjl
+----------
+----------
+Error JNLNOCREATE seen in jnl_file_extend_jfe_dce_ifoe.out as expected:
+%GTM-E-JNLNOCREATE, Journal file  not created
+----------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

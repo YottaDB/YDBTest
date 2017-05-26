@@ -1,0 +1,94 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance4:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance5:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST5 RP'==
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'RUN INST1 mkdir bak100 ; $MUPIP backup -replinstance=bak100 "*" bak100 >&! backup100.out'==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 $gtm_tst/com/cp_remote_file.csh __SRC_DIR__/bak100/mumps.dat _REMOTEINFO___RCV_DIR__/'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST5 RP'==
+==Executing MULTISITE_REPLIC 'START INST1 INST3 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST3'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST2 INST5 RESERVEPORT'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST3 INST5'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST3'==
+==Executing MULTISITE_REPLIC 'RUN INST1 mkdir bak200 ; $MUPIP backup -replinstance=bak200 "*" bak200 >&! backup200.out'==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 $gtm_tst/com/cp_remote_file.csh __SRC_DIR__/bak200/mumps.dat _REMOTEINFO___RCV_DIR__/'==
+==Executing MULTISITE_REPLIC 'RUN INST2 mv mumps.repl mumps.repl_bak ; mv mumps.mjl mumps.mjl_bak  '==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST4 $gtm_tst/com/cp_remote_file.csh __SRC_DIR__/bak200/mumps.dat _REMOTEINFO___RCV_DIR__/'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST5 RP'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST4 INST5 RP'==
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'START INST1 INST4 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+==Executing MULTISITE_REPLIC 'STOP INST1 INST4'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+Shutting down Primary Source Server Server in ##TEST_PATH##
+HST #      0 : Root Primary Instance Name        INSTANCE2
+HST #      0 : Stream Sequence Number                    1 [0x0000000000000001]
+HST #      1 : Root Primary Instance Name        INSTANCE1
+HST #      1 : Stream Sequence Number                  201 [0x00000000000000C9]
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+==Executing MULTISITE_REPLIC 'STOPSRC INST2 INST5 RESERVEPORT'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST4 INST5'==
+==Executing MULTISITE_REPLIC 'RUN INST4 mv mumps.repl mumps.repl_bak'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST4 RP'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST3 INST4'==
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##SRC_##TIMESTAMP##.log -message "do MUPIP JOURNAL ROLLBACK FETCHRESYNC" -duration 120 -waitcreation'==
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message "Received REPL_ROLLBACK_FIRST message" -duration 120 -waitcreation'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST4 SRC=INST3 $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST3INST4.out'==
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST3 INST4'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST5 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

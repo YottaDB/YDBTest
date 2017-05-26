@@ -1,0 +1,12 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+----------
+Error RELINKCTLFULL seen in rctlerror.log as expected:
+##TEST_AWK[0-9]*,child\+[0-9]+\^relinksrch,%GTM-E-RELINKCTLFULL, Relinkctl file for directory ##TEST_PATH##/dir[0-9]+ is full \(maximum entries 100\)
+----------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

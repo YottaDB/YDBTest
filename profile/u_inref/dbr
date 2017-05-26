@@ -1,0 +1,34 @@
+#!/usr/local/bin/tcsh
+#################################################################
+#								#
+# Copyright (c) 2002-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# 	restore the database for v${profileversion}perf
+cd ${testbasedir}/v${profileversion}perf/gbls
+touch mumps.junk
+\rm mumps.*
+cd ${testbasedir}/v${profileversion}perf
+# echo 'restoring databases ... ...'
+rm tmp.profile.gde
+if ($?gtm_test_qdbrundown) then
+	if ($gtm_test_qdbrundown) then
+		echo "template -region -qdbrundown"		>> tmp.profile.gde
+		echo "change -region DEFAULT -qdbrundown"	>> tmp.profile.gde
+	endif
+endif
+cat profile.gde > tmp.profile.gde
+$GDE @tmp.profile.gde
+if ("ENCRYPT" == "$test_encryption" ) then
+	$gtm_test/$tst_src/com/create_key_file.csh >& create_key_file_dbload.out
+endif
+$MUPIP create
+$MUPIP load v${profileversion}gbls.zwr
+chmod 777 *.*
+cd ${testbasedir}/v${profileversion}perf

@@ -1,0 +1,947 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+###################################################################
+Testing trigger names
+Interleaved add, select and deletes for each line of names.trg
+
+No matching triggers found for deletion
+###################################################################
+load, select and delete by fullname
+Added SET and/or Non-SET trigger on ^A named ACDEFGHIJKLMNOPQRSTUVWXYZabc
+;trigger name: ACDEFGHIJKLMNOPQRSTUVWXYZabc (region AREG)  cycle: 1
++^A -name=ACDEFGHIJKLMNOPQRSTUVWXYZabc -commands=S,K -xecute="do ^mrtn"
+Deleted trigger named 'ACDEFGHIJKLMNOPQRSTUVWXYZabc' for global ^A (region AREG)
+
+load, select and delete by shortname with wildcard
+Added SET and/or Non-SET trigger on ^A named ACDEFGHIJKLMNOPQRSTUVWXYZabc
+;trigger name: ACDEFGHIJKLMNOPQRSTUVWXYZabc (region AREG)  cycle: 3
++^A -name=ACDEFGHIJKLMNOPQRSTUVWXYZabc -commands=S,K -xecute="do ^mrtn"
+Deleted trigger named 'ACDEFGHIJKLMNOPQRSTUVWXYZabc' for global ^A (region AREG)
+##TEST_AWKAll existing triggers named A.* \(count = 1\) now deleted
+###################################################################
+load, select and delete by fullname
+Added SET and/or Non-SET trigger on ^B named cefghijklmnopqrstuvwxyz01234
+;trigger name: cefghijklmnopqrstuvwxyz01234 (region BREG)  cycle: 1
++^B -name=cefghijklmnopqrstuvwxyz01234 -commands=S,K -xecute="do ^mrtn"
+Deleted trigger named 'cefghijklmnopqrstuvwxyz01234' for global ^B (region BREG)
+
+load, select and delete by shortname with wildcard
+Added SET and/or Non-SET trigger on ^B named cefghijklmnopqrstuvwxyz01234
+;trigger name: cefghijklmnopqrstuvwxyz01234 (region BREG)  cycle: 3
++^B -name=cefghijklmnopqrstuvwxyz01234 -commands=S,K -xecute="do ^mrtn"
+Deleted trigger named 'cefghijklmnopqrstuvwxyz01234' for global ^B (region BREG)
+##TEST_AWKAll existing triggers named c.* \(count = 1\) now deleted
+###################################################################
+load, select and delete by fullname
+Added SET and/or Non-SET trigger on ^C named D6789ABCDEFGHIJKLMNOPQRSTUVW
+;trigger name: D6789ABCDEFGHIJKLMNOPQRSTUVW (region CREG)  cycle: 1
++^C -name=D6789ABCDEFGHIJKLMNOPQRSTUVW -commands=S,K -xecute="do ^mrtn"
+Deleted trigger named 'D6789ABCDEFGHIJKLMNOPQRSTUVW' for global ^C (region CREG)
+
+load, select and delete by shortname with wildcard
+Added SET and/or Non-SET trigger on ^C named D6789ABCDEFGHIJKLMNOPQRSTUVW
+;trigger name: D6789ABCDEFGHIJKLMNOPQRSTUVW (region CREG)  cycle: 3
++^C -name=D6789ABCDEFGHIJKLMNOPQRSTUVW -commands=S,K -xecute="do ^mrtn"
+Deleted trigger named 'D6789ABCDEFGHIJKLMNOPQRSTUVW' for global ^C (region CREG)
+##TEST_AWKAll existing triggers named D.* \(count = 1\) now deleted
+###################################################################
+load, select and delete by fullname
+Added SET and/or Non-SET trigger on ^D named fYZabcdefghijklmnopqrstuvwxy
+;trigger name: fYZabcdefghijklmnopqrstuvwxy (region DREG)  cycle: 1
++^D -name=fYZabcdefghijklmnopqrstuvwxy -commands=S,K -xecute="do ^mrtn"
+Deleted trigger named 'fYZabcdefghijklmnopqrstuvwxy' for global ^D (region DREG)
+
+load, select and delete by shortname with wildcard
+Added SET and/or Non-SET trigger on ^D named fYZabcdefghijklmnopqrstuvwxy
+;trigger name: fYZabcdefghijklmnopqrstuvwxy (region DREG)  cycle: 3
++^D -name=fYZabcdefghijklmnopqrstuvwxy -commands=S,K -xecute="do ^mrtn"
+Deleted trigger named 'fYZabcdefghijklmnopqrstuvwxy' for global ^D (region DREG)
+##TEST_AWKAll existing triggers named f.* \(count = 1\) now deleted
+###################################################################
+Use ztrigger to load names.trg
+
+No matching triggers found for deletion
+File names.trg, Line 1: No matching triggers found for deletion
+File names.trg, Line 5: Added SET and/or Non-SET trigger on ^A named ACDEFGHIJKLMNOPQRSTUVWXYZabc
+File names.trg, Line 6: Deleted trigger named 'ACDEFGHIJKLMNOPQRSTUVWXYZabc' for global ^A (region AREG)
+File names.trg, Line 7: Added SET and/or Non-SET trigger on ^A named ACDEFGHIJKLMNOPQRSTUVWXYZabc
+File names.trg, Line 8: Deleted trigger named 'ACDEFGHIJKLMNOPQRSTUVWXYZabc' for global ^A (region AREG)
+##TEST_AWKFile names.trg, Line 8: All existing triggers named A.* \(count = 1\) now deleted
+File names.trg, Line 12: Added SET and/or Non-SET trigger on ^B named cefghijklmnopqrstuvwxyz01234
+File names.trg, Line 13: Deleted trigger named 'cefghijklmnopqrstuvwxyz01234' for global ^B (region BREG)
+File names.trg, Line 14: Added SET and/or Non-SET trigger on ^B named cefghijklmnopqrstuvwxyz01234
+File names.trg, Line 15: Deleted trigger named 'cefghijklmnopqrstuvwxyz01234' for global ^B (region BREG)
+##TEST_AWKFile names.trg, Line 15: All existing triggers named c.* \(count = 1\) now deleted
+File names.trg, Line 19: Added SET and/or Non-SET trigger on ^C named D6789ABCDEFGHIJKLMNOPQRSTUVW
+File names.trg, Line 20: Deleted trigger named 'D6789ABCDEFGHIJKLMNOPQRSTUVW' for global ^C (region CREG)
+File names.trg, Line 21: Added SET and/or Non-SET trigger on ^C named D6789ABCDEFGHIJKLMNOPQRSTUVW
+File names.trg, Line 22: Deleted trigger named 'D6789ABCDEFGHIJKLMNOPQRSTUVW' for global ^C (region CREG)
+##TEST_AWKFile names.trg, Line 22: All existing triggers named D.* \(count = 1\) now deleted
+File names.trg, Line 26: Added SET and/or Non-SET trigger on ^D named fYZabcdefghijklmnopqrstuvwxy
+File names.trg, Line 27: Deleted trigger named 'fYZabcdefghijklmnopqrstuvwxy' for global ^D (region DREG)
+File names.trg, Line 28: Added SET and/or Non-SET trigger on ^D named fYZabcdefghijklmnopqrstuvwxy
+File names.trg, Line 29: Deleted trigger named 'fYZabcdefghijklmnopqrstuvwxy' for global ^D (region DREG)
+##TEST_AWKFile names.trg, Line 29: All existing triggers named f.* \(count = 1\) now deleted
+=========================================
+8 triggers added
+8 triggers deleted
+0 triggers modified
+16 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+No matching triggers found for deletion
+###################################################################
+
+###################################################################
+Look at the file before mupip trigger -triggerfile=names.trg -noprompt
+-*
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Testing name=ACDEFGHIJKLMNOPQRSTUVWXYZabc
++^A -command=S,K -xecute="do ^mrtn" -name=ACDEFGHIJKLMNOPQRSTUVWXYZabc
+-ACDEFGHIJKLMNOPQRSTUVWXYZabc
++^A -command=S,K -xecute="do ^mrtn" -name=ACDEFGHIJKLMNOPQRSTUVWXYZabc
+##TEST_AWK-A.*
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Testing name=cefghijklmnopqrstuvwxyz01234
++^B -command=S,K -xecute="do ^mrtn" -name=cefghijklmnopqrstuvwxyz01234
+-cefghijklmnopqrstuvwxyz01234
++^B -command=S,K -xecute="do ^mrtn" -name=cefghijklmnopqrstuvwxyz01234
+##TEST_AWK-c.*
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Testing name=D6789ABCDEFGHIJKLMNOPQRSTUVW
++^C -command=S,K -xecute="do ^mrtn" -name=D6789ABCDEFGHIJKLMNOPQRSTUVW
+-D6789ABCDEFGHIJKLMNOPQRSTUVW
++^C -command=S,K -xecute="do ^mrtn" -name=D6789ABCDEFGHIJKLMNOPQRSTUVW
+##TEST_AWK-D.*
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Testing name=fYZabcdefghijklmnopqrstuvwxy
++^D -command=S,K -xecute="do ^mrtn" -name=fYZabcdefghijklmnopqrstuvwxy
+-fYZabcdefghijklmnopqrstuvwxy
++^D -command=S,K -xecute="do ^mrtn" -name=fYZabcdefghijklmnopqrstuvwxy
+##TEST_AWK-f.*
+
+File names.trg, Line 1: No matching triggers found for deletion
+File names.trg, Line 5: Added SET and/or Non-SET trigger on ^A named ACDEFGHIJKLMNOPQRSTUVWXYZabc
+File names.trg, Line 6: Deleted trigger named 'ACDEFGHIJKLMNOPQRSTUVWXYZabc' for global ^A (region AREG)
+File names.trg, Line 7: Added SET and/or Non-SET trigger on ^A named ACDEFGHIJKLMNOPQRSTUVWXYZabc
+File names.trg, Line 8: Deleted trigger named 'ACDEFGHIJKLMNOPQRSTUVWXYZabc' for global ^A (region AREG)
+##TEST_AWKFile names.trg, Line 8: All existing triggers named A.* \(count = 1\) now deleted
+File names.trg, Line 12: Added SET and/or Non-SET trigger on ^B named cefghijklmnopqrstuvwxyz01234
+File names.trg, Line 13: Deleted trigger named 'cefghijklmnopqrstuvwxyz01234' for global ^B (region BREG)
+File names.trg, Line 14: Added SET and/or Non-SET trigger on ^B named cefghijklmnopqrstuvwxyz01234
+File names.trg, Line 15: Deleted trigger named 'cefghijklmnopqrstuvwxyz01234' for global ^B (region BREG)
+##TEST_AWKFile names.trg, Line 15: All existing triggers named c.* \(count = 1\) now deleted
+File names.trg, Line 19: Added SET and/or Non-SET trigger on ^C named D6789ABCDEFGHIJKLMNOPQRSTUVW
+File names.trg, Line 20: Deleted trigger named 'D6789ABCDEFGHIJKLMNOPQRSTUVW' for global ^C (region CREG)
+File names.trg, Line 21: Added SET and/or Non-SET trigger on ^C named D6789ABCDEFGHIJKLMNOPQRSTUVW
+File names.trg, Line 22: Deleted trigger named 'D6789ABCDEFGHIJKLMNOPQRSTUVW' for global ^C (region CREG)
+##TEST_AWKFile names.trg, Line 22: All existing triggers named D.* \(count = 1\) now deleted
+File names.trg, Line 26: Added SET and/or Non-SET trigger on ^D named fYZabcdefghijklmnopqrstuvwxy
+File names.trg, Line 27: Deleted trigger named 'fYZabcdefghijklmnopqrstuvwxy' for global ^D (region DREG)
+File names.trg, Line 28: Added SET and/or Non-SET trigger on ^D named fYZabcdefghijklmnopqrstuvwxy
+File names.trg, Line 29: Deleted trigger named 'fYZabcdefghijklmnopqrstuvwxy' for global ^D (region DREG)
+##TEST_AWKFile names.trg, Line 29: All existing triggers named f.* \(count = 1\) now deleted
+=========================================
+8 triggers added
+8 triggers deleted
+0 triggers modified
+16 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+###################################################################
+load and run all those triggers
+###################################################################
+Execute every installed trigger
+run+5^validnames	$reference=^A	$ztupdate=
+run+5^validnames	$reference=^B	$ztupdate=
+run+5^validnames	$reference=^C	$ztupdate=
+run+5^validnames	$reference=^D	$ztupdate=
+###################################################################
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+###################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+Testing named select and deletes
+###################################################################
+;trigger name: a#1 (region AREG)  cycle: 5
++^a -commands=S -xecute="set x=1"
+;trigger name: a#2 (region AREG)  cycle: 5
++^a -commands=S -xecute="set x=2"
+;trigger name: yName (region AREG)  cycle: 5
++^a -name=yName -commands=S -xecute="set x=3"
+;trigger name: yNamp (region AREG)  cycle: 5
++^a -name=yNamp -commands=S -xecute="set x=10"
+;trigger name: a#3 (region AREG)  cycle: 5
++^a -commands=S -xecute="set x=12"
+;trigger name: auto#1 (region AREG)  cycle: 4
++^auto -commands=ZTR -xecute="set x=1"
+;trigger name: auto#2 (region AREG)  cycle: 4
++^auto -commands=ZTR -xecute="set x=2"
+;trigger name: auto#3 (region AREG)  cycle: 4
++^auto -commands=ZTR -xecute="set x=3"
+;trigger name: auto#4 (region AREG)  cycle: 4
++^auto -commands=ZTR -xecute="set x=4"
+;trigger name: b#1 (region BREG)  cycle: 3
++^b -commands=S -xecute="set x=4"
+;trigger name: b#2 (region BREG)  cycle: 3
++^b -commands=S -xecute="set x=5"
+;trigger name: yName2 (region BREG)  cycle: 3
++^b -name=yName2 -commands=S -xecute="set x=6"
+;trigger name: %9lives#1 (region DEFAULT)  cycle: 4
++^%9lives -commands=S -xecute="set x=21"
+;trigger name: %9lives#2 (region DEFAULT)  cycle: 4
++^%9lives -commands=S -xecute="set x=22"
+;trigger name: %9lives#3 (region DEFAULT)  cycle: 4
++^%9lives -commands=S -xecute="set x=23"
+;trigger name: %9lives#4 (region DEFAULT)  cycle: 4
++^%9lives -commands=S -xecute="set x=24"
+;trigger name: %pct#1 (region DEFAULT)  cycle: 4
++^%pct -commands=S -xecute="set x=14"
+;trigger name: %pct#2 (region DEFAULT)  cycle: 4
++^%pct -commands=S -xecute="set x=15"
+;trigger name: %pct#3 (region DEFAULT)  cycle: 4
++^%pct -commands=S -xecute="set x=19"
+;trigger name: %pct#4 (region DEFAULT)  cycle: 4
++^%pct -commands=S -xecute="set x=20"
+;trigger name: %pctgvn (region DEFAULT)  cycle: 4
++^%pctgvn -name=%pctgvn -commands=S -xecute="set x=13"
+;trigger name: %pctgvn#1 (region DEFAULT)  cycle: 4
++^%pctgvn -commands=S -xecute="set x=16"
+;trigger name: %pctgvn#2 (region DEFAULT)  cycle: 4
++^%pctgvn -commands=S -xecute="set x=17"
+;trigger name: %pctgvn#3 (region DEFAULT)  cycle: 4
++^%pctgvn -commands=S -xecute="set x=18"
+;trigger name: % (region DEFAULT)  cycle: 1
++^pct -name=% -commands=S -xecute="set x=25"
+;trigger name: yName#1 (region DEFAULT)  cycle: 2
++^yName -commands=S -xecute="set x=7"
+;trigger name: yName#2 (region DEFAULT)  cycle: 2
++^yName -commands=S -xecute="set x=8"
+;trigger name: yNamp#1 (region DEFAULT)  cycle: 1
++^yNamp -commands=S -xecute="set x=9"
+###################################################################
+###################################################################
+Testing deletion of individual user defined names
+
+Select '9notaname'(9)
+Invalid name entry in SELECT list: "9notaname"
+
+Delete '-9notaname'(9)
+Invalid trigger NAME string: "9notaname"
+Invalid name entry in SELECT list: "9notaname"
+
+Select 'not.aname'(9)
+Invalid name entry in SELECT list: "not.aname"
+
+Delete '-not.aname'(9)
+Invalid trigger NAME string: "not.aname"
+Invalid name entry in SELECT list: "not.aname"
+
+Select '.notaname'(9)
+Invalid name entry in SELECT list: ".notaname"
+
+Delete '-.notaname'(9)
+Invalid trigger NAME string: ".notaname"
+Invalid name entry in SELECT list: ".notaname"
+
+Select 'n.otaname'(9)
+Invalid name entry in SELECT list: "n.otaname"
+
+Delete '-n.otaname'(9)
+Invalid trigger NAME string: "n.otaname"
+Invalid name entry in SELECT list: "n.otaname"
+
+Select 'no.taname'(9)
+Invalid name entry in SELECT list: "no.taname"
+
+Delete '-no.taname'(9)
+Invalid trigger NAME string: "no.taname"
+Invalid name entry in SELECT list: "no.taname"
+
+Select 'yName#0'(7)
+Invalid name entry in SELECT list: "yName#0"
+
+Delete '-yName#0'(7)
+Invalid trigger NAME string: "yName#0"
+Invalid name entry in SELECT list: "yName#0"
+
+Select 'yName#a'(7)
+Invalid name entry in SELECT list: "yName#a"
+
+Delete '-yName#a'(7)
+Invalid trigger NAME string: "yName#a"
+Invalid name entry in SELECT list: "yName#a"
+
+Select 'yName#'(6)
+;trigger name: yName (region AREG)  cycle: 11
++^a -name=yName -commands=S -xecute="set x=3"
+
+Delete '-yName#'(6)
+Deleted trigger named 'yName' for global ^a (region AREG)
+
+Select '%'(1)
+;trigger name: % (region DEFAULT)  cycle: 3
++^pct -name=% -commands=S -xecute="set x=25"
+
+Delete '-%'(1)
+Deleted trigger named '%' for global ^pct (region DEFAULT)
+
+Select '%pctgvn'(7)
+;trigger name: %pctgvn (region DEFAULT)  cycle: 9
++^%pctgvn -name=%pctgvn -commands=S -xecute="set x=13"
+
+Delete '-%pctgvn'(7)
+Deleted trigger named '%pctgvn' for global ^%pctgvn (region DEFAULT)
+###################################################################
+###################################################################
+Testing deletion of individual generated names
+
+Select 'auto#'(5)
+
+Delete '-auto#'(5)
+Trigger named auto# does not exist
+
+Select 'auto#a'(6)
+Invalid name entry in SELECT list: "auto#a"
+
+Delete '-auto#a'(6)
+Invalid trigger NAME string: "auto#a"
+Invalid name entry in SELECT list: "auto#a"
+
+Select 'auto#.'(6)
+Invalid name entry in SELECT list: "auto#."
+
+Delete '-auto#.'(6)
+Invalid trigger NAME string: "auto#."
+Invalid name entry in SELECT list: "auto#."
+
+Select 'auto##'(6)
+Invalid name entry in SELECT list: "auto##"
+
+Delete '-auto##'(6)
+Invalid trigger NAME string: "auto##"
+Invalid name entry in SELECT list: "auto##"
+
+Select 'auto#4##'(8)
+Invalid name entry in SELECT list: "auto#4##"
+
+Delete '-auto#4##'(8)
+Invalid trigger NAME string: "auto#4##"
+Invalid name entry in SELECT list: "auto#4##"
+
+Select 'auto#4#1'(8)
+Invalid name entry in SELECT list: "auto#4#1"
+
+Delete '-auto#4#1'(8)
+Invalid trigger NAME string: "auto#4#1"
+Invalid name entry in SELECT list: "auto#4#1"
+
+Select 'auto#4#'(7)
+;trigger name: auto#4 (region AREG)  cycle: 14
++^auto -commands=ZTR -xecute="set x=4"
+
+Delete '-auto#4#'(7)
+Deleted trigger named 'auto#4' for global ^auto (region AREG)
+
+Select 'auto#2'(6)
+;trigger name: auto#2 (region AREG)  cycle: 15
++^auto -commands=ZTR -xecute="set x=2"
+
+Delete '-auto#2'(6)
+Deleted trigger named 'auto#2' for global ^auto (region AREG)
+
+Select '%pct#3#'(7)
+;trigger name: %pct#3 (region DEFAULT)  cycle: 14
++^%pct -commands=S -xecute="set x=19"
+
+Delete '-%pct#3#'(7)
+Deleted trigger named '%pct#3' for global ^%pct (region DEFAULT)
+
+Select '%pct#1'(6)
+;trigger name: %pct#1 (region DEFAULT)  cycle: 15
++^%pct -commands=S -xecute="set x=14"
+
+Delete '-%pct#1'(6)
+Deleted trigger named '%pct#1' for global ^%pct (region DEFAULT)
+
+Select '%pctgvn#'(8)
+;trigger name: %pctgvn (region DEFAULT)  cycle: 15
++^%pctgvn -name=%pctgvn -commands=S -xecute="set x=13"
+
+Delete '-%pctgvn#'(8)
+Deleted trigger named '%pctgvn' for global ^%pctgvn (region DEFAULT)
+
+Select '%pctgvn#0'(9)
+Invalid name entry in SELECT list: "%pctgvn#0"
+
+Delete '-%pctgvn#0'(9)
+Invalid trigger NAME string: "%pctgvn#0"
+Invalid name entry in SELECT list: "%pctgvn#0"
+
+Select '%pctgvn#2'(9)
+;trigger name: %pctgvn#2 (region DEFAULT)  cycle: 16
++^%pctgvn -commands=S -xecute="set x=17"
+
+Delete '-%pctgvn#2'(9)
+Deleted trigger named '%pctgvn#2' for global ^%pctgvn (region DEFAULT)
+
+Select '%9lives#5'(9)
+
+Delete '-%9lives#5'(9)
+Trigger named %9lives#5 does not exist
+
+Select '%9lives#4'(9)
+;trigger name: %9lives#4 (region DEFAULT)  cycle: 14
++^%9lives -commands=S -xecute="set x=24"
+
+Delete '-%9lives#4'(9)
+Deleted trigger named '%9lives#4' for global ^%9lives (region DEFAULT)
+###################################################################
+Do a few more selects on auto#* and ^auto
+
+;trigger name: auto#1 (region AREG)  cycle: 16
++^auto -commands=ZTR -xecute="set x=1"
+;trigger name: auto#3 (region AREG)  cycle: 16
++^auto -commands=ZTR -xecute="set x=3"
+;trigger name: %pct#2 (region DEFAULT)  cycle: 16
++^%pct -commands=S -xecute="set x=15"
+;trigger name: %pct#4 (region DEFAULT)  cycle: 16
++^%pct -commands=S -xecute="set x=20"
+;trigger name: %pctgvn#1 (region DEFAULT)  cycle: 17
++^%pctgvn -commands=S -xecute="set x=16"
+;trigger name: %pctgvn#3 (region DEFAULT)  cycle: 17
++^%pctgvn -commands=S -xecute="set x=18"
+###################################################################
+;trigger name: auto#1 (region AREG)  cycle: 16
++^auto -commands=ZTR -xecute="set x=1"
+;trigger name: auto#3 (region AREG)  cycle: 16
++^auto -commands=ZTR -xecute="set x=3"
+;trigger name: %pct#4 (region DEFAULT)  cycle: 16
++^%pct -commands=S -xecute="set x=20"
+;trigger name: %pct#2 (region DEFAULT)  cycle: 16
++^%pct -commands=S -xecute="set x=15"
+###################################################################
+###################################################################
+Testing deletion of multiple generated names
+
+Select 'yName##*'(8)
+Invalid name entry in SELECT list: "yName##*"
+
+Delete '-yName##*'(8)
+Invalid trigger NAME string: "yName##*"
+Invalid name entry in SELECT list: "yName##*"
+
+Select 'yName##'(7)
+Invalid name entry in SELECT list: "yName##"
+
+Delete '-yName##'(7)
+Invalid trigger NAME string: "yName##"
+Invalid name entry in SELECT list: "yName##"
+
+Select 'yName#1#1'(9)
+Invalid name entry in SELECT list: "yName#1#1"
+
+Delete '-yName#1#1'(9)
+Invalid trigger NAME string: "yName#1#1"
+Invalid name entry in SELECT list: "yName#1#1"
+
+Select 'yName#1*'(8)
+Invalid name entry in SELECT list: "yName#1*"
+
+Delete '-yName#1*'(8)
+Invalid trigger NAME string: "yName#1*"
+Invalid name entry in SELECT list: "yName#1*"
+
+Select 'yName#*'(7)
+;trigger name: yName#1 (region DEFAULT)  cycle: 11
++^yName -commands=S -xecute="set x=7"
+;trigger name: yName#2 (region DEFAULT)  cycle: 11
++^yName -commands=S -xecute="set x=8"
+
+Delete '-yName#*'(7)
+Deleted trigger named 'yName#1' for global ^yName (region DEFAULT)
+Deleted trigger named 'yName#2' for global ^yName (region DEFAULT)
+All existing triggers named yName#* (count = 2) now deleted
+
+Select '%pctgvn#034567#'(15)
+Invalid name entry in SELECT list: "%pctgvn#034567#"
+
+Delete '-%pctgvn#034567#'(15)
+Invalid trigger NAME string: "%pctgvn#034567#"
+Invalid name entry in SELECT list: "%pctgvn#034567#"
+
+Select '%pctgvn#999999#'(15)
+
+Delete '-%pctgvn#999999#'(15)
+Trigger named %pctgvn#999999# does not exist
+
+Select '%pctgvn#1#a'(11)
+Invalid name entry in SELECT list: "%pctgvn#1#a"
+
+Delete '-%pctgvn#1#a'(11)
+Invalid trigger NAME string: "%pctgvn#1#a"
+Invalid name entry in SELECT list: "%pctgvn#1#a"
+
+Select '%pctgvn*'(8)
+;trigger name: %pctgvn (region DEFAULT)  cycle: 22
++^%pctgvn -name=%pctgvn -commands=S -xecute="set x=13"
+;trigger name: %pctgvn#1 (region DEFAULT)  cycle: 22
++^%pctgvn -commands=S -xecute="set x=16"
+;trigger name: %pctgvn#2 (region DEFAULT)  cycle: 22
++^%pctgvn -commands=S -xecute="set x=17"
+;trigger name: %pctgvn#3 (region DEFAULT)  cycle: 22
++^%pctgvn -commands=S -xecute="set x=18"
+
+Delete '-%pctgvn*'(8)
+Deleted trigger named '%pctgvn' for global ^%pctgvn (region DEFAULT)
+Deleted trigger named '%pctgvn#1' for global ^%pctgvn (region DEFAULT)
+Deleted trigger named '%pctgvn#2' for global ^%pctgvn (region DEFAULT)
+Deleted trigger named '%pctgvn#3' for global ^%pctgvn (region DEFAULT)
+All existing triggers named %pctgvn* (count = 4) now deleted
+
+Select '%9lives#*'(9)
+;trigger name: %9lives#1 (region DEFAULT)  cycle: 20
++^%9lives -commands=S -xecute="set x=21"
+;trigger name: %9lives#2 (region DEFAULT)  cycle: 20
++^%9lives -commands=S -xecute="set x=22"
+;trigger name: %9lives#3 (region DEFAULT)  cycle: 20
++^%9lives -commands=S -xecute="set x=23"
+;trigger name: %9lives#4 (region DEFAULT)  cycle: 20
++^%9lives -commands=S -xecute="set x=24"
+
+Delete '-%9lives#*'(9)
+Deleted trigger named '%9lives#1' for global ^%9lives (region DEFAULT)
+Deleted trigger named '%9lives#2' for global ^%9lives (region DEFAULT)
+Deleted trigger named '%9lives#3' for global ^%9lives (region DEFAULT)
+Deleted trigger named '%9lives#4' for global ^%9lives (region DEFAULT)
+All existing triggers named %9lives#* (count = 4) now deleted
+###################################################################
+
+Do a few more selects on ^a and ^yName
+;trigger name: a#1 (region AREG)  cycle: 24
++^a -commands=S -xecute="set x=1"
+;trigger name: a#2 (region AREG)  cycle: 24
++^a -commands=S -xecute="set x=2"
+;trigger name: yName (region AREG)  cycle: 24
++^a -name=yName -commands=S -xecute="set x=3"
+;trigger name: yNamp (region AREG)  cycle: 24
++^a -name=yNamp -commands=S -xecute="set x=10"
+;trigger name: a#3 (region AREG)  cycle: 24
++^a -commands=S -xecute="set x=12"
+###################################################################
+###################################################################
+Testing deletion of multiple user defined names
+
+Select 'y*p'(3)
+Invalid name entry in SELECT list: "y*p"
+
+Delete '-y*p'(3)
+Invalid trigger NAME string: "y*p"
+Invalid name entry in SELECT list: "y*p"
+
+Select 'yName*'(6)
+;trigger name: yName (region AREG)  cycle: 30
++^a -name=yName -commands=S -xecute="set x=3"
+;trigger name: yName2 (region BREG)  cycle: 19
++^b -name=yName2 -commands=S -xecute="set x=6"
+;trigger name: yName#1 (region DEFAULT)  cycle: 15
++^yName -commands=S -xecute="set x=7"
+;trigger name: yName#2 (region DEFAULT)  cycle: 15
++^yName -commands=S -xecute="set x=8"
+
+Delete '-yName*'(6)
+Deleted trigger named 'yName' for global ^a (region AREG)
+Deleted trigger named 'yName2' for global ^b (region BREG)
+Deleted trigger named 'yName#1' for global ^yName (region DEFAULT)
+Deleted trigger named 'yName#2' for global ^yName (region DEFAULT)
+All existing triggers named yName* (count = 4) now deleted
+
+Select 'a*'(2)
+;trigger name: a#1 (region AREG)  cycle: 31
++^a -commands=S -xecute="set x=1"
+;trigger name: a#2 (region AREG)  cycle: 31
++^a -commands=S -xecute="set x=2"
+;trigger name: a#3 (region AREG)  cycle: 31
++^a -commands=S -xecute="set x=12"
+;trigger name: auto#1 (region AREG)  cycle: 26
++^auto -commands=ZTR -xecute="set x=1"
+;trigger name: auto#2 (region AREG)  cycle: 26
++^auto -commands=ZTR -xecute="set x=2"
+;trigger name: auto#3 (region AREG)  cycle: 26
++^auto -commands=ZTR -xecute="set x=3"
+;trigger name: auto#4 (region AREG)  cycle: 26
++^auto -commands=ZTR -xecute="set x=4"
+
+Delete '-a*'(2)
+Deleted trigger named 'a#1' for global ^a (region AREG)
+Deleted trigger named 'a#2' for global ^a (region AREG)
+Deleted trigger named 'a#3' for global ^a (region AREG)
+Deleted trigger named 'auto#1' for global ^auto (region AREG)
+Deleted trigger named 'auto#2' for global ^auto (region AREG)
+Deleted trigger named 'auto#3' for global ^auto (region AREG)
+Deleted trigger named 'auto#4' for global ^auto (region AREG)
+All existing triggers named a* (count = 7) now deleted
+
+Select 'b#*'(3)
+;trigger name: b#1 (region BREG)  cycle: 20
++^b -commands=S -xecute="set x=4"
+;trigger name: b#2 (region BREG)  cycle: 20
++^b -commands=S -xecute="set x=5"
+
+Delete '-b#*'(3)
+Deleted trigger named 'b#1' for global ^b (region BREG)
+Deleted trigger named 'b#2' for global ^b (region BREG)
+All existing triggers named b#* (count = 2) now deleted
+
+Select '%*'(2)
+;trigger name: % (region DEFAULT)  cycle: 9
++^pct -name=% -commands=S -xecute="set x=25"
+;trigger name: %9lives#1 (region DEFAULT)  cycle: 28
++^%9lives -commands=S -xecute="set x=21"
+;trigger name: %9lives#2 (region DEFAULT)  cycle: 28
++^%9lives -commands=S -xecute="set x=22"
+;trigger name: %9lives#3 (region DEFAULT)  cycle: 28
++^%9lives -commands=S -xecute="set x=23"
+;trigger name: %9lives#4 (region DEFAULT)  cycle: 28
++^%9lives -commands=S -xecute="set x=24"
+;trigger name: %pct#1 (region DEFAULT)  cycle: 26
++^%pct -commands=S -xecute="set x=14"
+;trigger name: %pct#2 (region DEFAULT)  cycle: 26
++^%pct -commands=S -xecute="set x=15"
+;trigger name: %pct#3 (region DEFAULT)  cycle: 26
++^%pct -commands=S -xecute="set x=19"
+;trigger name: %pct#4 (region DEFAULT)  cycle: 26
++^%pct -commands=S -xecute="set x=20"
+;trigger name: %pctgvn (region DEFAULT)  cycle: 30
++^%pctgvn -name=%pctgvn -commands=S -xecute="set x=13"
+;trigger name: %pctgvn#1 (region DEFAULT)  cycle: 30
++^%pctgvn -commands=S -xecute="set x=16"
+;trigger name: %pctgvn#2 (region DEFAULT)  cycle: 30
++^%pctgvn -commands=S -xecute="set x=17"
+;trigger name: %pctgvn#3 (region DEFAULT)  cycle: 30
++^%pctgvn -commands=S -xecute="set x=18"
+
+Delete '-%*'(2)
+Deleted trigger named '%' for global ^pct (region DEFAULT)
+Deleted trigger named '%9lives#1' for global ^%9lives (region DEFAULT)
+Deleted trigger named '%9lives#2' for global ^%9lives (region DEFAULT)
+Deleted trigger named '%9lives#3' for global ^%9lives (region DEFAULT)
+Deleted trigger named '%9lives#4' for global ^%9lives (region DEFAULT)
+Deleted trigger named '%pct#1' for global ^%pct (region DEFAULT)
+Deleted trigger named '%pct#2' for global ^%pct (region DEFAULT)
+Deleted trigger named '%pct#3' for global ^%pct (region DEFAULT)
+Deleted trigger named '%pct#4' for global ^%pct (region DEFAULT)
+Deleted trigger named '%pctgvn' for global ^%pctgvn (region DEFAULT)
+Deleted trigger named '%pctgvn#1' for global ^%pctgvn (region DEFAULT)
+Deleted trigger named '%pctgvn#2' for global ^%pctgvn (region DEFAULT)
+Deleted trigger named '%pctgvn#3' for global ^%pctgvn (region DEFAULT)
+All existing triggers named %* (count = 13) now deleted
+###################################################################
+###################################################################
+
+Do a complete select, we should only see yNamp
+;trigger name: yNamp (region AREG)  cycle: 34
++^a -name=yNamp -commands=S -xecute="set x=10"
+;trigger name: yNamp#1 (region DEFAULT)  cycle: 9
++^yNamp -commands=S -xecute="set x=9"
+###################################################################
+###################################################################
+Install some long named, > 21 char, triggers
+Delete long generated and user defined names
+;trigger name: aaaaaaaaaaaaaaaaaaaab#1 (region AREG)  cycle: 1
++^aaaaaaaaaaaaaaaaaaaab -commands=S -xecute="set x=21"
+;trigger name: aaaaaaaaaaaaaaaaaaaab#2 (region AREG)  cycle: 1
++^aaaaaaaaaaaaaaaaaaaabc -commands=S -xecute="set x=22"
+;trigger name: aaaaaaaaaaaaaaaaaaaab#3 (region AREG)  cycle: 1
++^aaaaaaaaaaaaaaaaaaaabcd -commands=S -xecute="set x=23"
+;trigger name: aaaaaaaaaaaaaaaaaaaab#4 (region AREG)  cycle: 1
++^aaaaaaaaaaaaaaaaaaaabcde -commands=S -xecute="set x=24"
+;trigger name: %aaaaaaaaaaaaaaaaaaab#1 (region DEFAULT)  cycle: 1
++^%aaaaaaaaaaaaaaaaaaab -commands=S -xecute="set y=21"
+;trigger name: %aaaaaaaaaaaaaaaaaaab#2 (region DEFAULT)  cycle: 1
++^%aaaaaaaaaaaaaaaaaaabc -commands=S -xecute="set y=22"
+;trigger name: %aaaaaaaaaaaaaaaaaaab#3 (region DEFAULT)  cycle: 1
++^%aaaaaaaaaaaaaaaaaaabcd -commands=S -xecute="set y=23"
+;trigger name: %aaaaaaaaaaaaaaaaaaab#4 (region DEFAULT)  cycle: 1
++^%aaaaaaaaaaaaaaaaaaabcde -commands=S -xecute="set y=24"
+;trigger name: aaaaaaaaaaaaaaaaaaaab (region DEFAULT)  cycle: 2
++^z -name=aaaaaaaaaaaaaaaaaaaab -commands=S -xecute="set x=21"
+;trigger name: %aaaaaaaaaaaaaaaaaaab (region DEFAULT)  cycle: 2
++^z -name=%aaaaaaaaaaaaaaaaaaab -commands=S -xecute="set y=21"
+
+Select 'aaaaaaaaaaaaaaaaaaaabcd#'(24)
+
+Delete '-aaaaaaaaaaaaaaaaaaaabcd#'(24)
+Trigger named aaaaaaaaaaaaaaaaaaaabcd# does not exist
+
+Select 'aaaaaaaaaaaaaaaaaaaabc#'(23)
+
+Delete '-aaaaaaaaaaaaaaaaaaaabc#'(23)
+Trigger named aaaaaaaaaaaaaaaaaaaabc# does not exist
+
+Select 'aaaaaaaaaaaaaaaaaaaab#'(22)
+;trigger name: aaaaaaaaaaaaaaaaaaaab (region DEFAULT)  cycle: 2
++^z -name=aaaaaaaaaaaaaaaaaaaab -commands=S -xecute="set x=21"
+
+Delete '-aaaaaaaaaaaaaaaaaaaab#'(22)
+Deleted trigger named 'aaaaaaaaaaaaaaaaaaaab' for global ^z (region DEFAULT)
+
+Select 'aaaaaaaaaaaaaaaaaaaabcd#*'(25)
+Invalid name entry in SELECT list: "aaaaaaaaaaaaaaaaaaaabcd#*"
+
+Delete '-aaaaaaaaaaaaaaaaaaaabcd#*'(25)
+Invalid trigger NAME string: "aaaaaaaaaaaaaaaaaaaabcd#*"
+Invalid name entry in SELECT list: "aaaaaaaaaaaaaaaaaaaabcd#*"
+
+Select 'aaaaaaaaaaaaaaaaaaaabc#*'(24)
+Invalid name entry in SELECT list: "aaaaaaaaaaaaaaaaaaaabc#*"
+
+Delete '-aaaaaaaaaaaaaaaaaaaabc#*'(24)
+Invalid trigger NAME string: "aaaaaaaaaaaaaaaaaaaabc#*"
+Invalid name entry in SELECT list: "aaaaaaaaaaaaaaaaaaaabc#*"
+
+Select 'aaaaaaaaaaaaaaaaaaaab#1234567#'(30)
+Invalid name entry in SELECT list: "aaaaaaaaaaaaaaaaaaaab#1234567#"
+
+Delete '-aaaaaaaaaaaaaaaaaaaab#1234567#'(30)
+Invalid trigger NAME string: "aaaaaaaaaaaaaaaaaaaab#1234567#"
+Invalid name entry in SELECT list: "aaaaaaaaaaaaaaaaaaaab#1234567#"
+
+Select 'aaaaaaaaaaaaaaaaaaaab#1234567'(29)
+Invalid name entry in SELECT list: "aaaaaaaaaaaaaaaaaaaab#1234567"
+
+Delete '-aaaaaaaaaaaaaaaaaaaab#1234567'(29)
+Invalid trigger NAME string: "aaaaaaaaaaaaaaaaaaaab#1234567"
+Invalid name entry in SELECT list: "aaaaaaaaaaaaaaaaaaaab#1234567"
+
+Select 'aaaaaaaaaaaaaaaaaaaab#3'(23)
+;trigger name: aaaaaaaaaaaaaaaaaaaab#3 (region AREG)  cycle: 1
++^aaaaaaaaaaaaaaaaaaaabcd -commands=S -xecute="set x=23"
+
+Delete '-aaaaaaaaaaaaaaaaaaaab#3'(23)
+Deleted trigger named 'aaaaaaaaaaaaaaaaaaaab#3' for global ^aaaaaaaaaaaaaaaaaaaabcd (region AREG)
+
+Select 'aaaaaaaaaaaaaaaaaaaab#*'(23)
+;trigger name: aaaaaaaaaaaaaaaaaaaab#1 (region AREG)  cycle: 1
++^aaaaaaaaaaaaaaaaaaaab -commands=S -xecute="set x=21"
+;trigger name: aaaaaaaaaaaaaaaaaaaab#2 (region AREG)  cycle: 1
++^aaaaaaaaaaaaaaaaaaaabc -commands=S -xecute="set x=22"
+;trigger name: aaaaaaaaaaaaaaaaaaaab#4 (region AREG)  cycle: 1
++^aaaaaaaaaaaaaaaaaaaabcde -commands=S -xecute="set x=24"
+
+Delete '-aaaaaaaaaaaaaaaaaaaab#*'(23)
+Deleted trigger named 'aaaaaaaaaaaaaaaaaaaab#1' for global ^aaaaaaaaaaaaaaaaaaaab (region AREG)
+Deleted trigger named 'aaaaaaaaaaaaaaaaaaaab#2' for global ^aaaaaaaaaaaaaaaaaaaabc (region AREG)
+Deleted trigger named 'aaaaaaaaaaaaaaaaaaaab#4' for global ^aaaaaaaaaaaaaaaaaaaabcde (region AREG)
+All existing triggers named aaaaaaaaaaaaaaaaaaaab#* (count = 3) now deleted
+
+Select '%aaaaaaaaaaaaaaaaaaab*'(22)
+;trigger name: %aaaaaaaaaaaaaaaaaaab (region DEFAULT)  cycle: 3
++^z -name=%aaaaaaaaaaaaaaaaaaab -commands=S -xecute="set y=21"
+;trigger name: %aaaaaaaaaaaaaaaaaaab#1 (region DEFAULT)  cycle: 1
++^%aaaaaaaaaaaaaaaaaaab -commands=S -xecute="set y=21"
+;trigger name: %aaaaaaaaaaaaaaaaaaab#2 (region DEFAULT)  cycle: 1
++^%aaaaaaaaaaaaaaaaaaabc -commands=S -xecute="set y=22"
+;trigger name: %aaaaaaaaaaaaaaaaaaab#3 (region DEFAULT)  cycle: 1
++^%aaaaaaaaaaaaaaaaaaabcd -commands=S -xecute="set y=23"
+;trigger name: %aaaaaaaaaaaaaaaaaaab#4 (region DEFAULT)  cycle: 1
++^%aaaaaaaaaaaaaaaaaaabcde -commands=S -xecute="set y=24"
+
+Delete '-%aaaaaaaaaaaaaaaaaaab*'(22)
+Deleted trigger named '%aaaaaaaaaaaaaaaaaaab' for global ^z (region DEFAULT)
+Deleted trigger named '%aaaaaaaaaaaaaaaaaaab#1' for global ^%aaaaaaaaaaaaaaaaaaab (region DEFAULT)
+Deleted trigger named '%aaaaaaaaaaaaaaaaaaab#2' for global ^%aaaaaaaaaaaaaaaaaaabc (region DEFAULT)
+Deleted trigger named '%aaaaaaaaaaaaaaaaaaab#3' for global ^%aaaaaaaaaaaaaaaaaaabcd (region DEFAULT)
+Deleted trigger named '%aaaaaaaaaaaaaaaaaaab#4' for global ^%aaaaaaaaaaaaaaaaaaabcde (region DEFAULT)
+All existing triggers named %aaaaaaaaaaaaaaaaaaab* (count = 5) now deleted
+###################################################################
+
+Do a complete select
+###################################################################
+Delete long GVNs with short names
+;trigger name: x21 (region AREG)  cycle: 3
++^aaaaaaaaaaaaaaaaaaaab -name=x21 -commands=S -xecute="set x=211"
+;trigger name: x22 (region AREG)  cycle: 3
++^aaaaaaaaaaaaaaaaaaaabc -name=x22 -commands=S -xecute="set x=222"
+;trigger name: x23 (region AREG)  cycle: 3
++^aaaaaaaaaaaaaaaaaaaabcd -name=x23 -commands=S -xecute="set x=233"
+
+Select 'aaaaaaaaaaaaaaaaaaaabc123456789'(31)
+Invalid name entry in SELECT list: "aaaaaaaaaaaaaaaaaaaabc123456789"
+
+Delete '-aaaaaaaaaaaaaaaaaaaabc123456789'(31)
+Invalid trigger NAME string: "aaaaaaaaaaaaaaaaaaaabc123456789"
+Invalid name entry in SELECT list: "aaaaaaaaaaaaaaaaaaaabc123456789"
+
+Select 'aaaaaaaaaaaaaaaaaaaabc12345678'(30)
+Invalid name entry in SELECT list: "aaaaaaaaaaaaaaaaaaaabc12345678"
+
+Delete '-aaaaaaaaaaaaaaaaaaaabc12345678'(30)
+Invalid trigger NAME string: "aaaaaaaaaaaaaaaaaaaabc12345678"
+Invalid name entry in SELECT list: "aaaaaaaaaaaaaaaaaaaabc12345678"
+
+Select 'aaaaaaaaaaaaaaaaaaaabc1234567'(29)
+Invalid name entry in SELECT list: "aaaaaaaaaaaaaaaaaaaabc1234567"
+
+Delete '-aaaaaaaaaaaaaaaaaaaabc1234567'(29)
+Invalid trigger NAME string: "aaaaaaaaaaaaaaaaaaaabc1234567"
+Invalid name entry in SELECT list: "aaaaaaaaaaaaaaaaaaaabc1234567"
+
+Select 'aaaaaaaaaaaaaaaaaaaabc123456'(28)
+
+Delete '-aaaaaaaaaaaaaaaaaaaabc123456'(28)
+Trigger named aaaaaaaaaaaaaaaaaaaabc123456 does not exist
+
+Select 'aaaaaaaaaaaaaaaaaaaabcd#'(24)
+
+Delete '-aaaaaaaaaaaaaaaaaaaabcd#'(24)
+Trigger named aaaaaaaaaaaaaaaaaaaabcd# does not exist
+
+Select 'aaaaaaaaaaaaaaaaaaaabcd*'(24)
+
+Delete '-aaaaaaaaaaaaaaaaaaaabcd*'(24)
+No matching triggers of the form aaaaaaaaaaaaaaaaaaaabcd* found for deletion
+
+Select 'aaaaaaaaaaaaaaaaaaaabc'(22)
+
+Delete '-aaaaaaaaaaaaaaaaaaaabc'(22)
+Trigger named aaaaaaaaaaaaaaaaaaaabc does not exist
+
+Select 'aaaaaaaaaaaaaaaaaaaabcd#'(24)
+
+Delete '-aaaaaaaaaaaaaaaaaaaabcd#'(24)
+Trigger named aaaaaaaaaaaaaaaaaaaabcd# does not exist
+
+Select 'aaaaaaaaaaaaaaaaaaaabcd*'(24)
+
+Delete '-aaaaaaaaaaaaaaaaaaaabcd*'(24)
+No matching triggers of the form aaaaaaaaaaaaaaaaaaaabcd* found for deletion
+
+Select 'x#*'(3)
+
+Delete '-x#*'(3)
+No matching triggers of the form x#* found for deletion
+
+Select 'x2*'(3)
+;trigger name: x21 (region AREG)  cycle: 3
++^aaaaaaaaaaaaaaaaaaaab -name=x21 -commands=S -xecute="set x=211"
+;trigger name: x22 (region AREG)  cycle: 3
++^aaaaaaaaaaaaaaaaaaaabc -name=x22 -commands=S -xecute="set x=222"
+;trigger name: x23 (region AREG)  cycle: 3
++^aaaaaaaaaaaaaaaaaaaabcd -name=x23 -commands=S -xecute="set x=233"
+
+Delete '-x2*'(3)
+Deleted trigger named 'x21' for global ^aaaaaaaaaaaaaaaaaaaab (region AREG)
+Deleted trigger named 'x22' for global ^aaaaaaaaaaaaaaaaaaaabc (region AREG)
+Deleted trigger named 'x23' for global ^aaaaaaaaaaaaaaaaaaaabcd (region AREG)
+All existing triggers named x2* (count = 3) now deleted
+###################################################################
+
+Do a complete select. We expected everything was deleted!
+###################################################################
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Test triggers for > 21 character global names go to respective mapped regions
+# and can coexist with conflicting auto-generated names in same gld.
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/c.dat
+Created file ##TEST_PATH##/mumps.dat
+;trigger name: a23456789012345678901#1 (region AREG)  cycle: 1
++^a23456789012345678901a -commands=S -xecute="do ^twork(1)"
+;trigger name: a23456789012345678901#2 (region AREG)  cycle: 1
++^a23456789012345678901e -commands=S -xecute="do ^twork(1)"
+;trigger name: a23456789012345678901#1 (region BREG)  cycle: 1
++^a23456789012345678901b -commands=S -xecute="do ^twork(1)"
+;trigger name: a23456789012345678901#1 (region CREG)  cycle: 1
++^a23456789012345678901c -commands=S -xecute="do ^twork(1)"
+;trigger name: a23456789012345678901#2 (region CREG)  cycle: 1
++^a23456789012345678901f -commands=S -xecute="do ^twork(1)"
+;trigger name: a23456789012345678901#1 (region DEFAULT)  cycle: 1
++^a23456789012345678901d -commands=S -xecute="do ^twork(1)"
+1
+Deleted trigger named 'a23456789012345678901#2' for global ^a23456789012345678901e (region AREG)
+Deleted trigger named 'a23456789012345678901#2' for global ^a23456789012345678901f (region CREG)
+1
+;trigger name: a23456789012345678901#1 (region AREG)  cycle: 1
++^a23456789012345678901a -commands=S -xecute="do ^twork(1)"
+;trigger name: a23456789012345678901#1 (region BREG)  cycle: 1
++^a23456789012345678901b -commands=S -xecute="do ^twork(1)"
+;trigger name: a23456789012345678901#1 (region CREG)  cycle: 1
++^a23456789012345678901c -commands=S -xecute="do ^twork(1)"
+;trigger name: a23456789012345678901#1 (region DEFAULT)  cycle: 1
++^a23456789012345678901d -commands=S -xecute="do ^twork(1)"
+1
+1
+Deleted trigger named 'a23456789012345678901#1' for global ^a23456789012345678901a (region AREG)
+Deleted trigger named 'a23456789012345678901#1' for global ^a23456789012345678901b (region BREG)
+Deleted trigger named 'a23456789012345678901#1' for global ^a23456789012345678901c (region CREG)
+Deleted trigger named 'a23456789012345678901#1' for global ^a23456789012345678901d (region DEFAULT)
+1
+1
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

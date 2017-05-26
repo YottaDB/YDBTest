@@ -1,0 +1,145 @@
+###################################################################
+setenv gtmgbldir mumps1.gld
+unset echo
+setenv gtm_chset M
+unset echo
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps1.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/gdeinput.gdecmd
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps1.gld
+setenv gtm_chset UTF-8
+unset echo
+Created file ##TEST_PATH##/ｍｕｍｐｓ.dat
+###################################################################
+setenv gtmgbldir mumps2.gld
+unset echo
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps2.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/gdeinput.gdecmd
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps2.gld
+                                                                  FILE = ｍｕｍｐｓ.dat
+                                                                  FILE = ｍｕｍｐｓ.dat
+Created file ##TEST_PATH##/ｍｕｍｐｓ.dat
+###################################################################
+setenv gtmgbldir mumps3.gld
+unset echo
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps3.gld
+
+GDE> 
+GDE> 
+%GDE-X-NONASCII, aａ* is illegal for a name as it contains non-ASCII characters
+
+GDE> 
+%GDE-X-NONASCII, BｒEG is illegal for a region as it contains non-ASCII characters
+
+GDE> 
+%GDE-X-NONASCII, AｓEG is illegal for a segment as it contains non-ASCII characters
+
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps3.gld
+###################################################################
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps3.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ a*                                 AREG
+
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ ASEG                            ｍｕｍｐｓ3.dat     BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+##SUSPEND_OUTPUT  ENCRYPT
+                                                                                    ENCR=OFF
+##ALLOW_OUTPUT  ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+                                                                                    ENCR=ON
+##ALLOW_OUTPUT   NON_ENCRYPT
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               a                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ a                               b                                REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = ｍｕｍｐｓ3.dat
+ b                               ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps3.gld

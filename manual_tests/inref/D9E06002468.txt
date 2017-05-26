@@ -1,0 +1,88 @@
+D9E06-002468 Source server JNLFILOPN and GTMASSERT error at ING UK
+==================================================================
+
+About D9E06-002468 (from TR)
+-----------------------------
+Sample extract from source server log
+%GTM-E-JNLFILOPN, Error opening journal file for database file ACN
+%SYSTEM-E-UNKNOWN, Unknown system error 0
+
+Source server should report unexpected broken links (in function gtmsource_readfiles.c:open_newer_jnl(), while following links from
+latest gener back to the last open gener, the source server must not encounter NULL links. If it does, report an error). More
+specifically, in the loop "for (do_jnl_ensure_open = TRUE; ; do_jnl_ensure_open = FALSE)", if either jnl_fn_len is 0 or jnl_fn is
+"", report a broken link error. We expect the only exit point from the loop to be the "break" following
+"if (is_gdid_file_identical".
+
+How to test
+-----------
+We have to ensure that the source server has to switch to reading from newer generation journal files.
+
+Step 1:
+Start replication primary only
+
+Step 2:
+Run enough updates on primary to overflow journal pool
+
+Step 3:
+Start replication secondary
+
+Step 4:
+Before the primary source server transmits enough to read from jnlpool, switch journal files using the -noprevjnl qualifier.
+
+Step 5:
+Run enough updates on primary to ensure that the source has to continue to read from journal files
+
+Eventually, the source server will try to follow the backlinks from newer genration file(s) to currently open file(s). This will
+trigger "Unknown system error" in pre V5, and a more meaningful "NOPREVLINK" error from V5 onwards
+
+To avoid the timing dependency, you can build mupip (specifically, source server) with -DGTMSOURCE_ALWAYS_READ_FILES compiler flag.
+This will force all records to be read from files. While updates are running on primary and source server is transmitting data,
+switch jnlfiles qualifier -noprevjnl. This will trigger the error.
+
+Simpler method to test:
+----------------------
+Build : build pro version with the -DGTMSOURCE_ALWAYS_READ_FILES compiler flag.
+
+Test : (Might need three terminals)
+
+Terminal 1: (Source server)
+1.    setenv gtmgbldir mumps.gld ; gde exit ; mupip create
+2.    setenv gtm_repl_instance mumps.repl
+3.    mupip replic -instance_create -name=INSTANCE1 ; mupip set -replication=on -reg "*"
+4.    mupip replic -source -start -second=localhost:5000 -log=src.log -buff=1 -instsecondary=INSTANCE2
+
+
+Terminal 2 : (Receiver server)
+1.    setenv gtmgbldir mumps.gld ; gde exit ; mupip crea
+2.    setenv gtm_repl_instance mumps.repl
+3.    mupip replic -instance_create -name=INSTANCE2 ; mupip set -replication=on -reg "*"
+4.    mupip replic -source -start -passive -buff=1 -log=passive.log -instsecondary=INSTANCE1
+
+
+Terminal 3: (updates)
+# gtm
+GTM>f i=1:1 q:$d(^stop)  s ^global(i)=i h 0.1
+
+Terminal 2:
+<wait for a few seconds>
+1.    mupip replic -receiv -start -log=recv.log -buff=1 -listen=5000
+<wait for a few seconds>
+2.    mupip replic -recei -shut -time=0
+
+Terminal 1:
+1.    mupip set -jnlfile mumps.mjl -noprevjnlfile -bypass ; mupip set -region "*" -journal=enable,on,before -noprevjnl
+<wait for a few seconds>
+2.    mupip set -jnlfile mumps.mjl -noprevjnlfile -bypass
+
+Terminal 2:
+1.    mupip replic -receiv -start -log=recv.log -buff=1 -listen=5000
+
+
+Terminal 1:
+1.    tail -f src.log
+
+(NOPREVLINK error can be seen)
+
+Now in terminal 1: GTM> set ^stop=1
+    (to stop the updates)
+

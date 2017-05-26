@@ -1,0 +1,16 @@
+set gtm_dist [lrange $argv 0 0]
+spawn $gtm_dist/mupip journal -recover -forward mumps.mjl,copy.mjl -nochecktn
+# Wait 15 second so the process gets running, and to be sure that the prompt won't be reprinted upon EINTR
+expect -timeout 15
+# check that CTRL-D is considered as a NO
+send -- \004
+expect -timeout 30
+wait
+spawn $gtm_dist/mupip journal -recover -forward mumps.mjl,copy.mjl -nochecktn
+expect -timeout 10
+# check that pressing ENTER get the prompt reprinted
+send -- "\r"
+expect -timeout 5
+send -- "N\r"
+expect -timeout 30
+wait

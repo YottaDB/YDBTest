@@ -1,0 +1,183 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+mupip set -journal=enable,on,before,file=mumps1.mjl -reg "*"
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps1.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+mupip set -journal=enable,on,before,file=mumps2.mjl -reg "*"
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps2.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+mupip set -journal=enable,on,before,file=mumps3.mjl -reg "*"
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps3.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+----------------------------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+mupip journal -recover -forward "*"
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps2.mjl included for database file ##TEST_PATH##/mumps.dat
+%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps1.mjl included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+GTM>
+^x=1,^y=2,^z=3
+
+GTM>
+----------------------------------------------------------------------------
+mupip journal -recover -forward mumps3.mjl,mumps2.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps1.mjl included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+----------------------------------------------------------------------------
+mupip journal -recover -forward mumps3.mjl,mumps1.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-JNLTNOUTOFSEQ, End transaction [0x0000000000000002] of journal ##TEST_PATH##/mumps1.mjl different from Begin transaction [0x0000000000000003] of next generation journal ##TEST_PATH##/mumps3.mjl
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+----------------------------------------------------------------------------
+mupip journal -recover -forward mumps2.mjl,mumps1.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+GTM>
+^x=1,^y=2,^z=
+%GTM-E-GVUNDEF, Global variable undefined: ^z
+
+GTM>
+----------------------------------------------------------------------------
+mupip journal -recover -forward mumps3.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps2.mjl included for database file ##TEST_PATH##/mumps.dat
+%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps1.mjl included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+GTM>
+^x=1,^y=2,^z=3
+
+GTM>
+----------------------------------------------------------------------------
+mupip journal -recover -forward -nochain mumps3.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##/mumps3.mjl has beginning transaction number [0x0000000000000003], but database ##TEST_PATH##/mumps.dat has current transaction number [0x0000000000000001] and journal end transaction number [0x0000000000000001]
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+----------------------------------------------------------------------------
+mupip journal -recover -forward -chain mumps2.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps1.mjl included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+GTM>
+^x=1
+
+GTM>
+^y=2
+
+GTM>
+^z=
+%GTM-E-GVUNDEF, Global variable undefined: ^z
+
+GTM>
+----------------------------------------------------------------------------
+mupip journal -recover -forward -nochain -nochecktn mumps3.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+GTM>
+^z=3
+
+GTM>
+^x=
+%GTM-E-GVUNDEF, Global variable undefined: ^x
+
+GTM>
+^y=
+%GTM-E-GVUNDEF, Global variable undefined: ^y
+
+GTM>
+----------------------------------------------------------------------------
+mupip journal -recover -forward -chain mumps3.mjl,mumps1.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-JNLTNOUTOFSEQ, End transaction [0x0000000000000002] of journal ##TEST_PATH##/mumps1.mjl different from Begin transaction [0x0000000000000003] of next generation journal ##TEST_PATH##/mumps3.mjl
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+----------------------------------------------------------------------------
+mupip journal -recover -forward -chain -nochecktn mumps3.mjl,mumps1.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+GTM>
+^x=1
+
+GTM>
+^z=3
+
+GTM>
+^y=
+%GTM-E-GVUNDEF, Global variable undefined: ^y
+
+GTM>
+----------------------------------------------------------------------------
+Mutiple generation journal file cannot be specified with backward recovery
+ mupip journal -recover -backward mumps3.mjl,mumps2.mjl,mumps1.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps2.mjl does not match the current journal file ##TEST_PATH##/mumps3.mjl of database file ##TEST_PATH##/mumps.dat
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+End of test
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

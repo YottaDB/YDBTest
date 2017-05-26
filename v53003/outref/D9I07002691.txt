@@ -1,0 +1,55 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# load some interesting values and save them in zwr format
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+Global Output Utility
+
+Global ^
+^a        
+Current total of 1 global.
+
+Global ^
+
+Header Label: 
+
+Output Format: GO or ZWR: 
+
+Output device: <terminal>: 
+
+
+^a        
+
+Total of 4 nodes in 1 global.
+
+
+GTM>
+# mess up the last record to test that load detects the error
+# Run the MUPIP LOAD
+##TEST_AWKD9I07002691.*
+##TEST_AWK.*
+Beginning LOAD at record number: 3
+
+Format error in record number: 6
+With content:
+1.1.1
+LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 6  Max Data Len: 2
+Last LOAD record number: 8
+
+%GTM-E-LOADFILERR, Error with load file 
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+End of D9I07002691 test...

@@ -1,0 +1,65 @@
+Testing plugin Error messages with  Mupip create functionality
+# Enable WHITE BOX TESTING
+#########TEST CONDITION:ALL TRUE###########
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+create.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+create.dat
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/create.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/temp.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/create.gld
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/y.dat
+Created file ##TEST_PATH##/create.dat
+Created file ##TEST_PATH##/z.dat
+Created file ##TEST_PATH##/b.dat
+#########TEST CONDITION:BAD PASSPHRASE###########
+##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. .*
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+Created file ##TEST_PATH##/y.dat
+##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. .*
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+Created file ##TEST_PATH##/z.dat
+##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. .*
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+#########TEST CONDITION:gtm_passwd unset#########
+%GTM-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file a.dat. Environment variable gtm_passwd not set
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%GTM-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file b.dat. Environment variable gtm_passwd not set
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%GTM-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file create.dat. Environment variable gtm_passwd not set
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+Created file ##TEST_PATH##/y.dat
+Created file ##TEST_PATH##/z.dat
+#########TEST CONDITION:gtm_passwd restored to the true value########
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/create.dat
+Created file ##TEST_PATH##/y.dat
+Created file ##TEST_PATH##/z.dat
+HASH DUMP ON ENCRYPTED DATABASE
+  DB encryption hash cutoff              -1
+  DB encr hash2 start TN 0x0000000000000000
+##TEST_AWK  Database file encryption hash           [A-Z|0-9]*
+##TEST_AWK  Database file encryption hash2          [A-Z|0-9]*
+HASH DUMP ON NONENCRYPTED DATABASE
+  DB encryption hash cutoff              -1
+  DB encr hash2 start TN 0x0000000000000000
+  Database file encryption hash           00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  Database file encryption hash2          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

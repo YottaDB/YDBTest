@@ -1,0 +1,60 @@
+V4SVQ6 ;IW-KO-YS-TS,V4SVQ,MVTS V9.10;15/6/96;PART-94
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+ W !!,"74---V4SVQ6:  Special variable $QUIT  -6-"
+ ;
+ W !!,"extrinsic function",!
+ ;
+1 S ^ABSN="40539",^ITEM="IV-539  DO"
+ S ^NEXT="2^V4SVQ6,V4MERGE^VV4" D ^V4PRESET K
+ S ^VCOMP=$$EFDO("a")
+ S ^VCORR="a101" D ^VEXAMINE
+ ;
+2 S ^ABSN="40540",^ITEM="IV-540  argumentless DO"
+ S ^NEXT="3^V4SVQ6,V4MERGE^VV4" D ^V4PRESET K
+ S ^VCOMP=$$EFALDO("B")
+ S ^VCORR="B101" D ^VEXAMINE
+ ;
+3 S ^ABSN="40541",^ITEM="IV-541  DO with parameters"
+ S ^NEXT="4^V4SVQ6,V4MERGE^VV4" D ^V4PRESET K
+ S ^VCOMP=$$EFDOWP^V4SVQE("C")
+ S ^VCORR="C101" D ^VEXAMINE
+ ;
+4 S ^ABSN="40542",^ITEM="IV-542  FOR scope"
+ S ^NEXT="5^V4SVQ6,V4MERGE^VV4" D ^V4PRESET K
+ S ^VCOMP=$$EFFOR("D")
+ S ^VCORR="D1001" D ^VEXAMINE
+ ;
+5 S ^ABSN="40543",^ITEM="IV-543  GOTO"
+ S ^NEXT="6^V4SVQ6,V4MERGE^VV4" D ^V4PRESET K
+ ;(test fixed in V9.02;7/10/95)
+ S ^VCOMP=$$EFGO("E")
+ S ^VCORR="E11" D ^VEXAMINE
+ ;
+6 S ^ABSN="40544",^ITEM="IV-544  return by eor"
+ S ^NEXT="V4MERGE^VV4" D ^V4PRESET K
+ S ^VCOMP=$$EFEOR("F")
+ S ^VCORR="F101" D ^VEXAMINE
+ ;
+END W !!,"End of 74 --- V4SVQ6",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q
+EFDO(X) S X=X_$q DO AAA S X=X_$q Q X
+AAA S X=X_$q Q
+ ;
+EFGO(X) S X=X_$q G DD S X=X_$q Q X
+ S X=89 Q X
+DD S X=X_$q Q X
+ ;
+EFFOR(X) S X=X_$q F N=1:1:2 DO A
+ S X=X_$q Q X
+A S X=X_$q Q
+ ;
+EFALDO(X) S X=X_$q DO  S X=X_$q Q X
+ . S X=X_$q
+ Q
+ ;
+EFEOR(X) S X=X_$q DO  S X=X_$Q Q X
+ . S X=X_$q

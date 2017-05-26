@@ -1,0 +1,36 @@
+REORG test Starts...
+##SUSPEND_OUTPUT REPLIC
+PASS from coalsce
+PASS from star_rec
+PASS from reorg_stat
+PASS from hightree
+PASS from restrict_region
+##SUSPEND_OUTPUT  L
+PASS from collation
+##SUSPEND_OUTPUT MM
+##ALLOW_OUTPUT  L
+PASS from truncate_simple
+PASS from truncate
+##SUSPEND_OUTPUT PRO
+PASS from truncate_crash
+##ALLOW_OUTPUT PRO
+##SUSPEND_OUTPUT HOST_HP-UX_PA_RISC
+PASS from truncate_hasht
+##ALLOW_OUTPUT HOST_HP-UX_PA_RISC
+##SUSPEND_OUTPUT  L
+PASS from on_tp_jnl_multi_reorg
+##ALLOW_OUTPUT MM
+PASS from on_ntp_njnl_reorg
+##SUSPEND_OUTPUT MM
+PASS from gtm7519
+##ALLOW_OUTPUT MM
+PASS from gtm7688
+PASS from gtm7430
+##SUSPEND_OUTPUT NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+##SUSPEND_OUTPUT MM
+PASS from on_tp_jnl_multi_reorg
+##ALLOW_OUTPUT MM
+PASS from on_ntp_njnl_reorg
+##ALLOW_OUTPUT  L  NON_REPLIC
+REORG test DONE.

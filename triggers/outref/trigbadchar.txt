@@ -1,0 +1,321 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+###################################################################
+Testing bad characters in the Global Variable Name
+
+Use unicode in the GVN
+Error : Invalid global name:
+"^a१ -commands=SET -xecute=""do mrtn^trigbadchar"" -name=badchargvn"
+                                                               PASS
+
+Use high 127 character in the GVN
+Error : Invalid global name:
+"^a"_$ZCH(224)_" -commands=SET -xecute=""do mrtn^trigbadchar"" -name=badcharbytegvn"
+                                                               PASS
+Error : Invalid global name:
+"^a"_$ZCH(224)_"z -commands=SET -xecute=""do mrtn^trigbadchar"" -name=badcharbytegvn"
+                                                               PASS
+
+Use high 127 character in the GVN subscript
+Added SET trigger on ^a named badcharsubscript
+                                                               PASS
+
+Use high 127 character without quotes in the GVN subscript
+Invalid character $ZCH(224) in subscript
+"^a("_$ZCH(224,165)_") -commands=SET -xecute=""do mrtn^trigbadchar"" -name=badcharnakedsubscript"
+                                                               PASS
+
+SELECT with unicode in the GVN
+Invalid global variable name in SELECT list: "^a३"
+                                                               PASS
+
+SELECT with a high 127 character in the GVN
+Invalid global variable name in SELECT list: "^a"_$ZCH(224)
+                                                               PASS
+Invalid global variable name in SELECT list: "^a"_$ZCH(224)_"z"
+                                                               PASS
+###################################################################
+###################################################################
+Testing bad characters in the Trigger Name
+
+Use unicode in the trigger name
+Trigger name has non-alphanumeric character
+Error : Parsing NAME string: "badtrignamefail१bbb"
+                                                               PASS
+
+Use high 127 character in the trigger name
+Added SET trigger on ^a named badtrignamepassccc
+                                                               PASS
+Add another trigger to use in a delete by name
+Added SET trigger on ^a named badtrignamepassddd
+                                                               PASS
+
+SELECT with the bogus name
+Invalid name entry in SELECT list: "badtrignamefail१bbb"
+                                                               PASS
+Invalid name entry in SELECT list: "badtrignamepass"_$ZCH(224,161)_"ccc"
+                                                               PASS
+Invalid name entry in SELECT list: "badtrignamepass"_$ZCH(224,161)_"ddd"
+                                                               PASS
+
+SELECT with an asterix
+;trigger name: badtrignamepassccc (region DEFAULT)  cycle: 3
++^a -name=badtrignamepassccc -commands=S -xecute="do mrtn^trigbadchar set fail=1"
+;trigger name: badtrignamepassddd (region DEFAULT)  cycle: 3
++^a -name=badtrignamepassddd -commands=S -xecute="do mrtn^trigbadchar set fail=2"
+                                                               PASS
+
+Use unicode in the trigger name and try to DELETE
+Trigger name has non-alphanumeric character
+Error : Parsing NAME string: "badtrignamefail१bbb"
+                                                               PASS
+
+Use high 127 character in the trigger name and try to DELETE
+Deleted SET trigger on ^a named badtrignamepassccc
+                                                               PASS
+DELETE trigger by name
+Invalid trigger NAME string: "badtrignamepass"_$ZCH(224,161)_"ddd"
+                                                               PASS
+###################################################################
+###################################################################
+Testing bad characters in the COMMAND
+
+Use unicode in the trigger command
+Error : In parsing input:
+"^a -commands=S,१ -xecute=""set x=1"" -name=badcharcmd1"
+                                                               PASS
+Error : In parsing input:
+"^a -commands=S,१ -xecute=""set x=1"" -name=badcharcmd1"
+                                                               PASS
+Use high 127 character in the trigger command
+Error : In parsing input:
+"^a -commands=S,"_$ZCH(224,161)_" -xecute=""set x=2"" -name=badcharcmd2"
+                                                               PASS
+Error : In parsing input:
+"^a -commands=S,"_$ZCH(224,161)_" -xecute=""set x=2"" -name=badcharcmd2"
+                                                               PASS
+Use unicode in the trigger command
+Even without comma the unicode char is rejected
+Error : In parsing input:
+"^a -commands=S१ -xecute=""set x=3"" -name=badcharcmd3"
+                                                               PASS
+Error : In parsing input:
+"^a -commands=S१ -xecute=""set x=3"" -name=badcharcmd3"
+                                                               PASS
+Use high 127 character in the trigger command
+Without comma the bad char gets silently dropped
+Added SET trigger on ^a named badcharcmd4
+                                                               PASS
+Deleted SET trigger on ^a named badcharcmd4
+                                                               PASS
+###################################################################
+###################################################################
+Testing bad characters in the DELIMITER.
+This always works because the delimiter can contain anything
+In each test, we add and delete the same trigger with the weird delimiter
+
+Use unicode in the DELIM
+Added SET trigger on ^a named badchardelim
+                                                               PASS
+Deleted SET trigger on ^a named badchardelim
+                                                               PASS
+
+Use high 127 character in the DELIM
+Added SET trigger on ^a named badzchardelim
+                                                               PASS
+Deleted SET trigger on ^a named badzchardelim
+                                                               PASS
+
+Use high 127 character in the zDELIM
+Added SET trigger on ^a named badzcharzdelim
+                                                               PASS
+Deleted SET trigger on ^a named badzcharzdelim
+                                                               PASS
+
+Use unicode in the zDELIM
+Added SET trigger on ^a named badcharzdelim
+                                                               PASS
+Deleted SET trigger on ^a named badcharzdelim
+                                                               PASS
+###################################################################
+###################################################################
+Testing bad characters in the XECUTE
+dropping in random bytes into the spec get silently discarded, so these pass
+
+Use unicode in the XECUTE string without quotes
+	 do mrtn^trigbadchar set x=à write x,!
+	                           ^-----
+##TEST_AWK		At column 28, line 1, source module /.*/trgtmp.*
+%GTM-E-EXPR, Expression expected but not found
+Error : Parsing XECUTE string: " do mrtn^trigbadchar set x=à write x,!"
+                                                               PASS
+
+Use high 127 character in the XECUTE string
+In each test, we add and delete the same trigger with the stray bytesAdded SET trigger on ^a named disappearingbadchar1
+                                                               PASS
+Added SET trigger on ^a named disappearingbadchar2
+                                                               PASS
+Deleted SET trigger on ^a named disappearingbadchar2
+                                                               PASS
+Added SET trigger on ^a named disappearingbadchar3
+                                                               PASS
+Deleted SET trigger on ^a named disappearingbadchar3
+                                                               PASS
+Added SET trigger on ^a named disappearingbadchar4
+                                                               PASS
+Deleted SET trigger on ^a named disappearingbadchar4
+                                                               PASS
+
+Use high 127 character in the XECUTE string without quotation marks
+Leave this trigger in to see the trigger hit a badchar during the run time test
+Added SET trigger on ^a named badcharinxecute
+                                                               PASS
+###################################################################
+###################################################################
+Use unicode in the GVN
+Invalid global variable name in SELECT list: "^a१"
+                                                               PASS
+
+Use high 127 character in the GVN
+Invalid global variable name in SELECT list: "^a"_$ZCH(224)
+                                                               PASS
+
+Use unicode in the name
+Invalid name entry in SELECT list: "bad१"
+                                                               PASS
+
+Use high 127 character in the name
+Invalid name entry in SELECT list: "bad"_$ZCH(224)
+                                                               PASS
+
+Output File: 
+Invalid global variable name in SELECT list: "^a१"
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+
+###################################################################
+Output File: 
+;trigger name: badcharsubscript (region DEFAULT)  cycle: 22
++^a($ZCH(224,165)) -name=badcharsubscript -commands=S -xecute="do mrtn^trigbadchar"
+;trigger name: badtrignamepassddd (region DEFAULT)  cycle: 22
++^a -name=badtrignamepassddd -commands=S -xecute="do mrtn^trigbadchar set fail=2"
+;trigger name: disappearingbadchar1 (region DEFAULT)  cycle: 22
++^a -name=disappearingbadchar1 -commands=S -xecute="do mrtn^trigbadchar set x="""" write x,!"
+;trigger name: badcharinxecute (region DEFAULT)  cycle: 22
++^a -name=badcharinxecute -commands=S -xecute="do mrtn^trigbadchar set x=$zchar(224,161) write x,! "
+
+###################################################################
+Output File: 
+Invalid name entry in SELECT list: "bad१"
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+
+###################################################################
+Output File: 
+
+###################################################################
+###################################################################
+###################################################################
+Testing bad characters placed in the CLI options
+dropping in random bytes into the spec get silently discarded, so most pass
+Since the CLI parser should treat badchars the same for each option,
+bad chars are placed right before and after the '-', right before the '=',
+in the middle of the opt and just as a stray character
+
+First test has no bad chars
+Added SET trigger on ^a named badcharcli1
+                                                               PASS
+
+bad char COMMAND - no bad chars
+Added SET trigger on ^a named badcharcli2
+                                                               PASS
+
+bad char XECUTE - bad char in front of '-'
+Error : In parsing input:
+"^a -commands=SET "_$ZCH(224)_"-xecute=""do mrtn^trigbadchar set x=3"" -name=badcharcli3"
+                                                               PASS
+
+bad char NAME - bad char after the '-'
+Added SET trigger on ^a named badcharcli4
+                                                               PASS
+
+bad char DELIM - bad char right before the '='
+Added SET trigger on ^a named badcharcli5
+                                                               PASS
+
+bad char PIECE - bad char in the middle the cli option
+Added SET trigger on ^a named badcharcli6
+                                                               PASS
+
+bad char OPTION - bad char as a stray byte in the cli
+Error : In parsing input:
+"^a -commands=SET -xecute=""do mrtn^trigbadchar set x=7"" -option=i "_$ZCH(224)_" -name=badcharcli7"
+                                                               PASS
+
+###################################################################
+###################################################################
+;trigger name: badcharsubscript (region DEFAULT)  cycle: 27
++^a($ZCH(224,165)) -name=badcharsubscript -commands=S -xecute="do mrtn^trigbadchar"
+;trigger name: badtrignamepassddd (region DEFAULT)  cycle: 27
++^a -name=badtrignamepassddd -commands=S -xecute="do mrtn^trigbadchar set fail=2"
+;trigger name: disappearingbadchar1 (region DEFAULT)  cycle: 27
++^a -name=disappearingbadchar1 -commands=S -xecute="do mrtn^trigbadchar set x="""" write x,!"
+;trigger name: badcharinxecute (region DEFAULT)  cycle: 27
++^a -name=badcharinxecute -commands=S -xecute="do mrtn^trigbadchar set x=$zchar(224,161) write x,! "
+;trigger name: badcharcli1 (region DEFAULT)  cycle: 27
++^a -name=badcharcli1 -commands=S -xecute="do mrtn^trigbadchar set x=1"
+;trigger name: badcharcli2 (region DEFAULT)  cycle: 27
++^a -name=badcharcli2 -commands=S -xecute="do mrtn^trigbadchar set x=2"
+;trigger name: badcharcli4 (region DEFAULT)  cycle: 27
++^a -name=badcharcli4 -commands=S -xecute="do mrtn^trigbadchar set x=4"
+;trigger name: badcharcli5 (region DEFAULT)  cycle: 27
++^a -name=badcharcli5 -commands=S -delim=$C(9) -xecute="do mrtn^trigbadchar set x=5"
+;trigger name: badcharcli6 (region DEFAULT)  cycle: 27
++^a -name=badcharcli6 -commands=S -delim=$C(9) -pieces=1 -xecute="do mrtn^trigbadchar set x=6"
+150381066,+1^badcharinxecute#,%GTM-E-BADCHAR, $ZCHAR(224,161) is not a valid character in the UTF-8 encoding form
+
+^fired("+1^badcharcli1#")="executions=1.$reference=^a"
+^fired("+1^badcharcli2#")="executions=1.$reference=^a"
+^fired("+1^badcharcli4#")="executions=1.$reference=^a"
+^fired("+1^badcharcli5#")="executions=1.$reference=^a"
+^fired("+1^badcharcli6#")="executions=1.$reference=^a"
+^fired("+1^badcharinxecute#")="executions=1.$reference=^a"
+^fired("+1^badtrignamepassddd#")="executions=1.$reference=^a"
+^fired("+1^disappearingbadchar1#")="executions=1.$reference=^a"
+###################################################################
+Run time test
+150381066,+1^badcharinxecute#,%GTM-E-BADCHAR, $ZCHAR(224,161) is not a valid character in the UTF-8 encoding form
+
+^fired("+1^badcharcli1#")="executions=1.$reference=^a"
+^fired("+1^badcharcli2#")="executions=1.$reference=^a"
+^fired("+1^badcharcli4#")="executions=1.$reference=^a"
+^fired("+1^badcharcli5#")="executions=1.$reference=^a"
+^fired("+1^badcharcli6#")="executions=1.$reference=^a"
+^fired("+1^badcharinxecute#")="executions=1.$reference=^a"
+^fired("+1^badtrignamepassddd#")="executions=1.$reference=^a"
+^fired("+1^disappearingbadchar1#")="executions=1.$reference=^a"
+###################################################################
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT NON_REPLIC
+##TEST_AWK##TEST_HOST_SHORT##:##REMOTE_TEST_PATH##/RCVR_[0-9][0-9]_[0-9][0-9]_[0-9][0-9].log.updproc
+150381066,+1^badcharinxecute#,%GTM-E-BADCHAR, $ZCHAR(224,161) is not a valid character in the UTF-8 encoding form
+150381066,+1^badcharinxecute#,%GTM-E-BADCHAR, $ZCHAR(224,161) is not a valid character in the UTF-8 encoding form

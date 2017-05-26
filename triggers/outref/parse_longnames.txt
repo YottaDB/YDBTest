@@ -1,0 +1,51 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+###################################################################
+Exceed the length of the name field
+Added SET trigger on ^a named AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+Trigger name length [29] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAB"
+Trigger name length [100] exceeds maximum supported length of [28]
+Error : Parsing NAME string: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+###################################################################
+Execute every installed trigger
+The trigger AAAAAAAAAAAAAAAAAAAAAAAAAAAA# is doing S
+	$Reference:^a	$Test:1
+	$ZTDAta :0	$ZTVAlue:27
+	$ZTLEvel:1	$ZLevel:6	$TLevel:1
+	twork+7^twork	+1^AAAAAAAAAAAAAAAAAAAAAAAAAAAA#	run+5^validnames	run+3^validnames
+	longnames+19^longnames
+###################################################################
+STAT=longnames+23^longnames,%GTM-E-TRIGNAMENF, Trigger name AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA# not found with the current default global directory
+STAT=longnames+25^longnames,%GTM-E-TRIGNAMENF, Trigger name AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA# not found with the current default global directory
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

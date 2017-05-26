@@ -1,0 +1,154 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+
+Trying the passing commands first
+Use the short form names of each command
+Select
+PASS: ztrigger(S)
+
+Item
+Added SET trigger on ^notp named notp#1
+PASS: ztrigger(I,+^notp -commands=S -xecute="set ztvalue=$ztrigger(""file"",$ztvalue)")
+
+File
+File ztrigger.trg, Line 1: SET trigger on ^notp already present in trigger named notp#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+PASS: ztrigger(F,ztrigger.trg)
+
+Mix the case of the commands
+Select
+;trigger name: notp#1 (region DEFAULT)  cycle: 1
++^notp -commands=S -xecute="set ztvalue=$ztrigger(""file"",$ztvalue)"
+PASS: ztrigger(SelecT)
+
+File
+File ztrigger.trg, Line 1: SET trigger on ^notp already present in trigger named notp#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+PASS: ztrigger(filE,ztrigger.trg)
+
+Item
+SET trigger on ^notp already present in trigger named notp#1 - no action taken
+PASS: ztrigger(iTEM,+^notp -commands=S -xecute="set ztvalue=$ztrigger(""file"",$ztvalue)")
+
+Start with passing in bad files to ztrigger
+Nonexistent file
+Invalid file name: noexist: No such file or directory
+PASS: ztrigger(F,noexist)
+
+No permissions file
+%SYSTEM-E-ENO13, Permission denied
+PASS: ztrigger(F,noperms)
+
+Bad select values
+Invalid name entry in SELECT list: "+^notp -commands=S -xecute=""set ztvalue=$ztrigger(""""file"""""
+Invalid name entry in SELECT list: "$ztvalue)"""
+PASS: ztrigger(select,+^notp -commands=S -xecute="set ztvalue=$ztrigger(""file"",$ztvalue)")
+Invalid name entry in SELECT list: "-*"
+PASS: ztrigger(select,-*)
+Invalid name entry in SELECT list: "- *"
+PASS: ztrigger(select,- *)
+Invalid global variable name in SELECT list: "^^"
+PASS: ztrigger(select,^^)
+;trigger name: notp#1 (region DEFAULT)  cycle: 1
++^notp -commands=S -xecute="set ztvalue=$ztrigger(""file"",$ztvalue)"
+PASS: ztrigger(S)
+
+Using anything other than ITEM/I, FILE/F, SELECT/S as the
+first argument is an invalid action
+
+We are looking to see the ZTRIGINVACT using ztrigger with one arg BADARG
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+
+We are looking to see the ZTRIGINVACT using ztrigger with two args BADARG,BADARG
+	$ZSTATUS=150381762,twoarg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+
+Passing NULL parameters into ztrigger
+	$ZSTATUS=150381762,nullz+2^nullz,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+	$ZSTATUS=150381762,file+2^nullz,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 2 given to $ZTRIGGER()
+	$ZSTATUS=150381762,item+2^nullz,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 2 given to $ZTRIGGER()
+	$ZSTATUS=150381762,select+2^nullz,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 2 given to $ZTRIGGER()
+
+The use of FILE or ITEM without arguments is a valid action
+I
+PASS: ztrigger(I)
+F
+PASS: ztrigger(F)
+file
+PASS: ztrigger(file)
+ITEM
+PASS: ztrigger(ITEM)
+
+###################################################################
+Need to fuzz the command arguments
+Trying :+
+
+We are looking to see the ZTRIGINVACT using ztrigger with one arg +
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+Trying :-
+
+We are looking to see the ZTRIGINVACT using ztrigger with one arg -
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+Trying :-*
+
+We are looking to see the ZTRIGINVACT using ztrigger with one arg -*
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+Trying :*
+
+We are looking to see the ZTRIGINVACT using ztrigger with one arg *
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+Trying :-select
+
+We are looking to see the ZTRIGINVACT using ztrigger with one arg -select
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+"
+
+We are looking to see the ZTRIGINVACT using ztrigger with one arg "
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+""
+
+We are looking to see the ZTRIGINVACT using ztrigger with one arg ""
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+Trying :'
+
+We are looking to see the ZTRIGINVACT using ztrigger with one arg '
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+Trying :''
+
+We are looking to see the ZTRIGINVACT using ztrigger with one arg ''
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+###################################################################
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,41 @@
+setenv gtm_chset UTF-8
+unset echo
+
+GTM>
+do ^basicUnicodeIO
+
+GTM>
+init
+createIOTestFiles
+duplicate
+copyFile(ascii.txt,duplicateascii.txt)
+cmps ascii.txt duplicateascii.txt PASS
+copyFile(extended_ascii.txt,duplicateextended_ascii.txt)
+cmps extended_ascii.txt duplicateextended_ascii.txt PASS
+copyFile(utf8_1B_char.txt,duplicateutf8_1B_char.txt)
+cmps utf8_1B_char.txt duplicateutf8_1B_char.txt PASS
+copyFile(àáâãäåæçèéêëìíîï.txt,duplicateàáâãäåæçèéêëìíîï.txt)
+cmps àáâãäåæçèéêëìíîï.txt duplicateàáâãäåæçèéêëìíîï.txt PASS
+copyFile(ḀḁḂḃḄḅḆḇḈḉḊḋḌḍḎḏ.txt,duplicateḀḁḂḃḄḅḆḇḈḉḊḋḌḍḎḏ.txt)
+cmps ḀḁḂḃḄḅḆḇḈḉḊḋḌḍḎḏ.txt duplicateḀḁḂḃḄḅḆḇḈḉḊḋḌḍḎḏ.txt PASS
+copyFile(𐒖𐒗𐒘.txt,duplicate𐒖𐒗𐒘.txt)
+cmps 𐒖𐒗𐒘.txt duplicate𐒖𐒗𐒘.txt PASS
+copyFile(utf8.txt,duplicateutf8.txt)
+cmps utf8.txt duplicateutf8.txt PASS
+copyFile(utf16.txt,duplicateutf16.txt)
+cmps utf16.txt duplicateutf16.txt PASS
+copyFile(utf16_BE.txt,duplicateutf16_BE.txt)
+cmps utf16_BE.txt duplicateutf16_BE.txt PASS
+copyFile(utf16_LE.txt,duplicateutf16_LE.txt)
+cmps utf16_LE.txt duplicateutf16_LE.txt PASS
+differentEncodingDiff
+pass from cmps ascii.txt utf8_1B_char.txt
+pass from cmps utf8.txt utf16.txt
+pass from cmps utf8.txt utf16_BE.txt
+pass from cmps utf8.txt utf16_LE.txt
+convertEncoding
+pass from cmps utf8.txt utf16.txt
+pass from cmps utf8.txt utf16_BE.txt
+pass from cmps utf8.txt utf16_LE.txt
+
+GTM>

@@ -1,0 +1,12 @@
+#!/usr/local/bin/tcsh -f
+#!/usr/bin/expect -f
+set password [lrange $argv 0 0]
+set process [lrange $argv 1 1]
+spawn $process/mumps -direct
+expect "Enter Passphrase:"
+sleep 0.1
+send "$password\r"
+send "set ^x=10\r"
+send "h\r"
+expect eof
+

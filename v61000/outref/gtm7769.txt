@@ -1,0 +1,22 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# journal exract -global=\"^GBL\(1,\"\"TMP\"\"\"\"\*\"\"\)\"
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+# expect globals with values 4, 6 and 8
+^GBL(1,"TMP""")="4"
+^GBL(1,"TMP""""")="6"
+^GBL(1,"TMP""x")="8"
+journal -extract -global=\"^GBL\(1,\"\"TMP\"\"\"\"\*\"\",\*\)\"
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+# expect globals with values 5, 7 and 9
+^GBL(1,"TMP""",5)="5"
+^GBL(1,"TMP""""",7)="7"
+^GBL(1,"TMP""x",9)="9"
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

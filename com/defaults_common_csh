@@ -1,0 +1,121 @@
+#################################################################
+#								#
+# Copyright (c) 2005-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+################
+#IMPORTANT
+# As this file is processed, "check_setenv a b" becomes
+# if ( $?a == 0 ) setenv a b
+# so that already set environment variables are used in the test
+#
+#Also "check_number a x" becomes
+#if ($?a == 0 ) setenv  a x
+#if ( `echo $a | \sed -n '/[^0-9]/p'` != "" ) then
+# setenv  a x
+#endif
+# so that if the already set environment variable is not a number, it is set to x
+# (with the assumption x is a number a will be a number)
+#
+#Be careful about checking values of environment variables here,
+#the request file or the command line are not parsed when this is processed,
+#so values might not be effective yet
+################
+
+# hashed variable names are found in test.csh but not set here
+
+if ($?gtm_tools) then
+   if (-e $gtm_tools/gtm_env.csh) source $gtm_tools/gtm_env.csh  # to get the alias for version and other gt_cc* stuff
+else
+   $tst_awk -f $gtm_test_com_individual/process_defaults.awk $gtm_test_com_individual/gtm_env_missing_csh >! /tmp/__${USER}_test_suite_$$_gtm_env_missing.csh
+   if ($status ) exit $status
+   source /tmp/__${USER}_test_suite_$$_gtm_env_missing.csh
+   set stat = $status
+   if ($stat) exit $stat
+endif
+
+setenv TMP_FILE_PREFIX  "/tmp/__${USER}_test_suite_$$"
+setenv test_list  ${TMP_FILE_PREFIX}_test_list
+setenv test_list_1  ${TMP_FILE_PREFIX}_test_list_1
+setenv exclude_file  ${TMP_FILE_PREFIX}_exclude
+setenv submit_tests  ${TMP_FILE_PREFIX}_submit_tests
+setenv submit_tests_temp  ${TMP_FILE_PREFIX}_submit_tests_temp
+setenv tmpfile  ${TMP_FILE_PREFIX}_tmpfile
+setenv run_all  ${TMP_FILE_PREFIX}_run_all
+#touch $test_list might not be necessary, since rm -f
+#touch'ing some of the files is necessary after removing them,
+#if there is a chance they will not be created
+#actually, is rm necessary if filenames will have $$ in them#ND#
+\rm -f $test_list >& /dev/null
+\rm -f $test_list_1 >& /dev/null
+\rm -f $submit_tests >& /dev/null
+\rm -f $submit_tests_temp >& /dev/null
+\rm -f ${submit_tests_temp}_a >& /dev/null
+\rm -f ${TMP_FILE_PREFIX}_submit_tests_temp1 >& /dev/null
+\rm -f $tmpfile >& /dev/null
+\rm -f $exclude_file >& /dev/null
+\rm -f $run_all >& /dev/null
+\rm -f ${TMP_FILE_PREFIX}_buckets >& /dev/null
+\rm -f ${TMP_FILE_PREFIX}_option_default_1 >& /dev/null
+\rm -f ${TMP_FILE_PREFIX}_option_default_2 >& /dev/null
+\touch $submit_tests
+
+##Version variables
+check_setenv tst_ver $gtm_verno
+
+##Image variables
+if (!($?tst_image)) then
+   if ("$gtm_exe" == "") then
+    setenv tst_image "p" #default
+   else
+    setenv tst_image `basename $gtm_exe`
+   endif
+endif
+# bucket
+check_setenv bucket ""
+
+##Mail variables
+check_setenv mailing_list $USER
+
+##Test source directory
+check_setenv tst_def_src "T990"
+
+###########################################
+#REPLICATION
+#test_repl should be by default non_replic
+#test_replic does not have a meaning at this point, it is set by the test system!
+#test_repl defined reset default_opt_bucket.csh
+
+## Remote user variables
+check_setenv tst_remote_user  $USER
+
+##Remote version
+check_setenv remote_ver "default"
+
+##Remote image
+check_setenv remote_image "default"
+
+##Remote & Local machines
+check_setenv tst_org_host $HOST:r:r:r:r
+check_setenv tst_remote_host $tst_org_host
+check_setenv tst_gtcm_remote_host "default"
+check_setenv tst_gtcm_remote_dir "default"
+
+##Remote Output Dir
+check_setenv tst_remote_dir "default"
+
+# for initial null value (corrected further, this is only for premature exit from EXIT_POINT)
+setenv gtm_tst_out ""
+
+setenv LC_COLLATE "C"
+if (-e /testarea/$USER) then
+	check_setenv tst_dir "/testarea/$USER"
+else
+	check_setenv tst_dir "$PWD"
+endif

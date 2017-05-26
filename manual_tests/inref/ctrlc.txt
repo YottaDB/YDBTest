@@ -1,0 +1,99 @@
+This tests the interaction of ctrl-C with zbreak (?). Run ctrlc.m and send
+ctrl-c signals while the program is still executing. Control should be
+returnedto the GTM prompt.
+
+====== INSTRUCTIONS =====
+From a GG server that has the expect, You can now run this test in an
+automated fashion . Copy and paste the line below (fix the version as
+necessary). It sends PASS/FAIL emails. In the case of failure, please refere
+to the original instructions.
+
+ver V990 p ; $gtm_test/manual_tests/u_inref/controlc.csh
+
+====== ORIGINAL INSTRUCTIONS =====
+[note: lines starting with ">" are the lines you need to input. The others are
+what you should see as output] If you are running the same copy in a different
+server (if the files are in NFS), make sure you delete .o before you run
+again.
+>ver <version> <image>
+>cp $gtm_test/T990/manual_tests/inref/ctrlc.m .
+>gtm
+
+at the GTM prompt:
+>	do ^ctrlc
+
+you should see the following
+
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory
+	<current pwd>/$gtmgbldir.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file
+	<current pwd>/$gtmgbldir.gld
+Created file <current pwd>/mumps.dat
+Database file <current pwd>/mumps.dat now has lock space 5000 pages
+
+Stepping STARTED
+        q
+        S x=1
+        f i=1:1:10000000  SET x=x+1
+
+>[input <CTRL-C> now]
+
+you should see:
+
+%GTM-I-CTRLC, CTRL_C encountered
+
+at the GTM prompt:
+	zshow "v":y
+
+>[input <CTRL-C> now]
+
+you should see:
+
+%GTM-I-CTRLC, CTRL_C encountered
+
+at the GTM prompt:
+	zwrite a
+
+>[input <CTRL-C> now]
+
+you should see:
+
+%GTM-I-CTRLC, CTRL_C encountered
+
+at the GTM prompt:
+	xecute "zwrite a"
+
+>[input <CTRL-C> now]
+
+in UNIX, you should NOT see ANY:
+
+%GTM-I-CTRLC, CTRL_C encountered
+
+you should (eventually) see:
+
+a="                                                                                               100000"
+
+but in VMS you should see:
+
+%GTM-I-CTRLC, CTRL_C encountered
+
+at the GTM prompt:
+
+	do lke^ctrlc
+
+>[input <CTRL-C> now]
+
+%GTM-I-CTRLC, CTRL_C encountered
+
+at the GTM prompt:
+>	do validate^ctrlc
+
+you should see:
+
+PASS
+
+GTM>
+
+>halt

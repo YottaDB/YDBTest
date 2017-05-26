@@ -1,0 +1,130 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+=======================
+[GTM-7678] Changes to how -OPTIONS are treated by MUPIP TRIGGER
+# The second line should error out because, -options is changed, but the entire -commands is not specified
+File gtm7678_a.trg, Line 1: No matching triggers found for deletion
+File gtm7678_a.trg, Line 2: Added SET trigger on ^b named b#1
+File gtm7678_a.trg, Line 3: Error : Specified options and commands cannot both be different from those in trigger on ^b named b#1
+=========================================
+1 trigger file entries have errors
+2 trigger file entries have no errors
+=========================================
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+# The second line should error out because, -options is changed (to nothing), but the entire -commands is not specified
+File gtm7678_b.trg, Line 1: No matching triggers found for deletion
+File gtm7678_b.trg, Line 2: Added SET and/or Non-SET trigger on ^b named b#1
+File gtm7678_b.trg, Line 3: Error : Specified options and commands cannot both be different from those in trigger on ^b named b#1
+=========================================
+1 trigger file entries have errors
+2 trigger file entries have no errors
+=========================================
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+# The third trigger should error out because
+# while changing -options it does not specify the entire list of commands in the matching trigger
+File gtm7678_c.trg, Line 1: No matching triggers found for deletion
+File gtm7678_c.trg, Line 2: Added SET and/or Non-SET trigger on ^a named a#1
+File gtm7678_c.trg, Line 3: Added SET trigger on ^a named a#2
+File gtm7678_c.trg, Line 4: Error : Specified options and commands cannot both be different from those in trigger on ^a named a#1
+=========================================
+1 trigger file entries have errors
+3 trigger file entries have no errors
+=========================================
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+# The third trigger should not error out even if it does not specify the entire lis of commands because
+# -options is ignored in case of trigger deletes.
+File gtm7678_d.trg, Line 1: No matching triggers found for deletion
+File gtm7678_d.trg, Line 2: Added SET and/or Non-SET trigger on ^a named a#1
+File gtm7678_d.trg, Line 3: Added SET trigger on ^a named a#2
+File gtm7678_d.trg, Line 4: Modified Non-SET trigger on ^a named a#1
+File gtm7678_d.trg, Line 4: Deleted SET trigger on ^a named a#2
+=========================================
+2 triggers added
+1 triggers deleted
+1 triggers modified
+3 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# The second trigger should error out because the trigger matches, but the name does not match
+File gtm7678_e.trg, Line 1: All existing triggers (count = 1) deleted
+File gtm7678_e.trg, Line 2: Added SET trigger on ^a named x
+File gtm7678_e.trg, Line 3: SET trigger on ^a matches trigger named x but not with specified name x2 - no action taken
+=========================================
+1 triggers added
+1 triggers deleted
+0 triggers modified
+2 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# The second trigger should be a no-op because the commands are different
+File gtm7678_f.trg, Line 1: All existing triggers (count = 1) deleted
+File gtm7678_f.trg, Line 2: Added SET trigger on ^a named x
+File gtm7678_f.trg, Line 3: Non-SET trigger on ^a not present in trigger named x - no action taken
+=========================================
+1 triggers added
+1 triggers deleted
+0 triggers modified
+2 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# The second trigger should be a no-op because the commands are different
+File gtm7678_g.trg, Line 1: All existing triggers (count = 1) deleted
+File gtm7678_g.trg, Line 2: Added Non-SET trigger on ^a named x
+File gtm7678_g.trg, Line 3: SET trigger on ^a not present in trigger named x - no action taken
+=========================================
+1 triggers added
+1 triggers deleted
+0 triggers modified
+2 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# The second trigger should error out because the trigger matches, but the name does not match
+File gtm7678_h.trg, Line 1: All existing triggers (count = 1) deleted
+File gtm7678_h.trg, Line 2: Added Non-SET trigger on ^a named x
+File gtm7678_h.trg, Line 3: SET trigger on ^a matches trigger named x but not with specified name x2 - no action taken
+=========================================
+1 triggers added
+1 triggers deleted
+0 triggers modified
+2 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# The second trigger should be a no-op because both the name and the commands differ
+File gtm7678_i.trg, Line 1: All existing triggers (count = 1) deleted
+File gtm7678_i.trg, Line 2: Added SET and/or Non-SET trigger on ^a named x
+File gtm7678_i.trg, Line 3: SET trigger on ^a does not exist - no action taken
+=========================================
+1 triggers added
+1 triggers deleted
+0 triggers modified
+2 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# The second trigger should be a no-op because the commands are different
+File gtm7678_j.trg, Line 1: All existing triggers (count = 1) deleted
+File gtm7678_j.trg, Line 2: Added Non-SET trigger on ^a named x
+File gtm7678_j.trg, Line 3: SET and/or Non-SET trigger on ^a not present in trigger named x - no action taken
+=========================================
+1 triggers added
+1 triggers deleted
+0 triggers modified
+2 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# The second trigger should modify the trigger because the commands partially match
+File gtm7678_k.trg, Line 1: All existing triggers (count = 1) deleted
+File gtm7678_k.trg, Line 2: Added Non-SET trigger on ^a named x
+File gtm7678_k.trg, Line 3: Modified SET and/or Non-SET trigger on ^a named x
+=========================================
+1 triggers added
+1 triggers deleted
+1 triggers modified
+3 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

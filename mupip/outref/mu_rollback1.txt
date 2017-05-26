@@ -1,0 +1,65 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+$gtm_tst/com/mupip_rollback.csh -backward -resync=1 -losttrans=lost1.glo *
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWKReplpool semaphore \(id = [0-9]*\) for replication instance ##TEST_PATH##/mumps.repl is in use by another process.
+##TEST_AWK%GTM-E-MUJPOOLRNDWNFL, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl rundown failed
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%GTM-I-FILENOTCREATE, Lost transactions extract file lost1.glo not created
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+Secondary Side: $gtm_tst/com/mupip_rollback.csh -backward -losttrans=lost2.glo *
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWKReplpool semaphore \(id = [0-9]*\) for replication instance ##REMOTE_TEST_PATH##/mumps.repl is in use by another process.
+##TEST_AWK%GTM-E-MUJPOOLRNDWNFL, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##REMOTE_TEST_PATH##/mumps.repl rundown failed
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%GTM-I-FILENOTCREATE, Lost transactions extract file lost2.glo not created
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##SOURCE_PATH##/mupip journal -recover -back *
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_PATH##/a.dat -> File already open by another process (2).
+##TEST_AWK.*
+%GTM-I-MUSTANDALONE, Could not get exclusive access to ##TEST_PATH##/a.dat
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>

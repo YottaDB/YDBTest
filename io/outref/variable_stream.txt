@@ -1,0 +1,71 @@
+Will test VARIABLE and STREAM record formats...
+
+GTM>
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+VARIABLE, $X
+-> OPEN "foovar1.txt":(NEWVERSION:RECORDSIZE=20:VARIABLE)
+-> USE "foovar1.txt":(WIDTH=20:NOWRAP)
+
+1     the quick brown fox
+2     the quick brown fox
+3     the quick brown fox
+4     the quick brown fox
+5     the quick brown fox
+6     the quick brown fox
+7     the quick brown fox
+8     the quick brown fox
+9     the quick brown fox
+10    the quick brown fox
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+STREAM, $X
+-> OPEN "foostream1.txt":(NEWVERSION:RECORDSIZE=20:STREAM)
+-> USE "foostream1.txt":(WIDTH=20:NOWRAP)
+
+1     the quick brown fox jumped over the lazy dog 46
+2     the quick brown fox jumped over the lazy dog 46
+3     the quick brown fox jumped over the lazy dog 46
+4     the quick brown fox jumped over the lazy dog 46
+5     the quick brown fox jumped over the lazy dog 46
+6     the quick brown fox jumped over the lazy dog 46
+7     the quick brown fox jumped over the lazy dog 46
+8     the quick brown fox jumped over the lazy dog 46
+9     the quick brown fox jumped over the lazy dog 46
+10    the quick brown fox jumped over the lazy dog 46
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+VARIABLE, $X, no !
+-> OPEN "foovar2.txt":(NEWVERSION:RECORDSIZE=20:VARIABLE)
+-> USE "foovar2.txt":(WIDTH=20:NOWRAP)
+
+1     the quick brown fox
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+STREAM, $X, no !
+-> OPEN "foostream2.txt":(NEWVERSION:RECORDSIZE=20:STREAM)
+-> USE "foostream2.txt":(WIDTH=20:NOWRAP)
+
+1     the quick brown fox jumped over the lazy dog 46 the quick brown fox jumped over the lazy dog 94 the
+2     quick brown fox jumped over the lazy dog 142 the quick brown fox jumped over the lazy dog 191 the q
+3    uick brown fox jumped over the lazy dog 240 the quick brown fox jumped over the lazy dog 289 the qui
+4    ck brown fox jumped over the lazy dog 338 the quick brown fox jumped over the lazy dog 387 the quick
+5     brown fox jumped over the lazy dog 436 the quick brown fox jumped over the lazy dog 485
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+STREAM, abc, no !
+-> OPEN "foostream3.txt":(NEWVERSION:RECORDSIZE=20:STREAM)
+-> USE "foostream3.txt":(WIDTH=20:NOWRAP)
+
+1     the quick brown fox jumped over the lazy dog abc the quick brown fox jumped over the lazy dog abc t
+2    he quick brown fox jumped over the lazy dog abc the quick brown fox jumped over the lazy dog abc the
+3     quick brown fox jumped over the lazy dog abc the quick brown fox jumped over the lazy dog abc the q
+4    uick brown fox jumped over the lazy dog abc the quick brown fox jumped over the lazy dog abc the qui
+5    ck brown fox jumped over the lazy dog abc the quick brown fox jumped over the lazy dog abc
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+STREAM, abc, seperate write
+-> OPEN "foostream4.txt":(NEWVERSION:RECORDSIZE=20:STREAM)
+-> USE "foostream4.txt":(WIDTH=20:NOWRAP)
+
+1     the quick brown fox jumped over the lazy dog abc the quick brown fox jumped over the lazy dog abc t
+2    he quick brown fox jumped over the lazy dog abc the quick brown fox jumped over the lazy dog abc the
+3     quick brown fox jumped over the lazy dog abc the quick brown fox jumped over the lazy dog abc the q
+4    uick brown fox jumped over the lazy dog abc the quick brown fox jumped over the lazy dog abc the qui
+5    ck brown fox jumped over the lazy dog abc the quick brown fox jumped over the lazy dog abc
+GTM>

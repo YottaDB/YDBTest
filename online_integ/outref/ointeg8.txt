@@ -1,0 +1,28 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+###################################################################
+# Kick off online integ in the background and have it wait once the snapshot is started.
+###################################################################
+###################################################################
+# Now that the snapshot is started, issue kill -9 to bring down the ONLINE INTEG	   
+###################################################################
+###################################################################
+# ONLINE INTEG is now shot down. Ensure that doing a rundown cleans up the temporary files
+###################################################################
+# Snapshot temporary files found before rundown as expected
+##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+##TEST_AWK%GTM-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+# Snapshot temporary files NOT found after rundown as expected
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

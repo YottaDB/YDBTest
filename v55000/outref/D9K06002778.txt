@@ -1,0 +1,8 @@
+Entering main
+Entering subA
+Entering subB - corruption subA with whitebox call
+Level     Place                         ECode                MCode
+
+3         showstack+4^D9K06002778                            For lvls=lvls:-1:1 Do
+2         subB+3^D9K06002778            ,M9,Z150373210,      Set x=1/0	; Trip an error which causes stack to be saved for $STACK().
+1         @                                                 N/A

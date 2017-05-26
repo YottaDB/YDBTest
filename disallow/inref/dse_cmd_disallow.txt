@@ -1,0 +1,308 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!! Lines beginning with ! are comments
+!! Lines beginning with p are commands where "-" can be globally substituted with "/" and the VMS equivalent is obtained
+!! Lines beginning with u are unix-specific commands
+!! Lines beginning with v are vvms-specific commands
+!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  DSE ADD
+!	DISALLOW STAR AND (DATA OR KEY OR RECORD OR OFFSET) OR DATA AND POINTER OR RECORD AND OFFSET
+!
+p add -data="ABCD" -star
+p add -key="^X" -star
+p add -record=1 -star
+p add -offset=20 -star
+p add -data="ABCD" -pointer=65
+p add -record=2 -offset=35
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  DSE ALL
+!	DISALLOW (WCINIT AND BUFFER_FLUSH)
+!
+! VMS needs a dummy parameter for WCINIT (for confirmation). Unix does not.
+!
+u all -wcinit -buff
+v all -wcinit dummy_wcinit_param -buff
+!
+!	DISALLOW (RENEW AND (FREEZE OR SEIZE OR RELEASE OR CRITINIT OR BUFFER_FLUSH OR REFERENCE OR WCINIT OR OVERRIDE))
+!
+! VMS needs a dummy parameter for RENEW (for confirmation). Unix does not.
+!
+u all -renew -freeze
+u all -renew -seize
+u all -renew -release
+u all -renew -critinit
+u all -renew -buff
+u all -renew -reference
+u all -renew -wcinit
+u all -renew -override
+v all -renew dummy_renew_param -freeze
+v all -renew dummy_renew_param -seize
+v all -renew dummy_renew_param -release
+v all -renew dummy_renew_param -critinit
+v all -renew dummy_renew_param -buff
+v all -renew dummy_renew_param -reference
+v all -renew dummy_renew_param -wcinit
+v all -renew dummy_renew_param -override
+!
+!	DISALLOW (SEIZE AND RELEASE) OR (CRITINIT AND (SEIZE OR RELEASE))
+!
+p all -seize -release
+p all -critinit -seize
+p all -critinit -release
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  DSE CACHE
+!	DISALLOW NOT (CHANGE OR RECOVER OR SHOW OR VERIFY)
+!
+p cache -all
+p cache -crit
+p cache -nocrit
+p cache -offset=10
+p cache -size=4
+p cache -value=23
+p cache
+!
+!	DISALLOW ANY2(CHANGE,RECOVER,SHOW,VERIFY)
+!
+p cache -change -recover
+p cache -change -show
+p cache -change -verify
+p cache -recover -show
+p cache -recover -verify
+p cache -show -verify
+!
+!	DISALLOW ALL AND CHANGE
+!
+p cache -change -all -size=4 -value=10 -offset=8
+!
+!	DISALLOW NOT (CHANGE OR SHOW) AND (OFFSET OR SIZE OR VALUE)
+!
+p cache -recover -all -offset=10 -size=4 -value=10
+p cache -verify -crit -offset=10 -size=4 -value=10
+p cache -recover -nocrit -offset=10 -size=4 -value=10
+p cache -recover -offset=10 -size=4 -value=10
+p cache -verify -offset=10 -size=4 -value=10
+!
+!	DISALLOW SHOW AND VALUE
+!
+p cache -show -offset=8 -size=4 -value=10
+!
+!	DISALLOW CHANGE AND NOT OFFSET
+!
+p cache -change -size=4 -value=10
+!
+!	DISALLOW OFFSET AND NOT SIZE
+!
+p cache -change -offset=4 -value=10
+!
+!	DISALLOW SIZE AND NOT OFFSET
+!
+p cache -show -size=4 
+!
+!	DISALLOW VALUE AND NOT OFFSET
+!
+!		Currently, there is no way of testing this out because of the way the previous disallow rules are structured.
+!		Nevertheless, we try to test it as follows but note that the failure will not indicate the above disallow
+!			rule taking effect instead it will show a previous disallow rule taking effect.
+!
+p cache -change -value=10
+!
+!	DISALLOW NEG CRIT AND (CHANGE OR RECOVER OR VERIFY)
+!
+p cache -change -offset=4 -size=4 -value=10 -nocrit
+p cache -recover -nocrit
+p cache -verify -nocrit
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  DSE CHANGE
+!	DISALLOW (fileheader AND (BLOCK OR LEVEL OR BSIZ OR RECORD OR OFFSET OR CMPC OR RSIZ OR TN)) OR
+!		((LEVEL OR BSIZ OR TN) AND (RECORD OR OFFSET OR CMPC OR RSIZ)) OR
+!		(RECORD AND OFFSET)
+!
+p change -block=10  -fileheader 
+p change -level=10  -fileheader 
+p change -bsiz=10   -fileheader 
+p change -record=10 -fileheader 
+p change -offset=10 -fileheader 
+p change -cmpc=10   -fileheader 
+p change -rsiz=10   -fileheader 
+p change -tn=10     -fileheader 
+p change -level=1 -record=10
+p change -level=1 -offset=10
+p change -level=1 -cmpc=10
+p change -level=1 -rsiz=10
+p change -bsiz=1 -record=10
+p change -bsiz=1 -offset=10
+p change -bsiz=1 -cmpc=10
+p change -bsiz=1 -rsiz=10
+p change -tn=1 -record=10
+p change -tn=1 -offset=10
+p change -tn=1 -cmpc=10
+p change -tn=1 -rsiz=10
+p change -record=10 -offset=40
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  DSE CRIT
+!	DISALLOW ANY2(INIT,OWNER,SEIZE,RELEASE,REMOVE)
+p crit -init -owner
+p crit -init -seize
+p crit -init -release
+p crit -init -remove
+p crit -owner -seize
+p crit -owner -release
+p crit -owner -remove
+p crit -seize -release
+p crit -seize -remove
+p crit -release -remove
+!
+!	DISALLOW CRASH AND (SEIZE OR RELEASE OR OWNER OR RESET)
+!
+p crit -crash -seize
+p crit -crash -release
+p crit -crash -owner
+p crit -crash -reset
+!
+!	DISALLOW RESET AND (SEIZE OR RELEASE OR OWNER)
+!
+p crit -reset -seize
+p crit -reset -release
+p crit -reset -owner
+!
+!	DISALLOW CYCLE AND (INIT OR REMOVE OR SEIZE OR RELEASE OR RESET)
+!
+p crit -cycle -init
+p crit -cycle -remove
+p crit -cycle -seize
+p crit -cycle -release
+p crit -cycle -reset
+!
+!	DISALLOW ALL AND (CRASH OR CYCLE OR INIT OR OWNER OR RELEASE OR REMOVE OR RESET OR SEIZE)
+!
+p crit -all -crash
+p crit -all -cycle
+p crit -all -init
+p crit -all -owner
+p crit -all -release
+p crit -all -remove
+p crit -all -reset
+p crit -all -seize
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  DSE DUMP
+!	DISALLOW ANY2(RECORD,OFFSET,FILEHEADER) OR FILEHEADER AND (BLOCK OR HEADER OR COUNT OR GLO OR ZWR) OR GLO AND ZWR
+!		OR GLO AND HEADER OR ZWR AND HEADER OR COUNT AND NOT HEADER AND NOT (RECORD OR OFFSET) AND NOT BLOCK
+!
+! The dump commands below involving -fileheader have the order different in Unix and VMS.
+! This is because if we try the Unix command in VMS (e.g. dump -record=20 -fileheader), VMS CLI parser seems to ignore
+!	the -record before the -fileheader and in turn dumps the fileheader which is not what we want. The actual error is
+!
+!	%CLI-I-IGNQUAL, qualifiers appearing before this item were ignored
+!	 \FILEHEADER\
+!
+p dump -record=50 -offset=10
+u dump -record=20 -fileheader 
+u dump -offset=15 -fileheader 
+u dump -block=10  -fileheader 
+u dump -header    -fileheader 
+u dump -count=10  -fileheader 
+u dump -glo       -fileheader 
+u dump -zwr       -fileheader 
+v dump -fileheader -record=20 
+v dump -fileheader -offset=15 
+v dump -fileheader -block=10  
+v dump -fileheader -header    
+v dump -fileheader -count=10  
+v dump -fileheader -glo       
+v dump -fileheader -zwr       
+p dump -glo -zwr
+p dump -glo -header
+p dump -zwr -header
+p dump -count=10 -glo
+p dump -count=10 -zwr
+p dump -count=10 -noheader -glo
+p dump -count=10 -noheader -zwr
+p dump -count=10 -noheader -zwr -crit
+p dump -count=10 -noheader -zwr -nocrit
+p dump -count=10
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  DSE FIND
+!
+!	DISALLOW ANY2(BLOCK,FREEBLOCK,KEY,REGION)
+!
+p find -block=10 -freeblock
+p find -block=12 -key="^a"
+p find -block=15 -region
+p find -freeblock -key="^a"
+p find -freeblock -region
+p find -key="^a" -region
+!
+!	DISALLOW (EXHAUSTIVE OR SIBLINGS) AND (FREEBLOCK OR KEY OR REGION)
+!
+p find -exhaustive -freeblock
+p find -exhaustive -key="^a"
+p find -exhaustive -region
+p find -siblings -freeblock
+p find -siblings -key="^a"
+p find -siblings -region
+!
+!	DISALLOW HINT AND NOT FREEBLOCK
+!
+p find -block=10 -hint=20
+p find -crit -hint=20
+p find -nocrit -hint=20
+p find -exhaustive -hint=20
+p find -key="^a" -hint=20
+p find -region -hint=20
+p find -siblings -hint=20
+p find -hint=20
+!
+!	DISALLOW FREEBLOCK AND NOT HINT
+!
+p find -freeblock
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  DSE MAPS
+!	DISALLOW ANY2(FREE,BUSY,MASTER,RESTORE_ALL) OR (BLOCK AND RESTORE_ALL)
+!
+p maps -free -busy
+p maps -free -master
+p maps -free -restore_all
+p maps -busy -master
+p maps -busy -restore_all
+p maps -master -restore_all
+p maps -block=10 -restore_all
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  DSE REMOVE
+!	DISALLOW ANY2(RECORD,OFFSET,VERSION) OR VERSION AND COUNT
+!
+p remove -record=5 -offset=10
+p remove -record=7 -version=11
+p remove -offset=8 -version=12
+p remove -version=13 -count=20
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  DSE SAVE
+!	DISALLOW LIST AND COMMENT
+!
+p save -list -comment="abcd"
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  DSE SHIFT
+!	DISALLOW FORWARD AND BACKWARD
+!
+p shift -forward=5 -backward=10

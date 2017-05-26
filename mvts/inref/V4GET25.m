@@ -1,0 +1,35 @@
+V4GET25 ;IW-KO-YS-TS,V4GET2,MVTS V9.10;15/6/96;PART-94
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+ W !!,"27---V4GET25:  $GET function  -5-"
+ ;
+ W !,"glvn=gvn"
+ ;
+1 S ^ABSN="40211",^ITEM="IV-211  $D(gvn)=0"
+ S ^NEXT="2^V4GET25,V4GET26^V4GET2,V4NAME^VV4" D ^V4PRESET K  K ^VV
+ S ^VCOMP=$GET(^VV(1,2),"OK")
+ S ^VCORR="OK" D ^VEXAMINE K ^VV
+ ;
+2 S ^ABSN="40212",^ITEM="IV-212  $D(gvn)=1"
+ S ^NEXT="3^V4GET25,V4GET26^V4GET2,V4NAME^VV4" D ^V4PRESET K  K ^VV
+ S ^VV("A","B")="data"
+ S ^VCOMP=$get(^VV("A","B"),"DATA")
+ S ^VCORR="data" D ^VEXAMINE K ^VV
+ ;
+3 S ^ABSN="40213",^ITEM="IV-213  $D(gvn)=10"
+ S ^NEXT="4^V4GET25,V4GET26^V4GET2,V4NAME^VV4" D ^V4PRESET K  K ^VV
+ S ^VV("A","B","C","D")="data",^VV="^VV",^VV("b")="b"
+ S ^VCOMP=$get(^VV("A"),"DATA")
+ S ^VCORR="DATA" D ^VEXAMINE K ^VV
+ ;
+4 S ^ABSN="40214",^ITEM="IV-214  $D(gvn)=11"
+ S ^NEXT="V4GET26^V4GET2,V4NAME^VV4" D ^V4PRESET K  K ^VV
+ S ^VV("A","B")="AB",^VV="^VV",^VV("b")="b",^VV("A")="a",^VV("A","B",1)="AB1"
+ S ^VCOMP=$get(^VV("A","B"),"DATA")
+ S ^VCORR="AB" D ^VEXAMINE K ^VV
+ ;
+END W !!,"End of 27 --- V4GET25",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

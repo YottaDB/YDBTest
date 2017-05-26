@@ -1,0 +1,193 @@
+Test case 01
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+============================================================
+Test case 02
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/dummy.dat
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+REGION AREG's file a.dat cannot be found.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-NOREGION, REGION not found: AREG
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+REGION AREG's file a.dat cannot be found.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-NOREGION, REGION not found: AREG
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/dummy.dat
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+============================================================
+Test case 03
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+%GTM-W-MUPIPSET2BIG, 1000 too large, maximum RESERVED_BYTES allowed is 940
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+Database file mumps.dat now has 600 reserved bytes
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
+============================================================
+DISABLE option
+##SOURCE_PATH##/mupip set -journal=disable -file mumps.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+##SOURCE_PATH##/mupip set -journal=disable -file mumps.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+  Journal State               [inactive] ON  Journal Before imaging       FALSE
+  Journal Allocation                   2048  Journal Extension              100
+  Journal Buffer Size                  2308  Journal Alignsize             4096
+##TEST_AWK  Journal AutoSwitchLimit             16448  Journal Epoch Interval         ( 30|300)
+  Journal Yield Limit                  1000  Journal Sync IO               TRUE
+  Journal File: ##TEST_PATH##/abcd.mjl
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+  Journal State                    DISABLED
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+  Journal State               [inactive] ON  Journal Before imaging       FALSE
+  Journal Allocation                   2048  Journal Extension             2048
+  Journal Buffer Size                  2308  Journal Alignsize             4096
+##TEST_AWK  Journal AutoSwitchLimit           8386560  Journal Epoch Interval         ( 30|300)
+  Journal Yield Limit                     8  Journal Sync IO              FALSE
+  Journal File: ##TEST_PATH##/mumps.mjl
+============================================================
+Test case : 5
+DISABLE option is not compatible with any other option
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE ALIGNSIZE
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE ALIGNSIZE EPOCH_INTERVAL AUTOSWITCHLIMIT
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE ALIGNSIZE EPOCH_INTERVAL
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME
+%GTM-E-CLIERR, Option expected
+============================================================
+Test case 06
+NOJOURNAL option
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+NOJOURANL qualifier is equivalent to DISABLE option
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+  Journal State               [inactive] ON  Journal Before imaging       FALSE
+  Journal Allocation                   2048  Journal Extension              100
+  Journal Buffer Size                  2308  Journal Alignsize             4096
+##TEST_AWK  Journal AutoSwitchLimit             16448  Journal Epoch Interval         ( 30|300)
+  Journal Yield Limit                  1000  Journal Sync IO               TRUE
+  Journal File: ##TEST_PATH##/abcd.mjl
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+Journal state (expected DISABLED): DISABLED
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+  Journal State               [inactive] ON  Journal Before imaging       FALSE
+  Journal Allocation                   2048  Journal Extension             2048
+  Journal Buffer Size                  2308  Journal Alignsize             4096
+##TEST_AWK  Journal AutoSwitchLimit           8386560  Journal Epoch Interval         ( 30|300)
+  Journal Yield Limit                     8  Journal Sync IO              FALSE
+  Journal File: ##TEST_PATH##/mumps.mjl
+============================================================
+Test case 07
+[NO]BEFORE qualifier
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+============================================================
+Test case 08
+If both BEFORE and NOBEFORE are given latter is taken
+##SOURCE_PATH##/mupip set -journal=enable,before,nobefore -file mumps.dat
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+============================================================
+Test case 09
+ON option does not have any effect if journaling is not enabled
+##SOURCE_PATH##/mupip set -journal=disable -file mumps.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+##SOURCE_PATH##/mupip set -journal=on,nobefore -file mumps.dat
+%GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
+%GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
+Journal state: 
+##SOURCE_PATH##/mupip set -journal=enable,on,nobefore -file mumps.dat
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+Journal state: ON
+##SOURCE_PATH##/mupip set -journal=off -file mumps.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+Journal state: Journal
+##SOURCE_PATH##/mupip set -journal=on,nobefore -file mumps.dat
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+Journal state (expected ON): ON
+============================================================
+Test case 10
+ON is default value with enable option
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+Journal state (expected ON): ON
+============================================================
+Test case 11
+OFF option does have any effect if journaling is not enabled
+##SOURCE_PATH##/mupip set -journal=disable -file mumps.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+##SOURCE_PATH##/mupip set -journal=off -file mumps.dat
+%GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
+%GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
+##SOURCE_PATH##/mupip set -journal=enable,off,alignsize=4096,allocation=2048,autoswitchlimit=16448,buffer_size=2308,extension=100,filename=abcd.mjl,sync_io,yield_limit=1000 -file mumps.dat
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+  Journal State                         OFF  Journal Before imaging       FALSE
+  Journal Allocation                   2048  Journal Extension              100
+  Journal Buffer Size                  2308  Journal Alignsize             4096
+##TEST_AWK  Journal AutoSwitchLimit             16448  Journal Epoch Interval         ( 30|300)
+  Journal Yield Limit                  1000  Journal Sync IO               TRUE
+  Journal File: ##TEST_PATH##/abcd.mjl
+##SOURCE_PATH##/mupip set -journal=on,nobefore -file mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+  Journal State               [inactive] ON  Journal Before imaging       FALSE
+  Journal Allocation                   2048  Journal Extension              100
+  Journal Buffer Size                  2308  Journal Alignsize             4096
+##TEST_AWK  Journal AutoSwitchLimit             16448  Journal Epoch Interval         ( 30|300)
+  Journal Yield Limit                  1000  Journal Sync IO               TRUE
+  Journal File: ##TEST_PATH##/abcd.mjl
+============================================================
+Test case 12
+ON and OFF are mutually exclusive
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
+============================================================
+Test case 13 (default value of qualifiers)
+Default values are  tested with  other test cases
+============================================================
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

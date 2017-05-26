@@ -1,0 +1,3042 @@
+
+*** TSTMBAKNJ ***
+
+
+$gtm_tst/com/dbcreate.csh mumps $1
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod 666 *.dat
+
+unset verbose
+mkdir ./back
+$MUPIP backup -noonline "*" ./back | & sort -f
+
+
+
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file ./back/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file ./back/b.dat
+DB file ##TEST_PATH##/c.dat backed up in file ./back/c.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ./back/mumps.dat
+Transactions up to 0x000000000000001D are backed up.
+Transactions up to 0x000000000000001D are backed up.
+Transactions up to 0x000000000000001D are backed up.
+Transactions up to 0x0000000000000039 are backed up.
+mipcmanage
+dbcheck
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f ./back/*
+
+echo "***** changing b.dat to read_only *****"
+***** changing b.dat to read_only *****
+chmod 444 b.dat
+$MUPIP backup -noonline "*" ./back | & sort -f
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+DB file ##TEST_PATH##/a.dat backed up in file ./back/a.dat
+DB file ##TEST_PATH##/c.dat backed up in file ./back/c.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ./back/mumps.dat
+Transactions up to 0x000000000000001D are backed up.
+Transactions up to 0x000000000000001D are backed up.
+Transactions up to 0x0000000000000039 are backed up.
+mipcmanage
+unset verbose
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+
+*** TSTMBAKWJ.CSH ***
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod 666 *.dat *.mjl
+
+mkdir ./Back
+echo "*** *.dat R/W *.mjl R/W ***"
+*** *.dat R/W *.mjl R/W ***
+$MUPIP backup -noonline "*" ./Back | & sort -f
+
+
+
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file ./Back/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file ./Back/b.dat
+DB file ##TEST_PATH##/c.dat backed up in file ./Back/c.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ./Back/mumps.dat
+Transactions up to 0x000000000000001D are backed up.
+Transactions up to 0x000000000000001D are backed up.
+Transactions up to 0x000000000000001D are backed up.
+Transactions up to 0x0000000000000039 are backed up.
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f ./Back/*
+
+echo "*** b.dat R/W b.mjl R/O ***"
+*** b.dat R/W b.mjl R/O ***
+chmod 666 b.dat
+chmod 444 b.mjl
+$MUPIP backup -noonline "*" ./Back | & sort -f
+
+
+
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file ./Back/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file ./Back/b.dat
+DB file ##TEST_PATH##/c.dat backed up in file ./Back/c.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ./Back/mumps.dat
+Transactions up to 0x000000000000001D are backed up.
+Transactions up to 0x000000000000001D are backed up.
+Transactions up to 0x000000000000001D are backed up.
+Transactions up to 0x0000000000000039 are backed up.
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f ./Back/*
+
+echo "*** b.dat R/O b.mjl R/W ***"
+*** b.dat R/O b.mjl R/W ***
+chmod 444 b.dat
+chmod 666 b.mjl
+$MUPIP backup -noonline "*" ./Back | & sort -f
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+DB file ##TEST_PATH##/a.dat backed up in file ./Back/a.dat
+DB file ##TEST_PATH##/c.dat backed up in file ./Back/c.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ./Back/mumps.dat
+Transactions up to 0x000000000000001D are backed up.
+Transactions up to 0x000000000000001D are backed up.
+Transactions up to 0x0000000000000039 are backed up.
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f ./Back/*
+
+echo "*** b.dat R/O b.mjl R/O ***"
+*** b.dat R/O b.mjl R/O ***
+chmod 444 b.dat
+chmod 444 b.mjl
+$MUPIP backup -noonline "*" ./Back | & sort -f
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+DB file ##TEST_PATH##/a.dat backed up in file ./Back/a.dat
+DB file ##TEST_PATH##/c.dat backed up in file ./Back/c.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file ./Back/mumps.dat
+Transactions up to 0x000000000000001D are backed up.
+Transactions up to 0x000000000000001D are backed up.
+Transactions up to 0x0000000000000039 are backed up.
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -rf Back
+
+\rm -f *.dat *.mjl mumps.gld
+
+
+
+*** TSTMEXTE.CSH ****
+
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod 666 *.dat *.mjl
+
+echo "***** *.dat R/W  *.mjl R/W *****"
+***** *.dat R/W  *.mjl R/W *****
+$MUPIP extend DEFAULT
+Extension successful, file ##TEST_PATH##/mumps.dat extended by 100 blocks.  Total blocks = 200.
+mipcmanage
+$MUPIP extend AREG
+Extension successful, file ##TEST_PATH##/a.dat extended by 100 blocks.  Total blocks = 200.
+mipcmanage
+$MUPIP extend BREG
+Extension successful, file ##TEST_PATH##/b.dat extended by 100 blocks.  Total blocks = 200.
+mipcmanage
+$MUPIP extend CREG
+Extension successful, file ##TEST_PATH##/c.dat extended by 100 blocks.  Total blocks = 200.
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+echo "***** b.dat R/W  b.mjl R/O *****"
+***** b.dat R/W  b.mjl R/O *****
+chmod 666 b.dat
+chmod 444 b.mjl
+$MUPIP extend DEFAULT
+Extension successful, file ##TEST_PATH##/mumps.dat extended by 100 blocks.  Total blocks = 300.
+mipcmanage
+$MUPIP extend AREG
+Extension successful, file ##TEST_PATH##/a.dat extended by 100 blocks.  Total blocks = 300.
+mipcmanage
+$MUPIP extend BREG
+The extension failed on file ##TEST_PATH##/b.dat; check disk space and permissions.
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+mipcmanage
+$MUPIP extend CREG
+Extension successful, file ##TEST_PATH##/c.dat extended by 100 blocks.  Total blocks = 300.
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+echo "***** b.dat R/O  b.mjl R/W *****"
+***** b.dat R/O  b.mjl R/W *****
+chmod 444 b.dat
+chmod 666 b.mjl
+$MUPIP extend DEFAULT
+Extension successful, file ##TEST_PATH##/mumps.dat extended by 100 blocks.  Total blocks = 400.
+mipcmanage
+$MUPIP extend AREG
+Extension successful, file ##TEST_PATH##/a.dat extended by 100 blocks.  Total blocks = 400.
+mipcmanage
+$MUPIP extend BREG
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+mipcmanage
+$MUPIP extend CREG
+Extension successful, file ##TEST_PATH##/c.dat extended by 100 blocks.  Total blocks = 400.
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+echo "***** b.dat R/O  b.mjl R/O *****"
+***** b.dat R/O  b.mjl R/O *****
+chmod 444 b.dat
+chmod 444 b.mjl
+$MUPIP extend DEFAULT
+Extension successful, file ##TEST_PATH##/mumps.dat extended by 100 blocks.  Total blocks = 500.
+mipcmanage
+$MUPIP extend AREG
+Extension successful, file ##TEST_PATH##/a.dat extended by 100 blocks.  Total blocks = 500.
+mipcmanage
+$MUPIP extend BREG
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+mipcmanage
+$MUPIP extend CREG
+Extension successful, file ##TEST_PATH##/c.dat extended by 100 blocks.  Total blocks = 500.
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat *.mjl mumps.gld
+
+*** TSTMEXTRNJ.CSH ***
+
+
+$gtm_tst/com/dbcreate.csh mumps $1
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod 666 *.dat
+
+echo "mupip extract -nolog glo.dir"
+mupip extract -nolog glo.dir
+$MUPIP extract -nolog glo.dir | & sort -f
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f glo.dir
+
+echo "***** changing *.dat to read_only *****"
+***** changing *.dat to read_only *****
+chmod 444 *.dat
+echo "mupip extract -nolog glo.dir"
+mupip extract -nolog glo.dir
+$MUPIP extract -nolog glo.dir | & sort -f
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+mipcmanage
+
+\rm -f *.dat glo.dir mumps.gld
+
+*** TSTMEXTRNJWFR.CSH ***
+
+
+$gtm_tst/com/dbcreate.csh mumps $1
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod 666 *.dat
+
+echo "mupip extract -fr -nolog glo.dir"
+mupip extract -fr -nolog glo.dir
+$MUPIP extract -fr -nolog glo.dir | & sort -f
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f glo.dir
+
+echo "***** changing *.dat to read_only *****"
+***** changing *.dat to read_only *****
+chmod 444 *.dat
+echo "mupip extract -fr -nolog glo.dir"
+mupip extract -fr -nolog glo.dir
+$MUPIP extract -fr -nolog glo.dir | & sort -f
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/a.dat read only
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+Cannot freeze the database
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+mipcmanage
+
+\rm -f *.dat glo.dir mumps.gld
+
+*** TSTMEXTRWJ.CSH ***
+
+
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod 666 *.dat *.mjl
+
+echo "**** *.dat R/W *.mjl R/W ****"
+**** *.dat R/W *.mjl R/W ****
+echo "mupip extract -nolog glo.dir"
+mupip extract -nolog glo.dir
+$MUPIP extract -nolog glo.dir | & sort -f
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f glo.dir
+
+chmod 666 b.dat
+chmod 444 b.mjl
+echo "**** b.dat R/W b.mjl R/O ****"
+**** b.dat R/W b.mjl R/O ****
+echo "mupip extract -nolog glo.dir"
+mupip extract -nolog glo.dir
+$MUPIP extract -nolog glo.dir | & sort -f
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f glo.dir
+
+chmod 444 b.dat
+chmod 666 b.mjl
+echo "**** b.dat R/O b.mjl R/W ****"
+**** b.dat R/O b.mjl R/W ****
+echo "mupip extract -nolog glo.dir"
+mupip extract -nolog glo.dir
+$MUPIP extract -nolog glo.dir | & sort -f
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f glo.dir
+
+chmod 444 b.dat
+chmod 444 b.mjl
+echo "**** b.dat R/O b.mjl R/O ****"
+**** b.dat R/O b.mjl R/O ****
+echo "mupip extract -nolog glo.dir"
+mupip extract -nolog glo.dir
+$MUPIP extract -nolog glo.dir | & sort -f
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f glo.dir *.dat *.mjl mumps.gld
+
+*** TSTMEXTRWJWFR.CSH ***
+
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod 666 *.dat *.mjl
+
+echo "**** *.dat R/W *.mjl R/W ***"
+**** *.dat R/W *.mjl R/W ***
+echo "mupip extract -fr -nolog glo.dir"
+mupip extract -fr -nolog glo.dir
+$MUPIP extract -fr -nolog glo.dir | & sort -f
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f glo.dir
+
+echo "**** b.dat R/W b.mjl R/O ***"
+**** b.dat R/W b.mjl R/O ***
+chmod 666 b.dat
+chmod 444 b.mjl
+echo "mupip extract -fr -nolog glo.dir"
+mupip extract -fr -nolog glo.dir
+$MUPIP extract -fr -nolog glo.dir | & sort -f
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f glo.dir
+
+echo "**** b.dat R/O b.mjl R/W ***"
+**** b.dat R/O b.mjl R/W ***
+chmod 444 b.dat
+chmod 666 b.mjl
+echo "mupip extract -fr -nolog glo.dir"
+mupip extract -fr -nolog glo.dir
+$MUPIP extract -fr -nolog glo.dir | & sort -f
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+Cannot freeze the database
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f glo.dir
+
+echo "**** b.dat R/O b.mjl R/O ***"
+**** b.dat R/O b.mjl R/O ***
+chmod 444 b.dat
+chmod 444 b.mjl
+echo "mupip extract -fr -nolog glo.dir"
+mupip extract -fr -nolog glo.dir
+$MUPIP extract -fr -nolog glo.dir | & sort -f
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+Cannot freeze the database
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f *.dat *.mjl glo.dir mumps.gld
+
+*** TSTMFREZ.CSH ***
+
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod 666 *.dat *.mjl
+
+echo "***** *.dat R/W  *.mjl R/W *****"
+***** *.dat R/W  *.mjl R/W *****
+echo mupip freeze -on "*"
+mupip freeze -on *
+$MUPIP freeze -on "*" > & freeze_on_all.out
+mipcmanage
+echo mupip freeze -off "*"
+mupip freeze -off *
+$MUPIP freeze -off "*" > & freeze_off_all.out
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+echo "***** b.dat R/W  b.mjl R/O *****"
+***** b.dat R/W  b.mjl R/O *****
+chmod 666 b.dat
+chmod 444 b.mjl
+echo mupip freeze -on "*"
+mupip freeze -on *
+$MUPIP freeze -on "*" > & freeze1_on_all.out
+mipcmanage
+echo mupip freeze -off "*"
+mupip freeze -off *
+$MUPIP freeze -off "*" > & freeze1_off_all.out
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+echo "***** b.dat R/O  b.mjl R/W *****"
+***** b.dat R/O  b.mjl R/W *****
+chmod 444 b.dat
+chmod 666 b.mjl
+echo mupip freeze -on "*"
+mupip freeze -on *
+$MUPIP freeze -on "*" > & freeze2_on_all.outx
+$gtm_tst/com/check_error_exist.csh freeze2_on_all.outx "GTM-E-DBRDONLY"
+----------
+Error GTM-E-DBRDONLY seen in freeze2_on_all.outx as expected:
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+----------
+mipcmanage
+echo mupip freeze -off "*"
+mupip freeze -off *
+$MUPIP freeze -off "*" > & freeze2_off_all.outx
+$gtm_tst/com/check_error_exist.csh freeze2_off_all.outx "GTM-E-DBRDONLY"
+----------
+Error GTM-E-DBRDONLY seen in freeze2_off_all.outx as expected:
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+----------
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+echo "***** b.dat R/O  b.mjl R/O *****"
+***** b.dat R/O  b.mjl R/O *****
+chmod 444 b.dat
+chmod 444 b.mjl
+echo mupip freeze -on "*"
+mupip freeze -on *
+$MUPIP freeze -on "*" > & freeze3_on_all.outx
+$gtm_tst/com/check_error_exist.csh freeze3_on_all.outx "GTM-E-DBRDONLY"
+----------
+Error GTM-E-DBRDONLY seen in freeze3_on_all.outx as expected:
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+----------
+mipcmanage
+echo mupip freeze -off "*"
+mupip freeze -off *
+$MUPIP freeze -off "*" > & freeze3_off_all.outx
+$gtm_tst/com/check_error_exist.csh freeze3_off_all.outx "GTM-E-DBRDONLY"
+----------
+Error GTM-E-DBRDONLY seen in freeze3_off_all.outx as expected:
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+----------
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat *.mjl mumps.gld
+
+*** TSTMINTEGR.CSH ***
+
+
+
+echo ""
+
+echo "First with no journal"
+First with no journal
+echo ""
+
+$gtm_tst/com/dbcreate.csh mumps $1
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod 666 b.dat
+$MUPIP integ -FAST -reg "*" > & integr.out1
+egrep "GTM-E|No errors" integr.out1
+No errors detected by fast integ.
+No errors detected by fast integ.
+No errors detected by fast integ.
+No errors detected by fast integ.
+mipcmanage
+$MUPIP integ -reg "*" > & integr.out2
+egrep "GTM-E|No errors" integr.out2
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+mipcmanage
+
+echo "***** b.dat R/O *****"
+***** b.dat R/O *****
+chmod 444 b.dat
+$MUPIP integ -FAST -reg "*" > & integr.out3
+egrep "GTM-E|No errors" integr.out3
+No errors detected by fast integ.
+No errors detected by fast integ.
+No errors detected by fast integ.
+No errors detected by fast integ.
+mipcmanage
+$MUPIP integ -reg "*" > & integr.out4
+egrep "GTM-E|No errors" integr.out4
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+mipcmanage
+\rm -f *.dat
+
+echo ""
+
+echo "Now with journal"
+Now with journal
+echo ""
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod 666 b.dat b.mjl
+
+echo "***** *.dat R/W *.mjl R/W *****"
+***** *.dat R/W *.mjl R/W *****
+$MUPIP integ -FAST -reg "*" > & integr.out5
+egrep "GTM-E|No errors" integr.out5
+No errors detected by fast integ.
+No errors detected by fast integ.
+No errors detected by fast integ.
+No errors detected by fast integ.
+mipcmanage
+$MUPIP integ -reg "*" > & integr.out6
+egrep "GTM-E|No errors" integr.out6
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+mipcmanage
+
+echo "***** b.dat R/W b.mjl R/O *****"
+***** b.dat R/W b.mjl R/O *****
+chmod 666 b.dat
+chmod 444 b.mjl
+$MUPIP integ -FAST -reg "*" > & integr.out7
+egrep "GTM-E|No errors" integr.out7
+No errors detected by fast integ.
+No errors detected by fast integ.
+No errors detected by fast integ.
+No errors detected by fast integ.
+mipcmanage
+$MUPIP integ -reg "*" > & integr.out8
+egrep "GTM-E|No errors" integr.out8
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+mipcmanage
+
+echo "***** b.dat R/O b.mjl R/W *****"
+***** b.dat R/O b.mjl R/W *****
+chmod 444 b.dat
+chmod 666 b.mjl
+$MUPIP integ -FAST -reg "*" > & integr.out9
+egrep "GTM-E|No errors" integr.out9
+No errors detected by fast integ.
+No errors detected by fast integ.
+No errors detected by fast integ.
+No errors detected by fast integ.
+mipcmanage
+$MUPIP integ -reg "*" > & integr.out10
+egrep "GTM-E|No errors" integr.out10
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+mipcmanage
+
+echo "***** b.dat R/O b.mjl R/O *****"
+***** b.dat R/O b.mjl R/O *****
+chmod 444 b.dat
+chmod 444 b.mjl
+$MUPIP integ -FAST -reg "*" > & integr.out11
+egrep "GTM-E|No errors" integr.out11
+No errors detected by fast integ.
+No errors detected by fast integ.
+No errors detected by fast integ.
+No errors detected by fast integ.
+mipcmanage
+$MUPIP integ -reg "*" > & integr.out12
+egrep "GTM-E|No errors" integr.out12
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+mipcmanage
+chmod 666 *.dat *.mjl
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f *.dat *.mjl mumps.gld
+
+*** TSTMINTEGTN.CSH ***
+
+*** First database with no journal***
+
+
+$gtm_tst/com/dbcreate.csh mumps $1
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+$GTM << aaa
+
+GTM>
+do in0^sfill("set",1,4)
+set PASS
+
+GTM>
+chmod 666 b.dat
+
+echo "***** *.dat read_write *****"
+***** *.dat read_write *****
+$gtm_tst/$tst/u_inref/tstmintegtn_domultireg.csh | & sort > & integtn.out1
+egrep "GTM-E|No errors" integtn.out1
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+mipcmanage
+
+echo "***** b.dat read_only *****"
+***** b.dat read_only *****
+chmod 444 b.dat
+$gtm_tst/$tst/u_inref/tstmintegtn_domultireg.csh | & sort > & integtn.out2
+egrep "GTM-E|No errors" integtn.out2
+%GTM-E-DBRDONLY, Database file b.dat read only
+%GTM-E-DBTNRESET, Cannot reset transaction number for this region
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+mipcmanage
+\rm -f *.dat
+
+echo ""
+
+echo "*** Now database with journal***"
+*** Now database with journal***
+echo ""
+
+
+$MUPIP create
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/c.dat
+Created file ##TEST_PATH##/mumps.dat
+$MUPIP set -journal=enable,on,before -reg "*" | & sort -f
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+$GTM << aaa
+
+GTM>
+do in0^sfill("set",1,4)
+set PASS
+
+GTM>
+chmod 666 *.dat *.mjl
+
+chmod.csh rwrw
+**** R/W b.dat R/W b.mjl ****
+$gtm_tst/$tst/u_inref/tstmintegtn_domultireg.csh | & sort > & integtn.out3
+egrep "GTM-E|No errors" integtn.out3
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+mipcmanage
+
+chmod.csh rwro
+**** R/W b.dat R/O b.mjl ****
+$gtm_tst/$tst/u_inref/tstmintegtn_domultireg.csh | & sort > & integtn.out4
+egrep "GTM-E|No errors" integtn.out4
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+mipcmanage
+
+chmod.csh rorw
+**** R/O b.dat R/W b.mjl ****
+$gtm_tst/$tst/u_inref/tstmintegtn_domultireg.csh | & sort > & integtn.out5
+egrep "GTM-E|No errors" integtn.out5
+%GTM-E-DBRDONLY, Database file b.dat read only
+%GTM-E-DBTNRESET, Cannot reset transaction number for this region
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+mipcmanage
+
+chmod.csh roro
+**** R/O b.dat R/O b.mjl ****
+$gtm_tst/$tst/u_inref/tstmintegtn_domultireg.csh | & sort > & integtn.out6
+egrep "GTM-E|No errors" integtn.out6
+%GTM-E-DBRDONLY, Database file b.dat read only
+%GTM-E-DBTNRESET, Cannot reset transaction number for this region
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+No errors detected by integ.
+mipcmanage
+
+chmod 666 *.dat *.mjl
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f *.dat *.mjl mumps.gld
+
+*** TSTMLOAD.CSH ***
+
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+chmod.csh rwrw
+**** R/W b.dat R/W b.mjl ****
+$MUPIP load load.go
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 140  Max Subsc Len: 10  Max Data Len: 14
+Last LOAD record number: 142
+
+$GTM << bbb
+
+GTM>
+ver PASS
+
+GTM>
+kill PASS
+
+GTM>
+mipcmanage
+
+chmod.csh rwro
+**** R/W b.dat R/O b.mjl ****
+$MUPIP load load.go
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(1)
+%GTM-E-RECLOAD, Error loading record number: 31
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(2)
+%GTM-E-RECLOAD, Error loading record number: 32
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(3)
+%GTM-E-RECLOAD, Error loading record number: 33
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(4)
+%GTM-E-RECLOAD, Error loading record number: 34
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(5)
+%GTM-E-RECLOAD, Error loading record number: 35
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(6)
+%GTM-E-RECLOAD, Error loading record number: 36
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(7)
+%GTM-E-RECLOAD, Error loading record number: 37
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(8)
+%GTM-E-RECLOAD, Error loading record number: 38
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(9)
+%GTM-E-RECLOAD, Error loading record number: 39
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(10)
+%GTM-E-RECLOAD, Error loading record number: 40
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(11)
+%GTM-E-RECLOAD, Error loading record number: 41
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(12)
+%GTM-E-RECLOAD, Error loading record number: 42
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(13)
+%GTM-E-RECLOAD, Error loading record number: 43
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(14)
+%GTM-E-RECLOAD, Error loading record number: 44
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(15)
+%GTM-E-RECLOAD, Error loading record number: 45
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(16)
+%GTM-E-RECLOAD, Error loading record number: 46
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(17)
+%GTM-E-RECLOAD, Error loading record number: 47
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(18)
+%GTM-E-RECLOAD, Error loading record number: 48
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(19)
+%GTM-E-RECLOAD, Error loading record number: 49
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(20)
+%GTM-E-RECLOAD, Error loading record number: 50
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(21)
+%GTM-E-RECLOAD, Error loading record number: 51
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(22)
+%GTM-E-RECLOAD, Error loading record number: 52
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(23)
+%GTM-E-RECLOAD, Error loading record number: 53
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(24)
+%GTM-E-RECLOAD, Error loading record number: 54
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(25)
+%GTM-E-RECLOAD, Error loading record number: 55
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(26)
+%GTM-E-RECLOAD, Error loading record number: 56
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(27)
+%GTM-E-RECLOAD, Error loading record number: 57
+
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+		Global variable : ^bfill(28)
+%GTM-E-RECLOAD, Error loading record number: 58
+
+LOAD TOTAL		Key Cnt: 112  Max Subsc Len: 10  Max Data Len: 14
+Last LOAD record number: 142
+
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+chmod.csh rorw
+**** R/O b.dat R/W b.mjl ****
+$MUPIP load load.go
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(1)
+%GTM-E-RECLOAD, Error loading record number: 31
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(2)
+%GTM-E-RECLOAD, Error loading record number: 32
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(3)
+%GTM-E-RECLOAD, Error loading record number: 33
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(4)
+%GTM-E-RECLOAD, Error loading record number: 34
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(5)
+%GTM-E-RECLOAD, Error loading record number: 35
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(6)
+%GTM-E-RECLOAD, Error loading record number: 36
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(7)
+%GTM-E-RECLOAD, Error loading record number: 37
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(8)
+%GTM-E-RECLOAD, Error loading record number: 38
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(9)
+%GTM-E-RECLOAD, Error loading record number: 39
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(10)
+%GTM-E-RECLOAD, Error loading record number: 40
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(11)
+%GTM-E-RECLOAD, Error loading record number: 41
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(12)
+%GTM-E-RECLOAD, Error loading record number: 42
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(13)
+%GTM-E-RECLOAD, Error loading record number: 43
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(14)
+%GTM-E-RECLOAD, Error loading record number: 44
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(15)
+%GTM-E-RECLOAD, Error loading record number: 45
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(16)
+%GTM-E-RECLOAD, Error loading record number: 46
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(17)
+%GTM-E-RECLOAD, Error loading record number: 47
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(18)
+%GTM-E-RECLOAD, Error loading record number: 48
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(19)
+%GTM-E-RECLOAD, Error loading record number: 49
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(20)
+%GTM-E-RECLOAD, Error loading record number: 50
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(21)
+%GTM-E-RECLOAD, Error loading record number: 51
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(22)
+%GTM-E-RECLOAD, Error loading record number: 52
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(23)
+%GTM-E-RECLOAD, Error loading record number: 53
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(24)
+%GTM-E-RECLOAD, Error loading record number: 54
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(25)
+%GTM-E-RECLOAD, Error loading record number: 55
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(26)
+%GTM-E-RECLOAD, Error loading record number: 56
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(27)
+%GTM-E-RECLOAD, Error loading record number: 57
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(28)
+%GTM-E-RECLOAD, Error loading record number: 58
+
+LOAD TOTAL		Key Cnt: 112  Max Subsc Len: 10  Max Data Len: 14
+Last LOAD record number: 142
+
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+chmod.csh roro
+**** R/O b.dat R/O b.mjl ****
+$MUPIP load load.go
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(1)
+%GTM-E-RECLOAD, Error loading record number: 31
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(2)
+%GTM-E-RECLOAD, Error loading record number: 32
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(3)
+%GTM-E-RECLOAD, Error loading record number: 33
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(4)
+%GTM-E-RECLOAD, Error loading record number: 34
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(5)
+%GTM-E-RECLOAD, Error loading record number: 35
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(6)
+%GTM-E-RECLOAD, Error loading record number: 36
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(7)
+%GTM-E-RECLOAD, Error loading record number: 37
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(8)
+%GTM-E-RECLOAD, Error loading record number: 38
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(9)
+%GTM-E-RECLOAD, Error loading record number: 39
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(10)
+%GTM-E-RECLOAD, Error loading record number: 40
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(11)
+%GTM-E-RECLOAD, Error loading record number: 41
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(12)
+%GTM-E-RECLOAD, Error loading record number: 42
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(13)
+%GTM-E-RECLOAD, Error loading record number: 43
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(14)
+%GTM-E-RECLOAD, Error loading record number: 44
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(15)
+%GTM-E-RECLOAD, Error loading record number: 45
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(16)
+%GTM-E-RECLOAD, Error loading record number: 46
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(17)
+%GTM-E-RECLOAD, Error loading record number: 47
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(18)
+%GTM-E-RECLOAD, Error loading record number: 48
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(19)
+%GTM-E-RECLOAD, Error loading record number: 49
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(20)
+%GTM-E-RECLOAD, Error loading record number: 50
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(21)
+%GTM-E-RECLOAD, Error loading record number: 51
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(22)
+%GTM-E-RECLOAD, Error loading record number: 52
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(23)
+%GTM-E-RECLOAD, Error loading record number: 53
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(24)
+%GTM-E-RECLOAD, Error loading record number: 54
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(25)
+%GTM-E-RECLOAD, Error loading record number: 55
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(26)
+%GTM-E-RECLOAD, Error loading record number: 56
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(27)
+%GTM-E-RECLOAD, Error loading record number: 57
+
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+		Global variable : ^bfill(28)
+%GTM-E-RECLOAD, Error loading record number: 58
+
+LOAD TOTAL		Key Cnt: 112  Max Subsc Len: 10  Max Data Len: 14
+Last LOAD record number: 142
+
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat *.mjl mumps.gld
+
+*** TSTMREORGNJ.CSH ***
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+
+GTM>
+set PASS
+
+GTM>
+ ------- Before reorg --------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip reorg
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+Global: afill (region AREG)
+Blocks processed    : 2 
+Blocks coalesced    : 1 
+Blocks split        : 0 
+Blocks swapped      : 2 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: afill (region CREG)
+Blocks processed    : 10 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 5 
+Blocks freed        : 5 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: bfill (region BREG)
+Blocks processed    : 9 
+Blocks coalesced    : 7 
+Blocks split        : 0 
+Blocks swapped      : 5 
+Blocks freed        : 6 
+Blocks reused       : 3 
+Blocks extended     : 0 
+   
+Global: bfill (region DEFAULT)
+Blocks processed    : 3 
+Blocks coalesced    : 1 
+Blocks split        : 0 
+Blocks swapped      : 2 
+Blocks freed        : 2 
+Blocks reused       : 1 
+Blocks extended     : 0 
+   
+Global: cfill (region AREG)
+Blocks processed    : 4 
+Blocks coalesced    : 3 
+Blocks split        : 0 
+Blocks swapped      : 2 
+Blocks freed        : 2 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: cfill (region CREG)
+Blocks processed    : 9 
+Blocks coalesced    : 8 
+Blocks split        : 0 
+Blocks swapped      : 5 
+Blocks freed        : 7 
+Blocks reused       : 3 
+Blocks extended     : 0 
+   
+Global: dfill (region AREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: dfill (region DEFAULT)
+Blocks processed    : 12 
+Blocks coalesced    : 11 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 7 
+Blocks reused       : 2 
+Blocks extended     : 0 
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Global: afill (region AREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: bfill (region BREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: cfill (region CREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: dfill (region DEFAULT)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+##ALLOW_OUTPUT SPANNING_REGIONS
+ ------- After reorg --------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+
+GTM>
+set PASS
+
+GTM>
+----- Before reorg -----
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+****** Changing database to read_only ******
+-r--r--r-- mumps.dat
+##SOURCE_PATH##/mupip reorg
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+Global: afill (region AREG)
+Blocks processed    : 2 
+Blocks coalesced    : 1 
+Blocks split        : 0 
+Blocks swapped      : 2 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: afill (region CREG)
+Blocks processed    : 10 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 5 
+Blocks freed        : 5 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: bfill (region BREG)
+Blocks processed    : 9 
+Blocks coalesced    : 7 
+Blocks split        : 0 
+Blocks swapped      : 5 
+Blocks freed        : 6 
+Blocks reused       : 3 
+Blocks extended     : 0 
+   
+Global: bfill (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+   
+Global: cfill (region AREG)
+Blocks processed    : 4 
+Blocks coalesced    : 3 
+Blocks split        : 0 
+Blocks swapped      : 2 
+Blocks freed        : 2 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: cfill (region CREG)
+Blocks processed    : 9 
+Blocks coalesced    : 8 
+Blocks split        : 0 
+Blocks swapped      : 5 
+Blocks freed        : 7 
+Blocks reused       : 3 
+Blocks extended     : 0 
+   
+Global: dfill (region AREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: dfill (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Global: afill (region AREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: bfill (region BREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: cfill (region CREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: dfill (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+##ALLOW_OUTPUT SPANNING_REGIONS
+ ----- After reorg on read_only database -----
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+*** TSTMREORG.CSH ***
+
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+set PASS
+
+GTM>
+------- Before reorg -------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+R/W mumps.dat R/W mumps.mjl
+##SOURCE_PATH##/mupip reorg
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+Global: afill (region AREG)
+Blocks processed    : 2 
+Blocks coalesced    : 1 
+Blocks split        : 0 
+Blocks swapped      : 2 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: afill (region CREG)
+Blocks processed    : 10 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 4 
+Blocks freed        : 5 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: bfill (region BREG)
+Blocks processed    : 9 
+Blocks coalesced    : 7 
+Blocks split        : 0 
+Blocks swapped      : 5 
+Blocks freed        : 6 
+Blocks reused       : 3 
+Blocks extended     : 0 
+   
+Global: bfill (region DEFAULT)
+Blocks processed    : 3 
+Blocks coalesced    : 1 
+Blocks split        : 0 
+Blocks swapped      : 2 
+Blocks freed        : 1 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: cfill (region AREG)
+Blocks processed    : 4 
+Blocks coalesced    : 3 
+Blocks split        : 0 
+Blocks swapped      : 2 
+Blocks freed        : 2 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: cfill (region CREG)
+Blocks processed    : 9 
+Blocks coalesced    : 8 
+Blocks split        : 0 
+Blocks swapped      : 5 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: dfill (region AREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: dfill (region DEFAULT)
+Blocks processed    : 12 
+Blocks coalesced    : 11 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 7 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: efill (region CREG)
+Blocks processed    : 6 
+Blocks coalesced    : 3 
+Blocks split        : 0 
+Blocks swapped      : 3 
+Blocks freed        : 5 
+Blocks reused       : 3 
+Blocks extended     : 0 
+   
+Global: efill (region DEFAULT)
+Blocks processed    : 6 
+Blocks coalesced    : 4 
+Blocks split        : 0 
+Blocks swapped      : 3 
+Blocks freed        : 5 
+Blocks reused       : 2 
+Blocks extended     : 0 
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Global: afill (region AREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: bfill (region BREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: cfill (region CREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: dfill (region DEFAULT)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 5 
+Blocks freed        : 4 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: efill (region DEFAULT)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 5 
+Blocks freed        : 7 
+Blocks reused       : 3 
+Blocks extended     : 0 
+##ALLOW_OUTPUT SPANNING_REGIONS
+------- Test last reorg -------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+set PASS
+
+GTM>
+------- Before reorg -------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+R/O mumps.dat R/W mumps.mjl
+##SOURCE_PATH##/mupip reorg
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+Global: afill (region AREG)
+Blocks processed    : 2 
+Blocks coalesced    : 1 
+Blocks split        : 0 
+Blocks swapped      : 2 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: afill (region CREG)
+Blocks processed    : 10 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 4 
+Blocks freed        : 5 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: bfill (region BREG)
+Blocks processed    : 9 
+Blocks coalesced    : 7 
+Blocks split        : 0 
+Blocks swapped      : 5 
+Blocks freed        : 6 
+Blocks reused       : 3 
+Blocks extended     : 0 
+   
+Global: bfill (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+   
+Global: cfill (region AREG)
+Blocks processed    : 4 
+Blocks coalesced    : 3 
+Blocks split        : 0 
+Blocks swapped      : 2 
+Blocks freed        : 2 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: cfill (region CREG)
+Blocks processed    : 9 
+Blocks coalesced    : 8 
+Blocks split        : 0 
+Blocks swapped      : 5 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: dfill (region AREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: dfill (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+   
+Global: efill (region CREG)
+Blocks processed    : 6 
+Blocks coalesced    : 3 
+Blocks split        : 0 
+Blocks swapped      : 3 
+Blocks freed        : 5 
+Blocks reused       : 3 
+Blocks extended     : 0 
+   
+Global: efill (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Global: afill (region AREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: bfill (region BREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: cfill (region CREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: dfill (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+   
+Global: efill (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+##ALLOW_OUTPUT SPANNING_REGIONS
+------- Test last reorg -------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+set PASS
+
+GTM>
+------- Before reorg -------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+R/W mumps.dat R/O mumps.mjl
+##SOURCE_PATH##/mupip reorg
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+Global: afill (region AREG)
+Blocks processed    : 2 
+Blocks coalesced    : 1 
+Blocks split        : 0 
+Blocks swapped      : 2 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: afill (region CREG)
+Blocks processed    : 10 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 4 
+Blocks freed        : 5 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: bfill (region BREG)
+Blocks processed    : 9 
+Blocks coalesced    : 7 
+Blocks split        : 0 
+Blocks swapped      : 5 
+Blocks freed        : 6 
+Blocks reused       : 3 
+Blocks extended     : 0 
+   
+Global: bfill (region DEFAULT)
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Global: afill (region AREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: bfill (region BREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: cfill (region CREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: dfill (region DEFAULT)
+%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
+##ALLOW_OUTPUT SPANNING_REGIONS
+------- Test last reorg -------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+
+GTM>
+set PASS
+
+GTM>
+------- Before reorg -------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+R/O mumps.dat R/O mumps.mjl
+##SOURCE_PATH##/mupip reorg
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+Global: afill (region AREG)
+Blocks processed    : 2 
+Blocks coalesced    : 1 
+Blocks split        : 0 
+Blocks swapped      : 2 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: afill (region CREG)
+Blocks processed    : 10 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 4 
+Blocks freed        : 5 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: bfill (region BREG)
+Blocks processed    : 9 
+Blocks coalesced    : 7 
+Blocks split        : 0 
+Blocks swapped      : 5 
+Blocks freed        : 6 
+Blocks reused       : 3 
+Blocks extended     : 0 
+   
+Global: bfill (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+   
+Global: cfill (region AREG)
+Blocks processed    : 4 
+Blocks coalesced    : 3 
+Blocks split        : 0 
+Blocks swapped      : 2 
+Blocks freed        : 2 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: cfill (region CREG)
+Blocks processed    : 9 
+Blocks coalesced    : 8 
+Blocks split        : 0 
+Blocks swapped      : 5 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: dfill (region AREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: dfill (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+   
+Global: efill (region CREG)
+Blocks processed    : 6 
+Blocks coalesced    : 3 
+Blocks split        : 0 
+Blocks swapped      : 3 
+Blocks freed        : 5 
+Blocks reused       : 3 
+Blocks extended     : 0 
+   
+Global: efill (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Global: afill (region AREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: bfill (region BREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: cfill (region CREG)
+Blocks processed    : 11 
+Blocks coalesced    : 9 
+Blocks split        : 0 
+Blocks swapped      : 7 
+Blocks freed        : 6 
+Blocks reused       : 2 
+Blocks extended     : 0 
+   
+Global: dfill (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+   
+Global: efill (region DEFAULT)
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+##ALLOW_OUTPUT SPANNING_REGIONS
+------- Test last reorg -------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+*** TSTMRESTORE.CSH ***
+
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod 666 *.dat *.mjl
+
+mkdir ./backup
+$MUPIP backup -noonline -i "*" ./backup | & sort -f
+
+
+
+5 blocks saved.
+5 blocks saved.
+5 blocks saved.
+7 blocks saved.
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat incrementally backed up in file ./backup/a.dat
+DB file ##TEST_PATH##/b.dat incrementally backed up in file ./backup/b.dat
+DB file ##TEST_PATH##/c.dat incrementally backed up in file ./backup/c.dat
+DB file ##TEST_PATH##/mumps.dat incrementally backed up in file ./backup/mumps.dat
+MUPIP backup of database file ##TEST_PATH##/a.dat to ./backup/a.dat
+MUPIP backup of database file ##TEST_PATH##/b.dat to ./backup/b.dat
+MUPIP backup of database file ##TEST_PATH##/c.dat to ./backup/c.dat
+MUPIP backup of database file ##TEST_PATH##/mumps.dat to ./backup/mumps.dat
+Transactions from 0x0000000000000001 to 0x000000000000001D are backed up.
+Transactions from 0x0000000000000001 to 0x000000000000001D are backed up.
+Transactions from 0x0000000000000001 to 0x000000000000001D are backed up.
+Transactions from 0x0000000000000001 to 0x0000000000000039 are backed up.
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat
+$MUPIP create
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/c.dat
+Created file ##TEST_PATH##/mumps.dat
+chmod.csh rwrw
+**** R/W b.dat R/W b.mjl ****
+res mumps.dat a.dat b.dat c.dat
+mupip restore mumps.dat ./backup/mumps.dat
+
+RESTORE COMPLETED
+7 blocks restored
+mupip restore a.dat ./backup/a.dat
+
+RESTORE COMPLETED
+5 blocks restored
+mupip restore b.dat ./backup/b.dat
+
+RESTORE COMPLETED
+5 blocks restored
+mupip restore c.dat ./backup/c.dat
+
+RESTORE COMPLETED
+5 blocks restored
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat
+$MUPIP create
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/c.dat
+Created file ##TEST_PATH##/mumps.dat
+chmod.csh rwro
+**** R/W b.dat R/O b.mjl ****
+res mumps.dat a.dat b.dat c.dat
+mupip restore mumps.dat ./backup/mumps.dat
+
+RESTORE COMPLETED
+7 blocks restored
+mupip restore a.dat ./backup/a.dat
+
+RESTORE COMPLETED
+5 blocks restored
+mupip restore b.dat ./backup/b.dat
+
+RESTORE COMPLETED
+5 blocks restored
+mupip restore c.dat ./backup/c.dat
+
+RESTORE COMPLETED
+5 blocks restored
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat
+$MUPIP create
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/c.dat
+Created file ##TEST_PATH##/mumps.dat
+chmod.csh rorw
+**** R/O b.dat R/W b.mjl ****
+res mumps.dat a.dat b.dat c.dat
+mupip restore mumps.dat ./backup/mumps.dat
+
+RESTORE COMPLETED
+7 blocks restored
+mupip restore a.dat ./backup/a.dat
+
+RESTORE COMPLETED
+5 blocks restored
+mupip restore b.dat ./backup/b.dat
+Error accessing output file b.dat. Aborting restore.
+open : Permission denied
+%SYSTEM-E-ENO13, Permission denied
+mupip restore c.dat ./backup/c.dat
+
+RESTORE COMPLETED
+5 blocks restored
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat
+$MUPIP create
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/c.dat
+Created file ##TEST_PATH##/mumps.dat
+chmod.csh roro
+**** R/O b.dat R/O b.mjl ****
+res mumps.dat a.dat b.dat c.dat
+mupip restore mumps.dat ./backup/mumps.dat
+
+RESTORE COMPLETED
+7 blocks restored
+mupip restore a.dat ./backup/a.dat
+
+RESTORE COMPLETED
+5 blocks restored
+mupip restore b.dat ./backup/b.dat
+Error accessing output file b.dat. Aborting restore.
+open : Permission denied
+%SYSTEM-E-ENO13, Permission denied
+mupip restore c.dat ./backup/c.dat
+
+RESTORE COMPLETED
+5 blocks restored
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat *.mjl mumps.gld
+\rm -fr backup
+*** Test for mupip command RUNDOWN ***
+
+*** TSTMRUNDOWN ***
+
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+set PASS
+
+GTM>
+chmod 666 *.dat *.mjl
+
+chmod.csh rwrw
+**** R/W b.dat R/W b.mjl ****
+echo "mupip rundown -reg * "
+mupip rundown -reg * 
+$MUPIP rundown -reg "*" | & sort -f
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat *.mjl
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+set PASS
+
+GTM>
+chmod.csh rwro
+**** R/W b.dat R/O b.mjl ****
+echo "mupip rundown -reg * "
+mupip rundown -reg * 
+$MUPIP rundown -reg "*" | & sort -f
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat *.mjl
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+set PASS
+
+GTM>
+chmod.csh rorw
+**** R/O b.dat R/W b.mjl ****
+echo "mupip rundown -reg * "
+mupip rundown -reg * 
+$MUPIP rundown -reg "*" | & sort -f
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat *.mjl
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+set PASS
+
+GTM>
+chmod.csh roro
+**** R/O b.dat R/O b.mjl ****
+echo "mupip rundown -reg * "
+mupip rundown -reg * 
+$MUPIP rundown -reg "*" | & sort -f
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat *.mjl mumps.gld
+
+*** TSTMSETR.CSH ***
+
+rm: No match.
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod.csh rwrw
+**** R/W b.dat R/W b.mjl ****
+$MUPIP set -reg "*" -journal=enable,on,before | & sort -f
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f *.gld *.dat *.mjl*
+
+
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod.csh rwro
+**** R/W b.dat R/O b.mjl ****
+$MUPIP set -reg "*" -journal=enable,on,before | & sort -f
+%GTM-E-JNLNOCREATE, Journal file ##TEST_PATH##/b.mjl not created
+%GTM-E-JNLRDONLY, Journal file ##TEST_PATH##/b.mjl read only
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f *.gld *.dat *.mjl*
+
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod.csh rorw
+**** R/O b.dat R/W b.mjl ****
+$MUPIP set -reg "*" -journal=enable,on,before | & sort -f
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f *.gld *.dat *.mjl*
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod.csh roro
+**** R/O b.dat R/O b.mjl ****
+$MUPIP set -reg "*" -journal=enable,on,before | & sort -f
+%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f *.gld *.dat *.mjl*
+*** Test for MUPIP JOURNAL -EXTRACT ***
+
+*** TSTMJLEX.CSH ***
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+set PASS
+
+GTM>
+chmod.csh rwrw
+**** R/W b.dat R/W b.mjl ****
+$MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f *.mjf
+
+chmod.csh rwro
+**** R/W b.dat R/O b.mjl ****
+$MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f *.mjf
+
+chmod.csh rorw
+**** R/O b.dat R/W b.mjl ****
+$MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f *.mjf
+
+chmod.csh roro
+**** R/O b.dat R/O b.mjl ****
+$MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+\rm -f *.mjf
+
+\rm -f *.dat *.mjl mumps.gld
+
+*** TSTMJLREC.CSH ***
+
+*** Test for MUPIP JOURNAL -RECOVER -FORWARD ***
+
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod 666 *.dat *.mjl
+
+\rm -f *.dat
+$MUPIP create > & /dev/null
+chmod.csh rwrw
+**** R/W b.dat R/W b.mjl ****
+$MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat
+$MUPIP create > & /dev/null
+chmod.csh rwro
+**** R/W b.dat R/O b.mjl ****
+$MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat
+$MUPIP create > & /dev/null
+chmod.csh rorw
+**** R/O b.dat R/W b.mjl ****
+$MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat
+$MUPIP create > & /dev/null
+chmod.csh roro
+**** R/O b.dat R/O b.mjl ****
+$MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat *.mjl mumps.gld
+
+echo "*** Test for MUPIP JOURNAL -RECOVER -BACKWARD ***"
+*** Test for MUPIP JOURNAL -RECOVER -BACKWARD ***
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod 666 *.dat *.mjl
+chmod.csh rwrw
+**** R/W b.dat R/W b.mjl ****
+$MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+chmod.csh rwro
+**** R/W b.dat R/O b.mjl ****
+$MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/b.mjl
+##TEST_AWK%GTM-E-SYSCALL, Error received from system call open -- called from module ##SOURCE_SRC_PATH##/mur_read_file_sp.c at line [0-9]*
+%SYSTEM-E-ENO13, Permission denied
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+chmod.csh rorw
+**** R/O b.dat R/W b.mjl ****
+$MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+chmod.csh roro
+**** R/O b.dat R/O b.mjl ****
+$MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/b.mjl
+##TEST_AWK%GTM-E-SYSCALL, Error received from system call open -- called from module ##SOURCE_SRC_PATH##/mur_read_file_sp.c at line [0-9]*
+%SYSTEM-E-ENO13, Permission denied
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat *.mjl mumps.gld
+
+*** TSTMJLSH.CSH ***
+
+*** Test for MUPIP JOURNAL -SHOW ***
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << EOF
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod 666 *.dat *.mjl
+
+chmod.csh rwrw
+**** R/W b.dat R/W b.mjl ****
+$MUPIP journal -show=all -forward mumps.mjl,a.mjl,b.mjl,c.mjl > & jlsh1.out
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+chmod.csh rwro
+**** R/W b.dat R/O b.mjl ****
+$MUPIP journal -show=all -forward mumps.mjl,a.mjl,b.mjl,c.mjl > & jlsh2.out
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+chmod.csh rorw
+**** R/O b.dat R/W b.mjl ****
+$MUPIP journal -show=all -forward mumps.mjl,a.mjl,b.mjl,c.mjl > & jlsh3.out
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+chmod.csh roro
+**** R/O b.dat R/O b.mjl ****
+$MUPIP journal -show=all -forward mumps.mjl,a.mjl,b.mjl,c.mjl > & jlsh4.out
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+$grep successful jlsh*.out
+jlsh1.out:%GTM-S-JNLSUCCESS, Show successful
+jlsh1.out:%GTM-S-JNLSUCCESS, Verify successful
+jlsh2.out:%GTM-S-JNLSUCCESS, Show successful
+jlsh2.out:%GTM-S-JNLSUCCESS, Verify successful
+jlsh3.out:%GTM-S-JNLSUCCESS, Show successful
+jlsh3.out:%GTM-S-JNLSUCCESS, Verify successful
+jlsh4.out:%GTM-S-JNLSUCCESS, Show successful
+jlsh4.out:%GTM-S-JNLSUCCESS, Verify successful
+\rm -f jlsh*.out *.dat *.mjl mumps.gld
+
+*** TSTMJLVERI.CSH ***
+
+*** Test for MUPIP JOURNAL -VERIFY ***
+
+$gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
+-rw-rw-rw- a.dat
+-rw-rw-rw- a.mjl
+-rw-rw-rw- b.dat
+-rw-rw-rw- b.mjl
+-rw-rw-rw- c.dat
+-rw-rw-rw- c.mjl
+-rw-rw-rw- mumps.dat
+-rw-rw-rw- mumps.mjl
+$GTM << bbb
+
+GTM>
+Do in0^sfill("set",1,4)
+
+GTM>
+set PASS
+
+GTM>
+chmod 666 *.dat *.mjl
+
+chmod.csh rwrw
+**** R/W b.dat R/W b.mjl ****
+$MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+chmod.csh rwro
+**** R/W b.dat R/O b.mjl ****
+$MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+chmod.csh rorw
+**** R/O b.dat R/W b.mjl ****
+$MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+chmod.csh roro
+**** R/O b.dat R/O b.mjl ****
+$MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mipcmanage
+$gtm_tst/com/dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+\rm -f *.dat *.mjl mumps.gld

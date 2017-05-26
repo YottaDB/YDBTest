@@ -1,0 +1,23 @@
+Killed
+----------
+Error REQRECOV seen in gtm.out as expected:
+%GTM-E-REQRECOV, Error accessing database ##TEST_PATH##/mumps.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+----------
+----------
+Error ENO seen in gtm.out as expected:
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
+----------
+----------
+Error PREVJNLLINKCUT seen in mupip_set2.out as expected:
+%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
+----------
+Old journal file:
+ Crash                                        TRUE
+
+New journal file:
+ Crash                                       FALSE
+ Prev journal file name 
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,5 @@
+clear(testnum)
+	s test=$o(^cpucur(testnum,""))
+	s pid=$o(^cpucur(testnum,test,""))
+	s host=$o(^cpucur(testnum,test,pid,""))
+	d ^unload(test,host,pid,testnum)

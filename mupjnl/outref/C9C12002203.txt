@@ -1,0 +1,57 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+Mupip extract ......
+##TEST_AWK.GTM-I-RECORDSTAT, .name.	  Key cnt. 1  max subsc len. 6  max rec len. [0-9]*  max node len. [0-9]*
+%GTM-I-RECORDSTAT, ^var:	  Key cnt: 1202  max subsc len: 179  max rec len: 740  max node len: 923
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 1  max subsc len: 3  max rec len: 162  max node len: 169
+##TEST_AWK.GTM-I-RECORDSTAT, .y.	  Key cnt. 1  max subsc len. 3  max rec len. [0-9]*  max node len. [0-9]*
+##TEST_AWK.GTM-I-RECORDSTAT, .z.	  Key cnt. 1  max subsc len. 3  max rec len. [0-9]*  max node len. [0-9]*
+##TEST_AWK.GTM-I-RECORDSTAT, TOTAL.	  Key cnt. 1206  max subsc len. 179  max rec len. [0-9]*  max node len. [0-9]*
+setenv gtm_chset M
+unset echo
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+1 GLO records written.
+
+DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+1 ZWR records written.
+
+DSE> 
+##SUSPEND_OUTPUT  NON_UTF8
+setenv gtm_chset UTF-8
+unset echo
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> Error:  GLO format is not supported in UTF-8 mode. Use ZWR format.
+DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+1 ZWR records written.
+
+DSE> 
+##ALLOW_OUTPUT NON_UTF8
+Journal extract ......
+%GTM-S-JNLSUCCESS, Extract successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

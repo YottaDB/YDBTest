@@ -1,0 +1,15 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+Prefill the database.
+
+Reencrypt the database.
+
+##TEST_AWK.*MUPIP REORG ENCRYPT finished
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

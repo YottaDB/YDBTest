@@ -1,0 +1,198 @@
+GTM version is switched to ##FILTERED##PRIORVER##
+Files Created in ##TEST_PATH##:
+Using: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/##TST_IMAGE##/mumps -run GDE
+mumps.gld
+Using: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/##TST_IMAGE##/mupip
+mumps.dat
+--------------------------------------------------------------------------------------------------------------------- 
+Test #1
+--------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Total blocks in database  -------            101 [0x00000065]
+Total local bitmap blocks -------              1 [0x00000001]
+Blocks bypassed -----------------             91 [0x0000005b]
+Blocks processed ----------------             10 [0x0000000a]
+Blocks needing to be split ------              5 [0x00000005]
+- DT leaf (data) blocks ---------              0 [0x00000000]
+- DT index blocks ---------------              0 [0x00000000]
+- GVT leaf (data) blocks --------              5 [0x00000005]
+- GVT index blocks --------------              0 [0x00000000]
+Scan phase records read:      5
+Scan phase records bypassed:  0
+Scan phase records processed: 5
+Scan phase records left:      0
+
+
+Total blocks in database  -------            101 [0x00000065]
+Total local bitmap blocks -------              1 [0x00000001]
+Blocks bypassed -----------------             86 [0x00000056]
+Blocks processed ----------------             15 [0x0000000f]
+Blocks needing to be split ------              0 [0x00000000]
+- DT leaf (data) blocks ---------              0 [0x00000000]
+- DT index blocks ---------------              0 [0x00000000]
+- GVT leaf (data) blocks --------              0 [0x00000000]
+- GVT index blocks --------------              0 [0x00000000]
+--------------------------------------------------------------------------------
+You must have a backup of database ##TEST_PATH##/mumps.dat before you proceed!
+An abnormal termination can damage the database while doing the certification !
+Proceeding will also turn off replication and/or journaling if enabled
+--------------------------------------------------------------------------------
+Proceed? [y/n]:
+Certification phase for database ##TEST_PATH##/mumps.dat beginning
+
+%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+
+Total blocks in scan phase file --              0 [0x00000000]
+Blocks bypassed ------------------              0 [0x00000000]
+Blocks processed -----------------              0 [0x00000000]
+Blocks read ----------------------              0 [0x00000000]
+Blocks read from cache -----------              0 [0x00000000]
+Blocks updated -------------------              0 [0x00000000]
+Blocks created -------------------              0 [0x00000000]
+GVTROOT right children processed -              0 [0x00000000]
+
+
+Total blocks in database  -------            101 [0x00000065]
+Total local bitmap blocks -------              1 [0x00000001]
+Blocks bypassed -----------------             86 [0x00000056]
+Blocks processed ----------------             15 [0x0000000f]
+Blocks needing to be split ------              0 [0x00000000]
+- DT leaf (data) blocks ---------              0 [0x00000000]
+- DT index blocks ---------------              0 [0x00000000]
+- GVT leaf (data) blocks --------              0 [0x00000000]
+- GVT index blocks --------------              0 [0x00000000]
+##V4VER##/mupip
+##V4VER##/mupip integ -REG *
+No errors detected by integ.
+--------------------------------------------------------------------------------------------------------------------- 
+Test #2
+--------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+%GTM-E-DBCREC2BIG, Record with key ^a("ABCDEFG","HIJKLMNOP",1,"QRSTUVWXY",8) is length 497 in block 0x00000003 which is greater than the maximum length 496 in database ##TEST_PATH##/mumps.dat
+%GTM-E-DBCREC2BIG, Record with key ^a("ABCDEFG","HIJKLMNOP",1,"QRSTUVWXY",2) is length 497 in block 0x00000005 which is greater than the maximum length 496 in database ##TEST_PATH##/mumps.dat
+%GTM-E-DBCREC2BIG, Record with key ^a("ABCDEFG","HIJKLMNOP",1,"QRSTUVWXY",4) is length 497 in block 0x00000006 which is greater than the maximum length 496 in database ##TEST_PATH##/mumps.dat
+%GTM-E-DBCREC2BIG, Record with key ^a("ABCDEFG","HIJKLMNOP",1,"QRSTUVWXY",6) is length 497 in block 0x00000007 which is greater than the maximum length 496 in database ##TEST_PATH##/mumps.dat
+
+
+Total blocks in database  -------            101 [0x00000065]
+Total local bitmap blocks -------              1 [0x00000001]
+Blocks bypassed -----------------             93 [0x0000005d]
+Blocks processed ----------------              4 [0x00000004]
+Blocks needing to be split ------              0 [0x00000000]
+- DT leaf (data) blocks ---------              0 [0x00000000]
+- DT index blocks ---------------              0 [0x00000000]
+- GVT leaf (data) blocks --------              4 [0x00000004]
+- GVT index blocks --------------              0 [0x00000000]
+##V4VER##/mupip
+##V4VER##/mupip integ -REG *
+No errors detected by integ.
+--------------------------------------------------------------------------------------------------------------------- 
+Test #3
+--------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Total blocks in database  -------            101 [0x00000065]
+Total local bitmap blocks -------              1 [0x00000001]
+Blocks bypassed -----------------             88 [0x00000058]
+Blocks processed ----------------             13 [0x0000000d]
+Blocks needing to be split ------              9 [0x00000009]
+- DT leaf (data) blocks ---------              0 [0x00000000]
+- DT index blocks ---------------              0 [0x00000000]
+- GVT leaf (data) blocks --------              9 [0x00000009]
+- GVT index blocks --------------              0 [0x00000000]
+Scan phase records read:      9
+Scan phase records bypassed:  0
+Scan phase records processed: 9
+Scan phase records left:      0
+
+
+Total blocks in database  -------            101 [0x00000065]
+Total local bitmap blocks -------              1 [0x00000001]
+Blocks bypassed -----------------             79 [0x0000004f]
+Blocks processed ----------------             22 [0x00000016]
+Blocks needing to be split ------              0 [0x00000000]
+- DT leaf (data) blocks ---------              0 [0x00000000]
+- DT index blocks ---------------              0 [0x00000000]
+- GVT leaf (data) blocks --------              0 [0x00000000]
+- GVT index blocks --------------              0 [0x00000000]
+##V4VER##/mupip
+##V4VER##/mupip integ -REG *
+No errors detected by integ.
+--------------------------------------------------------------------------------------------------------------------- 
+Test #4
+--------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Total blocks in database  -------            101 [0x00000065]
+Total local bitmap blocks -------              1 [0x00000001]
+Blocks bypassed -----------------             88 [0x00000058]
+Blocks processed ----------------             13 [0x0000000d]
+Blocks needing to be split ------              9 [0x00000009]
+- DT leaf (data) blocks ---------              0 [0x00000000]
+- DT index blocks ---------------              0 [0x00000000]
+- GVT leaf (data) blocks --------              9 [0x00000009]
+- GVT index blocks --------------              0 [0x00000000]
+--------------------------------------------------------------------------------
+You must have a backup of database ##TEST_PATH##/mumps.dat before you proceed!
+An abnormal termination can damage the database while doing the certification !
+Proceeding will also turn off replication and/or journaling if enabled
+--------------------------------------------------------------------------------
+Proceed? [y/n]:
+Certification phase for database ##TEST_PATH##/mumps.dat beginning
+
+%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+
+Total blocks in scan phase file --              9 [0x00000009]
+Blocks bypassed ------------------              0 [0x00000000]
+Blocks processed -----------------              9 [0x00000009]
+Blocks read ----------------------             45 [0x0000002d]
+Blocks read from cache -----------             33 [0x00000021]
+Blocks updated -------------------             27 [0x0000001b]
+Blocks created -------------------              9 [0x00000009]
+GVTROOT right children processed -              0 [0x00000000]
+
+
+Total blocks in database  -------            101 [0x00000065]
+Total local bitmap blocks -------              1 [0x00000001]
+Blocks bypassed -----------------             79 [0x0000004f]
+Blocks processed ----------------             22 [0x00000016]
+Blocks needing to be split ------              0 [0x00000000]
+- DT leaf (data) blocks ---------              0 [0x00000000]
+- DT index blocks ---------------              0 [0x00000000]
+- GVT leaf (data) blocks --------              0 [0x00000000]
+- GVT index blocks --------------              0 [0x00000000]
+##V4VER##/mupip
+##V4VER##/mupip integ -REG *
+No errors detected by integ.

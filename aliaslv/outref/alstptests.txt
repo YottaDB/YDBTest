@@ -1,0 +1,2826 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+
+*********************************** Start new subtest run condition 1 ************************************
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 1 condition 1 ********* restarts: 2 transaction end cmd: trollback
+------------------
+TSTART (varA) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *  ZWRITE follows:
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+KILL *  ZWRITE follows:
+------------------
+trollback command to end transaction - ZWRITE follows
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 2 condition 1 ********* restarts: 2 transaction end cmd: trollback
+------------------
+TSTART (varB) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *  ZWRITE follows:
+------------------
+TRESTART ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+KILL *  ZWRITE follows:
+------------------
+trollback command to end transaction - ZWRITE follows
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 3 condition 1 ********* restarts: 2 transaction end cmd: trollback
+------------------
+TSTART (varA,varB) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varA  ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varA  ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+trollback command to end transaction - ZWRITE follows
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 4 condition 1 ********* restarts: 2 transaction end cmd: trollback
+------------------
+TSTART (varA,varB) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varB  ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varB  ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+trollback command to end transaction - ZWRITE follows
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 5 condition 1 ********* restarts: 2 transaction end cmd: trollback
+------------------
+TSTART (varB,varA) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varA  ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varA  ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+trollback command to end transaction - ZWRITE follows
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 6 condition 1 ********* restarts: 2 transaction end cmd: trollback
+------------------
+TSTART (varB,varA) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varB  ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varB  ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+trollback command to end transaction - ZWRITE follows
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 7 condition 1 ********* restarts: 2 transaction end cmd: trollback
+------------------
+TSTART (varA,varB) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *  ZWRITE follows:
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *  ZWRITE follows:
+------------------
+trollback command to end transaction - ZWRITE follows
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 8 condition 1 ********* restarts: 2 transaction end cmd: trollback
+------------------
+TSTART (varA,varB) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+container reset  ZWRITE follows:
+varA=1 ;*
+*varA(1)=varA
+varB=2 ;*
+*varB(1)=varB
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+container reset  ZWRITE follows:
+varA=1 ;*
+*varA(1)=varA
+varB=2 ;*
+*varB(1)=varB
+------------------
+trollback command to end transaction - ZWRITE follows
+varA=1 ;*
+*varA(1)=varA
+varB=2 ;*
+*varB(1)=varB
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 9 condition 1 ********* restarts: 2 transaction end cmd: trollback
+------------------
+TSTART * ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+Definition of varC/varD and container reset follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+varC=42 ;*
+*varD=varC
+------------------
+TRESTART ZWRITE follows: 0
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+Definition of varC/varD and container reset follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+varC=42 ;*
+*varD=varC
+------------------
+TRESTART ZWRITE follows: 1
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+Definition of varC/varD and container reset follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+varC=42 ;*
+*varD=varC
+------------------
+trollback command to end transaction - ZWRITE follows
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+varC=42 ;*
+*varD=varC
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 10 condition 1 ********* restarts: 2 transaction end cmd: trollback
+------------------
+TSTART (varA,varB) [*** first ***] ZWRITE follows:
+varA="a" ;*
+varA(1)="a1"
+*varA(2)=varE
+varB="b" ;*
+varB(1)="b1"
+*varB(2)=varF
+varC="c"
+*varC(1)=varG
+varC(2)="c2"
+varD="d"
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to varA/varB
+------------------
+TSTART (varB,varC,varD) ZWRITE follows:
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+*varB(2)=varF
+varB(3)="b3-1"
+varC="c" ;*
+*varC(1)=varG
+varC(2)="c2"
+varD="d" ;*
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to all but varA
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+varB(2)="b2-2"
+varB(3)="b3-1"
+varB(4)="b4-2"
+varC="c-2" ;*
+*varC(1)=varG
+varC(2)="c2"
+varC(3)="c3-2"
+varE="e" ;*
+*varE(1)=varA
+varF="f" ;*
+*varF(2)=varB
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varG(3)="g3-2"
+varH="h" ;*
+varH(1)="h1"
+varH(2)="h2-2"
+*varH(3)=varF
+------------------
+TRESTART ******** ZWRITE follows: 0
+varA="a" ;*
+varA(1)="a1"
+*varA(2)=varE
+varB="b" ;*
+varB(1)="b1"
+*varB(2)=varF
+varC="c"
+*varC(1)=varG
+varC(2)="c2"
+varD="d"
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to varA/varB
+------------------
+TSTART (varB,varC,varD) ZWRITE follows:
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+*varB(2)=varF
+varB(3)="b3-1"
+varC="c" ;*
+*varC(1)=varG
+varC(2)="c2"
+varD="d" ;*
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to all but varA
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+varB(2)="b2-2"
+varB(3)="b3-1"
+varB(4)="b4-2"
+varC="c-2" ;*
+*varC(1)=varG
+varC(2)="c2"
+varC(3)="c3-2"
+varE="e" ;*
+*varE(1)=varA
+varF="f" ;*
+*varF(2)=varB
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varG(3)="g3-2"
+varH="h" ;*
+varH(1)="h1"
+varH(2)="h2-2"
+*varH(3)=varF
+------------------
+TRESTART ******** ZWRITE follows: 1
+varA="a" ;*
+varA(1)="a1"
+*varA(2)=varE
+varB="b" ;*
+varB(1)="b1"
+*varB(2)=varF
+varC="c"
+*varC(1)=varG
+varC(2)="c2"
+varD="d"
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to varA/varB
+------------------
+TSTART (varB,varC,varD) ZWRITE follows:
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+*varB(2)=varF
+varB(3)="b3-1"
+varC="c" ;*
+*varC(1)=varG
+varC(2)="c2"
+varD="d" ;*
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to all but varA
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+varB(2)="b2-2"
+varB(3)="b3-1"
+varB(4)="b4-2"
+varC="c-2" ;*
+*varC(1)=varG
+varC(2)="c2"
+varC(3)="c3-2"
+varE="e" ;*
+*varE(1)=varA
+varF="f" ;*
+*varF(2)=varB
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varG(3)="g3-2"
+varH="h" ;*
+varH(1)="h1"
+varH(2)="h2-2"
+*varH(3)=varF
+------------------
+trollback command to end transaction - ZWRITE follows
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+varB(2)="b2-2"
+varB(3)="b3-1"
+varB(4)="b4-2"
+varC="c-2"
+*varC(1)=varG
+varC(2)="c2"
+varC(3)="c3-2"
+varE="e" ;*
+*varE(1)=varA
+varF="f" ;*
+*varF(2)=varB
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varG(3)="g3-2"
+varH="h"
+varH(1)="h1"
+varH(2)="h2-2"
+*varH(3)=varF
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 11 condition 1 ********* restarts: 2 transaction end cmd: trollback
+
+
+Start of iteration 1 using fetchrtn sts11newvar1 and fetchstmt: do sts11newvar1(.a,41+i)
+
+*** Starting TP transaction preserving nothing ***
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+$ZWRTAC=""
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+$ZWRTAC=""
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+
+**** Final result after trollback -1 of entire transaction
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+
+
+Start of iteration 2 using fetchrtn sts11newvar2 and fetchstmt: do sts11newvar2(.a,41+i)
+
+*** Starting TP transaction preserving nothing ***
+* In newvar after adding new container: scalar tref/cref: 4/2  val tref/cref: 2/1  newval tref/cref: 1/0  $TLEVEL=2
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+$ZWRTAC=""
+* In newvar after adding new container: scalar tref/cref: 4/2  val tref/cref: 2/1  newval tref/cref: 1/0  $TLEVEL=2
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+$ZWRTAC=""
+* In newvar after adding new container: scalar tref/cref: 4/2  val tref/cref: 2/1  newval tref/cref: 1/0  $TLEVEL=2
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",3\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+
+**** Final result after trollback -1 of entire transaction
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",3\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+
+
+Start of iteration 3 using fetchrtn sts11newvar3 and fetchstmt: set *a("newvar","F"_$zahandle(val),$increment(idx))=$$sts11newvar3(41+i)
+
+*** Starting TP transaction preserving nothing ***
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+$ZWRTAC=""
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+$ZWRTAC=""
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",3\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+
+**** Final result after trollback -1 of entire transaction
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",3\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+Total of 0 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+*********************************** Start new subtest run condition 2 ************************************
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 1 condition 2 ********* restarts: 3 transaction end cmd: trollback
+------------------
+TSTART (varA) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *  ZWRITE follows:
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+KILL *  ZWRITE follows:
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+KILL *  ZWRITE follows:
+------------------
+trollback command to end transaction - ZWRITE follows
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 2 condition 2 ********* restarts: 3 transaction end cmd: trollback
+------------------
+TSTART (varB) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *  ZWRITE follows:
+------------------
+TRESTART ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+KILL *  ZWRITE follows:
+------------------
+TRESTART ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+KILL *  ZWRITE follows:
+------------------
+trollback command to end transaction - ZWRITE follows
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 3 condition 2 ********* restarts: 3 transaction end cmd: trollback
+------------------
+TSTART (varA,varB) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varA  ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varA  ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varA  ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+trollback command to end transaction - ZWRITE follows
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 4 condition 2 ********* restarts: 3 transaction end cmd: trollback
+------------------
+TSTART (varA,varB) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varB  ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varB  ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varB  ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+trollback command to end transaction - ZWRITE follows
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 5 condition 2 ********* restarts: 3 transaction end cmd: trollback
+------------------
+TSTART (varB,varA) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varA  ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varA  ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varA  ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+trollback command to end transaction - ZWRITE follows
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 6 condition 2 ********* restarts: 3 transaction end cmd: trollback
+------------------
+TSTART (varB,varA) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varB  ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varB  ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varB  ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+trollback command to end transaction - ZWRITE follows
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 7 condition 2 ********* restarts: 3 transaction end cmd: trollback
+------------------
+TSTART (varA,varB) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *  ZWRITE follows:
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *  ZWRITE follows:
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *  ZWRITE follows:
+------------------
+trollback command to end transaction - ZWRITE follows
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 8 condition 2 ********* restarts: 3 transaction end cmd: trollback
+------------------
+TSTART (varA,varB) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+container reset  ZWRITE follows:
+varA=1 ;*
+*varA(1)=varA
+varB=2 ;*
+*varB(1)=varB
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+container reset  ZWRITE follows:
+varA=1 ;*
+*varA(1)=varA
+varB=2 ;*
+*varB(1)=varB
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+container reset  ZWRITE follows:
+varA=1 ;*
+*varA(1)=varA
+varB=2 ;*
+*varB(1)=varB
+------------------
+trollback command to end transaction - ZWRITE follows
+varA=1 ;*
+*varA(1)=varA
+varB=2 ;*
+*varB(1)=varB
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 9 condition 2 ********* restarts: 3 transaction end cmd: trollback
+------------------
+TSTART * ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+Definition of varC/varD and container reset follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+varC=42 ;*
+*varD=varC
+------------------
+TRESTART ZWRITE follows: 0
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+Definition of varC/varD and container reset follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+varC=42 ;*
+*varD=varC
+------------------
+TRESTART ZWRITE follows: 1
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+Definition of varC/varD and container reset follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+varC=42 ;*
+*varD=varC
+------------------
+TRESTART ZWRITE follows: 2
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+Definition of varC/varD and container reset follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+varC=42 ;*
+*varD=varC
+------------------
+trollback command to end transaction - ZWRITE follows
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+varC=42 ;*
+*varD=varC
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 10 condition 2 ********* restarts: 3 transaction end cmd: trollback
+------------------
+TSTART (varA,varB) [*** first ***] ZWRITE follows:
+varA="a" ;*
+varA(1)="a1"
+*varA(2)=varE
+varB="b" ;*
+varB(1)="b1"
+*varB(2)=varF
+varC="c"
+*varC(1)=varG
+varC(2)="c2"
+varD="d"
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to varA/varB
+------------------
+TSTART (varB,varC,varD) ZWRITE follows:
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+*varB(2)=varF
+varB(3)="b3-1"
+varC="c" ;*
+*varC(1)=varG
+varC(2)="c2"
+varD="d" ;*
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to all but varA
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+varB(2)="b2-2"
+varB(3)="b3-1"
+varB(4)="b4-2"
+varC="c-2" ;*
+*varC(1)=varG
+varC(2)="c2"
+varC(3)="c3-2"
+varE="e" ;*
+*varE(1)=varA
+varF="f" ;*
+*varF(2)=varB
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varG(3)="g3-2"
+varH="h" ;*
+varH(1)="h1"
+varH(2)="h2-2"
+*varH(3)=varF
+------------------
+TRESTART ******** ZWRITE follows: 0
+varA="a" ;*
+varA(1)="a1"
+*varA(2)=varE
+varB="b" ;*
+varB(1)="b1"
+*varB(2)=varF
+varC="c"
+*varC(1)=varG
+varC(2)="c2"
+varD="d"
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to varA/varB
+------------------
+TSTART (varB,varC,varD) ZWRITE follows:
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+*varB(2)=varF
+varB(3)="b3-1"
+varC="c" ;*
+*varC(1)=varG
+varC(2)="c2"
+varD="d" ;*
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to all but varA
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+varB(2)="b2-2"
+varB(3)="b3-1"
+varB(4)="b4-2"
+varC="c-2" ;*
+*varC(1)=varG
+varC(2)="c2"
+varC(3)="c3-2"
+varE="e" ;*
+*varE(1)=varA
+varF="f" ;*
+*varF(2)=varB
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varG(3)="g3-2"
+varH="h" ;*
+varH(1)="h1"
+varH(2)="h2-2"
+*varH(3)=varF
+------------------
+TRESTART ******** ZWRITE follows: 1
+varA="a" ;*
+varA(1)="a1"
+*varA(2)=varE
+varB="b" ;*
+varB(1)="b1"
+*varB(2)=varF
+varC="c"
+*varC(1)=varG
+varC(2)="c2"
+varD="d"
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to varA/varB
+------------------
+TSTART (varB,varC,varD) ZWRITE follows:
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+*varB(2)=varF
+varB(3)="b3-1"
+varC="c" ;*
+*varC(1)=varG
+varC(2)="c2"
+varD="d" ;*
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to all but varA
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+varB(2)="b2-2"
+varB(3)="b3-1"
+varB(4)="b4-2"
+varC="c-2" ;*
+*varC(1)=varG
+varC(2)="c2"
+varC(3)="c3-2"
+varE="e" ;*
+*varE(1)=varA
+varF="f" ;*
+*varF(2)=varB
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varG(3)="g3-2"
+varH="h" ;*
+varH(1)="h1"
+varH(2)="h2-2"
+*varH(3)=varF
+------------------
+TRESTART ******** ZWRITE follows: 2
+varA="a" ;*
+varA(1)="a1"
+*varA(2)=varE
+varB="b" ;*
+varB(1)="b1"
+*varB(2)=varF
+varC="c"
+*varC(1)=varG
+varC(2)="c2"
+varD="d"
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to varA/varB
+------------------
+TSTART (varB,varC,varD) ZWRITE follows:
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+*varB(2)=varF
+varB(3)="b3-1"
+varC="c" ;*
+*varC(1)=varG
+varC(2)="c2"
+varD="d" ;*
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to all but varA
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+varB(2)="b2-2"
+varB(3)="b3-1"
+varB(4)="b4-2"
+varC="c-2" ;*
+*varC(1)=varG
+varC(2)="c2"
+varC(3)="c3-2"
+varE="e" ;*
+*varE(1)=varA
+varF="f" ;*
+*varF(2)=varB
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varG(3)="g3-2"
+varH="h" ;*
+varH(1)="h1"
+varH(2)="h2-2"
+*varH(3)=varF
+------------------
+trollback command to end transaction - ZWRITE follows
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+varB(2)="b2-2"
+varB(3)="b3-1"
+varB(4)="b4-2"
+varC="c-2"
+*varC(1)=varG
+varC(2)="c2"
+varC(3)="c3-2"
+varE="e" ;*
+*varE(1)=varA
+varF="f" ;*
+*varF(2)=varB
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varG(3)="g3-2"
+varH="h"
+varH(1)="h1"
+varH(2)="h2-2"
+*varH(3)=varF
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 11 condition 2 ********* restarts: 3 transaction end cmd: trollback
+
+
+Start of iteration 1 using fetchrtn sts11newvar1 and fetchstmt: do sts11newvar1(.a,41+i)
+
+*** Starting TP transaction preserving nothing ***
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+$ZWRTAC=""
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+$ZWRTAC=""
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+
+**** Final result after trollback -1 of entire transaction
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+
+
+Start of iteration 2 using fetchrtn sts11newvar2 and fetchstmt: do sts11newvar2(.a,41+i)
+
+*** Starting TP transaction preserving nothing ***
+* In newvar after adding new container: scalar tref/cref: 4/2  val tref/cref: 2/1  newval tref/cref: 1/0  $TLEVEL=2
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+$ZWRTAC=""
+* In newvar after adding new container: scalar tref/cref: 4/2  val tref/cref: 2/1  newval tref/cref: 1/0  $TLEVEL=2
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+$ZWRTAC=""
+* In newvar after adding new container: scalar tref/cref: 4/2  val tref/cref: 2/1  newval tref/cref: 1/0  $TLEVEL=2
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",3\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+
+**** Final result after trollback -1 of entire transaction
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",3\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+
+
+Start of iteration 3 using fetchrtn sts11newvar3 and fetchstmt: set *a("newvar","F"_$zahandle(val),$increment(idx))=$$sts11newvar3(41+i)
+
+*** Starting TP transaction preserving nothing ***
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+$ZWRTAC=""
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+$ZWRTAC=""
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",3\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+
+**** Final result after trollback -1 of entire transaction
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",3\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+Total of 0 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+*********************************** Start new subtest run condition 3 ************************************
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 1 condition 3 ********* restarts: 3 transaction end cmd: tcommit
+------------------
+TSTART (varA) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *  ZWRITE follows:
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+KILL *  ZWRITE follows:
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+KILL *  ZWRITE follows:
+------------------
+tcommit command to end transaction - ZWRITE follows
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 2 condition 3 ********* restarts: 3 transaction end cmd: tcommit
+------------------
+TSTART (varB) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *  ZWRITE follows:
+------------------
+TRESTART ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+KILL *  ZWRITE follows:
+------------------
+TRESTART ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+KILL *  ZWRITE follows:
+------------------
+tcommit command to end transaction - ZWRITE follows
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 3 condition 3 ********* restarts: 3 transaction end cmd: tcommit
+------------------
+TSTART (varA,varB) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varA  ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varA  ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varA  ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+tcommit command to end transaction - ZWRITE follows
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 4 condition 3 ********* restarts: 3 transaction end cmd: tcommit
+------------------
+TSTART (varA,varB) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varB  ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varB  ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varB  ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+tcommit command to end transaction - ZWRITE follows
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 5 condition 3 ********* restarts: 3 transaction end cmd: tcommit
+------------------
+TSTART (varB,varA) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varA  ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varA  ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varA  ZWRITE follows:
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+------------------
+tcommit command to end transaction - ZWRITE follows
+varB=2 ;*
+$ZWRTAC=""
+*varB(1)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+*$ZWRTAC1(1)=varB
+$ZWRTAC=""
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 6 condition 3 ********* restarts: 3 transaction end cmd: tcommit
+------------------
+TSTART (varB,varA) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varB  ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varB  ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *varB  ZWRITE follows:
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+------------------
+tcommit command to end transaction - ZWRITE follows
+varA=1 ;*
+$ZWRTAC=""
+*varA(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=varA
+$ZWRTAC=""
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 7 condition 3 ********* restarts: 3 transaction end cmd: tcommit
+------------------
+TSTART (varA,varB) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *  ZWRITE follows:
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *  ZWRITE follows:
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+KILL *  ZWRITE follows:
+------------------
+tcommit command to end transaction - ZWRITE follows
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 8 condition 3 ********* restarts: 3 transaction end cmd: tcommit
+------------------
+TSTART (varA,varB) ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+container reset  ZWRITE follows:
+varA=1 ;*
+*varA(1)=varA
+varB=2 ;*
+*varB(1)=varB
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+container reset  ZWRITE follows:
+varA=1 ;*
+*varA(1)=varA
+varB=2 ;*
+*varB(1)=varB
+------------------
+TRESTART ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+container reset  ZWRITE follows:
+varA=1 ;*
+*varA(1)=varA
+varB=2 ;*
+*varB(1)=varB
+------------------
+tcommit command to end transaction - ZWRITE follows
+varA=1 ;*
+*varA(1)=varA
+varB=2 ;*
+*varB(1)=varB
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 9 condition 3 ********* restarts: 3 transaction end cmd: tcommit
+------------------
+TSTART * ZWRITE follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+Definition of varC/varD and container reset follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+varC=42 ;*
+*varD=varC
+------------------
+TRESTART ZWRITE follows: 0
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+Definition of varC/varD and container reset follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+varC=42 ;*
+*varD=varC
+------------------
+TRESTART ZWRITE follows: 1
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+Definition of varC/varD and container reset follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+varC=42 ;*
+*varD=varC
+------------------
+TRESTART ZWRITE follows: 2
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+------------------
+Definition of varC/varD and container reset follows:
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+varC=42 ;*
+*varD=varC
+------------------
+tcommit command to end transaction - ZWRITE follows
+varA=1 ;*
+*varA(1)=varB
+varB=2 ;*
+*varB(1)=varA
+varC=42 ;*
+*varD=varC
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 10 condition 3 ********* restarts: 3 transaction end cmd: tcommit
+------------------
+TSTART (varA,varB) [*** first ***] ZWRITE follows:
+varA="a" ;*
+varA(1)="a1"
+*varA(2)=varE
+varB="b" ;*
+varB(1)="b1"
+*varB(2)=varF
+varC="c"
+*varC(1)=varG
+varC(2)="c2"
+varD="d"
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to varA/varB
+------------------
+TSTART (varB,varC,varD) ZWRITE follows:
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+*varB(2)=varF
+varB(3)="b3-1"
+varC="c" ;*
+*varC(1)=varG
+varC(2)="c2"
+varD="d" ;*
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to all but varA
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+varB(2)="b2-2"
+varB(3)="b3-1"
+varB(4)="b4-2"
+varC="c-2" ;*
+*varC(1)=varG
+varC(2)="c2"
+varC(3)="c3-2"
+varE="e" ;*
+*varE(1)=varA
+varF="f" ;*
+*varF(2)=varB
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varG(3)="g3-2"
+varH="h" ;*
+varH(1)="h1"
+varH(2)="h2-2"
+*varH(3)=varF
+------------------
+TRESTART ******** ZWRITE follows: 0
+varA="a" ;*
+varA(1)="a1"
+*varA(2)=varE
+varB="b" ;*
+varB(1)="b1"
+*varB(2)=varF
+varC="c"
+*varC(1)=varG
+varC(2)="c2"
+varD="d"
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to varA/varB
+------------------
+TSTART (varB,varC,varD) ZWRITE follows:
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+*varB(2)=varF
+varB(3)="b3-1"
+varC="c" ;*
+*varC(1)=varG
+varC(2)="c2"
+varD="d" ;*
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to all but varA
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+varB(2)="b2-2"
+varB(3)="b3-1"
+varB(4)="b4-2"
+varC="c-2" ;*
+*varC(1)=varG
+varC(2)="c2"
+varC(3)="c3-2"
+varE="e" ;*
+*varE(1)=varA
+varF="f" ;*
+*varF(2)=varB
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varG(3)="g3-2"
+varH="h" ;*
+varH(1)="h1"
+varH(2)="h2-2"
+*varH(3)=varF
+------------------
+TRESTART ******** ZWRITE follows: 1
+varA="a" ;*
+varA(1)="a1"
+*varA(2)=varE
+varB="b" ;*
+varB(1)="b1"
+*varB(2)=varF
+varC="c"
+*varC(1)=varG
+varC(2)="c2"
+varD="d"
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to varA/varB
+------------------
+TSTART (varB,varC,varD) ZWRITE follows:
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+*varB(2)=varF
+varB(3)="b3-1"
+varC="c" ;*
+*varC(1)=varG
+varC(2)="c2"
+varD="d" ;*
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to all but varA
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+varB(2)="b2-2"
+varB(3)="b3-1"
+varB(4)="b4-2"
+varC="c-2" ;*
+*varC(1)=varG
+varC(2)="c2"
+varC(3)="c3-2"
+varE="e" ;*
+*varE(1)=varA
+varF="f" ;*
+*varF(2)=varB
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varG(3)="g3-2"
+varH="h" ;*
+varH(1)="h1"
+varH(2)="h2-2"
+*varH(3)=varF
+------------------
+TRESTART ******** ZWRITE follows: 2
+varA="a" ;*
+varA(1)="a1"
+*varA(2)=varE
+varB="b" ;*
+varB(1)="b1"
+*varB(2)=varF
+varC="c"
+*varC(1)=varG
+varC(2)="c2"
+varD="d"
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to varA/varB
+------------------
+TSTART (varB,varC,varD) ZWRITE follows:
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+*varB(2)=varF
+varB(3)="b3-1"
+varC="c" ;*
+*varC(1)=varG
+varC(2)="c2"
+varD="d" ;*
+varD(1)="d1"
+*varD(2)=varH
+varE="e" ;*
+varE(1)="e1"
+varF="f" ;*
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varH="h" ;*
+varH(1)="h1"
+*varH(3)=varF
+------------------
+Making some changes to all but varA
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+varB(2)="b2-2"
+varB(3)="b3-1"
+varB(4)="b4-2"
+varC="c-2" ;*
+*varC(1)=varG
+varC(2)="c2"
+varC(3)="c3-2"
+varE="e" ;*
+*varE(1)=varA
+varF="f" ;*
+*varF(2)=varB
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varG(3)="g3-2"
+varH="h" ;*
+varH(1)="h1"
+varH(2)="h2-2"
+*varH(3)=varF
+------------------
+tcommit command to end transaction - ZWRITE follows
+varA="a" ;*
+varA(1)="a1-1"
+*varA(2)=varE
+varA(3)="a3-1"
+varB="b-1" ;*
+varB(1)="b1"
+varB(2)="b2-2"
+varB(3)="b3-1"
+varB(4)="b4-2"
+varC="c-2"
+*varC(1)=varG
+varC(2)="c2"
+varC(3)="c3-2"
+varE="e" ;*
+*varE(1)=varA
+varF="f" ;*
+*varF(2)=varB
+varF(3)="f3"
+varG="g" ;*
+varG(1)="g1"
+*varG(2)=varE
+varG(3)="g3-2"
+varH="h"
+varH(1)="h1"
+varH(2)="h2-2"
+*varH(3)=varF
+Return will now pop NEWs and clean alias var test results
+Total of 2 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+Starting memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********* subtest 11 condition 3 ********* restarts: 3 transaction end cmd: tcommit
+
+
+Start of iteration 1 using fetchrtn sts11newvar1 and fetchstmt: do sts11newvar1(.a,41+i)
+
+*** Starting TP transaction preserving nothing ***
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+$ZWRTAC=""
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+$ZWRTAC=""
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+
+**** Final result after tcommit of entire transaction
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\"\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+
+
+Start of iteration 2 using fetchrtn sts11newvar2 and fetchstmt: do sts11newvar2(.a,41+i)
+
+*** Starting TP transaction preserving nothing ***
+* In newvar after adding new container: scalar tref/cref: 4/2  val tref/cref: 2/1  newval tref/cref: 1/0  $TLEVEL=2
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+$ZWRTAC=""
+* In newvar after adding new container: scalar tref/cref: 4/2  val tref/cref: 2/1  newval tref/cref: 1/0  $TLEVEL=2
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+$ZWRTAC=""
+* In newvar after adding new container: scalar tref/cref: 4/2  val tref/cref: 2/1  newval tref/cref: 1/0  $TLEVEL=2
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",3\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+
+**** Final result after tcommit of entire transaction
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",3\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+
+
+Start of iteration 3 using fetchrtn sts11newvar3 and fetchstmt: set *a("newvar","F"_$zahandle(val),$increment(idx))=$$sts11newvar3(41+i)
+
+*** Starting TP transaction preserving nothing ***
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+$ZWRTAC=""
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+$ZWRTAC=""
+
+** New container added - Current value(s) of a:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",3\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+
+**** Final result after tcommit of entire transaction
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+$ZWRTAC=""
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",1\)=\$ZWRTAC1
+$ZWRTAC1=42 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",2\)=\$ZWRTAC2
+$ZWRTAC2=43 ;*
+##TEST_AWK\*a\(\"newvar\",\"F[0-9,A-F][0-9,A-F]*\",3\)=\$ZWRTAC3
+$ZWRTAC3=44 ;*
+$ZWRTAC=""
+Total of 0 lv_vals recovered
+Ending memory usage: ##TEST_AWK[0-9][0-9]*
+
+
+********** Start of memory leak tests *************
+
+Begin NOautoLVGC memory tests
+
+
+PASS condition 4a
+
+
+PASS condition 4b
+
+
+PASS condition 4c
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

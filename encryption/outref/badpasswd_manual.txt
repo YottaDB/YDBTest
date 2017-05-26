@@ -1,0 +1,25 @@
+#########TEST CONDITION:MUMPS TEST WHEN gtm_passwd SET TO NULL STRING###########
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+create.gld
+Using: ##SOURCE_PATH##/mupip
+create.dat
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/create.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/temp.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/create.gld
+Created file ##TEST_PATH##/y.dat
+Created file ##TEST_PATH##/z.dat
+Refer expect.out for the expect script output
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

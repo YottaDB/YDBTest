@@ -1,0 +1,19 @@
+#!/usr/local/bin/tcsh -f
+set x = `$gtm_exe/ftok mumps.dat | $tst_awk '{print $5}'`
+if ($x != "0xffffffff") then
+	foreach y ($x)
+		$gtm_tst/com/ipcs|grep $y >& foo
+		if (-z foo) then 
+			echo "OK."
+			echo ""
+		else
+			echo "IPCS TEST FAILED. Shared Memory or, Semaphore, were left!"
+			echo $gtm_tst/com/ipcrm -M $y
+			$gtm_tst/com/ipcrm -M $y >& /dev/null
+			echo $gtm_tst/com/ipcrm -S $y
+			$gtm_tst/com/ipcrm -S $y >& /dev/null
+			echo "Read-only test cleaned them to continue the test..."
+			echo ""
+		endif
+	endif
+endif

@@ -1,0 +1,547 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("symmetry")'
+File symmetry.trg, Line 1: No matching triggers found for deletion
+File symmetry.trg, Line 6: Added SET and/or Non-SET trigger on ^a named a#1
+File symmetry.trg, Line 7: Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+File symmetry.trg, Line 7: Added SET trigger on ^a named a#2
+File symmetry.trg, Line 10: Added SET trigger on ^a named a#3
+File symmetry.trg, Line 11: Added Non-SET trigger on ^b named b#1
+File symmetry.trg, Line 12: Modified Non-SET trigger on ^a named a#3
+File symmetry.trg, Line 13: Modified SET trigger on ^b named b#1
+=========================================
+4 triggers added
+0 triggers deleted
+2 triggers modified
+6 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+The last command PASSED
+
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S,K,ZK -delim=";" -pieces=1:20 -xecute="do ^twork"
+;trigger name: a#2 (region DEFAULT)  cycle: X
++^a -commands=S -delim=":" -pieces=2:30 -xecute="do ^twork"
+;trigger name: a#3 (region DEFAULT)  cycle: X
++^a(acn=*,1,acn2=?1"%".ULN) -commands=S,K -zdelim="|" -pieces=2:6;8 -xecute="Do ^mrtn"
+;trigger name: b#1 (region DEFAULT)  cycle: X
++^b(acn=*,2,acn2=?1"%".ULN) -commands=S,K -options=NOC -zdelim="|" -pieces=2:6;8 -xecute="Do ^mrtn"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("namesymmetry")'
+File namesymmetry.trg, Line 2: Modified SET and/or Non-SET trigger on ^a named a#1
+File namesymmetry.trg, Line 4: Error : SET trigger on ^a not added as another trigger named Again already exists
+=========================================
+1 trigger file entries have errors
+1 trigger file entries have no errors
+=========================================
+The last command FAILED
+
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S,K,ZK -delim=";" -pieces=1:20 -xecute="do ^twork"
+;trigger name: a#2 (region DEFAULT)  cycle: X
++^a -commands=S -delim=":" -pieces=2:30 -xecute="do ^twork"
+;trigger name: a#3 (region DEFAULT)  cycle: X
++^a(acn=*,1,acn2=?1"%".ULN) -commands=S,K -zdelim="|" -pieces=2:6;8 -xecute="Do ^mrtn"
+;trigger name: b#1 (region DEFAULT)  cycle: X
++^b(acn=*,2,acn2=?1"%".ULN) -commands=S,K -options=NOC -zdelim="|" -pieces=2:6;8 -xecute="Do ^mrtn"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("namesymmetryagain")'
+File namesymmetryagain.trg, Line 2: Modified SET and/or Non-SET trigger on ^a named a#1
+File namesymmetryagain.trg, Line 4: Error : Input trigger on ^a with trigger name AGAIN cannot match two different triggers named again and a#2 at the same time
+=========================================
+1 trigger file entries have errors
+1 trigger file entries have no errors
+=========================================
+The last command FAILED
+
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S,K,ZK -delim=";" -pieces=1:20 -xecute="do ^twork"
+;trigger name: a#2 (region DEFAULT)  cycle: X
++^a -commands=S -delim=":" -pieces=2:30 -xecute="do ^twork"
+;trigger name: a#3 (region DEFAULT)  cycle: X
++^a(acn=*,1,acn2=?1"%".ULN) -commands=S,K -zdelim="|" -pieces=2:6;8 -xecute="Do ^mrtn"
+;trigger name: b#1 (region DEFAULT)  cycle: X
++^b(acn=*,2,acn2=?1"%".ULN) -commands=S,K -options=NOC -zdelim="|" -pieces=2:6;8 -xecute="Do ^mrtn"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("renamesymmetry")'
+File renamesymmetry.trg, Line 2: Modified SET and/or Non-SET trigger on ^a named a#1
+File renamesymmetry.trg, Line 3: Modified SET trigger on ^a named a#2
+File renamesymmetry.trg, Line 4: Modified SET and/or Non-SET trigger on ^a named rogain
+File renamesymmetry.trg, Line 5: Modified SET trigger on ^a named yetAgain
+File renamesymmetry.trg, Line 6: Modified SET and/or Non-SET trigger on ^a named a#3
+File renamesymmetry.trg, Line 7: Modified SET and/or Non-SET trigger on ^a named renew1
+File renamesymmetry.trg, Line 8: Modified SET and/or Non-SET trigger on ^b named b#1
+File renamesymmetry.trg, Line 9: Modified SET and/or Non-SET trigger on ^b named renew2
+=========================================
+0 triggers added
+0 triggers deleted
+8 triggers modified
+8 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+The last command PASSED
+
+;trigger name: replAce (region DEFAULT)  cycle: X
++^a -name=replAce -commands=S,K,ZK -delim=";" -pieces=1:20 -xecute="do ^twork"
+;trigger name: replAceAgain (region DEFAULT)  cycle: X
++^a -name=replAceAgain -commands=S -delim=":" -pieces=2:30 -xecute="do ^twork"
+;trigger name: renew1rename (region DEFAULT)  cycle: X
++^a(acn=*,1,acn2=?1"%".ULN) -name=renew1rename -commands=S,K -zdelim="|" -pieces=2:6;8 -xecute="Do ^mrtn"
+;trigger name: renew2rename (region DEFAULT)  cycle: X
++^b(acn=*,2,acn2=?1"%".ULN) -name=renew2rename -commands=S,K -options=NOC -zdelim="|" -pieces=2:6;8 -xecute="Do ^mrtn"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("simplesetUP")'
+File simplesetUP.trg, Line 1: All existing triggers (count = 4) deleted
+File simplesetUP.trg, Line 3: Added SET trigger on ^a named a#1
+File simplesetUP.trg, Line 4: Added SET trigger on ^a named a#2
+File simplesetUP.trg, Line 5: Added SET trigger on ^a named a#3
+File simplesetUP.trg, Line 8: Modified SET trigger on ^a named a#1
+File simplesetUP.trg, Line 9: Modified SET trigger on ^a named a#2
+File simplesetUP.trg, Line 10: Modified SET trigger on ^a named a#3
+File simplesetUP.trg, Line 13: Modified SET trigger on ^a named a1
+File simplesetUP.trg, Line 14: Modified SET trigger on ^a named a2
+File simplesetUP.trg, Line 15: Modified SET trigger on ^a named a3
+=========================================
+3 triggers added
+4 triggers deleted
+6 triggers modified
+10 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+The last command PASSED
+
+;trigger name: a (region DEFAULT)  cycle: X
++^a(*) -name=a -commands=S -options=NOI -xecute="set a=1"
+;trigger name: a2 (region DEFAULT)  cycle: X
++^a(*) -name=a2 -commands=S -options=I -delim="|" -xecute="set a=1"
+;trigger name: a3 (region DEFAULT)  cycle: X
++^a(*) -name=a3 -commands=S -options=C -delim="|" -pieces=2 -xecute="set a=1"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("simplesetDOWN")'
+File simplesetDOWN.trg, Line 4: Deleted SET trigger on ^a named a
+File simplesetDOWN.trg, Line 6: Deleted SET trigger on ^a named a3
+File simplesetDOWN.trg, Line 8: Trigger named a3 does not exist
+=========================================
+0 triggers added
+2 triggers deleted
+0 triggers modified
+2 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+The last command PASSED
+
+;trigger name: a2 (region DEFAULT)  cycle: X
++^a(*) -name=a2 -commands=S -options=I -delim="|" -xecute="set a=1"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("simplekillUP")'
+File simplekillUP.trg, Line 1: All existing triggers (count = 1) deleted
+File simplekillUP.trg, Line 4: Added Non-SET trigger on ^a named a#1
+File simplekillUP.trg, Line 6: Modified Non-SET trigger on ^a named a#1
+File simplekillUP.trg, Line 8: Modified Non-SET trigger on ^a named killa
+File simplekillUP.trg, Line 10: Modified Non-SET trigger on ^a named killa
+File simplekillUP.trg, Line 13: Added Non-SET trigger on ^b named killb
+=========================================
+2 triggers added
+1 triggers deleted
+3 triggers modified
+6 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+The last command PASSED
+
+;trigger name: killab (region DEFAULT)  cycle: X
++^a -name=killab -commands=K,ZK,ZTR -xecute="do A^symmetry"
+;trigger name: killb (region DEFAULT)  cycle: X
++^b -name=killb -commands=K,ZK,ZTR -options=NOI -xecute="do A^symmetry"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("simplekillDOWN")'
+File simplekillDOWN.trg, Line 3: Modified Non-SET trigger on ^a named killab
+File simplekillDOWN.trg, Line 5: Modified Non-SET trigger on ^a named killab
+File simplekillDOWN.trg, Line 7: Non-SET trigger on ^a matches trigger named killab but not with specified name killa - no action taken
+File simplekillDOWN.trg, Line 10: Deleted Non-SET trigger on ^b named killb
+=========================================
+0 triggers added
+1 triggers deleted
+2 triggers modified
+3 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+The last command PASSED
+
+;trigger name: killab (region DEFAULT)  cycle: X
++^a -name=killab -commands=ZTR -xecute="do A^symmetry"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("simpleFAIL")'
+File simpleFAIL.trg, Line 1: All existing triggers (count = 1) deleted
+File simpleFAIL.trg, Line 5: Added SET and/or Non-SET trigger on ^a named a#1
+File simpleFAIL.trg, Line 6: Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+File simpleFAIL.trg, Line 6: Added SET trigger on ^a named a#2
+File simpleFAIL.trg, Line 7: Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+File simpleFAIL.trg, Line 7: Added SET trigger on ^a named a#3
+=========================================
+3 triggers added
+1 triggers deleted
+0 triggers modified
+4 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+The last command PASSED
+
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S,ZTR -xecute="do A^symmetry"
+;trigger name: a#2 (region DEFAULT)  cycle: X
++^a -commands=S -delim="=" -xecute="do A^symmetry"
+;trigger name: a#3 (region DEFAULT)  cycle: X
++^a -commands=S -delim=" " -xecute="do A^symmetry"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("simpleFAILredux")'
+File simpleFAILredux.trg, Line 1: All existing triggers (count = 3) deleted
+File simpleFAILredux.trg, Line 4: Added SET and/or Non-SET trigger on ^a named a#1
+File simpleFAILredux.trg, Line 5: Modified Non-SET trigger on ^a named a#1
+File simpleFAILredux.trg, Line 5: Added SET trigger on ^a named a#2
+File simpleFAILredux.trg, Line 6: Modified Non-SET trigger on ^a named a#1
+File simpleFAILredux.trg, Line 6: Added SET trigger on ^a named a#3
+File simpleFAILredux.trg, Line 7: Error : Command options S,ZTK incompatible with trigger on ^a named a#1
+=========================================
+1 trigger file entries have errors
+4 trigger file entries have no errors
+=========================================
+The last command FAILED
+
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S,ZTR -xecute="do A^symmetry"
+;trigger name: a#2 (region DEFAULT)  cycle: X
++^a -commands=S -delim="=" -xecute="do A^symmetry"
+;trigger name: a#3 (region DEFAULT)  cycle: X
++^a -commands=S -delim=" " -xecute="do A^symmetry"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("simpleFAILredux")'
+File simpleFAILredux.trg, Line 1: All existing triggers (count = 3) deleted
+File simpleFAILredux.trg, Line 4: Added SET and/or Non-SET trigger on ^a named a#1
+File simpleFAILredux.trg, Line 5: Modified Non-SET trigger on ^a named a#1
+File simpleFAILredux.trg, Line 5: Added SET trigger on ^a named a#2
+File simpleFAILredux.trg, Line 6: Modified Non-SET trigger on ^a named a#1
+File simpleFAILredux.trg, Line 6: Added SET trigger on ^a named a#3
+File simpleFAILredux.trg, Line 7: Error : Command options S,ZTK incompatible with trigger on ^a named a#1
+=========================================
+1 trigger file entries have errors
+4 trigger file entries have no errors
+=========================================
+The last command FAILED
+
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S,ZTR -xecute="do A^symmetry"
+;trigger name: a#2 (region DEFAULT)  cycle: X
++^a -commands=S -delim="=" -xecute="do A^symmetry"
+;trigger name: a#3 (region DEFAULT)  cycle: X
++^a -commands=S -delim=" " -xecute="do A^symmetry"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("nameconflict1")'
+File nameconflict1.trg, Line 3: Modified SET and/or Non-SET trigger on ^a named a#1
+File nameconflict1.trg, Line 5: Modified SET and/or Non-SET trigger on ^a named name1
+File nameconflict1.trg, Line 7: Modified Non-SET trigger on ^a named name2
+File nameconflict1.trg, Line 7: Added SET trigger on ^a named a#4
+File nameconflict1.trg, Line 9: Error : Input trigger on ^a with trigger name name4 cannot match a trigger named name2 and a to-be-created SET trigger at the same time
+=========================================
+1 trigger file entries have errors
+3 trigger file entries have no errors
+=========================================
+The last command FAILED
+
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S,ZTR -xecute="do A^symmetry"
+;trigger name: a#2 (region DEFAULT)  cycle: X
++^a -commands=S -delim="=" -xecute="do A^symmetry"
+;trigger name: a#3 (region DEFAULT)  cycle: X
++^a -commands=S -delim=" " -xecute="do A^symmetry"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("nameconflict2")'
+File nameconflict2.trg, Line 3: Modified SET and/or Non-SET trigger on ^a named a#1
+File nameconflict2.trg, Line 6: Error : Specified name name2 different from that of trigger on ^a named name1 but specified commands do not contain those in trigger
+=========================================
+1 trigger file entries have errors
+1 trigger file entries have no errors
+=========================================
+The last command FAILED
+
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S,ZTR -xecute="do A^symmetry"
+;trigger name: a#2 (region DEFAULT)  cycle: X
++^a -commands=S -delim="=" -xecute="do A^symmetry"
+;trigger name: a#3 (region DEFAULT)  cycle: X
++^a -commands=S -delim=" " -xecute="do A^symmetry"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("nameconflict3")'
+File nameconflict3.trg, Line 3: Error : Specified name name1 different from that of trigger on ^a named a#1 but specified commands do not contain those in trigger
+File nameconflict3.trg, Line 6: Error : Specified name name2 different from that of trigger on ^a named name1 but specified commands do not contain those in trigger
+=========================================
+2 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+The last command FAILED
+
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S,ZTR -xecute="do A^symmetry"
+;trigger name: a#2 (region DEFAULT)  cycle: X
++^a -commands=S -delim="=" -xecute="do A^symmetry"
+;trigger name: a#3 (region DEFAULT)  cycle: X
++^a -commands=S -delim=" " -xecute="do A^symmetry"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("usernamevsautoname")'
+File usernamevsautoname.trg, Line 1: All existing triggers (count = 3) deleted
+File usernamevsautoname.trg, Line 4: Added SET and/or Non-SET trigger on ^a named uname1
+File usernamevsautoname.trg, Line 5: Modified SET and/or Non-SET trigger on ^a named uname1
+File usernamevsautoname.trg, Line 7: Non-SET trigger on ^a already present in trigger named uname2 - no action taken
+File usernamevsautoname.trg, Line 7: Added SET trigger on ^a named a#1
+File usernamevsautoname.trg, Line 8: Modified Non-SET trigger on ^a named uname2
+File usernamevsautoname.trg, Line 8: SET trigger on ^a already present in trigger named a#1 - no action taken
+=========================================
+2 triggers added
+3 triggers deleted
+2 triggers modified
+5 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+The last command PASSED
+
+;trigger name: uname2 (region DEFAULT)  cycle: X
++^a -name=uname2 -commands=S,K,ZK,ZTR -xecute="do ^A"
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S -delim="|" -xecute="do ^A"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("autonamevsusername")'
+File autonamevsusername.trg, Line 1: All existing triggers (count = 2) deleted
+File autonamevsusername.trg, Line 4: Added SET and/or Non-SET trigger on ^a named a#1
+File autonamevsusername.trg, Line 5: Modified Non-SET trigger on ^a named a#1
+File autonamevsusername.trg, Line 7: Modified Non-SET trigger on ^a named a#1
+File autonamevsusername.trg, Line 7: Added SET trigger on ^a named a#2
+File autonamevsusername.trg, Line 8: Error : Input trigger on ^a with trigger name uname4 cannot match two different triggers named a#1 and a#2 at the same time
+=========================================
+1 trigger file entries have errors
+4 trigger file entries have no errors
+=========================================
+The last command FAILED
+
+;trigger name: uname2 (region DEFAULT)  cycle: X
++^a -name=uname2 -commands=S,K,ZK,ZTR -xecute="do ^A"
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S -delim="|" -xecute="do ^A"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("consolidate1")'
+File consolidate1.trg, Line 1: All existing triggers (count = 2) deleted
+File consolidate1.trg, Line 5: Added SET and/or Non-SET trigger on ^a named a#1
+File consolidate1.trg, Line 6: SET and/or Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+File consolidate1.trg, Line 7: Modified Non-SET trigger on ^a named a#1
+File consolidate1.trg, Line 8: Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+File consolidate1.trg, Line 8: Added SET trigger on ^a named a#2
+File consolidate1.trg, Line 9: Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+File consolidate1.trg, Line 10: Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+File consolidate1.trg, Line 10: Added SET trigger on ^a named a#3
+File consolidate1.trg, Line 11: SET and/or Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+=========================================
+3 triggers added
+2 triggers deleted
+1 triggers modified
+5 trigger file entries did update database trigger content
+3 trigger file entries did not update database trigger content
+=========================================
+The last command PASSED
+
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S,K,ZK,ZTR -delim=" " -xecute="do A^symmetry"
+;trigger name: a#2 (region DEFAULT)  cycle: X
++^a -commands=S -xecute="do A^symmetry"
+;trigger name: a#3 (region DEFAULT)  cycle: X
++^a -commands=S -delim="=" -xecute="do A^symmetry"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("consolidate2")'
+File consolidate2.trg, Line 2: SET and/or Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+File consolidate2.trg, Line 3: Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+File consolidate2.trg, Line 3: SET trigger on ^a already present in trigger named a#2 - no action taken
+File consolidate2.trg, Line 4: Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+File consolidate2.trg, Line 4: SET trigger on ^a already present in trigger named a#3 - no action taken
+File consolidate2.trg, Line 5: SET and/or Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+4 trigger file entries did not update database trigger content
+=========================================
+The last command PASSED
+
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S,K,ZK,ZTR -delim=" " -xecute="do A^symmetry"
+;trigger name: a#2 (region DEFAULT)  cycle: X
++^a -commands=S -xecute="do A^symmetry"
+;trigger name: a#3 (region DEFAULT)  cycle: X
++^a -commands=S -delim="=" -xecute="do A^symmetry"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("consolidate3")'
+File consolidate3.trg, Line 3: Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+File consolidate3.trg, Line 3: SET trigger on ^a already present in trigger named a#2 - no action taken
+File consolidate3.trg, Line 4: Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+File consolidate3.trg, Line 5: Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+File consolidate3.trg, Line 5: Added SET trigger on ^a named a#4
+File consolidate3.trg, Line 6: Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+File consolidate3.trg, Line 6: SET trigger on ^a already present in trigger named a#4 - no action taken
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+3 trigger file entries did not update database trigger content
+=========================================
+The last command PASSED
+
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S,K,ZK,ZTR -delim=" " -xecute="do A^symmetry"
+;trigger name: a#2 (region DEFAULT)  cycle: X
++^a -commands=S -xecute="do A^symmetry"
+;trigger name: a#3 (region DEFAULT)  cycle: X
++^a -commands=S -delim="=" -xecute="do A^symmetry"
+;trigger name: a#4 (region DEFAULT)  cycle: X
++^a -commands=S -delim="|" -xecute="do A^symmetry"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("setconsolidation1")'
+The last command PASSED
+
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S,K,ZK,ZTR -delim=" " -xecute="do A^symmetry"
+;trigger name: a#2 (region DEFAULT)  cycle: X
++^a -commands=S -xecute="do A^symmetry"
+;trigger name: a#3 (region DEFAULT)  cycle: X
++^a -commands=S -delim="=" -xecute="do A^symmetry"
+;trigger name: a#4 (region DEFAULT)  cycle: X
++^a -commands=S -delim="|" -xecute="do A^symmetry"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("setconsolidation2")'
+The last command PASSED
+
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S,K,ZK,ZTR -delim=" " -xecute="do A^symmetry"
+;trigger name: a#2 (region DEFAULT)  cycle: X
++^a -commands=S -xecute="do A^symmetry"
+;trigger name: a#3 (region DEFAULT)  cycle: X
++^a -commands=S -delim="=" -xecute="do A^symmetry"
+;trigger name: a#4 (region DEFAULT)  cycle: X
++^a -commands=S -delim="|" -xecute="do A^symmetry"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("setconsolidation3")'
+The last command PASSED
+
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S,K,ZK,ZTR -delim=" " -xecute="do A^symmetry"
+;trigger name: a#2 (region DEFAULT)  cycle: X
++^a -commands=S -xecute="do A^symmetry"
+;trigger name: a#3 (region DEFAULT)  cycle: X
++^a -commands=S -delim="=" -xecute="do A^symmetry"
+;trigger name: a#4 (region DEFAULT)  cycle: X
++^a -commands=S -delim="|" -xecute="do A^symmetry"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("setconsolidation4")'
+The last command PASSED
+
+;trigger name: a#1 (region DEFAULT)  cycle: X
++^a -commands=S,K,ZK,ZTR -delim=" " -xecute="do A^symmetry"
+;trigger name: a#2 (region DEFAULT)  cycle: X
++^a -commands=S -xecute="do A^symmetry"
+;trigger name: a#3 (region DEFAULT)  cycle: X
++^a -commands=S -delim="=" -xecute="do A^symmetry"
+;trigger name: a#4 (region DEFAULT)  cycle: X
++^a -commands=S -delim="|" -xecute="do A^symmetry"
+###################################################################
+###################################################################
+$gtm_exe/mumps -run %XCMD 'do drive^symmetry("killconsolidation")'
+File killconsolidation.trg, Line 1: All existing triggers (count = 4) deleted
+File killconsolidation.trg, Line 5: Added Non-SET trigger on ^kill named kill#1
+File killconsolidation.trg, Line 6: Added Non-SET trigger on ^kill2 named kill2#1
+File killconsolidation.trg, Line 7: Modified Non-SET trigger on ^kill2 named kill2#1
+File killconsolidation.trg, Line 8: Modified Non-SET trigger on ^kill2 named kill2#1
+File killconsolidation.trg, Line 11: Modified SET and/or Non-SET trigger on ^kill named kill#1
+File killconsolidation.trg, Line 12: Modified SET and/or Non-SET trigger on ^kill2 named kill2#1
+File killconsolidation.trg, Line 13: SET and/or Non-SET trigger on ^kill2 already present in trigger named kill2#1 - no action taken
+File killconsolidation.trg, Line 14: SET and/or Non-SET trigger on ^kill2 already present in trigger named kill2#1 - no action taken
+File killconsolidation.trg, Line 17: Non-SET trigger on ^kill already present in trigger named kill#1 - no action taken
+File killconsolidation.trg, Line 17: Added SET trigger on ^kill named kill#2
+File killconsolidation.trg, Line 18: Non-SET trigger on ^kill already present in trigger named kill#1 - no action taken
+File killconsolidation.trg, Line 18: Added SET trigger on ^kill named kill#3
+File killconsolidation.trg, Line 19: Non-SET trigger on ^kill2 already present in trigger named kill2#1 - no action taken
+File killconsolidation.trg, Line 19: Added SET trigger on ^kill2 named kill2#2
+File killconsolidation.trg, Line 20: Non-SET trigger on ^kill2 already present in trigger named kill2#1 - no action taken
+File killconsolidation.trg, Line 20: Added SET trigger on ^kill2 named kill2#3
+File killconsolidation.trg, Line 21: Non-SET trigger on ^kill2 already present in trigger named kill2#1 - no action taken
+File killconsolidation.trg, Line 21: Added SET trigger on ^kill2 named kill2#4
+File killconsolidation.trg, Line 25: Modified SET and/or Non-SET trigger on ^kill named kill#1
+File killconsolidation.trg, Line 26: Modified Non-SET trigger on ^kill named kill#1
+File killconsolidation.trg, Line 27: Modified Non-SET trigger on ^kill2 named kill2#1
+File killconsolidation.trg, Line 27: Deleted SET trigger on ^kill2 named kill2#4
+File killconsolidation.trg, Line 28: Deleted Non-SET trigger on ^kill named kill#1
+File killconsolidation.trg, Line 28: Deleted SET trigger on ^kill named kill#2
+File killconsolidation.trg, Line 29: Non-SET trigger on ^kill not present in trigger named kill#3 - no action taken
+File killconsolidation.trg, Line 29: SET trigger on ^kill does not exist - no action taken
+=========================================
+7 triggers added
+7 triggers deleted
+7 triggers modified
+16 trigger file entries did update database trigger content
+3 trigger file entries did not update database trigger content
+=========================================
+The last command PASSED
+
+;trigger name: kill#3 (region DEFAULT)  cycle: X
++^kill -commands=S -delim="|" -pieces=1 -xecute="set kill=1"
+;trigger name: kill2#1 (region DEFAULT)  cycle: X
++^kill2 -commands=S,K,ZK -xecute="set kill=2"
+;trigger name: kill2#2 (region DEFAULT)  cycle: X
++^kill2 -commands=S -delim="|" -xecute="set kill=2"
+;trigger name: kill2#3 (region DEFAULT)  cycle: X
++^kill2 -commands=S -delim="|" -pieces=1 -xecute="set kill=2"
+###################################################################
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT NON_REPLIC

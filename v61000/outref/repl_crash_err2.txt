@@ -1,0 +1,52 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+# GTM Process starts in background...
+Simulating crash on primary in ##TEST_PATH##
+Primary crashed!
+Simulating crash on receiver in ##REMOTE_TEST_PATH##
+Receiver crashed!
+# Start a rollback
+Killed
+----------
+Error NOJNLPOOL seen in replic_shut.out1 as expected:
+%GTM-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
+----------
+----------
+Error REPLREQROLLBACK seen in replic_shut.out2 as expected:
+%GTM-E-REPLREQROLLBACK, Replication instance file ##TEST_PATH##/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+----------
+----------
+Error REPLREQROLLBACK seen in replic_start.out1 as expected:
+%GTM-E-REPLREQROLLBACK, Replication instance file ##TEST_PATH##/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+----------
+# Do a healthy rollback
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,18 @@
+The test rx0 cannot run like other test scripts because the main purpose of
+rx0 is to test the command "r x:0". It will timeout immediately if there is 
+nothing ALREADY available. But our usual way to do the test is to do it by 
+the instream.csh, which is exactly one of the ways that makes something 
+ALREADY available to a read. I am trying to find another way to test it, but
+for now, you might want to do the test by hand. Just start the GT.M. and write
+the command "d ^rx0". And see if it PASS.
+
+-- Xianguan Li 06/09/97  
+
+rx0.m JOBs a seond process that kills the first after a few seconds - when
+manually run this seems unnecessary (or even confusing), but is a residual from
+earlier attempts at more automation and is left for now. Also, on VMS V999 used 
+for daily testing has $zv V9.9-0 and won't work since rx0start.com will have the
+wrong ver command.
+
+If you are running the same copy in a different server (if the files are in NFS), make sure you delete .o before you run again.
+-- Sam Weiner 2004/5/18 update by Roger 30 Jan 2008

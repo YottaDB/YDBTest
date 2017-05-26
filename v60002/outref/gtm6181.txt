@@ -1,0 +1,120 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+-----------------------------
+***BEGIN List of all locks***
+-----------------------------
+
+DEFAULT
+n($C(0,1)_"x"_$C(1,0)_"y")
+                         Owned by PIDVAL which is an existing process
+n($C(0)_"x") Owned by PIDVAL which is an existing process
+n("""") Owned by PIDVAL which is an existing process
+n("x"_$C(0)) Owned by PIDVAL which is an existing process
+n("x"_$C(0)_"y") Owned by PIDVAL which is an existing process
+n("x""y") Owned by PIDVAL which is an existing process
+n("x,y") Owned by PIDVAL which is an existing process
+n("x_y") Owned by PIDVAL which is an existing process
+##SUSPEND_OUTPUT NONUNICODE_MODE
+n("x"_$ZCH(228)_$C(2,4)_$ZCH(184,187))
+                         Owned by PIDVAL which is an existing process
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+-----------------------------
+***END List of all locks***
+-----------------------------
+
+-----------------------------
+Valid search string:
+\"n\(\"\"x\"\"_\$c\(0\)\)\"
+After shell evaluation:"n(""x""_$c(0))"
+n("x"_$C(0)) Owned by PIDVAL which is an existing process
+
+-----------------------------
+Valid search string:
+\"n\(\"\"x\"\"_\$ch\(0\)\)\"
+After shell evaluation:"n(""x""_$ch(0))"
+n("x"_$C(0)) Owned by PIDVAL which is an existing process
+
+-----------------------------
+Valid search string:
+\"n\(\"\"x\"\"_\$chA\(0\)\)\"
+After shell evaluation:"n(""x""_$chA(0))"
+n("x"_$C(0)) Owned by PIDVAL which is an existing process
+
+-----------------------------
+Valid search string:
+\"n\(\"\"x\"\"_\$char\(0\)\)\"
+After shell evaluation:"n(""x""_$char(0))"
+n("x"_$C(0)) Owned by PIDVAL which is an existing process
+##SUSPEND_OUTPUT NONUNICODE_MODE
+
+-----------------------------
+Valid search string:
+\"n\(\"\"x\"\"_\$zchar\(228\)_\$c\(2,4\)_\$zchar\(184,187\)\)\"
+After shell evaluation:"n(""x""_$zchar(228)_$c(2,4)_$zchar(184,187))"
+                         Owned by PIDVAL which is an existing process
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+-----------------------------
+Valid search string:
+\"n\(\$c\(0\)_\"\"x\"\"\)\"
+After shell evaluation:"n($c(0)_""x"")"
+n($C(0)_"x") Owned by PIDVAL which is an existing process
+
+-----------------------------
+Valid search string:
+\"n\(\"\"x\"\"_\$c\(0\)_\"\"y\"\"\)\"
+After shell evaluation:"n(""x""_$c(0)_""y"")"
+n("x"_$C(0)_"y") Owned by PIDVAL which is an existing process
+
+-----------------------------
+Valid search string:
+\"n\(\$c\(0,1\)_\"\"x\"\"_\$C\(1,0\)_\"\"y\"\"\)\"
+After shell evaluation:"n($c(0,1)_""x""_$C(1,0)_""y"")"
+                         Owned by PIDVAL which is an existing process
+
+-----------------------------
+Valid search string:
+\"n\(\"\"x_y\"\"\)\"
+After shell evaluation:"n(""x_y"")"
+n("x_y") Owned by PIDVAL which is an existing process
+
+-----------------------------
+Valid search string:
+\"n\(\"\"\"\"\"\"\"\"\)\"
+After shell evaluation:"n("""""""")"
+n("""") Owned by PIDVAL which is an existing process
+
+-----------------------------
+Valid search string:
+\"n\(\"\"x\"\"\"\"y\"\"\)\"
+After shell evaluation:"n(""x""""y"")"
+n("x""y") Owned by PIDVAL which is an existing process
+
+-----------------------------
+Invalid search string:
+\"n\(\"\"x\"\"_\$CHARNONSENSE\(0\)\)\"
+After shell evaluation:"n(""x""_$CHARNONSENSE(0))"
+
+-----------------------------
+Invalid search string:
+\"n\(\)\"
+After shell evaluation:"n()"
+
+-----------------------------
+Invalid search string:
+\"n\(\"\"x\"\",\)\"
+After shell evaluation:"n(""x"",)"
+
+-----------------------------
+Invalid search string:
+\"n\(\"\"x\"\"_\)\"
+After shell evaluation:"n(""x""_)"
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,218 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+
+##TEST_AWKvermismatch test -- v4 GLD, v4 DB and V.* version being tested
+
+
+GTM>
+global set attempted on a v4 database. should error out
+GTM>
+##TEST_AWK%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld, expected label: GTCGBDUNX[01]10, found: GTCGBDUNX003
+
+GTM>
+mupip extract attempted on a v4 database. should error out
+##TEST_AWK%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld, expected label: GTCGBDUNX[01]10, found: GTCGBDUNX003
+dse dump attempted on a v4 database. should error out
+##TEST_AWK%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld, expected label: GTCGBDUNX[01]10, found: GTCGBDUNX003
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Total blocks in database  -------            101 [0x00000065]
+Total local bitmap blocks -------              1 [0x00000001]
+Blocks bypassed -----------------             98 [0x00000062]
+Blocks processed ----------------              3 [0x00000003]
+Blocks needing to be split ------              0 [0x00000000]
+- DT leaf (data) blocks ---------              0 [0x00000000]
+- DT index blocks ---------------              0 [0x00000000]
+- GVT leaf (data) blocks --------              0 [0x00000000]
+- GVT index blocks --------------              0 [0x00000000]
+%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip upgrade started
+%GTM-I-MUINFOUINT4, Old file header size : 24576 [0x00006000]
+%GTM-I-MUINFOUINT8, Old file length : 128512 [0x000000000001F600]
+%GTM-I-MUINFOUINT4, Old file start_vbn : 49 [0x00000031]
+%GTM-I-MUINFOUINT4, Old file gds blk_size : 1024 [0x00000400]
+%GTM-I-MUINFOUINT4, Old file total_blks : 101 [0x00000065]
+##TEST_AWK%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M .*
+databse upgraded to V5 now
+do gde exit in V5. this should automatically convert gld to V5 without issue
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+global sets, mupip & dse expected to PASS here
+
+GTM>
+
+GTM>
+
+GTM>
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File            ##TEST_PATH##/mumps.dat
+Region          DEFAULT
+##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
+  Access method                          BG  Global Buffers                1024
+  Reserved Bytes                          0  Block size (in bytes)         1024
+  Maximum record size                   256  Starting VBN                    49
+  Maximum key size                       64  Total blocks            0x00000065
+  Null subscripts                     NEVER  Free blocks             0x00000060
+  Standard Null Collation             FALSE  Free space              0x00000000
+  Last Record Backup     0x0000000000000001  Extension Count                100
+  Last Database Backup   0x0000000000000001  Number of local maps             1
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  In critical section            0x00000000  Timers pending                   0
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Freeze match                   0x00000000  Flush trigger                  960
+  Current transaction    0x0000000000000002  No. of writes/flush              7
+  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
+  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
+  Master Bitmap Size                     32  Blocks to Upgrade       0x00000001
+  Create in progress                  FALSE  Modified cache blocks            0
+  Reference count                         1  Wait Disk                        0
+  Journal State                    DISABLED
+  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
+  Mutex Queue Slots                    1024  KILLs in progress                0
+  Replication State                     OFF  Region Seqno    0x0000000000000001
+  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
+  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
+  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
+  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+
+vermismatch test -- v5 GLD, v5 DB and ##FILTERED##PRIORVER## version being tested
+
+
+GTM>
+global set attempted on a v5 database. should error out
+GTM>
+%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
+
+GTM>
+mupip extract attempted on a v5 database. should error out
+%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
+dse dump attempted on a v5 database. should error out
+%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
+
+vermismatch test -- v5 GLD, v4 DB and ##FILTERED##PRIORVER## version being tested
+
+
+GTM>
+global set attempted on a v4 database. should error out
+GTM>
+%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
+
+GTM>
+mupip extract attempted on a v4 database. should error out
+%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
+dse dump attempted on a v4 database. should error out
+%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
+
+##TEST_AWKvermismatch test -- v5 GLD, v4 DB and V.* version being tested
+
+
+GTM>
+global set attempted on a v4 database. should error out
+GTM>
+%GTM-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
+
+GTM>
+mupip extract attempted on a v4 database. should error out
+%GTM-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
+dse dump attempted on a v4 database. should error out
+%GTM-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
+%GTM-E-DBNOREGION, None of the database regions accessible
+Clean up ftok semaphore which will be left around from the BADDBVER errors above to avoid MUSTANDALONE errors later
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+##TEST_AWK.*(Before-images|BEFORE_IMAGES).*
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Total blocks in database  -------            101 [0x00000065]
+Total local bitmap blocks -------              1 [0x00000001]
+Blocks bypassed -----------------             96 [0x00000060]
+Blocks processed ----------------              5 [0x00000005]
+Blocks needing to be split ------              0 [0x00000000]
+- DT leaf (data) blocks ---------              0 [0x00000000]
+- DT index blocks ---------------              0 [0x00000000]
+- GVT leaf (data) blocks --------              0 [0x00000000]
+- GVT index blocks --------------              0 [0x00000000]
+%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip upgrade started
+%GTM-I-MUINFOUINT4, Old file header size : 24576 [0x00006000]
+%GTM-I-MUINFOUINT8, Old file length : 128512 [0x000000000001F600]
+%GTM-I-MUINFOUINT4, Old file start_vbn : 49 [0x00000031]
+%GTM-I-MUINFOUINT4, Old file gds blk_size : 1024 [0x00000400]
+%GTM-I-MUINFOUINT4, Old file total_blks : 101 [0x00000065]
+%GTM-I-MUINFOSTR, Journal file name : ##TEST_PATH##/mumps.mjl
+%GTM-I-MUINFOSTR, Journal before imaging :  TRUE
+%GTM-I-MUINFOUINT4, Journal buffer size : 128 [0x00000080]
+%GTM-I-MUINFOUINT4, Journal allocation : 100 [0x00000064]
+%GTM-I-MUINFOUINT4, Journal extension : 100 [0x00000064]
+%GTM-I-MUINFOUINT4, Journal autoswitchlimit : 8388600 [0x007FFFF8]
+##TEST_AWK%GTM-I-MUINFOUINT4, Journal epoch interval : 30[0]* .0x00000[10][12][CE].
+%GTM-I-MUINFOSTR, Journal sync_io : FALSE
+##TEST_AWK%GTM-I-MUINFOUINT4, Journal yield limit : (8|256) .0x00000[10]0[08].
+%GTM-I-MUINFOUINT8, Region sequence number : 1 [0x0000000000000001]
+##TEST_AWK%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M .*
+databse upgraded to V5 now
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+MUPIP recover attempted on V4 journals. should issue JNLBADLABEL but not explode
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-JNLBADLABEL, Journal file ##TEST_PATH##/mumps.mjl has a bad GT.M Journal File Label. Expected GDSJNL26. Found GDSJNL15.
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+MUPIP rollback attempted on V4 journals. should issue JNLBADLABEL but not explode
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.repl is renamed to ##TEST_PATH##/mumps.repl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-JNLBADLABEL, Journal file ##TEST_PATH##/mumps.mjl has a bad GT.M Journal File Label. Expected GDSJNL26. Found GDSJNL15.
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%GTM-I-FILENOTCREATE, Lost transactions extract file fetch.glo not created
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..

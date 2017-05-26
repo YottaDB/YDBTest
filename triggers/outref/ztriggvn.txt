@@ -1,0 +1,74 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+Added SET trigger on ^a named a1
+^fired("a1#")=1
+###################################################################
+Added SET trigger on ^a named a2
+^fired("a1#")=1
+^fired("a2#")=1
+###################################################################
+a3 will not fire because ^a is set to 1 meaning the update did not change $ztupdate
+Added SET trigger on ^a named a3
+^fired("a1#")=1
+^fired("a2#")=1
+###################################################################
+Kill ^a. now all triggers a1 to a4 will fire
+Added SET trigger on ^a named a4
+^fired("a1#")=1
+^fired("a2#")=1
+^fired("a3#")=1
+^fired("a4#")=1
+###################################################################
+Added SET trigger on ^a named a5
+^fired("a1#")=1
+^fired("a2#")=1
+^fired("a5#")=1
+###################################################################
+^fired("a1#")=1
+^fired("a2#")=1
+^fired("a3#")=1
+^fired("a4#")=1
+^fired("a5#")=1
+###################################################################
+;trigger name: a1 (region DEFAULT)  cycle: 5
++^a -name=a1 -commands=S -xecute="set x=1 do mrtn^ztriggvn"
+;trigger name: a2 (region DEFAULT)  cycle: 5
++^a -name=a2 -commands=S -xecute="set x=2 do mrtn^ztriggvn"
+;trigger name: a3 (region DEFAULT)  cycle: 5
++^a -name=a3 -commands=S -delim=$C(9) -xecute="set x=3 do mrtn^ztriggvn"
+;trigger name: a4 (region DEFAULT)  cycle: 5
++^a -name=a4 -commands=S -delim=$C(10) -xecute="set x=4 do mrtn^ztriggvn"
+;trigger name: a5 (region DEFAULT)  cycle: 5
++^a -name=a5 -commands=S -xecute="set x=5 do mrtn^ztriggvn"
+^fired("a1#")=1
+^fired("a2#")=1
+^fired("a3#")=1
+^fired("a4#")=1
+^fired("a5#")=1
+###################################################################
+All existing triggers (count = 5) deleted
+###################################################################
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT NON_REPLIC

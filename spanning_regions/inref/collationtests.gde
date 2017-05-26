@@ -1,0 +1,50 @@
+template -region -std
+change -region DEFAULT -std
+!
+add -gblname efgh -coll=3
+!
+add -name efgh -region=REG1
+add -name efgh(1) -region=REG1
+add -name efgh(1,2) -region=REG2
+add -name efgh(1,2,10:20) -region=REG3
+add -name efgh(1,2,20:) -region=REG4
+add -name efgh(1,2:3) -region=REG4
+add -name efgh(1,3:) -region=REG5
+add -name efgh(1:3) -region=REG5
+add -name efgh(3) -region=REG5
+add -name efgh(3,4:) -region=REG6
+add -name efgh(3:) -region=REG6
+add -name efgh("z":"a") -region=REG1
+add -name efgh($zchar(49):$zchar(1)) -region=REG2
+add -name efgh($char(97):$char(50)) -region=REG3
+add -name nocol("a":"h") -region=REG1
+add -name nocol($zchar(1):$zchar(49)) -region=REG2
+add -name nocol($char(50):$char(97)) -region=REG3
+add -name nocol($char(75),1:10) -region=REG4
+add -name nocol($char(75),$zchar(75),11:20) -region=REG5
+add -name reg3 -region=REG3
+add -name reg4 -region=REG4
+add -name reg5 -region=REG5
+add -name reg5a -region=REG5
+add -name reg6 -region=REG6
+!
+add -gblname abcd -coll=1
+add -gblname zzzz -coll=1
+add -gblname ijkl -coll=1
+add -gblname mnop -coll=2
+add -gblname qrst -coll=1
+add -gblname uvwxy -coll=2
+add -gblname reg5 -coll=0
+!
+add -region REG1 -dyn=REG1
+add -segment REG1 -file=REG1
+add -region REG2 -dyn=REG2
+add -segment REG2 -file=REG2
+add -region REG3 -dyn=REG3
+add -segment REG3 -file=REG3
+add -region REG4 -dyn=REG4
+add -segment REG4 -file=REG4
+add -region REG5 -dyn=REG5
+add -segment REG5 -file=REG5
+add -region REG6 -dyn=REG6
+add -segment REG6 -file=REG6

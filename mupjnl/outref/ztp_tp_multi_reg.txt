@@ -1,0 +1,412 @@
+Test case : 08 - ztp_tp_multi_region
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+start before image  journaling
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+##TEST_AWKTime written into time1.txt:.*
+
+GTM>
+----------------------------------------------------------------------------------
+mupip journal -recover -back a.mjl,b.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASSED
+----------------------------------------------------------------------------------
+##TEST_AWKmupip journal -recover -back a.mjl,b.mjl -since=".*" -look="time=0 0:0:0" -broken=a.broken
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Lookback processing started at ... ... .. ..:..:.. ....
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+##TEST_AWK##FILTERED##SHOW output for journal file ##TEST_PATH##/[ab].mjl_##TIMESTAMP##
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+-------------------------------------------------------------------------------
+##TEST_AWK##FILTERED##SHOW output for journal file ##TEST_PATH##/[ab].mjl_##TIMESTAMP##
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-I-FILECREATE, Broken transactions extract file a.broken created
+##TEST_AWK%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/[ab].lost created
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASSED
+
+GTM>
+^a(1)="A1"
+^b(1)="B1"
+^c(1)="C1"
+^c(2)="C2"
+^c(3)="C3"
+^c(4)="C4"
+^c(5)="C5"
+^c(6)="C6"
+^c(7)="C7"
+^c(8)="C8"
+^c(9)="C9"
+^c(10)="C10"
+^d(1)="D1"
+^d(2)="D2"
+^d(3)="D3"
+^d(4)="D4"
+^d(5)="D5"
+^d(6)="D6"
+^d(7)="D7"
+^d(8)="D8"
+^d(9)="D9"
+^d(10)="D10"
+
+GTM>
+^a(2) to ^a(10) and ^b(2) to ^b(10) will be in the a.broken file
+^a(2)="A2"
+^b(2)="B2"
+^a(3)="A3"
+^b(3)="B3"
+^a(4)="A4"
+^b(4)="B4"
+^a(5)="A5"
+^b(5)="B5"
+^a(6)="A6"
+^b(6)="B6"
+^a(7)="A7"
+^b(7)="B7"
+^a(8)="A8"
+^b(8)="B8"
+^a(9)="A9"
+^b(9)="B9"
+^a(10)="A10"
+^b(10)="B10"
+----------------------------------------------------------------------------------
+##TEST_AWKmupip journal -recover -back \* -since=".*"
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+GTM>
+^a(1)="A1"
+^a(2)="A2"
+^a(3)="A3"
+^a(4)="A4"
+^a(5)="A5"
+^a(6)="A6"
+^a(7)="A7"
+^a(8)="A8"
+^a(9)="A9"
+^a(10)="A10"
+^b(1)="B1"
+^b(2)="B2"
+^b(3)="B3"
+^b(4)="B4"
+^b(5)="B5"
+^b(6)="B6"
+^b(7)="B7"
+^b(8)="B8"
+^b(9)="B9"
+^b(10)="B10"
+^c(1)="C1"
+^c(2)="C2"
+^c(3)="C3"
+^c(4)="C4"
+^c(5)="C5"
+^c(6)="C6"
+^c(7)="C7"
+^c(8)="C8"
+^c(9)="C9"
+^c(10)="C10"
+^d(1)="D1"
+^d(2)="D2"
+^d(3)="D3"
+^d(4)="D4"
+^d(5)="D5"
+^d(6)="D6"
+^d(7)="D7"
+^d(8)="D8"
+^d(9)="D9"
+^d(10)="D10"
+
+GTM>
+----------------------------------------------------------------------------------
+Again delete databases
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/c.dat
+Created file ##TEST_PATH##/mumps.dat
+mupip journal -recover -forward -verify a.mjl,b.mjl -lost=a1.lost
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+##TEST_AWKSHOW output for journal file ##TEST_PATH##/[ab].mjl
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+-------------------------------------------------------------------------------
+##TEST_AWKSHOW output for journal file ##TEST_PATH##/[ab].mjl
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+##FILTERED##%GTM-I-FILERENAME, File a.broken is renamed to a.broken_##TIMESTAMP##
+%GTM-I-FILECREATE, Broken transactions extract file a.broken created
+%GTM-I-FILECREATE, Lost transactions extract file a1.lost created
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASSED
+
+GTM>
+%GTM-E-GVUNDEF, Global variable undefined: ^a
+
+GTM>
+%GTM-E-GVUNDEF, Global variable undefined: ^b
+
+GTM>
+%GTM-E-GVUNDEF, Global variable undefined: ^c
+
+GTM>
+%GTM-E-GVUNDEF, Global variable undefined: ^d
+
+GTM>
+^a(1) to ^a(10) and ^b(1) to ^b(10) will be in the a.broken file
+^a(1)="A1"
+^b(1)="B1"
+^a(2)="A2"
+^b(2)="B2"
+^a(3)="A3"
+^b(3)="B3"
+^a(4)="A4"
+^b(4)="B4"
+^a(5)="A5"
+^b(5)="B5"
+^a(6)="A6"
+^b(6)="B6"
+^a(7)="A7"
+^b(7)="B7"
+^a(8)="A8"
+^b(8)="B8"
+^a(9)="A9"
+^b(9)="B9"
+^a(10)="A10"
+^b(10)="B10"
+----------------------------------------------------------------------------------
+Again delete databases
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/c.dat
+Created file ##TEST_PATH##/mumps.dat
+mupip journal -recover -forward -verify a.mjl,b.mjl,c.mjl -broken=a.broken -lost=a2.lost
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+
+-------------------------------------------------------------------------------
+##TEST_AWKSHOW output for journal file ##TEST_PATH##/[abc].mjl
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+-------------------------------------------------------------------------------
+##TEST_AWKSHOW output for journal file ##TEST_PATH##/[abc].mjl
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+-------------------------------------------------------------------------------
+##TEST_AWKSHOW output for journal file ##TEST_PATH##/[abc].mjl
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+##FILTERED##%GTM-I-FILERENAME, File a.broken is renamed to a.broken_##TIMESTAMP##
+%GTM-I-FILECREATE, Broken transactions extract file a.broken created
+%GTM-I-FILECREATE, Lost transactions extract file a2.lost created
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASSED
+
+GTM>
+%GTM-E-GVUNDEF, Global variable undefined: ^a
+
+GTM>
+%GTM-E-GVUNDEF, Global variable undefined: ^b
+
+GTM>
+%GTM-E-GVUNDEF, Global variable undefined: ^c
+
+GTM>
+%GTM-E-GVUNDEF, Global variable undefined: ^d
+
+GTM>
+^a(1) to ^a(10) and ^b(1) to ^b(10) and ^c(1) to ^c(10) will be in the a.broken file
+^a(1)="A1"
+^b(1)="B1"
+^c(1)="C1"
+^a(2)="A2"
+^b(2)="B2"
+^c(2)="C2"
+^a(3)="A3"
+^b(3)="B3"
+^c(3)="C3"
+^a(4)="A4"
+^b(4)="B4"
+^c(4)="C4"
+^a(5)="A5"
+^b(5)="B5"
+^c(5)="C5"
+^a(6)="A6"
+^b(6)="B6"
+^c(6)="C6"
+^a(7)="A7"
+^b(7)="B7"
+^c(7)="C7"
+^a(8)="A8"
+^b(8)="B8"
+^c(8)="C8"
+^a(9)="A9"
+^b(9)="B9"
+^c(9)="C9"
+^a(10)="A10"
+^b(10)="B10"
+^c(10)="C10"
+----------------------------------------------------------------------------------
+Again delete databases
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/c.dat
+Created file ##TEST_PATH##/mumps.dat
+mupip journal -recover -forward -verify a.mjl,b.mjl,c.mjl,mumps.mjl -broken=a.broken
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILENOTCREATE, Broken transactions extract file a.broken not created
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+PASSED
+
+GTM>
+^a(1)="A1"
+^a(2)="A2"
+^a(3)="A3"
+^a(4)="A4"
+^a(5)="A5"
+^a(6)="A6"
+^a(7)="A7"
+^a(8)="A8"
+^a(9)="A9"
+^a(10)="A10"
+^b(1)="B1"
+^b(2)="B2"
+^b(3)="B3"
+^b(4)="B4"
+^b(5)="B5"
+^b(6)="B6"
+^b(7)="B7"
+^b(8)="B8"
+^b(9)="B9"
+^b(10)="B10"
+^c(1)="C1"
+^c(2)="C2"
+^c(3)="C3"
+^c(4)="C4"
+^c(5)="C5"
+^c(6)="C6"
+^c(7)="C7"
+^c(8)="C8"
+^c(9)="C9"
+^c(10)="C10"
+^d(1)="D1"
+^d(2)="D2"
+^d(3)="D3"
+^d(4)="D4"
+^d(5)="D5"
+^d(6)="D6"
+^d(7)="D7"
+^d(8)="D8"
+^d(9)="D9"
+^d(10)="D10"
+
+GTM>
+----------------------------------------------------------------------------------
+End of test 08
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

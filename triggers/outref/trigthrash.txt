@@ -1,0 +1,135 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+Stepping STARTED
++19^trigtrc         :	Kill ^A
++20^trigtrc         :	Set cnt=42
++21^trigtrc         :	For i=0:1:3 Do
++22^trigtrc         :	. Set cnt=cnt-1
++23^trigtrc         :	. Set ^A(i)=i*cnt
++1^trigtrc#         : If sub=0 Do
++2^trigtrc#         : . Write "sub=0 - Setting ZBreak in trigger",!
+sub=0 - Setting ZBreak in trigger
++3^trigtrc#         : . ZBreak ^trigtrc#:"Write ""sub=1 - ZBreak works"",!"
++4^trigtrc#         : Else  If sub=1 Do  ; no output as zbreak took care of that already
++6^trigtrc#         : Else  If sub=2 Do
++8^trigtrc#         : Else  If sub=3 Do
++10^trigtrc#        : Else  Write "Error - unknown sub: ",sub,!
++12^trigtrc#        :; ZPrint reference
++22^trigtrc         :	. Set cnt=cnt-1
++23^trigtrc         :	. Set ^A(i)=i*cnt
++1^trigtrc#         : If sub=0 Do
+sub=1 - ZBreak works
++4^trigtrc#         : Else  If sub=1 Do  ; no output as zbreak took care of that already
++5^trigtrc#         : . Zbreak -*
++6^trigtrc#         : Else  If sub=2 Do
++8^trigtrc#         : Else  If sub=3 Do
++10^trigtrc#        : Else  Write "Error - unknown sub: ",sub,!
++12^trigtrc#        :; ZPrint reference
++22^trigtrc         :	. Set cnt=cnt-1
++23^trigtrc         :	. Set ^A(i)=i*cnt
++1^trigtrc#         : If sub=0 Do
++4^trigtrc#         : Else  If sub=1 Do  ; no output as zbreak took care of that already
++6^trigtrc#         : Else  If sub=2 Do
++7^trigtrc#         : . Write "sub=2 ",$Text(+11^trigtrc#),!
+sub=2 ; $Text call reference
++8^trigtrc#         : Else  If sub=3 Do
++10^trigtrc#        : Else  Write "Error - unknown sub: ",sub,!
++12^trigtrc#        :; ZPrint reference
++22^trigtrc         :	. Set cnt=cnt-1
++23^trigtrc         :	. Set ^A(i)=i*cnt
++1^trigtrc#         : If sub=0 Do
++4^trigtrc#         : Else  If sub=1 Do  ; no output as zbreak took care of that already
++6^trigtrc#         : Else  If sub=2 Do
++8^trigtrc#         : Else  If sub=3 Do
++9^trigtrc#         : . Write "sub=3 " ZPrint +12^trigtrc#
+sub=3 ; ZPrint reference
++10^trigtrc#        : Else  Write "Error - unknown sub: ",sub,!
++12^trigtrc#        :; ZPrint reference
++25^trigtrc         :	Quit
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+###################################################################
+All existing triggers (count = 1) deleted
+##TEST_AWK..:..:.. Starting interference jobs
+##TEST_AWK..:..:.. 4 interference jobs launched
+##TEST_AWK..:..:.. Starting update trigthrash1 loop - main
+No matching triggers found for deletion
+##TEST_AWKFile ztf-[0-9]*.trg, Line 1: Added SET and/or Non-SET trigger on \^B named B#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+All existing triggers (count = 1) deleted
+##TEST_AWKFile ztf-[0-9]*.trg, Line 1: Added SET and/or Non-SET trigger on \^B named B#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+##TEST_AWK..:..:.. Trigger loop ended - trigthrash1
+##TEST_AWK          Trigger 1 stats:  Executions: [0-9][0-9]*[ ]* Restarts: [0-9][0-9]*
+##TEST_AWK          Trigger 2 stats:  Executions: [0-9][0-9]*[ ]* Restarts: [0-9][0-9]*
+##TEST_AWK          Trigger 3 stats:  Executions: [0-9][0-9]*[ ]* Restarts: [0-9][0-9]*
+##TEST_AWK          Trigger 4 stats:  Executions: [0-9][0-9]*[ ]* Restarts: [0-9][0-9]*
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+###################################################################
+All existing triggers (count = 1) deleted
+##TEST_AWK..:..:.. Starting interference jobs
+##TEST_AWK..:..:.. 4 interference jobs launched
+##TEST_AWK..:..:.. Starting trigthrash2 update loop - main
+No matching triggers found for deletion
+##TEST_AWKFile ztf-[0-9]*.trg, Line 1: Added SET trigger on \^B named B#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+All existing triggers (count = 1) deleted
+##TEST_AWKFile ztf-[0-9]*.trg, Line 1: Added SET trigger on \^B named B#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+##TEST_AWK..:..:.. Trigger loop ended - trigthrash2
+##TEST_AWK     Trigger 1 stats:  \$Text\(\): [0-9][0-9]*[ ]* ZPrint: [0-9][0-9]*[ ]* ZBreak: [0-9][0-9]*
+##TEST_AWK     Trigger 2 stats:  \$Text\(\): [0-9][0-9]*[ ]* ZPrint: [0-9][0-9]*[ ]* ZBreak: [0-9][0-9]*
+##TEST_AWK     Trigger 3 stats:  \$Text\(\): [0-9][0-9]*[ ]* ZPrint: [0-9][0-9]*[ ]* ZBreak: [0-9][0-9]*
+##TEST_AWK     Trigger 4 stats:  \$Text\(\): [0-9][0-9]*[ ]* ZPrint: [0-9][0-9]*[ ]* ZBreak: [0-9][0-9]*
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+###################################################################
+All existing triggers (count = 1) deleted
+##TEST_AWK..:..:.. Starting interference jobs
+##TEST_AWK..:..:.. 4 interference jobs launched
+##TEST_AWK(All existing triggers \(count = [1-9][0-9]*\) deleted|No matching triggers found for deletion)
+Added SET trigger on ^antp named antp#1
+Added SET trigger on ^antp named antp#2
+##TEST_AWK..:..:.. Starting trigthrash3 update loop - main
+All existing triggers (count = 2) deleted
+Added SET trigger on ^antp named antp#1
+Added SET trigger on ^antp named antp#2
+##TEST_AWK..:..:.. Trigger loop ended - trigthrash3
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

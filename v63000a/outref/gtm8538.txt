@@ -1,0 +1,52 @@
+-----------------------------------------------------------------------------------------------------------------
+Test it is okay for instance and database file to be read-only to the 32K counter semaphore overflowing process
+-----------------------------------------------------------------------------------------------------------------
+# Create replicated database and start replication servers on read-write instance file
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+# Make instance file and database file read-only for to-be-started mumps processes
+# Cause 32K counter overflow on instance file
+Test Replication instance file counter overflow error message
+# Wait for NOMORESEMCNT message
+##TEST_AWK.*GTM-MUMPS-INSTANCE1\[.* %GTM-I-NOMORESEMCNT, ftok counter semaphore has reached its maximum and stopped counting for replication instance ##TEST_PATH##/mumps.repl. Run MUPIP JOURNAL -ROLLBACK -BACKWARD, MUPIP JOURNAL -RECOVER -BACKWARD or MUPIP RUNDOWN to restore the database files and shared resources to a clean state .*
+##TEST_AWK.*GTM-MUMPS-INSTANCE1\[.* %GTM-I-NOMORESEMCNT, ftok counter semaphore has reached its maximum and stopped counting for database ##TEST_PATH##/mumps.dat. Run MUPIP JOURNAL -ROLLBACK -BACKWARD, MUPIP JOURNAL -RECOVER -BACKWARD or MUPIP RUNDOWN to restore the database files and shared resources to a clean state .*
+# Restore permissions on instance and db file
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+----------------------------------------------------------------------------------------------
+Test that MUUSERECOV error is not accompanied by incorrect secondary errors (e.g. CRITSEMFAIL)
+----------------------------------------------------------------------------------------------
+Create journaled (but not replicated) database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Open database and crash
+
+GTM>
+
+GTM>
+Killed
+# Expect MUUSERECOV error from MUPIP INTEG of crashed journaled database
+%GTM-E-MUUSERECOV, Abnormal shutdown of journaled database mumps.dat detected
+%GTM-I-TEXT, Run MUPIP JOURNAL RECOVER
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

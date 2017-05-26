@@ -1,0 +1,13 @@
+Create database file mumps.dat
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Load triggers
+Added SET trigger on ^x named x#1
+Run gtm8370 test
+Do a dbcheck to ensure db integs clean
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

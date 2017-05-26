@@ -1,0 +1,50 @@
+Ops/CPU_sec     = No of Operations/CPU second/CPU>
+Ops/Elapsed_sec = No of Operations/Elapsed second>
+PASS/FAIL reported on Ops/CPU_sec
+Find number of processors
+Create executable ##TEST_PATH##/prime_root to be used later
+Speed Test Starts
+Global Variable: Ordered Keys: No Journaling: Multi-Process
+SPEED_TEST:   LOCKI:   LOCKI: SEQOP: NOJNL:PASS
+Profile Local Variable Test (Using Array) : No Journaling: Single-Process
+SPEED_TEST:ZDSRTST1:ZDSRTST1:RANDOP: NOJNL:PASS
+Profile Local Variable Test (Using Named Locals) : No Journaling: Single-Process
+SPEED_TEST:ZDSRTST2:ZDSRTST2:RANDOP: NOJNL:PASS
+Local Variable: Ordered Keys : No Journaling: Single-Process
+SPEED_TEST:     LCL:   SETOP: SEQOP: NOJNL:PASS
+SPEED_TEST:     LCL:  READOP: SEQOP: NOJNL:PASS
+Local Variable: Random Keys : No Journaling: Single-Process
+SPEED_TEST:     LCL:   SETOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL:  READOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL:   GETOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL:  DATAOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL: ORDEROP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL: ZPREVOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL: QUERYOP:RANDOP: NOJNL:PASS
+SPEED_TEST:     LCL:  KILLOP:RANDOP: NOJNL:PASS
+Global Variable: Ordered Keys: No Journaling: Single-Process
+SPEED_TEST:    GBLS:   SETOP: SEQOP: NOJNL:PASS
+SPEED_TEST:    GBLS:  READOP: SEQOP: NOJNL:PASS
+Global Variable: Random Keys: No Journaling : Single-Process : READs done after MUPIP REORG
+SPEED_TEST:GBLREORG:   SETOP:RANDOP: NOJNL:PASS
+SPEED_TEST:GBLREORG:  READOP:RANDOP: NOJNL:PASS
+Global Variable: Random Keys: No Journaling : Single-Process
+SPEED_TEST:    GBLS:   SETOP:RANDOP: NOJNL:PASS
+SPEED_TEST:    GBLS:  READOP:RANDOP: NOJNL:PASS
+Global Variable: Random Keys: No Journaling : Multi-Process
+SPEED_TEST:    GBLM:   SETOP:RANDOP: NOJNL:PASS
+SPEED_TEST:    GBLM:  READOP:RANDOP: NOJNL:PASS
+SPEED_TEST:    GBLM:   GETOP:RANDOP: NOJNL:PASS
+SPEED_TEST:    GBLM:  DATAOP:RANDOP: NOJNL:PASS
+SPEED_TEST:    GBLM: ORDEROP:RANDOP: NOJNL:PASS
+SPEED_TEST:    GBLM: ZPREVOP:RANDOP: NOJNL:PASS
+SPEED_TEST:    GBLM: QUERYOP:RANDOP: NOJNL:PASS
+SPEED_TEST:    GBLM:  KILLOP:RANDOP: NOJNL:PASS
+Global Variable: Random Keys: No Journaling : TP BATCH : Multi-Process
+SPEED_TEST:    TPBA:    TPBA:RANDOP: NOJNL:PASS
+Global Variable: Random Keys: Journaling : TP BATCH : Multi-Process
+SPEED_TEST:    TPBA:    TPBA:RANDOP:   JNL:PASS
+Global Variable: Random Keys: Journaling : TP ONLINE : Multi-Process
+SPEED_TEST:    TPON:    TPON:RANDOP:   JNL:PASS
+Speed Test Ends...
+Speed Test Ends...

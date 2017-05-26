@@ -1,0 +1,953 @@
+#################################################################################
+STEP0. test too-long names for various commands
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/toolong.gld
+
+GDE> 
+%GDE-E-VALTOOLONG, FF345678901234567890123456789012 exceeds the maximum length of 31 for a region
+
+GDE> 
+%GDE-E-VALTOOLONG, FF345678901234567890123456789012 exceeds the maximum length of 31 for a segment
+
+GDE> 
+%GDE-E-VALTOOLONG, FF345678901234567890123456789012 exceeds the maximum length of 31 for a region
+
+GDE> 
+%GDE-E-VALTOOLONG, FF345678901234567890123456789012 exceeds the maximum length of 31 for a segment
+
+GDE> 
+%GDE-E-VALTOOLONG, Ff345678901234567890123456789012 exceeds the maximum length of 31 for a name
+
+GDE> 
+%GDE-E-VALTOOLONG, FF345678901234567890123456789012 exceeds the maximum length of 31 for a segment
+
+GDE> 
+%GDE-E-VALTOOLONG, De34567890123456789012345678901* exceeds the maximum length of 31 for a name
+
+GDE> 
+%GDE-E-VALTOOLONG, De34567890123456789012345678901* exceeds the maximum length of 31 for a name
+
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/toolong.gld
+#################################################################################
+STEP1. test long name name-space (gde_long1.csh)
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               Aa                               REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Aa                              Ab                               REG = AA345678901
+                                                                  SEG = AA345678901
+                                                                  FILE = a.dat
+ Ab                              Ba345678901                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Ba345678901                     Ba3456789010                     REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Ba3456789010                    Bb3456789012345678901            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Bb3456789012345678901           Bb34567890123456789010           REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Bb34567890123456789010          Bc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Bc345678901234567890123456789   Bc34567890123456789012345678A    REG = BB3456789012345678901
+                                                                  SEG = BB3456789012345678901
+                                                                  FILE = b.dat
+ Bc34567890123456789012345678A   Ca345678901                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Ca345678901                     Ca345678902                      REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Ca345678902                     Cb3456789012345678901            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cb3456789012345678901           Cb3456789012345678902            REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Cb3456789012345678902           Cc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cc345678901234567890123456789   Cc34567890123456789012345678A    REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Cc34567890123456789012345678A   Cd3456789012345678901234567890   REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Cd3456789012345678901234567890  Cd34567890123456789012345678900  REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Cd34567890123456789012345678900 Da345678901                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Da345678901                     Da345678902                      REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Da345678902                     Db3456789012345678901            REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Db3456789012345678901           Db3456789012345678902            REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Db3456789012345678902           Dc345678901234567890123456789    REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Dc345678901234567890123456789   Dc3456789012345678901234567890   REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Dc3456789012345678901234567890  Dd3456789012345678901234567890   REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ Dd3456789012345678901234567890  Dd34567890123456789012345678901  REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Dd34567890123456789012345678901 Dd34567890123456789012345678902  REG = CC345678901234567890123456789
+                                                                  SEG = TEMP
+                                                                  FILE = temp.dat
+ Dd34567890123456789012345678902 Dd3456789012345678901234567891   REG = DD3456789012345678901234567890
+                                                                  SEG = DD3456789012345678901234567890
+                                                                  FILE = d.dat
+ Dd3456789012345678901234567891  ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     ENCR = OFF
+                                                                     MSLT =1024
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+create the database and fill the database with gdefill.m
+
+GTM>
+
+GTM>
+set globals of 31-char length (to test name-level $ORDER)
+
+GTM>
+
+GTM>
+Will test name level $ORDER() (in both directions) of max length names works
+Will loop through only the globals that are set using set3^gdefill
+loop through all globals A23* to verify $ORDER
+^A234567890123456789012345678900
+^A234567890123456789012345678901
+^A234567890123456789012345678902
+^A234567890123456789012345678903
+^A234567890123456789012345678904
+^A234567890123456789012345678905
+^A234567890123456789012345678906
+^A234567890123456789012345678907
+^A234567890123456789012345678908
+^A234567890123456789012345678909
+^A23456789012345678901234567890A
+^A23456789012345678901234567890B
+^A23456789012345678901234567890C
+^A23456789012345678901234567890D
+^A23456789012345678901234567890E
+^A23456789012345678901234567890F
+^A23456789012345678901234567890G
+^A23456789012345678901234567890H
+^A23456789012345678901234567890I
+^A23456789012345678901234567890J
+^A23456789012345678901234567890K
+^A23456789012345678901234567890L
+^A23456789012345678901234567890M
+^A23456789012345678901234567890N
+^A23456789012345678901234567890O
+^A23456789012345678901234567890P
+^A23456789012345678901234567890Q
+^A23456789012345678901234567890R
+^A23456789012345678901234567890S
+^A23456789012345678901234567890T
+^A23456789012345678901234567890U
+^A23456789012345678901234567890V
+^A23456789012345678901234567890W
+^A23456789012345678901234567890X
+^A23456789012345678901234567890Y
+^A23456789012345678901234567890Z
+^A23456789012345678901234567890a
+^A23456789012345678901234567890b
+^A23456789012345678901234567890c
+^A23456789012345678901234567890d
+^A23456789012345678901234567890e
+^A23456789012345678901234567890f
+^A23456789012345678901234567890g
+^A23456789012345678901234567890h
+^A23456789012345678901234567890i
+^A23456789012345678901234567890j
+^A23456789012345678901234567890k
+^A23456789012345678901234567890l
+^A23456789012345678901234567890m
+^A23456789012345678901234567890n
+^A23456789012345678901234567890o
+^A23456789012345678901234567890p
+^A23456789012345678901234567890q
+^A23456789012345678901234567890r
+^A23456789012345678901234567890s
+^A23456789012345678901234567890t
+^A23456789012345678901234567890u
+^A23456789012345678901234567890v
+^A23456789012345678901234567890w
+^A23456789012345678901234567890x
+^A23456789012345678901234567890y
+^A23456789012345678901234567890z
+loop through all globals A23* to verify $ORDER(x,-1)
+^A23456789012345678901234567890z
+^A23456789012345678901234567890y
+^A23456789012345678901234567890x
+^A23456789012345678901234567890w
+^A23456789012345678901234567890v
+^A23456789012345678901234567890u
+^A23456789012345678901234567890t
+^A23456789012345678901234567890s
+^A23456789012345678901234567890r
+^A23456789012345678901234567890q
+^A23456789012345678901234567890p
+^A23456789012345678901234567890o
+^A23456789012345678901234567890n
+^A23456789012345678901234567890m
+^A23456789012345678901234567890l
+^A23456789012345678901234567890k
+^A23456789012345678901234567890j
+^A23456789012345678901234567890i
+^A23456789012345678901234567890h
+^A23456789012345678901234567890g
+^A23456789012345678901234567890f
+^A23456789012345678901234567890e
+^A23456789012345678901234567890d
+^A23456789012345678901234567890c
+^A23456789012345678901234567890b
+^A23456789012345678901234567890a
+^A23456789012345678901234567890Z
+^A23456789012345678901234567890Y
+^A23456789012345678901234567890X
+^A23456789012345678901234567890W
+^A23456789012345678901234567890V
+^A23456789012345678901234567890U
+^A23456789012345678901234567890T
+^A23456789012345678901234567890S
+^A23456789012345678901234567890R
+^A23456789012345678901234567890Q
+^A23456789012345678901234567890P
+^A23456789012345678901234567890O
+^A23456789012345678901234567890N
+^A23456789012345678901234567890M
+^A23456789012345678901234567890L
+^A23456789012345678901234567890K
+^A23456789012345678901234567890J
+^A23456789012345678901234567890I
+^A23456789012345678901234567890H
+^A23456789012345678901234567890G
+^A23456789012345678901234567890F
+^A23456789012345678901234567890E
+^A23456789012345678901234567890D
+^A23456789012345678901234567890C
+^A23456789012345678901234567890B
+^A23456789012345678901234567890A
+^A234567890123456789012345678909
+^A234567890123456789012345678908
+^A234567890123456789012345678907
+^A234567890123456789012345678906
+^A234567890123456789012345678905
+^A234567890123456789012345678904
+^A234567890123456789012345678903
+^A234567890123456789012345678902
+^A234567890123456789012345678901
+^A234567890123456789012345678900
+
+GTM>
+Verify the globals have gone to the correct database
+Globals written to a_extract.glo
+Globals written to b_extract.glo
+Globals written to d_extract.glo
+Globals written to mumps_extract.glo
+Globals written to temp_extract.glo
+gde_long1 SUCCESS
+#################################################################################
+STEP2. test long global directory names
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g2.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g2.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g23.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g23.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g234.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g234.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g2345.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g2345.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g23456.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g23456.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g234567.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g234567.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g2345678.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g2345678.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g23456789.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g23456789.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g234567890.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g234567890.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g2345678901.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g2345678901.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g23456789012.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g23456789012.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g234567890123.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g234567890123.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g2345678901234.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g2345678901234.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g23456789012345.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g23456789012345.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g234567890123456.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g234567890123456.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g2345678901234567.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g2345678901234567.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g23456789012345678.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g23456789012345678.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g234567890123456789.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g234567890123456789.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g2345678901234567890.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g2345678901234567890.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g23456789012345678901.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g23456789012345678901.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g234567890123456789012.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g234567890123456789012.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g2345678901234567890123.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g2345678901234567890123.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g23456789012345678901234.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g23456789012345678901234.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g234567890123456789012345.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g234567890123456789012345.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g2345678901234567890123456.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g2345678901234567890123456.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g23456789012345678901234567.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g23456789012345678901234567.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g234567890123456789012345678.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g234567890123456789012345678.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g2345678901234567890123456789.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g2345678901234567890123456789.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g23456789012345678901234567890.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g23456789012345678901234567890.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g234567890123456789012345678901.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g234567890123456789012345678901.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/g2345678901234567890123456789012.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/g2345678901234567890123456789012.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/g2345678901234567890123456789012.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/g2345678901234567890123456789012.gld
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+GTM>
+^a=1
+^b=2
+^c=3
+
+GTM>
+#################################################################################
+STEP3. test GDE boundary conditions with long region/segment names (gde_long2.csh)
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               A                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ A                               A2                               REG = A
+                                                                  SEG = A
+                                                                  FILE = a1.dat
+ A2                              A23                              REG = A2
+                                                                  SEG = A2
+                                                                  FILE = a2.dat
+ A23                             A234                             REG = A23
+                                                                  SEG = A23
+                                                                  FILE = a3.dat
+ A234                            A2345                            REG = A234
+                                                                  SEG = A234
+                                                                  FILE = a4.dat
+ A2345                           A23456                           REG = A2345
+                                                                  SEG = A2345
+                                                                  FILE = a5.dat
+ A23456                          A234567                          REG = A23456
+                                                                  SEG = A23456
+                                                                  FILE = a6.dat
+ A234567                         A2345678                         REG = A234567
+                                                                  SEG = A234567
+                                                                  FILE = a7.dat
+ A2345678                        A23456789                        REG = A2345678
+                                                                  SEG = A2345678
+                                                                  FILE = a8.dat
+ A23456789                       A234567890                       REG = A23456789
+                                                                  SEG = A23456789
+                                                                  FILE = a9.dat
+ A234567890                      A2345678901                      REG = A234567890
+                                                                  SEG = A234567890
+                                                                  FILE = a10.dat
+ A2345678901                     A23456789012                     REG = A2345678901
+                                                                  SEG = A2345678901
+                                                                  FILE = a11.dat
+ A23456789012                    A234567890123                    REG = A23456789012
+                                                                  SEG = A23456789012
+                                                                  FILE = a12.dat
+ A234567890123                   A2345678901234                   REG = A234567890123
+                                                                  SEG = A234567890123
+                                                                  FILE = a13.dat
+ A2345678901234                  A23456789012345                  REG = A2345678901234
+                                                                  SEG = A2345678901234
+                                                                  FILE = a14.dat
+ A23456789012345                 A234567890123456                 REG = A23456789012345
+                                                                  SEG = A23456789012345
+                                                                  FILE = a15.dat
+ A234567890123456                A2345678901234567                REG = A234567890123456
+                                                                  SEG = A234567890123456
+                                                                  FILE = a16.dat
+ A2345678901234567               A23456789012345678               REG = A2345678901234567
+                                                                  SEG = A2345678901234567
+                                                                  FILE = a17.dat
+ A23456789012345678              A234567890123456789              REG = A23456789012345678
+                                                                  SEG = A23456789012345678
+                                                                  FILE = a18.dat
+ A234567890123456789             A2345678901234567890             REG = A234567890123456789
+                                                                  SEG = A234567890123456789
+                                                                  FILE = a19.dat
+ A2345678901234567890            A23456789012345678901            REG = A2345678901234567890
+                                                                  SEG = A2345678901234567890
+                                                                  FILE = a20.dat
+ A23456789012345678901           A234567890123456789012           REG = A23456789012345678901
+                                                                  SEG = A23456789012345678901
+                                                                  FILE = a21.dat
+ A234567890123456789012          A2345678901234567890123          REG = A234567890123456789012
+                                                                  SEG = A234567890123456789012
+                                                                  FILE = a22.dat
+ A2345678901234567890123         A23456789012345678901234         REG = A2345678901234567890123
+                                                                  SEG = A2345678901234567890123
+                                                                  FILE = a23.dat
+ A23456789012345678901234        A234567890123456789012345        REG = A23456789012345678901234
+                                                                  SEG = A23456789012345678901234
+                                                                  FILE = a24.dat
+ A234567890123456789012345       A2345678901234567890123456       REG = A234567890123456789012345
+                                                                  SEG = A234567890123456789012345
+                                                                  FILE = a25.dat
+ A2345678901234567890123456      A23456789012345678901234567      REG = A2345678901234567890123456
+                                                                  SEG = A2345678901234567890123456
+                                                                  FILE = a26.dat
+ A23456789012345678901234567     A234567890123456789012345678     REG = A23456789012345678901234567
+                                                                  SEG = A23456789012345678901234567
+                                                                  FILE = a27.dat
+ A234567890123456789012345678    A2345678901234567890123456789    REG = A234567890123456789012345678
+                                                                  SEG = A234567890123456789012345678
+                                                                  FILE = a28.dat
+ A2345678901234567890123456789   A23456789012345678901234567890   REG = A2345678901234567890123456789
+                                                                  SEG = A2345678901234567890123456789
+                                                                  FILE = a29.dat
+ A23456789012345678901234567890  A234567890123456789012345678901  REG = A23456789012345678901234567890
+                                                                  SEG = A23456789012345678901234567890
+                                                                  FILE = a30.dat
+ A234567890123456789012345678901 A234567890123456789012345678902  REG = A234567890123456789012345678901
+                                                                  SEG = A234567890123456789012345678901
+                                                                  FILE = a31.dat
+ A234567890123456789012345678902 A23456789012345678901234567891   REG = A23456789012345678901234567890
+                                                                  SEG = A23456789012345678901234567890
+                                                                  FILE = a30.dat
+ A23456789012345678901234567891  A234567890123456789012345678A    REG = A2345678901234567890123456789
+                                                                  SEG = A2345678901234567890123456789
+                                                                  FILE = a29.dat
+ A234567890123456789012345678A   A234567890123456789012345679     REG = A234567890123456789012345678
+                                                                  SEG = A234567890123456789012345678
+                                                                  FILE = a28.dat
+ A234567890123456789012345679    A23456789012345678901234568      REG = A23456789012345678901234567
+                                                                  SEG = A23456789012345678901234567
+                                                                  FILE = a27.dat
+ A23456789012345678901234568     A2345678901234567890123457       REG = A2345678901234567890123456
+                                                                  SEG = A2345678901234567890123456
+                                                                  FILE = a26.dat
+ A2345678901234567890123457      A234567890123456789012346        REG = A234567890123456789012345
+                                                                  SEG = A234567890123456789012345
+                                                                  FILE = a25.dat
+ A234567890123456789012346       A23456789012345678901235         REG = A23456789012345678901234
+                                                                  SEG = A23456789012345678901234
+                                                                  FILE = a24.dat
+ A23456789012345678901235        A2345678901234567890124          REG = A2345678901234567890123
+                                                                  SEG = A2345678901234567890123
+                                                                  FILE = a23.dat
+ A2345678901234567890124         A234567890123456789013           REG = A234567890123456789012
+                                                                  SEG = A234567890123456789012
+                                                                  FILE = a22.dat
+ A234567890123456789013          A23456789012345678902            REG = A23456789012345678901
+                                                                  SEG = A23456789012345678901
+                                                                  FILE = a21.dat
+ A23456789012345678902           A2345678901234567891             REG = A2345678901234567890
+                                                                  SEG = A2345678901234567890
+                                                                  FILE = a20.dat
+ A2345678901234567891            A23456789012345678A              REG = A234567890123456789
+                                                                  SEG = A234567890123456789
+                                                                  FILE = a19.dat
+ A23456789012345678A             A23456789012345679               REG = A23456789012345678
+                                                                  SEG = A23456789012345678
+                                                                  FILE = a18.dat
+ A23456789012345679              A2345678901234568                REG = A2345678901234567
+                                                                  SEG = A2345678901234567
+                                                                  FILE = a17.dat
+ A2345678901234568               A234567890123457                 REG = A234567890123456
+                                                                  SEG = A234567890123456
+                                                                  FILE = a16.dat
+ A234567890123457                A23456789012346                  REG = A23456789012345
+                                                                  SEG = A23456789012345
+                                                                  FILE = a15.dat
+ A23456789012346                 A2345678901235                   REG = A2345678901234
+                                                                  SEG = A2345678901234
+                                                                  FILE = a14.dat
+ A2345678901235                  A234567890124                    REG = A234567890123
+                                                                  SEG = A234567890123
+                                                                  FILE = a13.dat
+ A234567890124                   A23456789013                     REG = A23456789012
+                                                                  SEG = A23456789012
+                                                                  FILE = a12.dat
+ A23456789013                    A2345678902                      REG = A2345678901
+                                                                  SEG = A2345678901
+                                                                  FILE = a11.dat
+ A2345678902                     A234567891                       REG = A234567890
+                                                                  SEG = A234567890
+                                                                  FILE = a10.dat
+ A234567891                      A2345678A                        REG = A23456789
+                                                                  SEG = A23456789
+                                                                  FILE = a9.dat
+ A2345678A                       A2345679                         REG = A2345678
+                                                                  SEG = A2345678
+                                                                  FILE = a8.dat
+ A2345679                        A234568                          REG = A234567
+                                                                  SEG = A234567
+                                                                  FILE = a7.dat
+ A234568                         A23457                           REG = A23456
+                                                                  SEG = A23456
+                                                                  FILE = a6.dat
+ A23457                          A2346                            REG = A2345
+                                                                  SEG = A2345
+                                                                  FILE = a5.dat
+ A2346                           A235                             REG = A234
+                                                                  SEG = A234
+                                                                  FILE = a4.dat
+ A235                            A24                              REG = A23
+                                                                  SEG = A23
+                                                                  FILE = a3.dat
+ A24                             A3                               REG = A2
+                                                                  SEG = A2
+                                                                  FILE = a2.dat
+ A3                              B                                REG = A
+                                                                  SEG = A
+                                                                  FILE = a1.dat
+ B                               ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+Verify that the globals go to the correct databases
+gde_long2 SUCCESS
+#################################################################################
+STEP4. test GDE boundary conditions with mappings in form 2 (gde_long3.csh)
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               A234567890123456789012345678900  REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ A234567890123456789012345678900 A234567890123456789012345678901  REG = A234567890123456789012345678900
+                                                                  SEG = A234567890123456789012345678900
+                                                                  FILE = ax1.dat
+ A234567890123456789012345678901 A234567890123456789012345678902  REG = A234567890123456789012345678901
+                                                                  SEG = A234567890123456789012345678901
+                                                                  FILE = ax2.dat
+ A234567890123456789012345678902 A234567890123456789012345678903  REG = A234567890123456789012345678902
+                                                                  SEG = A234567890123456789012345678902
+                                                                  FILE = ax3.dat
+ A234567890123456789012345678903 A234567890123456789012345678904  REG = A234567890123456789012345678903
+                                                                  SEG = A234567890123456789012345678903
+                                                                  FILE = ax4.dat
+ A234567890123456789012345678904 A234567890123456789012345678905  REG = A234567890123456789012345678904
+                                                                  SEG = A234567890123456789012345678904
+                                                                  FILE = ax5.dat
+ A234567890123456789012345678905 A234567890123456789012345678906  REG = A234567890123456789012345678905
+                                                                  SEG = A234567890123456789012345678905
+                                                                  FILE = ax6.dat
+ A234567890123456789012345678906 A234567890123456789012345678907  REG = A234567890123456789012345678906
+                                                                  SEG = A234567890123456789012345678906
+                                                                  FILE = ax7.dat
+ A234567890123456789012345678907 A234567890123456789012345678908  REG = A234567890123456789012345678907
+                                                                  SEG = A234567890123456789012345678907
+                                                                  FILE = ax8.dat
+ A234567890123456789012345678908 A234567890123456789012345678909  REG = A234567890123456789012345678908
+                                                                  SEG = A234567890123456789012345678908
+                                                                  FILE = ax9.dat
+ A234567890123456789012345678909 A23456789012345678901234567890A  REG = A234567890123456789012345678909
+                                                                  SEG = A234567890123456789012345678909
+                                                                  FILE = ax10.dat
+ A23456789012345678901234567890A A23456789012345678901234567890B  REG = A23456789012345678901234567890A
+                                                                  SEG = A23456789012345678901234567890A
+                                                                  FILE = ax11.dat
+ A23456789012345678901234567890B A23456789012345678901234567890C  REG = A23456789012345678901234567890B
+                                                                  SEG = A23456789012345678901234567890B
+                                                                  FILE = ax12.dat
+ A23456789012345678901234567890C A23456789012345678901234567890D  REG = A23456789012345678901234567890C
+                                                                  SEG = A23456789012345678901234567890C
+                                                                  FILE = ax13.dat
+ A23456789012345678901234567890D A23456789012345678901234567890E  REG = A23456789012345678901234567890D
+                                                                  SEG = A23456789012345678901234567890D
+                                                                  FILE = ax14.dat
+ A23456789012345678901234567890E A23456789012345678901234567890F  REG = A23456789012345678901234567890E
+                                                                  SEG = A23456789012345678901234567890E
+                                                                  FILE = ax15.dat
+ A23456789012345678901234567890F A23456789012345678901234567890G  REG = A23456789012345678901234567890F
+                                                                  SEG = A23456789012345678901234567890F
+                                                                  FILE = ax16.dat
+ A23456789012345678901234567890G A23456789012345678901234567890H  REG = A23456789012345678901234567890G
+                                                                  SEG = A23456789012345678901234567890G
+                                                                  FILE = ax17.dat
+ A23456789012345678901234567890H A23456789012345678901234567890I  REG = A23456789012345678901234567890H
+                                                                  SEG = A23456789012345678901234567890H
+                                                                  FILE = ax18.dat
+ A23456789012345678901234567890I A23456789012345678901234567890J  REG = A23456789012345678901234567890I
+                                                                  SEG = A23456789012345678901234567890I
+                                                                  FILE = ax19.dat
+ A23456789012345678901234567890J A23456789012345678901234567890K  REG = A23456789012345678901234567890J
+                                                                  SEG = A23456789012345678901234567890J
+                                                                  FILE = ax20.dat
+ A23456789012345678901234567890K A23456789012345678901234567890L  REG = A23456789012345678901234567890K
+                                                                  SEG = A23456789012345678901234567890K
+                                                                  FILE = ax21.dat
+ A23456789012345678901234567890L A23456789012345678901234567890M  REG = A23456789012345678901234567890L
+                                                                  SEG = A23456789012345678901234567890L
+                                                                  FILE = ax22.dat
+ A23456789012345678901234567890M A23456789012345678901234567890N  REG = A23456789012345678901234567890M
+                                                                  SEG = A23456789012345678901234567890M
+                                                                  FILE = ax23.dat
+ A23456789012345678901234567890N A23456789012345678901234567890O  REG = A23456789012345678901234567890N
+                                                                  SEG = A23456789012345678901234567890N
+                                                                  FILE = ax24.dat
+ A23456789012345678901234567890O A23456789012345678901234567890P  REG = A23456789012345678901234567890O
+                                                                  SEG = A23456789012345678901234567890O
+                                                                  FILE = ax25.dat
+ A23456789012345678901234567890P A23456789012345678901234567890Q  REG = A23456789012345678901234567890P
+                                                                  SEG = A23456789012345678901234567890P
+                                                                  FILE = ax26.dat
+ A23456789012345678901234567890Q A23456789012345678901234567890R  REG = A23456789012345678901234567890Q
+                                                                  SEG = A23456789012345678901234567890Q
+                                                                  FILE = ax27.dat
+ A23456789012345678901234567890R A23456789012345678901234567890S  REG = A23456789012345678901234567890R
+                                                                  SEG = A23456789012345678901234567890R
+                                                                  FILE = ax28.dat
+ A23456789012345678901234567890S A23456789012345678901234567890T  REG = A23456789012345678901234567890S
+                                                                  SEG = A23456789012345678901234567890S
+                                                                  FILE = ax29.dat
+ A23456789012345678901234567890T A23456789012345678901234567890U  REG = A23456789012345678901234567890T
+                                                                  SEG = A23456789012345678901234567890T
+                                                                  FILE = ax30.dat
+ A23456789012345678901234567890U A23456789012345678901234567890V  REG = A23456789012345678901234567890U
+                                                                  SEG = A23456789012345678901234567890U
+                                                                  FILE = ax31.dat
+ A23456789012345678901234567890V A23456789012345678901234567890W  REG = A23456789012345678901234567890V
+                                                                  SEG = A23456789012345678901234567890V
+                                                                  FILE = ax32.dat
+ A23456789012345678901234567890W A23456789012345678901234567890X  REG = A23456789012345678901234567890W
+                                                                  SEG = A23456789012345678901234567890W
+                                                                  FILE = ax33.dat
+ A23456789012345678901234567890X A23456789012345678901234567890Y  REG = A23456789012345678901234567890X
+                                                                  SEG = A23456789012345678901234567890X
+                                                                  FILE = ax34.dat
+ A23456789012345678901234567890Y A23456789012345678901234567890Z  REG = A23456789012345678901234567890Y
+                                                                  SEG = A23456789012345678901234567890Y
+                                                                  FILE = ax35.dat
+ A23456789012345678901234567890Z A23456789012345678901234567890a  REG = A23456789012345678901234567890Z
+                                                                  SEG = A23456789012345678901234567890Z
+                                                                  FILE = ax36.dat
+ A23456789012345678901234567890a A23456789012345678901234567890b  REG = B23456789012345678901234567890A
+                                                                  SEG = B23456789012345678901234567890A
+                                                                  FILE = ax37.dat
+ A23456789012345678901234567890b A23456789012345678901234567890c  REG = B23456789012345678901234567890B
+                                                                  SEG = B23456789012345678901234567890B
+                                                                  FILE = ax38.dat
+ A23456789012345678901234567890c A23456789012345678901234567890d  REG = B23456789012345678901234567890C
+                                                                  SEG = B23456789012345678901234567890C
+                                                                  FILE = ax39.dat
+ A23456789012345678901234567890d A23456789012345678901234567890e  REG = B23456789012345678901234567890D
+                                                                  SEG = B23456789012345678901234567890D
+                                                                  FILE = ax40.dat
+ A23456789012345678901234567890e A23456789012345678901234567890f  REG = B23456789012345678901234567890E
+                                                                  SEG = B23456789012345678901234567890E
+                                                                  FILE = ax41.dat
+ A23456789012345678901234567890f A23456789012345678901234567890g  REG = B23456789012345678901234567890F
+                                                                  SEG = B23456789012345678901234567890F
+                                                                  FILE = ax42.dat
+ A23456789012345678901234567890g A23456789012345678901234567890h  REG = B23456789012345678901234567890G
+                                                                  SEG = B23456789012345678901234567890G
+                                                                  FILE = ax43.dat
+ A23456789012345678901234567890h A23456789012345678901234567890i  REG = B23456789012345678901234567890H
+                                                                  SEG = B23456789012345678901234567890H
+                                                                  FILE = ax44.dat
+ A23456789012345678901234567890i A23456789012345678901234567890j  REG = B23456789012345678901234567890I
+                                                                  SEG = B23456789012345678901234567890I
+                                                                  FILE = ax45.dat
+ A23456789012345678901234567890j A23456789012345678901234567890k  REG = B23456789012345678901234567890J
+                                                                  SEG = B23456789012345678901234567890J
+                                                                  FILE = ax46.dat
+ A23456789012345678901234567890k A23456789012345678901234567890l  REG = B23456789012345678901234567890K
+                                                                  SEG = B23456789012345678901234567890K
+                                                                  FILE = ax47.dat
+ A23456789012345678901234567890l A23456789012345678901234567890m  REG = B23456789012345678901234567890L
+                                                                  SEG = B23456789012345678901234567890L
+                                                                  FILE = ax48.dat
+ A23456789012345678901234567890m A23456789012345678901234567890n  REG = B23456789012345678901234567890M
+                                                                  SEG = B23456789012345678901234567890M
+                                                                  FILE = ax49.dat
+ A23456789012345678901234567890n A23456789012345678901234567890o  REG = B23456789012345678901234567890N
+                                                                  SEG = B23456789012345678901234567890N
+                                                                  FILE = ax50.dat
+ A23456789012345678901234567890o A23456789012345678901234567890p  REG = B23456789012345678901234567890O
+                                                                  SEG = B23456789012345678901234567890O
+                                                                  FILE = ax51.dat
+ A23456789012345678901234567890p A23456789012345678901234567890q  REG = B23456789012345678901234567890P
+                                                                  SEG = B23456789012345678901234567890P
+                                                                  FILE = ax52.dat
+ A23456789012345678901234567890q A23456789012345678901234567890r  REG = B23456789012345678901234567890Q
+                                                                  SEG = B23456789012345678901234567890Q
+                                                                  FILE = ax53.dat
+ A23456789012345678901234567890r A23456789012345678901234567890s  REG = B23456789012345678901234567890R
+                                                                  SEG = B23456789012345678901234567890R
+                                                                  FILE = ax54.dat
+ A23456789012345678901234567890s A23456789012345678901234567890t  REG = B23456789012345678901234567890S
+                                                                  SEG = B23456789012345678901234567890S
+                                                                  FILE = ax55.dat
+ A23456789012345678901234567890t A23456789012345678901234567890u  REG = B23456789012345678901234567890T
+                                                                  SEG = B23456789012345678901234567890T
+                                                                  FILE = ax56.dat
+ A23456789012345678901234567890u A23456789012345678901234567890v  REG = B23456789012345678901234567890U
+                                                                  SEG = B23456789012345678901234567890U
+                                                                  FILE = ax57.dat
+ A23456789012345678901234567890v A23456789012345678901234567890w  REG = B23456789012345678901234567890V
+                                                                  SEG = B23456789012345678901234567890V
+                                                                  FILE = ax58.dat
+ A23456789012345678901234567890w A23456789012345678901234567890x  REG = B23456789012345678901234567890W
+                                                                  SEG = B23456789012345678901234567890W
+                                                                  FILE = ax59.dat
+ A23456789012345678901234567890x A23456789012345678901234567890y  REG = B23456789012345678901234567890X
+                                                                  SEG = B23456789012345678901234567890X
+                                                                  FILE = ax60.dat
+ A23456789012345678901234567890y A23456789012345678901234567890z  REG = B23456789012345678901234567890Y
+                                                                  SEG = B23456789012345678901234567890Y
+                                                                  FILE = ax61.dat
+ A23456789012345678901234567890z ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+Set some globals...
+Verify that the globals go to the correct databases
+gde_long3 SUCCESS
+#################################################################################
+some name does not exist errors (4 of them) are expected from dbcreate1.out
+##TEST_PATH##/long1/dbcreate1.out
+%GDE-E-OBJNOTFND, Name Dd3456789012345678901234567890 does not exist
+%GDE-E-OBJNOTFND, Name De34567890123456789012345678901 does not exist
+%GDE-E-OBJNOTFND, Name Cd3456789012345678901234567890* does not exist
+%GDE-E-OBJNOTFND, Name Ce34567890123456789012345678901 does not exist

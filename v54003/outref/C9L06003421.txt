@@ -1,0 +1,121 @@
+---------------------------------------------------------------------------------------
+BEGIN 1 :-) Create database and enable journaling with desired settings
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+mumps.dat
+
+END 1
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 2 :-) Add 10 transaction in a, b and c regions spanned across 1 seconds
+
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+END 2
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 3 :-) Add updates transaction in d region and crash the database
+
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Killed
+
+END 3
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 4 :-) Add updates transaction in e region and crash the database
+
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Killed
+
+END 4
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 5 :-) Do backward recovery
+
+
+END 5
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 6 :-) Extract the journal for region d region
+
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/d.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+END 6
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 7 :-) Get time stamp of EOF record in d.mjf and tp_resolve_time calculated during backward recovery
+
+
+END 7
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 8 :-) EOF timestamp in c.mjf and tp_resolve time should match
+
+
+GTM>
+##TEST_AWKEOF time stamp:  [0-9]+,[0-9]+
+GTM>
+##TEST_AWKTP Resolve time: [0-9]+,[0-9]+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Timestamp match
+GTM>
+
+END 8
+---------------------------------------------------------------------------------------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

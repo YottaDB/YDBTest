@@ -1,0 +1,1126 @@
+setenv gtm_chset UTF-8
+unset echo
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+test ZBREAK
+do ^uzbbasic start
+Simple zbreak test starts
+Set break points
+After break points set: Show the break points and stack:zbbasic+14^zbbasicexec
+zbbasic+13^zbbasicexec
+zbbasic+12^zbbasicexec
+zbbasic+11^zbbasicexec
+zbbasic+10^zbbasicexec
+zbbasic+9^zbbasicexec
+zbbasic+8^zbbasicexec
+zbbasic+7^zbbasicexec
+zbbasic+6^zbbasicexec
+zbbasic+5^zbbasicexec
+zbbasic+4^zbbasicexec
+zbbasic+3^zbbasicexec
+zbbasic+2^zbbasicexec
+uzbbasic+11^uzbbasic
+uzbbasic+5^uzbdrive
+Test xecute
+Verify xecute
+Test zbreak actions
+do zbbasic^zbbasicexec
+zbbasic+1^zbbasicexec$zlevel=3
+After zbreak actions: Show the break points and stack:zbbasic+14^zbbasicexec
+zbbasic+13^zbbasicexec
+zbbasic+12^zbbasicexec
+zbbasic+11^zbbasicexec
+zbbasic+10^zbbasicexec
+zbbasic+9^zbbasicexec
+zbbasic+8^zbbasicexec
+zbbasic+7^zbbasicexec
+zbbasic+6^zbbasicexec
+zbbasic+5^zbbasicexec
+zbbasic+4^zbbasicexec
+zbbasic+3^zbbasicexec
+zbbasic+2^zbbasicexec
+uzbbasic+25^uzbbasic
+uzbbasic+5^uzbdrive
+Now verify data
+do verify^zbbasicexec
+Set break points again
+Test xecute cmd
+Verify xecute cmd
+Test zbreak actions again
+do zbbasic^zbbasicexec
+zbbasic+1^zbbasicexec$zlevel=3
+After second zbreak actions: Show the break points and stack:zbbasic+14^zbbasicexec
+zbbasic+13^zbbasicexec
+zbbasic+12^zbbasicexec
+zbbasic+11^zbbasicexec
+zbbasic+10^zbbasicexec
+zbbasic+9^zbbasicexec
+zbbasic+8^zbbasicexec
+zbbasic+7^zbbasicexec
+zbbasic+6^zbbasicexec
+zbbasic+5^zbbasicexec
+zbbasic+4^zbbasicexec
+zbbasic+3^zbbasicexec
+zbbasic+2^zbbasicexec
+uzbbasic+49^uzbbasic
+uzbbasic+5^uzbdrive
+Now verify data
+do verify^zbbasicexec
+zlink "zbbasicexec"
+After zlink zbbasiecexec : Show the break points and stack:uzbbasic+57^uzbbasic
+uzbbasic+5^uzbdrive
+Simple zbreak test ends
+do ^uzbbasic done
+ZT=set $ZT="" goto myerr^uzbmain
+Will force an error
+After forcerr caused error : Show the break points and stack:forcerr+5^uzbmain
+forcerr+4^uzbmain
+forcerr+3^uzbmain
+forcerr+2^uzbmain
+forcerr+1^uzbmain
+myerr+1^uzbmain
+errtest+8^uzbdrive
+$zstatus=150373850,forcerr+6^uzbmain,%GTM-E-UNDEF, Undefined local variable: junk(αβγ我ＡＢＧ玻璃而傷)
+zwrite forcerr1
+forcerr1="forcerr1 value was set"
+zwrite zberr
+zberr("Ā0")=1
+zberr("ā1")=1
+zberr("Ă2")=1
+zberr("ă3")=1
+zberr("Ą4")=1
+Exiting myerr
+After break points set in initlab: Show the break points and stack:forcerr+5^uzbmain
+forcerr+4^uzbmain
+forcerr+3^uzbmain
+forcerr+2^uzbmain
+forcerr+1^uzbmain
+uzbmain+43^uzbmain
+uzbmain+42^uzbmain
+uzbmain+41^uzbmain
+uzbmain+40^uzbmain
+uzbmain+39^uzbmain
+uzbmain+38^uzbmain
+uzbmain+37^uzbmain
+uzbmain+36^uzbmain
+uzbmain+35^uzbmain
+uzbmain+34^uzbmain
+uzbmain+33^uzbmain
+uzbmain+32^uzbmain
+uzbmain+31^uzbmain
+uzbmain+30^uzbmain
+uzbmain+29^uzbmain
+uzbmain+28^uzbmain
+uzbmain+27^uzbmain
+uzbmain+26^uzbmain
+uzbmain+25^uzbmain
+uzbmain+24^uzbmain
+uzbmain+23^uzbmain
+uzbmain+22^uzbmain
+uzbmain+21^uzbmain
+uzbmain+20^uzbmain
+uzbmain+18^uzbmain
+uzbmain+17^uzbmain
+uzbmain+16^uzbmain
+uzbmain+15^uzbmain
+uzbmain+14^uzbmain
+uzbmain+13^uzbmain
+uzbmain+12^uzbmain
+uzbmain+11^uzbmain
+uzbmain+10^uzbmain
+uzbmain+9^uzbmain
+uzbmain+8^uzbmain
+uzbmain+7^uzbmain
+uzbmain+6^uzbmain
+uzbmain+5^uzbmain
+uzbmain+4^uzbmain
+uzbmain+3^uzbmain
+uzbmain+2^uzbmain
+initlab+10^uzbdrive
+Test zbreak actions with set
+do ^uzbmain
+uzbbasic+1^uzbmain$zlevel=2
+LOTSVAR-I-END_SET
+set PASS
+After break points set in lab0: Show the break points and stack:forcerr+5^uzbmain
+forcerr+4^uzbmain
+forcerr+3^uzbmain
+forcerr+2^uzbmain
+forcerr+1^uzbmain
+uzbmain+43^uzbmain
+uzbmain+42^uzbmain
+uzbmain+41^uzbmain
+uzbmain+40^uzbmain
+uzbmain+39^uzbmain
+uzbmain+38^uzbmain
+uzbmain+37^uzbmain
+uzbmain+36^uzbmain
+uzbmain+35^uzbmain
+uzbmain+34^uzbmain
+uzbmain+33^uzbmain
+uzbmain+32^uzbmain
+uzbmain+31^uzbmain
+uzbmain+30^uzbmain
+uzbmain+29^uzbmain
+uzbmain+28^uzbmain
+uzbmain+27^uzbmain
+uzbmain+26^uzbmain
+uzbmain+25^uzbmain
+uzbmain+24^uzbmain
+uzbmain+23^uzbmain
+uzbmain+22^uzbmain
+uzbmain+21^uzbmain
+uzbmain+20^uzbmain
+uzbmain+18^uzbmain
+uzbmain+17^uzbmain
+uzbmain+16^uzbmain
+uzbmain+15^uzbmain
+uzbmain+14^uzbmain
+uzbmain+13^uzbmain
+uzbmain+12^uzbmain
+uzbmain+11^uzbmain
+uzbmain+10^uzbmain
+uzbmain+9^uzbmain
+uzbmain+8^uzbmain
+uzbmain+7^uzbmain
+uzbmain+6^uzbmain
+uzbmain+5^uzbmain
+uzbmain+4^uzbmain
+uzbmain+3^uzbmain
+uzbmain+2^uzbmain
+lab0+3^uzbdrive
+Test zbreak actions with action do uzblab1^uzblab1
+Test zbreak actions with action as zpos
+$level=10 $text= if $tlevel trollback
+	write $zpos,"$zlevel=",$zlevel,!
+uzbbasic+1^uzbmain$zlevel=10
+$level=10 $text= if $tlevel trollback
+        new Avariable,AA,expr,mindex,cmd,varname
+$level=10 $text= if $tlevel trollback
+	set ^callcnt=$get(^callcnt)+1
+$level=10 $text= if $tlevel trollback
+	set zbmaxloop=10 
+$level=10 $text= if $tlevel trollback
+	set AA="ZBREAKAA(""我能吞下玻璃而不伤身体"")" set @AA="Avariable"
+$level=10 $text= if $tlevel trollback
+	set expr="ZBMAIN=22" set @expr
+$level=10 $text= if $tlevel trollback
+	new cmd
+$level=10 $text= if $tlevel trollback
+	for mindex=1:1:zbmaxloop  do
+$level=11 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=11 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=11 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=11 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=11 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=11 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=11 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=11 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=11 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=11 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=10 $text= if $tlevel trollback
+	for mindex=1:1:zbmaxloop  do
+$level=11 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=11 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=11 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=11 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=11 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=11 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=11 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=11 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=11 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=11 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=11 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=11 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=11 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=11 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=11 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=11 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=11 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=11 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=11 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=11 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=11 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=11 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=11 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=11 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=11 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=11 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=11 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=11 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=11 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=11 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=10 $text= if $tlevel trollback
+	if $get(^setrout1)=0 set global=0 do set^lotsvar  set ^setrout1=$get(^setrout1)+1
+$level=10 $text= if $tlevel trollback
+	if $get(^setrout2)=0 do in1^lfill("set",5,1)  set ^setrout2=$get(^setrout2)+1
+$level=10 $text= if $tlevel trollback
+	set @"zbendofbasic"=1
+$level=10 $text= if $tlevel trollback
+	new cmdcnt
+$level=10 $text= if $tlevel trollback
+	set ^myvar=$get(^myvar)+1
+$level=10 $text= if $tlevel trollback
+	if ($data(^caller))=0 set ^caller=100
+$level=10 $text= if $tlevel trollback
+	set ^pid=$j
+$level=10 $text= if $tlevel trollback
+	for cmdcnt=1:1:5 do
+$level=11 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=11 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=11 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=11 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=11 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=11 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=11 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=11 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=11 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=11 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=10 $text= if $tlevel trollback
+	tstart ():(serial:t="BA")
+$level=10 $text= if $tlevel trollback
+	set ^tstcnt=$get(^tstcnt)+1
+$level=10 $text= if $tlevel trollback
+	set ^tailcnt(^myvar,^caller)=$get(^tailcnt(^myvar,^caller))+1
+$level=10 $text= if $tlevel trollback
+	tc
+$level=10 $text= if $tlevel trollback
+	kill myvar
+$level=10 $text= if $tlevel trollback
+	set myvar(1)=Avar
+$level=10 $text= if $tlevel trollback
+	set myvar(2)=Bvar
+$level=10 $text= if $tlevel trollback
+	set myvar(3)=Cvar
+$level=10 $text= if $tlevel trollback
+	tstart (myvar):(serial:t="BA")
+$level=10 $text= if $tlevel trollback
+	set myvar(4)=Dvar
+$level=10 $text= if $tlevel trollback
+	set myvar(5)=Evar
+$level=10 $text= if $tlevel trollback
+	merge mergvar=myvar
+$level=10 $text= if $tlevel trollback
+	zkill myvar(1)
+$level=10 $text= if $tlevel trollback
+	kill myvar(2)
+$level=10 $text= if $tlevel trollback
+	kill myvar
+$level=10 $text= if $tlevel trollback
+	if $trestart=0 trestart
+$level=10 $text= if $tlevel trollback
+	set myvar(4)=Dvar
+$level=10 $text= if $tlevel trollback
+	set myvar(5)=Evar
+$level=10 $text= if $tlevel trollback
+	merge mergvar=myvar
+$level=10 $text= if $tlevel trollback
+	zkill myvar(1)
+$level=10 $text= if $tlevel trollback
+	kill myvar(2)
+$level=10 $text= if $tlevel trollback
+	kill myvar
+$level=10 $text= if $tlevel trollback
+	if $trestart=0 trestart
+$level=10 $text= if $tlevel trollback
+	if $tlevel trollback
+$level=10 $text= if $tlevel trollback
+	quit
+uzbbasic+1^uzbmain$zlevel=8
+$level=8 $text= if $tlevel trollback
+        new Avariable,AA,expr,mindex,cmd,varname
+$level=8 $text= if $tlevel trollback
+	set ^callcnt=$get(^callcnt)+1
+$level=8 $text= if $tlevel trollback
+	set zbmaxloop=10 
+$level=8 $text= if $tlevel trollback
+	set AA="ZBREAKAA(""我能吞下玻璃而不伤身体"")" set @AA="Avariable"
+$level=8 $text= if $tlevel trollback
+	set expr="ZBMAIN=22" set @expr
+$level=8 $text= if $tlevel trollback
+	new cmd
+$level=8 $text= if $tlevel trollback
+	for mindex=1:1:zbmaxloop  do
+$level=9 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=9 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=9 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=9 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=9 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=9 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=9 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=9 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=9 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=9 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=8 $text= if $tlevel trollback
+	for mindex=1:1:zbmaxloop  do
+$level=9 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=9 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=9 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=9 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=9 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=9 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=9 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=9 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=9 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=9 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=9 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=9 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=9 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=9 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=9 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=9 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=9 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=9 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=9 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=9 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=9 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=9 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=9 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=9 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=9 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=9 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=9 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=9 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=9 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=9 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=8 $text= if $tlevel trollback
+	if $get(^setrout1)=0 set global=0 do set^lotsvar  set ^setrout1=$get(^setrout1)+1
+$level=8 $text= if $tlevel trollback
+	if $get(^setrout2)=0 do in1^lfill("set",5,1)  set ^setrout2=$get(^setrout2)+1
+$level=8 $text= if $tlevel trollback
+	set @"zbendofbasic"=1
+$level=8 $text= if $tlevel trollback
+	new cmdcnt
+$level=8 $text= if $tlevel trollback
+	set ^myvar=$get(^myvar)+1
+$level=8 $text= if $tlevel trollback
+	if ($data(^caller))=0 set ^caller=100
+$level=8 $text= if $tlevel trollback
+	set ^pid=$j
+$level=8 $text= if $tlevel trollback
+	for cmdcnt=1:1:5 do
+$level=9 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=9 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=9 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=9 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=9 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=9 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=9 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=9 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=9 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=9 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=8 $text= if $tlevel trollback
+	tstart ():(serial:t="BA")
+$level=8 $text= if $tlevel trollback
+	set ^tstcnt=$get(^tstcnt)+1
+$level=8 $text= if $tlevel trollback
+	set ^tailcnt(^myvar,^caller)=$get(^tailcnt(^myvar,^caller))+1
+$level=8 $text= if $tlevel trollback
+	tc
+$level=8 $text= if $tlevel trollback
+	kill myvar
+$level=8 $text= if $tlevel trollback
+	set myvar(1)=Avar
+$level=8 $text= if $tlevel trollback
+	set myvar(2)=Bvar
+$level=8 $text= if $tlevel trollback
+	set myvar(3)=Cvar
+$level=8 $text= if $tlevel trollback
+	tstart (myvar):(serial:t="BA")
+$level=8 $text= if $tlevel trollback
+	set myvar(4)=Dvar
+$level=8 $text= if $tlevel trollback
+	set myvar(5)=Evar
+$level=8 $text= if $tlevel trollback
+	merge mergvar=myvar
+$level=8 $text= if $tlevel trollback
+	zkill myvar(1)
+$level=8 $text= if $tlevel trollback
+	kill myvar(2)
+$level=8 $text= if $tlevel trollback
+	kill myvar
+$level=8 $text= if $tlevel trollback
+	if $trestart=0 trestart
+$level=8 $text= if $tlevel trollback
+	set myvar(4)=Dvar
+$level=8 $text= if $tlevel trollback
+	set myvar(5)=Evar
+$level=8 $text= if $tlevel trollback
+	merge mergvar=myvar
+$level=8 $text= if $tlevel trollback
+	zkill myvar(1)
+$level=8 $text= if $tlevel trollback
+	kill myvar(2)
+$level=8 $text= if $tlevel trollback
+	kill myvar
+$level=8 $text= if $tlevel trollback
+	if $trestart=0 trestart
+$level=8 $text= if $tlevel trollback
+	if $tlevel trollback
+$level=8 $text= if $tlevel trollback
+	quit
+uzbbasic+1^uzbmain$zlevel=6
+$level=6 $text= if $tlevel trollback
+        new Avariable,AA,expr,mindex,cmd,varname
+$level=6 $text= if $tlevel trollback
+	set ^callcnt=$get(^callcnt)+1
+$level=6 $text= if $tlevel trollback
+	set zbmaxloop=10 
+$level=6 $text= if $tlevel trollback
+	set AA="ZBREAKAA(""我能吞下玻璃而不伤身体"")" set @AA="Avariable"
+$level=6 $text= if $tlevel trollback
+	set expr="ZBMAIN=22" set @expr
+$level=6 $text= if $tlevel trollback
+	new cmd
+$level=6 $text= if $tlevel trollback
+	for mindex=1:1:zbmaxloop  do
+$level=7 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=7 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=7 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=7 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=7 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=7 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=7 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=7 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=7 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=7 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=6 $text= if $tlevel trollback
+	for mindex=1:1:zbmaxloop  do
+$level=7 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=7 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=7 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=7 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=7 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=7 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=7 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=7 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=7 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=7 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=7 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=7 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=7 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=7 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=7 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=7 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=7 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=7 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=7 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=7 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=7 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=7 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=7 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=7 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=7 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=7 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=7 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=7 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=7 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=7 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=6 $text= if $tlevel trollback
+	if $get(^setrout1)=0 set global=0 do set^lotsvar  set ^setrout1=$get(^setrout1)+1
+$level=6 $text= if $tlevel trollback
+	if $get(^setrout2)=0 do in1^lfill("set",5,1)  set ^setrout2=$get(^setrout2)+1
+$level=6 $text= if $tlevel trollback
+	set @"zbendofbasic"=1
+$level=6 $text= if $tlevel trollback
+	new cmdcnt
+$level=6 $text= if $tlevel trollback
+	set ^myvar=$get(^myvar)+1
+$level=6 $text= if $tlevel trollback
+	if ($data(^caller))=0 set ^caller=100
+$level=6 $text= if $tlevel trollback
+	set ^pid=$j
+$level=6 $text= if $tlevel trollback
+	for cmdcnt=1:1:5 do
+$level=7 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=7 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=7 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=7 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=7 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=7 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=7 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=7 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=7 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=7 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=6 $text= if $tlevel trollback
+	tstart ():(serial:t="BA")
+$level=6 $text= if $tlevel trollback
+	set ^tstcnt=$get(^tstcnt)+1
+$level=6 $text= if $tlevel trollback
+	set ^tailcnt(^myvar,^caller)=$get(^tailcnt(^myvar,^caller))+1
+$level=6 $text= if $tlevel trollback
+	tc
+$level=6 $text= if $tlevel trollback
+	kill myvar
+$level=6 $text= if $tlevel trollback
+	set myvar(1)=Avar
+$level=6 $text= if $tlevel trollback
+	set myvar(2)=Bvar
+$level=6 $text= if $tlevel trollback
+	set myvar(3)=Cvar
+$level=6 $text= if $tlevel trollback
+	tstart (myvar):(serial:t="BA")
+$level=6 $text= if $tlevel trollback
+	set myvar(4)=Dvar
+$level=6 $text= if $tlevel trollback
+	set myvar(5)=Evar
+$level=6 $text= if $tlevel trollback
+	merge mergvar=myvar
+$level=6 $text= if $tlevel trollback
+	zkill myvar(1)
+$level=6 $text= if $tlevel trollback
+	kill myvar(2)
+$level=6 $text= if $tlevel trollback
+	kill myvar
+$level=6 $text= if $tlevel trollback
+	if $trestart=0 trestart
+$level=6 $text= if $tlevel trollback
+	set myvar(4)=Dvar
+$level=6 $text= if $tlevel trollback
+	set myvar(5)=Evar
+$level=6 $text= if $tlevel trollback
+	merge mergvar=myvar
+$level=6 $text= if $tlevel trollback
+	zkill myvar(1)
+$level=6 $text= if $tlevel trollback
+	kill myvar(2)
+$level=6 $text= if $tlevel trollback
+	kill myvar
+$level=6 $text= if $tlevel trollback
+	if $trestart=0 trestart
+$level=6 $text= if $tlevel trollback
+	if $tlevel trollback
+$level=6 $text= if $tlevel trollback
+	quit
+uzbbasic+1^uzbmain$zlevel=4
+$level=4 $text= if $tlevel trollback
+        new Avariable,AA,expr,mindex,cmd,varname
+$level=4 $text= if $tlevel trollback
+	set ^callcnt=$get(^callcnt)+1
+$level=4 $text= if $tlevel trollback
+	set zbmaxloop=10 
+$level=4 $text= if $tlevel trollback
+	set AA="ZBREAKAA(""我能吞下玻璃而不伤身体"")" set @AA="Avariable"
+$level=4 $text= if $tlevel trollback
+	set expr="ZBMAIN=22" set @expr
+$level=4 $text= if $tlevel trollback
+	new cmd
+$level=4 $text= if $tlevel trollback
+	for mindex=1:1:zbmaxloop  do
+$level=5 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=5 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=5 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=5 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=5 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=5 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=5 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=5 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=5 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=5 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=4 $text= if $tlevel trollback
+	for mindex=1:1:zbmaxloop  do
+$level=5 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=5 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=5 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=5 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=5 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=5 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=5 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=5 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=5 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=5 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=5 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=5 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=5 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=5 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=5 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=5 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=5 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=5 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=5 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=5 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=5 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=5 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=5 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=5 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=5 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=5 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=5 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=5 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=5 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=5 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=4 $text= if $tlevel trollback
+	if $get(^setrout1)=0 set global=0 do set^lotsvar  set ^setrout1=$get(^setrout1)+1
+$level=4 $text= if $tlevel trollback
+	if $get(^setrout2)=0 do in1^lfill("set",5,1)  set ^setrout2=$get(^setrout2)+1
+$level=4 $text= if $tlevel trollback
+	set @"zbendofbasic"=1
+$level=4 $text= if $tlevel trollback
+	new cmdcnt
+$level=4 $text= if $tlevel trollback
+	set ^myvar=$get(^myvar)+1
+$level=4 $text= if $tlevel trollback
+	if ($data(^caller))=0 set ^caller=100
+$level=4 $text= if $tlevel trollback
+	set ^pid=$j
+$level=4 $text= if $tlevel trollback
+	for cmdcnt=1:1:5 do
+$level=5 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=5 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=5 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=5 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=5 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=5 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=5 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=5 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=5 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=5 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=4 $text= if $tlevel trollback
+	tstart ():(serial:t="BA")
+$level=4 $text= if $tlevel trollback
+	set ^tstcnt=$get(^tstcnt)+1
+$level=4 $text= if $tlevel trollback
+	set ^tailcnt(^myvar,^caller)=$get(^tailcnt(^myvar,^caller))+1
+$level=4 $text= if $tlevel trollback
+	tc
+$level=4 $text= if $tlevel trollback
+	kill myvar
+$level=4 $text= if $tlevel trollback
+	set myvar(1)=Avar
+$level=4 $text= if $tlevel trollback
+	set myvar(2)=Bvar
+$level=4 $text= if $tlevel trollback
+	set myvar(3)=Cvar
+$level=4 $text= if $tlevel trollback
+	tstart (myvar):(serial:t="BA")
+$level=4 $text= if $tlevel trollback
+	set myvar(4)=Dvar
+$level=4 $text= if $tlevel trollback
+	set myvar(5)=Evar
+$level=4 $text= if $tlevel trollback
+	merge mergvar=myvar
+$level=4 $text= if $tlevel trollback
+	zkill myvar(1)
+$level=4 $text= if $tlevel trollback
+	kill myvar(2)
+$level=4 $text= if $tlevel trollback
+	kill myvar
+$level=4 $text= if $tlevel trollback
+	if $trestart=0 trestart
+$level=4 $text= if $tlevel trollback
+	set myvar(4)=Dvar
+$level=4 $text= if $tlevel trollback
+	set myvar(5)=Evar
+$level=4 $text= if $tlevel trollback
+	merge mergvar=myvar
+$level=4 $text= if $tlevel trollback
+	zkill myvar(1)
+$level=4 $text= if $tlevel trollback
+	kill myvar(2)
+$level=4 $text= if $tlevel trollback
+	kill myvar
+$level=4 $text= if $tlevel trollback
+	if $trestart=0 trestart
+$level=4 $text= if $tlevel trollback
+	if $tlevel trollback
+$level=4 $text= if $tlevel trollback
+	quit
+uzbbasic+1^uzbmain$zlevel=2
+$level=2 $text= if $tlevel trollback
+        new Avariable,AA,expr,mindex,cmd,varname
+$level=2 $text= if $tlevel trollback
+	set ^callcnt=$get(^callcnt)+1
+$level=2 $text= if $tlevel trollback
+	set zbmaxloop=10 
+$level=2 $text= if $tlevel trollback
+	set AA="ZBREAKAA(""我能吞下玻璃而不伤身体"")" set @AA="Avariable"
+$level=2 $text= if $tlevel trollback
+	set expr="ZBMAIN=22" set @expr
+$level=2 $text= if $tlevel trollback
+	new cmd
+$level=2 $text= if $tlevel trollback
+	for mindex=1:1:zbmaxloop  do
+$level=3 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=3 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=3 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=3 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=3 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=3 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=3 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=3 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=3 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=3 $text= if $tlevel trollback
+	. set cmd="set %zbmva"_mindex_"=mindex"  xecute cmd
+$level=2 $text= if $tlevel trollback
+	for mindex=1:1:zbmaxloop  do
+$level=3 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=3 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=3 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=3 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=3 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=3 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=3 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=3 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=3 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=3 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=3 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=3 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=3 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=3 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=3 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=3 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=3 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=3 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=3 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=3 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=3 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=3 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=3 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=3 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=3 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=3 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=3 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=3 $text= if $tlevel trollback
+	. set varname="%zbreak"_mindex
+$level=3 $text= if $tlevel trollback
+	. set @varname=mindex
+$level=3 $text= if $tlevel trollback
+	. set zbreak(mindex)=mindex
+$level=2 $text= if $tlevel trollback
+	if $get(^setrout1)=0 set global=0 do set^lotsvar  set ^setrout1=$get(^setrout1)+1
+$level=2 $text= if $tlevel trollback
+	if $get(^setrout2)=0 do in1^lfill("set",5,1)  set ^setrout2=$get(^setrout2)+1
+$level=2 $text= if $tlevel trollback
+	set @"zbendofbasic"=1
+$level=2 $text= if $tlevel trollback
+	new cmdcnt
+$level=2 $text= if $tlevel trollback
+	set ^myvar=$get(^myvar)+1
+$level=2 $text= if $tlevel trollback
+	if ($data(^caller))=0 set ^caller=100
+$level=2 $text= if $tlevel trollback
+	set ^pid=$j
+$level=2 $text= if $tlevel trollback
+	for cmdcnt=1:1:5 do
+$level=3 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=3 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=3 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=3 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=3 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=3 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=3 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=3 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=3 $text= if $tlevel trollback
+	. set command(cmdcnt)="set "_$C(64+cmdcnt)_"var=$j"
+$level=3 $text= if $tlevel trollback
+	. xecute command(cmdcnt)
+$level=2 $text= if $tlevel trollback
+	tstart ():(serial:t="BA")
+$level=2 $text= if $tlevel trollback
+	set ^tstcnt=$get(^tstcnt)+1
+$level=2 $text= if $tlevel trollback
+	set ^tailcnt(^myvar,^caller)=$get(^tailcnt(^myvar,^caller))+1
+$level=2 $text= if $tlevel trollback
+	tc
+$level=2 $text= if $tlevel trollback
+	kill myvar
+$level=2 $text= if $tlevel trollback
+	set myvar(1)=Avar
+$level=2 $text= if $tlevel trollback
+	set myvar(2)=Bvar
+$level=2 $text= if $tlevel trollback
+	set myvar(3)=Cvar
+$level=2 $text= if $tlevel trollback
+	tstart (myvar):(serial:t="BA")
+$level=2 $text= if $tlevel trollback
+	set myvar(4)=Dvar
+$level=2 $text= if $tlevel trollback
+	set myvar(5)=Evar
+$level=2 $text= if $tlevel trollback
+	merge mergvar=myvar
+$level=2 $text= if $tlevel trollback
+	zkill myvar(1)
+$level=2 $text= if $tlevel trollback
+	kill myvar(2)
+$level=2 $text= if $tlevel trollback
+	kill myvar
+$level=2 $text= if $tlevel trollback
+	if $trestart=0 trestart
+$level=2 $text= if $tlevel trollback
+	set myvar(4)=Dvar
+$level=2 $text= if $tlevel trollback
+	set myvar(5)=Evar
+$level=2 $text= if $tlevel trollback
+	merge mergvar=myvar
+$level=2 $text= if $tlevel trollback
+	zkill myvar(1)
+$level=2 $text= if $tlevel trollback
+	kill myvar(2)
+$level=2 $text= if $tlevel trollback
+	kill myvar
+$level=2 $text= if $tlevel trollback
+	if $trestart=0 trestart
+$level=2 $text= if $tlevel trollback
+	if $tlevel trollback
+$level=2 $text= if $tlevel trollback
+	quit
+Now verify data
+do verify^uzbmain
+Verify
+LOTSVAR-I-OK
+LOTSVAR-I-END_VER
+ver PASS
+Verify Done
+
+##TEST_AWKIndirect code cache performance -- Hits: .*
+##TEST_AWKIndirect cache entries currently marked active: .*
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

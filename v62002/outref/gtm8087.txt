@@ -1,0 +1,386 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+Let's validate the empty case
+
+zshow "C"
+
+Now use the gtm8087xcalls1 extcall package
+
+zshow "C"
+gtm8087xcalls1.iamtoolongforanexternalcallname1
+gtm8087xcalls1.iamjustrightforanexternalcallnm
+gtm8087xcalls1.truncateFile
+gtm8087xcalls1.chShmMod
+gtm8087xcalls1.murmurHash
+gtm8087xcalls1.matchFiles
+gtm8087xcalls1.removeFile
+gtm8087xcalls1.renameFile
+gtm8087xcalls1.chooseFileByIndex
+
+Let's see the output to a local
+
+zshow "C":x
+x("C","gtm8087xcalls1","chShmMod")=""
+x("C","gtm8087xcalls1","chooseFileByIndex")=""
+x("C","gtm8087xcalls1","iamjustrightforanexternalcallnm")=""
+x("C","gtm8087xcalls1","iamtoolongforanexternalcallname")=""
+x("C","gtm8087xcalls1","matchFiles")=""
+x("C","gtm8087xcalls1","murmurHash")=""
+x("C","gtm8087xcalls1","removeFile")=""
+x("C","gtm8087xcalls1","renameFile")=""
+x("C","gtm8087xcalls1","truncateFile")=""
+
+Now use the gtm8087xcalls3 extcall package
+
+zshow "C"
+gtm8087xcalls3.utimes
+gtm8087xcalls3.unsetenv
+gtm8087xcalls3.umask
+gtm8087xcalls3.syslogconst
+gtm8087xcalls3.syslog
+gtm8087xcalls3.sysconfval
+gtm8087xcalls3.sysconf
+gtm8087xcalls3.symlink
+gtm8087xcalls3.stat
+gtm8087xcalls3.signalval
+gtm8087xcalls3.setenv
+gtm8087xcalls3.rmdir
+gtm8087xcalls3.regofft2offsets
+gtm8087xcalls3.regfree
+gtm8087xcalls3.regexec
+gtm8087xcalls3.regconst
+gtm8087xcalls3.regcomp
+gtm8087xcalls3.realpath
+gtm8087xcalls3.mktime
+gtm8087xcalls3.mkdtemp
+gtm8087xcalls3.mkdir
+gtm8087xcalls3.localtime
+gtm8087xcalls3.gettimeofday
+gtm8087xcalls3.filemodeconst
+gtm8087xcalls3.cp
+gtm8087xcalls3.clockval
+gtm8087xcalls3.clockgettime
+gtm8087xcalls3.chmod
+gtm8087xcalls1.iamtoolongforanexternalcallname1
+gtm8087xcalls1.iamjustrightforanexternalcallnm
+gtm8087xcalls1.truncateFile
+gtm8087xcalls1.chShmMod
+gtm8087xcalls1.murmurHash
+gtm8087xcalls1.matchFiles
+gtm8087xcalls1.removeFile
+gtm8087xcalls1.renameFile
+gtm8087xcalls1.chooseFileByIndex
+
+Let's see the output to a global
+zshow "C":^y
+^y("C","gtm8087xcalls1","chShmMod")=""
+^y("C","gtm8087xcalls1","chooseFileByIndex")=""
+^y("C","gtm8087xcalls1","iamjustrightforanexternalcallnm")=""
+^y("C","gtm8087xcalls1","iamtoolongforanexternalcallname")=""
+^y("C","gtm8087xcalls1","matchFiles")=""
+^y("C","gtm8087xcalls1","murmurHash")=""
+^y("C","gtm8087xcalls1","removeFile")=""
+^y("C","gtm8087xcalls1","renameFile")=""
+^y("C","gtm8087xcalls1","truncateFile")=""
+^y("C","gtm8087xcalls3","chmod")=""
+^y("C","gtm8087xcalls3","clockgettime")=""
+^y("C","gtm8087xcalls3","clockval")=""
+^y("C","gtm8087xcalls3","cp")=""
+^y("C","gtm8087xcalls3","filemodeconst")=""
+^y("C","gtm8087xcalls3","gettimeofday")=""
+^y("C","gtm8087xcalls3","localtime")=""
+^y("C","gtm8087xcalls3","mkdir")=""
+^y("C","gtm8087xcalls3","mkdtemp")=""
+^y("C","gtm8087xcalls3","mktime")=""
+^y("C","gtm8087xcalls3","realpath")=""
+^y("C","gtm8087xcalls3","regcomp")=""
+^y("C","gtm8087xcalls3","regconst")=""
+^y("C","gtm8087xcalls3","regexec")=""
+^y("C","gtm8087xcalls3","regfree")=""
+^y("C","gtm8087xcalls3","regofft2offsets")=""
+^y("C","gtm8087xcalls3","rmdir")=""
+^y("C","gtm8087xcalls3","setenv")=""
+^y("C","gtm8087xcalls3","signalval")=""
+^y("C","gtm8087xcalls3","stat")=""
+^y("C","gtm8087xcalls3","symlink")=""
+^y("C","gtm8087xcalls3","sysconf")=""
+^y("C","gtm8087xcalls3","sysconfval")=""
+^y("C","gtm8087xcalls3","syslog")=""
+^y("C","gtm8087xcalls3","syslogconst")=""
+^y("C","gtm8087xcalls3","umask")=""
+^y("C","gtm8087xcalls3","unsetenv")=""
+^y("C","gtm8087xcalls3","utimes")=""
+
+Let's make sure if an existing subscript exists, it gets deleted
+
+set z("C")="I should not be here"z("C","gtm8087xcalls1","chShmMod")=""
+z("C","gtm8087xcalls1","chooseFileByIndex")=""
+z("C","gtm8087xcalls1","iamjustrightforanexternalcallnm")=""
+z("C","gtm8087xcalls1","iamtoolongforanexternalcallname")=""
+z("C","gtm8087xcalls1","matchFiles")=""
+z("C","gtm8087xcalls1","murmurHash")=""
+z("C","gtm8087xcalls1","removeFile")=""
+z("C","gtm8087xcalls1","renameFile")=""
+z("C","gtm8087xcalls1","truncateFile")=""
+z("C","gtm8087xcalls3","chmod")=""
+z("C","gtm8087xcalls3","clockgettime")=""
+z("C","gtm8087xcalls3","clockval")=""
+z("C","gtm8087xcalls3","cp")=""
+z("C","gtm8087xcalls3","filemodeconst")=""
+z("C","gtm8087xcalls3","gettimeofday")=""
+z("C","gtm8087xcalls3","localtime")=""
+z("C","gtm8087xcalls3","mkdir")=""
+z("C","gtm8087xcalls3","mkdtemp")=""
+z("C","gtm8087xcalls3","mktime")=""
+z("C","gtm8087xcalls3","realpath")=""
+z("C","gtm8087xcalls3","regcomp")=""
+z("C","gtm8087xcalls3","regconst")=""
+z("C","gtm8087xcalls3","regexec")=""
+z("C","gtm8087xcalls3","regfree")=""
+z("C","gtm8087xcalls3","regofft2offsets")=""
+z("C","gtm8087xcalls3","rmdir")=""
+z("C","gtm8087xcalls3","setenv")=""
+z("C","gtm8087xcalls3","signalval")=""
+z("C","gtm8087xcalls3","stat")=""
+z("C","gtm8087xcalls3","symlink")=""
+z("C","gtm8087xcalls3","sysconf")=""
+z("C","gtm8087xcalls3","sysconfval")=""
+z("C","gtm8087xcalls3","syslog")=""
+z("C","gtm8087xcalls3","syslogconst")=""
+z("C","gtm8087xcalls3","umask")=""
+z("C","gtm8087xcalls3","unsetenv")=""
+z("C","gtm8087xcalls3","utimes")=""
+
+set ^z("C")="I should not be here"^z("C","gtm8087xcalls1","chShmMod")=""
+^z("C","gtm8087xcalls1","chooseFileByIndex")=""
+^z("C","gtm8087xcalls1","iamjustrightforanexternalcallnm")=""
+^z("C","gtm8087xcalls1","iamtoolongforanexternalcallname")=""
+^z("C","gtm8087xcalls1","matchFiles")=""
+^z("C","gtm8087xcalls1","murmurHash")=""
+^z("C","gtm8087xcalls1","removeFile")=""
+^z("C","gtm8087xcalls1","renameFile")=""
+^z("C","gtm8087xcalls1","truncateFile")=""
+^z("C","gtm8087xcalls3","chmod")=""
+^z("C","gtm8087xcalls3","clockgettime")=""
+^z("C","gtm8087xcalls3","clockval")=""
+^z("C","gtm8087xcalls3","cp")=""
+^z("C","gtm8087xcalls3","filemodeconst")=""
+^z("C","gtm8087xcalls3","gettimeofday")=""
+^z("C","gtm8087xcalls3","localtime")=""
+^z("C","gtm8087xcalls3","mkdir")=""
+^z("C","gtm8087xcalls3","mkdtemp")=""
+^z("C","gtm8087xcalls3","mktime")=""
+^z("C","gtm8087xcalls3","realpath")=""
+^z("C","gtm8087xcalls3","regcomp")=""
+^z("C","gtm8087xcalls3","regconst")=""
+^z("C","gtm8087xcalls3","regexec")=""
+^z("C","gtm8087xcalls3","regfree")=""
+^z("C","gtm8087xcalls3","regofft2offsets")=""
+^z("C","gtm8087xcalls3","rmdir")=""
+^z("C","gtm8087xcalls3","setenv")=""
+^z("C","gtm8087xcalls3","signalval")=""
+^z("C","gtm8087xcalls3","stat")=""
+^z("C","gtm8087xcalls3","symlink")=""
+^z("C","gtm8087xcalls3","sysconf")=""
+^z("C","gtm8087xcalls3","sysconfval")=""
+^z("C","gtm8087xcalls3","syslog")=""
+^z("C","gtm8087xcalls3","syslogconst")=""
+^z("C","gtm8087xcalls3","umask")=""
+^z("C","gtm8087xcalls3","unsetenv")=""
+^z("C","gtm8087xcalls3","utimes")=""
+
+Let's check some limits on locals
+
+kill x
+zshow "C":x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)
+%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+		At M source location locallimits31+7^gtm8087
+
+GTM>
+zshow "C":x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30)
+%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+		At M source location locallimits30+4^gtm8087
+
+GTM>
+zshow "C":x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29)
+%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+		At M source location locallimits29+4^gtm8087
+
+GTM>
+zshow "C":x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28)
+x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,"C","gtm8087xcalls1","chShmMod")=""
+x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,"C","gtm8087xcalls1","chooseFileByIndex")=""
+x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,"C","gtm8087xcalls1","iamjustrightforanexternalcallnm")=""
+x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,"C","gtm8087xcalls1","iamtoolongforanexternalcallname")=""
+x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,"C","gtm8087xcalls1","matchFiles")=""
+x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,"C","gtm8087xcalls1","murmurHash")=""
+x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,"C","gtm8087xcalls1","removeFile")=""
+x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,"C","gtm8087xcalls1","renameFile")=""
+x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,"C","gtm8087xcalls1","truncateFile")=""
+
+Let's check some limits on globals
+
+kill ^z
+zshow "C":^z(1,2,3,4,5)
+%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^z(1,2,3,4,5,"C","gtm8087xcalls1","iamtoolongforanexternalcallname")
+		At M source location globallimits5+7^gtm8087
+
+GTM>
+%GTM-E-GVUNDEF, Global variable undefined: ^z
+		At M source location globallimits5b+1^gtm8087
+
+GTM>
+
+kill ^z
+zshow "C":^z(1,2,3,4)
+%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^z(1,2,3,4,"C","gtm8087xcalls1","iamtoolongforanexternalcallname")
+		At M source location globallimits4+6^gtm8087
+
+GTM>
+%GTM-E-GVUNDEF, Global variable undefined: ^z
+		At M source location globallimits4b+1^gtm8087
+
+GTM>
+
+kill ^z
+zshow "C":^z(1,2,3)
+^z(1,2,3,"C","gtm8087xcalls1","chShmMod")=""
+^z(1,2,3,"C","gtm8087xcalls1","chooseFileByIndex")=""
+^z(1,2,3,"C","gtm8087xcalls1","iamjustrightforanexternalcallnm")=""
+^z(1,2,3,"C","gtm8087xcalls1","iamtoolongforanexternalcallname")=""
+^z(1,2,3,"C","gtm8087xcalls1","matchFiles")=""
+^z(1,2,3,"C","gtm8087xcalls1","murmurHash")=""
+^z(1,2,3,"C","gtm8087xcalls1","removeFile")=""
+^z(1,2,3,"C","gtm8087xcalls1","renameFile")=""
+^z(1,2,3,"C","gtm8087xcalls1","truncateFile")=""
+
+Let's check zshow "*"
+
+zshow "*"
+$DEVICE=""
+$ECODE=""
+$ESTACK=0
+$ETRAP=""
+##TEST_AWK\$HOROLOG="[1-9][0-9]*,[1-9][0-9]*"
+$IO=0
+##TEST_AWK\$JOB=[1-9][0-9]*
+$KEY=""
+$PRINCIPAL=0
+$QUIT=0
+$REFERENCE=""
+$STACK=0
+##TEST_AWK\$STORAGE=[1-9][0-9]*
+##TEST_AWK\$SYSTEM="[1-9][0-9]*,gtm_sysid"
+$TEST=0
+$TLEVEL=0
+$TRESTART=0
+##TEST_AWK\$X=[0-9]*
+##TEST_AWK\$Y=[0-9]*
+$ZA=0
+##TEST_AWK\$ZALLOCSTOR=[1-9][0-9]*
+$ZB=""
+##TEST_AWK\$ZCHSET=".*"
+$ZCLOSE=0
+$ZCMDLINE=""
+##TEST_AWK\$ZCOMPILE=".*"
+$ZCSTATUS=0
+$ZDATEFORM=0
+$ZDIRECTORY="##TEST_PATH##/"
+$ZEDITOR=0
+$ZEOF=0
+##TEST_AWK\$ZERROR=".*"
+$ZGBLDIR="##TEST_PATH##/mumps.gld"
+##TEST_AWK.ZHOROLOG="[0-9]*,[0-9]*,[0-9]*,[0-9]*"
+$ZININTERRUPT=0
+##TEST_AWK\$ZINTERRUPT=".*"
+$ZIO=0
+$ZJOB=0
+$ZKEY=""
+$ZLEVEL=1
+$ZMAXTPTIME=0
+##TEST_AWK\$ZMODE=".*"
+$ZONLNRLBK=0
+##TEST_AWK\$ZPATNUMERIC=".*"
+$ZPIN="0< /"
+##TEST_AWK\$ZPOSITION=".*"
+$ZPOUT="0> /"
+$ZPROCESS=""
+$ZPROMPT="GTM>"
+$ZQUIT=0
+##TEST_AWK\$ZREALSTOR=[1-9][0-9]*
+##TEST_AWK\$ZROUTINES=".*"
+$ZSOURCE=""
+$ZSTATUS=""
+##TEST_AWK\$ZSTEP=".*"
+$ZSYSTEM=0
+$ZTNAME=""
+$ZTDATA=0
+$ZTDELIM=""
+$ZTEXIT=""
+$ZTLEVEL=0
+$ZTOLDVAL=""
+##TEST_AWK\$ZTRAP=".*"
+$ZTRIGGEROP=""
+$ZTSLATE=""
+$ZTUPDATE=""
+$ZTVALUE=""
+$ZTWORMHOLE=""
+##TEST_AWK\$ZUSEDSTOR=[1-9][0-9]*
+##TEST_AWK.ZUT=[0-9]*
+##TEST_AWK\$ZVERSION=".*"
+$ZYERROR=""
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+MLG:0,MLT:0
+GLD:*,REG:*,SET:0,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:0,LKS:0,LKF:0,CTN:0,DRD:0,DWT:0,NTW:0,NTR:0,NBW:0,NBR:0,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:0,DFS:0,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:0,CAT:0,CFE:0,CFS:0,CFT:0,CQS:0,CQT:0,CYS:0,CYT:0
+##TEST_AWKzshowstar\+5\^gtm8087:[a-z0-9]*
+gtm8087xcalls1.iamtoolongforanexternalcallname1
+gtm8087xcalls1.iamjustrightforanexternalcallnm
+gtm8087xcalls1.truncateFile
+gtm8087xcalls1.chShmMod
+gtm8087xcalls1.murmurHash
+gtm8087xcalls1.matchFiles
+gtm8087xcalls1.removeFile
+gtm8087xcalls1.renameFile
+gtm8087xcalls1.chooseFileByIndex
+
+Let's check zshow "*" to a local
+
+kill x
+
+zshow "*":x
+
+zwr x("C",*)
+x("C","gtm8087xcalls1","chShmMod")=""
+x("C","gtm8087xcalls1","chooseFileByIndex")=""
+x("C","gtm8087xcalls1","iamjustrightforanexternalcallnm")=""
+x("C","gtm8087xcalls1","iamtoolongforanexternalcallname")=""
+x("C","gtm8087xcalls1","matchFiles")=""
+x("C","gtm8087xcalls1","murmurHash")=""
+x("C","gtm8087xcalls1","removeFile")=""
+x("C","gtm8087xcalls1","renameFile")=""
+x("C","gtm8087xcalls1","truncateFile")=""
+
+Let's check zshow "*" to a global
+
+kill ^z
+
+zshow "*":^z
+
+zwr ^z("C",*)
+^z("C","gtm8087xcalls1","chShmMod")=""
+^z("C","gtm8087xcalls1","chooseFileByIndex")=""
+^z("C","gtm8087xcalls1","iamjustrightforanexternalcallnm")=""
+^z("C","gtm8087xcalls1","iamtoolongforanexternalcallname")=""
+^z("C","gtm8087xcalls1","matchFiles")=""
+^z("C","gtm8087xcalls1","murmurHash")=""
+^z("C","gtm8087xcalls1","removeFile")=""
+^z("C","gtm8087xcalls1","renameFile")=""
+^z("C","gtm8087xcalls1","truncateFile")=""
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

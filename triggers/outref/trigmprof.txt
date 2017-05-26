@@ -1,0 +1,28 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+Set ^A, tracing started in the M routine
+	Trigger trace Executed
+###################################################################
+Set ^B, tracing started and stopped in the trigger
+	Trigger trace Executed
+###################################################################
+Set ^C whose trigger stops tracing
+	Trigger trace Executed
+Turn on tracing for ^C and see if it can stop it
+	Trigger trace Executed
+###################################################################
+Set ^D, tracing started in the trigger, stopped outside
+	Trigger trace Executed
+###################################################################
+Set ^E, tracing turned on and put into triggered GVN
+	Trigger trace Executed
+	Trigger trace Executed
+	Trigger trace Executed
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,95 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Start Iteration 1
+GTM Process starts in background...
+##SOURCE_PATH##/mupip set -journal=enable,on,before,file=a_1.mjl -reg AREG
+##SOURCE_PATH##/mupip set -journal=enable,on,before,file=mumps_1.mjl -reg DEFAULT
+Crash ...
+Simulating kill of GTM Processes in ##TEST_PATH##
+GTM processes Killed!
+Recover...
+##SOURCE_PATH##/mupip journal -recover -backward * -since=<gtm_test_since_time>
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip journal -recover -backward * -since=<gtm_test_since_time>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+End Iteration 1
+Start Iteration 2
+GTM Process starts in background...
+##SOURCE_PATH##/mupip set -journal=enable,on,before,file=a_2.mjl -reg AREG
+##SOURCE_PATH##/mupip set -journal=enable,on,before,file=mumps_2.mjl -reg DEFAULT
+Crash ...
+Simulating kill of GTM Processes in ##TEST_PATH##
+GTM processes Killed!
+Recover...
+##SOURCE_PATH##/mupip journal -recover -backward * -since=<gtm_test_since_time>
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip journal -recover -backward * -since=<gtm_test_since_time>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+End Iteration 2
+Start Iteration 3
+GTM Process starts in background...
+##SOURCE_PATH##/mupip set -journal=enable,on,before,file=a_3.mjl -reg AREG
+##SOURCE_PATH##/mupip set -journal=enable,on,before,file=mumps_3.mjl -reg DEFAULT
+Crash ...
+Simulating kill of GTM Processes in ##TEST_PATH##
+GTM processes Killed!
+Recover...
+##SOURCE_PATH##/mupip journal -recover -backward * -since=<gtm_test_since_time>
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip journal -recover -backward * -since=<gtm_test_since_time>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+End Iteration 3
+ Prev journal file name 
+##TEST_AWK Prev journal file name ##TEST_PATH##/b.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##TEST_AWK Prev journal file name ##TEST_PATH##/c.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##TEST_AWK Prev journal file name ##TEST_PATH##/d.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##TEST_AWK Prev journal file name ##TEST_PATH##/e.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##TEST_AWK Prev journal file name ##TEST_PATH##/f.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##TEST_AWK Prev journal file name ##TEST_PATH##/g.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##TEST_AWK Prev journal file name ##TEST_PATH##/h.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+ Prev journal file name 
+crash_rec_back1 TEST PASSED

@@ -1,0 +1,56 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+Current local collation=0
+d ^colfill("set",15)
+set PASS
+d ^colfill("ver",15)
+ver PASS
+M newvar("A")=A
+M newvar("B")=B
+d ^colfill("ver",15)
+ver PASS
+K A,B
+M A=newvar("A")
+M B=newvar("B")
+K newvar
+d ^colfill("ver",15)
+ver PASS
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+Compare ZWR outputs
+Local collation test PASSED
+Compare ZWR outputs
+Local collation test PASSED
+Compare ZWR outputs
+Local collation test PASSED
+Compare ZSHOW ZWR outputs
+Local collation test PASSED

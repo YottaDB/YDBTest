@@ -1,0 +1,133 @@
+#!/usr/bin/expect -f
+# expect $gtm_test/T999/manual_tests/u_inref/remote_terminal.exp zztop2 $gtm_test/T999 V990
+
+proc debug {switch} {
+	exp_internal $switch
+}
+
+set tst "manual_tests"
+set subtst "terminal"
+
+set host [lindex $argv 0]
+if {$host == ""} {
+	puts "No host"
+	exit
+}
+
+set gtm_tst [lindex $argv 1]
+if {$gtm_tst == ""} {
+	## FIXME from 982 to 990
+	set gtm_tst "/gtc/staff/gtm_test/current/T982"
+}
+
+set gtm_verno [lindex $argv 2]
+if {$gtm_verno == ""} {
+	set gtm_verno "V990"
+}
+
+# -1 timeout means the expect match must occur
+# up the time out to 10 seconds so that the expect script won't hang
+set timeout 10
+
+# Enable logging
+log_user 0
+log_file -noappend $host.$subtst.log
+
+###################
+# Start a shell on the remote host
+spawn ssh $host
+match_max 100000
+
+# wait for remote shell to start
+# some slow machines really test the sleep timeout
+sleep 2
+
+# clean up the prompt
+expect "*"
+send -- "set prompt=\"$host $gtm_tst > \"\r"
+
+expect -exact "$host $gtm_tst > "
+send -- "stty cols 132 ; stty -a;\r"
+
+# set GT.M version
+expect -exact "$host $gtm_tst > "
+send -- "set setactive_parms=($gtm_verno p);source \$gtm_tools/setactive.csh >&! /dev/null\r"
+
+# avoid copying M routines by setting gtmroutines correctly
+expect -exact "$host $gtm_tst > "
+send -- "setenv gtmroutines \".(. $gtm_tst/com $gtm_tst/$tst/inref) \$gtm_dist\"\r"
+
+# Temp directory setup
+expect "$host $gtm_tst > "
+send "rm -rf /testarea1/\$user/$gtm_verno/$tst/$subtst\r"
+expect "$host $gtm_tst > "
+send "mkdir -p /testarea1/\$user/$gtm_verno/$tst/$subtst\r"
+expect "$host $gtm_tst > "
+send "cd /testarea1/\$user/$gtm_verno/$tst/$subtst\r"
+send "clear\n"
+
+# Execute GT.M
+send -- "\$gtm_exe/mumps -direct\r"
+expect "GTM>"
+send "do ^terminal\r"
+
+# Emtpy the expect buffer and start logging
+expect -re {$}
+log_user 1
+
+expect "GTM>"
+send_user "\r\n"
+log_user 0
+send -- "halt\r"
+
+# log off
+expect "$host $gtm_tst > "
+send "logout\r"
+
+# Disable logging
+log_file
+
+expect eof
+
+###################
+puts ""
+puts "#######################################################"
+spawn scp $host:/testarea1/\$user/$gtm_verno/$tst/terminal/zshow.out zshow_$host.out
+expect eof
+
+###################
+# spawn shell on local host to send mail
+puts ""
+puts "#######################################################"
+spawn $env(SHELL)
+log_user 1
+
+set status "CHECK"
+
+expect "*>"
+send "printenv gtm_tst\r"
+expect {
+	"$gtm_tst" {set inside 1}
+	"*>" {set inside 0}
+}
+
+send "diff $host.$subtst.log $gtm_tst/$tst/outref/$subtst.txt >&! $host.$subtst.diff\r"
+send -- "awk -f $gtm_tst/$tst/inref/sanitizezshow.awk zshow_$host.out > zshow_$host.log\r"
+send "diff zshow_$host.log $gtm_tst/$tst/outref/zshow.txt >&! zshow_$host.diff\r"
+expect -re {.*$}
+send "wc -l $host.$subtst.diff zshow_$host.diff\r"
+expect {
+	"0 *total" {set status "PASS"}
+	expect -re "\[1-9\]\[0-9\]* *total" {set status "FAIL"}
+}
+# message
+if {$inside == 0} {
+	set msg "SUBSET $host $status $gtm_verno  manual_tests/$subtst /testarea1/\$user/$gtm_verno/manual_tests/$subtst"
+	send -- "(echo 'Passing tests report nothing' ; cat $host.$subtst.diff zshow_$host.diff ) | mailx -s \"$msg\" \$user\r"
+}
+
+# Kill the shell
+send -- "exit\r"
+
+expect eof
+

@@ -1,0 +1,211 @@
+
+Test GLD upgrade
+================
+Randomly chosen prior V5 version is : ##FILTERED##GTM_TEST_DEBUGINFO.*
+----------------------------------------------------------------------
+# Switch to prior version
+# Create database using prior V5 version
+Files Created in ##TEST_PATH##/upgradegld:
+Using: ##TEST_AWK.*/mumps -run GDE
+mumps.gld
+Using: ##TEST_AWK.*/mupip
+mumps.dat
+
+# Switch to current version
+
+# Upgrade global directory to current version
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/upgradegld/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/upgradegld/mumps.gld
+
+Journal Extension: 2048
+
+
+Test setting journal extension to maximum with mupip
+====================================================
+Files Created in ##TEST_PATH##/jnlextmax:
+Using: ##TEST_AWK.*/mumps -run GDE
+mumps.gld
+Using: ##TEST_AWK.*/mupip
+mumps.dat
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Journal Extension: 1073741823
+
+
+Test setting journal extension to maximum with gde
+==================================================
+Files Created in ##TEST_PATH##/jnlextmaxgde:
+Using: ##TEST_AWK.*/mumps -run GDE
+mumps.gld
+Using: ##TEST_AWK.*/mupip
+mumps.dat
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/jnlextmaxgde/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Journal Extension: 1073741823
+
+
+Test setting journal extension beyond maximum with mupip
+========================================================
+Files Created in ##TEST_PATH##/jnlexttoobig:
+Using: ##TEST_AWK.*/mumps -run GDE
+mumps.gld
+Using: ##TEST_AWK.*/mupip
+mumps.dat
+%GTM-W-JNLINVEXT, Journal file extension 1073741824 is greater than the maximum allowed size of 1073741823.  Journal file not created.
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+
+Test setting journal extension beyond maximum with gde
+======================================================
+---------------------------------------------------------------
+TEST-E-DBCREATE, errors seen in the log file dbcreate.out:
+%GDE-E-OBJNOTCHG, Not changing region DEFAULT
+---------------------------------------------------------------
+Files Created in ##TEST_PATH##/jnlexttoobiggde:
+Using: ##TEST_AWK.*/mumps -run GDE
+mumps.gld
+Using: ##TEST_AWK.*/mupip
+mumps.dat
+----------
+Error GDE-I-VALTOOBIG seen in dbcreate.out as expected:
+%GDE-I-VALTOOBIG, 1073741824 is larger than the maximum of 1073741823 for a EXTENSION
+----------
+----------
+Error GDE-E-OBJNOTCHG seen in dbcreate.out as expected:
+%GDE-E-OBJNOTCHG, Not changing region DEFAULT
+----------
+
+
+Test setting allocation adjustment with gde
+===========================================
+
+# Set allocation with no adjustment required
+
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/allocadjust/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/allocadjust/mumps.gld
+##TEST_AWKTEMPLATE -REGION -JOURNAL=.ALLOCATION=7340025,AUTOSWITCHLIMIT=8388600,.*BEFORE_IMAGE,BUFFER_SIZE=2308,EXTENSION=1048575.
+DELETE -REGION DEFAULT
+ADD -REGION DEFAULT -DYNAMIC_SEGMENT=DEFAULT
+
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/allocadjust/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/allocadjust/mumps.gld
+##TEST_AWKTEMPLATE -REGION -JOURNAL=.ALLOCATION=7340026,AUTOSWITCHLIMIT=7340026,.*BEFORE_IMAGE,BUFFER_SIZE=2308,EXTENSION=1048575.
+DELETE -REGION DEFAULT
+ADD -REGION DEFAULT -DYNAMIC_SEGMENT=DEFAULT
+
+# Set allocation with adjustment
+
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/allocadjust/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-JNLALLOCGROW, Increased Journal ALLOCATION from [7340026 blocks] to [8388600 blocks] to match AUTOSWITCHLIMIT for region DEFAULT
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/allocadjust/mumps.gld
+##TEST_AWKTEMPLATE -REGION -JOURNAL=.ALLOCATION=8388600,AUTOSWITCHLIMIT=8388600,.*BEFORE_IMAGE,BUFFER_SIZE=2308,EXTENSION=1048575.
+DELETE -REGION DEFAULT
+ADD -REGION DEFAULT -DYNAMIC_SEGMENT=DEFAULT
+
+# Set allocation beyond autoswitchlimit
+
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/allocadjust/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VALTOOBIG, 7340026 is larger than the maximum of 7340025 (AUTOSWITCHLIMIT) for a ALLOCATION
+
+%GDE-E-OBJNOTCHG, Not changing region DEFAULT
+
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/allocadjust/mumps.gld
+
+# Add new regions
+
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/allocadjust/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/allocadjust/a.gde
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/allocadjust/mumps.gld
+##TEST_AWKTEMPLATE -REGION -JOURNAL=.ALLOCATION=8388600,AUTOSWITCHLIMIT=8388600,.*BEFORE_IMAGE,BUFFER_SIZE=2308,EXTENSION=1048575.
+ADD -REGION A -DYNAMIC_SEGMENT=A -JOURNAL=(ALLOCATION=7340025)
+
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/allocadjust/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/allocadjust/b.gde
+%GDE-I-JNLALLOCGROW, Increased Journal ALLOCATION from [7340026 blocks] to [8388600 blocks] to match AUTOSWITCHLIMIT for region B
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/allocadjust/mumps.gld
+##TEST_AWKTEMPLATE -REGION -JOURNAL=.ALLOCATION=8388600,AUTOSWITCHLIMIT=8388600,.*BEFORE_IMAGE,BUFFER_SIZE=2308,EXTENSION=1048575.
+ADD -REGION B -DYNAMIC_SEGMENT=B
+
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/allocadjust/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/allocadjust/c.gde
+%GDE-I-VALTOOBIG, 7340026 is larger than the maximum of 7340025 (AUTOSWITCHLIMIT) for a ALLOCATION
+
+%GDE-E-OBJNOTADD, Not adding Region C
+
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/allocadjust/mumps.gld
+
+
+Test autoswitchlimit set in gde used by mupip
+=============================================
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/aslgdemupip/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/aslgdemupip/mumps.gld
+Created file ##TEST_PATH##/aslgdemupip/mumps.dat
+
+Journal AutoSwitchLimit: 4192256
+
+
+Test setting allocation adjustment with mupip
+=============================================
+Files Created in ##TEST_PATH##/allocadjustmupip:
+Using: ##TEST_AWK.*/mumps -run GDE
+mumps.gld
+Using: ##TEST_AWK.*/mupip
+mumps.dat
+
+Journal Allocation: 8388600
+
+###
+### END OF TEST
+###

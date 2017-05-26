@@ -1,0 +1,67 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gde47.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gde47.cmd
+%GDE-I-MAPBAD, Region YREG for Name yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy("y":"") does not exist
+%GDE-I-MAPBAD, Region YYREG for Name yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy("yy":"") does not exist
+%GDE-I-MAPBAD, Region ZREG for Name zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz("z":"") does not exist
+%GDE-I-MAPBAD, Region ZZREG for Name zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz("zz":"") does not exist
+%GDE-I-STDNULLCOLLREQ, Region ZZREG needs Standard Null Collation enabled because global ^zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz spans through it
+%GDE-I-STDNULLCOLLREQ, Region ZREG needs Standard Null Collation enabled because global ^zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz spans through it
+%GDE-I-STDNULLCOLLREQ, Region YYREG needs Standard Null Collation enabled because global ^yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy spans through it
+%GDE-I-STDNULLCOLLREQ, Region YREG needs Standard Null Collation enabled because global ^yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy spans through it
+%GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-I-NOEXIT, Cannot exit because of verification failure
+
+
+         *** NAMES ***
+ Global                                    Region
+ ---------------------------------------------------------------------------
+ *                                         DEFAULT
+ yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy("y":"")    YREG
+ yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy("yy":"")  YYREG
+ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz("z":"")    ZREG
+ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz("zz":"")  ZZREG
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                                   Up to                                   Region / Segment / File(def ext: .dat)
+ ----------------------------------------------------------------------------------------------------------------------
+ %                                      yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy("y")     REG = DEFAULT
+                                                                                SEG = DEFAULT
+                                                                                FILE = mumps.dat
+ yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy("y")    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy0         REG = YREG
+                                                                                SEG = YREG
+                                                                                FILE = YREG.dat
+ yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy0        yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy("yy")   REG = DEFAULT
+                                                                                SEG = DEFAULT
+                                                                                FILE = mumps.dat
+ yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy("yy")  yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyz         REG = YYREG
+                                                                                SEG = YYREG
+                                                                                FILE = YYREG.dat
+ yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyz        zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz("z")     REG = DEFAULT
+                                                                                SEG = DEFAULT
+                                                                                FILE = mumps.dat
+ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz("z")    zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz0         REG = ZREG
+                                                                                SEG = ZREG
+                                                                                FILE = ZREG.dat
+ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz0        zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz("zz")   REG = DEFAULT
+                                                                                SEG = DEFAULT
+                                                                                FILE = mumps.dat
+ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz("zz")  ...                                     REG = ZZREG
+                                                                                SEG = ZZREG
+                                                                                FILE = ZZREG.dat
+ LOCAL LOCKS                                                                    REG = DEFAULT
+                                                                                SEG = DEFAULT
+                                                                                FILE = mumps.dat
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gde47.gld

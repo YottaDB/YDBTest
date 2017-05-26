@@ -1,0 +1,70 @@
+###################################################################
+Choose a random pre-encryption GT.M version
+###################################################################
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_LINUX_S390X HOST_OS390_S390
+No prior versions available: RANDOMVER-E-CANNOTRUN : Could not determine previous version matching the given criteria. Exiting...
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_LINUX_S390X HOST_OS390_S390
+Random version choosen is - ##FILTERED##GTM_TEST_DEBUGINFO.*
+
+###################################################################
+Switch to the prior version and create databases
+###################################################################
+
+Files Created in ##TEST_PATH##:
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/.*/.*/mumps -run GDE
+mumps.gld
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/.*/.*/mupip
+mumps.dat
+
+###################################################################
+Some updates
+###################################################################
+
+GTM>
+do in0^dbfill("set")
+set PASS
+
+GTM>
+
+###################################################################
+Verify database integrity before BACKUP
+###################################################################
+##TEST_AWK##GTM_LIBRARY_PATH##/.*/.*/mupip
+##TEST_AWK##GTM_LIBRARY_PATH##/.*/.*/mupip integ -REG .
+No errors detected by integ.
+
+###################################################################
+Do BYTESTREAM BACKUP
+###################################################################
+##TEST_AWKMUPIP backup of database file ##TEST_PATH##/mumps.dat to .*.dat
+##TEST_AWKDB file ##TEST_PATH##/mumps.dat incrementally backed up in file .*.dat
+##TEST_AWK[1-9][0-9]* blocks saved.
+##TEST_AWKTransactions from 0x0000000000000001 to 0x0000000000000[0-9A-F]* are backed up.
+
+
+BACKUP COMPLETED.
+
+
+###################################################################
+Switch to current GT.M version and create fresh encrypted databases
+###################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+###################################################################
+Do MUPIP RESTORE from ##FILTERED##GTM_TEST_DEBUGINFO.*
+###################################################################
+##TEST_AWKMinor DB version in the extract (predates|.GDSM##FILTERED##PRIORVER##. is different from) that in the database .GDSMV[0-9A-Z]*.
+%GTM-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
+
+###################################################################
+Do dbcheck
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

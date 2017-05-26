@@ -1,0 +1,52 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+###################################################################
+Load triggers on the primary
+###################################################################
+;trigger name: a#1 (region DEFAULT)  cycle: 1
++^a -commands=S -xecute="set ^x($ztvalue)=$ztvalue"
+;trigger name: b#1 (region DEFAULT)  cycle: 1
++^b -commands=S -xecute="set ^y($ztvalue)=$ztvalue"
+###################################################################
+###################################################################
+Randomly decide to delete triggers for global ^b either on primary or secondary
+###################################################################
+
+
+###################################################################
+Do some updates to ^a global. Expect no issues
+###################################################################
+
+
+###################################################################
+Do an update to ^b. TRIGDEFNOSYNC warning will be sent to syslog.
+###################################################################
+
+
+###################################################################
+Do another update to ^b. TRIGDEFNOSYNC warning will NOT be sent to syslog
+###################################################################
+
+
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+
+TEST-I-PASSED, TRIGDEFNOSYNC warning seen in the syslog as expected

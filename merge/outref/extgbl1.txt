@@ -1,0 +1,266 @@
+##SUSPEND_OUTPUT  REPLIC GT.M
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
+##GT.CM##second.gld
+##GT.CM##Using: ##SOURCE_PATH##/mupip
+Create local (client) database...
+##ALLOW_OUTPUT  REPLIC GT.M
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+second.gld
+Using: ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  REPLIC GT.M
+The database layout is:
+ASEG	a.dat
+BSEG	##TEST_REMOTE_NODE_PATH_GTCM##/b.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/second.dat
+Starting the GT.CM Servers...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+##ALLOW_OUTPUT  REPLIC GT.M
+##SUSPEND_OUTPUT  GT.CM
+a.dat
+b.dat
+second.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+##SUSPEND_OUTPUT  REPLIC GT.M
+##ALLOW_OUTPUT  NON_REPLIC GT.CM
+mumps.dat
+
+GTM>
+a=12
+a(1,1)=11
+a(1,2)=12
+a(2,1)=21
+a(2,2)=22
+aa=12
+aa(1,1)=11
+aa(1,2)=12
+aa(2,1)=21
+aa(2,2)=22
+aalongsecondvariablesworkformrg=12
+aalongsecondvariablesworkformrg(1,1)=11
+aalongsecondvariablesworkformrg(1,2)=12
+aalongsecondvariablesworkformrg(2,1)=21
+aalongsecondvariablesworkformrg(2,2)=22
+b=12
+b(1,1)=2
+b(1,2)=3
+b(2,1)=3
+b(2,2)=4
+bb=12
+bb(1,1)=2
+bb(1,2)=3
+bb(2,1)=3
+bb(2,2)=4
+bblongsecondvariablesworkformrg=12
+bblongsecondvariablesworkformrg(1,1)=2
+bblongsecondvariablesworkformrg(1,2)=3
+bblongsecondvariablesworkformrg(2,1)=3
+bblongsecondvariablesworkformrg(2,2)=4
+c=12
+c(1,1)=1
+c(1,2)=2
+c(2,1)=2
+c(2,2)=4
+cc=12
+cc(1,1)=1
+cc(1,2)=2
+cc(2,1)=2
+cc(2,2)=4
+cclongsecondvariablesworkformrg=12
+cclongsecondvariablesworkformrg(1,1)=1
+cclongsecondvariablesworkformrg(1,2)=2
+cclongsecondvariablesworkformrg(2,1)=2
+cclongsecondvariablesworkformrg(2,2)=4
+i=2
+j=2
+
+GTM>
+setenv gtmgbldir mumps.gld
+
+Output device: <terminal>: 
+
+List ^
+
+List ^
+setenv gtmgbldir second.gld
+
+Output device: <terminal>: 
+
+List ^
+^alongsecondvariablesworkformerg=12
+^alongsecondvariablesworkformerg(1,1)=11
+^alongsecondvariablesworkformerg(1,2)=12
+^alongsecondvariablesworkformerg(2,1)=21
+^alongsecondvariablesworkformerg(2,2)=22
+^asecond=12
+^asecond(1,1)=11
+^asecond(1,2)=12
+^asecond(2,1)=21
+^asecond(2,2)=22
+^blongsecondvariablesworkformerg=12
+^blongsecondvariablesworkformerg(1,1)=2
+^blongsecondvariablesworkformerg(1,2)=3
+^blongsecondvariablesworkformerg(2,1)=3
+^blongsecondvariablesworkformerg(2,2)=4
+^bsecond=12
+^bsecond(1,1)=2
+^bsecond(1,2)=3
+^bsecond(2,1)=3
+^bsecond(2,2)=4
+^clongsecondvariablesworkformerg=12
+^clongsecondvariablesworkformerg(1,1)=1
+^clongsecondvariablesworkformerg(1,2)=2
+^clongsecondvariablesworkformerg(2,1)=2
+^clongsecondvariablesworkformerg(2,2)=4
+^csecond=12
+^csecond(1,1)=1
+^csecond(1,2)=2
+^csecond(2,1)=2
+^csecond(2,2)=4
+
+List ^
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####SOURCE_PATH##/mupip
+##GT.CM####SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ a.dat
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ mumps.dat
+No errors detected by integ.
+##SUSPEND_OUTPUT  GT.CM NON_REPLIC
+##ALLOW_OUTPUT  REPLIC GT.M
+Using: ##SOURCE_PATH##/mumps -run GDE
+second.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+second.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+a=12
+a(1,1)=11
+a(1,2)=12
+a(2,1)=21
+a(2,2)=22
+aa=12
+aa(1,1)=11
+aa(1,2)=12
+aa(2,1)=21
+aa(2,2)=22
+aalongsecondvariablesworkformrg=12
+aalongsecondvariablesworkformrg(1,1)=11
+aalongsecondvariablesworkformrg(1,2)=12
+aalongsecondvariablesworkformrg(2,1)=21
+aalongsecondvariablesworkformrg(2,2)=22
+b=12
+b(1,1)=2
+b(1,2)=3
+b(2,1)=3
+b(2,2)=4
+bb=12
+bb(1,1)=2
+bb(1,2)=3
+bb(2,1)=3
+bb(2,2)=4
+bblongsecondvariablesworkformrg=12
+bblongsecondvariablesworkformrg(1,1)=2
+bblongsecondvariablesworkformrg(1,2)=3
+bblongsecondvariablesworkformrg(2,1)=3
+bblongsecondvariablesworkformrg(2,2)=4
+c=12
+c(1,1)=1
+c(1,2)=2
+c(2,1)=2
+c(2,2)=4
+cc=12
+cc(1,1)=1
+cc(1,2)=2
+cc(2,1)=2
+cc(2,2)=4
+cclongsecondvariablesworkformrg=12
+cclongsecondvariablesworkformrg(1,1)=1
+cclongsecondvariablesworkformrg(1,2)=2
+cclongsecondvariablesworkformrg(2,1)=2
+cclongsecondvariablesworkformrg(2,2)=4
+i=2
+j=2
+
+GTM>
+setenv gtmgbldir mumps.gld
+
+Output device: <terminal>: 
+
+List ^
+
+List ^
+setenv gtmgbldir second.gld
+
+Output device: <terminal>: 
+
+List ^
+^alongsecondvariablesworkformerg=12
+^alongsecondvariablesworkformerg(1,1)=11
+^alongsecondvariablesworkformerg(1,2)=12
+^alongsecondvariablesworkformerg(2,1)=21
+^alongsecondvariablesworkformerg(2,2)=22
+^asecond=12
+^asecond(1,1)=11
+^asecond(1,2)=12
+^asecond(2,1)=21
+^asecond(2,2)=22
+^blongsecondvariablesworkformerg=12
+^blongsecondvariablesworkformerg(1,1)=2
+^blongsecondvariablesworkformerg(1,2)=3
+^blongsecondvariablesworkformerg(2,1)=3
+^blongsecondvariablesworkformerg(2,2)=4
+^bsecond=12
+^bsecond(1,1)=2
+^bsecond(1,2)=3
+^bsecond(2,1)=3
+^bsecond(2,2)=4
+^clongsecondvariablesworkformerg=12
+^clongsecondvariablesworkformerg(1,1)=1
+^clongsecondvariablesworkformerg(1,2)=2
+^clongsecondvariablesworkformerg(2,1)=2
+^clongsecondvariablesworkformerg(2,2)=4
+^csecond=12
+^csecond(1,1)=1
+^csecond(1,2)=2
+^csecond(2,1)=2
+^csecond(2,2)=4
+
+List ^
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip integ mumps.dat
+No errors detected by integ.

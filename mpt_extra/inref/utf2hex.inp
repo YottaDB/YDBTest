@@ -1,0 +1,42 @@
+do global^unicodesampledata
+do ^utf2hex
+do misc^utf2hex
+write "Interactive mode testing on chinese characters",!
+set str="倚立自移时 北斗兼春远 end of chinese"
+set byte="E5809AE7AB8BE887AAE7A7BBE697B620E58C97E69697E585BCE698A5E8BF9C20656E64206F66206368696E657365"
+do INT^%UTF2HEX
+倚立自移时 北斗兼春远 end of chinese
+do ^examine(%U,byte,"INT^%UTF2HEX failure for chinese")
+do INT^%HEX2UTF
+E5809AE7AB8BE887AAE7A7BBE697B620E58C97E69697E585BCE698A5E8BF9C20656E64206F66206368696E657365
+do ^examine(%S,str,"INT^%HEX2UTF failure for chinese")
+write "Interactive mode testing on hebrew accents ",!
+set str="לְׄ"
+set byte="D79CD6B0D784"
+do INT^%UTF2HEX
+לְׄ
+do ^examine(%U,byte,"INT^%UTF2HEX failure for hebrew")
+do INT^%HEX2UTF
+D79CD6B0D784
+do ^examine(%S,str,"INT^%HEX2UTF failure for hebrew")
+write "Interactive mode testing on Japanese characters ",!
+set str="いろはにほへど　ちりぬるを"
+set byte="E38184E3828DE381AFE381ABE381BBE381B8E381A9E38080E381A1E3828AE381ACE3828BE38292"
+do INT^%UTF2HEX
+いろはにほへど　ちりぬるを
+do ^examine(%U,byte,"INT^%UTF2HEX failure for japanese")
+do INT^%HEX2UTF
+E38184E3828DE381AFE381ABE381BBE381B8E381A9E38080E381A1E3828AE381ACE3828BE38292
+do ^examine(%S,str,"INT^%HEX2UTF failure for japanese")
+write "Interactive mode testing on CJK extension $CHAR(19266-19903)",!
+set str="䭂䮅䯋䰔䱠䲯䴁䶿"
+set byte="E4AD82E4AE85E4AF8BE4B094E4B1A0E4B2AFE4B481E4B6BF"
+do INT^%UTF2HEX
+䭂䮅䯋䰔䱠䲯䴁䶿
+do ^examine(%U,byte,"INT^%UTF2HEX failure for CJK extension")
+do INT^%HEX2UTF
+E4AD82E4AE85E4AF8BE4B094E4B1A0E4B2AFE4B481E4B6BF
+do ^examine(%S,str,"INT^%HEX2UTF failure for CJK extension")
+write "Testing ONE MB strings",!
+do oneMB^utf2hex
+halt

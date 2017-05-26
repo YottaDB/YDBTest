@@ -1,0 +1,33 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+Do first set of updates. The first jnl_seqno has ~ 4Mb of journal data so source server will expand its internal buffers
+Start receiver server after updates are done to ensure source server reads first jnl_seqno from files
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+Sleep at least two heartbeat periods (8 seconds each) to ensure source server trims its internal buffers
+Stop receiver server before second set of updates to ensure source server reads those from journal files as well
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+Do second set of updates. This has ~ 3Mb of journal data so source server does not need to expand its buffers as much as before
+Start receiver server so source server now sends from files
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+Check that source server has sent all data without issues
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT ALL'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

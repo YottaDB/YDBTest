@@ -1,0 +1,78 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+mumps.dat
+Multi-Process GTM Process starts in background...
+
+GTM>
+
+GTM>
+set PASS
+
+GTM>
+set PASS
+
+GTM>
+Simulating kill of GTM Processes in ##TEST_PATH##
+GTM processes Killed!
+Start Iteration 1
+##SOURCE_PATH##/mupip journal -recover -backward *
+Update successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+Extact from database...
+End Iteration 1
+Start Iteration 2
+##SOURCE_PATH##/mupip journal -recover -backward * -since=<gtm_test_since_time>
+
+Update successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+Extact from database...
+End Iteration 2
+Start Iteration 3
+##SOURCE_PATH##/mupip journal -recover -backward * -since=0 9:00 -nochain
+
+Update successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+Extact from database...
+End Iteration 3
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+diff data1.glo dbextr.glo
+diff data2.glo dbextr.glo
+diff data3.glo dbextr.glo

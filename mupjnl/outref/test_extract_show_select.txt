@@ -1,0 +1,2469 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Turn journaling on:
+##TEST_AWKJOURNAL OPTIONS: -journal=enable,on,before.*
+####################################################################
+# database with some active transactions (and an active process of another user)
+####################################################################
+##TEST_AWKTime written into time1:.*
+
+GTM>
+
+GTM>
+Start second process (as another user)...
+Wait for second user to finish its processing...
+
+GTM>
+##TEST_AWK.H = [0-9]*,[0-9]*
+
+GTM>
+
+GTM>
+
+GTM>
+second user should have finished
+
+GTM>
+##TEST_AWK.H = [0-9]*,[0-9]*
+
+GTM>
+Updates done, test...
+
+
+GTM>
+
+GTM>
+
+GTM>
+######################################
+EXTRACT
+
+First extract all
+
+GTM>
+
+GTM>
+$MUPIP journal -extract=total.mjf -detail -broken=total.broken -lost=total.lost -forward mumps.mjl
+%GTM-I-FILECREATE, Journal extract file total.mjf created
+%GTM-I-FILECREATE, Broken transactions extract file total.broken created
+%GTM-I-FILECREATE, Lost transactions extract file total.lost created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf total.mjf
+total.mjf
+#Number of records of type (in the order of appearance):
+PINI	3
+PFIN	2
+SET	61
+TSTART	2
+TSET	2
+USET	8
+TCOM	2
+UZKILL	1
+ZKILL	1
+KILL	1
+#Globals set (in the order of appearance):
+^A	17
+^VB	1
+^C	11
+^XA	1
+^YAY	1
+^B	10
+^CC	5
+^BB	5
+^AA	5
+^CCC	5
+^BBB	5
+^AAA	5
+#Globals (z)killed (in the order of appearance):
+^A	1
+^B	1
+^C	1
+check_mjf total.broken
+total.broken
+#Number of records of type (in the order of appearance):
+ZTSTART	1
+FSET	1
+GSET	4
+#Globals set (in the order of appearance):
+^aact	1
+^bact	1
+^cact	1
+^dact	1
+^sema1	1
+check_mjf total.lost
+total.lost
+#Number of records of type (in the order of appearance):
+PINI	2
+KILL	1
+SET	1
+PFIN	2
+#Globals set (in the order of appearance):
+^AA	1
+#Globals (z)killed (in the order of appearance):
+^AA	1
+$grep -v PINI total.mjf_analysis > total.mjf_analysis_noPINI
+
+$MUPIP journal -global="^A*,^C" -extract=globalac.mjf -detail -forward mumps.mjl
+%GTM-I-FILECREATE, Journal extract file globalac.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf globalac.mjf
+globalac.mjf
+#Number of records of type (in the order of appearance):
+PINI	5
+PFIN	4
+SET	29
+TSTART	2
+TSET	2
+USET	8
+TCOM	2
+UZKILL	1
+KILL	2
+#Globals set (in the order of appearance):
+^A	17
+^C	11
+^AA	6
+^AAA	5
+#Globals (z)killed (in the order of appearance):
+^A	1
+^C	1
+^AA	1
+
+
+
+$MUPIP journal -global="~(^*A*,^C,^*B*)" -extract=global_m_abc.mjf -detail -forward mumps.mjl
+%GTM-I-FILECREATE, Journal extract file global_m_abc.mjf created
+%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
+%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf global_m_abc.mjf
+global_m_abc.mjf
+#Number of records of type (in the order of appearance):
+PINI	3
+PFIN	2
+TCOM	2
+SET	10
+#Globals set (in the order of appearance):
+^CC	5
+^CCC	5
+
+
+
+$MUPIP journal -global="^*A" -extract=globalstara.mjf -detail -forward mumps.mjl
+%GTM-I-FILECREATE, Journal extract file globalstara.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf globalstara.mjf
+globalstara.mjf
+#Number of records of type (in the order of appearance):
+PINI	5
+PFIN	4
+SET	2
+TCOM	2
+#Globals set (in the order of appearance):
+^A	1
+^XA	1
+
+
+$MUPIP journal -extract=globalasub1.mjf -forward -global=\"^A\(1\),^AA\" mumps.mjl
+%GTM-I-FILECREATE, Journal extract file globalasub1.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf globalasub1.mjf
+globalasub1.mjf
+#Number of records of type (in the order of appearance):
+01	5
+02	4
+05	13
+09	2
+08	1
+04	1
+#Globals set (in the order of appearance):
+^A	7
+^AA	6
+#Globals (z)killed (in the order of appearance):
+^AA	1
+
+
+$MUPIP journal -extract=globalasub1a.mjf -forward -global=\"^A\(1\)\" -detail mumps.mjl
+%GTM-I-FILECREATE, Journal extract file globalasub1a.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf globalasub1a.mjf
+globalasub1a.mjf
+#Number of records of type (in the order of appearance):
+PINI	5
+PFIN	4
+SET	6
+TCOM	2
+TSTART	1
+TSET	1
+#Globals set (in the order of appearance):
+^A	7
+
+
+$MUPIP journal -extract=globalasub2.mjf -forward -global=\"^A\(1,\"\"str\"\"\),^AA\" -detail mumps.mjl
+%GTM-I-FILECREATE, Journal extract file globalasub2.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf globalasub2.mjf
+globalasub2.mjf
+#Number of records of type (in the order of appearance):
+PINI	5
+PFIN	4
+SET	7
+TCOM	2
+KILL	1
+#Globals set (in the order of appearance):
+^A	1
+^AA	6
+#Globals (z)killed (in the order of appearance):
+^AA	1
+
+
+$MUPIP journal -extract=globalasub3.mjf -forward -global=\"^A\(1,\*\),^AA\" -detail mumps.mjl
+%GTM-I-FILECREATE, Journal extract file globalasub3.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf globalasub3.mjf
+globalasub3.mjf
+#Number of records of type (in the order of appearance):
+PINI	5
+PFIN	4
+SET	11
+TCOM	2
+KILL	1
+#Globals set (in the order of appearance):
+^A	5
+^AA	6
+#Globals (z)killed (in the order of appearance):
+^AA	1
+
+
+$MUPIP journal -extract=globalasub4.mjf -forward -global=\"^A\(\*,\"\"str\"\"\),^AA\" -detail mumps.mjl
+%GTM-I-FILECREATE, Journal extract file globalasub4.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf globalasub4.mjf
+globalasub4.mjf
+#Number of records of type (in the order of appearance):
+PINI	5
+PFIN	4
+SET	8
+TCOM	2
+KILL	1
+#Globals set (in the order of appearance):
+^A	2
+^AA	6
+#Globals (z)killed (in the order of appearance):
+^AA	1
+
+
+$MUPIP journal -global="^*A,~^AA" -extract=globalstara_maa.mjf -detail -forward mumps.mjl
+%GTM-I-FILECREATE, Journal extract file globalstara_maa.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf globalstara_maa.mjf
+globalstara_maa.mjf
+#Number of records of type (in the order of appearance):
+PINI	5
+PFIN	4
+SET	2
+TCOM	2
+#Globals set (in the order of appearance):
+^A	1
+^XA	1
+
+
+$MUPIP journal -global="^D" -extract=globald.mjf -detail -forward mumps.mjl
+%GTM-I-FILECREATE, Journal extract file globald.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf globald.mjf
+globald.mjf
+#Number of records of type (in the order of appearance):
+PINI	5
+PFIN	4
+TCOM	2
+
+
+
+$MUPIP journal -global="~^B" -extract=global_mb.mjf -detail -broken=global_mb.broken -lost=global_mb.lost -forward mumps.mjl
+%GTM-I-FILECREATE, Journal extract file global_mb.mjf created
+%GTM-I-FILECREATE, Broken transactions extract file global_mb.broken created
+%GTM-I-FILECREATE, Lost transactions extract file global_mb.lost created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf global_mb.mjf
+global_mb.mjf
+#Number of records of type (in the order of appearance):
+PINI	3
+PFIN	2
+SET	51
+TSTART	2
+TSET	2
+USET	8
+TCOM	2
+UZKILL	1
+KILL	1
+#Globals set (in the order of appearance):
+^A	17
+^VB	1
+^C	11
+^XA	1
+^YAY	1
+^CC	5
+^BB	5
+^AA	5
+^CCC	5
+^BBB	5
+^AAA	5
+#Globals (z)killed (in the order of appearance):
+^A	1
+^C	1
+check_mjf global_mb.broken
+global_mb.broken
+#Number of records of type (in the order of appearance):
+ZTSTART	1
+FSET	1
+GSET	4
+#Globals set (in the order of appearance):
+^aact	1
+^bact	1
+^cact	1
+^dact	1
+^sema1	1
+check_mjf global_mb.lost
+global_mb.lost
+#Number of records of type (in the order of appearance):
+PINI	2
+KILL	1
+SET	1
+PFIN	2
+#Globals set (in the order of appearance):
+^AA	1
+#Globals (z)killed (in the order of appearance):
+^AA	1
+
+
+
+$MUPIP journal -global="~^D" -extract=global_md.mjf -detail -broken=global_md.broken -lost=global_md.lost -forward mumps.mjl
+%GTM-I-FILECREATE, Journal extract file global_md.mjf created
+%GTM-I-FILECREATE, Broken transactions extract file global_md.broken created
+%GTM-I-FILECREATE, Lost transactions extract file global_md.lost created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf global_md.mjf
+global_md.mjf
+#Number of records of type (in the order of appearance):
+PINI	3
+PFIN	2
+SET	61
+TSTART	2
+TSET	2
+USET	8
+TCOM	2
+UZKILL	1
+ZKILL	1
+KILL	1
+#Globals set (in the order of appearance):
+^A	17
+^VB	1
+^C	11
+^XA	1
+^YAY	1
+^B	10
+^CC	5
+^BB	5
+^AA	5
+^CCC	5
+^BBB	5
+^AAA	5
+#Globals (z)killed (in the order of appearance):
+^A	1
+^B	1
+^C	1
+check_mjf global_md.broken
+global_md.broken
+#Number of records of type (in the order of appearance):
+ZTSTART	1
+FSET	1
+GSET	4
+#Globals set (in the order of appearance):
+^aact	1
+^bact	1
+^cact	1
+^dact	1
+^sema1	1
+check_mjf global_md.lost
+global_md.lost
+#Number of records of type (in the order of appearance):
+PINI	2
+KILL	1
+SET	1
+PFIN	2
+#Globals set (in the order of appearance):
+^AA	1
+#Globals (z)killed (in the order of appearance):
+^AA	1
+diff total.mjf_analysis global_md.mjf_analysis
+diff total.broken_analysis global_md.broken_analysis
+diff total.lost_analysis global_md.lost_analysis
+
+
+
+$MUPIP journal -global="^A*,^C" -extract=bglobal_as_c.mjf -detail -backward -since=\"$time1\" mumps.mjl
+%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%GTM-I-FILECREATE, Journal extract file bglobal_as_c.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf bglobal_as_c.mjf
+bglobal_as_c.mjf
+#Number of records of type (in the order of appearance):
+PFIN	4
+PINI	4
+SET	29
+TSTART	2
+TSET	2
+USET	8
+TCOM	2
+UZKILL	1
+KILL	2
+#Globals set (in the order of appearance):
+^A	17
+^C	11
+^AA	6
+^AAA	5
+#Globals (z)killed (in the order of appearance):
+^A	1
+^C	1
+^AA	1
+
+
+
+$MUPIP journal -global="^D" -extract=bglobal_d.mjf -since=\"$time1\" -detail -backward mumps.mjl
+%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%GTM-I-FILECREATE, Journal extract file bglobal_d.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+echo "check this one"
+check this one
+check_mjf bglobal_d.mjf
+bglobal_d.mjf
+#Number of records of type (in the order of appearance):
+PFIN	4
+PINI	4
+TCOM	2
+
+
+
+$MUPIP journal -global="~^B" -extract=bglobal_mb.mjf -detail -backward -since=\"$time1\" mumps.mjl -fences=none
+%GTM-I-FILECREATE, Journal extract file bglobal_mb.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf bglobal_mb.mjf
+bglobal_mb.mjf
+#Number of records of type (in the order of appearance):
+PFIN	4
+PINI	4
+SET	52
+TSTART	2
+TSET	2
+USET	8
+TCOM	2
+UZKILL	1
+KILL	2
+ZTSTART	1
+FSET	1
+GSET	4
+#Globals set (in the order of appearance):
+^A	17
+^VB	1
+^C	11
+^XA	1
+^YAY	1
+^CC	5
+^BB	5
+^AA	6
+^CCC	5
+^BBB	5
+^AAA	5
+^aact	1
+^bact	1
+^cact	1
+^dact	1
+^sema1	1
+#Globals (z)killed (in the order of appearance):
+^A	1
+^C	1
+^AA	1
+
+
+
+$MUPIP journal -global="~^D" -extract=bglobal_md.mjf -detail -backward -since=\"$time1\" -broken=bglobal_md.broken -lost=bglobal_md.lost mumps.mjl
+%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%GTM-I-FILECREATE, Journal extract file bglobal_md.mjf created
+%GTM-I-FILECREATE, Broken transactions extract file bglobal_md.broken created
+%GTM-I-FILECREATE, Lost transactions extract file bglobal_md.lost created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf bglobal_md.mjf
+bglobal_md.mjf
+#Number of records of type (in the order of appearance):
+PFIN	2
+PINI	2
+SET	61
+TSTART	2
+TSET	2
+USET	8
+TCOM	2
+UZKILL	1
+ZKILL	1
+KILL	1
+#Globals set (in the order of appearance):
+^A	17
+^VB	1
+^C	11
+^XA	1
+^YAY	1
+^B	10
+^CC	5
+^BB	5
+^AA	5
+^CCC	5
+^BBB	5
+^AAA	5
+#Globals (z)killed (in the order of appearance):
+^A	1
+^B	1
+^C	1
+check_mjf bglobal_md.broken
+bglobal_md.broken
+#Number of records of type (in the order of appearance):
+ZTSTART	1
+FSET	1
+GSET	4
+#Globals set (in the order of appearance):
+^aact	1
+^bact	1
+^cact	1
+^dact	1
+^sema1	1
+check_mjf bglobal_md.lost
+bglobal_md.lost
+#Number of records of type (in the order of appearance):
+PINI	2
+KILL	1
+SET	1
+PFIN	2
+#Globals set (in the order of appearance):
+^AA	1
+#Globals (z)killed (in the order of appearance):
+^AA	1
+$grep -v PINI bglobal_md.mjf_analysis > bglobal_md.mjf_analysis_noPINI
+diff total.mjf_analysis_noPINI bglobal_md.mjf_analysis_noPINI
+diff total.broken_analysis bglobal_md.broken_analysis
+diff total.lost_analysis bglobal_md.lost_analysis
+
+
+
+$MUPIP journal -user="$USER" -extract=buser.mjf -detail -backward -since=\"$time1\" mumps.mjl
+%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%GTM-I-FILECREATE, Journal extract file buser.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf buser.mjf
+buser.mjf
+#Number of records of type (in the order of appearance):
+PFIN	4
+PINI	3
+SET	37
+TSTART	1
+TSET	1
+USET	4
+TCOM	1
+KILL	1
+#Globals set (in the order of appearance):
+^A	12
+^VB	1
+^C	6
+^XA	1
+^YAY	1
+^B	5
+^CC	5
+^BB	5
+^AA	6
+#Globals (z)killed (in the order of appearance):
+^AA	1
+$grep -v PINI buser.mjf_analysis > buser.mjf_analysis_noPINI
+
+
+
+
+
+$MUPIP journal -user="~$USER" -extract=buser2.mjf -detail -backward -since=\"$time1\" mumps.mjl -fences=none
+%GTM-I-FILECREATE, Journal extract file buser2.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf buser2.mjf
+buser2.mjf
+#Number of records of type (in the order of appearance):
+PINI	1
+TSTART	1
+TSET	1
+USET	4
+UZKILL	1
+TCOM	1
+SET	25
+ZKILL	1
+KILL	1
+ZTSTART	1
+FSET	1
+GSET	4
+#Globals set (in the order of appearance):
+^A	5
+^B	5
+^C	5
+^CCC	5
+^BBB	5
+^AAA	5
+^aact	1
+^bact	1
+^cact	1
+^dact	1
+^sema1	1
+#Globals (z)killed (in the order of appearance):
+^A	1
+^B	1
+^C	1
+
+
+
+
+$MUPIP journal -user="~${gtmtest1}" -extract=buser3.mjf -detail -forward mumps.mjl
+%GTM-I-FILECREATE, Journal extract file buser3.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf buser3.mjf
+buser3.mjf
+#Number of records of type (in the order of appearance):
+PINI	4
+PFIN	4
+SET	37
+TSTART	1
+TSET	1
+USET	4
+TCOM	1
+KILL	1
+#Globals set (in the order of appearance):
+^A	12
+^VB	1
+^C	6
+^XA	1
+^YAY	1
+^B	5
+^CC	5
+^BB	5
+^AA	6
+#Globals (z)killed (in the order of appearance):
+^AA	1
+$grep -v PINI buser3.mjf_analysis > buser3.mjf_analysis_noPINI
+diff buser.mjf_analysis_noPINI buser3.mjf_analysis_noPINI
+
+
+
+
+
+$MUPIP journal -user="$USER,~${gtmtest1}" -extract=user4.mjf -detail -forward mumps.mjl
+%GTM-I-FILECREATE, Journal extract file user4.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf user4.mjf
+user4.mjf
+#Number of records of type (in the order of appearance):
+PINI	4
+PFIN	4
+SET	37
+TSTART	1
+TSET	1
+USET	4
+TCOM	1
+KILL	1
+#Globals set (in the order of appearance):
+^A	12
+^VB	1
+^C	6
+^XA	1
+^YAY	1
+^B	5
+^CC	5
+^BB	5
+^AA	6
+#Globals (z)killed (in the order of appearance):
+^AA	1
+$grep -v PINI user4.mjf_analysis > user4.mjf_analysis_noPINI
+diff buser.mjf_analysis_noPINI user4.mjf_analysis_noPINI
+
+
+
+
+
+$MUPIP journal -user="~$USER,${gtmtest1}" -extract=user5.mjf -detail -forward mumps.mjl -fences=none
+%GTM-I-FILECREATE, Journal extract file user5.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf user5.mjf
+user5.mjf
+#Number of records of type (in the order of appearance):
+PINI	1
+TSTART	1
+TSET	1
+USET	4
+UZKILL	1
+TCOM	1
+SET	25
+ZKILL	1
+KILL	1
+ZTSTART	1
+FSET	1
+GSET	4
+#Globals set (in the order of appearance):
+^A	5
+^B	5
+^C	5
+^CCC	5
+^BBB	5
+^AAA	5
+^aact	1
+^bact	1
+^cact	1
+^dact	1
+^sema1	1
+#Globals (z)killed (in the order of appearance):
+^A	1
+^B	1
+^C	1
+
+
+
+
+$MUPIP journal -user="~$USER,~${gtmtest1}" -extract=user6.mjf -detail -forward mumps.mjl
+%GTM-I-FILENOTCREATE, Journal extract file user6.mjf not created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+if ( -e user6.mjf ) then
+
+
+
+$MUPIP journal -user="gtmtestx,~${gtmtest1}" -extract=user7.mjf -detail -forward mumps.mjl
+%GTM-I-FILENOTCREATE, Journal extract file user7.mjf not created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+if ( -e user7.mjf ) then
+
+
+
+
+
+$MUPIP journal -user="$USER,~gtmtestx" -extract=user8.mjf -detail -forward mumps.mjl
+%GTM-I-FILECREATE, Journal extract file user8.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf user8.mjf
+user8.mjf
+#Number of records of type (in the order of appearance):
+PINI	4
+PFIN	4
+SET	37
+TSTART	1
+TSET	1
+USET	4
+TCOM	1
+KILL	1
+#Globals set (in the order of appearance):
+^A	12
+^VB	1
+^C	6
+^XA	1
+^YAY	1
+^B	5
+^CC	5
+^BB	5
+^AA	6
+#Globals (z)killed (in the order of appearance):
+^AA	1
+
+
+
+$MUPIP journal -extract=user_${gtmtest1}.mjf -user="${gtmtest1}" -detail -fences=none -for mumps.mjl
+%GTM-I-FILECREATE, Journal extract file user_gtmtest1.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+( check_mjf user_${gtmtest1}.mjf ) > & /dev/null
+unset verbose
+$MUPIP journal -extract=user_star.mjf -user="$gtmtstusr1" -detail -fences=none -for mumps.mjl
+%GTM-I-FILECREATE, Journal extract file user_star.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf user_star.mjf
+user_star.mjf
+#Number of records of type (in the order of appearance):
+PINI	1
+TSTART	1
+TSET	1
+USET	4
+UZKILL	1
+TCOM	1
+SET	25
+ZKILL	1
+KILL	1
+ZTSTART	1
+FSET	1
+GSET	4
+#Globals set (in the order of appearance):
+^A	5
+^B	5
+^C	5
+^CCC	5
+^BBB	5
+^AAA	5
+^aact	1
+^bact	1
+^cact	1
+^dact	1
+^sema1	1
+#Globals (z)killed (in the order of appearance):
+^A	1
+^B	1
+^C	1
+diff user_${gtmtest1}.mjf_analysis user_star.mjf_analysis
+$MUPIP journal -extract=user_per.mjf -user="$gtmtstusr2" -detail -fences=none -for mumps.mjl
+%GTM-I-FILECREATE, Journal extract file user_per.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf user_per.mjf
+user_per.mjf
+#Number of records of type (in the order of appearance):
+PINI	1
+TSTART	1
+TSET	1
+USET	4
+UZKILL	1
+TCOM	1
+SET	25
+ZKILL	1
+KILL	1
+ZTSTART	1
+FSET	1
+GSET	4
+#Globals set (in the order of appearance):
+^A	5
+^B	5
+^C	5
+^CCC	5
+^BBB	5
+^AAA	5
+^aact	1
+^bact	1
+^cact	1
+^dact	1
+^sema1	1
+#Globals (z)killed (in the order of appearance):
+^A	1
+^B	1
+^C	1
+check_mjf user_per.mjf
+user_per.mjf
+#Number of records of type (in the order of appearance):
+PINI	1
+TSTART	1
+TSET	1
+USET	4
+UZKILL	1
+TCOM	1
+SET	25
+ZKILL	1
+KILL	1
+ZTSTART	1
+FSET	1
+GSET	4
+#Globals set (in the order of appearance):
+^A	5
+^B	5
+^C	5
+^CCC	5
+^BBB	5
+^AAA	5
+^aact	1
+^bact	1
+^cact	1
+^dact	1
+^sema1	1
+#Globals (z)killed (in the order of appearance):
+^A	1
+^B	1
+^C	1
+diff user_${gtmtest1}.mjf_analysis user_per.mjf_analysis
+$MUPIP journal -extract=user_per2.mjf -user="$gtmtstusr3" -detail -fences=none -for mumps.mjl
+%GTM-I-FILECREATE, Journal extract file user_per2.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf user_per2.mjf
+user_per2.mjf
+#Number of records of type (in the order of appearance):
+PINI	1
+TSTART	1
+TSET	1
+USET	4
+UZKILL	1
+TCOM	1
+SET	25
+ZKILL	1
+KILL	1
+ZTSTART	1
+FSET	1
+GSET	4
+#Globals set (in the order of appearance):
+^A	5
+^B	5
+^C	5
+^CCC	5
+^BBB	5
+^AAA	5
+^aact	1
+^bact	1
+^cact	1
+^dact	1
+^sema1	1
+#Globals (z)killed (in the order of appearance):
+^A	1
+^B	1
+^C	1
+diff user_per.mjf_analysis user_per2.mjf_analysis
+
+set verbose
+
+$MUPIP journal -id="$pid1" -extract=bpid_1.mjf -detail -backward -since=\"$time1\" mumps.mjl
+%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%GTM-I-FILECREATE, Journal extract file bpid_1.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf bpid_1.mjf
+bpid_1.mjf
+#Number of records of type (in the order of appearance):
+PINI	1
+SET	36
+TSTART	1
+TSET	1
+USET	4
+TCOM	1
+PFIN	1
+#Globals set (in the order of appearance):
+^A	12
+^VB	1
+^C	6
+^XA	1
+^YAY	1
+^B	5
+^CC	5
+^BB	5
+^AA	5
+
+
+
+$MUPIP journal -id="~$pid1" -extract=bpid_1m.mjf -lost=bpid_1m.lost -broken=bpid_1m.broken -detail -backward -since=\"$time1\" mumps.mjl
+%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%GTM-I-FILECREATE, Journal extract file bpid_1m.mjf created
+%GTM-I-FILECREATE, Broken transactions extract file bpid_1m.broken created
+%GTM-I-FILECREATE, Lost transactions extract file bpid_1m.lost created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf bpid_1m.mjf
+bpid_1m.mjf
+#Number of records of type (in the order of appearance):
+PFIN	1
+PINI	1
+TSTART	1
+TSET	1
+USET	4
+UZKILL	1
+TCOM	1
+SET	25
+ZKILL	1
+KILL	1
+#Globals set (in the order of appearance):
+^A	5
+^B	5
+^C	5
+^CCC	5
+^BBB	5
+^AAA	5
+#Globals (z)killed (in the order of appearance):
+^A	1
+^B	1
+^C	1
+check_mjf bpid_1m.broken
+bpid_1m.broken
+#Number of records of type (in the order of appearance):
+ZTSTART	1
+FSET	1
+GSET	4
+#Globals set (in the order of appearance):
+^aact	1
+^bact	1
+^cact	1
+^dact	1
+^sema1	1
+check_mjf bpid_1m.lost
+bpid_1m.lost
+#Number of records of type (in the order of appearance):
+PINI	2
+KILL	1
+SET	1
+PFIN	2
+#Globals set (in the order of appearance):
+^AA	1
+#Globals (z)killed (in the order of appearance):
+^AA	1
+$MUPIP journal -id="~$pid1" -extract=bpid2_nofence.mjf -backward -since=\"$time1\" -detail -fences=none mumps.mjl
+%GTM-I-FILECREATE, Journal extract file bpid2_nofence.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf bpid2_nofence.mjf
+bpid2_nofence.mjf
+#Number of records of type (in the order of appearance):
+PFIN	3
+PINI	3
+TSTART	1
+TSET	1
+USET	4
+UZKILL	1
+TCOM	1
+SET	26
+ZKILL	1
+KILL	2
+ZTSTART	1
+FSET	1
+GSET	4
+#Globals set (in the order of appearance):
+^A	5
+^B	5
+^C	5
+^CCC	5
+^BBB	5
+^AAA	5
+^aact	1
+^bact	1
+^cact	1
+^dact	1
+^sema1	1
+^AA	1
+#Globals (z)killed (in the order of appearance):
+^A	1
+^B	1
+^C	1
+^AA	1
+
+
+
+$MUPIP journal -id="~$pid1,$pid2" -extract=pid_m1_2.mjf -forward -detail mumps.mjl -fences=none
+%GTM-I-FILECREATE, Journal extract file pid_m1_2.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf pid_m1_2.mjf
+pid_m1_2.mjf
+#Number of records of type (in the order of appearance):
+PINI	1
+TSTART	1
+TSET	1
+USET	4
+UZKILL	1
+TCOM	1
+SET	25
+ZKILL	1
+KILL	1
+ZTSTART	1
+FSET	1
+GSET	4
+#Globals set (in the order of appearance):
+^A	5
+^B	5
+^C	5
+^CCC	5
+^BBB	5
+^AAA	5
+^aact	1
+^bact	1
+^cact	1
+^dact	1
+^sema1	1
+#Globals (z)killed (in the order of appearance):
+^A	1
+^B	1
+^C	1
+
+
+
+$MUPIP journal -id="$pid1,$pid2" -extract=bpid_1_2.mjf -backward -since=\"$time1\" -detail mumps.mjl -fences=none
+%GTM-I-FILECREATE, Journal extract file bpid_1_2.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf bpid_1_2.mjf
+bpid_1_2.mjf
+#Number of records of type (in the order of appearance):
+PINI	2
+SET	61
+TSTART	2
+TSET	2
+USET	8
+TCOM	2
+PFIN	1
+UZKILL	1
+ZKILL	1
+KILL	1
+ZTSTART	1
+FSET	1
+GSET	4
+#Globals set (in the order of appearance):
+^A	17
+^VB	1
+^C	11
+^XA	1
+^YAY	1
+^B	10
+^CC	5
+^BB	5
+^AA	5
+^CCC	5
+^BBB	5
+^AAA	5
+^aact	1
+^bact	1
+^cact	1
+^dact	1
+^sema1	1
+#Globals (z)killed (in the order of appearance):
+^A	1
+^B	1
+^C	1
+
+
+
+$MUPIP journal -id="~($pid1,$pid2)" -extract=bpid_m12.mjf -backward -since=\"$time1\" -detail mumps.mjl
+%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%GTM-I-FILECREATE, Journal extract file bpid_m12.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf bpid_m12.mjf
+bpid_m12.mjf
+#Number of records of type (in the order of appearance):
+PFIN	3
+PINI	2
+KILL	1
+SET	1
+#Globals set (in the order of appearance):
+^AA	1
+#Globals (z)killed (in the order of appearance):
+^AA	1
+$MUPIP journal -id="~($pid1,$pid2)" -extract=pid_m12.mjf -forward -detail mumps.mjl
+%GTM-I-FILECREATE, Journal extract file pid_m12.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf pid_m12.mjf
+pid_m12.mjf
+#Number of records of type (in the order of appearance):
+PINI	3
+PFIN	3
+KILL	1
+SET	1
+#Globals set (in the order of appearance):
+^AA	1
+#Globals (z)killed (in the order of appearance):
+^AA	1
+
+
+$MUPIP journal -id="~$pid1,~$pid2" -extract=pid_m1_m2.mjf -forward -detail mumps.mjl
+%GTM-I-FILECREATE, Journal extract file pid_m1_m2.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf pid_m1_m2.mjf
+pid_m1_m2.mjf
+#Number of records of type (in the order of appearance):
+PINI	3
+PFIN	3
+KILL	1
+SET	1
+#Globals set (in the order of appearance):
+^AA	1
+#Globals (z)killed (in the order of appearance):
+^AA	1
+diff pid_m12.mjf_analysis pid_m1_m2.mjf_analysis
+
+
+
+$MUPIP journal -id="~$pid1,~$pid2,$pid3" -extract=bpid_m1_m2_3.mjf -backward -since=\"$time1\" -detail mumps.mjl
+%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%GTM-I-FILECREATE, Journal extract file bpid_m1_m2_3.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf bpid_m1_m2_3.mjf
+bpid_m1_m2_3.mjf
+#Number of records of type (in the order of appearance):
+PINI	1
+KILL	1
+SET	1
+PFIN	1
+#Globals set (in the order of appearance):
+^AA	1
+#Globals (z)killed (in the order of appearance):
+^AA	1
+
+
+
+$MUPIP journal -id="~$pid1,$pid4" -extract=bpid_m1_4.mjf -backward -since=\"$time1\" -detail mumps.mjl
+%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%GTM-I-FILENOTCREATE, Journal extract file bpid_m1_4.mjf not created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+if ( -e bpid_m1_4.mjf ) then
+
+
+
+
+$MUPIP journal -id="$pid4,$pid5" -extract=bpid_4_5.mjf -backward -since=\"$time1\" -detail mumps.mjl
+%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%GTM-I-FILENOTCREATE, Journal extract file bpid_4_5.mjf not created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+if ( -e bpid_4_5.mjf ) then
+
+
+
+
+
+
+$MUPIP journal -transaction="set" -extract=btypeset.mjf -for -detail mumps.mjl -fences=none
+%GTM-I-FILECREATE, Journal extract file btypeset.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf btypeset.mjf
+btypeset.mjf
+#Number of records of type (in the order of appearance):
+PINI	5
+PFIN	4
+SET	62
+TSTART	2
+TSET	2
+USET	8
+TCOM	2
+ZTSTART	1
+FSET	1
+GSET	4
+#Globals set (in the order of appearance):
+^A	17
+^VB	1
+^C	11
+^XA	1
+^YAY	1
+^B	10
+^CC	5
+^BB	5
+^AA	6
+^CCC	5
+^BBB	5
+^AAA	5
+^aact	1
+^bact	1
+^cact	1
+^dact	1
+^sema1	1
+
+$MUPIP journal -transaction=nokill -extract=btypenokill.mjf -for -detail mumps.mjl -fences=none
+%GTM-I-FILECREATE, Journal extract file btypenokill.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf btypenokill.mjf
+btypenokill.mjf
+#Number of records of type (in the order of appearance):
+PINI	5
+PFIN	4
+SET	62
+TSTART	2
+TSET	2
+USET	8
+TCOM	2
+ZTSTART	1
+FSET	1
+GSET	4
+#Globals set (in the order of appearance):
+^A	17
+^VB	1
+^C	11
+^XA	1
+^YAY	1
+^B	10
+^CC	5
+^BB	5
+^AA	6
+^CCC	5
+^BBB	5
+^AAA	5
+^aact	1
+^bact	1
+^cact	1
+^dact	1
+^sema1	1
+diff btypeset.mjf_analysis btypenokill.mjf_analysis
+
+
+
+$MUPIP journal -transaction="kill" -extract=btypekill.mjf -for -detail mumps.mjl -fences=none
+%GTM-I-FILECREATE, Journal extract file btypekill.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf btypekill.mjf
+btypekill.mjf
+#Number of records of type (in the order of appearance):
+PINI	5
+PFIN	4
+TCOM	2
+UZKILL	1
+ZKILL	1
+KILL	2
+#Globals (z)killed (in the order of appearance):
+^A	1
+^B	1
+^C	1
+^AA	1
+
+$MUPIP journal -transaction="noset" -extract=btypenoset.mjf -for -detail mumps.mjl -fences=none
+%GTM-I-FILECREATE, Journal extract file btypenoset.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf btypenoset.mjf
+btypenoset.mjf
+#Number of records of type (in the order of appearance):
+PINI	5
+PFIN	4
+TCOM	2
+UZKILL	1
+ZKILL	1
+KILL	2
+#Globals (z)killed (in the order of appearance):
+^A	1
+^B	1
+^C	1
+^AA	1
+diff btypekill1.mjf btypenoset1.mjf
+
+
+
+$MUPIP journal -transaction="set" -global="^A*" -user="${gtmtest1}" -extract=select1.mjf -for -detail mumps.mjl -fences=none
+%GTM-I-FILECREATE, Journal extract file select1.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf select1.mjf
+select1.mjf
+#Number of records of type (in the order of appearance):
+PINI	1
+TSTART	1
+TSET	1
+USET	4
+TCOM	1
+SET	5
+#Globals set (in the order of appearance):
+^A	5
+^AAA	5
+$MUPIP journal -transaction="kill" -global="^AA" -user="$USER" -extract=select2.mjf -for -detail mumps.mjl -fences=none
+%GTM-I-FILECREATE, Journal extract file select2.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf select2.mjf
+select2.mjf
+#Number of records of type (in the order of appearance):
+PINI	4
+PFIN	4
+TCOM	1
+KILL	1
+#Globals (z)killed (in the order of appearance):
+^AA	1
+
+unset verbose
+######################################
+SHOW
+
+
+$MUPIP journal -show=all -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                        TRUE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ End of Data                             ##FILTERED##
+ Prev Recovery End of Data                       0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+ End Transaction                                73 [0x0000000000000049]
+##TEST_AWK Align size  *[1-9][0-9]* \[0x[0-9A-F]*\] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      0 [0x0000000000000000]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##TEST_AWK[0-9]*[ ]*##TEST_HOST_SHORT##[A-Za-z.]*[ ]* [A-Za-z0-9]*[ ]*20........ ..:..:..[ ]*
+
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##TEST_AWK[0-9]*[ ]*##TEST_HOST_SHORT##[A-Za-z.]*[ ]* [A-Za-z0-9]*[ ]*20........ ..:..:..[ ]*
+
+Process(es) that are COMPLETE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           5
+   PFIN           4
+   ZTCOM          0
+   KILL           2
+   FKILL          0
+   GKILL          0
+   SET           62
+   FSET           1
+   GSET           4
+   EOF            0
+   TKILL          0
+   UKILL          0
+   TSET           2
+   USET           8
+   TCOM           2
+   NULL           0
+   ZKILL          1
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          1
+   INCTN          0
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+
+$MUPIP journal -global="^A*,^C" -show=stat -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           5
+   PFIN           4
+   ZTCOM          0
+   KILL           2
+   FKILL          0
+   GKILL          0
+   SET           29
+   FSET           0
+   GSET           0
+   EOF            0
+   TKILL          0
+   UKILL          0
+   TSET           2
+   USET           8
+   TCOM           2
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          1
+   INCTN          0
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+
+
+
+$MUPIP journal -global="^A,^C" -show=s -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           5
+   PFIN           4
+   ZTCOM          0
+   KILL           1
+   FKILL          0
+   GKILL          0
+   SET           18
+   FSET           0
+   GSET           0
+   EOF            0
+   TKILL          0
+   UKILL          0
+   TSET           2
+   USET           8
+   TCOM           2
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          1
+   INCTN          0
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+
+
+
+$MUPIP journal -user="$USER" -show=s -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           4
+   PFIN           4
+   ZTCOM          0
+   KILL           1
+   FKILL          0
+   GKILL          0
+   SET           37
+   FSET           0
+   GSET           0
+   EOF            0
+   TKILL          0
+   UKILL          0
+   TSET           1
+   USET           4
+   TCOM           1
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          0
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+
+
+
+$MUPIP journal -user="${gtmtest1}" -show=s -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           1
+   PFIN           0
+   ZTCOM          0
+   KILL           1
+   FKILL          0
+   GKILL          0
+   SET           25
+   FSET           1
+   GSET           4
+   EOF            0
+   TKILL          0
+   UKILL          0
+   TSET           1
+   USET           4
+   TCOM           1
+   NULL           0
+   ZKILL          1
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          1
+   INCTN          0
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+
+
+
+$MUPIP journal -id="$pid1" -show=p -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Process(es) that are COMPLETE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+
+
+
+$MUPIP journal -id="$pid1" -show=s -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           1
+   PFIN           1
+   ZTCOM          0
+   KILL           0
+   FKILL          0
+   GKILL          0
+   SET           36
+   FSET           0
+   GSET           0
+   EOF            0
+   TKILL          0
+   UKILL          0
+   TSET           1
+   USET           4
+   TCOM           1
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          0
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+
+
+
+$MUPIP journal -id="$pid2" -show=process -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##TEST_AWK[0-9]*[ ]*##TEST_HOST_SHORT##[A-Za-z.]*[ ]* [A-Za-z0-9]*[ ]*20........ ..:..:..[ ]*
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+
+
+
+$MUPIP journal -id="~$pid3" -show=process -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##TEST_AWK[0-9]*[ ]*##TEST_HOST_SHORT##[A-Za-z.]*[ ]* [A-Za-z0-9]*[ ]*20........ ..:..:..[ ]*
+
+Process(es) that are COMPLETE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+
+$MUPIP journal -transaction="set" -show=s -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           5
+   PFIN           4
+   ZTCOM          0
+   KILL           0
+   FKILL          0
+   GKILL          0
+   SET           62
+   FSET           1
+   GSET           4
+   EOF            0
+   TKILL          0
+   UKILL          0
+   TSET           2
+   USET           8
+   TCOM           2
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          0
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+
+
+
+$MUPIP journal -transaction="kill" -show=stat -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           5
+   PFIN           4
+   ZTCOM          0
+   KILL           2
+   FKILL          0
+   GKILL          0
+   SET            0
+   FSET           0
+   GSET           0
+   EOF            0
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           2
+   NULL           0
+   ZKILL          1
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          1
+   INCTN          0
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+
+
+unset verbose
+Stop second process...
+
+GTM>
+##TEST_AWK.H = [0-9]*,[0-9]*
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+End
+
+GTM>
+##TEST_AWK.H = [0-9]*,[0-9]*
+
+GTM>
+################ SECOND PROCESS OUTPUT ###################
+Check second_process.log for the following output:
+Will run           : user2
+##SOURCE_PATH##
+##TEST_PATH##
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+##TEST_AWK.ZV = GT.M .*
+
+GTM>
+start...
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+in active ztp...
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+end...
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+End of second_process job!
+############ END SECOND PROCESS OUTPUT ###################
+$MUPIP journal -extract=error.mjf -global=\"^A\(\" -for mumps.mjl
+%GTM-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 3 in ^A(
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
+$MUPIP journal -extract=error.mjf -global=\"^A\(1,2,3\" -for mumps.mjl
+%GTM-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 8 in ^A(1,2,3
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
+$MUPIP journal -extract=error.mjf -global=\"^A\)\" -for mumps.mjl
+%GTM-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 3 in ^A)
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
+$MUPIP journal -extract=error.mjf -global=\"^\(\" -for mumps.mjl
+%GTM-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 2 in ^(
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
+$MUPIP journal -extract=error.mjf -global=\"^\)\" -for mumps.mjl
+%GTM-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 2 in ^)
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
+$MUPIP journal -id="badpid" -extract=error.mjf -detail -forward mumps.mjl
+%GTM-E-INVIDQUAL, Invalid ID qualifier value badpid
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
+$MUPIP journal -id="98765432198" -extract=error.mjf -detail -forward mumps.mjl
+%GTM-E-INVIDQUAL, Invalid ID qualifier value 98765432198
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
+
+unset verbose
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Test multiple regions...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+multireg.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+multireg.dat
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+$MUPIP journal -show=stat -extract -global="~^B" -forward b.mjl
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/b.mjf created
+%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/b.broken created
+%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/b.lost created
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/b.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           2
+   PFIN           2
+   ZTCOM          1
+   KILL           0
+   FKILL          0
+   GKILL          0
+   SET            0
+   FSET           0
+   GSET           0
+   EOF            1
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           0
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          2
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf b.mjf
+b.mjf
+#Number of records of type (in the order of appearance):
+01	2
+02	1
+
+
+
+$MUPIP journal -show=stat -extract=b1.mjf -global="^A,^B" -forward b.mjl -lost=b1.lost -broken=b1.broken
+%GTM-I-FILECREATE, Journal extract file b1.mjf created
+%GTM-I-FILECREATE, Broken transactions extract file b1.broken created
+%GTM-I-FILECREATE, Lost transactions extract file b1.lost created
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/b.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           2
+   PFIN           2
+   ZTCOM          1
+   KILL           1
+   FKILL          0
+   GKILL          1
+   SET            1
+   FSET           1
+   GSET           0
+   EOF            1
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           0
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          2
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf b1.mjf
+b1.mjf
+#Number of records of type (in the order of appearance):
+01	2
+02	1
+05	1
+04	1
+#Globals set (in the order of appearance):
+^B	1
+#Globals (z)killed (in the order of appearance):
+^B	1
+check_mjf b1.lost
+b1.lost
+#Number of records of type (in the order of appearance):
+02	1
+03	1
+check_mjf b1.broken
+b1.broken
+#Number of records of type (in the order of appearance):
+06	1
+05	1
+04	1
+07	1
+#Globals set (in the order of appearance):
+^B	1
+#Globals (z)killed (in the order of appearance):
+^B	1
+
+
+
+$MUPIP journal -extract=multi_mb.mjf -global="~^B" -forward "*"
+%GTM-I-FILECREATE, Journal extract file multi_mb.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+setenv extract_summary_sort 1
+
+check_mjf multi_mb.mjf
+multi_mb.mjf
+#Number of records of type (in sorted order):
+01	8
+02	8
+03	4
+04	6
+05	9
+06	3
+07	4
+#Globals set (in sorted order):
+^A	5
+^C	2
+^D	2
+#Globals (z)killed (in sorted order):
+^A	2
+^C	2
+^D	2
+unsetenv extract_summary_sort
+
+
+
+
+$MUPIP journal -show=stat -extract=no_a_mb.mjf -global="^A,~^B" -forward b.mjl -fences=NONE
+%GTM-I-FILECREATE, Journal extract file no_a_mb.mjf created
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/b.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           2
+   PFIN           2
+   ZTCOM          1
+   KILL           0
+   FKILL          0
+   GKILL          0
+   SET            0
+   FSET           0
+   GSET           0
+   EOF            1
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           0
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          2
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf no_a_mb.mjf
+no_a_mb.mjf
+#Number of records of type (in the order of appearance):
+01	2
+02	2
+07	1
+03	1
+
+$MUPIP journal -show=stat -extract=multi_a_ma1.mjf -global="^A,~^A(1)" -forward "*" > & multi_a_ma1.unsorted
+$tst_awk -f $gtm_tst/com/mupjnl_multireg_show_sort.awk multi_a_ma1.unsorted
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/a.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           2
+   PFIN           2
+   ZTCOM          1
+   KILL           1
+   FKILL          0
+   GKILL          1
+   SET            1
+   FSET           1
+   GSET           2
+   EOF            1
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           0
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          2
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/b.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           2
+   PFIN           2
+   ZTCOM          1
+   KILL           0
+   FKILL          0
+   GKILL          0
+   SET            0
+   FSET           0
+   GSET           0
+   EOF            1
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           0
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          2
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/c.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           2
+   PFIN           2
+   ZTCOM          1
+   KILL           0
+   FKILL          0
+   GKILL          0
+   SET            0
+   FSET           0
+   GSET           0
+   EOF            1
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           0
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          2
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/multireg.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           2
+   PFIN           2
+   ZTCOM          1
+   KILL           0
+   FKILL          0
+   GKILL          0
+   SET            0
+   FSET           0
+   GSET           0
+   EOF            1
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           0
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          2
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-I-FILECREATE, Journal extract file multi_a_ma1.mjf created
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf multi_a_ma1.mjf
+multi_a_ma1.mjf
+#Number of records of type (in the order of appearance):
+01	8
+02	8
+05	4
+04	2
+06	1
+07	4
+03	4
+#Globals set (in the order of appearance):
+^A	4
+#Globals (z)killed (in the order of appearance):
+^A	2
+$MUPIP journal -show=stat -extract=multi_a_ma1.mjf -global="^A,~^A(1)" -forward a.mjl -fences=none
+##FILTERED##%GTM-I-FILERENAME, File multi_a_ma1.mjf is renamed to multi_a_ma1.mjf_##TIMESTAMP##
+%GTM-I-FILECREATE, Journal extract file multi_a_ma1.mjf created
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/a.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           2
+   PFIN           2
+   ZTCOM          1
+   KILL           1
+   FKILL          0
+   GKILL          1
+   SET            1
+   FSET           1
+   GSET           2
+   EOF            1
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           0
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          2
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+check_mjf multi_a_ma1.mjf
+multi_a_ma1.mjf
+#Number of records of type (in the order of appearance):
+01	2
+02	2
+05	4
+04	2
+06	1
+07	1
+03	1
+#Globals set (in the order of appearance):
+^A	4
+#Globals (z)killed (in the order of appearance):
+^A	2
+
+
+
+
+unset verbose
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,79 @@
+setenv gtm_chset M
+unset echo
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+Running binary load test cases
+
+
+Test case 1a - Compression count > 0 on first record in a block
+PASS
+
+Test case 1b - Key does not terminate before end of record
+Created file ##TEST_PATH##/mumps.dat
+PASS
+
+Test case 2a - Record length points beyond top of block
+Created file ##TEST_PATH##/mumps.dat
+PASS
+
+Test case 2b1 - Key does not terminate before end of record
+Created file ##TEST_PATH##/mumps.dat
+PASS
+
+
+Test case 2b2 - Key length > max key length for region
+Created file ##TEST_PATH##/mumps.dat
+PASS
+
+Test case 2c1 - While building a spanning node find a non-spanning record
+Created file ##TEST_PATH##/mumps.dat
+PASS
+
+GTM>
+I am here!!                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+GTM>
+
+Test case 2c2 - While building a spanning node find a chunk from another spanning node
+Created file ##TEST_PATH##/mumps.dat
+PASS
+
+Test case 2c3 - While building a spanning node expected chunk x but found chunk y
+Created file ##TEST_PATH##/mumps.dat
+PASS
+
+Test case 2c4 - While building a spanning node adding the next chunk makes value longer than expected
+Created file ##TEST_PATH##/mumps.dat
+PASS
+
+Test case 2c5 - While building a spanning node have all chunks but value is not expected length
+Created file ##TEST_PATH##/mumps.dat
+PASS
+
+Test case 2c6 - While building a spanning node extract file terminates
+Created file ##TEST_PATH##/mumps.dat
+PASS
+
+Test case 2c7 - Verify that a child of the beacon node is not deleted when an incomplete spanning node is found
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+GTM>
+PASS
+
+GTM>
+hope I am still here!!!
+GTM>
+
+Test case 2d - Encounter an errant spanning node chunk while not building a spanning node
+Created file ##TEST_PATH##/mumps.dat
+PASS

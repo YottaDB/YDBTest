@@ -1,0 +1,82 @@
+V3DWP ;IW-KO-YS-TS,VV3,MVTS V9.10;15/6/96;PART-90
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1990-1996
+ ;
+1 W !!,"137---V3DWP: Tests of DO command with parameter passsing",!
+ S ^ABSN="31079",^ITEM="III-1079  DO label(expr)"
+ S ^NEXT="2^V3DWP,V3ESV^VV3" D ^V3PRESET K
+ S ^VCOMP="",A(12,3)="A",D(1,2,3)="123E1"
+ d A0("",0.003,A(12,3),+D(1,2,3))
+ S ^VCORR="1 0 1.003 0 1A 0 11230 0 0 0 0/" D ^VEXAMINE
+ ;
+2 S ^ABSN="31080",^ITEM="III-1080  DO ^routine(expr)"
+ S ^NEXT="3^V3DWP,V3ESV^VV3" D ^V3PRESET K  S X="X"
+ S ^VCOMP=""
+ D ^V3DWPE("a","b")
+ S ^VCOMP=^VCOMP_" "_$T_" " ;change test in 15/2/94
+ S ^VCOMP=^VCOMP_$d(X) I $D(X)#10=1 S ^VCOMP=^VCOMP_X
+ S ^VCOMP=^VCOMP_$d(Y) I $D(Y)#10=1 S ^VCOMP=^VCOMP_Y
+ S ^VCORR="1a1b 0 1X0" D ^VEXAMINE
+ ;
+3 S ^ABSN="31081",^ITEM="III-1081  D label^routine(expr,expr)"
+ S ^NEXT="4^V3DWP,V3ESV^VV3" D ^V3PRESET K  S W="W"
+ S ^VCOMP=""
+ D AB^V3DWPE("a","b")
+ S ^VCOMP=^VCOMP_$d(X) I $D(X)#10=1 S ^VCOMP=^VCOMP_X
+ S ^VCOMP=^VCOMP_$d(Y) I $D(Y)#10=1 S ^VCOMP=^VCOMP_Y
+ S ^VCOMP=^VCOMP_$d(Z) I $D(Z)#10=1 S ^VCOMP=^VCOMP_Z
+ S ^VCOMP=^VCOMP_$d(W) I $D(W)#10=1 S ^VCOMP=^VCOMP_W
+ S ^VCORR="1a1b01W0001w" D ^VEXAMINE
+ ;
+4 S ^ABSN="31082",^ITEM="III-1082  call by reference"
+ S ^NEXT="5^V3DWP,V3ESV^VV3" D ^V3PRESET k
+ S ^VCOMP="",X="X",X(1)="X1",Y="Y",Z("A")="ZA",W(1,2,3)="W123",F="F"
+ S A="a",D="d",D(1,2,3)="d123",E(1)="e1"
+ d A0(.X,.Y,.Z,.W,.P)
+ S ^VCORR="11X 1X1 1Y 0 10 1ZA 10 1W123 0 0 0/" D ^VEXAMINE
+ ;
+5 S ^ABSN="31083",^ITEM="III-1083  indirection"
+ S ^NEXT="6^V3DWP,V3ESV^VV3" D ^V3PRESET K
+ S ^VCOMP="",X="X",X(1)="X1",Y="Y",Z("A")="ZA",W(1,2,3)="W123",F="F"
+ S A="a",D="d",D(1,2,3)="d123",E(1)="e1"
+ S IX="X",IY="@IY(1)",IY(1)="Y"
+ d A0^V3DWPE(.@IX,.@IY,@IX@(1),.W,@IX,@IY)
+ S ^VCORR="11X 1X1 1Y 0 1X1 0 10 1W123 1X 1Y 0/" D ^VEXAMINE
+ ;
+6 S ^ABSN="31084",^ITEM="III-1084  $TEST value"
+ S ^NEXT="V3ESV^VV3" D ^V3PRESET K  S X="X" I 1
+ S ^VCOMP=""
+ D T^V3DWPE("a","b")
+ S ^VCOMP=^VCOMP_" "_$T_" " ;change test in 15/2/94
+ S ^VCOMP=^VCOMP_$d(X) I $D(X)#10=1 S ^VCOMP=^VCOMP_X
+ S ^VCOMP=^VCOMP_$d(Y) I $D(Y)#10=1 S ^VCOMP=^VCOMP_Y
+ S ^VCORR="1a1b 0 0 1X0" D ^VEXAMINE
+ ;
+END W !!,"End of 137 --- V3DWP",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q
+A0(A,B,C,D,E,F,G) ;
+ S ^VCOMP=^VCOMP_$D(A)      I $D(A)#10=1 S ^VCOMP=^VCOMP_A
+ S ^VCOMP=^VCOMP_" "
+ S ^VCOMP=^VCOMP_$D(A(1))   I $D(A(1))#10=1 S ^VCOMP=^VCOMP_A(1)
+ S ^VCOMP=^VCOMP_" "
+ S ^VCOMP=^VCOMP_$D(B)      I $D(B)#10=1 S ^VCOMP=^VCOMP_B
+ S ^VCOMP=^VCOMP_" "
+ S ^VCOMP=^VCOMP_$D(B(2,3)) I $D(B(2,3))#10=1 S ^VCOMP=^VCOMP_B(2,3)
+ S ^VCOMP=^VCOMP_" "
+ S ^VCOMP=^VCOMP_$D(C)      I $D(C)#10=1 S ^VCOMP=^VCOMP_C
+ S ^VCOMP=^VCOMP_" "
+ S ^VCOMP=^VCOMP_$D(C("A")) I $D(C("A"))#10=1 S ^VCOMP=^VCOMP_C("A")
+ S ^VCOMP=^VCOMP_" "
+ S ^VCOMP=^VCOMP_$D(D)      I $D(D)#10=1 S ^VCOMP=^VCOMP_D
+ S ^VCOMP=^VCOMP_" "
+ S ^VCOMP=^VCOMP_$D(D(1,2,3)) I $D(D(1,2,3))#10=1 S ^VCOMP=^VCOMP_D(1,2,3)
+ S ^VCOMP=^VCOMP_" "
+ S ^VCOMP=^VCOMP_$D(E)      I $D(E)#10=1 S ^VCOMP=^VCOMP_E
+ S ^VCOMP=^VCOMP_" "
+ S ^VCOMP=^VCOMP_$D(F)      I $D(F)#10=1 S ^VCOMP=^VCOMP_F
+ S ^VCOMP=^VCOMP_" "
+ S ^VCOMP=^VCOMP_$D(G)      I $D(G)#10=1 S ^VCOMP=^VCOMP_G
+ S ^VCOMP=^VCOMP_"/"
+ Q

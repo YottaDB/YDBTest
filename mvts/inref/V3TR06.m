@@ -1,0 +1,106 @@
+V3TR06 ;IW-KO-YS-TS,V3TR,MVTS V9.10;15/6/96;PART-90
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1990-1996
+ W !!,"12---V3TR06: $TRANSLATE function -6-"
+ ;
+1 S ^ABSN="30157",^ITEM="III-157  The tailing 2 chars are changed"
+ S ^NEXT="2^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABCDEFGH","GH","gh")
+ S ^VCORR="ABCDEFgh" D ^VEXAMINE
+ ;
+2 S ^ABSN="30158",^ITEM="III-158  The tailing substring is changed"
+ S ^NEXT="3^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABBACDDCEFFE","EF","ef")
+ S ^VCORR="ABBACDDCeffe" D ^VEXAMINE
+ ;
+3 S ^ABSN="30159",^ITEM="III-159  The heading and tailing chars are changed"
+ S ^NEXT="4^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABCDEFGH","AH","ah")
+ S ^VCORR="aBCDEFGh" D ^VEXAMINE
+ ;
+4 S ^ABSN="30160",^ITEM="III-160  The heading and tailing substrings are changed"
+ S ^NEXT="5^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABBACDDCABBA","AB","ab")
+ S ^VCORR="abbaCDDCabba" D ^VEXAMINE
+ ;
+5 S ^ABSN="30161",^ITEM="III-161  The heading and middle chars are changed"
+ S ^NEXT="6^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABCDEFGH","AC","ac")
+ S ^VCORR="aBcDEFGH" D ^VEXAMINE
+ ;
+6 S ^ABSN="30162",^ITEM="III-162  The heading and middle substrings are changed"
+ S ^NEXT="7^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABBACDDCABBACDDC","AB","ab")
+ S ^VCORR="abbaCDDCabbaCDDC" D ^VEXAMINE
+ ;
+7 S ^ABSN="30163",^ITEM="III-163  Non successive 2 middle chars are changed"
+ S ^NEXT="8^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABCDEFGH","CE","ce")
+ S ^VCORR="ABcDeFGH" D ^VEXAMINE
+ ;
+8 S ^ABSN="30164",^ITEM="III-164  Non successive 2 middle substrings are changed"
+ S ^NEXT="9^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("AABBCCDDEEFFGGHH","DF","df")
+ S ^VCORR="AABBCCddEEffGGHH" D ^VEXAMINE
+ ;
+9 S ^ABSN="30165",^ITEM="III-165  A middle and tailing chars are changed"
+ S ^NEXT="10^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABCDEFGH","DH","dh")
+ S ^VCORR="ABCdEFGh" D ^VEXAMINE
+ ;
+10 S ^ABSN="30166",^ITEM="III-166  A middle and tailing substrings are changed"
+ S ^NEXT="11^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABBACDDCABBACDDC","CD","cd")
+ S ^VCORR="ABBAcddcABBAcddc" D ^VEXAMINE
+ ;
+11 S ^ABSN="30167",^ITEM="III-167  All chars are changed"
+ S ^NEXT="12^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABBAABBA","AB","ab")
+ S ^VCORR="abbaabba" D ^VEXAMINE
+ ;
+ W !!,"expr2 has 3 chars",!
+ ;
+12 S ^ABSN="30168",^ITEM="III-168  expr1 undergoes no change"
+ S ^NEXT="13^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABCDE","abc","def")
+ S ^VCORR="ABCDE" D ^VEXAMINE
+ ;
+13 S ^ABSN="30169",^ITEM="III-169  The heading 1 char is changed"
+ S ^NEXT="14^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABCDE","Abc","aBC")
+ S ^VCORR="aBCDE" D ^VEXAMINE
+ ;
+14 S ^ABSN="30170",^ITEM="III-170  The heading 2 chars are changed"
+ S ^NEXT="15^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABCDEFGHIJ","ABc","abC")
+ S ^VCORR="abCDEFGHIJ" D ^VEXAMINE
+ ;
+15 S ^ABSN="30171",^ITEM="III-171  The heading 3 chars are changed"
+ S ^NEXT="16^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABCDEFGHIJ","ABC","abc")
+ S ^VCORR="abcDEFGHIJ" D ^VEXAMINE
+ ;
+16 S ^ABSN="30172",^ITEM="III-172  The heading substring is changed"
+ S ^NEXT="17^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABCCBADEFFED","ABC","abc")
+ S ^VCORR="abccbaDEFFED" D ^VEXAMINE
+ ;
+17 S ^ABSN="30173",^ITEM="III-173  A middle char is changed"
+ S ^NEXT="18^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABCDE","Cde","cDE")
+ S ^VCORR="ABcDE" D ^VEXAMINE
+ ;
+18 S ^ABSN="30174",^ITEM="III-174  2 successive middle chars are changed"
+ S ^NEXT="19^V3TR06,V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABCDEF","eDC","Edc")
+ S ^VCORR="ABcdEF" D ^VEXAMINE
+ ;
+19 S ^ABSN="30175",^ITEM="III-175  3 successive middle chars are changed"
+ S ^NEXT="V3TR07^V3TR,V3TEXT^VV3" D ^V3PRESET
+ S ^VCOMP=$TR("ABCDEF","EDC","edc")
+ S ^VCORR="ABcdeF" D ^VEXAMINE
+ ;
+END W !!,"End of 12 --- V3TR06",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

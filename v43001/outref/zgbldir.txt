@@ -1,0 +1,66 @@
+Entering ZGBLDIR subtest
+
+GTM>
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/ddd.gld.  Retaining ##TEST_PATH##/mumps.gld.
+%SYSTEM-E-ENO2, No such file or directory
+
+GTM>
+%GTM-E-UNDEF, Undefined local variable: abc
+
+GTM>
+
+GTM>
+##TEST_PATH##/mumps.gld
+GTM>
+
+GTM>
+##TEST_PATH##/$gtmgbldir.gld
+GTM>
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/ddd.gld.  Retaining ##TEST_PATH##/$gtmgbldir.gld.
+%SYSTEM-E-ENO2, No such file or directory
+
+GTM>
+
+GTM>
+##TEST_PATH##/$gtmgbldir.gld
+GTM>
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/a.gld
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/a.gld
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/mumps.dat
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/b.gld
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/b.gld
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+Inside sub: Global Directory ##TEST_PATH##/b.gld
+Now Global directory b.gld
+We can see ^a
+We cannot see ^b
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Leaving ZGBLDIR subtest

@@ -1,0 +1,161 @@
+Begin write tests of gde...
+undefined and doesn't exist - set to same...
+ls: No match.
+gtmgbldir is not defined: 0
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/$gtmgbldir.gld
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/$gtmgbldir.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/acct.gld
+
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/acct.gld
+the *.gld's are:
+$gtmgbldir.gld
+acct.gld
+undefined and does exist - set to same...
+$gtmgbldir.gld
+acct.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/$gtmgbldir.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/acct.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/acct.gld
+the *.gld's are:
+$gtmgbldir.gld
+acct.gld
+undefined create new .gld set to same make change...
+$gtmgbldir.gld
+acct.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/$gtmgbldir.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/acct.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/acct.gld
+the *.gld's are:
+$gtmgbldir.gld
+acct.gld
+mumps.gld
+defined and doesn't exist - set to same...
+gtmgbldir is defined : acct.gld (1)
+ls: No match.
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/acct.gld
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/acct.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/acct.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/acct.gld
+the *.gld's are:
+acct.gld
+defined and exists set to same...
+acct.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/acct.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/acct.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/acct.gld
+the *.gld's are:
+acct.gld
+defined create new .gld set to same make change...
+acct.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/acct.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/acct.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/acct.gld
+the *.gld's are:
+acct.gld
+mumps.gld
+End write tests of gde...

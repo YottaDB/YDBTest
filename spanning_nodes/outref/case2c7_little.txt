@@ -1,0 +1,32 @@
+Label = GDS BINARY EXTRACT LEVEL 6201207251343220000512104857600000640000001GT.M MUPIP EXTRACT              
+
+Beginning LOAD at record number: 2
+
+%GTM-E-LDSPANGLOINCMP, Incomplete spanning node found during load
+		at File offset : [0x000000000000046B]
+		Expected Spanning Global variable : ^a
+		Global variable from record: ^a(#SPAN9)
+		Expected chunk number : 4 but found chunk number : 9
+		Partial Value :
+"begin                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     "
+
+		Errant Chunk :
+"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     "
+
+%GTM-E-LDSPANGLOINCMP, Incomplete spanning node found during load
+		at File offset : [0x000000000000065D]
+		Global variable from record: ^a(#SPAN5)
+		Not expecting a spanning node chunk but found chunk : 5
+		Errant Chunk :
+"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     "
+
+%GTM-E-LDSPANGLOINCMP, Incomplete spanning node found during load
+		at File offset : [0x000000000000084F]
+		Global variable from record: ^a(#SPAN6)
+		Not expecting a spanning node chunk but found chunk : 6
+		Errant Chunk :
+"                                                              end"
+
+LOAD TOTAL		Key Cnt: 4  Max Subsc Len: 3  Max Data Len: 2005
+Last LOAD record number: 25
+

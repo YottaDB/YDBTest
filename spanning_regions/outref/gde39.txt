@@ -1,0 +1,101 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gde39.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gde39.cmd
+%GDE-I-MAPBAD, Region AREG for Name a does not exist
+%GDE-I-MAPBAD, Region CREG for Name a(3,5,7,8,"zzz",10) does not exist
+%GDE-I-MAPBAD, Region BREG for Name b does not exist
+%GDE-I-MAPBAD, Region AREG for Name b(1) does not exist
+%GDE-I-MAPBAD, Region CREG for Name c does not exist
+%GDE-I-MAPBAD, Region BREG for Name c(2,"ef,)(""ghABCDEFGHIJKLMNOPQRSTUVWXYZ") does not exist
+%GDE-I-MAPBAD, Region BREG for Name c(2,"z") does not exist
+%GDE-I-MAPBAD, Region AREG for Name c(2,"zzzzzzzzzzzzzzzzzzzzzzzzz") does not exist
+%GDE-I-STDNULLCOLLREQ, Region CREG needs Standard Null Collation enabled because global ^c spans through it
+%GDE-I-STDNULLCOLLREQ, Region AREG needs Standard Null Collation enabled because global ^c spans through it
+%GDE-I-STDNULLCOLLREQ, Region BREG needs Standard Null Collation enabled because global ^c spans through it
+%GDE-I-STDNULLCOLLREQ, Region BREG needs Standard Null Collation enabled because global ^b spans through it
+%GDE-I-STDNULLCOLLREQ, Region AREG needs Standard Null Collation enabled because global ^b spans through it
+%GDE-I-STDNULLCOLLREQ, Region AREG needs Standard Null Collation enabled because global ^a spans through it
+%GDE-I-STDNULLCOLLREQ, Region CREG needs Standard Null Collation enabled because global ^a spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-I-NOEXIT, Cannot exit because of verification failure
+
+
+         *** NAMES ***
+ Global                                      Region
+ -----------------------------------------------------------------------------
+ *                                           DEFAULT
+ a                                           AREG
+ a(3,5,7,8,"zzz",10)                         CREG
+ b                                           BREG
+ b(1)                                        AREG
+ c                                           CREG
+ c(2,"ef,)(""ghABCDEFGHIJKLMNOPQRSTUVWXYZ")  BREG
+ c(2,"z")                                    BREG
+ c(2,"zzzzzzzzzzzzzzzzzzzzzzzzz")            AREG
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                                          Up to                                          Region / Segment / File(def ext: .dat)
+ ------------------------------------------------------------------------------------------------------------------------------------
+ %                                             a                                              REG = DEFAULT
+                                                                                              SEG = DEFAULT
+                                                                                              FILE = mumps.dat
+ a                                             a(3,5,7,8,"zzz",10)                            REG = AREG
+                                                                                              SEG = AREG
+                                                                                              FILE = AREG.dat
+ a(3,5,7,8,"zzz",10)                           a(3,5,7,8,"zzz",10)++                          REG = CREG
+                                                                                              SEG = CREG
+                                                                                              FILE = CREG.dat
+ a(3,5,7,8,"zzz",10)++                         a0                                             REG = AREG
+                                                                                              SEG = AREG
+                                                                                              FILE = AREG.dat
+ a0                                            b                                              REG = DEFAULT
+                                                                                              SEG = DEFAULT
+                                                                                              FILE = mumps.dat
+ b                                             b(1)                                           REG = BREG
+                                                                                              SEG = BREG
+                                                                                              FILE = BREG.dat
+ b(1)                                          b(1)++                                         REG = AREG
+                                                                                              SEG = AREG
+                                                                                              FILE = AREG.dat
+ b(1)++                                        b0                                             REG = BREG
+                                                                                              SEG = BREG
+                                                                                              FILE = BREG.dat
+ b0                                            c                                              REG = DEFAULT
+                                                                                              SEG = DEFAULT
+                                                                                              FILE = mumps.dat
+ c                                             c(2,"ef,)(""ghABCDEFGHIJKLMNOPQRSTUVWXYZ")     REG = CREG
+                                                                                              SEG = CREG
+                                                                                              FILE = CREG.dat
+ c(2,"ef,)(""ghABCDEFGHIJKLMNOPQRSTUVWXYZ")    c(2,"ef,)(""ghABCDEFGHIJKLMNOPQRSTUVWXYZ")++   REG = BREG
+                                                                                              SEG = BREG
+                                                                                              FILE = BREG.dat
+ c(2,"ef,)(""ghABCDEFGHIJKLMNOPQRSTUVWXYZ")++  c(2,"z")                                       REG = CREG
+                                                                                              SEG = CREG
+                                                                                              FILE = CREG.dat
+ c(2,"z")                                      c(2,"z")++                                     REG = BREG
+                                                                                              SEG = BREG
+                                                                                              FILE = BREG.dat
+ c(2,"z")++                                    c(2,"zzzzzzzzzzzzzzzzzzzzzzzzz")               REG = CREG
+                                                                                              SEG = CREG
+                                                                                              FILE = CREG.dat
+ c(2,"zzzzzzzzzzzzzzzzzzzzzzzzz")              c(2,"zzzzzzzzzzzzzzzzzzzzzzzzz")++             REG = AREG
+                                                                                              SEG = AREG
+                                                                                              FILE = AREG.dat
+ c(2,"zzzzzzzzzzzzzzzzzzzzzzzzz")++            c0                                             REG = CREG
+                                                                                              SEG = CREG
+                                                                                              FILE = CREG.dat
+ c0                                            ...                                            REG = DEFAULT
+                                                                                              SEG = DEFAULT
+                                                                                              FILE = mumps.dat
+ LOCAL LOCKS                                                                                  REG = DEFAULT
+                                                                                              SEG = DEFAULT
+                                                                                              FILE = mumps.dat
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gde39.gld

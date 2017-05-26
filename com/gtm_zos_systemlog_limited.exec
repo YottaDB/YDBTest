@@ -1,0 +1,55 @@
+/* REXX */
+
+/* GTM_syslog     extract last n  minutes of syslog */
+/* n is between 1 and 59 exclusively */
+
+Parse Arg  lastn fn .
+
+parse source opsys command_type exec_name .
+mid = "<"exec_name">"
+
+debug=0
+
+if fn = "" then fn = '/tmp/GTM.syslog'
+if lastn = "" then lastn = 30
+if datatype(lastn)<>'NUM' then exit 99
+if (lastn<1 | lastn>59) then lastn = 30
+
+outddn="SYSLOG"  /* DDName of output file */
+
+stoptime = time()
+stopdate = '20'||left(date('J'),2)||'.'||right(date('J'),3)
+
+starttime = stoptime
+parse var starttime hh ':' mm ':' ss
+mm = mm - lastn
+if mm < 0 then do
+  mm = mm + 60
+  hh = hh - 1
+  if hh = 0 then hh = 23
+end
+starttime = right(hh,2,'0')':'right(mm,2,'0')':'right(ss,2,'0')
+
+startdate = stopdate
+if (hh = 23) & (mm > 60-lastn) then do
+  parse var startdate yy '.' dd
+  dd = dd - 1
+  if dd = 0 then do
+     yy = yy - 1
+     if yy//4 = 0 then dd = 366 else dd = 365
+  end
+  startdate = yy||'.'||right(dd,3,'0')
+end
+say "Output file is" fn
+say "obtaining last" lastn "minutes of console log"
+  
+say "allocating file " fn 
+ call bpxwdyn "free  fi('SYSLOG')"
+ call bpxwdyn "alloc fi('SYSLOG') path('"||fn||"') pathopts(OCREAT,ORDWR) pathmode(SIRWXU,SIRGRP,SIROTH) msg(2) lrecl(130) recfm(f) filedata(text)"
+
+ bpxwdyn="alloc fi('SYSLOG') path('"||fn||"') pathopts(OCREAT,ORDWR) pathmode(SIRWXU,SIRGRP,SIROTH) msg(2) lrecl(130) recfm(f) filedata(text)"
+say bpxwdyn
+
+ say 'slog.exec' startdate starttime stopdate stoptime
+call 'slog.exec' startdate starttime stopdate stoptime 
+call bpxwdyn 'free fi(syslog)'

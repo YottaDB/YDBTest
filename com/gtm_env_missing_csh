@@ -1,0 +1,105 @@
+#!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2002-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#This script will work only if gtm_dist is defined!!!!!
+# I do not know what to do if gtm_dist is not defined!!!
+# $gtm_dist = /long/dir/tree/V_this_ver/this_image
+if ($?gtm_dist == 0) then
+   echo \$gtm_dist is not defined. Dont know what to do. Exiting
+   exit 40
+   endif
+
+echo Going to try to determine the variables
+echo If they are not correct set them to correct values in the shell and run test again
+#set verbose
+#Assuming gtm_dist in the form /long/dir/tree/Version/image
+set __tmp = `dirname $gtm_dist`    #/long/dir/tree/Version
+set __dir = `dirname $__tmp`         #/long/dir/tree
+set __ver = `basename $__tmp`        #Version
+set __image = `basename $gtm_dist` #image
+#$__dir $__ver $__image
+check_setenv_echo gtm_tools $__dir/$__ver/tools
+check_setenv_echo gtm_root $__dir
+check_setenv_echo gtm_com  $gtm_root/com
+check_setenv_echo gtm_gtmdev `dirname $__dir`
+check_setenv_echo gtm_topdir `basename $__dir`
+check_setenv_echo gtm_curpro $__ver
+check_setenv_echo gtm_curdrl V990
+check_setenv_echo gtm_verno $__ver
+check_setenv_echo gtm_ver $__dir/$__ver
+#check_setenv_echo gtm_dist $gtm_dist
+check_setenv_echo gtm_exe $gtm_dist
+check_setenv_echo gtm_obj $gtm_dist/obj
+check_setenv_echo gtm_log $__dir/$__ver/log
+check_setenv_echo gtm_pct_list $__dir/$__ver/pct
+check_setenv_echo gtm_pct $gtm_pct_list
+check_setenv_echo gtm_inc_list $gtm_ver/inc
+check_setenv_echo gtmroutines ". $gtm_exe"
+
+check_setenv_echo gtm_inc $gtm_ver/inc
+check_setenv_echo gtm_vrt $gtm_ver
+
+check_setenv_echo  gt_cc_option_DDEBUG     "-DDEBUG"
+check_setenv_echo  gt_cc_option_I          "-I$gtm_inc"
+check_setenv_echo  gt_ld_option_output    "-o"
+
+if ( $?HOSTOS == "0" )  setenv HOSTOS `uname -s`
+switch($HOSTOS)
+case "Linux":
+   check_setenv_echo  gt_cc_compiler		"cc"
+   check_setenv_echo  gt_cc_shl_options		"-c"
+   check_setenv_echo  gt_cc_option_debug	"-g"
+   check_setenv_echo  gt_cc_option_nooptimize	""
+   check_setenv_echo  gt_cc_option_optimize  	"-O"
+   check_setenv_echo  gt_cc_options_common	"-c"
+   check_setenv_echo  gt_cc_shl_options      	"-c"
+   check_setenv_echo  gt_ld_linker		"$gt_cc_compiler"
+   check_setenv_echo  gt_ld_shl_linker       	"cc"
+   check_setenv_echo  gt_ld_shl_options      	"-shared"
+   check_setenv_echo  gt_ld_shl_suffix       	".so"
+breaksw
+
+case("SunOS"):
+   check_setenv_echo  gt_cc_compiler		"/opt/SUNWspro/SC4.2/bin/acc"
+   check_setenv_echo  gt_cc_shl_options		"-c"
+   check_setenv_echo  gt_cc_option_debug	"-g"
+   check_setenv_echo  gt_cc_option_nooptimize	""
+   check_setenv_echo  gt_cc_option_optimize  	"-O"
+   check_setenv_echo  gt_cc_options_common	"-c -D_LARGEFILE64_SOURCE=1 -D_FILE_OFFSET_BITS=64"
+   check_setenv_echo  gt_cc_shl_options      	"-c"
+   check_setenv_echo  gt_ld_linker		"$gt_cc_compiler"
+   check_setenv_echo  gt_ld_shl_linker       	"ld"
+   check_setenv_echo  gt_ld_shl_options      	"-G"
+   check_setenv_echo  gt_ld_shl_suffix       	".so"
+breaksw
+case("AIX"):
+      check_setenv_echo  gt_cc_shl_options    	"-c"
+      check_setenv_echo  gt_cc_option_debug  	"-g"
+      check_setenv_echo  gt_cc_option_nooptimize	""
+      check_setenv_echo  gt_cc_option_optimize 	"-O"
+      check_setenv_echo  gt_cc_shl_options      "-c"
+      check_setenv_echo  gt_ld_shl_suffix      	".so"
+      check_setenv_echo  gt_ld_linker		"$gt_cc_compiler"
+   if ("`uname -v`" == "3") then
+      check_setenv_echo  gt_cc_compiler      	"svcc"
+      check_setenv_echo  gt_cc_options_common   "-qchars=signed -qsrcmsg -D_BSD=43"
+      check_setenv_echo  gt_ld_shl_linker       "svcc"
+      check_setenv_echo  gt_ld_shl_options     	"-H512 -T512 -bM:SRE -bh:4"
+      check_setenv_echo  gt_ld_option_output
+   else
+      check_setenv_echo  gt_cc_compiler      	"cc"
+      check_setenv_echo  gt_cc_options_common   "-c -qchars=signed -qsrcmsg -D_BSD=43 -D_LARGE_FILES"
+      check_setenv_echo  gt_ld_shl_linker      	"ld"
+      check_setenv_echo  gt_ld_shl_options      "-G -bexpall -bnoentry -bh:4"
+   endif
+breaksw
+endsw

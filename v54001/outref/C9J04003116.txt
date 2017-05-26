@@ -1,0 +1,85 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+
+
+###################################################################
+Start few mumps process in the background
+###################################################################
+
+
+###################################################################
+Sleep for 15 seconds to let the process do enough updates
+###################################################################
+
+
+###################################################################
+Change the fileid of the mumps.mjl by doing a gzip followed by a gunzip
+###################################################################
+
+
+###################################################################
+Attempt to do journal activity by a new process should result in GTM-E-JNLOPNERR
+###################################################################
+
+GTM>
+%GTM-E-JNLOPNERR, Error opening journal file ##TEST_PATH##/mumps.mjl
+  for database ##TEST_PATH##/mumps.dat
+
+GTM>
+
+
+###################################################################
+Fix the situation by doing a MUPIP SET -JOURNAL that will cut the previous link and create fresh set of journal files
+###################################################################
+----------
+Error JNLOPNERR seen in set_journal2.out as expected:
+%GTM-E-JNLOPNERR, Error opening journal file ##TEST_PATH##/mumps.mjl
+----------
+----------
+Error PREVJNLLINKCUT seen in set_journal2.out as expected:
+%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
+----------
+
+
+###################################################################
+Verify that the situation is indeed fixed by doing an update to DEFAULT region and ensuring that it gets journaled
+###################################################################
+
+GTM>
+set ^xrandomvariable="something_unique"
+GTM>
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+%GTM-S-JNLSUCCESS, Extract successful
+^xrandomvariable="something_unique"
+
+
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

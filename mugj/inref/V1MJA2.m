@@ -1,0 +1,75 @@
+V1MJA2	;LOCK,CLOSE,OPEN,$JOB,$TEST -2-;KO-TS,V1MJA,VALIDATION VERSION 7.1;31-AUG-1987;
+	;COPYRIGHT MUMPS SYSTEM LABORATORY 1978
+	S PASS=0,FAIL=0 W:$Y>50 #
+	K ^V1A,^V1B,^V1F
+OPEN	W !!,"TEST OF OPEN & $TEST",! S ^V1F=""
+	W !,"WHEN YOU SEE '>', ENTER THE DEVICE 2 PORT NUMBERS"
+	W !,"WHICH WILL BE APPROPRIATE TO OPEN ARGUMENT"
+	R !,"No.1 PORT NUMBER > ",X S ^V1A=X
+	R !,"No.2 PORT NUMBER > ",Y S ^V1B=Y U 0
+	;
+639	W !,"I-639  OPEN the same device from two partitions"
+	S ITEM="I-639  ",VCOMP="" I 1
+	OPEN:1 ^V1A K ^V1F
+	S POS="639" D HANG S VCOMP=VCOMP_^V1F C ^V1A
+	S VCORR="0/1" D EXAMINER
+	;
+640	W !,"I-640  OPEN with timeout and its effect on $TEST"
+	S ITEM="I-640  ",VCOMP=""
+	O ^V1B::1 S VCOMP=VCOMP_$T_" " K ^V1F
+	S POS="640" D HANG S VCOMP=VCOMP_^V1F C ^V1B
+	S VCORR="1 1" D EXAMINER
+	;
+641	W !,"I-641  argument list of OPEN command"
+	S ITEM="I-641  ",VCOMP=""
+	O ^V1A::1,^V1B::1 S VCOMP=VCOMP_$T_" " K ^V1F
+	S POS="641" D HANG S VCOMP=VCOMP_^V1F CLOSE ^V1A,^V1B
+	S VCORR="1 0/0" D EXAMINER
+	;
+642	W !,"I-642  effect of CLOSE on another partition"
+	S ITEM="I-642  ",VCOMP=""
+	O ^V1A::1 S VCOMP=VCOMP_$T_" " K ^V1F
+	S POS="642-1" D HANG S VCOMP=VCOMP_^V1F
+	C ^V1A K ^V1F
+	S POS="642-2" D HANG S VCOMP=VCOMP_^V1F
+	O ^V1A::1 S VCOMP=VCOMP_$T C ^V1A
+	S VCORR="1 0/1/1" D EXAMINER
+	;
+643	W !,"I-643  postconditional of CLOSE command"
+	S ITEM="I-643  ",VCOMP=""
+	O ^V1B::1 S VCOMP=VCOMP_$T_" " C:10="QWE" ^V1B
+	O ^V1B::1 CLOSE:"ABD"="ABD" ^V1B S VCOMP=VCOMP_$T_" "
+	S VCORR="1 1 " D EXAMINER
+	;
+644	W !,"I-644  CLOSE the device which is not OPENed"
+	S ITEM="I-644  ",VCOMP=$IO
+	C ^V1A,^V1B
+	S VCORR=$IO D EXAMINER
+	;
+645	W !,"I-645  format of $JOB"
+	S ITEM="I-645  " K ^V1F F I=1:1 Q:$D(^V1F)  H 1
+	S VCOMP=$JOB?1N.N_" "_($J?1"0".N)_" "_(^V1A(1)?1N.N)_" "_(^V1A(1)?1"0".N)
+	S VCORR="1 0 1 0" D EXAMINER
+	;
+646	W !,"I-646  value of $JOB on two partitions"
+	S ITEM="I-646  "
+	S VCOMP=($J=^V1A(1)),VCORR=0 D EXAMINER
+	;
+647	W !,"I-647  $IO when Principal Device Convention is adopted"
+	S ITEM="I-647  " K ^V1F F I=1:1 Q:$D(^V1F)  H 1
+	S VCOMP=(^V1A(2)?1N.N)_" "_(^V1A(2)?1"0".N)_" "
+	I $IO=0,^V1A(2)=0 S VCOMP=VCOMP_1
+	E  S VCOMP=VCOMP_(^V1A(2)'=$IO)
+	S VCORR="1 0 1" D EXAMINER
+	;
+END	W !!,"END OF V1MJA2",!
+	S ROUTINE="V1MJA2",TESTS=9,AUTO=9,VISUAL=0 D ^VREPORT
+	K ^V1A,^V1B,^V1F K  L  Q
+	;
+EXAMINER	I VCORR=VCOMP S PASS=PASS+1 W !,"   PASS  ",ITEM W:$Y>55 # Q
+	S FAIL=FAIL+1 W !,"** FAIL  ",ITEM W:$Y>55 #
+	W !,"           COMPUTED =""",VCOMP,"""" W:$Y>55 #
+	W !,"           CORRECT  =""",VCORR,"""" W:$Y>55 #
+	Q
+HANG	F I=1:1 Q:$D(^V1F)  H 1
+	Q

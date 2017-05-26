@@ -1,0 +1,15 @@
+#!/usr/bin/expect -f
+
+set dist_path [lrange $argv 0 0]
+set passwd $env(gtm_test_gpghome_passwd)
+set timeout 10
+spawn $dist_path/mumps -dir
+expect "GTM>"
+send "d &setNullPasswd\n"
+expect "GTM>"
+send "w ^a\n"
+expect "Enter Passphrase:"
+sleep 0.1
+send "$passwd\n"
+expect "GTM>"
+send "h"

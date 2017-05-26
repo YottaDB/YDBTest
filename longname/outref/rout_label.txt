@@ -1,0 +1,316 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###########################################################################################
+test that the correct labels/routines are invoked
+
+GTM>
+
+Test of differentiation between short and long routines
+PASS
+
+GTM>
+###########################################################################################
+test all acceptable lengths of label and routine names
+
+GTM>
+##BEGIN labtest.m
+direct mode...
+ (the output is in driverm.out)
+mumps -run label^routine...
+##END labtest.m
+
+GTM>
+###########################################################################################
+zlink a routine over and over to test that literals set in the prev incarnations are still valid
+
+GTM>
+------------------------------------------------------------
+Test of literals, variables and labels for replaced routines
+------------------------------------------------------------
+Generate M routines and run them
+
+Replaced routines have finished running. Verify results...
+Verification of literals and variables PASSED
+Now try some label which has been replaced. There will be one error at the end
+do sublabelno2001^testReplacedLiteralsAndLabels
+do sublabelno2000^testReplacedLiteralsAndLabels
+do sublabelno1999^testReplacedLiteralsAndLabels
+do sublabelno1998^testReplacedLiteralsAndLabels
+150373194,errtest+6^litlab,%GTM-E-LABELMISSING, Label referenced but not defined: sublabelno1998
+###########################################################################################
+relinks
+
+GTM>
+in lnkrtn0
+enable:lnkrtn1
+in lnkrtn1
+in entry1^lnkrtn1
+in entry2^lnkrtn1
+enable:lnkrtn2
+in lnkrtn2
+in entry1^lnkrtn2
+in entry2^lnkrtn2
+in lnkrtn0
+in entry1^lnkrtn0
+in entry2^lnkrtn0
+enable:lnkrtn1
+in lnkrtn1
+in entry1^lnkrtn1
+in entry2^lnkrtn1
+enable:lnkrtn2
+in lnkrtn2
+in entry1^lnkrtn2
+in entry2^lnkrtn2
+in lnkrtn0
+in entry1^lnkrtn0
+in entry2^lnkrtn0
+in entry3^lnkrtn0
+enable:lnkrtn1
+in entry4^lnkrtn1
+in entry4^lnkrtn0
+in entry3^lnkrtn1
+enable:lnkrtn2
+in entry4^lnkrtn2
+in entry4^lnkrtn0
+in entry3^lnkrtn2
+in entry4^lnkrtn0
+in entry3^lnkrtn2
+enable:lnkrtn1
+in entry5^lnkrtn1
+enable:lnkrtn2
+in entry5^lnkrtn2
+in entry5^lnkrtn0
+enable:lnkrtn1
+enable:lnkrtn2
+enable:lnkrtn1
+enable:lnkrtn2
+enable:lnkrtn1
+enable:lnkrtn2
+enable:lnkrtn1
+enable:lnkrtn2
+enable:lnkrtn1
+enable:lnkrtn2
+enable:lnkrtn1
+enable:lnkrtn2
+enable:lnkrtn1
+enable:lnkrtn2
+enable:lnkrtn1
+enable:lnkrtn2
+enable:lnkrtn1
+enable:lnkrtn2
+enable:lnkrtn1
+enable:lnkrtn2
+verifyall PASSED
+Following will error out while it tries to link itself
+zlink "relinks"
+Error Number=1
+STAT=relinks+71^relinks,%GTM-E-LOADRUNNING, Cannot ZLINK an active routine relinks
+
+GTM>
+###########################################################################################
+test stp_move
+
+GTM>
+Error Number=1
+STAT=testmain+38^testmain,%GTM-E-LOADRUNNING, Cannot ZLINK an active routine testmain
+Now ZWR of all locals
+alpha="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+arrv1("alpha")="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+arrv1("digits")="0123456789"
+arrv1("fromtest2","alpha")="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+arrv1("fromtest2","digits")="0123456789"
+arrv1("fromtest2","lit1")="This is a literal"
+arrv1("fromtest2","lit2")="This is a literal"
+arrv1("fromtest2","pi")=3.141592
+arrv1("fromtest2","wspace")="!@#$%^&*(){}[]|\,./<>?`~;:"
+arrv1("lit1")="This is a literal"
+arrv1("lit2")="This is a literal"
+arrv1("main1")="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+arrv1("main2")="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+arrv1("main3")="!@#$%^&*(){}[]|\,./<>?`~;:"
+arrv1("pi")=3.141592
+arrv1("wspace")="!@#$%^&*(){}[]|\,./<>?`~;:"
+arrv2("alpha")="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+arrv2("digits")="0123456789"
+arrv2("fromtest1","alpha")="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+arrv2("fromtest1","digits")="0123456789"
+arrv2("fromtest1","fromtest2","alpha")="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+arrv2("fromtest1","fromtest2","digits")="0123456789"
+arrv2("fromtest1","fromtest2","lit1")="This is a literal"
+arrv2("fromtest1","fromtest2","lit2")="This is a literal"
+arrv2("fromtest1","fromtest2","pi")=3.141592
+arrv2("fromtest1","fromtest2","wspace")="!@#$%^&*(){}[]|\,./<>?`~;:"
+arrv2("fromtest1","lit1")="This is a literal"
+arrv2("fromtest1","lit2")="This is a literal"
+arrv2("fromtest1","main1")="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+arrv2("fromtest1","main2")="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+arrv2("fromtest1","main3")="!@#$%^&*(){}[]|\,./<>?`~;:"
+arrv2("fromtest1","pi")=3.141592
+arrv2("fromtest1","wspace")="!@#$%^&*(){}[]|\,./<>?`~;:"
+arrv2("lit1")="This is a literal"
+arrv2("lit2")="This is a literal"
+arrv2("pi")=3.141592
+arrv2("wspace")="!@#$%^&*(){}[]|\,./<>?`~;:"
+cnt=8
+cp="\cp -f "
+digits="0123456789"
+errcnt=1
+fnarr("alpha")="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+fnarr("digits")="0123456789"
+fnarr("fun1",1)="Literal Ret 1"
+fnarr("fun1",2)="Literal Ret"
+fnarr("fun1",3)="Literal Ret 3"
+fnarr("fun1",4)="Literal Ret"
+fnarr("fun1",5)="Literal Ret"
+fnarr("fun1",6)="Literal Ret"
+fnarr("fun1",7)="Literal Ret"
+fnarr("fun1",8)="Literal Ret"
+fnarr("fun2",1)="Literal Ret 1"
+fnarr("fun2",2)="Literal Ret"
+fnarr("fun2",3)="Literal Ret 3"
+fnarr("fun2",4)="Literal Ret"
+fnarr("fun2",5)="Literal Ret"
+fnarr("fun2",6)="Literal Ret"
+fnarr("fun2",7)="Literal Ret"
+fnarr("fun2",8)="Literal Ret"
+fnarr("pi")=3.141592
+fnarr("test1","lb2var")="This is labelcalledbystpmovetest2^test1"
+fnarr("test1","var2")="Literal one of labelcalledbystpmovetest2^test1"
+fnarr("test2",1,"lb2var")="This is labelcalledbystpmovetest2^test2"
+fnarr("test2",1,"var22")="This is labelcalledbystpmovetest2^test2"
+fnarr("wspace")="!@#$%^&*(){}[]|\,./<>?`~;:"
+fnret1="Literal Ret"
+fnret2="Literal Ret"
+fun1ret="Literal Ret"
+fun2ret="Literal Ret"
+ialpha="main1"
+indarr("fun1",1)="Literal Ret 1"
+indarr("fun1",2)="Literal Ret"
+indarr("fun1",3)="Literal Ret 3"
+indarr("fun1",4)="Literal Ret"
+indarr("fun1",5)="Literal Ret"
+indarr("fun1",6)="Literal Ret"
+indarr("fun1",7)="Literal Ret"
+indarr("fun1",8)="Literal Ret"
+indarr("fun2",1)=1
+indarr("fun2",2)=2
+indarr("fun2",3)=3
+indarr("fun2",4)=4
+indarr("fun2",5)=5
+indarr("fun2",6)=6
+indarr("fun2",7)=7
+indarr("fun2",8)=8
+index=8
+lb2var="This is labelcalledbystpmovetest2^test2"
+line=39
+main1="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+main2="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+main3="!@#$%^&*(){}[]|\,./<>?`~;:"
+mystat="testmain+38^testmain,%GTM-E-LOADRUNNING, Cannot ZLINK an active routine testmain"
+newprog="2:testmain+39^testmain"
+pi=3.141592
+prog="testmain+38^testmain"
+qwspace="!@#$%^&*(){}[]|\,./<>?`~;:"
+savestat="150373234,testmain+38^testmain,%GTM-E-LOADRUNNING, Cannot ZLINK an active routine testmain"
+unix=1
+var2="Literal one of labelcalledbystpmovetest2^test1"
+var22="This is labelcalledbystpmovetest2^test2"
+wspace="!@#$%^&*(){}[]|\,./<>?`~;:"
+zstr="zsystem ""\cp -f test2.m currentcalleeroutineinstpmovetest.m"""
+
+GTM>
+###########################################################################################
+echo routine name is more than 31 characters
+routine name is more than 31 characters
+##SOURCE_PATH##/mumps -run x234567890123456789012345678901a
+%GTM-E-ZLINKFILE, Error while zlinking "x234567890123456789012345678901"
+%GTM-E-FILENOTFND, File x234567890123456789012345678901 not found
+##SOURCE_PATH##/mumps -run x234567890123456789012345678901
+%GTM-E-ZLINKFILE, Error while zlinking "x234567890123456789012345678901"
+%GTM-E-FILENOTFND, File x234567890123456789012345678901 not found
+ls: No match.
+##SOURCE_PATH##/mumps x234567890123456789012345678901a.m
+ls x234567890123456789012345678901.o
+x234567890123456789012345678901.o
+##SOURCE_PATH##/mumps -direct
+
+GTM>
+
+GTM>
+do ^x234567890123456789012345678901
+
+GTM>
+this routine name is more than 31 characters
+x123456789012345678901234567890+1^x234567890123456789012345678901
+
+GTM>
+##SOURCE_PATH##/mumps -direct
+
+GTM>
+
+GTM>
+do ^x234567890123456789012345678901a
+
+GTM>
+this routine name is more than 31 characters
+x123456789012345678901234567890+1^x234567890123456789012345678901
+
+GTM>
+rm -f x234567890123456789012345678901.o
+##SOURCE_PATH##/mumps -direct
+
+GTM>
+
+GTM>
+do ^x234567890123456789012345678901a
+
+GTM>
+%GTM-E-ZLINKFILE, Error while zlinking "x234567890123456789012345678901",%GTM-E-FILENOTFND, File x234567890123456789012345678901 not found
+		At M source location +1^GTM$DMOD
+
+GTM>
+
+GTM>
+zlink "x234567890123456789012345678901a"
+
+GTM>
+
+GTM>
+
+GTM>
+do ^x234567890123456789012345678901a
+
+GTM>
+this routine name is more than 31 characters
+x123456789012345678901234567890+1^x234567890123456789012345678901
+
+GTM>
+##SOURCE_PATH##/mumps -direct
+
+GTM>
+
+GTM>
+do ^x234567890123456789012345678901a
+
+GTM>
+%GTM-E-ZLINKFILE, Error while zlinking "x234567890123456789012345678901",%GTM-E-FILENOTFND, File x234567890123456789012345678901 not found
+		At M source location +1^GTM$DMOD
+
+GTM>
+unset echo
+###########################################################################################
+label names are more than 31 characters
+##SOURCE_PATH##/mumps -run x234567890123456789012345678901a^toolong
+%GTM-E-JOBLABOFF, Label and offset not found in created process
+##SOURCE_PATH##/mumps -run x234567890123456789012345678901b^toolong
+%GTM-E-JOBLABOFF, Label and offset not found in created process
+##SOURCE_PATH##/mumps -run x234567890123456789012345678901c^toolong
+%GTM-E-JOBLABOFF, Label and offset not found in created process
+unset echo
+###########################################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,189 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/gdenamelevelorder.cmd
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+# Testing 1^namelevelorder
+# Name-level $order     loop
+$o(^%) = ^w
+$o(^w) = ^y
+$o(^y) = 
+# Name-level $zprevious loop
+$zp(^z) = ^y
+$zp(^y) = ^w
+$zp(^w) = 
+# Testing 2^namelevelorder
+# Name-level $order     loop
+$o(^%) = ^w
+$o(^w) = ^x
+$o(^x) = ^y
+$o(^y) = 
+# Name-level $zprevious loop
+$zp(^z) = ^y
+$zp(^y) = ^x
+$zp(^x) = ^w
+$zp(^w) = 
+# Testing 3^namelevelorder
+# Name-level $order     loop
+$o(^%) = ^w
+$o(^w) = ^x
+$o(^x) = ^y
+$o(^y) = 
+# Name-level $zprevious loop
+$zp(^z) = ^y
+$zp(^y) = ^x
+$zp(^x) = ^w
+$zp(^w) = 
+# Testing 4^namelevelorder
+# Name-level $order     loop
+$o(^%) = ^w
+$o(^w) = ^x
+$o(^x) = ^y
+$o(^y) = 
+# Name-level $zprevious loop
+$zp(^z) = ^y
+$zp(^y) = ^x
+$zp(^x) = ^w
+$zp(^w) = 
+# Testing 5^namelevelorder
+# Name-level $order     loop
+$o(^%) = ^w
+$o(^w) = ^x0
+$o(^x0) = ^y
+$o(^y) = 
+# Name-level $zprevious loop
+$zp(^z) = ^y
+$zp(^y) = ^x0
+$zp(^x0) = ^w
+$zp(^w) = 
+# Testing 6^namelevelorder
+set (^w,^x,^x(10),^x(40),^y)=1
+# Name-level $order     loop
+$o(^%) = ^w
+$o(^w) = ^x
+$o(^x) = ^y
+$o(^y) = 
+# Name-level $zprevious loop
+$zp(^z) = ^y
+$zp(^y) = ^x
+$zp(^x) = ^w
+$zp(^w) = zkill ^x
+# Name-level $order     loop
+$o(^%) = ^w
+$o(^w) = ^x
+$o(^x) = ^y
+$o(^y) = 
+# Name-level $zprevious loop
+$zp(^z) = ^y
+$zp(^y) = ^x
+$zp(^x) = ^w
+$zp(^w) = kill ^x(10)
+# Name-level $order     loop
+$o(^%) = ^w
+$o(^w) = ^x
+$o(^x) = ^y
+$o(^y) = 
+# Name-level $zprevious loop
+$zp(^z) = ^y
+$zp(^y) = ^x
+$zp(^x) = ^w
+$zp(^w) = kill ^x(40)
+# Name-level $order     loop
+$o(^%) = ^w
+$o(^w) = ^y
+$o(^y) = 
+# Name-level $zprevious loop
+$zp(^z) = ^y
+$zp(^y) = ^w
+$zp(^w) = # Name-level $order     loop
+$o(^%) = ^w
+$o(^w) = ^y
+$o(^y) = 
+# Name-level $zprevious loop
+$zp(^z) = ^y
+$zp(^y) = ^w
+$zp(^w) = 
+# Testing 7^namelevelorder
+set (^a(11),^a(21),^a(31),^b(11),^b(21),^b(31),^c(11),^c(21),^c(31))=1
+# Name-level $order     loop
+$o(^%) = ^a
+$o(^a) = ^b
+$o(^b) = ^c
+$o(^c) = 
+# Name-level $zprevious loop
+$zp(^z) = ^c
+$zp(^c) = ^b
+$zp(^b) = ^a
+$zp(^a) = kill ^a(11),^b(11),^c(11)
+# Name-level $order     loop
+$o(^%) = ^a
+$o(^a) = ^b
+$o(^b) = ^c
+$o(^c) = 
+# Name-level $zprevious loop
+$zp(^z) = ^c
+$zp(^c) = ^b
+$zp(^b) = ^a
+$zp(^a) = kill ^a(21),^b(21),^c(21)
+# Name-level $order     loop
+$o(^%) = ^a
+$o(^a) = ^b
+$o(^b) = ^c
+$o(^c) = 
+# Name-level $zprevious loop
+$zp(^z) = ^c
+$zp(^c) = ^b
+$zp(^b) = ^a
+$zp(^a) = # Name-level $order     loop
+$o(^%) = ^a
+$o(^a) = ^b
+$o(^b) = ^c
+$o(^c) = 
+# Name-level $zprevious loop
+$zp(^z) = ^c
+$zp(^c) = ^b
+$zp(^b) = ^a
+$zp(^a) = 
+# Testing 8^namelevelorder
+set (^a(11),^a(21),^a(31),^b(11),^b(21),^b(31),^c(11),^c(21),^c(31))=1
+# Name-level $order     loop
+$o(^%) = ^a
+$o(^a) = ^b
+$o(^b) = ^c
+$o(^c) = 
+# Name-level $zprevious loop
+$zp(^z) = ^c
+$zp(^c) = ^b
+$zp(^b) = ^a
+$zp(^a) = kill ^a(11),^b(21),^c(31)
+# Name-level $order     loop
+$o(^%) = ^a
+$o(^a) = ^b
+$o(^b) = ^c
+$o(^c) = 
+# Name-level $zprevious loop
+$zp(^z) = ^c
+$zp(^c) = ^b
+$zp(^b) = ^a
+$zp(^a) = kill ^a(21),^b(31),^c(11)
+# Name-level $order     loop
+$o(^%) = ^a
+$o(^a) = ^b
+$o(^b) = ^c
+$o(^c) = 
+# Name-level $zprevious loop
+$zp(^z) = ^c
+$zp(^c) = ^b
+$zp(^b) = ^a
+$zp(^a) = # Name-level $order     loop
+$o(^%) = ^a
+$o(^a) = ^b
+$o(^b) = ^c
+$o(^c) = 
+# Name-level $zprevious loop
+$zp(^z) = ^c
+$zp(^c) = ^b
+$zp(^b) = ^a
+$zp(^a) = 

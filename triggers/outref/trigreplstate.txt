@@ -1,0 +1,81 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+-----------------------
+# Do SETs
+-----------------------
+150381706,+1^h1#1#,%GTM-E-TRIGREPLSTATE, Trigger cannot update replicated database file ##TEST_PATH##/b.dat since triggering update was not replicated,%GTM-I-GVIS, 		Global variable: ^b11(1)
+150381706,+1^h55#1#,%GTM-E-TRIGREPLSTATE, Trigger cannot update replicated database file ##TEST_PATH##/b.dat since triggering update was not replicated,%GTM-I-GVIS, 		Global variable: ^b555(5)
+-----------------------
+# Globals after the SET
+-----------------------
+^b2(2)=2
+^b3(3)=3
+^b33(3)=4
+^b6(6)=6
+^b7(7)=7
+^b777(7)=9
+^b8(8)=8
+^b88(8)=9
+^b9(9)=9
+^b99(9)=10
+^b999(9)=11
+^h0(0)=0
+^h00(0)=1
+^h1(1)=1
+^h22(2)=3
+^h4(4)=4
+^h44(4)=5
+^h444(4)=6
+^h5(5)=5
+^h55(5)=6
+^h66(6)=7
+^h666(6)=8
+^h77(7)=8
+^h888(8)=10
+-----------------------
+# Do KILLs
+-----------------------
+150381706,+1^h1#2#,%GTM-E-TRIGREPLSTATE, Trigger cannot update replicated database file ##TEST_PATH##/b.dat since triggering update was not replicated,%GTM-I-GVIS, 		Global variable: ^b11(1)
+150381706,+1^h55#2#,%GTM-E-TRIGREPLSTATE, Trigger cannot update replicated database file ##TEST_PATH##/b.dat since triggering update was not replicated,%GTM-I-GVIS, 		Global variable: ^b555(5)
+-----------------------
+# Globals after the KILL
+-----------------------
+^b11(1)=2
+^b555(5)=7
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+Created file ##TEST_PATH##/h.dat
+Created file ##REMOTE_TEST_PATH##/h.dat
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

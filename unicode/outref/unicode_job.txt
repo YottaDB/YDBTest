@@ -1,0 +1,44 @@
+setenv gtm_chset UTF-8
+unset echo
+Created file ##TEST_PATH##/ＡＢＣＤ.db
+
+GTM>
+do ^unicodeJob
+
+GTM>
+zwr ^utf8
+^utf8("unijob1","ＡＢＣＤＥＦＧ")=3
+^utf8("unijob2","乴亐亯仑件伞佉佷")="There will be an error for this job"
+^utf8("unijob3","ｘｙｚ｛｜｝～")="There will be an error but no error file created"
+^utf8("unijob4","豈羅爛來祿屢讀數")="There will be an undef error, and will be seen in mje file"
+^utf8("unijob5","兩驪練殮領遼戮李")="αβγ我ＡＢＧ玻璃而傷"
+
+GTM>
+No errors detected by integ.
+cat ＡＢＣＤＥＦＧ.out : Expect No Error
+unijob1:Arg=ＡＢＣＤＥＦＧ
+cat 乴亐亯仑件伞佉佷.job2 : Expect Errors
+unijob2:Arg=乴亐亯仑件伞佉佷
+^utf8("undef-乴亐亯仑件伞佉佷")=
+$zstatus=150372994,unijob2+7^unicodeJob,%GTM-E-GVUNDEF, Global variable undefined: ^utf8("undef-乴亐亯仑件伞佉佷")
+$zgbldir=##TEST_PATH##/ＡＢＣＤ.ＥＦＧ
+cat ＡＢＣＤＥＦＧ.job3 : Expect Errors
+unijob3:Arg=αβγδε
+$zstatus=150373850,unijob3+7^ujob,%GTM-E-UNDEF, Undefined local variable: undefvar(ｘｙｚ｛｜｝～)
+$zgbldir=##TEST_PATH##/ＡＢＣＤ.ＥＦＧ
+cat αβγ我ＡＢＧ玻璃而傷/ujob.mjo : Expect Errors
+unijob4:Arg=লায়েক
+$zstatus=150373850,unijob4+7^ujob,%GTM-E-UNDEF, Undefined local variable: undefvar(豈羅爛來祿屢讀數)
+$zgbldir=##TEST_PATH##/ＡＢＣＤ.ＥＦＧ
+cat αβγ我ＡＢＧ玻璃而傷/ujob.mje : Expect No Error
+cat ujob.mjo : Expect No Error
+unijob5:Arg=我能吞下玻璃而不伤身体
+unicode string:length=30:str = αβγ我ＡＢＧ玻璃而傷
+cat ujob.mje : Expect No Error
+##TEST_AWKcat ḀḁḂḃḄḅḆḇ.*
+##TEST_AWKunijob1:Arg=JOBPID.*
+##TEST_AWKunijob1:Arg=JOBPID.*
+##TEST_AWKcat ḀḁḂḃḄḅḆḇ.*
+Done checking background jobs for completion
+##TEST_PATH##/αβγ我ＡＢＧ玻璃而傷/ujob.mjo
+$zstatus=150373850,unijob4+7^ujob,%GTM-E-UNDEF, Undefined local variable: undefvar(豈羅爛來祿屢讀數)

@@ -1,0 +1,544 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+GTM>
+
+GTM>
+
+GTM>
+##SUSPEND_OUTPUT SPANNING_REGIONS
+$MUPIP reorg -region "*"
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: b (region DEFAULT)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1030 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region CREG)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1030 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -region AREG
+Fill Factor:: Index blocks 100%: Data blocks 100%
+%GTM-W-NOSELECT, None of the selected variables exist -- halting
+$MUPIP reorg -region DEFAULT
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: b (region DEFAULT)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -region CREG
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: c (region CREG)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+unset verbose
+
+GTM>
+
+GTM>
+$MUPIP reorg -region "*"
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a (region AREG)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1030 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: b (region DEFAULT)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region CREG)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -region AREG
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a (region AREG)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -region DEFAULT
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: b (region DEFAULT)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -region CREG
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: c (region CREG)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -region "AREG,DEFAULT"
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a (region AREG)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: b (region DEFAULT)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -region "AREG,CREG"
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a (region AREG)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region CREG)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -region "CREG,DEFAULT"
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: b (region DEFAULT)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region CREG)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+
+##ALLOW_OUTPUT SPANNING_REGIONS
+##SUSPEND_OUTPUT NONSPANNING_REGIONS
+$MUPIP reorg -region "*"
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: b (region CREG)
+Blocks processed    : 317 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 231 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: b (region DEFAULT)
+Blocks processed    : 809 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 717 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region BREG)
+Blocks processed    : 160 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 76 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region CREG)
+Blocks processed    : 464 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 376 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region DEFAULT)
+Blocks processed    : 503 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 415 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -region AREG
+Fill Factor:: Index blocks 100%: Data blocks 100%
+%GTM-W-NOSELECT, None of the selected variables exist -- halting
+$MUPIP reorg -region DEFAULT
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: b (region DEFAULT)
+Blocks processed    : 809 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region DEFAULT)
+Blocks processed    : 503 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -region CREG
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: b (region CREG)
+Blocks processed    : 317 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region CREG)
+Blocks processed    : 464 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+unset verbose
+
+GTM>
+
+GTM>
+$MUPIP reorg -region "*"
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a (region AREG)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 1030 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: b (region CREG)
+Blocks processed    : 317 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: b (region DEFAULT)
+Blocks processed    : 809 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region BREG)
+Blocks processed    : 160 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region CREG)
+Blocks processed    : 464 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region DEFAULT)
+Blocks processed    : 503 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -region AREG
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a (region AREG)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -region DEFAULT
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: b (region DEFAULT)
+Blocks processed    : 809 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region DEFAULT)
+Blocks processed    : 503 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -region CREG
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: b (region CREG)
+Blocks processed    : 317 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region CREG)
+Blocks processed    : 464 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -region "AREG,DEFAULT"
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a (region AREG)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: b (region DEFAULT)
+Blocks processed    : 809 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region DEFAULT)
+Blocks processed    : 503 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -region "AREG,CREG"
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a (region AREG)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: b (region CREG)
+Blocks processed    : 317 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region CREG)
+Blocks processed    : 464 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -region "CREG,DEFAULT"
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: b (region CREG)
+Blocks processed    : 317 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: b (region DEFAULT)
+Blocks processed    : 809 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region CREG)
+Blocks processed    : 464 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: c (region DEFAULT)
+Blocks processed    : 503 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+$MUPIP reorg -exclude="^a" -region AREG
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a (region AREG)
+%GTM-W-EXCLUDEREORG, Global: a is present in the EXCLUDE option.  REORG will skip the global.
+%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+$MUPIP reorg -exclude="^b" -region AREG
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a (region AREG)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -select="^a" -region AREG
+Fill Factor:: Index blocks 100%: Data blocks 100%
+   
+Global: a (region AREG)
+Blocks processed    : 1126 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+$MUPIP reorg -select="^b" -region AREG
+Fill Factor:: Index blocks 100%: Data blocks 100%
+%GTM-W-NOSELECT, None of the selected variables exist -- halting
+
+$MUPIP reorg "*"
+MUPIP REORG only accepts a parameter when -REGION is specified.
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+$MUPIP reorg asdf hjkl
+%GTM-E-CLIERR, Too many parameters
+unset verbose
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

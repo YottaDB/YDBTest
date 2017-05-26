@@ -1,0 +1,63 @@
+#################################################################
+#								#
+#	Copyright 2003, 2014 Fidelity Information Services, Inc	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#######################################
+### UNIX Call-ins mechanism tests   ###
+#######################################
+# maxstrlen		[mohammad] 	Supporing local variable up to 1MB (D9D06-002345).
+# multi_gtm_init	[s7mj] 		Subtest for testing more than one set of gtm_init/gtm_exit per process.
+# gtm_percent		[laurent]	support call in with M label starting with % (C9E12-002681).
+# gtm_cip		[rajendrk]	Performance improved version of gtm_ci.
+# timers		[sopini]	Verify the operation of gtm_start_timer and gtm_cancel_timer operations.
+# empty_table		[sopini]	Ensure that providing an empty table file does not cause SIG-11s.
+# stack_leak		[sopini]	Ensure that call-ins do not leak M stack when gtmci_init() is called repeatedly.
+#
+# Options to record Load Path in executables. Similar options needed for OS390 platform
+setenv unicode_testlist "unic2m2c2m unimaxstrlen"
+#
+setenv subtest_list "32args argcnt c_args ctomctom ctomtom gtm_args gtm_errors gtm_exit_err lngargs maxnstlvl nest_err nest_err_et nest_err_et2"
+setenv subtest_list "$subtest_list nest_err_et3 nest_err_zt nest_err_zt2 nest_err_zt3 maxstrlen gtmxc_test_types xc_test_types multi_gtm_init"
+setenv subtest_list "$subtest_list gtm_percent gtm_cip timers empty_table stack_leak"
+
+if ("TRUE" == $gtm_test_unicode_support) then
+	## Unicode supported machine
+	setenv subtest_list "$subtest_list $unicode_testlist"
+endif
+
+if (1 == $gtm_test_trigger) then
+	setenv test_specific_trig_file "$gtm_tst/$tst/inref/callins.trg"
+endif
+
+# filter out some subtests for some servers
+set hostn = $HOST:r:r:r
+# Disable unic2m2c2m subtest on platforms that do not support 4 byte unicode characters
+if ("1" == "$gtm_platform_no_4byte_utf8") then
+	setenv subtest_exclude_list "unic2m2c2m"
+endif
+
+if ( "os390" == $gtm_test_osname ) then
+	# Save the normal LIBPATH and append the desired paths for call ins to work
+	set old_libpath=${LIBPATH}
+	setenv LIBPATH ${tst_working_dir}:${gtm_exe}:.:${LIBPATH}
+	# Apparently on z/OS the the sidedeck must be specified for the call out DLL
+	setenv tst_ld_sidedeck "-L$gtm_dist $tst_ld_gtmshr"
+else
+	setenv tst_ld_sidedeck ""
+endif
+
+$gtm_tst/com/submit_subtest.csh
+
+if ( "os390" == $gtm_test_osname ) then
+	# Restore the normal LIBPATH
+	setenv LIBPATH $old_libpath
+	unsetenv tst_ld_sidedeck
+endif
+
+echo "CALL IN tests DONE"

@@ -1,0 +1,17 @@
+Create database file
+Change the permission for mumps.dat
+Create gtm_tmp directory
+Try to write some data to data base file which will cause fail and it starts gtmsecshr
+TEST-I-PASSED.. GTM-E-LOGTOOLONG found in gtm_gtmsecshr.log
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+TEST-I-PASSED.. GTM-E-MUTEXERR found in gtm_gtmsecshr.log
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+TEST-I-PASSED.. GTM-E-DBPRIVERR found in gtm_gtmsecshr.log
+##ALLOW_OUTPUT HOST_OS390_S390
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+SUBTEST END

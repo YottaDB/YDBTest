@@ -1,0 +1,63 @@
+PER 1831, 2416, 2482, 2733, 2739, 2745:
+
+	These tests appear to work and the reference output appears to
+	be correct.  They need to be verified.
+
+
+PER 1633, 2422:
+
+	These tests are commented-out and appear to do with journaling.
+
+
+PER 2601:
+
+	This test has been commented-out.  The shell script looks like a
+	VMS DCL command file (with hard-coded references to Bernie Metzger's
+	home directory) and it refers to a GDE input file that does not
+	exist in this directory.  This looks suspiciously like a VMS-only
+	test (and, in fact, the problem may only exist on VMS).  In any case,
+	if it is to run on Unix, the test needs to be dramatically
+	restructured.
+
+
+PER 2607:
+
+	It appears as if the invocation of per2607a.csh should precede
+	the commented-out invocation of per2607f.m and per2607g.m because
+	it appears to establish the journal files used later.  Perhaps all
+	of the parts of the per2607 test should be gathered together into
+	a single contiguous portion of this test.
+
+	Only per2607a.csh is used,
+	per2607b.csh . . . per2707h.csh are not used by this test.
+
+	The tests that invoke per2607f.m and per2607g.m are commented
+	out.
+
+
+PER 2996:
+
+	This is clearly a VMS test for mailbox timeouts.  If applicable to
+	Unix, it needs to be re-written; if not, it should be deleted.
+
+
+PER 3043:
+
+	This has something to do with an attached printer; is it VMS-only?
+
+
+PER 3050:
+
+	This has something to do with a Transaction Processing problem with
+	local arrays.  VMS-only or applicable to Unix too?
+
+
+
+PER 3150:
+
+	Tests whether boolean disrupts subsequent naked reference.
+
+
+PER 3313:
+
+	Tests division bug fix.

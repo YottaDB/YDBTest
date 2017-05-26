@@ -1,0 +1,337 @@
+-----------------------------------------------------------------------------------------
+Test case (1) : Test that DSE CHANGE -FILE -CORRUPT_FILE works without -NOCRIT (actually a test for GTM-7396)
+-----------------------------------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+%GTM-W-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  REPLIC
+-----------------------------------------------------------------------------------------
+Test case (2a) : Test that MUPIP RUNDOWN works fine in case of DBFLCORRP error : REQRUNDOWN
+-----------------------------------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Start backgrounded GT.M process that does updates
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+Try to start GT.M. Expect DBFLCORRP error
+
+GTM>
+%GTM-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+
+GTM>
+Kill backgrounded GT.M process
+Remove database semaphore to induce REQRUNDOWN situation
+Try to start GT.M. Expect REQRUNDOWN error now
+
+GTM>
+%GTM-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
+
+GTM>
+Try to start DSE. Should get REQRUNDOWN error
+%GTM-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
+%GTM-E-DBNOREGION, None of the database regions accessible
+
+Start MUPIP RUNDOWN. Should work fine without DBFLCORRP error. Should also fix REQRUNDOWN error.
+##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+Try to start GT.M. Expect DBFLCORRP error still
+
+GTM>
+%GTM-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+
+GTM>
+Try to start DSE. Should NOT get REQRUNDOWN error. Fix DBFLCORRP error
+%GTM-W-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+Try to start GT.M. Expect NO errors
+
+GTM>
+##TEST_AWK[1-9][0-9]*
+
+GTM>
+-----------------------------------------------------------------------------------------
+Test case (2b) : Test that MUPIP RUNDOWN works fine in case of DBFLCORRP error : REQRECOV
+-----------------------------------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Start backgrounded GT.M process that does updates
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+Try to start GT.M. Expect DBFLCORRP error
+
+GTM>
+%GTM-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+
+GTM>
+Kill backgrounded GT.M process
+Remove database semaphore to induce REQRECOV situation
+Try to start GT.M. Expect REQRECOV error now
+
+GTM>
+%GTM-E-REQRECOV, Error accessing database ##TEST_PATH##/mumps.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
+
+GTM>
+Try to start DSE. Should get REQRECOV error
+%GTM-E-REQRECOV, Error accessing database ##TEST_PATH##/mumps.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
+%GTM-E-DBNOREGION, None of the database regions accessible
+
+Start MUPIP RUNDOWN. Should issue error saying run MUPIP JOURNAL -RECOVER
+%GTM-E-MUUSERECOV, Abnormal shutdown of journaled database ##TEST_PATH##/mumps.dat detected
+%GTM-I-TEXT, Run MUPIP JOURNAL RECOVER
+%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+
+Start MUPIP RUNDOWN -OVERRIDE. Should work fine without DBFLCORRP error. Should also fix REQRECOV error.
+##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+Try to start GT.M. Expect DBFLCORRP error still
+
+GTM>
+%GTM-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+
+GTM>
+Try to start DSE. Should NOT get REQRECOV error. Fix DBFLCORRP error
+%GTM-W-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+Try to start GT.M. Expect NO errors
+
+GTM>
+##TEST_AWK[1-9][0-9]*
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  REPLIC
+##SUSPEND_OUTPUT  NON_REPLIC
+--------------------------------------------------------------------------------------------
+Test case (2c) : Test that MUPIP RUNDOWN works fine in case of DBFLCORRP error : REQROLLBACK
+--------------------------------------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Start backgrounded GT.M process that does updates
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+Try to start GT.M. Expect DBFLCORRP error
+
+GTM>
+%GTM-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+
+GTM>
+Kill backgrounded GT.M process
+Kill source server
+Simulating crash on primary in ##TEST_PATH##
+Primary crashed!
+Remove database semaphore to induce REQROLLBACK situation
+Try to start GT.M. Expect REQROLLBACK error now
+
+GTM>
+%GTM-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL ROLLBACK on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
+
+GTM>
+Try to start DSE. Should get REQROLLBACK error
+%GTM-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL ROLLBACK on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
+%GTM-E-DBNOREGION, None of the database regions accessible
+
+Start MUPIP RUNDOWN. Should issue error saying run MUPIP JOURNAL -ROLLBACK
+%GTM-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##TEST_PATH##/mumps.dat detected
+##TEST_AWK%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
+##TEST_AWK%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
+##TEST_AWK%GTM-I-SEMREMOVED, Semaphore id [1-9][0-9]* removed from the system
+%GTM-I-TEXT, Run MUPIP JOURNAL ROLLBACK
+%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+
+Start MUPIP RUNDOWN -OVERRIDE. Should work fine without DBFLCORRP error. Should also fix REQROLLBACK error.
+##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+Try to start GT.M. Expect DBFLCORRP error still
+
+GTM>
+%GTM-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+
+GTM>
+Try to start DSE. Should NOT get REQROLLBACK error. Fix DBFLCORRP error
+%GTM-W-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+Try to start GT.M. Expect NO errors
+
+GTM>
+##TEST_AWK[1-9][0-9]*
+
+GTM>
+Run MUPIP JOURNAL -ROLLBACK to fix crashed journal files
+Restarting source server
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+--------------------------------------------------------------------------------------------
+Test case (2d) : Test that MUPIP JOURNAL -ROLLBACK works fine in case of DBFLCORRP error
+--------------------------------------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Start backgrounded GT.M process that does updates
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> 
+Try to start GT.M. Expect DBFLCORRP error
+
+GTM>
+%GTM-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+
+GTM>
+Kill backgrounded GT.M process
+Kill source server
+Simulating crash on primary in ##TEST_PATH##
+Primary crashed!
+Remove database semaphore to induce REQROLLBACK situation
+Try to start GT.M. Expect REQROLLBACK error now
+
+GTM>
+%GTM-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL ROLLBACK on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
+
+GTM>
+Try to start DSE. Should get REQROLLBACK error
+%GTM-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL ROLLBACK on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
+%GTM-E-DBNOREGION, None of the database regions accessible
+
+Start MUPIP RUNDOWN. Should issue error saying run MUPIP JOURNAL -ROLLBACK
+%GTM-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##TEST_PATH##/mumps.dat detected
+##TEST_AWK%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
+##TEST_AWK%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
+##TEST_AWK%GTM-I-SEMREMOVED, Semaphore id [1-9][0-9]* removed from the system
+%GTM-I-TEXT, Run MUPIP JOURNAL ROLLBACK
+%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+
+Start MUPIP JOURNAL -ROLLBACK. Should work fine without DBFLCORRP error. Should fix REQROLLBACK and DBFLCORRP error.
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is [1-9][0-9]* .0x.*
+%GTM-I-FILENOTCREATE, Lost transactions extract file rollback4.los not created
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+Try to start GT.M. Expect NO errors
+
+GTM>
+##TEST_AWK[1-9][0-9]*
+
+GTM>
+Restarting source server
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC

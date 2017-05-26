@@ -1,0 +1,67 @@
+V4QLEN1 ;IW-KO-YS-TS,V4QLEN,MVTS V9.10;15/6/96;PART-94
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+ W !!,"46---V4QLEN1:  $QLENGTH function  -1-"
+ ;
+ W !!,"$QLENGTH(namevalue)"
+ W !!,"lvn"
+ ;
+1 S ^ABSN="40340",^ITEM="IV-340  unsubscripted"
+ S ^NEXT="2^V4QLEN1,V4QLEN2^V4QLEN,V4QSUB^VV4" D ^V4PRESET K
+ K A1234567
+ S ^VCOMP=$QLENGTH("A1234567")
+ S ^VCORR="0" D ^VEXAMINE
+ ;
+ W !,"1 subscript"
+ ;
+2 S ^ABSN="40341",^ITEM="IV-341  subscript is an integer number"
+ S ^NEXT="3^V4QLEN1,V4QLEN2^V4QLEN,V4QSUB^VV4" D ^V4PRESET K
+ K V
+ S ^VCOMP=$QL("V(987)")
+ S ^VCORR="1" D ^VEXAMINE
+ ;
+;**MVTS LOCAL CHANGE**
+;Current requirement is for canonic input 10/2001 SE
+3 ;S ^ABSN="40342",^ITEM="IV-342  subscript is a number"
+ ;S ^NEXT="4^V4QLEN1,V4QLEN2^V4QLEN,V4QSUB^VV4" D ^V4PRESET K
+ ;S V(845.15)=123
+ ;S ^VCOMP=$qlength("V(845.15000)")
+ ;S ^VCORR="1" D ^VEXAMINE
+ ;
+4 S ^ABSN="40343",^ITEM="IV-343  subscript is a string"
+ S ^NEXT="5^V4QLEN1,V4QLEN2^V4QLEN,V4QSUB^VV4" D ^V4PRESET K
+ K V S V("data",123)="DATA"
+ S ^VCOMP=$ql("V(""data"")")
+ S ^VCORR="1" D ^VEXAMINE
+ ;
+5 S ^ABSN="40344",^ITEM="IV-344  $DATA(lvn)=0"
+ S ^NEXT="6^V4QLEN1,V4QLEN2^V4QLEN,V4QSUB^VV4" D ^V4PRESET K
+ K VV
+ S ^VCOMP=$ql("VV(-494.45)")
+ S ^VCORR="1" D ^VEXAMINE
+ ;
+;**MVTS LOCAL CHANGE**
+;Current requirement is for canonic input 10/2001 SE
+6 ;S ^ABSN="40345",^ITEM="IV-345  $DATA(lvn)=1"
+ ;S ^NEXT="7^V4QLEN1,V4QLEN2^V4QLEN,V4QSUB^VV4" D ^V4PRESET K
+ ;K VV S VV(948463.384)=123
+ ;S ^VCOMP=$QL("VV(9.48463384E-5)")
+ ;S ^VCORR="1" D ^VEXAMINE
+ ;
+7 S ^ABSN="40346",^ITEM="IV-346  $DATA(lvn)=10"
+ S ^NEXT="8^V4QLEN1,V4QLEN2^V4QLEN,V4QSUB^VV4" D ^V4PRESET K
+ K VV S VV("A","B")="AB"
+ S ^VCOMP=$qlength("VV(""A"")")
+ S ^VCORR="1" D ^VEXAMINE
+ ;
+8 S ^ABSN="40347",^ITEM="IV-347  $DATA(lvn)=11"
+ S ^NEXT="V4QLEN2^VV4" D ^V4PRESET K
+ K VV S VV("A")="A",VV("A","B")="AB"
+ S ^VCOMP=$qlength("VV(""A"")")
+ S ^VCORR="1" D ^VEXAMINE
+ ;
+END W !!,"End of 46 --- V4QLEN1",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

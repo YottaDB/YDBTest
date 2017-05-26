@@ -1,0 +1,17 @@
+set gtm_dist [lrange $argv 0 0]
+set timeout 300
+spawn $gtm_dist/mumps -run dlrkey
+match_max 100000
+# Expect a line written by M program
+expect -exact "Enter Newline Character: "
+# Send newline character to M porgram
+send "\012"
+# Expect a line written by M program
+expect -exact "Enter F8 key: "
+# Send F8 key to M program
+send "\033\[19~"
+# Expect a line written by M program
+expect "*Enter character 'M': "
+# Send single chracter to M program
+send -- "M"
+expect eof

@@ -1,0 +1,175 @@
+##SUSPEND_OUTPUT SNAIL TURTLE
+
+C9A03-001430
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Testing New Line
+
+GTM>
+
+ZTRAP is called
+Timed out as expected
+ZSTATUS:%GTM-E-TPTIMEOUT, Transaction timeout
+
+TEST PASSED
+
+GTM>
+
+GTM>
+Testing for loop
+
+GTM>
+
+ZTRAP is called
+Timed out as expected
+ZSTATUS:%GTM-E-TPTIMEOUT, Transaction timeout
+
+TEST PASSED
+
+GTM>
+
+GTM>
+Testing lock
+
+GTM>
+
+ZTRAP is called
+Timed out as expected
+ZSTATUS:%GTM-E-TPTIMEOUT, Transaction timeout
+
+TEST PASSED
+
+GTM>
+
+GTM>
+Testing hang
+
+GTM>
+
+ZTRAP is called
+Timed out as expected
+ZSTATUS:%GTM-E-TPTIMEOUT, Transaction timeout
+
+TEST PASSED
+
+GTM>
+
+GTM>
+Testing read from TCP
+
+GTM>
+
+GTM>
+
+ZTRAP is called
+Timed out as expected
+ZSTATUS:%GTM-E-TPTIMEOUT, Transaction timeout
+
+TEST PASSED
+
+GTM>
+
+GTM>
+Testing open using TCP
+
+GTM>
+
+ZTRAP is called
+Timed out as expected
+ZSTATUS:%GTM-E-TPTIMEOUT, Transaction timeout
+
+TEST PASSED
+
+GTM>
+Testing TP in direct Mode:New Line
+
+GTM>
+
+ZTRAP is called
+Timed out as expected
+ZSTATUS:%GTM-E-TPTIMEOUT, Transaction timeout
+
+TEST PASSED
+#
+TPTimeout deferral testing
+
+
+GTM>
+
+
+----------------------------------------------------------
+
+ Subtest ecodeclr starting
+##TEST_AWK errortrap: error tripped: 150379506,ecodeclr\+[0-9]+\^tptimeecode,%GTM-E-SETECODE, Non-empty value assigned to \$ECODE \(user-defined error trap\)
+##TEST_AWK errortrap: error tripped: 150377322,ecodeclrcont\+[0-9]+\^tptimeecode,%GTM-E-TPTIMEOUT, Transaction timeout
+ Subtest ecodeclr completed successfully (got interrupt)
+
+
+----------------------------------------------------------
+
+ Subtest tpunw starting
+##TEST_AWK errortrap: error tripped: 150379506,tpunw\+[0-9]+\^tptimeecode,%GTM-E-SETECODE, Non-empty value assigned to \$ECODE \(user-defined error trap\)
+ Subtest tpunw completed successfully (interrupt cancelled)
+
+
+----------------------------------------------------------
+
+ Subtest ztrapset starting
+##TEST_AWK errortrap: error tripped: 150379506,ztrapset\+[0-9]+\^tptimeecode,%GTM-E-SETECODE, Non-empty value assigned to \$ECODE \(user-defined error trap\)
+##TEST_AWK errorztrap via : error tripped: 150377322,ztrapsetcont1\+[0-9]+\^tptimeecode,%GTM-E-TPTIMEOUT, Transaction timeout
+ Subtest ztrapset completed successfully (got interrupt)
+
+
+----------------------------------------------------------
+
+ Subtest unwztrap starting
+##TEST_AWK errortrap: error tripped: 150379506,unwztrap\+[0-9]+\^tptimeecode,%GTM-E-SETECODE, Non-empty value assigned to \$ECODE \(user-defined error trap\)
+unwztrapcont1 entered
+ Leaving $ETRAP block to $ZTRAP block - should allow handler to be be driven
+##TEST_AWK errortrap: error tripped: 150377322,unwztrapcont1\+[0-9]+\^tptimeecode,%GTM-E-TPTIMEOUT, Transaction timeout
+ Subtest unwztrap completed successfully (got interrupt)
+
+
+----------------------------------------------------------
+
+ Subtest jintexit starting
+ Job interrupt jintexitcont entered (TP timeout in 10 seconds)
+ Exiting jobinterrupt
+##TEST_AWK errortrap: error tripped: 150377322,jintexit\+[0-9]+\^tptimeecode,%GTM-E-TPTIMEOUT, Transaction timeout
+ Subtest jintexit completed successfully (got interrupt)
+
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT SNAIL TURTLE

@@ -1,0 +1,15 @@
+V3RAND ;IW-YS-KO-TS,VV3,MVTS V9.10;15/6/96;$RANDOM FUNCTION -1-
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1978-1996
+ W !!,"25---V3RAND: $RANDOM function",!
+ ;
+1 W !!,"I,III-329  intexpr is 12 digits ( maximum range )"
+ S ^ABSN="30329",^ITEM="I,III-329  intexpr is 12 digits ( maximum range )"
+ S ^NEXT="V3MAX^VV3" D ^V3PRESET
+ W !,"       $R(999999999999) : " S VCOMP=0
+ F I=1:1:5 S R=$R(999999999999) W R," " I R'?.N!(R'<999999999999) S VCOMP=VCOMP+1
+ S ^VCOMP=VCOMP,^VCORR=0 D ^VEXAMINE
+ ;
+END W !!,"End of 25 --- V3RAND",!
+ K  Q
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

@@ -1,0 +1,86 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gde20.gld
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gde20.cmd
+%GDE-I-MAPBAD, Region XREG for Name X does not exist
+%GDE-I-MAPBAD, Region X19REG for Name X(1:9) does not exist
+%GDE-I-MAPBAD, Region X2AZREG for Name X(2,"a":"") does not exist
+%GDE-I-MAPBAD, Region X2XREG for Name X(2,"x") does not exist
+%GDE-I-MAPBAD, Region X2X4REG for Name X(2,"x",4) does not exist
+%GDE-I-STDNULLCOLLREQ, Region XREG needs Standard Null Collation enabled because global ^X spans through it
+%GDE-I-STDNULLCOLLREQ, Region X19REG needs Standard Null Collation enabled because global ^X spans through it
+%GDE-I-STDNULLCOLLREQ, Region X2AZREG needs Standard Null Collation enabled because global ^X spans through it
+%GDE-I-STDNULLCOLLREQ, Region X2XREG needs Standard Null Collation enabled because global ^X spans through it
+%GDE-I-STDNULLCOLLREQ, Region X2X4REG needs Standard Null Collation enabled because global ^X spans through it
+%GDE-I-VERIFY, Verification FAILED
+
+%GDE-I-NOEXIT, Cannot exit because of verification failure
+
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ X                                  XREG
+ X(1:9)                             X19REG
+ X(2,"a":"")                        X2AZREG
+ X(2,"x")                           X2XREG
+ X(2,"x",4)                         X2X4REG
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               X                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ X                               X(1)                             REG = XREG
+                                                                  SEG = XREG
+                                                                  FILE = XREG.dat
+ X(1)                            X(2,"a")                         REG = X19REG
+                                                                  SEG = X19REG
+                                                                  FILE = X19REG.dat
+ X(2,"a")                        X(2,"x")                         REG = X2AZREG
+                                                                  SEG = X2AZREG
+                                                                  FILE = X2AZREG.dat
+ X(2,"x")                        X(2,"x",4)                       REG = X2XREG
+                                                                  SEG = X2XREG
+                                                                  FILE = X2XREG.dat
+ X(2,"x",4)                      X(2,"x",4)++                     REG = X2X4REG
+                                                                  SEG = X2X4REG
+                                                                  FILE = X2X4REG.dat
+ X(2,"x",4)++                    X(2,"x")++                       REG = X2XREG
+                                                                  SEG = X2XREG
+                                                                  FILE = X2XREG.dat
+ X(2,"x")++                      X(2)++                           REG = X2AZREG
+                                                                  SEG = X2AZREG
+                                                                  FILE = X2AZREG.dat
+ X(2)++                          X(9)                             REG = X19REG
+                                                                  SEG = X19REG
+                                                                  FILE = X19REG.dat
+ X(9)                            X0                               REG = XREG
+                                                                  SEG = XREG
+                                                                  FILE = XREG.dat
+ X0                              ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+
+                         *** MAP for region X2XREG ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ X(2,"x")                        X(2,"x",4)                       REG = X2XREG
+                                                                  SEG = X2XREG
+                                                                  FILE = X2XREG.dat
+ X(2,"x",4)++                    X(2,"x")++                       REG = X2XREG
+                                                                  SEG = X2XREG
+                                                                  FILE = X2XREG.dat
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gde20.gld

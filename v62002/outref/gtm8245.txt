@@ -1,0 +1,22 @@
+Create TWO database files a.dat and mumps.dat
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+ --> Running : ##SOURCE_PATH##/mumps -run testa^gtm8245
+ --> Running integ after testa^gtm8245
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+ --> Running : ##SOURCE_PATH##/mumps -run testb^gtm8245
+ --> Running integ after testb^gtm8245
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+ --> Running : ##SOURCE_PATH##/mumps -run testc^gtm8245
+ --> Running integ after testc^gtm8245
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

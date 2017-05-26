@@ -1,0 +1,45 @@
+V4QSUB12 ;IW-KO-YS-TS,V4QSUB,MVTS V9.10;15/6/96;PART-94
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+ W !!,"65---V4QSUB12:  $QSUBSCRIPT function  -12-"
+ ;
+ W !!,"$QL(namevalue)<intexpr"
+ ;
+1 S ^ABSN="40484",^ITEM="IV-484  unsubscripted"
+ S ^NEXT="2^V4QSUB12,V4QSUB13^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^VCOMP=$QS("^V",11)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+ W !!,"1 subscript"
+ ;
+2 S ^ABSN="40485",^ITEM="IV-485  subscript is an integer number"
+ S ^NEXT="3^V4QSUB12,V4QSUB13^V4QSUB,V4SVQ^VV4" D ^V4PRESET K  K ^V
+ S ^V(35484900)=1
+ S ^VCOMP=$QS("^V(35484900)",2)
+ S ^VCORR="" D ^VEXAMINE K ^V
+ ;
+3 S ^ABSN="40486",^ITEM="IV-486  subscript is a number"
+ S ^NEXT="4^V4QSUB12,V4QSUB13^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^VCOMP=$qs("^V(-99999900)",3)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+4 S ^ABSN="40487",^ITEM="IV-487  subscript is a string"
+ S ^NEXT="5^V4QSUB12,V4QSUB13^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^VCOMP=$QS("^VAAAAAA(""-0.1"")",1000)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+5 S ^ABSN="40488",^ITEM="IV-488  subscript contains a "" character"
+ S ^NEXT="6^V4QSUB12,V4QSUB13^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^VCOMP=$QS("^V(""AB""""CD"")",9)
+ S ^VCORR="" D ^VEXAMINE
+ ;
+6 S ^ABSN="40489",^ITEM="IV-489  subscript contains "" characters"
+ S ^NEXT="V4QSUB13^V4QSUB,V4SVQ^VV4" D ^V4PRESET K
+ S ^VCOMP=$QS("^V(""AB""""SC""""D"")",+"2020ED")
+ S ^VCORR="" D ^VEXAMINE
+ ;
+END W !!,"End of 65 --- V4QSUB12",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

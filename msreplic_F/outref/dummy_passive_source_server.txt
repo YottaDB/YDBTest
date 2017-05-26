@@ -1,0 +1,87 @@
+###################################################################
+INST1 --> INST2 --> INST3
+###################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 100'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
+#- Start replication on INST2, with a dummy passive source server to INST3 (if INST1 will not be a secondary)
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/$tst/u_inref/helper_start_source_passive_buf_pp.csh DUMMY'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [DUMMY]
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 $gtm_tst/$tst/u_inref/helper_start_receiver_server.csh __RCV_PORTNO__'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 50'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+#- Crash INST1 and make INST2 primary, replicating to INST3:
+==Executing MULTISITE_REPLIC 'CRASH INST1'==
+Simulating crash on Instance INSTANCE1 in ##TEST_PATH##
+Instance INSTANCE1 crashed!
+#- since we will not use INST1 again, run it down
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -receiver -shutdown -timeout=0 >&! SHUT_INST2.out'==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST3 $gtm_tst/$tst/u_inref/helper_start_source_passive_pp.csh __RCV_INSTNAME__'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE3]
+==Executing MULTISITE_REPLIC 'RUN SRC=INST2 $MUPIP replic -source -shutdown -instsecondary=DUMMY -timeout=0 >& dummy_INST2.tmp; cat dummy_INST2.tmp'==
+##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHUTDOWN operation on source server pid [##PID##] for secondary instance [DUMMY]
+##FILTERED##... ... .. ..:..:.. 20.. : Waiting for upto XXX seconds for the source server to shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Not deleting jnlpool ipcs. 1 source servers still attached to jnlpool
+==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST3'==
+==Executing MULTISITE_REPLIC 'ACTIVATE INST2 INST3 RP'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating ACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE3]
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message "New History Content"'==
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/simpleinstanceupdate.csh 50'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT INST2 INST3'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

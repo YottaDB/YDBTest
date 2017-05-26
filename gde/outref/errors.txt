@@ -1,0 +1,174 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-E-VALUEBAD, "a" is not a valid name
+
+GDE> 
+%GDE-E-VALUEBAD, -reg=AREG is not a valid name
+
+GDE> 
+GDE> 
+%GDE-E-STRMISSQUOTE, Missing double-quote at end of string specification "mumps.gld
+
+GDE> 
+GDE> 
+%GDE-E-VALUEBAD, abcd-reg=AREG is not a valid name
+
+GDE> 
+%GDE-E-VALUEBAD, AREG!ABCD is not a valid region
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-E-VALUEBAD,  is not a valid qualifier
+
+GDE> 
+%GDE-E-KEYWRDBAD, ABCD is not a valid qualifier in this context
+
+GDE> 
+%GDE-E-VALUEREQD, Qualifier COLLATION_DEFAULT requires a value
+
+GDE> 
+%GDE-E-VALUEBAD, A is not a valid number
+
+GDE> 
+%GDE-E-NOVALUE, Qualifier STDNULLCOLL does not take a value
+
+GDE> 
+%GDE-E-NOVALUE, Qualifier NOSTDNULLCOLL does not take a value
+
+GDE> 
+%GDE-E-VALUEREQD, Qualifier DYNAMIC_SEGMENT requires a value
+
+GDE> 
+%GDE-E-VALUEREQD, Qualifier DYNAMIC_SEGMENT requires a value
+
+GDE> 
+%GDE-E-NOVALUE, Qualifier INST_FREEZE_ON_ERROR does not take a value
+
+GDE> 
+%GDE-E-NOVALUE, Qualifier NOINST_FREEZE_ON_ERROR does not take a value
+
+GDE> 
+%GDE-E-VALUEREQD, Qualifier JOURNAL requires a value
+
+GDE> 
+%GDE-E-VALUEBAD,  is not a valid qualifier
+
+GDE> 
+GDE> 
+%GDE-E-NOVALUE, Qualifier NOJOURNAL does not take a value
+
+GDE> 
+%GDE-E-NOVALUE, Qualifier BEFORE_IMAGE does not take a value
+
+GDE> 
+%GDE-E-NOVALUE, Qualifier NOJOURNAL does not take a value
+
+GDE> 
+%GDE-E-NOVALUE, Qualifier NOJOURNAL does not take a value
+
+GDE> 
+%GDE-E-NOVALUE, Qualifier NOJOURNAL does not take a value
+
+GDE> 
+%GDE-E-VALUEREQD, Qualifier EXTENSION requires a value
+
+GDE> 
+%GDE-E-NOVALUE, Qualifier NOJOURNAL does not take a value
+
+GDE> 
+%GDE-E-VALUEREQD, Qualifier FILE_NAME requires a value
+
+GDE> 
+%GDE-E-RPAREN, List must end with right parenthesis or continue with comma
+
+GDE> 
+%GDE-E-VALUEREQD, Qualifier KEY_SIZE requires a value
+
+GDE> 
+%GDE-E-VALUEBAD, 1A is not a valid number
+
+GDE> 
+%GDE-E-VALUEREQD, Qualifier NULL_SUBSCRIPTS requires a value
+
+GDE> 
+%GDE-E-VALUEREQD, Qualifier NULL_SUBSCRIPTS requires a value
+
+GDE> 
+%GDE-E-VALUEBAD, DEFAULT is not a valid NULL_SUBSCRIPTS
+
+GDE> 
+%GDE-E-NOVALUE, Qualifier NONULL_SUBSCRIPTS does not take a value
+
+GDE> 
+%GDE-E-NOVALUE, Qualifier QDBRUNDOWN does not take a value
+
+GDE> 
+%GDE-E-VALUEREQD, Qualifier RECORD_SIZE requires a value
+
+GDE> 
+%GDE-E-VALUEREQD, Qualifier RECORD_SIZE requires a value
+
+GDE> 
+%GDE-E-VALUEBAD, TRUE is not a valid number
+
+GDE> 
+%GDE-I-VALTOOBIG, 1048577 is larger than the maximum of 1048576 for a RECORD_SIZE
+%GDE-I-REGIS, in region DEFAULT
+
+%GDE-E-OBJNOTCHG, Not changing region DEFAULT
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-E-VALUEBAD, USER is not a valid ACCESS_METHOD
+
+GDE> 
+%GDE-E-VALUEBAD, DEFAULT is not a valid ACCESS_METHOD
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+GTM>
+DEFAULT
+GTM>
+%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+
+GTM>
+DEFAULT
+GTM>
+AREG
+GTM>
+DEFAULT
+GTM>
+%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+
+GTM>
+%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+
+GTM>
+%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+
+GTM>
+%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+
+GTM>
+%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+
+GTM>
+DEFAULT,AREG
+GTM>
+%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): abcd(1,2,4)
+
+GTM>

@@ -1,0 +1,19 @@
+>>> Journal enable is done in this test. So let's not randomly enable journaling in dbcreate.csh
+>>> Since we will use before images let's set BG access method
+>>> Let's use before images
+>>> Create the database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+>>> Enable journaling with before images
+>>> Do approximately two minutes of journaled update
+
+GTM>
+
+GTM>
+>>> Take an extract from within the middle of the journal file
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

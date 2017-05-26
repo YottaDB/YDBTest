@@ -1,0 +1,112 @@
+change -segment DEFAULT -file_name=integ.dat
+change -segment DEFAULT -block_size=1024
+change -segment DEFAULT -allocation=100
+change -segment DEFAULT -global_buffer_count=256
+change -region DEFAULT -record_size=256
+change -region DEFAULT -key_size=128
+change -region DEFAULT -inst_freeze_on_error
+add -name a* -region=areg
+add -name A* -region=areg
+add -region areg -dyn=aseg
+add -segment aseg -file=a.dat
+change -segment aseg -block_size=1024
+change -segment aseg -allocation=100
+change -segment aseg -global_buffer_count=256
+change -region areg -record_size=256
+change -region areg -key_size=128
+change -region areg -inst_freeze_on_error
+add -name b* -region=breg
+add -name B* -region=breg
+add -region breg -dyn=bseg
+add -segment bseg -file=b.dat
+change -segment bseg -block_size=1024
+change -segment bseg -allocation=100
+change -segment bseg -global_buffer_count=256
+change -region breg -record_size=256
+change -region breg -key_size=128
+change -region breg -inst_freeze_on_error
+add -name c* -region=creg
+add -name C* -region=creg
+add -region creg -dyn=cseg
+add -segment cseg -file=c.dat
+change -segment cseg -block_size=1024
+change -segment cseg -allocation=100
+change -segment cseg -global_buffer_count=256
+change -region creg -record_size=256
+change -region creg -key_size=128
+change -region creg -inst_freeze_on_error
+! Use this spanning regions configuration instead of creating one dynamically
+! Number of included regions is 4
+!    Region 1 = AREG
+!    Region 2 = BREG
+!    Region 3 = CREG
+!    Region 4 = DEFAULT
+! Number of sections randomly chosen is 32
+! Map : ^aingfillingdatabase("BCDEFGHIJ(149)") maps to BREG
+add -name aingfillingdatabase("BCDEFGHIJ(149)":"CDEFGHIJKL(50)") -region=BREG
+! Map : ^aingfillingdatabase("CDEFGHIJKL(50)") maps to CREG
+add -name aingfillingdatabase("CDEFGHIJKL(50)":"EF(2)") -region=CREG
+! Map : ^aingfillingdatabase("EF(2)") maps to BREG
+add -name aingfillingdatabase("EF(2)":"GHIJ(104)") -region=BREG
+! Map : ^aingfillingdatabase("GHIJ(104)") maps to CREG
+add -name aingfillingdatabase("GHIJ(104)":"GHIJ(154)") -region=CREG
+! Map : ^aingfillingdatabase("GHIJ(154)") maps to DEFAULT
+add -name aingfillingdatabase("GHIJ(154)":"HIJKL(155)") -region=DEFAULT
+! Map : ^aingfillingdatabase("HIJKL(155)") maps to CREG
+add -name aingfillingdatabase("HIJKL(155)":"KLMNOPQR(108)") -region=CREG
+! Map : ^aingfillingdatabase("KLMNOPQR(108)") maps to DEFAULT
+add -name aingfillingdatabase("KLMNOPQR(108)":"LMNOPQRST(9)") -region=DEFAULT
+! Map : ^aingfillingdatabase("LMNOPQRST(9)") maps to BREG
+add -name aingfillingdatabase("LMNOPQRST(9)":"MNOPQRSTUV(10)") -region=BREG
+! Map : ^aingfillingdatabase("MNOPQRSTUV(10)") maps to CREG
+add -name aingfillingdatabase("MNOPQRSTUV(10)":"NOPQRSTUVWX(61)") -region=CREG
+! Map : ^aingfillingdatabase("NOPQRSTUVWX(61)") maps to DEFAULT
+add -name aingfillingdatabase("NOPQRSTUVWX(61)":"OP(12)") -region=DEFAULT
+! Map : ^aingfillingdatabase("OP(12)") maps to AREG
+add -name aingfillingdatabase("OP(12)":"OP(162)") -region=AREG
+! Map : ^aingfillingdatabase("OP(162)") maps to BREG
+add -name aingfillingdatabase("OP(162)":"PQR(163)") -region=BREG
+! Map : ^aingfillingdatabase("PQR(163)") maps to AREG
+add -name aingfillingdatabase("PQR(163)":"QRST(164)") -region=AREG
+! Map : ^aingfillingdatabase("QRST(164)") maps to DEFAULT
+add -name aingfillingdatabase("QRST(164)":"STUVWX(116)") -region=DEFAULT
+! Map : ^aingfillingdatabase("STUVWX(116)") maps to BREG
+add -name aingfillingdatabase("STUVWX(116)":"UVWXYZ01(68)") -region=BREG
+! Map : ^aingfillingdatabase("UVWXYZ01(68)") maps to AREG
+add -name aingfillingdatabase("UVWXYZ01(68)":"VWXYZ0123(119)") -region=AREG
+! Map : ^aingfillingdatabase("VWXYZ0123(119)") maps to BREG
+add -name aingfillingdatabase("VWXYZ0123(119)":"WXYZ012345(120)") -region=BREG
+! Map : ^aingfillingdatabase("WXYZ012345(120)") maps to CREG
+add -name aingfillingdatabase("WXYZ012345(120)":"WXYZ012345(20)") -region=CREG
+! Map : ^aingfillingdatabase("WXYZ012345(20)") maps to DEFAULT
+add -name aingfillingdatabase("WXYZ012345(20)":"XYZ01234567(71)") -region=DEFAULT
+! Map : ^aingfillingdatabase("XYZ01234567(71)") maps to CREG
+add -name aingfillingdatabase("XYZ01234567(71)":"cdef(24)") -region=CREG
+! Map : ^aingfillingdatabase("cdef(24)") maps to BREG
+add -name aingfillingdatabase("cdef(24)":"defgh(25)") -region=BREG
+! Map : ^aingfillingdatabase("defgh(25)") maps to AREG
+add -name aingfillingdatabase("defgh(25)":"jklmnopqrst(181)") -region=AREG
+! Map : ^aingfillingdatabase("jklmnopqrst(181)") maps to BREG
+add -name aingfillingdatabase("jklmnopqrst(181)":"lmn(183)") -region=BREG
+! Map : ^aingfillingdatabase("lmn(183)") maps to AREG
+add -name aingfillingdatabase("lmn(183)":"opqrst(36)") -region=AREG
+! Map : ^aingfillingdatabase("opqrst(36)") maps to BREG
+add -name aingfillingdatabase("opqrst(36)":"qrstuvwx(188)") -region=BREG
+! Map : ^aingfillingdatabase("qrstuvwx(188)") maps to AREG
+add -name aingfillingdatabase("qrstuvwx(188)":"tuvwxyzABCD(141)") -region=AREG
+! Map : ^aingfillingdatabase("tuvwxyzABCD(141)") maps to CREG
+add -name aingfillingdatabase("tuvwxyzABCD(141)":"uv(142)") -region=CREG
+! Map : ^aingfillingdatabase("uv(142)") maps to DEFAULT
+add -name aingfillingdatabase("uv(142)":"vwx(143)") -region=DEFAULT
+! Map : ^aingfillingdatabase("vwx(143)") maps to CREG
+add -name aingfillingdatabase("vwx(143)":"vwx(193)") -region=CREG
+! Map : ^aingfillingdatabase("vwx(193)") maps to AREG
+add -name aingfillingdatabase("vwx(193)":"xyzAB(145)") -region=AREG
+! Map : ^aingfillingdatabase("xyzAB(145)") maps to CREG
+add -name aingfillingdatabase("xyzAB(145)":"zABCDEF(47)") -region=CREG
+! Map : ^aingfillingdatabase("zABCDEF(47)") maps to BREG
+add -name aingfillingdatabase("zABCDEF(47)":) -region=BREG
+change -region AREG -std
+change -region BREG -std
+change -region CREG -std
+change -region DEFAULT -std

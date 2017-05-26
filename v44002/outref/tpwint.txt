@@ -1,0 +1,111 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+Do ztedef^tpwint
+
+Transaction 1 Starts....
+
+$ZTEXIT = 
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : thrint+5^thrint
+
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+interrupt occurred at : ztedef+14^tpwint
+
+End of transaction 1....
+
+$ZTEXIT = 1
+
+----------------------------------------------
+GTM>
+
+GTM>
+Do ztendef^tpwint
+
+Transaction 2 Starts....
+
+$ZTEXIT = 0
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=0
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : uthrint+5^uthrint
+
+End of transaction 2....
+
+$ZTEXIT = 0
+
+----------------------------------------------
+GTM>
+
+GTM>
+Do discint^tpwint
+
+Transaction 1 Starts....
+
+$ZTEXIT = 
+
+SIGUSR1 sent to process
+
+Interrupt issued to process
+
+SIGUSR1 sent to process
+**************************************************************
+
+$zint = d discard
+
+Interrupt issued to process
+
+SIGUSR1 sent to process
+**************************************************************
+
+End of transaction 1....
+
+$ZTEXIT = 4rethrow
+
+----------------------------------------------
+GTM>
+
+GTM>
+Do savzte^tpwint
+
+Transaction 1 Starts....
+
+$ZTEXIT = 
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : thrint+5^thrint
+
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+interrupt occurred at : savzte+14^tpwint
+
+End of transaction 1....
+
+$ZTEXIT = 1
+
+---;;---;;---;;---;;---;;---
+Transaction 2 Starts...
+
+$ZTEXIT = 1
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : thrint+5^thrint
+
+$zint = w "interrupt occurred at : ",$stack($stack-1,"PLACE"),! s $zte=1
+interrupt occurred at : savzte+29^tpwint
+
+End of transaction 2...
+
+---;;---;;---;;---;;---;;---
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

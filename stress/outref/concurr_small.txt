@@ -1,0 +1,120 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+stress.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+e.dat
+f.dat
+g.dat
+h.dat
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+stress.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+b234567890123456789012345678901.dat
+cpct1.dat
+d.dat
+ef_longGGGGGGGGGGGGGGGGGGGGGGGG.dat
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+stress.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+b234567890123456789012345678901.dat
+cpct1.dat
+d.dat
+ef_longGGGGGGGGGGGGGGGGGGGGGGGG.dat
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance4:
+Using: ##SOURCE_PATH##/mumps -run GDE
+stress.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b234567890123456789012345678901.dat
+cpct1.dat
+d.dat
+ef_longGGGGGGGGGGGGGGGGGGGGGGGG.dat
+mumps.dat
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2 helper'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST3 helper'==
+==Executing MULTISITE_REPLIC 'START INST2 INST4'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/wait_for_log.csh -log callstress.out -waitcreation -duration 1200 -message "Application Level Verification Ends"'==
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/wait_for_log.csh -log callstress.out -waitcreation -duration 1200 -message "Application Level Verification Ends"'==
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2 ON'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+==Executing MULTISITE_REPLIC 'STOP INST1 INST3 ON'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Shutting down Primary Source Server Server in ##TEST_PATH##
+==Executing MULTISITE_REPLIC 'STOP INST2 INST4 ON'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+Doing database extract diff of INST1 and INST3
+==Executing MULTISITE_REPLIC 'EXTRACT INST1 INST3'==
+DATABASE EXTRACT PASSED
+
+Doing database extract diff of INST2 and INST4
+==Executing MULTISITE_REPLIC 'EXTRACT INST2 INST4'==
+DATABASE EXTRACT PASSED
+
+Doing dbcheck of INST1
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Doing dbcheck of INST2
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Doing dbcheck of INST3
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Doing dbcheck of INST4
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Testing recover:
+Extact from original database...
+##SOURCE_PATH##/mupip journal -recover -forward -verbose -fence=none *
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Extact from database after forward recovery...
+diff origdata.glo forwglo.glo
+##SUSPEND_OUTPUT JNL_NOBEFORE
+##SOURCE_PATH##/mupip journal -recover -backward -verbose '*' -since=0 0:0:1
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Extact from database after backward recovery...
+diff origdata.glo backglo.glo
+Testing rollback:
+Get JNLSEQNO from Secondary (B) at the first backup point...
+Now do rollback:
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT JNL_NOBEFORE

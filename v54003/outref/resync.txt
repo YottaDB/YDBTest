@@ -1,0 +1,128 @@
+---------------------------------------------------------------------------------------
+BEGIN 1 :-) Start source server and receiver server with journaling enabled
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+END 1
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 2 :-) Make updates on database for around 40 seconds
+
+
+END 2
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 3 :-) Crash secondary and take the backup of crashed database
+
+==Executing MULTISITE_REPLIC 'CRASH INST2'==
+Simulating crash on Instance INSTANCE2 in ##FILTERED##_REMOTE_TEST_PATH_
+Instance INSTANCE2 crashed!
+
+END 3
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 4 :-) run -fetchresync ROLLBACK on secondary and collect memory usage statistics
+
+
+END 4
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 5 :-) Take the backup of recovered database
+
+
+END 5
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 6 :-) Get the sequence number to be used in -resync ROLLBACK
+
+fetchresync seq no is=##FILTERED##GTM_TEST_DEBUGINFO.*
+
+END 6
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 7 :-) Calculate the memory usage for -fetcyresync ROLLBACK
+
+
+END 7
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 8 :-) Restore the crashed database on secondary
+
+
+END 8
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 9 :-) run -resync ROLLBACK on restored crashed database
+
+
+END 9
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 10 :-) Calculate the memory usage for -fetcyresync ROLLBACK
+
+
+END 10
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 11 :-) Stop source server
+
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+
+END 11
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 12 :-) Set the size of tracebuffsize depending upon the platform
+
+
+END 12
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 13 :-) Compare the memory usage for fetchresync ROLLBACK and resync ROLLBACK
+
+
+GTM>
+fetchresync ROLLBACK memory usage=##FILTERED##GTM_TEST_DEBUGINFO.*
+GTM>
+resync ROLLBACK memory usage=##FILTERED##GTM_TEST_DEBUGINFO.*
+GTM>
+memory usage difference for fetchresync and resync rollback=##FILTERED##GTM_TEST_DEBUGINFO.*
+GTM>
+Constant trace buffer size is=##FILTERED##GTM_TEST_DEBUGINFO.*
+GTM>
+
+GTM>
+Memory usage for fetchresync ROLLBACK and resync ROLLBACK are as expected
+GTM>
+
+END 13
+---------------------------------------------------------------------------------------
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

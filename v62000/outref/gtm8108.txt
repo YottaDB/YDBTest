@@ -1,0 +1,107 @@
+--------------------------------------------
+Test case 1 : ZSHOW C onto a subscripted lvn
+--------------------------------------------
+
+--------------------------------------------
+Test case 2 : ZSHOW B onto a subscripted lvn
+--------------------------------------------
+
+--------------------------------------------------------------------------------------------------
+Test case 3 : SET @ onto a subscripted lvn where rhs of set is an undefined unsubscripted variable
+--------------------------------------------------------------------------------------------------
+--> Running with gtm_noundef=0, gtm_side_effects=0
+%GTM-E-UNDEF, Undefined local variable: dflt
+		At M source location test3+1^gtm8108
+
+GTM>
+--> Running with gtm_noundef=0, gtm_side_effects=1
+%GTM-E-UNDEF, Undefined local variable: dflt
+		At M source location test3+1^gtm8108
+
+GTM>
+--> Running with gtm_noundef=0, gtm_side_effects=2
+%GTM-E-UNDEF, Undefined local variable: dflt
+		At M source location test3+1^gtm8108
+
+GTM>
+--> Running with gtm_noundef=1, gtm_side_effects=0
+x(1)
+--> Running with gtm_noundef=1, gtm_side_effects=1
+x(1)
+--> Running with gtm_noundef=1, gtm_side_effects=2
+x(1)
+-------------------------------------------------------------------------------------
+Test case 4 : SET @ where src and dst are subscripted lvns and src is alias container
+-------------------------------------------------------------------------------------
+--> Running with gtm_side_effects=0
+
+Stepping STARTED
+test4+2^gtm8108     :	set x=1,*y(1)=x,z="y(2)"
+test4+3^gtm8108     :	set @z=y(1)
+test4+4^gtm8108     :	zwrite
+%zrtn="($piece($zpos,""^"",1))"
+%zsaveio=0
+x=1 ;*
+*y(1)=x
+y(2)=""
+z="y(2)"
+test4+5^gtm8108     :	kill *
+test4+6^gtm8108     :	zwrite
+%zrtn="($piece($zpos,""^"",1))"
+%zsaveio=0
+y(1)=""
+y(2)=""
+z="y(2)"
+test4+7^gtm8108     :	quit
+--> Running with gtm_side_effects=1
+
+Stepping STARTED
+test4+2^gtm8108     :	set x=1,*y(1)=x,z="y(2)"
+test4+3^gtm8108     :	set @z=y(1)
+test4+4^gtm8108     :	zwrite
+%zrtn="($piece($zpos,""^"",1))"
+%zsaveio=0
+x=1 ;*
+*y(1)=x
+y(2)=""
+z="y(2)"
+test4+5^gtm8108     :	kill *
+test4+6^gtm8108     :	zwrite
+%zrtn="($piece($zpos,""^"",1))"
+%zsaveio=0
+y(1)=""
+y(2)=""
+z="y(2)"
+test4+7^gtm8108     :	quit
+--> Running with gtm_side_effects=2
+
+Stepping STARTED
+test4+2^gtm8108     :	set x=1,*y(1)=x,z="y(2)"
+test4+3^gtm8108     :	set @z=y(1)
+test4+4^gtm8108     :	zwrite
+%zrtn="($piece($zpos,""^"",1))"
+%zsaveio=0
+x=1 ;*
+*y(1)=x
+y(2)=""
+z="y(2)"
+test4+5^gtm8108     :	kill *
+test4+6^gtm8108     :	zwrite
+%zrtn="($piece($zpos,""^"",1))"
+%zsaveio=0
+y(1)=""
+y(2)=""
+z="y(2)"
+test4+7^gtm8108     :	quit
+-----------------------------------------------------------------------------------------
+Test case 5 : MERGE lvn(1)=^gvn where ^gvn is concurrently updated (causing TP restarts)
+-----------------------------------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

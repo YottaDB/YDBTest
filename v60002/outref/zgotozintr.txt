@@ -1,0 +1,15 @@
+Entered zinterrupt entryref
+Stack at re-written interrupt frame:
+
+Frame #   Entry Point                      Mode                     M-Code
+2         newinterrupt+7^zgotozintr        DO                        . Write stx,?10,$Stack(stx,"PLACE"),?43,$Stack(stx),?68,$Stack(stx,"MCODE"),!
+1         newinterrupt+5^zgotozintr        ZINTR                     For stx=frames:-1:0 Do
+0         +24^zgotozintr                   -run ^zgotozintr          Else  Set x=$ZSigproc($Job,16)			; Must use zsigproc for VMS
+
+End of $Stack() - Actual stack:
+
+Frame #   Entry Point
+1         newinterrupt+10^zgotozintr
+0         +24^zgotozintr
+
+Returned from interrupt

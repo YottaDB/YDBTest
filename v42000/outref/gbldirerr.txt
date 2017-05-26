@@ -1,0 +1,76 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/gtmgbldir.gld
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/gtmgbldir.gld
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/*.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+
+GTM>
+
+GTM>
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$gtmgbldir.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+
+GTM>
+
+GTM>
+
+GTM>
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/foo.gld.  Retaining ##TEST_PATH##/gtmgbldir.gld.
+%SYSTEM-E-ENO2, No such file or directory
+
+GTM>
+
+GTM>
+
+GTM>
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/foo.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+^val("five")=5
+^val("four")=4
+^val("one")=1
+^val("seven")=7
+
+GTM>
+Now test mupip functions:
+setenv gtmgbldir foo.gld
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/foo.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/foo.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/foo.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/foo.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/foo.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+unsetenv gtmgbldir
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$gtmgbldir.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$gtmgbldir.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$gtmgbldir.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$gtmgbldir.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$gtmgbldir.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory

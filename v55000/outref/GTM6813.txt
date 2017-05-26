@@ -1,0 +1,966 @@
+Testing various types of invocations using DO and \$\$...
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic: $$foo -> foo
+    
+%GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: intExtrNoFmlLst
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/intExtrNoFmlLstCldNoPrn.m
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic: $$foo() -> foo
+    
+%GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: intExtrNoFmlLst
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/intExtrNoFmlLstCldPrn.m
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic: $$foo(1) -> foo
+    
+%GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: intExtrNoFmlLst
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/intExtrNoFmlLstCldPrm.m
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic: $$foo -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic: $$foo() -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic: $$foo(1) -> foo()
+    
+%GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: intExtrEmpFmlLst
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/intExtrEmpFmlLstCldPrm.m
+FAIL: %GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic: $$foo -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic: $$foo() -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic: $$foo(1) -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label: do foo -> foo
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label: do foo() -> foo
+    
+%GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: intLblNoFmlLst
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/intLblNoFmlLstCldPrn.m
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label: do foo(1) -> foo
+    
+%GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: intLblNoFmlLst
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/intLblNoFmlLstCldPrm.m
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label: do foo -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label: do foo() -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label: do foo(1) -> foo()
+    
+%GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: intLblEmpFmlLst
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/intLblEmpFmlLstCldPrm.m
+FAIL: %GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label: do foo -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label: do foo() -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label: do foo(1) -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic indirectly: @"$$foo" -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic indirectly: @"$$foo()" -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic indirectly: @"$$foo(1)" -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic indirectly: @"$$foo" -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic indirectly: @"$$foo()" -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic indirectly: @"$$foo(1)" -> foo()
+    FAIL: %GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic indirectly: @"$$foo" -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic indirectly: @"$$foo()" -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal extrinsic indirectly: @"$$foo(1)" -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label indirectly: @"do foo" -> foo
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label indirectly: @"do foo()" -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label indirectly: @"do foo(1)" -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label indirectly: @"do foo" -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label indirectly: @"do foo()" -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label indirectly: @"do foo(1)" -> foo()
+    FAIL: %GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label indirectly: @"do foo" -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label indirectly: @"do foo()" -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling internal label indirectly: @"do foo(1)" -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic: $$foo^bar -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic: $$foo^bar() -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic: $$foo^bar(1) -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic: $$foo^bar -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic: $$foo^bar() -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic: $$foo^bar(1) -> foo()
+    FAIL: %GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic: $$foo^bar -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic: $$foo^bar() -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic: $$foo^bar(1) -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic by routine name: $$^bar -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic by routine name: $$^bar() -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic by routine name: $$^bar(1) -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic by routine name: $$^bar -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic by routine name: $$^bar() -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic by routine name: $$^bar(1) -> foo()
+    FAIL: %GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic by routine name: $$^bar -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic by routine name: $$^bar() -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic by routine name: $$^bar(1) -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label: do foo^bar -> foo
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label: do foo^bar() -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label: do foo^bar(1) -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label: do foo^bar -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label: do foo^bar() -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label: do foo^bar(1) -> foo()
+    FAIL: %GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label: do foo^bar -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label: do foo^bar() -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label: do foo^bar(1) -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label by routine name: do ^bar -> foo
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label by routine name: do ^bar() -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label by routine name: do ^bar(1) -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label by routine name: do ^bar -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label by routine name: do ^bar() -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label by routine name: do ^bar(1) -> foo()
+    FAIL: %GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label by routine name: do ^bar -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label by routine name: do ^bar() -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label by routine name: do ^bar(1) -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly: @"$$foo^bar" -> foo"
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly: @"$$foo^bar()" -> foo"
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly: @"$$foo^bar(1)" -> foo"
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly: @"$$foo^bar" -> foo()"
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly: @"$$foo^bar()" -> foo()"
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly: @"$$foo^bar(1)" -> foo()"
+    FAIL: %GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly: @"$$foo^bar" -> foo(x,y)"
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly: @"$$foo^bar()" -> foo(x,y)"
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly: @"$$foo^bar(1)" -> foo(x,y)"
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly by routine name: @"$$^bar" -> foo"
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly by routine name: @"$$^bar()" -> foo"
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly by routine name: @"$$^bar(1)" -> foo"
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly by routine name: @"$$^bar" -> foo()"
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly by routine name: @"$$^bar()" -> foo()"
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly by routine name: @"$$^bar(1)" -> foo()"
+    FAIL: %GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly by routine name: @"$$^bar" -> foo(x,y)"
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly by routine name: @"$$^bar()" -> foo(x,y)"
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external extrinsic indirectly by routine name: @"$$^bar(1)" -> foo(x,y)"
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly: do @"foo^bar" -> foo
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly: do @"foo^bar()" -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly: do @"foo^bar(1)" -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly: do @"foo^bar" -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly: do @"foo^bar()" -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly: do @"foo^bar(1)" -> foo()
+    FAIL: %GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly: do @"foo^bar" -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly: do @"foo^bar()" -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly: do @"foo^bar(1)" -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly by routine name: do @"^bar" -> foo
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly by routine name: do @"^bar()" -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly by routine name: do @"^bar(1)" -> foo
+    FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly by routine name: do @"^bar" -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly by routine name: do @"^bar()" -> foo()
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly by routine name: do @"^bar(1)" -> foo()
+    FAIL: %GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly by routine name: do @"^bar" -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly by routine name: do @"^bar()" -> foo(x,y)
+    PASS
+
+---------------------------------------------------------------------------------------------------
+
+Calling external label indirectly by routine name: do @"^bar(1)" -> foo(x,y)
+    PASS
+
+###################################################################
+Testing whether the top label in the invoked routine forwards the parameters...
+
+---------------------------------------------------------------------------------------------------
+
+Calling do ^foo(0,1):
+    foo
+        ;
+    label(x,y)
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do ^foo(0,1):
+    foo
+    label(x,y)
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do ^foo(0,1):
+    foo
+        set x=1
+    label(x,y)
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do ^foo(0,1):
+    foo
+        quit
+    label(x,y)
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do ^foo(0,1):
+    foo()
+        quit
+    label(x,y)
+FAIL: %GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do ^foo(0,1):
+    f
+        ;
+    label(x,y)
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do ^foo(0,1):
+    f
+    label(x,y)
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do ^foo(0,1):
+    f
+        set x=1
+    label(x,y)
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do ^foo(0,1):
+    f
+        quit
+    label(x,y)
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do ^foo(0,1):
+    f()
+        quit
+    label(x,y)
+FAIL: %GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do foo^foo(0,1):
+    foo
+        ;
+    label(x,y)
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do foo^foo(0,1):
+    foo
+    label(x,y)
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do foo^foo(0,1):
+    foo
+        set x=1
+    label(x,y)
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do foo^foo(0,1):
+    foo
+        quit
+    label(x,y)
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do foo^foo(0,1):
+    foo()
+        quit
+    label(x,y)
+FAIL: %GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do f^foo(0,1):
+    f
+        ;
+    label(x,y)
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do f^foo(0,1):
+    f
+    label(x,y)
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do f^foo(0,1):
+    f
+        set x=1
+    label(x,y)
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do f^foo(0,1):
+    f
+        quit
+    label(x,y)
+FAIL: %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+
+---------------------------------------------------------------------------------------------------
+
+Calling do f^foo(0,1):
+    f()
+        quit
+    label(x,y)
+FAIL: %GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+
+###################################################################
+Testing of passing undefined arguments and reading undefined parameters...
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: y
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: y
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is 1: PASSED
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: y
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: y
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is 1: PASSED
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: y
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: y
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is 1: PASSED
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: y
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+FAIL: %GTM-E-UNDEF, Undefined local variable: y
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is 0: PASSED
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+---------------------------------------------------------------------------------------------------
+X is 1: PASSED
+---------------------------------------------------------------------------------------------------
+X is FAIL: %GTM-E-UNDEF, Undefined local variable: x
+
+###################################################################
+Testing gtm_zquit_anyway environment variable and quit argument evaluation...
+
+HFAIL: %GTM-E-NOTEXTRINSIC, Quit does not return to an extrinsic function: argument not allowed
+EFAIL: %GTM-E-UNDEF, Undefined local variable: arg
+OFAIL: %GTM-E-UNDEF, Undefined local variable: x
+FAIL: %GTM-E-NOTEXTRINSIC, Quit does not return to an extrinsic function: argument not allowed
+WFAIL: %GTM-E-NOTEXTRINSIC, Quit does not return to an extrinsic function: argument not allowed
+ORFAIL: %GTM-E-UNDEF, Undefined local variable: x
+FAIL: %GTM-E-QUITARGREQD, Quit from an extrinsic must have an argument
+
+HFAIL: %GTM-E-NOTEXTRINSIC, Quit does not return to an extrinsic function: argument not allowed
+ELLFAIL: %GTM-E-QUITARGREQD, Quit from an extrinsic must have an argument
+O FAIL: %GTM-E-NOTEXTRINSIC, Quit does not return to an extrinsic function: argument not allowed
+WFAIL: %GTM-E-NOTEXTRINSIC, Quit does not return to an extrinsic function: argument not allowed
+ORLFAIL: %GTM-E-QUITARGREQD, Quit from an extrinsic must have an argument
+
+HEFAIL: %GTM-E-UNDEF, Undefined local variable: arg
+OFAIL: %GTM-E-UNDEF, Undefined local variable: x
+WORFAIL: %GTM-E-UNDEF, Undefined local variable: x
+DFAIL: %GTM-E-UNDEF, Undefined local variable: x
+ ...and FAIL: %GTM-E-UNDEF, Undefined local variable: x
+bye...FAIL: %GTM-E-UNDEF, Undefined local variable: x
+FAIL: %GTM-E-UNDEF, Undefined local variable: x
+Internal extrinsic that has no quit argument
+Internal label that returns a value
+Internal label that has an evaluated quit expression
+Internal extrinsic that gets evaluated
+External extrinsic that has no quit argument
+External label that returns a value
+External label that has an evaluated quit expression
+External extrinsic that gets evaluated
+
+HELLO WORLD! ...and goodbye...
+
+Internal extrinsic that has no quit argument
+Internal label that returns a value
+Internal label that has an evaluated quit expression
+Internal extrinsic that gets evaluated
+External extrinsic that has no quit argument
+External label that returns a value
+External label that has an evaluated quit expression
+External extrinsic that gets evaluated
+
+###################################################################
+Testing argument passing while issuing interrupts...
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting...
+Stopping...
+##TEST_AWK  interrupt count: [1-9][0-9]*
+##TEST_AWK  iteration count: [1-9][0-9]*
+All done.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,38 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Saving version 1 of block 1B9
+DSE> 
+Saving version 1 of block 0
+DSE> 
+Restoring block 1B9 from version 1 of block 0
+
+DSE> 	Directory path
+	Path--blk:off
+	1:10	2:10
+
+	Global paths
+	Path--blk:off
+	4:55	1F4:136	1B9
+
+DSE> 	Directory path
+	Path--blk:off
+	1:10	2:10
+
+	Global paths
+	Path--blk:off
+	4:55	1F4:136	1B9
+
+DSE> 
+Restoring block 1B9 from version 1
+
+DSE> ##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

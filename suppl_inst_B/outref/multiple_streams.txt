@@ -1,0 +1,44 @@
+==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST4 RP'==
+==Executing MULTISITE_REPLIC 'START INST1 INST3 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST3'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST3'==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST3 $MUPIP replic -source -start -log=SRC_INST2INST3.log -secondary=__RCV_HOST__:__RCV_PORTNO__ -instsecondary=__RCV_INSTNAME__'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE3]
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message INSUNKNOWN'==
+==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log INSUNKNOWN'==
+----------
+Error INSUNKNOWN seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+%GTM-E-INSUNKNOWN, Supplementary Instance INSTANCE3 has no instance definition for non-Supplementary Instance INSTANCE2
+----------
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST3'==
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP backup -replinstance=INST2bak.repl >&! INST2_repl_backup.out'==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST3 $gtm_tst/com/cp_remote_file.csh __SRC_DIR__/INST2bak.repl  _REMOTEINFO___RCV_DIR__/INST2bak.repl'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST3 SRC=INST1 set msr_dont_chk_stat ; $MUPIP replic -receiv -shutdown -timeout=0 >&! SHUT_receiver.log'==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST3 RCV=INST4 $MUPIP replic -source -shutdown -instsecondary=__RCV_INSTNAME__ -timeout=0 >&! SHUTSRC_INST3INST4_1.out'==
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST2 INST3'==
+==Executing MULTISITE_REPLIC 'SYNC INST2 INST3'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST3 SRC=INST2 $MUPIP replic -receiv -shutdown -timeout=0 >&! SHUTRCV_INST2INT4.out '==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST3 RCV=INST4 $MUPIP replic -source -shutdown -instsecondary=__RCV_INSTNAME__ -timeout=0 >&! SHUTSRC_INST3INST4_2.out'==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST3 $MUPIP replic -source -shutdown -instsecondary=__RCV_INSTNAME__ -timeout=0 >&! SHUTSRC_INST2INT4.out'==
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST2 INST3'==
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST3 INST4'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,61 @@
+V1BOB10	;BINARY OPERATORS -2.10- (<>=[]);YS-TS,V1BOB,VALIDATION VERSION 7.1;31-AUG-1987;
+	;COPYRIGHT MUMPS SYSTEM LABORATORY 1978
+	S PASS=0,FAIL=0
+	W !!,"V1BOB10: TEST OF BINARY OPERATORS -2.10-  (RELATIONAL: '] )",!
+	W !,"string not follows ('])",!
+133	W !,"I-133  expratoms are numlit and numlit"
+	S ITEM="I-133.1  123']1" S VCOMP=123']1,VCORR="0" D EXAMINER
+	S ITEM="I-133.2  3.0']3" S VCOMP=3.0']3,VCORR="1" D EXAMINER
+	S ITEM="I-133.3  00123']1" S VCOMP=00123']1,VCORR="0" D EXAMINER
+	S ITEM="I-133.4  00.34']0" S VCOMP=00.34']0,VCORR="1" D EXAMINER
+	S ITEM="I-133.5  1234']124" S VCOMP=1234']124,VCORR="1" D EXAMINER
+	S ITEM="I-133.6  98788.34']987880" S VCOMP=98788.34']987880,VCORR="1" D EXAMINER
+	S ITEM="I-133.7  98788.34']987" S VCOMP=98788.34']987,VCORR="0" D EXAMINER
+	;
+134	W !,"I-134  expratoms are numlit and strlit"
+	S ITEM="I-134.1  987']""987""" S VCOMP=987']"987",VCORR="1" D EXAMINER
+	S ITEM="I-134.2  3.1']""3.1ABD""" S VCOMP=3.1']"3.1ABD",VCORR="1" D EXAMINER
+	S ITEM="I-134.3  22.56']""22$56""" S VCOMP=22.56']"22$56",VCORR="0" D EXAMINER
+	S ITEM="I-134.4  99.2']"" ! """ S VCOMP=99.2']" ! ",VCORR="0" D EXAMINER
+	S ITEM="I-134.5  -099.2']""-9 ! """ S VCOMP=-099.2']"-9 ! ",VCORR="0" D EXAMINER
+	;
+135	W !,"I-135  expratoms are strlit and numlit"
+	S ITEM="I-135.1  ""3""']3" S VCOMP="3"']3,VCORR="1" D EXAMINER
+	S ITEM="I-135.2  ""3A""']3" S VCOMP="3A"']3,VCORR="0" D EXAMINER
+	S ITEM="I-135.3  ""00123""']1" S VCOMP="00123"']1,VCORR="1" D EXAMINER
+	S ITEM="I-135.4  ""ABCD""']1" S VCOMP="ABCD"']1,VCORR="0" D EXAMINER
+	S ITEM="I-135.5  ""!""""""']0231" S VCOMP="!"""']0231,VCORR="1" D EXAMINER
+	S ITEM="I-135.6  +""3E-2A""']-3" S VCOMP=+"3E-2A"']-3,VCORR="0" D EXAMINER
+	;
+136	W !,"I-136  expratoms are strlit and strlit"
+	S ITEM="I-136.1  ""B""']""A""" S VCOMP="B"']"A",VCORR="0" D EXAMINER
+	S ITEM="I-136.2  "")""']""(""" S VCOMP=")"']"(",VCORR="0" D EXAMINER
+	S ITEM="I-136.3  ""#""']""A""" S VCOMP="#"']"A",VCORR="1" D EXAMINER
+	S ITEM="I-136.4  ""A""']""A""" S VCOMP="A"']"A",VCORR="1" D EXAMINER
+	S ITEM="I-136.5  ""AB""']""A""" S VCOMP="AB"']"A",VCORR="0" D EXAMINER
+	S ITEM="I-136.6  ""ABC""']""ABC""" S VCOMP="ABC"']"ABC",VCORR="1" D EXAMINER
+	S ITEM="I-136.7  ""AAA""']""AA""" S VCOMP="AAA"']"AA",VCORR="0" D EXAMINER
+	S ITEM="I-136.8  -""3A""']""-""" S VCOMP=-"3A"']"-",VCORR="0" D EXAMINER
+	S ITEM="I-136.9  ""AA""']""AAA""" S VCOMP="AA"']"AAA",VCORR="1" D EXAMINER
+	S ITEM="I-136.10  ""AAA""']""aaa""" S VCOMP="AAA"']"aaa",VCORR="1" D EXAMINER
+	S ITEM="I-136.11  ""aaa""']""AAA""" S VCOMP="aaa"']"AAA",VCORR="0" D EXAMINER
+	;
+137	W !,"I-137  empty string on left side"
+	S ITEM="I-137.1  """"']""A""" S VCOMP=""']"A",VCORR="1" D EXAMINER
+	S ITEM="I-137.2  """"']"".1234""" S VCOMP=""']".1234",VCORR="1" D EXAMINER
+	;
+138	W !,"I-138  empty string on right side"
+	S ITEM="I-138.1  ""A""']""""" S VCOMP="A"']"",VCORR="0" D EXAMINER
+	S ITEM="I-138.2  ""%AND""']""""" S VCOMP="%AND"']"",VCORR="0" D EXAMINER
+	;
+139	W !,"I-139  empty string on both sides"
+	S ITEM="I-139  " S VCOMP=""']"",VCORR="1" D EXAMINER
+	;
+END	W !!,"END OF V1BOB10",!
+	S ROUTINE="V1BOB10",TESTS=34,AUTO=34,VISUAL=0 D ^VREPORT
+	K  Q
+	;
+EXAMINER	I VCORR=VCOMP S PASS=PASS+1 W !,"   PASS  ",ITEM W:$Y>55 # Q
+	S FAIL=FAIL+1 W !,"** FAIL  ",ITEM W:$Y>55 #
+	W !,"           COMPUTED =""",VCOMP,"""" W:$Y>55 #
+	W !,"           CORRECT  =""",VCORR,"""" W:$Y>55 #

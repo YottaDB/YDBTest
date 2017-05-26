@@ -1,0 +1,219 @@
+D9E06-002470 NFS file create fails with ACP error
+
+The test is to create a file on the
+NFS mounted disk and then read it.
+Also, read an existing file.  Do
+this both while set default to the
+NFS directory specifying only the
+file name and from a local directory
+specifying the full dev:[dir]file.name.
+
+Background information on required setup to perform tests
+
+This requires a UNIX filesystem to be
+NFS mounted on a VMS system which has
+NFS proxies properly setup for the user
+doing the test.
+
+In HP TCPIP services, to add a proxy
+(requires SYSPRV and SYSLCK, only needs
+to be done once due to /perm):
+
+  tcpip add proxy vmsuser/nfs=out/host=unixhost/uid=unixuid/gid=unixgid/perm
+
+To mount a UNIX disk (doesn't need
+privileges due to /share):
+
+  tcpip mount dnfs: /path="/path/exported/from/unix"/host=unixhost/share
+
+A DNFS device will be created.  Note that
+DNFS0: is a template only and should not
+be referenced.
+
+Yeti, asgard, and wiglaf are in lespaul's
+/etc/netgroup so can mount /ext1/gtc/staff.
+
+-->  set proc/priv=(syslck,sysprv)
+-->  tcpip add prox weiner /uid=1040/gid=21/nfs/perm/host="lespaul.sanchez.com"
+-->  tcpip show prox weiner
+ 
+ VMS User_name     Type      User_ID    Group_ID   Host_name
+
+WEINER            CD	WEINER			   *
+WEINER            O		1040          21   mesquite.sanchez.com
+WEINER            ON		1040          21   lespaul.sanchez.com
+-->  set proc/priv=(nosyslck,nosysprv)
+-->  tcpip mount dnfs0: /host="lespaul.sanchez.com"/path="/ext1/gtc/staff/weiner"/share
+%TCPIP$DNFSMOUNT-S-MOUNTED, /ext1/gtc/staff/weiner mounted on _DNFS1:[000000]
+-->  tcpip show  mount/fu
+_DNFS1:[000000] mounted
+    lespaul.sanchez.com:/ext1/gtc/staff/weiner
+        Transport                   TCPIP-UDP   Writing		 Enabled
+        Read/write size             8192/8192   Write conversion Enabled
+	RPC timeout             0 00:00:01.00   ADF usage USE,UPDATE,CREATE
+	RPC retry limit                     0   Fileids Unique
+	Attribute time          0 00:00:15.00   Server type	    UNIX
+	Directory time          0 00:00:30.00   Advisory Locking    Disabled
+	Cache Validation          MODIFY TIME Default user         [200,200]
+	Superuser                          No Default UID,GID         -2,-2
+
+-->  sho dev dnfs1/fu
+
+Disk DNFS1:, device type Foreign disk type 7, is online, mounted, file-oriented
+    device, shareable.
+
+    Error count			   0    Operations completed	  6
+    Owner process		  ""    Owner UIC	[DEV,WEINER]
+    Owner process ID	    00000000	Dev Prot S:RWPL,O:RWPL,G:RWPL,W:RWPL
+    Reference count		   1	Default buffer size	512
+    Total blocks	    33554432	Sectors per track	  0
+    Total cylinders		   0	Tracks per cylinder	  0
+
+    Volume label	"lespa:/ext1/"	Relative volume number	  0
+    Cluster size		  16	Transaction count	  1
+    Free blocks			   0	Maximum files allowed 1000000
+    Extend quantity		  16	Mount count		  1
+    Mount status	     Process	ACP process name	"DNFS1ACP"
+    Extent cache size		   0	Maximum blocks in extent cache   0
+    File ID cache size		   0	Blocks currently in extent cache 0
+    Quota cache size		   0	Maximum buffers in FCP cache     0
+
+  Volume Status: ODS-2, do not unload on dismount, file high-water marking,
+      write-back caching enabled.
+
+Do "show dev dnfs" (on Bilbo with TCPWare,
+"show dev nfs") to see which device was
+allocated.  A logical to be defined can
+also be specified on the mount.  On Bilbo,
+nfs500: is Atlas' /home and a proxy
+should be predefined for your SCA userid.
+If not, contact ATS.
+
+BILBO$ sho dev nfs500    
+
+Device                  Device           Error    Volume         Free  Trans
+ Name                   Status           Count     Label        Blocks Count
+ BILBO$NFS500:           Mounted              0  ATLAS:/home   71825760     1
+
+BILBO$ dir nfs500:[weiners] 
+
+Directory NFS500:[WEINERS]
+
+$5NSSH.DIR;1        .$X$DEFAULTS;1      .BASHRC;1           .BASH_HISTORY;1    
+
+==========
+
+Begin of actual testing
+
+DNFS1:[test] is ~weiner/test on lespaul
+
+--> dir dnfs1:[test]/sec/siz/dat
+
+Directory DNFS1:[TEST]
+
+LONGSTR.M;1	 2 24-FEB-2004 21:54:24.00 [DEV,WEINER]             
+        (RWD,RWD,RD,RD)
+LONGSTR.O;1	 6 24-FEB-2004 23:20:42.00 [DEV,WEINER]             
+	(RWD,RWD,RD,RD)
+SHRNKFIL.M;1	 3 24-FEB-2004 22:39:16.00 [DEV,WEINER]             
+	(RWD,RWD,RD,RD)
+SHRNKFIL.O;1	11 24-FEB-2004 23:22:41.00 [DEV,WEINER]             
+        (RWD,RWD,RD,RD)
+
+Total of 4 files, 22 blocks.
+
+Test reading a pre-existing file:
+
+--> gtm
+%GTM-I-BREAK, Break instruction encountered
+                At M source location +1^GTM$DMOD
+GTM>s f="dnfs1:[test]shrnkfil.m"
+
+GTM>o f:read
+
+GTM>zshow "D"
+DNFS1:[TEST]SHRNKFIL.M OPEN RMS ALLO=3 STMLF READ 
+_TNA811: OPEN TERMINAL EDIT NOESCA HOST NOINSE NOPAST
+	NOREADS TTSY TYPE WIDTH=80 LENG=24 
+
+GTM>use f read line use 0 zwrite
+f="dnfs1:[test]shrnkfil.m"
+line=$C(9)_"; shrinks a file of long strings, printing the number of ALPHABETalp
+	habet occurrences instead."
+
+Assumes gtm$routines includes gtm$troot:[v990.manual_tests.inref]
+
+-->  gtm
+%GTM-I-BREAK, Break instruction encountered
+                At M source location +1^GTM$DMOD
+GTM>d write^d002470
+file to create: dnfs1:[test]d2470.txt
+DNFS1:[TEST]D2470.TXT OPEN RMS 
+_TNA811: OPEN TERMINAL EDIT NOESCA HOST NOINSE NOPAST NOREADS TTSY TYPE WIDTH=80
+           LENG=24 
+
+GTM>d read^d002470
+file to read: dnfs1:[test]d2470.txt
+DNFS1:[TEST]D2470.TXT OPEN RMS ALLO=1 STMLF READ EXCE="G notfound"
+_TNA811: OPEN TERMINAL EDIT NOESCA HOST NOINSE NOPAST NOREADS TTSY TYPE WIDTH=80
+           LENG=24 
+line="this is line 1"
+line="this is the second line"
+line="this is the last line"
+
+GTM>d read^d002470
+file to read: dnfs1:[test]nothere.txt
+
+The file dnfs1:[test]nothere.txt does not exist.
+
+GTM>
+
+-->  dir/fu dnfs1:[test]d2470;
+
+Directory DNFS1:[TEST]
+
+D2470.TXT;2                   File ID:  (445,24817,0)         
+Size:            1/1          Owner:    [DEV,WEINER]
+Created:   22-JUN-2005 21:19:19.67
+Revised:   22-JUN-2005 21:19:19.67 (1)
+Expires:   <None specified>
+Backup:    <No backup recorded>
+Effective: <None specified>
+Recording: <None specified>
+File organization:  Sequential
+Shelved state:      Online 
+Caching attribute:  Unknown caching value: 0
+File attributes:    Allocation: 1, Extend: 0, Global buffer count: 0
+                    No version limit
+Record format:      Stream_LF, maximum 0 bytes, longest 0 bytes
+Record attributes:  Carriage return carriage control
+RMS attributes:     None
+Journaling enabled: None
+File protection:    System:RWED, Owner:RWED, Group:RED, World:D
+Access Cntrl List:  None
+Client attributes:  None
+
+Total of 1 file, 1/1 block.
+
+-->  sho def
+  DNFS1:[TEST]
+-->  gtm
+%GTM-I-BREAK, Break instruction encountered
+                At M source location +1^GTM$DMOD
+GTM>d write^d002470
+file to create: d2470indir.txt
+D2470INDIR.TXT OPEN RMS 
+_TNA811: OPEN TERMINAL EDIT NOESCA HOST NOINSE NOPAST NOREADS TTSY TYPE WIDTH=80
+           LENG=24 
+
+GTM>d read^d002470
+file to read: d2470indir.txt
+D2470INDIR.TXT OPEN RMS ALLO=1 STMLF READ EXCE="G notfound"
+_TNA811: OPEN TERMINAL EDIT NOESCA HOST NOINSE NOPAST NOREADS TTSY TYPE WIDTH=80
+           LENG=24 
+line="this is line 1"
+line="this is the second line"
+line="this is the last line"
+
+GTM>h
+

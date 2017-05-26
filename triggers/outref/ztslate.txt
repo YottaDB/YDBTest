@@ -1,0 +1,203 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+###################################################################
+###################################################################
+set $ztwormhole to an undef variable
+ZSTATUS=ztwoundeftest+3^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+###################################################################
+set $ztslate to a valid variable
+before:                         
+inside:
+after: AB10                     
+###################################################################
+set $ztslate to an undef variable
+You will see two error messages from the trigger's $etrap handler
+before:AB10                     
+inside:
+ZSTATUS=undefslate+2^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+5:undefslate+3^ztslate	$ZTLEVEL=1	$ZLEVEL=6
+after:                          
+###################################################################
+set $ztwormhole to an undef variable in a trigger
+You will see two error messages from the trigger's $etrap handler
+before:                         
+inside:
+ZSTATUS=undefztwo+2^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+5:undefztwo+3^ztslate	$ZTLEVEL=1	$ZLEVEL=6
+after: set undef ztwo           
+###################################################################
+show $ztslate is empty for each imlpict transaction start
+before:set undef ztwo           
+inside:
+inside:
+after: AB50                     
+###################################################################
+use $ztslate with trollback in trigger
+because trollback breaks the trigger context, expect error messages from $etrap and $ztrap
+before:AB50                     
+##SUSPEND_OUTPUT HOST_ALL
+inside:I've been triggered!
+ZSTATUS=rollback+5^ztslate,%GTM-E-SETINTRIGONLY, ISV $ZTSLATE cannot be modified outside of the trigger environment
+5:rollback+6^ztslate	$ZTLEVEL=1	$ZLEVEL=6
+rolled:
+ZSTATUS=trollslate+6^ztslate,%GTM-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger d#1#. Transaction level must be the same at exit as when the trigger started
+##ALLOW_OUTPUT HOST_ALL
+after:                          
+###################################################################
+use $ztslate with trestart in trigger
+before:                         
+inside:I've been triggered!
+trestart:I've been triggered!time to restart!
+inside:I've been triggered!
+restart:I've been triggered!I've been trestarted!
+after: I've been triggered!I've been trestarted!
+###################################################################
+use $ztslate with tcommit in trigger
+before:I've been triggered!I've been trestarted!
+inside:I've been triggered!
+ZSTATUS=commit+4^ztslate,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
+5:commit+5^ztslate	$ZTLEVEL=1	$ZLEVEL=6
+commit:I've been triggered!I've been committed!
+after: I've been triggered!I've been committed!
+###################################################################
+use $ztslate with tstart/tcommit in trigger
+before:I've been triggered!I've been committed!
+inside:I've been triggered!
+start: I've been triggered!I've been started!
+commit:I've been triggered!I've been started!I've been committed!
+after: I've been triggered!I've been started!I've been committed!
+###################################################################
+
+Repeat the same tests, but wrap them in an explicit transaction
+###################################################################
+###################################################################
+set $ztwormhole to an undef variable
+ZSTATUS=ztwoundeftest+3^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+###################################################################
+set $ztslate to a valid variable
+before:                         
+inside:
+after: AB100                    
+###################################################################
+set $ztslate to an undef variable
+You will see two error messages from the trigger's $etrap handler
+before:                         
+inside:
+ZSTATUS=undefslate+2^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+5:undefslate+3^ztslate	$ZTLEVEL=1	$ZLEVEL=6
+after:                          
+###################################################################
+set $ztwormhole to an undef variable in a trigger
+You will see two error messages from the trigger's $etrap handler
+before:                         
+inside:
+ZSTATUS=undefztwo+2^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+5:undefztwo+3^ztslate	$ZTLEVEL=1	$ZLEVEL=6
+after: set undef ztwo           
+###################################################################
+show $ztslate is not empty for each imlpict transaction when wrapped by an explicit transaction
+before:                         
+inside:
+inside:AB130
+after: AB130AB140               
+###################################################################
+use $ztslate with trollback in trigger
+before:                         
+##SUSPEND_OUTPUT HOST_ALL
+inside:I've been triggered!
+ZSTATUS=rollback+5^ztslate,%GTM-E-SETINTRIGONLY, ISV $ZTSLATE cannot be modified outside of the trigger environment
+5:rollback+6^ztslate	$ZTLEVEL=1	$ZLEVEL=6
+rolled:
+ZSTATUS=trollslate+6^ztslate,%GTM-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger d#1#. Transaction level must be the same at exit as when the trigger started
+##ALLOW_OUTPUT HOST_ALL
+after:                          
+##SUSPEND_OUTPUT HOST_ALL
+ZSTATUS=trollslate+8^ztslate,%GTM-E-TLVLZERO, Transaction is not in progress
+##ALLOW_OUTPUT HOST_ALL
+###################################################################
+use $ztslate with trestart in trigger
+before:                         
+inside:I've been triggered!
+trestart:I've been triggered!time to restart!
+use $ztslate with trestart in trigger
+before:                         
+inside:I've been triggered!
+restart:I've been triggered!I've been trestarted!
+after: I've been triggered!I've been trestarted!
+###################################################################
+use $ztslate with tcommit in trigger
+before:                         
+inside:I've been triggered!
+ZSTATUS=commit+4^ztslate,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
+5:commit+5^ztslate	$ZTLEVEL=1	$ZLEVEL=6
+commit:I've been triggered!I've been committed!
+after: I've been triggered!I've been committed!
+###################################################################
+use $ztslate with tstart/tcommit in trigger
+before:                         
+inside:I've been triggered!
+start: I've been triggered!I've been started!
+commit:I've been triggered!I've been started!I've been committed!
+after: I've been triggered!I've been started!I've been committed!
+###################################################################
+###################################################################
+This caused an assert instead of issuing a %GTM-E-TRESTNOT
+use $ztslate with trestart in trigger
+before:                         
+inside:I've been triggered!
+ZSTATUS=assert+5^ztslate,%GTM-E-TRESTNOT, Cannot TRESTART, transaction is not restartable,%GTM-E-TRESTLOC, Transaction start: assert+5^ztslate, Transaction failure: assertrtn+4^ztslate
+use $ztslate with trestart in trigger
+before:                         
+inside:I've been triggered!
+inside:I've been triggered!
+restart:I've been triggered!I've been trestarted!
+after: I've been triggered!I've been trestarted!
+ZSTATUS=assert+10^ztslate,%GTM-E-TLVLZERO, Transaction is not in progress
+###################################################################
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT NON_REPLIC
+##TEST_AWK##TEST_HOST_SHORT##:##REMOTE_TEST_PATH##/RCVR[_0-9]*.log.updproc
+%GTM-E-SVNOSET, Cannot SET this special variable
+%GTM-E-SVNOSET, Cannot SET this special variable
+%GTM-E-SVNOSET, Cannot SET this special variable
+%GTM-E-SVNOSET, Cannot SET this special variable
+%GTM-E-SVNOSET, Cannot SET this special variable
+%GTM-E-SVNOSET, Cannot SET this special variable
+%GTM-E-SVNOSET, Cannot SET this special variable
+%GTM-E-SVNOSET, Cannot SET this special variable
+%GTM-E-SVNOSET, Cannot SET this special variable
+%GTM-E-SVNOSET, Cannot SET this special variable
+%GTM-E-SVNOSET, Cannot SET this special variable
+%GTM-E-SVNOSET, Cannot SET this special variable
+%GTM-E-SVNOSET, Cannot SET this special variable
+%GTM-E-SVNOSET, Cannot SET this special variable
+%GTM-E-SVNOSET, Cannot SET this special variable
+%GTM-E-SVNOSET, Cannot SET this special variable
+ZSTATUS=undefslate+2^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+ZSTATUS=undefztwo+2^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+ZSTATUS=commit+4^ztslate,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
+ZSTATUS=undefslate+2^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+ZSTATUS=undefztwo+2^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+ZSTATUS=commit+4^ztslate,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0

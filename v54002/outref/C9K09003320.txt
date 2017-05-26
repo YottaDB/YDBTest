@@ -1,0 +1,53 @@
+###################################################################
+=> Create database and replication instance file
+###################################################################
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+###################################################################
+=> ##SOURCE_PATH##/mupip replicate -instance_create -name=INSTA
+###################################################################
+
+mumps.dat
+mumps.gld
+mumps.repl
+
+Now, try creating another instance file (without -name qualifier) to test that RENAMING does NOT happen
+###################################################################
+=> ##SOURCE_PATH##/mupip replicate -instance_create
+###################################################################
+
+%GTM-E-REPLINSTNMUNDEF, Replication instance name not defined
+
+mumps.dat
+mumps.gld
+mumps.repl
+
+Now, by passing a valid -name qualifier with -noreplace flag test that RENAMING still does NOT happen
+###################################################################
+=> ##SOURCE_PATH##/mupip replicate -instance_create -name=INSTA -noreplace
+###################################################################
+%GTM-E-FILEEXISTS, File ##TEST_PATH##/mumps.repl already exists
+
+mumps.dat
+mumps.gld
+mumps.repl
+
+Now, by passing a valid -name qualifier without -noreplace flag test that RENAMING does happen
+###################################################################
+=> ##SOURCE_PATH##/mupip replicate -instance_create -name=INSTA
+###################################################################
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.repl is renamed to ##TEST_PATH##/mumps.repl_##TIMESTAMP##
+
+mumps.dat
+mumps.gld
+mumps.repl
+##TEST_AWKmumps.repl_[0-9]*
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

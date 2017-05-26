@@ -1,0 +1,34 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+do ^misc
+test quit if for xecute use open close with long names
+##################################################
+Test QUIT
+##################################################
+Test IF
+local true
+local false
+global true
+global false
+global false
+##################################################
+Test FOR
+thisisthelonglocalvariablefor=1
+thisisthelonglocalvariablefor=2
+thisisthelonglocalvariablefor=3
+thisisthelonglocalvariablefor=4
+thisisthelonglocalvariablefor=5
+##################################################
+Test XECUTE
+xecute thisisthelonglocalvariableforxecute
+xecute ^thisisthelongglobalvariableforxecute
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

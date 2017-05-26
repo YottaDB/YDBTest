@@ -1,0 +1,420 @@
+###################################################################
+1. Test standard trigger subscript collation, standard default region collation
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps1.gld
+Using: ##SOURCE_PATH##/mupip
+mumps1.dat
+trigcol1a.dat
+trigcol1b.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps1.gld
+Using: ##SOURCE_PATH##/mupip
+mumps1.dat
+trigcol1a.dat
+trigcol1b.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+^collrange("A")=1
+^collrange("B")=2
+^collrange("C")=3
+^collrange("D")=4
+^collrange("E")=5
+^collrange("F")=6
+^collrange("G")=7
+^collrange("H")=8
+^collrange("I")=9
+^collrange("J")=10
+^collrange("K")=11
+^collrange("L")=12
+^collrange("M")=13
+^collrange("N")=14
+^collrange("O")=15
+^collrange("P")=16
+^collrange("Q")=17
+^collrange("R")=18
+^collrange("S")=19
+^collrange("T")=20
+^collrange("U")=21
+^collrange("V")=22
+^collrange("W")=23
+^collrange("X")=24
+^collrange("Y")=25
+^collrange("Z")=26
+^collrange("a")=27
+^collrange("b")=28
+^collrange("c")=29
+^collrange("d")=30
+^collrange("e")=31
+^collrange("f")=32
+^collrange("g")=33
+^collrange("h")=34
+^collrange("i")=35
+^collrange("j")=36
+^collrange("k")=37
+^collrange("l")=38
+^collrange("m")=39
+^collrange("n")=40
+^collrange("o")=41
+^collrange("p")=42
+^collrange("q")=43
+^collrange("r")=44
+^collrange("s")=45
+^collrange("t")=46
+^collrange("u")=47
+^collrange("v")=48
+^collrange("w")=49
+^collrange("x")=50
+^collrange("y")=51
+^collrange("z")=52
+^range("A")=1
+^range("B")=2
+^range("C")=3
+^range("D")=4
+^range("E")=5
+^range("F")=6
+^range("G")=7
+^range("h")=34
+^range("i")=35
+^range("j")=36
+^range("k")=37
+^range("l")=38
+^range("m")=39
+^range("n")=40
+^range("o")=41
+^range("p")=42
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Output File: 
+;trigger name: trigcolupper (region TRIGCOL1A)  cycle: 2
++^collrange(sub="A":"G") -name=trigcolupper -commands=S -xecute="Set ^range(sub)=$ZTValue"
+;trigger name: trigcollower (region TRIGCOL1A)  cycle: 2
++^collrange(sub="h":"p") -name=trigcollower -commands=S -xecute="Set ^range(sub)=$ZTValue"
+
+###################################################################
+2. Alternate trigger subscript collation, standard default region collation
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps2.gld
+Using: ##SOURCE_PATH##/mupip
+mumps2.dat
+trigcol2a.dat
+trigcol2b.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps2.gld
+Using: ##SOURCE_PATH##/mupip
+mumps2.dat
+trigcol2a.dat
+trigcol2b.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+^collrange("z")=52
+^collrange("y")=51
+^collrange("x")=50
+^collrange("w")=49
+^collrange("v")=48
+^collrange("u")=47
+^collrange("t")=46
+^collrange("s")=45
+^collrange("r")=44
+^collrange("q")=43
+^collrange("p")=42
+^collrange("o")=41
+^collrange("n")=40
+^collrange("m")=39
+^collrange("l")=38
+^collrange("k")=37
+^collrange("j")=36
+^collrange("i")=35
+^collrange("h")=34
+^collrange("g")=33
+^collrange("f")=32
+^collrange("e")=31
+^collrange("d")=30
+^collrange("c")=29
+^collrange("b")=28
+^collrange("a")=27
+^collrange("Z")=26
+^collrange("Y")=25
+^collrange("X")=24
+^collrange("W")=23
+^collrange("V")=22
+^collrange("U")=21
+^collrange("T")=20
+^collrange("S")=19
+^collrange("R")=18
+^collrange("Q")=17
+^collrange("P")=16
+^collrange("O")=15
+^collrange("N")=14
+^collrange("M")=13
+^collrange("L")=12
+^collrange("K")=11
+^collrange("J")=10
+^collrange("I")=9
+^collrange("H")=8
+^collrange("G")=7
+^collrange("F")=6
+^collrange("E")=5
+^collrange("D")=4
+^collrange("C")=3
+^collrange("B")=2
+^collrange("A")=1
+^range("p")=42
+^range("o")=41
+^range("n")=40
+^range("m")=39
+^range("l")=38
+^range("k")=37
+^range("j")=36
+^range("i")=35
+^range("h")=34
+^range("G")=7
+^range("F")=6
+^range("E")=5
+^range("D")=4
+^range("C")=3
+^range("B")=2
+^range("A")=1
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Output File: 
+;trigger name: trigcolupper (region TRIGCOL2A)  cycle: 2
++^collrange(sub="G":"A") -name=trigcolupper -commands=S -xecute="Set ^range(sub)=$ZTValue"
+;trigger name: trigcollower (region TRIGCOL2A)  cycle: 2
++^collrange(sub="p":"h") -name=trigcollower -commands=S -xecute="Set ^range(sub)=$ZTValue"
+
+###################################################################
+3. Standard trigger subscript collation, alternate default region collation
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps3.gld
+Using: ##SOURCE_PATH##/mupip
+mumps3.dat
+trigcol3a.dat
+trigcol3b.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps3.gld
+Using: ##SOURCE_PATH##/mupip
+mumps3.dat
+trigcol3a.dat
+trigcol3b.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+^collrange("A")=1
+^collrange("B")=2
+^collrange("C")=3
+^collrange("D")=4
+^collrange("E")=5
+^collrange("F")=6
+^collrange("G")=7
+^collrange("H")=8
+^collrange("I")=9
+^collrange("J")=10
+^collrange("K")=11
+^collrange("L")=12
+^collrange("M")=13
+^collrange("N")=14
+^collrange("O")=15
+^collrange("P")=16
+^collrange("Q")=17
+^collrange("R")=18
+^collrange("S")=19
+^collrange("T")=20
+^collrange("U")=21
+^collrange("V")=22
+^collrange("W")=23
+^collrange("X")=24
+^collrange("Y")=25
+^collrange("Z")=26
+^collrange("a")=27
+^collrange("b")=28
+^collrange("c")=29
+^collrange("d")=30
+^collrange("e")=31
+^collrange("f")=32
+^collrange("g")=33
+^collrange("h")=34
+^collrange("i")=35
+^collrange("j")=36
+^collrange("k")=37
+^collrange("l")=38
+^collrange("m")=39
+^collrange("n")=40
+^collrange("o")=41
+^collrange("p")=42
+^collrange("q")=43
+^collrange("r")=44
+^collrange("s")=45
+^collrange("t")=46
+^collrange("u")=47
+^collrange("v")=48
+^collrange("w")=49
+^collrange("x")=50
+^collrange("y")=51
+^collrange("z")=52
+^range("A")=1
+^range("B")=2
+^range("C")=3
+^range("D")=4
+^range("E")=5
+^range("F")=6
+^range("G")=7
+^range("h")=34
+^range("i")=35
+^range("j")=36
+^range("k")=37
+^range("l")=38
+^range("m")=39
+^range("n")=40
+^range("o")=41
+^range("p")=42
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Output File: 
+;trigger name: trigcolupper (region TRIGCOL3A)  cycle: 2
++^collrange(sub="A":"G") -name=trigcolupper -commands=S -xecute="Set ^range(sub)=$ZTValue"
+;trigger name: trigcollower (region TRIGCOL3A)  cycle: 2
++^collrange(sub="h":"p") -name=trigcollower -commands=S -xecute="Set ^range(sub)=$ZTValue"
+
+###################################################################
+4. Alternate trigger subscript collation, alternate default region collation
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps4.gld
+Using: ##SOURCE_PATH##/mupip
+mumps4.dat
+trigcol4a.dat
+trigcol4b.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps4.gld
+Using: ##SOURCE_PATH##/mupip
+mumps4.dat
+trigcol4a.dat
+trigcol4b.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+^collrange("z")=52
+^collrange("y")=51
+^collrange("x")=50
+^collrange("w")=49
+^collrange("v")=48
+^collrange("u")=47
+^collrange("t")=46
+^collrange("s")=45
+^collrange("r")=44
+^collrange("q")=43
+^collrange("p")=42
+^collrange("o")=41
+^collrange("n")=40
+^collrange("m")=39
+^collrange("l")=38
+^collrange("k")=37
+^collrange("j")=36
+^collrange("i")=35
+^collrange("h")=34
+^collrange("g")=33
+^collrange("f")=32
+^collrange("e")=31
+^collrange("d")=30
+^collrange("c")=29
+^collrange("b")=28
+^collrange("a")=27
+^collrange("Z")=26
+^collrange("Y")=25
+^collrange("X")=24
+^collrange("W")=23
+^collrange("V")=22
+^collrange("U")=21
+^collrange("T")=20
+^collrange("S")=19
+^collrange("R")=18
+^collrange("Q")=17
+^collrange("P")=16
+^collrange("O")=15
+^collrange("N")=14
+^collrange("M")=13
+^collrange("L")=12
+^collrange("K")=11
+^collrange("J")=10
+^collrange("I")=9
+^collrange("H")=8
+^collrange("G")=7
+^collrange("F")=6
+^collrange("E")=5
+^collrange("D")=4
+^collrange("C")=3
+^collrange("B")=2
+^collrange("A")=1
+^range("p")=42
+^range("o")=41
+^range("n")=40
+^range("m")=39
+^range("l")=38
+^range("k")=37
+^range("j")=36
+^range("i")=35
+^range("h")=34
+^range("G")=7
+^range("F")=6
+^range("E")=5
+^range("D")=4
+^range("C")=3
+^range("B")=2
+^range("A")=1
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Output File: 
+;trigger name: trigcolupper (region TRIGCOL4A)  cycle: 2
++^collrange(sub="G":"A") -name=trigcolupper -commands=S -xecute="Set ^range(sub)=$ZTValue"
+;trigger name: trigcollower (region TRIGCOL4A)  cycle: 2
++^collrange(sub="p":"h") -name=trigcollower -commands=S -xecute="Set ^range(sub)=$ZTValue"
+

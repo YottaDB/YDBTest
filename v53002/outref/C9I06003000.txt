@@ -1,0 +1,104 @@
+
+# Start replication with BEFORE image journaling on primary and secondary.
+# Use 2 databases a.dat and mumps.dat AND minimum alignsize on both sides.
+# Do the following updates on the primary.
+#     f i=1:1:x s ^a=$j(i,y)
+# The x and y are chosen such that we would be guaranteed that at least one
+# alignsize boundary is reached in the journal file.
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+# Check if the align size is minimal. The rest of the test relies on it.
+# If align size is not minimal, no point in continuing the test. Will exit
+
+GTM>
+
+GTM>
+
+# Run "mupip journal -extract -noverify -detail -for -fences=none a.mjl" on primary.
+# Run "grep 0x00020000 a.mjf" on primary. Sample output is as follows.
+# 0x00020000 [0x00f8] :: SET    \61170,60629\253\818546390\13802\0\253\^a="  ....253"
+# Note down the value "253" above (in the \253\^a=). This means the 253rd set was written at an alignsize boundary.
+# Assuming it to be 253, the rest of the description continues
+
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/a.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+# stop replication and restart with a fresh set of databases.
+# Do the following updates on the primary.
+#     f i=1:1:252 s ^a=$j(i,200)
+#     f i=1:1:100 s ^x=$j(i,200)
+#     set i=253 s ^a=$j(i,200)
+# Note that we are doing 252 updates of ^a followed by 100 updates of ^x followed by the 253rd update of ^a.
+
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+# Once all these updates are sent across to the secondary, shut down the secondary and primary.
+# On the secondary run : mupip_rollback.csh -resync=352 -lost=x.los "*"
+#     Note that the -resync= value should be greater than 252 but less than 252+100+1.
+#     This way we are taking the database on the secondary to some point back in time BEFORE the 253rd  ^a update.
+
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+mupip journal rollback ...
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+
+# Now start primary and secondary.
+# The source server will start sending from seqno 352 onwards since that is the journal seqno of the secondary.
+#     All these journal records correspond to updates to ^x.
+# Eventually it will have to send ^a (the 253rd update) across. At that point, without the fix,
+# In dbg, it will assert fail in gtmsource_readfiles.c. In pro, it will spin taking 100% of the cpu.
+# With the fix it will send it across without any issues.
+
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

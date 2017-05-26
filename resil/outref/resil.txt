@@ -1,0 +1,64 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+
+GTM>
+
+GTM>
+
+Caution: Database Block Certification Has Been Enabled
+
+GTM>
+##SUSPEND_OUTPUT TP
+RESIL TEST
+##ALLOW_OUTPUT  TP
+##SUSPEND_OUTPUT NON_TP
+TPRESIL TEST
+##ALLOW_OUTPUT  NON_TP
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+##SUSPEND_OUTPUT TP
+volkill0.mjo0
+volkill1.mjo1
+volkill2.mjo1
+volkill3.mjo1
+volkill4.mjo1
+volkill5.mjo1
+volkill5.mjo2
+volkill5.mjo3
+volkill5.mjo4
+##SUSPEND_OUTPUT NON_TP
+##ALLOW_OUTPUT TP
+volktp0.mjo0
+volktp1.mjo1
+volktp2.mjo1
+volktp3.mjo1
+volktp4.mjo1
+volktp5.mjo1
+volktp5.mjo2
+volktp5.mjo3
+volktp5.mjo4

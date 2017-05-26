@@ -1,0 +1,73 @@
+V1IE1	;IF, ELSE AND $TEST -1-;YS-KO-TS,V1IE,VALIDATION VERSION 7.1;31-AUG-1987;
+	;COPYRIGHT MUMPS SYSTEM LABORATORY 1978
+	S PASS=0,FAIL=0
+	W !!,"V1IE1: TEST OF IF, ELSE, $TEST -1-",!
+518	W !,"I-518  tvexpr contains binary operator"
+	S ITEM="I-518.1  tvexpr is true",VCOMP=""
+	I 1=1 S VCOMP=VCOMP_3
+	E  S VCOMP=VCOMP_"ERROR 3"
+	S VCORR="3" D EXAMINER
+	;
+	S ITEM="I-518.2  tvexpr is false",VCOMP=""
+	I 2=3 S VCOMP=VCOMP_"ERROR 4"
+	E  S VCOMP=VCOMP_4
+	S VCORR="4" D EXAMINER
+	;
+519	W !,"I-519  tvexpr contains unary operator"
+	S ITEM="I-519  ",VCOMP="" I '0.0,+(10.0),-.01 S VCOMP=VCOMP_519 ;comment
+	E  S VCOMP=VCOMP_"ERROR 519"
+	S VCORR="519" D EXAMINER
+	;
+520	W !,"I-520  tvexpr is string literal"
+	S ITEM="I-520.1  ""ABC""",VCOMP="" I "ABC" S VCOMP=VCOMP_"ERROR 0"
+	E  S VCOMP=VCOMP_0
+	S VCORR="0" D EXAMINER
+	;
+	S ITEM="I-520.2  ""1ABC""",VCOMP="" I "1ABC" S VCOMP=VCOMP_1
+	E  S VCOMP=VCOMP_"ERROR 1"
+	S VCORR="1" D EXAMINER
+	;
+	S ITEM="I-520.3  "".05EEE""",VCOMP="" I ".05EEE" S VCOMP=VCOMP_2
+	E  S VCOMP=VCOMP_"ERROR 2"
+	S VCORR="2" D EXAMINER
+	;
+521	W !,"I-521  tvexpr is empty string"
+	S ITEM="I-521  ",VCOMP="" I "" S VCOMP=VCOMP_"empty"
+	E  S VCOMP=VCOMP_"**empty**"
+	S VCORR="**empty**" D EXAMINER
+	;
+522	W !,"I-522  tvexpr is integer"
+	S ITEM="I-522  ",VCOMP="" I 9998765 S VCOMP=VCOMP_522
+	E  S VCOMP=VCOMP_"ERROR 522"
+	S VCORR="522" D EXAMINER
+	;
+523	W !,"I-523  tvexpr is non-integer"
+	S ITEM="I-523  ",VCOMP="" I 0000.00005000 S VCOMP=VCOMP_523
+	E  S VCOMP=VCOMP_"ERROR 523"
+	S VCORR="523" D EXAMINER
+	;
+524	W !,"I-524  ELSE command, while $T=1"
+	S ITEM="I-524  ",VCOMP="" IF 1 S VCOMP=VCOMP_" "
+	E  S VCOMP=VCOMP_"ERROR 524"
+	S VCORR=" " D EXAMINER
+	;
+525	W !,"I-525  ELSE command, while $T=0"
+	S ITEM="I-525  ",VCOMP="" IF 0 S VCOMP=VCOMP_" "
+	E  S VCOMP=VCOMP_"525"
+	S VCORR="525" D EXAMINER
+	;
+526	W !,"I-526  argumentless IF command, while $T=1"
+	S ITEM="I-526  ",VCOMP=""
+	I 1 S VCOMP=VCOMP_" " S:0 VCOMP=VCOMP_" " I  S VCOMP=VCOMP_"//"_$TEST
+	I  S VCOMP=VCOMP_"//"_$TEST
+	E  S VCOMP=VCOMP_"ERROR 526"
+	S VCORR=" //1//1" D EXAMINER
+	;
+END	W !!,"END OF V1IE1",!
+	S ROUTINE="V1IE1",TESTS=12,AUTO=12,VISUAL=0 D ^VREPORT
+	K  Q
+	;
+EXAMINER	I VCORR=VCOMP S PASS=PASS+1 W !,"   PASS  ",ITEM W:$Y>55 # Q
+	S FAIL=FAIL+1 W !,"** FAIL  ",ITEM W:$Y>55 #
+	W !,"           COMPUTED =""",VCOMP,"""" W:$Y>55 #
+	W !,"           CORRECT  =""",VCORR,"""" W:$Y>55 #

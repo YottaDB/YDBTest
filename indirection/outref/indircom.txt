@@ -1,0 +1,39 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+job label1:(out="job1.mjo":err="job1.mje")
+job label2:(out="job2.mjo":err="job2.mje")
+***$TEXT()***
+label1 write "This is label1",!
+ write "This is label1+1",!
+label2 write "This is label2",!
+
+***ZBREAK***
+label5^indircom
+label5^indircom
+label4^indircom
+label5^indircom
+label4^indircom
+label3^indircom
+
+***ZPRINT***
+label1	write "This is label1",!
+	write "This is label1+1",!
+	set ^label1=$JOB ; To communicate the jobid of the first job to the parent
+	quit
+label3	;just to test zbreak and zprint
+	write "This is label3",! quit
+
+***JOB***
+This is label1
+This is label1+1
+This is label2
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

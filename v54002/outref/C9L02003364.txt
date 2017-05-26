@@ -1,0 +1,29 @@
+Create driver.m
+Create mtest.m
+Create echo.csh which exits with a 0
+Create badecho.csh which exits with a 1
+Make echo.csh executable
+
+Execute driver
+
+Wait for mtest to die
+
+Output from mtest.mjo:
+Write some output to mtest.mjo
+Write some more output to mtest.mjo
+Output from mtest.mje:
+Output from echo.out:
+verifies echo.csh was executed
+Make badecho.csh executable
+
+Execute driver for badecho
+
+Wait for error in mtest.mje
+----------
+Error GTM-E-JOBSTARTCMDFAIL seen in mtest.mje as expected:
+%GTM-E-JOBSTARTCMDFAIL, JOB command STARTUP script invocation failed
+----------
+Output from mtest.mjo:
+Output from mtest.mje:
+Output from badecho.out:
+verifies badecho.csh was executed

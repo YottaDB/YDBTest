@@ -1,0 +1,25 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+
+GTM>
+In the init routine
+Updates some globals to database without gtm_passwd
+Set failed- 6: Unrecoverable error
+
+GTM>
+----------
+Error CRYPTINIT seen in gtcm_start.log as expected:
+%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+----------
+----------
+Error CRYPTBADCONFIG seen in gtcm_start.log as expected:
+%GTM-E-CRYPTBADCONFIG, Could not retrieve data from encrypted file ##TEST_PATH##/mumps.dat due to bad encryption configuration. Please look at prior messages related to encryption for more details
+----------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,96 @@
+#!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2002-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+# Ensure $gtm_tst is defined (test system defines it, but if called on its own).
+if (! $?gtm_tst) then
+	# We are doing temporary cd-ing below, so remember the current directory.
+	set orig_path = $PWD
+
+	# The script may be invoked with an absolute or relative path; account for that.
+	if ($0 =~ /*) then
+		set cur_path = $0
+	else
+		set cur_path = $PWD/$0
+	endif
+
+	# The resultant path might contain such anomalies as './' and '../', so actually cd into
+	# the directory and obtain the canonical full path.
+	set cur_path = ${cur_path:h}
+	cd $cur_path
+	set cur_path = $PWD
+	cd $orig_path
+
+	# Finally set gtm_tst.
+	setenv gtm_tst ${cur_path:h}
+
+	# Since this is not invoked from the test system, redirect log to /tmp
+	set log_prefix = "/tmp/"
+endif
+source $gtm_tst/com/set_specific.csh
+
+# Remove logs at the end if not running within the test system or the host OS is not AIX. Note that
+# in case of "Option not allowed" error the logs will not be deleted regardless.
+if ($?tst_working_dir && ("AIX" == "$HOSTOS")) then
+	set keep_logs = 1
+else
+	set keep_logs = 0
+endif
+
+# Prepare the base of the log filename.
+if (! $?log_prefix) set log_prefix = ""
+set timestamp = `date +%H_%M_%S`
+set log_name = "${log_prefix}ipcs_$timestamp"
+@ count = 1
+
+# Ensure that we are not overwriting a log created in the same second.
+while (-f $log_name)
+	@ count = $count + 1
+	set log_name = "${log_prefix}ipcs_${timestamp}_${count}"
+end
+
+# Execute the ipcs command.
+\ipcs $argv >&! $log_name
+set ipcs_status = $status
+
+# Check if the "Option not allowed" message was printed.
+$grep -q "Option not allowed" $log_name
+set grep_status = $status
+
+# If the error message is there, copy the output to a temporary file and reissue the ipcs command.
+if (! $grep_status) then
+	echo "Status of the operation: $ipcs_status" >> $log_name
+	mv $log_name $log_name.bak
+	\ipcs $argv >&! $log_name
+	set ipcs_status = $status
+endif
+
+# Ensure a particular ordering of the command's output unless a 'c' flag was supplied.
+if (("$HOSTOS" == "Linux") && ("$argv" !~ *c*)) then
+	$tst_awk -f $gtm_tst/com/ipcs.awk $log_name
+else
+	cat $log_name
+endif
+
+# Either append the result of the first / second attempt to the log file, or delete it if not needed.
+if (! $grep_status) then
+	echo "---------------------" >> $log_name.bak
+	cat $log_name >> $log_name.bak
+	echo "Status of the operation: $ipcs_status" >> $log_name
+	mv $log_name.bak $log_name
+else if (! $keep_logs) then
+	rm $log_name
+else
+	echo "Status of the operation: $ipcs_status" >> $log_name
+endif
+
+exit $ipcs_status

@@ -1,0 +1,95 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##ALLOW_OUTPUT  NON_REPLIC
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##SUSPEND_OUTPUT  NON_REPLIC
+##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##REMOTE_TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+Receiver shut down ...
+##ALLOW_OUTPUT  NON_REPLIC
+DB file ##TEST_PATH##/mumps.dat backed up in file before.dat
+Transactions up to 0x0000000000000001 are backed up.
+
+
+BACKUP COMPLETED.
+
+
+GTM>
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Starting receiver server ...
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+check the journal files
+##ALLOW_OUTPUT  NON_REPLIC
+check -show=header time
+##SUSPEND_OUTPUT  REPLIC
+Backward recovery ...
+%GTM-S-JNLSUCCESS, Recover successful
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+Rollback on side A ...
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+Rollback on side B ...
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+Verifying data ...
+
+GTM>
+VERIFICATION PASSED
+
+GTM>
+Forward recovery ...
+%GTM-S-JNLSUCCESS, Recover successful
+##ALLOW_OUTPUT  NON_REPLIC
+Verifying data ...
+
+GTM>
+VERIFICATION PASSED
+
+GTM>
+##SUSPEND_OUTPUT  REPLIC
+Forward recovery ...
+%GTM-S-JNLSUCCESS, Recover successful
+Verifying data ...
+
+GTM>
+VERIFICATION PASSED
+
+GTM>
+##ALLOW_OUTPUT  REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

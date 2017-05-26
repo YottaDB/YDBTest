@@ -1,0 +1,1057 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+---------------------------
+Testing tcommit in err trap
+
+Stepping STARTED
+main+2^nestederror  :	set errtype=$select($zcmdline'="":$zcmdline,1:0)
+main+3^nestederror  :	if errtype'?.N  halt
+main+4^nestederror  :	new $ztrap
+main+5^nestederror  :	set $etrap="do etr^nestederror("_errtype_")"
+main+6^nestederror  :	tstart ()
+main+7^nestederror  :	for i=1:1:10 set $piece(^a(i),",",1)=i,$piece(^a(i),",",2)=i*5
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
+main+8^nestederror  :	tcommit
+main+9^nestederror  :	zwr ^b zwr ^d
+^b(1)="1,5"
+^b(2)="2,10"
+^b(3)="3,15"
+^b(4)="4,20"
+^b(5)="5,25"
+^b(6)="6,30"
+^b(7)="7,35"
+^b(8)="8,40"
+^b(9)="9,45"
+^b(10)="10,50"
+^d(1)="1,5"
+^d(2)="2,10"
+^d(3)="3,15"
+^d(4)="4,20"
+^d(5)="5,25"
+^d(6)="6,30"
+^d(7)="7,35"
+^d(8)="8,40"
+^d(9)="9,45"
+^d(10)="10,50"
+main+10^nestederror :	tstart ()
+main+11^nestederror :	for i=1:2:10 zkill ^b(i)
++1^b#1#             : xecute "$ZTRIGgerop ^a("_subs_")"
+etr^nestederror     :etr(err)	;
+etr+1^nestederror   :	write $zstatus,!
+150372458,+1^b#1#,%GTM-E-CMD, Command expected but not found
+etr+2^nestederror   :	if err=0 tcommit
+etr^nestederror     :etr(err)	;
+etr+1^nestederror   :	write $zstatus,!
+150381738,etr+2^nestederror,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
+etr+2^nestederror   :	if err=0 tcommit
+%GTM-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
+		At M source location etr+2^nestederror
+
+GTM>
+
+---------------------------
+Testing conditional tcommit in err trap
+
+Stepping STARTED
+main+2^nestederror  :	set errtype=$select($zcmdline'="":$zcmdline,1:0)
+main+3^nestederror  :	if errtype'?.N  halt
+main+4^nestederror  :	new $ztrap
+main+5^nestederror  :	set $etrap="do etr^nestederror("_errtype_")"
+main+6^nestederror  :	tstart ()
+main+7^nestederror  :	for i=1:1:10 set $piece(^a(i),",",1)=i,$piece(^a(i),",",2)=i*5
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
+main+8^nestederror  :	tcommit
+main+9^nestederror  :	zwr ^b zwr ^d
+^b(1)="1,5"
+^b(2)="2,10"
+^b(3)="3,15"
+^b(4)="4,20"
+^b(5)="5,25"
+^b(6)="6,30"
+^b(7)="7,35"
+^b(8)="8,40"
+^b(9)="9,45"
+^b(10)="10,50"
+^d(1)="1,5"
+^d(2)="2,10"
+^d(3)="3,15"
+^d(4)="4,20"
+^d(5)="5,25"
+^d(6)="6,30"
+^d(7)="7,35"
+^d(8)="8,40"
+^d(9)="9,45"
+^d(10)="10,50"
+main+10^nestederror :	tstart ()
+main+11^nestederror :	for i=1:2:10 zkill ^b(i)
++1^b#1#             : xecute "$ZTRIGgerop ^a("_subs_")"
+etr^nestederror     :etr(err)	;
+etr+1^nestederror   :	write $zstatus,!
+150372458,+1^b#1#,%GTM-E-CMD, Command expected but not found
+etr+2^nestederror   :	if err=0 tcommit
+etr+3^nestederror   :	if err=1&$tlevel tcommit
+etr^nestederror     :etr(err)	;
+etr+1^nestederror   :	write $zstatus,!
+150381738,etr+3^nestederror,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
+etr+2^nestederror   :	if err=0 tcommit
+etr+3^nestederror   :	if err=1&$tlevel tcommit
+%GTM-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
+		At M source location etr+3^nestederror
+
+GTM>
+
+---------------------------
+Testing conditional trollback in err trap
+
+Stepping STARTED
+main+2^nestederror  :	set errtype=$select($zcmdline'="":$zcmdline,1:0)
+main+3^nestederror  :	if errtype'?.N  halt
+main+4^nestederror  :	new $ztrap
+main+5^nestederror  :	set $etrap="do etr^nestederror("_errtype_")"
+main+6^nestederror  :	tstart ()
+main+7^nestederror  :	for i=1:1:10 set $piece(^a(i),",",1)=i,$piece(^a(i),",",2)=i*5
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
++1^a#1#             :	set (^c(subs),^b(subs))=$ZTVAlue
++2^a#1#             :	goto label1
+label1+1^a#1#       :	set ^d(subs)=$ZTVAlue
+label1+2^a#1#       :	do next
+next+1^a#1#         :	set ^e(subs)=$ZTVAlue
+next+2^a#1#         :	quit
+label1+3^a#1#       :	quit
+main+8^nestederror  :	tcommit
+main+9^nestederror  :	zwr ^b zwr ^d
+^b(1)="1,5"
+^b(2)="2,10"
+^b(3)="3,15"
+^b(4)="4,20"
+^b(5)="5,25"
+^b(6)="6,30"
+^b(7)="7,35"
+^b(8)="8,40"
+^b(9)="9,45"
+^b(10)="10,50"
+^d(1)="1,5"
+^d(2)="2,10"
+^d(3)="3,15"
+^d(4)="4,20"
+^d(5)="5,25"
+^d(6)="6,30"
+^d(7)="7,35"
+^d(8)="8,40"
+^d(9)="9,45"
+^d(10)="10,50"
+main+10^nestederror :	tstart ()
+main+11^nestederror :	for i=1:2:10 zkill ^b(i)
++1^b#1#             : xecute "$ZTRIGgerop ^a("_subs_")"
+etr^nestederror     :etr(err)	;
+etr+1^nestederror   :	write $zstatus,!
+150372458,+1^b#1#,%GTM-E-CMD, Command expected but not found
+etr+2^nestederror   :	if err=0 tcommit
+etr+3^nestederror   :	if err=1&$tlevel tcommit
+etr+4^nestederror   :	if err=2&$tlevel trollback
+etr+5^nestederror   :	set $ecode=""
+etr+6^nestederror   :	quit
+etr^nestederror     :etr(err)	;
+etr+1^nestederror   :	write $zstatus,!
+150381746,main+11^nestederror,%GTM-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger b#1#. Transaction level must be the same at exit as when the trigger started
+etr+2^nestederror   :	if err=0 tcommit
+etr+3^nestederror   :	if err=1&$tlevel tcommit
+etr+4^nestederror   :	if err=2&$tlevel trollback
+etr+5^nestederror   :	set $ecode=""
+etr+6^nestederror   :	quit
+nestederror+2^nestederror:	quit
+
+###################################################################
+Testing of TCOMMITDISALLOW error
+The uncommitable transaction (TCOMMITDISALLOW error) issue occurs only when a trigger frame is forcibly unwound
+(because of an error) causing an abnormal transition from triggerland to non-trigger-land (i.e. M-land). In the
+case of a non-TP explicit update, if the error gets rethrown in the triggering M-frame (after the transition from
+triggerland to non-trigger-land), as part of error_return(), we will repoint the frame_pointer->mpc to error_return
+and unwind the M-stack including the op_tstart that was done (by an explicit OP_TROLLBACK) so we can never have
+this issue because of a non-TP explcit update.
+---------------------------
+Testcase test1
+$zlevel=1 : $ztlevel=0 : $zstatus=
+
+Stepping STARTED
+tcommitdisallow+9^tcommitdisallow:	do @label
+test1+1^tcommitdisallow:	write "Non-TP sets that are implicitly converted to TP",!
+Non-TP sets that are implicitly converted to TP
+test1+2^tcommitdisallow:	set ^f(1)=1
++1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+11^tcommitdisallow:	.	if $tlevel  do
+etr+12^tcommitdisallow:	.	.	tcommit
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=3 : $ztlevel=0 : $tlevel=0 : $zstatus=150381738,etr+12^tcommitdisallow,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+11^tcommitdisallow:	.	if $tlevel  do
+etr+13^tcommitdisallow:	if $tlevel  do
+etr+16^tcommitdisallow:	if $data(^f) zwrite ^f
+etr+17^tcommitdisallow:	if $data(^good) zwrite ^good
+etr+18^tcommitdisallow:	set $ecode=""
+etr+19^tcommitdisallow:	quit
+tcommitdisallow+10^tcommitdisallow:	quit
+---------------------------
+Testcase test2
+$zlevel=1 : $ztlevel=0 : $zstatus=
+
+Stepping STARTED
+tcommitdisallow+9^tcommitdisallow:	do @label
+test2+1^tcommitdisallow:	write "TP sets where Tstart is at same $zlevel as erroring set",!
+TP sets where Tstart is at same $zlevel as erroring set
+test2+2^tcommitdisallow:	tstart ():serial
+test2+3^tcommitdisallow:	set ^f(2)=2
++1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+11^tcommitdisallow:	.	if $tlevel  do
+etr+12^tcommitdisallow:	.	.	tcommit
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=3 : $ztlevel=0 : $tlevel=1 : $zstatus=150381738,etr+12^tcommitdisallow,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+11^tcommitdisallow:	.	if $tlevel  do
+etr+12^tcommitdisallow:	.	.	tcommit
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150381842,etr+12^tcommitdisallow,%GTM-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+13^tcommitdisallow:	if $tlevel  do
+etr+16^tcommitdisallow:	if $data(^f) zwrite ^f
+etr+17^tcommitdisallow:	if $data(^good) zwrite ^good
+etr+18^tcommitdisallow:	set $ecode=""
+etr+19^tcommitdisallow:	quit
+---------------------------
+Testcase test3
+$zlevel=1 : $ztlevel=0 : $zstatus=
+
+Stepping STARTED
+tcommitdisallow+9^tcommitdisallow:	do @label
+test3+1^tcommitdisallow:	write "TP sets where Tstart is at different $zlevel than erroring set (for loop)",!
+TP sets where Tstart is at different $zlevel than erroring set (for loop)
+test3+2^tcommitdisallow:	tstart ():serial
+test3+3^tcommitdisallow:	for i=1:1:1  set ^f(3)=3
++1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+11^tcommitdisallow:	.	if $tlevel  do
+etr+12^tcommitdisallow:	.	.	tcommit
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=3 : $ztlevel=0 : $tlevel=1 : $zstatus=150381738,etr+12^tcommitdisallow,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+11^tcommitdisallow:	.	if $tlevel  do
+etr+12^tcommitdisallow:	.	.	tcommit
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150381842,etr+12^tcommitdisallow,%GTM-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+13^tcommitdisallow:	if $tlevel  do
+etr+16^tcommitdisallow:	if $data(^f) zwrite ^f
+etr+17^tcommitdisallow:	if $data(^good) zwrite ^good
+etr+18^tcommitdisallow:	set $ecode=""
+etr+19^tcommitdisallow:	quit
+---------------------------
+Testcase test4
+$zlevel=1 : $ztlevel=0 : $zstatus=
+
+Stepping STARTED
+tcommitdisallow+9^tcommitdisallow:	do @label
+test4+1^tcommitdisallow:	write "TP sets where Tstart is at different $zlevel than erroring set (dotted do)",!
+TP sets where Tstart is at different $zlevel than erroring set (dotted do)
+test4+2^tcommitdisallow:	tstart ():serial
+test4+3^tcommitdisallow:	do
+test4+4^tcommitdisallow:	.	set ^f(4)=4
++1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=5 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+11^tcommitdisallow:	.	if $tlevel  do
+etr+12^tcommitdisallow:	.	.	tcommit
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=4 : $ztlevel=0 : $tlevel=1 : $zstatus=150381738,etr+12^tcommitdisallow,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+11^tcommitdisallow:	.	if $tlevel  do
+etr+12^tcommitdisallow:	.	.	tcommit
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=3 : $ztlevel=0 : $tlevel=1 : $zstatus=150381842,etr+12^tcommitdisallow,%GTM-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+11^tcommitdisallow:	.	if $tlevel  do
+etr+12^tcommitdisallow:	.	.	tcommit
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150381842,etr+12^tcommitdisallow,%GTM-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+13^tcommitdisallow:	if $tlevel  do
+etr+16^tcommitdisallow:	if $data(^f) zwrite ^f
+etr+17^tcommitdisallow:	if $data(^good) zwrite ^good
+etr+18^tcommitdisallow:	set $ecode=""
+etr+19^tcommitdisallow:	quit
+---------------------------
+Testcase test5
+$zlevel=1 : $ztlevel=0 : $zstatus=
+
+Stepping STARTED
+tcommitdisallow+9^tcommitdisallow:	do @label
+test5+1^tcommitdisallow:	write "Do nested TSTART/TCOMMIT after unhandled error in trigger context; Outer TCOMMIT should still fail",!
+Do nested TSTART/TCOMMIT after unhandled error in trigger context; Outer TCOMMIT should still fail
+test5+2^tcommitdisallow:	tstart ():serial
+test5+3^tcommitdisallow:	do
+test5+4^tcommitdisallow:	.	set ^f(55)=55
++1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=5 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+11^tcommitdisallow:	.	if $tlevel  do
+etr+12^tcommitdisallow:	.	.	tcommit
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=4 : $ztlevel=0 : $tlevel=1 : $zstatus=150381738,etr+12^tcommitdisallow,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+3^tcommitdisallow:	.	tstart ():serial
+etr+4^tcommitdisallow:	.	set ^good=$get(^good)+1
+etr+5^tcommitdisallow:	.	tcommit
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+11^tcommitdisallow:	.	if $tlevel  do
+etr+12^tcommitdisallow:	.	.	tcommit
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=3 : $ztlevel=0 : $tlevel=1 : $zstatus=150381842,etr+12^tcommitdisallow,%GTM-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+3^tcommitdisallow:	.	tstart ():serial
+etr+4^tcommitdisallow:	.	set ^good=$get(^good)+1
+etr+5^tcommitdisallow:	.	tcommit
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+11^tcommitdisallow:	.	if $tlevel  do
+etr+12^tcommitdisallow:	.	.	tcommit
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150381842,etr+12^tcommitdisallow,%GTM-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+3^tcommitdisallow:	.	tstart ():serial
+etr+4^tcommitdisallow:	.	set ^good=$get(^good)+1
+etr+5^tcommitdisallow:	.	tcommit
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+13^tcommitdisallow:	if $tlevel  do
+etr+16^tcommitdisallow:	if $data(^f) zwrite ^f
+etr+17^tcommitdisallow:	if $data(^good) zwrite ^good
+^good=1
+etr+18^tcommitdisallow:	set $ecode=""
+etr+19^tcommitdisallow:	quit
+---------------------------
+Testcase test6
+$zlevel=1 : $ztlevel=0 : $zstatus=
+
+Stepping STARTED
+tcommitdisallow+9^tcommitdisallow:	do @label
+test6+1^tcommitdisallow:	write "Do INCREMENTAL TROLLBACK of unhandled error in nested TSTART; Outer TCOMMIT should succeed",!
+Do INCREMENTAL TROLLBACK of unhandled error in nested TSTART; Outer TCOMMIT should succeed
+test6+2^tcommitdisallow:	set ^startztlevel=$ztlevel
+test6+3^tcommitdisallow:	tstart ():serial
+test6+4^tcommitdisallow:	do
+test6+5^tcommitdisallow:	.	set ^good=$get(^good)+1
+test6+6^tcommitdisallow:	.	tstart ():serial
+test6+7^tcommitdisallow:	.	set ^f(6)=6
++1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=5 : $ztlevel=1 : $tlevel=2 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=4 : $ztlevel=0 : $tlevel=2 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+7^tcommitdisallow:	.	if $ztlevel=^startztlevel  do
+etr+8^tcommitdisallow:	.	.	if $tlevel>1 do
+etr+9^tcommitdisallow:	.	.	.	trollback 1	; do incremental trollback
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+11^tcommitdisallow:	.	if $tlevel  do
+etr+12^tcommitdisallow:	.	.	tcommit
+etr+13^tcommitdisallow:	if $tlevel  do
+etr+16^tcommitdisallow:	if $data(^f) zwrite ^f
+etr+17^tcommitdisallow:	if $data(^good) zwrite ^good
+^good=2
+etr+18^tcommitdisallow:	set $ecode=""
+etr+19^tcommitdisallow:	quit
+test6+8^tcommitdisallow:	quit
+tcommitdisallow+10^tcommitdisallow:	quit
+##SUSPEND_OUTPUT HOST_ALL
+---------------------------
+Testcase test7
+$zlevel=1 : $ztlevel=0 : $zstatus=
+
+Stepping STARTED
+tcommitdisallow+9^tcommitdisallow:	do @label
+test7+1^tcommitdisallow:	write "Do test6 but inside triggerland (i.e. where $tlevel=0 and $ztlevel>0) and $ecode is NULL",!
+Do test6 but inside triggerland (i.e. where $tlevel=0 and $ztlevel>0) and $ecode is NULL
+test7+2^tcommitdisallow:	set $etrap="do etrcommon^tcommitdisallow(""test6"")"
+test7+3^tcommitdisallow:	set ^ecodenull=1
+test7+4^tcommitdisallow:	set ^f(7)=7
++1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
+etrcommon^tcommitdisallow:etrcommon(tst);
+etrcommon+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etrcommon+2^tcommitdisallow:	if $tlevel  trollback
+etrcommon+3^tcommitdisallow:	set $etrap="do etr^tcommitdisallow"
+etrcommon+4^tcommitdisallow:	set ^label=tst
+etrcommon+5^tcommitdisallow:	set label=^label
+etrcommon+6^tcommitdisallow:	if ^ecodenull  set $ecode=""
+etrcommon+7^tcommitdisallow:	if $ztlevel  do
+etrcommon+8^tcommitdisallow:	.	do @tst
+test6+1^tcommitdisallow:	write "Do INCREMENTAL TROLLBACK of unhandled error in nested TSTART; Outer TCOMMIT should succeed",!
+Do INCREMENTAL TROLLBACK of unhandled error in nested TSTART; Outer TCOMMIT should succeed
+test6+2^tcommitdisallow:	set ^startztlevel=$ztlevel
+test6+3^tcommitdisallow:	tstart ():serial
+test6+4^tcommitdisallow:	do
+test6+5^tcommitdisallow:	.	set ^good=$get(^good)+1
+test6+6^tcommitdisallow:	.	tstart ():serial
+test6+7^tcommitdisallow:	.	set ^f(6)=6
++1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=9 : $ztlevel=2 : $tlevel=2 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=8 : $ztlevel=1 : $tlevel=2 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+7^tcommitdisallow:	.	if $ztlevel=^startztlevel  do
+etr+8^tcommitdisallow:	.	.	if $tlevel>1 do
+etr+9^tcommitdisallow:	.	.	.	trollback 1	; do incremental trollback
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+11^tcommitdisallow:	.	if $tlevel  do
+etr+12^tcommitdisallow:	.	.	tcommit
+etr+13^tcommitdisallow:	if $tlevel  do
+etr+16^tcommitdisallow:	if $data(^f) zwrite ^f
+etr+17^tcommitdisallow:	if $data(^good) zwrite ^good
+^good=3
+etr+18^tcommitdisallow:	set $ecode=""
+etr+19^tcommitdisallow:	quit
+test6+8^tcommitdisallow:	quit
+etrcommon+9^tcommitdisallow:	quit
+etrcommon^tcommitdisallow:etrcommon(tst);
+etrcommon+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=3 : $ztlevel=0 : $tlevel=0 : $zstatus=150381746,test7+4^tcommitdisallow,%GTM-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger f#1#. Transaction level must be the same at exit as when the trigger started
+etrcommon+2^tcommitdisallow:	if $tlevel  trollback
+etrcommon+3^tcommitdisallow:	set $etrap="do etr^tcommitdisallow"
+etrcommon+4^tcommitdisallow:	set ^label=tst
+etrcommon+5^tcommitdisallow:	set label=^label
+etrcommon+6^tcommitdisallow:	if ^ecodenull  set $ecode=""
+etrcommon+7^tcommitdisallow:	if $ztlevel  do
+etrcommon+9^tcommitdisallow:	quit
+tcommitdisallow+10^tcommitdisallow:	quit
+---------------------------
+Testcase test8
+$zlevel=1 : $ztlevel=0 : $zstatus=
+
+Stepping STARTED
+tcommitdisallow+9^tcommitdisallow:	do @label
+test8+1^tcommitdisallow:	write "Do test6 but inside triggerland (i.e. where $tlevel=0 and $ztlevel>0) and $ecode is non-NULL",!
+Do test6 but inside triggerland (i.e. where $tlevel=0 and $ztlevel>0) and $ecode is non-NULL
+test8+2^tcommitdisallow:	set $etrap="do etrcommon^tcommitdisallow(""test6"")"
+test8+3^tcommitdisallow:	set ^ecodenull=0
+test8+4^tcommitdisallow:	set ^f(8)=8
++1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
+etrcommon^tcommitdisallow:etrcommon(tst);
+etrcommon+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etrcommon+2^tcommitdisallow:	if $tlevel  trollback
+etrcommon+3^tcommitdisallow:	set $etrap="do etr^tcommitdisallow"
+etrcommon+4^tcommitdisallow:	set ^label=tst
+etrcommon+5^tcommitdisallow:	set label=^label
+etrcommon+6^tcommitdisallow:	if ^ecodenull  set $ecode=""
+etrcommon+7^tcommitdisallow:	if $ztlevel  do
+etrcommon+8^tcommitdisallow:	.	do @tst
+test6+1^tcommitdisallow:	write "Do INCREMENTAL TROLLBACK of unhandled error in nested TSTART; Outer TCOMMIT should succeed",!
+Do INCREMENTAL TROLLBACK of unhandled error in nested TSTART; Outer TCOMMIT should succeed
+test6+2^tcommitdisallow:	set ^startztlevel=$ztlevel
+test6+3^tcommitdisallow:	tstart ():serial
+test6+4^tcommitdisallow:	do
+test6+5^tcommitdisallow:	.	set ^good=$get(^good)+1
+test6+6^tcommitdisallow:	.	tstart ():serial
+test6+7^tcommitdisallow:	.	set ^f(6)=6
++1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
+etrcommon^tcommitdisallow:etrcommon(tst);
+etrcommon+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=3 : $ztlevel=0 : $tlevel=0 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etrcommon+2^tcommitdisallow:	if $tlevel  trollback
+etrcommon+3^tcommitdisallow:	set $etrap="do etr^tcommitdisallow"
+etrcommon+4^tcommitdisallow:	set ^label=tst
+etrcommon+5^tcommitdisallow:	set label=^label
+etrcommon+6^tcommitdisallow:	if ^ecodenull  set $ecode=""
+etrcommon+7^tcommitdisallow:	if $ztlevel  do
+etrcommon+9^tcommitdisallow:	quit
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+7^tcommitdisallow:	.	if $ztlevel=^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+13^tcommitdisallow:	if $tlevel  do
+etr+16^tcommitdisallow:	if $data(^f) zwrite ^f
+etr+17^tcommitdisallow:	if $data(^good) zwrite ^good
+^good=3
+etr+18^tcommitdisallow:	set $ecode=""
+etr+19^tcommitdisallow:	quit
+---------------------------
+Testcase test9
+$zlevel=1 : $ztlevel=0 : $zstatus=
+
+Stepping STARTED
+tcommitdisallow+9^tcommitdisallow:	do @label
+test9+1^tcommitdisallow:	write "Do test5 but inside triggerland (i.e. where $tlevel=0 and $ztlevel>0) and $ecode is NULL",!
+Do test5 but inside triggerland (i.e. where $tlevel=0 and $ztlevel>0) and $ecode is NULL
+test9+2^tcommitdisallow:	set $etrap="do etrcommon^tcommitdisallow(""test5"")"
+test9+3^tcommitdisallow:	set ^ecodenull=1
+test9+4^tcommitdisallow:	set ^f(9)=9
++1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
+etrcommon^tcommitdisallow:etrcommon(tst);
+etrcommon+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etrcommon+2^tcommitdisallow:	if $tlevel  trollback
+etrcommon+3^tcommitdisallow:	set $etrap="do etr^tcommitdisallow"
+etrcommon+4^tcommitdisallow:	set ^label=tst
+etrcommon+5^tcommitdisallow:	set label=^label
+etrcommon+6^tcommitdisallow:	if ^ecodenull  set $ecode=""
+etrcommon+7^tcommitdisallow:	if $ztlevel  do
+etrcommon+8^tcommitdisallow:	.	do @tst
+test5+1^tcommitdisallow:	write "Do nested TSTART/TCOMMIT after unhandled error in trigger context; Outer TCOMMIT should still fail",!
+Do nested TSTART/TCOMMIT after unhandled error in trigger context; Outer TCOMMIT should still fail
+test5+2^tcommitdisallow:	tstart ():serial
+test5+3^tcommitdisallow:	do
+test5+4^tcommitdisallow:	.	set ^f(55)=55
++1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=9 : $ztlevel=2 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+11^tcommitdisallow:	.	if $tlevel  do
+etr+12^tcommitdisallow:	.	.	tcommit
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=8 : $ztlevel=1 : $tlevel=1 : $zstatus=150381738,etr+12^tcommitdisallow,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=2 not allowed as corresponding TSTART was done at lower $ZTLEVEL=1
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+3^tcommitdisallow:	.	tstart ():serial
+etr+4^tcommitdisallow:	.	set ^good=$get(^good)+1
+etr+5^tcommitdisallow:	.	tcommit
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+11^tcommitdisallow:	.	if $tlevel  do
+etr+12^tcommitdisallow:	.	.	tcommit
+etr+13^tcommitdisallow:	if $tlevel  do
+etr+16^tcommitdisallow:	if $data(^f) zwrite ^f
+^f(55)=55
+etr+17^tcommitdisallow:	if $data(^good) zwrite ^good
+^good=4
+etr+18^tcommitdisallow:	set $ecode=""
+etr+19^tcommitdisallow:	quit
+test5+5^tcommitdisallow:	quit
+etrcommon+9^tcommitdisallow:	quit
+etrcommon^tcommitdisallow:etrcommon(tst);
+etrcommon+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=3 : $ztlevel=0 : $tlevel=0 : $zstatus=150381746,test9+4^tcommitdisallow,%GTM-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger f#1#. Transaction level must be the same at exit as when the trigger started
+etrcommon+2^tcommitdisallow:	if $tlevel  trollback
+etrcommon+3^tcommitdisallow:	set $etrap="do etr^tcommitdisallow"
+etrcommon+4^tcommitdisallow:	set ^label=tst
+etrcommon+5^tcommitdisallow:	set label=^label
+etrcommon+6^tcommitdisallow:	if ^ecodenull  set $ecode=""
+etrcommon+7^tcommitdisallow:	if $ztlevel  do
+etrcommon+9^tcommitdisallow:	quit
+tcommitdisallow+10^tcommitdisallow:	quit
+---------------------------
+Testcase test10
+$zlevel=1 : $ztlevel=0 : $zstatus=
+
+Stepping STARTED
+tcommitdisallow+9^tcommitdisallow:	do @label
+test10+1^tcommitdisallow:	write "Do test5 but inside triggerland (i.e. where $tlevel=0 and $ztlevel>0) and $ecode is non-NULL",!
+Do test5 but inside triggerland (i.e. where $tlevel=0 and $ztlevel>0) and $ecode is non-NULL
+test10+2^tcommitdisallow:	set $etrap="do etrcommon^tcommitdisallow(""test5"")"
+test10+3^tcommitdisallow:	set ^ecodenull=0
+test10+4^tcommitdisallow:	set ^f(10)=10
++1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
+etrcommon^tcommitdisallow:etrcommon(tst);
+etrcommon+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etrcommon+2^tcommitdisallow:	if $tlevel  trollback
+etrcommon+3^tcommitdisallow:	set $etrap="do etr^tcommitdisallow"
+etrcommon+4^tcommitdisallow:	set ^label=tst
+etrcommon+5^tcommitdisallow:	set label=^label
+etrcommon+6^tcommitdisallow:	if ^ecodenull  set $ecode=""
+etrcommon+7^tcommitdisallow:	if $ztlevel  do
+etrcommon+8^tcommitdisallow:	.	do @tst
+test5+1^tcommitdisallow:	write "Do nested TSTART/TCOMMIT after unhandled error in trigger context; Outer TCOMMIT should still fail",!
+Do nested TSTART/TCOMMIT after unhandled error in trigger context; Outer TCOMMIT should still fail
+test5+2^tcommitdisallow:	tstart ():serial
+test5+3^tcommitdisallow:	do
+test5+4^tcommitdisallow:	.	set ^f(55)=55
++1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
+etrcommon^tcommitdisallow:etrcommon(tst);
+etrcommon+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=3 : $ztlevel=0 : $tlevel=0 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etrcommon+2^tcommitdisallow:	if $tlevel  trollback
+etrcommon+3^tcommitdisallow:	set $etrap="do etr^tcommitdisallow"
+etrcommon+4^tcommitdisallow:	set ^label=tst
+etrcommon+5^tcommitdisallow:	set label=^label
+etrcommon+6^tcommitdisallow:	if ^ecodenull  set $ecode=""
+etrcommon+7^tcommitdisallow:	if $ztlevel  do
+etrcommon+9^tcommitdisallow:	quit
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+3^tcommitdisallow:	.	tstart ():serial
+etr+4^tcommitdisallow:	.	set ^good=$get(^good)+1
+etr+5^tcommitdisallow:	.	tcommit
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+13^tcommitdisallow:	if $tlevel  do
+etr+16^tcommitdisallow:	if $data(^f) zwrite ^f
+^f(55)=55
+etr+17^tcommitdisallow:	if $data(^good) zwrite ^good
+^good=5
+etr+18^tcommitdisallow:	set $ecode=""
+etr+19^tcommitdisallow:	quit
+##ALLOW_OUTPUT HOST_ALL
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

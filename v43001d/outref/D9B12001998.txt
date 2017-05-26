@@ -1,0 +1,1413 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+---------------- d001998a testing BEGIN -------------------------------
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript=""
+%GTM-E-CLIERR, Unrecognized option : SUBSCRIPT, value expected but not found
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^"
+Error in SUBSCRIPT qualifier : Global variable name does not begin with an alphabet or % at offset 1 in ^
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript=":"
+Error in SUBSCRIPT qualifier : Key does not begin with '^' at offset 0 in :
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="abcd"
+Error in SUBSCRIPT qualifier : Key does not begin with '^' at offset 0 in abcd
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:abcd"
+Error in SUBSCRIPT qualifier : Key does not begin with '^' at offset 3 in ^a:abcd
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^%abcd"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               0           1.562           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               1              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^%abcd"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               0           1.562           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               1              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^1abcd"
+Error in SUBSCRIPT qualifier : Global variable name does not begin with an alphabet or % at offset 1 in ^1abcd
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^1abcd"
+Error in SUBSCRIPT qualifier : Global variable name does not begin with an alphabet or % at offset 4 in ^a:^1abcd
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a123b"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               0           1.562           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               1              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^a123b"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               0           1.562           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               1              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a123#"
+Error in SUBSCRIPT qualifier : Global variable name contains non-alphanumeric characters at offset 5 in ^a123#
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^a123#"
+Error in SUBSCRIPT qualifier : Global variable name contains non-alphanumeric characters at offset 8 in ^a:^a123#
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^abcd(1,23a)"
+Error in SUBSCRIPT qualifier : Non-string subscript contains non-numerical characters at offset 10 in ^abcd(1,23a)
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^abcd(1,23a)"
+Error in SUBSCRIPT qualifier : Non-string subscript contains non-numerical characters at offset 13 in ^a:^abcd(1,23a)
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^abcd(1,)"
+Error in SUBSCRIPT qualifier : Empty subscript specified at offset 8 in ^abcd(1,)
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^abcd(1,)"
+Error in SUBSCRIPT qualifier : Empty subscript specified at offset 11 in ^a:^abcd(1,)
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^abcd(1,"
+Error in SUBSCRIPT qualifier : Empty/Incomplete subscript specified at offset 8 in ^abcd(1,
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^abcd(1,"
+Error in SUBSCRIPT qualifier : Empty/Incomplete subscript specified at offset 11 in ^a:^abcd(1,
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^abcd("
+Error in SUBSCRIPT qualifier : Empty/Incomplete subscript specified at offset 6 in ^abcd(
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^abcd("
+Error in SUBSCRIPT qualifier : Empty/Incomplete subscript specified at offset 9 in ^a:^abcd(
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript=\"^a\(1,\"\"a\"\":^abcd\(1,2\"
+Error in SUBSCRIPT qualifier : Subscript terminating right parentheses not found at offset 8 in ^a(1,"a":^abcd(1,2
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^b:^c"
+Error: Subscript qualifier keyrange not clear. More than two keys specified at offset 6 in ^a:^b:^c
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript=\"^TEST\(\"\"a\)\"
+Error in SUBSCRIPT qualifier : String subscript does not terminate with double-quote (") character at offset 9 in ^TEST("a)
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript=\"^TEST\(\"\"a\"\"\):^TEST\(\"\"b\"\"\)\"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               1           3.320           NA
+
+Global variable ^TEST
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             1
+    0               1               5          11.523             1
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.832            NA
+Index               1               1           2.343             1
+Data                1               5          11.523             1
+Total               4               8              NA             2
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript=\"^TEST\(\"\"A\"\"\):^TEST\(\"\"z\"\"\)\"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               1           3.320           NA
+
+Global variable ^TEST
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             1
+    0               1              11          11.523             1
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.832            NA
+Index               1               1           2.343             1
+Data                1              11          11.523             1
+Total               4              14              NA             2
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript=\"^TEST\(\"\"b\"\"\):^TEST\(\"\"c\"\"\)\"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               1           3.320           NA
+
+Global variable ^TEST
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             1
+    0               1               5          11.523             1
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.832            NA
+Index               1               1           2.343             1
+Data                1               5          11.523             1
+Total               4               8              NA             2
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript=\"^TEST\(\"\"a\"\"\):^TEST\(\"\"c\"\"\)\"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               1           3.320           NA
+
+Global variable ^TEST
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             1
+    0               1               9          11.523             1
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.832            NA
+Index               1               1           2.343             1
+Data                1               9          11.523             1
+Total               4              12              NA             2
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript=\"^TEST\(\"\"a\"\",\"\"a\"\"\):^TEST\(\"\"b\"\",\"\"abc\"\"\)\"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               1           3.320           NA
+
+Global variable ^TEST
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             1
+    0               1               5          11.523             1
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.832            NA
+Index               1               1           2.343             1
+Data                1               5          11.523             1
+Total               4               8              NA             2
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript=\"^TEST\(\"\"a\"\",\"\"bc\"\"\):^TEST\(\"\"b\"\",\"\"ba\"\"\)\"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               1           3.320           NA
+
+Global variable ^TEST
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             1
+    0               1               5          11.523             1
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.832            NA
+Index               1               1           2.343             1
+Data                1               5          11.523             1
+Total               4               8              NA             2
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript=\"^TEST\(\"\"a\"\",\"\"cba\"\"\):^TEST\(\"\"b\"\",\"\"c\"\"\)\"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               1           3.320           NA
+
+Global variable ^TEST
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             1
+    0               1               5          11.523             1
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.832            NA
+Index               1               1           2.343             1
+Data                1               5          11.523             1
+Total               4               8              NA             2
+
+echo ""
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^xxxxx(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               1           3.320           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.832            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               2              NA             0
+echo ""
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^xxxxx(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)"
+%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
+%GTM-I-GVIS, 		Global variable: ^xxxxx(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1*
+unset verbose
+
+---------------- d001998b testing BEGIN -------------------------------
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^x(0)"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               2           4.785           NA
+
+Global variable ^x
+Level          Blocks         Records          % Used      Adjacent
+    2               1               1          39.257             1
+    1               1               1          98.730             0
+    0               1               0          82.714             1
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               3           3.564            NA
+Index               2               2          68.994             1
+Data                1               0          82.714             1
+Total               5               5              NA             2
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^x(1)"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               2           4.785           NA
+
+Global variable ^x
+Level          Blocks         Records          % Used      Adjacent
+    2               1               1          39.257             1
+    1               1               1          98.730             0
+    0               1               1          82.714             1
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               3           3.564            NA
+Index               2               2          68.994             1
+Data                1               1          82.714             1
+Total               5               6              NA             2
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^x(10000)"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               2           4.785           NA
+
+Global variable ^x
+Level          Blocks         Records          % Used      Adjacent
+    2               1               1          39.257             1
+    1               1               1          97.656             0
+    0               1               1          82.910             1
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               3           3.564            NA
+Index               2               2          68.457             1
+Data                1               1          82.910             1
+Total               5               6              NA             2
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^x(10001)"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               2           4.785           NA
+
+Global variable ^x
+Level          Blocks         Records          % Used      Adjacent
+    2               1               1          39.257             1
+    1               1               1          97.656             0
+    0               1               0          82.910             1
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               3           3.564            NA
+Index               2               2          68.457             1
+Data                1               0          82.910             1
+Total               5               5              NA             2
+
+---------------- d001998c testing BEGIN -------------------------------
+-------------------------------------------------------------------------------------
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^A"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               7              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^A:^a"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^TEST
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             1
+    0               1              11          11.523             1
+
+Global variable ^a
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               1           2.636             0
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               2               2           2.343             1
+Data                2              12           7.080             1
+Total               6              21              NA             2
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^A"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               7              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^A:^ab"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^TEST
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             1
+    0               1              11          11.523             1
+
+Global variable ^a
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               1           2.636             0
+
+Global variable ^ab
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               2           3.515             0
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               3               3           2.343             1
+Data                3              14           5.891             1
+Total               8              24              NA             2
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^ab:^A"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               7              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^A:^b"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^TEST
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             1
+    0               1              11          11.523             1
+
+Global variable ^a
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               1           2.636             0
+
+Global variable ^ab
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               2           3.515             0
+
+Global variable ^b
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               4           4.980             0
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               4               4           2.343             1
+Data                4              18           5.664             1
+Total              10              29              NA             2
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^b:^A"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               7              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^A:^ba"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^TEST
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             1
+    0               1              11          11.523             1
+
+Global variable ^a
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               1           2.636             0
+
+Global variable ^ab
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               2           3.515             0
+
+Global variable ^b
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               4           4.980             0
+
+Global variable ^ba
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               8           8.203             0
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               5               5           2.343             1
+Data                5              26           6.171             1
+Total              12              38              NA             2
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^ba:^A"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               7              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^A:^z"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^TEST
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             1
+    0               1              11          11.523             1
+
+Global variable ^a
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               1           2.636             0
+
+Global variable ^ab
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               2           3.515             0
+
+Global variable ^b
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               4           4.980             0
+
+Global variable ^ba
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               8           8.203             0
+
+Global variable ^x
+Level          Blocks         Records          % Used      Adjacent
+    2               1              30          39.257             1
+    1              30            2500          98.779             0
+    0            2500           10000          82.811          2499
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index              36            2535          83.732             2
+Data             2505           10026          82.658          2500
+Total            2543           12568              NA          2502
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^z:^A"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               7              NA             0
+-------------------------------------------------------------------------------------
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^a
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               1           2.636             0
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               1               1           2.343             0
+Data                1               1           2.636             0
+Total               4               9              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^ab"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^a
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               1           2.636             0
+
+Global variable ^ab
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               2           3.515             0
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               2               2           2.343             0
+Data                2               3           3.076             0
+Total               6              12              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^ab:^a"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               7              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^b"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^a
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               1           2.636             0
+
+Global variable ^ab
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               2           3.515             0
+
+Global variable ^b
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               4           4.980             0
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               3               3           2.343             0
+Data                3               7           3.710             0
+Total               8              17              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^b:^a"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               7              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^ba"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^a
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               1           2.636             0
+
+Global variable ^ab
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               2           3.515             0
+
+Global variable ^b
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               4           4.980             0
+
+Global variable ^ba
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               8           8.203             0
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               4               4           2.343             0
+Data                4              15           4.833             0
+Total              10              26              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^ba:^a"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               7              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^z"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^a
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               1           2.636             0
+
+Global variable ^ab
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               2           3.515             0
+
+Global variable ^b
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               4           4.980             0
+
+Global variable ^ba
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               8           8.203             0
+
+Global variable ^x
+Level          Blocks         Records          % Used      Adjacent
+    2               1              30          39.257             1
+    1              30            2500          98.779             0
+    0            2500           10000          82.811          2499
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index              35            2534          86.057             1
+Data             2504           10015          82.687          2499
+Total            2541           12556              NA          2500
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^z:^a"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               7              NA             0
+-------------------------------------------------------------------------------------
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^ab"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^ab
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               2           3.515             0
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               1               1           2.343             0
+Data                1               2           3.515             0
+Total               4              10              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^ab:^b"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^ab
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               2           3.515             0
+
+Global variable ^b
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               4           4.980             0
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               2               2           2.343             0
+Data                2               6           4.248             0
+Total               6              15              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^b:^ab"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               7              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^ab:^ba"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^ab
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               2           3.515             0
+
+Global variable ^b
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               4           4.980             0
+
+Global variable ^ba
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               8           8.203             0
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               3               3           2.343             0
+Data                3              14           5.566             0
+Total               8              24              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^ba:^ab"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               7              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^ab:^z"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^ab
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               2           3.515             0
+
+Global variable ^b
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               4           4.980             0
+
+Global variable ^ba
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               8           8.203             0
+
+Global variable ^x
+Level          Blocks         Records          % Used      Adjacent
+    2               1              30          39.257             1
+    1              30            2500          98.779             0
+    0            2500           10000          82.811          2499
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index              34            2533          88.519             1
+Data             2503           10014          82.719          2499
+Total            2539           12554              NA          2500
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^z:^ab"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               7              NA             0
+-------------------------------------------------------------------------------------
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^b"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^b
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               4           4.980             0
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               1               1           2.343             0
+Data                1               4           4.980             0
+Total               4              12              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^b:^ba"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^b
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               4           4.980             0
+
+Global variable ^ba
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               8           8.203             0
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               2               2           2.343             0
+Data                2              12           6.591             0
+Total               6              21              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^ba:^b"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               7              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^b:^z"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^b
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               4           4.980             0
+
+Global variable ^ba
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               8           8.203             0
+
+Global variable ^x
+Level          Blocks         Records          % Used      Adjacent
+    2               1              30          39.257             1
+    1              30            2500          98.779             0
+    0            2500           10000          82.811          2499
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index              33            2532          91.131             1
+Data             2502           10012          82.750          2499
+Total            2537           12551              NA          2500
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^z:^b"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               7              NA             0
+-------------------------------------------------------------------------------------
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^ba"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^ba
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               8           8.203             0
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               1               1           2.343             0
+Data                1               8           8.203             0
+Total               4              16              NA             0
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^ba:^z"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+Global variable ^ba
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343             0
+    0               1               8           8.203             0
+
+Global variable ^x
+Level          Blocks         Records          % Used      Adjacent
+    2               1              30          39.257             1
+    1              30            2500          98.779             0
+    0            2500           10000          82.811          2499
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index              32            2531          93.905             1
+Data             2501           10008          82.781          2499
+Total            2535           12546              NA          2500
+
+$gtm_dist/mupip integ -reg DEFAULT -full -subscript="^z:^ba"
+
+
+Integ of region DEFAULT
+
+Directory tree
+Level          Blocks         Records          % Used      Adjacent
+    1               1               1           2.343           NA
+    0               1               6          10.644           NA
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               7           6.494            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Total               2               7              NA             0
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

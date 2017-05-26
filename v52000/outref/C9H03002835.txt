@@ -1,0 +1,91 @@
+ENTERING C9H03002835 Testing of MOREREADTIME socket device parameter
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+Spawning receiver process
+##TEST_AWK[.][.]*
+Receiver process active
+Connecting to the receiver
+Connection to receiver established
+****************** New iteration (mrt=-2) *****************
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+0 OPEN RMS FILETAG=UNTAGGED TEXT 
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##ALLOW_OUTPUT HOST_OS390_S390
+##TEST_AWKclient.[1-9][0-9]* OPEN SOCKET TOTAL=1 CURRENT=0 
+##TEST_AWK        SOCKET.0.=client DESC=[1-9][0-9]* CONNECTED ACTIVE  NOTRAP  REMOTE=.*
+##TEST_AWK                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=[1-9][0-9]* NODELIMITER 
+##TEST_AWKElapsed seconds for this mrt test:.*
+****************** New iteration (mrt=200) *****************
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+0 OPEN RMS FILETAG=UNTAGGED TEXT 
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##ALLOW_OUTPUT HOST_OS390_S390
+##TEST_AWKclient.[1-9][0-9]* OPEN SOCKET TOTAL=1 CURRENT=0 
+##TEST_AWK        SOCKET.0.=client DESC=[1-9][0-9]* CONNECTED ACTIVE  NOTRAP  REMOTE=.*
+##TEST_AWK                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=[1-9][0-9]* NODELIMITER MOREREADTIME=200
+##TEST_AWKElapsed seconds for this mrt test:.*
+****************** New iteration (mrt=100) *****************
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+0 OPEN RMS FILETAG=UNTAGGED TEXT 
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##ALLOW_OUTPUT HOST_OS390_S390
+##TEST_AWKclient.[1-9][0-9]* OPEN SOCKET TOTAL=1 CURRENT=0 
+##TEST_AWK        SOCKET.0.=client DESC=[1-9][0-9]* CONNECTED ACTIVE  NOTRAP  REMOTE=.*
+##TEST_AWK                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=[1-9][0-9]* NODELIMITER MOREREADTIME=100
+##TEST_AWKElapsed seconds for this mrt test:.*
+****************** New iteration (mrt=50) *****************
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+0 OPEN RMS FILETAG=UNTAGGED TEXT 
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##ALLOW_OUTPUT HOST_OS390_S390
+##TEST_AWKclient.[1-9][0-9]* OPEN SOCKET TOTAL=1 CURRENT=0 
+##TEST_AWK        SOCKET.0.=client DESC=[1-9][0-9]* CONNECTED ACTIVE  NOTRAP  REMOTE=.*
+##TEST_AWK                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=[1-9][0-9]* NODELIMITER MOREREADTIME=50
+##TEST_AWKElapsed seconds for this mrt test:.*
+****************** New iteration (mrt=10) *****************
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+0 OPEN RMS FILETAG=UNTAGGED TEXT 
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+##ALLOW_OUTPUT HOST_OS390_S390
+##TEST_AWKclient.[1-9][0-9]* OPEN SOCKET TOTAL=1 CURRENT=0 
+##TEST_AWK        SOCKET.0.=client DESC=[1-9][0-9]* CONNECTED ACTIVE  NOTRAP  REMOTE=.*
+##TEST_AWK                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=[1-9][0-9]* NODELIMITER 
+##TEST_AWKElapsed seconds for this mrt test:.*
+***************************
+TEST PASS
+Shutting down receiver process - test complete
+##TEST_AWK[.][.]*
+Receiver process has shutdown
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ mumps.dat
+No errors detected by integ.
+LEAVING C9H03002835 Testing of MOREREADTIME socket device parameter

@@ -1,0 +1,3 @@
+extLblEmpFmlLst()
+	write "PASS",!
+	quit

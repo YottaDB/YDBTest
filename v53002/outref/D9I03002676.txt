@@ -1,0 +1,119 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+---------------------------------------------------------------------------------------------------
+          Testing mumps -run test1^d002676  
+---------------------------------------------------------------------------------------------------
+
+$ZSTATUS=150373210,level2^symblinetest,%GTM-E-DIVZERO, Attempt to divide by zero
+
+ZSHOW "S" output follows
+---------------------------
+traplevel1+4^symblinetest
+etrap^symblinetest
+level1+1^symblinetest
+symblinetest+3^symblinetest
+test1+6^d002676
+
+Done with symblinetest
+
+---------------------------------------------------------------------------------------------------
+          Testing do test1^d002676  
+---------------------------------------------------------------------------------------------------
+
+
+GTM>
+$ZSTATUS=150373210,level2^symblinetest,%GTM-E-DIVZERO, Attempt to divide by zero
+
+ZSHOW "S" output follows
+---------------------------
+traplevel1+4^symblinetest
+etrap^symblinetest
+level1+1^symblinetest
+symblinetest+3^symblinetest
+test1+6^d002676
++1^GTM$DMOD    (Direct mode) 
+
+Done with symblinetest
+
+GTM>
+
+---------------------------------------------------------------------------------------------------
+          Testing mumps -run test2^d002676  
+---------------------------------------------------------------------------------------------------
+
+
+$ST Level of Set $ET: 2
+
+##TEST_AWK.ZSTATUS=150373738,FSErr...TestTrap1,.GTM-E-STACKCRIT, Stack space critical
+##TEST_AWK.ZSTATUS=150373738,FSErr...TestTrap1,.GTM-E-STACKCRIT, Stack space critical
+##TEST_AWK.ZSTATUS=150373738,FSErr...TestTrap1,.GTM-E-STACKCRIT, Stack space critical
+
+---------------------------------------------------------------------------------------------------
+          Testing do test2^d002676  
+---------------------------------------------------------------------------------------------------
+
+
+GTM>
+
+$ST Level of Set $ET: 3
+
+##TEST_AWK.ZSTATUS=150373738,FSErr...TestTrap1,.GTM-E-STACKCRIT, Stack space critical
+##TEST_AWK.ZSTATUS=150373738,FSErr...TestTrap1,.GTM-E-STACKCRIT, Stack space critical
+##TEST_AWK.ZSTATUS=150373738,FSErr...TestTrap1,.GTM-E-STACKCRIT, Stack space critical
+%GTM-E-INVCMD, Invalid command keyword encountered
+
+GTM>
+
+---------------------------------------------------------------------------------------------------
+          Testing mumps -run test2^d002676 WITH gtm_ztrap_form = popadaptive 
+---------------------------------------------------------------------------------------------------
+
+
+$ST Level of Set $ET: 2
+
+##TEST_AWK.ZSTATUS=150373738,FSErr...TestTrap1,.GTM-E-STACKCRIT, Stack space critical
+##TEST_AWK.ZSTATUS=150373738,FSErr...TestTrap1,.GTM-E-STACKCRIT, Stack space critical
+##TEST_AWK.ZSTATUS=150373738,FSErr...TestTrap1,.GTM-E-STACKCRIT, Stack space critical
+
+$ZT at the end
+
+---------------------------------------------------------------------------------------------------
+          Testing do test2^d002676 WITH gtm_ztrap_form = popadaptive 
+---------------------------------------------------------------------------------------------------
+
+
+GTM>
+
+$ST Level of Set $ET: 3
+
+##TEST_AWK.ZSTATUS=150373738,FSErr...TestTrap1,.GTM-E-STACKCRIT, Stack space critical
+##TEST_AWK.ZSTATUS=150373738,FSErr...TestTrap1,.GTM-E-STACKCRIT, Stack space critical
+##TEST_AWK.ZSTATUS=150373738,FSErr...TestTrap1,.GTM-E-STACKCRIT, Stack space critical
+
+$ZT at the end
+
+GTM>
+
+---------------------------------------------------------------------------------------------------
+          Testing mumps -run test4^d002676  
+---------------------------------------------------------------------------------------------------
+
+
+pass(a,b,c) ; This entry must be called with parameters
+
+---------------------------------------------------------------------------------------------------
+          Testing do test4^d002676  
+---------------------------------------------------------------------------------------------------
+
+
+GTM>
+
+pass(a,b,c) ; This entry must be called with parameters
+GTM>
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

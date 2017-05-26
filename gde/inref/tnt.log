@@ -1,0 +1,160 @@
+	show -all
+!
+!
+!                              *** TEMPLATES ***
+!                                            Def   Rec   Key Null       Standard              Anticipatory
+!Region                                     Coll  Size  Size Subs       NullColl  Journaling  Freeze
+!----------------------------------------------------------------------------------------------------------
+!<default>                                     0   256    64 NEVER      N         N           N
+!
+!Segment          Active              Acc Typ Block      Alloc Exten Options
+!------------------------------------------------------------------------------
+!<default>          *                 BG  DYN  1024        100   100 GLOB = 64
+!                                                                    LOCK = 40
+##TEST_AWK!                                                                    RES  = *[0-9]*
+!                                                                    ENCR = OFF
+!                                                                    MSLT =1024
+!<default>                            MM  DYN  1024        100   100 DEFER
+!                                                                    LOCK = 40
+!                                                                    MSLT =1024
+!
+!
+!        *** NAMES ***
+!Global                             Region
+!------------------------------------------------------------------------------
+!*                                  DEFAULT
+!ACCOUNT                            ACCOUNT
+!ACCOUNT0                           ACCOUNT0
+!ARCHCER*                           ARCHCER
+!ARCHCERT                           ARCHCERT
+!ARCHGROT                           ARCHGROT
+!ARCHGROU                           ACCOUNT
+!ARCHGROV                           ACCOUNT0
+!ARCHIST                            ARCHCER
+!ARCHMAIL                           ARCHCERT
+!ARCHTIP                            ARCHGROT
+!ARCHXDB                            ACCOUNT
+!DBTBL                              ACCOUNT0
+!
+!
+!                               *** REGIONS ***
+!                                Dynamic                          Def    Rec   Key Null       Standard              Anticipatory
+!Region                          Segment                         Coll   Size  Size Subs       NullColl  Journaling  Freeze
+!--------------------------------------------------------------------------------------------------------------------------------
+!ACCOUNT                         ACCOUNT                            0    256    64 NEVER      N         N           N
+!ACCOUNT0                        ACCOUNT0                           0    256    64 NEVER      N         N           N
+!ARCHCER                         ARCHCER                            0    256    64 NEVER      N         N           N
+!ARCHCERT                        ARCHCERT                           0    256    64 NEVER      N         N           N
+!ARCHGROT                        ARCHGROT                           0    256    64 NEVER      N         N           N
+!DEFAULT                         DEFAULT                            0    256    64 NEVER      N         N           N
+!
+!
+!                               *** SEGMENTS ***
+!Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+!-------------------------------------------------------------------------------------------
+!ACCOUNT                         ACCOUNT             BG  DYN  1024        100   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+!                                                                                   MSLT=1024
+!ACCOUNT0                        ACCOUNT0            BG  DYN  1024        100   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+!                                                                                   MSLT=1024
+!ARCHCER                         ARCHCER             BG  DYN  1024        100   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+!                                                                                   MSLT=1024
+!ARCHCERT                        ARCHCERT            BG  DYN  1024        100   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+!                                                                                   MSLT=1024
+!ARCHGROT                        ARCHGROT            BG  DYN  1024        100   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+!                                                                                   MSLT=1024
+!DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=  64
+!                                                                                   LOCK=  40
+!                                                                                   RES =   0
+!                                                                                   MSLT=1024
+!
+!
+!                                 *** MAP ***
+!  -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+!From                            Up to                            Region / Segment / File(def ext: .dat)
+!-----------------------------------------------------------------------------------------------------------------------------------
+!%                               ACCOUNT                          REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = mumps.dat
+!ACCOUNT                         ACCOUNT0                         REG = ACCOUNT
+!                                                                 SEG = ACCOUNT
+!                                                                 FILE = ACCOUNT
+!ACCOUNT0                        ACCOUNT00                        REG = ACCOUNT0
+!                                                                 SEG = ACCOUNT0
+!                                                                 FILE = ACCOUNT0
+!ACCOUNT00                       ARCHCER                          REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = mumps.dat
+!ARCHCER                         ARCHCERT                         REG = ARCHCER
+!                                                                 SEG = ARCHCER
+!                                                                 FILE = ARCHCER
+!ARCHCERT                        ARCHCERT0                        REG = ARCHCERT
+!                                                                 SEG = ARCHCERT
+!                                                                 FILE = ARCHCERT
+!ARCHCERT0                       ARCHCES                          REG = ARCHCER
+!                                                                 SEG = ARCHCER
+!                                                                 FILE = ARCHCER
+!ARCHCES                         ARCHGROT                         REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = mumps.dat
+!ARCHGROT                        ARCHGROT0                        REG = ARCHGROT
+!                                                                 SEG = ARCHGROT
+!                                                                 FILE = ARCHGROT
+!ARCHGROT0                       ARCHGROU                         REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = mumps.dat
+!ARCHGROU                        ARCHGROU0                        REG = ACCOUNT
+!                                                                 SEG = ACCOUNT
+!                                                                 FILE = ACCOUNT
+!ARCHGROU0                       ARCHGROV                         REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = mumps.dat
+!ARCHGROV                        ARCHGROV0                        REG = ACCOUNT0
+!                                                                 SEG = ACCOUNT0
+!                                                                 FILE = ACCOUNT0
+!ARCHGROV0                       ARCHIST                          REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = mumps.dat
+!ARCHIST                         ARCHIST0                         REG = ARCHCER
+!                                                                 SEG = ARCHCER
+!                                                                 FILE = ARCHCER
+!ARCHIST0                        ARCHMAIL                         REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = mumps.dat
+!ARCHMAIL                        ARCHMAIL0                        REG = ARCHCERT
+!                                                                 SEG = ARCHCERT
+!                                                                 FILE = ARCHCERT
+!ARCHMAIL0                       ARCHTIP                          REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = mumps.dat
+!ARCHTIP                         ARCHTIP0                         REG = ARCHGROT
+!                                                                 SEG = ARCHGROT
+!                                                                 FILE = ARCHGROT
+!ARCHTIP0                        ARCHXDB                          REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = mumps.dat
+!ARCHXDB                         ARCHXDB0                         REG = ACCOUNT
+!                                                                 SEG = ACCOUNT
+!                                                                 FILE = ACCOUNT
+!ARCHXDB0                        DBTBL                            REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = mumps.dat
+!DBTBL                           DBTBL0                           REG = ACCOUNT0
+!                                                                 SEG = ACCOUNT0
+!                                                                 FILE = ACCOUNT0
+!DBTBL0                          ...                              REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = mumps.dat
+!LOCAL LOCKS                                                      REG = DEFAULT
+!                                                                 SEG = DEFAULT
+!                                                                 FILE = mumps.dat
+	ex

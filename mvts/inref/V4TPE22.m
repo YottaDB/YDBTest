@@ -1,0 +1,125 @@
+V4TPE22 ;IW-KO-YS-TS,VV4TP,MVTS V9.10;15/7/96;PART-94 Transaction
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+11 ;---1. TSTART :SERIAL  ... TCOMMIT
+ TSTART VA:SERIAL
+ D ^V4TPS21 ;^VA^VB(1)VAVB(1)
+ F  Q:$$^V4GETS1
+ D ^V4TPCHK1
+ TCOMMIT
+ D ^V4TPCHK1
+ L  H
+ ;
+12 ;---2. TSTART :S  ... TCOMMIT
+ TSTART :S
+ D ^V4TPS22 ;^VC^VD(1)VCVD(1)
+ F  Q:$$^V4GETS2
+ D ^V4TPCHK2
+ TCOMMIT
+ D ^V4TPCHK2
+ L  H
+ ;==========================================
+21 ;---1. TSTART :SERIAL  ... TROLLBACK
+ TSTART :SERIAL
+ D ^V4TPS21 ;^VA^VB(1)VAVB(1)
+ F  Q:$$^V4GETS1
+ D ^V4TPCHK1
+ TROLLBACK
+ D ^V4TPCHK1
+ L  H
+ ;
+22 ;---2. TSTART lname:S  ... TCOMMIT
+ TSTART VA:S
+ D ^V4TPS22 ;^VC^VD(1)VCVD(1)
+ F  Q:$$^V4GETS2
+ D ^V4TPCHK2
+ TCOMMIT
+ D ^V4TPCHK2
+ L  H
+ ;
+ ;==========================================
+31 ;---1. TSTART (lname,lname,lname):SERIAL  ... TROLLBACK
+ D ^V4TPS21 ;^VA^VB(1)VAVB(1)
+ TSTART (VA,VB,VC):SERIAL
+ D ^V4TPS3 ;^VA(1)^VB(1,2)^VC(2)^VD(1,2)VA(1)VB(1,2)VC(2)VD(1,2)
+ F  Q:$$^V4GETS1
+ D ^V4TPCHK1
+ K  K ^VB S ^VA(2)="^VA(2)"
+ TROLLBACK
+ D ^V4TPCHK1
+ L  H
+ ;
+32 ;---2. TSTART *:SERIAL  ... TROLLBACK
+ TSTART *:SERIAL
+ F  Q:$$^V4GETS2
+ D ^V4TPCHK2
+ K ^VA,^VB,^VC,^VD
+ TROLLBACK
+ D ^V4TPCHK2
+ L  H
+ ;==========================================
+41 ;---1. TSTART ():(SERIAL)  ... HALT
+ F  Q:$$^V4GETS1
+ D ^V4TPS21 ;^VA^VB(1)VAVB(1)
+ TSTART ():(SERIAL)
+ D ^V4TPS4 ;^va(1)^vb(2)^vc(1,2)^vd(2)va(1)vb(2)vc(1,2)vd(2)
+ D ^V4TPCHK1
+ HALT
+ L  HALT
+ ;
+42 ;---2. TSTART lname:(SERIAL)  ... TCOMMIT
+ F  Q:$$^V4GETS2
+ TSTART VA:(SERIAL)
+ D ^V4TPS22 ;^VC^VD(1)VCVD(1)
+ D ^V4TPCHK2
+ TCOMMIT
+ D ^V4TPCHK2
+ L  H
+ ;==========================================
+51 ;---1. TSTART ():SERIAL  ... TCOMMIT
+ LOCK +^S1
+ TSTART ():SERIAL
+ D ^V4TPS21 ;^VA^VB(1)VAVB(1)
+ F  Q:$$^V4GETS1
+ F I=1:1:20 L +^S2:1 Q:$T  H 1 IF $D(^HALT)=1 L  HALT
+ D ^V4TPCHK1
+ TCOMMIT
+ D ^V4TPCHK1
+ L  H
+ ;
+52 ;---2. non TP
+ LOCK +^S2
+ F  Q:$$^V4GETS2
+ S ^VB(2)="^vb(2)"
+ K ^VA
+ K
+ D ^V4TPCHK2
+ LOCK -^S2
+ F I=1:1:20 L +^S1:1 Q:$T  H 1 IF $D(^HALT)=1 L  HALT
+ D ^V4TPCHK2
+ L  H
+ ;
+ ;==========================================
+61 ;---1. TSTART lname:SERIAL  ... TROLLBACK
+ LOCK +^S1
+ D ^V4TPS21 ;^VA^VB(1)VAVB(1)
+ TSTART VB:SERIAL
+ D ^V4TPS21 ;^VA^VB(1)VAVB(1)
+ F  Q:$$^V4GETS1
+ F I=1:1:20 L +^S2:1 Q:$T  H 1 IF $D(^HALT)=1 L  HALT
+ D ^V4TPCHK1
+ TROLLBACK
+ D ^V4TPCHK1
+ L  H
+ ;
+62 ;---2. non TP
+ LOCK +^S2
+ D ^V4TPS22 ;^VC^VD(1)VCVD(1)
+ F  Q:$$^V4GETS2
+ D ^V4TPCHK2
+ LOCK -^S2
+ F I=1:1:20 L +^S1:1 Q:$T  H 1 IF $D(^HALT)=1 L  HALT
+ D ^V4TPCHK2
+ L  H
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

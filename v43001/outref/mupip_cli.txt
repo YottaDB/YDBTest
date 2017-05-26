@@ -1,0 +1,74 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+echo This should error out, since effectively, [NO]BEFORE_IMAGES is not specified
+This should error out, since effectively, [NO]BEFORE_IMAGES is not specified
+##SOURCE_PATH##/mupip set -journal=on,before -file mumps.dat -journal=on
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+echo 
+
+echo This should start journalling with BEFORE images
+This should start journalling with BEFORE images
+##SOURCE_PATH##/mupip set -journal=on,nobefore -file mumps.dat -journal=on,before,enable
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+echo 
+
+echo This should not error out
+This should not error out
+##SOURCE_PATH##/mupip set -journal=on,off -file mumps.dat -journal=on,before,enable
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+echo 
+
+echo This should not error out
+This should not error out
+##SOURCE_PATH##/mupip set -journal=alloc=a -file mumps.dat
+%GTM-E-CLIERR, Unrecognized value: a, Decimal number expected
+echo 
+
+echo This should error out
+This should error out
+##SOURCE_PATH##/mumps -bad
+%GTM-E-CLIERR, Unrecognized option : BAD
+echo 
+
+##SOURCE_PATH##/mupip set -journal=on,enable,before -file mumps.dat
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##SOURCE_PATH##/mumps -direct
+
+GTM>
+
+GTM>
+
+GTM>
+rm a.dat b.dat mumps.dat
+##SOURCE_PATH##/mupip create
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/mumps.dat
+##SOURCE_PATH##/mupip journal -recover -noapply_after_image -forward mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##SOURCE_PATH##/mumps -direct
+
+GTM>
+3
+GTM>
+4
+GTM>
+unset echo
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

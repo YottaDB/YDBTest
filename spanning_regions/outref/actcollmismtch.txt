@@ -1,0 +1,184 @@
+# Test case 1 :
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+# Create ^x entry in directory tree with collation of 0
+# Switch to collation 1
+# Add a global with collation 1
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+# Now try to set ^x. This should throw ACTCOLLMISMTCH error
+
+GTM>
+%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #0 for this global
+
+GTM>
+%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #0 for this global
+
+GTM>
+%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #0 for this global
+
+GTM>
+# Test case 2 :
+# create a.gld with global x having collation 1
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/a.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/a.gld
+# create b.gld with global x having collation 0
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/b.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/b.gld
+Created file ##TEST_PATH##/mumps.dat
+# Randomly change the fileheader collation to 2, but do not set any globals
+# Now try to do $get(^x) first with a.gld and then with b.gld
+# expect ACTCOLLMISMTCH error whenever accessed via b.gld but not when accessed with a.gld again
+
+GTM>
+
+GTM>
+%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
+
+GTM>
+
+GTM>
+%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
+
+GTM>
+# Test case 2B :
+# Create a database with fileheader collation set to 2
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+# Create ^x entry in directory tree with collation of 2
+# create a.gld with global x having collation 1
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/a.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/a.gld
+# create b.gld with global x having collation 0
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/b.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/b.gld
+# Now try to do $get(^x) first with a.gld and then with b.gld
+# expect ACTCOLLMISMTCH error in both the cases (because the Directory Tree has set collation 2 for the global)
+
+GTM>
+%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #2 for this global
+
+GTM>
+%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
+
+GTM>
+%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #2 for this global
+
+GTM>
+%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
+
+GTM>
+# Test case 3 :
+# Create a.gld with ^x(1:10) -> AREG and ^x(11:) -> DEFAULT ; and gblname x with collation=1
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/a.gld
+%GDE-I-VERIFY, Verification OK
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/a.gld
+# Create b.gld with ^x(1:10) -> DEFAULT and ^x(11:) -> AREG ; and gblname x with collation=0
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/b.gld
+%GDE-I-VERIFY, Verification OK
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/b.gld
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/mumps.dat
+# Within the same process try accessing |"a.gld"|^x(11), |"b.gld"|^x(11) -> expect ACTCOLLMISMTCH
+
+GTM>
+
+GTM>
+%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
+
+GTM>
+# Within the same process try accessing |"a.gld"|^x(1), |"b.gld"|^x(1)
+# It should not error out, as they map to different regions
+
+GTM>
+
+GTM>
+
+GTM>
+# Within the same process try accessing |"a.gld"|^x(1), |"b.gld"|^x(11) -> expect ACTCOLLMISMTCH
+
+GTM>
+
+GTM>
+%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/a.dat contains different collation sequence #1 for this global
+
+GTM>
+# Within the same process try accessing |"a.gld"|^x(11), |"b.gld"|^x(1) -> expect ACTCOLLMISMTCH
+
+GTM>
+
+GTM>
+%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
+
+GTM>
+# Test case 4 :
+# If collation characteristics are defined in gld for a global name, (only when) the first node of that global
+# name which gets set in the database (i.e. one that creates the GVT) will create a tree with 
+# the collation characteristics inherited from the gld.
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/b.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/b.gld
+Created file ##TEST_PATH##/mumps.dat
+# Without doing any global update (after creating the db), change the col of gblname a. It should work
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/b.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/b.gld
+# Now set ^a (so that the GVT will set the collation characteristics)
+# Now try changhing the col of gblname a. It would not work when tried to access
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/b.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/b.gld
+%GTM-E-ACTCOLLMISMTCH, Global ^a inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #2 for this global

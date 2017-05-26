@@ -1,0 +1,93 @@
+Verify that the new limits are enforced on various database and journaling configuration parameters.
+
+Too small a key size
+OK
+
+Too large a key size
+OK
+
+Negative record size
+OK
+
+Too large a record size
+OK
+
+Key size larger than the record size
+OK
+
+Too small a block size
+OK
+
+Too large a block size
+OK
+
+Block size smaller than the record size
+OK
+
+Small key size
+OK
+
+Large key size
+OK
+
+Small record size
+OK
+
+Large record size
+OK
+
+Small block size
+OK
+
+Large block size
+----------
+Error MUNOSTRMBKUP seen in dbcreate.out as expected:
+%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
+----------
+OK
+
+Create a normal database
+OK
+
+Too small an autoswitch limit
+OK
+
+Too large an autoswitch limit
+OK
+
+Too small an allocation limit
+OK
+
+Too large an allocation limit
+OK
+
+Allocation larger than autoswitch limit
+OK
+
+Too small a journal buffer size
+OK
+
+Too large a journal buffer size
+OK
+
+Small autoswitch limit
+OK
+
+Large autoswitch limit
+OK
+
+Small allocation limit
+OK
+
+Large allocation limit
+OK
+
+Small journal buffer size
+OK
+
+Large journal buffer size
+OK
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

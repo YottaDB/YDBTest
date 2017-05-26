@@ -1,0 +1,44 @@
+V1UO1B	;UNARY OPERATOR -2-;YS-TS,V1UO,VALIDATION VERSION 7.1;31-AUG-1987;
+	;COPYRIGHT MUMPS SYSTEM LABORATORY 1978
+	S PASS=0,FAIL=0
+	W !!,"V1UO1B: TEST OF UNARY OPERATOR -2-",!
+7983	W !,"I-798.3  plus unary operator and a strlit contains plus operator"
+	S ITEM="I-798.3.1  +""+0""",VCOMP=+"+0",VCORR="0" D EXAMINER
+	S ITEM="I-798.3.2  +""+1""",VCOMP=+"+1",VCORR="1" D EXAMINER
+	S ITEM="I-798.3.3  +strlit",VCOMP=+"+2ABCD",VCORR="2" D EXAMINER
+	S ITEM="I-798.3.4  +"".intlit""",VCOMP=+"+.2EAS",VCORR=".2" D EXAMINER
+	S ITEM="I-798.3.5  +""intlit.intlit""",VCOMP=+"+2.2B",VCORR="2.2" D EXAMINER
+	S ITEM="I-798.3.6  +""mantEintlit""",VCOMP=+"+2.2E2",VCORR="220" D EXAMINER
+	S ITEM="I-798.3.7  +""mantE+intlit""",VCOMP=+"+2.2E+2.3",VCORR="220" D EXAMINER
+	S ITEM="I-798.3.8  +""mantE-intlit""",VCOMP=+"+2.2E-2-1S",VCORR=".022" D EXAMINER
+	S ITEM="I-798.3.9  +""+AB2""",VCOMP=+"+AB2",VCORR="0" D EXAMINER
+	S ITEM="I-798.3.10  +""+2A2B""",VCOMP=+"+2A2B",VCORR="2" D EXAMINER
+	;
+7984	W !,"I-798.4  plus unary operator and a lvn"
+	S ITEM="I-798.4.1  0" S A=0 S VCOMP=+A S VCORR="0" D EXAMINER
+	S ITEM="I-798.4.2  1" S A=1 S VCOMP=+A S VCORR="1" D EXAMINER
+	S ITEM="I-798.4.3  intlit" S A=2 S VCOMP=+A S VCORR="2" D EXAMINER
+	S ITEM="I-798.4.4  .intlit" S A=.2 S VCOMP=+A S VCORR=".2" D EXAMINER
+	S ITEM="I-798.4.5  intlit.intlit" S A=2.2 S VCOMP=+A S VCORR="2.2" D EXAMINER
+	S ITEM="I-798.4.6  mantEintlit" S A=2.2E2 S VCOMP=+A S VCORR="220" D EXAMINER
+	S ITEM="I-798.4.7  mantE+intlit" S A=2.2E+2 S VCOMP=+A S VCORR="220" D EXAMINER
+	S ITEM="I-798.4.8  mantE-intlit" S A=2.2E-2 S VCOMP=+A S VCORR=".022" D EXAMINER
+	;
+7985	W !,"I-798.5  plus unary operator and a lvn"
+	S ITEM="I-798.5.1  ""0""" S A="0",VCOMP=+A S VCORR="0" D EXAMINER
+	S ITEM="I-798.5.2  ""1""" S A="1",VCOMP=+A S VCORR="1" D EXAMINER
+	S ITEM="I-798.5.3  ""intlit""" S A="2",VCOMP=+A S VCORR="2" D EXAMINER
+	S ITEM="I-798.5.4  "".intlit""" S A=".2",VCOMP=+A S VCORR=".2" D EXAMINER
+	S ITEM="I-798.5.5  ""intlit.intlit""" S A="2.2",VCOMP=+A S VCORR="2.2" D EXAMINER
+	S ITEM="I-798.5.6  ""mantEintlit""" S A="2.2E2",VCOMP=+A S VCORR="220" D EXAMINER
+	S ITEM="I-798.5.7  ""mantE+intlit""" S A="2.2E+2",VCOMP=+A S VCORR="220" D EXAMINER
+	S ITEM="I-798.5.8  ""mantE-intlit""" S A="2.2E-2",VCOMP=+A S VCORR=".022" D EXAMINER
+	;
+END	W !!,"END OF V1UO1B",!
+	S ROUTINE="V1UO1B",TESTS=26,AUTO=26,VISUAL=0 D ^VREPORT
+	K  Q
+EXAMINER	I VCORR=VCOMP S PASS=PASS+1 W !,"   PASS  ",ITEM W:$Y>55 # Q
+	S FAIL=FAIL+1 W !,"** FAIL  ",ITEM W:$Y>55 #
+	W !,"           COMPUTED =""",VCOMP,"""" W:$Y>55 #
+	W !,"           CORRECT  =""",VCORR,"""" W:$Y>55 #
+	Q

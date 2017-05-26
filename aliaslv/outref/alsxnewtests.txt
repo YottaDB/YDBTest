@@ -1,0 +1,2157 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+
+******* Start of xnewtests *******
+
+
+--------------------------
+Test case: txnew1
+a=1 ;*
+... Popping xnew
+a="1a"
+b=2
+
+--------------------------
+Test case: txnew2
+g=1 ;*
+... Popping xnew
+a=1 ;*
+b=2
+*g=a
+
+--------------------------
+Test case: txnew3
+g=1 ;*
+... Popping xnew
+a="3g" ;*
+b=2
+*g=a
+
+--------------------------
+Test case: txnew4
+a="4g" ;*
+*g=a
+... Popping xnew
+a="4g"
+b=2
+
+--------------------------
+Test case: txnew5
+a=1 ;*
+*g=a
+... Popping xnew
+a="5a" ;*
+b=2
+*g=a
+
+--------------------------
+Test case: txnew6
+Initial values
+a=1 ;*
+b=2
+*g=a
+... After NEW
+a=1 ;*
+*g=a
+... Setting new alias characteristics
+a="6h" ;*
+g=1 ;*
+*h=a
+... Popping xnew
+a="6h"
+b=2
+g=1
+
+--------------------------
+Test case: txnew7
+a=1 ;*
+b=2 ;*
+*g=a
+... Popping xnew
+a=1 ;*
+*a(1)=b
+b=2 ;*
+c=3
+*g=a
+... Var a(1) is an alias container
+
+--------------------------
+Test case: txnew8
+a=1 ;*
+*a(1)=b
+b="8b" ;*
+... Popping xnew
+a=1
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1="8b" ;*
+b=2
+c=3
+$ZWRTAC=""
+... pull data from container var into z
+a=1
+*a(1)=z
+b=2
+c=3
+z="8b" ;*
+
+--------------------------
+Test case: txnew9
+... Alias and alias container set to "b"
+b=2 ;*
+*k=b
+*m(1)=b
+... Popping xnew
+a=1
+b=2
+c=3
+
+--------------------------
+Test case: txnew10
+Vars after xnew/kill* of b
+a=42
+Adding aliases
+
+--------------------------
+Test case: txnew11
+Vars after xnew/kill* of a/b
+Adding aliases
+
+--------------------------
+Test case: txnew12
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=c
+c=42 ;*
+$ZWRTAC=""
+zap -----------
+a=1 ;*
+a(1)=11
+c=42 ;*
+pop-------------
+a=1
+a(1)=11
+b=2
+$ZWRTAC=""
+*b(1)=$ZWRTAC1
+$ZWRTAC1=42 ;*
+$ZWRTAC=""
+
+--------------------------
+Test case: txnew13
+$ZWRTAC=""
+*c(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*c(2)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+$ZWRTAC=""
+
+--------------------------
+Test case: txnew14
+a=1 ;*
+... Popping xnew
+a=20
+a(1)=21
+a(2)=22
+b=2
+
+--------------------------
+Test case: txnew15
+Values from nested vars:
+a=1 ;*
+*a(1)=a
+*a(2)=b
+$ZWRTAC=""
+*a(3)=$ZWRTAC1
+$ZWRTAC1="lvl2" ;*
+*a(4)=$ZWRTAC2
+$ZWRTAC2="lvl3" ;*
+b=2 ;*
+io=1
+$ZWRTAC=""
+
+--------------------------
+Test case: txnew16
+
+--------------------------
+Test case: txnew17
+txnew17rtn: ZWrite just before KILL * follows:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=4
+txnew17rtn: ZWrite just after KILL * follows:
+ZWrite after return from txnew17rtn follows:
+i=3
+
+--------------------------
+Test case: txnew18
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=8
+a(5)=10
+a(6)=12
+i=6
+txnew18rtnA: ZWrite just before call to txnew18rtnB follows:
+a(1)=1
+a(2)=2
+a(3)=3
+a(4)=8
+a(5)=10
+a(6)=12
+a(7)=21
+a(8)=24
+a(9)=27
+i=9
+txnew18rtnB: ZWrite just after KILL * follows:
+i=9
+txnew18rtnA: ZWrite just after call to txnew18rtnB follows:
+i=6
+ZWrite after return from txnew18rtnA follows:
+i=3
+
+--------------------------
+Test case: txnew19
+a(1)=1
+a(2)=2
+aa(1)=10
+aa(2)=20
+aaa(1)=100
+aaa(2)=200
+i=2
+ZWrite before call to txnew19rtnA follows:
+a(1)=1
+a(2)=2
+aa(1)=10
+aa(2)=20
+aa(3)=30
+aa(4)=40
+b(3)=6
+b(4)=8
+bbb(3)=300
+bbb(4)=400
+i=4
+txnew19rtnA: ZWrite just before call to txnew19rtnB follows:
+txnew19rtnB: ZWrite just before KILL * follows:
+a(1)=1
+a(2)=2
+a(5)=15
+a(6)=18
+b(3)=6
+b(4)=8
+b(7)=28
+b(8)=32
+i=8
+txnew19rtnB: ZWrite just after KILL * follows:
+i=8
+txnew19rtnA: ZWrite just after call to txnew19rtnB and before KILL * follows:
+aa(1)=10
+aa(2)=20
+aa(3)=30
+aa(4)=40
+bbb(3)=300
+bbb(4)=400
+i=4
+txnew19rtnA: ZWrite just after KILL * follows:
+bbb(3)=300
+bbb(4)=400
+i=4
+ZWrite after call to txnew19rtnA follows:
+aaa(1)=100
+aaa(2)=200
+i=2
+
+--------------------------
+Test case: txnew20
+ZWrite before call to txnew20rtnA follows:
+a(1)=1
+a(2)=2
+aa(1)=10
+aa(2)=20
+aaa(1)=100
+aaa(2)=200
+i=2
+txnew20rtnA: ZWrite just before call to txnew20rtnB follows:
+a(1)=1
+a(2)=2
+aa(1)=10
+aa(2)=20
+aa(3)=30
+aa(4)=40
+b(3)=6
+b(4)=8
+bbb(3)=300
+bbb(4)=400
+*c=a
+i=4
+txnew20rtnB: ZWrite just before KILL * follows:
+a(1)=1
+a(2)=2
+a(5)=15
+a(6)=18
+b(3)=6
+b(4)=8
+b(7)=28
+b(8)=32
+i=8
+txnew20rtnB: ZWrite just after KILL * follows:
+i=8
+txnew20rtnA: ZWrite just after call to txnew20rtnB and before KILL * follows:
+aa(1)=10
+aa(2)=20
+aa(3)=30
+aa(4)=40
+bbb(3)=300
+bbb(4)=400
+c(1)=1
+c(2)=2
+c(5)=15
+c(6)=18
+i=4
+txnew20rtnA: ZWrite just after KILL * follows:
+bbb(3)=300
+bbb(4)=400
+i=4
+ZWrite after call to txnew20rtnA follows:
+aaa(1)=100
+aaa(2)=200
+i=2
+
+--------------------------
+Test case: txnew21
+
+ZWRITE output at XNEW depth = 1
+-----------------------------------------
+a=1 ;*
+depth=1
+
+ZWRITE output at XNEW depth = 2
+-----------------------------------------
+a=2 ;*
+depth=2
+
+ZWRITE output at XNEW depth = 2
+-----------------------------------------
+depth=2
+*g=a
+
+ZWRITE output at XNEW depth = 0
+-----------------------------------------
+depth=0
+
+--------------------------
+Test case: txtp1
+Starting TP transaction
+------ Var settings just inside TSTART *
+a=1 ;*
+b=2 ;*
+c=3 ;*
+*d=a
+maxrestarts=2 ;*
+---- Current var settings before XNEW:
+a=2 ;*
+b=3 ;*
+c=4 ;*
+*d=a
+*e=b
+*h(1)=b
+*i=b
+maxrestarts=2 ;*
+---- Performing NEW
+Values just prior to restart
+a=3 ;*
+b=42 ;*
+c=4 ;*
+e=3 ;*
+f=24 ;*
+maxrestarts=2 ;*
+-- Restarting transaction NOW!
+------ Var settings just inside TSTART *
+a=1 ;*
+b=2 ;*
+c=3 ;*
+*d=a
+maxrestarts=2 ;*
+---- Current var settings before XNEW:
+a=2 ;*
+b=3 ;*
+c=4 ;*
+*d=a
+*e=b
+*h(1)=b
+*i=b
+maxrestarts=2 ;*
+---- Performing NEW
+Values just prior to restart
+a=3 ;*
+b=42 ;*
+c=4 ;*
+e=3 ;*
+f=24 ;*
+maxrestarts=2 ;*
+-- Restarting transaction NOW!
+------ Var settings just inside TSTART *
+a=1 ;*
+b=2 ;*
+c=3 ;*
+*d=a
+maxrestarts=2 ;*
+---- Current var settings before XNEW:
+a=2 ;*
+b=3 ;*
+c=4 ;*
+*d=a
+*e=b
+*h(1)=b
+*i=b
+maxrestarts=2 ;*
+---- Performing NEW
+****** Final values:
+a=3 ;*
+b=3 ;*
+c=4
+*d=a
+*e=b
+*h(1)=b
+*i=b
+maxrestarts=2
+
+--------------------------
+Test case: txtp2
+Initial values set
+Starting TP transaction
+Var settings just inside TSTART *
+a=1 ;*
+*a(1)=a
+b=2 ;*
+c=3 ;*
+*d=a
+maxrestarts=2 ;*
+Current var settings before XNEW:
+a=2 ;*
+*a(1)=a
+b=3 ;*
+c=4 ;*
+d=11 ;*
+*e=b
+*h(1)=b
+*i=b
+*j=d
+maxrestarts=2 ;*
+Current var settings after XNEW/TSTART*:
+a=2 ;*
+*a(1)=e
+*a(2)=zz
+b=42 ;*
+*b(1)=zz
+*b(2)=f
+*b(3)=q
+c=4 ;*
+e=3 ;*
+f=24 ;*
+maxrestarts=2 ;*
+q=2222 ;*
+zz=99 ;*
+*zz(1)=c
+*zz(2)=a
+****** TRestart-ing NOW !!
+
+Var settings just inside TSTART *
+a=1 ;*
+*a(1)=a
+b=2 ;*
+c=3 ;*
+*d=a
+maxrestarts=2 ;*
+Current var settings before XNEW:
+a=2 ;*
+*a(1)=a
+b=3 ;*
+c=4 ;*
+d=11 ;*
+*e=b
+*h(1)=b
+*i=b
+*j=d
+maxrestarts=2 ;*
+Current var settings after XNEW/TSTART*:
+a=2 ;*
+*a(1)=e
+*a(2)=zz
+b=42 ;*
+*b(1)=zz
+*b(2)=f
+*b(3)=q
+c=4 ;*
+e=3 ;*
+f=24 ;*
+maxrestarts=2 ;*
+q=2222 ;*
+zz=99 ;*
+*zz(1)=c
+*zz(2)=a
+****** TRestart-ing NOW !!
+
+Var settings just inside TSTART *
+a=1 ;*
+*a(1)=a
+b=2 ;*
+c=3 ;*
+*d=a
+maxrestarts=2 ;*
+Current var settings before XNEW:
+a=2 ;*
+*a(1)=a
+b=3 ;*
+c=4 ;*
+d=11 ;*
+*e=b
+*h(1)=b
+*i=b
+*j=d
+maxrestarts=2 ;*
+Current var settings after XNEW/TSTART*:
+a=2 ;*
+*a(1)=e
+*a(2)=zz
+b=42 ;*
+*b(1)=zz
+*b(2)=f
+*b(3)=q
+c=4 ;*
+e=3 ;*
+f=24 ;*
+maxrestarts=2 ;*
+q=2222 ;*
+zz=99 ;*
+*zz(1)=c
+*zz(2)=a
+
+****** Final values:
+a=2 ;*
+*a(1)=e
+*a(2)=zz
+b=42
+*b(1)=zz
+*b(2)=f
+*b(3)=q
+c=4 ;*
+e=3 ;*
+f=24 ;*
+maxrestarts=2 ;*
+q=2222 ;*
+zz=99 ;*
+*zz(1)=c
+*zz(2)=a
+
+--------------------------
+Test case: txtp3
+Start of txtp3a with parm values (0,0)
+
+------------- Starting values just inside first TStart *
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+b=20 ;*
+c=0 ;*
+cmt1=0 ;*
+cmt2=0 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+
+Exclusive NEW (passthru a,b,c,e,maxrestart1/2)
+
+Created d(3) container pointing to c and c(3) pointing to d
+
+Inner TSTART * fired up
+
+Created z(6) container pointing to c
+
+Values just before Restart #1 ($TLevel=2)
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=0 ;*
+cmt2=0 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Restart point #1 ocurring NOW!!
+
+------------- Starting values just inside first TStart *
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+b=20 ;*
+c=0 ;*
+cmt1=0 ;*
+cmt2=0 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+
+Exclusive NEW (passthru a,b,c,e,maxrestart1/2)
+
+Created d(3) container pointing to c and c(3) pointing to d
+
+Inner TSTART * fired up
+
+Created z(6) container pointing to c
+
+Begin nested TP level rollback
+
+Nested TP rolled back
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=0 ;*
+cmt2=0 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Values just before Restart #2 ($TLevel=1)
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=0 ;*
+cmt2=0 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Restart point #2 ocurring NOW!!
+
+------------- Starting values just inside first TStart *
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+b=20 ;*
+c=0 ;*
+cmt1=0 ;*
+cmt2=0 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+
+Exclusive NEW (passthru a,b,c,e,maxrestart1/2)
+
+Created d(3) container pointing to c and c(3) pointing to d
+
+Inner TSTART * fired up
+
+Created z(6) container pointing to c
+
+Begin nested TP level rollback
+
+Nested TP rolled back
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=0 ;*
+cmt2=0 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Values just before Restart #2 ($TLevel=1)
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=0 ;*
+cmt2=0 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Restart point #2 ocurring NOW!!
+
+------------- Starting values just inside first TStart *
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+b=20 ;*
+c=0 ;*
+cmt1=0 ;*
+cmt2=0 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+
+Exclusive NEW (passthru a,b,c,e,maxrestart1/2)
+
+Created d(3) container pointing to c and c(3) pointing to d
+
+Inner TSTART * fired up
+
+Created z(6) container pointing to c
+
+Begin nested TP level rollback
+
+Nested TP rolled back
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=0 ;*
+cmt2=0 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+XNEW has been popped
+
+Starting TP level rollback - before values:
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=$ZWRTAC3
+$ZWRTAC3=40 ;*
+*$ZWRTAC3(3)=c
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC4
+$ZWRTAC4=21 ;*
+*$ZWRTAC4(2)=$ZWRTAC5
+$ZWRTAC5=22 ;*
+c=30 ;*
+*c(3)=$ZWRTAC3
+cmt1=0 ;*
+cmt2=0 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+x=0 ;*
+$ZWRTAC=""
+
+Outer TP levelrolled back
+
+-------- Final values:
+a=1
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=$ZWRTAC3
+$ZWRTAC3=40 ;*
+*$ZWRTAC3(3)=c
+*$ZWRTAC1(6)=c
+b=20
+*b(2)=$ZWRTAC4
+$ZWRTAC4=21 ;*
+*$ZWRTAC4(2)=$ZWRTAC5
+$ZWRTAC5=22 ;*
+c=30 ;*
+*c(3)=$ZWRTAC3
+cmt1=0 ;*
+cmt2=0 ;*
+maxrestart1=1
+maxrestart2=3
+x=0
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+a=1
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=$ZWRTAC3
+$ZWRTAC3=40 ;*
+*$ZWRTAC3(3)=c
+*$ZWRTAC1(6)=c
+b=20
+*b(2)=$ZWRTAC4
+$ZWRTAC4=21 ;*
+*$ZWRTAC4(2)=$ZWRTAC5
+$ZWRTAC5=22 ;*
+c=30 ;*
+*c(3)=$ZWRTAC3
+cmt1=0 ;*
+cmt2=0 ;*
+maxrestart1=1
+maxrestart2=3
+x=0
+$ZWRTAC=""
+
+Exiting now
+Start of txtp3a with parm values (0,1)
+
+------------- Starting values just inside first TStart *
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+b=20 ;*
+c=0 ;*
+cmt1=0 ;*
+cmt2=1 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+
+Exclusive NEW (passthru a,b,c,e,maxrestart1/2)
+
+Created d(3) container pointing to c and c(3) pointing to d
+
+Inner TSTART * fired up
+
+Created z(6) container pointing to c
+
+Values just before Restart #1 ($TLevel=2)
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=0 ;*
+cmt2=1 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Restart point #1 ocurring NOW!!
+
+------------- Starting values just inside first TStart *
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+b=20 ;*
+c=0 ;*
+cmt1=0 ;*
+cmt2=1 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+
+Exclusive NEW (passthru a,b,c,e,maxrestart1/2)
+
+Created d(3) container pointing to c and c(3) pointing to d
+
+Inner TSTART * fired up
+
+Created z(6) container pointing to c
+
+Begin nested TP level rollback
+
+Nested TP rolled back
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=0 ;*
+cmt2=1 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Values just before Restart #2 ($TLevel=1)
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=0 ;*
+cmt2=1 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Restart point #2 ocurring NOW!!
+
+------------- Starting values just inside first TStart *
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+b=20 ;*
+c=0 ;*
+cmt1=0 ;*
+cmt2=1 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+
+Exclusive NEW (passthru a,b,c,e,maxrestart1/2)
+
+Created d(3) container pointing to c and c(3) pointing to d
+
+Inner TSTART * fired up
+
+Created z(6) container pointing to c
+
+Begin nested TP level rollback
+
+Nested TP rolled back
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=0 ;*
+cmt2=1 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Values just before Restart #2 ($TLevel=1)
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=0 ;*
+cmt2=1 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Restart point #2 ocurring NOW!!
+
+------------- Starting values just inside first TStart *
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+b=20 ;*
+c=0 ;*
+cmt1=0 ;*
+cmt2=1 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+
+Exclusive NEW (passthru a,b,c,e,maxrestart1/2)
+
+Created d(3) container pointing to c and c(3) pointing to d
+
+Inner TSTART * fired up
+
+Created z(6) container pointing to c
+
+Begin nested TP level rollback
+
+Nested TP rolled back
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=0 ;*
+cmt2=1 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+XNEW has been popped
+
+Starting TP level commit - before values:
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=$ZWRTAC3
+$ZWRTAC3=40 ;*
+*$ZWRTAC3(3)=c
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC4
+$ZWRTAC4=21 ;*
+*$ZWRTAC4(2)=$ZWRTAC5
+$ZWRTAC5=22 ;*
+c=30 ;*
+*c(3)=$ZWRTAC3
+cmt1=0 ;*
+cmt2=1 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+x=0 ;*
+$ZWRTAC=""
+
+Outer TP levelcommitted
+
+-------- Final values:
+a=1
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=$ZWRTAC3
+$ZWRTAC3=40 ;*
+*$ZWRTAC3(3)=c
+*$ZWRTAC1(6)=c
+b=20
+*b(2)=$ZWRTAC4
+$ZWRTAC4=21 ;*
+*$ZWRTAC4(2)=$ZWRTAC5
+$ZWRTAC5=22 ;*
+c=30 ;*
+*c(3)=$ZWRTAC3
+cmt1=0 ;*
+cmt2=1 ;*
+maxrestart1=1
+maxrestart2=3
+x=0
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+a=1
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=$ZWRTAC3
+$ZWRTAC3=40 ;*
+*$ZWRTAC3(3)=c
+*$ZWRTAC1(6)=c
+b=20
+*b(2)=$ZWRTAC4
+$ZWRTAC4=21 ;*
+*$ZWRTAC4(2)=$ZWRTAC5
+$ZWRTAC5=22 ;*
+c=30 ;*
+*c(3)=$ZWRTAC3
+cmt1=0 ;*
+cmt2=1 ;*
+maxrestart1=1
+maxrestart2=3
+x=0
+$ZWRTAC=""
+
+Exiting now
+Start of txtp3a with parm values (1,0)
+
+------------- Starting values just inside first TStart *
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+b=20 ;*
+c=0 ;*
+cmt1=1 ;*
+cmt2=0 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+
+Exclusive NEW (passthru a,b,c,e,maxrestart1/2)
+
+Created d(3) container pointing to c and c(3) pointing to d
+
+Inner TSTART * fired up
+
+Created z(6) container pointing to c
+
+Values just before Restart #1 ($TLevel=2)
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=1 ;*
+cmt2=0 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Restart point #1 ocurring NOW!!
+
+------------- Starting values just inside first TStart *
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+b=20 ;*
+c=0 ;*
+cmt1=1 ;*
+cmt2=0 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+
+Exclusive NEW (passthru a,b,c,e,maxrestart1/2)
+
+Created d(3) container pointing to c and c(3) pointing to d
+
+Inner TSTART * fired up
+
+Created z(6) container pointing to c
+
+Begin nested TP level commit
+
+Nested TP committed
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=1 ;*
+cmt2=0 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Values just before Restart #2 ($TLevel=1)
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=1 ;*
+cmt2=0 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Restart point #2 ocurring NOW!!
+
+------------- Starting values just inside first TStart *
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+b=20 ;*
+c=0 ;*
+cmt1=1 ;*
+cmt2=0 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+
+Exclusive NEW (passthru a,b,c,e,maxrestart1/2)
+
+Created d(3) container pointing to c and c(3) pointing to d
+
+Inner TSTART * fired up
+
+Created z(6) container pointing to c
+
+Begin nested TP level commit
+
+Nested TP committed
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=1 ;*
+cmt2=0 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Values just before Restart #2 ($TLevel=1)
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=1 ;*
+cmt2=0 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Restart point #2 ocurring NOW!!
+
+------------- Starting values just inside first TStart *
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+b=20 ;*
+c=0 ;*
+cmt1=1 ;*
+cmt2=0 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+
+Exclusive NEW (passthru a,b,c,e,maxrestart1/2)
+
+Created d(3) container pointing to c and c(3) pointing to d
+
+Inner TSTART * fired up
+
+Created z(6) container pointing to c
+
+Begin nested TP level commit
+
+Nested TP committed
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=1 ;*
+cmt2=0 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+XNEW has been popped
+
+Starting TP level rollback - before values:
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=$ZWRTAC3
+$ZWRTAC3=40 ;*
+*$ZWRTAC3(3)=c
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC4
+$ZWRTAC4=21 ;*
+*$ZWRTAC4(2)=$ZWRTAC5
+$ZWRTAC5=22 ;*
+c=30 ;*
+*c(3)=$ZWRTAC3
+cmt1=1 ;*
+cmt2=0 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+x=0 ;*
+$ZWRTAC=""
+
+Outer TP levelrolled back
+
+-------- Final values:
+a=1
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=$ZWRTAC3
+$ZWRTAC3=40 ;*
+*$ZWRTAC3(3)=c
+*$ZWRTAC1(6)=c
+b=20
+*b(2)=$ZWRTAC4
+$ZWRTAC4=21 ;*
+*$ZWRTAC4(2)=$ZWRTAC5
+$ZWRTAC5=22 ;*
+c=30 ;*
+*c(3)=$ZWRTAC3
+cmt1=1 ;*
+cmt2=0 ;*
+maxrestart1=1
+maxrestart2=3
+x=0
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+a=1
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=$ZWRTAC3
+$ZWRTAC3=40 ;*
+*$ZWRTAC3(3)=c
+*$ZWRTAC1(6)=c
+b=20
+*b(2)=$ZWRTAC4
+$ZWRTAC4=21 ;*
+*$ZWRTAC4(2)=$ZWRTAC5
+$ZWRTAC5=22 ;*
+c=30 ;*
+*c(3)=$ZWRTAC3
+cmt1=1 ;*
+cmt2=0 ;*
+maxrestart1=1
+maxrestart2=3
+x=0
+$ZWRTAC=""
+
+Exiting now
+Start of txtp3a with parm values (1,1)
+
+------------- Starting values just inside first TStart *
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+b=20 ;*
+c=0 ;*
+cmt1=1 ;*
+cmt2=1 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+
+Exclusive NEW (passthru a,b,c,e,maxrestart1/2)
+
+Created d(3) container pointing to c and c(3) pointing to d
+
+Inner TSTART * fired up
+
+Created z(6) container pointing to c
+
+Values just before Restart #1 ($TLevel=2)
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=1 ;*
+cmt2=1 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Restart point #1 ocurring NOW!!
+
+------------- Starting values just inside first TStart *
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+b=20 ;*
+c=0 ;*
+cmt1=1 ;*
+cmt2=1 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+
+Exclusive NEW (passthru a,b,c,e,maxrestart1/2)
+
+Created d(3) container pointing to c and c(3) pointing to d
+
+Inner TSTART * fired up
+
+Created z(6) container pointing to c
+
+Begin nested TP level commit
+
+Nested TP committed
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=1 ;*
+cmt2=1 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Values just before Restart #2 ($TLevel=1)
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=1 ;*
+cmt2=1 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Restart point #2 ocurring NOW!!
+
+------------- Starting values just inside first TStart *
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+b=20 ;*
+c=0 ;*
+cmt1=1 ;*
+cmt2=1 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+
+Exclusive NEW (passthru a,b,c,e,maxrestart1/2)
+
+Created d(3) container pointing to c and c(3) pointing to d
+
+Inner TSTART * fired up
+
+Created z(6) container pointing to c
+
+Begin nested TP level commit
+
+Nested TP committed
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=1 ;*
+cmt2=1 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Values just before Restart #2 ($TLevel=1)
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=1 ;*
+cmt2=1 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Restart point #2 ocurring NOW!!
+
+------------- Starting values just inside first TStart *
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+b=20 ;*
+c=0 ;*
+cmt1=1 ;*
+cmt2=1 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+
+Exclusive NEW (passthru a,b,c,e,maxrestart1/2)
+
+Created d(3) container pointing to c and c(3) pointing to d
+
+Inner TSTART * fired up
+
+Created z(6) container pointing to c
+
+Begin nested TP level commit
+
+Nested TP committed
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=d
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC3
+$ZWRTAC3=21 ;*
+*$ZWRTAC3(2)=$ZWRTAC4
+$ZWRTAC4=22 ;*
+c=30 ;*
+*c(3)=d
+cmt1=1 ;*
+cmt2=1 ;*
+d=40 ;*
+*d(3)=c
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+$ZWRTAC=""
+
+XNEW has been popped
+
+Starting TP level commit - before values:
+a=1 ;*
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=$ZWRTAC3
+$ZWRTAC3=40 ;*
+*$ZWRTAC3(3)=c
+*$ZWRTAC1(6)=c
+b=20 ;*
+*b(2)=$ZWRTAC4
+$ZWRTAC4=21 ;*
+*$ZWRTAC4(2)=$ZWRTAC5
+$ZWRTAC5=22 ;*
+c=30 ;*
+*c(3)=$ZWRTAC3
+cmt1=1 ;*
+cmt2=1 ;*
+maxrestart1=1 ;*
+maxrestart2=3 ;*
+x=0 ;*
+$ZWRTAC=""
+
+Outer TP levelcommitted
+
+-------- Final values:
+a=1
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=$ZWRTAC3
+$ZWRTAC3=40 ;*
+*$ZWRTAC3(3)=c
+*$ZWRTAC1(6)=c
+b=20
+*b(2)=$ZWRTAC4
+$ZWRTAC4=21 ;*
+*$ZWRTAC4(2)=$ZWRTAC5
+$ZWRTAC5=22 ;*
+c=30 ;*
+*c(3)=$ZWRTAC3
+cmt1=1 ;*
+cmt2=1 ;*
+maxrestart1=1
+maxrestart2=3
+x=0
+$ZWRTAC=""
+
+Recovering lv_vals
+
+Recovered lv_vals: 0
+a=1
+$ZWRTAC=""
+*a(1)=$ZWRTAC1
+$ZWRTAC1=2 ;*
+*$ZWRTAC1(1)=$ZWRTAC2
+$ZWRTAC2=3 ;*
+*$ZWRTAC1(5)=$ZWRTAC3
+$ZWRTAC3=40 ;*
+*$ZWRTAC3(3)=c
+*$ZWRTAC1(6)=c
+b=20
+*b(2)=$ZWRTAC4
+$ZWRTAC4=21 ;*
+*$ZWRTAC4(2)=$ZWRTAC5
+$ZWRTAC5=22 ;*
+c=30 ;*
+*c(3)=$ZWRTAC3
+cmt1=1 ;*
+cmt2=1 ;*
+maxrestart1=1
+maxrestart2=3
+x=0
+$ZWRTAC=""
+
+Exiting now
+
+--------------------------
+Test case: txtp4
+---- View after TStart ----
+a=1 ;*
+b=2 ;*
+c=3
+---- View after XNEW ----
+a=100
+b=200 ;*
+c=300 ;*
+d=400 ;*
+---- View after TStart ----
+a=1 ;*
+b=2 ;*
+c=300
+d=400
+---- View after XNEW ----
+a=100
+b=200 ;*
+c=300 ;*
+d=400 ;*
+---- View after TStart ----
+a=1 ;*
+b=2 ;*
+c=300
+d=400
+---- View after XNEW ----
+a=100
+b=200 ;*
+c=300 ;*
+d=400 ;*
+---- Popping stack ----
+a=10
+b=200
+c=300
+d=400
+
+--------------------------
+Test case: txtp5
+ZWrite just after TSTART and before call to txtp5rtnA follows:
+a(1)=1
+*a(2)=aaa
+aa(1)=10
+*aa(2)=a
+aaa(1)=100
+*aaa(2)=aa
+i=1
+txtp5rtnA: ZWrite just before call to txtp5rtnB follows:
+a(1)=1
+$ZWRTAC=""
+*a(2)=$ZWRTAC1
+$ZWRTAC1(1)=100
+*$ZWRTAC1(2)=aa
+aa(1)=10
+*aa(2)=a
+aa(3)=30
+b(3)=6
+bbb(3)=300
+*c=a
+i=3
+$ZWRTAC=""
+txtp5rtnB: ZWrite just before KILL * follows:
+a(1)=1
+$ZWRTAC=""
+*a(2)=$ZWRTAC1
+$ZWRTAC1(1)=100
+*$ZWRTAC1(2)=$ZWRTAC2
+$ZWRTAC2(1)=10
+*$ZWRTAC2(2)=a
+$ZWRTAC2(3)=30
+a(5)=15
+b(3)=6
+b(7)=28
+i=7
+$ZWRTAC=""
+txtp5rtnB: ZWrite just after KILL * and just before potential TRESTART follows:
+i=7
+ZWrite just after TSTART and before call to txtp5rtnA follows:
+a(1)=1
+*a(2)=aaa
+aa(1)=10
+*aa(2)=a
+aaa(1)=100
+*aaa(2)=aa
+i=1
+txtp5rtnA: ZWrite just before call to txtp5rtnB follows:
+a(1)=1
+$ZWRTAC=""
+*a(2)=$ZWRTAC1
+$ZWRTAC1(1)=100
+*$ZWRTAC1(2)=aa
+aa(1)=10
+*aa(2)=a
+aa(3)=30
+b(3)=6
+bbb(3)=300
+*c=a
+i=3
+$ZWRTAC=""
+txtp5rtnB: ZWrite just before KILL * follows:
+a(1)=1
+$ZWRTAC=""
+*a(2)=$ZWRTAC1
+$ZWRTAC1(1)=100
+*$ZWRTAC1(2)=$ZWRTAC2
+$ZWRTAC2(1)=10
+*$ZWRTAC2(2)=a
+$ZWRTAC2(3)=30
+a(5)=15
+b(3)=6
+b(7)=28
+i=7
+$ZWRTAC=""
+txtp5rtnB: ZWrite just after KILL * and just before potential TRESTART follows:
+i=7
+txtp5rtnB: TRESTART bypassed
+txtp5rtnA: ZWrite just after call to txtp5rtnB and before KILL * follows:
+aa(1)=10
+*aa(2)=c
+aa(3)=30
+bbb(3)=300
+c(1)=1
+$ZWRTAC=""
+*c(2)=$ZWRTAC1
+$ZWRTAC1(1)=100
+*$ZWRTAC1(2)=aa
+c(5)=15
+i=3
+$ZWRTAC=""
+txtp5rtnA: ZWrite just after KILL * and just before potential TRESTART follows:
+bbb(3)=300
+i=3
+ZWrite just after TSTART and before call to txtp5rtnA follows:
+a(1)=1
+*a(2)=aaa
+aa(1)=10
+*aa(2)=a
+aaa(1)=100
+*aaa(2)=aa
+i=1
+txtp5rtnA: ZWrite just before call to txtp5rtnB follows:
+a(1)=1
+$ZWRTAC=""
+*a(2)=$ZWRTAC1
+$ZWRTAC1(1)=100
+*$ZWRTAC1(2)=aa
+aa(1)=10
+*aa(2)=a
+aa(3)=30
+b(3)=6
+bbb(3)=300
+*c=a
+i=3
+$ZWRTAC=""
+txtp5rtnB: ZWrite just before KILL * follows:
+a(1)=1
+$ZWRTAC=""
+*a(2)=$ZWRTAC1
+$ZWRTAC1(1)=100
+*$ZWRTAC1(2)=$ZWRTAC2
+$ZWRTAC2(1)=10
+*$ZWRTAC2(2)=a
+$ZWRTAC2(3)=30
+a(5)=15
+b(3)=6
+b(7)=28
+i=7
+$ZWRTAC=""
+txtp5rtnB: ZWrite just after KILL * and just before potential TRESTART follows:
+i=7
+txtp5rtnB: TRESTART bypassed
+txtp5rtnA: ZWrite just after call to txtp5rtnB and before KILL * follows:
+aa(1)=10
+*aa(2)=c
+aa(3)=30
+bbb(3)=300
+c(1)=1
+$ZWRTAC=""
+*c(2)=$ZWRTAC1
+$ZWRTAC1(1)=100
+*$ZWRTAC1(2)=aa
+c(5)=15
+i=3
+$ZWRTAC=""
+txtp5rtnA: ZWrite just after KILL * and just before potential TRESTART follows:
+bbb(3)=300
+i=3
+txtp5rtnA: TRESTART bypassed
+ZWrite just after call to txtp5rtnA follows:
+aaa(1)=100
+$ZWRTAC=""
+*aaa(2)=$ZWRTAC1
+$ZWRTAC1(1)=10
+*$ZWRTAC1(2)=$ZWRTAC2
+$ZWRTAC2(1)=1
+*$ZWRTAC2(2)=aaa
+$ZWRTAC2(5)=15
+$ZWRTAC1(3)=30
+i=1
+$ZWRTAC=""
+
+--------------------------
+
+
+******* Finish xnewtests *******
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,150 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+mumps.dat
+%GTM-I-JNLSTATE, Journaling state for region AREG is now DISABLED
+%GTM-I-JNLSTATE, Journaling state for region BREG is now OFF
+%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%GTM-I-JNLSTATE, Journaling state for region DREG is now ON
+%GTM-I-REPLSTATE, Replication state for region DREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region EREG is now ON
+%GTM-I-REPLSTATE, Replication state for region EREG is now ON
+
+---------- With -newjnlfiles=prevlink -----------
+##SOURCE_PATH##/mupip backup -newjnlfiles=prevlink * backupdir |& sort -f
+
+
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/d.mjl is renamed to ##TEST_PATH##/d.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/e.mjl is renamed to ##TEST_PATH##/e.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file backupdir/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file backupdir/b.dat
+DB file ##TEST_PATH##/c.dat backed up in file backupdir/c.dat
+DB file ##TEST_PATH##/d.dat backed up in file backupdir/d.dat
+DB file ##TEST_PATH##/e.dat backed up in file backupdir/e.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file backupdir/mumps.dat
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Region          AREG
+  Journal State                    DISABLED
+Region          BREG
+  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                     8  Journal Sync IO              FALSE
+Region          CREG
+  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                     8  Journal Sync IO              FALSE
+Region          DEFAULT
+  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                     8  Journal Sync IO               TRUE
+Region          DREG
+  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                     8  Journal Sync IO              FALSE
+Region          EREG
+  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                     8  Journal Sync IO               TRUE
+
+---------- With -newjnlfiles=prevlink,nosync_io -----------
+##SOURCE_PATH##/mupip backup -newjnlfiles=prevlink,nosync_io * backupdir |& sort -f
+
+
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/d.mjl is renamed to ##TEST_PATH##/d.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/e.mjl is renamed to ##TEST_PATH##/e.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file backupdir/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file backupdir/b.dat
+DB file ##TEST_PATH##/c.dat backed up in file backupdir/c.dat
+DB file ##TEST_PATH##/d.dat backed up in file backupdir/d.dat
+DB file ##TEST_PATH##/e.dat backed up in file backupdir/e.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file backupdir/mumps.dat
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Region          AREG
+  Journal State                    DISABLED
+Region          BREG
+  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                     8  Journal Sync IO              FALSE
+Region          CREG
+  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                     8  Journal Sync IO              FALSE
+Region          DEFAULT
+  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                     8  Journal Sync IO              FALSE
+Region          DREG
+  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                     8  Journal Sync IO              FALSE
+Region          EREG
+  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                     8  Journal Sync IO              FALSE
+
+---------- With -newjnlfiles=prevlink,sync_io -----------
+##SOURCE_PATH##/mupip backup -newjnlfiles=prevlink,sync_io * backupdir |& sort -f
+
+
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/d.mjl is renamed to ##TEST_PATH##/d.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/e.mjl is renamed to ##TEST_PATH##/e.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file backupdir/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file backupdir/b.dat
+DB file ##TEST_PATH##/c.dat backed up in file backupdir/c.dat
+DB file ##TEST_PATH##/d.dat backed up in file backupdir/d.dat
+DB file ##TEST_PATH##/e.dat backed up in file backupdir/e.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file backupdir/mumps.dat
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Region          AREG
+  Journal State                    DISABLED
+Region          BREG
+  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                     8  Journal Sync IO               TRUE
+Region          CREG
+  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                     8  Journal Sync IO               TRUE
+Region          DEFAULT
+  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                     8  Journal Sync IO               TRUE
+Region          DREG
+  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                     8  Journal Sync IO               TRUE
+Region          EREG
+  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                     8  Journal Sync IO               TRUE
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##TEST_PATH##/jnl_on_5_,nosync_io.log
+%GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
+##TEST_PATH##/jnl_on_5_,sync_io.log
+%GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
+##TEST_PATH##/jnl_on_5_.log
+%GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat

@@ -1,0 +1,25 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Verify open database and journal fds does not get passed via zsystem
+PASSED
+Verify open read-only database and journal fds does not get passed via zsystem
+3
+PASSED
+Verify an open file's fd does not get passed via zsystem
+PASSED
+Verify an open fifo's fd does not get passed via zsystem
+PASSED
+Verify an open socket's fd does not get passed via zsystem
+
+GTM>
+
+GTM>
+PASSED
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

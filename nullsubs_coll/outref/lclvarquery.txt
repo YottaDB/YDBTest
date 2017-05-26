@@ -1,0 +1,190 @@
+Test for query() for local variables
+========================================
+With standard null collation
+
+GTM>
+
+GTM>
+only numeric subscripts
+x(1)="one"
+x(1,2,3,4,5)="one_two_three_four_five"
+x(5)="five"
+x(9)="nine"
+x(13.5)="thirteen.5"
+x(13.5,2.6)="thirteen_.5_2.6"
+x(17)="seventeen"
+x(31)="thirty one"
+$query x("")
+x(1)
+$query(x(0))
+x(1)
+$query(x(4))
+x(5)
+$query(x(10))
+x(13.5)
+$query(x(12.5))
+x(13.5)
+First do a zwr
+x(1)="one"
+x(1,2,3,4,5)="one_two_three_four_five"
+x(5)="five"
+x(9)="nine"
+x(13.5)="thirteen.5"
+x(13.5,2.6)="thirteen_.5_2.6"
+x(17)="seventeen"
+x(31)="thirty one"
+Now do $query()
+
+x(1)=one
+x(1,2,3,4,5)=one_two_three_four_five
+x(5)=five
+x(9)=nine
+x(13.5)=thirteen.5
+x(13.5,2.6)=thirteen_.5_2.6
+x(17)=seventeen
+x(31)=thirty one
+GTM>
+only string subscripts
+x("")="null"
+$q(x(""))
+x("")
+x("")="null"
+x("b")="b"
+x("e")="e"
+$q(x(""))
+x("b")
+$q(x(0))
+x("b")
+$q(x("c"))
+x("e")
+x("b")="b"
+x("e")="e"
+$q(x(""))
+x("b")
+$q(x(0))
+x("b")
+First do a zwr
+x("b")="b"
+x("e")="e"
+Now do $query()
+
+x("b")=b
+x("e")=e
+GTM>
+==== Both numeric/string subscripts==
+First do a zwr
+x("")=1
+x(1)=1
+x(1,2)=2
+x(1,2,"")=3
+x(1,2,"","")=4
+x(1,2,"","",4)=5
+x(1,2,0)=6
+x(1,2,"abc",5)=7
+x("x")=1
+Now do $query()
+
+x("")=1
+x(1)=1
+x(1,2)=2
+x(1,2,"")=3
+x(1,2,"","")=4
+x(1,2,"","",4)=5
+x(1,2,0)=6
+x(1,2,"abc",5)=7
+x("x")=1
+GTM>
+========================================
+With GTM null collation
+
+GTM>
+only numeric subscripts
+x(1)="one"
+x(1,2,3,4,5)="one_two_three_four_five"
+x(5)="five"
+x(9)="nine"
+x(13.5)="thirteen.5"
+x(13.5,2.6)="thirteen_.5_2.6"
+x(17)="seventeen"
+x(31)="thirty one"
+$query x("")
+x(1)
+$query(x(0))
+x(1)
+$query(x(4))
+x(5)
+$query(x(10))
+x(13.5)
+$query(x(12.5))
+x(13.5)
+First do a zwr
+x(1)="one"
+x(1,2,3,4,5)="one_two_three_four_five"
+x(5)="five"
+x(9)="nine"
+x(13.5)="thirteen.5"
+x(13.5,2.6)="thirteen_.5_2.6"
+x(17)="seventeen"
+x(31)="thirty one"
+Now do $query()
+
+x(1)=one
+x(1,2,3,4,5)=one_two_three_four_five
+x(5)=five
+x(9)=nine
+x(13.5)=thirteen.5
+x(13.5,2.6)=thirteen_.5_2.6
+x(17)=seventeen
+x(31)=thirty one
+GTM>
+only string subscripts
+x("")="null"
+$q(x(""))
+x("")
+x("")="null"
+x("b")="b"
+x("e")="e"
+$q(x(""))
+x("b")
+$q(x(0))
+x("")
+$q(x("c"))
+x("e")
+x("b")="b"
+x("e")="e"
+$q(x(""))
+x("b")
+$q(x(0))
+x("b")
+First do a zwr
+x("b")="b"
+x("e")="e"
+Now do $query()
+
+x("b")=b
+x("e")=e
+GTM>
+==== Both numeric/string subscripts==
+First do a zwr
+x(1)=1
+x(1,2)=2
+x(1,2,0)=6
+x(1,2,"")=3
+x(1,2,"","")=4
+x(1,2,"","",4)=5
+x(1,2,"abc",5)=7
+x("")=1
+x("x")=1
+Now do $query()
+
+x(1)=1
+x(1,2)=2
+x(1,2,0)=6
+x(1,2,"")=3
+x(1,2,"","")=4
+x(1,2,"","",4)=5
+x(1,2,"abc",5)=7
+x("")=1
+x("x")=1
+GTM>
+End of test

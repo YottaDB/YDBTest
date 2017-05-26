@@ -1,0 +1,156 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+do lkeexact
+Step 1: Verify lke clear -all
+Setting locks
+Issue: $LKE clear -all -noi
+
+DEFAULT
+Lock removed : ^X
+Lock removed : ^X(1)
+Lock removed : ^X(1,1)
+Lock removed : ^X(1,1,1)
+Lock removed : ^X(1,1,1,1)
+Lock removed : ^X(1,"train","plain")
+Lock removed : ^X("cat")
+Lock removed : ^X("cat","hat")
+Lock removed : ^X("cat","hat","rat")
+Lock removed : ^X("w")
+Lock removed : ^X("w","x")
+Lock removed : ^X("w","x","y")
+Lock removed : ^X("w","x","y","z")
+Lock removed : ^X1
+Lock removed : ^X2
+Lock removed : ^X3
+Lock removed : ^X4
+Lock removed : ^X5
+Lock removed : ^X6
+Lock removed : ^Y
+Lock removed : ^YY
+Lock removed : ^YYY
+Lock removed : ^YYYY
+Lock removed : ^YYYYY
+Lock removed : ^YYYYYY
+Lock removed : ^YYYYYYY
+
+Step 2: Verify lke clear -lock=^X
+Setting locks
+Issue: $LKE clear -lock=^X -noi
+
+DEFAULT
+Lock removed : ^X
+Lock removed : ^X(1)
+Lock removed : ^X(1,1)
+Lock removed : ^X(1,1,1)
+Lock removed : ^X(1,1,1,1)
+Lock removed : ^X(1,"train","plain")
+Lock removed : ^X("cat")
+Lock removed : ^X("cat","hat")
+Lock removed : ^X("cat","hat","rat")
+Lock removed : ^X("w")
+Lock removed : ^X("w","x")
+Lock removed : ^X("w","x","y")
+Lock removed : ^X("w","x","y","z")
+Lock removed : ^X1
+Lock removed : ^X2
+Lock removed : ^X3
+Lock removed : ^X4
+Lock removed : ^X5
+Lock removed : ^X6
+
+Step 3: Verify lke clear -lock=^X -exact
+Setting locks
+Issue: $LKE clear -lock=^X -exact -noi
+
+DEFAULT
+Lock removed : ^X
+
+Step 4: Verify lke clear -lock=^YYYY
+Setting locks
+Issue: $LKE clear -lock=^YYYY -noi
+
+DEFAULT
+Lock removed : ^YYYY
+Lock removed : ^YYYYY
+Lock removed : ^YYYYYY
+Lock removed : ^YYYYYYY
+
+Step 5: Verify lke clear -lock=^YYYY -exact
+Setting locks
+Issue: $LKE clear -lock=^YYYY -exact -noi
+
+DEFAULT
+Lock removed : ^YYYY
+
+Step 6: Verify lke clear -lock=^X("cat","hat")
+Setting locks
+Issue: $LKE clear -lock=^X\("cat","hat"\) -noi
+
+DEFAULT
+Lock removed : ^X("cat","hat")
+
+Step 7: Verify lke clear -lock=^X("cat","hat") -exact
+Setting locks
+Issue: $LKE clear -lock=^X\("cat","hat"\) -exact -noi
+
+DEFAULT
+Lock removed : ^X("cat","hat")
+
+Step 8: Verify lke clear -lock=^X("w","x","y")
+Setting locks
+Issue: $LKE clear -lock=^X\("w","x","y"\) -noi
+
+DEFAULT
+Lock removed : ^X("w","x","y")
+
+Step 9: Verify lke clear -lock=^X("w","x","y") -exact
+Setting locks
+Issue: $LKE clear -lock=^X\("w","x","y"\) -exact -noi
+
+DEFAULT
+Lock removed : ^X("w","x","y")
+
+Step 10: Verify clear -exact on non-existent lock
+Issue: $LKE clear -lock=^DOESNOTEXIST -exact
+Should see no lock message
+%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+
+Step 11: Verify lke show -exact
+Issue: $LKE show -exact
+Should see qualifier error
+%GTM-E-CLIERR, Unrecognized option : EXACT
+
+Step 12: Verify lke clear -exact
+Issue: $LKE clear -exact
+Should see qualifier error
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: EXACT LOCK
+
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  L
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

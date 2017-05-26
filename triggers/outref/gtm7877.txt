@@ -1,0 +1,422 @@
+# Create a single region gld and save it as nospan.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/nospan.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/nospan.gld
+# Create a spanning global from gtm7877span.gde and save it as span.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/span.gld
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gtm7877span.gde
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/span.gld
+###################################################################
+# Test case 1 
+# Create database
+# Use nonspan.gld and load trigger ^A(0)
+File nospan.trg, Line 1: Added SET trigger on ^A named A#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Use span.gld and load trigger ^A(1)
+File span.trg, Line 1: Added SET trigger on ^A (region AREG) named A#1
+File span.trg, Line 1: Added SET trigger on ^A (region BREG) named A#1
+File span.trg, Line 1: Added SET trigger on ^A (region CREG) named A#1
+File span.trg, Line 1: Added SET trigger on ^A (region DEFAULT) named A#2
+=========================================
+4 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Trigger extract using span.gld should show both the ^A triggers in DEFAULT region
+;trigger name: A#1 (region AREG)  cycle: 1
++^A(1) -commands=S -xecute="do A^symmetry"
+;trigger name: A#1 (region BREG)  cycle: 1
++^A(1) -commands=S -xecute="do A^symmetry"
+;trigger name: A#1 (region CREG)  cycle: 1
++^A(1) -commands=S -xecute="do A^symmetry"
+;trigger name: A#1 (region DEFAULT)  cycle: 2
++^A(0) -commands=S -xecute="do A^symmetry"
+;trigger name: A#2 (region DEFAULT)  cycle: 2
++^A(1) -commands=S -xecute="do A^symmetry"
+###################################################################
+# Test case 2 
+# Do the same as Test case 1, but with a named trigger
+# Create database
+# Use nonspan.gld and load trigger ^A(0) with name a0
+File nospan.trg, Line 1: Added SET trigger on ^A named a0
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Use span.gld and load trigger ^A(1) with name a0 - This should error out with trigger a0 already exists
+File span.trg, Line 1: Error : SET trigger on ^A (region AREG) not added as another trigger named a0 already exists
+File span.trg, Line 1: Error : SET trigger on ^A (region BREG) not added as another trigger named a0 already exists
+File span.trg, Line 1: Error : SET trigger on ^A (region CREG) not added as another trigger named a0 already exists
+File span.trg, Line 1: Error : SET trigger on ^A (region DEFAULT) not added as another trigger named a0 already exists
+=========================================
+1 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+# Trigger extract using span.gld should show ^A(0) in reg DEFAULT, loaded using nonspan.gld
+;trigger name: a0 (region DEFAULT)  cycle: 1
++^A(0) -name=a0 -commands=S -xecute="do A^symmetry"
+###################################################################
+# Test case 3 
+# Same as Test case 2, but with the same trigger signature
+# a.gld : maps DEFAULT region to a.dat
+# b.gld : maps DEFAULT region to b.dat
+# c.gld : maps DEFAULT region to c.dat
+# mumps.gld : maps DEFAULT region to mumps.dat
+# span.gld : ^A is spanned across all 4 regions
+# Use a.gld and load trigger ^A(0) with name a0, which would go to a.dat
+File nospan.trg, Line 1: Added SET trigger on ^A named a0
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Use c.gld and load trigger ^A(0) with name a0, which would go to c.dat
+File nospan.trg, Line 1: Added SET trigger on ^A named a0
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Use span.gld and load trigger ^A(0)
+# This should error in regions where the trigger is already loaded, but should load in the other regions
+File span.trg, Line 1: SET trigger on ^A (region AREG) already present in trigger named a0 - no action taken
+File span.trg, Line 1: Added SET trigger on ^A (region BREG) named a0
+File span.trg, Line 1: SET trigger on ^A (region CREG) already present in trigger named a0 - no action taken
+File span.trg, Line 1: Added SET trigger on ^A (region DEFAULT) named a0
+=========================================
+2 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Trigger extract using span.gld should show ^A(0) in all 4 regions
+;trigger name: a0 (region AREG)  cycle: 1
++^A(0) -name=a0 -commands=S -xecute="do A^symmetry"
+;trigger name: a0 (region BREG)  cycle: 1
++^A(0) -name=a0 -commands=S -xecute="do A^symmetry"
+;trigger name: a0 (region CREG)  cycle: 1
++^A(0) -name=a0 -commands=S -xecute="do A^symmetry"
+;trigger name: a0 (region DEFAULT)  cycle: 1
++^A(0) -name=a0 -commands=S -xecute="do A^symmetry"
+###################################################################
+# Test case : 4
+# Same as test case 3, but with a delete trigger for the spanning case
+# Use a.gld and load trigger ^A(0) with name a0, which would go to a.dat
+File nospan.trg, Line 1: Added SET trigger on ^A named a0
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Use c.gld and load trigger ^A(0) with name a0, which would go to c.dat
+File nospan.trg, Line 1: Added SET trigger on ^A named a0
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Use span.gld and delete trigger ^A(0)
+# This should delete trigger in regions AREG and CREG and should say does not exist for the other regions
+File span.trg, Line 1: Deleted SET trigger on ^A (region AREG) named a0
+File span.trg, Line 1: SET trigger on ^A (region BREG) does not exist - no action taken
+File span.trg, Line 1: Deleted SET trigger on ^A (region CREG) named a0
+File span.trg, Line 1: SET trigger on ^A (region DEFAULT) does not exist - no action taken
+=========================================
+0 triggers added
+2 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Trigger extract using span.gld - Should be empty
+###################################################################
+# Test case : 5
+# Same as test case 3, but with a different -commands= for the spanning case
+# Use a.gld and load SET,KILL trigger ^A(0) with name a0, which would go to a.dat
+File nospan.trg, Line 1: Added SET and/or Non-SET trigger on ^A named a0
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Use c.gld and load SET,KILL trigger ^A(0) with name a0, which would go to c.dat
+File nospan.trg, Line 1: Added SET and/or Non-SET trigger on ^A named a0
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Use span.gld and load SET trigger ^A(0)
+# This should load the two SET triggers in the regions that do not already have SET,KILL triggers
+File span.trg, Line 1: SET trigger on ^A (region AREG) already present in trigger named a0 - no action taken
+File span.trg, Line 1: Added SET trigger on ^A (region BREG) named a0
+File span.trg, Line 1: SET trigger on ^A (region CREG) already present in trigger named a0 - no action taken
+File span.trg, Line 1: Added SET trigger on ^A (region DEFAULT) named a0
+=========================================
+2 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Trigger extract using span.gld - Should have 2 S triggers and 2 S,K triggers
+;trigger name: a0 (region AREG)  cycle: 1
++^A(0) -name=a0 -commands=S,K -xecute="do A^symmetry"
+;trigger name: a0 (region BREG)  cycle: 1
++^A(0) -name=a0 -commands=S -xecute="do A^symmetry"
+;trigger name: a0 (region CREG)  cycle: 1
++^A(0) -name=a0 -commands=S,K -xecute="do A^symmetry"
+;trigger name: a0 (region DEFAULT)  cycle: 1
++^A(0) -name=a0 -commands=S -xecute="do A^symmetry"
+###################################################################
+# Test case : 6
+# Same as test case 5, but with a different SET and KILL delete trigger for the spanning case
+# Use a.gld and load SET,KILL trigger ^A(0) with name a0, which would go to a.dat
+File nospan.trg, Line 1: Added SET and/or Non-SET trigger on ^A named a0
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Use c.gld and load SET,KILL trigger ^A(0) with name a0, which would go to c.dat
+File nospan.trg, Line 1: Added SET and/or Non-SET trigger on ^A named a0
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Use span.gld and try -^A(0) once with SET command and once with KILL command
+# The first trigger should modify existing triggers in AREG/CREG. The next should delete them
+File span.trg, Line 1: Modified SET trigger on ^A (region AREG) named a0
+File span.trg, Line 1: SET trigger on ^A (region BREG) does not exist - no action taken
+File span.trg, Line 1: Modified SET trigger on ^A (region CREG) named a0
+File span.trg, Line 1: SET trigger on ^A (region DEFAULT) does not exist - no action taken
+File span.trg, Line 2: Deleted Non-SET trigger on ^A (region AREG) named a0
+File span.trg, Line 2: Non-SET trigger on ^A (region BREG) does not exist - no action taken
+File span.trg, Line 2: Deleted Non-SET trigger on ^A (region CREG) named a0
+File span.trg, Line 2: Non-SET trigger on ^A (region DEFAULT) does not exist - no action taken
+=========================================
+0 triggers added
+2 triggers deleted
+2 triggers modified
+2 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Trigger extract using span.gld - Should be empty
+###################################################################
+# Test case : 7
+# Use a.gld and load nonspan.trg
+File nospan.trg, Line 1: Added Non-SET trigger on ^A named A#1
+File nospan.trg, Line 2: Modified SET trigger on ^A named A#1
+File nospan.trg, Line 3: Added SET trigger on ^A named A#2
+=========================================
+2 triggers added
+0 triggers deleted
+1 triggers modified
+3 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Use c.gld and load nonspan.trg
+File nospan.trg, Line 1: Added Non-SET trigger on ^A named A#1
+File nospan.trg, Line 2: Modified SET trigger on ^A named A#1
+File nospan.trg, Line 3: Added SET trigger on ^A named A#2
+=========================================
+2 triggers added
+0 triggers deleted
+1 triggers modified
+3 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Use span.gld and load span.trg
+File span.trg, Line 1: Added SET trigger on ^A (region AREG) named A#3
+File span.trg, Line 1: Added SET trigger on ^A (region BREG) named A#1
+File span.trg, Line 1: Added SET trigger on ^A (region CREG) named A#3
+File span.trg, Line 1: Added SET trigger on ^A (region DEFAULT) named A#1
+File span.trg, Line 2: Added Non-SET trigger on ^A (region AREG) named A#4
+File span.trg, Line 2: Added Non-SET trigger on ^A (region BREG) named A#2
+File span.trg, Line 2: Added Non-SET trigger on ^A (region CREG) named A#4
+File span.trg, Line 2: Added Non-SET trigger on ^A (region DEFAULT) named A#2
+File span.trg, Line 3: Deleted SET trigger on ^A (region AREG) named A#3
+File span.trg, Line 3: Deleted SET trigger on ^A (region BREG) named A#1
+File span.trg, Line 3: Deleted SET trigger on ^A (region CREG) named A#3
+File span.trg, Line 3: Deleted SET trigger on ^A (region DEFAULT) named A#1
+File span.trg, Line 4: Deleted Non-SET trigger on ^A (region AREG) named A#4
+File span.trg, Line 4: Deleted Non-SET trigger on ^A (region BREG) named A#2
+File span.trg, Line 4: Deleted Non-SET trigger on ^A (region CREG) named A#4
+File span.trg, Line 4: Deleted Non-SET trigger on ^A (region DEFAULT) named A#2
+=========================================
+8 triggers added
+8 triggers deleted
+0 triggers modified
+4 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Trigger extract using span.gld - Should have two triggers (delim=c, delim=d) in regions AREG and CREG
+;trigger name: A#1 (region AREG)  cycle: 7
++^A(0) -commands=S,K -delim="c" -xecute="do A^symmetry"
+;trigger name: A#2 (region AREG)  cycle: 7
++^A(0) -commands=S -delim="d" -xecute="do A^symmetry"
+;trigger name: A#1 (region CREG)  cycle: 7
++^A(0) -commands=S,K -delim="c" -xecute="do A^symmetry"
+;trigger name: A#2 (region CREG)  cycle: 7
++^A(0) -commands=S -delim="d" -xecute="do A^symmetry"
+###################################################################
+# Test case : 8
+# Use a.gld and load nospan1.trg
+File nospan1.trg, Line 1: Added Non-SET trigger on ^A named A#1
+File nospan1.trg, Line 2: Modified SET trigger on ^A named A#1
+File nospan1.trg, Line 3: Added SET trigger on ^A named A#2
+=========================================
+2 triggers added
+0 triggers deleted
+1 triggers modified
+3 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+;trigger name: A#1 (region DEFAULT)  cycle: 3
++^A(0) -commands=S,K -delim="c" -xecute="do A^symmetry"
+;trigger name: A#2 (region DEFAULT)  cycle: 3
++^A(0) -commands=S -delim="d" -xecute="do A^symmetry"
+# Use b.gld and load nospan2.trg
+File nospan2.trg, Line 1: Added Non-SET trigger on ^A named A#1
+File nospan2.trg, Line 2: Modified SET trigger on ^A named A#1
+File nospan2.trg, Line 3: Added SET trigger on ^A named A#2
+=========================================
+2 triggers added
+0 triggers deleted
+1 triggers modified
+3 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+;trigger name: A#1 (region DEFAULT)  cycle: 3
++^A(0) -commands=S,K -delim="d" -xecute="do A^symmetry"
+;trigger name: A#2 (region DEFAULT)  cycle: 3
++^A(0) -commands=S -delim="c" -xecute="do A^symmetry"
+# Use c.gld and load nospan3.trg
+File nospan3.trg, Line 1: Added Non-SET trigger on ^A named A#1
+File nospan3.trg, Line 2: Modified SET trigger on ^A named A#1
+File nospan3.trg, Line 3: Added SET trigger on ^A named A#2
+=========================================
+2 triggers added
+0 triggers deleted
+1 triggers modified
+3 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+;trigger name: A#1 (region DEFAULT)  cycle: 3
++^A(0) -commands=S,K,ZK -delim="d" -xecute="do A^symmetry"
+;trigger name: A#2 (region DEFAULT)  cycle: 3
++^A(0) -commands=S -delim="c" -xecute="do A^symmetry"
+# Take a backup of database at this stage to be used by next test case
+# Use span.gld and load span.trg
+File span.trg, Line 1: Modified Non-SET trigger on ^A (region AREG) named A#1
+File span.trg, Line 1: Deleted SET trigger on ^A (region AREG) named A#2
+File span.trg, Line 1: Deleted SET and/or Non-SET trigger on ^A (region BREG) named A#1
+File span.trg, Line 1: Modified SET and/or Non-SET trigger on ^A (region CREG) named A#1
+File span.trg, Line 1: SET and/or Non-SET trigger on ^A (region DEFAULT) does not exist - no action taken
+=========================================
+0 triggers added
+2 triggers deleted
+2 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+;trigger name: A#1 (region AREG)  cycle: 4
++^A(0) -commands=S -delim="c" -xecute="do A^symmetry"
+;trigger name: A#2 (region BREG)  cycle: 4
++^A(0) -commands=S -delim="c" -xecute="do A^symmetry"
+;trigger name: A#1 (region CREG)  cycle: 4
++^A(0) -commands=ZK -xecute="do A^symmetry"
+;trigger name: A#2 (region CREG)  cycle: 4
++^A(0) -commands=S -delim="c" -xecute="do A^symmetry"
+###################################################################
+# Test case : 9
+# Copy db files from db8_nospantrig and continue test case 9
+# Use span.gld and load span.trg
+File span.trg, Line 1: Modified SET and/or Non-SET trigger on ^A (region AREG) named A#1
+File span.trg, Line 1: Error : Input trigger on ^A (region BREG) with trigger name newname cannot match two different triggers named A#1 and A#2 at the same time
+File span.trg, Line 1: Error : Input trigger on ^A (region CREG) with trigger name newname cannot match two different triggers named A#1 and A#2 at the same time
+File span.trg, Line 1: No errors processing trigger for global ^A (region DEFAULT)
+=========================================
+1 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+;trigger name: A#1 (region AREG)  cycle: 3
++^A(0) -commands=S,K -delim="c" -xecute="do A^symmetry"
+;trigger name: A#2 (region AREG)  cycle: 3
++^A(0) -commands=S -delim="d" -xecute="do A^symmetry"
+;trigger name: A#1 (region BREG)  cycle: 3
++^A(0) -commands=S,K -delim="d" -xecute="do A^symmetry"
+;trigger name: A#2 (region BREG)  cycle: 3
++^A(0) -commands=S -delim="c" -xecute="do A^symmetry"
+;trigger name: A#1 (region CREG)  cycle: 3
++^A(0) -commands=S,K,ZK -delim="d" -xecute="do A^symmetry"
+;trigger name: A#2 (region CREG)  cycle: 3
++^A(0) -commands=S -delim="c" -xecute="do A^symmetry"
+# Test case : 10
+# Deleting triggers by auto-generated name for spanning globals
+# Copy db files from db8_nospantrig and continue test case 10
+# Use span.gld and load span1.trg - newname cannot match two different triggers named A#1 and A#2 at the same time
+File span1.trg, Line 1: Modified SET and/or Non-SET trigger on ^A (region AREG) named A#1
+File span1.trg, Line 1: Error : Input trigger on ^A (region BREG) with trigger name newname cannot match two different triggers named A#1 and A#2 at the same time
+File span1.trg, Line 1: Error : Input trigger on ^A (region CREG) with trigger name newname cannot match two different triggers named A#1 and A#2 at the same time
+File span1.trg, Line 1: No errors processing trigger for global ^A (region DEFAULT)
+=========================================
+1 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+# Use span.gld and load span1.trg and span2.trg
+File span2.trg, Line 1: Deleted trigger named 'A#1' for global ^A (region AREG)
+File span2.trg, Line 1: Deleted trigger named 'A#1' for global ^A (region BREG)
+File span2.trg, Line 1: Deleted trigger named 'A#1' for global ^A (region CREG)
+=========================================
+0 triggers added
+3 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+;trigger name: A#2 (region AREG)  cycle: 4
++^A(0) -commands=S -delim="d" -xecute="do A^symmetry"
+;trigger name: A#2 (region BREG)  cycle: 4
++^A(0) -commands=S -delim="c" -xecute="do A^symmetry"
+;trigger name: A#2 (region CREG)  cycle: 4
++^A(0) -commands=S -delim="c" -xecute="do A^symmetry"

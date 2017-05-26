@@ -1,0 +1,122 @@
+ENTERING C9I06002997
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+# Set kill_in_prog=1 for second region : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# MUPIP FREEZE test starts ...
+
+# set MUPIP freeze ON for the first region. Expect success : ##FILTERED##GTM_TEST_DEBUGINFO.*
+All requested regions frozen
+# set MUPIP freeze ON for the second region. Expect error message : ##FILTERED##GTM_TEST_DEBUGINFO.*
+Kill in progress indicator is set for database file ##TEST_PATH##/##DBNAME2##
+All regions will be unfrozen
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# set MUPIP freeze ON for the third region. Expect success : ##FILTERED##GTM_TEST_DEBUGINFO.*
+All requested regions frozen
+# MUPIP FREEZE test ends
+
+MUPIP INTEG test on REGION started ...
+# MUPIP integ for first region. Expect region already frozen : ##FILTERED##GTM_TEST_DEBUGINFO.*
+
+
+Integ of region ##REGION1##
+
+Database for region ##REGION1## is already frozen, not integing
+%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+# MUPIP integ for second region. Expect error message: ##FILTERED##GTM_TEST_DEBUGINFO.*
+
+
+Integ of region ##REGION2##
+%GTM-W-MUKILLIP, Kill in progress indicator is set for file ##TEST_PATH##/##DBNAME2## - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+%GTM-E-INTEGERRS, Database integrity errors
+# MUPIP integ for third region. Expect region already frozen : ##FILTERED##GTM_TEST_DEBUGINFO.*
+
+
+Integ of region ##REGION3##
+
+Database for region ##REGION3## is already frozen, not integing
+%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+# MUPIP INTEG test on REGION ends
+
+# MUPIP INTEG test on FILE started ...
+# MUPIP integ -file for first region
+No errors detected by integ.
+# MUPIP integ -file for second region. Expect warning
+%GTM-W-MUKILLIP, Kill in progress indicator is set for file ##DBNAME2## - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory[ 0-9.AN]*
+##TEST_AWKIndex[ 0-9.AN]*
+##TEST_AWKData[ 0-9.AN]*
+##TEST_AWKFree[ 0-9.AN]*
+##TEST_AWKTotal[ 0-9.AN]*
+# MUPIP integ -file for third region
+No errors detected by integ.
+# MUPIP integ -file for second region. No warning expected
+No errors detected by integ.
+# MUPIP INTEG test on FILE ends
+
+# TEST MUPIP FREEZE '*' 
+# DSE SET KILL_IN_PROG=1 for second region : ##FILTERED##GTM_TEST_DEBUGINFO.*
+
+# Turn freeze off on all the regions
+All requested regions unfrozen
+# Turn ON freeze on all the regions. Expect failure
+Region ##REGION1## is now FROZEN
+Kill in progress indicator is set for database file ##TEST_PATH##/##DBNAME2##
+All regions will be unfrozen
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# MUPIP integ for first region. Expect success : ##FILTERED##GTM_TEST_DEBUGINFO.*
+No errors detected by integ.
+MUPIP integ for third region. Expect success : ##FILTERED##GTM_TEST_DEBUGINFO.*
+No errors detected by integ.
+# Turn freeze off on all the regions
+All requested regions unfrozen
+# Start testing inhibit_kills counter
+# Start MUPIP FREEZE, BACKUP and INTEG in backgroud
+##TEST_AWK\[1\] [0-9]*
+##TEST_AWK\[2\] [0-9]*
+##TEST_AWK\[3\] [0-9]*
+# inhibit_kills flag should be set to 3 by mupip freeze, backup and integ
+  Mutex Queue Slots                    1024  KILLs in progress                1
+  Actual kills in progress                1  Abandoned Kills                  0
+  Process(es) inhibiting KILLs            3
+# inhibit_kills flag should get cleared after MUPIP backup, freeze and integ are successful.
+  Mutex Queue Slots                    1024  KILLs in progress                0
+  Actual kills in progress                0  Abandoned Kills                  0
+  Process(es) inhibiting KILLs            0
+# End testing inhibit_kills counter
+# Start testing abandoned_kills counter
+# Set abandoned_kills flag
+# MUPIP BACKUP ALL regions. Region2 is expected to have warning but will not affect backup.
+%GTM-W-KILLABANDONED, Abandoned kills counter is greater than zero for file ##TEST_PATH##/##DBNAME2##, backup database could have incorrectly marked busy integrity errors
+BACKUP COMPLETED.
+# MUPIP FREEZE ALL regions. Region2 is expected to have warning but will be frozen.
+WARNING: The region ##REGION2## to be frozen contains abandoned kills
+All requested regions frozen
+# MUPIP INTEG ALL regions. Region2 is expected to have warning, but will be frozen.
+%GTM-W-KILLABANDONED, Abandoned kills counter is greater than zero for file ##TEST_PATH##/##DBNAME2##, database could have incorrectly marked busy integrity errors
+# Reset abandoned_kills flag
+All requested regions unfrozen
+# End testing abandoned_kills counter
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# LEAVING C9I06002997

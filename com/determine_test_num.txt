@@ -1,0 +1,15 @@
+# # This file lists the most common configurations.
+# # Any combination that is not here will be numbered in binary fashion depending on the options (e.g. NON_REPLIC would be 0, REPLIC would be 1, etc.) plus MAXDEF.
+# # This file's format is
+# # num opt1 opt2 opt3 ... optn
+# # In the binary numbering, opt1 will be lsd, optn will be most significant digit.
+# # For now, the only combination of test in SUITE that is not here is the tests with MULTISITE which evaluates to 49 i.e dualfail_ms_49
+##MAXDEF 32
+0   GT.M NON_REORG   NICE NON_REPLIC NON_NOLINE
+1   GT.M NON_REORG   NICE     REPLIC NON_NOLINE
+4   GT.M     REORG   NICE NON_REPLIC NON_NOLINE
+5   GT.M     REORG   NICE     REPLIC NON_NOLINE
+
+16 GT.CM NON_REORG   NICE NON_REPLIC NON_NOLINE
+
+34  GT.M NON_REORG UNNICE NON_REPLIC NON_NOLINE

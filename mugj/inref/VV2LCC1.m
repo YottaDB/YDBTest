@@ -1,0 +1,55 @@
+VV2LCC1	;LOWER CASE LETTER COMMAND WORDS AND $data -1-;KO-TS,,VALIDATION VERSION 7.1;31-AUG-1987;
+	;COPYRIGHT MUMPS SYSTEM LABORATORY 1984
+	S PASS=0,FAIL=0
+	W !!,"VV2LCC1: TEST OF LOWER CASE LETTER COMMAND WORDS AND $data -1-",!
+9	W !,"II-9  for" S ITEM="II-9",VCOMP="" for I=1:1:3 S VCOMP=VCOMP_I
+	fOR I(2)=-5:-1:-7 S VCOMP=VCOMP_I(2) ;COMMENT
+	S VCORR="123-5-6-7" D EXAMINER
+	;
+10	W !,"II-10  f" S ITEM="II-10",VCOMP="" f I=3:1:5.5 SET VCOMP=VCOMP_I
+	S VCORR="345" D EXAMINER
+	;
+11	W !,"II-11  write  (visual)"
+	S ITEM="II-11" write !,"   PASS  ",ITEM W:$Y>55 #
+	;
+12	W !,"II-12  w  (visual)"
+	S ITEM="II-12" w !,"   PASS  ",ITEM W:$Y>55 #
+	;
+13	W !,"II-13/17  do and quit"
+	S ITEM="II-13",VCOMP="" do C S VCORR="do" D EXAMINER
+	;
+14	W !,"II-14/18   d and q"
+	S ITEM="II-14",VCOMP="" d C1 S VCORR="d" D EXAMINER
+	;
+15	W !,"II-15  hang  (visual)" S ITEM="II-15" hang 1 W !,"   PASS  ",ITEM W:$Y>55 #
+	;
+16	W !,"II-16  h  (visual)" S ITEM="II-16" h .1 W !,"   PASS  ",ITEM W:$Y>55 #
+	;
+19	W !,"II-19  goto" S ITEM="II-19",VCOMP=""
+	goto D S VCOMP=VCOMP_"ERROR goto"
+	S VCOMP=VCOMP_"ERROR goto next line"
+G19	S VCORR="goto" D EXAMINER
+	;
+20	W !,"II-20  g"
+	S ITEM="II-20",VCOMP="" g D1 S VCOMP=VCOMP_"ERROR g"
+	S VCOMP=VCOMP_"ERROR g next line"
+G20	S VCORR="g" D EXAMINER
+	;
+END	w !!,"END OF VV2LCC1",!
+	S ROUTINE="VV2LCC1",TESTS=10,AUTO=6,VISUAL=4 D ^VREPORT
+	k  q
+	;
+EXAMINER	I VCORR=VCOMP S PASS=PASS+1 W !,"   PASS  ",ITEM W:$Y>55 # Q
+	S FAIL=FAIL+1 W !,"** FAIL  ",ITEM W:$Y>55 #
+	W !,"           COMPUTED =""",VCOMP,"""" W:$Y>55 #
+	W !,"           CORRECT  =""",VCORR,"""" W:$Y>55 #
+	Q
+C	S VCOMP=VCOMP_"do" q  S VCOMP=VCOMP_"ERROR do"
+	S VCOMP=VCOMP_"ERROR do next line" QUIT
+C1	S VCOMP=VCOMP_"d" quit  S VCOMP=VCOMP_"ERROR d"
+	S VCOMP=VCOMP_"ERROR do next line" QUIT
+D	S VCOMP=VCOMP_"goto" G G19 S VCOMP=VCOMP_"ERROR D goto "
+	S VCOMP=VCOMP_"ERROR D goto next line" GOTO G19
+D1	S VCOMP=VCOMP_"g" G G20 S VCOMP=VCOMP_"ERROR D1 goto "
+	S VCOMP=VCOMP_"ERROR D1 goto next line"
+	GOTO G20

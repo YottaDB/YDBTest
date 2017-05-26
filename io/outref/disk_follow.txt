@@ -1,0 +1,1951 @@
+setenv gtm_chset M
+unset echo
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+**************************** diskfollow ****************************
+###################################################################
+initialize rwfile
+setting ^a to a
+Output of reader.mjo:
+**********************************
+READONLY, NOFOLLOW, UNTIMED READS
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS READ 
+x= 123456789 length(x)= 9
+expect:
+$device= 0  $za= 0 $zeof= 0
+$device= 0  $za= 0 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $zeof= 1
+**********************************
+READONLY, NOFOLLOW, NON-ZERO TIMED READS
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS READ 
+x= 123456789 length(x)= 9
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, NOFOLLOW, ZERO TIMED READS
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS READ 
+x= 123456789 length(x)= 9
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, FOLLOW, UNTIMED READS
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS FOLLOW READ 
+x= 123456789 length(x)= 9
+expect:
+$device= 0  $za= 0 $zeof= 0
+$device= 0  $za= 0 $zeof= 0
+setting ^a to b to have writer add a line to rwfile after a 5 sec delay
+x= ABCDEFG length(x)= 7
+expect:
+$device= 0  $za= 0 $zeof= 0
+$device= 0  $za= 0 $zeof= 0
+setting ^a to c to have writer add a line to rwfile as 2 chunks with 5 sec delay before and between them
+x= CHUNK1CHUNK2 length(x)= 12
+expect:
+$device= 0  $za= 0 $zeof= 0
+$device= 0  $za= 0 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS READ 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $zeof= 1
+initialize rwfile
+**********************************
+READONLY, FOLLOW, NON-ZERO TIMED READS
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS FOLLOW READ 
+x= 123456789 length(x)= 9
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0
+setting ^a to f to have writer add a partial line to rwfile
+x= ABCDEFG length(x)= 7
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS READ 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, FOLLOW, ZERO TIMED READS
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS FOLLOW READ 
+x= 123456789 length(x)= 9
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x= ABCDEFG length(x)= 7
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS READ 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY x#n, FOLLOW, UNTIMED READS
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS FOLLOW READ 
+x= 1234567890 length(x)= 10
+expect:
+$device= 0  $za= 0 $zeof= 0
+$device= 0  $za= 0 $zeof= 0
+setting ^a to j to have writer wait 5 sec append 5 chars wait 5 sec and append 5 more
+x= ABCDEFGHIJ length(x)= 10
+expect:
+$device= 0  $za= 0 $zeof= 0
+$device= 0  $za= 0 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS READ 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $zeof= 1
+setting ^a to k
+###################################################################
+**************************** fixfollow ****************************
+###################################################################
+initialize rwfile
+setting ^a to a
+setting ^a to i
+Output of fixreader.mjo:
+**********************************
+READONLY, NOFOLLOW, UNTIMED READS
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS FIXED READ 
+x= 12345 length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x= 6789 length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, NOFOLLOW, NON-ZERO TIMED READS
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS FIXED READ REC=5 
+x= 12345 length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x= 6789 length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, NOFOLLOW, ZERO TIMED READS
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS FIXED READ REC=5 
+x= 12345 length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x= 6789 length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, FOLLOW, UNTIMED READS
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS FOLLOW FIXED READ 
+x= 12345 length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+setting ^a to b to have writer add a 0 to rwfile after a 5 sec delay
+x= 67890 length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+setting ^a to c to have writer delay 5 sec add ABC, delay 5 sec and add EF to rwfile
+x= ABCEF length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS FIXED READ REC=5 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+initialize rwfile
+**********************************
+READONLY, FOLLOW, NON-ZERO TIMED READS
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS FOLLOW FIXED READ 
+x= 12345 length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x= 6789 length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS FIXED READ REC=5 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, FOLLOW, ZERO TIMED READS
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS FOLLOW FIXED READ REC=5 
+x= 12345 length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x= 6789 length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS FIXED READ REC=5 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY x#n, FOLLOW, UNTIMED READS
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS FOLLOW FIXED READ 
+x= 12345 length(x)= 5
+expect:
+$device= 0  $za= 0 $zeof= 0
+$device= 0  $za= 0 $zeof= 0
+setting ^a to f to have writer wait 5 sec append 5 chars wait 5 sec and append 5 more
+x= 67890ABCDEFGHIJ length(x)= 15
+expect:
+$device= 0  $za= 0 $zeof= 0
+$device= 0  $za= 0 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwfile OPEN RMS FIXED READ 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $zeof= 1
+setting ^a to g to tell writer we are done
+##SUSPEND_OUTPUT NON_UTF8
+###################################################################
+**************************** utfdiskfollow ****************************
+###################################################################
+setenv gtm_chset UTF-8
+unset echo
+setting ^a to start
+Output of utfreader.mjo:
+**********************************
+READONLY, NOFOLLOW, UNTIMED READS UTF-8 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf8_bom OPEN RMS READ 
+x= ՇՈՉABCՏՐ length(x)= 8
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, NOFOLLOW, UNTIMED READS UTF-8 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf8_nobom OPEN RMS READ 
+x= ՇՈՉABCՏՐ length(x)= 8
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, NOFOLLOW, UNTIMED READS UTF-16 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf16_bom OPEN RMS READ ICHSET=UTF-16BE 
+x= ՇՈՉՊ length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, NOFOLLOW, UNTIMED READS UTF-16 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf16_nobom OPEN RMS READ ICHSET=UTF-16BE 
+x= ՇՈՉՊ length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, NOFOLLOW, NON-ZERO TIMED READS UTF-8 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf8_bom OPEN RMS READ 
+x= ՇՈՉABCՏՐ length(x)= 8
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, NOFOLLOW, NON-ZERO TIMED READS UTF-8 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf8_nobom OPEN RMS READ 
+x= ՇՈՉABCՏՐ length(x)= 8
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, NOFOLLOW, NON-ZERO TIMED READS UTF-16 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf16_bom OPEN RMS READ ICHSET=UTF-16BE 
+x= ՇՈՉՊ length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, NOFOLLOW, NON-ZERO TIMED READS UTF-16 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf16_nobom OPEN RMS READ ICHSET=UTF-16BE 
+x= ՇՈՉՊ length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, NOFOLLOW, ZERO TIMED READS UTF-8 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf8_bom OPEN RMS READ 
+x= ՇՈՉABCՏՐ length(x)= 8
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, NOFOLLOW, ZERO TIMED READS UTF-8 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf8_nobom OPEN RMS READ 
+x= ՇՈՉABCՏՐ length(x)= 8
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, NOFOLLOW, ZERO TIMED READS UTF-16 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf16_bom OPEN RMS READ ICHSET=UTF-16BE 
+x= ՇՈՉՊ length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, NOFOLLOW, ZERO TIMED READS UTF-16 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf16_nobom OPEN RMS READ ICHSET=UTF-16BE 
+x= ՇՈՉՊ length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, FOLLOW, UNTIMED READS UTF-8 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS FOLLOW READ 
+setting ^a to td1 to have writer add utf8_bom_tail to rwutffile after a 5 sec delay
+x= ՇՈՉABCՏՐ length(x)= 8
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS READ 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, FOLLOW, UNTIMED READS UTF-8 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS FOLLOW READ 
+setting ^a to td2 to have writer add utf8_nobom_tail to rwutffile after a 5 sec delay
+x= ՇՈՉABCՏՐ length(x)= 8
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS READ 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, FOLLOW, UNTIMED READS UTF-16 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS FOLLOW READ ICHSET=UTF-16BE 
+setting ^a to td3 to have writer add utf16_bom_tail to rwutffile after a 5 sec delay
+x= ՇՈՉՊ length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS READ ICHSET=UTF-16BE 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, FOLLOW, UNTIMED READS UTF-16 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS FOLLOW READ ICHSET=UTF-16BE 
+setting ^a to td4 to have writer add utf16_nobom_tail to rwutffile after a 5 sec delay
+x= ՇՈՉՊ length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS READ ICHSET=UTF-16BE 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, FOLLOW, NON-ZERO TIMED READS UTF-8 WITH BOM
+**********************************
+create a null file and read with a timeout to show that it will not return an EOF
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS FOLLOW READ 
+setting ^a to td5 to have writer add utf8_bom_tail to rwutffile after a 5 sec delay
+x= ՇՈՉABCՏՐ length(x)= 8
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS READ 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, FOLLOW, NON-ZERO TIMED READS UTF-8 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS FOLLOW READ 
+setting ^a to td6 to have writer add utf8_nobom_tail to rwutffile after a 5 sec delay
+x= ՇՈՉABCՏՐ length(x)= 8
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS READ 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, FOLLOW, NON-ZERO TIMED READS UTF-16 WITH BOM
+**********************************
+create a null file and read with a timeout to show that it will not return an EOF
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS FOLLOW READ ICHSET=UTF-16BE 
+setting ^a to td7 to have writer add utf16_bom_tail to rwutffile after a 5 sec delay
+x= ՇՈՉՊ length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS READ ICHSET=UTF-16BE 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, FOLLOW, NON-ZERO TIMED READS UTF-16 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS FOLLOW READ ICHSET=UTF-16BE 
+setting ^a to td8 to have writer add utf16_nobom_tail to rwutffile after a 5 sec delay
+x= ՇՈՉՊ length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS READ ICHSET=UTF-16BE 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, FOLLOW, ZERO TIMED READS UTF-8 WITH BOM
+**********************************
+create a null file and read with a timeout to show that it will not return an EOF
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS FOLLOW READ 
+x= ՇՈՉABCՏՐ length(x)= 8
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS READ 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, FOLLOW, ZERO TIMED READS UTF-8 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS FOLLOW READ 
+x= ՇՈՉABCՏՐ length(x)= 8
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS READ 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, FOLLOW, ZERO TIMED READS UTF-16 WITH BOM
+**********************************
+create a null file and read with a timeout to show that it will not return an EOF
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS FOLLOW READ ICHSET=UTF-16BE 
+x= ՇՈՉՊ length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS READ ICHSET=UTF-16BE 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, FOLLOW, ZERO TIMED READS UTF-16 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS FOLLOW READ ICHSET=UTF-16BE 
+x= ՇՈՉՊ length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS READ ICHSET=UTF-16BE 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, x#n, FOLLOW, UNTIMED READS UTF-8
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS FOLLOW READ 
+x= ՇՈՉAB length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+setting ^a to td9 to have writer add 8 more chars to rwutffile after a 5 sec delay
+x= CՏՐՇՈՉABCՏՐ length(x)= 11
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS READ 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+**********************************
+READONLY, x#n, FOLLOW, UNTIMED READS UTF-16
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS FOLLOW READ ICHSET=UTF-16BE 
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+setting ^a to td10 to have writer add 4 more chars to rwutffile after a 5 sec delay
+x= ՊՇՈՉՊ length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffile OPEN RMS READ ICHSET=UTF-16BE 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1
+###################################################################
+**************************** utffixfollow ****************************
+###################################################################
+setting ^a to start
+Output of utffixreader.mjo:
+**********************************
+READONLY, FIXED, NOFOLLOW, UNTIMED READS UTF-8 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf8_fix_bom OPEN RMS FIXED READ REC=15 
+x= ՇՈՉAB length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= CDEՏՐ length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, NOFOLLOW, UNTIMED READS UTF-8 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf8_fix_nobom OPEN RMS FIXED READ REC=15 
+x= ՇՈՉAB length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= CDEՏՐ length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, NOFOLLOW, UNTIMED READS UTF-16 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf16_fix_bom OPEN RMS FIXED READ REC=12 ICHSET=UTF-16BE 
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= ՊՋՌ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, NOFOLLOW, UNTIMED READS UTF-16 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf16_fix_nobom OPEN RMS FIXED READ REC=12 ICHSET=UTF-16BE 
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= ՊՋՌ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, NOFOLLOW, NON-ZERO TIMED READS UTF-8 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf8_fix_bom OPEN RMS FIXED READ REC=15 
+x= ՇՈՉAB length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= CDEՏՐ length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, NOFOLLOW, NON-ZERO TIMED READS UTF-8 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf8_fix_nobom OPEN RMS FIXED READ REC=15 
+x= ՇՈՉAB length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= CDEՏՐ length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, NOFOLLOW, NON-ZERO TIMED READS UTF-16 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf16_fix_bom OPEN RMS FIXED READ REC=12 ICHSET=UTF-16BE 
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= ՊՋՌ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, NOFOLLOW, NON-ZERO TIMED READS UTF-16 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf16_fix_nobom OPEN RMS FIXED READ REC=12 ICHSET=UTF-16BE 
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= ՊՋՌ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, NOFOLLOW, ZERO TIMED READS UTF-8 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf8_fix_bom OPEN RMS FIXED READ REC=15 
+x= ՇՈՉAB length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= CDEՏՐ length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, NOFOLLOW, ZERO TIMED READS UTF-8 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf8_fix_nobom OPEN RMS FIXED READ REC=15 
+x= ՇՈՉAB length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= CDEՏՐ length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, NOFOLLOW, ZERO TIMED READS UTF-16 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf16_fix_bom OPEN RMS FIXED READ REC=12 ICHSET=UTF-16BE 
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= ՊՋՌ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, NOFOLLOW, ZERO TIMED READS UTF-16 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+utf16_fix_nobom OPEN RMS FIXED READ REC=12 ICHSET=UTF-16BE 
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= ՊՋՌ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, FOLLOW, UNTIMED READS UTF-8 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=15 
+setting ^a to td1 to have writer add utf8_fix_bom_tail to rwutffixfile after a 5 sec delay
+x= ՇՈՉAB length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= CDEՏՐ length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=15 WIDTH=5 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, FOLLOW, UNTIMED READS UTF-8 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=15 
+setting ^a to td2 to have writer add utf8_fix_nobom_tail to rwutffixfile after a 5 sec delay
+x= ՇՈՉAB length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= CDEՏՐ length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=15 WIDTH=5 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, FOLLOW, UNTIMED READS UTF-16 WITH BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=12 ICHSET=UTF-16BE 
+setting ^a to td3 to have writer add utf16_fix_bom_tail to rwutffixfile after a 5 sec delay
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= ՊՋՌ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=12 WIDTH=3 ICHSET=UTF-16BE 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, FOLLOW, UNTIMED READS UTF-16 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=12 ICHSET=UTF-16BE 
+setting ^a to td4 to have writer add utf16_fix_nobom_tail to rwutffixfile after a 5 sec delay
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= ՊՋՌ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=12 WIDTH=3 ICHSET=UTF-16BE 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, FOLLOW, NON-ZERO TIMED READS UTF-8 WITH BOM
+**********************************
+create a null file and read with a timeout to show that it will not return an EOF
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=15 
+setting ^a to td5 to have writer add utf8_fix_bom_tail to rwutffixfile after a 5 sec delay
+x= ՇՈՉAB length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= CDEՏՐ length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=15 WIDTH=5 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, FOLLOW, NON-ZERO TIMED READS UTF-8 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=15 
+setting ^a to td6 to have writer add utf8_fix_nobom_tail to rwutffixfile after a 5 sec delay
+x= ՇՈՉAB length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= CDEՏՐ length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=15 WIDTH=5 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, FOLLOW, NON-ZERO TIMED READS UTF-16 WITH BOM
+**********************************
+create a null file and read with a timeout to show that it will not return an EOF
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=12 ICHSET=UTF-16BE 
+setting ^a to td7 to have writer add utf16_fix_bom_tail to rwutffixfile after a 5 sec delay
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= ՊՋՌ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=12 WIDTH=3 ICHSET=UTF-16BE 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, FOLLOW, NON-ZERO TIMED READS UTF-16 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=12 ICHSET=UTF-16BE 
+setting ^a to td8 to have writer add utf16_fix_nobom_tail to rwutffixfile after a 5 sec delay
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= ՊՋՌ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=12 WIDTH=3 ICHSET=UTF-16BE 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, FOLLOW, ZERO TIMED READS UTF-8 WITH BOM
+**********************************
+create a null file and read with a timeout to show that it will not return an EOF
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=15 
+x= Շ length(x)= 1
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 1
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 1
+x= ՈՉAB length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= CDEՏՐ length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=15 WIDTH=5 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, FOLLOW, ZERO TIMED READS UTF-8 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=15 
+x= ՇՈ length(x)= 2
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 2
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 2
+x= ՉAB length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= CDEՏՐ length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=15 WIDTH=5 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, FOLLOW, ZERO TIMED READS UTF-16 WITH BOM
+**********************************
+create a null file and read with a timeout to show that it will not return an EOF
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=12 ICHSET=UTF-16BE 
+x= Շ length(x)= 1
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 1
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 1
+x= ՈՉ length(x)= 2
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= ՊՋՌ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=12 WIDTH=3 ICHSET=UTF-16BE 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, FIXED, FOLLOW, ZERO TIMED READS UTF-16 NO BOM
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=12 ICHSET=UTF-16BE 
+x= Շ length(x)= 1
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 1
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 1
+x= ՈՉ length(x)= 2
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+x= ՊՋՌ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=12 WIDTH=3 ICHSET=UTF-16BE 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, x#n, FIXED, FOLLOW, UNTIMED READS UTF-8
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=30 
+setting ^a to td9 to have writer add 10 more chars to rwutffixfile after a 5 sec delay
+x= ՇՈՉABCDEՏՐ length(x)= 10
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 10
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 10
+x= ՇՈՉABCDEՏՐ length(x)= 10
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 10
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 10
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=30 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, x#n, FIXED, FOLLOW, UNTIMED READS UTF-16
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=12 ICHSET=UTF-16BE 
+setting ^a to td10 to have writer add 6 more chars to rwutffixfile after a 5 sec delay
+x= ՇՈՉՊՋՌ length(x)= 6
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 6
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 6
+x= ՇՈՉՊՋՌ length(x)= 6
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 6
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 6
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=12 ICHSET=UTF-16BE 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, x#n, FIXED, FOLLOW, NON-ZERO TIMED READS UTF-8
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=15 
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3 $y= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3 $y= 0
+setting ^a to td11 to have writer add 7 more chars to rwutffixfile after a 5 sec delay
+x= ABCDEՏՐ length(x)= 7
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 10 $y= 0
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 10 $y= 0
+x= ՇՈՉAB length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 1
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 1
+x= CDEՏՐ length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 5 $y= 1
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 5 $y= 1
+use p:nofollow to read an EOF
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=15 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, x#n, FIXED, FOLLOW, UNTIMED READS WIDTH < RECORDSIZE UTF-8
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=15 
+x= ՇՈՉABCDE length(x)= 8
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 1
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 1
+x= ՏՐ length(x)= 2
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 2 $y= 1
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 2 $y= 1
+setting ^a to td12 to have writer add 16 more chars (22 bytes) to rwutffixfile after a 5 sec delay
+x= ՉABCDE length(x)= 6
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 2
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 2
+the previous read consumed 7 bytes of the 15 byte recordsize or 6 utf chars to finish the 
+width of 8 chars leaving 8 bytes in the record for the next read
+This will be a read of 5 utf chars followed by a read of 3 to finish the next width.
+Finally 2 utf chars are read.
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=15 WIDTH=8 
+x= ՏՐՉAB length(x)= 5
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 5 $y= 2
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 5 $y= 2
+x= CDE length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 3
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 3
+x= ՏՐ length(x)= 2
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 2 $y= 3
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 2 $y= 3
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0 $y= 4
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0 $y= 4
+**********************************
+READONLY, x#n, FIXED, FOLLOW, TIMED READS WITH TIMEOUTS UTF-8, DEFAULT RECORDSIZE
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ 
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3 $y= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3 $y= 0
+setting ^a to tnd6 to have writer add 3 more chars to rwutffixfile
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 6 $y= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 6 $y= 0
+setting ^a to tnd7 to have writer add 3 chars, hang 2, add 3 chars to rwutffixfile
+x= ՇՈՉՇՈՉ length(x)= 6
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 12 $y= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 12 $y= 0
+setting ^a to tnd8 to have writer add 2 chars, hang 2, add 2 chars to rwutffixfile
+x= ՇՈՇՈ length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 16 $y= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 16 $y= 0
+setting ^a to tnd9 to have writer add 3 more chars to rwutffixfile
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 19 $y= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 19 $y= 0
+setting ^a to tnd10 to have writer add 2 chars, hang 2, add 2 chars to rwutffixfile
+x= ՇՈՇՈ length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 23 $y= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 23 $y= 0
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, x, FIXED, FOLLOW, TIMED READS WITH/WITHOUT TIMEOUT UTF-8, RECORDSIZE=15
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=15 
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3 $y= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3 $y= 0
+setting ^a to td13 to have writer add 7 more chars to rwutffixfile after a 5 sec delay
+x= ABCDEՏՐ length(x)= 7
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 1
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 1
+setting ^a to tnd11 to have writer hang 2, write 3 chars, hang 2, write 7 chars to rwutffixfile
+x= ՇՈՉABCDEՏՐ length(x)= 10
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 2
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 2
+setting ^a to tnd12 to have writer hang 2, write 3 chars, hang 2, write 7 chars to rwutffixfile
+x= ՇՈՉABCDEՏՐ length(x)= 10
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 3
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 3
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=15 WIDTH=10 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0 $y= 4
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0 $y= 4
+**********************************
+READONLY, x, FIXED, FOLLOW, TIMED and UNTIMED READS, FILL CHARS, UTF-8, RECORDSIZE=10
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=10 
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 1
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 1
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 2
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 2
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 2
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 2
+x= ՇՈ length(x)= 2
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 2 $y= 2
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 2 $y= 2
+x= Շ length(x)= 1
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 3
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 3
+x= Ո length(x)= 1
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 1 $y= 3
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 1 $y= 3
+x= ՇՈ length(x)= 2
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 4
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 4
+x= Չ length(x)= 1
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 1 $y= 4
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 1 $y= 4
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0 $y= 5
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0 $y= 5
+**********************************
+READONLY, x, FIXED, FOLLOW, TIMED and UNTIMED READS, FILL CHARS, UTF-16, RECORDSIZE=10
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=10 ICHSET=UTF-16BE 
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 1
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 1
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 2
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 2
+x=  length(x)= 0
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 2
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 2
+x= ՋՌ length(x)= 2
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 2 $y= 2
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 2 $y= 2
+x= Ջ length(x)= 1
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 3
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 3
+x= Ռ length(x)= 1
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 1 $y= 3
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 1 $y= 3
+x= ՇՈ length(x)= 2
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 4
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 4
+x= Չ length(x)= 1
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 1 $y= 4
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 1 $y= 4
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0 $y= 5
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0 $y= 5
+**********************************
+READONLY, x#n, FIXED, FOLLOW, TIMED READS WITH TIMEOUTS UTF-16, DEFAULT RECORDSIZE
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ ICHSET=UTF-16BE 
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3 $y= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3 $y= 0
+setting ^a to tnd21 to have writer add 3 more chars to rwutffixfile
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 6 $y= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 6 $y= 0
+setting ^a to tnd22 to have writer add 3 chars, hang 2, add 3 chars to rwutffixfile
+x= ՇՈՉՇՈՉ length(x)= 6
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 12 $y= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 12 $y= 0
+setting ^a to tnd23 to have writer add 2 chars, hang 2, add 2 chars to rwutffixfile
+x= ՋՌՋՌ length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 16 $y= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 16 $y= 0
+setting ^a to tnd24 to have writer add 3 more chars to rwutffixfile
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 19 $y= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 19 $y= 0
+setting ^a to tnd25 to have writer add 2 chars, hang 2, add 2 chars to rwutffixfile
+x= ՋՌՋՌ length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 23 $y= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 23 $y= 0
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ ICHSET=UTF-16BE 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0
+**********************************
+READONLY, x#n, FIXED, FOLLOW, UNTIMED READS WIDTH < RECORDSIZE UTF-16
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=24 ICHSET=UTF-16BE 
+this read will return a width of 10 chars (20 bytes) leaving 4 bytes in the record for the next read
+x= ՇՈՉՊՋՌՇՈՉՊ length(x)= 10
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 1
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 1
+this read will return 2 chars (4 bytes) leaving the record empty
+x= ՋՌ length(x)= 2
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 2 $y= 1
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 2 $y= 1
+setting ^a to td18 to have writer add 12 more chars (24 bytes) to rwutffixfile after a 5 sec delay
+this read will return 8 chars (16 bytes) to finish the width of 10 chars, leaving 4 chars in record
+x= ՇՈՉՊՋՌՇՈ length(x)= 8
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 2
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 2
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=24 WIDTH=10 ICHSET=UTF-16BE 
+this read will return 4 chars (8 bytes) to empty the record
+x= ՉՊՋՌ length(x)= 4
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 4 $y= 2
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 4 $y= 2
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0 $y= 3
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0 $y= 3
+**********************************
+READONLY, x, FIXED, FOLLOW, TIMED READS WITH/WITHOUT TIMEOUT UTF-16, RECORDSIZE=12
+**********************************
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FOLLOW FIXED READ REC=12 ICHSET=UTF-16BE 
+x= ՇՈՉ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3 $y= 0
+$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 3 $y= 0
+setting ^a to td19 to have writer add 3 more chars to rwutffixfile after a 5 sec delay
+x= ՊՋՌ length(x)= 3
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 1
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 1
+setting ^a to tnd26 to have writer hang 2, write 3 chars, hang 2, write 3 chars to rwutffixfile
+x= ՇՈՉՊՋՌ length(x)= 6
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 2
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 2
+setting ^a to tnd27 to have writer hang 2, write 3 chars, hang 2, write 3 chars to rwutffixfile
+x= ՇՈՉՊՋՌ length(x)= 6
+expect:
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 3
+$device= 0  $za= 0 $test= 1 $zeof= 0 $x= 0 $y= 3
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+rwutffixfile OPEN RMS FIXED READ REC=12 WIDTH=6 ICHSET=UTF-16BE 
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0 $y= 4
+$device= 1,Device detected EOF  $za= 9 $test= 1 $zeof= 1 $x= 0 $y= 4
+###################################################################
+**************************** badcharfollow ****************************
+###################################################################
+**********************************
+BAD CHARACTER PROCESSING, NON-FIXED, FOLLOW, UTF-8
+**********************************
+
+Processing utf8_nobom_tail
+STAT=badcharfollow+11^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
+x=  length(x)= 0
+expect:
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 136 $zb= 136
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 136 $zb= 136
+x= ՉABCՏՐ length(x)= 6
+expect:
+$device= 0 $za= 0 $zeof= 0
+$device= 0 $za= 0 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+
+Processing utf8_nobom_head
+x= Շ length(x)= 1
+expect:
+$device= 0 $za= 0 $zeof= 0 $test= 0
+$device= 0 $za= 0 $zeof= 0 $test= 0
+STAT=badcharfollow+27^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(213) is not a valid character in the UTF-8 encoding form
+x=  length(x)= 0
+expect:
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 213 $zb= 213
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 213 $zb= 213
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+
+**********************************
+BAD CHARACTER PROCESSING, NON-FIXED, FOLLOW, UTF-16
+**********************************
+
+Processing utf16_nobom_tail
+x= 䠅䤅䨀 length(x)= 3
+expect:
+$device= 0 $za= 0 $zeof= 0 $test= 0
+$device= 0 $za= 0 $zeof= 0 $test= 0
+STAT=badcharfollow+43^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(10) is not a valid character in the UTF-16BE encoding form
+x=  length(x)= 0
+expect:
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 10 $zb= 10
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 10 $zb= 10
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+
+Processing utf16_nobom_head
+x= Շ length(x)= 1
+expect:
+$device= 0 $za= 0 $zeof= 0 $test= 0
+$device= 0 $za= 0 $zeof= 0 $test= 0
+STAT=badcharfollow+56^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(5) is not a valid character in the UTF-16BE encoding form
+x=  length(x)= 0
+expect:
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 5 $zb= 5
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 5 $zb= 5
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+
+**********************************
+BAD CHARACTER PROCESSING, NON-FIXED, NOFOLLOW, UTF-8
+**********************************
+
+Processing utf8_nobom_tail
+STAT=badcharfollow+69^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
+x=  length(x)= 0
+expect:
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 136 $zb= 136
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 136 $zb= 136
+x= ՉABCՏՐ length(x)= 6
+expect:
+$device= 0 $za= 0 $zeof= 0
+$device= 0 $za= 0 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+
+Processing utf8_nobom_head
+STAT=badcharfollow+81^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(213) is not a valid character in the UTF-8 encoding form
+x= Շ length(x)= 1
+expect:
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 213 $zb= 213
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 213 $zb= 213
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+
+**********************************
+BAD CHARACTER PROCESSING, NON-FIXED, NOFOLLOW, UTF-16
+**********************************
+
+Processing utf16_nobom_tail
+STAT=badcharfollow+94^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(10) is not a valid character in the UTF-16BE encoding form
+x= 䠅䤅䨀 length(x)= 3
+expect:
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 10 $zb= 10
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 10 $zb= 10
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+
+Processing utf16_nobom_head
+STAT=badcharfollow+104^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(5) is not a valid character in the UTF-16BE encoding form
+x= Շ length(x)= 1
+expect:
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 5 $zb= 5
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 5 $zb= 5
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+
+**********************************
+BAD CHARACTER PROCESSING, FIXED, FOLLOW, UTF-8
+**********************************
+
+Processing utf8_nobom_tail
+STAT=badcharfollow+117^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
+x=  length(x)= 0
+expect:
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 136 $zb= 136
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 136 $zb= 136
+x= ՉABCՏՐ
+ length(x)= 7
+expect:
+$device= 0 $za= 0 $zeof= 0
+$device= 0 $za= 0 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+
+Processing utf8_nobom_head
+STAT=badcharfollow+130^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(213) is not a valid character in the UTF-8 encoding form
+x=  length(x)= 0
+expect:
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 213 $zb= 213
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 213 $zb= 213
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+
+**********************************
+BAD CHARACTER PROCESSING, FIXED, FOLLOW, UTF-16
+**********************************
+
+Processing utf16_nobom_tail
+STAT=badcharfollow+144^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(10) is not a valid character in the UTF-16BE encoding form
+x=  length(x)= 0
+expect:
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 10 $zb= 10
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 10 $zb= 10
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+
+Processing utf16_nobom_head
+STAT=badcharfollow+155^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(5) is not a valid character in the UTF-16BE encoding form
+x=  length(x)= 0
+expect:
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 5 $zb= 5
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 5 $zb= 5
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+
+**********************************
+BAD CHARACTER PROCESSING, FIXED, NOFOLLOW, UTF-8
+**********************************
+
+Processing utf8_nobom_tail
+STAT=badcharfollow+169^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
+x=  length(x)= 0
+expect:
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 136 $zb= 136
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 136 $zb= 136
+x= ՉABCՏՐ
+ length(x)= 7
+expect:
+$device= 0 $za= 0 $zeof= 0
+$device= 0 $za= 0 $zeof= 0
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+
+In utf8_nobom_head
+STAT=badcharfollow+181^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(213) is not a valid character in the UTF-8 encoding form
+x=  length(x)= 0
+expect:
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 213 $zb= 213
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 213 $zb= 213
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+
+**********************************
+BAD CHARACTER PROCESSING, FIXED, NOFOLLOW, UTF-16
+**********************************
+
+Processing utf16_nobom_tail
+STAT=badcharfollow+194^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(10) is not a valid character in the UTF-16BE encoding form
+x=  length(x)= 0
+expect:
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 10 $zb= 10
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 10 $zb= 10
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+
+In utf16_nobom_head
+STAT=badcharfollow+204^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(5) is not a valid character in the UTF-16BE encoding form
+x=  length(x)= 0
+expect:
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 5 $zb= 5
+$device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 5 $zb= 5
+x=  length(x)= 0
+expect:
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+$device= 1,Device detected EOF $za= 9 $zeof= 1
+##ALLOW_OUTPUT NON_UTF8
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

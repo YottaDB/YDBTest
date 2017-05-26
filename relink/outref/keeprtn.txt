@@ -1,0 +1,16 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# set gtm_autorelink_keeprtn to True - Expect "numvers:" in zshow "a" output to be 1
+# The value of gtm_autorelink_keeprtn : ##FILTERED##GTM_TEST_DEBUGINFO.*
+numvers: 1
+# set gtm_autorelink_keeprtn to False - Expect "numvers:" in zshow "a" output to be 0
+# The value of gtm_autorelink_keeprtn : ##FILTERED##GTM_TEST_DEBUGINFO.*
+numvers: 0
+# unset gtm_autorelink_keeprtn - Expect "numvers:" in zshow "a" output to be 0
+numvers: 0
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

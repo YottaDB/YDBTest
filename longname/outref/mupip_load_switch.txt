@@ -1,0 +1,14 @@
+Files Created in ##TEST_PATH##:
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z]*/mumps -run GDE
+mumps.gld
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z]*/mupip
+mumps.dat
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+LOAD TOTAL		Key Cnt: 31  Max Subsc Len: 9  Max Data Len: 4
+Last LOAD record number: 33
+
+PASS, loading v5xtract.log into a V4 database did fail as expected
+##TEST_AWK##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z]*/mupip
+##TEST_AWK##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z]*/mupip integ -REG \*
+No errors detected by integ.

@@ -1,0 +1,122 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'START INST1 INST3'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST3'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST3'==
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+
+# Test CHECKHEALTH behavior if VALID instance name is specified & source server is alive
+==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replicate -source -checkhealth -instsecondary=INSTANCE2; echo $status'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid [##PID##] for secondary instance name [INSTANCE2]
+PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
+0
+
+# Test SHOWBACKLOG behavior if VALID instance name is specified & source server is alive
+==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replic -source -showbacklog -instsecondary=INSTANCE2; echo $status'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE2]
+0 : backlog number of transactions written to journal pool and yet to be sent by the source server
+15 : sequence number of last transaction written to journal pool
+15 : sequence number of last transaction sent by source server
+0
+
+# Test CHECKHEALTH behavior if VALID instance name is specified & source server is dead
+# We expect a SRCSRVNOTEXIST error in this case
+==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replicate -source -checkhealth -instsecondary=INSTANCE3; echo $status'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid [##PID##] for secondary instance name [INSTANCE3]
+PID 0 Source server is NOT alive
+%GTM-E-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
+1
+
+# Test SHOWBACKLOG behavior if VALID instance name is specified & source server is dead
+# We expect a SRCSRVNOTEXIST warning message in this case
+==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE3; echo $status'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE3]
+5 : backlog number of transactions written to journal pool and yet to be sent by the source server
+15 : sequence number of last transaction written to journal pool
+10 : sequence number of last transaction sent by source server
+%GTM-W-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
+0
+
+# Test CHECKHEALTH behavior if INVALID instance name is specified
+# We expect a REPLINSTSECNONE error in this case
+==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replicate -source -checkhealth -instsecondary=ZYXWVU; echo $status'==
+%GTM-E-REPLINSTSECNONE, No information found for secondary instance ZYXWVU in instance file ##TEST_PATH##/mumps.repl
+138
+
+# Test SHOWBACKLOG behavior if INVALID instance name is specified
+# We expect a REPLINSTSECNONE error in this case
+==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replicate -source -showbacklog -instsecondary=UVWXYZ; echo $status'==
+%GTM-E-REPLINSTSECNONE, No information found for secondary instance UVWXYZ in instance file ##TEST_PATH##/mumps.repl
+138
+
+# Test that INVALID instance names did not use up a slot in the instance file/journal pool
+# A search for those instance names should not yield any output in the instance file
+==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replic -editinstance -show mumps.repl >& editinst.out'==
+
+# Test CHECKHEALTH behavior if NO instance name is specified
+# It should operate only on INST2 and not on INST3 (source server is dead)
+==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replic -source -checkhealth; echo $status'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid [##PID##] for secondary instance name [INSTANCE2]
+PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
+0
+
+# Test showbacklog behavior if NO instance name is specified
+# It should operate only on INST2 and not on INST3 (source server is dead)
+==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replic -source -showbacklog; echo $status'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE2]
+0 : backlog number of transactions written to journal pool and yet to be sent by the source server
+15 : sequence number of last transaction written to journal pool
+15 : sequence number of last transaction sent by source server
+0
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3'==
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST3'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT ALL'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##TEST_AWK##TEST_HOST_SHORT##:##TEST_PATH##/msr_execute_.*.out
+%GTM-E-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
+##TEST_AWK##TEST_HOST_SHORT##:##TEST_PATH##/msr_execute_.*.out
+%GTM-W-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
+##TEST_AWK##TEST_HOST_SHORT##:##TEST_PATH##/msr_execute_.*.out
+%GTM-E-REPLINSTSECNONE, No information found for secondary instance ZYXWVU in instance file ##TEST_PATH##/mumps.repl
+##TEST_AWK##TEST_HOST_SHORT##:##TEST_PATH##/msr_execute_.*.out
+%GTM-E-REPLINSTSECNONE, No information found for secondary instance UVWXYZ in instance file ##TEST_PATH##/mumps.repl

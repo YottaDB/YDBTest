@@ -1,0 +1,103 @@
+Scenario 1: Two regions both pointing to the second region's database file
+
+Create a database with two regions
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+
+Use gde change -segment for each region to use envvar to specify the database file
+
+Point the regions to their corresponding database files
+
+Fill in data in the regions
+
+Point the first region to the second region's database
+
+Do an extract
+%GTM-I-RECORDSTAT, ^z:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
+
+Point the first region back to its database
+
+Do a load
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *        
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 100  Max Subsc Len: 6  Max Data Len: 100
+Last LOAD record number: 13
+
+
+Do a dbcheck to ensure db integs clean
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Tuck away first scenario
+
+Scenario 2: Two regions pointing to each other's database files
+
+Create a database with two regions
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+
+Use gde change -segment for each region to use envvar to specify the database file
+
+Point the regions to the other region's database files
+
+Fill in data in the regions
+
+Do an extract
+%GTM-I-RECORDSTAT, ^A:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
+%GTM-I-RECORDSTAT, ^z:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 200  max subsc len: 6  max rec len: 100  max node len: 110
+
+Do a load
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *        
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 200  Max Subsc Len: 6  Max Data Len: 100
+Last LOAD record number: 25
+
+
+Do a dbcheck to ensure db integs clean
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Tuck away second scenario
+
+Scenario 3: Random number of regions with a random region to database file mapping
+
+Randomly pick the number of regions
+
+Generate a gbldir spec so each region uses an envvar to specify the database file
+
+Set default region to file mapping
+
+Create the global directory
+
+Create the database files
+
+Fill in data across the regions (ensure that all regions have some data)
+
+Randomly assign regions to database files
+
+Do an extract
+
+Restore the original region to database file mapping
+
+Do a load
+
+Do a dbcheck to ensure db integs clean
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

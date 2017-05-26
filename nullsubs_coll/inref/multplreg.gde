@@ -1,0 +1,19 @@
+add -name a* -region=AREG
+add -region AREG -d=ASEG -null_subscripts=NEVER -stdnullcoll
+add -segment ASEG -file=a.dat
+add -name b* -region=BREG
+add -region BREG -d=BSEG -null_subscripts=ALWAYS
+add -segment BSEG -file=b.dat
+add -name c* -region=CREG
+add -region CREG -d=CSEG -null_subscripts=ALWAYS -stdnullcoll
+add -segment CSEG -file=c.dat
+add -name d* -region=DREG
+add -region DREG -d=DSEG
+add -segment DSEG -file=d.dat
+add -name e* -region=EREG
+add -region EREG -d=ESEG
+add -segment ESEG -file=e.dat
+change -reg CREG -null_subscripts=EXISTING -nostdnullcoll
+change -reg DREG -null_subscripts=TRUE
+change -reg EREG -null_subscripts=FALSE
+show -reg

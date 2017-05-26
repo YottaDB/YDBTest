@@ -1,0 +1,13 @@
+V4COMP1(V) ;IW-KO-YS-TS,VV4TP,MVTS V9.10;15/7/96;PART-94 Transaction
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;PUT COMPUTEED DATA
+ write "$h  =",$h,!
+ write "$job=",$j,!
+ LOCK ^VCOMP
+ S I=$O(^VCOMP(1,""),-1)+1
+ S ^VCOMP(1,I)=V
+ LOCK
+ H
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

@@ -1,0 +1,689 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+Making some extracts
+##TEST_AWK%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
+##TEST_AWK%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
+##SUSPEND_OUTPUT UNICODE_MODE
+##TEST_AWK%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+###################################################################
+###################################################################
+No triggers should fire during MUPIP LOAD
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+1. ZWR
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+
+Global Directory
+
+Global ^
+
+Total of 0 globals.
+##TEST_AWKGT.M MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+%GTM-I-TRIGDATAIGNORE, Ignoring trigger data ^#t("c","#LABEL"). Use MUPIP TRIGGER to load trigger definitions
+##TEST_AWKLOAD TOTAL		Key Cnt: [0-9]+  Max Subsc Len: [0-9]+  Max Data Len: [0-9]+
+##TEST_AWKLast LOAD record number: [0-9]*
+
+
+Global Directory
+
+Global ^
+^a        ^b        ^c        
+Total of 3 globals.
+##TEST_AWK%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT UNICODE_MODE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+2. GLO
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+
+Global Directory
+
+Global ^
+
+Total of 0 globals.
+GT.M MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:..
+Beginning LOAD at record number: 3
+
+%GTM-I-TRIGDATAIGNORE, Ignoring trigger data ^#t("c","#LABEL")="2". Use MUPIP TRIGGER to load trigger definitions
+##TEST_AWKLOAD TOTAL		Key Cnt: [0-9]+  Max Subsc Len: [0-9]+  Max Data Len: [0-9]+
+##TEST_AWKLast LOAD record number: [0-9]*
+
+
+Global Directory
+
+Global ^
+^a        ^b        ^c        
+Total of 3 globals.
+##TEST_AWK%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT UNICODE_MODE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+3. BIN
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+
+Global Directory
+
+Global ^
+
+Total of 0 globals.
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+Beginning LOAD at record number: 2
+
+##TEST_AWKLOAD TOTAL		Key Cnt: [0-9]+  Max Subsc Len: [0-9]+  Max Data Len: [0-9]+
+##TEST_AWKLast LOAD record number: [0-9]*
+
+
+Global Directory
+
+Global ^
+^a        ^b        ^c        
+Total of 3 globals.
+##TEST_AWK%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
+Cannot see ^#t from GT.M runtime
+
+Global Directory
+
+Global ^
+
+Total of 0 globals.
+
+Global ^
+
+GTM>
+
+Global Directory
+
+Global ^
+
+Total of 0 globals.
+
+Global ^
+
+
+GTM>
+
+%GTM-E-VAREXPECTED, Variable expected in this context
+	zwr ^#t
+	     ^-----
+
+%GTM-E-VAREXPECTED, Variable expected in this context
+	^#t
+	 ^-----
+
+%GTM-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
+	^#t
+	 ^-----
+
+
+GTM>
+
+%GTM-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
+	set ^#t("a","#LABEL")=0
+	     ^-----
+
+%GTM-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
+	^#t("a","#LABEL")
+	 ^-----
+
+%GTM-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
+	^#t("a","#LABEL")
+	 ^-----
+
+%GTM-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
+		At M source location +1^GTM$DMOD
+
+# DSE should be able to access ^#t records
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+Key not found, would be in block  3.
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	3:XX,
+DSE> 
+Key found in block  3.
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	3:XX,
+DSE> 
+Key found in block  3.
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	3:XX,
+DSE> 
+Key found in block  3.
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	3:XX,
+DSE> 
+Key not found, would be in block  3.
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	3:XX,
+DSE> 
+Key not found, would be in block  3.
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	3:XX,
+DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Key found in block  3.
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	3:XX,
+DSE> 
+# dump of the right blocks should show ^#t records
+Rec:1  Blk 2  ##MASKED## Key ^#t
+Rec:2  Blk 2  ##MASKED## Key ^a
+Rec:1  Blk 3  ##MASKED## Key ^#t("#TNAME","a","#SEQNUM")
+Rec:2  Blk 3  ##MASKED## Key ^#t("#TNAME","a","#TNCOUNT")
+Rec:3  Blk 3  ##MASKED## Key ^#t("#TNAME","a#1")
+Rec:4  Blk 3  ##MASKED## Key ^#t("a",1,"BHASH")
+Rec:5  Blk 3  ##MASKED## Key ^#t("a",1,"CHSET")
+Rec:6  Blk 3  ##MASKED## Key ^#t("a",1,"CMD")
+Rec:7  Blk 3  ##MASKED## Key ^#t("a",1,"GVSUBS")
+Rec:8  Blk 3  ##MASKED## Key ^#t("a",1,"LHASH")
+Rec:9  Blk 3  ##MASKED## Key ^#t("a",1,"TRIGNAME")
+Rec:A  Blk 3  ##MASKED## Key ^#t("a",1,"XECUTE")
+Rec:B  Blk 3  ##MASKED## Key ^#t("a","#COUNT")
+Rec:C  Blk 3  ##MASKED## Key ^#t("a","#CYCLE")
+Rec:D  Blk 3  ##MASKED## Key ^#t("a","#LABEL")
+Rec:E  Blk 3  ##MASKED## Key ^#t("a","#TRHASH",541755592,1)
+
+Added for GTM2168 do not adjust the TEST_AWKs
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+Rec:6  Blk 3  ##MASKED## Key ^#t("a",1,"CMD")
+##TEST_AWK           .  .  .  .  .  M  D  .  .  S  ,  K                           .
+
+DSE> 
+Rec:7  Blk 3  ##MASKED## Key ^#t("a",1,"GVSUBS")
+##TEST_AWK           .  .  .  .  .  G  V  S  U  B  S  .  .  .                     .
+
+DSE> 
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+4. Backup
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+Trigger load for updates.trg PASSED
+Output File: 
+;trigger name: why (region DEFAULT)  cycle: 1
++^y -name=why -commands=S -xecute="set ^r($ztvalue)=$reference"
+;trigger name: zreason (region DEFAULT)  cycle: 1
++^z -name=zreason -commands=S -xecute="set $ztvalue=$ztvalue/3 set ^r($ztvalue)=$reference"
+
+comprehensive backup
+Output File: 
+;trigger name: why (region DEFAULT)  cycle: 2
++^y -name=why -commands=S,K -xecute="set ^r($ztvalue)=$reference"
+;trigger name: zreason (region DEFAULT)  cycle: 2
++^z -name=zreason -commands=S,K -xecute="set $ztvalue=$ztvalue/3 set ^r($ztvalue)=$reference"
+
+
+GTM>
+
+Do some updates
+
+
+GTM>
+
+Do some more updates
+
+Should see updates to ^r
+
+Global Directory
+
+Global ^
+^r        ^x        ^y        ^z        
+Total of 4 globals.
+
+^r(30)="^z"
+^r(31.6666666666666666)="^z"
+^r(32)="^z"
+^r(32.3333333333333333)="^z"
+^r(32.6666666666666666)="^z"
+^r(33)="^z"
+^r(90)="^y"
+^r(95)="^y"
+^r(96)="^y"
+^r(97)="^y"
+^r(98)="^y"
+^r(99)="^y"
+^y=99
+^x="^y"
+^z=33
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+5. Restore
+Created file ##TEST_PATH##/mumps.dat
+
+###################################################################
+First incremental restore
+###################################################################
+
+RESTORE COMPLETED
+5 blocks restored
+
+###################################################################
+Second incremental restore
+###################################################################
+
+RESTORE COMPLETED
+11 blocks restored
+After second incremental restore
+^r(30)="^z"
+^r(90)="^y"
+^y=90
+^x="^y"
+^z=30
+###################################################################
+Final incremental restore
+###################################################################
+
+RESTORE COMPLETED
+6 blocks restored
+After Final incremental restore
+^r(30)="^z"
+^r(31.6666666666666666)="^z"
+^r(32)="^z"
+^r(32.3333333333333333)="^z"
+^r(32.6666666666666666)="^z"
+^r(33)="^z"
+^r(90)="^y"
+^r(95)="^y"
+^r(96)="^y"
+^r(97)="^y"
+^r(98)="^y"
+^r(99)="^y"
+^y=99
+^x="^y"
+^z=33
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+6. ZTrigger
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+###################################################################
+Test dollar reference at runtime startup and with nothing in select
+
+GTM>
+
+$R at runtime startup is valid
+
+$R on naked select is valid
+
+$R on naked select with GVN parm is valid
+
+###################################################################
+Test dollar reference with ztrigger FILE commands
+
+GTM>
+
+File poundt.trg, Line 2: Added SET and/or Non-SET trigger on ^a named a#1
+File poundt.trg, Line 3: Added SET and/or Non-SET trigger on ^b named b#1
+File poundt.trg, Line 4: Added SET and/or Non-SET trigger on ^c named c#1
+=========================================
+3 triggers added
+0 triggers deleted
+0 triggers modified
+3 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+
+$R after FILE is valid
+
+%GTM-E-GVNAKED, Illegal naked global reference
+
+File poundt.trg, Line 2: SET and/or Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+File poundt.trg, Line 3: SET and/or Non-SET trigger on ^b already present in trigger named b#1 - no action taken
+File poundt.trg, Line 4: SET and/or Non-SET trigger on ^c already present in trigger named c#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+3 trigger file entries did not update database trigger content
+=========================================
+
+$R after FILE with GVN parm is valid
+
+File poundt.trg, Line 2: SET and/or Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+File poundt.trg, Line 3: SET and/or Non-SET trigger on ^b already present in trigger named b#1 - no action taken
+File poundt.trg, Line 4: SET and/or Non-SET trigger on ^c already present in trigger named c#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+3 trigger file entries did not update database trigger content
+=========================================
+
+$R after FILE with GVN parm is valid
+
+File poundt.trg, Line 2: SET and/or Non-SET trigger on ^a already present in trigger named a#1 - no action taken
+File poundt.trg, Line 3: SET and/or Non-SET trigger on ^b already present in trigger named b#1 - no action taken
+File poundt.trg, Line 4: SET and/or Non-SET trigger on ^c already present in trigger named c#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+3 trigger file entries did not update database trigger content
+=========================================
+
+$R after FILE with GVN parm is valid
+
+###################################################################
+Test dollar reference with ztrigger SELECT commands
+
+GTM>
+
+;trigger name: c#1 (region DEFAULT)  cycle: 1
++^c(*) -commands=S,K -xecute="write $ztri,$char(9),$reference,!"
+
+$R after select is valid
+
+%GTM-E-GVNAKED, Illegal naked global reference
+
+;trigger name: a#1 (region AREG)  cycle: 1
++^a(*) -commands=S,K -xecute="write $ztri,$char(9),$reference,!"
+;trigger name: b#1 (region BREG)  cycle: 1
++^b(*) -commands=S,K -xecute="write $ztri,$char(9),$reference,!"
+;trigger name: c#1 (region DEFAULT)  cycle: 1
++^c(*) -commands=S,K -xecute="write $ztri,$char(9),$reference,!"
+
+$R after select is valid
+
+%GTM-E-GVNAKED, Illegal naked global reference
+
+;trigger name: a#1 (region AREG)  cycle: 1
++^a(*) -commands=S,K -xecute="write $ztri,$char(9),$reference,!"
+;trigger name: b#1 (region BREG)  cycle: 1
++^b(*) -commands=S,K -xecute="write $ztri,$char(9),$reference,!"
+;trigger name: c#1 (region DEFAULT)  cycle: 1
++^c(*) -commands=S,K -xecute="write $ztri,$char(9),$reference,!"
+
+$R after select with GVN parm is valid
+
+;trigger name: a#1 (region AREG)  cycle: 1
++^a(*) -commands=S,K -xecute="write $ztri,$char(9),$reference,!"
+
+$R after select with GVN parm is valid
+
+;trigger name: b#1 (region BREG)  cycle: 1
++^b(*) -commands=S,K -xecute="write $ztri,$char(9),$reference,!"
+
+$R after select with GVN parm is valid
+
+;trigger name: a#1 (region AREG)  cycle: 1
++^a(*) -commands=S,K -xecute="write $ztri,$char(9),$reference,!"
+
+$R after select with GVN parm is valid
+
+###################################################################
+Test dollar reference with ztrigger ITEM commands
+
+GTM>
+
+Added Non-SET trigger on ^z named z#1
+
+$R after ITEM add is valid
+
+%GTM-E-GVNAKED, Illegal naked global reference
+
+Modified SET and/or Non-SET trigger on ^z named z#1
+
+$R after ITEM add with GVN is valid
+
+SET and/or Non-SET trigger on ^z already present in trigger named z#1 - no action taken
+
+$R after ITEM add with GVN is valid
+
+Modified SET trigger on ^z named z#1
+
+$R after ITEM add with GVN is valid
+
+
+
+GTM>
+
+SET and/or Non-SET trigger on ^DONOTEXIST does not exist - no action taken
+
+$R after deleting trigger is valid
+
+%GTM-E-GVNAKED, Illegal naked global reference
+
+Modified Non-SET trigger on ^b named b#1
+
+$R after deleting trigger is valid
+
+%GTM-E-GVNAKED, Illegal naked global reference
+
+All existing triggers (count = 4) deleted
+
+$R after deleting all triggers is valid
+
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Lift restriction on DSE that prevents changing ^#t by key
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+# Install a simple trigger in the database and dump the block containing ^#t records
+# Print the original trigger detail
+;trigger name: b#1 (region DEFAULT)  cycle: 1
++^b -commands=S -xecute="do ^badtrg"
+# Delete the installed trigger
+# Create add record commands from the extracted block details
+# dse add records to recreate trigger insertion
+# Print the trigger detail after inserting records via dse
+;trigger name: b#1 (region DEFAULT)  cycle: 1
++^b -commands=S -xecute="do ^goodtrg"
+# Check if the trigger actually works by doing a set of ^b and write of ^a
+^a=100
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

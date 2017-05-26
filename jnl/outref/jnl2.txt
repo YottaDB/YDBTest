@@ -1,0 +1,89 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+myjnl2.gld
+Using: ##SOURCE_PATH##/mupip
+myjnl2.dat
+##SUSPEND_OUTPUT  REPLIC
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/myjnl2.mjl created for database file ##TEST_PATH##/myjnl2.dat with (NO|)BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/myjnl2.dat is now ON
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+myjnl2.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+myjnl2.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/myjnl2.mjl is renamed to ##TEST_PATH##/myjnl2.mjl_##TIMESTAMP##
+##SUSPEND_OUTPUT  REPLIC
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/myjnl2.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/myjnl2.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
+##ALLOW_OUTPUT  NON_REPLIC
+DB file ##TEST_PATH##/myjnl2.dat backed up in file tmp.dat
+Transactions up to 0x0000000000000001 are backed up.
+
+
+BACKUP COMPLETED.
+
+
+GTM>
+s pass=16
+
+GTM>
+d ^jnlbas0
+
+
+JNLBAS0 test with KILL and SET 
+Caution: Database Block Certification Has Been Enabled
+
+JNLBAS0 - no wait 16 passes 
+.... .... .... .... 
+JNLBAS0 random wait 16 passes 
+.... .... .... .... 
+JNLBAS0 COMPLETE
+GTM>
+h 5
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/myjnl2.dat is now OFF
+##SUSPEND_OUTPUT  NON_REPLIC
+Created file ##TEST_PATH##/myjnl2.dat
+##ALLOW_OUTPUT  NON_REPLIC
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+
+GTM>
+s pass=16
+
+GTM>
+d ^jnlbas1
+
+
+JNLBAS1 data check 
+PASS 
+
+GTM>
+h 3
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

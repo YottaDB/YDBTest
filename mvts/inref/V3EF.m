@@ -1,0 +1,67 @@
+V3EF ;IW-KO-YS-TS,VV3,MVTS V9.10;15/6/96;PART-90
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1990-1996
+ ;
+1 W !!,"139---V3EF: Tests of extrinsic function",!
+ S ^ABSN="31089",^ITEM="III-1089  $$label()"
+ S ^NEXT="2^V3EF,V3CBR^VV3" D ^V3PRESET K
+ S X(1)="X1",Z(1,2,3)="123E1"
+ s ^VCOMP=""
+ S ^VCOMP=$$A0^V3EFE()_^VCOMP
+ S ^VCORR="Q/0 0 0 0 0 0 0 0 0 0 0/" D ^VEXAMINE
+ ;
+2 S ^ABSN="31090",^ITEM="III-1090  $$^routine(expr,intexpr)"
+ S ^NEXT="3^V3EF,V3CBR^VV3" D ^V3PRESET
+ K  S X="X",Y=127,W="A"
+ S ^VCOMP=""
+ S ^VCOMP=$$^V3EFE(W,255)_^VCOMP
+ S A="A" F I=1:1:Y S A=A_"AA"
+ S ^VCORR=A D ^VEXAMINE
+ ;
+3 S ^ABSN="31091",^ITEM="III-1091  $$label^routine(expr,expr)"
+ S ^NEXT="4^V3EF,V3CBR^VV3" D ^V3PRESET K  S W="W"
+ S ^VCOMP=""
+ S ^VCOMP=$$AB^V3EFE("a","b")_^VCOMP
+ S ^VCOMP=^VCOMP_$d(X) I $D(X)#10=1 S ^VCOMP=^VCOMP_X
+ S ^VCOMP=^VCOMP_$d(Y) I $D(Y)#10=1 S ^VCOMP=^VCOMP_Y
+ S ^VCOMP=^VCOMP_$d(Z) I $D(Z)#10=1 S ^VCOMP=^VCOMP_Z
+ S ^VCOMP=^VCOMP_$d(W) I $D(W)#10=1 S ^VCOMP=^VCOMP_W
+ S ^VCORR="/xyw 1a 1b 0 1W 0001w" D ^VEXAMINE
+ ;
+4 S ^ABSN="31092",^ITEM="III-1092  call by reference"
+ S ^NEXT="5^V3EF,V3CBR^VV3" D ^V3PRESET k
+ S ^VCOMP=""
+ S X="X",X(1)="X1",Y="Y",Z("A")="ZA",W(1,2,3)="W123",F="F"
+ S A="a",D="d",D(1,2,3)="d123",E(1)="e1"
+ S ^VCOMP=$$A0^V3EFE2(.X,.Y,.Z,.W,.P)_^VCOMP
+ S ^VCORR="11X 1X1 1Y 0 10 1ZA 10 1W123 0 0 0/11X 1X1 1Y 0 10 1ZA 10 1W123 0/" D ^VEXAMINE
+ ;
+5 S ^ABSN="31093",^ITEM="III-1093  indirection"
+ S ^NEXT="6^V3EF,V3CBR^VV3" D ^V3PRESET K
+ S ^VCOMP=""
+ S X="X",X(1)="X1",Y="Y",Z("A")="ZA",W(1,2,3)="W123",F="F"
+ S A="a",D="d",D(1,2,3)="d123",E(1)="e1"
+ S IX="X",IY="@IY(1)",IY(1)="Y"
+ S ^VCOMP=$$A0^V3EFE(.@IX,.@IY,@IX@(1),.W,@IX,@IY)_^VCOMP
+ S ^VCOMP=^VCOMP_$D(X)      I $D(X)#10=1 S ^VCOMP=^VCOMP_X
+ S ^VCOMP=^VCOMP_" "
+ S ^VCOMP=^VCOMP_$D(X(1))   I $D(X(1))#10=1 S ^VCOMP=^VCOMP_X(1)
+ S ^VCOMP=^VCOMP_" "
+ S ^VCOMP=^VCOMP_$D(A)      I $D(A)#10=1 S ^VCOMP=^VCOMP_A
+ S ^VCOMP=^VCOMP_" "
+ S ^VCOMP=^VCOMP_$D(A(1))   I $D(A(1))#10=1 S ^VCOMP=^VCOMP_A(1)
+ S ^VCOMP=^VCOMP_" "
+ S ^VCORR="QX/11X 1X1 1Y 0 1X1 0 10 1W123 1X 1Y 0/11X 1X1 1a 0 " D ^VEXAMINE
+ ;
+6 S ^ABSN="31094",^ITEM="III-1094  $TEST value"
+ S ^NEXT="V3CBR^VV3" D ^V3PRESET K  I 0
+ S W="W"
+ S ^VCOMP=""
+ S ^VCOMP=^VCOMP_$$T^V3EFE("a","b")
+ S ^VCOMP=^VCOMP_" "_$T
+ S ^VCORR="1a 1b 0 1W /xyw 1/ 0" D ^VEXAMINE
+ ;
+END W !!,"End of 139 --- V3EF",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

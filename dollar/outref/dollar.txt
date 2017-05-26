@@ -1,0 +1,160 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+$undef_dollar.dat
+da-sh.dat
+dolLAR.dat
+##SUSPEND_OUTPUT  REPLIC
+full-path-file.dat
+##ALLOW_OUTPUT  REPLIC
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+not-fullpath-for-replic.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+$undef_dollar.dat
+da-sh.dat
+dolLAR.dat
+mumps.dat
+not-fullpath-for-replic.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+ 
+ls -1 *.dat *.gld
+$undef_dollar.dat
+da-sh.dat
+dolLAR.dat
+##SUSPEND_OUTPUT  REPLIC
+full-path-file.dat
+##ALLOW_OUTPUT  REPLIC
+mumps.dat
+mumps.gld
+##SUSPEND_OUTPUT  NON_REPLIC
+not-fullpath-for-replic.dat
+##ALLOW_OUTPUT  NON_REPLIC
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               A                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = $first
+ A                               B                                REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = da-sh
+ B                               C                                REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = dol$lar
+ C                               D                                REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = $undef_dollar
+ D                               E                                REG = DREG
+                                                                  SEG = DSEG
+                                                                  FILE = $full_path
+ E                               a                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = $first
+ a                               b                                REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = da-sh
+ b                               c                                REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = dol$lar
+ c                               d                                REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = $undef_dollar
+ d                               e                                REG = DREG
+                                                                  SEG = DSEG
+                                                                  FILE = $full_path
+ e                               ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = $first
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = $first
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+##SUSPEND_OUTPUT  NON_REPLIC
+REMOTE
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+##ALLOW_OUTPUT  NON_REPLIC
+
+##SUSPEND_OUTPUT  NON_REPLIC
+
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               A                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = $first
+ A                               B                                REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = da-sh
+ B                               C                                REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = dol$lar
+ C                               D                                REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = $undef_dollar
+ D                               E                                REG = DREG
+                                                                  SEG = DSEG
+                                                                  FILE = $full_path
+ E                               a                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = $first
+ a                               b                                REG = AREG
+                                                                  SEG = ASEG
+                                                                  FILE = da-sh
+ b                               c                                REG = BREG
+                                                                  SEG = BSEG
+                                                                  FILE = dol$lar
+ c                               d                                REG = CREG
+                                                                  SEG = CSEG
+                                                                  FILE = $undef_dollar
+ d                               e                                REG = DREG
+                                                                  SEG = DSEG
+                                                                  FILE = $full_path
+ e                               ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = $first
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = $first
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+
+##ALLOW_OUTPUT  NON_REPLIC
+GTM>
+set PASS
+
+GTM>
+ver PASS
+
+GTM>
+kill PASS
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

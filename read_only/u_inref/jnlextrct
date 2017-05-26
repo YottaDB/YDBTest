@@ -1,0 +1,8 @@
+#! /usr/local/bin/tcsh -f
+while($#argv)
+echo "mupip journal -extract -forward $1"
+$gtm_exe/mupip journal -extract -forward $1
+mipcmanage
+shift
+end 
+

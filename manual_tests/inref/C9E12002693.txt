@@ -1,0 +1,22 @@
+C9E12-002693 Possible sig-11 if ACT/NCT and first local subscript to be processed is ""
+----
+The simple test case that reproduces this bug:
+
+Step 1:  Create a user defined collation library
+Example:
+> setenv gtm_tst $gtm_test/T990
+> source $gtm_tst/com/cre_coll_sl_reverse.csh 1
+
+Step 2: Check if the necessary logicals are defined
+Example:
+> env | grep coll
+> gtm_collate_1=/testarea1/raom/libreverse.so
+> gtm_local_collate=1
+
+Step 3: Verify the first null subscript doesn't fail
+Example:
+> gtm
+GTM>s x("")=1
+
+The test fails if you see the ASSERT failure as below:
+"%GTM-F-ASSERT, Assert failed ##GTM_LIBRARY_PATH##/V977/src/op_putindx.c line 106"

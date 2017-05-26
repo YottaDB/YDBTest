@@ -1,0 +1,27 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+This will not generate an error
+This will generate an undef error
+%GTM-E-GTMDISTUNDEF, Environment variable $gtm_dist is not defined
+This will generate a syscall error
+%GTM-E-SYSCALL, Error received from system call stat for $gtm_dist/gtmsecshr
+%SYSTEM-E-ENO2, No such file or directory
+This will not generate an error
+other
+This will generate an undef error
+%GTM-E-GTMDISTUNDEF, Environment variable $gtm_dist is not defined
+This will generate a syscall error
+%GTM-E-SYSCALL, Error received from system call stat for $gtm_dist/gtmsecshr
+%SYSTEM-E-ENO2, No such file or directory
+This will not generate an error
+This will generate an undef error
+%GTM-E-GTMDISTUNDEF, Environment variable $gtm_dist is not defined
+This will generate a syscall error
+%GTM-E-SYSCALL, Error received from system call stat for $gtm_dist/gtmsecshr
+%SYSTEM-E-ENO2, No such file or directory
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

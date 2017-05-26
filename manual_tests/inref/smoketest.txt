@@ -1,0 +1,35 @@
+smoketest is run before the other tests are run.
+No need to run this test as a part of manual tests that is run at the end of testing process for a release.
+
+INSTRUCTIONS: (For now this is UNIX only)
+
+* Create a single region database
+	> gde e # or run dtgbldir
+	> mupip create
+
+* Run smoketest.m smokepct.m and redirect the output to smoketest.out
+	> cp $gtm_test/T990/manual_tests/inref/smoketest.m .
+	> cp $gtm_test/T990/manual_tests/inref/smokepct.m .
+	> mumps -run smoketest >&! smoketest.out
+	> mumps -run smokepct >&! smokepct.out
+
+* Compare the output with smoketest.out in u_outref
+	> vim -do smoketest.out $gtm_test/T990/manual_tests/u_outref/smoketest.out
+	> vim -do smokepct.out $gtm_test/T990/manual_tests/u_outref/smokepct.out
+	> #(diff -bcw if vim isn't available)
+
+* Other than the known differences like $H, $R(x), Terminal, $Job, Memory details (Zallocstr etc) the output should visually match.
+
+Once the above passes, check the last few commented lines in smoketest.m. Those commands should be executed manually since either they are interactive commands or commands that error out.
+	> tail $gtm_test/T990/manual_tests/inref/smoketest.m
+	; The following should be executed on their own as part of the smoke test milestone
+	; > setenv EDITOR vi
+	; > gtm
+	; GTM> zedit "foo"
+	;
+	; GTM> zsy
+	; then cntl-d to get back to gtm prompt
+	;
+	; GTM> w !,$R(-10) ; when this is executed it should give an error
+
+NOTE : At various stages of the porting, commands from smoketest.m and smokepct.m can be just copied and executed, if the full routine cannot be executed successfully.

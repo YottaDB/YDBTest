@@ -1,0 +1,46 @@
+# Incoming gtmcompile environmental variable:
+##TEST_AWK.*
+# gtm6330 test starts...
+# a) Expect good.o and tmp.lis to be generated
+##TEST_AWK(ls: cannot access .*: No such file or directory|.* not found|ls: .*: No such file or directory)
+good.o
+tmp.lis
+# b) Expect same as (a)
+##TEST_AWK(ls: cannot access .*: No such file or directory|.* not found|ls: .*: No such file or directory)
+good.o
+tmp.lis
+# c) Expect same as (a)
+##TEST_AWK(ls: cannot access .*: No such file or directory|.* not found|ls: .*: No such file or directory)
+good.o
+tmp.lis
+# d) Expect same as (a)
+##TEST_AWK(ls: cannot access .*: No such file or directory|.* not found|ls: .*: No such file or directory)
+good.o
+tmp.lis
+# e) Expect MUMPS qualifiers to override gtmcompile. Expect good.o to be generated
+##TEST_AWK(ls: cannot access .*: No such file or directory|.* not found|ls: .*: No such file or directory)
+##TEST_AWK(ls: cannot access .*: No such file or directory|.* not found|ls: .*: No such file or directory)
+##TEST_AWK(ls: cannot access .*: No such file or directory|.* not found|ls: .*: No such file or directory)
+good.o
+# f) ZCOMPILE variant of (a)
+##TEST_AWK(ls: cannot access .*: No such file or directory|.* not found|ls: .*: No such file or directory)
+good.o
+tmp.lis
+# g) ZCOMPILE variant of (b)
+##TEST_AWK(ls: cannot access .*: No such file or directory|.* not found|ls: .*: No such file or directory)
+good.o
+tmp.lis
+# h) ZCOMPILE variant of (c)
+##TEST_AWK(ls: cannot access .*: No such file or directory|.* not found|ls: .*: No such file or directory)
+good.o
+tmp.lis
+# i) ZCOMPILE variant of (d)
+##TEST_AWK(ls: cannot access .*: No such file or directory|.* not found|ls: .*: No such file or directory)
+good.o
+tmp.lis
+# j) ZCOMPILE variant of (e)
+##TEST_AWK(ls: cannot access .*: No such file or directory|.* not found|ls: .*: No such file or directory)
+##TEST_AWK(ls: cannot access .*: No such file or directory|.* not found|ls: .*: No such file or directory)
+##TEST_AWK(ls: cannot access .*: No such file or directory|.* not found|ls: .*: No such file or directory)
+good.o
+# gtm6330 test complete.

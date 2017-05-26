@@ -1,0 +1,1232 @@
+###################################################################
+
+  This subtest will test $ZQGBLMOD and -needrestart and -losttncomplete, and applying lost transactions.
+       The overall scheme is:
+       -----------------------------------------------------------------------------------------------
+              INST1/A  (  *)      INST2/B  (  *)       INST3/C  (  *)        INST4/D
+       -----------------------------------------------------------------------------------------------
+Step  1:    (P)  1-100 (  0)sw  (S)  1- 70 (  0)sw   (S)  1- 50 (  0)sw    (T)  1-.. 	$ZQGBLMOD(^GBLA(1...35))=1
+Step  2:    (r)    L1  ( 71)    (P)        ( 71)           -                     -
+Step  3:    (S)                 (P)        ( 71)     (r)        (  0)            -  	$ZQGBLMOD(^GBLA(1...30))=0
+Step  4:    (S) 71-130 ( 71)sw  (P) 71-140 ( 71)sw   (S) 51-100 (  0)sw          -  	$ZQGBLMOD(^GBLA(1...30))=1
+Step  5:          -                   -              (P)101-    (  0)sw          -  	$ZQGBLMOD(^GBLA(1...35))=1
+Step  6:          -             (r)    L2  ( 71)     (P)        (101)            -  	$ZQGBLMOD(^GBLA(1...30))=0 (false negative)
+Step  7:    (r)   X1   ( 71)    (S)        ( 71)     (P)        (101)      (T)      	$ZQGBLMOD(^GBLA(1...30))=1,$ZQGBLMOD(^GBLA(30...35))=0
+Step  8:               ( 71)    (S)        (  0)     (P) apply L1, L2      (T)
+Step  9:                        (S)        (  0)     (P) -losttn  (0)      (T)
+Step 10:    (S)        (  0)    (S)                  (P)                   (T)
+
+(P): Primary
+(S): Secondary (receiver alive)
+(T): Tertiary (This is only for D: D will be connected to B when B is secondary)
+(r): rollback
+-  : shutdown
+sw : journal switch when seqno 71 or 101 would be written to the journal file. See below for details (and reasoning)
+(*): the value of the zqgblmod field out of dse dump -fileheader output.
+$ZQGBLMOD(^GBLA(a...b))=val ==> The value of $ZQGBLMOD for the subscripted globals ^GBLA(a) to ^GBLA(b) is expected to
+be val if applied on the instance that is the primary at this step. Also the $ZQGBLMOD should be done AFTER the
+updates indicated in the primary instance for this step are done.
+###################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance4:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+#- Step 1:
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'START INST1 INST3'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+==Executing MULTISITE_REPLIC 'START INST2 INST4 PP'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+# seqnos: 1-50:
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simplegblupd.csh -instance INST1 -count 50 -internal'==
+
+GTM>
+set ^GBLA(1)=1_<...>
+set ^GBLA(2)=1_<...>
+set ^GBLA(3)=1_<...>
+set ^GBLA(4)=1_<...>
+set ^GBLA(5)=1_<...>
+set ^GBLA(6)=1_<...>
+set ^GBLA(7)=1_<...>
+set ^GBLA(8)=1_<...>
+set ^GBLA(9)=1_<...>
+set ^GBLA(10)=1_<...>
+set ^GBLA(11)=1_<...>
+set ^GBLA(12)=1_<...>
+set ^GBLA(13)=1_<...>
+set ^GBLA(14)=1_<...>
+set ^GBLA(15)=1_<...>
+set ^GBLA(16)=1_<...>
+set ^GBLA(17)=1_<...>
+set ^GBLA(18)=1_<...>
+set ^GBLA(19)=1_<...>
+set ^GBLA(20)=1_<...>
+set ^GBLA(21)=1_<...>
+set ^GBLA(22)=1_<...>
+set ^GBLA(23)=1_<...>
+set ^GBLA(24)=1_<...>
+set ^GBLA(25)=1_<...>
+set ^GBLA(26)=1_<...>
+set ^GBLA(27)=1_<...>
+set ^GBLA(28)=1_<...>
+set ^GBLA(29)=1_<...>
+set ^GBLA(30)=1_<...>
+set ^GBLA(31)=1_<...>
+set ^GBLA(32)=1_<...>
+set ^GBLA(33)=1_<...>
+set ^GBLA(34)=1_<...>
+set ^GBLA(35)=1_<...>
+set ^GBLA(1)=2_<...>
+set ^GBLA(2)=2_<...>
+set ^GBLA(3)=2_<...>
+set ^GBLA(4)=2_<...>
+set ^GBLA(5)=2_<...>
+set ^GBLA(6)=2_<...>
+set ^GBLA(7)=2_<...>
+set ^GBLA(8)=2_<...>
+set ^GBLA(9)=2_<...>
+set ^GBLA(10)=2_<...>
+set ^GBLA(11)=2_<...>
+set ^GBLA(12)=2_<...>
+set ^GBLA(13)=2_<...>
+set ^GBLA(14)=2_<...>
+set ^GBLA(15)=2_<...>
+
+GTM>
+15,2
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST3'==
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST3'==
+##SUSPEND_OUTPUT JNL_BEFORE
+#-- Take backup on INST1 at seqno 51.
+==Executing MULTISITE_REPLIC 'RUN INST1 mkdir bak1; ##SOURCE_PATH##/mupip backup -replinstance=bak1 "*" bak1'==
+Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bak1/mumps.repl
+Journal Seqnos up to 0x0000000000000033 are backed up.
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+DB file ##TEST_PATH##/mumps.dat backed up in file bak1/mumps.dat
+##TEST_AWKTransactions up to .* are backed up.
+
+
+BACKUP COMPLETED.
+
+##ALLOW_OUTPUT JNL_BEFORE
+# seqnos: 51-70:
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simplegblupd.csh -instance INST1 -count 20 -internal'==
+
+GTM>
+set ^GBLA(16)=2_<...>
+set ^GBLA(17)=2_<...>
+set ^GBLA(18)=2_<...>
+set ^GBLA(19)=2_<...>
+set ^GBLA(20)=2_<...>
+set ^GBLA(21)=2_<...>
+set ^GBLA(22)=2_<...>
+set ^GBLA(23)=2_<...>
+set ^GBLA(24)=2_<...>
+set ^GBLA(25)=2_<...>
+set ^GBLA(26)=2_<...>
+set ^GBLA(27)=2_<...>
+set ^GBLA(28)=2_<...>
+set ^GBLA(29)=2_<...>
+set ^GBLA(30)=2_<...>
+set ^GBLA(31)=2_<...>
+set ^GBLA(32)=2_<...>
+set ^GBLA(33)=2_<...>
+set ^GBLA(34)=2_<...>
+set ^GBLA(35)=2_<...>
+
+GTM>
+35,2
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+    switch journals on INST1. -- Due to $ZQGBLMOD's pessimistic answers, let's
+    switch journals here to see the most-accurate answers from $ZQGBLMOD.
+    There will be other places below (whenever seqno 71 will be written to the
+    journal file) for the same reason.
+    Also switch journals soon after to see that $ZQGBLMOD does follow back
+    to the previous journal file as necessary.
+#-- Switch journals on INST1.
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/jnl_on.csh $test_jnldir'==
+#-- Switch journals on INST2.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/jnl_on.csh $test_jnldir'==
+#-- Switch journals on INST3.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/jnl_on.csh $test_jnldir'==
+###################################################################
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+# seqnos: 71- 75:
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simplegblupd.csh -instance INST1 -count 5 -internal'==
+
+GTM>
+set ^GBLA(1)=3_<...>
+set ^GBLA(2)=3_<...>
+set ^GBLA(3)=3_<...>
+set ^GBLA(4)=3_<...>
+set ^GBLA(5)=3_<...>
+
+GTM>
+5,3
+#-- Switch journals on INST1.
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/jnl_on.csh'==
+# seqnos: 76-100:
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simplegblupd.csh -instance INST1 -count 25 -internal'==
+
+GTM>
+set ^GBLA(6)=3_<...>
+set ^GBLA(7)=3_<...>
+set ^GBLA(8)=3_<...>
+set ^GBLA(9)=3_<...>
+set ^GBLA(10)=3_<...>
+set ^GBLA(11)=3_<...>
+set ^GBLA(12)=3_<...>
+set ^GBLA(13)=3_<...>
+set ^GBLA(14)=3_<...>
+set ^GBLA(15)=3_<...>
+set ^GBLA(16)=3_<...>
+set ^GBLA(17)=3_<...>
+set ^GBLA(18)=3_<...>
+set ^GBLA(19)=3_<...>
+set ^GBLA(20)=3_<...>
+set ^GBLA(21)=3_<...>
+set ^GBLA(22)=3_<...>
+set ^GBLA(23)=3_<...>
+set ^GBLA(24)=3_<...>
+set ^GBLA(25)=3_<...>
+set ^GBLA(26)=3_<...>
+set ^GBLA(27)=3_<...>
+set ^GBLA(28)=3_<...>
+set ^GBLA(29)=3_<...>
+set ^GBLA(30)=3_<...>
+
+GTM>
+30,3
+==Executing MULTISITE_REPLIC 'STOP INST1'==
+==Executing MULTISITE_REPLIC 'STOP INST2 INST4'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+###################################################################
+#- Step 2:
+==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST1'==
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/$tst/u_inref/dse_dump_info.csh 0'==
+Zqgblmod Seqno 0x0000000000000000
+The Zqgblmod seqno value is as expected, (0 vs 0)
+#  	--> We expect 0.
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/dse_dump_info.csh 0'==
+Zqgblmod Seqno 0x0000000000000000
+The Zqgblmod seqno value is as expected, (0 vs 0)
+#  	--> We expect 0.
+Snapshot of instance file on INST1 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST2 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST3 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST4 written into instancefile_##FILTERED##NO.out
+==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST2 $gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=lost1_INST1.glo "*"'==
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+  	--> We expect transactions with seqnos 71-100 to be in lost1_INST1.glo (L1). Also check the first line of the
+	    lost transaction file, the third field should show PRIMARY (newly introduced field that shows
+	    (previous)PRIMARY or (previous)SECONDARY).
+GDSJEX07 ROLLBACK PRIMARY INSTANCE1
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/analyze_jnl_extract.csh lost1_INST1.glo 71 100'==
+05 71 ^GBLA(1)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 72 ^GBLA(2)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 73 ^GBLA(3)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 74 ^GBLA(4)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 75 ^GBLA(5)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 76 ^GBLA(6)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 77 ^GBLA(7)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 78 ^GBLA(8)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 79 ^GBLA(9)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 80 ^GBLA(10)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 81 ^GBLA(11)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 82 ^GBLA(12)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 83 ^GBLA(13)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 84 ^GBLA(14)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 85 ^GBLA(15)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 86 ^GBLA(16)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 87 ^GBLA(17)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 88 ^GBLA(18)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 89 ^GBLA(19)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 90 ^GBLA(20)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 91 ^GBLA(21)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 92 ^GBLA(22)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 93 ^GBLA(23)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 94 ^GBLA(24)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 95 ^GBLA(25)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 96 ^GBLA(26)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 97 ^GBLA(27)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 98 ^GBLA(28)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 99 ^GBLA(29)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 100 ^GBLA(30)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+PASS from lost transaction analysis
+##SUSPEND_OUTPUT JNL_BEFORE
+Testing repeated rollbacks (with NOBEFORE_IMAGE journaling) yield the same lost transaction file
+==Executing MULTISITE_REPLIC 'RUN INST1 diff lost1_INST1_1.glo lost1_INST1_1.glo'==
+##ALLOW_OUTPUT JNL_BEFORE
+#  Transfer lost1_INST1.glo to INST3
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 $gtm_tst/com/cp_remote_file.csh __SRC_DIR__/lost1_INST1.glo _REMOTEINFO___RCV_DIR__/'==
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/$tst/u_inref/dse_dump_info.csh 71'==
+Zqgblmod Seqno 0x0000000000000047
+The Zqgblmod seqno value is as expected, (71 vs 71)
+#  	--> We expect 71.
+##SUSPEND_OUTPUT JNL_NOBEFORE
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/dse_dump_info.csh 71'==
+Zqgblmod Seqno 0x0000000000000047
+The Zqgblmod seqno value is as expected, (71 vs 71)
+#  	--> We expect 71.
+==========================================================
+Diffing instancefile_1.out and instancefile_2.out on INST1
+##TEST_AWK.*
+< HDR Journal Sequence Number                            101 [0x0000000000000065]
+---
+> HDR Journal Sequence Number                             71 [0x0000000000000047]
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+##TEST_AWK.*
+< HDR STRM  0: Journal Sequence Number                   101 [0x0000000000000065]
+---
+> HDR STRM  0: Journal Sequence Number                    71 [0x0000000000000047]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/dse_dump_info.csh 0'==
+Zqgblmod Seqno 0x0000000000000000
+The Zqgblmod seqno value is as expected, (0 vs 0)
+#  	--> We expect 0.
+==========================================================
+No diff on INST1 between instancefile_1.out instancefile_2.out
+##ALLOW_OUTPUT JNL_BEFORE
+==========================================================
+==========================================================
+Diffing instancefile_1.out and instancefile_2.out on INST2
+##TEST_AWK.*
+< SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
+---
+> SLT # 0 : Connect Sequence Number                       71 [0x0000000000000047]
+==========================================================
+==========================================================
+No diff on INST3 between instancefile_1.out instancefile_2.out
+==========================================================
+==========================================================
+No diff on INST4 between instancefile_1.out instancefile_2.out
+==========================================================
+	--> We do not expect a diff at this point (from the last time view_instancefiles.csh was done) since the slot
+	    for INST1 would not be updated by the rollback.
+##SUSPEND_OUTPUT JNL_BEFORE
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/backup_dbjnl.csh bak2 "*.dat *.mjl* *.repl" mv'==
+==Executing MULTISITE_REPLIC 'RUN INST1 cp bak1/* .; ##SOURCE_PATH##/mupip set -replication=on -journal=enable,on,nobefore -reg "*"'==
+%GTM-I-JNLFNF, Journal file ##TEST_PATH##/mumps.mjl not found
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
+##ALLOW_OUTPUT JNL_BEFORE
+==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST1 waitforconnect'==
+==========================================================
+Diffing instancefile_2.out and instancefile_3.out on INST1
+##TEST_AWK.*
+< HDR Journal Pool Sem Id                            INVALID
+< HDR Journal Pool Shm Id                            INVALID
+< HDR Receive Pool Sem Id                            INVALID
+< HDR Receive Pool Shm Id                            INVALID
+< HDR Journal Pool Sem Create Time                         0
+< HDR Journal Pool Shm Create Time                         0
+< HDR Receive Pool Sem Create Time                         0
+< HDR Receive Pool Shm Create Time                         0
+---
+> HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+> HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+> HDR ##FILTERED##Receive Pool Sem Id             .......... [0x........]
+> HDR ##FILTERED##Receive Pool Shm Id             .......... [0x........]
+> HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+> HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+> HDR Receive Pool Sem Create Time       ..../../.. ..:..:..
+> HDR Receive Pool Shm Create Time       ..../../.. ..:..:..
+##SUSPEND_OUTPUT JNL_NOBEFORE
+##TEST_AWK.*
+< HDR Number of used history records                       1 [0x00000001]
+< HDR Allocated history records                            1 [0x00000001]
+< HDR Crash                                            FALSE
+< HDR Root Primary                                      TRUE
+---
+> HDR Number of used history records                       2 [0x00000002]
+> HDR Allocated history records                            2 [0x00000002]
+> HDR Crash                                             TRUE
+> HDR Root Primary                                     FALSE
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+##TEST_AWK.*
+< HDR STRM  0: Last history record number                  0 [0x00000000]
+---
+> HDR STRM  0: Last history record number                  1 [0x00000001]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+##TEST_AWK.*
+> ----------------------------------------------------------
+> HST #      1 : Root Primary Instance Name        INSTANCE2
+> HST #      1 : Start Sequence Number                    71 [0x0000000000000047]
+##SUSPEND_OUTPUT SUPPLEMENTARY_PQ
+> HST #      1 : Stream Sequence Number                    0 [0x0000000000000000]
+##ALLOW_OUTPUT SUPPLEMENTARY_PQ
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+> HST #      1 : Stream Sequence Number                   71 [0x0000000000000047]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+> HST #      1 : Root Primary Cycle                        1 [0x00000001]
+> HST #      1 : Creator Process ID             PIDINDECIMAL [0xPIDINHEX]
+> HST #      1 : Creation Time           ..../../.. ..:..:..
+> HST #      1 : History Number                            1 [0x00000001]
+> HST #      1 : Previous History Number                   0 [0x00000000]
+> HST #      1 : Stream #                                  0 [0x00000000]
+> HST #      1 : History record type                       1 [0x00000001]
+> HST #      1 : Stream  0: Last History Number            0 [0x00000000]
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+##TEST_AWK.*
+< HDR Journal Sequence Number                            101 [0x0000000000000065]
+---
+> HDR Journal Sequence Number                             51 [0x0000000000000033]
+##TEST_AWK.*
+< HDR Crash                                            FALSE
+< HDR Root Primary                                      TRUE
+---
+> HDR Crash                                             TRUE
+> HDR Root Primary                                     FALSE
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB
+##TEST_AWK.*
+< HDR STRM  0: Journal Sequence Number                   101 [0x0000000000000065]
+---
+> HDR STRM  0: Journal Sequence Number                    51 [0x0000000000000033]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB
+##TEST_AWK.*
+< SLT # 0 : Resync Sequence Number                        71 [0x0000000000000047]
+---
+> SLT # 0 : Resync Sequence Number                        51 [0x0000000000000033]
+##ALLOW_OUTPUT JNL_BEFORE
+==========================================================
+#  	--> We expect the resync_seqno for the INST1 slot to be updated.
+###################################################################
+#- Step 3:
+==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST3'==
+Snapshot of instance file on INST1 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST2 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST3 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST4 written into instancefile_##FILTERED##NO.out
+==Executing MULTISITE_REPLIC 'RUN RCV=INST3 SRC=INST2 $gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=lost1_INST3.glo "*"'==
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+#  	--> Since there are no lost transactions, we do not expect lost1_INST3.glo to have any transactions.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/analyze_jnl_extract.csh lost1_INST3.glo 0 0'==
+lost transaction file empty
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/$tst/u_inref/dse_dump_info.csh 71'==
+Zqgblmod Seqno 0x0000000000000047
+The Zqgblmod seqno value is as expected, (71 vs 71)
+#  	--> We expect 71.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/$tst/u_inref/dse_dump_info.csh 0'==
+Zqgblmod Seqno 0x0000000000000000
+The Zqgblmod seqno value is as expected, (0 vs 0)
+#  	--> We expect 0.
+Snapshot of instance file on INST1 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST2 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST3 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST4 written into instancefile_##FILTERED##NO.out
+	--> We do not expect a diff at this point (from the last time view_instancefiles.csh was done) since the slot
+	for INST3 would not be updated by the rollback.
+==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST3 waitforconnect'==
+==========================================================
+No diff on INST1 between instancefile_5.out instancefile_6.out
+==========================================================
+==========================================================
+Diffing instancefile_5.out and instancefile_6.out on INST2
+##TEST_AWK.*
+< SLT # 2 : Resync Sequence Number                         1 [0x0000000000000001]
+---
+> SLT # 2 : Resync Sequence Number                        71 [0x0000000000000047]
+==========================================================
+==========================================================
+Diffing instancefile_5.out and instancefile_6.out on INST3
+##TEST_AWK.*
+< HDR Journal Pool Sem Id                            INVALID
+< HDR Journal Pool Shm Id                            INVALID
+< HDR Receive Pool Sem Id                            INVALID
+< HDR Receive Pool Shm Id                            INVALID
+< HDR Journal Pool Sem Create Time                         0
+< HDR Journal Pool Shm Create Time                         0
+< HDR Receive Pool Sem Create Time                         0
+< HDR Receive Pool Shm Create Time                         0
+---
+> HDR ##FILTERED##Journal Pool Sem Id             .......... [0x........]
+> HDR ##FILTERED##Journal Pool Shm Id             .......... [0x........]
+> HDR ##FILTERED##Receive Pool Sem Id             .......... [0x........]
+> HDR ##FILTERED##Receive Pool Shm Id             .......... [0x........]
+> HDR Journal Pool Sem Create Time       ..../../.. ..:..:..
+> HDR Journal Pool Shm Create Time       ..../../.. ..:..:..
+> HDR Receive Pool Sem Create Time       ..../../.. ..:..:..
+> HDR Receive Pool Shm Create Time       ..../../.. ..:..:..
+##TEST_AWK.*
+< HDR Crash                                            FALSE
+---
+> HDR Crash                                             TRUE
+##TEST_AWK.*
+> ----------------------------------------------------------
+> SLT # 1 : Secondary Instance Name                INSTANCE2
+> SLT # 1 : Resync Sequence Number                         1 [0x0000000000000001]
+> SLT # 1 : Connect Sequence Number                        0 [0x0000000000000000]
+==========================================================
+==========================================================
+No diff on INST4 between instancefile_5.out instancefile_6.out
+==========================================================
+# 	--> We expect the resync_seqno for the INST3 slot to be updated.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/$tst/u_inref/check_zqgblmod.csh 0:1-30 >& zqgblmod.tmp; cat zqgblmod.tmp'==
+=======================================================
+Checking $ZQGBLMOD values for the range:0:1-30
+check 0:1-30
+will now check the $ZQGBLMOD value for ^GBLA(x) for the range 1 < x < 30 and the expected value is 0
+examining ^examine($ZQGBLMOD(^GBLA(1),vcorr(1))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(2),vcorr(2))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(3),vcorr(3))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(4),vcorr(4))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(5),vcorr(5))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(6),vcorr(6))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(7),vcorr(7))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(8),vcorr(8))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(9),vcorr(9))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(10),vcorr(10))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(11),vcorr(11))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(12),vcorr(12))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(13),vcorr(13))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(14),vcorr(14))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(15),vcorr(15))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(16),vcorr(16))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(17),vcorr(17))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(18),vcorr(18))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(19),vcorr(19))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(20),vcorr(20))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(21),vcorr(21))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(22),vcorr(22))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(23),vcorr(23))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(24),vcorr(24))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(25),vcorr(25))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(26),vcorr(26))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(27),vcorr(27))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(28),vcorr(28))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(29),vcorr(29))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(30),vcorr(30))) -> ^examine(0,0)
+=======================================================
+#  	--> Expected values are: $ZQGBLMOD(^GBLA(1...30)=0
+###################################################################
+#- Step 4:
+#-- Switch journals on INST2.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/jnl_on.csh $test_jnldir'==
+==Executing MULTISITE_REPLIC 'SYNC INST2 INST3'==
+##SUSPEND_OUTPUT JNL_BEFORE
+#-- Take backup on INST2 at seqno 71.
+==Executing MULTISITE_REPLIC 'RUN INST2 mkdir bak1; ##SOURCE_PATH##/mupip backup -replinstance=bak1 "*" bak1 >& bak1mkdir.tmp; cat bak1mkdir.tmp'==
+##TEST_AWKReplication Instance file .*/instance2/mumps.repl backed up in file bak1/mumps.repl
+Journal Seqnos up to 0x0000000000000047 are backed up.
+
+##TEST_AWK##FILTERED##%GTM-I-FILERENAME, File .*/instance2/mumps.mjl is renamed to .*/instance2/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file .*/instance2/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+##TEST_AWKDB file .*/instance2/mumps.dat backed up in file bak1/mumps.dat
+##TEST_AWKTransactions up to .* are backed up.
+
+
+BACKUP COMPLETED.
+
+##ALLOW_OUTPUT JNL_BEFORE
+#-- Switch journals on INST1.
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/jnl_on.csh $test_jnldir'==
+==Executing MULTISITE_REPLIC 'SYNC INST2 INST3 sync_to_disk'==
+#-- Switch journals on INST3.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/jnl_on.csh $test_jnldir'==
+
+# seqnos: ( 71-100):
+# Let INSTB start seq 70 from ^GBLA(1) again...
+# seqnos: 71-75:
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simplegblupd.csh -instance INST2 -count 5 -internal'==
+
+GTM>
+set ^GBLA(1)=4_<...>
+set ^GBLA(2)=4_<...>
+set ^GBLA(3)=4_<...>
+set ^GBLA(4)=4_<...>
+set ^GBLA(5)=4_<...>
+
+GTM>
+5,4
+#-- Switch journals on INST2.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/jnl_on.csh $test_jnldir'==
+# seqnos: 76-100:
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simplegblupd.csh -instance INST2 -count 25 -internal'==
+
+GTM>
+set ^GBLA(6)=4_<...>
+set ^GBLA(7)=4_<...>
+set ^GBLA(8)=4_<...>
+set ^GBLA(9)=4_<...>
+set ^GBLA(10)=4_<...>
+set ^GBLA(11)=4_<...>
+set ^GBLA(12)=4_<...>
+set ^GBLA(13)=4_<...>
+set ^GBLA(14)=4_<...>
+set ^GBLA(15)=4_<...>
+set ^GBLA(16)=4_<...>
+set ^GBLA(17)=4_<...>
+set ^GBLA(18)=4_<...>
+set ^GBLA(19)=4_<...>
+set ^GBLA(20)=4_<...>
+set ^GBLA(21)=4_<...>
+set ^GBLA(22)=4_<...>
+set ^GBLA(23)=4_<...>
+set ^GBLA(24)=4_<...>
+set ^GBLA(25)=4_<...>
+set ^GBLA(26)=4_<...>
+set ^GBLA(27)=4_<...>
+set ^GBLA(28)=4_<...>
+set ^GBLA(29)=4_<...>
+set ^GBLA(30)=4_<...>
+
+GTM>
+30,4
+==Executing MULTISITE_REPLIC 'SYNC INST2 INST3'==
+==Executing MULTISITE_REPLIC 'STOPRCV INST2 INST3'==
+# seqnos: 101-130:
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simplegblupd.csh -instance INST2 -count 30 -internal'==
+
+GTM>
+set ^GBLA(31)=4_<...>
+set ^GBLA(32)=4_<...>
+set ^GBLA(33)=4_<...>
+set ^GBLA(34)=4_<...>
+set ^GBLA(35)=4_<...>
+set ^GBLA(1)=5_<...>
+set ^GBLA(2)=5_<...>
+set ^GBLA(3)=5_<...>
+set ^GBLA(4)=5_<...>
+set ^GBLA(5)=5_<...>
+set ^GBLA(6)=5_<...>
+set ^GBLA(7)=5_<...>
+set ^GBLA(8)=5_<...>
+set ^GBLA(9)=5_<...>
+set ^GBLA(10)=5_<...>
+set ^GBLA(11)=5_<...>
+set ^GBLA(12)=5_<...>
+set ^GBLA(13)=5_<...>
+set ^GBLA(14)=5_<...>
+set ^GBLA(15)=5_<...>
+set ^GBLA(16)=5_<...>
+set ^GBLA(17)=5_<...>
+set ^GBLA(18)=5_<...>
+set ^GBLA(19)=5_<...>
+set ^GBLA(20)=5_<...>
+set ^GBLA(21)=5_<...>
+set ^GBLA(22)=5_<...>
+set ^GBLA(23)=5_<...>
+set ^GBLA(24)=5_<...>
+set ^GBLA(25)=5_<...>
+
+GTM>
+25,5
+==Executing MULTISITE_REPLIC 'SYNC INST2 INST1'==
+==Executing MULTISITE_REPLIC 'STOPRCV INST2 INST1'==
+# seqnos: 131-140:
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simplegblupd.csh -instance INST2 -count 10 -internal'==
+
+GTM>
+set ^GBLA(26)=5_<...>
+set ^GBLA(27)=5_<...>
+set ^GBLA(28)=5_<...>
+set ^GBLA(29)=5_<...>
+set ^GBLA(30)=5_<...>
+set ^GBLA(31)=5_<...>
+set ^GBLA(32)=5_<...>
+set ^GBLA(33)=5_<...>
+set ^GBLA(34)=5_<...>
+set ^GBLA(35)=5_<...>
+
+GTM>
+35,5
+==Executing MULTISITE_REPLIC 'STOP INST2'==
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/$tst/u_inref/check_zqgblmod.csh 1:1-30'==
+=======================================================
+Checking $ZQGBLMOD values for the range:1:1-30
+check 1:1-30
+will now check the $ZQGBLMOD value for ^GBLA(x) for the range 1 < x < 30 and the expected value is 1
+examining ^examine($ZQGBLMOD(^GBLA(1),vcorr(1))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(2),vcorr(2))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(3),vcorr(3))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(4),vcorr(4))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(5),vcorr(5))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(6),vcorr(6))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(7),vcorr(7))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(8),vcorr(8))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(9),vcorr(9))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(10),vcorr(10))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(11),vcorr(11))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(12),vcorr(12))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(13),vcorr(13))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(14),vcorr(14))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(15),vcorr(15))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(16),vcorr(16))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(17),vcorr(17))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(18),vcorr(18))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(19),vcorr(19))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(20),vcorr(20))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(21),vcorr(21))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(22),vcorr(22))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(23),vcorr(23))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(24),vcorr(24))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(25),vcorr(25))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(26),vcorr(26))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(27),vcorr(27))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(28),vcorr(28))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(29),vcorr(29))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(30),vcorr(30))) -> ^examine(1,1)
+=======================================================
+#  	--> Expected values are: $ZQGBLMOD(^GBLA(1...30)=1
+###################################################################
+#- Step 5:
+==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST2'==
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/$tst/u_inref/check_zqgblmod.csh 1:1-35'==
+=======================================================
+Checking $ZQGBLMOD values for the range:1:1-35
+check 1:1-35
+will now check the $ZQGBLMOD value for ^GBLA(x) for the range 1 < x < 35 and the expected value is 1
+examining ^examine($ZQGBLMOD(^GBLA(1),vcorr(1))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(2),vcorr(2))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(3),vcorr(3))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(4),vcorr(4))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(5),vcorr(5))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(6),vcorr(6))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(7),vcorr(7))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(8),vcorr(8))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(9),vcorr(9))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(10),vcorr(10))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(11),vcorr(11))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(12),vcorr(12))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(13),vcorr(13))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(14),vcorr(14))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(15),vcorr(15))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(16),vcorr(16))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(17),vcorr(17))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(18),vcorr(18))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(19),vcorr(19))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(20),vcorr(20))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(21),vcorr(21))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(22),vcorr(22))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(23),vcorr(23))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(24),vcorr(24))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(25),vcorr(25))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(26),vcorr(26))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(27),vcorr(27))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(28),vcorr(28))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(29),vcorr(29))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(30),vcorr(30))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(31),vcorr(31))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(32),vcorr(32))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(33),vcorr(33))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(34),vcorr(34))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(35),vcorr(35))) -> ^examine(1,1)
+=======================================================
+#  	--> Expected values are: $ZQGBLMOD(^GBLA(1...35))=1 since zqgblmod field in dse dump -file output still shows 0.
+###################################################################
+#- Step 6:
+Snapshot of instance file on INST1 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST2 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST3 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST4 written into instancefile_##FILTERED##NO.out
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/$tst/u_inref/dse_dump_info.csh 0'==
+Zqgblmod Seqno 0x0000000000000000
+The Zqgblmod seqno value is as expected, (0 vs 0)
+#  	--> We expect 0.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/$tst/u_inref/dse_dump_info.csh 71'==
+Zqgblmod Seqno 0x0000000000000047
+The Zqgblmod seqno value is as expected, (71 vs 71)
+#  	--> We expect 71.
+==Executing MULTISITE_REPLIC 'RUN SRC=INST3 RCV=INST2 $MUPIP replic -source -needrestart -instsecondary=__RCV_INSTNAME__'==
+#	--> We expect a 'NEEDS to be restarted first' message since the receiver did not connect yet.
+#-- Switch journals on INST3.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/jnl_on.csh $test_jnldir'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST3 $gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=lost2_INST2.glo "*" >& rollback2_INST2.tmp; cat rollback2_INST2.tmp'==
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+  	--> We expect transactions with seqnos 101-140 in lost2_INST2.glo (L2). Also check the third field of the"
+	    first line shows PRIMARY type of lost transaction file (as in (previous)PRIMARY).
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/analyze_jnl_extract.csh lost2_INST2.glo 101 140'==
+05 101 ^GBLA(31)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 102 ^GBLA(32)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 103 ^GBLA(33)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 104 ^GBLA(34)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 105 ^GBLA(35)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 106 ^GBLA(1)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 107 ^GBLA(2)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 108 ^GBLA(3)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 109 ^GBLA(4)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 110 ^GBLA(5)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 111 ^GBLA(6)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 112 ^GBLA(7)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 113 ^GBLA(8)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 114 ^GBLA(9)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 115 ^GBLA(10)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 116 ^GBLA(11)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 117 ^GBLA(12)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 118 ^GBLA(13)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 119 ^GBLA(14)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 120 ^GBLA(15)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 121 ^GBLA(16)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 122 ^GBLA(17)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 123 ^GBLA(18)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 124 ^GBLA(19)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 125 ^GBLA(20)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 126 ^GBLA(21)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 127 ^GBLA(22)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 128 ^GBLA(23)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 129 ^GBLA(24)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 130 ^GBLA(25)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 131 ^GBLA(26)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 132 ^GBLA(27)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 133 ^GBLA(28)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 134 ^GBLA(29)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 135 ^GBLA(30)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 136 ^GBLA(31)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 137 ^GBLA(32)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 138 ^GBLA(33)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 139 ^GBLA(34)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 140 ^GBLA(35)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+PASS from lost transaction analysis
+#  Transfer lost2_INST2.glo to INST1 (for analysis of the first line)
+==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST1 $gtm_tst/com/cp_remote_file.csh __SRC_DIR__/lost2_INST2.glo _REMOTEINFO___RCV_DIR__/'==
+#  Transfer lost2_INST2.glo to INST3
+==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST3 $gtm_tst/com/cp_remote_file.csh __SRC_DIR__/lost2_INST2.glo _REMOTEINFO___RCV_DIR__/'==
+GDSJEX07 ROLLBACK PRIMARY INSTANCE2
+==Executing MULTISITE_REPLIC 'RUN SRC=INST3 RCV=INST2 setenv gtm_repl_instsecondary __RCV_INSTNAME__; $MUPIP replic -source -needrestart'==
+	--> We expect a "DOES NOT NEED to be restarted" message since a rollback command was run. (Note we are
+	    testing the usage of gtm_repl_instsecondary as well).
+Snapshot of instance file on INST1 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST2 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST3 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST4 written into instancefile_##FILTERED##NO.out
+#  	--> We do not expect a diff at this point.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/$tst/u_inref/dse_dump_info.csh 101'==
+Zqgblmod Seqno 0x0000000000000065
+The Zqgblmod seqno value is as expected, (101 vs 101)
+#  	--> We expect 101.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/$tst/u_inref/dse_dump_info.csh 71'==
+Zqgblmod Seqno 0x0000000000000047
+The Zqgblmod seqno value is as expected, (71 vs 71)
+#  	--> We expect 71.
+##SUSPEND_OUTPUT JNL_BEFORE
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/backup_dbjnl.csh bak2 "*.dat *.mjl* *.repl" mv'==
+==Executing MULTISITE_REPLIC 'RUN INST2 cp bak1/* .; ##SOURCE_PATH##/mupip set -replication=on -journal=enable,on,nobefore -reg "*" >& bak1cp.tmp; cat bak1cp.tmp'==
+##TEST_AWK%GTM-I-JNLFNF, Journal file .*/instance2/mumps.mjl not found
+##TEST_AWK%GTM-I-JNLCREATE, Journal file .*/instance2/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##TEST_AWK%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file .*/instance2/mumps.mjl created for database file .*/instance2/mumps.dat
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
+##ALLOW_OUTPUT JNL_BEFORE
+==Executing MULTISITE_REPLIC 'STARTRCV INST3 INST2'==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST3 RCV=INST2 $MUPIP replic -source -needrestart -instsecondary=__RCV_INSTNAME__'==
+#	--> We expect a DOES NOT NEED to be restarted message since the receiver is up.
+Snapshot of instance file on INST1 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST2 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST3 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST4 written into instancefile_##FILTERED##NO.out
+#  	--> We expect the resync_seqno for the INST2 slot to be updated.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/$tst/u_inref/check_zqgblmod.csh 0:1-30'==
+=======================================================
+Checking $ZQGBLMOD values for the range:0:1-30
+check 0:1-30
+will now check the $ZQGBLMOD value for ^GBLA(x) for the range 1 < x < 30 and the expected value is 0
+examining ^examine($ZQGBLMOD(^GBLA(1),vcorr(1))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(2),vcorr(2))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(3),vcorr(3))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(4),vcorr(4))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(5),vcorr(5))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(6),vcorr(6))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(7),vcorr(7))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(8),vcorr(8))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(9),vcorr(9))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(10),vcorr(10))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(11),vcorr(11))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(12),vcorr(12))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(13),vcorr(13))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(14),vcorr(14))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(15),vcorr(15))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(16),vcorr(16))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(17),vcorr(17))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(18),vcorr(18))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(19),vcorr(19))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(20),vcorr(20))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(21),vcorr(21))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(22),vcorr(22))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(23),vcorr(23))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(24),vcorr(24))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(25),vcorr(25))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(26),vcorr(26))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(27),vcorr(27))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(28),vcorr(28))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(29),vcorr(29))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(30),vcorr(30))) -> ^examine(0,0)
+=======================================================
+  	--> Expected values are: $ZQGBLMOD(^GBLA(1...30))=0
+	    Note that this is a false negative, since actually the globals have been modified. If we were looking
+	    at $ZQGBLMOD to apply the lost transactions in L1 (lost1_INST1.glo), this would have been the wrong
+	    answer, since those lost transactions were generated for a different primary.
+###################################################################
+#- Step 7:
+==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST1'==
+==Executing MULTISITE_REPLIC 'START INST2 INST4 PP'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+Snapshot of instance file on INST1 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST2 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST3 written into instancefile_##FILTERED##NO.out
+Snapshot of instance file on INST4 written into instancefile_##FILTERED##NO.out
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/$tst/u_inref/dse_dump_info.csh 101'==
+Zqgblmod Seqno 0x0000000000000065
+The Zqgblmod seqno value is as expected, (101 vs 101)
+#  	--> We expect 101.
+##SUSPEND_OUTPUT JNL_NOBEFORE
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/dse_dump_info.csh 71'==
+Zqgblmod Seqno 0x0000000000000047
+The Zqgblmod seqno value is as expected, (71 vs 71)
+#  	--> We expect 71.
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/dse_dump_info.csh 0'==
+Zqgblmod Seqno 0x0000000000000000
+The Zqgblmod seqno value is as expected, (0 vs 0)
+#  	--> We expect 0.
+##ALLOW_OUTPUT JNL_BEFORE
+==Executing MULTISITE_REPLIC 'RUN SRC=INST3 RCV=INST1 $MUPIP replic -source -needrestart -instsecondary=__RCV_INSTNAME__'==
+#	--> We expect a NEEDS to be restarted first message since the receiver did not connect yet.
+==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST3 $gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=lost2_INST1.glo "*"'==
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+  	--> We expect transactions with seqnos 101-130 in lost2_INST1.glo (X1). Note we will not need to apply this
+	    since the same lost transactions (and more) are already in L2. Also check that the first line indicates
+	    SECONDARY type of lost transaction file.
+GDSJEX07 ROLLBACK SECONDARY INSTANCE1
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/analyze_jnl_extract.csh lost2_INST1.glo 101 130'==
+05 101 ^GBLA(31)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 102 ^GBLA(32)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 103 ^GBLA(33)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 104 ^GBLA(34)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 105 ^GBLA(35)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 106 ^GBLA(1)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 107 ^GBLA(2)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 108 ^GBLA(3)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 109 ^GBLA(4)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 110 ^GBLA(5)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 111 ^GBLA(6)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 112 ^GBLA(7)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 113 ^GBLA(8)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 114 ^GBLA(9)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 115 ^GBLA(10)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 116 ^GBLA(11)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 117 ^GBLA(12)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 118 ^GBLA(13)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 119 ^GBLA(14)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 120 ^GBLA(15)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 121 ^GBLA(16)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 122 ^GBLA(17)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 123 ^GBLA(18)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 124 ^GBLA(19)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 125 ^GBLA(20)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 126 ^GBLA(21)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 127 ^GBLA(22)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 128 ^GBLA(23)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 129 ^GBLA(24)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+05 130 ^GBLA(25)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
+PASS from lost transaction analysis
+==Executing MULTISITE_REPLIC 'RUN SRC=INST3 RCV=INST1 $MUPIP replic -source -needrestart -instsecondary=__RCV_INSTNAME__'==
+#	--> We expect a DOES NOT NEED to be restarted message since a rollback was performed.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/$tst/u_inref/dse_dump_info.csh 101'==
+Zqgblmod Seqno 0x0000000000000065
+The Zqgblmod seqno value is as expected, (101 vs 101)
+#  	--> We expect 101.
+##SUSPEND_OUTPUT JNL_NOBEFORE
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/dse_dump_info.csh 71'==
+Zqgblmod Seqno 0x0000000000000047
+The Zqgblmod seqno value is as expected, (71 vs 71)
+#  	--> We expect 71.
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/dse_dump_info.csh 0'==
+Zqgblmod Seqno 0x0000000000000000
+The Zqgblmod seqno value is as expected, (0 vs 0)
+#  	--> We expect 0.
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/backup_dbjnl.csh bak3 "*.dat *.mjl* *.repl" mv'==
+==Executing MULTISITE_REPLIC 'RUN INST1 cp bak1/* .; ##SOURCE_PATH##/mupip set -replication=on -journal=enable,on,nobefore -reg "*"'==
+%GTM-I-JNLFNF, Journal file ##TEST_PATH##/mumps.mjl not found
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
+##ALLOW_OUTPUT JNL_BEFORE
+==Executing MULTISITE_REPLIC 'STARTRCV INST3 INST1'==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST3 RCV=INST1 $MUPIP replic -source -needrestart -instsecondary=__RCV_INSTNAME__'==
+#	--> We expect a DOES NOT NEED to be restarted message since the receiver is up.
+==Executing MULTISITE_REPLIC 'SYNC INST3 INST1'==
+==Executing MULTISITE_REPLIC 'STOPRCV INST3 INST1'==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST3 RCV=INST1 $MUPIP replic -source -needrestart -instsecondary=__RCV_INSTNAME__'==
+#  --> We still expect a DOES NOT NEED to be restarted message since the receiver did communicate with INST1.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/$tst/u_inref/dse_dump_info.csh 101'==
+Zqgblmod Seqno 0x0000000000000065
+The Zqgblmod seqno value is as expected, (101 vs 101)
+#  	--> We expect 101.
+In order to test $ZQGBLMOD returns correct values (0 AND 1), let's explicitly change the Zqgblmod Seqno and
+Zqgblmod Trans fields in the fileheader to 71 (0x47). (Zqgblmod Trans might be different, since the test uses
+random transaction numbers). To be safe, we'll pick up the values from the journal fileheader.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/$tst/u_inref/change_zqgblmod_seqno_tn.csh 71'==
+
+##TEST_AWKFile  	.*/instance3/mumps.dat
+Region	DEFAULT
+
+
+##TEST_AWKFile  	.*/instance3/mumps.dat
+Region	DEFAULT
+
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/$tst/u_inref/dse_dump_info.csh 71'==
+Zqgblmod Seqno 0x0000000000000047
+The Zqgblmod seqno value is as expected, (71 vs 71)
+#  	--> We expect 71.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/$tst/u_inref/check_zqgblmod.csh 1:1-30 0:31-35'==
+=======================================================
+Checking $ZQGBLMOD values for the range:1:1-30 0:31-35
+check 1:1-30
+will now check the $ZQGBLMOD value for ^GBLA(x) for the range 1 < x < 30 and the expected value is 1
+examining ^examine($ZQGBLMOD(^GBLA(1),vcorr(1))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(2),vcorr(2))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(3),vcorr(3))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(4),vcorr(4))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(5),vcorr(5))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(6),vcorr(6))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(7),vcorr(7))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(8),vcorr(8))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(9),vcorr(9))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(10),vcorr(10))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(11),vcorr(11))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(12),vcorr(12))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(13),vcorr(13))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(14),vcorr(14))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(15),vcorr(15))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(16),vcorr(16))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(17),vcorr(17))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(18),vcorr(18))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(19),vcorr(19))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(20),vcorr(20))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(21),vcorr(21))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(22),vcorr(22))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(23),vcorr(23))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(24),vcorr(24))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(25),vcorr(25))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(26),vcorr(26))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(27),vcorr(27))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(28),vcorr(28))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(29),vcorr(29))) -> ^examine(1,1)
+examining ^examine($ZQGBLMOD(^GBLA(30),vcorr(30))) -> ^examine(1,1)
+check 0:31-35
+will now check the $ZQGBLMOD value for ^GBLA(x) for the range 31 < x < 35 and the expected value is 0
+examining ^examine($ZQGBLMOD(^GBLA(31),vcorr(31))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(32),vcorr(32))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(33),vcorr(33))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(34),vcorr(34))) -> ^examine(0,0)
+examining ^examine($ZQGBLMOD(^GBLA(35),vcorr(35))) -> ^examine(0,0)
+=======================================================
+  	--> Expected values are: $ZQGBLMOD(^GBLA(1...30))=1,$ZQGBLMOD(^GBLA(31...35))=0
+	    Note that these are the correct/safe values, i.e. if we wanted to apply L1(gbls: ^GBLA(1...30)),
+	    $ZQGBLMOD says they have been modified, which is correct.
+	    As for L2 (seqno 101:^GBLA(31) ... 106:^GBLA(1) ... 140:^GBLA(35)), the $ZQGBLMOD values are either
+	    correct (for ^GBLA(30...35)), or simply safe (^GBLA(1...30)), i.e. the application needs to verify
+	    if these globals need to be applied.
+###################################################################
+#- Step 8: Apply lost transactions (L1: lost1_INST1.glo and L2: lost2_INST2.glo)
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/applylt_check_zqgblmod.csh lost1_INST1.glo '==
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/applylt_check_zqgblmod.csh lost1_INST1.glo '==
+
+GTM>
+
+GTM>
+
+Not applying "set ^GBLA(1)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(2)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(3)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(4)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(5)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(6)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(7)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(8)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(9)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(10)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(11)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(12)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(13)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(14)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(15)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(16)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(17)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(18)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(19)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(20)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(21)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(22)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(23)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(24)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(25)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(26)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(27)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(28)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(29)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(30)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+GTM>
+#  	--> This should succeed, but print out all updates rather than make the updates in the database (due to $ZQGBLMOD values).
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/applylt_check_zqgblmod.csh lost2_INST2.glo '==
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/applylt_check_zqgblmod.csh lost2_INST2.glo '==
+
+GTM>
+
+GTM>
+Applying: set ^GBLA(31)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr") returned 0.
+Applying: set ^GBLA(32)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr") returned 0.
+Applying: set ^GBLA(33)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr") returned 0.
+Applying: set ^GBLA(34)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr") returned 0.
+Applying: set ^GBLA(35)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr") returned 0.
+
+Not applying "set ^GBLA(1)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(2)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(3)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(4)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(5)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(6)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(7)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(8)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(9)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(10)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(11)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(12)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(13)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(14)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(15)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(16)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(17)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(18)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(19)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(20)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(21)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(22)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(23)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(24)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(25)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(26)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(27)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(28)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(29)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(30)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(31)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(32)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(33)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(34)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+Not applying "set ^GBLA(35)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
+GTM>
+	--> This should succeed, but it will not apply all the transactions. It will apply the first 5 (seqnos
+	    101-105: ^GBLA(31-35), the rest (seqnos:105-140: ^GBLA(1-35)) are expected to report $ZQGBLMOD=1.
+###################################################################
+#- Step 9:
+#  On INST1, INST2, and INST3, run ##IN_TEST_PATH##/u_inref/dse_dump_info.csh
+##SUSPEND_OUTPUT JNL_NOBEFORE
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/dse_dump_info.csh 71'==
+Zqgblmod Seqno 0x0000000000000047
+The Zqgblmod seqno value is as expected, (71 vs 71)
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/dse_dump_info.csh 0'==
+Zqgblmod Seqno 0x0000000000000000
+The Zqgblmod seqno value is as expected, (0 vs 0)
+##ALLOW_OUTPUT JNL_BEFORE
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/$tst/u_inref/dse_dump_info.csh 71'==
+Zqgblmod Seqno 0x0000000000000047
+The Zqgblmod seqno value is as expected, (71 vs 71)
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/$tst/u_inref/dse_dump_info.csh 71'==
+Zqgblmod Seqno 0x0000000000000047
+The Zqgblmod seqno value is as expected, (71 vs 71)
+##SUSPEND_OUTPUT JNL_NOBEFORE
+#  	--> We expect 71, 71, 71 from INST1, INST2, and INST3, respectively.
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+#  	--> We expect 0, 71, 71 from INST1, INST2, and INST3, respectively.
+##ALLOW_OUTPUT JNL_BEFORE
+###################################################################
+==Executing MULTISITE_REPLIC 'RUN INST3 $MUPIP replic -source -losttncomplete'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating LOSTTNCOMPLETE operation on instance [##INSTANCE##]
+#  On INST1, INST2, INST3 and INST4, run ##IN_TEST_PATH##/u_inref/dse_dump_info.csh:
+##SUSPEND_OUTPUT JNL_NOBEFORE
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/dse_dump_info.csh 71'==
+Zqgblmod Seqno 0x0000000000000047
+The Zqgblmod seqno value is as expected, (71 vs 71)
+#  	--> We expect 71.
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/dse_dump_info.csh 0'==
+Zqgblmod Seqno 0x0000000000000000
+The Zqgblmod seqno value is as expected, (0 vs 0)
+#  	--> We expect 0.
+##ALLOW_OUTPUT JNL_BEFORE
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/$tst/u_inref/dse_dump_info.csh 0'==
+Zqgblmod Seqno 0x0000000000000000
+The Zqgblmod seqno value is as expected, (0 vs 0)
+#  	--> We expect 0.
+  	--> We expect 0 from INST2 and INST4. However, due to connection delays, the information might take a while to
+	    make it to INST2 (and INST4). So make this step a loop, checking the value on INST2 (and INST4) and if it
+	    is not 0 yet, waiting more 5 seconds, upto a minute. If it is not 0 at the end of the minute, report
+	    error.
+
+###################################################################
+#- Step 10:
+==Executing MULTISITE_REPLIC 'STARTRCV INST3 INST1'==
+#  	--> We expect 0 from INST1 finally. However, due to possible connection delays, make this a waiting loop like the above step.
+###################################################################
+#- Wrap up:
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT INST1 INST2 INST3'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Also check that all of the data is indeed as expected. Let's use an extract scheme to verify this data: Take an extract
+for the expected data and store it in the test system, and in the test, diff the actual extract against it.
+PASS

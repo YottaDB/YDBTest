@@ -1,0 +1,266 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	3
+
+DSE> DSE> 
+Block 3   Size 5B   Level 0   TN 5 V6
+
+Rec:1  Blk 3  Off 10  Size 1B  Cmpc 0  Key ^a(1)
+##TEST_AWK.*
+##TEST_AWK.*
+      24 : | 20 20 31 50 4F 53 52                                       |
+           |        1  P  O  S  R                                       |
+
+Rec:2  Blk 3  Off 2B  Size 18  Cmpc 3  Key ^a(2)
+##TEST_AWK.*
+##TEST_AWK.*
+      3F : | 50 4F 53 52                                                |
+           |  P  O  S  R                                                |
+
+Rec:3  Blk 3  Off 43  Size 18  Cmpc 3  Key ^a(4)
+##TEST_AWK.*
+##TEST_AWK.*
+      57 : | 50 4F 53 52                                                |
+           |  P  O  S  R                                                |
+
+DSE> DSE> 
+Block 3   Size 79   Level 0   TN 6 V6
+
+Rec:1  Blk 3  Off 10  Size 1B  Cmpc 0  Key ^a(1)
+##TEST_AWK.*
+##TEST_AWK.*
+      24 : | 20 20 31 50 4F 53 52                                       |
+           |        1  P  O  S  R                                       |
+
+Rec:2  Blk 3  Off 2B  Size 18  Cmpc 3  Key ^a(2)
+##TEST_AWK.*
+##TEST_AWK.*
+      3F : | 50 4F 53 52                                                |
+           |  P  O  S  R                                                |
+
+Rec:3  Blk 3  Off 43  Size 1D  Cmpc 2  Key ^a("NewKey")
+##TEST_AWK.*
+##TEST_AWK.*
+      57 : | 6F 72 64 20 41 64 64 65 64                                 |
+           |  o  r  d     A  d  d  e  d                                 |
+
+Rec:4  Blk 3  Off 60  Size 19  Cmpc 2  Key ^a(4)
+##TEST_AWK.*
+##TEST_AWK.*
+      74 : | 34 50 4F 53 52                                             |
+           |  4  P  O  S  R                                             |
+
+DSE> 
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%GTM-E-DBKEYORD, 
+       3:60     0  Keys out of order
+                   Directory Path:  1:10, 2:10
+                   Path:  4:10, 3:60
+Keys from ^a("NewKey") to the end are suspect.
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           1.790            NA
+Index               1               1           1.562             1
+Data                1               4           7.877             1
+Free               96              NA              NA            NA
+Total             100               7              NA             2
+%GTM-E-INTEGERRS, Database integrity errors
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	3
+
+DSE> DSE> 
+Block 3   Size 60   Level 0   TN 7 V6
+
+Rec:1  Blk 3  Off 10  Size 1B  Cmpc 0  Key ^a(1)
+##TEST_AWK.*
+##TEST_AWK.*
+      24 : | 20 20 31 50 4F 53 52                                       |
+           |        1  P  O  S  R                                       |
+
+Rec:2  Blk 3  Off 2B  Size 18  Cmpc 3  Key ^a(2)
+##TEST_AWK.*
+##TEST_AWK.*
+      3F : | 50 4F 53 52                                                |
+           |  P  O  S  R                                                |
+
+Rec:3  Blk 3  Off 43  Size 1D  Cmpc 2  Key ^a("NewKey")
+##TEST_AWK.*
+##TEST_AWK.*
+      57 : | 6F 72 64 20 41 64 64 65 64                                 |
+           |  o  r  d     A  d  d  e  d                                 |
+
+DSE> 
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           1.790            NA
+Index               1               1           1.562             1
+Data                1               3           6.250             1
+Free               96              NA              NA            NA
+Total             100               6              NA             2
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Journal extract file dse.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+GTM>
+Analyzing detailed journal extract
+
+GTM>
+
+Get PBLK records from dse.mjf : Field Position:8
+TN = 16
+TN = 144
+TN = 115
+TN = 121
+
+GTM>
+
+Get PBLK records from dse.mjf : Field Position:6
+BLOCK ID = 0
+BLOCK ID = 0
+BLOCK ID = 0
+BLOCK ID = 0
+
+GTM>
+
+Get PBLK records from dse.mjf : Field Position:7
+SIZE = 2
+SIZE = 0
+SIZE = 3
+SIZE = 3
+
+GTM>
+
+Get AIMG records from dse.mjf : Field Position:3
+TN = 5
+TN = 6
+TN = 7
+
+GTM>
+
+Get AIMG records from dse.mjf : Field Position:6
+BLOCK ID = 0
+BLOCK ID = 0
+BLOCK ID = 0
+
+GTM>
+
+Get AIMG records from dse.mjf : Field Position:7
+SIZE = 3
+SIZE = 3
+SIZE = 3
+
+GTM>
+mupip journal -recov -noverify -back mumps.mjl -since=time1
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Block 3   Size 60   Level 0   TN 7 V6
+
+Rec:1  Blk 3  Off 10  Size 1B  Cmpc 0  Key ^a(1)
+##TEST_AWK.*
+##TEST_AWK.*
+      24 : | 20 20 31 50 4F 53 52                                       |
+           |        1  P  O  S  R                                       |
+
+Rec:2  Blk 3  Off 2B  Size 18  Cmpc 3  Key ^a(2)
+##TEST_AWK.*
+##TEST_AWK.*
+      3F : | 50 4F 53 52                                                |
+           |  P  O  S  R                                                |
+
+Rec:3  Blk 3  Off 43  Size 1D  Cmpc 2  Key ^a("NewKey")
+##TEST_AWK.*
+##TEST_AWK.*
+      57 : | 6F 72 64 20 41 64 64 65 64                                 |
+           |  o  r  d     A  d  d  e  d                                 |
+
+DSE> Created file ##TEST_PATH##/mumps.dat
+mupip journal -recov -forward mumps.mjl -APPLY_AFTER_IMAGE
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Block 3   Size 60   Level 0   TN 7 V6
+
+Rec:1  Blk 3  Off 10  Size 1B  Cmpc 0  Key ^a(1)
+##TEST_AWK.*
+##TEST_AWK.*
+      24 : | 20 20 31 50 4F 53 52                                       |
+           |        1  P  O  S  R                                       |
+
+Rec:2  Blk 3  Off 2B  Size 18  Cmpc 3  Key ^a(2)
+##TEST_AWK.*
+##TEST_AWK.*
+      3F : | 50 4F 53 52                                                |
+           |  P  O  S  R                                                |
+
+Rec:3  Blk 3  Off 43  Size 1D  Cmpc 2  Key ^a("NewKey")
+##TEST_AWK.*
+##TEST_AWK.*
+      57 : | 6F 72 64 20 41 64 64 65 64                                 |
+           |  o  r  d     A  d  d  e  d                                 |
+
+DSE> The end of dse_basic_jnl
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,64 @@
+alternative collation  with long string
+gtm_ac_xform_1 is present, but gtm_ac_xback_1 is missing
+%GTM-E-COLLFNMISSING, Routine gtm_ac_xback_1() is not found for collation sequence 1
+%GTM-E-COLLATIONUNDEF, Collation type 1 is not defined
+------------------------------------------------------------
+gtm_ac_xform is present, but gtm_ac_xback is missing
+%GTM-E-COLLFNMISSING, Routine gtm_ac_xback() is not found for collation sequence 1
+%GTM-E-COLLATIONUNDEF, Collation type 1 is not defined
+------------------------------------------------------------
+neither gtm_ac_xform_1 nor  gtm_ac_xform is present
+%GTM-E-COLLATIONUNDEF, Collation type 1 is not defined
+------------------------------------------------------------
+Both gtm_ac_xform_1 and gtm_ac_xback_1 are present
+
+GTM>
+Create five strings of length: 32k,65k,130k,196k,and 1MB
+Now set local array with large local variable
+================== $order() ==============================
+1048576 EEE
+196608 DDD
+131072 CCC
+65536 BBB
+32768 AAA
+================== $zprevious() ==================================
+Output will be in the reverse order of $order() output
+32768 AAA
+65536 BBB
+131072 CCC
+196608 DDD
+1048576 EEE
+================ $NEXT() ==================================
+1048576
+196608
+131072
+65536
+32768
+================== $query() ====================================
+1048586 EEE
+32778 AAA
+65546 BBB
+131082 CCC
+196618 DDD
+======================= $extract() =========================
+mnopqrs
+32776
+length of str6 is: 1048571(expected 1048571)
+======================= $piece()=================================
+32767
+32767
+
+GTM>
+------------------------------------------------------------
+Both gtm_ac_xform and gtm_ac_xback are present
+
+GTM>
+------------------------------------------------------------
+Try with subscripts > 32767, which will give error
+
+GTM>
+
+GTM>
+%GTM-E-COLLARGLONG, Collation sequence 1 does not contain routines for long strings
+
+GTM>

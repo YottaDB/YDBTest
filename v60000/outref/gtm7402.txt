@@ -1,0 +1,38 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+mumps.dat
+Database file ##TEST_PATH##/a.dat now has extension count 0
+Database file ##TEST_PATH##/b.dat now has extension count 0
+Database file ##TEST_PATH##/c.dat now has extension count 0
+Database file ##TEST_PATH##/d.dat now has extension count 0
+Database file ##TEST_PATH##/e.dat now has extension count 0
+Database file ##TEST_PATH##/f.dat now has extension count 0
+Database file ##TEST_PATH##/g.dat now has extension count 0
+Database file ##TEST_PATH##/mumps.dat now has extension count 0
+Database file ##TEST_PATH##/e.dat now has extension count 100
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##TEST_PATH##/child_gtm7402.mjo1
+##TEST_AWK.zstatus = 150372882,child.[0-9]*.gtm7402,.GTM-E-GBLOFLOW, Database segment is full,%GTM-I-GVIS, 		Global variable: .[a-df-h].*
+##TEST_PATH##/child_gtm7402.mjo2
+##TEST_AWK.zstatus = 150372882,child.[0-9]*.gtm7402,.GTM-E-GBLOFLOW, Database segment is full,%GTM-I-GVIS, 		Global variable: .[a-df-h].*
+##TEST_PATH##/child_gtm7402.mjo3
+##TEST_AWK.zstatus = 150372882,child.[0-9]*.gtm7402,.GTM-E-GBLOFLOW, Database segment is full,%GTM-I-GVIS, 		Global variable: .[a-df-h].*
+##TEST_PATH##/child_gtm7402.mjo4
+##TEST_AWK.zstatus = 150372882,child.[0-9]*.gtm7402,.GTM-E-GBLOFLOW, Database segment is full,%GTM-I-GVIS, 		Global variable: .[a-df-h].*
+##TEST_PATH##/child_gtm7402.mjo5
+##TEST_AWK.zstatus = 150372882,child.[0-9]*.gtm7402,.GTM-E-GBLOFLOW, Database segment is full,%GTM-I-GVIS, 		Global variable: .[a-df-h].*

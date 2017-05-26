@@ -1,0 +1,208 @@
+Standalone access subtest ..
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+Test Case 41
+
+Replication state transition 1 to 0 needs standalone access
+GTM Process starts in background...
+Try 1 to 0 : ##SOURCE_PATH##/mupip set -replic=off -reg *
+Journal States:(expected ON) : Replication States (expected ON):
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+ON
+ON
+ON
+ON
+Try Journal State 2 to 2 and replication 1 to 0:
+##SOURCE_PATH##/mupip set -replic=off -journal=enable,on,before -reg *
+Journal States:(expected ON) : Replication States (expected ON):
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+ON
+ON
+ON
+ON
+Try Journal State 2 to 1:
+%GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
+%GTM-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/a.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
+%GTM-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/b.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
+%GTM-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/c.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
+%GTM-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/mumps.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
+Journal States:(expected ON) : Replication States (expected ON):
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+ON
+ON
+ON
+ON
+Try Journal DISABLED:
+%GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
+%GTM-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/a.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
+%GTM-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/b.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
+%GTM-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/c.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
+%GTM-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/mumps.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
+Journal States:(expected ON) : Replication States (expected ON):
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+ON
+ON
+ON
+ON
+Stop the background process
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+Verify Pass
+
+GTM>
+No background processes are running
+$gtm_tst/com/mupip_rollback.csh -resync=1 -lost=alllost.glo *
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RESOLVESEQNO, Resolving until sequence number 1 [0x0000000000000001]
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Lost transactions extract file alllost.glo created
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 1 [0x0000000000000001]
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+Journal States:(expected ON) : Replication States (expected ON):
+  Journal State               [inactive] ON  Journal Before imaging        TRUE
+  Journal State               [inactive] ON  Journal Before imaging        TRUE
+  Journal State               [inactive] ON  Journal Before imaging        TRUE
+  Journal State               [inactive] ON  Journal Before imaging        TRUE
+ON
+ON
+ON
+ON
+Now switch replication state 1 to 0
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%GTM-I-REPLSTATE, Replication state for region AREG is now OFF
+%GTM-I-REPLSTATE, Replication state for region BREG is now OFF
+%GTM-I-REPLSTATE, Replication state for region CREG is now OFF
+%GTM-I-REPLSTATE, Replication state for region DEFAULT is now OFF
+Journal States:(expected ON) : Replication States (expected OFF):
+  Journal State               [inactive] ON  Journal Before imaging        TRUE
+  Journal State               [inactive] ON  Journal Before imaging        TRUE
+  Journal State               [inactive] ON  Journal Before imaging        TRUE
+  Journal State               [inactive] ON  Journal Before imaging        TRUE
+OFF
+OFF
+OFF
+OFF
+
+Test Case 40
+
+Transition of replication state 0 to 1 needs standalone access
+GTM Process starts in background...
+Journal States:(expected ON) : Replication States (expected OFF):
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+OFF
+OFF
+OFF
+OFF
+Journal States:(expected ON) : Replication States (expected OFF):
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                          ON  Journal Before imaging        TRUE
+OFF
+OFF
+OFF
+OFF
+Stop the background process
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Checking database on ##TEST_PATH##
+
+GTM>
+Verify Pass
+
+GTM>
+No background processes are running
+Now switch replication state 0 to 1
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/a.mjl created for database file ##TEST_PATH##/a.dat
+%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/b.mjl created for database file ##TEST_PATH##/b.dat
+%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/c.mjl created for database file ##TEST_PATH##/c.dat
+%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
+%GTM-I-REPLSTATE, Replication state for region AREG is now ON
+%GTM-I-REPLSTATE, Replication state for region BREG is now ON
+%GTM-I-REPLSTATE, Replication state for region CREG is now ON
+%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
+Journal States:(expected ON) : Replication States (expected ON):
+  Journal State               [inactive] ON  Journal Before imaging        TRUE
+  Journal State               [inactive] ON  Journal Before imaging        TRUE
+  Journal State               [inactive] ON  Journal Before imaging        TRUE
+  Journal State               [inactive] ON  Journal Before imaging        TRUE
+ON
+ON
+ON
+ON
+Verify All Journals:

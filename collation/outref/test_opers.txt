@@ -1,0 +1,226 @@
+setenv gtm_chset UTF-8
+unset echo
+DEBUG INFORMATION
+1
+gtm_collate_1=##TEST_PATH##/libchinese##TEST_SHL_SUFFIX##
+DEBUG INFORMATION
+
+GTM>
+
+GTM>
+Current local collation=0; ncol=0; nct=0
+
+GTM>
+a(0)=""
+a(1)=""
+a(9)=""
+a("00.10")=""
+a("010.10")=""
+a("0A")=""
+a("0啊不二")=""
+a("10E2")=""
+a("1Z")=""
+a("1卡")=""
+a("9a")=""
+a("A")=""
+a("Z")=""
+a("a")=""
+a("y")=""
+a("不")=""
+a("二")=""
+a("卡")=""
+a("啊")=""
+]] and ] operator result differ : "1"]"00.10"=1 : "1"]]"00.10"=0
+]] and ] operator result differ : "1"]"010.10"=1 : "1"]]"010.10"=0
+]] and ] operator result differ : "1"]"0A"=1 : "1"]]"0A"=0
+]] and ] operator result differ : "1"]"0啊不二"=1 : "1"]]"0啊不二"=0
+]] and ] operator result differ : "9"]"00.10"=1 : "9"]]"00.10"=0
+]] and ] operator result differ : "9"]"010.10"=1 : "9"]]"010.10"=0
+]] and ] operator result differ : "9"]"0A"=1 : "9"]]"0A"=0
+]] and ] operator result differ : "9"]"0啊不二"=1 : "9"]]"0啊不二"=0
+]] and ] operator result differ : "9"]"10E2"=1 : "9"]]"10E2"=0
+]] and ] operator result differ : "9"]"1Z"=1 : "9"]]"1Z"=0
+]] and ] operator result differ : "9"]"1卡"=1 : "9"]]"1卡"=0
+]] and ] operator result differ : "00.10"]"1"=0 : "00.10"]]"1"=1
+]] and ] operator result differ : "00.10"]"9"=0 : "00.10"]]"9"=1
+]] and ] operator result differ : "010.10"]"1"=0 : "010.10"]]"1"=1
+]] and ] operator result differ : "010.10"]"9"=0 : "010.10"]]"9"=1
+]] and ] operator result differ : "0A"]"1"=0 : "0A"]]"1"=1
+]] and ] operator result differ : "0A"]"9"=0 : "0A"]]"9"=1
+]] and ] operator result differ : "0啊不二"]"1"=0 : "0啊不二"]]"1"=1
+]] and ] operator result differ : "0啊不二"]"9"=0 : "0啊不二"]]"9"=1
+]] and ] operator result differ : "10E2"]"9"=0 : "10E2"]]"9"=1
+]] and ] operator result differ : "1Z"]"9"=0 : "1Z"]]"9"=1
+]] and ] operator result differ : "1卡"]"9"=0 : "1卡"]]"9"=1
+]] and ] operator verification PASS
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Current local collation=0; ncol=0; nct=1
+
+GTM>
+a(0)=""
+a(1)=""
+a(9)=""
+a("00.10")=""
+a("010.10")=""
+a("0A")=""
+a("0啊不二")=""
+a("10E2")=""
+a("1Z")=""
+a("1卡")=""
+a("9a")=""
+a("A")=""
+a("Z")=""
+a("a")=""
+a("y")=""
+a("不")=""
+a("二")=""
+a("卡")=""
+a("啊")=""
+]] operator check failed : "1"]]"00.10"=1:Expected=0
+]] operator check failed : "1"]]"010.10"=1:Expected=0
+]] operator check failed : "1"]]"0A"=1:Expected=0
+]] operator check failed : "1"]]"0啊不二"=1:Expected=0
+]] operator check failed : "9"]]"00.10"=1:Expected=0
+]] operator check failed : "9"]]"010.10"=1:Expected=0
+]] operator check failed : "9"]]"0A"=1:Expected=0
+]] operator check failed : "9"]]"0啊不二"=1:Expected=0
+]] operator check failed : "9"]]"10E2"=1:Expected=0
+]] operator check failed : "9"]]"1Z"=1:Expected=0
+]] operator check failed : "9"]]"1卡"=1:Expected=0
+]] operator check failed : "00.10"]]"1"=0:Expected=1
+]] operator check failed : "00.10"]]"9"=0:Expected=1
+]] operator check failed : "010.10"]]"1"=0:Expected=1
+]] operator check failed : "010.10"]]"9"=0:Expected=1
+]] operator check failed : "0A"]]"1"=0:Expected=1
+]] operator check failed : "0A"]]"9"=0:Expected=1
+]] operator check failed : "0啊不二"]]"1"=0:Expected=1
+]] operator check failed : "0啊不二"]]"9"=0:Expected=1
+]] operator check failed : "10E2"]]"9"=0:Expected=1
+]] operator check failed : "1Z"]]"9"=0:Expected=1
+]] operator check failed : "1卡"]]"9"=0:Expected=1
+]] and ] operator verification PASS
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Current local collation=1; ncol=0; nct=0
+
+GTM>
+a(0)=""
+a(1)=""
+a(9)=""
+a("00.10")=""
+a("010.10")=""
+a("0A")=""
+a("0啊不二")=""
+a("10E2")=""
+a("1Z")=""
+a("1卡")=""
+a("9a")=""
+a("A")=""
+a("Z")=""
+a("a")=""
+a("y")=""
+a("啊")=""
+a("不")=""
+a("二")=""
+a("卡")=""
+]] and ] operator result differ : "1"]"00.10"=1 : "1"]]"00.10"=0
+]] and ] operator result differ : "1"]"010.10"=1 : "1"]]"010.10"=0
+]] and ] operator result differ : "1"]"0A"=1 : "1"]]"0A"=0
+]] and ] operator result differ : "1"]"0啊不二"=1 : "1"]]"0啊不二"=0
+]] and ] operator result differ : "9"]"00.10"=1 : "9"]]"00.10"=0
+]] and ] operator result differ : "9"]"010.10"=1 : "9"]]"010.10"=0
+]] and ] operator result differ : "9"]"0A"=1 : "9"]]"0A"=0
+]] and ] operator result differ : "9"]"0啊不二"=1 : "9"]]"0啊不二"=0
+]] and ] operator result differ : "9"]"10E2"=1 : "9"]]"10E2"=0
+]] and ] operator result differ : "9"]"1Z"=1 : "9"]]"1Z"=0
+]] and ] operator result differ : "9"]"1卡"=1 : "9"]]"1卡"=0
+]] and ] operator result differ : "00.10"]"1"=0 : "00.10"]]"1"=1
+]] and ] operator result differ : "00.10"]"9"=0 : "00.10"]]"9"=1
+]] and ] operator result differ : "010.10"]"1"=0 : "010.10"]]"1"=1
+]] and ] operator result differ : "010.10"]"9"=0 : "010.10"]]"9"=1
+]] and ] operator result differ : "0A"]"1"=0 : "0A"]]"1"=1
+]] and ] operator result differ : "0A"]"9"=0 : "0A"]]"9"=1
+]] and ] operator result differ : "0啊不二"]"1"=0 : "0啊不二"]]"1"=1
+]] and ] operator result differ : "0啊不二"]"9"=0 : "0啊不二"]]"9"=1
+]] and ] operator result differ : "10E2"]"9"=0 : "10E2"]]"9"=1
+]] and ] operator result differ : "1Z"]"9"=0 : "1Z"]]"9"=1
+]] and ] operator result differ : "1卡"]"9"=0 : "1卡"]]"9"=1
+]] and ] operator result differ : "啊"]"不"=1 : "啊"]]"不"=0
+]] and ] operator result differ : "啊"]"二"=1 : "啊"]]"二"=0
+]] and ] operator result differ : "啊"]"卡"=1 : "啊"]]"卡"=0
+]] and ] operator result differ : "不"]"啊"=0 : "不"]]"啊"=1
+]] and ] operator result differ : "二"]"啊"=0 : "二"]]"啊"=1
+]] and ] operator result differ : "卡"]"啊"=0 : "卡"]]"啊"=1
+]] and ] operator verification PASS
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Current local collation=1; ncol=0; nct=1
+
+GTM>
+a(0)=""
+a(1)=""
+a(9)=""
+a("00.10")=""
+a("010.10")=""
+a("0A")=""
+a("0啊不二")=""
+a("10E2")=""
+a("1Z")=""
+a("1卡")=""
+a("9a")=""
+a("A")=""
+a("Z")=""
+a("a")=""
+a("y")=""
+a("啊")=""
+a("不")=""
+a("二")=""
+a("卡")=""
+]] operator check failed : "1"]]"00.10"=1:Expected=0
+]] operator check failed : "1"]]"010.10"=1:Expected=0
+]] operator check failed : "1"]]"0A"=1:Expected=0
+]] operator check failed : "1"]]"0啊不二"=1:Expected=0
+]] operator check failed : "9"]]"00.10"=1:Expected=0
+]] operator check failed : "9"]]"010.10"=1:Expected=0
+]] operator check failed : "9"]]"0A"=1:Expected=0
+]] operator check failed : "9"]]"0啊不二"=1:Expected=0
+]] operator check failed : "9"]]"10E2"=1:Expected=0
+]] operator check failed : "9"]]"1Z"=1:Expected=0
+]] operator check failed : "9"]]"1卡"=1:Expected=0
+]] operator check failed : "00.10"]]"1"=0:Expected=1
+]] operator check failed : "00.10"]]"9"=0:Expected=1
+]] operator check failed : "010.10"]]"1"=0:Expected=1
+]] operator check failed : "010.10"]]"9"=0:Expected=1
+]] operator check failed : "0A"]]"1"=0:Expected=1
+]] operator check failed : "0A"]]"9"=0:Expected=1
+]] operator check failed : "0啊不二"]]"1"=0:Expected=1
+]] operator check failed : "0啊不二"]]"9"=0:Expected=1
+]] operator check failed : "10E2"]]"9"=0:Expected=1
+]] operator check failed : "1Z"]]"9"=0:Expected=1
+]] operator check failed : "1卡"]]"9"=0:Expected=1
+]] and ] operator result differ : "啊"]"不"=1 : "啊"]]"不"=0
+]] and ] operator result differ : "啊"]"二"=1 : "啊"]]"二"=0
+]] and ] operator result differ : "啊"]"卡"=1 : "啊"]]"卡"=0
+]] and ] operator result differ : "不"]"啊"=0 : "不"]]"啊"=1
+]] and ] operator result differ : "二"]"啊"=0 : "二"]]"啊"=1
+]] and ] operator result differ : "卡"]"啊"=0 : "卡"]]"啊"=1
+]] and ] operator verification PASS
+GTM>
+
+GTM>

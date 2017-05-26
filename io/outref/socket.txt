@@ -1,0 +1,72 @@
+
+GTM>
+
+GTM>
+----------------------
+TEST val = -10
+-> USE "sock":(width=-10)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150372658,use+6^io,%GTM-E-DEVPARMNEG, Deviceparameter must be a positive value
+PASS. Was expecting error for
+continue...
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-> USE "sock":(length=-10)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+150372658,use+6^io,%GTM-E-DEVPARMNEG, Deviceparameter must be a positive value
+PASS. Was expecting error for
+continue...
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+----------------------
+TEST val = 0
+-> USE "sock":(width=0)
+PASS
+-> USE "sock":(length=0)
+PASS
+----------------------
+TEST val = 32767
+-> USE "sock":(width=32767)
+PASS
+-> USE "sock":(length=32767)
+PASS
+----------------------
+TEST val = 32768
+-> USE "sock":(width=32768)
+PASS
+-> USE "sock":(length=32768)
+PASS
+----------------------
+TEST val = 1048576
+-> USE "sock":(width=1048576)
+PASS
+-> USE "sock":(length=1048576)
+PASS
+----------------------
+TEST val = 1048577
+-> USE "sock":(width=1048577)
+PASS
+-> USE "sock":(length=1048577)
+PASS
+
+GTM>
+
+GTM>
+
+GTM>
+Test 1: Test if the default option is nodestroy
+Before closing socket: 
+ZSHOW "D" output: SOCKETDESTROY OPEN SOCKET TOTAL=1 CURRENT=0 
+After closing socket: 
+ZSHOW "D" output: SOCKETDESTROY CLOSED 
+
+Test 2: Test destroy parameter
+Before closing socket
+ZSHOW "D" output: SOCKETDESTROY OPEN SOCKET TOTAL=1 CURRENT=0 
+After closing socket
+
+Test 3: Test nodestroy parameter
+Before closing socket
+ZSHOW "D" output: SOCKETDESTROY OPEN SOCKET TOTAL=1 CURRENT=0 
+After closing socket
+ZSHOW "D" output: SOCKETDESTROY CLOSED 
+
+GTM>

@@ -1,0 +1,68 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ tamil("அ":"க")                     TAMIL
+ tamil("க":"ஹ")                     CONSONANTS
+ tamil("ஹ":"௧")                     TAMIL
+ tamil("௧":"௺")                     NUMBERS
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ tamil("அ":"க")                     VOWELS
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+GDE> 
+
+         *** NAMES ***
+ Global                             Region
+ ------------------------------------------------------------------------------
+ *                                  DEFAULT
+ tamil("அ":"க")                     VOWELS
+ tamil("க":"வ")                     CONSONANTS
+ tamil("ஹ":"௧")                     TAMIL
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+ %                               tamil("அ")                       REG = DEFAULT
+ tamil("அ")                      tamil("க")                       REG = VOWELS
+ tamil("க")                      tamil("வ")                       REG = CONSONANTS
+ tamil("வ")                      tamil("ஹ")                       REG = DEFAULT
+ tamil("ஹ")                      tamil("௧")                       REG = TAMIL
+ tamil("௧")                      ...                              REG = DEFAULT
+ LOCAL LOCKS                                                      REG = DEFAULT

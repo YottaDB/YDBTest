@@ -1,0 +1,380 @@
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-E-PREFIXBAD, $DEFA - region name must start with an alphabetic character
+
+GDE> 
+%GDE-E-PREFIXBAD, $DEFA - new region name must start with an alphabetic character
+
+GDE> 
+%GDE-E-PREFIXBAD, $DEFA - old region name must start with an alphabetic character
+
+GDE> 
+%GDE-E-PREFIXBAD, $DEFA - segment name must start with an alphabetic character
+
+GDE> 
+%GDE-E-PREFIXBAD, $DEFA - new segment name must start with an alphabetic character
+
+GDE> 
+%GDE-E-PREFIXBAD, $DEFA - old segment name must start with an alphabetic character
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+##SUSPEND_OUTPUT UNICODE_MODE
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-E-VALUEBAD, AREG is not a valid region
+
+GDE> 
+GDE> 
+
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-E-KEYWRDBAD, AT is not a valid verb in this context
+
+GDE> 
+%GDE-E-VALUEBAD, - is not a valid Verb
+
+GDE> 
+GDE> 
+GDE> 
+%GDE-E-VALUEBAD, - is not a valid Verb
+
+GDE> 
+GDE> 
+%GDE-E-KEYWRDBAD, FA is not a valid verb in this context
+
+GDE> 
+%GDE-E-KEYWRDBAD, UL.T.MJL is not a valid verb in this context
+
+GDE> 
+
+##ALLOW_OUTPUT NONUNICODE_MODE
+                                *** REGIONS ***
+                                                                                                Std      Inst
+                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ ----------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ DEFAULT                         DEFAULT                            0      256    64 NEVER      N    Y   ENABLED  DISABLED ENABLED
+
+                          *** JOURNALING INFORMATION ***
+ Region                          Jnl File (def ext: .mjl)  Before Buff      Alloc      Exten   AutoSwitch
+ --------------------------------------------------------------------------------------------------------
+##SUSPEND_OUTPUT UNICODE_MODE
+ DEFAULT                         "de"_$C(12)_"fa"_$C(13)_"ul"_$C(15)_"t.mjl"
+                                                           Y      2308       2048       2048      8386560
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+ DEFAULT                         de                        Y      2308       2048       2048      8386560
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+GDE> 
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+##SUSPEND_OUTPUT UNICODE_MODE
+ ASEG                            "a.d"_$C(13)_"at"_$C(13)_" -acc=BG"
+                                                     BG  DYN  1024        100   100 GLOB=1024
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+ ASEG                            a.d                 BG  DYN  1024        100   100 GLOB=1024
+##ALLOW_OUTPUT NONUNICODE_MODE
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+ DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+GDE> 
+
+                                  *** MAP ***
+   -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
+ From                            Up to                            Region / Segment / File(def ext: .dat)
+ --------------------------------------------------------------------------------------------------------------------------
+ %                               A                                REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ A                               A0                               REG = AREG
+                                                                  SEG = ASEG
+##SUSPEND_OUTPUT UNICODE_MODE
+                                                                  FILE = "a.d"_$C(13)_"at"_$C(13)_" -acc=BG"
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+                                                                  FILE = a.d
+##ALLOW_OUTPUT NONUNICODE_MODE
+ A0                              ...                              REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+ LOCAL LOCKS                                                      REG = DEFAULT
+                                                                  SEG = DEFAULT
+                                                                  FILE = mumps.dat
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+# Expect GTM-I-JNLALLOCGROW below and not an assert failure
+##SUSPEND_OUTPUT UNICODE_MODE
+Created file ##TEST_PATH##/a.dat -acc=BG
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Created file ##TEST_PATH##/a.d
+##ALLOW_OUTPUT NONUNICODE_MODE
+%GTM-I-JNLALLOCGROW, Increased Journal ALLOCATION from [2048 blocks] to [16384 blocks] to match AUTOSWITCHLIMIT for database file b.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/mumps.dat
+# While the vaule of allocation in the gde settings was not changed, expect it to be higher due to JNLALLOCGROW above
+ Jnlfile SwitchLimit                         16384 [0x00004000] blocks
+ Jnlfile Allocation                          16384 [0x00004000] blocks
+ Jnlfile Extension                            4096 [0x00001000] blocks
+# Test case to check for LOCK SPACE max check and the new GDE command for mutex queue slots. Move it to a better place if one exists
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VALTOOBIG, 65537 is larger than the maximum of 65536 for a LOCK_SPACE
+%GDE-I-SEGIS, in BG segment ASEG
+
+%GDE-E-OBJNOTCHG, Not changing segment ASEG
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VALTOOSMALL, 63 is less than the minimum of 64 for a MUTEX_SLOTS
+%GDE-I-SEGIS, in BG segment ASEG
+
+%GDE-E-OBJNOTCHG, Not changing segment ASEG
+
+GDE> 
+GDE> 
+%GDE-I-VALTOOBIG, 32769 is larger than the maximum of 32768 for a MUTEX_SLOTS
+%GDE-I-SEGIS, in MM segment BSEG
+
+%GDE-E-OBJNOTCHG, Not changing segment BSEG
+
+GDE> 
+GDE> 
+%GDE-I-KEYSIZIS, Key size is 64
+%GDE-I-KEYFORBLK, But block size 1024 and reserved bytes 921 limit key size to 63
+%GDE-I-REGIS, in region DEFAULT
+
+%GDE-E-OBJNOTCHG, Not changing segment DEFAULT
+
+GDE> 
+GDE> 
+%GDE-I-KEYSIZIS, Key size is 1019
+%GDE-I-KEYFORBLK, But block size 65024 and reserved bytes 63966 limit key size to 1018
+%GDE-I-REGIS, in region AREG
+
+%GDE-E-OBJNOTCHG, Not changing segment ASEG
+
+GDE> 
+GDE> 
+%GDE-I-KEYSIZIS, Key size is 512
+%GDE-I-KEYFORBLK, But block size 5120 and reserved bytes 4569 limit key size to 511
+%GDE-I-REGIS, in region BREG
+
+%GDE-E-OBJNOTCHG, Not changing segment BSEG
+
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+# GDE show -segments shoud reflect the modified values of lockspace, mutex slots and reserved bytes
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ ASEG                            locksmutexa.dat     BG  DYN 65024        100   100 GLOB=1024
+                                                                                    LOCK=65536
+                                                                                    RES =63965
+                                                                                    ENCR=OFF
+                                                                                    MSLT=  64
+                                                                                    DALL=YES
+ BSEG                            locksmutexb.dat     MM  DYN  5120        100   100 DEFER
+                                                                                    LOCK=12345
+                                                                                    RES =4568
+                                                                                    ENCR=OFF
+                                                                                    MSLT=32768
+                                                                                    DALL=YES
+ DEFAULT                         locksmutexdefault.dat
+                                                     BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES = 920
+                                                                                    ENCR=OFF
+                                                                                    MSLT=2048
+                                                                                    DALL=YES
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+# GDE show -commands should have the correct values of lockspace, mutex slots and reserved bytes
+TEMPLATE -SEGMENT -ACCESS_METHOD=BG
+TEMPLATE -SEGMENT -LOCK_SPACE=40
+TEMPLATE -SEGMENT -MUTEX_SLOTS=2048
+TEMPLATE -SEGMENT -RESERVED_BYTES=920
+TEMPLATE -SEGMENT -ACCESS_METHOD=MM
+TEMPLATE -SEGMENT -LOCK_SPACE=12345
+TEMPLATE -SEGMENT -MUTEX_SLOTS=32768
+TEMPLATE -SEGMENT -RESERVED_BYTES=4568
+TEMPLATE -SEGMENT -ACCESS_METHOD=BG
+ADD -SEGMENT ASEG -BLOCK_SIZE=65024 -FILE_NAME="locksmutexa.dat" -LOCK_SPACE=65536 -MUTEX_SLOTS=64 -RESERVED_BYTES=63965
+ADD -SEGMENT BSEG -ACCESS_METHOD=MM -FILE_NAME="locksmutexb.dat"
+# DSE dump should reflect the modified values of lockspace, mutex slots and reserved bytes
+%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/locksmutexa.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
+Created file ##TEST_PATH##/locksmutexa.dat
+Created file ##TEST_PATH##/locksmutexb.dat
+Created file ##TEST_PATH##/locksmutexdefault.dat
+Region	AREG
+Region          AREG
+  Reserved Bytes                      63965  Block size (in bytes)        65024
+  Mutex Queue Slots                      64  KILLs in progress                0
+Region          BREG
+  Reserved Bytes                       4568  Block size (in bytes)         5120
+  Mutex Queue Slots                   32768  KILLs in progress                0
+Region          DEFAULT
+  Reserved Bytes                        920  Block size (in bytes)         1024
+  Mutex Queue Slots                    2048  KILLs in progress                0
+# Test case to check if a change to template and subsequent rename of DEFAULT segment, shows the right commands in show -command output
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/chtemplate.cmd
+
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ ABCD                            mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+
+                               *** TEMPLATES ***
+                                                                          Std      Inst
+                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
+ Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
+ -----------------------------------------------------------------------------------------------------------
+ <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+
+ Segment          Active              Acc Typ Block      Alloc Exten Options
+ ------------------------------------------------------------------------------
+ <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+                                                                     LOCK = 40
+                                                                     RES  =   0
+                                                                     ENCR = OFF
+                                                                     MSLT =2048
+                                                                     DALL=YES
+ <default>                            MM  DYN  1024        100   100 DEFER
+                                                                     LOCK = 40
+                                                                     MSLT =1024
+                                                                     DALL=YES
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/chtemplate.com
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
+ -------------------------------------------------------------------------------------------
+ ABCD                            mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    LOCK=  40
+                                                                                    RES =   0
+                                                                                    ENCR=OFF
+                                                                                    MSLT=1024
+                                                                                    DALL=YES
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+# Test case to check for + or - E with no number following it
+
+GTM>
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	write 1E-
+	       ^-----
+
+GTM>
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	write 1E+
+	       ^-----
+
+GTM>
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	write 1E-
+	       ^-----
+
+GTM>
+1
+GTM>
+1
+GTM>
+1
+GTM>
+100
+GTM>
+1
+GTM>
+1
+GTM>
+1
+GTM>
+1
+GTM>
+1
+GTM>
+1
+GTM>
+100
+GTM>

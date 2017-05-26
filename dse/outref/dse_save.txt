@@ -1,0 +1,379 @@
+TEST DSE - SAVE COMMAND
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+
+GTM>
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Saving version 1 of block 3
+DSE> 
+Saving version 2 of block 3
+DSE> 
+Saving version 3 of block 3
+DSE> DSE> DSE> 
+Checking integrity of block 3:
+%GTM-I-DBKEYMX,        3:10     0  Key too long
+
+DSE> 
+Restoring block 3 from version 1
+
+DSE> DSE> 
+Restoring block 3 from version 1
+
+DSE> 
+Checking integrity of block 3:
+
+  No errors detected.
+
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Saved versions of block 4
+None.
+
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Saving version 1 of block 0
+DSE> DSE> 
+Checking integrity of block 0:
+%GTM-I-DBBMINV,        0:      FF  Bit map contains an invalid pattern
+
+DSE> 
+Restoring block 0 from version 1
+
+DSE> 
+Checking integrity of block 0:
+
+  No errors detected.
+
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+Saving version 1 of block 3
+DSE> 
+Saving version 2 of block 3
+DSE> 
+Saving version 1 of block 1
+DSE> 
+Save history:
+
+Block 3
+Version 1  Region AREG  Comment: has comment
+
+Block 3
+Version 2  Region AREG
+
+Block 1
+Version 1  Region AREG  Comment: first block
+
+DSE> 
+Saved versions of block 3
+Version 1  Region AREG  Comment: has comment
+
+Version 2  Region AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+Saving version 1 of block 1
+DSE> 
+Saving version 2 of block 1
+DSE> 
+Saving version 3 of block 1
+DSE> 
+Saving version 4 of block 1
+DSE> 
+Saving version 5 of block 1
+DSE> 
+Saving version 6 of block 1
+DSE> 
+Saving version 7 of block 1
+DSE> 
+Saving version 8 of block 1
+DSE> 
+Saving version 9 of block 1
+DSE> 
+Saving version 10 of block 1
+DSE> 
+Saving version 11 of block 1
+DSE> 
+Saving version 12 of block 1
+DSE> 
+Saving version 13 of block 1
+DSE> 
+Saving version 14 of block 1
+DSE> 
+Saving version 15 of block 1
+DSE> 
+Saving version 16 of block 1
+DSE> 
+Saving version 17 of block 1
+DSE> 
+Saving version 18 of block 1
+DSE> 
+Saving version 19 of block 1
+DSE> 
+Saving version 20 of block 1
+DSE> 
+Saving version 21 of block 1
+DSE> 
+Saving version 22 of block 1
+DSE> 
+Saving version 23 of block 1
+DSE> 
+Saving version 24 of block 1
+DSE> 
+Saving version 25 of block 1
+DSE> 
+Saving version 26 of block 1
+DSE> 
+Saving version 27 of block 1
+DSE> 
+Saving version 28 of block 1
+DSE> 
+Saving version 29 of block 1
+DSE> 
+Saving version 30 of block 1
+DSE> 
+Saving version 31 of block 1
+DSE> 
+Saving version 32 of block 1
+DSE> 
+Saving version 33 of block 1
+DSE> 
+Saving version 34 of block 1
+DSE> 
+Saving version 35 of block 1
+DSE> 
+Saving version 36 of block 1
+DSE> 
+Saving version 37 of block 1
+DSE> 
+Saving version 38 of block 1
+DSE> 
+Saving version 39 of block 1
+DSE> 
+Saving version 40 of block 1
+DSE> 
+Saving version 41 of block 1
+DSE> 
+Saving version 42 of block 1
+DSE> 
+Saving version 43 of block 1
+DSE> 
+Saving version 44 of block 1
+DSE> 
+Saving version 45 of block 1
+DSE> 
+Saving version 46 of block 1
+DSE> 
+Saving version 47 of block 1
+DSE> 
+Saving version 48 of block 1
+DSE> 
+Saving version 49 of block 1
+DSE> 
+Saving version 50 of block 1
+DSE> 
+Saving version 51 of block 1
+DSE> 
+Saving version 52 of block 1
+DSE> 
+Saving version 53 of block 1
+DSE> 
+Saving version 54 of block 1
+DSE> 
+Saving version 55 of block 1
+DSE> 
+Saving version 56 of block 1
+DSE> 
+Saving version 57 of block 1
+DSE> 
+Saving version 58 of block 1
+DSE> 
+Saving version 59 of block 1
+DSE> 
+Saving version 60 of block 1
+DSE> 
+Saving version 61 of block 1
+DSE> 
+Saving version 62 of block 1
+DSE> 
+Saving version 63 of block 1
+DSE> 
+Saving version 64 of block 1
+DSE> 
+Saving version 65 of block 1
+DSE> 
+Saving version 66 of block 1
+DSE> 
+Saving version 67 of block 1
+DSE> 
+Saving version 68 of block 1
+DSE> 
+Saving version 69 of block 1
+DSE> 
+Saving version 70 of block 1
+DSE> 
+Saving version 71 of block 1
+DSE> 
+Saving version 72 of block 1
+DSE> 
+Saving version 73 of block 1
+DSE> 
+Saving version 74 of block 1
+DSE> 
+Saving version 75 of block 1
+DSE> 
+Saving version 76 of block 1
+DSE> 
+Saving version 77 of block 1
+DSE> 
+Saving version 78 of block 1
+DSE> 
+Saving version 79 of block 1
+DSE> 
+Saving version 80 of block 1
+DSE> 
+Saving version 81 of block 1
+DSE> 
+Saving version 82 of block 1
+DSE> 
+Saving version 83 of block 1
+DSE> 
+Saving version 84 of block 1
+DSE> 
+Saving version 85 of block 1
+DSE> 
+Saving version 86 of block 1
+DSE> 
+Saving version 87 of block 1
+DSE> 
+Saving version 88 of block 1
+DSE> 
+Saving version 89 of block 1
+DSE> 
+Saving version 90 of block 1
+DSE> 
+Saving version 91 of block 1
+DSE> 
+Saving version 92 of block 1
+DSE> 
+Saving version 93 of block 1
+DSE> 
+Saving version 94 of block 1
+DSE> 
+Saving version 95 of block 1
+DSE> 
+Saving version 96 of block 1
+DSE> 
+Saving version 97 of block 1
+DSE> 
+Saving version 98 of block 1
+DSE> 
+Saving version 99 of block 1
+DSE> 
+Saving version 100 of block 1
+DSE> 
+Saving version 101 of block 1
+DSE> 
+Saving version 102 of block 1
+DSE> 
+Saving version 103 of block 1
+DSE> 
+Saving version 104 of block 1
+DSE> 
+Saving version 105 of block 1
+DSE> 
+Saving version 106 of block 1
+DSE> 
+Saving version 107 of block 1
+DSE> 
+Saving version 108 of block 1
+DSE> 
+Saving version 109 of block 1
+DSE> 
+Saving version 110 of block 1
+DSE> 
+Saving version 111 of block 1
+DSE> 
+Saving version 112 of block 1
+DSE> 
+Saving version 113 of block 1
+DSE> 
+Saving version 114 of block 1
+DSE> 
+Saving version 115 of block 1
+DSE> 
+Saving version 116 of block 1
+DSE> 
+Saving version 117 of block 1
+DSE> 
+Saving version 118 of block 1
+DSE> 
+Saving version 119 of block 1
+DSE> 
+Saving version 120 of block 1
+DSE> 
+Saving version 121 of block 1
+DSE> 
+Saving version 122 of block 1
+DSE> 
+Saving version 123 of block 1
+DSE> 
+Saving version 124 of block 1
+DSE> 
+Saving version 125 of block 1
+DSE> 
+Saving version 126 of block 1
+DSE> 
+Saving version 127 of block 1
+DSE> 
+Saving version 128 of block 1
+DSE> %GTM-E-DSEMAXBLKSAV, DSE cannot SAVE another block as it already has the maximum of 128
+DSE> 
+Removing version 1 of block 1
+DSE> 
+Saving version 129 of block 1
+##SUSPEND_OUTPUT  REPLIC
+DSE> ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+DSE> Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

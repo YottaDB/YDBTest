@@ -1,0 +1,94 @@
+# For a comment, first char of the line should be #, second char should be a whitespace.
+# NOTE: Whenever there is a change to gg_servers.txt, the following files should also be changed
+#	~library/cron/root_allunix_sysadmin_zipsyslog.csh - If there is a change in gg_servers.txt layout
+#	serverconf.m : Has all the speed, memstress and profile data. - If a host is added or removed
+#	grep for gg_servers.txt in the test system and check if the layout change affects them (e.g multi_machine instream)
+#	grep for each of the hostname in $cvs_root/tools and $cvs_root/test and look for possible changes
+# ---------------------------------------------------------------------------------------------------------------------
+# Column Name	: Description
+# ---------------------------------------------------------------------------------------------------------------------
+# servername	: Name of the current host
+# buddy1(SE)	: Buddy 1 for multi-machine tests	- Should be of same endian	and same N/W location (2WL/ATL)
+# buddy2(SE)	: Buddy 2 for multi-machine tests	- Should be of same endian	and same N/W location (2WL/ATL)
+# buddy3(OE)	: Buddy for enciancvt test		- Should be of opposite endian	and same N/W location (2WL/ATL)
+# GT.CM buddy1	: Buddy 1 for GT.CM tests		- Should be of ANY endian	and same N/W location (2WL/ATL)
+# GT.CM buddy2	: Buddy 2 for GT.CM tests		- Should be of ANY endian	and same N/W location (2WL/ATL)
+# alt server	: Buddy to use if current host excluded	- Should be of same endian	and same N/W location (2WL/ATL)
+#							  And when this servername appears as a buddy of another
+#							  server, the alt server should be different from the other
+#							  servername and the other server's buddies within the
+#							  (SE1,SE2,OE) and (GTCM1,GTCM2) groups.
+# syslog file	: syslog file name
+# syslogpidfile : syslog pid file name
+# Java home	: Location of the Java installation
+# ---------------------------------------------------------------------------------------------------------------------
+# SE: Same Endian (choose a mix of 64-bit and 32-bit buddies for a given platform)
+# OE: Opposite Endian (choose a mix of 64-bit and 32-bit buddies for a given platform)
+#
+# The catch is that buddy1(SE), buddy2(SE), buddy3(OE), GT.CM buddy1 and GT.CM buddy2 should be chosen to be in the same network
+# location as the first column i.e. If first column server is in 2WL, servers in the other columns should also be in 2WL.
+# Note that buddy3(OE) column has across-location servers in case of 2WL servers in the first column. This is because
+# there are no opposite endian boxes in 2WL (all linux). Those across-location servers are dummies since the endiancvt
+# test (which is what uses buddy3(OE)) is disabled in 2WL.
+# At least one machine of each platform should appear in each column.
+# AIX : pfloyd,lespaul,strato,sphere	SunOS : atlst2000,inti,liza
+# HP-UX : atlhxit1
+# Linux : jackal,titan,tuatara,carmen scylla,charybdis
+# IPv6-enabled servers should have at least one IPv6-enabled SE buddy and one IPv6-enabled GT.CM buddy.
+# Since we only have one OE buddy server, some IPv6-enabled servers should have IPv6-enabled OE buddies.
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# servername	#buddy1(SE)	#buddy2(SE)	#buddy3(OE)	#GT.CM buddy1	#GT.CM buddy2	#alt server	syslog file			syslogpidfile		Java home
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# ATL servers
+#   LE
+jackal		titan		carmen		pfloyd		tuatara		strato		carmen		/var/log/messages		/var/run/syslogd.pid	NA
+tuatara		carmen		jackal		strato		titan		lespaul		carmen		/var/log/messages		/var/run/syslog-ng.pid	/usr/local/java/jdk1.7.0_09
+titan		tuatara		jackal		pfloyd		jackal		strato		tuatara		/var/log/messages		/var/run/syslogd.pid	/usr/lib/jvm/java
+carmen		jackal		tuatara		strato		titan		jackal		jackal		/var/log/messages		/var/run/syslogd.pid	/usr/lib/jvm/java
+#   BE
+strato		pfloyd		lespaul		tuatara		pfloyd		tuatara		pfloyd		/usr/library/syslog/syslog	/etc/syslog.pid		/usr/java7_64
+sphere		strato		lespaul		tuatara		lespaul		tuatara		strato		/usr/library/syslog/syslog	/etc/syslog.pid		/usr/java71_64
+lespaul		pfloyd		strato		titan		strato		jackal		strato		/usr/library/syslog/syslog	/etc/syslog.pid		NA				#/usr/java7_64
+pfloyd		strato		lespaul		jackal		strato		titan		lespaul		/usr/library/syslog/syslog	/etc/syslog.pid		NA
+# No longer supported platforms
+atlhxit1	inti		strato		jackal		inti		titan		inti		/var/adm/syslog/syslog.log	/var/run/syslog.pid	NA
+atlst2000	pfloyd		liza		jackal		atlhxit1	jackal		lespaul		/usr/library/syslog/syslog	/etc/syslog.pid		/usr/local/java/jdk1.7.0_09
+inti		liza		strato		titan		liza		atlhxit1	liza		/usr/library/syslog/syslog	/etc/syslog.pid		/usr/local/java/jdk1.7.0_09
+liza		strato		inti		carmen		atlhxit1	tuatara		strato		/usr/library/syslog/syslog	/etc/syslog.pid		NA
+#
+# 2WL servers
+scylla		charybdis	thunder		mlnhxit1	charybdis	thunder		thunder		/var/log/messages		/var/run/syslogd.pid	NA
+charybdis	scylla		bolt		mlnhxit1	bolt		scylla		bolt		/var/log/messages		/var/run/rsyslogd.pid	/usr/lib/jvm/java-7-openjdk-amd64
+thunder		bolt		charybdis	mlnhxit1	charybdis	bolt		scylla		/var/log/messages		/var/run/syslogd.pid	/usr/lib/jvm/java
+bolt		charybdis	scylla		mlnhxit1	scylla		charybdis	charybdis	/var/log/messages		/var/run/rsyslogd.pid	/usr/lib/jvm/java-7-openjdk-amd64
+# NIS servers, not used for testing
+pine		NA		NA		NA		NA		NA		NA		/var/log/messages		/var/run/syslogd.pid	NA
+pinata		NA		NA		NA		NA		NA		NA		/var/log/messages		/var/run/syslogd.pid	NA
+pinyon		NA		NA		NA		NA		NA		NA		/var/log/messages		/var/run/syslogd.pid	NA
+twinata		NA		NA		NA		NA		NA		NA		/var/log/messages		/var/run/syslogd.pid	NA
+# Linux PCs
+#  eight core
+nars		kishoreh	shaha		mlnhxit1	estess		hathawayc	duzang		/var/log/messages		/var/run/rsyslogd.pid	/usr/lib/jvm/java-7-openjdk-amd64
+duzang		estess		hathawayc	mlnhxit1	kishoreh	shaha		nars		/var/log/messages		/var/run/rsyslogd.pid	/usr/lib/jvm/java-7-openjdk-amd64
+#  quad core
+kishoreh	nars		shaha		mlnhxit1	duzang		hathawayc	estess		/var/log/messages		/var/run/syslog-ng.pid	/usr/lib/jvm/java-7-openjdk-amd64
+estess		duzang		hathawayc	mlnhxit1	nars		shaha		kishoreh	/var/log/messages		/var/run/syslog-ng.pid	/usr/lib/jvm/java-7-openjdk-amd64
+shaha		nars		kishoreh	mlnhxit1	duzang		estess		hathawayc	/var/log/messages		/var/run/syslog-ng.pid	/usr/lib/jvm/java-7-openjdk-amd64
+hathawayc	duzang		estess		mlnhxit1	nars		kishoreh	shaha		/var/log/messages		/var/run/syslog-ng.pid	/usr/lib/jvm/java-7-openjdk-amd64
+base		kishoreh	shaha		mlnhxit1	estess		hathawayc	rajamanin	/var/log/messages		/var/run/syslog-ng.pid	/usr/lib/jvm/default-java
+rajamanin	estess		hathawayc	mlnhxit1	kishoreh	shaha		cronem		/var/log/messages		/var/run/syslog-ng.pid	/usr/lib/jvm/java-7-openjdk-amd64
+cronem		kishoreh	hathawayc	mlnhxit1	estess		shaha		base		/var/log/messages		/var/run/syslog-ng.pid	/usr/lib/jvm/java-7-openjdk-amd64
+#  dual core
+maimoneb	base		cronem		mlnhxit1	rajamanin	bahirs		rajamanin	/var/log/messages		/var/run/syslog-ng.pid	/usr/lib/jvm/java-7-openjdk-amd64
+bahirs		rajamanin	base		mlnhxit1	cronem		maimoneb	cronem		/var/log/messages		/var/run/syslogd.pid	/usr/lib/jvm/java
+# Performance Testing Machine, 2WL
+shrug		thermopylae	charybdis	mlnhxit1	charybdis	thermopylae	charybdis	/var/log/messages		/var/run/syslog-ng.pid	/usr/lib/jvm/java-6-openjdk-amd64
+thermopylae	shrug		charybdis	mlnhxit1	shrug		charybdis	shrug		/var/log/messages		/var/run/syslog-ng.pid	/usr/lib/jvm/java-7-openjdk-amd64
+# Remote PCs (downloading testsystem over VPN)
+# MikeC
+stage		stage		stage		stage		stage		stage		NA		/var/log/messages		/var/run/syslog-ng.pid	/usr/lib/jvm/java-7-openjdk-amd64
+# SteveE (remote/home system)
+flyingv		flyingv		flyingv		flyingv		flyingv		flyingv		NA		/var/log/syslog			/var/run/rsyslogd.pid	NA
+# Offsite servers
+# sagaloo	sagpaneer	sagaloo2	localhost	sagpaneer	sagaloo2	NA		/var/log/messages		/var/run/klogd.pid	NA
+# sagpaneer	sagaloo		sagpaneer2	localhost	sagaloo		sagpaneer2	NA		/var/log/messages		/var/run/klogd.pid	NA

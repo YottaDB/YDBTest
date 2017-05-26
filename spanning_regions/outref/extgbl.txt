@@ -1,0 +1,20 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# A reference to extended global followed by a zwrite
+# A normal global access following that should not pick extended global reference
+^a(1)="default gld"
+^a(1)=default gld
+# A reference to extended global followed by a zwrite
+# A naked reference following that still should point to extended global reference
+^a(1)="default gld"
+^a(2)="default gld"
+^a(2)=extended gld
+# make sure that even if savtarg and rectarg opcodes are generated in a boolean expression,
+# the naked indicator is properly maintained and that gd_map/gd_map_top has nothing to do with this maintenance.
+Naked ^a(3)=21
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

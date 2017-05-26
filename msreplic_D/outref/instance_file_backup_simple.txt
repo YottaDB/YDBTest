@@ -1,0 +1,404 @@
+# Functionality test for backup of instance files.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'START INST1 INST3'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+###################################################################
+#- Some bakground updates on INST1:
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simplebgupdate.csh 111 > bg_pid.out'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+#- While the source servers are running on INST1, test:
+##SOURCE_PATH##/mupip backup -replinstance=bak1on.repl
+Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bak1on.repl
+Journal Seqnos up to 0x0000000000000070 are backed up.
+
+
+
+BACKUP COMPLETED.
+
+unset echo
+#        --> Does create a backup of the repl instance file
+bak1on.repl
+mumps.repl
+###################################################################
+##SOURCE_PATH##/mupip backup -replinstance=bak1on.repl
+unset echo
+#        --> We expect a MUNOACTION error since file bak1on.repl exists already
+----------
+Error MUNOACTION seen in backup1on1.out as expected:
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+----------
+Error FILEEXISTS seen in backup1on1.out as expected:
+%GTM-E-FILEEXISTS, File bak1on.repl already exists
+----------
+
+MUPIP cannot start backup with above errors
+
+###################################################################
+##SOURCE_PATH##/mupip backup -replinstance=bakx.repl -incremental
+unset echo
+#        --> Issues a MUPCLIERR error, no bakx.repl generated
+----------
+Error MUPCLIERR seen in backup1on2.out as expected:
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+----------
+INCREMENTAL cannot be specified without specifying a backup region
+###################################################################
+##SOURCE_PATH##/mupip backup -replinstance=bakx.repl -bkupdbjnl=off
+unset echo
+#        --> Issues a MUPCLIERR error, no bakx.repl generated
+----------
+Error MUPCLIERR seen in backup1on3.out as expected:
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+----------
+BKUPDBJNL cannot be specified without specifying a backup region
+###################################################################
+##SOURCE_PATH##/mupip backup -replinstance=bakx.repl -newjnlfiles
+unset echo
+#        --> Issues a MUPCLIERR error, no bakx.repl generated
+----------
+Error MUPCLIERR seen in backup1on4.out as expected:
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+----------
+NEWJNLFILES cannot be specified without specifying a backup region
+###################################################################
+mkdir bakdir1on
+##SOURCE_PATH##/mupip backup -replinstance=bakdir1on * bakdir1on
+unset echo
+#        --> Creates a backup of the replinstance file as well as all regions in the directory bakdir1on
+
+
+
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with .*BEFORE_IMAGES
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file bakdir1on/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file bakdir1on/b.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file bakdir1on/mumps.dat
+Journal Seqnos up to 0x0000000000000070 are backed up.
+Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bakdir1on/mumps.repl
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000070 are backed up.
+##ALLOW_OUTPUT SPANNING_REGIONS
+# Total number of transactions backed up:  114
+ls bakdir1on
+a.dat
+b.dat
+mumps.dat
+mumps.repl
+unset echo
+###################################################################
+##SOURCE_PATH##/mupip backup -replinstance=bakdir1on
+unset echo
+#        --> We expect a MUNOACTION error since bakdir1on exists, since there is a mumps.repl in it already
+----------
+Error MUNOACTION seen in backup1on6.out as expected:
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+----------
+Error FILEEXISTS seen in backup1on6.out as expected:
+%GTM-E-FILEEXISTS, File bakdir1on/mumps.repl already exists
+----------
+
+MUPIP cannot start backup with above errors
+
+###################################################################
+##SOURCE_PATH##/mupip backup -replinstance=bakdirf * bakdirf
+unset echo
+	--> Should error out after the replication instance file backup (at the first region's backup) that the file
+	    exists.
+----------
+Error MUNOACTION seen in backup1on7.out as expected:
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+
+
+Cannot backup replication instance file and database region AREG to the same destination file bakdirf
+MUPIP cannot start backup with above errors
+###################################################################
+mkdir bakdirrepl bakdirdb
+##SOURCE_PATH##/mupip backup -replinstance=bakdirrepl * bakdirdb
+unset echo
+#	--> The replication instance file should be backed up into bakdirrepl directory, and databases into bakdirdb.
+
+
+
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with .*BEFORE_IMAGES
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file bakdirdb/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file bakdirdb/b.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file bakdirdb/mumps.dat
+Journal Seqnos up to 0x0000000000000070 are backed up.
+Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bakdirrepl/mumps.repl
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000070 are backed up.
+##ALLOW_OUTPUT SPANNING_REGIONS
+# Total number of transactions backed up:  114
+bakdirrepl:
+mumps.repl
+bakdirdb:
+a.dat
+b.dat
+mumps.dat
+###################################################################
+#- Do some of the backup commands on INST2, same results expected.
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP backup -replinstance=bak2.repl >& bak2.tmp; cat bak2.tmp'==
+Replication Instance file ##TEST_AWK.*/instance2/mumps.repl backed up in file bak2.repl
+Journal Seqnos up to 0x0000000000000070 are backed up.
+
+
+
+BACKUP COMPLETED.
+
+#        --> Does create a backup of the repl instance file
+==Executing MULTISITE_REPLIC 'RUN INST2 ls bak2.repl mumps.repl'==
+bak2.repl
+mumps.repl
+###################################################################
+----------
+Error MUPCLIERR seen in msr_execute_##FILTERED##NO.out as expected:
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+----------
+----------
+Error MUPCLIERR seen in backup21.out as expected:
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+----------
+==Executing MULTISITE_REPLIC 'RUN INST2 set msr_dont_chk_stat; $MUPIP backup -replinstance=bakx.repl -incremental >& backup21.tmp; cat backup21.tmp'==
+INCREMENTAL cannot be specified without specifying a backup region
+#        --> Issues a MUPCLIERR error, no bakx.repl generated
+###################################################################
+----------
+Error MUPCLIERR seen in msr_execute_##FILTERED##NO.out as expected:
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+----------
+----------
+Error MUPCLIERR seen in backup22.out as expected:
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+----------
+==Executing MULTISITE_REPLIC 'RUN INST2 set msr_dont_chk_stat; $MUPIP backup -replinstance=bakx.repl -bkupdbjnl="off" >& backup22.tmp; cat backup22.tmp'==
+BKUPDBJNL cannot be specified without specifying a backup region
+#        --> Issues a MUPCLIERR error, no bakx.repl generated
+###################################################################
+----------
+Error MUPCLIERR seen in msr_execute_##FILTERED##NO.out as expected:
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+----------
+----------
+Error MUPCLIERR seen in backup23.out as expected:
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+----------
+==Executing MULTISITE_REPLIC 'RUN INST2 set msr_dont_chk_stat; $MUPIP backup -replinstance=bakx.repl -newjnlfiles >& backup23.tmp; cat backup23.tmp'==
+NEWJNLFILES cannot be specified without specifying a backup region
+#        --> Issues a MUPCLIERR error, no bakx.repl generated
+###################################################################
+
+
+
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_AWK.*/instance2/a.mjl is renamed to ##TEST_AWK.*/instance2/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_AWK.*/instance2/b.mjl is renamed to ##TEST_AWK.*/instance2/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_AWK.*/instance2/mumps.mjl is renamed to ##TEST_AWK.*/instance2/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_AWK.*/instance2/a.mjl created for region AREG with .*BEFORE_IMAGES
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_AWK.*/instance2/b.mjl created for region BREG with .*BEFORE_IMAGES
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_AWK.*/instance2/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+==Executing MULTISITE_REPLIC 'RUN INST2 mkdir bakdir2; $MUPIP backup -replinstance=bakdir2 "*" bakdir2 >& backup24.tmp; cat backup24.tmp'==
+BACKUP COMPLETED.
+DB file ##TEST_AWK.*/instance2/a.dat backed up in file bakdir2/a.dat
+DB file ##TEST_AWK.*/instance2/b.dat backed up in file bakdir2/b.dat
+DB file ##TEST_AWK.*/instance2/mumps.dat backed up in file bakdir2/mumps.dat
+Journal Seqnos up to 0x0000000000000070 are backed up.
+Replication Instance file ##TEST_AWK.*/instance2/mumps.repl backed up in file bakdir2/mumps.repl
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000070 are backed up.
+##ALLOW_OUTPUT SPANNING_REGIONS
+# Total number of transactions backed up:  114
+#        --> Creates a backup of the replinstance file as well as all regions in the directory bakdir1
+==Executing MULTISITE_REPLIC 'RUN INST2 ls bakdir2'==
+a.dat
+b.dat
+mumps.dat
+mumps.repl
+###################################################################
+#- Shutdown M process:
+###################################################################
+#- Some more updates on INST1:
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+###################################################################
+#- Shutdown the replication servers
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+==Executing MULTISITE_REPLIC 'STOP INST1 INST3'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Shutting down Primary Source Server Server in ##TEST_PATH##
+###################################################################
+#- Do some of the backup commands on INST1, same results expected
+##SOURCE_PATH##/mupip backup -replinstance=bak1b.repl
+Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bak1b.repl
+Journal Seqnos up to 0x00000000000000DF are backed up.
+
+
+
+BACKUP COMPLETED.
+
+unset echo
+#        --> Does create a backup of the repl instance file
+bak1b.repl
+mumps.repl
+###################################################################
+##SOURCE_PATH##/mupip backup -replinstance=bak1b.repl
+unset echo
+#        --> We expect a MUNOACTION error since file bak1b.repl exists already
+----------
+Error MUNOACTION seen in backup1off1.out as expected:
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+----------
+Error FILEEXISTS seen in backup1off1.out as expected:
+%GTM-E-FILEEXISTS, File bak1b.repl already exists
+----------
+
+MUPIP cannot start backup with above errors
+
+###################################################################
+##SOURCE_PATH##/mupip backup -replinstance=bakx.repl -incremental
+unset echo
+#        --> Issues a MUPCLIERR error, no bakx.repl generated
+----------
+Error MUPCLIERR seen in backup1off2.out as expected:
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+----------
+INCREMENTAL cannot be specified without specifying a backup region
+###################################################################
+##SOURCE_PATH##/mupip backup -replinstance=bakx.repl -bkupdbjnl=off
+unset echo
+#        --> Issues a MUPCLIERR error, no bakx.repl generated
+----------
+Error MUPCLIERR seen in backup1off3.out as expected:
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+----------
+BKUPDBJNL cannot be specified without specifying a backup region
+###################################################################
+##SOURCE_PATH##/mupip backup -replinstance=bakx.repl -newjnlfiles
+unset echo
+#        --> Issues a MUPCLIERR error, no bakx.repl generated
+----------
+Error MUPCLIERR seen in backup1off4.out as expected:
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+----------
+NEWJNLFILES cannot be specified without specifying a backup region
+###################################################################
+mkdir bakdir1off
+##SOURCE_PATH##/mupip backup -replinstance=bakdir1off * bakdir1off
+unset echo
+#        --> Creates a backup of the replinstance file as well as all regions in the directory bakdir1off
+
+
+
+
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with .*BEFORE_IMAGES
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+BACKUP COMPLETED.
+DB file ##TEST_PATH##/a.dat backed up in file bakdir1off/a.dat
+DB file ##TEST_PATH##/b.dat backed up in file bakdir1off/b.dat
+DB file ##TEST_PATH##/mumps.dat backed up in file bakdir1off/mumps.dat
+Journal Seqnos up to 0x00000000000000DF are backed up.
+Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bakdir1off/mumps.repl
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x0000000000000001 are backed up.
+Transactions up to 0x00000000000000DF are backed up.
+##ALLOW_OUTPUT SPANNING_REGIONS
+# Total number of transactions backed up:  225
+ls bakdir1off
+a.dat
+b.dat
+mumps.dat
+mumps.repl
+unset echo
+###################################################################
+#- Attempt to use the offline backup:
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'START INST1 INST3'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 111'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT INST1 INST2 INST3'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

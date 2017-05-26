@@ -1,0 +1,21 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+-----------------------------------------------------------------------------------------------
+Issue mupip rundown while doing GTM updates without gtm_passwd and expect to error out
+-----------------------------------------------------------------------------------------------
+unsetenv gtm_passwd
+mupip rundown -region DEFAULT
+%GTM-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+-----------------------------------------------------------------------------------------------
+Issue mupip rundown while doing GTM updates with bad gtm_passwd and expect to error out
+-----------------------------------------------------------------------------------------------
+mupip rundown -region DEFAULT
+##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
+%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

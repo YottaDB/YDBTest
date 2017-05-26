@@ -1,0 +1,183 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+###################################################################
+Unicode subscript matching
+###################################################################
+match single subscripts
+^fired("hindinum#1#")=1
+^fired("hindinum#1#",1)="CHARS: ^hindinum(""१"") १"
+^fired("hindinum#2#")=1
+^fired("hindinum#2#",1)="DOLLARCHAR: ^hindinum(""१"") १"
+^fired("hindinum#3#")=1
+^fired("hindinum#3#",1)="DOLLARZCHAR: ^hindinum(""१"") १"
+^fired("names#2#")=1
+^fired("names#2#",1)="^names(""અમિ"")"
+^fired("names#3#")=1
+^fired("names#3#",1)="^names(""અમૂલ"")"
+###################################################################
+###################################################################
+
+match ranges
+^fired("generic#1#")=2
+^fired("generic#1#",1)="^generic(""મિલન"") મિલન"
+^fired("generic#1#",2)="^generic(""અમૂલ"") અમૂલ"
+
+start from Hindi zero to nine
+zero won't fire a trigger
+^fired("hindinum#1#")=9
+^fired("hindinum#1#",1)="CHARS: ^hindinum(""१"") १"
+^fired("hindinum#1#",2)="CHARS: ^hindinum(""२"") २"
+^fired("hindinum#1#",3)="CHARS: ^hindinum(""३"") ३"
+^fired("hindinum#1#",4)="CHARS: ^hindinum(""४"") ४"
+^fired("hindinum#1#",5)="CHARS: ^hindinum(""५"") ५"
+^fired("hindinum#1#",6)="CHARS: ^hindinum(""६"") ६"
+^fired("hindinum#1#",7)="CHARS: ^hindinum(""७"") ७"
+^fired("hindinum#1#",8)="CHARS: ^hindinum(""८"") ८"
+^fired("hindinum#1#",9)="CHARS: ^hindinum(""९"") ९"
+^fired("hindinum#2#")=9
+^fired("hindinum#2#",1)="DOLLARCHAR: ^hindinum(""१"") १"
+^fired("hindinum#2#",2)="DOLLARCHAR: ^hindinum(""२"") २"
+^fired("hindinum#2#",3)="DOLLARCHAR: ^hindinum(""३"") ३"
+^fired("hindinum#2#",4)="DOLLARCHAR: ^hindinum(""४"") ४"
+^fired("hindinum#2#",5)="DOLLARCHAR: ^hindinum(""५"") ५"
+^fired("hindinum#2#",6)="DOLLARCHAR: ^hindinum(""६"") ६"
+^fired("hindinum#2#",7)="DOLLARCHAR: ^hindinum(""७"") ७"
+^fired("hindinum#2#",8)="DOLLARCHAR: ^hindinum(""८"") ८"
+^fired("hindinum#2#",9)="DOLLARCHAR: ^hindinum(""९"") ९"
+^fired("hindinum#3#")=9
+^fired("hindinum#3#",1)="DOLLARZCHAR: ^hindinum(""१"") १"
+^fired("hindinum#3#",2)="DOLLARZCHAR: ^hindinum(""२"") २"
+^fired("hindinum#3#",3)="DOLLARZCHAR: ^hindinum(""३"") ३"
+^fired("hindinum#3#",4)="DOLLARZCHAR: ^hindinum(""४"") ४"
+^fired("hindinum#3#",5)="DOLLARZCHAR: ^hindinum(""५"") ५"
+^fired("hindinum#3#",6)="DOLLARZCHAR: ^hindinum(""६"") ६"
+^fired("hindinum#3#",7)="DOLLARZCHAR: ^hindinum(""७"") ७"
+^fired("hindinum#3#",8)="DOLLARZCHAR: ^hindinum(""८"") ८"
+^fired("hindinum#3#",9)="DOLLARZCHAR: ^hindinum(""९"") ९"
+
+start from Gujarati zero to nine.
+zero fires no trigger. 1 fires one triggers. 2-9 fire an extra trigger
+^fired("gujaratinum#1#")=1
+^fired("gujaratinum#1#",1)="1to1999: ^gujaratinum(""૧"") ૧"
+^fired("gujaratinum#2#")=8
+^fired("gujaratinum#2#",1)="2+: ^gujaratinum(""૨"") ૨"
+^fired("gujaratinum#2#",2)="2+: ^gujaratinum(""૩"") ૩"
+^fired("gujaratinum#2#",3)="2+: ^gujaratinum(""૪"") ૪"
+^fired("gujaratinum#2#",4)="2+: ^gujaratinum(""૫"") ૫"
+^fired("gujaratinum#2#",5)="2+: ^gujaratinum(""૬"") ૬"
+^fired("gujaratinum#2#",6)="2+: ^gujaratinum(""૭"") ૭"
+^fired("gujaratinum#2#",7)="2+: ^gujaratinum(""૮"") ૮"
+^fired("gujaratinum#2#",8)="2+: ^gujaratinum(""૯"") ૯"
+^fired("gujaratinum#3#")=7
+^fired("gujaratinum#3#",1)="2k+: ^gujaratinum(""૩"") ૩"
+^fired("gujaratinum#3#",2)="2k+: ^gujaratinum(""૪"") ૪"
+^fired("gujaratinum#3#",3)="2k+: ^gujaratinum(""૫"") ૫"
+^fired("gujaratinum#3#",4)="2k+: ^gujaratinum(""૬"") ૬"
+^fired("gujaratinum#3#",5)="2k+: ^gujaratinum(""૭"") ૭"
+^fired("gujaratinum#3#",6)="2k+: ^gujaratinum(""૮"") ૮"
+^fired("gujaratinum#3#",7)="2k+: ^gujaratinum(""૯"") ૯"
+###################################################################
+###################################################################
+
+patterns
+^fired("gujaratipat#1#")=2
+^fired("gujaratipat#1#",1)="ALLNUMS: ^gujaratipat(""५"") ५"
+^fired("gujaratipat#1#",2)="ALLNUMS: ^gujaratipat(""૨૦૦૦"") ૨૦૦૦"
+^fired("gujaratipat#2#")=4
+^fired("gujaratipat#2#",1)="MATCHALL: ^gujaratipat(""५"") ५"
+^fired("gujaratipat#2#",2)="MATCHALL: ^gujaratipat(""૨૦૦૦"") ૨૦૦૦"
+^fired("gujaratipat#2#",3)="MATCHALL: ^gujaratipat(""૨૨૨-५५-૦૦૦૦"") ૨૨૨-५५-૦૦૦૦"
+^fired("gujaratipat#2#",4)="MATCHALL: ^gujaratipat(""૨૨-૧૧૧૧૧૧૧"") ૨૨-૧૧૧૧૧૧૧"
+^fired("gujaratipat#3#")=2
+^fired("gujaratipat#3#",1)="SSN/TIN: ^gujaratipat(""૨૨૨-५५-૦૦૦૦"") ૨૨૨-५५-૦૦૦૦"
+^fired("gujaratipat#3#",2)="SSN/TIN: ^gujaratipat(""૨૨-૧૧૧૧૧૧૧"") ૨૨-૧૧૧૧૧૧૧"
+^fired("gujaratipat#4#")=1
+^fired("gujaratipat#4#",1)="SSN+User: ^gujaratipat(""૨૨૨-५५-૦૦૦૦"",""અમૂલ"") ૨૨૨-५५-૦૦૦૦ અમૂલ"
+^fired("hindipat#1#")=20
+^fired("hindipat#1#",1)="ALLNUMS: ^hindipat(""०"") ०"
+^fired("hindipat#1#",2)="ALLNUMS: ^hindipat(""१"") १"
+^fired("hindipat#1#",3)="ALLNUMS: ^hindipat(""२"") २"
+^fired("hindipat#1#",4)="ALLNUMS: ^hindipat(""३"") ३"
+^fired("hindipat#1#",5)="ALLNUMS: ^hindipat(""४"") ४"
+^fired("hindipat#1#",6)="ALLNUMS: ^hindipat(""५"") ५"
+^fired("hindipat#1#",7)="ALLNUMS: ^hindipat(""६"") ६"
+^fired("hindipat#1#",8)="ALLNUMS: ^hindipat(""७"") ७"
+^fired("hindipat#1#",9)="ALLNUMS: ^hindipat(""८"") ८"
+^fired("hindipat#1#",10)="ALLNUMS: ^hindipat(""९"") ९"
+^fired("hindipat#1#",11)="ALLNUMS: ^hindipat(""००"") ००"
+^fired("hindipat#1#",12)="ALLNUMS: ^hindipat(""११"") ११"
+^fired("hindipat#1#",13)="ALLNUMS: ^hindipat(""२२"") २२"
+^fired("hindipat#1#",14)="ALLNUMS: ^hindipat(""३३"") ३३"
+^fired("hindipat#1#",15)="ALLNUMS: ^hindipat(""४४"") ४४"
+^fired("hindipat#1#",16)="ALLNUMS: ^hindipat(""५५"") ५५"
+^fired("hindipat#1#",17)="ALLNUMS: ^hindipat(""६६"") ६६"
+^fired("hindipat#1#",18)="ALLNUMS: ^hindipat(""७७"") ७७"
+^fired("hindipat#1#",19)="ALLNUMS: ^hindipat(""८८"") ८८"
+^fired("hindipat#1#",20)="ALLNUMS: ^hindipat(""९९"") ९९"
+^fired("hindipat#2#")=10
+^fired("hindipat#2#",1)="SOMENUMS: ^hindipat(""०"") ०"
+^fired("hindipat#2#",2)="SOMENUMS: ^hindipat(""१"") १"
+^fired("hindipat#2#",3)="SOMENUMS: ^hindipat(""२"") २"
+^fired("hindipat#2#",4)="SOMENUMS: ^hindipat(""३"") ३"
+^fired("hindipat#2#",5)="SOMENUMS: ^hindipat(""४"") ४"
+^fired("hindipat#2#",6)="SOMENUMS: ^hindipat(""५"") ५"
+^fired("hindipat#2#",7)="SOMENUMS: ^hindipat(""६"") ६"
+^fired("hindipat#2#",8)="SOMENUMS: ^hindipat(""७"") ७"
+^fired("hindipat#2#",9)="SOMENUMS: ^hindipat(""८"") ८"
+^fired("hindipat#2#",10)="SOMENUMS: ^hindipat(""९"") ९"
+###################################################################
+###################################################################
+
+compound
+^fired("gujaratipat#4#")=1
+^fired("gujaratipat#4#",1)="SSN+User: ^gujaratipat(""૨૨૨-५५-૦૦૦૦"",""અમૂલ"") ૨૨૨-५५-૦૦૦૦ અમૂલ"
+^fired("hindi#4#")=2
+^fired("hindi#4#",1)="MESSY: ^hindi(""२"",""१०"") २ १०"
+^fired("hindi#4#",2)="MESSY: ^hindi(""२"",""३"") २ ३"
+###################################################################
+###################################################################
+
+Go against encoding to get a subscript range error
+###################################################################
+Disable Unicode numeric pattern matching
+###################################################################
+Unicode numeric pattern matching disabled
+
+patterns
+^fired("gujaratipat#2#")=4
+^fired("gujaratipat#2#",1)="MATCHALL: ^gujaratipat(""५"") ५"
+^fired("gujaratipat#2#",2)="MATCHALL: ^gujaratipat(""૨૦૦૦"") ૨૦૦૦"
+^fired("gujaratipat#2#",3)="MATCHALL: ^gujaratipat(""૨૨૨-५५-૦૦૦૦"") ૨૨૨-५५-૦૦૦૦"
+^fired("gujaratipat#2#",4)="MATCHALL: ^gujaratipat(""૨૨-૧૧૧૧૧૧૧"") ૨૨-૧૧૧૧૧૧૧"
+###################################################################
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

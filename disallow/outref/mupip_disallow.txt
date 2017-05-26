@@ -1,0 +1,1321 @@
+
+GTM>
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!! Lines beginning with ! are comments
+!! Lines beginning with p are Unix commands where to obtain the VMS equivalent we do the following
+!!	'-' is globally substituted with '/'
+!!	'"..."' is globally substituted with '(...)'
+!! Lines beginning with u are unix-specific commands
+!! Lines beginning with v are vvms-specific commands
+!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP BACKUP
+!	DISALLOW((TRANSACTION OR SINCE) AND NOT(INCREMENTAL OR BYTESTREAM) )
+!
+! MUPIP BACKUP needs two parameters one for the region and one for the backup directory. If not specified VMS MUPIP will prompt.
+! To avoid that we provide dummy parameters. Similar case for other MUPIP commands too.
+!
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -transaction=10 -comprehensive  ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -transaction=10 -database ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -transaction=10 -dbg ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -transaction=10 -journal="off,enable" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -transaction=10 -nettimeout=5 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -transaction=10 -newjnlfiles ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -transaction=10 -bkupdbjnl="off" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -transaction=10 -online ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -transaction=10 -record ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -transaction=10 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -since="bytestream" -comprehensive  ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION SINCE INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -since="database" -database ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION SINCE INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -since="record" -dbg ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION SINCE INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -since="comprehensive" -journal="off,enable" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION SINCE INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -since="incremental" -nettimeout=5 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION SINCE INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -since="bytestream" -newjnlfiles ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION SINCE INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -since="comprehensive" -bkupdbjnl="off" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION SINCE INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -since="record" -online ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION SINCE INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -since="database" -record ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION SINCE INCREMENTAL BYTESTREAM
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -since="record" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION SINCE INCREMENTAL BYTESTREAM
+!
+!	DISALLOW(((INCREMENTAL OR BYTESTREAM) AND (COMPREHENSIVE OR DATABASE)) OR (TRANSACTION AND SINCE) )
+!
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -incremental -comprehensive  ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: INCREMENTAL COMPREHENSIVE
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -incremental -database ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: INCREMENTAL COMPREHENSIVE DATABASE
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -bytestream -comprehensive  ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: INCREMENTAL BYTESTREAM COMPREHENSIVE
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -bytestream -database ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: INCREMENTAL BYTESTREAM COMPREHENSIVE DATABASE
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -transaction=10 -incremental -since="bytestream" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRANSACTION SINCE
+!
+!	DISALLOW((BKUPDBJNL.DISABLE) AND (BKUPDBJNL.OFF))
+!
+--------- Testing : ##SOURCE_PATH##/mupip  backup dummy_region dummy_backup_dir -bkupdbjnl="disable,off" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE OFF
+!
+!	VMS : DISALLOW dstinstname
+!
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP FREEZE
+!	DISALLOW(NOT(ON) AND NOT(OFF) )
+!
+--------- Testing : ##SOURCE_PATH##/mupip  freeze dummy_region -record ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
+--------- Testing : ##SOURCE_PATH##/mupip  freeze dummy_region -override ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
+--------- Testing : ##SOURCE_PATH##/mupip  freeze dummy_region ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
+!
+!	DISALLOW(RECORD AND NOT(ON) )
+!
+--------- Testing : ##SOURCE_PATH##/mupip  freeze dummy_region -record -off -override ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD ON
+--------- Testing : ##SOURCE_PATH##/mupip  freeze dummy_region -record -off ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD ON
+!
+!	DISALLOW(OVERRIDE AND NOT(OFF) )
+!
+--------- Testing : ##SOURCE_PATH##/mupip  freeze dummy_region -override -on -record ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: OVERRIDE OFF
+--------- Testing : ##SOURCE_PATH##/mupip  freeze dummy_region -override -on ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: OVERRIDE OFF
+!
+!	DISALLOW(ON AND OFF )
+!
+--------- Testing : ##SOURCE_PATH##/mupip  freeze dummy_region -on -off ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP INTEG
+!	DISALLOW(BRIEF AND FULL)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  integ dummy_file -brief -full ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: BRIEF FULL
+!
+!	DISALLOW(FILE AND REGION)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  integ dummy_file -file -region ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION
+!
+!	DISALLOW(TN_RESET AND (FAST OR BLOCK OR SUBSCRIPT OR REGION))
+!
+--------- Testing : ##SOURCE_PATH##/mupip  integ dummy_file -tn_reset -fast ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TN_RESET FAST
+--------- Testing : ##SOURCE_PATH##/mupip  integ dummy_file -tn_reset -block=10 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TN_RESET FAST BLOCK
+--------- Testing : ##SOURCE_PATH##/mupip  integ dummy_file -tn_reset -subs="abcd" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TN_RESET FAST BLOCK SUBSCRIPT
+--------- Testing : ##SOURCE_PATH##/mupip  integ dummy_file -tn_reset -region ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: TN_RESET FAST BLOCK SUBSCRIPT REGION
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP INTRPT
+!	VMS  : DISALLOW NOT(name OR id)
+!
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP JOURNAL
+!	DISALLOW NOT (recover OR verify OR show OR extract OR rollback)
+!	DISALLOW recover and rollback
+!	DISALLOW NOT (forward OR backward)
+!	DISALLOW forward AND backward
+!	DISALLOW since AND forward
+!	DISALLOW lookback_limit AND forward
+!	DISALLOW redirect AND NOT recover
+!	DISALLOW checktn AND backward
+!	DISALLOW resync and fetchresync
+!	DISALLOW (resync OR fetchresync) AND NOT(rollback)
+!	DISALLOW losttrans AND NOT(recover OR rollback OR extract)
+!	DISALLOW brokentrans AND NOT(recover OR rollback OR extract)
+!	DISALLOW forward AND rollback
+!	DISALLOW full AND (recover OR rollback)
+!	DISALLOW detail AND NOT extract
+!	DISALLOW after and NOT forward
+!	DISALLOW after and (recover OR rollback)
+!	DISALLOW since and NOT backward
+!	DISALLOW lookback_limit AND NOT backward
+!	DISALLOW lookback_limit AND NOT (verify OR recover OR extract OR show)
+!	DISALLOW apply_after_image AND NOT (recover OR rollback)
+!	DISALLOW redirect AND NOT recover
+!	DISALLOW redirect AND NOT forward
+!	DISALLOW backward AND NEG chain
+!	DISALLOW (after OR before OR since OR lookback_limit) AND rollback
+!	DISALLOW (global OR user OR id OR process OR transaction) AND (recover OR rollback OR verify)
+!	DISALLOW output AND interactive
+!
+! Disallows for MUPIP JOURNAL are taken care of by the "mu_jnl_disallow" subtest of the mupjnl test.
+! See there for details.
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP RUNDOWN
+!	DISALLOW(FILE AND REGION)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  rundown -file -region ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP SET
+!
+!	since the maximum number of parameters is 1 for MUPIP SET command, we specify only one dummy parameter in the following
+!	not specifying that one parameter will cause VMS MUPIP SET to prompt for input which we want to avoid.
+!
+!	DISALLOW ANY2(file, region, jnlfile)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -file -region ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -file -jnlfile ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -region -jnlfile ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -region -jnlfile -file ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+!
+!	DISALLOW(NOT(file OR region OR jnlfile))
+!
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -journal="enable,off" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -access="BG" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -defer_time=40 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -extension=30 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -flush_time ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -global_buffers=2048 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -lock_space=2048 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reserved_bytes=2048 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -replication="on" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -bypass ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -partial_recov_bypass ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -dbfilename="abcd.dat" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -prevjnlfile="abcd.mjl" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -repl_state="off" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -standalonenot ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -wait_disk=10 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+!
+!
+! In order to better test the following MUPIP SET DISALLOWs, we need to specify a dummy -reg as otherwise the previous
+!	DISALLOW(NOT(file OR region OR jnlfile)) will take effect below too. Hence you will see "p set dummy_region -reg" below.
+!
+!       DISALLOW -VERSION AND -ACCESS_METHOD
+!       DISALLOW -VERSION AND -GLOBAL_BUFFERS
+!       DISALLOW -VERSION AND -RESERVED_BYTES
+!       DISALLOW -VERSION AND -FLUSH_TIME
+!       DISALLOW -VERSION AND -LOCK_SPACE
+!       DISALLOW -VERSION AND -DEFER_TIME
+!       DISALLOW -VERSION AND -WAIT_DISK
+!       DISALLOW -VERSION AND -PARTIAL_RECOV_BYPASS
+!
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -version=V4 -access_method="BG" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -version=V4 -global_buffers=2048 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -version=V4 -reserved_bytes=0 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS RESERVED_BYTES
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -version=V4 -flush_time ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS RESERVED_BYTES FLUSH_TIME
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -version=V4 -lock_space=2048 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS RESERVED_BYTES FLUSH_TIME LOCK_SPACE
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -version=V4 -defer_time=40 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS RESERVED_BYTES FLUSH_TIME LOCK_SPACE DEFER_TIME
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -version=V4 -wait_disk=10 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS RESERVED_BYTES FLUSH_TIME LOCK_SPACE DEFER_TIME WAIT_DISK
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -version=V4 -partial_recov_bypass ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS RESERVED_BYTES FLUSH_TIME LOCK_SPACE DEFER_TIME WAIT_DISK PARTIAL_RECOV_BYPASS
+!
+!
+!	DISALLOW(journal.on AND journal.off)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="off,on" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
+!
+!	! --- disallow /NOJOURNAL=DISABLE ---
+!	DISALLOW(journal.disable AND NEG journal)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="disable" ------------
+%GTM-E-CLIERR, Assignment is not allowed for this option : JOURNAL
+!
+!	! --- disallow any other journal options for both /NOJOURNAL and DISABLE (Unix CLI disallows assignment for /NOJOURNAL) ---
+!	DISALLOW((journal.disable OR NEG journal) AND (journal.on OR journal.off OR journal.enable OR journal.before_images
+!		OR journal.filename OR journal.allocation OR journal.extension OR journal.buffer_size OR journal.alignsize
+!		OR journal.epoch_interval OR journal.autoswitchlimit OR NEG journal.before_images))
+!
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,on" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,off" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,enable" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,before_images" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,filename=dummy.mjl" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,allocation=10" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,extension=20" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,buffer_size=40" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,alignsize=80" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE ALIGNSIZE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,epoch_interval=100" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE ALIGNSIZE EPOCH_INTERVAL
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,autoswitchlimit=2048" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE ALIGNSIZE EPOCH_INTERVAL AUTOSWITCHLIMIT
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,nobefore_images" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="on" ------------
+%GTM-E-CLIERR, Assignment is not allowed for this option : JOURNAL
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="off" ------------
+%GTM-E-CLIERR, Assignment is not allowed for this option : JOURNAL
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="enable" ------------
+%GTM-E-CLIERR, Assignment is not allowed for this option : JOURNAL
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="before_images" ------------
+%GTM-E-CLIERR, Assignment is not allowed for this option : JOURNAL
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="filename=dummy.mjl" ------------
+%GTM-E-CLIERR, Assignment is not allowed for this option : JOURNAL
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="allocation=10" ------------
+%GTM-E-CLIERR, Assignment is not allowed for this option : JOURNAL
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="extension=20" ------------
+%GTM-E-CLIERR, Assignment is not allowed for this option : JOURNAL
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="buffer_size=40" ------------
+%GTM-E-CLIERR, Assignment is not allowed for this option : JOURNAL
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="alignsize=80" ------------
+%GTM-E-CLIERR, Assignment is not allowed for this option : JOURNAL
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="epoch_interval=100" ------------
+%GTM-E-CLIERR, Assignment is not allowed for this option : JOURNAL
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="autoswitchlimit=2048" ------------
+%GTM-E-CLIERR, Assignment is not allowed for this option : JOURNAL
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="nobefore_images" ------------
+%GTM-E-CLIERR, Assignment is not allowed for this option : JOURNAL
+!
+!	DISALLOW(journal AND NOT(journal.disable OR journal.off OR journal.before_images OR NEG journal.before_images))
+!
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="on" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="enable,on" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="enable,on,filename=dummy.mjl" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="enable,on,allocation=10" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="enable,on,extension=15" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="enable,on,buffer_size=25" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="enable,on,alignsize=100" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="enable,on,epoch_interval=40" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="enable,on,autoswitchlimit=85" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+!
+!	DISALLOW(replication.on AND replication.off)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -replication="off,on" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
+!
+!	DISALLOW(replication.on AND (journal.off OR journal.disable OR NEG journal OR NEG journal.before_images))
+!
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -replication="on" -journal="off" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -replication="on" -journal="disable" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF DISABLE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -replication="on" -nojournal ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF DISABLE JOURNAL
+!
+!	DISALLOW(prevjnlfile AND NOT(jnlfile))
+!
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl"  ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -journal="enable,off" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -access="BG" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -defer_time=40 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -extension=30 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -flush_time ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -global_buffers=2048 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -lock_space=2048 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -reserved_bytes=2048 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -replication="on" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -bypass ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -partial_recov_bypass ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -dbfilename="abcd.dat" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -prevjnlfile="abcd.mjl" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -repl_state="off" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -standalonenot ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -wait_disk=10 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+--------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -file -prevjnlfile="abcd.mjl" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP STOP
+!	VMS  : DISALLOW NOT(name OR id)
+!
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP REPLICATE
+!	VMS  : DISALLOW NOT(RECEIVER OR SOURCE OR UPDATEPROC)
+!	Unix : DISALLOW NOT(RECEIVER OR SOURCE OR UPDATEPROC OR INSTANCE_CREATE)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: EDITINSTANCE INSTANCE_CREATE RECEIVER SOURCE UPDATEPROC UPDHELPER
+!
+!  MUPIP REPLICATE -RECEIVER (Receiver server)
+!	DISALLOW ANY2(start, shutdown, checkhealth, statslog, showbacklog, changelog)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -shutdown ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -checkhealth ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -statslog="dummylog" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -showbacklog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -changelog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -shutdown -checkhealth ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -shutdown -statslog="dummylog" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -shutdown -showbacklog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -shutdown -changelog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -checkhealth -statslog="dummylog" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -checkhealth -showbacklog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -checkhealth -changelog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -statslog="dummylog" -showbacklog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -statslog="dummylog" -changelog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -showbacklog -changelog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+!
+!	VMS : DISALLOW noresync OR loadinst
+!
+!
+!	DISALLOW NOT(start OR shutdown OR checkhealth OR statslog OR showbacklog OR changelog)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -buff=10 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -filter="abcd" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -listenport=15 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -log="dummylog" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -stopsourcefilter ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -timeout ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -notimeout ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -updateonly ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -updateresync ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+!
+!	DISALLOW (((start AND NOT(updateonly)) OR changelog) AND NOT(log))
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START LISTENPORT UPDATEONLY HELPERS
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -buff=10 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START LISTENPORT UPDATEONLY HELPERS
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -filter="abcd" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START LISTENPORT UPDATEONLY HELPERS
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -listenport=15 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START LISTENPORT LOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -stopsourcefilter ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START LISTENPORT UPDATEONLY HELPERS
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -timeout ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START LISTENPORT UPDATEONLY HELPERS
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -notimeout ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START LISTENPORT UPDATEONLY HELPERS
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -updateresync ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START LISTENPORT UPDATEONLY HELPERS
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -changelog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGELOG LOG LOG_INTERVAL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -changelog -buff=10 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGELOG LOG LOG_INTERVAL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -changelog -filter="abcd" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGELOG LOG LOG_INTERVAL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -changelog -listenport=15 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START LISTENPORT
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -changelog -stopsourcefilter ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGELOG LOG LOG_INTERVAL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -changelog -timeout ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGELOG LOG LOG_INTERVAL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -changelog -notimeout ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGELOG LOG LOG_INTERVAL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -changelog -updateonly ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN UPDATEONLY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -changelog -updateresync ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START LISTENPORT UPDATERESYNC
+!
+!	DISALLOW (statslog AND log)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -statslog=ON -log=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: STATSLOG LOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -statslog=OFF -log=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: STATSLOG LOG
+!
+!	DISALLOW (NOT(start) AND updateresync)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -updateresync -changelog -log="dummylog" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START LISTENPORT UPDATERESYNC
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -updateresync -checkhealth ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START LISTENPORT UPDATERESYNC
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -updateresync -showbacklog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START LISTENPORT UPDATERESYNC
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -updateresync -shutdown ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START LISTENPORT UPDATERESYNC
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -updateresync -statslog="dummylog" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START LISTENPORT UPDATERESYNC
+!
+!	disallow_return_value = (d_c_cli_present("UPDATERESYNC") && d_c_cli_present("NORESYNC"));
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -listenport=15 -log=receiver.log -updateresync -noresync ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: UPDATERESYNC NORESYNC
+!
+!	disallow_return_value = (!d_c_cli_present("UPDATERESYNC") && (d_c_cli_present("REUSE")
+!								|| d_c_cli_present("RESUME")
+!								|| d_c_cli_present("INITIALIZE")));
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -listenport=15 -log=receiver.log -reuse=INSTANCE2 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: UPDATERESYNC REUSE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -listenport=15 -log=receiver.log -resume=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: UPDATERESYNC REUSE RESUME
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -listenport=15 -log=receiver.log -initialize ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: UPDATERESYNC REUSE RESUME INITIALIZE
+!
+!	disallow_return_value = (d_c_cli_present("INITIALIZE") && d_c_cli_present("RESUME"));
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -listenport=15 -log=receiver.log -updateresync -initialize -resume=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: INITIALIZE RESUME
+!
+!	disallow_return_value = (d_c_cli_present("REUSE") && d_c_cli_present("RESUME"));
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -listenport=15 -log=receiver.log -updateresync -reuse=INSTANCE2 -resume=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: REUSE RESUME
+!
+!	/* ROOTPRIMARY (or UPDOK) and PROPAGATEPRIMARY (or UPDNOTOK) are mutually exclusive */
+!	disallow_return_value = ((d_c_cli_present("ROOTPRIMARY") || d_c_cli_present("UPDOK"))
+!					&& (d_c_cli_present("PROPAGATEPRIMARY") || d_c_cli_present("UPDNOTOK")));
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -passive -log=passive.log -rootprimary -updnotok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY UPDNOTOK
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -passive -log=passive.log -rootprimary -propagateprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -passive -log=passive.log -propagateprimary -updok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY UPDOK PROPAGATEPRIMARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -passive -log=passive.log -propagateprimary -rootprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY
+!
+!	/* ROOTPRIMARY and PROPAGATEPRIMARY are allowed only along with START, ACTIVATE or DEACTIVATE qualifiers */
+!	disallow_return_value = ((d_c_cli_present("ROOTPRIMARY") || d_c_cli_present("PROPAGATEPRIMARY")
+!						|| d_c_cli_present("UPDOK") || d_c_cli_present("UPDNOTOK"))
+!					&& !(d_c_cli_present("START")
+!						|| d_c_cli_present("ACTIVATE")
+!						|| d_c_cli_present("DEACTIVATE")));
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -rootprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -propagateprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -updok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY UPDOK START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -updnotok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY UPDOK UPDNOTOK START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -rootprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -propagateprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -updok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY UPDOK START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -updnotok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY UPDOK UPDNOTOK START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -rootprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -propagateprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -updok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY UPDOK START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -updnotok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY UPDOK UPDNOTOK START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -rootprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -propagateprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -updok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY UPDOK START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -updnotok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY UPDOK UPDNOTOK START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -log="dummylog" -rootprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -log="dummylog" -propagateprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -log="dummylog" -updok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY UPDOK START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -log="dummylog" -updnotok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY UPDOK UPDNOTOK START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -rootprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -propagateprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -updok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY UPDOK START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -updnotok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY UPDOK UPDNOTOK START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -rootprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -propagateprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -updok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY UPDOK START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -updnotok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY UPDOK UPDNOTOK START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -rootprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -propagateprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -updok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY UPDOK START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -updnotok ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY UPDOK UPDNOTOK START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -jnlpool -rootprimary ------------
+%GTM-E-CLIERR, Unrecognized option : ROOTPRIMARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -jnlpool -propagateprimary ------------
+%GTM-E-CLIERR, Unrecognized option : PROPAGATEPRIMARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -jnlpool -updok ------------
+%GTM-E-CLIERR, Unrecognized option : UPDOK
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -jnlpool -updnotok ------------
+%GTM-E-CLIERR, Unrecognized option : UPDNOTOK
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -freeze -rootprimary ------------
+%GTM-E-CLIERR, Unrecognized option : ROOTPRIMARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -freeze -propagateprimary ------------
+%GTM-E-CLIERR, Unrecognized option : PROPAGATEPRIMARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -freeze -updok ------------
+%GTM-E-CLIERR, Unrecognized option : UPDOK
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -freeze -updnotok ------------
+%GTM-E-CLIERR, Unrecognized option : UPDNOTOK
+!
+!  MUPIP REPLICATE -SOURCE (Receiver server)
+!	DISALLOW ANY2(start, shutdown, activate, deactivate, checkhealth, statslog, showbacklog, changelog, stopsourcefilter,losttncomplete,needrestart,jnlpool)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -shutdown ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -activate ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -deactivate ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -checkhealth ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -statslog="dummylog" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -showbacklog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -changelog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -stopsourcefilter ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -losttncomplete ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -needrestart ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START PASSIVE SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -activate ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -deactivate ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -checkhealth ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -statslog="dummylog" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -showbacklog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -changelog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -stopsourcefilter ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -losttncomplete ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -needrestart ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+! output of below command might be different because of the following reason.
+! source has its disallows and -jnlpool has its own set of disallows. It is a design limitation of our parsing scheme
+! that we can have only one disallow active at any point in time. The moment -jnlpool is parsed,
+! -jnlpool's disallow takes over and that is why it expects either a CHANGE or SHOW in the command line and does not find any
+! keep this comment till the software gets fixed
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -deactivate ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -checkhealth ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -statslog="dummylog" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -showbacklog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -changelog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -stopsourcefilter ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -losttncomplete ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -needrestart ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ACTIVATE SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -checkhealth ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -statslog="dummylog" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -showbacklog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -changelog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -stopsourcefilter ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -losttncomplete ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -needrestart ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+! output of below command might be different because of the following reason.
+! source has its disallows and -jnlpool has its own set of disallows. It is a design limitation of our parsing scheme
+! that we can have only one disallow active at any point in time. The moment -jnlpool is parsed,
+! -jnlpool's disallow takes over and that is why it expects either a CHANGE or SHOW in the command line and does not find any
+! keep this comment till the software gets fixed
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -statslog="dummylog" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -showbacklog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -changelog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -stopsourcefilter ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -losttncomplete ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -needrestart ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -showbacklog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -changelog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -stopsourcefilter ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -losttncomplete ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -needrestart ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -changelog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -stopsourcefilter ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -losttncomplete ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -needrestart ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+! ##TODO##SHOW seems to collide with the SHOWBACKLOG qualifier, so we comment it out till the software gets fixed for this
+!u replicate -source -showbacklog -jnlpool
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -stopsourcefilter ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -losttncomplete ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -needrestart ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGELOG LOG LOG_INTERVAL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -losttncomplete ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -needrestart ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -needrestart ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN
+!
+!	DISALLOW (statslog AND log)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog=ON -log=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: STATSLOG LOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog=OFF -log=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: STATSLOG LOG
+!
+!
+!	DISALLOW NOT(update OR start OR shutdown OR activate OR deactivate OR checkhealth
+!			OR statslog OR showbacklog OR changelog OR stopsourcefilter
+!			OR losttncomplete OR needrestart OR jnlpool)
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source  ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -buff=10 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -connectparams="dummyparams" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -filter="abcd" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -log="dummylog" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -log_interval=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -passive ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -secondary="dummysec" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -timeout ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -notimeout ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+! ## The below sections work only for unix, for now. Thought the commands run only in unix, the comments are displayed both in vms and unix. ##
+! C9G05-002793 MUPIP REPLIC disallows need to be fixed on VMS
+!
+!	DISALLOW (buffsize OR cmplvl OR filter OR passive) AND NOT(start)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -buff=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -secondary=dummy -buff=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -buff=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -buff=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummy" -buff=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -buff=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -buff=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -buff=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -buff=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -buff=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -cmplvl=8 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -secondary=dummy -cmplvl=8 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -cmplvl=8 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -cmplvl=8 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummy" -cmplvl=8 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -cmplvl=8 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -cmplvl=8 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -cmplvl=8 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -cmplvl=8 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -cmplvl=8 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -buff=1 -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -filter=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -secondary=dummy -filter=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -filter=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -filter=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummy" -filter=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -filter=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -filter=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -filter=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -filter=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -filter=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -filter=dummy -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -passive ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER PASSIVE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -secondary=dummy -passive ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER PASSIVE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -passive ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER PASSIVE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -passive ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER PASSIVE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummy" -passive ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER PASSIVE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -passive ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER PASSIVE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -passive ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER PASSIVE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -passive ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER PASSIVE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -passive ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER PASSIVE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -passive ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER PASSIVE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -passive -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER PASSIVE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -shutdown -buff=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -checkhealth -buff=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -showbacklog -buff=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -changelog -log=dummy -buff=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -shutdown -cmplvl=8 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -checkhealth -cmplvl=8 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -showbacklog -cmplvl=8 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -changelog -log=dummy -cmplvl=8 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -shutdown -filter=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -checkhealth -filter=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -showbacklog -filter=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -changelog -log=dummy -filter=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START BUFFSIZE CMPLVL FILTER
+!
+!	DISALLOW (connectparams OR secondary) AND NOT(start OR activate)
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -connectparams=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -connectparams=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -connectparams=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummy" -connectparams=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -connectparams=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -connectparams=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -connectparams=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -connectparams=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -connectparams=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -connectparams=dummy -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -secondary=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -secondary=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -secondary=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummy" -secondary=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -secondary=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -secondary=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -secondary=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -secondary=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -secondary=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -secondary=dummy -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START ACTIVATE CONNECTPARAMS SECONDARY
+!
+!	DISALLOW (log OR log_interval) AND NOT(start OR activate OR changelog)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -log=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START CHANGELOG ACTIVATE LOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -log=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START CHANGELOG ACTIVATE LOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -log=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START CHANGELOG ACTIVATE LOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -log=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START CHANGELOG ACTIVATE LOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -log=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START CHANGELOG ACTIVATE LOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -log=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START CHANGELOG ACTIVATE LOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -log=dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START CHANGELOG ACTIVATE LOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -log=dummy -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START CHANGELOG ACTIVATE LOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -log_interval=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START CHANGELOG ACTIVATE STATSLOG LOG_INTERVAL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -log_interval=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START CHANGELOG ACTIVATE STATSLOG LOG_INTERVAL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -log_interval=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START CHANGELOG ACTIVATE STATSLOG LOG_INTERVAL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -log_interval=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START CHANGELOG ACTIVATE STATSLOG LOG_INTERVAL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -log_interval=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START CHANGELOG ACTIVATE STATSLOG LOG_INTERVAL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -log_interval=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START CHANGELOG ACTIVATE STATSLOG LOG_INTERVAL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -log_interval=1 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START CHANGELOG ACTIVATE STATSLOG LOG_INTERVAL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -log_interval=1 -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START CHANGELOG ACTIVATE STATSLOG LOG_INTERVAL
+!
+!	DISALLOW timeout AND NOT(shutdown)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -timeout -start ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN TIMEOUT
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -timeout -activate ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN TIMEOUT
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -timeout -deactivate ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN TIMEOUT
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -timeout -checkhealth ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN TIMEOUT
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -timeout -statslog="dummy" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN TIMEOUT
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -timeout -showbacklog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN TIMEOUT
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -timeout -changelog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN TIMEOUT
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -timeout -stopsourcefilter ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN TIMEOUT
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -timeout -losttncomplete ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN TIMEOUT
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -timeout -needrestart ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN TIMEOUT
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -timeout -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN TIMEOUT
+!
+!	DISALLOW start AND (passive AND secondary)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -secondary=dummy -buff=1 -instsecondary=dummy -passive ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START PASSIVE SECONDARY
+!
+!	DISALLOW start AND NOT(log)
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -secondary="dummy" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START LOG
+!
+!	DISALLOW activate AND NOT(secondary)
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ACTIVATE SECONDARY
+!
+!	DISALLOW changelog AND NOT(log OR log_interval)
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGELOG LOG LOG_INTERVAL
+!
+!	DISALLOW NOT(editinstance OR instance_create OR receiver OR source
+!			OR updateproc OR updhelper)
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -start -secondary=dummysec -buffsize=dummy -instsecondary=dummy ------------
+%GTM-E-CLIERR, Unrecognized option : START
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -activate -secondary=dummysec -log=dummylog -instsecondary=dummy ------------
+%GTM-E-CLIERR, Unrecognized option : ACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -deactivate ------------
+%GTM-E-CLIERR, Unrecognized option : DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -changelog -log=dummylog ------------
+%GTM-E-CLIERR, Unrecognized option : CHANGELOG
+!
+!	DISALLOW ANY2 (editinstance,instance_create,receiver,
+!				source,updateproc,updhelper)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -instance_create -name=dummy -editinstance -show dummy ------------
+%GTM-E-CLIERR, Unrecognized option : EDITINSTANCE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -editinstance -show dummy ------------
+%GTM-E-CLIERR, Unrecognized option : EDITINSTANCE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -editinstance -show dummy ------------
+%GTM-E-CLIERR, Unrecognized option : EDITINSTANCE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -editinstance -show dummy -updateproc ------------
+%GTM-E-CLIERR, Unrecognized option : UPDATEPROC
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -editinstance -show dummy -updhelper ------------
+%GTM-E-CLIERR, Unrecognized option : UPDHELPER
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -instance_create -name=dummy ------------
+%GTM-E-CLIERR, Unrecognized option : INSTANCE_CREATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -instance_create -name=dummy ------------
+%GTM-E-CLIERR, Unrecognized option : INSTANCE_CREATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -updateproc ------------
+%GTM-E-CLIERR, Unrecognized option : UPDATEPROC
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -updateproc ------------
+%GTM-E-CLIERR, Unrecognized option : UPDATEPROC
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -updhelper ------------
+%GTM-E-CLIERR, Unrecognized option : UPDHELPER
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -updhelper ------------
+%GTM-E-CLIERR, Unrecognized option : UPDHELPER
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -updhelper -updateproc ------------
+%GTM-E-CLIERR, Unrecognized option : UPDATEPROC
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -updateproc -editinstance -show dummy ------------
+%GTM-E-CLIERR, Unrecognized option : EDITINSTANCE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -updateproc -instance_create -name=dummy ------------
+%GTM-E-CLIERR, Unrecognized option : INSTANCE_CREATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -updhelper -editinstance -show dummy ------------
+%GTM-E-CLIERR, Unrecognized option : EDITINSTANCE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -updhelper -instance_create -name=dummy ------------
+%GTM-E-CLIERR, Unrecognized option : INSTANCE_CREATE
+!
+!
+!	MUPIP REPLIC -EDITINSTANCE
+!
+!	DISALLOW NOT(change OR show)
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -editinstance dummy ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN
+!	DISALLOW (change AND show)
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -editinstance -show -change -offset=0xFFFFFFFF -value=0xFFFFFFFF -size=0x00000001 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW
+!	DISALLOW (offset OR size OR value) AND NOT(change)
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -editinstance -show -offset=0xFFFFFFFF ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE OFFSET
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -editinstance -show -value=0xFFFFFFFF ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE OFFSET SIZE VALUE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -editinstance -show -size=0x00000001 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE OFFSET SIZE
+!	DISALLOW change AND NOT(offset OR size)
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -editinstance -change -value=0xFFFFFFFF ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE OFFSET
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -editinstance -change -offset=0xFFFFFFFF -value=0xFFFFFFFF ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE OFFSET SIZE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -editinstance -change -value=0xFFFFFFFF -size=0x00000001 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE OFFSET
+!	DISALLLOW detail AND NOT(show)
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -editinstance -change -offset=0xFFFFFFFF -value=0xFFFFFFFF -size=0x00000001 -detail ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHOW DETAIL
+!
+!
+!	DISALLOW rootprimary AND propagateprimary
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -secondary=dummy -log=dummy.log -rootprimary -propagateprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY
+!
+!	DISALLOW (rootprimary OR propagateprimary) AND NOT(start OR activate OR deactivate)
+!
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -rootprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -rootprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummy" -rootprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -rootprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -rootprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGELOG LOG LOG_INTERVAL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -rootprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -rootprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -rootprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -rootprimary -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -propagateprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummy" -propagateprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -propagateprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -propagateprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGELOG LOG LOG_INTERVAL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -propagateprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -propagateprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -propagateprimary ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY START ACTIVATE DEACTIVATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -propagateprimary -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROOTPRIMARY PROPAGATEPRIMARY START ACTIVATE DEACTIVATE
+!
+!	VMS : DISALLOW showbacklog AND supplementary
+!
+!
+!	DISALLOW instsecondary AND (losttncomplete OR jnlpool)
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -instsecondary=dummy -losttncomplete ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: INSTSECONDARY LOSTTNCOMPLETE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -instsecondary=dummy -jnlpool ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: INSTSECONDARY LOSTTNCOMPLETE JNLPOOL
+!
+!	DISALLOW detail AND NOT(jnlpool)
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -secondary="dummy" -log=dummy -detail ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JNLPOOL DETAIL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -detail ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JNLPOOL DETAIL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -secondary=dummy -detail ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JNLPOOL DETAIL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -detail ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JNLPOOL DETAIL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog=dummy -detail ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JNLPOOL DETAIL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -detail ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JNLPOOL DETAIL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -log=dummy -detail ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JNLPOOL DETAIL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -detail ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JNLPOOL DETAIL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -detail ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JNLPOOL DETAIL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -detail ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JNLPOOL DETAIL
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -detail ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JNLPOOL DETAIL
+!
+!	DISALLOW (MUPIP REORG -UPGRADE AND (EXCLUDE OR FILL_FACTOR
+!				OR INDEX_FILL_FACTOR OR RESUME OR SELECT OR USER_DEFINED_REORG OR DOWNGRADE))
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -upgrade -exclude="^*" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE UPGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -upgrade -fill_factor=5 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR UPGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -upgrade -index_fill_factor=5 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR UPGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -upgrade -resume ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME UPGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -upgrade -select="^*" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT UPGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -upgrade -user_defined_reorg="^*" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME USER_DEFINED_REORG UPGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -upgrade -downgrade ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: UPGRADE DOWNGRADE
+!
+!	DISALLOW (MUPIP REORG -DOWNGRADE AND (EXCLUDE OR FILL_FACTOR
+!				OR INDEX_FILL_FACTOR OR RESUME OR SELECT OR USER_DEFINED_REORG OR UPGRADE))
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -downgrade -exclude="^*" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -downgrade -fill_factor=5 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -downgrade -index_fill_factor=5 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -downgrade -resume ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -downgrade -select="^*" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -downgrade -user_defined_reorg="^*" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME USER_DEFINED_REORG UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -downgrade -upgrade ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: UPGRADE DOWNGRADE
+!
+!	DISALLOW (MUPIP REORG -SAFEJNL AND (EXCLUDE OR FILL_FACTOR
+!				OR INDEX_FILL_FACTOR OR RESUME OR SELECT OR USER_DEFINED_REORG))
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -safejnl -exclude="^*" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -safejnl -fill_factor=5 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -safejnl -index_fill_factor=5 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -safejnl -resume ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -safejnl -select="^*" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -safejnl -user_defined_reorg="^*" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL UPGRADE DOWNGRADE
+!
+!	DISALLOW (MUPIP REORG -NOSAFEJNL AND (EXCLUDE OR FILL_FACTOR
+!				OR INDEX_FILL_FACTOR OR RESUME OR SELECT OR USER_DEFINED_REORG))
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -nosafejnl -exclude="^*" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL SAFEJNL UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -nosafejnl -fill_factor=5 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL SAFEJNL UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -nosafejnl -index_fill_factor=5 ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL SAFEJNL UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -nosafejnl -resume ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL SAFEJNL UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -nosafejnl -select="^*" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL SAFEJNL UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -nosafejnl -user_defined_reorg="^*" ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL SAFEJNL UPGRADE DOWNGRADE
+!
+!	DISALLOW (MUPIP REORG -SAFEJNL -REGION )
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -safejnl -region DEFAULT ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL UPGRADE DOWNGRADE
+!
+!	DISALLOW (MUPIP REORG -NOSAFEJNL -REGION )
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -nosafejnl -region DEFAULT ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL SAFEJNL UPGRADE DOWNGRADE
+!
+!	DISALLOW (MUPIP REORG -UPGRADE )
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -upgrade ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: UPGRADE REGION
+!
+!	DISALLOW (MUPIP REORG -DOWNGRADE )
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -downgrade ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: UPGRADE DOWNGRADE REGION
+!
+!	DISALLOW (MUPIP REORG -TRUNCATE AND (UPGRADE OR DOWNGRADE OR SAFEJNL OR NOSAFEJNL))
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -upgrade -truncate ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME USER_DEFINED_REORG TRUNCATE UPGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -downgrade -truncate ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME USER_DEFINED_REORG TRUNCATE UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -safejnl -truncate ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL UPGRADE DOWNGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  reorg -nosafejnl -truncate ------------
+%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL SAFEJNL UPGRADE DOWNGRADE
+!
+
+GTM>

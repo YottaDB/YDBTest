@@ -1,0 +1,235 @@
+setenv gtm_chset UTF-8
+unset echo
+
+GTM>
+zwrite zwrdata(:"A")
+
+zwrdata(0)=0
+zwrdata(1)=1
+zwrdata($C(0))=$C(0)
+zwrdata($C(1))=$C(1)
+zwrdata("""")="null"
+zwrdata("@")="@"
+zwrdata("A")="A"
+zwrite zwrdata("A":"Z")
+
+zwrdata("A")="A"
+zwrdata("Falsches Üben von")="German"
+zwrdata("Příliš žluťoučký")="Polish"
+zwrite zwrdata("a":"z")
+
+zwrdata("a")="a"
+zwrdata("d")="d"
+zwrdata("y")="y"
+zwrdata("z")="z"
+zwrite zwrdata("z":"Ḁ")
+
+zwrdata("z")="z"
+zwrdata($ZCH(128))=$ZCH(128)
+zwrdata($ZCH(129))=$ZCH(129)
+zwrdata($ZCH(160))=$ZCH(160)
+zwrdata("²")="superscript"
+zwrdata("Üben Pchnąć")="Mixed1"
+zwrdata($ZCH(200))=$ZCH(200)
+zwrdata("В чащах юга жил-был цитрус? Да, но фальшивый экземпляр! ёъ.")="Russian"
+zwrdata("١٢১২೧೨೩൧൨9")="digits"
+zwrdata("٥")="Arabic Five"
+zwrdata("यह लोग हिन्दी क्यों नहीं बोल सकते हैं ?")="Hindi"
+zwrdata("ওরা েকন বাংলা বলেত")="Bengali"
+zwrdata("১২")="digits"
+zwrite zwrdata("Ḁ":)
+
+zwrdata("いろはにほへど　ちりぬるを")="Japanese"
+zwrdata("乴亐亯仑件伞佉佷")="CJK"
+zwrdata($ZCH(255))=$ZCH(255)
+zwr zwrdata(?1.10A)
+
+zwrdata("A")="A"
+zwrdata("a")="a"
+zwrdata("d")="d"
+zwrdata("y")="y"
+zwrdata("z")="z"
+zwrdata("²")="superscript"
+zwrdata("٥")="Arabic Five"
+zwrdata("১২")="digits"
+zwrdata("乴亐亯仑件伞佉佷")="CJK"
+zwr zwrdata(?1.10AN)
+
+zwrdata(0)=0
+zwrdata(1)=1
+zwrdata("A")="A"
+zwrdata("a")="a"
+zwrdata("d")="d"
+zwrdata("y")="y"
+zwrdata("z")="z"
+zwrdata("²")="superscript"
+zwrdata("١٢১২೧೨೩൧൨9")="digits"
+zwrdata("٥")="Arabic Five"
+zwrdata("১২")="digits"
+zwrdata("乴亐亯仑件伞佉佷")="CJK"
+zwr zwrdata(?10.20APN)
+
+zwrdata("Falsches Üben von")="German"
+zwrdata("Příliš žluťoučký")="Polish"
+zwrdata("Üben Pchnąć")="Mixed1"
+zwrdata("١٢১২೧೨೩൧൨9")="digits"
+zwrdata("ওরা েকন বাংলা বলেত")="Bengali"
+zwrdata("いろはにほへど　ちりぬるを")="Japanese"
+zwr zwrdata(?30.APN)
+
+zwrdata("В чащах юга жил-был цитрус? Да, но фальшивый экземпляр! ёъ.")="Russian"
+zwrdata("यह लोग हिन्दी क्यों नहीं बोल सकते हैं ?")="Hindi"
+zwr zwrdata(?1.10N)
+
+zwrdata(0)=0
+zwrdata(1)=1
+zwrite zwrdata
+
+zwrdata(0)=0
+zwrdata(1)=1
+zwrdata($C(0))=$C(0)
+zwrdata($C(1))=$C(1)
+zwrdata("""")="null"
+zwrdata("@")="@"
+zwrdata("A")="A"
+zwrdata("Falsches Üben von")="German"
+zwrdata("Příliš žluťoučký")="Polish"
+zwrdata("`")="`"
+zwrdata("a")="a"
+zwrdata("d")="d"
+zwrdata("y")="y"
+zwrdata("z")="z"
+zwrdata($ZCH(128))=$ZCH(128)
+zwrdata($ZCH(129))=$ZCH(129)
+zwrdata($ZCH(160))=$ZCH(160)
+zwrdata("²")="superscript"
+zwrdata("Üben Pchnąć")="Mixed1"
+zwrdata($ZCH(200))=$ZCH(200)
+zwrdata("В чащах юга жил-был цитрус? Да, но фальшивый экземпляр! ёъ.")="Russian"
+zwrdata("١٢১২೧೨೩൧൨9")="digits"
+zwrdata("٥")="Arabic Five"
+zwrdata("यह लोग हिन्दी क्यों नहीं बोल सकते हैं ?")="Hindi"
+zwrdata("ওরা েকন বাংলা বলেত")="Bengali"
+zwrdata("১২")="digits"
+zwrdata("いろはにほへど　ちりぬるを")="Japanese"
+zwrdata("乴亐亯仑件伞佉佷")="CJK"
+zwrdata($ZCH(255))=$ZCH(255)
+
+GTM>
+
+GTM>
+zwrite zwrdata(:"A")
+
+zwrdata(0)=0
+zwrdata(1)=1
+zwrdata($C(0))=$C(0)
+zwrdata($C(1))=$C(1)
+zwrdata("""")="null"
+zwrdata("@")="@"
+zwrdata("A")="A"
+zwrite zwrdata("A":"Z")
+
+zwrdata("A")="A"
+zwrdata("Falsches Üben von")="German"
+zwrdata("Příliš žluťoučký")="Polish"
+zwrite zwrdata("a":"z")
+
+zwrdata("a")="a"
+zwrdata("d")="d"
+zwrdata("y")="y"
+zwrdata("z")="z"
+zwrite zwrdata("z":"Ḁ")
+
+zwrdata("z")="z"
+zwrdata($ZCH(128))=$ZCH(128)
+zwrdata($ZCH(129))=$ZCH(129)
+zwrdata($ZCH(160))=$ZCH(160)
+zwrdata("²")="superscript"
+zwrdata("Üben Pchnąć")="Mixed1"
+zwrdata($ZCH(200))=$ZCH(200)
+zwrdata("В чащах юга жил-был цитрус? Да, но фальшивый экземпляр! ёъ.")="Russian"
+zwrdata("١٢১২೧೨೩൧൨9")="digits"
+zwrdata("٥")="Arabic Five"
+zwrdata("यह लोग हिन्दी क्यों नहीं बोल सकते हैं ?")="Hindi"
+zwrdata("ওরা েকন বাংলা বলেত")="Bengali"
+zwrdata("১২")="digits"
+zwrite zwrdata("Ḁ":)
+
+zwrdata("いろはにほへど　ちりぬるを")="Japanese"
+zwrdata("乴亐亯仑件伞佉佷")="CJK"
+zwrdata($ZCH(255))=$ZCH(255)
+zwr zwrdata(?1.10A)
+
+zwrdata("A")="A"
+zwrdata("a")="a"
+zwrdata("d")="d"
+zwrdata("y")="y"
+zwrdata("z")="z"
+zwrdata("²")="superscript"
+zwrdata("乴亐亯仑件伞佉佷")="CJK"
+zwr zwrdata(?1.10AN)
+
+zwrdata(0)=0
+zwrdata(1)=1
+zwrdata("A")="A"
+zwrdata("a")="a"
+zwrdata("d")="d"
+zwrdata("y")="y"
+zwrdata("z")="z"
+zwrdata("²")="superscript"
+zwrdata("١٢১২೧೨೩൧൨9")="digits"
+zwrdata("٥")="Arabic Five"
+zwrdata("১২")="digits"
+zwrdata("乴亐亯仑件伞佉佷")="CJK"
+zwr zwrdata(?10.20APN)
+
+zwrdata("Falsches Üben von")="German"
+zwrdata("Příliš žluťoučký")="Polish"
+zwrdata("Üben Pchnąć")="Mixed1"
+zwrdata("١٢১২೧೨೩൧൨9")="digits"
+zwrdata("ওরা েকন বাংলা বলেত")="Bengali"
+zwrdata("いろはにほへど　ちりぬるを")="Japanese"
+zwr zwrdata(?30.APN)
+
+zwrdata("В чащах юга жил-был цитрус? Да, но фальшивый экземпляр! ёъ.")="Russian"
+zwrdata("यह लोग हिन्दी क्यों नहीं बोल सकते हैं ?")="Hindi"
+zwr zwrdata(?1.10N)
+
+zwrdata(0)=0
+zwrdata(1)=1
+zwrdata("١٢১২೧೨೩൧൨9")="digits"
+zwrdata("٥")="Arabic Five"
+zwrdata("১২")="digits"
+zwrite zwrdata
+
+zwrdata(0)=0
+zwrdata(1)=1
+zwrdata($C(0))=$C(0)
+zwrdata($C(1))=$C(1)
+zwrdata("""")="null"
+zwrdata("@")="@"
+zwrdata("A")="A"
+zwrdata("Falsches Üben von")="German"
+zwrdata("Příliš žluťoučký")="Polish"
+zwrdata("`")="`"
+zwrdata("a")="a"
+zwrdata("d")="d"
+zwrdata("y")="y"
+zwrdata("z")="z"
+zwrdata($ZCH(128))=$ZCH(128)
+zwrdata($ZCH(129))=$ZCH(129)
+zwrdata($ZCH(160))=$ZCH(160)
+zwrdata("²")="superscript"
+zwrdata("Üben Pchnąć")="Mixed1"
+zwrdata($ZCH(200))=$ZCH(200)
+zwrdata("В чащах юга жил-был цитрус? Да, но фальшивый экземпляр! ёъ.")="Russian"
+zwrdata("١٢১২೧೨೩൧൨9")="digits"
+zwrdata("٥")="Arabic Five"
+zwrdata("यह लोग हिन्दी क्यों नहीं बोल सकते हैं ?")="Hindi"
+zwrdata("ওরা েকন বাংলা বলেত")="Bengali"
+zwrdata("১২")="digits"
+zwrdata("いろはにほへど　ちりぬるを")="Japanese"
+zwrdata("乴亐亯仑件伞佉佷")="CJK"
+zwrdata($ZCH(255))=$ZCH(255)
+
+GTM>

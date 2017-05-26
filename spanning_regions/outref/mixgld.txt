@@ -1,0 +1,52 @@
+Created file ##TEST_PATH##/mumps.dat
+Created file ##TEST_PATH##/REG1.dat
+Created file ##TEST_PATH##/REG2.dat
+Created file ##TEST_PATH##/REG3.dat
+Created file ##TEST_PATH##/REG4.dat
+Created file ##TEST_PATH##/REG5.dat
+# Two M programs each updating globals spanning two different regions should not restart due to each other
+# Hold crit on region REG5, where the unsubscripted global is mapped to
+# Two glds spanning the same global intersect in terms of actual db files a global maps to but not completely
+# Referencing subscripted globals through both glds in the same process such that they open only a subset
+#  of regions that are mapped to by the globals should work fine
+$zgbldir : mixgld2.gld
+^a(19) = 2 19 1 1
+^a(20) = 2 20 1 1
+^a(21) = 2 21 1 1
+^a(22) = 2 22 1 1
+^a(23) = 2 23 1 1
+$zgbldir : mixgld3.gld
+^a(19) = 3 19 1 1
+^a(20) = 3 20 1 1
+^a(21) = 3 21 1 1
+^a(22) = 3 22 1 1
+^a(23) = 3 23 1 1
+# Do the same using extended references
+Using Extended references
+mixgld2.gld : ^a(19,2) = 2 19 2 2
+mixgld3.gld : ^a(19,2) = 3 19 2 2
+mixgld2.gld : ^a(20,2) = 2 20 2 2
+mixgld3.gld : ^a(20,2) = 3 20 2 2
+mixgld2.gld : ^a(21,2) = 2 21 2 2
+mixgld3.gld : ^a(21,2) = 3 21 2 2
+mixgld2.gld : ^a(22,2) = 2 22 2 2
+mixgld3.gld : ^a(22,2) = 3 22 2 2
+mixgld2.gld : ^a(23,2) = 2 23 2 2
+mixgld3.gld : ^a(23,2) = 3 23 2 2
+# Do the same using naked references
+Using naked references
+^(19,3) = 2 19 3 3
+^(20,3) = 2 20 3 3
+^(21,3) = 2 21 3 3
+^(22,3) = 2 22 3 3
+^(23,3) = 2 23 3 3
+$reference : ^|"mixgld2.gld"|a(23,3,3)
+^(19,3) = 3 19 3 3
+^(20,3) = 3 20 3 3
+^(21,3) = 3 21 3 3
+^(22,3) = 3 22 3 3
+^(23,3) = 3 23 3 3
+$reference : ^|"mixgld3.gld"|a(23,3,3)
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

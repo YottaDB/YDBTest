@@ -1,0 +1,269 @@
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
+##GT.CM##mumps.gld
+##GT.CM##Using: ##SOURCE_PATH##/mupip
+Create local (client) database...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+The database layout is:
+ASEG	a.dat
+BSEG	##TEST_REMOTE_NODE_PATH_GTCM##/b.dat
+CSEG	##TEST_REMOTE_NODE_PATH_GTCM##/c.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
+Starting the GT.CM Servers...
+I've disabled all checking -- Nergis
+Testing LOCK and Z(DE)ALLOCATE...
+No other processes are holding locks...
+locks101
+very basic locks testing
+noone:
+MLG:0,MLT:0
+lock ^A (local)
+MLG:1,MLT:0
+LOCK ^A LEVEL=1
+Lock ^B (server 2)
+MLG:4,MLT:0
+Lock ^C (server 1)
+MLG:7,MLT:0
+Release all
+MLG:7,MLT:0
+done locks101
+(in testit) First some Set's and Write's to see everything is all right:
+The values of ^A,^B,^C,^X are:1234
+
+Testing locks...
+Starting lkebas...
+simple locks
+exam(0,.,.,.,.) 1
+exam(1,^a,.,.,.) 1
+exam(3,.,.,^c,.) 1
+exam(2,.,^b,.,.) 1
+exam(4,^a,^b,^c,^d) 1
+exam(5,.,.,.,.) 1
+
+incremental locks
+exam(11,^a,.,.,.) 1
+exam(12,^a,^b,.,.) 1
+exam(13,.,.,^c,.) 1
+exam(14,^a,^b,^c,^d) 1
+exam(15,.,.,.,.) 1
+
+decremental locks
+exam(21,^a,.,.,.) 1
+exam(22,^a,^b,.,.) 1
+exam(23,.,^b,.,.) 1
+exam(24,^a,^b,^c,^d) 1
+exam(25,.,^b,.,.) 1
+
+local locks
+exam(31,a,.,.,.) 1
+exam(32,.,b,.,.) 1
+exam(33,.,.,c,.) 1
+exam(34,a,b,c,.) 1
+
+End of lock test
+
+Testing z(de)allocate and locks...
+z(de)alloccheck(1,,) 1
+check(2,,^a) 1
+check(3,,) 1
+check(4,,^a,^b) 1
+check(5,,^a,^b) 1
+check(6,,^a,^b,^c) 1
+check(7,,^a,^b,^c,^d) 1
+check(8,,^a,^c,^d) 1
+check(9,,) 1
+
+local locks and z(de)alloccheck(10,,a) 1
+check(11,,a,b) 1
+check(12,,a,b,c,d) 1
+check(13,,a,b,c) 1
+check(14,a,a,b,c) 1
+check(15,a,b,c) 1
+check(16,b,b,c) 1
+check(17,,) 1
+
+locks and z(de)alloc togethercheck(18,,^c) 1
+check(19,^c,^c) 1
+check(20,^b,^c,^c) 1
+check(21,^b,^c,^b,^c) 1
+check(22,^b,^c,^a,^b,^c,^d) 1
+check(23,^a,^d,^a,^b,^c,^d) 1
+check(24,^a,^b,^c,^d,^a,^b,^c,^d) 1
+check(25,^a,^b,^c,^d,^d) 1
+check(26,,^d) 1
+check(27,,) 1
+
+##################################################################################
+Now, server 2 will lock ^b, (along with it's local ^d,a,b) and the tests lkebas and zalloc will be run while server 2 is holding it's locks
+Lock status from remote host 2:
+
+BREG
+##TEST_AWK.b Owned by PID= <PID> which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+
+DEFAULT
+##TEST_AWK.d Owned by PID= <PID> which is an existing process
+##TEST_AWKa Owned by PID= <PID> which is an existing process
+##TEST_AWKb Owned by PID= <PID> which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+Server 2 is holding some locks locally...
+(in testit) First some Set's and Write's to see everything is all right:
+The values of ^A,^B,^C,^X are:1234
+
+Testing locks...
+Starting lkebas...
+simple locks
+exam(0,.,.,.,.) 1
+exam(1,^a,.,.,.) 1
+exam(3,.,.,^c,.) 1
+exam(2,.,^b,.,.) 0
+exam(4,^a,^b,^c,^d) 0
+exam(5,.,.,.,.) 1
+
+incremental locks
+exam(11,^a,.,.,.) 1
+exam(12,^a,^b,.,.) 0
+exam(13,.,.,^c,.) 1
+exam(14,^a,^b,^c,^d) 0
+exam(15,.,.,.,.) 1
+
+decremental locks
+exam(21,^a,.,.,.) 1
+exam(22,^a,^b,.,.) 0
+exam(23,.,^b,.,.) 1
+exam(24,^a,^b,^c,^d) 0
+exam(25,.,^b,.,.) 1
+
+local locks
+exam(31,a,.,.,.) 1
+exam(32,.,b,.,.) 1
+exam(33,.,.,c,.) 1
+exam(34,a,b,c,.) 1
+
+End of lock test
+
+Testing z(de)allocate and locks...
+z(de)alloccheck(1,,) 1
+check(2,,^a) 1
+check(3,,) 1
+check(4,,^a,^b) 0
+check(5,,^a,^b) 0
+check(6,,^a,^b,^c) 1
+check(7,,^a,^b,^c,^d) 1
+check(8,,^a,^c,^d) 1
+check(9,,) 1
+
+local locks and z(de)alloccheck(10,,a) 1
+check(11,,a,b) 1
+check(12,,a,b,c,d) 1
+check(13,,a,b,c) 1
+check(14,a,a,b,c) 1
+check(15,a,b,c) 1
+check(16,b,b,c) 1
+check(17,,) 1
+
+locks and z(de)alloc togethercheck(18,,^c) 1
+check(19,^c,^c) 1
+check(20,^b,^c,^c) 0
+check(21,^b,^c,^b,^c) 0
+check(22,^b,^c,^a,^b,^c,^d) 1
+check(23,^a,^d,^a,^b,^c,^d) 1
+check(24,^a,^b,^c,^d,^a,^b,^c,^d) 0
+check(25,^a,^b,^c,^d,^d) 0
+check(26,,^d) 0
+check(27,,) 0
+
+##################################################################################
+Now the tests will be run again with Server 1 locking ^c (and it's local ^d)
+Lock status from remote host 1:
+
+CREG
+##TEST_AWK.c Owned by PID= <PID> which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+
+DEFAULT
+##TEST_AWK.d Owned by PID= <PID> which is an existing process
+##TEST_AWKa Owned by PID= <PID> which is an existing process
+##TEST_AWKb Owned by PID= <PID> which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+Both Server 1 and 2 are holding some locks locally...
+(in testit) First some Set's and Write's to see everything is all right:
+The values of ^A,^B,^C,^X are:1234
+
+Testing locks...
+Starting lkebas...
+simple locks
+exam(0,.,.,.,.) 1
+exam(1,^a,.,.,.) 1
+exam(3,.,.,^c,.) 0
+exam(2,.,^b,.,.) 0
+exam(4,^a,^b,^c,^d) 0
+exam(5,.,.,.,.) 1
+
+incremental locks
+exam(11,^a,.,.,.) 1
+exam(12,^a,^b,.,.) 0
+exam(13,.,.,^c,.) 0
+exam(14,^a,^b,^c,^d) 0
+exam(15,.,.,.,.) 1
+
+decremental locks
+exam(21,^a,.,.,.) 1
+exam(22,^a,^b,.,.) 0
+exam(23,.,^b,.,.) 1
+exam(24,^a,^b,^c,^d) 0
+exam(25,.,^b,.,.) 1
+
+local locks
+exam(31,a,.,.,.) 0
+exam(32,.,b,.,.) 0
+exam(33,.,.,c,.) 1
+exam(34,a,b,c,.) 0
+
+End of lock test
+
+Testing z(de)allocate and locks...
+z(de)alloccheck(1,,) 1
+check(2,,^a) 1
+check(3,,) 1
+check(4,,^a,^b) 0
+check(5,,^a,^b) 0
+check(6,,^a,^b,^c) 0
+check(7,,^a,^b,^c,^d) 0
+check(8,,^a,^c,^d) 0
+check(9,,) 0
+
+local locks and z(de)alloccheck(10,,a) 0
+check(11,,a,b) 0
+check(12,,a,b,c,d) 0
+check(13,,a,b,c) 0
+check(14,a,a,b,c) 0
+check(15,a,b,c) 0
+check(16,b,b,c) 0
+check(17,,) 0
+
+locks and z(de)alloc togethercheck(18,,^c) 0
+check(19,^c,^c) 0
+check(20,^b,^c,^c) 0
+check(21,^b,^c,^b,^c) 0
+check(22,^b,^c,^a,^b,^c,^d) 0
+check(23,^a,^d,^a,^b,^c,^d) 0
+check(24,^a,^b,^c,^d,^a,^b,^c,^d) 0
+check(25,^a,^b,^c,^d,^d) 0
+check(26,,^d) 0
+check(27,,) 0
+
+##################################################################################
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####SOURCE_PATH##/mupip
+##GT.CM####SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ a.dat
+No errors detected by integ.

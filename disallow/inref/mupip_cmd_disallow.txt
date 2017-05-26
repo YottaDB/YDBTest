@@ -1,0 +1,829 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!! Lines beginning with ! are comments
+!! Lines beginning with p are Unix commands where to obtain the VMS equivalent we do the following
+!!	'-' is globally substituted with '/'
+!!	'"..."' is globally substituted with '(...)'
+!! Lines beginning with u are unix-specific commands
+!! Lines beginning with v are vvms-specific commands
+!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP BACKUP
+!	DISALLOW((TRANSACTION OR SINCE) AND NOT(INCREMENTAL OR BYTESTREAM) )
+!
+! MUPIP BACKUP needs two parameters one for the region and one for the backup directory. If not specified VMS MUPIP will prompt.
+! To avoid that we provide dummy parameters. Similar case for other MUPIP commands too.
+!
+p backup dummy_region dummy_backup_dir -transaction=10 -comprehensive 
+p backup dummy_region dummy_backup_dir -transaction=10 -database
+p backup dummy_region dummy_backup_dir -transaction=10 -dbg
+p backup dummy_region dummy_backup_dir -transaction=10 -journal="off,enable"
+p backup dummy_region dummy_backup_dir -transaction=10 -nettimeout=5
+p backup dummy_region dummy_backup_dir -transaction=10 -newjnlfiles
+p backup dummy_region dummy_backup_dir -transaction=10 -bkupdbjnl="off"
+p backup dummy_region dummy_backup_dir -transaction=10 -online
+p backup dummy_region dummy_backup_dir -transaction=10 -record
+p backup dummy_region dummy_backup_dir -transaction=10
+p backup dummy_region dummy_backup_dir -since="bytestream" -comprehensive 
+p backup dummy_region dummy_backup_dir -since="database" -database
+p backup dummy_region dummy_backup_dir -since="record" -dbg
+p backup dummy_region dummy_backup_dir -since="comprehensive" -journal="off,enable"
+p backup dummy_region dummy_backup_dir -since="incremental" -nettimeout=5
+p backup dummy_region dummy_backup_dir -since="bytestream" -newjnlfiles
+p backup dummy_region dummy_backup_dir -since="comprehensive" -bkupdbjnl="off"
+p backup dummy_region dummy_backup_dir -since="record" -online
+p backup dummy_region dummy_backup_dir -since="database" -record
+p backup dummy_region dummy_backup_dir -since="record"
+!
+!	DISALLOW(((INCREMENTAL OR BYTESTREAM) AND (COMPREHENSIVE OR DATABASE)) OR (TRANSACTION AND SINCE) )
+!
+p backup dummy_region dummy_backup_dir -incremental -comprehensive 
+p backup dummy_region dummy_backup_dir -incremental -database
+p backup dummy_region dummy_backup_dir -bytestream -comprehensive 
+p backup dummy_region dummy_backup_dir -bytestream -database
+p backup dummy_region dummy_backup_dir -transaction=10 -incremental -since="bytestream"
+!
+!	DISALLOW((BKUPDBJNL.DISABLE) AND (BKUPDBJNL.OFF))
+!
+p backup dummy_region dummy_backup_dir -bkupdbjnl="disable,off"
+!
+!	VMS : DISALLOW dstinstname
+!
+v backup dummy_region dummy_backup_dir -dstinstname=dummy_inst
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP FREEZE
+!	DISALLOW(NOT(ON) AND NOT(OFF) )
+!
+p freeze dummy_region -record
+p freeze dummy_region -override
+p freeze dummy_region
+!
+!	DISALLOW(RECORD AND NOT(ON) )
+!
+p freeze dummy_region -record -off -override
+p freeze dummy_region -record -off
+!
+!	DISALLOW(OVERRIDE AND NOT(OFF) )
+!
+p freeze dummy_region -override -on -record
+p freeze dummy_region -override -on
+!
+!	DISALLOW(ON AND OFF )
+!
+p freeze dummy_region -on -off
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP INTEG
+!	DISALLOW(BRIEF AND FULL)
+!
+p integ dummy_file -brief -full
+!
+!	DISALLOW(FILE AND REGION)
+!
+p integ dummy_file -file -region
+!
+!	DISALLOW(TN_RESET AND (FAST OR BLOCK OR SUBSCRIPT OR REGION))
+!
+p integ dummy_file -tn_reset -fast
+p integ dummy_file -tn_reset -block=10
+p integ dummy_file -tn_reset -subs="abcd"
+p integ dummy_file -tn_reset -region
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP INTRPT
+!	VMS  : DISALLOW NOT(name OR id)
+!
+v intrpt
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP JOURNAL
+!	DISALLOW NOT (recover OR verify OR show OR extract OR rollback)
+!	DISALLOW recover and rollback
+!	DISALLOW NOT (forward OR backward)
+!	DISALLOW forward AND backward
+!	DISALLOW since AND forward
+!	DISALLOW lookback_limit AND forward
+!	DISALLOW redirect AND NOT recover
+!	DISALLOW checktn AND backward
+!	DISALLOW resync and fetchresync
+!	DISALLOW (resync OR fetchresync) AND NOT(rollback)
+!	DISALLOW losttrans AND NOT(recover OR rollback OR extract)
+!	DISALLOW brokentrans AND NOT(recover OR rollback OR extract)
+!	DISALLOW forward AND rollback
+!	DISALLOW full AND (recover OR rollback)
+!	DISALLOW detail AND NOT extract
+!	DISALLOW after and NOT forward
+!	DISALLOW after and (recover OR rollback)
+!	DISALLOW since and NOT backward
+!	DISALLOW lookback_limit AND NOT backward
+!	DISALLOW lookback_limit AND NOT (verify OR recover OR extract OR show)
+!	DISALLOW apply_after_image AND NOT (recover OR rollback)
+!	DISALLOW redirect AND NOT recover
+!	DISALLOW redirect AND NOT forward
+!	DISALLOW backward AND NEG chain
+!	DISALLOW (after OR before OR since OR lookback_limit) AND rollback
+!	DISALLOW (global OR user OR id OR process OR transaction) AND (recover OR rollback OR verify)
+!	DISALLOW output AND interactive
+!
+! Disallows for MUPIP JOURNAL are taken care of by the "mu_jnl_disallow" subtest of the mupjnl test.
+! See there for details.
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP RUNDOWN
+!	DISALLOW(FILE AND REGION)
+!
+p rundown -file -region
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP SET
+!
+!	since the maximum number of parameters is 1 for MUPIP SET command, we specify only one dummy parameter in the following
+!	not specifying that one parameter will cause VMS MUPIP SET to prompt for input which we want to avoid.
+!
+!	DISALLOW ANY2(file, region, jnlfile)
+!
+p set dummy_region -file -region
+p set dummy_region -file -jnlfile
+p set dummy_region -region -jnlfile
+p set dummy_region -region -jnlfile -file
+!
+!	DISALLOW(NOT(file OR region OR jnlfile))
+!
+p set dummy_region
+p set dummy_region -journal="enable,off"
+p set dummy_region -access="BG"
+p set dummy_region -defer_time=40
+p set dummy_region -extension=30
+p set dummy_region -flush_time
+p set dummy_region -global_buffers=2048
+p set dummy_region -lock_space=2048
+p set dummy_region -reserved_bytes=2048
+p set dummy_region -replication="on"
+p set dummy_region -bypass
+p set dummy_region -partial_recov_bypass
+p set dummy_region -dbfilename="abcd.dat"
+p set dummy_region -prevjnlfile="abcd.mjl"
+p set dummy_region -repl_state="off"
+p set dummy_region -standalonenot
+p set dummy_region -wait_disk=10
+!
+!
+! In order to better test the following MUPIP SET DISALLOWs, we need to specify a dummy -reg as otherwise the previous
+!	DISALLOW(NOT(file OR region OR jnlfile)) will take effect below too. Hence you will see "p set dummy_region -reg" below.
+!
+!       DISALLOW -VERSION AND -ACCESS_METHOD
+!       DISALLOW -VERSION AND -GLOBAL_BUFFERS
+!       DISALLOW -VERSION AND -RESERVED_BYTES
+!       DISALLOW -VERSION AND -FLUSH_TIME
+!       DISALLOW -VERSION AND -LOCK_SPACE
+!       DISALLOW -VERSION AND -DEFER_TIME
+!       DISALLOW -VERSION AND -WAIT_DISK
+!       DISALLOW -VERSION AND -PARTIAL_RECOV_BYPASS
+!
+p set -reg dummy_region -version=V4 -access_method="BG"
+p set -reg dummy_region -version=V4 -global_buffers=2048
+p set -reg dummy_region -version=V4 -reserved_bytes=0
+p set -reg dummy_region -version=V4 -flush_time
+p set -reg dummy_region -version=V4 -lock_space=2048
+p set -reg dummy_region -version=V4 -defer_time=40
+p set -reg dummy_region -version=V4 -wait_disk=10
+p set -reg dummy_region -version=V4 -partial_recov_bypass
+!
+!
+!	DISALLOW(journal.on AND journal.off)
+!
+p set dummy_region -reg -journal="off,on"
+!
+!	! --- disallow /NOJOURNAL=DISABLE ---
+!	DISALLOW(journal.disable AND NEG journal)
+!
+p set dummy_region -reg -nojournal="disable"
+!
+!	! --- disallow any other journal options for both /NOJOURNAL and DISABLE (Unix CLI disallows assignment for /NOJOURNAL) ---
+!	DISALLOW((journal.disable OR NEG journal) AND (journal.on OR journal.off OR journal.enable OR journal.before_images
+!		OR journal.filename OR journal.allocation OR journal.extension OR journal.buffer_size OR journal.alignsize
+!		OR journal.epoch_interval OR journal.autoswitchlimit OR NEG journal.before_images))
+!
+p set dummy_region -reg -journal="disable,on"
+p set dummy_region -reg -journal="disable,off"
+p set dummy_region -reg -journal="disable,enable"
+p set dummy_region -reg -journal="disable,before_images"
+p set dummy_region -reg -journal="disable,filename=dummy.mjl"
+p set dummy_region -reg -journal="disable,allocation=10"
+p set dummy_region -reg -journal="disable,extension=20"
+p set dummy_region -reg -journal="disable,buffer_size=40"
+p set dummy_region -reg -journal="disable,alignsize=80"
+p set dummy_region -reg -journal="disable,epoch_interval=100"
+p set dummy_region -reg -journal="disable,autoswitchlimit=2048"
+p set dummy_region -reg -journal="disable,nobefore_images"
+p set dummy_region -reg -nojournal="on"
+p set dummy_region -reg -nojournal="off"
+p set dummy_region -reg -nojournal="enable"
+p set dummy_region -reg -nojournal="before_images"
+p set dummy_region -reg -nojournal="filename=dummy.mjl"
+p set dummy_region -reg -nojournal="allocation=10"
+p set dummy_region -reg -nojournal="extension=20"
+p set dummy_region -reg -nojournal="buffer_size=40"
+p set dummy_region -reg -nojournal="alignsize=80"
+p set dummy_region -reg -nojournal="epoch_interval=100"
+p set dummy_region -reg -nojournal="autoswitchlimit=2048"
+p set dummy_region -reg -nojournal="nobefore_images"
+!
+!	DISALLOW(journal AND NOT(journal.disable OR journal.off OR journal.before_images OR NEG journal.before_images))
+!
+p set dummy_region -reg -journal="on"
+p set dummy_region -reg -journal="enable,on"
+p set dummy_region -reg -journal="enable,on,filename=dummy.mjl"
+p set dummy_region -reg -journal="enable,on,allocation=10"
+p set dummy_region -reg -journal="enable,on,extension=15"
+p set dummy_region -reg -journal="enable,on,buffer_size=25"
+p set dummy_region -reg -journal="enable,on,alignsize=100"
+p set dummy_region -reg -journal="enable,on,epoch_interval=40"
+p set dummy_region -reg -journal="enable,on,autoswitchlimit=85"
+!
+!	DISALLOW(replication.on AND replication.off)
+!
+p set dummy_region -reg -replication="off,on"
+!
+!	DISALLOW(replication.on AND (journal.off OR journal.disable OR NEG journal OR NEG journal.before_images))
+!
+p set dummy_region -reg -replication="on" -journal="off"
+p set dummy_region -reg -replication="on" -journal="disable"
+p set dummy_region -reg -replication="on" -nojournal
+v set dummy_region -reg -replication="on" -journal="nobefore_images"
+!
+!	DISALLOW(prevjnlfile AND NOT(jnlfile))
+!
+p set dummy_region -reg -prevjnlfile="abcd.mjl" 
+p set dummy_region -reg -prevjnlfile="abcd.mjl" -journal="enable,off"
+p set dummy_region -reg -prevjnlfile="abcd.mjl" -access="BG"
+p set dummy_region -reg -prevjnlfile="abcd.mjl" -defer_time=40
+p set dummy_region -reg -prevjnlfile="abcd.mjl" -extension=30
+p set dummy_region -reg -prevjnlfile="abcd.mjl" -flush_time
+p set dummy_region -reg -prevjnlfile="abcd.mjl" -global_buffers=2048
+p set dummy_region -reg -prevjnlfile="abcd.mjl" -lock_space=2048
+p set dummy_region -reg -prevjnlfile="abcd.mjl" -reserved_bytes=2048
+p set dummy_region -reg -prevjnlfile="abcd.mjl" -replication="on"
+p set dummy_region -reg -prevjnlfile="abcd.mjl" -bypass
+p set dummy_region -reg -prevjnlfile="abcd.mjl" -partial_recov_bypass
+p set dummy_region -reg -prevjnlfile="abcd.mjl" -dbfilename="abcd.dat"
+p set dummy_region -reg -prevjnlfile="abcd.mjl" -prevjnlfile="abcd.mjl"
+p set dummy_region -reg -prevjnlfile="abcd.mjl" -repl_state="off"
+p set dummy_region -reg -prevjnlfile="abcd.mjl" -standalonenot
+p set dummy_region -reg -prevjnlfile="abcd.mjl" -wait_disk=10
+p set dummy_region -reg -prevjnlfile="abcd.mjl"
+p set dummy_region -file -prevjnlfile="abcd.mjl"
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP STOP
+!	VMS  : DISALLOW NOT(name OR id)
+!
+v stop
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!  MUPIP REPLICATE
+!	VMS  : DISALLOW NOT(RECEIVER OR SOURCE OR UPDATEPROC)
+!	Unix : DISALLOW NOT(RECEIVER OR SOURCE OR UPDATEPROC OR INSTANCE_CREATE)
+!
+p replicate
+!
+!  MUPIP REPLICATE -RECEIVER (Receiver server)
+!	DISALLOW ANY2(start, shutdown, checkhealth, statslog, showbacklog, changelog)
+!
+p replicate -receiver -start -shutdown
+p replicate -receiver -start -checkhealth
+p replicate -receiver -start -statslog="dummylog"
+p replicate -receiver -start -showbacklog
+p replicate -receiver -start -changelog
+p replicate -receiver -shutdown -checkhealth
+p replicate -receiver -shutdown -statslog="dummylog"
+p replicate -receiver -shutdown -showbacklog
+p replicate -receiver -shutdown -changelog
+p replicate -receiver -checkhealth -statslog="dummylog"
+p replicate -receiver -checkhealth -showbacklog
+p replicate -receiver -checkhealth -changelog
+p replicate -receiver -statslog="dummylog" -showbacklog
+p replicate -receiver -statslog="dummylog" -changelog
+p replicate -receiver -showbacklog -changelog
+!
+!	VMS : DISALLOW noresync OR loadinst
+!
+v replicate -receiver -noresync
+v replicate -receiver -loadinst
+!
+!	DISALLOW NOT(start OR shutdown OR checkhealth OR statslog OR showbacklog OR changelog)
+!
+p replicate -receiver
+p replicate -receiver -buff=10
+p replicate -receiver -filter="abcd"
+p replicate -receiver -listenport=15
+p replicate -receiver -log="dummylog"
+v replicate -receiver -startup_file="dummyfile"
+p replicate -receiver -stopsourcefilter
+p replicate -receiver -timeout
+p replicate -receiver -notimeout
+p replicate -receiver -updateonly
+p replicate -receiver -updateresync
+v replicate -receiver -dummy_start
+!
+!	DISALLOW (((start AND NOT(updateonly)) OR changelog) AND NOT(log))
+!
+p replicate -receiver -start
+p replicate -receiver -start -buff=10
+p replicate -receiver -start -filter="abcd"
+p replicate -receiver -start -listenport=15
+v replicate -receiver -start -startup_file="dummyfile"
+p replicate -receiver -start -stopsourcefilter
+p replicate -receiver -start -timeout
+p replicate -receiver -start -notimeout
+p replicate -receiver -start -updateresync
+v replicate -receiver -start -dummy_start
+p replicate -receiver -changelog
+p replicate -receiver -changelog -buff=10
+p replicate -receiver -changelog -filter="abcd"
+p replicate -receiver -changelog -listenport=15
+v replicate -receiver -changelog -startup_file="dummyfile"
+p replicate -receiver -changelog -stopsourcefilter
+p replicate -receiver -changelog -timeout
+p replicate -receiver -changelog -notimeout
+p replicate -receiver -changelog -updateonly
+p replicate -receiver -changelog -updateresync
+v replicate -receiver -changelog -dummy_changelog
+!
+!	DISALLOW (statslog AND log)
+!
+p replicate -receiver -statslog=ON -log=dummy
+p replicate -receiver -statslog=OFF -log=dummy
+!
+!	DISALLOW (NOT(start) AND updateresync)
+!
+p replicate -receiver -updateresync -changelog -log="dummylog"
+p replicate -receiver -updateresync -checkhealth
+p replicate -receiver -updateresync -showbacklog
+p replicate -receiver -updateresync -shutdown
+p replicate -receiver -updateresync -statslog="dummylog"
+!
+!	disallow_return_value = (d_c_cli_present("UPDATERESYNC") && d_c_cli_present("NORESYNC"));
+!
+u replicate -receiver -start -listenport=15 -log=receiver.log -updateresync -noresync
+!
+!	disallow_return_value = (!d_c_cli_present("UPDATERESYNC") && (d_c_cli_present("REUSE")
+!								|| d_c_cli_present("RESUME")
+!								|| d_c_cli_present("INITIALIZE")));
+!
+u replicate -receiver -start -listenport=15 -log=receiver.log -reuse=INSTANCE2
+u replicate -receiver -start -listenport=15 -log=receiver.log -resume=1
+u replicate -receiver -start -listenport=15 -log=receiver.log -initialize
+!
+!	disallow_return_value = (d_c_cli_present("INITIALIZE") && d_c_cli_present("RESUME"));
+!
+u replicate -receiver -start -listenport=15 -log=receiver.log -updateresync -initialize -resume=1
+!
+!	disallow_return_value = (d_c_cli_present("REUSE") && d_c_cli_present("RESUME"));
+!
+u replicate -receiver -start -listenport=15 -log=receiver.log -updateresync -reuse=INSTANCE2 -resume=1
+!
+!	/* ROOTPRIMARY (or UPDOK) and PROPAGATEPRIMARY (or UPDNOTOK) are mutually exclusive */
+!	disallow_return_value = ((d_c_cli_present("ROOTPRIMARY") || d_c_cli_present("UPDOK"))
+!					&& (d_c_cli_present("PROPAGATEPRIMARY") || d_c_cli_present("UPDNOTOK")));
+u replicate -source -start -passive -log=passive.log -rootprimary -updnotok
+u replicate -source -start -passive -log=passive.log -rootprimary -propagateprimary
+u replicate -source -start -passive -log=passive.log -propagateprimary -updok
+u replicate -source -start -passive -log=passive.log -propagateprimary -rootprimary
+!
+!	/* ROOTPRIMARY and PROPAGATEPRIMARY are allowed only along with START, ACTIVATE or DEACTIVATE qualifiers */
+!	disallow_return_value = ((d_c_cli_present("ROOTPRIMARY") || d_c_cli_present("PROPAGATEPRIMARY")
+!						|| d_c_cli_present("UPDOK") || d_c_cli_present("UPDNOTOK"))
+!					&& !(d_c_cli_present("START")
+!						|| d_c_cli_present("ACTIVATE")
+!						|| d_c_cli_present("DEACTIVATE")));
+u replicate -source -shutdown -rootprimary
+u replicate -source -shutdown -propagateprimary
+u replicate -source -shutdown -updok
+u replicate -source -shutdown -updnotok
+u replicate -source -checkhealth -rootprimary
+u replicate -source -checkhealth -propagateprimary
+u replicate -source -checkhealth -updok
+u replicate -source -checkhealth -updnotok
+u replicate -source -statslog="dummylog" -rootprimary
+u replicate -source -statslog="dummylog" -propagateprimary
+u replicate -source -statslog="dummylog" -updok
+u replicate -source -statslog="dummylog" -updnotok
+u replicate -source -showbacklog -rootprimary
+u replicate -source -showbacklog -propagateprimary
+u replicate -source -showbacklog -updok
+u replicate -source -showbacklog -updnotok
+u replicate -source -changelog -log="dummylog" -rootprimary
+u replicate -source -changelog -log="dummylog" -propagateprimary
+u replicate -source -changelog -log="dummylog" -updok
+u replicate -source -changelog -log="dummylog" -updnotok
+u replicate -source -stopsourcefilter -rootprimary
+u replicate -source -stopsourcefilter -propagateprimary
+u replicate -source -stopsourcefilter -updok
+u replicate -source -stopsourcefilter -updnotok
+u replicate -source -losttncomplete -rootprimary
+u replicate -source -losttncomplete -propagateprimary
+u replicate -source -losttncomplete -updok
+u replicate -source -losttncomplete -updnotok
+u replicate -source -needrestart -rootprimary
+u replicate -source -needrestart -propagateprimary
+u replicate -source -needrestart -updok
+u replicate -source -needrestart -updnotok
+u replicate -source -jnlpool -rootprimary
+u replicate -source -jnlpool -propagateprimary
+u replicate -source -jnlpool -updok
+u replicate -source -jnlpool -updnotok
+u replicate -source -freeze -rootprimary
+u replicate -source -freeze -propagateprimary
+u replicate -source -freeze -updok
+u replicate -source -freeze -updnotok
+!
+!  MUPIP REPLICATE -SOURCE (Receiver server)
+!	DISALLOW ANY2(start, shutdown, activate, deactivate, checkhealth, statslog, showbacklog, changelog, stopsourcefilter,losttncomplete,needrestart,jnlpool)
+!
+p replicate -source -start -shutdown
+p replicate -source -start -activate
+p replicate -source -start -deactivate
+p replicate -source -start -checkhealth
+p replicate -source -start -statslog="dummylog"
+p replicate -source -start -showbacklog
+p replicate -source -start -changelog
+p replicate -source -start -stopsourcefilter
+u replicate -source -start -losttncomplete
+u replicate -source -start -needrestart
+u replicate -source -start -jnlpool
+p replicate -source -shutdown -activate
+p replicate -source -shutdown -deactivate
+p replicate -source -shutdown -checkhealth
+p replicate -source -shutdown -statslog="dummylog"
+p replicate -source -shutdown -showbacklog
+p replicate -source -shutdown -changelog
+p replicate -source -shutdown -stopsourcefilter
+u replicate -source -shutdown -losttncomplete
+u replicate -source -shutdown -needrestart
+! output of below command might be different because of the following reason.
+! source has its disallows and -jnlpool has its own set of disallows. It is a design limitation of our parsing scheme
+! that we can have only one disallow active at any point in time. The moment -jnlpool is parsed,
+! -jnlpool's disallow takes over and that is why it expects either a CHANGE or SHOW in the command line and does not find any
+! keep this comment till the software gets fixed
+u replicate -source -shutdown -jnlpool
+p replicate -source -activate -deactivate
+p replicate -source -activate -checkhealth
+p replicate -source -activate -statslog="dummylog"
+p replicate -source -activate -showbacklog
+p replicate -source -activate -changelog
+p replicate -source -activate -stopsourcefilter
+u replicate -source -activate -losttncomplete
+u replicate -source -activate -needrestart
+u replicate -source -activate -jnlpool
+p replicate -source -deactivate -checkhealth
+p replicate -source -deactivate -statslog="dummylog"
+p replicate -source -deactivate -showbacklog
+p replicate -source -deactivate -changelog
+p replicate -source -deactivate -stopsourcefilter
+u replicate -source -deactivate -losttncomplete
+u replicate -source -deactivate -needrestart
+! output of below command might be different because of the following reason.
+! source has its disallows and -jnlpool has its own set of disallows. It is a design limitation of our parsing scheme
+! that we can have only one disallow active at any point in time. The moment -jnlpool is parsed,
+! -jnlpool's disallow takes over and that is why it expects either a CHANGE or SHOW in the command line and does not find any
+! keep this comment till the software gets fixed
+u replicate -source -deactivate -jnlpool
+p replicate -source -checkhealth -statslog="dummylog"
+p replicate -source -checkhealth -showbacklog
+p replicate -source -checkhealth -changelog
+p replicate -source -checkhealth -stopsourcefilter
+u replicate -source -checkhealth -losttncomplete
+u replicate -source -checkhealth -needrestart
+u replicate -source -checkhealth -jnlpool
+p replicate -source -statslog="dummylog" -showbacklog
+p replicate -source -statslog="dummylog" -changelog
+p replicate -source -statslog="dummylog" -stopsourcefilter
+u replicate -source -statslog="dummylog" -losttncomplete
+u replicate -source -statslog="dummylog" -needrestart
+u replicate -source -statslog="dummylog" -jnlpool
+p replicate -source -showbacklog -changelog
+p replicate -source -showbacklog -stopsourcefilter
+u replicate -source -showbacklog -losttncomplete
+u replicate -source -showbacklog -needrestart
+! ##TODO##SHOW seems to collide with the SHOWBACKLOG qualifier, so we comment it out till the software gets fixed for this
+!u replicate -source -showbacklog -jnlpool
+p replicate -source -changelog -stopsourcefilter
+u replicate -source -changelog -losttncomplete
+u replicate -source -changelog -needrestart
+u replicate -source -changelog -jnlpool
+u replicate -source -stopsourcefilter -losttncomplete
+u replicate -source -stopsourcefilter -needrestart
+u replicate -source -stopsourcefilter -jnlpool
+u replicate -source -losttncomplete -needrestart
+u replicate -source -losttncomplete -jnlpool
+u replicate -source -needrestart -jnlpool
+!
+!	DISALLOW (statslog AND log)
+!
+p replicate -source -statslog=ON -log=dummy
+p replicate -source -statslog=OFF -log=dummy
+!
+!
+!	DISALLOW NOT(update OR start OR shutdown OR activate OR deactivate OR checkhealth
+!			OR statslog OR showbacklog OR changelog OR stopsourcefilter
+!			OR losttncomplete OR needrestart OR jnlpool)
+p replicate -source 
+p replicate -source -buff=10
+p replicate -source -connectparams="dummyparams"
+p replicate -source -filter="abcd"
+p replicate -source -log="dummylog"
+u replicate -source -log_interval=1
+p replicate -source -passive
+p replicate -source -secondary="dummysec"
+v replicate -source -startup_file="dummyfile"
+p replicate -source -timeout
+p replicate -source -notimeout
+v replicate -source -dummy_start
+! ## The below sections work only for unix, for now. Thought the commands run only in unix, the comments are displayed both in vms and unix. ##
+! C9G05-002793 MUPIP REPLIC disallows need to be fixed on VMS
+!
+!	DISALLOW (buffsize OR cmplvl OR filter OR passive) AND NOT(start)
+!
+##TODO## The commands following were added as a part of multisite replic change. All are now blindly changed as unix only command. 
+u replicate -source -shutdown -buff=1
+u replicate -source -activate -secondary=dummy -buff=1
+u replicate -source -deactivate -buff=1
+u replicate -source -checkhealth -buff=1
+u replicate -source -statslog="dummy" -buff=1
+u replicate -source -showbacklog -buff=1
+u replicate -source -changelog -buff=1
+u replicate -source -stopsourcefilter -buff=1
+u replicate -source -losttncomplete -buff=1
+u replicate -source -needrestart -buff=1
+u replicate -source -shutdown -cmplvl=8
+u replicate -source -activate -secondary=dummy -cmplvl=8
+u replicate -source -deactivate -cmplvl=8
+u replicate -source -checkhealth -cmplvl=8
+u replicate -source -statslog="dummy" -cmplvl=8
+u replicate -source -showbacklog -cmplvl=8
+u replicate -source -changelog -cmplvl=8
+u replicate -source -stopsourcefilter -cmplvl=8
+u replicate -source -losttncomplete -cmplvl=8
+u replicate -source -needrestart -cmplvl=8
+u replicate -source -buff=1 -jnlpool
+u replicate -source -shutdown -filter=dummy
+u replicate -source -activate -secondary=dummy -filter=dummy
+u replicate -source -deactivate -filter=dummy
+u replicate -source -checkhealth -filter=dummy
+u replicate -source -statslog="dummy" -filter=dummy
+u replicate -source -showbacklog -filter=dummy
+u replicate -source -changelog -filter=dummy
+u replicate -source -stopsourcefilter -filter=dummy
+u replicate -source -losttncomplete -filter=dummy
+u replicate -source -needrestart -filter=dummy
+u replicate -source -filter=dummy -jnlpool
+u replicate -source -shutdown -passive
+u replicate -source -activate -secondary=dummy -passive
+u replicate -source -deactivate -passive
+u replicate -source -checkhealth -passive
+u replicate -source -statslog="dummy" -passive
+u replicate -source -showbacklog -passive
+u replicate -source -changelog -passive
+u replicate -source -stopsourcefilter -passive
+u replicate -source -losttncomplete -passive
+u replicate -source -needrestart -passive
+u replicate -source -passive -jnlpool
+u replicate -receiver -shutdown -buff=1
+u replicate -receiver -checkhealth -buff=1
+u replicate -receiver -showbacklog -buff=1
+u replicate -receiver -changelog -log=dummy -buff=1
+u replicate -receiver -shutdown -cmplvl=8
+u replicate -receiver -checkhealth -cmplvl=8
+u replicate -receiver -showbacklog -cmplvl=8
+u replicate -receiver -changelog -log=dummy -cmplvl=8
+u replicate -receiver -shutdown -filter=dummy
+u replicate -receiver -checkhealth -filter=dummy
+u replicate -receiver -showbacklog -filter=dummy
+u replicate -receiver -changelog -log=dummy -filter=dummy
+!
+!	DISALLOW (connectparams OR secondary) AND NOT(start OR activate)
+u replicate -source -shutdown -connectparams=dummy
+u replicate -source -deactivate -connectparams=dummy
+u replicate -source -checkhealth -connectparams=dummy
+u replicate -source -statslog="dummy" -connectparams=dummy
+u replicate -source -showbacklog -connectparams=dummy
+u replicate -source -changelog -connectparams=dummy
+u replicate -source -stopsourcefilter -connectparams=dummy
+u replicate -source -losttncomplete -connectparams=dummy
+u replicate -source -needrestart -connectparams=dummy
+u replicate -source -connectparams=dummy -jnlpool
+u replicate -source -shutdown -secondary=dummy
+u replicate -source -deactivate -secondary=dummy
+u replicate -source -checkhealth -secondary=dummy
+u replicate -source -statslog="dummy" -secondary=dummy
+u replicate -source -showbacklog -secondary=dummy
+u replicate -source -changelog -secondary=dummy
+u replicate -source -stopsourcefilter -secondary=dummy
+u replicate -source -losttncomplete -secondary=dummy
+u replicate -source -needrestart -secondary=dummy
+u replicate -source -secondary=dummy -jnlpool
+!
+!	DISALLOW (log OR log_interval) AND NOT(start OR activate OR changelog)
+!
+u replicate -source -shutdown -log=dummy
+u replicate -source -deactivate -log=dummy
+u replicate -source -checkhealth -log=dummy
+u replicate -source -showbacklog -log=dummy
+u replicate -source -stopsourcefilter -log=dummy
+u replicate -source -losttncomplete -log=dummy
+u replicate -source -needrestart -log=dummy
+u replicate -source -log=dummy -jnlpool
+u replicate -source -shutdown -log_interval=1
+u replicate -source -deactivate -log_interval=1
+u replicate -source -checkhealth -log_interval=1
+u replicate -source -showbacklog -log_interval=1
+u replicate -source -stopsourcefilter -log_interval=1
+u replicate -source -losttncomplete -log_interval=1
+u replicate -source -needrestart -log_interval=1
+u replicate -source -log_interval=1 -jnlpool
+!
+!	DISALLOW timeout AND NOT(shutdown)
+!
+u replicate -source -timeout -start
+u replicate -source -timeout -activate
+u replicate -source -timeout -deactivate
+u replicate -source -timeout -checkhealth
+u replicate -source -timeout -statslog="dummy"
+u replicate -source -timeout -showbacklog
+u replicate -source -timeout -changelog
+u replicate -source -timeout -stopsourcefilter
+u replicate -source -timeout -losttncomplete
+u replicate -source -timeout -needrestart
+u replicate -source -timeout -jnlpool
+!
+!	DISALLOW start AND (passive AND secondary)
+!
+u replicate -source -start -secondary=dummy -buff=1 -instsecondary=dummy -passive
+!
+!	DISALLOW start AND NOT(log)
+u replicate -source -start -secondary="dummy"
+!
+!	DISALLOW activate AND NOT(secondary)
+u replicate -source -activate
+!
+!	DISALLOW changelog AND NOT(log OR log_interval)
+u replicate -source -changelog
+!
+!	DISALLOW NOT(editinstance OR instance_create OR receiver OR source
+!			OR updateproc OR updhelper)
+u replicate -start -secondary=dummysec -buffsize=dummy -instsecondary=dummy
+u replicate -activate -secondary=dummysec -log=dummylog -instsecondary=dummy
+u replicate -deactivate
+u replicate -changelog -log=dummylog
+!
+!	DISALLOW ANY2 (editinstance,instance_create,receiver,
+!				source,updateproc,updhelper)
+!
+u replicate -instance_create -name=dummy -editinstance -show dummy
+u replicate -source -editinstance -show dummy
+u replicate -receiver -editinstance -show dummy
+u replicate -editinstance -show dummy -updateproc
+u replicate -editinstance -show dummy -updhelper
+u replicate -source -instance_create -name=dummy
+u replicate -receiver -instance_create -name=dummy
+u replicate -receiver -updateproc
+u replicate -source -updateproc
+u replicate -receiver -updhelper
+u replicate -source -updhelper
+u replicate -updhelper -updateproc
+u replicate -updateproc -editinstance -show dummy
+u replicate -updateproc -instance_create -name=dummy
+u replicate -updhelper -editinstance -show dummy
+u replicate -updhelper -instance_create -name=dummy
+!
+!
+!	MUPIP REPLIC -EDITINSTANCE
+!
+!	DISALLOW NOT(change OR show)
+u replicate -editinstance dummy
+!	DISALLOW (change AND show)
+u replicate -editinstance -show -change -offset=0xFFFFFFFF -value=0xFFFFFFFF -size=0x00000001
+!	DISALLOW (offset OR size OR value) AND NOT(change)
+u replicate -editinstance -show -offset=0xFFFFFFFF
+u replicate -editinstance -show -value=0xFFFFFFFF
+u replicate -editinstance -show -size=0x00000001
+!	DISALLOW change AND NOT(offset OR size)
+u replicate -editinstance -change -value=0xFFFFFFFF
+u replicate -editinstance -change -offset=0xFFFFFFFF -value=0xFFFFFFFF
+u replicate -editinstance -change -value=0xFFFFFFFF -size=0x00000001
+!	DISALLLOW detail AND NOT(show)
+u replicate -editinstance -change -offset=0xFFFFFFFF -value=0xFFFFFFFF -size=0x00000001 -detail
+!
+!
+!	DISALLOW rootprimary AND propagateprimary
+u replicate -source -start -secondary=dummy -log=dummy.log -rootprimary -propagateprimary
+!
+!	DISALLOW (rootprimary OR propagateprimary) AND NOT(start OR activate OR deactivate)
+!
+u replicate -source -shutdown -rootprimary
+u replicate -source -checkhealth -rootprimary
+u replicate -source -statslog="dummy" -rootprimary
+u replicate -source -showbacklog -rootprimary
+u replicate -source -changelog -rootprimary
+u replicate -source -stopsourcefilter -rootprimary
+u replicate -source -losttncomplete -rootprimary
+u replicate -source -needrestart -rootprimary
+u replicate -source -rootprimary -jnlpool
+u replicate -source -checkhealth -propagateprimary
+u replicate -source -statslog="dummy" -propagateprimary
+u replicate -source -showbacklog -propagateprimary
+u replicate -source -changelog -propagateprimary
+u replicate -source -stopsourcefilter -propagateprimary
+u replicate -source -losttncomplete -propagateprimary
+u replicate -source -needrestart -propagateprimary
+u replicate -source -propagateprimary -jnlpool
+!
+!	VMS : DISALLOW showbacklog AND supplementary
+!
+v replicate -source -showbacklog -supplementary
+!
+!	DISALLOW instsecondary AND (losttncomplete OR jnlpool)
+u replicate -source -instsecondary=dummy -losttncomplete
+u replicate -source -instsecondary=dummy -jnlpool
+!
+!	DISALLOW detail AND NOT(jnlpool)
+u replicate -source -start -secondary="dummy" -log=dummy -detail
+u replicate -source -shutdown -detail
+u replicate -source -activate -secondary=dummy -detail
+u replicate -source -deactivate -detail
+u replicate -source -statslog=dummy -detail
+u replicate -source -showbacklog -detail
+u replicate -source -changelog -log=dummy -detail
+u replicate -source -checkhealth -detail
+u replicate -source -stopsourcefilter -detail
+u replicate -source -losttncomplete -detail
+u replicate -source -needrestart -detail
+##TODO## Till this part of multisite change
+!
+!	DISALLOW (MUPIP REORG -UPGRADE AND (EXCLUDE OR FILL_FACTOR
+!				OR INDEX_FILL_FACTOR OR RESUME OR SELECT OR USER_DEFINED_REORG OR DOWNGRADE))
+p reorg -upgrade -exclude="^*"
+p reorg -upgrade -fill_factor=5
+p reorg -upgrade -index_fill_factor=5
+p reorg -upgrade -resume
+p reorg -upgrade -select="^*"
+p reorg -upgrade -user_defined_reorg="^*"
+p reorg -upgrade -downgrade
+!
+!	DISALLOW (MUPIP REORG -DOWNGRADE AND (EXCLUDE OR FILL_FACTOR
+!				OR INDEX_FILL_FACTOR OR RESUME OR SELECT OR USER_DEFINED_REORG OR UPGRADE))
+p reorg -downgrade -exclude="^*"
+p reorg -downgrade -fill_factor=5
+p reorg -downgrade -index_fill_factor=5
+p reorg -downgrade -resume
+p reorg -downgrade -select="^*"
+p reorg -downgrade -user_defined_reorg="^*"
+p reorg -downgrade -upgrade
+!
+!	DISALLOW (MUPIP REORG -SAFEJNL AND (EXCLUDE OR FILL_FACTOR
+!				OR INDEX_FILL_FACTOR OR RESUME OR SELECT OR USER_DEFINED_REORG))
+p reorg -safejnl -exclude="^*"
+p reorg -safejnl -fill_factor=5
+p reorg -safejnl -index_fill_factor=5
+p reorg -safejnl -resume
+p reorg -safejnl -select="^*"
+p reorg -safejnl -user_defined_reorg="^*"
+!
+!	DISALLOW (MUPIP REORG -NOSAFEJNL AND (EXCLUDE OR FILL_FACTOR
+!				OR INDEX_FILL_FACTOR OR RESUME OR SELECT OR USER_DEFINED_REORG))
+p reorg -nosafejnl -exclude="^*"
+p reorg -nosafejnl -fill_factor=5
+p reorg -nosafejnl -index_fill_factor=5
+p reorg -nosafejnl -resume
+p reorg -nosafejnl -select="^*"
+p reorg -nosafejnl -user_defined_reorg="^*"
+!
+!	DISALLOW (MUPIP REORG -SAFEJNL -REGION )
+p reorg -safejnl -region DEFAULT
+!
+!	DISALLOW (MUPIP REORG -NOSAFEJNL -REGION )
+p reorg -nosafejnl -region DEFAULT
+!
+!	DISALLOW (MUPIP REORG -UPGRADE )
+p reorg -upgrade
+!
+!	DISALLOW (MUPIP REORG -DOWNGRADE )
+p reorg -downgrade
+!
+!	DISALLOW (MUPIP REORG -TRUNCATE AND (UPGRADE OR DOWNGRADE OR SAFEJNL OR NOSAFEJNL))
+u reorg -upgrade -truncate
+u reorg -downgrade -truncate
+u reorg -safejnl -truncate
+u reorg -nosafejnl -truncate
+!

@@ -1,0 +1,69 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+Block:Offset Level
+%GTM-W-DBFGTBC, 
+       0:0      0  File size larger than block count would indicate
+%GTM-E-DBMISALIGN, Database file mumps.dat has 458 blocks which does not match alignment rules. Reconstruct the database from a backup or extend it by at least 358 blocks.
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+%GTM-E-INTEGERRS, Database integrity errors
+Extension successful, file ##TEST_PATH##/mumps.dat extended by 358 blocks.  Total blocks = 458.
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free              456              NA              NA            NA
+Total             458               1              NA             0
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block:Offset Level
+%GTM-W-DBFGTBC, 
+       0:0      0  File size larger than block count would indicate
+%GTM-E-DBTOTBLK, Total blocks should be 0x000001CB, is 0x00000111
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free              270              NA              NA            NA
+Total             272               1              NA             0
+%GTM-E-INTEGERRS, Database integrity errors
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           1.953            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free              456              NA              NA            NA
+Total             458               1              NA             0
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

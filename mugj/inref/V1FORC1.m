@@ -1,0 +1,52 @@
+V1FORC1	;FOR COMMAND -3.1-;YS-TS,V1FORC,VALIDATION VERSION 7.1;31-AUG-1987;
+	;COPYRIGHT MUMPS SYSTEM LABORATORY 1978
+	S PASS=0,FAIL=0
+	W !!,"V1FORC1: TEST OF FOR COMMAND -3.1-",!
+	W !,"FOR lvn=numexpr1:numexpr2:numexpr3",!
+364	W !,"I-364  numexpr is non-integer numeric literal"
+	S ITEM="I-364  ",VCOMP="" F I=-0.73:2000E-4:"000.123E+1" S VCOMP=VCOMP_I_" "
+	S VCOMP=VCOMP_I S VCORR="-.73 -.53 -.33 -.13 .07 .27 .47 .67 .87 1.07 1.07" D EXAMINER
+	;
+365	W !,"I-365  numexpr is function"
+	S ITEM="I-365  " S VCOMP="" F I=1_0:4>3:$F("ABC","B")*"6A" S VCOMP=VCOMP_I_" "
+	S VCOMP=VCOMP_I S VCORR="10 11 12 13 14 15 16 17 18 18" D EXAMINER
+	;
+366	W !,"I-366  numexpr contains unary operator"
+	S ITEM="I-366  ",VCOMP="" F I='0:+"000001.20E-.8ABDEF0":--"82E-1FOR" S VCOMP=VCOMP_I_" "
+	S VCOMP=VCOMP_I S VCORR="1 2.2 3.4 4.6 5.8 7 8.2 8.2" D EXAMINER
+	;
+367	W !,"I-367  numexpr contains binary operator"
+	S ITEM="I-367  " S X=4,Y=3,VCOMP="" F I=X/1.0+0.0:Y*1:X*Y S VCOMP=VCOMP_I_" "
+	S VCOMP=VCOMP_I S VCORR="4 7 10 10" D EXAMINER
+	;
+368	W !,"I-368  numexpr is unsubscripted gvn"
+	S ITEM="I-368  ",VCOMP="" S ^V1A="10GLOBAL" F I=^V1A:2:^V1A+^V1A+1 S VCOMP=VCOMP_I_" "
+	S VCOMP=VCOMP_I S VCORR="10 12 14 16 18 20 20" D EXAMINER
+	;
+369	W !,"I-369  numexpr is subscripted gvn"
+	S ITEM="I-369  ",VCOMP="" K ^V1A,^V1B S ^V1A(1)=2,^(1,2)=12,^(2,3)=10,^V1B(1)="X",^(4)=7,^(5)=24
+	F A(^(1,^V1A(1)))=^(2,3):^V1B(4):^(5) S VCOMP=VCOMP_^(1)
+	S VCOMP=VCOMP_A(12),VCORR="XXX24" D EXAMINER
+	;
+	W !!,"Combination of FOR scope",!
+370	W !,"I-370  FOR ... QUIT ... FOR"
+	S ITEM="I-370  ",VCOMP="" KILL I,J FOR I=1:1:3 SET VCOMP=VCOMP_I_" " Q  F J=1:1:4 S VCOMP=VCOMP_J_"/"
+	S VCOMP=VCOMP_I_"+"_$D(I)_" "_$D(J),VCORR="1 1+1 0" D EXAMINER
+	;
+371	W !,"I-371  FOR ... QUIT ... FOR ... QUIT"
+	S ITEM="I-371  ",VCOMP="" KILL I,J FOR I=1:1:4 S VCOMP=VCOMP_"  "_I Q:I=3  F J=1:1:4 S VCOMP=VCOMP_I_J Q:J=2  ;
+	S VCOMP=VCOMP_"  "_I_" "_J,VCORR="  11112  22122  3  3 2" D EXAMINER
+	;
+372	W !,"I-372  FOR ... FOR ... QUIT"
+	S ITEM="I-372  ",VCOMP="" F I=1:1:3 S VCOMP=VCOMP_I_" " F J=1:1:4 S VCOMP=VCOMP_J_"/" QUIT  ;COMMENT
+	S VCOMP=VCOMP_I_" "_J,VCORR="1 1/2 1/3 1/3 1" D EXAMINER
+	;
+END	W !!,"END OF V1FORC1",!
+	S ROUTINE="V1FORC1",TESTS=9,AUTO=9,VISUAL=0 D ^VREPORT
+	K  K ^V1A,^V1B Q
+	;
+EXAMINER	I VCORR=VCOMP S PASS=PASS+1 W !,"   PASS  ",ITEM W:$Y>55 # Q
+	S FAIL=FAIL+1 W !,"** FAIL  ",ITEM W:$Y>55 #
+	W !,"           COMPUTED =""",VCOMP,"""" W:$Y>55 #
+	W !,"           CORRECT  =""",VCORR,"""" W:$Y>55 #
+	Q

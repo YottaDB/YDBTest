@@ -1,0 +1,59 @@
+V4NAME22 ;IW-KO-YS-TS,V4NAME,MVTS V9.10;15/6/96;PART-94
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+ W !!,"41---V4NAME22:  $NAME function  -10-"
+ ;
+ W !,"$QL(lvn)>intexpr"
+ ;
+1 S ^ABSN="40303",^ITEM="IV-303  1 subscript"
+ S ^NEXT="2^V4NAME22,V4NAME23^V4NAME,V4QLEN^VV4" D ^V4PRESET K
+ S ^VCOMP=$NA(AAB1(1234),0)
+ S ^VCORR="AAB1" D ^VEXAMINE
+ ;
+2 S ^ABSN="40304",^ITEM="IV-304  2 subscripts"
+ S ^NEXT="3^V4NAME22,V4NAME23^V4NAME,V4QLEN^VV4" D ^V4PRESET K
+ S ^VCOMP=$na(X("A","B"),1)
+ S ^VCORR="X(""A"")" D ^VEXAMINE
+ ;
+3 S ^ABSN="40305",^ITEM="IV-305  5 subscripts"
+ S ^NEXT="4^V4NAME22,V4NAME23^V4NAME,V4QLEN^VV4" D ^V4PRESET K
+ S (A,B,C,D,E)="a"
+ S ^VCOMP=$NA(QWE3000(A,B,C,D,E),5-1)
+ S ^VCORR="QWE3000(""a"",""a"",""a"",""a"")" D ^VEXAMINE
+ ;
+4 S ^ABSN="40306",^ITEM="IV-306  subscript is naked reference"
+ S ^NEXT="5^V4NAME22,V4NAME23^V4NAME,V4QLEN^VV4" D ^V4PRESET K  k ^V
+ S ^V(1)=1,^V(1,1)=11,^V(1,2,2)=122,^V(1,2,3,3)=1233,^V(1,2,3,4,5)=2
+ S ^V(1,2,3,4,4)=12344,^V(2)=2
+ S ^VCOMP=$na(X(^(1,1),^(2,2),^(3,3),^(4,4)),^(5))
+ S ^VCORR="X(11,122)" D ^VEXAMINE K ^V
+ ;
+ W !,"$QL(lvn)'>intexpr"
+ ;
+5 S ^ABSN="40307",^ITEM="IV-307  1 subscript"
+ S ^NEXT="6^V4NAME22,V4NAME23^V4NAME,V4QLEN^VV4" D ^V4PRESET K
+ S ^VCOMP=$NA(X("1."),3)
+ S ^VCORR="X(""1."")" D ^VEXAMINE
+ ;
+6 S ^ABSN="40308",^ITEM="IV-308  2 subscripts"
+ S ^NEXT="7^V4NAME22,V4NAME23^V4NAME,V4QLEN^VV4" D ^V4PRESET K
+ S ^VCOMP=$na(ZZZZZZZZ(-0,-3E-5),0.002E3)
+ S ^VCORR="ZZZZZZZZ(0,-.00003)" D ^VEXAMINE
+ ;
+7 S ^ABSN="40309",^ITEM="IV-309  5 subscripts"
+ S ^NEXT="8^V4NAME22,V4NAME23^V4NAME,V4QLEN^VV4" D ^V4PRESET K
+ S ^VCOMP=$na(V("-","+",".","\","@"),600000)
+ S ^VCORR="V(""-"",""+"",""."",""\"",""@"")" D ^VEXAMINE
+ ;
+8 S ^ABSN="40310",^ITEM="IV-310  subscript is naked reference"
+ S ^NEXT="V4NAME23^V4NAME,V4QLEN^VV4" D ^V4PRESET K  K ^V
+ S ^V(1)=1,^V(1,1)=11,^V(1,2,2)=122,^V(1,2,3,3)=1233,^V(1,2,3,4,5)=4
+ S ^V(1,2,3,4,4)=12344,^V(2)=2
+ S ^VCOMP=$na(X(^(1,1),^(2,2),^(3,3),^(4,4)),^(5))
+ S ^VCORR="X(11,122,1233,12344)" D ^VEXAMINE K ^V
+ ;
+END W !!,"End of 41 --- V4NAME22",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

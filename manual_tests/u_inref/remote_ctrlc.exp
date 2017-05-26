@@ -1,0 +1,149 @@
+#!/usr/bin/expect -f
+# expect $gtm_test/T999/manual_tests/u_inref/remote_ctrlc.exp sagaloo $gtm_test/T999 V990
+
+proc debug {switch} {
+	exp_internal $switch
+}
+
+set tst "manual_tests"
+set subtst "ctrlc"
+
+set host [lindex $argv 0]
+if {$host == ""} {
+	puts "No host"
+	exit
+}
+
+set gtm_tst [lindex $argv 1]
+if {$gtm_tst == ""} {
+	set gtm_tst "/gtc/staff/gtm_test/current/T990"
+}
+
+set gtm_verno [lindex $argv 2]
+if {$gtm_verno == ""} {
+	set gtm_verno "V990"
+}
+
+# -1 timeout means the expect match must occur
+# up the time out to 10 seconds so that the expect script won't hang
+set timeout 10
+
+###################
+# Start a shell on the remote host
+spawn ssh $host
+match_max 100000
+
+# wait for remote shell to start
+# some slow machines really test the sleep timeout
+sleep 2
+
+# clean up the prompt
+expect "*"
+send -- "set prompt=\"$host $gtm_tst > \"\r"
+
+# set GT.M version
+expect -exact "$host $gtm_tst > "
+send -- "set setactive_parms=($gtm_verno p);source \$gtm_tools/setactive.csh >&! /dev/null\r"
+
+# avoid copying M routines by setting gtmroutines correctly
+expect -exact "$host $gtm_tst > "
+send -- "setenv gtmroutines \".(. $gtm_tst/com $gtm_tst/$tst/inref) \$gtm_dist\"\r"
+
+# Temp directory setup
+expect "$host $gtm_tst > "
+send "rm -rf /testarea1/\$user/$gtm_verno/$tst/$subtst\r"
+expect "$host $gtm_tst > "
+send "mkdir -p /testarea1/\$user/$gtm_verno/$tst/$subtst\r"
+expect "$host $gtm_tst > "
+send "cd /testarea1/\$user/$gtm_verno/$tst/$subtst\r"
+expect "$host $gtm_tst > "
+send "setenv gtmgbldir mumps.gld ; clear\n"
+expect "$host $gtm_tst > "
+
+# Enable logging
+log_file -noappend $host.$subtst.log
+
+# Execute GT.M
+expect -exact "$host $gtm_tst > "
+send -- "\$gtm_exe/mumps -direct\r"
+
+#
+expect "GTM>"
+send -- "do ^ctrlc\r"
+expect "for i=1:1:10000000  SET x=x+1"
+send -- ""
+expect "%GTM-I-CTRLC, CTRL_C encountered"
+#
+send -- "write \"Testing interrupt of zshow V\",!\r"
+expect "GTM>"
+send -- "zshow \"v\":y\r"
+send -- ""
+expect "%GTM-I-CTRLC, CTRL_C encountered"
+#
+send -- "write \"Testing interrupt of zwrite a\",!\r"
+expect "GTM>"
+send -- "zwrite a\r"
+send -- ""
+expect "%GTM-I-CTRLC, CTRL_C encountered"
+#
+send -- "write \"Testing interrupt of xecuted zwrite a\",!\r"
+expect "GTM>"
+send -- "xecute \"zwrite a\"\r"
+expect "a=0"
+send -- ""
+expect "%GTM-I-CTRLC, CTRL_C encountered"
+#
+send -- "write \"Testing interrupt of lke show -all\",!\r"
+expect "GTM>"
+send -- "zsystem\r"
+expect ">"
+send -- "\$gtm_dist/lke show -all\r"
+expect "Owned by PID="
+send -- ""
+expect "%GTM-I-CTRLC, CTRL_C encountered"
+send -- "exit\r"
+
+expect "GTM>"
+send "do validate^ctrlc\r"
+
+set status "MISSING"
+expect "Checking test status"
+expect {
+	"FAIL" {set status "FAIL"}
+	"PASS" {set status "PASS"}
+}
+
+expect "GTM>"
+send -- "halt\r"
+
+# log off
+expect "$host $gtm_tst > "
+send "logout\r"
+
+# Disable logging
+log_file
+expect eof
+
+###################
+# spawn shell on local host to send mail if not in the test system
+puts ""
+puts "####MAIL####MAIL####MAIL####MAIL####MAIL####MAIL####"
+spawn $env(SHELL)
+
+expect "*>"
+send "printenv gtm_tst\r"
+expect {
+	"$gtm_tst" {set inside 1}
+	"*>" {set inside 0}
+}
+
+# message
+if {$inside == 0} {
+	set msg "SUBSET $host $status $gtm_verno  manual_tests/$subtst /testarea1/\$user/$gtm_verno/manual_tests/$subtst"
+	send -- "cat $host.$subtst.log | mailx -s \"$msg\" \$user\r"
+}
+
+# Kill the shell
+send -- "exit\r"
+
+expect eof

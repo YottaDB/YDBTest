@@ -1,0 +1,37 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+----------------------------------------------------------------
+# Test that TRIGGER SELECT operations happen under a TP fence
+Added SET trigger on ^SAMPLE named myname0
+Added SET trigger on ^SAMPLE named myname1
+Added SET trigger on ^SAMPLE named myname2
+Added SET trigger on ^SAMPLE named myname3
+Added SET trigger on ^SAMPLE named myname4
+Added SET trigger on ^SAMPLE named myname5
+Added SET trigger on ^SAMPLE named myname6
+Added SET trigger on ^SAMPLE named myname7
+Added SET trigger on ^SAMPLE named myname8
+Added SET trigger on ^SAMPLE named myname9
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

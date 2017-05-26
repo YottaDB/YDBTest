@@ -1,0 +1,12 @@
+###################################################################
+Size of created file.big is 5125000000
+Initial size of file.big in append test is 5125000000
+Output when preceded by newline,$ZKEY = 5125000001
+Output when not preceded by newline,$ZKEY = 5125000052
+* rewrite the same line after doing a relative seek backwards *
+Output when not preceded by newline,$ZKEY = 5125000052
+The file size prior to the truncate test is 5125000107
+The file size after the line to truncate has been added is 5125000136
+this line will get truncated
+The size of the file after truncating a line is 5125000107
+The final size of the file after append:truncate is 5125000107

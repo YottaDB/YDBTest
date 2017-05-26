@@ -1,0 +1,72 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+# Pass gd_region.jnl_state
+PASS
+# Pass gd_region.jnl_file_name
+PASS
+# Pass gd_region.max_key_size
+PASS
+# Pass repl_inst_hdr.inst_info.this_instname
+PASS
+# Pass gtmsrc_lcl.secondary_instname
+PASS
+# Pass sgmnt_data.label with a base address
+PASS
+# Pass gd_region.max_key_size without region. Expect error.
+150383746,error+7^%PEEKBYNAME,%GTM-E-PBNPARMREQ, A first parameter value gd_region requires a second parameter specified containing a region name
+
+# Pass repl_inst_hdr.inst_info.this_instname with region. Expect error.
+150383754,error+7^%PEEKBYNAME,%GTM-E-PBNNOPARM, First parameter repl_inst_hdr does not support a second parameter
+
+# Pass foo.foo. Expect error.
+150383762,error+7^%PEEKBYNAME,%GTM-E-PBNUNSUPSTRUCT, $ZPEEK() does not support structure foo
+
+# Pass repl_inst_hdr.inst_info.foo. Expect error.
+150383770,error+7^%PEEKBYNAME,%GTM-E-PBNINVALID, repl_inst_hdr does not have a field named inst_info.foo
+
+# Pass gtmsrc_lcl.secondary_instname with a region name. Expect error.
+150383034,%PEEKBYNAME+52^%PEEKBYNAME,%GTM-E-BADZPEEKARG, Missing, invalid or surplus mnemonic argument (array index) parameter for $ZPEEK()
+
+# Pass gtmsrc_lcl.secondary_instname without an index. Expect error.
+150383746,error+7^%PEEKBYNAME,%GTM-E-PBNPARMREQ, A first parameter value gtmsrc_lcl requires a second parameter specified containing an index value
+
+# Pass repl_inst_hdr.inst_info.this_instname with an index. Expect error.
+150383754,error+7^%PEEKBYNAME,%GTM-E-PBNNOPARM, First parameter repl_inst_hdr does not support a second parameter
+
+# Pass gd_region.jnl_state with an index. Expect error.
+150383034,%PEEKBYNAME+52^%PEEKBYNAME,%GTM-E-BADZPEEKARG, Missing, invalid or surplus mnemonic argument (region name) parameter for $ZPEEK()
+
+# Pass gtmsrc_lcl.secondary_instname with a base address. Expect error.
+150383042,%PEEKBYNAME+52^%PEEKBYNAME,%GTM-E-BADZPEEKRANGE, Access exception raised in memory range given to $ZPEEK()
+
+# Pass without a first argument
+150383778,error+7^%PEEKBYNAME,%GTM-E-PBNNOFIELD, %ZPEEKBYNAME() requires a field.item as its first parameter
+
+# Verify LISTALL^%PEEKBYNAME and LIST^%PEEKBYNAME
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT ALL'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

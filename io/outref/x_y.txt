@@ -1,0 +1,121 @@
+TEST $X and $Y and LENGTH (sequential files)
+
+GTM>
+-> OPEN "testxy.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=1048576)
+-> USE "testxy.txt"
+-> USE "testxy.txt":(LENGTH=4)
+-> USE "testxy.txt":(LENGTH=50:WIDTH=30:WRAP)
+-> USE "testxy.txt":(WIDTH=32767)
+-> USE "testxy.txt":(WIDTH=1048576)
+-> CLOSE "testxy.txt"
+-> OPEN "testxy.txt":(REWIND:BIGRECORD:RECORDSIZE=1048576)
+File: testxy.txt
+#l   $L(l)   l
+1    39      NEWVERSION:BIGRECORD:RECORDSIZE=1048576
+2    33809   looong line:<649_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr3<...length=84...> 
+3    1048576 loooong line:<20164_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZab1048569
+4    1048576 loooong line:<20164_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi
+5    15      jklmnopqrstuv13
+6    8       LENGTH:4
+7    11      _,$X:5,$Y:2
+8    12       _,$X:6,$Y:3
+9    13        _,$X:7,$Y:0
+10   14         _,$X:8,$Y:1
+11   15          _,$X:9,$Y:2
+12   17           _,$X:10,$Y:3
+13   18            _,$X:11,$Y:0
+14   19             _,$X:12,$Y:1
+15   20              _,$X:13,$Y:2
+16   21               _,$X:14,$Y:3
+17   22                _,$X:15,$Y:0
+18   23                 _,$X:16,$Y:1
+19   24                  _,$X:17,$Y:2
+20   25                   _,$X:18,$Y:3
+21   26                    _,$X:19,$Y:0
+22   23      LENGTH:50,WIDTH=30:WRAP
+23   11      _,$X:5,$Y:2
+24   12       _,$X:6,$Y:3
+25   13        _,$X:7,$Y:4
+26   14         _,$X:8,$Y:5
+27   15          _,$X:9,$Y:6
+28   17           _,$X:10,$Y:7
+29   18            _,$X:11,$Y:8
+30   19             _,$X:12,$Y:9
+31   21              _,$X:13,$Y:10
+32   22               _,$X:14,$Y:11
+33   23                _,$X:15,$Y:12
+34   24                 _,$X:16,$Y:13
+35   25                  _,$X:17,$Y:14
+36   26                   _,$X:18,$Y:15
+37   27                    _,$X:19,$Y:16
+38   28                     _,$X:20,$Y:17
+39   29                      _,$X:21,$Y:18
+40   30                       _,$X:22,$Y:19
+41   30                        _,$X:23,$Y:2
+42   1       0
+43   30                         _,$X:24,$Y:
+44   2       22
+45   30                          _,$X:25,$Y
+46   3       :25
+47   30                           _,$X:26,$
+48   4       Y:27
+49   30                            _,$X:27,
+50   5       $Y:29
+51   30                             _,$X:28
+52   6       ,$Y:31
+53   30                              _,$X:2
+54   7       9,$Y:33
+55   30                               _,$X:
+56   8       30,$Y:35
+57   30                                _,$X
+58   8       :1,$Y:37
+59   30                                 _,$
+60   9       X:2,$Y:39
+61   30                                  _,
+62   10      $X:3,$Y:41
+63   30                                   _
+64   11      ,$X:4,$Y:43
+65   12      _,$X:5,$Y:44
+66   12      _,$X:5,$Y:45
+67   13       _,$X:6,$Y:46
+68   14        _,$X:7,$Y:47
+69   15         _,$X:8,$Y:48
+70   16          _,$X:9,$Y:49
+71   17           _,$X:10,$Y:0
+72   18            _,$X:11,$Y:1
+73   19             _,$X:12,$Y:2
+74   20              _,$X:13,$Y:3
+75   21               _,$X:14,$Y:4
+76   22                _,$X:15,$Y:5
+77   23                 _,$X:16,$Y:6
+78   24                  _,$X:17,$Y:7
+79   25                   _,$X:18,$Y:8
+80   26                    _,$X:19,$Y:9
+81   28                     _,$X:20,$Y:10
+82   29                      _,$X:21,$Y:11
+83   30                       _,$X:22,$Y:12
+84   30                        _,$X:23,$Y:1
+85   1       3
+86   30                         _,$X:24,$Y:
+87   2       15
+88   30                          _,$X:25,$Y
+89   3       :18
+90   11      WIDTH=32767
+91   31759   long line:<610_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWX31754
+92   32767   loong line:<629_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrst<...length=82...> 
+93   14      wxyzABCDEFGH12
+94   13      WIDTH=1048576
+95   33809   looong line:<649_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr3<...length=84...> 
+96   1048576 loooong line:<20164_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZab1048569
+97   1048576 loooong line:<20164_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi
+98   15      jklmnopqrstuv13
+-> CLOSE "testxy.txt"
+Test that LENGTH=0 does not reset $Y
+-> OPEN "testxylong.txt":(NEWVERSION:RECORDSIZE=6)
+-> USE "testxylong.txt":(LENGTH=0)
+-> CLOSE "testxylong.txt"
+-> OPEN "testxylong.txt":(REWIND:RECORDSIZE=7)
+PASS, LENGTH=0 does not reset $Y
+-> CLOSE "testxylong.txt"
+
+GTM>

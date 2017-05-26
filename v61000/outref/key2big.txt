@@ -1,0 +1,11 @@
+# A global reference following a KEY2BIG error should not cause assert failure or core
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+^stop=0
+^stop(1)=543
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,128 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'START INST2 INST3 PP'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+###################################################################
+#- Try to activate a source server from INST1 to INST3 (but there is no source server at all)
+#  	--> We expect a REPLINSTSECNONE error since there is no source server running to INST3.
+----------
+Error REPLINSTSECNONE seen in log1.log as expected:
+%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
+----------
+log1.log:
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 set msr_dont_chk_stat; $MUPIP replic -source -activate -instsecondary=__RCV_INSTNAME__ -secondary=__RCV_HOST__:1234'==
+###################################################################
+#- Try to de-activate a non-existing passive source server on INST1 (to INST3)
+#  	--> We expect a REPLINSTSECNONE error since there is no source server running to INST3.
+----------
+Error REPLINSTSECNONE seen in log2.log as expected:
+%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
+----------
+log2.log:
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 set msr_dont_chk_stat; $MUPIP replic -source -deactivate -instsecondary=__RCV_INSTNAME__'==
+###################################################################
+#- deactivate and then activate the source server on INST1
+#   	--> We expect a PRIMARYISROOT error since -propagateprimary will be implicitly assumed
+----------
+Error PRIMARYISROOT seen in log3.log as expected:
+%GTM-E-PRIMARYISROOT, Attempted operation not valid on root primary instance INSTANCE1
+----------
+log3.log:
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 set msr_dont_chk_stat; $MUPIP replic -source -deactivate -instsecondary=__RCV_INSTNAME__'==
+
+#  	--> This should succeed. Note this does not make it a secondary, it is still the rootprimary.
+log4.log:
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 $MUPIP replic -source -rootprimary -deactivate -instsecondary=__RCV_INSTNAME__'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating DEACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE2]
+
+#  	--> We expect a PRIMARYISROOT error since this is not the propagating primary, but only a deactivated rootprimary.
+----------
+Error PRIMARYISROOT seen in log5.log as expected:
+%GTM-E-PRIMARYISROOT, Attempted operation not valid on root primary instance INSTANCE1
+----------
+log5.log:
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 set msr_dont_chk_stat; $MUPIP replic -source -propagateprimary -activate -instsecondary=__RCV_INSTNAME__ -secondary=__RCV_HOST__:__RCV_PORTNO__'==
+some updates on INST1
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+###################################################################
+# activate it again:
+#  	--> This should succeed.
+==Executing MULTISITE_REPLIC 'CHECKHEALTH INST1 INST2 SRC'==
+###################################################################
+#- deactivate and then activate the active source server on INST2.
+==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST3 $MUPIP replic -source -propagateprimary -deactivate -instsecondary=__RCV_INSTNAME__ >& log_7.tmp ; cat log_7.tmp'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating DEACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE3]
+#  	--> This should succeed.
+#  	--> Verify it is in passive mode (checkhealth will report active/passive information now).
+PID ##FILTERED##[##PID##] Source server is alive in PASSIVE mode
+some updates on INST1
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+###################################################################
+# activate it again:
+#  	--> We expect a ACTIVATEFAIL error since -rootprimary will be assumed, and there are more processes attached to the journal pool than only one passive source server.
+----------
+Error ACTIVATEFAIL seen in log8.log as expected:
+%GTM-E-ACTIVATEFAIL, Cannot activate passive source server on instance INSTANCE3 while a receiver server and/or update process is running
+----------
+----------
+Error ACTIVATEFAIL seen in msr_execute_##FILTERED##NO.out as expected:
+%GTM-E-ACTIVATEFAIL, Cannot activate passive source server on instance INSTANCE3 while a receiver server and/or update process is running
+----------
+###################################################################
+#  	--> This should succeed.
+some updates on INST1:
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT INST1 INST2 INST3'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

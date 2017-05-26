@@ -1,0 +1,109 @@
+Test case 21: redirect_qualifier
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+mupip set -journal=enable,on,[no]before -reg *
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+-REDIRECT qualifier needs a value
+mupip journal -recover -forw -redir mumps.mjl
+%GTM-E-CLIERR, Option : REDIRECT needs value
+------------------------------------------------------------------------
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-FILENOTFND, File ##TEST_PATH##/redir.dat not found
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+------------------------------------------------------------------------
+mupip journal -recover -forw -redir=mumps.dat=redir.dat mumps.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+GTM>
+a1
+a2
+a3
+a4
+a5
+
+GTM>
+------------------------------------------------------------------------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+mupip set -journal=enable,on,[no]before -reg *
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with (NO|)BEFORE_IMAGES
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with (NO|)BEFORE_IMAGES
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with (NO|)BEFORE_IMAGES
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+
+GTM>
+mupip journal -recover -redir="a.dat=redir2.dat,mumps.dat=redir1.dat" -forw "*"
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-STARFILE, Star(*) argument cannot be specified with REDIRECT qualifier
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+------------------------------------------------------------------------
+mupip journal -recover -redir="a.dat=redir1.dat,b.dat=redir2.dat" -forw mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+GTM>
+1111
+GTM>
+------------------------------------------------------------------------
+mupip journal -recover -redir="a.dat=./save/redir1.dat,b.dat=./save/redir2.dat" -forw mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+Now verify data
+
+GTM>
+1111
+GTM>
+------------------------------------------------------------------------
+Check for duplicates
+mupip journal -recover -redir="a.dat=b.dat,a.dat=c.dat" -forw mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-INVREDIRQUAL, Invalid REDIRECT qualifier value.  Duplicate or invalid specification of files
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+mupip journal -recover -redir="a.dat=b.dat,c.dat=b.dat" -forw mumps.mjl,a.mjl,b.mjl,c.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-INVREDIRQUAL, Invalid REDIRECT qualifier value.  Duplicate or invalid specification of files
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+End of test
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

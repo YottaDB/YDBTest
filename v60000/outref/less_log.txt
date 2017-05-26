@@ -1,0 +1,64 @@
+## Test the mechanism for adaptively adjusting replication logging frequency
+##  INST1 --> INST2
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+ 
+# Test 1: Using default settings for connection: soft_tries_period=5, alert_period=30
+###################################################################
+src1.log:
+1 soft connection attempt failed : Connection refused
+2 soft connection attempt failed : Connection refused
+4 soft connection attempt failed : Connection refused
+8 soft connection attempt failed : Connection refused
+16 soft connection attempt failed : Connection refused
+32 soft connection attempt failed : Connection refused
+%GTM-W-REPLWARN, GTM Replication Source Server : Could not connect to secondary in 160 seconds, 
+============Test1 ends==========
+ 
+# Test 2: Set the soft tries period=1, alert time = 2
+###################################################################
+src2.log:
+1 soft connection attempt failed : Connection refused
+2 soft connection attempt failed : Connection refused
+%GTM-W-REPLWARN, GTM Replication Source Server : Could not connect to secondary in 2 seconds, 
+4 soft connection attempt failed : Connection refused
+8 soft connection attempt failed : Connection refused
+%GTM-W-REPLWARN, GTM Replication Source Server : Could not connect to secondary in 8 seconds, 
+16 soft connection attempt failed : Connection refused
+32 soft connection attempt failed : Connection refused
+%GTM-W-REPLWARN, GTM Replication Source Server : Could not connect to secondary in 32 seconds, 
+64 soft connection attempt failed : Connection refused
+============Test2 ends==========
+ 
+# Test 3: keep the soft tries period=1, alert time = 2, start the receiver, then shut down the receiver 
+###################################################################
+src3.log:
+1 soft connection attempt failed : Connection refused
+2 soft connection attempt failed : Connection refused
+%GTM-W-REPLWARN, GTM Replication Source Server : Could not connect to secondary in 2 seconds, 
+4 soft connection attempt failed : Connection refused
+8 soft connection attempt failed : Connection refused
+%GTM-W-REPLWARN, GTM Replication Source Server : Could not connect to secondary in 8 seconds, 
+16 soft connection attempt failed : Connection refused
+32 soft connection attempt failed : Connection refused
+%GTM-W-REPLWARN, GTM Replication Source Server : Could not connect to secondary in 32 seconds, 
+64 soft connection attempt failed : Connection refused
+============Test3 ends==========
+ 
+# Test 4: Set the soft tries period larger than maximum logging period (150), soft_tries_period = 155  alert_period=310 
+###################################################################
+src4.log:
+1 soft connection attempt failed : Connection refused
+2 soft connection attempt failed : Connection refused
+%GTM-W-REPLWARN, GTM Replication Source Server : Could not connect to secondary in 310 seconds, 
+============Test4 ends==========

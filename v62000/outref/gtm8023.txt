@@ -1,0 +1,85 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'START INST2 INST3 PP'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP set -flush_time=01:00:00:00 -region DEFAULT'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+# Expect ACTIVATEFAIL error, as receiver and update process is still running in INST2
+==Executing MULTISITE_REPLIC 'ACTIVATE INST2 INST1'==
+Instance cannot be activated
+######################################################################
+Check ##FILTERED##ACTIVATE_##TIMESTAMP##.out
+######################################################################
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##ACTIVATE_##TIMESTAMP##.out ACTIVATEFAIL'==
+----------
+Error ACTIVATEFAIL seen in ##FILTERED##ACTIVATE_##TIMESTAMP##.out as expected:
+%GTM-E-ACTIVATEFAIL, Cannot activate passive source server on instance INSTANCE1 while a receiver server and/or update process is running
+----------
+# Kill only the receiver server and let the update process run
+# Expect ACTIVATEFAIL error, as update process is still running in INST2
+==Executing MULTISITE_REPLIC 'ACTIVATE INST2 INST1'==
+Instance cannot be activated
+######################################################################
+Check ##FILTERED##ACTIVATE_##TIMESTAMP##.out
+######################################################################
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##ACTIVATE_##TIMESTAMP##.out ACTIVATEFAIL'==
+----------
+Error ACTIVATEFAIL seen in ##FILTERED##ACTIVATE_##TIMESTAMP##.out as expected:
+%GTM-E-ACTIVATEFAIL, Cannot activate passive source server on instance INSTANCE1 while a receiver server and/or update process is running
+----------
+# Restart the receiver server to have a clean shutdown
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -receiver -start -listen=__SRC_PORTNO__ -log=receiver_restart.log'==
+# Shutdown receiver and activate - Should work
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 $MUPIP replic -receiv -shutdown -timeout=0 >& INST1INST2_rcv_shut.out'==
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
+==Executing MULTISITE_REPLIC 'ACTIVATE INST2 INST1'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating ACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE1]
+==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST1'==
+# INST2 is now primary - Do an update and it should succeed
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_exe/mumps -run %XCMD "set ^nowprimary=1"'==
+# Signal all the background jobs to exit and wait for them to die
+# The below two errors should have happened. Make sure they did
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/check_error_exist.csh bgmumps1.out SCNDDBNOUPD'==
+----------
+Error SCNDDBNOUPD seen in bgmumps1.out as expected:
+STAT=gtm8023+2^gtm8023,%GTM-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
+----------
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/check_error_exist.csh bgprocess.out E-NOTFOUND'==
+----------
+Error E-NOTFOUND seen in bgprocess.out as expected:
+TEST-E-NOTFOUND message noreorg(1) not found in bgmumps1.out after 15 secs
+----------
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT ALL'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

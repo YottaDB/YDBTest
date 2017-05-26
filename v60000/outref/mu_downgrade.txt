@@ -1,0 +1,147 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip downgrade started
+%GTM-E-TEXT, Database is created with V6 version.
+%GTM-E-MUNODWNGRD, Database not downgraded because of preceding errors
+# Randomly choose a prior V5 version to create the database first.
+Randomly chosen prior V5 version is : ##FILTERED##GTM_TEST_DEBUGINFO.*
+----------------------------------------------------------------------
+# Switch to prior version
+Creating database using prior V5 version
+# Switch to current version
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+Change the MAC RECORD SIZE to that of BLOCK SIZE and create spanning node
+----------------------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Downgrade should fail as spanning node is present
+----------------------------------------------------------------------
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip downgrade started
+%GTM-E-TEXT, Spanning node might be present.
+%GTM-E-MUNODWNGRD, Database not downgraded because of preceding errors
+
+Kill Spanning Node
+----------------------------------------------------------------------
+
+Downgrade should fail as spanning node absent flag is not set yet
+----------------------------------------------------------------------
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip downgrade started
+%GTM-E-TEXT, Spanning node might be present.
+%GTM-E-MUNODWNGRD, Database not downgraded because of preceding errors
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               0           1.562             1
+Free               96              NA              NA            NA
+Total             100               3              NA             2
+
+Downgrade should fail as record size is not supported in V5 database
+----------------------------------------------------------------------
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip downgrade started
+%GTM-E-TEXT, MAX REC SIZE is not supported for given BLK SIZE in V5
+%GTM-E-MUNODWNGRD, Database not downgraded because of preceding errors
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Downgrade should be successful
+----------------------------------------------------------------------
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip downgrade started
+%GTM-I-MUINFOUINT4, V5 supportable record size for current DB configuration  : 1008 [0x000003F0]
+%GTM-I-MUINFOUINT4, V5 supportable max key size for current DB configuration : 255 [0x000000FF]
+%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V5
+
+Set the max_key_size to value which is not supported in V5 database
+----------------------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+downgrade should fail as it max_key_size is not supported in V5 database
+----------------------------------------------------------------------
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip downgrade started
+%GTM-E-TEXT, Database might contain keys larger than MAX KEY SIZE in DB header
+%GTM-E-MUNODWNGRD, Database not downgraded because of preceding errors
+
+Change key size to value which is supported in V5
+----------------------------------------------------------------------
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Downgrade should fail as MAXIMUM KEY SIZE ASSURED field is FALSE in DB header
+----------------------------------------------------------------------
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip downgrade started
+%GTM-E-TEXT, Database might contain keys larger than MAX KEY SIZE in DB header
+%GTM-E-MUNODWNGRD, Database not downgraded because of preceding errors
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.685            NA
+Index               1               1           2.343             1
+Data                1               0           1.562             1
+Free               96              NA              NA            NA
+Total             100               3              NA             2
+
+Downgrade should success as MAXIMUM KEY SIZE ASSURED is set appropriately by above INTEG
+----------------------------------------------------------------------
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip downgrade started
+%GTM-I-MUINFOUINT4, V5 supportable record size for current DB configuration  : 1008 [0x000003F0]
+%GTM-I-MUINFOUINT4, V5 supportable max key size for current DB configuration : 255 [0x000000FF]
+%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V5
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

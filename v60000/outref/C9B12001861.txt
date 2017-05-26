@@ -1,0 +1,46 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+#Launch first process and wait after db_init()
+
+GTM>
+
+GTM>
+
+GTM>
+#Launch second process
+#Launch third and bypasser process:  dse change -fileheader -record_max_size=1024
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+##TEST_AWK.*GTM-DSE\[.*%GTM-I-RESRCWAIT, Waiting briefly for the FTOK semaphore for region DEFAULT \(##TEST_PATH##/mumps.dat\) was held by PID [0-9]* \(Sem. ID: [0-9]*\).*
+##TEST_AWK.*GTM-DSE\[.*%GTM-I-RESRCWAIT, Waiting briefly for the access control semaphore for region DEFAULT \(##TEST_PATH##/mumps.dat\) was held by PID [0-9]* \(Sem. ID: [0-9]*\).*
+#Allow the first process to go
+##TEST_AWKINTRPT issued to process.*
+#Wait for all processes to quit
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+1024
+#Launch first process and wait after db_init()
+
+GTM>
+
+GTM>
+
+GTM>
+#Launch second process
+#Launch third and bypasser process:  lke show
+%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK.*GTM-LKE\[.*%GTM-I-RESRCWAIT, Waiting briefly for the FTOK semaphore for region DEFAULT \(##TEST_PATH##/mumps.dat\) was held by PID [0-9]* \(Sem. ID: [0-9]*\).*
+##TEST_AWK.*GTM-LKE\[.*%GTM-I-RESRCWAIT, Waiting briefly for the access control semaphore for region DEFAULT \(##TEST_PATH##/mumps.dat\) was held by PID [0-9]* \(Sem. ID: [0-9]*\).*
+#Allow the first process to go
+##TEST_AWKINTRPT issued to process.*
+#Wait for all processes to quit
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+1024
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

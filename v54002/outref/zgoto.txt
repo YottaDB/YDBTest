@@ -1,0 +1,48 @@
+ZGoto specifying local label
+ZGoto specifying local label and offset
+ZGoto specifying fully qualified entryref
+ZGoto with indirect local label
+ZGoto with indirect local label and variable offset
+ZGoto with indirect label and routine
+ZGoto with indirect label and routine with offset
+ZGoto with full entry in single indirect
+ZGoto with full entry in single indirect (including offset)
+ZGoto external entry point (resolving/auto-zlinking) with no label
+Xecuted ZGoto specifying local label
+Xecuted ZGoto specifying local label and offset
+Xecuted ZGoto specifying fully qualified entryref
+Xecuted ZGoto with indirect local label
+Xecuted ZGoto with indirect local label and variable offset
+Xecuted ZGoto with indirect label and routine
+Xecuted ZGoto with indirect label and routine with offset
+Xecuted ZGoto with full entry in single indirect
+Xecuted ZGoto with full entry in single indirect (including offset)
+Xecuted ZGoto external entry point (resolving/auto-zlinking) with no label
+Test relative ZGOTO no entryref
+Next20 return (good)
+Test relative ZGOTO with entryref
+Next21 return (good)
+Pass: ZGoto test successfully completed
+
+GTM>
+ZGoto a non-existent label in an existing routine (expect error)
+
+GTM>
+%GTM-E-LABELMISSING, Label referenced but not defined: Next99
+
+GTM>
+
+GTM>
+ZGoto a non-existent routine (expect error)
+
+GTM>
+%GTM-E-ZLINKFILE, Error while zlinking "zgoto99"
+%GTM-E-FILENOTFND, File zgoto99 not found
+
+GTM>
+
+ii=2
+ii=1
+ii=2
+ii=3
+DONE!

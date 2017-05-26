@@ -1,0 +1,67 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# try funky QUIT compile; setenv gtm_zquit_anyway 1
+# Compile D9I07002689.m
+		Quit x,x		; this line should give a compilation error
+		      ^-----
+		At column 8, line 71, source module ##IN_TEST_PATH##/inref/D9I07002689.m
+%GTM-E-QUITARGLST, Quit cannot take a list of arguments
+		set x=1 quit set x=2 	; this line should give a compilation error
+		                  ^-----
+		At column 20, line 72, source module ##IN_TEST_PATH##/inref/D9I07002689.m
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+# run D9I07002689
+
+$ZQUIT = 1
+$ZQUIT = 0
+$ZQUIT = 1
+DO of a plain label and an XECUTE with it
+formallist label with plain QUIT; x = DO
+extrinsic label with argument on QUIT; x = no x defined
+extrinsic label with indirect QUIT argument; x = DO
+Q:$Q arg Q; x = DO
+Q:'$Q  Q arg; x = DO
+Q ^a(x)
+extrinsic label with argument on QUIT; x = $$1
+formallist label with plain QUIT; x = $$<
+extrinsic label with indirect QUIT argument; x = $$$$
+Q:$Q arg Q; x = $$$$
+Q:'$Q  Q arg; x = $$$$
+Q ^a(x)$$
+PASS from D9I07002689 with $ZQUIT=1
+# verify normal (error) QUIT behavior; unsetenv gtm_zquit_anyway
+# Compile D9I07002689.m
+		Quit x,x		; this line should give a compilation error
+		      ^-----
+		At column 8, line 71, source module ##IN_TEST_PATH##/inref/D9I07002689.m
+%GTM-E-QUITARGLST, Quit cannot take a list of arguments
+		set x=1 quit set x=2 	; this line should give a compilation error
+		                  ^-----
+		At column 20, line 72, source module ##IN_TEST_PATH##/inref/D9I07002689.m
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+# run D9I07002689
+
+$ZQUIT = 0
+$ZQUIT = 1
+$ZQUIT = 0
+DO of a plain label and an XECUTE with it
+formallist label with plain QUIT; x = DO
+extrinsic label with argument on QUIT; x = no x defined
+extrinsic label with indirect QUIT argument; x = DO
+Q:$Q arg Q; x = DO
+Q:'$Q  Q arg; x = DO
+Q ^a(x)
+extrinsic label with argument on QUIT; x = $$1
+formallist label with plain QUIT; x = $$
+extrinsic label with indirect QUIT argument; x = $$$$
+Q:$Q arg Q; x = $$$$
+Q:'$Q  Q arg; x = $$$$
+Q ^a(x)$$
+PASS from D9I07002689 with $ZQUIT=0
+# End of test
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

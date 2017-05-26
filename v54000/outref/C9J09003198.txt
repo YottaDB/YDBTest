@@ -1,0 +1,48 @@
+
+** test bogus owner 55555
+** journal file will be world rw since 55555 is not a member of gtc group
+
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+-rw-rw----  55555   GTC  mumps.dat
+-rw-rw-rw-  $USER   GTC  mumps.mjl
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+-rw-rw----  55555   gtc  mumps.dat
+-rw-rw-rw-  $USER   gtc  mumps.mjl
+##ALLOW_OUTPUT HOST_OS390_S390
+
+GTM>
+
+GTM>
+^a = 1
+
+GTM>
+##TEST_AWK.*
+##TEST_AWK.*
+No errors detected by integ.
+%GTM-I-MUFILRNDWNSUC, File mumps.dat successfully rundown
+
+** test bogus group 55555
+** journal file will be world rw since installation is not group restricted
+
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+-rw-rw----  $USER  55555  mumps.dat
+-rw-rw-rw-  $USER  GTC    mumps.mjl
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+-rw-rw----  $USER  55555  mumps.dat
+-rw-rw-rw-  $USER  gtc    mumps.mjl
+##ALLOW_OUTPUT HOST_OS390_S390
+
+GTM>
+
+GTM>
+^a = 1
+
+GTM>
+##TEST_AWK.*
+##TEST_AWK.*
+No errors detected by integ.
+# End of C9J09003198 testing

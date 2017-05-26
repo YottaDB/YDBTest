@@ -1,0 +1,45 @@
+###################################################################
+**************************** pipe close status ***********************
+###################################################################
+Test1: use "grep z" as the only command in the pipeline.  Close status should be 0
+matched: zzzzzzzzzzzzz
+PIPE close status = 0
+
+Test2: use "grep z" as the only command in the pipeline.  No match so close status should be 1
+PIPE close status = 1
+
+Test3: use the following pipeline: "cat | tr a k | grep z".  Close status should be 0
+matched: abcdefghz
+PIPE close status = 0
+
+Test4: use the following pipeline: "cat | tr a k | grep z".  No match so close status should be 1
+PIPE close status = 1
+
+Test5: close status when killing the PIPE's child process
+
+pipe command: delay_filter 1 2
+abcdefg
+PIPE close status = -9
+
+Test6: close status when killing the PIPE's grandchild process
+
+pipe command: delay_filter2 1 2
+abcdefg
+PIPE close status = 137
+
+Test7: close status for normal termination of delay_filter 1 2
+
+pipe command: delay_filter 1 2
+abcdefg
+PIPE close status = 2
+
+Test8: close status for timeout=10 of delay_filter3 20 2
+
+pipe command: delay_filter3 20 2
+abcdefg
+PIPE close status = -99
+
+###################################################################
+**************************** pipe close timeout error message ***********************
+###################################################################
+Two DEVPARMTOOSMALL errors seen - as expected

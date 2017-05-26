@@ -1,0 +1,76 @@
+Checking plugin error messages with gtmcrypt_config env variable by mupip create functionality
+# Enable WHITE BOX TESTING
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+create.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+create.dat
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/create.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/temp.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/create.gld
+#########TEST CONDITION:ENVIRONMENT VARIABLE gtmcrypt_config SET TO POINT TO CORRECT FILE##############
+Created file ##TEST_PATH##/a.dat
+Created file ##TEST_PATH##/create.dat
+Created file ##TEST_PATH##/b.dat
+Created file ##TEST_PATH##/y.dat
+Created file ##TEST_PATH##/z.dat
+#########TEST CONDITION:ENVIRONMENT VARIABLE gtmcrypt_config SET TO INVALID PATH###########
+%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot stat configuration file: gtmcryptcfg. No such file or directory
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot stat configuration file: gtmcryptcfg. No such file or directory
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Cannot stat configuration file: gtmcryptcfg. No such file or directory
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+Created file ##TEST_PATH##/y.dat
+Created file ##TEST_PATH##/z.dat
+#########TEST CONDITION:ENVIRONMENT VARIABLE gtmcrypt_config NOT SET AND .gtm_dbkeys IS NOT FOUND###########
+%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Environment variable gtmcrypt_config not set
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Environment variable gtmcrypt_config not set
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Environment variable gtmcrypt_config not set
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+Created file ##TEST_PATH##/y.dat
+Created file ##TEST_PATH##/z.dat
+#########TEST CONDITION:ENVIRONMENT VARIABLE gtmcrypt_config NOT SET AND .gtm_dbkeys IS FOUND###########
+%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Environment variable gtmcrypt_config not set
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Environment variable gtmcrypt_config not set
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Environment variable gtmcrypt_config not set
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+Created file ##TEST_PATH##/y.dat
+Created file ##TEST_PATH##/z.dat
+########TEST CONDITION:ENVIRONMENT VARIABLE gtmcrypt_config SET TO POINT TO DIRECTORY AND FILE .gtm_dbkeys IS NOT FOUND####
+%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Configuration file ./dbkeyfile is not a regular file
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Configuration file ./dbkeyfile is not a regular file
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Configuration file ./dbkeyfile is not a regular file
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+Created file ##TEST_PATH##/y.dat
+Created file ##TEST_PATH##/z.dat
+######TEST CONDITION:ENVIRONMENT VARIABLE gtmcrypt_config SET TO POINT TO DIRECTORY AND FILE .gtm_dbkeys IS FOUND##########
+%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Configuration file ./dbkeyfile is not a regular file
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Configuration file ./dbkeyfile is not a regular file
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Configuration file ./dbkeyfile is not a regular file
+%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+Created file ##TEST_PATH##/y.dat
+Created file ##TEST_PATH##/z.dat
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

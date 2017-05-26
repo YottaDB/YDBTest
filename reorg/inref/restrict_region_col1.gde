@@ -1,0 +1,51 @@
+change -segment DEFAULT -file_name=mumps.dat
+add -name a* -region=areg
+add -name A* -region=areg
+add -region areg -dyn=aseg
+add -segment aseg -file=a.dat
+add -name b* -region=breg
+add -name B* -region=breg
+add -region breg -dyn=bseg
+add -segment bseg -file=b.dat
+add -name c* -region=creg
+add -name C* -region=creg
+add -region creg -dyn=cseg
+add -segment cseg -file=c.dat
+! GDE command file excluding AREG from spanning regions since the test expects nothing other than ^a to be in AREG
+! Number of records in *.dat files is 30003
+! User/Randomly excluded region = AREG
+! Number of included regions is 3
+!    Region 1 = BREG
+!    Region 2 = CREG
+!    Region 3 = DEFAULT
+! Number of sections randomly chosen is 16
+! Map : ^a(1335) : Section excluded : Global variable maps to excluded region : AREG
+! Map : ^a(1923) : Section excluded : Global variable maps to excluded region : AREG
+! Map : ^a(5890) : Section excluded : Global variable maps to excluded region : AREG
+! Map : ^a(7088) : Section excluded : Global variable maps to excluded region : AREG
+! Map : ^a(7146) : Section excluded : Global variable maps to excluded region : AREG
+! Map : ^a(7848) : Section excluded : Global variable maps to excluded region : AREG
+! Map : ^b(703) maps to BREG
+add -name b(703:3950) -region=BREG
+! Map : ^b(3950) maps to CREG
+add -name b(3950:4955) -region=CREG
+! Map : ^b(4955) maps to BREG
+add -name b(4955:6877) -region=BREG
+! Map : ^b(6877) maps to CREG
+add -name b(6877:8681) -region=CREG
+! Map : ^b(8681) maps to BREG
+add -name b(8681:) -region=BREG
+! Map : ^c(395) maps to DEFAULT
+add -name c(395:1406) -region=DEFAULT
+! Map : ^c(1406) maps to CREG
+add -name c(1406:3195) -region=CREG
+! Map : ^c(3195) maps to DEFAULT
+add -name c(3195:6651) -region=DEFAULT
+! Map : ^c(6651) maps to CREG
+add -name c(6651:8582) -region=CREG
+! Map : ^c(8582) maps to BREG
+add -name c(8582:) -region=BREG
+change -region AREG -std
+change -region BREG -std
+change -region CREG -std
+change -region DEFAULT -std

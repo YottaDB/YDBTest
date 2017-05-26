@@ -1,0 +1,46 @@
+# Create database and turn on journaling
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Start updates in the background
+# Allow some updates to happen while journaling is turned ON
+# Manually make dskaddr to be out of sync with dsk (create an out-of-design situation).
+# GT.M will respond to this by turning journaling OFF automatically.
+# This is done in a sequence of steps below.
+# Do a mupip freeze
+All requested regions frozen
+# Flush the journal buffers
+
+GTM>
+
+GTM>
+# Verify that journaling is currently turned ON
+  Journal State                          ON  Journal Before imaging ##FILTERED##GTM_TEST_DEBUGINFO.*
+# Determine current values of dskaddr and freeaddr in journal buffer
+# Determine offset of jnl_buffer in shared memory
+# Determine offset of dskaddr in journal buffer
+# Generate dse script that will change dskaddr to be out of sync with dsk
+# Invoke generated dse script
+# Determine current values of dskaddr and freeaddr in journal buffer after the modification
+# Unfreeze the database
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Region DEFAULT is now UNFROZEN
+# Verify that journaling does get turned OFF by GT.M as part of its updates (wait for a maximum of 2 minutes)
+  Journal State                         OFF  Journal Before imaging ##FILTERED##GTM_TEST_DEBUGINFO.*
+# Allow some updates to happen while journaling is turned OFF
+# Switch to new journal file
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Allow some updates to happen while journaling is turned BACK ON
+# Verify that journaling is currently turned ON
+  Journal State                          ON  Journal Before imaging ##FILTERED##GTM_TEST_DEBUGINFO.*
+# Stop GT.M updates
+# Check integrity of database and cleanup
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,74 @@
+MUPIP EXTEND
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+extend.gld
+Using: ##SOURCE_PATH##/mupip
+extend.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+extend.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+extend.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+
+Caution: Database Block Certification Has Been Enabled
+
+GTM>
+do in0^dbfill("set")
+set PASS
+
+GTM>
+h
+#
+# Extend with a bad region
+#
+%GTM-E-NOREGION, REGION not found: FREELUNCH
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+Extension successful, file ##TEST_PATH##/extend.dat extended by 400 blocks.  Total blocks = ##TEST_AWK[1-2][0-9]00.
+
+GTM>
+
+Caution: Database Block Certification Has Been Enabled
+
+GTM>
+do in0^dbfill("ver")
+ver PASS
+
+GTM>
+do in1^dbfill("set")
+set PASS
+
+GTM>
+h
+Extension successful, file ##TEST_PATH##/extend.dat extended by 100 blocks.  Total blocks = ##TEST_AWK[1-2][0-9]00.
+
+GTM>
+
+Caution: Database Block Certification Has Been Enabled
+
+GTM>
+do in1^dbfill("ver")
+ver PASS
+
+GTM>
+
+GTM>
+SUCCESS
+GTM>
+h
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

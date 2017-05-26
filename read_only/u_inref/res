@@ -1,0 +1,8 @@
+#! /usr/local/bin/tcsh -f
+while($#argv)
+	echo "mupip restore $1 ./backup/$1"
+	$gtm_exe/mupip restore $1 ./backup/$1
+	mipcmanage
+	shift
+end
+

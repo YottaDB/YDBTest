@@ -1,0 +1,175 @@
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 10'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+# Now upgrade INST1 to current version
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+# Installing triggers should work fine
+File gbl.trg, Line 1: Added SET trigger on ^GBL named trigname
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+trigger executed
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT INST1 INST2'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##FILTERED##/mupip
+##FILTERED##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##FILTERED##/mupip
+##FILTERED##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/dbcheck_base.csh '==
+##FILTERED##/mupip
+##FILTERED##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 $gtm_tst/com/cp_remote_file.csh __SRC_DIR__/{gbl,new}.trg _REMOTEINFO___RCV_DIR__/'==
+==Executing MULTISITE_REPLIC 'START INST3 INST4'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+==Executing MULTISITE_REPLIC 'RUN INST3 $MUPIP trigger -triggerfile=gbl.trg'==
+File gbl.trg, Line 1: Added trigger on ^GBL named trigname#
+=========================================
+1 triggers added
+0 triggers deleted
+0 trigger file entries not changed
+0 triggers modified
+=========================================
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/simpleinstanceupdate.csh 10'==
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+==Executing MULTISITE_REPLIC 'SYNC INST3 INST4'==
+==Executing MULTISITE_REPLIC 'STOP INST3 INST4'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+# Now upgrade INST3 and INST4 to current version
+==Executing MULTISITE_REPLIC 'RUN INST3 $GDE exit >& gde_upgrade2.out'==
+==Executing MULTISITE_REPLIC 'RUN INST4 $GDE exit >& gde_upgrade3.out'==
+==Executing MULTISITE_REPLIC 'START INST3 INST4'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+# Anything that requires examining triggers should issue NEEDTRIGUPGRD error
+==Executing MULTISITE_REPLIC 'RUN INST3 set msr_dont_chk_stat ; echo "" | $MUPIP trigger -select '==
+Output File: 
+%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##REMOTE_TEST_PATH##/instance3/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+==Executing MULTISITE_REPLIC 'RUN INST3 set msr_dont_chk_stat ; $gtm_exe/mumps -run %XCMD "set ^GBL(1)=1"'==
+%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##REMOTE_TEST_PATH##/instance3/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+# The same commands should work fine after trigger -upgrade
+==Executing MULTISITE_REPLIC 'RUN INST3 $MUPIP trigger -upgrade'==
+##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/instance3/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/instance3/mumps.mjl_##TIMESTAMP##
+Triggers in region DEFAULT have been upgraded
+# trigger -upgrade should cut new journal file with no back link
+==Executing MULTISITE_REPLIC 'RUN INST3 $MUPIP journal -show=header -forward mumps.mjl|& $grep "Prev journal file name"'==
+ Prev journal file name 
+# journal extract of the trigger-upgrade jnl file should show an empty LGTRIG record and ^#t USET/UKILL records.
+==Executing MULTISITE_REPLIC 'RUN INST3 set prevmjl = `ls -rt mumps.mjl_* | $tail -1` ; $MUPIP journal -extract -forw -detail $prevmjl >&! jnlextract.out'==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST3 RCV=INST1 $gtm_tst/com/cp_remote_file.csh __SRC_DIR__/mumps.mjf _REMOTEINFO___RCV_DIR__/inst3mumps.mjf'==
+                       TLGTRIG "; ^#t physical upgrade from #LABEL 2,3 to #LABEL 4 (no logical change)"
+ UKILL   ^#t("#TNAME")
+ UKILL   ^#t("#TRHASH")
+ USET    ^#t("GBL","#CYCLE")="2"
+ USET    ^#t("GBL","#LABEL")="4"
+ USET    ^#t("GBL",1,"LHASH")="606097150"
+ USET    ^#t("GBL",1,"BHASH")="606097150"
+ USET    ^#t("GBL","#TRHASH",606097150,1)="GBL"_$C(0)_"1"
+ USET    ^#t("#TNAME","trigname")="GBL"_$C(0)_"1"
+==Executing MULTISITE_REPLIC 'RUN INST3 echo "" | $MUPIP trigger -select '==
+Output File: 
+;trigger name: trigname (region DEFAULT)  cycle: 2
++^GBL(*) -name=trigname -commands=S -xecute="write ""trigger executed"",!"
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_exe/mumps -run %XCMD "set ^GBL(1)=1"'==
+trigger executed
+==Executing MULTISITE_REPLIC 'RUN INST3 $MUPIP trigger -triggerfile=new.trg'==
+File new.trg, Line 1: Added SET trigger on ^new named newtrig
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+==Executing MULTISITE_REPLIC 'RUN INST3 echo "" | $MUPIP trigger -select '==
+Output File: 
+;trigger name: trigname (region DEFAULT)  cycle: 2
++^GBL(*) -name=trigname -commands=S -xecute="write ""trigger executed"",!"
+;trigger name: newtrig (region DEFAULT)  cycle: 1
++^new(*) -name=newtrig -commands=S -xecute="write ""trigger executed"",!"
+# When the new trigger gets replicated to the receiver, updproc would exit with NEEDTRIGUPGRD
+==Executing MULTISITE_REPLIC 'RUN INST4 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log.updproc NEEDTRIGUPGRD'==
+----------
+Error NEEDTRIGUPGRD seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
+%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##REMOTE_TEST_PATH##/instance4/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+----------
+# Simply restarting update process will still result in the same NEEDTRIGUPGRD error
+==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP replicate -receiver -start -updateonly'==
+%GTM-I-REPLINFO, Update Process started successfully
+==Executing MULTISITE_REPLIC 'RUN INST4 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log.updproc NEEDTRIGUPGRD'==
+----------
+Error NEEDTRIGUPGRD seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
+%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##REMOTE_TEST_PATH##/instance4/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+----------
+# Restarting update process after upgrading the triggers on the reciever side should work fine
+==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP trigger -upgrade'==
+##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/instance4/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/instance4/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/instance4/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/instance4/mumps.mjl_##TIMESTAMP##
+Triggers in region DEFAULT have been upgraded
+==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP replicate -receiver -start -updateonly'==
+%GTM-I-REPLINFO, Update Process started successfully
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_exe/mumps -run %XCMD "set ^new(1)=1"'==
+trigger executed
+==Executing MULTISITE_REPLIC 'RUN INST3 $MUPIP trigger -triggerfile=new.trg'==
+File new.trg, Line 1: SET trigger on ^new already present in trigger named newtrig - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT INST3 INST4'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##FILTERED##/mupip
+##FILTERED##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,15 @@
+#!/usr/local/bin/tcsh -f
+$gtm_tst/com/dbcreate.csh mumps 1
+# Testing the piece and delimiter matching during trigger execution with
+# unicode and non-unicode characters
+# - delim matches on unicode character boundaries
+# - zdelim matches on byte boundaries
+#
+# * delim w/$zchar both unicode and bytes
+# * delim w/$char unicode char
+# * zdelim w/$zchar both unicode and bytes
+# * zdelim w/$char unicode char
+#
+# * test pieces while doing some of the delim tests
+$gtm_exe/mumps -run testpiecesunicode
+$gtm_tst/com/dbcheck.csh -extract

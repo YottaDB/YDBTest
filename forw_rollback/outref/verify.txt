@@ -1,0 +1,161 @@
+Generate few updates in a replicated environment
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+
+GTM>
+
+GTM>
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+ --> Testing VERIFY status for mupip journal -rollback -forward
+ --> Testing VERIFY status for mupip journal -rollback -forward -verify
+%GTM-S-JNLSUCCESS, Verify successful
+ --> Testing VERIFY status for mupip journal -rollback -forward -noverify
+ --> Testing VERIFY status for mupip journal -recover -forward
+ --> Testing VERIFY status for mupip journal -recover -forward -verify
+%GTM-S-JNLSUCCESS, Verify successful
+ --> Testing VERIFY status for mupip journal -recover -forward -noverify
+ --> Testing VERIFY status for mupip journal -recover -forward -nochecktn
+%GTM-S-JNLSUCCESS, Verify successful
+ --> Testing VERIFY status for mupip journal -extract -forward
+%GTM-S-JNLSUCCESS, Verify successful
+ --> Testing VERIFY status for mupip journal -extract -forward -verify
+%GTM-S-JNLSUCCESS, Verify successful
+ --> Testing VERIFY status for mupip journal -extract -forward -noverify
+ --> Testing VERIFY status for mupip journal -show -forward
+%GTM-S-JNLSUCCESS, Verify successful
+ --> Testing VERIFY status for mupip journal -show -forward -verify
+%GTM-S-JNLSUCCESS, Verify successful
+ --> Testing VERIFY status for mupip journal -show -forward -noverify
+ --> Testing VERIFY status for mupip journal -rollback -backward
+%GTM-S-JNLSUCCESS, Verify successful
+ --> Testing VERIFY status for mupip journal -rollback -backward -verify
+%GTM-S-JNLSUCCESS, Verify successful
+ --> Testing VERIFY status for mupip journal -rollback -backward -noverify
+ --> Testing VERIFY status for mupip journal -recover -backward
+TEST-E-FAIL : MUPIP journal -recover -backward  failed. See backward_recover.out
+# Previous action would have errored out with MUUSERLBK due to crashed mjl.
+----------
+Error MUUSERLBK seen in backward_recover.out as expected:
+%GTM-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##TEST_PATH##/mumps.dat detected
+----------
+----------
+Error MUNOACTION seen in backward_recover.out as expected:
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+# Retry with non-crashed mjl
+ --> Retrying VERIFY status for mupip journal -recover -backward
+%GTM-S-JNLSUCCESS, Verify successful
+ --> Testing VERIFY status for mupip journal -recover -backward -verify
+TEST-E-FAIL : MUPIP journal -recover -backward -verify failed. See backward_recover-verify.out
+# Previous action would have errored out with MUUSERLBK due to crashed mjl.
+----------
+Error MUUSERLBK seen in backward_recover-verify.out as expected:
+%GTM-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##TEST_PATH##/mumps.dat detected
+----------
+----------
+Error MUNOACTION seen in backward_recover-verify.out as expected:
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+# Retry with non-crashed mjl
+ --> Retrying VERIFY status for mupip journal -recover -backward -verify
+%GTM-S-JNLSUCCESS, Verify successful
+ --> Testing VERIFY status for mupip journal -recover -backward -noverify
+TEST-E-FAIL : MUPIP journal -recover -backward -noverify failed. See backward_recover-noverify.out
+# Previous action would have errored out with MUUSERLBK due to crashed mjl.
+----------
+Error MUUSERLBK seen in backward_recover-noverify.out as expected:
+%GTM-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##TEST_PATH##/mumps.dat detected
+----------
+----------
+Error MUNOACTION seen in backward_recover-noverify.out as expected:
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+# Retry with non-crashed mjl
+ --> Retrying VERIFY status for mupip journal -recover -backward -noverify
+ --> Testing VERIFY status for mupip journal -extract -backward
+%GTM-S-JNLSUCCESS, Verify successful
+ --> Testing VERIFY status for mupip journal -extract -backward -verify
+%GTM-S-JNLSUCCESS, Verify successful
+ --> Testing VERIFY status for mupip journal -extract -backward -noverify
+ --> Testing VERIFY status for mupip journal -show -backward
+%GTM-S-JNLSUCCESS, Verify successful
+ --> Testing VERIFY status for mupip journal -show -backward -verify
+%GTM-S-JNLSUCCESS, Verify successful
+ --> Testing VERIFY status for mupip journal -show -backward -noverify
+# Test of REPLSTATEOFF error
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-REPLSTATEOFF, MUPIP JOURNAL -ROLLBACK -BACKWARD cannot proceed as database ##TEST_PATH##/mumps.dat does not have replication ON
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+# Test of MUPJNLINTERRUPT error from forward rollback
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Location 972 [0x000003CC] : Old Value = 0 [0x00000000] : New Value = 1 [0x00000001] : Size = 4 [0x04]
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-MUPJNLINTERRUPT, Database file ##TEST_PATH##/mumps.dat indicates interrupted MUPIP JOURNAL command.  Restore from backup for forward recover/rollback.
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+# Test of JNLDBSEQNOMATCH error
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+# Switch journal files and cut previous journalfile link
+prev_jnl_file name changed from NULL to NULL
+prev_jnl_file name changed from NULL to NULL
+prev_jnl_file name changed from NULL to NULL
+# Shut down replication servers, but have journaling on
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Copy *.dat from $bkupdir1
+# Expect JNLDBSEQNOMATCH error when rollback -forward is attempted with -nochain
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-JNLDBSEQNOMATCH, Journal file ##TEST_PATH##/a.mjl has beginning region sequence number [0x0000000000000033], but database ##TEST_PATH##/a.dat has region sequence number [0x000000000000001D]
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+# Expect JNLDBSEQNOMATCH error for the below rollback -forward, since journal backlinks are cut
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%GTM-E-JNLDBSEQNOMATCH, Journal file ##TEST_PATH##/a.mjl has beginning region sequence number [0x0000000000000033], but database ##TEST_PATH##/a.dat has region sequence number [0x000000000000001D]
+%GTM-E-NOPREVLINK, Journal file ##TEST_PATH##/a.mjl has a null previous link
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..

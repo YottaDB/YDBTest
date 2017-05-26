@@ -1,0 +1,19 @@
+setgd -f=makedmp.gld
+add -name ACCT -region=ACCT
+add -name ACNM -region=ACNM
+add -name JNL  -region=JNL
+add -name UNUSED -region=UNUSED
+add -region ACCT -dynamic=ACCT
+add -region ACNM -dynamic=ACNM
+add -region JNL  -dynamic=JNL
+add -region UNUSED -dynamic=UNUSED
+add -segment ACCT -file=acct.dat
+add -segment ACNM -file=acnm.dat
+add -segment JNL  -file=jnl.dat
+add -segment UNUSED -file=unused.dat
+change -segment ACCT -access_method=bg -block_size=1024 -allocation=4000 -extension_count=1000 -g=4096
+change -segment ACNM -access_method=bg -block_size=1024 -allocation=5000 -extension_count=1000 -g=4096
+change -segment DEFAULT -access_method=bg -block_size=1024 -allocation=5000 -extension_count=1000 -g=4096
+change -segment JNL  -access_method=bg -block_size=1024 -allocation=6000 -extension_count=1000 -g=4096
+change -region DEFAULT -record=1000 -key=255
+exit

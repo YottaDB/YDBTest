@@ -1,0 +1,233 @@
+C9H10-002916 When $Principal SOCKET device is lost process should terminate
+
+=========================== Expect automated instructions ============================
+The instructions below are automated. Please follow these steps to run this test:
+
+1) Make sure PRO version is built on the platforms you are testing for. This test only works with PRO because this is not a weekly
+test. It is meant to be used only testing release versions. It has always bee PRO-only and we won't spend time to enhance it to pro
+unless necessary.
+
+2) Login as yourself and run the test such as: $gtm_test/T988/manual_tests/u_inref/manual_netd.csh V9XX (where V9XX is the version
+   	 number. Takes a couple of minutes to run on each box) Tip: use cssh to run this test on multiple boxes
+
+3) Verify all the tests exited without hanging. NOPRINCIO syslog message is verified by the test. If the test can not find NOPRINCIO
+after 5 minutes, it will fail.
+
+      WARNING: Some boxes may hang right before exiting the test. We suspect it is due to a bug or implementation differences in
+      inetd. Just verify the actual test is passed and "NOPRINCIO." message is there.  Exit with ctrl-C and clean up "expect"
+      processes if there is any.
+
+=========================== Setup Instructions ============================
+Note: It's best to run a multi-terminal setup like cssh/terminator/multiterm
+to speed this up. This is how I tested. :)
+
+The script test/manual_tests/u_inref/c002916.csh automates every part of this
+test in a platform neutral way. Note that the DEFAULT is not HELP.
+	Usage of test/manual_tests/u_inref/c002916.csh
+	help | usage : display this help
+	show | info  : validate the current configuration (DEFAULT)
+	enable       : (must run as root) enable the C9H10002916 [x]inetd configuration. establish the [x]inetd configuration if necessary. you must 'test/manual_tests/u_inref/c002916.csh restart'
+	disable      : (must run as root) disable the C9H10002916 [x]inetd configuration. you must 'test/manual_tests/u_inref/c002916.csh restart'
+	restart      : (must run as root) restart the [x]inetd server after a configuration change
+	server       : (must run as root) change the target server of the [x]inetd configuration.
+	client       : (should be run as a regular user) run the C9H10002916 client and validate/dump some of the output
+
+As it stands today, all GG servers have been [x]inetd installed and configured
+to do this test. The configuration is disabled. If the server has not been
+setup, just running the enable command will insert the [x]inetd configuration.
+
+
+To setup for the test you need to su to root and do the following commands in
+the TCSH (/usr/local/bin/csh) shell. Each command is shown with output from a
+system running inetd.
+
+WARNING: Solaris 10 doesn't work with the supplied script below. Please refer
+the Solaris 10 section way below. At moment, atlst2000 is the only Solaris 10
+server.
+
+
+VIEW the existing setup -------------------------------
+# $gtm_test/T990/manual_tests/u_inref/c002916.csh show
+Check port 9777 in /etc/services
+        gtmserver       9777/tcp                       # C9H10002916			<---- You should see this on all platforms that use INETD
+Checking if port 9777 is in use								<---- Note that the port does not show up
+Check for the [x]inetd process
+        root      7977     1  0 17:13 ?        00:00:00 /usr/sbin/inetutils-inetd	<---- INETD is running
+Check for the [x]inetd configurations: INETD						<---- The host uses INETD
+The configuration is : DISABLED								<---- The test configuration is not in use
+The server is : /gtc/staff/gtm_test/current/T990/manual_tests/u_inref/C9H10002916.sh	<---- The script run by inetd
+
+ENABLE the service for testing ------------------------
+# $gtm_test/T990/manual_tests/u_inref/c002916.csh enable
+Enabling gtmserver inetd configuration
+5c5
+< #gtmserver stream tcp nowait gtmtest /gtc/staff/gtm_test/current/T990/manual_tests/u_inref/C9H10002916.sh C9H10002916.sh
+---
+> gtmserver stream tcp nowait gtmtest /gtc/staff/gtm_test/current/T990/manual_tests/u_inref/C9H10002916.sh C9H10002916.sh
+The configuration is ENABLED
+
+RESTART [x]inetd --------------------------------------
+# $gtm_test/T990/manual_tests/u_inref/c002916.csh restart
+Restarting the [x]inetd Internet super server
+root      7977     1  0 17:13 ?        00:00:00 /usr/sbin/inetutils-inetd
+
+VIEW the setup changes --------------------------------
+# $gtm_test/T990/manual_tests/u_inref/c002916.csh show
+Check port 9777 in /etc/services
+        gtmserver       9777/tcp                       # C9H10002916
+Checking if port 9777 is in use
+        tcp        0      0 0.0.0.0:9777            0.0.0.0:*               LISTEN	<---- The port is in use
+Check for the [x]inetd process
+        root      7977     1  0 17:13 ?        00:00:00 /usr/sbin/inetutils-inetd
+Check for the [x]inetd configurations: INETD
+The configuration is : ENABLED								<---- The configuration is enabled
+The server is : /gtc/staff/gtm_test/current/T990/manual_tests/u_inref/C9H10002916.sh
+
+
+=========================== Testing Instructions ============================
+As a non-root user, run the either the client program or telnet <host> <port>.
+Make sure to 'ver V990' first. The script saves the complete interaction log
+to client_c002916_${HOST:r:r:r}.log.
+> ver V990 p
+> $gtm_test/T990/manual_tests/u_inref/c002916.csh client
+
+The client script asks for host and port. Just use the defaults. The client
+will also ask "test lost read or write [read] ? ". Excercise both the read and
+write options.  The script will wait for the NOPRINCIO message in syslog and
+print out socket information logged by the server.
+
+Please compare the excerpted output from the script with the validation steps
+below.
+
+
+====================== Original Validation Instructions ======================
+After each try, check the syslog for a NOPRINCIO message for the server job
+(the 27597 below which should match $JOB in c2916out.txt.)
+
+Dec 23 19:47:22 jackal GTM[27597]: %GTM-F-NOPRINCIO, Unable to write to principal device -- generated from 0x00DB4751.
+
+Even for reads, the "write" in the message is correct since it is issued when
+GT.M is unable to write an error message to $PRINCIPAL.
+
+The file c2916out.txt in the server's working directory contains diagnostic
+output from the server.  Below are extracts which show what is expected.
+
+after read 2
+$ECODE=",Z150373082,"
+$ESTACK=1
+$ETRAP=""
+$IO="c2916out.txt"
+$JOB=27376
+$ZEOF=1
+$ZSTATUS="150373082,INETD+18^c002916server,%GTM-E-IOEOF, Attempt to read past an end-of-file,%GTM-I-TEXT, Connection reset by peer"
+dev=0
+devcur="1,Connection reset by peer"
+devr=0
+devr(1)=0
+devr(2)="1,Connection reset by peer"
+dollarkey="ESTABLISHED|h11984565850|127.0.0.1"
+dollarkeyr=$C(13,10)
+dollarkeyr(1)=$C(13,10)
+dollarkeyr(2)=""
+done=0
+errorlast=0
+file="c2916out.txt"
+i=2
+incrtrapNODISP=""
+incrtrapPRE="s trapdev=$device,trapstatus=$zstatus"
+line(1)="line of input"
+trapdev="1,Connection reset by peer"
+trapstatus="150373082,INETD+18^c002916server,%GTM-E-IOEOF, Attempt to read past an end-of-file,%GTM-I-TEXT, Connection reset by peer"
+what="read"
+zar=0
+zar(1)=0
+zar(2)=9
+zeofr=0
+zeofr(1)=0
+zeofr(2)=1
+0 OPEN SOCKET NOWRAP TOTAL=1 CURRENT=0
+        SOCKET[0]=h11984565850 DESC=0 CONNECTED ACTIVE  TRAP  REMOTE=127.0.0.1@46442 LOCAL=127.0.0.1@7777
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0
+                DELIMITER $C(13,10)
+EXCE="g incrtrap^incrtrap"
+c2916out.txt OPEN RMS
+INETD+23^c002916server
+INETD+16^c002916server
+
+after write 2
+$DEVICE=""
+$ECODE=",Z150376602,"
+$ESTACK=1
+$ETRAP=""
+$IO="c2916out.txt"
+$JOB=27597
+$KEY=""
+$ZSTATUS="150376602,INETD+21^c002916server,%GTM-E-SOCKWRITE, Write to a TCP/IP socket failed,%GTM-I-TEXT, Broken pipe"
+dev=0
+devcur="1,Broken pipe"
+devr=0
+devw(1)=0
+devw(2)="1,Broken pipe"
+dollarkey="ESTABLISHED|h11984572340|127.0.0.1"
+dollarkeyr=$C(13,10)
+dollarkeyw(1)=$C(13,10)
+dollarkeyw(2)=$C(13,10)
+done=0
+errorlast=0
+file="c2916out.txt"
+i=2
+incrtrapNODISP=""
+incrtrapPRE="s trapdev=$device,trapstatus=$zstatus"
+trapdev="1,Broken pipe"
+trapstatus="150376602,INETD+21^c002916server,%GTM-E-SOCKWRITE, Write to a TCP/IP socket failed,%GTM-I-TEXT, Broken pipe"
+what="write"
+zar=0
+zaw(1)=0
+zaw(2)=9
+zeofr=0
+zeofw(1)=0
+zeofw(2)=0
+0 OPEN SOCKET NOWRAP TOTAL=1 CURRENT=0
+        SOCKET[0]=h11984572340 DESC=0 CONNECTED ACTIVE  TRAP  REMOTE=127.0.0.1@46448 LOCAL=127.0.0.1@7777
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0
+                DELIMITER $C(13,10)
+EXCE="g incrtrap^incrtrap"
+c2916out.txt OPEN RMS
+INETD+23^c002916server
+INETD+16^c002916server
+
+
+**** Solaris 10 **** Solaris 10 **** Solaris 10 **** Solaris 10 ****
+Solaris 10 does not work like everything else. :(
+
+Please read and understand the following commands. I have left the
+configuration for gtmserver installed, but disabled.
+
+- Install the service (converts the old inetd config to the SMH model)
+# inetconv -i $gtm_test/T990/manual_tests/u_inref/C9H10002916.inetd
+gtmserver -> /var/svc/manifest/network/gtmserver-tcp.xml
+Importing gtmserver-tcp.xml ...Done
+
+- List the services
+# inetadm
+ENABLED   STATE          FMRI
+enabled   maintenance    svc:/network/gtmserver/tcp:default
+
+- Disable the service (includes HUPing inetd)
+# inetadm -d svc:/network/gtmserver/tcp:default
+
+- Enable the service (includes HUPing inetd)
+# inetadm -e svc:/network/gtmserver/tcp:default
+
+- List the service properties
+# inetadm -l svc:/network/gtmserver/tcp:default
+
+- Edit the service's properties (the example changes the user and target
+  script)
+# inetadm -m svc:/network/gtmserver/tcp:default user=gtmtest exec="/gtc/staff/gtm_test/current/T990/manual_tests/u_inref/C9H10002916.sh"
+
+- Remove the service
+# svccfg delete svc:/network/gtmserver/tcp:default
+
+**** Solaris 10 **** Solaris 10 **** Solaris 10 **** Solaris 10 ****
+

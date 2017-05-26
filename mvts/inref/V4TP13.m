@@ -1,0 +1,41 @@
+V4TP13 ;IW-KO-YS-TS,VV4TP,MVTS V9.10;15/7/96;PART-94 Transaction
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+ W !!,"144---V4TP13: 1 Transaction tests  -3-"
+ ;
+ W !!,"TSTART without transparameters"
+ W !,"   without a restart before TCOMMIT",!
+ ;
+1 S ^ABSN="40876",^ITEM="IV-876  TSTART lname  ... TCOMMIT"
+ S ^NEXT="2^V4TP13,V4TP14^VV4TP" D ^V4PRETP1
+ JOB 1^V4TPE13::60 S WAIT=$T
+ L  F  Q:$$^V4GETSM
+ S ^VCORR="#1^VA^VB(1)VAVB(1)10/#1^VA^VB(1)VAVB(1)00/*11/#M^VA^VB(1)00/"
+ D ^V4TPCHKM D ^V4GETCOM D ^VEXAMINE
+ ;
+2 S ^ABSN="40877",^ITEM="IV-877  TSTART (lname,lname,lname,lname)  ... TCOMMIT"
+ S ^NEXT="3^V4TP13,V4TP14^VV4TP" D ^V4PRETP1
+ JOB 2^V4TPE13::60 S WAIT=$T
+ L  F  Q:$$^V4GETSM
+ S ^VCORR="#1^va^vb(1)vavb(1)10/#1^va^vb(1)vavb(1)00/*11/#M^va^vb(1)00/"
+ D ^V4TPCHKM D ^V4GETCOM D ^VEXAMINE
+ ;
+3 S ^ABSN="40878",^ITEM="IV-878  TSTART *  ... TCOMMIT"
+ S ^NEXT="4^V4TP13,V4TP14^VV4TP" D ^V4PRETP1
+ JOB 3^V4TPE13::60 S WAIT=$T
+ L  F  Q:$$^V4GETSM
+ S ^VCORR="#1^VA(1)^VB(1,2)^VC(2)^VD(1,2)VA(1)VB(1,2)VC(2)VD(1,2)10/#1^VA(1)^VB(1,2)^VC(2)^VD(1,2)VA(1)VB(1,2)VC(2)VD(1,2)00/*11/#M^VA(1)^VB(1,2)^VC(2)^VD(1,2)00/"
+ D ^V4TPCHKM D ^V4GETCOM D ^VEXAMINE
+ ;
+4 S ^ABSN="40879",^ITEM="IV-879  TSTART ()  ... TCOMMIT"
+ S ^NEXT="V4TP14^VV4TP" D ^V4PRETP1
+ JOB 4^V4TPE13::60 S WAIT=$T
+ L  F  Q:$$^V4GETSM
+ S ^VCORR="#1^va(1)^vb(2)^vc(1,2)^vd(2)va(1)vb(2)vc(1,2)vd(2)10/#1^va(1)^vb(2)^vc(1,2)^vd(2)va(1)vb(2)vc(1,2)vd(2)00/*11/#M^va(1)^vb(2)^vc(1,2)^vd(2)00/"
+ D ^V4TPCHKM D ^V4GETCOM D ^VEXAMINE
+ ;
+END W !!,"End of 144 --- V4TP13",!
+ Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

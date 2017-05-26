@@ -1,0 +1,52 @@
+Flags status, after database is created
+TRUE
+TRUE
+
+
+GTM>
+
+GTM>
+Flags status, after adding normal node
+TRUE
+TRUE
+
+
+GTM>
+
+GTM>
+Flags status, after adding spanning node
+FALSE
+TRUE
+
+##TEST_AWKLength of the subscript will be [0-9]*
+
+GTM>
+
+GTM>
+
+GTM>
+Flags status, after adding another node
+FALSE
+TRUE
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Flags status, after reducing keysize less than maximum of the lengths of keys present in the DB
+FALSE
+FALSE
+
+
+GTM>
+
+GTM>
+
+GTM>
+Flags status, after MUPIP INTEG
+TRUE
+TRUE
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

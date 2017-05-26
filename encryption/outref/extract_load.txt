@@ -1,0 +1,82 @@
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_LINUX_S390X HOST_OS390_S390
+No prior versions available: RANDOMVER-E-CANNOTRUN : Could not determine previous version matching the given criteria. Exiting...
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_LINUX_S390X HOST_OS390_S390
+Created file ##TEST_PATH##/mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+%GTM-I-RECORDSTAT, ^var:	  Key cnt: 384  max subsc len: 59  max data len: 4  max rec len: 67
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 384  max subsc len: 59  max data len: 4  max rec len: 67
+%GTM-I-RECORDSTAT, ^var:	  Key cnt: 384  max subsc len: 59  max rec len: 4  max node len: 67
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 384  max subsc len: 59  max rec len: 4  max node len: 67
+#####TEST CONDITION :Loading into encrypted and non encrypted databases with new extract filee#####
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+create.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+create.dat
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/create.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/temp.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/create.gld
+Created file ##TEST_PATH##/z.dat
+Created file ##TEST_PATH##/y.dat
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 384  Max Subsc Len: 59  Max Data Len: 4
+Last LOAD record number: 6
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+#####TEST CONDITION :Loading into encrypted and non encrypted databases with old extract file#####
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+create_old.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+create_old.dat
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/create_old.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-I-EXECOM, Executing command file ##TEST_PATH##/temp.gde
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/create_old.gld
+Created file ##TEST_PATH##/z.dat
+Created file ##TEST_PATH##/y.dat
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 384  Max Subsc Len: 59  Max Data Len: 4
+Last LOAD record number: 6
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

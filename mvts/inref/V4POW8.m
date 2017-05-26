@@ -1,0 +1,34 @@
+V4POW8 ;IW-KO-TS-YS,V4POWER,MVTS V9.10;15/6/96;POWER OPERATOR
+ ;
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1984-1996
+ ;
+ W !!,"106---V4POW8:  power operator  (A**P)  -8-"
+ ;
+1 S ^ABSN="40676",^ITEM="IV-676  A is a lvn"
+ S ^NEXT="2^V4POW8,V4RAND^VV4" D ^V4PRESET K
+ s A(12)=10
+ S ^VCOMP=A(12)**7
+ S ^VCORR="10000000" D ^VEXAMINE
+ ;
+2 S ^ABSN="40677",^ITEM="IV-677  A is a gvn"
+ S ^NEXT="3^V4POW8,V4RAND^VV4" D ^V4PRESET K  k ^V
+ s ^V("A")=2
+ S ^VCOMP=^V("A")**-1
+ S ^VCORR=".5" D ^VEXAMINE k ^V
+ ;
+3 S ^ABSN="40678",^ITEM="IV-678  P is a lvn"
+ S ^NEXT="4^V4POW8,V4RAND^VV4" D ^V4PRESET K
+ s A=4,B("b")=-2.5
+ S ^VCOMP=A**B("b")
+ S ^VCORR=".03125" D ^VEXAMINE
+ ;
+4 S ^ABSN="40679",^ITEM="IV-679  P is a gvn"
+ S ^NEXT="V4RAND^VV4" D ^V4PRESET K  k ^V
+ s ^V("A")=0.5,^V("P")=-4
+ S ^VCOMP=^V("A")**^V("P")
+ S ^VCORR="16" D ^VEXAMINE k ^V
+ ;
+END W !!,"End of 106 --- V4POW8",!
+ K  Q
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

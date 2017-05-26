@@ -1,0 +1,121 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+
+******* Start of specexamples *******
+
+
+--------------------------
+Test case: basecase
+Base case:
+barbar
+--------------------------
+Test case: newvardel
+New'd var goes away on exit:
+barfoo
+--------------------------
+Test case: alsprskill
+Alias is persistent through a Kill:
+barzot
+--------------------------
+Test case: destructall
+Destruction - KILL * :
+barbar
+Expected undefined local variable error occured
+--------------------------
+Test case: destnewscp
+Destruction - New may cause alias to go out of scope:
+barbar
+Expected undefined local variable error occured
+--------------------------
+Test case: alcnocroot
+Creating an alias container doesn't change the root:
+foofoo
+--------------------------
+Test case: alcchgdesc
+Creating an alias does change descendants:
+barbar
+Expected undefined local variable error occured
+--------------------------
+Test case: alcvalngraph
+An alias contain value is not graphic:
+Value >><<
+--------------------------
+Test case: varoneval
+Variable can only have one value:
+Value >><<
+--------------------------
+Test case: morcmplxex
+More complex example (with some additional coverage):
+<
+0
+0
+1
+0
+b("got")="a match"
+10
+--------------------------
+Test case: zwrxmpl1
+ZWrite example:
+$ZWRTAC=""
+*b(1)=$ZWRTAC1
+$ZWRTAC1=22 ;*
+$ZWRTAC=""
+--------------------------
+Test case: zwrxmpl2
+ZWrite more complex example:
+a(1)="foo"
+*b=a
+*c("bar")=a
+$ZWRTAC=""
+*d(1)=$ZWRTAC1
+$ZWRTAC1("bar")="1|2|3|"
+$ZWRTAC1("bar",1)="Mrs. Jones"
+*d(2)=$ZWRTAC2
+$ZWRTAC2(5000)="where's the beef?"
+$ZWRTAC=""
+--------------------------
+Test case: tstartxmpl1
+TStart data only example:
+
+DON'T
+DON'T
+--------------------------
+Test case: tstartxmpl2
+TStart data and alias example:
+
+DON'T
+DON'T
+--------------------------
+Test case: tstartxmpl3
+TStart data but not alias example:
+
+DON'T
+ME
+--------------------------
+Test case: tstartxmpl4
+TStart - another data but not alias example:
+
+ME
+DON'T
+--------------------------
+Test case: tstartxmpl5
+Protected alias with associated container example:
+
+Refcnt for A: 1  Refcnt for B: 1  Refcnt for C: 2
+
+ME
+ME
+Refcnt for A: 1  Refcnt for B: 2  Refcnt for C: 2
+
+--------------------------
+
+
+******* Finish specexamples *******
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

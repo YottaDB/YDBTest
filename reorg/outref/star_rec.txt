@@ -1,0 +1,78 @@
+Create some star-record-only blocks:
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Fill Factor:: Index blocks 100%: Data blocks 100%
+##SUSPEND_OUTPUT PRO
+GTMPOOLLIMIT used for mupip reorg : ##FILTERED##
+##ALLOW_OUTPUT PRO
+   
+Global: a (region DEFAULT)
+Blocks processed    : 6 
+Blocks coalesced    : 2 
+Blocks split        : 0 
+Blocks swapped      : 4 
+Blocks freed        : 6 
+Blocks reused       : 4 
+Levels Eliminated   : 1 
+Blocks extended     : 0 
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory           2               2           2....            NA
+Index               1               3           5.078             1
+Data                3               3          99.251             3
+Free              294              NA              NA            NA
+Total             300               8              NA             4
+Now print Which block have globals:
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+Key found in block  5.
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:10,	5:10,
+DSE> 
+Key found in block  6.
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:1F,	6:10,
+DSE> 
+Key found in block  7.
+    Directory path
+    Path--blk:off
+	1:10,	2:10,
+    Global tree path
+    Path--blk:off
+	4:2C,	7:10,
+DSE> star_rec test ends
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

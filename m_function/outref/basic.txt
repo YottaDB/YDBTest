@@ -1,0 +1,444 @@
+M function test starts ...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/xxx.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/xxx.gld
+
+GTM>
+
+GTM>
+##############################################################
+Test $DATA
+##############################################################
+Test $GET
+##############################################################
+Test $NAME
+^longglobalnamefornamefunctionte("A""B",1,"somestr",1,"abc",3)
+6
+
+abc
+^longglobalnamefornamefunctionte
+^longglobalnamefornamefunctionte("A""B")
+^longglobalnamefornamefunctionte("A""B",1)
+^longglobalnamefornamefunctionte("A""B",1,"somestr",1,"abc")
+##############################################################
+Test $ORDER
+1
+2
+B
+1
+2
+C
+D
+E
+F
+1
+2
+B
+1
+2
+C
+D
+E
+F
+1
+2
+cc
+##############################################################
+Test $ZPREVIOUS
+Output will be in the reverse order of $order() output
+B
+2
+1
+F
+E
+D
+C
+2
+1
+B
+2
+1
+F
+E
+D
+C
+2
+1
+##############################################################
+Test $NEXT
+1
+2
+B
+1
+2
+C
+D
+E
+F
+1
+2
+B
+1
+2
+C
+D
+E
+F
+##############################################################
+Test $QUERY
+^longglobalnameformfunctiontesta(1)=a1
+^longglobalnameformfunctiontesta(2)=a2
+^longglobalnameformfunctiontesta(2,2,4)=a24
+^longglobalnameformfunctiontesta(2,3)=a23
+^longglobalnameformfunctiontesta("B")=ab
+^longglobalnameformfunctiontesta("B",2)=ab2
+^longglobalnameformfunctiontestc(1)=c1
+^longglobalnameformfunctiontestc(1,1)=c11
+^longglobalnameformfunctiontestc(2)=c2
+^longglobalnameformfunctiontestc(2,1)=c21
+^longglobalnameformfunctiontestc(2,2,2)=c22
+^longglobalnameformfunctiontestc(2,2,2,2,4)=c224
+^longglobalnameformfunctiontestc(2,2,2,2,"C",1)=cc1
+^longglobalnameformfunctiontestc(2,2,2,2,"C","C","cc",234,"aa")=clevel4
+^longglobalnameformfunctiontestc(2,2,3)=c223
+^longglobalnameformfunctiontestc("C",2,"third")=cc23
+^longglobalnameformfunctiontestc("D",23,2)=cd23
+^longglobalnameformfunctiontestc("E","thisisE")=ce
+^longglobalnameformfunctiontestc("F","thisisF")=cf
+longlocalnameformfunctiontesta(1)=a1
+longlocalnameformfunctiontesta(2)=a2
+longlocalnameformfunctiontesta(2,3)=a23
+longlocalnameformfunctiontesta(2,4)=a24
+longlocalnameformfunctiontesta("B")=ab
+longlocalnameformfunctiontesta("B",2)=ab2
+longlocalnameformfunctiontestc(1)=c1
+longlocalnameformfunctiontestc(1,1)=c11
+longlocalnameformfunctiontestc(2)=c2
+longlocalnameformfunctiontestc(2,1)=c21
+longlocalnameformfunctiontestc(2,2)=c22
+longlocalnameformfunctiontestc(2,2,3)=c223
+longlocalnameformfunctiontestc(2,2,4)=c224
+longlocalnameformfunctiontestc("C",1)=cc1
+longlocalnameformfunctiontestc("C",2,"third")=cc23
+longlocalnameformfunctiontestc("C","cc",234,"aa")=clevel4
+longlocalnameformfunctiontestc("D",23,2)=cd23
+longlocalnameformfunctiontestc("E","thisisE")=ce
+longlocalnameformfunctiontestc("F","thisisF")=cf
+##############################################################
+Test $QLENGTH
+5
+5
+7
+8
+0
+5
+##############################################################
+Test $QSUBSCRIPT
+xxx.gld
+^a234567890123456789012345678901
+1
+22
+333
+4444
+55
+66
+7
+eight
+
+
+^ABC
+1
+2
+5
+
+##############################################################
+Test $STACK
+1
+2
+in label1forstackwithlongnamedlabels:  2
+in label1forstackwithlongnamedDlabels: 3
+2
+1
+##############################################################
+Test $TEXT
+functionwithlongnamedvariables
+functionwithlongnamedvariables ; test M functions
+textforlongnamedentryandlabels ; $text
+ write $text(+1),!
+ set dollartextvariable=$ZPOSITION
+
+GTM>
+################################################
+Test zgetjpi should error out gracefully with incorrect item parameter
+
+GTM>
+Testing with incorrect item parameter null
+%GTM-E-BADJPIPARAM, null is not a legal parameter for $ZGETJPI()
+Testing with incorrect item parameter @
+%GTM-E-BADJPIPARAM, @ is not a legal parameter for $ZGETJPI()
+Testing with incorrect item parameter a
+%GTM-E-BADJPIPARAM, a is not a legal parameter for $ZGETJPI()
+Testing with incorrect item parameter .afdas
+%GTM-E-BADJPIPARAM, .afdas is not a legal parameter for $ZGETJPI()
+Testing with incorrect item parameter -0
+%GTM-E-BADJPIPARAM, -0 is not a legal parameter for $ZGETJPI()
+Testing with incorrect item parameter +999999999
+%GTM-E-BADJPIPARAM, +999999999 is not a legal parameter for $ZGETJPI()
+Testing with incorrect item parameter *
+%GTM-E-BADJPIPARAM, * is not a legal parameter for $ZGETJPI()
+Testing with correct item parameter ISPROCALIVE
+##TEST_AWK[0-9][0-9]*
+Testing with correct item parameter CPUTIM
+##TEST_AWK[0-9][0-9]*
+Testing with correct item parameter CSTIME
+##TEST_AWK[0-9][0-9]*
+Testing with correct item parameter CUTIME
+##TEST_AWK[0-9][0-9]*
+Testing with correct item parameter STIME
+##TEST_AWK[0-9][0-9]*
+Testing with correct item parameter UTIME
+##TEST_AWK[0-9][0-9]*
+
+GTM>
+################################################
+# C9I06-003002 $ZD does not properly format DAY of the week
+################################################
+Print $zdate with all possible format specifiers
+*** SECTION 1 ***
+Simple checks without month and day codes
+
+----- Only day format specification elements -----
+Testing the value 61181
+$ZDATE()         : 07/04/08
+2 digit year     : 08
+4 digit year     : 2008
+numeral month    : 07
+3 lettered month : JUL
+digit day        : 04
+3 lettered day   : FRI
+DD-MON-YEAR      : 04-JUL-2008
+MM/DD/YY         : 07/04/08
+DAY, MON DD YEAR : FRI, JUL 04 2008
+Testing the value 61181,47958
+$ZDATE()         : 07/04/08
+2 digit year     : 08
+4 digit year     : 2008
+numeral month    : 07
+3 lettered month : JUL
+digit day        : 04
+3 lettered day   : FRI
+DD-MON-YEAR      : 04-JUL-2008
+MM/DD/YY         : 07/04/08
+DAY, MON DD YEAR : FRI, JUL 04 2008
+
+----- day-time format specification elements -----
+Testing the value 61181,47958
+Hour in 24   : 13
+Hour in 12   : 01
+Minute       : 19
+Second       : 18
+AM/PM        : PM
+24:60:SS     : 13:19:18
+Some format  : +01:19:18 PM
+Funny format : * JUL 04, 08. FRI ; 01:19:18 PM *
+
+*** SECTION 2 ***
+Essentially the same commands as above. But with month codes
+monthcodes : Januar,Februar,M√§rz,April,Mai,Juni,Juli,August,September,Oktober,November,Dezember
+daycodes   : 
+
+----- Only day format specification elements -----
+Testing the value 61181
+2 digit year     : 08
+4 digit year     : 2008
+numeral month    : 07
+Month            : Juli
+digit day        : 04
+day of the week  : FRI
+DD-MON-YEAR      : 04-Juli-2008
+MM/DD/YY         : 07/04/08
+DAY, MON DD YEAR : FRI, Juli 04 2008
+Testing the value 61181,47958
+2 digit year     : 08
+4 digit year     : 2008
+numeral month    : 07
+Month            : Juli
+digit day        : 04
+day of the week  : FRI
+DD-MON-YEAR      : 04-Juli-2008
+MM/DD/YY         : 07/04/08
+DAY, MON DD YEAR : FRI, Juli 04 2008
+
+----- day-time format specification elements -----
+Testing the value 61181,47958
+Hour in 24   : 13
+Hour in 12   : 01
+Minute       : 19
+Second       : 18
+AM/PM        : PM
+24:60:SS     : 13:19:18
+Some fomat   : +01:19:18 PM
+Funny format : * Juli 04, 08. FRI ; 01:19:18 PM *
+
+*** SECTION 3 ***
+Essentially the same commands as above. But with day codes
+monthcodes : 
+daycodes   : Dimanche,Lundi,Mardi,Mercredi,Jeudi,Vendredi,Samedi
+
+----- Only day format specification elements -----
+Testing the value 61181
+2 digit year     : 08
+4 digit year     : 2008
+numeral month    : 07
+Month            : JUL
+digit day        : 04
+day of the week  : Vendredi
+DD-MON-YEAR      : 04-JUL-2008
+MM/DD/YY         : 07/04/08
+DAY, MON DD YEAR : Vendredi, JUL 04 2008
+Testing the value 61181,47958
+2 digit year     : 08
+4 digit year     : 2008
+numeral month    : 07
+Month            : JUL
+digit day        : 04
+day of the week  : Vendredi
+DD-MON-YEAR      : 04-JUL-2008
+MM/DD/YY         : 07/04/08
+DAY, MON DD YEAR : Vendredi, JUL 04 2008
+
+----- day-time format specification elements -----
+Testing the value 61181,47958
+Hour in 24   : 13
+Hour in 12   : 01
+Minute       : 19
+Second       : 18
+AM/PM        : PM
+24:60:SS     : 13:19:18
+Some fomat   : +01:19:18 PM
+Funny format : * JUL 04, 08. Vendredi ; 01:19:18 PM *
+
+*** SECTION 4 ***
+Essentially the same commands as above. But with both month and day codes
+monthcodes : Januar,Februar,M√§rz,April,Mai,Juni,Juli,August,September,Oktober,November,Dezember
+daycodes   : Dimanche,Lundi,Mardi,Mercredi,Jeudi,Vendredi,Samedi
+
+----- Only day format specification elements -----
+Testing the value 61181
+2 digit year     : 08
+4 digit year     : 2008
+numeral month    : 07
+Month            : Juli
+digit day        : 04
+day of the week  : Vendredi
+DD-MON-YEAR      : 04-Juli-2008
+MM/DD/YY         : 07/04/08
+DAY, MON DD YEAR : Vendredi, Juli 04 2008
+Testing the value 61181,47958
+2 digit year     : 08
+4 digit year     : 2008
+numeral month    : 07
+Month            : Juli
+digit day        : 04
+day of the week  : Vendredi
+DD-MON-YEAR      : 04-Juli-2008
+MM/DD/YY         : 07/04/08
+DAY, MON DD YEAR : Vendredi, Juli 04 2008
+
+----- day-time format specification elements -----
+Testing the value 61181,47958
+Hour in 24   : 13
+Hour in 12   : 01
+Minute       : 19
+Second       : 18
+AM/PM        : PM
+24:60:SS     : 13:19:18
+Some fomat   : +01:19:18 PM
+Funny format : * Juli 04, 08. Vendredi ; 01:19:18 PM *
+##SUSPEND_OUTPUT NONUNICODE_MODE
+
+*** SECTION 5 ***
+Test $ZDate with UNICODE values for daycodes
+DAY, MON DD YEAR :   ‡Æµ‡ØÜ‡Æ≥‡Øç‡Æ≥‡Æø, JUL 04 2008
+Funny format : * JUL 04, 08.   ‡Æµ‡ØÜ‡Æ≥‡Øç‡Æ≥‡Æø ; 01:19:28 PM *
+# Test cases for $VIEW("YGVN2GDS") and $VIEW("YGDS2GVN")
+# Test simple numeric subscripts
+x="A"_$C(0)_$ZCH(191)_$C(17,0)_$ZCH(191)_"!"_$C(0,0)
+y="^A(1,2)"
+# Test numeric + string subscripts
+x="A"_$C(0)_$ZCH(191)_$C(17,0)_$ZCH(255)_"abcd"_$C(0,0)
+y="^A(1,""abcd"")"
+# Test numeric + string subscripts with collation 1 way but not the other way
+x="A"_$C(0)_$ZCH(191)_$C(17,0)_$ZCH(255,158,157,156,155)_$C(0,0)
+y="^A(1,"""_$ZCH(158,157,156,155)_""")"
+# Test numeric + string subscripts with collation both ways
+x="A"_$C(0)_$ZCH(191)_$C(17,0)_$ZCH(255,158,157,156,155)_$C(0,0)
+y="^A(1,""abcd"")"
+# Test a few numeric subscripts
+x="A"_$C(0)_$ZCH(191)_$C(19)_"5Wy"_$ZCH(145)_$C(19)_"5Wq"_$C(0,0)
+14
+y="^A(1.2345678901234567)"
+x="A"_$C(0)_$ZCH(191)_$C(19)_"5Wy"_$ZCH(145)_$C(19)_"5Wy"_$C(0,0)
+14
+y="^A(1.23456789012345678)"
+# Test a few invalid or non-canonical numeric subscripts
+STAT=viewygn2gds+26^viewygvn2gds,%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+STAT=viewygn2gds+27^viewygvn2gds,%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+STAT=viewygn2gds+28^viewygvn2gds,%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+STAT=viewygn2gds+29^viewygvn2gds,%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+# Test that numeric subscripts inside double-quotes are treated as string subscripts
+x="A"_$C(0)_$ZCH(191)_$C(17,0,0)
+y="^A(1)"
+x="A"_$C(0)_$ZCH(255)_"1"_$C(0,0)
+y="^A(""1"")"
+# Test $C() usages in string subscripts
+x="A"_$C(0)_$ZCH(255)_$C(1,1)_"("_$C(1,2,0,0)
+y="^A("""_$C(0)_"("_$C(1)_""")"
+##ALLOW_OUTPUT NONUNICODE_MODE
+##SUSPEND_OUTPUT UNICODE_MODE
+# Test cases for $VIEW("YGVN2GDS") and $VIEW("YGDS2GVN")
+# Test simple numeric subscripts
+x="A"_$C(0)_"ø"_$C(17,0)_"ø!"_$C(0,0)
+y="^A(1,2)"
+# Test numeric + string subscripts
+x="A"_$C(0)_"ø"_$C(17,0,255)_"abcd"_$C(0,0)
+y="^A(1,""abcd"")"
+# Test numeric + string subscripts with collation 1 way but not the other way
+x="A"_$C(0)_"ø"_$C(17,0,255,158,157,156,155,0,0)
+y="^A(1,"""_$C(158,157,156,155)_""")"
+# Test numeric + string subscripts with collation both ways
+x="A"_$C(0)_"ø"_$C(17,0,255,158,157,156,155,0,0)
+y="^A(1,""abcd"")"
+# Test a few numeric subscripts
+x="A"_$C(0)_"ø"_$C(19)_"5Wy"_$C(145,19)_"5Wq"_$C(0,0)
+14
+y="^A(1.2345678901234567)"
+x="A"_$C(0)_"ø"_$C(19)_"5Wy"_$C(145,19)_"5Wy"_$C(0,0)
+14
+y="^A(1.23456789012345678)"
+# Test a few invalid or non-canonical numeric subscripts
+STAT=viewygn2gds+26^viewygvn2gds,%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+STAT=viewygn2gds+27^viewygvn2gds,%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+STAT=viewygn2gds+28^viewygvn2gds,%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+STAT=viewygn2gds+29^viewygvn2gds,%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+# Test that numeric subscripts inside double-quotes are treated as string subscripts
+x="A"_$C(0)_"ø"_$C(17,0,0)
+y="^A(1)"
+x="A"_$C(0,255)_"1"_$C(0,0)
+y="^A(""1"")"
+# Test $C() usages in string subscripts
+x="A"_$C(0,255,1,1)_"("_$C(1,2,0,0)
+y="^A("""_$C(0)_"("_$C(1)_""")"
+##ALLOW_OUTPUT UNICODE_MODE
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+M functions test Done.

@@ -1,0 +1,123 @@
+
+GTM>
+---------------------------------------------------------------
+Testing EXCEPTION parameter for close (try to rename the file to a directory that is read-only)
+exception_1.txt
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Source of error was close
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+129,try+5^except,%SYSTEM-E-ENO129, No such file or directory
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+2,try+8^except,%SYSTEM-E-ENO2, No such file or directory
+##ALLOW_OUTPUT HOST_OS390_S390
+continue...
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------------------------
+Testing EXCEPTION parameter for use (try to write into the file, although not positioned to EOF)
+exception_1.txt
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Source of error was use
+150373618,use+8^except,%GTM-E-DEVICEREADONLY, Cannot write to read-only device
+continue...
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------------------------
+Testing EXCEPTION parameter for open (try to write into a file that is read-only)
+tmp/exception_2.txt
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Source of error was open
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+129,try+2^except,%SYSTEM-E-ENO129, No such file or directory
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+2,try+5^except,%SYSTEM-E-ENO2, No such file or directory
+##ALLOW_OUTPUT HOST_OS390_S390
+continue...
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------------------------
+Now let's try a bad exception parameter...
+	open file:(EXCEPTION="s err=""open"" do error or is this correct at all")
+%GTM-E-INVCMD, Invalid command keyword encountered
+		At M source location badexc+5^except
+
+GTM>
+
+GTM>
+---------------------------------------------------------------
+Testing EXCEPTION parameter for close (try to rename the file to a directory that is read-only)
+exception_1.txt
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Source of error was use
+150373618,try+7^except,%GTM-E-DEVICEREADONLY, Cannot write to read-only device
+continue...
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------------------------
+Testing EXCEPTION parameter for use (try to write into the file, although not positioned to EOF)
+exception_1.txt
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Source of error was use
+150373618,use+8^except,%GTM-E-DEVICEREADONLY, Cannot write to read-only device
+continue...
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------------------------
+Testing EXCEPTION parameter for open (try to write into a file that is read-only)
+tmp/exception_2.txt
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Source of error was open
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+129,try+2^except,%SYSTEM-E-ENO129, No such file or directory
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+2,try+5^except,%SYSTEM-E-ENO2, No such file or directory
+##ALLOW_OUTPUT HOST_OS390_S390
+continue...
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------------------------
+Now let's try a bad exception parameter...
+	open file:(EXCEPTION="s err=""open"" do error or is this correct at all")
+%GTM-E-INVCMD, Invalid command keyword encountered
+		At M source location badexc+5^except
+
+GTM>
+
+GTM>
+---------------------------------------------------------------
+Testing EXCEPTION parameter for close (try to rename the file to a directory that is read-only)
+exception_1.txt
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Source of error was use
+150373618,try+7^except,%GTM-E-DEVICEREADONLY, Cannot write to read-only device
+continue...
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------------------------
+Testing EXCEPTION parameter for use (try to write into the file, although not positioned to EOF)
+exception_1.txt
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Source of error was use
+150373618,use+8^except,%GTM-E-DEVICEREADONLY, Cannot write to read-only device
+continue...
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------------------------
+Testing EXCEPTION parameter for open (try to write into a file that is read-only)
+tmp/exception_2.txt
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Source of error was open
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OS390_S390
+129,try+2^except,%SYSTEM-E-ENO129, No such file or directory
+##ALLOW_OUTPUT HOST_ALL
+##SUSPEND_OUTPUT HOST_OS390_S390
+2,try+5^except,%SYSTEM-E-ENO2, No such file or directory
+##ALLOW_OUTPUT HOST_OS390_S390
+continue...
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---------------------------------------------------------------
+Now let's try a bad exception parameter...
+	open file:(EXCEPTION="s err=""open"" do error or is this correct at all")
+%GTM-E-INDEXTRACHARS, Indirection string contains extra trailing characters
+		At M source location badexc+5^except
+
+GTM>

@@ -1,0 +1,198 @@
+Long Names ZGBLDIR test starts ...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+fourreg.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+fourreg.dat
+
+GTM>
+---------- $ZGBLDIR = threereg.gld----------
+-----Globals filled in here -----
+^abcdefghi="abcdefghi in threereg.gld"
+^abcdefghij="abcdefghij in threereg.gld"
+^abcdefghijk="abcdefghijk in threereg.gld"
+^abcdefghijkl="abcdefghijkl in threereg.gld"
+^abcdefghijklm="abcdefghijklm in threereg.gld"
+^bcdefghijklmno="bcdefghijklmno in threereg.gld"
+^bcdefghijklmnop="bcdefghijklmnop in threereg.gld"
+^bcdefghijklmnopq="bcdefghijklmnopq in threereg.gld"
+^bcdefghijklmnopqr="bcdefghijklmnopqr in threereg.gld"
+^bcdefghijklmnopqrs="bcdefghijklmnopqrs in threereg.gld"
+^cdefghijklmnopqrstu="cdefghijklmnopqrstu in threereg.gld"
+^cdefghijklmnopqrstuv="cdefghijklmnopqrstuv in threereg.gld"
+^cdefghijklmnopqrstuvw="cdefghijklmnopqrstuvw in threereg.gld"
+^cdefghijklmnopqrstuvwx="cdefghijklmnopqrstuvwx in threereg.gld"
+^cdefghijklmnopqrstuvwxy="cdefghijklmnopqrstuvwxy in threereg.gld"
+^defghijklmnopqrstuvwxyzA="defghijklmnopqrstuvwxyzA in threereg.gld"
+^defghijklmnopqrstuvwxyzAB="defghijklmnopqrstuvwxyzAB in threereg.gld"
+^defghijklmnopqrstuvwxyzABC="defghijklmnopqrstuvwxyzABC in threereg.gld"
+^defghijklmnopqrstuvwxyzABCD="defghijklmnopqrstuvwxyzABCD in threereg.gld"
+^defghijklmnopqrstuvwxyzABCDE="defghijklmnopqrstuvwxyzABCDE in threereg.gld"
+^efghijklmnopqrstuvwxyzABCDEFG="efghijklmnopqrstuvwxyzABCDEFG in threereg.gld"
+^efghijklmnopqrstuvwxyzABCDEFGH="efghijklmnopqrstuvwxyzABCDEFGH in threereg.gld"
+^efghijklmnopqrstuvwxyzABCDEFGHI="efghijklmnopqrstuvwxyzABCDEFGHIJ in threereg.gld"
+
+---------- $ZGBLDIR = fourreg.gld----------
+-----Globals filled in here -----
+^abcdefghi="abcdefghi in fourreg.gld"
+^abcdefghij="abcdefghij in fourreg.gld"
+^abcdefghijk="abcdefghijk in fourreg.gld"
+^abcdefghijkl="abcdefghijkl in fourreg.gld"
+^abcdefghijklm="abcdefghijklm in fourreg.gld"
+^bcdefghijklmno="bcdefghijklmno in fourreg.gld"
+^bcdefghijklmnop="bcdefghijklmnop in fourreg.gld"
+^bcdefghijklmnopq="bcdefghijklmnopq in fourreg.gld"
+^bcdefghijklmnopqr="bcdefghijklmnopqr in fourreg.gld"
+^bcdefghijklmnopqrs="bcdefghijklmnopqrs in fourreg.gld"
+^cdefghijklmnopqrstu="cdefghijklmnopqrstu in fourreg.gld"
+^cdefghijklmnopqrstuv="cdefghijklmnopqrstuv in fourreg.gld"
+^cdefghijklmnopqrstuvw="cdefghijklmnopqrstuvw in fourreg.gld"
+^cdefghijklmnopqrstuvwx="cdefghijklmnopqrstuvwx in fourreg.gld"
+^cdefghijklmnopqrstuvwxy="cdefghijklmnopqrstuvwxy in fourreg.gld"
+^defghijklmnopqrstuvwxyzA="defghijklmnopqrstuvwxyzA in fourreg.gld"
+^defghijklmnopqrstuvwxyzAB="defghijklmnopqrstuvwxyzAB in fourreg.gld"
+^defghijklmnopqrstuvwxyzABC="defghijklmnopqrstuvwxyzABC in fourreg.gld"
+^defghijklmnopqrstuvwxyzABCD="defghijklmnopqrstuvwxyzABCD in fourreg.gld"
+^defghijklmnopqrstuvwxyzABCDE="defghijklmnopqrstuvwxyzABCDE in fourreg.gld"
+^efghijklmnopqrstuvwxyzABCDEFG="efghijklmnopqrstuvwxyzABCDEFG in fourreg.gld"
+^efghijklmnopqrstuvwxyzABCDEFGH="efghijklmnopqrstuvwxyzABCDEFGH in fourreg.gld"
+^efghijklmnopqrstuvwxyzABCDEFGHI="efghijklmnopqrstuvwxyzABCDEFGHIJ in fourreg.gld"
+
+# $zgbldir : fourreg.gld Extended reference threereg.gld should not change $view behavior
+CREG
+^|globaldirectory3|xasalongvariable
+x in globaldirectory3
+^|globaldirectory3|xasalongvariable
+x in globaldirectory4
+---------- $ZGBLDIR = threereg.gld----------
+^xasalongvariable="x in globaldirectory3"
+# $order with extended reference should work irrespective of $zgbldir value
+
+^xasalongvariable2
+---------- $ZGBLDIR = fourreg.gld----------
+^xasalongvariable="x in globaldirectory4"
+# $order with extended reference should work irrespective of $zgbldir value
+
+^xasalongvariable2
+
+GTM>
+*** mupip extract threereg.glo ***
+%GTM-I-RECORDSTAT, ^abcdefghi:	  Key cnt: 1  max subsc len: 11  max rec len: 24  max node len: 39
+%GTM-I-RECORDSTAT, ^abcdefghij:	  Key cnt: 1  max subsc len: 12  max rec len: 25  max node len: 41
+%GTM-I-RECORDSTAT, ^abcdefghijk:	  Key cnt: 1  max subsc len: 13  max rec len: 26  max node len: 43
+%GTM-I-RECORDSTAT, ^abcdefghijkl:	  Key cnt: 1  max subsc len: 14  max rec len: 27  max node len: 45
+%GTM-I-RECORDSTAT, ^abcdefghijklm:	  Key cnt: 1  max subsc len: 15  max rec len: 28  max node len: 47
+%GTM-I-RECORDSTAT, ^bcdefghijklmno:	  Key cnt: 1  max subsc len: 16  max rec len: 29  max node len: 49
+%GTM-I-RECORDSTAT, ^bcdefghijklmnop:	  Key cnt: 1  max subsc len: 17  max rec len: 30  max node len: 51
+%GTM-I-RECORDSTAT, ^bcdefghijklmnopq:	  Key cnt: 1  max subsc len: 18  max rec len: 31  max node len: 53
+%GTM-I-RECORDSTAT, ^bcdefghijklmnopqr:	  Key cnt: 1  max subsc len: 19  max rec len: 32  max node len: 55
+%GTM-I-RECORDSTAT, ^bcdefghijklmnopqrs:	  Key cnt: 1  max subsc len: 20  max rec len: 33  max node len: 57
+%GTM-I-RECORDSTAT, ^cdefghijklmnopqrstu:	  Key cnt: 1  max subsc len: 21  max rec len: 35  max node len: 60
+%GTM-I-RECORDSTAT, ^cdefghijklmnopqrstuv:	  Key cnt: 1  max subsc len: 22  max rec len: 36  max node len: 62
+%GTM-I-RECORDSTAT, ^cdefghijklmnopqrstuvw:	  Key cnt: 1  max subsc len: 23  max rec len: 37  max node len: 64
+%GTM-I-RECORDSTAT, ^cdefghijklmnopqrstuvwx:	  Key cnt: 1  max subsc len: 24  max rec len: 38  max node len: 66
+%GTM-I-RECORDSTAT, ^cdefghijklmnopqrstuvwxy:	  Key cnt: 1  max subsc len: 25  max rec len: 39  max node len: 68
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzA:	  Key cnt: 1  max subsc len: 26  max rec len: 40  max node len: 70
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzAB:	  Key cnt: 1  max subsc len: 27  max rec len: 41  max node len: 72
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzABC:	  Key cnt: 1  max subsc len: 28  max rec len: 42  max node len: 74
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzABCD:	  Key cnt: 1  max subsc len: 29  max rec len: 43  max node len: 76
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzABCDE:	  Key cnt: 1  max subsc len: 30  max rec len: 44  max node len: 78
+%GTM-I-RECORDSTAT, ^efghijklmnopqrstuvwxyzABCDEFG:	  Key cnt: 1  max subsc len: 31  max rec len: 45  max node len: 80
+%GTM-I-RECORDSTAT, ^efghijklmnopqrstuvwxyzABCDEFGH:	  Key cnt: 1  max subsc len: 32  max rec len: 46  max node len: 82
+%GTM-I-RECORDSTAT, ^efghijklmnopqrstuvwxyzABCDEFGHI:	  Key cnt: 1  max subsc len: 33  max rec len: 48  max node len: 85
+%GTM-I-RECORDSTAT, ^xasalongvariable:	  Key cnt: 1  max subsc len: 18  max rec len: 21  max node len: 43
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 24  max subsc len: 33  max rec len: 48  max node len: 85
+*** cat threereg.glo ***
+##TEST_AWKGT.M.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+^abcdefghi="abcdefghi in fourreg.gld"
+^abcdefghij="abcdefghij in fourreg.gld"
+^abcdefghijk="abcdefghijk in fourreg.gld"
+^abcdefghijkl="abcdefghijkl in fourreg.gld"
+^abcdefghijklm="abcdefghijklm in fourreg.gld"
+^bcdefghijklmno="bcdefghijklmno in fourreg.gld"
+^bcdefghijklmnop="bcdefghijklmnop in fourreg.gld"
+^bcdefghijklmnopq="bcdefghijklmnopq in fourreg.gld"
+^bcdefghijklmnopqr="bcdefghijklmnopqr in fourreg.gld"
+^bcdefghijklmnopqrs="bcdefghijklmnopqrs in fourreg.gld"
+^cdefghijklmnopqrstu="cdefghijklmnopqrstu in threereg.gld"
+^cdefghijklmnopqrstuv="cdefghijklmnopqrstuv in threereg.gld"
+^cdefghijklmnopqrstuvw="cdefghijklmnopqrstuvw in threereg.gld"
+^cdefghijklmnopqrstuvwx="cdefghijklmnopqrstuvwx in threereg.gld"
+^cdefghijklmnopqrstuvwxy="cdefghijklmnopqrstuvwxy in threereg.gld"
+^defghijklmnopqrstuvwxyzA="defghijklmnopqrstuvwxyzA in threereg.gld"
+^defghijklmnopqrstuvwxyzAB="defghijklmnopqrstuvwxyzAB in threereg.gld"
+^defghijklmnopqrstuvwxyzABC="defghijklmnopqrstuvwxyzABC in threereg.gld"
+^defghijklmnopqrstuvwxyzABCD="defghijklmnopqrstuvwxyzABCD in threereg.gld"
+^defghijklmnopqrstuvwxyzABCDE="defghijklmnopqrstuvwxyzABCDE in threereg.gld"
+^efghijklmnopqrstuvwxyzABCDEFG="efghijklmnopqrstuvwxyzABCDEFG in threereg.gld"
+^efghijklmnopqrstuvwxyzABCDEFGH="efghijklmnopqrstuvwxyzABCDEFGH in threereg.gld"
+^efghijklmnopqrstuvwxyzABCDEFGHI="efghijklmnopqrstuvwxyzABCDEFGHIJ in threereg.gld"
+^xasalongvariable="x in globaldirectory3"
+*** mupip extract fourreg.glo ***
+%GTM-I-RECORDSTAT, ^abcdefghi:	  Key cnt: 1  max subsc len: 11  max rec len: 24  max node len: 39
+%GTM-I-RECORDSTAT, ^abcdefghij:	  Key cnt: 1  max subsc len: 12  max rec len: 25  max node len: 41
+%GTM-I-RECORDSTAT, ^abcdefghijk:	  Key cnt: 1  max subsc len: 13  max rec len: 26  max node len: 43
+%GTM-I-RECORDSTAT, ^abcdefghijkl:	  Key cnt: 1  max subsc len: 14  max rec len: 27  max node len: 45
+%GTM-I-RECORDSTAT, ^abcdefghijklm:	  Key cnt: 1  max subsc len: 15  max rec len: 28  max node len: 47
+%GTM-I-RECORDSTAT, ^bcdefghijklmno:	  Key cnt: 1  max subsc len: 16  max rec len: 29  max node len: 49
+%GTM-I-RECORDSTAT, ^bcdefghijklmnop:	  Key cnt: 1  max subsc len: 17  max rec len: 30  max node len: 51
+%GTM-I-RECORDSTAT, ^bcdefghijklmnopq:	  Key cnt: 1  max subsc len: 18  max rec len: 31  max node len: 53
+%GTM-I-RECORDSTAT, ^bcdefghijklmnopqr:	  Key cnt: 1  max subsc len: 19  max rec len: 32  max node len: 55
+%GTM-I-RECORDSTAT, ^bcdefghijklmnopqrs:	  Key cnt: 1  max subsc len: 20  max rec len: 33  max node len: 57
+%GTM-I-RECORDSTAT, ^cdefghijklmnopqrstu:	  Key cnt: 1  max subsc len: 21  max rec len: 34  max node len: 59
+%GTM-I-RECORDSTAT, ^cdefghijklmnopqrstuv:	  Key cnt: 1  max subsc len: 22  max rec len: 35  max node len: 61
+%GTM-I-RECORDSTAT, ^cdefghijklmnopqrstuvw:	  Key cnt: 1  max subsc len: 23  max rec len: 36  max node len: 63
+%GTM-I-RECORDSTAT, ^cdefghijklmnopqrstuvwx:	  Key cnt: 1  max subsc len: 24  max rec len: 37  max node len: 65
+%GTM-I-RECORDSTAT, ^cdefghijklmnopqrstuvwxy:	  Key cnt: 1  max subsc len: 25  max rec len: 38  max node len: 67
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzA:	  Key cnt: 1  max subsc len: 26  max rec len: 39  max node len: 69
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzAB:	  Key cnt: 1  max subsc len: 27  max rec len: 40  max node len: 71
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzABC:	  Key cnt: 1  max subsc len: 28  max rec len: 41  max node len: 73
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzABCD:	  Key cnt: 1  max subsc len: 29  max rec len: 42  max node len: 75
+%GTM-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzABCDE:	  Key cnt: 1  max subsc len: 30  max rec len: 43  max node len: 77
+%GTM-I-RECORDSTAT, ^efghijklmnopqrstuvwxyzABCDEFG:	  Key cnt: 1  max subsc len: 31  max rec len: 44  max node len: 79
+%GTM-I-RECORDSTAT, ^efghijklmnopqrstuvwxyzABCDEFGH:	  Key cnt: 1  max subsc len: 32  max rec len: 45  max node len: 81
+%GTM-I-RECORDSTAT, ^efghijklmnopqrstuvwxyzABCDEFGHI:	  Key cnt: 1  max subsc len: 33  max rec len: 47  max node len: 84
+%GTM-I-RECORDSTAT, ^xasalongvariable:	  Key cnt: 1  max subsc len: 18  max rec len: 21  max node len: 43
+%GTM-I-RECORDSTAT, ^xasalongvariable2:	  Key cnt: 1  max subsc len: 19  max rec len: 22  max node len: 45
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 25  max subsc len: 33  max rec len: 47  max node len: 84
+*** cat fourreg.glo ***
+##TEST_AWKGT.M.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+^abcdefghi="abcdefghi in fourreg.gld"
+^abcdefghij="abcdefghij in fourreg.gld"
+^abcdefghijk="abcdefghijk in fourreg.gld"
+^abcdefghijkl="abcdefghijkl in fourreg.gld"
+^abcdefghijklm="abcdefghijklm in fourreg.gld"
+^bcdefghijklmno="bcdefghijklmno in fourreg.gld"
+^bcdefghijklmnop="bcdefghijklmnop in fourreg.gld"
+^bcdefghijklmnopq="bcdefghijklmnopq in fourreg.gld"
+^bcdefghijklmnopqr="bcdefghijklmnopqr in fourreg.gld"
+^bcdefghijklmnopqrs="bcdefghijklmnopqrs in fourreg.gld"
+^cdefghijklmnopqrstu="cdefghijklmnopqrstu in fourreg.gld"
+^cdefghijklmnopqrstuv="cdefghijklmnopqrstuv in fourreg.gld"
+^cdefghijklmnopqrstuvw="cdefghijklmnopqrstuvw in fourreg.gld"
+^cdefghijklmnopqrstuvwx="cdefghijklmnopqrstuvwx in fourreg.gld"
+^cdefghijklmnopqrstuvwxy="cdefghijklmnopqrstuvwxy in fourreg.gld"
+^defghijklmnopqrstuvwxyzA="defghijklmnopqrstuvwxyzA in fourreg.gld"
+^defghijklmnopqrstuvwxyzAB="defghijklmnopqrstuvwxyzAB in fourreg.gld"
+^defghijklmnopqrstuvwxyzABC="defghijklmnopqrstuvwxyzABC in fourreg.gld"
+^defghijklmnopqrstuvwxyzABCD="defghijklmnopqrstuvwxyzABCD in fourreg.gld"
+^defghijklmnopqrstuvwxyzABCDE="defghijklmnopqrstuvwxyzABCDE in fourreg.gld"
+^efghijklmnopqrstuvwxyzABCDEFG="efghijklmnopqrstuvwxyzABCDEFG in fourreg.gld"
+^efghijklmnopqrstuvwxyzABCDEFGH="efghijklmnopqrstuvwxyzABCDEFGH in fourreg.gld"
+^efghijklmnopqrstuvwxyzABCDEFGHI="efghijklmnopqrstuvwxyzABCDEFGHIJ in fourreg.gld"
+^xasalongvariable="x in globaldirectory4"
+^xasalongvariable2="x2 in globaldirectory4"
+Trying to forward recover after fresh mupip create
+Recreating the data files
+Recovering the database
+diff threereg.glo.2 threereg_afterrecover.glo.2
+diff fourreg.glo.2 fourreg_afterrecover.glo.2
+Long Names ZGBLDIR test DONE.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

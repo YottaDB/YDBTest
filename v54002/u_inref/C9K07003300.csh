@@ -1,0 +1,41 @@
+#!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2013-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+setenv gtm_test_jnl NON_SETJNL
+$gtm_tst/com/dbcreate.csh mumps 1
+
+setenv gtm_white_box_test_case_count 1
+setenv gtm_white_box_test_case_enable 1
+setenv gtm_white_box_test_case_number 32
+set syslog_before1 = `date +"%b %e %H:%M:%S"`
+echo "Starting DSE in the background"
+($gtm_tst/$tst/u_inref/do_dse_halt.csh >>& dse_halt.out&) >&! dse_halt.log
+$gtm_tst/com/wait_for_log.csh -log dse_halt.out -message "DSE is ready. MUPIP can start."
+source $gtm_tst/$tst/u_inref/get_dse_pid.csh
+if (0 != $status) then
+	echo "Did not get DSE PID, status: $status. Exiting"
+	exit 1
+endif
+echo "Starting MUPIP SET  command now"
+$MUPIP set -extension_count=400 -file mumps.dat
+$gtm_tst/com/wait_for_log.csh -log  do_dse.done
+echo "# Test if the output file exists"
+ls TRACE_SEMOP_INFO* | $tst_awk '{sub(/SEMOP_INFO_.*/,"SEMOP_INFO_##FILTERED##");print $0;exit}'
+set syslog_after1 = `date +"%b %e %H:%M:%S"`
+echo "# Time after processes got over : GTM_TEST_DEBUGINFO $syslog_after1"
+# Check if the error/messages are logged in operator log
+echo "# Check the operator log for the messages GTM-I-STUCKACT"
+ $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1a.txt "" STUCKACT
+ $grep "GTM-I-STUCKACT" syslog1a.txt | $grep SEMOP_INFO | $grep $dsepid | sed 's/.*\(GTM-I-STUCKACT\)/\1/; s/\(.*stack_trace.csh\).*/\1/'
+echo ""
+$gtm_tst/com/dbcheck.csh

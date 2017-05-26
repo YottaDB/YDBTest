@@ -1,0 +1,120 @@
+setenv gtm_chset UTF-8
+unset echo
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+do ^unizsys
+
+GTM>
+$zsystem=0
+
+GTM>
+
+GTM>
+do ^unicodeif
+
+GTM>
+charcmp^unicodeif Completed Successfully
+strcmp^unicodeif Completed Successfully
+
+GTM>
+
+GTM>
+do ^unicodeIncrement
+
+GTM>
+^x=1
+^x=1
+^y("αβγδε")=2
+^x=1
+^y("αβγδε")=2
+^z("我能吞下玻璃而不伤身体")=3
+^x=1
+^y("αβγδε")=2
+^z("我能吞下玻璃而不伤身体")=5
+$increment(@indir)
+1
+^a("αβγδε一丄下丕丢串久")=1
+x=1
+x=1
+y("αβγδε")=2
+x=1
+y("αβγδε")=2
+z("我能吞下玻璃而不伤身体")=3
+x=1
+y("αβγδε")=2
+z("我能吞下玻璃而不伤身体")=5
+$increment(@indir)
+1
+a("αβγδε一丄下丕丢串久")=1
+
+GTM>
+
+GTM>
+do ^unicodeQlengthName
+
+GTM>
+pass $qlength()
+pass $qlength()
+pass $qlength()
+pass $qlength()
+zwrite
+$reference=^myvar("Falsches Üben von Xylophonmusik quält jeden größeren Zwerg.","いろはにほへど　ちりぬるを","あさきゆめみじ　ゑひもせず")
+$Name=^myvar("Falsches Üben von Xylophonmusik quält jeden größeren Zwerg.","いろはにほへど　ちりぬるを","αβγδε")
+$Name=^myvar("Falsches Üben von Xylophonmusik quält jeden größeren Zwerg.","いろはにほへど　ちりぬるを","我能吞下玻璃而不伤身体")
+$Name=^myvar("Falsches Üben von Xylophonmusik quält jeden größeren Zwerg.","いろはにほへど　ちりぬるを",0)
+pass $qlength()
+pass $qlength()
+pass $qlength()
+pass $qlength()
+
+GTM>
+
+GTM>
+do ^unicodeQsubscript
+
+GTM>
+zwrite
+x="myvar1(""Falsches jeden größeren"",""łódź jeża lub ośm skrzyń"",""Falsches ."",""łódź jeża lub ośm skrzyń fig."")"
+y="myvar2(""いろはにほへど　ちりぬるを"",""あさきゆめみじ　ゑひもせず"",""Příliš"",""жил-был цитрус"")"
+Falsches jeden größeren
+łódź jeża lub ośm skrzyń
+Falsches .
+łódź jeża lub ośm skrzyń fig.
+
+いろはにほへど　ちりぬるを
+あさきゆめみじ　ゑひもせず
+Příliš
+жил-был цитрус
+
+
+GTM>
+
+GTM>
+do ^unicodeReverse
+
+GTM>
+$reverse() test finished successfully
+
+GTM>
+
+GTM>
+do ^unicodeZtrap
+
+GTM>
+$ztrap=set $ztrap="zprint @$zposition break"  set z="豈羅爛來祿屢讀數"  do error
+$zstatus=150373850,unicodeZtrap+5^unicodeZtrap,%GTM-E-UNDEF, Undefined local variable: y(அவர்கள் ஏன் தமிழில் பேசக்கூடாது ?)
+	set x=y("அவர்கள் ஏன் தமிழில் பேசக்கூடாது ?")
+%GTM-E-UNDEF, Undefined local variable: y(அவர்கள் ஏன் தமிழில் பேசக்கூடாது ?)
+		At M source location unicodeZtrap+5^unicodeZtrap
+
+GTM>
+$zcmdline=我能吞下玻璃而不伤身体 αβγδε ①②③④⑤⑥⑦⑧
+$ztrnlnm("UNICODE")=我能吞下玻璃而不伤身体
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

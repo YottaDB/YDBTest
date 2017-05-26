@@ -1,0 +1,37 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Testing TSTART with preserved locals in direct mode...
+
+GTM>
+
+GTM>
+Locals before TSTART (x,y): 
+x=1
+y=2
+z=3
+
+GTM>
+
+GTM>
+
+GTM>
+Locals before restart: 
+x=10 ;*
+y=20 ;*
+z=30
+
+GTM>
+
+GTM>
+Locals after restart: 
+x=1 ;*
+y=2 ;*
+z=30
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

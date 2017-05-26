@@ -1,0 +1,25 @@
+Create the database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+Write database updates
+
+Determine first timestamp, if necessary
+
+Determine SINCE time, if necessary
+
+Determine BEFORE time, if necessary
+
+# Recovery command is mupip journal -recover ##FILTERED##GTM_TEST_DEBUGINFO.*
+
+##TEST_AWKStart .*
+
+##TEST_AWKStart .*
+
+Check integrity
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,24 @@
+Beginning Job Interrupt testing
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Spawning interrupter job
+waiting for job to set ^drvactive
+Beginning database transactions
+Exiting interrupt stage -- waiting for interrupter to shutdown
+waiting for job to unset ^drvactive
+Shutdown complete
+Stats: 
+##TEST_AWK[0-9][0-9]* transactions were done
+##TEST_AWK[0-9][0-9]* interrupts were sent
+##TEST_AWK[0-9][0-9]* interrupt handlers were started or restarted
+##TEST_AWK[0-9][0-9]* interrupts generated ztraps that were handled
+##TEST_AWK[0-9][0-9]* interrupts ran to completion
+Entering validation phase
+The interrupt count and summed interrupt count array are in agreement
+Test Passed
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

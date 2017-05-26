@@ -1,0 +1,50 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Testing that we can use the existing gtm_dist (##SOURCE_PATH##) directory structure
+Pass for ##SOURCE_PATH##/dse gtm_dist=##SOURCE_PATH##
+Pass for ##SOURCE_PATH##/utf8/dse gtm_dist=##SOURCE_PATH##
+Pass for ##SOURCE_PATH##/mupip gtm_dist=##SOURCE_PATH##
+Pass for ##SOURCE_PATH##/utf8/mupip gtm_dist=##SOURCE_PATH##
+Pass for ##SOURCE_PATH##/lke gtm_dist=##SOURCE_PATH##
+Pass for ##SOURCE_PATH##/utf8/lke gtm_dist=##SOURCE_PATH##
+Testing that we can use a symlink to gtm_dist and either the existing gtm_dist (##SOURCE_PATH##) or the symlink
+##TEST_AWKPass for ..mydist.dse gtm_dist=.*
+##TEST_AWKPass for ..mydist.utf8.dse gtm_dist=.*
+##TEST_AWKPass for ..mydist.mupip gtm_dist=.*
+##TEST_AWKPass for ..mydist.utf8.mupip gtm_dist=.*
+##TEST_AWKPass for ..mydist.lke gtm_dist=.*
+##TEST_AWKPass for ..mydist.utf8.lke gtm_dist=.*
+Testing that we can use symlinked executables and retain the existing dollar gtm_dist (##SOURCE_PATH##)
+Pass for aliasbin/dse gtm_dist=##SOURCE_PATH##
+Pass for aliasbin/utf8/dse gtm_dist=##SOURCE_PATH##
+Pass for aliasbin/mupip gtm_dist=##SOURCE_PATH##
+Pass for aliasbin/utf8/mupip gtm_dist=##SOURCE_PATH##
+Pass for aliasbin/lke gtm_dist=##SOURCE_PATH##
+Pass for aliasbin/utf8/lke gtm_dist=##SOURCE_PATH##
+Testing that we can use executables from PATH and retain the existing dollar gtm_dist (##SOURCE_PATH##)
+Pass for dse gtm_dist=##SOURCE_PATH##
+Pass for mupip gtm_dist=##SOURCE_PATH##
+Pass for lke gtm_dist=##SOURCE_PATH##
+Pass for dse gtm_dist=##SOURCE_PATH##
+Pass for mupip gtm_dist=##SOURCE_PATH##
+Pass for lke gtm_dist=##SOURCE_PATH##
+Testing that we cannot use executables from PATH which don't reside in the supplied dollar gtm_dist (##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro)
+Failure for dse gtm_dist=##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro
+Failure for mupip gtm_dist=##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro
+Failure for lke gtm_dist=##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro
+Failure for dse gtm_dist=##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro
+Failure for mupip gtm_dist=##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro
+Failure for lke gtm_dist=##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro
+Testing that we cannot supply a dollar gtm_dist (##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro) that is different from the executables path (##SOURCE_PATH##)
+Failure for ##SOURCE_PATH##/dse gtm_dist=##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro
+Failure for ##SOURCE_PATH##/utf8/dse gtm_dist=##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro
+Failure for ##SOURCE_PATH##/mupip gtm_dist=##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro
+Failure for ##SOURCE_PATH##/utf8/mupip gtm_dist=##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro
+Failure for ##SOURCE_PATH##/lke gtm_dist=##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro
+Failure for ##SOURCE_PATH##/utf8/lke gtm_dist=##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/pro
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

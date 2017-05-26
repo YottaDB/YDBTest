@@ -1,0 +1,389 @@
+setenv gtm_chset UTF-8
+unset echo
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+uniupdates.gld
+Using: ##SOURCE_PATH##/mupip
+uniupdates.dat
+
+File  	##TEST_PATH##/uniupdates.dat
+Region	DEFAULT
+
+DSE> DSE> 
+GTM>
+do ^unicodeLocalUpdates
+
+GTM>
+Start Set unicode Local variable
+End Set unicode Local variable
+Start Test Unicode Order
+End Test Unicode Order
+Start Test Unicode Query Get Data
+$data(utf8)=10
+$data(utf8(0))=10
+$data(utf8(0,0))=0
+$data(utf8("","")=0
+$data(utf8(0,0,0))=0
+$data(utf8("","","")=0
+$get(utf8)=
+$get(utf8(0))=
+$get(utf8(0,0))=
+$get(utf8("","")=
+$get(utf8(0,0,0))=0
+$get(utf8("","","")=
+End Test Unicode Query Get Data
+Start do killzkill
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+$data(utf8(subs1))=11
+$data(utf8(0,subs2))=10
+$data(utf8(subs1,longsubs))=10
+End do killzkill
+Start do badcharkill
+$data(utf8(efbc90))=1
+$GET(utf8(efbc90))=1
+$data(utf8(efbc,90))=1
+$get(utf8(efbc,90))=1
+End do badcharkill
+Start unicodezshowx
+End unicodezshowx
+Test Completed Successfully
+
+GTM>
+
+GTM>
+do ^unicodeGlobalUpdates
+
+GTM>
+Start Set unicode Global variable
+$reference=^utf8("чащах юга жил-был цитрус","чащах юга жил-был цитрус","чащах юга жил-был цитрус","чащах юга жил-был цитрус","綴縢纓缇罾翺翿"_$C(127)_"ÿ"_$C(0,1,5)_" AB我能吞下玻璃而傷")
+End Set unicode Global variable
+Start Test Unicode Order
+End Test Unicode Order
+Start Test Unicode Query Get Data
+$data(^utf8)=10
+$data(^utf8(0))=10
+$data(^utf8(0,0))=0
+$data(^utf8("","")=0
+$data(^utf8(0,0,0))=0
+$data(^utf8("","","")=0
+$get(^utf8)=
+$get(^utf8(0))=
+$get(^utf8(0,0))=
+$get(^utf8("","")=
+$get(^utf8(0,0,0))=0
+$get(^utf8("","","")=
+End Test Unicode Query Get Data
+Start do killzkill
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+$data(^utf8(subs1))=11
+$data(^utf8(0,subs2))=10
+End do killzkill
+Start do badcharkill
+$data(^utf8(efbc90))=1
+$GET(^utf8(efbc90))=1
+$data(^utf8(efbc,90))=1
+$get(^utf8(efbc,90))=1
+End do badcharkill
+Start do unicodezshowx
+End do unicodezshowx
+Test Completed Successfully
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

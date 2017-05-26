@@ -1,0 +1,1719 @@
+Passed the version test
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+d ^fact(18)
+Factorial test 
+  PASS
+
+GTM>
+d ^arith(18)
+Numeric Test 
+  unary operators 
+u  PASS
+  addition - subtraction
+a  PASS
+  multiplication 
+m  PASS
+
+GTM>
+d ^ebmuldiv(0)
+## BEGIN PROGRAM - ebmuldiv
+   PASS - PER 002137
+   PASS - PER 002412
+   PASS - PER 002541
+   PASS - Division tests
+   PASS - Multiplication tests
+## END   PROGRAM - ebmuldiv
+
+GTM>
+d ^barith
+## BEGIN PROGRAM - barith
+   PASS
+## END   PROGRAM - barith
+
+GTM>
+d ^bool
+
+Test of Boolean operators
+c  PASS
+u  PASS
+b  PASS
+
+GTM>
+d ^relation
+
+Test of relational operations
+a  PASS
+b  PASS
+c  PASS
+d  PASS
+
+GTM>
+d ^pattst
+## BEGIN PROGRAM - pattst
+Test of MUMPS pattern match operator
+a  PASS
+b  PASS
+c  PASS
+0  PASS - PER 002579
+## END   PROGRAM - pattst
+
+GTM>
+d ^sortsaft
+## BEGIN PROGRAM - sortsaft
+   PASS
+## END   PROGRAM - sortsaft
+
+GTM>
+d ^text4
+In text4 beginning calls to other routines
+
+
+ W $T(STS+-1),!,!
+
+OUT
+
+texttst
+
+STS W "$TEXT TEST",!,!
+
+IN W $T(OUT+1),!,!
+
+ W $T(STS+2),!,!
+
+FINISHED
+in text1
+ W $T(ST+1),!
+text1
+text1
+
+you should not get this in text2
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+leaving text1
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+IN TEXT3
+ W $T(+2),!
+ D ^text1
+in text1
+ W $T(ST+1),!
+text1
+text1
+
+you should not get this in text2
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+leaving text1
+LEAVING TEXT3
+in text1
+ W $T(ST+1),!
+text1
+text1
+
+you should not get this in text2
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+leaving text1
+
+returned from call to texttest at entryref out
+
+
+$TEXT TEST
+
+ W $T(OUT+-1),!,!
+
+ W $T(STS+2),!,!
+
+texttst
+
+ W $T(STS+-1),!,!
+
+OUT
+
+texttst
+
+STS W "$TEXT TEST",!,!
+
+IN W $T(OUT+1),!,!
+
+ W $T(STS+2),!,!
+
+FINISHED
+in text1
+ W $T(ST+1),!
+text1
+text1
+
+you should not get this in text2
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+leaving text1
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+IN TEXT3
+ W $T(+2),!
+ D ^text1
+in text1
+ W $T(ST+1),!
+text1
+text1
+
+you should not get this in text2
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+leaving text1
+LEAVING TEXT3
+in text1
+ W $T(ST+1),!
+text1
+text1
+
+you should not get this in text2
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+leaving text1
+
+returned after accessing texttst at sts+10
+
+calling text2
+
+in text2 
+ W "you should not get this in text2",!
+ W "leaving text2",!,!
+leaving text2
+
+
+GTM>
+d ^per02457
+## BEGIN PROGRAM - per02457
+   PASS - PER 002457
+## END   PROGRAM - per02457
+
+GTM>
+d ^ascii
+******* ASCII TEST ********
+
+GTM>
+d ^char
+******** CHAR TEST *******
+
+GTM>
+d ^fnextr
+-1 -1 ''
+-1 0 ''
+-1 1 'A'
+-1 2 'AB'
+-1 3 'ABC'
+-1 4 'ABC'
+0 -1 ''
+0 0 ''
+0 1 'A'
+0 2 'AB'
+0 3 'ABC'
+0 4 'ABC'
+1 -1 ''
+1 0 ''
+1 1 'A'
+1 2 'AB'
+1 3 'ABC'
+1 4 'ABC'
+2 -1 ''
+2 0 ''
+2 1 ''
+2 2 'B'
+2 3 'BC'
+2 4 'BC'
+3 -1 ''
+3 0 ''
+3 1 ''
+3 2 ''
+3 3 'C'
+3 4 'C'
+4 -1 ''
+4 0 ''
+4 1 ''
+4 2 ''
+4 3 ''
+4 4 ''
+
+GTM>
+d ^length
+
+Test of $length function
+l  PASS
+
+GTM>
+d ^piece
+
+Test of $piece
+a  PASS
+b  PASS
+c  PASS
+d  PASS
+e  PASS
+
+GTM>
+d ^setpiece
+## BEGIN PROGRAM - setpiece
+   PASS
+## END   PROGRAM - setpiece
+
+GTM>
+d ^query
+## BEGIN PROGRAM - query
+   PASS - PER 001897
+## END   PROGRAM - query
+
+GTM>
+d ^extcall
+ENTERED ^extcall2
+ENTERED LAB1^extcall1
+ABOUT TO DO A
+I AM AT LABEL A
+A IS DONE
+DOING LAB1^extcall AGAINENTERED LAB1^extcall1
+ENTERED LAB1^extcall1
+I AM AT LABEL A
+ENTERED ^extcall2
+ENTERED LAB1^extcall1
+ABOUT TO DO A
+I AM AT LABEL A
+A IS DONE
+DOING LAB1^extcall AGAINENTERED LAB1^extcall1
+
+GTM>
+d ^locals
+
+Test of access to MUMPS locals
+d  PASS
+i  PASS
+A(0)="A(0)"
+A(.0005)="A(.0005)"
+A(.001)="A(.001)"
+A(1)="A(1)"
+A(1.0005)="A(1.0005)"
+A(1.001)="A(1.001)"
+A(2)="A(2)"
+A(2.0005)="A(2.0005)"
+A(2.001)="A(2.001)"
+u  PASS
+k  PASS
+s  PASS
+
+GTM>
+d ^cmptst
+1
+0
+1234567.89+
+1234568+
+1234567.89+
+1234568+
+ 1234567.89 
+(121,234,567.9)
+(1,234,567.891)
+
+GTM>
+d ^expr2
+str= 1
+1
+str= 12
+12
+str= 123
+123
+str= 1234
+1234
+str= 12345
+12345
+str= 123456
+123456
+str= 1234567
+1234567
+str= 12345678
+12345678
+str= 123456789
+123456789
+str= 12345678910
+12345678910
+
+GTM>
+d ^for
+
+Test of for loop
+q  PASS
+g  PASS
+l  PASS
++x PASS
+-x PASS
++m PASS
+-m PASS
++c PASS
+-c PASS
+
+GTM>
+d ^forloop
+1000005
+1000001
+1000001
+-1000005
+-1000001
+-1000001
+
+GTM>
+d ^log
+0000001100010110001100001001100000010001000011000010100001000000
+
+0011011111111111011111111111111111111111111111111111111111111111
+
+1011111111111111011111111111111111111111111111111111111111111111
+
+1111111111111111111111111111111111111111111111111111111111111111
+
+0000000000000000000000000000000000000000000000000000000000000000
+
+0000000000000000000000000000000000000000000000000000000000000000
+
+0011011111111111011111111111111111111111111111111111111111111111
+
+1100100001000000100001000000001001001000001000000100001010000001
+
+
+GTM>
+d ^new
+ind45678="x2345678"
+ind4567890123456789012345678901="y2345678"
+x2345678=1
+x234567890123456789012345678901=2
+y2345678=2
+y234567890123456789012345678901=3
+z2345678=3
+z234567890123456789012345678901=5
+n (@ind45678,@ind4567890123456789012345678901,x234567890123456789012345678901,y234567890123456789012345678901)
+x2345678=1 ;*
+x234567890123456789012345678901=2 ;*
+y2345678=2 ;*
+y234567890123456789012345678901=3 ;*
+
+
+new x2345678,y2345678
+x234567890123456789012345678901=2 ;*
+y234567890123456789012345678901=3 ;*
+
+
+new 
+new some long name variables
+a2345678="a8"
+b23456789012345678901234567890="b30"
+b234567890123456789012345678901="b31"
+c234567890123456789012345678901="c31"
+vcomp=",,,"
+
+do func2
+a2345678="a8func2"
+b23456789012345678901234567890="b30func2"
+b234567890123456789012345678901="b31func2"
+c234567890123456789012345678901="c31func2"
+varc="c234567890123456789012345678901"
+vcomp=",,,"
+out of func2
+a2345678="a8"
+b23456789012345678901234567890="b30"
+b234567890123456789012345678901="b31"
+c234567890123456789012345678901="c31"
+varc="c234567890123456789012345678901"
+vcomp="a8,b30,b31,c31"
+
+GTM>
+d ^select
+<begin>
+<enter>
+<start>
+<finished>
+<enter>
+<begin>
+<begin>
+
+GTM>
+d ^xecute
+help
+write "help",!
+
+help
+write "help",!
+
+help
+help
+write "help",!
+x
+
+GTM>
+d ^larray
+## BEGIN PROGRAM - larray
+   PASS  1
+   PASS  2a
+   PASS  2b
+   PASS  2c
+## END   PROGRAM - larray
+
+GTM>
+d ^view
+## BEGIN PROGRAM - view
+   PASS - PER 002184
+   PASS - PER 002277
+## END   PROGRAM - view
+
+GTM>
+d ^view2(0)
+## BEGIN PROGRAM - view2
+   PASS
+## END   PROGRAM - view2
+
+GTM>
+d ^zbits
+## BEGIN PROGRAM - zbits
+   PASS - $ZBITSTR $ZBITLEN
+   PASS - $ZBITSET
+   PASS - $ZBITGET
+   PASS - $ZBITCOUNT
+   PASS - $ZBITFIND
+   PASS - $ZBITNOT
+   PASS - $ZBITAND
+   PASS - $ZBITOR
+   PASS - $ZBITXOR
+## END   PROGRAM - zbits
+
+GTM>
+d ^per2586a(0)
+$ZTRAP on entry to ^%X, before New $ZTRAP = B
+
+   PASS
+
+GTM>
+d ^per2586b(0)
+$ZTRAP on entry to ^%X, before New $ZTRAP = B
+
+   PASS
+
+GTM>
+d ^per2586c(0)
+$ZTRAP on entry to ^%X, before New $ZTRAP = B
+
+   PASS
+
+GTM>
+d ^per2968
+This is the calling routine
+This is foo^per2968b
+This is the calling routine
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+%GTM-E-LABELMISSING, Label referenced but not defined: foo
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+%GTM-E-LABELUNKNOWN, Label referenced but not defined
+##ALLOW_OUTPUT HOST_ALL
+		At M source location per2968a+1^per2968a
+
+GTM>
+d ^tstp
+All tests passed
+
+GTM>
+d ^zlfix
+We are here in zlfix1a
+We are here in zlfix1b
+
+GTM>
+d ^largeexp1
+k f s f(1E11)="1E11" zwr f
+f(100000000000)="1E11"
+k ^f s ^f(1E11)="1E11" zwr ^f
+^f(100000000000)="1E11"
+s x=1E11 w x,!
+100000000000
+s x=1E46 w x,!
+10000000000000000000000000000000000000000000000
+s x=1E-11 w x,!
+.00000000001
+s x=1E-111 w x,!
+0
+s x=1E-11111111111111111 w x,!
+0
+s x=1E-40 w x,!
+.0000000000000000000000000000000000000001
+s x=1E-41 w x,!
+.00000000000000000000000000000000000000001
+s x=1E-42 w x,!
+.000000000000000000000000000000000000000001
+s x=1E-43 w x,!
+.0000000000000000000000000000000000000000001
+s x=1E-44 w x,!
+0
+s x=1E-45 w x,!
+0
+s x=1E-46 w x,!
+0
+s x=1E-47 w x,!
+0
+s ^x("1E60",1)=23 zwr ^x("1E60",*)
+^x("1E60",1)=23
+
+GTM>
+d ^largeexp2
+		k f s f(1E111)="1E111" zwr f
+		       ^-----
+		At column 9, line 4, source module ##IN_TEST_PATH##/inref/largeexp2.m
+%GTM-E-NUMOFLOW, Numeric overflow
+		k f s f(1E11111111111111111)="1Ealot" zwr f
+		       ^-----
+		At column 9, line 6, source module ##IN_TEST_PATH##/inref/largeexp2.m
+%GTM-E-NUMOFLOW, Numeric overflow
+		k f s f(1E1111111111111111111111)="1Ealotalot" zwr f
+		       ^-----
+		At column 9, line 8, source module ##IN_TEST_PATH##/inref/largeexp2.m
+%GTM-E-NUMOFLOW, Numeric overflow
+		k ^f s ^f(1E111)="1E111" zwr ^f
+		         ^-----
+		At column 11, line 10, source module ##IN_TEST_PATH##/inref/largeexp2.m
+%GTM-E-NUMOFLOW, Numeric overflow
+		k ^f s ^f(1E11111111111111111)="1Ealot" zwr ^f
+		         ^-----
+		At column 11, line 12, source module ##IN_TEST_PATH##/inref/largeexp2.m
+%GTM-E-NUMOFLOW, Numeric overflow
+		k ^f s ^f(1E1111111111111111111111)="1Ealotalot" zwr ^f
+		         ^-----
+		At column 11, line 14, source module ##IN_TEST_PATH##/inref/largeexp2.m
+%GTM-E-NUMOFLOW, Numeric overflow
+		w "s x=1E111 w x,!",! s x=1E111 w x,!
+		                         ^-----
+		At column 27, line 15, source module ##IN_TEST_PATH##/inref/largeexp2.m
+%GTM-E-NUMOFLOW, Numeric overflow
+		w "s x=1E11111111111111111 w x,!",! s x=1E11111111111111111 w x,!
+		                                       ^-----
+		At column 41, line 16, source module ##IN_TEST_PATH##/inref/largeexp2.m
+%GTM-E-NUMOFLOW, Numeric overflow
+		w "s x=1E47 w x,!",! s x=1E47 w x,!
+		                        ^-----
+		At column 26, line 17, source module ##IN_TEST_PATH##/inref/largeexp2.m
+%GTM-E-NUMOFLOW, Numeric overflow
+k f s f(1E111)="1E111" zwr f
+%GTM-E-NUMOFLOW, Numeric overflow
+		At M source location largeexp2+3^largeexp2
+
+GTM>
+d ^largeexp3
+		k f s f(1E1111111111111111111111)="1Ealotalot" zwr f
+		       ^-----
+		At column 9, line 4, source module ##IN_TEST_PATH##/inref/largeexp3.m
+%GTM-E-NUMOFLOW, Numeric overflow
+		k ^f s ^f(1E1111111111111111111111)="1Ealotalot" zwr ^f
+		         ^-----
+		At column 11, line 6, source module ##IN_TEST_PATH##/inref/largeexp3.m
+%GTM-E-NUMOFLOW, Numeric overflow
+k f s f(1E1111111111111111111111)="1Ealotalot" zwr f
+%GTM-E-NUMOFLOW, Numeric overflow
+		At M source location largeexp3+3^largeexp3
+
+GTM>
+d ^order
+test 1
+s a("31100180200000000003")="A"
+s x=$o(a(""))
+w a(x)
+A
+test 2
+s b("1111")="B"
+s x=$o(b(""))
+w b(x)
+B
+test 3
+s c("123456789012345678901234567890")="C"
+s x=$o(c(""))
+w c(x)
+C
+
+GTM>
+ZTRAP testing starts...
+
+GTM>
+Testing valid ZTRAP cases...
+
+GTM>
+do ^ztvref1
+Testing Ztrap Label...done(SUB2)
+Testing Ztrap Lable+offset...done(SUB3+1)
+Testing Ztrap Label+offset+module...done(labelinanothermoduleforztrap+1^ztleaf)
+end ztleaf
+Testing Ztrap Label+module...done(labelinanothermoduleforztrap^ztleaf)
+end ztleaf
+
+GTM>
+do ^ztvref2
+Testing Ztrap @Label...done(IND2)
+Testing Ztrap @Label+offest...done(IND3+1)
+Testing Ztrap @Label+offset+@module...done(labelinanothermoduleforztrap+1^ztleaf)
+end ztleaf
+Testing Ztrap @Label+@module...done(labelinanothermoduleforztrap^ztleaf)
+end ztleaf
+
+GTM>
+do ^ztvref3
+Testing Recursive Ztrap to find the sum
+Sum of first 100 numbers = 5050
+
+GTM>
+do ^ztvcmd1
+This is main function
+this is SUB1
+this is SUB2
+exiting main function
+stack level: 2
+
+GTM>
+do ^ztvcmd2
+This is main function
+
+error handler
+25
+value of a = 10
+value of b = 15
+value of x(a+b) = 25
+150
+value of a = 10
+value of b = 15
+value of x(a*b) = 150
+
+GTM>
+do ^ztvcmd3
+This is main function
+Before SUB1
+this is SUB1
+zlevel = 3
+After SUB1
+Before SUB2
+this is SUB2
+end of valid ZTRAP cases...
+Testing invalid ZTRAP cases with gtm_ztrap_new set to TRUE...
+
+GTM>
+do ^ztidrv
+do NOLAB^ztiref
+Testing 'ZTRAP label' with no label present
+150372762,NOLAB+3^ztiref,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-LABELMISSING, Label referenced but not defined: lab
+
+do OFF^ztiref
+Testing Ztrap Lable+offset with invalid offset
+150372762,OFF+3^ztiref,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-OFFSETINV, Entry point OFF+1000 not valid
+
+do MOD^ztiref
+Testing Ztrap ^module with no module
+150372762,MOD+3^ztiref,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-ZLINKFILE, Error while zlinking "nowhere",%GTM-E-FILENOTFND, File nowhere not found
+
+do SUB4^ztiref
+Testing Ztrap containing erroneous indirection
+150372762,SUB4+4^ztiref,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-LABELEXPECTED, Label expected in this context
+
+do IND^ztiref
+Testing invalid indirection @(lab+off)^mod)
+150372762,IND+4^ztiref,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-LABELMISSING, Label referenced but not defined: lab+0
+
+do TST1^zticmd3
+Testing syntax error...zlevel = 4
+done
+do TST2^zticmd3
+Testing quit as label...zlevel = 4
+do TST3^zticmd3
+Testing syntax error in set command...zlevel = 4
+150373010,SUB1+2^zticmd3,%GTM-E-INDEXTRACHARS, Indirection string contains extra trailing characters
+
+do TST4^zticmd3
+Testing indirect arg with syntax error...zlevel = 4
+150372762,SUB1+2^zticmd3,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-EXPR, Expression expected but not found
+
+
+GTM>
+Testing invalid ZTRAP cases with NO gtm_ztrap_new ...
+
+GTM>
+do ^ztidrv
+do NOLAB^ztiref
+Testing 'ZTRAP label' with no label present
+%GTM-E-LABELMISSING, Label referenced but not defined: lab
+
+GTM>
+
+GTM>
+do ^zticmd1
+
+This is main function
+
+GTM>
+do ^zticmd2
+This is main function
+%GTM-E-STACKCRIT, Stack space critical
+
+GTM>
+end of invalid ZTRAP cases...
+...end of ZTRAP testing
+Testing of ZYERROR/ZERROR starts...
+
+GTM>
+do ^zevref1
+Testing ZYERROR Label...
+done(SUB2)
+ZSTATUS = 150373850,SUBROUTINE1+4^zevref1,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+end of SUB2
+Testing ZYERROR Label+offset...done(SUB3+1)
+ZSTATUS = 150373210,SUBROUTINE1+8^zevref1,%GTM-E-DIVZERO, Attempt to divide by zero  ZERROR = GTM-E-DIVZERO, Attempt to divide by zero
+end of SUB3
+1Testing ZYERROR Label+module...done(labelinanothermoduleforzyerror^zeleaf)
+ZSTATUS = 150372778,SUBROUTINE1+12^zevref1,%GTM-E-EXPR, Expression expected but not found  ZERROR = GTM-E-EXPR, Expression expected but not found
+1
+Testing ZYERROR Label+offset+module...done(labelinanothermoduleforzyerror+1^zeleaf)
+ZSTATUS = 150373850,SUBROUTINE1+16^zevref1,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+end of SUB1
+
+GTM>
+do ^zevref2
+Testing ZYERROR Label^module...done(SUB2)
+ZSTATUS = 150373850,SUBROUTINEWITHINMODULE1+4^zevref2,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+end of SUB2
+end of SUB1
+
+GTM>
+do ^zevref3
+Testing ZYERROR @Label...
+done(SUB2)
+ZSTATUS = 150373850,INDIRECTSUBROUTINE1+4^zevref3,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+end of SUB2
+Testing ZYERROR @Lable+offset...done(SUB3+1)
+ZSTATUS = 150373210,INDIRECTSUBROUTINE1+9^zevref3,%GTM-E-DIVZERO, Attempt to divide by zero  ZERROR = GTM-E-DIVZERO, Attempt to divide by zero
+end of SUB3
+1
+Testing ZYERROR @Label+@module...done(labelinanothermoduleforzyerror^zeleaf)
+ZSTATUS = 150372778,INDIRECTSUBROUTINE1+14^zevref3,%GTM-E-EXPR, Expression expected but not found  ZERROR = GTM-E-EXPR, Expression expected but not found
+1
+Testing ZYERROR @(Label+offset+module)...
+done(labelinanothermoduleforzyerror+1^zeleaf)
+ZSTATUS = 150373850,INDIRECTSUBROUTINE1+19^zevref3,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+Testing ZYERROR with no quit cmd in its handler...
+ZSTATUS = 150373850,INDIRECTSUBROUTINE1+24^zevref3,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+end of SUB1
+
+GTM>
+
+GTM>
+do NOLAB^zeiref1
+Testing 'ZYERROR label' with no label present
+
+GTM>
+do OFF^zeiref1
+Testing ZYERROR Lable+offset with invalid offset
+1
+
+GTM>
+do MOD^zeiref1
+Testing ZYERROR ^module with no module
+1
+
+GTM>
+do IND^zeiref1
+Testing ZYERROR containing erroneous indirection
+1
+
+GTM>
+do ZTERR^zeiref1
+Testing ZYERROR with syntactically erroneous ZTRAP value
+%GTM-E-INDEXTRACHARS, Indirection string contains extra trailing characters
+
+GTM>
+do TST1^zeiref2
+Testing ZYERROR Label...
+done(SUB2)
+ZSTATUS = 150373850,TST1+4^zeiref2,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+Testing ZYERROR Label+offset...
+done(SUB3+1)
+ZSTATUS = 150373210,TST1+8^zeiref2,%GTM-E-DIVZERO, Attempt to divide by zero  ZERROR = GTM-E-DIVZERO, Attempt to divide by zero
+1
+end of TST1
+
+GTM>
+do TST2^zeiref2
+Testing ZYERROR with command...
+1
+
+GTM>
+do TST3^zeiref2
+Testing ZYERROR @(Label+offset)...
+
+GTM>
+do TST4^zeiref2
+Testing ZYERROR @(offset^module)...
+
+GTM>
+Begin of ZYERROR environement test cases...
+
+GTM>
+do TST1^zevref4
+Testing ZYERROR Label...
+done(SUB2)
+ZSTATUS = 150373850,TST1+3^zevref4,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+end of SUB2
+
+GTM>
+
+GTM>
+do TST2^zevref4
+Testing ZYERROR Label+offset...done(SUB3+1)
+ZSTATUS = 150373210,TST2+3^zevref4,%GTM-E-DIVZERO, Attempt to divide by zero  ZERROR = GTM-E-DIVZERO, Attempt to divide by zero
+end of SUB3
+1
+GTM>
+
+GTM>
+do TST3^zevref4
+Testing ZYERROR Label+module...done(labelinanothermoduleforzyerror^zeleaf)
+ZSTATUS = 150372778,TST3+3^zevref4,%GTM-E-EXPR, Expression expected but not found  ZERROR = GTM-E-EXPR, Expression expected but not found
+1
+GTM>
+
+GTM>
+do TST4^zevref4
+Testing ZYERROR Label+offset+module...done(labelinanothermoduleforzyerror+1^zeleaf)
+ZSTATUS = 150373850,TST4+3^zevref4,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+
+GTM>
+
+GTM>
+do TST1^zevref4
+Testing ZYERROR Label...
+
+GTM>
+...end of ZYERROR as environment variable
+...end of ZYERROR testing
+Testing ZTRAP for errors in ZBREAK, ZSTEP actions...
+
+GTM>
+d ^zbrk
+ztrap called
+3
+break points reached
+$zstatus = 150372754,sub^zbrk,%GTM-E-ERRWZBRK, Error while processing ZBREAK action string,-GTM-E-UNDEF, Undefined local variable: x
+
+GTM>
+d ^ztrp
+150373210,ztrp+2^ztrp,%GTM-E-DIVZERO, Attempt to divide by zero
+%GTM-E-UNDEF, Undefined local variable: x
+
+GTM>
+$zstatus = 150372762,ztrp+2^ztrp,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-UNDEF, Undefined local variable: x
+
+GTM>
+d ^zstep
+ztrap called
+zstep stops here
+$zstatus = 150372738,zstep+3^zstep,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-UNDEF, Undefined local variable: x
+
+GTM>
+d ^zstep1
+B
+$zstep=do zsteplabelforzstepwithoutparameter
+zstep called
+zsteplabelforzstepwithoutparame+2^zstep1
+zstep stops here
+$zstatus = 150372738,zstep+3^zstep,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-UNDEF, Undefined local variable: x
+
+GTM>
+endof ZTRAP testing with ZBREAK and ZSTEP
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+d ^kill1
+tty=1
+tty2=3
+test some long name variables
+a2345678="la8"
+a2345678(1)="la8(1)"
+a2345678(1,2)="la8(1,2)"
+a2345678(1,2,3)="la8(1,2,3)"
+a2345678901234567890123456789="la29"
+a234567890123456789012345678901="la32"
+a234567890123456789012345678901(1)="la31(1)"
+a234567890123456789012345678901(1,2)="la31(1,2)"
+a234567890123456789012345678901(1,2,3)="la31(1,2,3)"
+tf3456789012345678901234567890f=0
+tf3456789012345678901234567890t=1
+##SUSPEND_OUTPUT TRIGGER
+^a2345678="a8"
+^a2345678(1)="a8(1)"
+^a2345678(1,2)="a8(1,2)"
+^a2345678(1,2,3)="a8(1,2,3)"
+##SUSPEND_OUTPUT NOTRIGGER
+##ALLOW_OUTPUT TRIGGER
+^a2345678="^a8"
+^a2345678(1)="^a8(1)"
+^a2345678(1,2)="^a8(1,2)"
+^a2345678(1,2,3)="^a8(1,2,3)"
+##ALLOW_OUTPUT NOTRIGGER
+^a234567890123456789012345678901="a32"
+^a234567890123456789012345678901(1)="a31(1)"
+^a234567890123456789012345678901(1,2)="a31(1,2)"
+^a234567890123456789012345678901(1,2,3)="a31(1,2,3)"
+
+initially, all defined
+zkill...
+zwithdraw...
+kill...
+PASS
+
+GTM>
+d ^set
+2
+test
+test
+##SUSPEND_OUTPUT TRIGGER
+test
+##SUSPEND_OUTPUT NOTRIGGER
+##ALLOW_OUTPUT TRIGGER
+testtriggered
+##ALLOW_OUTPUT NOTRIGGER
+  23   3
+12
+w=0
+x=2
+y=3
+z=2
+
+GTM>
+d ^globals
+
+Test of access to MUMPS globals
+d  PASS
+i  PASS
+u  PASS
+
+GTM>
+##SUSPEND_OUTPUT NON_COLLATION
+Running with alternative collation. ZPREVIOUS test will fail:
+##ALLOW_OUTPUT NON_COLLATION
+
+GTM>
+d ^zprev
+## BEGIN PROGRAM - zprev
+   PASS - PER 002320
+##SUSPEND_OUTPUT COLLATION
+   PASS
+## END   PROGRAM - zprev
+##SUSPEND_OUTPUT NON_COLLATION
+##ALLOW_OUTPUT COLLATION
+** FAIL  ^bA("a")
+   COMPUTED = "5"
+   CORRECT  = "XXX"
+## END   PROGRAM - zprev     Error count = 1
+##ALLOW_OUTPUT NON_COLLATION
+
+GTM>
+
+GTM>
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+Data for PER 002397 test
+GT.M 18-NOV-1992 09:06:17
+##SUSPEND_OUTPUT NONUNICODE_MODE
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+OK <Yes>? 
+
+^ASW      
+
+Restored 15 nodes in 1 global.
+GTM>
+d ^per02397
+## BEGIN PROGRAM - per02397
+   PASS - PER 002397
+## END   PROGRAM - per02397
+
+GTM>
+d ^miscdb
+## BEGIN PROGRAM - miscdb
+   PASS - PER 002209
+## END   PROGRAM - miscdb
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+d ^per02276
+## BEGIN PROGRAM - per02276
+   PASS - PER 002276,002416
+## END   PROGRAM - per02276
+
+GTM>
+d ^stpfail
+Execute/Set test PASSED
+
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT  NON_REPLIC
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+
+GTM>
+d ^putfail
+## BEGIN PROGRAM - putfail
+   PASS - putfail1
+   PASS - putfail2
+   PASS - putfail3
+   PASS - putfail4
+   PASS - putfail5
+   PASS - putfail6
+   PASS - putfail7
+   PASS - putfail8
+   PASS - putfail9
+   PASS - putfail
+## END   PROGRAM - putfail
+
+GTM>
+d ^fifo
+## BEGIN PROGRAM - fifo
+  ** fifo output **
+##SUSPEND_OUTPUT HOST_CYGWIN_IX86
+   PASS
+  ** fifo2 output **
+   PASS
+##ALLOW_OUTPUT HOST_CYGWIN_IX86
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_CYGWIN_IX86
+FIFO blocks on CYGWIN 1.5-24-2, try again when 1.7 is out
+  ** fifo2 output **
+FIFO blocks on CYGWIN 1.5-24-2, try again when 1.7 is out
+##ALLOW_OUTPUT HOST_ALL
+## END   PROGRAM - fifo
+
+GTM>
+d ^stream
+## BEGIN PROGRAM - stream
+   PASS
+## END   PROGRAM - stream
+
+GTM>
+d ^iowrite
+
+GTM>
+R   I   C   K   S       T   E   S   T                        
+
+
+\n   A   B                                                    
+
+
+
+##SUSPEND_OUTPUT REPLIC
+More ZBreak and ZSTep tests ........
+
+GTM>
+ZB fact^factor
+
+GTM>
+ZB ^main
+
+GTM>
+Do ^main
+%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location +2^main
+
+GTM>
+ZContinue
+
+Executing Shared Copy of MAIN...
+%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location fact^factor
+
+GTM>
+ZContinue
+%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location fact^factor
+
+GTM>
+ZContinue
+%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location fact^factor
+
+GTM>
+ZContinue
+%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location fact^factor
+
+GTM>
+ZContinue
+%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location fact^factor
+
+GTM>
+ZContinue
+
+Done!
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+ZSHOW B:
+
+GTM>
+
+^main
+fact^factor
+GTM>
+Do ^main
+%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location +2^main
+
+GTM>
+ZSHOW B
+
+GTM>
+
+GTM>
+
+GTM>
+
+^main
+fact^factor
+GTM>
+ZB -*
+
+GTM>
+ZContinue
+
+Executing Shared Copy of MAIN...
+
+Done!
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+ZB average+3^avg
+
+GTM>
+Do ^avg
+
+Executing Shared Copy of AVG...
+breaks reached in average+3^avg...
+The AVERAGE is 11
+
+GTM>
+ZB ^main
+
+GTM>
+ZB cubeit^cube
+
+GTM>
+Do ^main
+
+breaks reached in main...
+Executing Shared Copy of MAIN...
+
+Current value is : 3
+Done!
+GTM>
+ZContinue
+
+GTM>
+ZContinue
+
+GTM>
+ZContinue
+
+GTM>
+ZContinue
+
+GTM>
+ZContinue
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+ZSHOW B:
+
+GTM>
+
+^main
+average+3^avg
+cubeit^cube
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+ZB ^main
+
+GTM>
+ZB average^avg
+
+GTM>
+Do ^main
+
+breaks reached in main...
+Executing Shared Copy of MAIN...
+
+Done!
+GTM>
+ZContinue
+
+GTM>
+Do ^avg
+
+Executing Shared Copy of AVG...
+breaks reached in average^avg...
+The AVERAGE is 11
+
+GTM>
+ZContinue
+
+GTM>
+ZContinue
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+ZSHOW B:
+
+GTM>
+
+^main
+average^avg
+GTM>
+ZB average^avg
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+ZSHOW B:
+
+GTM>
+
+^main
+average^avg
+GTM>
+ZL main
+
+GTM>
+ZSHOW B
+average^avg
+
+GTM>
+ZB fact^factor
+
+GTM>
+Do ^main
+
+Executing Shared Copy of MAIN...
+%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location fact^factor
+
+GTM>
+ZContinue
+%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location fact^factor
+
+GTM>
+ZContinue
+%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location fact^factor
+
+GTM>
+ZB -average^avg
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+ZSHOW B:
+
+GTM>
+
+GTM>
+ZB average+400^avg
+%GTM-E-NOPLACE, Line specified in a ZBREAK cannot be found
+
+GTM>
+ZB nolab^avg
+%GTM-E-NOPLACE, Line specified in a ZBREAK cannot be found
+
+GTM>
+ZB average+1^avg
+
+GTM>
+ZB average+2^avg
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+ZSHOW B:
+
+GTM>
+
+^main
+average+1^avg
+average+2^avg
+average^avg
+fact^factor
+GTM>
+ZB average+6^avg
+%GTM-E-NOPLACE, Line specified in a ZBREAK cannot be found
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+ZSHOW B:
+
+GTM>
+
+^main
+average+1^avg
+average+2^avg
+average^avg
+fact^factor
+GTM>
+ZB -*
+
+GTM>
+ZSHOW B
+
+GTM>
+Test breaks in eightlab^eightrtn....
+
+GTM>
+ZB squaroot^squaroot
+
+GTM>
+Do ^main
+
+Executing Shared Copy of MAIN...
+%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location squaroot^squaroot
+
+GTM>
+ZContinue
+%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location squaroot^squaroot
+
+GTM>
+ZB -*
+
+GTM>
+ZContinue
+
+Done!
+GTM>
+
+GTM>
+ZB ^main
+
+GTM>
+ZB ^base
+
+GTM>
+Do ^main
+%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location +2^main
+
+GTM>
+ZST into
+
+Executing Shared Copy of MAIN...
++3^main
+       For I=1:1:5 Do
+%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location +3^main
+
+GTM>
+ZST into
++5^main
+       . Do squaroot^squaroot(I,.sqrt) Set NUM(I,"root")=sqrt
+%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location +5^main
+
+GTM>
+ZST into
+squaroot^squaroot
+squaroot(num,root);
+%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location squaroot^squaroot
+
+GTM>
+ZST Outof
++6^main
+       . Set sqr=$$squar^square(I),NUM(I,"square")=sqr
+%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location +6^main
+
+GTM>
+ZST over
++7^main
+       . Set cube=$$cubeit^cube(I),NUM(I,"cube")=cube
+%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location +7^main
+
+GTM>
+ZB cubeit^cube
+
+GTM>
+ZST Outof
+%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location cubeit^cube
+
+GTM>
+ZST Outof
++8^main
+       . Set factrl=$$fact^factor(I),NUM(I,"factorial")=factrl                 
+%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location +8^main
+
+GTM>
+ZST over
++9^main
+       . Set base=10,base2=2,base8=8
+%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location +9^main
+
+GTM>
+ZST over
++10^main
+       . Set binary=$$base^base(sqr,base,base2),NUM(I,"square","binary")=binary
+%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location +10^main
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+ZSHOW B:
+
+GTM>
+
+^base
+^main
+cubeit^cube
+GTM>
+ZB -cubeit^cube
+
+GTM>
+ZB -^main
+
+GTM>
+ZContinue
+%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location base^base
+
+GTM>
+ZContinue
+%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location base^base
+
+GTM>
+ZContinue
+%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location base^base
+
+GTM>
+ZST into
+base+1^base
+ 	New val Set val=""
+%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location base+1^base
+
+GTM>
+ZST into
+base+2^base
+	If (n<0)!(y<2)!(y>16)!(z<2)!(z>16)!(+n[".") Q val
+%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location base+2^base
+
+GTM>
+ZST into
+base+3^base
+	Set n=$$decimal^decimal(n,y)
+%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location base+3^base
+
+GTM>
+Converting 4 from base 10 to base 2
+
+GTM>
+ZB -*
+
+GTM>
+ZContinue
+
+Done!
+GTM>
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

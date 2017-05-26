@@ -1,0 +1,232 @@
+#############RECORD SIZE 4000#############
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/b.dat
+Region	BREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/c.dat
+Region	CREG
+
+DSE> DSE> 
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> #Start $query test
+#End $query test
+#Start "merge" command duplication test
+#There should be only one diff here:> ^a("merge")=1
+1a2
+> ^a("merge")=1
+#End "merge" command duplication test
+#Start small get/set test
+create non-bsg test has started.
+PASSED
+non-bsg to non-bsg test has started.
+PASSED
+non-bsg to bsg test has started.
+PASSED
+non-bsg to non-bsg (smaller) test has started.
+PASSED
+non-bsg to non-bsg (larger) test has started.
+PASSED
+bsg to non-bsg test has started.
+PASSED
+progressively larger bsgs - size=1008 test has started.
+PASSED
+progressively larger bsgs - size=2008 test has started.
+PASSED
+progressively larger bsgs - size=3008 test has started.
+PASSED
+transition back to non-bsg test has started.
+PASSED
+progressively smaller bsgs - size=3008 test has started.
+PASSED
+progressively smaller bsgs - size=2008 test has started.
+PASSED
+progressively smaller bsgs - size=1008 test has started.
+PASSED
+#End small get/set test
+#Start $order/$next test
+BEGIN1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        END1
+BEGIN2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    END2
+BEGIN3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              END3
+1
+2
+
+#End $order/$next test
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+#############RECORD SIZE 10000#############
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+#Start $query with larger values test
+#End $query with larger values test
+#Start $data test
+Parent: SP Child: SP
+PASSED
+Parent: SP Child: NON-SP
+PASSED
+Parent: NON-SP Child: SP
+PASSED
+Parent: NON-SP Child: NON-SP
+PASSED
+Testing interesting cases
+#End $data test
+#Start zwrite test
+Verify that zwrite prints  ^nsgbl(1) and ^nsgbl(1,1,1)
+^nsgbl="root"
+^nsgbl(1)=1
+^nsgbl(1,1,1)=2
+^nsgbl(2)="BEGIN                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    END"
+^y="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           value"
+^y(1)="findme!"
+#End zwrite test
+#Start zprevious test
+#End zprevious test
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               5           5.078            NA
+Index               4              88          28.857             1
+Data               88             113          80.418            76
+Free                6              NA              NA            NA
+Total             100             206              NA            77
+[Spanning Nodes:12 ; Blocks:90]
+#############RECORD SIZE 10000 without -stdnull. This used to fail.#############
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+#Start zwrite test
+Verify that zwrite prints  ^nsgbl(1) and ^nsgbl(1,1,1)
+^nsgbl="root"
+^nsgbl(1)=1
+^nsgbl(1,1,1)=2
+^y="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           value"
+^y(1)="findme!"
+#End zwrite test
+#############RECORD SIZE 3000#############
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+#Start zshow
+===================zshow "G"===================
+val("G",0)="GLD:*,REG:*,SET:100,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:0,LKS:0,LKF:0,CTN:0,DRD:3,DWT:XX,NTW:1,NTR:1,NBW:4,NBR:4,NR0:0,NR1:0,NR2:0,NR3:0,TTW:99,TTR:0,TRB:0,TBW:600,TBR:272,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:0,DFS:6,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:3,CAT:XX,CFE:0,CFS:0,CFT:0,CQS:0,CQT:0,CYS:0,CYT:0"
+val("G",1)="GLD:##TEST_PATH##/mumps.gld,REG:DEFAULT,SET:100,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:0,LKS:0,LKF:0,CTN:103,DRD:3,DWT:XX,NTW:1,NTR:1,NBW:4,NBR:4,NR0:0,NR1:0,NR2:0,NR3:0,TTW:99,TTR:0,TRB:0,TBW:600,TBR:272,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:0,DFS:6,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:3,CAT:XX,CFE:0,CFS:0,CFT:0,CQS:0,CQT:0,CYS:0,CYT:0"
+#End zshow
+#Generating random keys and values with varying sizes (justkeys.txt,justvalues.txt).
+#Putting key-value pairs in database (global ^tmpgbl).
+#Comparing values in database against the file. Killing successfully compared key-value pairs.
+No errors detected by integ.
+#Start references
+Naked ref. test
+BEGIN0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    END0
+BEGIN1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    END1
+2
+BEGIN0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    END0
+^nakedgbl(2)
+BEGIN0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    END0
+Extended ref. test
+BEGIN1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    END1
+#End references
+#Start zdata
+#End zdata
+#############RECORD SIZE 0#############
+Make sure max recordsize can be set to 0
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+#############RECORD SIZE 1MB#############
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+#Start $increment
+
+GTM>
+
+GTM>
+1
+GTM>
+
+GTM>
+
+GTM>
+1
+GTM>
+
+GTM>
+
+GTM>
+124
+GTM>
+
+GTM>
+#End $increment
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           2.832            NA
+Index               1               1           2.343             1
+Data                1               1           2.832             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2

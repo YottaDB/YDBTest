@@ -1,0 +1,160 @@
+Begin of READ_ONLY subtest
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+make database read-only
+make current directory read-only
+should issue DEVOPENFAIL error accompanied with TEXT message indicating permission issue
+%GTM-E-DEVOPENFAIL, Error opening dbcmdx_DEFAULT.sh
+%GTM-I-TEXT, Permission denied
+current directory back to read-write
+should issue DBRDONLY error
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+make database back to read-write
+scan should run fine here
+
+
+Total blocks in database  -------##SCAN_BLOCKS##
+Total local bitmap blocks -------##SCAN_BLOCKS##
+Blocks bypassed -----------------##SCAN_BLOCKS##
+Blocks processed ----------------##SCAN_BLOCKS##
+Blocks needing to be split ------##SCAN_BLOCKS##
+- DT leaf (data) blocks ---------##SCAN_BLOCKS##
+- DT index blocks ---------------##SCAN_BLOCKS##
+- GVT leaf (data) blocks --------##SCAN_BLOCKS##
+- GVT index blocks --------------##SCAN_BLOCKS##
+make database read-only again
+should issue DBRDONLY error
+--------------------------------------------------------------------------------
+You must have a backup of database ##TEST_PATH##/mumps.dat before you proceed!
+An abnormal termination can damage the database while doing the certification !
+Proceeding will also turn off replication and/or journaling if enabled
+--------------------------------------------------------------------------------
+Proceed? [y/n]:
+Certification phase for database ##TEST_PATH##/mumps.dat beginning
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+Now make db read_write
+run dbcertify again,should be fine here
+%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+Before switching to version V5, make database read-only again
+Switch to V5 version
+############## UPGRADE #################
+Upgrade global directory
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+should issue DBRDONLY error
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip upgrade started
+%GTM-E-DBRDONLY, Database file mumps.dat read only
+%SYSTEM-E-ENO13, Permission denied
+
+%GTM-E-TEXT, Cannot upgrade read-only database
+%GTM-E-MUNOUPGRD, Database not upgraded because of preceding errors
+======= successful upgrade =======
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip upgrade started
+%GTM-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
+%GTM-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
+%GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
+%GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
+%GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
+%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgrade to GT.M ##MACHTYPE##
+############## DOWNGRADE #################
+ Try to downgrade
+should issue DBRDONLY error
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip downgrade started
+%GTM-E-DBRDONLY, Database file mumps.dat read only
+%SYSTEM-E-ENO13, Permission denied
+
+%GTM-E-TEXT, Cannot downgrade read-only database
+%GTM-E-MUNODWNGRD, Database not downgraded because of preceding errors
+==== successful downgrade ========
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip downgrade started
+%GTM-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
+%GTM-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
+%GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
+%GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
+%GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
+%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V4
+run db certification phases and do a mupip upgrade on the downgraded db.All steps should pass
+
+
+Total blocks in database  -------##SCAN_BLOCKS##
+Total local bitmap blocks -------##SCAN_BLOCKS##
+Blocks bypassed -----------------##SCAN_BLOCKS##
+Blocks processed ----------------##SCAN_BLOCKS##
+Blocks needing to be split ------##SCAN_BLOCKS##
+- DT leaf (data) blocks ---------##SCAN_BLOCKS##
+- DT index blocks ---------------##SCAN_BLOCKS##
+- GVT leaf (data) blocks --------##SCAN_BLOCKS##
+- GVT index blocks --------------##SCAN_BLOCKS##
+%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+You must have a backup before you proceed!!
+An abnormal termination will damage the database during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%GTM-I-TEXT, Mupip upgrade started
+%GTM-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
+%GTM-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
+%GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
+%GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
+%GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
+%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgrade to GT.M ##MACHTYPE##
+All of the following commands from now on should give DBRDONLY error
+===== version =======
+MUPIP SET -VERSION=V6 -reg DEFAULT
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+MUPIP SET -VERSION=V4 -reg DEFAULT
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+====== access_method =======
+%GTM-E-DBFILOPERR, Error doing database I/O to region mumps.dat
+%SYSTEM-E-ENO13, Permission denied
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+%GTM-E-DBFILOPERR, Error doing database I/O to region mumps.dat
+%SYSTEM-E-ENO13, Permission denied
+%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+==== REORG upgrade ====
+
+Region DEFAULT : MUPIP REORG UPGRADE started
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+==== REORG downgrade ====
+
+Region DEFAULT : MUPIP REORG DOWNGRADE started
+%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+== Make database read-write before final verification ===
+Final verification for upddated database should run fine
+
+GTM>
+ --> Verify Directory Tree : PASS
+ --> Verify all Global Variable Tree : PASS
+
+GTM>
+END of READ_ONLY subtest

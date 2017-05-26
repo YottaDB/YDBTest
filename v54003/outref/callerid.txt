@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------------------
+BEGIN 1 :-) create database
+
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+Created file ##TEST_PATH##/mumps.dat
+
+END 1
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 2 :-) create global and crash the database
+
+
+GTM>
+
+GTM>
+Killed
+
+END 2
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 3 :-) Do mupip rundown and check if the 0xFFFFFFFF is sent as <generated from> address to operator log
+
+0xFFFFFFFF is printed properly in operator log
+
+END 3
+---------------------------------------------------------------------------------------

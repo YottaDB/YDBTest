@@ -1,0 +1,146 @@
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
+##GT.CM##mumps.gld
+##GT.CM##Using: ##SOURCE_PATH##/mupip
+Create local (client) database...
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  GT.CM
+a.dat
+mumps.dat
+##SUSPEND_OUTPUT  NON_REORG NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+##ALLOW_OUTPUT  NON_REORG NON_REPLIC GT.CM
+The database layout is:
+ASEG	a.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
+Starting the GT.CM Servers...
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+
+GTM>
+d ^colfill("set",15)
+set PASS
+d ^colfill("ver",15)
+ver PASS
+M newvar("^A")=^A
+M newvar("^B")=^B
+d ^colfill("ver",15)
+ver PASS
+K ^A,^B
+M ^A=newvar("^A")
+M ^B=newvar("^B")
+K newvar
+d ^colfill("ver",15)
+ver PASS
+
+GTM>
+Compare ZWR output
+Local collation test PASSED
+Compare reverse ZWR output
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Reverse collation test PASSED
+Compare ZWR output
+Local collation test PASSED
+Compare reverse ZWR output
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Reverse collation test PASSED
+Compare ZWR output
+Local collation test PASSED
+Compare reverse ZWR output
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Reverse collation test PASSED
+Compare ZSHOW ZWR output
+Local collation test PASSED
+Compare reverse ZSHOW ZWR output
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Reverse collation test PASSED
+##SUSPEND_OUTPUT  NON_REORG GT.CM NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+##ALLOW_OUTPUT  NON_REORG NON_REPLIC GT.CM
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####SOURCE_PATH##/mupip
+##GT.CM####SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+##SOURCE_PATH##/mupip
+##SUSPEND_OUTPUT  GT.CM
+##SOURCE_PATH##/mupip integ -REG *
+##SUSPEND_OUTPUT  REPLIC REORG GT.M
+##ALLOW_OUTPUT  GT.CM
+##SOURCE_PATH##/mupip integ a.dat
+##ALLOW_OUTPUT  REPLIC REORG GT.M
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REORG GT.CM NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

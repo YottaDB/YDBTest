@@ -1,0 +1,7 @@
+u50
+	; write 50 utf-8 characters to the current device
+	for i=1:1:50 do
+	. set a=1350+i
+	. write $c(a)
+      	write !
+	quit

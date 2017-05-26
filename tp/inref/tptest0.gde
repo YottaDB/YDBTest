@@ -1,0 +1,5 @@
+change -region DEFAULT -key_size=255 -record_size=496
+change -segment DEFAULT -block_size=512 -global_buffer_count=64
+add -name b* -region=b
+add -region b -dynamic=b -key=255 -rec=496
+add -segment b -block=512 -glo=64 -file=b

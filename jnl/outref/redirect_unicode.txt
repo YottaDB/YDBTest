@@ -1,0 +1,29 @@
+setenv gtm_chset UTF-8
+unset echo
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+ＡＢＣＤＥＦＧ.gld
+Using: ##SOURCE_PATH##/mupip
+ＡＢＣＤＥＦＧ.dat
+##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤＥＦＧ.mjl created for region DEFAULT with (|NO)BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+d in0^udbfill("set")
+set PASS
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ ＡＢＣＤＥＦＧ.dat
+No errors detected by integ.
+Created file ##TEST_PATH##/ＡＢＣＤＥＦＧ.dat
+cp ＡＢＣＤＥＦＧ.dat ＲＥＤＩＲ.dat
+Redirect forward TEST FAILED
+##SOURCE_PATH##/mupip journal -recover -forward -redir=ＡＢＣＤＥＦＧ.dat=ＲＥＤＩＲ.dat -fences=NONE -verify ＡＢＣＤＥＦＧ.mjl
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Recover successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..

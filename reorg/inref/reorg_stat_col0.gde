@@ -1,0 +1,76 @@
+change -segment DEFAULT -file_name=mumps.dat
+add -name a* -region=areg
+add -name A* -region=areg
+add -region areg -dyn=aseg
+add -segment aseg -file=a.dat
+! Use this spanning regions configuration to have a static reference file
+! Number of included regions is 2
+!    Region 1 = AREG
+!    Region 2 = DEFAULT
+! Number of sections randomly chosen is 32
+! Map : ^afill(1336) maps to DEFAULT
+add -name afill(1336:1745) -region=DEFAULT
+! Map : ^afill(1745) maps to AREG
+add -name afill(1745:2659) -region=AREG
+! Map : ^afill(2659) maps to DEFAULT
+add -name afill(2659:3194) -region=DEFAULT
+! Map : ^afill(3194) maps to AREG
+add -name afill(3194:3636) -region=AREG
+! Map : ^afill(3636) maps to DEFAULT
+add -name afill(3636:4173) -region=DEFAULT
+! Map : ^afill(4173) maps to AREG
+add -name afill(4173:4203) -region=AREG
+! Map : ^afill(4203) maps to DEFAULT
+add -name afill(4203:4697) -region=DEFAULT
+! Map : ^afill(4697) maps to AREG
+add -name afill(4697:5191) -region=AREG
+! Map : ^afill(5191) maps to DEFAULT
+add -name afill(5191:5950) -region=DEFAULT
+! Map : ^afill(5950) maps to AREG
+add -name afill(5950:6190) -region=AREG
+! Map : ^afill(6190) maps to DEFAULT
+add -name afill(6190:6835) -region=DEFAULT
+! Map : ^afill(6835) maps to AREG
+add -name afill(6835:) -region=AREG
+! Map : ^bfill(113) maps to AREG
+add -name bfill(113:141) -region=AREG
+! Map : ^bfill(141) maps to DEFAULT
+add -name bfill(141:1075) -region=DEFAULT
+! Map : ^bfill(1075) maps to AREG
+add -name bfill(1075:1465) -region=AREG
+! Map : ^bfill(1465) maps to DEFAULT
+add -name bfill(1465:1899) -region=DEFAULT
+! Map : ^bfill(1899) maps to AREG
+add -name bfill(1899:2382) -region=AREG
+! Map : ^bfill(2382) maps to DEFAULT
+add -name bfill(2382:2440) -region=DEFAULT
+! Map : ^bfill(2440) maps to AREG
+add -name bfill(2440:2854) -region=AREG
+! Map : ^bfill(2854) maps to DEFAULT
+add -name bfill(2854:3788) -region=DEFAULT
+! Map : ^bfill(3788) maps to AREG
+add -name bfill(3788:5145) -region=AREG
+! Map : ^bfill(5145) maps to DEFAULT
+add -name bfill(5145:6098) -region=DEFAULT
+! Map : ^bfill(6098) maps to AREG
+add -name bfill(6098:7067) -region=AREG
+! Map : ^bfill(7067) maps to DEFAULT
+add -name bfill(7067:7396) -region=DEFAULT
+! Map : ^bfill(7396) maps to AREG
+add -name bfill(7396:7563) -region=AREG
+! Map : ^bfill(7563) maps to DEFAULT
+add -name bfill(7563:8045) -region=DEFAULT
+! Map : ^bfill(8045) maps to AREG
+add -name bfill(8045:8480) -region=AREG
+! Map : ^bfill(8480) maps to DEFAULT
+add -name bfill(8480:9104) -region=DEFAULT
+! Map : ^bfill(9104) maps to AREG
+add -name bfill(9104:9436) -region=AREG
+! Map : ^bfill(9436) maps to DEFAULT
+add -name bfill(9436:9498) -region=DEFAULT
+! Map : ^bfill(9498) maps to AREG
+add -name bfill(9498:9784) -region=AREG
+! Map : ^bfill(9784) maps to DEFAULT
+add -name bfill(9784:) -region=DEFAULT
+change -region AREG -std
+change -region DEFAULT -std

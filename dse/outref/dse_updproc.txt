@@ -1,0 +1,54 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Get dump before change
+  Upd reserved area [% global buffers]   50  Avg blks read per 100 records  200
+  Pre read trigger factor [% upd rsrvd]  50  Upd writer trigger [%flshTrgr]  33
+Now change update process related fields
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> DSE> DSE> Get dump after change
+  Upd reserved area [% global buffers]   45  Avg blks read per 100 records   10
+  Pre read trigger factor [% upd rsrvd]  40  Upd writer trigger [%flshTrgr]  60
+Get dump before change
+  Upd reserved area [% global buffers]   50  Avg blks read per 100 records  200
+  Pre read trigger factor [% upd rsrvd]  50  Upd writer trigger [%flshTrgr]  33
+Now change update process related fields
+
+File  	##REMOTE_TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> DSE> DSE> DSE> Get dump after change
+  Upd reserved area [% global buffers]   45  Avg blks read per 100 records   10
+  Pre read trigger factor [% upd rsrvd]  40  Upd writer trigger [%flshTrgr]  60
+
+GTM>
+set PASS
+
+GTM>
+ver PASS
+
+GTM>
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Verify the updproc related file header fields
+  Upd reserved area [% global buffers]   45  Avg blks read per 100 records   10
+  Pre read trigger factor [% upd rsrvd]  40  Upd writer trigger [%flshTrgr]  60

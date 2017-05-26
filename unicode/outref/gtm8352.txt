@@ -1,0 +1,125 @@
+***** Starting utfcache_extract test
+Case 1: Extraction from a simple uncached string
+  Subcase 1a: Starting at first char, ending in the middle
+    Success
+
+  Subcase 1b: Starting in middle, ending in middle+N
+    Success
+
+  Subcase 1c: Starting in middle ending at last char
+    Success
+
+  Subcase 1d: Starting at first char ending at last char
+    Success
+
+Case 2: Extraction from a fully cached string - all extractions should cross groups
+  Subcase 2a: Starting at first char, ending in middle (start on ascii, end on ascii)
+    Success
+
+  Subcase 2b: Starting at first char, ending in middle (start on ascii, end on utf8)
+    Success
+
+  Subcase 2c: Starting at first char, ending in middle (start on utf8, end on ascii)
+    Success
+
+  Subcase 2d: Starting at first char, ending in middle (start on utf8, end on utf8)
+    Success
+
+  Subcase 2e: Starting in middle, ending in middle+N (start on ascii, end on ascii)
+    Success
+
+  Subcase 2f: Starting in middle, ending in middle+N (start on ascii, end on utf8)
+    Success
+
+  Subcase 2g: Starting in middle, ending in middle+N (start on utf8, end on ascii)
+    Success
+
+  Subcase 2h: Starting in middle, ending in middle+N (start on utf8, end on utf8)
+    Success
+
+  Subcase 2i: Starting in middle ending at last char (start on ascii, end on ascii)
+    Success
+
+  Subcase 2j: Starting in middle ending at last char (start on ascii, end on utf8)
+    Success
+
+  Subcase 2k: Starting in middle ending at last char (start on utf8, end on ascii)
+    Success
+
+  Subcase 2l: Starting in middle ending at last char (start on utf8, end on utf8)
+    Success
+
+Case 3: Detect BADCHAR and verify target string unchanged
+  Success
+
+Case 4: Detect BADCHAR and verify target string unchanged where src == target
+  Success
+
+Case 5: Extraction from a fully cached string
+  Subcase 5a: Starting at first char (start on ascii)
+    Success
+
+  Subcase 5b: Starting at first char (start on utf8)
+    Success
+
+  Subcase 5c: Starting in middle char (start on ascii)
+    Success
+
+  Subcase 5d: Starting in middle char (start on utf8)
+    Success
+
+  Subcase 5e: Starting at last char (start on ascii - note contains no utf8 by definition)
+    Success
+
+  Subcase 5f: Starting at last char (start on utf8)
+    Success
+
+
+All subtests passed
+
+
+***** Starting utfcache_find test
+
+Case 1 - Find char in cache
+  Success
+
+Case 2a - Find char in partially cached string but outside the cache
+  Success
+
+Case 2b - (alternate case 2) Find char as first char we search
+  Success
+
+Case 3 - Find char where string was either not in cache or cache was full so found via brute-force scan
+  Success
+
+
+All subtests passed!
+
+***** Starting JSON parsing test
+  .. running ASCII flavor
+json read in - starting processing in UTF-8 mode
+
+beginning parse
+
+
+rebuilding json string
+
+output complete
+
+  .. running UTF flavor
+json read in - starting processing in UTF-8 mode
+
+beginning parse
+
+
+rebuilding json string
+
+output complete
+
+Output files jsonoutasc.txt and jsonoututf.txt are the same - PASS
+
+***** Starting random string/testcase generator
+Character sets built - now building strings
+String generation complete - moving on to generate test cases
+Driving generated routine to compare values
+Total of 5000 test cases with 0 error(s)

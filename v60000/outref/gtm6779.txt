@@ -1,0 +1,12 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+MLG:511,MLT:0
+LOCK abc("xyz",1,2,$C(0)) LEVEL=511
+Expect an RTS error here
+%GTM-E-LOCKINCR2HIGH, Attempt to increment a LOCK more than 511 times,%GTM-I-LOCKIS, 		Resource name: abc("xyz",1,2,$C(0))
+		At M source location gtm6779+4^gtm6779
+
+GTM>

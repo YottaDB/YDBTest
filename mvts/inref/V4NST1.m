@@ -1,0 +1,57 @@
+V4NST1 ;IW-KO-YS-TS,VV4,MVTS V9.10;15/6/96;NESTING LEVEL
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1978-1996
+ W !!,"135---V4NST1: Nesting ( FOR, XECUTE, DO ) -1-"
+ W !,"As this routine itself is counted as one level of nesting,"
+ W !,"additional 126 levels of nesting are required."
+ W !,"Admitted nesting levels are indicated by the number in each test.",!
+ ;
+1 W !,"IV-859  13 levels of DO, and 114 levels of FOR"
+ S ^ABSN="40859",^ITEM="IV-859  Termination by GOTO"
+ S ^NEXT="V4NST2^VV4" D ^V4PRESET K
+ S X="(OK)",^VCOMP=""
+FOR0 F A(1)=1:1:2 F A(2)=1:1:2 F A(3)=1:1:2 F A(4)=1:1:2 F A(5)=1:1:2 F A(6)=1:1:2 F A(7)=1:1:2 F A(8)=1:1:2 F A(9)=1:1:2 D FOR1 S ^VCOMP=^VCOMP_X G F2
+ S ^VCOMP=^VCOMP_" ERROR 653"
+F2 S ^VCORR="(OK)(OK)" D ^VEXAMINE
+ ;
+END W !!,"End of 135 --- V4NST1",!
+ K  Q
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q
+ ;
+FOR1 F A(11)=1:1:2 F A(12)=1:1:2 F A(13)=1:1:2 F A(14)=1:1:2 F A(15)=1:1:2 F A(16)=1:1:2 F A(17)=1:1:2 F A(18)=1:1:2 F A(19)=1:1:2 D FOR2 G FOR1E
+ Q
+FOR1E Q
+FOR2 F A(21)=1:1:2 F A(22)=1:1:2 F A(23)=1:1:2 F A(24)=1:1:2 F A(25)=1:1:2 F A(26)=1:1:2 F A(27)=1:1:2 F A(28)=1:1:2 F A(29)=1:1:2 D FOR3 G FOR2E
+ Q
+FOR2E Q
+FOR3 F A(31)=1:1:2 F A(32)=1:1:2 F A(33)=1:1:2 F A(34)=1:1:2 F A(35)=1:1:2 F A(36)=1:1:2 F A(37)=1:1:2 F A(38)=1:1:2 F A(39)=1:1:2 D FOR4 G FOR3E
+ Q
+FOR3E Q
+FOR4 F A(41)=1:1:2 F A(42)=1:1:2 F A(43)=1:1:2 F A(44)=1:1:2 F A(45)=1:1:2 F A(46)=1:1:2 F A(47)=1:1:2 F A(48)=1:1:2 F A(49)=1:1:2 D FOR5 G FOR4E
+ Q
+FOR4E Q
+FOR5 F A(51)=1:1:2 F A(52)=1:1:2 F A(53)=1:1:2 F A(54)=1:1:2 F A(55)=1:1:2 F A(56)=1:1:2 F A(57)=1:1:2 F A(58)=1:1:2 F A(59)=1:1:2 D FOR6 G FOR5E
+ Q
+FOR5E Q
+FOR6 F A(61)=1:1:2 F A(62)=1:1:2 F A(63)=1:1:2 F A(64)=1:1:2 F A(65)=1:1:2 F A(66)=1:1:2 F A(67)=1:1:2 F A(68)=1:1:2 F A(69)=1:1:2 D FOR7 G FOR6E
+ Q
+FOR6E Q
+FOR7 F A(71)=1:1:2 F A(72)=1:1:2 F A(73)=1:1:2 F A(74)=1:1:2 F A(75)=1:1:2 F A(76)=1:1:2 F A(77)=1:1:2 F A(78)=1:1:2 F A(79)=1:1:2 D FOR8 G FOR7E
+ Q
+FOR7E Q
+FOR8 F A(81)=1:1:2 F A(82)=1:1:2 F A(83)=1:1:2 F A(84)=1:1:2 F A(85)=1:1:2 F A(86)=1:1:2 F A(87)=1:1:2 F A(88)=1:1:2 F A(89)=1:1:2 D FOR9 G FOR8E
+ Q
+FOR8E Q
+FOR9 F A(91)=1:1:2 F A(92)=1:1:2 F A(93)=1:1:2 F A(94)=1:1:2 F A(95)=1:1:2 F A(96)=1:1:2 F A(97)=1:1:2 F A(98)=1:1:2 F A(99)=1:1:2 D FOR10 G FOR9E
+ Q
+FOR9E Q
+FOR10 F A(101)=1:1:2 F A(102)=1:1:2 F A(103)=1:1:2 F A(104)=1:1:2 F A(105)=1:1:2 F A(106)=1:1:2 F A(107)=1:1:2 F A(108)=1:1:2 F A(109)=1:1:2 D FOR11 G FOR10E
+ Q
+FOR10E Q
+FOR11 F A(111)=1:1:2 F A(112)=1:1:2 F A(113)=1:1:2 F A(114)=1:1:2 F A(115)=1:1:2 F A(116)=1:1:2 F A(117)=1:1:2 F A(118)=1:1:2 F A(119)=1:1:2 D FOR12 G FOR11E
+ Q
+FOR11E Q
+FOR12 F A(121)=1:1:2 F A(122)=1:1:2 F A(123)=1:1:2 F A(124)=1:1:2 F A(125)=1:1:2 F A(126)=1:1:2 I A(122)=2 G FOR12E
+ Q
+FOR12E S ^VCOMP=^VCOMP_X Q
+ ;

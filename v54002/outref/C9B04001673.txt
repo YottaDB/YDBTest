@@ -1,0 +1,65 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+PASS from C9B04001673a short-circuit
+PASS from C9B04001673b
+PASS from C9B04001673a full
+PASS from C9B04001673c
+ 
+	  set d=^b!$i(^b)
+	            ^-----
+		At column 13, line 8, source module ##IN_TEST_PATH##/inref/C9B04001673d.m
+%GTM-W-BOOLSIDEFFECT, Extrinsic ($$), External call ($&) or $INCREMENT() with potential side effects in Boolean expression
+	  set d=^b&$i(^b,-1)
+	            ^-----
+		At column 13, line 9, source module ##IN_TEST_PATH##/inref/C9B04001673d.m
+%GTM-W-BOOLSIDEFFECT, Extrinsic ($$), External call ($&) or $INCREMENT() with potential side effects in Boolean expression
+	  set d=^b!$$ef(^b)
+	           ^-----
+		At column 12, line 12, source module ##IN_TEST_PATH##/inref/C9B04001673d.m
+%GTM-W-BOOLSIDEFFECT, Extrinsic ($$), External call ($&) or $INCREMENT() with potential side effects in Boolean expression
+	  set d=^b&$$ef(^b)
+	           ^-----
+		At column 12, line 13, source module ##IN_TEST_PATH##/inref/C9B04001673d.m
+%GTM-W-BOOLSIDEFFECT, Extrinsic ($$), External call ($&) or $INCREMENT() with potential side effects in Boolean expression
+	  set d=^b!$&ec(^b)
+	           ^-----
+		At column 12, line 16, source module ##IN_TEST_PATH##/inref/C9B04001673d.m
+%GTM-W-BOOLSIDEFFECT, Extrinsic ($$), External call ($&) or $INCREMENT() with potential side effects in Boolean expression
+	  set d=^b&$&ec(^b)
+	           ^-----
+		At column 12, line 17, source module ##IN_TEST_PATH##/inref/C9B04001673d.m
+%GTM-W-BOOLSIDEFFECT, Extrinsic ($$), External call ($&) or $INCREMENT() with potential side effects in Boolean expression
+	  set d=(1<$i(^b))!^b&$&ec(^b)
+	                      ^-----
+		At column 23, line 18, source module ##IN_TEST_PATH##/inref/C9B04001673d.m
+%GTM-W-BOOLSIDEFFECT, Extrinsic ($$), External call ($&) or $INCREMENT() with potential side effects in Boolean expression
+	  set d=(1]]$&ec(^b))&$$ef(^b)!^b
+	                      ^-----
+		At column 23, line 19, source module ##IN_TEST_PATH##/inref/C9B04001673d.m
+%GTM-W-BOOLSIDEFFECT, Extrinsic ($$), External call ($&) or $INCREMENT() with potential side effects in Boolean expression
+	  set d=^b&$&ec(^b)&(1<$i(^b))
+	           ^-----
+		At column 12, line 20, source module ##IN_TEST_PATH##/inref/C9B04001673d.m
+%GTM-W-BOOLSIDEFFECT, Extrinsic ($$), External call ($&) or $INCREMENT() with potential side effects in Boolean expression
+	  set d=^b&$&ec(^b)&(1<$i(^b))
+	                        ^-----
+		At column 25, line 20, source module ##IN_TEST_PATH##/inref/C9B04001673d.m
+%GTM-W-BOOLSIDEFFECT, Extrinsic ($$), External call ($&) or $INCREMENT() with potential side effects in Boolean expression
+	  set d=$$ef(^b)!^b!(1]]$&ec(^b))
+	                        ^-----
+		At column 25, line 21, source module ##IN_TEST_PATH##/inref/C9B04001673d.m
+%GTM-W-BOOLSIDEFFECT, Extrinsic ($$), External call ($&) or $INCREMENT() with potential side effects in Boolean expression
+
+Standard Boolean with side-effect warning
+
+Standard Boolean evaluation side effects
+
+GT.M Boolean short-circuit
+ 
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

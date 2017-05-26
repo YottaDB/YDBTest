@@ -1,0 +1,87 @@
+V4GET24 ;IW-KO-YS-TS,V4GET2,MVTS V9.10;15/6/96;PART-94
+ ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1994-1996
+ ;
+ W !!,"26---V4GET24:  $GET function  -4-"
+ ;
+ W !,"expr contains a function"
+ ;
+1 S ^ABSN="40200",^ITEM="IV-200  expr contains $DATA function"
+ S ^NEXT="2^V4GET24,V4GET25^V4GET2,V4NAME^VV4" D ^V4PRESET K
+ K ^VCOMP
+ S A(1,2,3,4)=1234
+ S A(1,2,3,4,5,6)=123456
+ S ^VCOMP=$G(A(1,2,3,4),$D(^VCOMP))
+ S ^VCORR="1234" D ^VEXAMINE
+ ;
+2 S ^ABSN="40201",^ITEM="IV-201  expr contains $SELECT function"
+ S ^NEXT="3^V4GET24,V4GET25^V4GET2,V4NAME^VV4" D ^V4PRESET K
+ S A=1000 IF 0
+ S A(1)="$T",X=4
+ S ^VCOMP=$G(A($T),$SELECT(A>1000:X*10,A=1000:X*100,1:X*10000))
+ S ^VCORR="400" D ^VEXAMINE
+ ;
+3 S ^ABSN="40202",^ITEM="IV-202  expr contains $GET function"
+ S ^NEXT="4^V4GET24,V4GET25^V4GET2,V4NAME^VV4" D ^V4PRESET K
+ s NAM("A","B")="VV(""A"")",VV("A")="A"
+ S BB="B(1)",CC="C1"
+ S ^VCOMP=$GET(@NAM($g(VV("A"),"A"),$g(AA(1),"B")),123)
+ S ^VCORR="A" D ^VEXAMINE
+ ;
+4 S ^ABSN="40203",^ITEM="IV-203  expr contains extrinsic special variable"
+ S ^NEXT="5^V4GET24,V4GET25^V4GET2,V4NAME^VV4" D ^V4PRESET K
+ S ^VCOMP=$g(@$$GETNAME^V4GETE,$$GETDATA^V4GETE)
+ S ^VCORR="##" D ^VEXAMINE
+ ;
+5 S ^ABSN="40204",^ITEM="IV-204  expr contains extrinsic function"
+ S ^NEXT="6^V4GET24,V4GET25^V4GET2,V4NAME^VV4" D ^V4PRESET K
+ S X="A",Y=123.0,Z="ZZ"
+ S ^VCOMP=$get(V("A",$E("BAC"),$TR("xys","12xx","XYZ"),"DKDKRRJKR",12),$$^V4GETE(X,Y,.Z))
+ S ^VCORR="Aa 123b ZZc" D ^VEXAMINE
+ ;
+6 S ^ABSN="40205",^ITEM="IV-205  expr contains nested functions"
+ S ^NEXT="7^V4GET24,V4GET25^V4GET2,V4NAME^VV4" D ^V4PRESET K  K ^VV
+ S ^VV(1)="A/B/C/D/E/F"
+ S ^VCOMP=$G(A,$P($g(^VV,^VV(1)),$g(B,"/"),$s($d(V):4,1:3),$F($g(^VV(1),"/"),"/",5)))
+ S ^VCORR="C/D/E/F" D ^VEXAMINE K ^VV
+ ;
+ w !,"expr has indirections"
+ ;
+7 S ^ABSN="40206",^ITEM="IV-206  ^VV(@A)"
+ S ^NEXT="8^V4GET24,V4GET25^V4GET2,V4NAME^VV4" D ^V4PRESET K  K ^VV
+ S A="B(1,C(8))",C(8)="88",B(1,88)="188",^VV(188)="XYZ"
+ S ^VCOMP=$g(^VV,^VV(@A))
+ S ^VCORR="XYZ" D ^VEXAMINE K ^VV
+ ;
+8 S ^ABSN="40207",^ITEM="IV-207  @VV"
+ S ^NEXT="9^V4GET24,V4GET25^V4GET2,V4NAME^VV4" D ^V4PRESET K
+ S B="1"
+ S VV="@VV(B)",VV(1)="VV(B,B+B)",VV(1,2)="0000"
+ S ^VCOMP=$G(A,@VV)
+ S ^VCORR="0000" D ^VEXAMINE
+ ;
+9 S ^ABSN="40208",^ITEM="IV-208  @^VV@(12,456)"
+ S ^NEXT="10^V4GET24,V4GET25^V4GET2,V4NAME^VV4" D ^V4PRESET K  K ^VV
+ S ^VV(1,2,3,4,12,456)="1234567",^VV="@AA@(3,4)",^VV(1,2,3,4,12,4)="44"
+ S AA="^VV(1,2)"
+ S ^VCOMP=$g(A,@^VV@(12,456))_" "_^(4)
+ S ^VCORR="1234567 44" D ^VEXAMINE K ^VV
+ ;
+10 S ^ABSN="40209",^ITEM="IV-209  @@^VV(0)@(12,456)"
+ S ^NEXT="11^V4GET24,V4GET25^V4GET2,V4NAME^VV4" D ^V4PRESET K  K ^VV
+ S ^VV(3,4,12,456)="12345",^VV(0)="^(3,4)",^VV(3,4,12,4)="44"
+ S ^VCOMP=$g(A,@^VV(0)@(12,456))_" "_^(4)
+ S ^VCORR="12345 44" D ^VEXAMINE K ^VV
+ ;
+11 S ^ABSN="40210",^ITEM="IV-210  nesting"
+ S ^NEXT="V4GET25^V4GET2,V4NAME^VV4" D ^V4PRESET K  K ^VV
+ S ^VV(1,2,3,4,12,456)="@^VV(1,2)",^VV="@AA@(3,4)",^VV(1,2,3,4,12,4)="44"
+ S AA="^VV(1,2)",^VV(1,2)="ABCD",ABCD="abcd",VV="@BB@(3,4)",BB="VV(1,2)"
+ S VV(1,2,3,4)="@VV(1)",VV(1)="VV(99)"
+ S ^VCOMP=$g(@@VV,@@^VV@(12,456))_" "_^(2)
+ S ^VCORR="abcd ABCD" D ^VEXAMINE K ^VV
+ ;
+END W !!,"End of 26 --- V4GET24",!
+ K  Q
+ ;
+SUM S SUM=0 F I=1:1 S L=$T(+I) Q:L=""  F K=1:1:$L(L) S SUM=SUM+$A(L,K)
+ Q

@@ -1,0 +1,15 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+%GTM-I-REPLSTATE, Replication state for region AREG is now ON
+%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTB]
+# Do updates and kill the GT.M process
+Killed
+# Crash Now
+Simulating crash on primary in ##TEST_PATH##
+Primary crashed!
+TEST-I-PASS. The expected errors did appear when journal rollback was attempted with insufficient disk space or permission

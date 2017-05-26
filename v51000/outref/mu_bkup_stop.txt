@@ -1,0 +1,42 @@
+MUPIP ONLINE BACKUP TEST FOR LARGE DATABASES AND A MUPIP STOP AT HALF WAY STAGE
+TRY THREE TIMES TO CATCH AND STOP THE BACKUP PROCESS
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+check for temp files created by MUPIP and written to by GT.M processes.
+##TEST_AWKSTOP issued to process[0-9 ]*
+PASS! Temporary files are cleaned up after MUPIP STOP
+exit status: 0
+Successful in stopping the backup process
+The following backup should run successfully
+BACKUP COMPLETED.
+PASS! BACKUP successfull
+We expect all the following fields to be zero to confirm a successfull backup
+Backup_errno 0
+Backup_errno 0
+Backup_errno 0
+Backup_errno 0
+Shmpool blocked FALSE
+Shmpool blocked FALSE
+Shmpool blocked FALSE
+Shmpool blocked FALSE
+Backup blocks 0
+Backup blocks 0
+Backup blocks 0
+Backup blocks 0
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,59 @@
+# Random RECOVER/ROLLBACK choice is : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# substitute mentions of $test_rol_or_rec in reference file with the above
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+e.dat
+f.dat
+g.dat
+mumps.dat
+Turn Journaling on (check jnl_on.log for the actual settings)...
+Start the Source Server if ROLLBACK...
+Time written into time1:##FILTERED##GTM_TEST_DEBUGINFO.*
+Start GT.M updates...
+##FILTERED##GTM_TEST_DEBUGINFO.*
+# gtm_update_time = ##FILTERED##GTM_TEST_DEBUGINFO.*
+Wait for $gtm_update_time seconds (might switch some journal files explicitly in the meantime. Check halftime.txt)...
+Time written into time2:##FILTERED##GTM_TEST_DEBUGINFO.*
+Stop the updates either with endtp (shutdown.out) or crash (crash.out) (30%-70%). Check which one of crash.out or shutdown.out exists.
+##########################################
+Testing MUPIP ${test_rol_or_rec}...
+Check the output at MUPIP_${test_rol_or_rec}.log
+##TEST_AWK==> R.*1_1.log <==
+##TEST_AWK(##TEST_COM_PATH##/mupip_rollback.csh .*|##SOURCE_PATH##/mupip journal -RECOVER .*)
+
+##TEST_AWK==> R.*1_2.log <==
+##TEST_AWK(##TEST_COM_PATH##/mupip_rollback.csh .*|##SOURCE_PATH##/mupip journal -RECOVER .*)
+
+##TEST_AWK==> R.*1_3.log <==
+##TEST_AWK(##TEST_COM_PATH##/mupip_rollback.csh .*|##SOURCE_PATH##/mupip journal -RECOVER .*)
+# The times (if RECOVER) or seqnos (if ROLLBACK) are logged in times_seqnos_used.txt
+##########################################
+And one complete ${test_rol_or_rec}:
+# The decision to specify is : ##FILTERED##GTM_TEST_DEBUGINFO.*
+Check ${test_rol_or_rec}_last.log
+##TEST_AWK(##TEST_COM_PATH##/mupip_rollback.csh .*|(##SOURCE_PATH##/mupip|\$MUPIP) journal -recover .*)
+%GTM-S-JNLSUCCESS, Show successful
+##TEST_AWKThe time the mupip command took:  .*
+##########################################
+Checking...
+Time written into time3:##FILTERED##GTM_TEST_DEBUGINFO.*
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Time written into time4:##FILTERED##GTM_TEST_DEBUGINFO.*
+Checking database on ##TEST_PATH##
+
+GTM>
+do checkdb
+checkdb PASSED.
+
+GTM>
+Time written into time5:##FILTERED##GTM_TEST_DEBUGINFO.*
+Verify journal files...
+Time written into time6:##FILTERED##GTM_TEST_DEBUGINFO.*

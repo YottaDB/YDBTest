@@ -1,0 +1,96 @@
+##SUSPEND_OUTPUT HOST_OSF1_ALPHA
+Beginning Job Interrupt and terminal testing
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Now call the expect script
+##TEST_AWKspawn .*
+> $gtm_exe/mumps -run d002636
+Spawning interrupter job to check zshow "D" zinterrupt
+wait 15 seconds for interrupt: end of wait for interrupt
+TERM = xterm
+Spawning interrupter job
+##TEST_AWK\.[.]*
+Beginning database transactions
+
+enter the alphabet: abcdefghijklmnopqrstuvwxyz
+PASS tt read was interrupted
+
+alphabet="abcdefghijklmnopqrstuvwxyz"
+PASS iott_read
+
+Entering direct mode, zcontinue to leave
+%GTM-I-BREAK, Break instruction encountered
+		At M source location d002636+95^d002636
+
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_AIX_RS6000
+##SUSPEND_OUTPUT AIX_NEW
+##ALLOW_OUTPUT AIX_5
+GTM>=z[Cs[Ch[Co[Cw[C [C"[CS[C"[C>
+d002636+95^d002636    (Direct mode) 
+
+GTM>=z[Cs[Ch[Co[Cw[C [C"[CD[C"[C>
+##TEST_AWK[a-zA-Z0-9/]* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=[1-9][0-9]* LENG=[1-9][0-9]* 
+
+GTM>=z[Cc[Co[Cn[Ct[Ci[Cn[Cu[Ce[C>
+##SUSPEND_OUTPUT AIX_5
+##ALLOW_OUTPUT AIX_NEW
+GTM>[?1h=z[Cs[Ch[Co[Cw[C [C"[CS[C"[C[?1l>
+d002636+95^d002636    (Direct mode) 
+
+GTM>[?1h=z[Cs[Ch[Co[Cw[C [C"[CD[C"[C[?1l>
+##TEST_AWK[a-zA-Z0-9/]* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=[1-9][0-9]* LENG=[1-9][0-9]* 
+
+GTM>[?1h=z[Cc[Co[Cn[Ct[Ci[Cn[Cu[Ce[C[?1l>
+##SUSPEND_OUTPUT AIX_NEW
+##SUSPEND_OUTPUT HOST_AIX_RS6000
+##ALLOW_OUTPUT HOST_HP-UX_PA_RISC HOST_HP-UX_IA64
+GTM>[?1hz[Cs[Ch[Co[Cw[C [C"[CS[C"[C[?1l
+d002636+95^d002636    (Direct mode) 
+
+GTM>[?1hz[Cs[Ch[Co[Cw[C [C"[CD[C"[C[?1l
+##TEST_AWK[a-zA-Z0-9/]* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=[1-9][0-9]* LENG=[1-9][0-9]* 
+
+GTM>[?1hz[Cc[Co[Cn[Ct[Ci[Cn[Cu[Ce[C[?1l
+##SUSPEND_OUTPUT HOST_HP-UX_PA_RISC HOST_HP-UX_IA64
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_LINUX_X86_64 HOST_LINUX_IA64 HOST_LINUX_S390X HOST_SUNOS_SPARC
+GTM>[?1h=z[Cs[Ch[Co[Cw[C [C"[CS[C"[C[?1l>
+d002636+95^d002636    (Direct mode) 
+
+GTM>[?1h=z[Cs[Ch[Co[Cw[C [C"[CD[C"[C[?1l>
+##TEST_AWK[a-zA-Z0-9/]* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=[1-9][0-9]* LENG=[1-9][0-9]* 
+
+GTM>[?1h=z[Cc[Co[Cn[Ct[Ci[Cn[Cu[Ce[C[?1l>
+##ALLOW_OUTPUT HOST_AIX_RS6000
+##ALLOW_OUTPUT HOST_ALL
+##ALLOW_OUTPUT AIX_5
+##ALLOW_OUTPUT AIX_NEW
+##SUSPEND_OUTPUT HOST_OSF1_ALPHA
+
+PASS direct mode was interrupted
+Exiting interrupt stage -- waiting for interrupter to shutdown
+##TEST_AWK\.[.]*
+Shutdown complete
+
+Stats: 
+##TEST_AWK[0-9][0-9]* transactions were done
+##TEST_AWK[0-9][0-9]* interrupts were sent
+##TEST_AWK[0-9][0-9]* interrupt handlers were started or restarted
+##TEST_AWK[0-9][0-9]* interrupts generated ztraps that were handled
+##TEST_AWK[0-9][0-9]* interrupts ran to completion
+
+Entering validation phase
+The interrupt count and summed interrupt count array are in agreement
+Test Passed
+> exit
+exit
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Done...
+##SUSPEND_OUTPUT HOST_ALL
+##ALLOW_OUTPUT HOST_OSF1_ALPHA
+No expect in PATH, please install

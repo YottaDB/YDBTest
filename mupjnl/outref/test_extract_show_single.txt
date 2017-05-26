@@ -1,0 +1,2117 @@
+TEST MUPIP JOURNAL -EXTRACT AND -SHOW SINGLE REGION
+Run with single region and multiple regions
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Turn journaling on:
+##TEST_AWKJOURNAL OPTIONS: -journal=enable,on,before.*
+####################################################################
+#STAGE A
+# empty database with BIJ
+####################################################################
+######################################
+EXTRACT
+
+##SOURCE_PATH##/mupip journal -extract -forward nonexist.mjl
+%GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/nonexist.mjl
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##SOURCE_PATH##/mupip journal -extract=file-a.mjf -forward *
+%GTM-I-FILECREATE, Journal extract file file-a.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+unset echo
+GDSJEX07
+01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
+02\#TIMESTAMP#\1\#PID1#\0
+03\#TIMESTAMP#\1\#PID1#\0\1
+##SOURCE_PATH##/mupip journal -extract=/bad/path/file-a.mjf -forward *
+unset echo
+%GTM-E-FILENOTCREATE, Journal extract file /bad/path/file-a.mjf not created
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##SOURCE_PATH##/mupip journal -extract -forward mumps.mjl
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+unset echo
+GDSJEX07
+01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
+02\#TIMESTAMP#\1\#PID1#\0
+03\#TIMESTAMP#\1\#PID1#\0\1
+if ( 1 != 1 ) then
+unset echo
+######################################
+SHOW
+
+##SOURCE_PATH##/mupip journal -show -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                       FALSE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+##TEST_AWK Align size  *[1-9][0-9]* \[0x[0-9A-F]*\] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      1 [0x0000000000000001]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+Process(es) that are COMPLETE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           1
+   PFIN           1
+   ZTCOM          0
+   KILL           0
+   FKILL          0
+   GKILL          0
+   SET            0
+   FSET           0
+   GSET           0
+   EOF            1
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           0
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          0
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -show=header -noverify -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                       FALSE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+##TEST_AWK Align size  *[1-9][0-9]* \[0x[0-9A-F]*\] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      1 [0x0000000000000001]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+%GTM-S-JNLSUCCESS, Show successful
+##SOURCE_PATH##/mupip journal -show=processes -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Process(es) that are COMPLETE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -show=processes,active -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Process(es) that are COMPLETE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -show=ac -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -show=b -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -show=s -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           1
+   PFIN           1
+   ZTCOM          0
+   KILL           0
+   FKILL          0
+   GKILL          0
+   SET            0
+   FSET           0
+   GSET           0
+   EOF            1
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           0
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          0
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -show -forward nonexist.mjl
+%GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/nonexist.mjl
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+unset echo
+####################################################################
+#STAGE B
+# database with BIJ with some updates
+####################################################################
+Do some  updates...
+##TEST_AWKTime written into time.*
+SET,TSET,USET,GSET,FSET
+##TEST_AWKTime written into time.*
+##TEST_AWKTime written into time.*
+KILL,TKILL,UKILL,GKILL,FKILL
+Passed SET and KILL
+SET,TSET,USET,GSET,FSET
+##TEST_AWKTime written into time.*
+ZKILL,TZKILL,UZKILL,GZKILL,FZKILL
+##TEST_AWKTime written into time.*
+Check that only ^acn(11,11),^acn(12,12),^acn(13,13),^acn(14,14) are present
+^acn(11,11)="this is USET"
+^acn(12,12)="this is USET"
+^acn(13,13)="this is GSET"
+^acn(14,14)="this is GSET"
+##TEST_AWKTime written into time.*
+Updates done, test...
+##SOURCE_PATH##/mupip journal -extract -back mumps.mjl
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+if ( 1 ) then
+echo ######################################
+######################################
+echo EXTRACT
+EXTRACT
+echo 
+
+set echo
+##SOURCE_PATH##/mupip journal -extract -back mumps.mjl
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+unset echo
+GDSJEX07
+01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
+02\#TIMESTAMP#\1\#PID1#\0
+03\#TIMESTAMP#\1\#PID1#\0\1
+##SOURCE_PATH##/mupip journal -extract=fileb.mjf -forward *
+%GTM-I-FILECREATE, Journal extract file fileb.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -extract=/bad/path/fileb.mjf -forward *
+unset echo
+%GTM-E-FILENOTCREATE, Journal extract file /bad/path/fileb.mjf not created
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##SOURCE_PATH##/mupip journal -extract -forward mumps.mjl
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+unset echo
+GDSJEX07
+01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
+02\#TIMESTAMP#\1\#PID1#\0
+01\#TIMESTAMP#\1\#PID2#\#HOST#\#USER1#\\0\\\
+05\#TIMESTAMP#\1\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(1)="this is SET"
+05\#TIMESTAMP#\2\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(1)="this is SET"
+05\#TIMESTAMP#\3\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^cn(1)="this is SET"
+05\#TIMESTAMP#\4\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(1)="this is SET"
+08\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(2)="this is TSET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(2)="this is TSET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(2)="this is TSET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(2)="this is TSET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(3)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(3)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(3)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(3)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(3,1)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(3,1)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(3,1)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(3,1)="this is USET"
+09\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\1\BATCH
+06\#TIMESTAMP#\6\#PID2#\0\#TOKENSEQ3#
+05\#TIMESTAMP#\6\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(5)="this is FSET"
+05\#TIMESTAMP#\7\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(5)="this is FSET"
+05\#TIMESTAMP#\8\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(5)="this is FSET"
+05\#TIMESTAMP#\9\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(5)="this is FSET"
+05\#TIMESTAMP#\10\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(6)="this is GSET"
+05\#TIMESTAMP#\11\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(6)="this is GSET"
+05\#TIMESTAMP#\12\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(6)="this is GSET"
+05\#TIMESTAMP#\13\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(6)="this is GSET"
+05\#TIMESTAMP#\14\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(6,1)="this is GSET"
+05\#TIMESTAMP#\15\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(6,1)="this is GSET"
+05\#TIMESTAMP#\16\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(6,1)="this is GSET"
+05\#TIMESTAMP#\17\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(6,1)="this is GSET"
+07\#TIMESTAMP#\18\#PID2#\0\#TOKENSEQ3#\1
+04\#TIMESTAMP#\18\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(1)
+04\#TIMESTAMP#\19\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(1)
+04\#TIMESTAMP#\20\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(1)
+08\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(2)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(2)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(2)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(2)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(3)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(3)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(3)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(3)
+09\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\1\
+06\#TIMESTAMP#\22\#PID2#\0\#TOKENSEQ5#
+04\#TIMESTAMP#\22\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(5)
+04\#TIMESTAMP#\23\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(5)
+04\#TIMESTAMP#\24\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(5)
+04\#TIMESTAMP#\25\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(5)
+04\#TIMESTAMP#\26\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(6)
+04\#TIMESTAMP#\28\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(6)
+04\#TIMESTAMP#\30\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(6)
+04\#TIMESTAMP#\32\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(6)
+07\#TIMESTAMP#\34\#PID2#\0\#TOKENSEQ5#\1
+05\#TIMESTAMP#\34\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(10)="this is SET"
+05\#TIMESTAMP#\35\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(10)="this is SET"
+05\#TIMESTAMP#\36\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^ccn(10)="this is SET"
+05\#TIMESTAMP#\37\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(10)="this is SET"
+08\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(11)="this is TSET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(11)="this is TSET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(11)="this is TSET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(11)="this is TSET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(11,11)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(11,11)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(11,11)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(11,11)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\13\#NODEFLAGS#\^acn(12,12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\14\#NODEFLAGS#\^bcn(12,12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\15\#NODEFLAGS#\^ccn(12,12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\16\#NODEFLAGS#\^dcn(12,12)="this is USET"
+09\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\1\online
+06\#TIMESTAMP#\39\#PID2#\0\#TOKENSEQ7#
+05\#TIMESTAMP#\39\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(13)="this is FSET"
+05\#TIMESTAMP#\40\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(13)="this is FSET"
+05\#TIMESTAMP#\41\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(13)="this is FSET"
+05\#TIMESTAMP#\42\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(13)="this is FSET"
+05\#TIMESTAMP#\43\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(13,13)="this is GSET"
+05\#TIMESTAMP#\44\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(13,13)="this is GSET"
+05\#TIMESTAMP#\45\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(13,13)="this is GSET"
+05\#TIMESTAMP#\46\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(13,13)="this is GSET"
+05\#TIMESTAMP#\47\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(14)="this is GSET"
+05\#TIMESTAMP#\48\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(14)="this is GSET"
+05\#TIMESTAMP#\49\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(14)="this is GSET"
+05\#TIMESTAMP#\50\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(14)="this is GSET"
+05\#TIMESTAMP#\51\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\13\#NODEFLAGS#\^acn(14,14)="this is GSET"
+05\#TIMESTAMP#\52\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\14\#NODEFLAGS#\^bcn(14,14)="this is GSET"
+05\#TIMESTAMP#\53\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\15\#NODEFLAGS#\^ccn(14,14)="this is GSET"
+05\#TIMESTAMP#\54\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\16\#NODEFLAGS#\^dcn(14,14)="this is GSET"
+07\#TIMESTAMP#\55\#PID2#\0\#TOKENSEQ7#\1
+10\#TIMESTAMP#\55\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(10)
+10\#TIMESTAMP#\56\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(10)
+10\#TIMESTAMP#\57\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^ccn(10)
+10\#TIMESTAMP#\58\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(10)
+08\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(11)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(11)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(11)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(11)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(12)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(12)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(12)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(12)
+09\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\1\
+06\#TIMESTAMP#\60\#PID2#\0\#TOKENSEQ9#
+10\#TIMESTAMP#\60\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(13)
+10\#TIMESTAMP#\61\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(13)
+10\#TIMESTAMP#\62\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(13)
+10\#TIMESTAMP#\63\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(13)
+10\#TIMESTAMP#\64\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(14)
+10\#TIMESTAMP#\65\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(14)
+10\#TIMESTAMP#\66\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(14)
+10\#TIMESTAMP#\67\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(14)
+07\#TIMESTAMP#\68\#PID2#\0\#TOKENSEQ9#\1
+02\#TIMESTAMP#\68\#PID2#\0
+03\#TIMESTAMP#\68\#PID2#\0\0
+if ( 1 != 1 ) then
+unset echo
+check that SHOW=STAT and EXTRACT counts match
+%GTM-I-FILECREATE, Journal extract file nodetail.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-I-FILECREATE, Journal extract file detail.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+TOT_KILL, TOT_SET, and TOT_ZKILL should be the same in the three:
+detail.out:   TOTAL(excl. (Z)TS):   120
+detail.out:   TOTAL(incl. (Z)TS):   128
+detail.out:   TOT_KILL   19
+detail.out:   TOT_SET    64
+detail.out:   TOT_ZKILL  20
+nodetail.out:   TOTAL(excl. (Z)TS):   116
+nodetail.out:   TOTAL(incl. (Z)TS):   124
+nodetail.out:   TOT_KILL   19
+nodetail.out:   TOT_SET    64
+nodetail.out:   TOT_ZKILL  20
+stats.out:   TOTAL      120
+stats.out:   TOT_KILL   19
+stats.out:   TOT_SET    64
+stats.out:   TOT_ZKILL  20
+######################################
+SHOW
+
+##SOURCE_PATH##/mupip journal -show=all -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                       FALSE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+##TEST_AWK Align size  *[1-9][0-9]* \[0x[0-9A-F]*\] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      0 [0x0000000000000000]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+Process(es) that are COMPLETE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           2
+   PFIN           2
+   ZTCOM          4
+   KILL           3
+   FKILL          1
+   GKILL          7
+   SET            8
+   FSET           2
+   GSET          26
+   EOF            1
+   TKILL          1
+   UKILL          7
+   TSET           2
+   USET          26
+   TCOM           4
+   NULL           0
+   ZKILL          4
+   FZKIL          1
+   GZKIL          7
+   TZKIL          1
+   UZKIL          7
+   INCTN          4
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -show -backward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                       FALSE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+##TEST_AWK Align size  *[1-9][0-9]* \[0x[0-9A-F]*\] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      0 [0x0000000000000000]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           0
+   PFIN           0
+   ZTCOM          0
+   KILL           0
+   FKILL          0
+   GKILL          0
+   SET            0
+   FSET           0
+   GSET           0
+   EOF            0
+   TKILL          0
+   UKILL          0
+   TSET           0
+   USET           0
+   TCOM           0
+   NULL           0
+   ZKILL          0
+   FZKIL          0
+   GZKIL          0
+   TZKIL          0
+   UZKIL          0
+   INCTN          0
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -show=header -noverify -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                       FALSE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+##TEST_AWK Align size  *[1-9][0-9]* \[0x[0-9A-F]*\] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      0 [0x0000000000000000]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+%GTM-S-JNLSUCCESS, Show successful
+##SOURCE_PATH##/mupip journal -show=header -noverify -forward *
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                       FALSE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+##TEST_AWK Align size  *[1-9][0-9]* \[0x[0-9A-F]*\] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      0 [0x0000000000000000]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+%GTM-S-JNLSUCCESS, Show successful
+##SOURCE_PATH##/mupip journal -show=processes -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Process(es) that are COMPLETE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -show=processes,active -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Process(es) that are COMPLETE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -show=ac -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -show=b -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -show=s -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           2
+   PFIN           2
+   ZTCOM          4
+   KILL           3
+   FKILL          1
+   GKILL          7
+   SET            8
+   FSET           2
+   GSET          26
+   EOF            1
+   TKILL          1
+   UKILL          7
+   TSET           2
+   USET          26
+   TCOM           4
+   NULL           0
+   ZKILL          4
+   FZKIL          1
+   GZKIL          7
+   TZKIL          1
+   UZKIL          7
+   INCTN          4
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+if ( 1 != 1 ) then
+endif
+if ( ( 1 != 1 ) && ( 1 || 1 ) ) then
+echo ####################################################################
+####################################################################
+echo #STAGE C
+#STAGE C
+echo # database with BIJ with some active transactions (and an active process of another user)
+# database with BIJ with some active transactions (and an active process of another user)
+echo ####################################################################
+####################################################################
+echo Start second process (as same user)...
+Start second process (as same user)...
+##IN_TEST_PATH##/u_inref/same_user.csh jnlrecm
+echo Wait for second user to finish its processing...
+Wait for second user to finish its processing...
+##SOURCE_PATH##/mumps -direct
+
+GTM>
+##TEST_AWK.H = [0-9]*,[0-9]*
+
+GTM>
+
+GTM>
+
+GTM>
+second user should have finished
+
+GTM>
+##TEST_AWK.H = [0-9]*,[0-9]*
+
+GTM>
+
+GTM>
+echo Updates done, test...
+Updates done, test...
+echo 
+
+##SOURCE_PATH##/mumps -direct
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mumps -direct
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mumps -direct
+
+GTM>
+
+GTM>
+
+GTM>
+##TEST_COM_PATH##/wait_for_log.csh -log updatesyncndie_done.txt -duration 300
+##TEST_COM_PATH##/gtm_crash.csh
+Simulating kill of GTM Processes in ##TEST_PATH##
+GTM processes Killed!
+##SOURCE_PATH##/mupip rundown -reg * -override
+##SOURCE_PATH##/mupip rundown -relinkctl
+##SOURCE_PATH##/mumps -direct
+##TEST_COM_PATH##/backup_dbjnl.csh save_c *.dat *.gld *.mjl* time* cp
+if ( 1 ) then
+echo ######################################
+######################################
+echo EXTRACT
+EXTRACT
+echo 
+
+set echo
+##SOURCE_PATH##/mupip journal -extract=filec.mjf -broken=filec.broken -lost=filec.lost -forward *
+%GTM-I-FILECREATE, Journal extract file filec.mjf created
+%GTM-I-FILECREATE, Broken transactions extract file filec.broken created
+%GTM-I-FILECREATE, Lost transactions extract file filec.lost created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+unset echo
+GDSJEX07
+01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
+02\#TIMESTAMP#\1\#PID1#\0
+01\#TIMESTAMP#\1\#PID2#\#HOST#\#USER1#\\0\\\
+05\#TIMESTAMP#\1\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(1)="this is SET"
+05\#TIMESTAMP#\2\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(1)="this is SET"
+05\#TIMESTAMP#\3\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^cn(1)="this is SET"
+05\#TIMESTAMP#\4\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(1)="this is SET"
+08\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(2)="this is TSET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(2)="this is TSET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(2)="this is TSET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(2)="this is TSET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(3)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(3)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(3)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(3)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(3,1)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(3,1)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(3,1)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(3,1)="this is USET"
+09\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\1\BATCH
+06\#TIMESTAMP#\6\#PID2#\0\#TOKENSEQ3#
+05\#TIMESTAMP#\6\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(5)="this is FSET"
+05\#TIMESTAMP#\7\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(5)="this is FSET"
+05\#TIMESTAMP#\8\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(5)="this is FSET"
+05\#TIMESTAMP#\9\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(5)="this is FSET"
+05\#TIMESTAMP#\10\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(6)="this is GSET"
+05\#TIMESTAMP#\11\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(6)="this is GSET"
+05\#TIMESTAMP#\12\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(6)="this is GSET"
+05\#TIMESTAMP#\13\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(6)="this is GSET"
+05\#TIMESTAMP#\14\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(6,1)="this is GSET"
+05\#TIMESTAMP#\15\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(6,1)="this is GSET"
+05\#TIMESTAMP#\16\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(6,1)="this is GSET"
+05\#TIMESTAMP#\17\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(6,1)="this is GSET"
+07\#TIMESTAMP#\18\#PID2#\0\#TOKENSEQ3#\1
+04\#TIMESTAMP#\18\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(1)
+04\#TIMESTAMP#\19\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(1)
+04\#TIMESTAMP#\20\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(1)
+08\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(2)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(2)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(2)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(2)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(3)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(3)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(3)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(3)
+09\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\1\
+06\#TIMESTAMP#\22\#PID2#\0\#TOKENSEQ5#
+04\#TIMESTAMP#\22\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(5)
+04\#TIMESTAMP#\23\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(5)
+04\#TIMESTAMP#\24\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(5)
+04\#TIMESTAMP#\25\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(5)
+04\#TIMESTAMP#\26\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(6)
+04\#TIMESTAMP#\28\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(6)
+04\#TIMESTAMP#\30\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(6)
+04\#TIMESTAMP#\32\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(6)
+07\#TIMESTAMP#\34\#PID2#\0\#TOKENSEQ5#\1
+05\#TIMESTAMP#\34\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(10)="this is SET"
+05\#TIMESTAMP#\35\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(10)="this is SET"
+05\#TIMESTAMP#\36\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^ccn(10)="this is SET"
+05\#TIMESTAMP#\37\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(10)="this is SET"
+08\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(11)="this is TSET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(11)="this is TSET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(11)="this is TSET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(11)="this is TSET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(11,11)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(11,11)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(11,11)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(11,11)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\13\#NODEFLAGS#\^acn(12,12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\14\#NODEFLAGS#\^bcn(12,12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\15\#NODEFLAGS#\^ccn(12,12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\16\#NODEFLAGS#\^dcn(12,12)="this is USET"
+09\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\1\online
+06\#TIMESTAMP#\39\#PID2#\0\#TOKENSEQ7#
+05\#TIMESTAMP#\39\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(13)="this is FSET"
+05\#TIMESTAMP#\40\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(13)="this is FSET"
+05\#TIMESTAMP#\41\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(13)="this is FSET"
+05\#TIMESTAMP#\42\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(13)="this is FSET"
+05\#TIMESTAMP#\43\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(13,13)="this is GSET"
+05\#TIMESTAMP#\44\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(13,13)="this is GSET"
+05\#TIMESTAMP#\45\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(13,13)="this is GSET"
+05\#TIMESTAMP#\46\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(13,13)="this is GSET"
+05\#TIMESTAMP#\47\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(14)="this is GSET"
+05\#TIMESTAMP#\48\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(14)="this is GSET"
+05\#TIMESTAMP#\49\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(14)="this is GSET"
+05\#TIMESTAMP#\50\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(14)="this is GSET"
+05\#TIMESTAMP#\51\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\13\#NODEFLAGS#\^acn(14,14)="this is GSET"
+05\#TIMESTAMP#\52\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\14\#NODEFLAGS#\^bcn(14,14)="this is GSET"
+05\#TIMESTAMP#\53\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\15\#NODEFLAGS#\^ccn(14,14)="this is GSET"
+05\#TIMESTAMP#\54\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\16\#NODEFLAGS#\^dcn(14,14)="this is GSET"
+07\#TIMESTAMP#\55\#PID2#\0\#TOKENSEQ7#\1
+10\#TIMESTAMP#\55\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(10)
+10\#TIMESTAMP#\56\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(10)
+10\#TIMESTAMP#\57\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^ccn(10)
+10\#TIMESTAMP#\58\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(10)
+08\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(11)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(11)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(11)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(11)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(12)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(12)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(12)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(12)
+09\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\1\
+06\#TIMESTAMP#\60\#PID2#\0\#TOKENSEQ9#
+10\#TIMESTAMP#\60\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(13)
+10\#TIMESTAMP#\61\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(13)
+10\#TIMESTAMP#\62\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(13)
+10\#TIMESTAMP#\63\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(13)
+10\#TIMESTAMP#\64\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(14)
+10\#TIMESTAMP#\65\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(14)
+10\#TIMESTAMP#\66\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(14)
+10\#TIMESTAMP#\67\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(14)
+07\#TIMESTAMP#\68\#PID2#\0\#TOKENSEQ9#\1
+02\#TIMESTAMP#\68\#PID2#\0
+01\#TIMESTAMP#\68\#PID3#\#HOST#\#USER1#\\0\\\
+04\#TIMESTAMP#\68\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn
+05\#TIMESTAMP#\70\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(1)="this is SET"
+05\#TIMESTAMP#\71\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(1)="this is SET"
+05\#TIMESTAMP#\72\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^cn(1)="this is SET"
+05\#TIMESTAMP#\73\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(1)="this is SET"
+08\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(2)="this is TSET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(2)="this is TSET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(2)="this is TSET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(2)="this is TSET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(3)="this is USET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(3)="this is USET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(3)="this is USET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(3)="this is USET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(3,1)="this is USET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(3,1)="this is USET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(3,1)="this is USET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(3,1)="this is USET"
+09\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\1\BATCH
+06\#TIMESTAMP#\75\#PID3#\0\#TOKENSEQ11#
+05\#TIMESTAMP#\75\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(5)="this is FSET"
+05\#TIMESTAMP#\76\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(5)="this is FSET"
+05\#TIMESTAMP#\77\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(5)="this is FSET"
+05\#TIMESTAMP#\78\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(5)="this is FSET"
+05\#TIMESTAMP#\79\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(6)="this is GSET"
+05\#TIMESTAMP#\80\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(6)="this is GSET"
+05\#TIMESTAMP#\81\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(6)="this is GSET"
+05\#TIMESTAMP#\82\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(6)="this is GSET"
+05\#TIMESTAMP#\83\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(6,1)="this is GSET"
+05\#TIMESTAMP#\84\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(6,1)="this is GSET"
+05\#TIMESTAMP#\85\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(6,1)="this is GSET"
+05\#TIMESTAMP#\86\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(6,1)="this is GSET"
+07\#TIMESTAMP#\87\#PID3#\0\#TOKENSEQ11#\1
+04\#TIMESTAMP#\87\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(1)
+04\#TIMESTAMP#\88\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(1)
+04\#TIMESTAMP#\89\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(1)
+08\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#
+04\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(2)
+04\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(2)
+04\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(2)
+04\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(2)
+04\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(3)
+04\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(3)
+04\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(3)
+04\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(3)
+09\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\1\
+06\#TIMESTAMP#\91\#PID3#\0\#TOKENSEQ13#
+04\#TIMESTAMP#\91\#PID3#\0\#TOKENSEQ13#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(5)
+04\#TIMESTAMP#\92\#PID3#\0\#TOKENSEQ13#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(5)
+04\#TIMESTAMP#\93\#PID3#\0\#TOKENSEQ13#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(5)
+04\#TIMESTAMP#\94\#PID3#\0\#TOKENSEQ13#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(5)
+04\#TIMESTAMP#\95\#PID3#\0\#TOKENSEQ13#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(6)
+04\#TIMESTAMP#\97\#PID3#\0\#TOKENSEQ13#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(6)
+04\#TIMESTAMP#\98\#PID3#\0\#TOKENSEQ13#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(6)
+04\#TIMESTAMP#\99\#PID3#\0\#TOKENSEQ13#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(6)
+07\#TIMESTAMP#\100\#PID3#\0\#TOKENSEQ13#\1
+05\#TIMESTAMP#\100\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(10)="this is SET"
+05\#TIMESTAMP#\101\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(10)="this is SET"
+05\#TIMESTAMP#\102\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^ccn(10)="this is SET"
+05\#TIMESTAMP#\103\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(10)="this is SET"
+08\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(11)="this is TSET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(11)="this is TSET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(11)="this is TSET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(11)="this is TSET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(11,11)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(11,11)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(11,11)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(11,11)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(12)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(12)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(12)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(12)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\13\#NODEFLAGS#\^acn(12,12)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\14\#NODEFLAGS#\^bcn(12,12)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\15\#NODEFLAGS#\^ccn(12,12)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\16\#NODEFLAGS#\^dcn(12,12)="this is USET"
+09\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\1\online
+06\#TIMESTAMP#\105\#PID3#\0\#TOKENSEQ15#
+05\#TIMESTAMP#\105\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(13)="this is FSET"
+05\#TIMESTAMP#\106\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(13)="this is FSET"
+05\#TIMESTAMP#\107\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(13)="this is FSET"
+05\#TIMESTAMP#\108\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(13)="this is FSET"
+05\#TIMESTAMP#\109\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(13,13)="this is GSET"
+05\#TIMESTAMP#\110\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(13,13)="this is GSET"
+05\#TIMESTAMP#\111\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(13,13)="this is GSET"
+05\#TIMESTAMP#\112\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(13,13)="this is GSET"
+05\#TIMESTAMP#\113\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(14)="this is GSET"
+05\#TIMESTAMP#\114\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(14)="this is GSET"
+05\#TIMESTAMP#\115\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(14)="this is GSET"
+05\#TIMESTAMP#\116\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(14)="this is GSET"
+05\#TIMESTAMP#\117\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\13\#NODEFLAGS#\^acn(14,14)="this is GSET"
+05\#TIMESTAMP#\118\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\14\#NODEFLAGS#\^bcn(14,14)="this is GSET"
+05\#TIMESTAMP#\119\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\15\#NODEFLAGS#\^ccn(14,14)="this is GSET"
+05\#TIMESTAMP#\120\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\16\#NODEFLAGS#\^dcn(14,14)="this is GSET"
+07\#TIMESTAMP#\121\#PID3#\0\#TOKENSEQ15#\1
+10\#TIMESTAMP#\121\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(10)
+10\#TIMESTAMP#\122\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(10)
+10\#TIMESTAMP#\123\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^ccn(10)
+10\#TIMESTAMP#\124\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(10)
+08\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#
+10\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(11)
+10\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(11)
+10\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(11)
+10\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(11)
+10\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(12)
+10\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(12)
+10\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(12)
+10\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(12)
+09\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\1\
+06\#TIMESTAMP#\126\#PID3#\0\#TOKENSEQ17#
+10\#TIMESTAMP#\126\#PID3#\0\#TOKENSEQ17#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(13)
+10\#TIMESTAMP#\127\#PID3#\0\#TOKENSEQ17#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(13)
+10\#TIMESTAMP#\128\#PID3#\0\#TOKENSEQ17#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(13)
+10\#TIMESTAMP#\129\#PID3#\0\#TOKENSEQ17#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(13)
+10\#TIMESTAMP#\130\#PID3#\0\#TOKENSEQ17#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(14)
+10\#TIMESTAMP#\131\#PID3#\0\#TOKENSEQ17#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(14)
+10\#TIMESTAMP#\132\#PID3#\0\#TOKENSEQ17#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(14)
+10\#TIMESTAMP#\133\#PID3#\0\#TOKENSEQ17#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(14)
+07\#TIMESTAMP#\134\#PID3#\0\#TOKENSEQ17#\1
+unset echo
+##SOURCE_PATH##/mupip journal -extract -forward mumps.mjl
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
+%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+unset echo
+GDSJEX07
+01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
+02\#TIMESTAMP#\1\#PID1#\0
+01\#TIMESTAMP#\1\#PID2#\#HOST#\#USER1#\\0\\\
+05\#TIMESTAMP#\1\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(1)="this is SET"
+05\#TIMESTAMP#\2\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(1)="this is SET"
+05\#TIMESTAMP#\3\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^cn(1)="this is SET"
+05\#TIMESTAMP#\4\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(1)="this is SET"
+08\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(2)="this is TSET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(2)="this is TSET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(2)="this is TSET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(2)="this is TSET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(3)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(3)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(3)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(3)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(3,1)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(3,1)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(3,1)="this is USET"
+05\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(3,1)="this is USET"
+09\#TIMESTAMP#\5\#PID2#\0\#TOKENSEQ2#\0\#STRMSEQNO#\1\BATCH
+06\#TIMESTAMP#\6\#PID2#\0\#TOKENSEQ3#
+05\#TIMESTAMP#\6\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(5)="this is FSET"
+05\#TIMESTAMP#\7\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(5)="this is FSET"
+05\#TIMESTAMP#\8\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(5)="this is FSET"
+05\#TIMESTAMP#\9\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(5)="this is FSET"
+05\#TIMESTAMP#\10\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(6)="this is GSET"
+05\#TIMESTAMP#\11\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(6)="this is GSET"
+05\#TIMESTAMP#\12\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(6)="this is GSET"
+05\#TIMESTAMP#\13\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(6)="this is GSET"
+05\#TIMESTAMP#\14\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(6,1)="this is GSET"
+05\#TIMESTAMP#\15\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(6,1)="this is GSET"
+05\#TIMESTAMP#\16\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(6,1)="this is GSET"
+05\#TIMESTAMP#\17\#PID2#\0\#TOKENSEQ3#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(6,1)="this is GSET"
+07\#TIMESTAMP#\18\#PID2#\0\#TOKENSEQ3#\1
+04\#TIMESTAMP#\18\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(1)
+04\#TIMESTAMP#\19\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(1)
+04\#TIMESTAMP#\20\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(1)
+08\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(2)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(2)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(2)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(2)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(3)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(3)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(3)
+04\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(3)
+09\#TIMESTAMP#\21\#PID2#\0\#TOKENSEQ4#\0\#STRMSEQNO#\1\
+06\#TIMESTAMP#\22\#PID2#\0\#TOKENSEQ5#
+04\#TIMESTAMP#\22\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(5)
+04\#TIMESTAMP#\23\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(5)
+04\#TIMESTAMP#\24\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(5)
+04\#TIMESTAMP#\25\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(5)
+04\#TIMESTAMP#\26\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(6)
+04\#TIMESTAMP#\28\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(6)
+04\#TIMESTAMP#\30\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(6)
+04\#TIMESTAMP#\32\#PID2#\0\#TOKENSEQ5#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(6)
+07\#TIMESTAMP#\34\#PID2#\0\#TOKENSEQ5#\1
+05\#TIMESTAMP#\34\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(10)="this is SET"
+05\#TIMESTAMP#\35\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(10)="this is SET"
+05\#TIMESTAMP#\36\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^ccn(10)="this is SET"
+05\#TIMESTAMP#\37\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(10)="this is SET"
+08\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(11)="this is TSET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(11)="this is TSET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(11)="this is TSET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(11)="this is TSET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(11,11)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(11,11)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(11,11)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(11,11)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\13\#NODEFLAGS#\^acn(12,12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\14\#NODEFLAGS#\^bcn(12,12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\15\#NODEFLAGS#\^ccn(12,12)="this is USET"
+05\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\16\#NODEFLAGS#\^dcn(12,12)="this is USET"
+09\#TIMESTAMP#\38\#PID2#\0\#TOKENSEQ6#\0\#STRMSEQNO#\1\online
+06\#TIMESTAMP#\39\#PID2#\0\#TOKENSEQ7#
+05\#TIMESTAMP#\39\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(13)="this is FSET"
+05\#TIMESTAMP#\40\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(13)="this is FSET"
+05\#TIMESTAMP#\41\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(13)="this is FSET"
+05\#TIMESTAMP#\42\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(13)="this is FSET"
+05\#TIMESTAMP#\43\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(13,13)="this is GSET"
+05\#TIMESTAMP#\44\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(13,13)="this is GSET"
+05\#TIMESTAMP#\45\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(13,13)="this is GSET"
+05\#TIMESTAMP#\46\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(13,13)="this is GSET"
+05\#TIMESTAMP#\47\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(14)="this is GSET"
+05\#TIMESTAMP#\48\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(14)="this is GSET"
+05\#TIMESTAMP#\49\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(14)="this is GSET"
+05\#TIMESTAMP#\50\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(14)="this is GSET"
+05\#TIMESTAMP#\51\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\13\#NODEFLAGS#\^acn(14,14)="this is GSET"
+05\#TIMESTAMP#\52\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\14\#NODEFLAGS#\^bcn(14,14)="this is GSET"
+05\#TIMESTAMP#\53\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\15\#NODEFLAGS#\^ccn(14,14)="this is GSET"
+05\#TIMESTAMP#\54\#PID2#\0\#TOKENSEQ7#\0\#STRMSEQNO#\16\#NODEFLAGS#\^dcn(14,14)="this is GSET"
+07\#TIMESTAMP#\55\#PID2#\0\#TOKENSEQ7#\1
+10\#TIMESTAMP#\55\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(10)
+10\#TIMESTAMP#\56\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(10)
+10\#TIMESTAMP#\57\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^ccn(10)
+10\#TIMESTAMP#\58\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(10)
+08\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(11)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(11)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(11)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(11)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(12)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(12)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(12)
+10\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(12)
+09\#TIMESTAMP#\59\#PID2#\0\#TOKENSEQ8#\0\#STRMSEQNO#\1\
+06\#TIMESTAMP#\60\#PID2#\0\#TOKENSEQ9#
+10\#TIMESTAMP#\60\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(13)
+10\#TIMESTAMP#\61\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(13)
+10\#TIMESTAMP#\62\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(13)
+10\#TIMESTAMP#\63\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(13)
+10\#TIMESTAMP#\64\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(14)
+10\#TIMESTAMP#\65\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(14)
+10\#TIMESTAMP#\66\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(14)
+10\#TIMESTAMP#\67\#PID2#\0\#TOKENSEQ9#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(14)
+07\#TIMESTAMP#\68\#PID2#\0\#TOKENSEQ9#\1
+02\#TIMESTAMP#\68\#PID2#\0
+01\#TIMESTAMP#\68\#PID3#\#HOST#\#USER1#\\0\\\
+04\#TIMESTAMP#\68\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn
+05\#TIMESTAMP#\70\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(1)="this is SET"
+05\#TIMESTAMP#\71\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(1)="this is SET"
+05\#TIMESTAMP#\72\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^cn(1)="this is SET"
+05\#TIMESTAMP#\73\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(1)="this is SET"
+08\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(2)="this is TSET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(2)="this is TSET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(2)="this is TSET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(2)="this is TSET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(3)="this is USET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(3)="this is USET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(3)="this is USET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(3)="this is USET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(3,1)="this is USET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(3,1)="this is USET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(3,1)="this is USET"
+05\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(3,1)="this is USET"
+09\#TIMESTAMP#\74\#PID3#\0\#TOKENSEQ10#\0\#STRMSEQNO#\1\BATCH
+06\#TIMESTAMP#\75\#PID3#\0\#TOKENSEQ11#
+05\#TIMESTAMP#\75\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(5)="this is FSET"
+05\#TIMESTAMP#\76\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(5)="this is FSET"
+05\#TIMESTAMP#\77\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(5)="this is FSET"
+05\#TIMESTAMP#\78\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(5)="this is FSET"
+05\#TIMESTAMP#\79\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(6)="this is GSET"
+05\#TIMESTAMP#\80\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(6)="this is GSET"
+05\#TIMESTAMP#\81\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(6)="this is GSET"
+05\#TIMESTAMP#\82\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(6)="this is GSET"
+05\#TIMESTAMP#\83\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(6,1)="this is GSET"
+05\#TIMESTAMP#\84\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(6,1)="this is GSET"
+05\#TIMESTAMP#\85\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(6,1)="this is GSET"
+05\#TIMESTAMP#\86\#PID3#\0\#TOKENSEQ11#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(6,1)="this is GSET"
+07\#TIMESTAMP#\87\#PID3#\0\#TOKENSEQ11#\1
+04\#TIMESTAMP#\87\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(1)
+04\#TIMESTAMP#\88\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(1)
+04\#TIMESTAMP#\89\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(1)
+08\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#
+04\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(2)
+04\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(2)
+04\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(2)
+04\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(2)
+04\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(3)
+04\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(3)
+04\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(3)
+04\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(3)
+09\#TIMESTAMP#\90\#PID3#\0\#TOKENSEQ12#\0\#STRMSEQNO#\1\
+06\#TIMESTAMP#\91\#PID3#\0\#TOKENSEQ13#
+04\#TIMESTAMP#\91\#PID3#\0\#TOKENSEQ13#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(5)
+04\#TIMESTAMP#\92\#PID3#\0\#TOKENSEQ13#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(5)
+04\#TIMESTAMP#\93\#PID3#\0\#TOKENSEQ13#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(5)
+04\#TIMESTAMP#\94\#PID3#\0\#TOKENSEQ13#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(5)
+04\#TIMESTAMP#\95\#PID3#\0\#TOKENSEQ13#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(6)
+04\#TIMESTAMP#\97\#PID3#\0\#TOKENSEQ13#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(6)
+04\#TIMESTAMP#\98\#PID3#\0\#TOKENSEQ13#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(6)
+04\#TIMESTAMP#\99\#PID3#\0\#TOKENSEQ13#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(6)
+07\#TIMESTAMP#\100\#PID3#\0\#TOKENSEQ13#\1
+05\#TIMESTAMP#\100\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(10)="this is SET"
+05\#TIMESTAMP#\101\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(10)="this is SET"
+05\#TIMESTAMP#\102\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^ccn(10)="this is SET"
+05\#TIMESTAMP#\103\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(10)="this is SET"
+08\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(11)="this is TSET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(11)="this is TSET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(11)="this is TSET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(11)="this is TSET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(11,11)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(11,11)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(11,11)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(11,11)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(12)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(12)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(12)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(12)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\13\#NODEFLAGS#\^acn(12,12)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\14\#NODEFLAGS#\^bcn(12,12)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\15\#NODEFLAGS#\^ccn(12,12)="this is USET"
+05\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\16\#NODEFLAGS#\^dcn(12,12)="this is USET"
+09\#TIMESTAMP#\104\#PID3#\0\#TOKENSEQ14#\0\#STRMSEQNO#\1\online
+06\#TIMESTAMP#\105\#PID3#\0\#TOKENSEQ15#
+05\#TIMESTAMP#\105\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(13)="this is FSET"
+05\#TIMESTAMP#\106\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(13)="this is FSET"
+05\#TIMESTAMP#\107\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(13)="this is FSET"
+05\#TIMESTAMP#\108\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(13)="this is FSET"
+05\#TIMESTAMP#\109\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(13,13)="this is GSET"
+05\#TIMESTAMP#\110\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(13,13)="this is GSET"
+05\#TIMESTAMP#\111\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(13,13)="this is GSET"
+05\#TIMESTAMP#\112\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(13,13)="this is GSET"
+05\#TIMESTAMP#\113\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\9\#NODEFLAGS#\^acn(14)="this is GSET"
+05\#TIMESTAMP#\114\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\10\#NODEFLAGS#\^bcn(14)="this is GSET"
+05\#TIMESTAMP#\115\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\11\#NODEFLAGS#\^ccn(14)="this is GSET"
+05\#TIMESTAMP#\116\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\12\#NODEFLAGS#\^dcn(14)="this is GSET"
+05\#TIMESTAMP#\117\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\13\#NODEFLAGS#\^acn(14,14)="this is GSET"
+05\#TIMESTAMP#\118\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\14\#NODEFLAGS#\^bcn(14,14)="this is GSET"
+05\#TIMESTAMP#\119\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\15\#NODEFLAGS#\^ccn(14,14)="this is GSET"
+05\#TIMESTAMP#\120\#PID3#\0\#TOKENSEQ15#\0\#STRMSEQNO#\16\#NODEFLAGS#\^dcn(14,14)="this is GSET"
+07\#TIMESTAMP#\121\#PID3#\0\#TOKENSEQ15#\1
+10\#TIMESTAMP#\121\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn(10)
+10\#TIMESTAMP#\122\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^bcn(10)
+10\#TIMESTAMP#\123\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^ccn(10)
+10\#TIMESTAMP#\124\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(10)
+08\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#
+10\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(11)
+10\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(11)
+10\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(11)
+10\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(11)
+10\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(12)
+10\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(12)
+10\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(12)
+10\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(12)
+09\#TIMESTAMP#\125\#PID3#\0\#TOKENSEQ16#\0\#STRMSEQNO#\1\
+06\#TIMESTAMP#\126\#PID3#\0\#TOKENSEQ17#
+10\#TIMESTAMP#\126\#PID3#\0\#TOKENSEQ17#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn(13)
+10\#TIMESTAMP#\127\#PID3#\0\#TOKENSEQ17#\0\#STRMSEQNO#\2\#NODEFLAGS#\^bcn(13)
+10\#TIMESTAMP#\128\#PID3#\0\#TOKENSEQ17#\0\#STRMSEQNO#\3\#NODEFLAGS#\^ccn(13)
+10\#TIMESTAMP#\129\#PID3#\0\#TOKENSEQ17#\0\#STRMSEQNO#\4\#NODEFLAGS#\^dcn(13)
+10\#TIMESTAMP#\130\#PID3#\0\#TOKENSEQ17#\0\#STRMSEQNO#\5\#NODEFLAGS#\^acn(14)
+10\#TIMESTAMP#\131\#PID3#\0\#TOKENSEQ17#\0\#STRMSEQNO#\6\#NODEFLAGS#\^bcn(14)
+10\#TIMESTAMP#\132\#PID3#\0\#TOKENSEQ17#\0\#STRMSEQNO#\7\#NODEFLAGS#\^ccn(14)
+10\#TIMESTAMP#\133\#PID3#\0\#TOKENSEQ17#\0\#STRMSEQNO#\8\#NODEFLAGS#\^dcn(14)
+07\#TIMESTAMP#\134\#PID3#\0\#TOKENSEQ17#\1
+if ( 1 != 1 ) then
+##SOURCE_PATH##/mupip journal -extract -forward mumps.mjl -detail
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.broken is renamed to ##TEST_PATH##/mumps.broken_##TIMESTAMP##
+%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.lost is renamed to ##TEST_PATH##/mumps.lost_##TIMESTAMP##
+%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+endif
+if ( 1 == 1 ) then
+echo ######################################
+######################################
+echo SHOW
+SHOW
+echo 
+
+##SOURCE_PATH##/mupip journal -show=all -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                        TRUE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+##TEST_AWK Align size  *[1-9][0-9]* \[0x[0-9A-F]*\] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      0 [0x0000000000000000]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process(es) that are still ACTIVE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process(es) that are COMPLETE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           7
+   PFIN           5
+   ZTCOM          8
+   KILL           7
+   FKILL          2
+   GKILL         14
+   SET           29
+   FSET           5
+   GSET          56
+   EOF            0
+   TKILL          2
+   UKILL         14
+   TSET           4
+   USET          52
+   TCOM           8
+   NULL           0
+   ZKILL          8
+   FZKIL          2
+   GZKIL         14
+   TZKIL          2
+   UZKIL         14
+   INCTN          6
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##TEST_AWK##SOURCE_PATH##/mupip journal -show -backward mumps.mjl -since=".*"
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                        TRUE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+##TEST_AWK Align size  *[1-9][0-9]* \[0x[0-9A-F]*\] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      0 [0x0000000000000000]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process(es) that are still ACTIVE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process(es) that are COMPLETE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           6
+   PFIN           5
+   ZTCOM          8
+   KILL           7
+   FKILL          2
+   GKILL         14
+   SET           29
+   FSET           5
+   GSET          56
+   EOF            0
+   TKILL          2
+   UKILL         14
+   TSET           4
+   USET          52
+   TCOM           8
+   NULL           0
+   ZKILL          8
+   FZKIL          2
+   GZKIL         14
+   TZKIL          2
+   UZKIL         14
+   INCTN          6
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -show=header -noverify -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                        TRUE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+##TEST_AWK Align size  *[1-9][0-9]* \[0x[0-9A-F]*\] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      0 [0x0000000000000000]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+%GTM-S-JNLSUCCESS, Show successful
+##SOURCE_PATH##/mupip journal -show=header -noverify -forward *
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Journal file name       ##TEST_PATH##/mumps.mjl
+Journal file label      ##FILTERED##
+Database file name      ##TEST_PATH##/mumps.dat
+ Prev journal file name 
+ Next journal file name 
+
+ Before-image journal                      ENABLED
+ Journal file header size                    65536 [0x00010000]
+ Virtual file size                            2048 [0x00000800] blocks
+ Journal file checksum seed           ##FILTERED##
+ Crash                                        TRUE
+ Recover interrupted                         FALSE
+ Journal file encrypted               ##FILTERED##
+ Journal file (re)encryption in progress     FALSE
+ Journal file hash                    ##FILTERED##
+ Journal file hash2                          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ Journal file uses null IV                   FALSE
+ Journal file encryption hash cutoff            -1
+ Journal file hash2 start TN                     0 [0x0000000000000000]
+ Blocks to Upgrade Adjustment                    0 [0x00000000]
+ Endian Format      ##FILTERED####ENDIAN##
+ Journal Creation Time         ..../../.. ..:..:..
+ Time of last update           ..../../.. ..:..:..
+ Begin Transaction                               1 [0x0000000000000001]
+##TEST_AWK Align size  *[1-9][0-9]* \[0x[0-9A-F]*\] bytes
+ Epoch Interval                       ##FILTERED##
+ Replication State                          CLOSED
+ Jnlfile SwitchLimit                       8386560 [0x007FF800] blocks
+ Jnlfile Allocation                           2048 [0x00000800] blocks
+ Jnlfile Extension                            2048 [0x00000800] blocks
+ Maximum Journal Record Length             1049696 [0x00100460]
+ Turn Around Point Offset                        0 [0x00000000]
+ Turn Around Point Time                          0
+ Start Region Sequence Number                    1 [0x0000000000000001]
+ End Region Sequence Number                      0 [0x0000000000000000]
+
+Process That Created the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process That First Opened the Journal File:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+
+%GTM-S-JNLSUCCESS, Show successful
+##SOURCE_PATH##/mupip journal -show=processes -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process(es) that are still ACTIVE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process(es) that are COMPLETE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -show=processes,active -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process(es) that are still ACTIVE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process(es) that are COMPLETE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -show=ac -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+Process(es) that are still ACTIVE in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -show=b -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+##SOURCE_PATH##/mupip journal -show=s -forward mumps.mjl
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Record type    Count
+----------------------
+   *BAD*          0
+   PINI           7
+   PFIN           5
+   ZTCOM          8
+   KILL           7
+   FKILL          2
+   GKILL         14
+   SET           29
+   FSET           5
+   GSET          56
+   EOF            0
+   TKILL          2
+   UKILL         14
+   TSET           4
+   USET          52
+   TCOM           8
+   NULL           0
+   ZKILL          8
+   FZKIL          2
+   GZKIL         14
+   TZKIL          2
+   UZKIL         14
+   INCTN          6
+   AIMG           0
+   TZTWO          0
+   UZTWO          0
+   TZTRI          0
+   UZTRI          0
+   TRUNC          0
+   TLGTR          0
+   ULGTR          0
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+if ( 1 != 1 ) then
+endif
+unset echo
+################ SECOND PROCESS OUTPUT ###################
+Check second_process.log for the following output:
+Will run           : jnlrecm
+##SOURCE_PATH##
+##TEST_PATH##
+Killed
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+##TEST_AWK.ZV = GT.M .*
+
+GTM>
+start...
+
+GTM>
+
+GTM>
+##TEST_AWKTime written into time.*
+SET,TSET,USET,GSET,FSET
+##TEST_AWKTime written into time.*
+##TEST_AWKTime written into time.*
+KILL,TKILL,UKILL,GKILL,FKILL
+Passed SET and KILL
+SET,TSET,USET,GSET,FSET
+##TEST_AWKTime written into time.*
+ZKILL,TZKILL,UZKILL,GZKILL,FZKILL
+##TEST_AWKTime written into time.*
+Check that only ^acn(11,11),^acn(12,12),^acn(13,13),^acn(14,14) are present
+^acn(11,11)="this is USET"
+^acn(12,12)="this is USET"
+^acn(13,13)="this is GSET"
+^acn(14,14)="this is GSET"
+
+GTM>
+
+GTM>
+
+GTM>
+in active ztp...
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+End of second_process job!
+############ END SECOND PROCESS OUTPUT ###################
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip journal -show=broken -forward *
+env LC_ALL=C gawk -f ##TEST_COM_PATH##/mupjnl_multireg_show_sort.awk show_broken3.unsorted
+
+-------------------------------------------------------------------------------
+SHOW output for journal file ##TEST_PATH##/mumps.mjl
+-------------------------------------------------------------------------------
+
+Process(es) with BROKEN transactions in this journal:
+
+PID        NODE         USER     TERM JPV_TIME           
+---------------------------------------------------------
+##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
+
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+unset echo
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+####################################################################
+# DETAIL EXTRACT
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+GTM>
+##TEST_AWKTime written into time.*
+SET,TSET,USET,GSET,FSET
+##TEST_AWKTime written into time.*
+##TEST_AWKTime written into time.*
+KILL,TKILL,UKILL,GKILL,FKILL
+Passed SET and KILL
+SET,TSET,USET,GSET,FSET
+##TEST_AWKTime written into time.*
+ZKILL,TZKILL,UZKILL,GZKILL,FZKILL
+##TEST_AWKTime written into time.*
+Check that only ^acn(11,11),^acn(12,12),^acn(13,13),^acn(14,14) are present
+^acn(11,11)="this is USET"
+^acn(12,12)="this is USET"
+^acn(13,13)="this is GSET"
+^acn(14,14)="this is GSET"
+
+GTM>
+##TEST_AWKTime written into time.*
+SET,TSET,USET,GSET,FSET
+##TEST_AWKTime written into time.*
+##TEST_AWKTime written into time.*
+KILL,TKILL,UKILL,GKILL,FKILL
+Passed SET and KILL
+SET,TSET,USET,GSET,FSET
+##TEST_AWKTime written into time.*
+ZKILL,TZKILL,UZKILL,GZKILL,FZKILL
+##TEST_AWKTime written into time.*
+Check that only ^acn(11,11),^acn(12,12),^acn(13,13),^acn(14,14) are present
+^acn(11,11)="this is USET"
+^acn(12,12)="this is USET"
+^acn(13,13)="this is GSET"
+^acn(14,14)="this is GSET"
+
+GTM>
+##TEST_AWKTime written into time.*
+SET,TSET,USET,GSET,FSET
+##TEST_AWKTime written into time.*
+##TEST_AWKTime written into time.*
+KILL,TKILL,UKILL,GKILL,FKILL
+Passed SET and KILL
+SET,TSET,USET,GSET,FSET
+##TEST_AWKTime written into time.*
+ZKILL,TZKILL,UZKILL,GZKILL,FZKILL
+##TEST_AWKTime written into time.*
+Check that only ^acn(11,11),^acn(12,12),^acn(13,13),^acn(14,14) are present
+^acn(11,11)="this is USET"
+^acn(12,12)="this is USET"
+^acn(13,13)="this is GSET"
+^acn(14,14)="this is GSET"
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
+%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%GTM-S-JNLSUCCESS, Extract successful
+%GTM-S-JNLSUCCESS, Verify successful
+Check that the offset + len matches the next offset (i.e. no records are omitted, and len is correct)
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+####################################################################

@@ -1,0 +1,10 @@
+add -name a* -reg=AREG
+add -name b* -reg=BREG
+add -name c* -reg=CREG
+add -reg AREG -d=ASEG -null_subscripts=ALWAYS
+add -reg BREG -d=BSEG -null_subscripts=ALWAYS
+add -reg CREG -d=CSEG -null_subscripts=NEVER
+add -seg ASEG -file=a.dat
+add -seg BSEG -file=b.dat
+add -seg CSEG -file=c.dat
+show -reg

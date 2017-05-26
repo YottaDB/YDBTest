@@ -1,0 +1,11 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Put something in the database so REORG doesn't complain
+# Start alternating truncates and extends in the background. Block 512 oscillates into/out of existence.
+# Do some database updates that frequently read bitmap block 512
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

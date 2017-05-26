@@ -1,0 +1,116 @@
+Case 1.
+$grep "GTM>.*FILENOTFND" case1.expect.outx
+
+Case 2.
+cat case2.mumps.out
+hello
+GTM>
+
+cat case2.mumps.err
+%GTM-E-DIVZERO, Attempt to divide by zero
+		At M source location case2+2^case2
+
+cat case2.mumps.out+err
+hello
+%GTM-E-DIVZERO, Attempt to divide by zero
+		At M source location case2+2^case2
+
+GTM>
+
+$grep "hello.*DIVZERO" case2.expect.outx
+
+Case 3.
+cat case3.mumps.out
+helloworld
+
+cat case3.mumps.err
+
+cat case3.mumps.out+err
+helloworld
+
+$grep -w "hello" case3.expect.outx
+
+Case 4.
+cat case4.gde.out+err
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+%GDE-E-VALUEBAD,  is not a valid qualifier
+
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+Case 5.
+cat case5.mumps.out+err
+hello world
+
+Case 6.
+$grep "$y is [0-9]" case6.expect.outx
+$y is 3
+
+cat case6.mumps.out+err
+hello
+%GTM-E-DIVZERO, Attempt to divide by zero
+		At M source location case6+2^case6
+
+GTM>
+$y is 5
+GTM>
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+Case 7.
+$grep -E "(GTM\-|FAIL)" case7.expect.outx | $grep -v "%GTM\-F\-KILLBYSIGUINFO"
+
+Case 8.
+$grep -E "(GTM\-|FAIL)" case8.outx | $grep -v "%GTM\-F\-KILLBYSIGUINFO"
+
+Case 9.
+$grep -E "(GTM\-|FAIL)" case9.outx | $grep -v "%GTM\-F\-KILLBYSIGUINFO"
+
+Case 10.
+$grep -E "(GTM\-|FAIL)" case10.expect.outx | $grep -vE "%GTM\-E\-(ERRWZINTR|ZINTDIRECT)"
+
+Case 11.
+$grep -E "(GTM\-|FAIL)" case11.outx | $grep -vE "%GTM\-E\-(ERRWZINTR|ZINTDIRECT)"
+
+Case 12.
+$grep -E "(GTM\-|FAIL)" case12.outx | $grep -vE "%GTM\-E\-(ERRWZINTR|ZINTDIRECT)"
+
+Case 13.
+$grep "\-E\-" case13.expect.outx
+##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+%GTM-E-RELINKCTLERR, Error with relink control structure for $ZROUTINES directory ##TEST_PATH##
+##TEST_AWK%GTM-E-SYSCALL, Error received from system call open\(\) of file ./gtm-relinkctl-[0-9a-f]* failed -- called from module ##SOURCE_SRC_PATH##/relinkctl.c at line [1-9][0-9]*
+##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
+##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
+
+Case 14.
+$grep -E "(GTM\-|FAIL)" case14.expect.outx | $grep -v "%GTM\-F\-FORCEDHALT"
+
+Case 15.
+$grep -E "(GTM\-|FAIL)" case15.outx | $grep -v "%GTM\-F\-FORCEDHALT"
+
+Case 16.
+$grep -E "(GTM\-|FAIL)" case16.outx | $grep -v "%GTM\-F\-FORCEDHALT"
+
+Case 17.
+$grep -E "(GTM\-|FAIL)" case17.expect.outx | $grep -vE "%GTM\-E\-(ERRWZINTR|ZINTDIRECT)"
+
+Case 18.
+$grep -E "(GTM\-|FAIL)" case18.outx | $grep -vE "%GTM\-E\-(ERRWZINTR|ZINTDIRECT)"
+
+Case 19.
+$grep -E "(GTM\-|FAIL)" case19.outx | $grep -vE "%GTM\-E\-(ERRWZINTR|ZINTDIRECT)"
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

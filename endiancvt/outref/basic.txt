@@ -1,0 +1,147 @@
+##SUSPEND_OUTPUT PLATFORM_NO_V4GTM
+
+## create a V4 database
+## mupip endiancvt mumps.dat
+##      --> Shoud issue "GTM-E-NOENDIANCVT Unable to convert the endian format of the file mumps.dat due to the database not in current version" error
+## concurrently run a few updates
+## mupip endiancvt mumps.dat
+##      --> Shoud issue "GTM-E-NOENDIANCVT Unable to convert the endian format of the file mumps.dat due to the database not in current version" error
+
+GT.M switched to ##FILTERED##PRIORVER## version
+Files Created in ##TEST_PATH##:
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z]*/mumps -run GDE
+mumps.gld
+##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z]*/mupip
+mumps.dat
+----------
+Error unrecognizable seen in endiancvt_try1.out as expected:
+Database file mumps.dat has an unrecognizable format
+----------
+----------
+Error MUNOACTION seen in endiancvt_try1.out as expected:
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+----------
+Error unrecognizable seen in endiancvt_try2.out as expected:
+Database file mumps.dat has an unrecognizable format
+----------
+----------
+Error MUNOACTION seen in endiancvt_try2.out as expected:
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+
+# Upgrade the database to V5
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+# dbcertify certify...
+%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+
+# mupip upgrade...
+##TEST_AWK%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M .*
+
+# convert the gld to V5 format
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+# mupip reorg upgrade...
+Region DEFAULT : MUPIP REORG UPGRADE started
+Region DEFAULT : Desired DB Format remains at V6 after MUPIP REORG UPGRADE
+Region DEFAULT : Database is now FULLY UPGRADED
+Region DEFAULT : MUPIP REORG UPGRADE finished
+
+## concurrently run a few updates
+## mupip endiancvt mumps.dat
+##      --> Shoud issue MUSTANDALONE error
+## stop the updates
+## mupip endiancvt mumps.dat
+##      --> should be successfull
+
+----------
+Error MUSTANDALONE seen in endiancvt_try3.out as expected:
+%GTM-E-MUSTANDALONE, Could not get exclusive access to mumps.dat
+----------
+----------
+Error MUNOACTION seen in endiancvt_try3.out as expected:
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##FILTERED##Converting database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+Converting in place - database will be damaged by an abnormal termination
+You must have a backup before proceeding
+Proceed [yes/no] ?
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+# Now copy the database to the remote machine and do an integ check
+TEST-I-INTEG check of mumps.dat passed
+##ALLOW_OUTPUT PLATFORM_NO_V4GTM
+
+## b)
+## Create a V5 database with GDS blocks bigger than a disk block (512)
+##      /* The default blocksize is 1024. So a simple dbcreate would do */
+## Set exactly one global
+## Note down the size of the database (ls -l)
+## $MUPIP endiancvt mumps.dat -outdb=convert.dat
+## check the size of the database (ls -l) of conver.dat matches mumps.dat
+## In the other endian machine:
+##    $MUPIP integ convert.dat
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##FILTERED##Converting database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+Converting to new file convert.dat
+Proceed [yes/no] ?
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+TEST-I-SUCCESS the size of the database before and after endiancvt is the same
+# Now copy the database to the remote machine and do an integ check
+TEST-I-INTEG check of convert.dat passed
+
+## c) /* Check with a data value that looks like a block pointer */
+## Create a V5 database
+## set a single global to a value that looks like a block pointer
+##      - $c(0,0,0,1) if machine_host is a big endian machine
+##      - $c(1,0,0,0) if machine_host is a little endian machine
+## $MUPIP endiancvt blkptrdat.dat
+## copy blkptrdat.dat to the other endian machine
+## In the remote machine:
+##    $MUPIP integ blkptrdat.dat
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+blkptrdat.gld
+Using: ##SOURCE_PATH##/mupip
+blkptrdat.dat
+
+GTM>
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##FILTERED##Converting database file blkptrdat.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+Converting in place - database will be damaged by an abnormal termination
+You must have a backup before proceeding
+Proceed [yes/no] ?
+##FILTERED##%GTM-I-ENDIANCVT, Converted database file blkptrdat.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+# Now copy the database to the remote machine and do an integ check
+TEST-I-INTEG check of blkptrdat.dat passed

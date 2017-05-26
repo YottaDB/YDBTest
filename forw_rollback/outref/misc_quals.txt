@@ -1,0 +1,382 @@
+Generate few updates in a replicated environment
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+
+GTM>
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+#############################################################################################################
+# Test that MUPIP JOURNAL -ROLLBACK -FORWARD does not support the -NOCHECKTN qualifier
+#	(even though MUPIP JOURNAL -RECOVER -FORWARD does) and that -CHECKTN is the default
+# Test that MUPIP JOURNAL -ROLLBACK -FORWARD supports the -CHAIN qualifier just like MUPIP JOURNAL -RECOVER -FORWARD does
+#	and that -CHAIN is the default
+#############################################################################################################
+
+Trying -NOCHECKTN. Expect a MUPCLIERR error
+----------------------------------------------------------
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+MUPIP JOURNAL -ROLLBACK -FORWARD does not support -NOCHECKTN
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+Trying -CHECKTN with one missing .mjl file and prevlink. Expect JNLFILEOPNERR error
+----------------------------------------------------------
+# With -CHAIN or no chain specification, we expect the same output. Test that by randomly adding one of the two.
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%GTM-I-DBFRZRESETSUC, Freeze released successfully on database file ##TEST_PATH##/mumps.dat
+##TEST_AWK%GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+Trying -CHECKTN with one missing .mjl file and prevlink but with -NOCHAIN. Expect JNLDBTNNOMATCH but no NOPREVLINK error
+----------------------------------------------------------
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.GTM-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##.mumps.mjl has beginning transaction number .0x[0-9A-F]+., but database ##TEST_PATH##.mumps.dat has current transaction number .0x[0-9A-F]+. and journal end transaction number .0x[0-9A-F]+.
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+Trying -CHECKTN with one missing .mjl file and noprevlink and *. Expect JNLDBTNNOMATCH and NOPREVLINK error
+----------------------------------------------------------
+##TEST_AWKprev_jnl_file name changed from ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) to NULL
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.GTM-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##.mumps.mjl has beginning transaction number .0x[0-9A-F]+., but database ##TEST_PATH##.mumps.dat has current transaction number .0x[0-9A-F]+. and journal end transaction number .0x[0-9A-F]+.
+%GTM-E-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+Trying -CHECKTN with one missing .mjl file and noprevlink with explicit mjl file. Expect JNLDBTNNOMATCH and NOPREVLINK error
+----------------------------------------------------------
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.GTM-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##.mumps.mjl has beginning transaction number .0x[0-9A-F]+., but database ##TEST_PATH##.mumps.dat has current transaction number .0x[0-9A-F]+. and journal end transaction number .0x[0-9A-F]+.
+%GTM-E-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+Trying -CHECKTN with no missing .mjl file. Expect NO error
+----------------------------------------------------------
+# With CHECKTN or no checktn specification, we expect the same output. Test that by randomly adding one of the two.
+# With * or explicit mjl filename specification, we expect the same output. Test that by randomly adding one of the two.
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 7 [0x0000000000000007]
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 7 [0x0000000000000007]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#############################################################################################################
+# Test that MUPIP JOURNAL -ROLLBACK (with -BACKWARD or -FORWARD) does not allow -FENCES=NONE or -FENCES=ALWAYS
+# Test that MUPIP JOURNAL -ROLLBACK (with -BACKWARD or -FORWARD) allows -FENCES=PROCESS and is the default
+#############################################################################################################
+
+Trying FENCES=NONE with FORWARD ROLLBACK. Expect MUPCLIERR error
+----------------------------------------------------------
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+MUPIP JOURNAL -ROLLBACK only supports -FENCES=PROCESS
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+Trying FENCES=ALWAYS with FORWARD ROLLBACK. Expect MUPCLIERR error
+----------------------------------------------------------
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+MUPIP JOURNAL -ROLLBACK only supports -FENCES=PROCESS
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+Trying FENCES=PROCESS with FORWARD ROLLBACK. Expect NO error
+----------------------------------------------------------
+# -FENCES=PROCESS or no -fences specification should produce the same output. Test that by randomly adding one of the two.
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%GTM-I-DBFRZRESETSUC, Freeze released successfully on database file ##TEST_PATH##/mumps.dat
+##TEST_AWK%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 7 [0x0000000000000007]
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 7 [0x0000000000000007]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+Trying FENCES=NONE with BACKWARD ROLLBACK. Expect MUPCLIERR error
+----------------------------------------------------------
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+MUPIP JOURNAL -ROLLBACK only supports -FENCES=PROCESS
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+Trying FENCES=ALWAYS with BACKWARD ROLLBACK. Expect MUPCLIERR error
+----------------------------------------------------------
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+MUPIP JOURNAL -ROLLBACK only supports -FENCES=PROCESS
+%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+##SUSPEND_OUTPUT JNL_BEFORE
+Trying FENCES=PROCESS with BACKWARD ROLLBACK. Expect RLBKNOBIMG error
+##ALLOW_OUTPUT JNL_BEFORE
+##SUSPEND_OUTPUT JNL_NOBEFORE
+Trying FENCES=PROCESS with BACKWARD ROLLBACK. Expect NO error
+##ALLOW_OUTPUT JNL_NOBEFORE
+----------------------------------------------------------
+# -FENCES=PROCESS or no -fences specification should produce the same output. Test that by randomly adding one of the two.
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##SUSPEND_OUTPUT JNL_BEFORE
+%GTM-E-RLBKNOBIMG, ROLLBACK cannot proceed as database ##TEST_PATH##/mumps.dat has NOBEFORE_IMAGE journaling
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##ALLOW_OUTPUT JNL_BEFORE
+##SUSPEND_OUTPUT JNL_NOBEFORE
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 7 [0x0000000000000007]
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 7 [0x0000000000000007]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##ALLOW_OUTPUT JNL_NOBEFORE
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+# Do some journal extracts and time calculations in preparation for the next few tests
+# For purposes of the journal extract, move away the db to avoid REQRUNDOWN errors
+# But this means possible DBCOLLREQ warnings from journal extract so redirect to .outx file to avoid those from showing up
+# Create setvar.csh that contains variables needed (and can be sourced) by test
+##SUSPEND_OUTPUT JNL_NOBEFORE
+#############################################################################################################
+# Test that MUPIP JOURNAL -RECOVER -BACKWARD -BEFORE works even if -SINCE is not specified.
+#	Previously it used to error out with a JNLTMQUAL1 error.
+#
+# Specify -BEFORE time in the middle of previous generation mjl file (mumps.mjl_*)
+# Expect RLBKJNSEQ of 2
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 2 [0x0000000000000002]
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl_##TIMESTAMP## is renamed to ##TEST_PATH##/rolled_bak_mumps.mjl_##TIMESTAMP##
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 2 [0x0000000000000002]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+# Specify -BEFORE time in the middle of current  generation mjl file (mumps.mjl)
+# Expect RLBKJNSEQ of 7
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 7 [0x0000000000000007]
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 7 [0x0000000000000007]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#############################################################################################################
+# Test MUPIP JOURNAL -ROLLBACK -BACKWARD -SINCE
+#
+# Specify -SINCE time in the middle of previous generation mjl file (mumps.mjl_*)
+# Expect RLBKJNSEQ of 7
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 7 [0x0000000000000007]
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl_##TIMESTAMP## is renamed to ##TEST_PATH##/rolled_bak_mumps.mjl_##TIMESTAMP##
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 7 [0x0000000000000007]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+# Specify -SINCE time in the middle of current  generation mjl file (mumps.mjl)
+# Expect RLBKJNSEQ of 7
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 7 [0x0000000000000007]
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 7 [0x0000000000000007]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#############################################################################################################
+# Test that MUPIP JOURNAL -ROLLBACK -BACKWARD -BEFORE -SINCE works
+# Specify -SINCE and -BEFORE time in previous generation mjl file
+# Verify (by MUJNLPREVGEN message) that rollback did go to previous generation mjl file in its backward processing
+# Expect RLBKJNSEQ of 2
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 2 [0x0000000000000002]
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl_##TIMESTAMP## is renamed to ##TEST_PATH##/rolled_bak_mumps.mjl_##TIMESTAMP##
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 2 [0x0000000000000002]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#############################################################################################################
+# Test MUPIP JOURNAL -ROLLBACK BACKWARD -BEFORE -RESYNC
+#
+# -BEFORE time occurs before the RESYNC seqno specification. BEFORE should prevail.
+# Expect RLBKJNSEQ of 2
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RESOLVESEQNO, Resolving until sequence number 3 [0x0000000000000003]
+##TEST_AWK%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 2 [0x0000000000000002]
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl_##TIMESTAMP## is renamed to ##TEST_PATH##/rolled_bak_mumps.mjl_##TIMESTAMP##
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 2 [0x0000000000000002]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#
+# -BEFORE time occurs after the RESYNC seqno specification. RESYNC should prevail.
+# Expect RLBKJNSEQ of 5
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RESOLVESEQNO, Resolving until sequence number 5 [0x0000000000000005]
+##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 5 [0x0000000000000005]
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 5 [0x0000000000000005]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Verify successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##ALLOW_OUTPUT JNL_NOBEFORE
+#############################################################################################################
+# Test MUPIP JOURNAL -ROLLBACK FORWARD -BEFORE -RESYNC
+#
+# -BEFORE time occurs before the RESYNC seqno specification. BEFORE should prevail.
+# Expect RLBKJNSEQ of 2
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%GTM-I-DBFRZRESETSUC, Freeze released successfully on database file ##TEST_PATH##/mumps.dat
+##TEST_AWK%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RESOLVESEQNO, Resolving until sequence number 3 [0x0000000000000003]
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 2 [0x0000000000000002]
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 2 [0x0000000000000002]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#
+# -BEFORE time occurs after the RESYNC seqno specification. RESYNC should prevail.
+# Expect RLBKJNSEQ of 5
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%GTM-I-DBFRZRESETSUC, Freeze released successfully on database file ##TEST_PATH##/mumps.dat
+##TEST_AWK%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RESOLVESEQNO, Resolving until sequence number 5 [0x0000000000000005]
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##SUSPEND_OUTPUT JNL_NOBEFORE
+##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.lost is renamed to ##TEST_PATH##/mumps.lost_##TIMESTAMP##
+##ALLOW_OUTPUT JNL_NOBEFORE
+%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 5 [0x0000000000000005]
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 5 [0x0000000000000005]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#############################################################################################################
+# Test MUPIP JOURNAL -ROLLBACK -FORWARD -BEFORE
+#
+# Specify -BEFORE time in the middle of previous generation mjl file (mumps.mjl_*)
+# Expect RLBKJNSEQ of 2
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%GTM-I-DBFRZRESETSUC, Freeze released successfully on database file ##TEST_PATH##/mumps.dat
+##TEST_AWK%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 2 [0x0000000000000002]
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 2 [0x0000000000000002]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+# Specify -BEFORE time in the middle of current  generation mjl file (mumps.mjl)
+# Expect RLBKJNSEQ of 7
+##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%GTM-I-DBFRZRESETSUC, Freeze released successfully on database file ##TEST_PATH##/mumps.dat
+##TEST_AWK%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 7 [0x0000000000000007]
+%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 7 [0x0000000000000007]
+##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
+%GTM-S-JNLSUCCESS, Show successful
+%GTM-S-JNLSUCCESS, Rollback successful
+##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..

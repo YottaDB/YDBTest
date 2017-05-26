@@ -1,0 +1,354 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+
+******* Start of basicals1 *******
+
+basicals1: PASS
+
+
+******* Start of basicals2 *******
+
+
+--------------------------
+Test case: alsnewpop
+Prior to call - $ZData(b)=101 - value: 1
+In subrtn prior to set - $ZData(b)=0 - value: not-set
+In subrtn after set - $ZData(b)=1 - value: 2
+After call (New pop) - $ZData(b)=101 - value: 1
+
+--------------------------
+Test case: alsdotprm
+prior to call to suba - parm type: 1 -- parm refcnt: 1
+In suba - parm type: 101 -- parm refcnt: 2
+In suba - base type: 101 -- base refcnt: 2
+returned from suba - parm type: 1 -- parm refcnt: 1
+In subb - parm type: 101 -- parm refcnt: 2
+returned from subb - parm type: 1 -- parm refcnt: 1
+
+--------------------------
+Test case: subnewals
+prior to call - x type: 1 -- x refcnt: 1 -- x value: 1
+in sub - x type: 101 -- x refcnt: 2 -- x value: 2
+in sub - X type: 101 -- X refcnt: 2 -- X value: 2
+after call (New pop) - x type: 1 -- x refcnt: 1 -- x value: 2
+
+--------------------------
+Test case: chkcntflg
+Container flag was supressed with assignment
+Container flag was supressed with $Get()
+Container flag was supressed with Merge
+Container flag was supressed with subroutine return value
+Container was properly copied
+
+--------------------------
+Test case: lvrehash
+lvrehash test PASS
+
+--------------------------
+Test case: memleak
+memleak test PASS
+
+--------------------------
+Test case: killaliasall
+*** Begin ZWrite ***
+A=2 ;*
+*B=A
+C=3 ;*
+*D=C
+E=4 ;*
+Estat=1
+F=5
+*F(1)=E
+F1stat=101
+*** End of ZWrite ***
+$ZData(E) was 1 and is now 101
+
+Killing all aliases now
+*** Begin ZWrite ***
+Estat=1
+F=5
+F(1)=""
+F1stat=101
+*** End of ZWrite ***
+$ZData(F(1)) was 101 and is now 1
+
+--------------------------
+Test case: killdotprms
+****** Inside tc15sub
+a=1 ;*
+b=2 ;*
+c=3
+d=4
+*e=a
+*f=b
+g=3
+h=4
+*z=b
+Performing kill *
+c=3
+d=4
+g=3
+h=4
+****** Returned from tc15sub
+c=3
+d=4
+
+--------------------------
+Test case: killdotver
+killdotver test PASS
+
+--------------------------
+Test case: xkilltst
+Pre-kill zwr follows:
+a=1
+*a(1)=b
+b=2 ;*
+refcount for a: 1
+refcount for b: 2
+Performing Kill (b)
+Post-kill ZWrite follows:
+b=2
+refcount for b: 1
+
+--------------------------
+Test case: varreuse
+a=3 ;*
+b=2
+*c=a
+So far so good, trying unqualified Kill *
+b=2
+d=4
+
+--------------------------
+Test case: repcntnr1
+repcntnr1: PASS
+
+--------------------------
+Test case: repcntnr2
+repcntnr2: PASS
+
+--------------------------
+Test case: killaliasall2
+killaliasall2: PASS
+
+--------------------------
+Test case: repals1
+repals1: PASS
+
+--------------------------
+Test case: repals2
+repals2: PASS
+
+--------------------------
+Test case: repcntnr3
+repcntnr3: PASS
+
+--------------------------
+Test case: zahtst
+zahtst: PASS
+
+--------------------------
+Test case: alsindir
+alsindir: PASS
+
+--------------------------
+Test case: varretain
+varretain: PASS
+
+--------------------------
+Test case: zahindir
+zahindir: PASS
+
+--------------------------
+Test case: zdataindir
+zahindir: PASS
+
+--------------------------
+Test case: pvalrepl
+pvalrepl: PASS
+
+--------------------------
+Test case: killaliasall3
+killaliasall3: PASS
+
+--------------------------
+Test case: zwrundefals
+zwrundefals: PASS
+
+--------------------------
+Test case: alslvgc
+alslvgc: PASS
+
+--------------------------
+Test case: alscmrglv
+alscmrglv: PASS
+
+--------------------------
+Test case: alscmrggv
+alscmrggv: PASS
+
+--------------------------
+
+
+******* Finish basicals2 *******
+
+
+
+******* Start basicals3 *******
+
+----------
+Test of Set *x=$$funcals() with Quit *y (New only working vars)
+Refcnt  x: 1
+CRefcnt x: 0
+x(1)=1
+x(2)=2
+----------
+Test of Set *x=$$funcals() with Quit *y (New all vars)
+Refcnt  x: 1
+CRefcnt x: 0
+x(1)=1
+x(2)=2
+----------
+Test of Set *x=$$funcals^basicals3funcs() with Quit *y (New only working vars)
+Refcnt  x: 1
+CRefcnt x: 0
+x(1)="1ext"
+x(2)="2ext"
+----------
+Test of Set *x=$$funcals^basicals3funcs() with Quit *y (New all vars)
+Refcnt  x: 1
+CRefcnt x: 0
+x(1)="1ext"
+x(2)="2ext"
+----------
+test of Set *x=$$funcalsct() with Quit *z(1) (New only working vars)
+Refcnt  x: 1
+CRefcnt x: 0
+x(1)=11
+x(2)=22
+----------
+test of Set *x=$$funcalsct() with Quit *z(1) (New all vars)
+Refcnt  x: 1
+CRefcnt x: 0
+x(1)=11
+x(2)=22
+----------
+test of Set *x=$$funcalsct^basicals3funcs() with Quit *z(1) (New only working vars)
+Refcnt  x: 1
+CRefcnt x: 0
+x(1)="11ext"
+x(2)="22ext"
+----------
+test of Set *x=$$funcalsct^basicals3funcs() with Quit *z(1) (New all vars)
+Refcnt  x: 1
+CRefcnt x: 0
+x(1)="11ext"
+x(2)="22ext"
+----------
+test of Set *x(1)=$$funcals() with Quit *y (New only working vars)
+Refcnt  z: 1
+CRefcnt z: 0
+z(1)=1
+z(2)=2
+----------
+test of Set *x(1)=$$funcals() with Quit *y (New all vars)
+Refcnt  z: 1
+CRefcnt z: 0
+z(1)=1
+z(2)=2
+----------
+test of Set *x(1)=$$funcals^basicals3funcs() with Quit *y (New only working vars)
+Refcnt  z: 1
+CRefcnt z: 0
+z(1)="1ext"
+z(2)="2ext"
+----------
+test of Set *x(1)=$$funcals^basicals3funcs() with Quit *y (New all vars)
+Refcnt  z: 1
+CRefcnt z: 0
+z(1)="1ext"
+z(2)="2ext"
+----------
+test of Set *x(1)=$$funcalsct() with Quit *z(1) (New only working vars)
+Refcnt  z: 1
+CRefcnt z: 0
+z(1)=11
+z(2)=22
+----------
+test of Set *x(1)=$$funcalsct() with Quit *z(1) (New all vars)
+Refcnt  z: 1
+CRefcnt z: 0
+z(1)=11
+z(2)=22
+----------
+test of Set *x(1)=$$funcalsct^basicals3funcs() with Quit *z(1) (New only working vars)
+Refcnt  z: 1
+CRefcnt z: 0
+z(1)="11ext"
+z(2)="22ext"
+----------
+test of Set *x(1)=$$funcalsct^basicals3funcs() with Quit *z(1) (New all vars)
+Refcnt  z: 1
+CRefcnt z: 0
+z(1)="11ext"
+z(2)="22ext"
+----------
+test of returning alias to pass'd through NEW element
+Refcnt  z: 3
+CRefcnt z: 0
+x=42 ;*
+*y=x
+*z=x
+----------
+test of returning alias to pass'd through NEW element
+Refcnt  z: 1
+CRefcnt z: 0
+x=42 ;*
+*y=x
+z=24
+----------
+Initial value of $Quit in no-return-value routine: 0
+Indirect reference value of $Quit in no-return-value routine: 0
+--
+Initial value of $Quit in non-alias-return-value routine: 1
+Indirect reference value of $Quit in non-alias-return-value routine: 1
+Non-alias return value: 43
+--
+Initial value of $Quit in alias-return-value routine: 11
+Indirect reference value of $Quit in alias-return-value routine: 11
+Alias return value: 42
+----------
+lvl=1
+*x=c
+SUCCESS: Error for return of non-existant alias was NOT invoked
+----------
+Error for return of non-existant alias container correctly invoked
+----------
+Linked list test
+##TEST_AWKLinks: .*
+##TEST_AWKLinks: .*
+##TEST_AWKLinks: .*
+##TEST_AWKLinks: .*
+##TEST_AWKLinks: .*
+##TEST_AWKLinks: .*
+##TEST_AWKLinks: .*
+##TEST_AWKLinks: .*
+##TEST_AWKLinks: .*
+##TEST_AWKLinks: .*
+##TEST_AWKLinks: .*
+##TEST_AWKLinks: .*
+----------
+Storage leak test successful
+
+----------
+
+
+******* Finish basicals3 *******
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

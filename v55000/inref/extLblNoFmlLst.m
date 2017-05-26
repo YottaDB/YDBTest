@@ -1,0 +1,3 @@
+extLblNoFmlLst
+	write "PASS",!
+	quit

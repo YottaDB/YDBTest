@@ -1,0 +1,213 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance3:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance4:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance5:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+# A non-supplementary replicating receiver will report the error UPDSYNC2MTINS if its instance file is not empty.
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simplegblupd.csh -instance INST1 -count 1 -internal'==
+
+GTM>
+set ^GBLA(1)=1_<...>
+
+GTM>
+1,1
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2 updateresync -initialize'==
+TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
+==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##START_##TIMESTAMP##.out UPDSYNC2MTINS NORECVPOOL'==
+----------
+Error UPDSYNC2MTINS seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
+%GTM-E-UPDSYNC2MTINS, Can only UPDATERESYNC with an empty instance file
+----------
+----------
+Error NORECVPOOL seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
+##TEST_AWK.GTM-E-NORECVPOOL, No receiver pool info found in the replication instance of .*/instance2/mumps.repl
+----------
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST1INST2.out'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS'==
+# A supplementary replicating receiver will report the error INSUNKNOWN if its instance file is empty.
+==Executing MULTISITE_REPLIC 'STARTSRC INST5 INST3 RP'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST5 RP'==
+==Executing MULTISITE_REPLIC 'RUN INST5 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message INSUNKNOWN -duration 120 -waitcreation'==
+==Executing MULTISITE_REPLIC 'RUN INST5 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log INSUNKNOWN'==
+----------
+Error INSUNKNOWN seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+%GTM-E-INSUNKNOWN, Supplementary Instance INSTANCE5 has no instance definition for non-Supplementary Instance INSTANCE1
+----------
+==Executing MULTISITE_REPLIC 'RUN INST5 set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_INST1INST5.out'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST5 INST3'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST5'==
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST5'==
+# report the error RCVRAHEADOFSRC if it is specified on a receiver with a max-reg-seqno value greater than the source
+==Executing MULTISITE_REPLIC 'START INST3 INST4 RP'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/simplegblupd.csh -instance INST3 -count 50 -internal'==
+
+GTM>
+set ^GBLA(2)=1_<...>
+set ^GBLA(3)=1_<...>
+set ^GBLA(4)=1_<...>
+set ^GBLA(5)=1_<...>
+set ^GBLA(6)=1_<...>
+set ^GBLA(7)=1_<...>
+set ^GBLA(8)=1_<...>
+set ^GBLA(9)=1_<...>
+set ^GBLA(10)=1_<...>
+set ^GBLA(11)=1_<...>
+set ^GBLA(12)=1_<...>
+set ^GBLA(13)=1_<...>
+set ^GBLA(14)=1_<...>
+set ^GBLA(15)=1_<...>
+set ^GBLA(16)=1_<...>
+set ^GBLA(17)=1_<...>
+set ^GBLA(18)=1_<...>
+set ^GBLA(19)=1_<...>
+set ^GBLA(20)=1_<...>
+set ^GBLA(21)=1_<...>
+set ^GBLA(22)=1_<...>
+set ^GBLA(23)=1_<...>
+set ^GBLA(24)=1_<...>
+set ^GBLA(25)=1_<...>
+set ^GBLA(26)=1_<...>
+set ^GBLA(27)=1_<...>
+set ^GBLA(28)=1_<...>
+set ^GBLA(29)=1_<...>
+set ^GBLA(30)=1_<...>
+set ^GBLA(31)=1_<...>
+set ^GBLA(32)=1_<...>
+set ^GBLA(33)=1_<...>
+set ^GBLA(34)=1_<...>
+set ^GBLA(35)=1_<...>
+set ^GBLA(1)=2_<...>
+set ^GBLA(2)=2_<...>
+set ^GBLA(3)=2_<...>
+set ^GBLA(4)=2_<...>
+set ^GBLA(5)=2_<...>
+set ^GBLA(6)=2_<...>
+set ^GBLA(7)=2_<...>
+set ^GBLA(8)=2_<...>
+set ^GBLA(9)=2_<...>
+set ^GBLA(10)=2_<...>
+set ^GBLA(11)=2_<...>
+set ^GBLA(12)=2_<...>
+set ^GBLA(13)=2_<...>
+set ^GBLA(14)=2_<...>
+set ^GBLA(15)=2_<...>
+set ^GBLA(16)=2_<...>
+
+GTM>
+16,2
+==Executing MULTISITE_REPLIC 'SYNC INST3 INST4'==
+==Executing MULTISITE_REPLIC 'RUN INST3 mkdir bak1; ##REMOTE_SOURCE_PATH##/mupip backup -replinstance=bak1 "*" bak1 >&! backup_replinstance_bak1.out'==
+==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/simplegblupd.csh -instance INST3 -count 50 -internal'==
+
+GTM>
+set ^GBLA(17)=2_<...>
+set ^GBLA(18)=2_<...>
+set ^GBLA(19)=2_<...>
+set ^GBLA(20)=2_<...>
+set ^GBLA(21)=2_<...>
+set ^GBLA(22)=2_<...>
+set ^GBLA(23)=2_<...>
+set ^GBLA(24)=2_<...>
+set ^GBLA(25)=2_<...>
+set ^GBLA(26)=2_<...>
+set ^GBLA(27)=2_<...>
+set ^GBLA(28)=2_<...>
+set ^GBLA(29)=2_<...>
+set ^GBLA(30)=2_<...>
+set ^GBLA(31)=2_<...>
+set ^GBLA(32)=2_<...>
+set ^GBLA(33)=2_<...>
+set ^GBLA(34)=2_<...>
+set ^GBLA(35)=2_<...>
+set ^GBLA(1)=3_<...>
+set ^GBLA(2)=3_<...>
+set ^GBLA(3)=3_<...>
+set ^GBLA(4)=3_<...>
+set ^GBLA(5)=3_<...>
+set ^GBLA(6)=3_<...>
+set ^GBLA(7)=3_<...>
+set ^GBLA(8)=3_<...>
+set ^GBLA(9)=3_<...>
+set ^GBLA(10)=3_<...>
+set ^GBLA(11)=3_<...>
+set ^GBLA(12)=3_<...>
+set ^GBLA(13)=3_<...>
+set ^GBLA(14)=3_<...>
+set ^GBLA(15)=3_<...>
+set ^GBLA(16)=3_<...>
+set ^GBLA(17)=3_<...>
+set ^GBLA(18)=3_<...>
+set ^GBLA(19)=3_<...>
+set ^GBLA(20)=3_<...>
+set ^GBLA(21)=3_<...>
+set ^GBLA(22)=3_<...>
+set ^GBLA(23)=3_<...>
+set ^GBLA(24)=3_<...>
+set ^GBLA(25)=3_<...>
+set ^GBLA(26)=3_<...>
+set ^GBLA(27)=3_<...>
+set ^GBLA(28)=3_<...>
+set ^GBLA(29)=3_<...>
+set ^GBLA(30)=3_<...>
+set ^GBLA(31)=3_<...>
+
+GTM>
+31,3
+==Executing MULTISITE_REPLIC 'STOP INST3 INST4'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST4'==
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message "Received REPL_ROLLBACK_FIRST message" -duration 120 -waitcreation'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST4 SRC=INST3 $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST3INST4.out'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST3 INST4'==
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST3 INST4'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST5 $gtm_tst/com/dbcheck_base.csh '==
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,0 +1,17 @@
+	;test impromper line numbers > 10
+main	w "*"
+	w "*"
+	w "*"
+	w "*"
+	w "*"
+	w "*"
+	w "*"
+	w "*"
+	w "*"
+	w "*"
+	w "*"
+	w "*"
+	w "*"
+	w "*"
+	w "*"
+	b

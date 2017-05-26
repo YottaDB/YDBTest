@@ -1,0 +1,8 @@
+#!/usr/bin/X11/expect -f
+#
+# using expect so $P is a terminal, but, because expect is flaky on some platforms, the desired CTRAP comes from a $ZSIGPROC()
+#
+set gtm_dist [lrange $argv 0 0]
+set timeout 300
+spawn $gtm_dist/mumps -run c003014
+expect eof
