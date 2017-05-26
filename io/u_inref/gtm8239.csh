@@ -289,7 +289,7 @@ setenv gtm_linktmpdir .
 
 expect > case13.expect.outx <<eof
 set timeout 120
-set stty_init "columns 200 rows 54"
+set stty_init "columns 240 rows 54"
 spawn /usr/local/bin/tcsh -f
 expect "*>"
 send -- "set prompt=\"termmumps > \"\r"
