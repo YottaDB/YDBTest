@@ -18,11 +18,19 @@
 # there are any processes (of the different version) actively accessing the shared memory.
 # -------------------------------------------------------------------------------------------------------
 #
-# Randomly choose a prior version (to simulate a VERMISMATCH error). Skip V3, V4, V9 versions
-set prior_ver = `$gtm_tst/com/random_ver.csh -type V5`
+# Randomly choose a prior version (to simulate a VERMISMATCH error).
+set prior_ver = `$gtm_tst/com/random_ver.csh -type any`
 if ("$prior_ver" =~ "*-E-*") then
 	echo "No prior versions available: $prior_ver"
 	exit -1
+endif
+# This is not a GG setup. And so versions prior to V63000A were not built from source and so the encryption
+# plugin even though present needs to be rebuilt. Since we do not have the sources, we do not rebuild here.
+# So disable encryption in case prior version is < V63000A.
+if ("ENCRYPT" == "$test_encryption" ) then
+	if (`expr "V63000A" \> "$prior_ver"`) then
+		setenv test_encryption NON_ENCRYPT
+	endif
 endif
 echo "$prior_ver" > priorver.txt
 \rm -f rand.o	# rand.o created by current version might have incompatible object format for older version in dbcreate.csh below

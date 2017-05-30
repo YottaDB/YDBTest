@@ -37,4 +37,30 @@ endif
 
 if (-e $gtm_tools/setactive.csh) then
 	set setactive_parms=($1 $2); source $gtm_tools/setactive.csh
+else
+	# Not a GG environment. So simulate $gtm_tools/setactive.csh
+	if (($2 == "p") || ($2 == "pro")) then
+		set image = "pro"
+	else if (($2 == "b") || ($2 == "bta")) then
+		set image = "bta"
+	else
+		set image = "dbg"
+	endif
+	if (! -e $gtm_root/$verno/$image) then
+		echo "VERSION-E-VERNOTEXIST : Directory $gtm_root/$verno/$image does not exist. Exiting..."
+		exit -1
+	endif
+	setenv gtm_dist $gtm_root/$verno/$image; setenv gtm_exe $gtm_dist; setenv gtmroutines ". $gtm_dist"
+	setenv gtm_tools $gtm_root/$verno/tools
+	setenv gtm_inc $gtm_root/$verno/inc
+	setenv gtm_verno $verno
+	setenv gtm_ver $gtm_root/$verno
+	setenv gtm_obj $gtm_dist/obj
+	setenv gtm_log $gtm_ver/log
+	setenv gtm_pct_list $gtm_ver/pct
+	setenv gtm_pct $gtm_pct_list
+	setenv gtm_inc_list $gtm_ver/inc
+	setenv gtm_inc $gtm_inc_list
+	setenv gtm_vrt $gtm_ver
+	setenv gt_cc_option_I "-I$gtm_inc"
 endif
