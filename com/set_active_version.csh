@@ -50,7 +50,13 @@ else
 		echo "VERSION-E-VERNOTEXIST : Directory $gtm_root/$verno/$image does not exist. Exiting..."
 		exit -1
 	endif
-	setenv gtm_dist $gtm_root/$verno/$image; setenv gtm_exe $gtm_dist; setenv gtmroutines ". $gtm_dist"
+	setenv gtm_dist $gtm_root/$verno/$image
+	setenv gtm_exe $gtm_dist
+	if ($?gtmroutines) then
+		setenv gtmroutines ". $gtm_dist $gtmroutines"
+	else
+		setenv gtmroutines ". $gtm_dist"
+	endif
 	setenv gtm_tools $gtm_root/$verno/tools
 	setenv gtm_inc $gtm_root/$verno/inc
 	setenv gtm_verno $verno

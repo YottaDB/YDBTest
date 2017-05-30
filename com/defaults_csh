@@ -30,7 +30,12 @@
 
 # hashed variable names are found in test.csh but not set here
 
-if ($?gtm_tools) then
+if ($?ydb_environment_init || (! $?gtm_tools)) then
+	set use_gtm_env_missing = 1
+else
+	set use_gtm_env_missing = 0
+endif
+if (! $use_gtm_env_missing) then
    if (-e $gtm_tools/gtm_env.csh) source $gtm_tools/gtm_env.csh  # to get the alias for version and other gt_cc* stuff
 else
    $tst_awk -f $gtm_test_com_individual/process_defaults.awk $gtm_test_com_individual/gtm_env_missing_csh >! /tmp/__${USER}_test_suite_$$_gtm_env_missing.csh

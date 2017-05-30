@@ -16,7 +16,7 @@
 if ($?gtm_dist == 0) then
    echo \$gtm_dist is not defined. Dont know what to do. Exiting
    exit 40
-   endif
+endif
 
 echo Going to try to determine the variables
 echo If they are not correct set them to correct values in the shell and run test again
@@ -46,6 +46,8 @@ check_setenv_echo gtm_inc_list $gtm_ver/inc
 check_setenv_echo gtmroutines ". $gtm_exe"
 
 check_setenv_echo gtm_inc $gtm_ver/inc
+check_setenv_echo gtm_src_list $gtm_ver/src
+check_setenv_echo gtm_src $gtm_ver/src
 check_setenv_echo gtm_vrt $gtm_ver
 
 check_setenv_echo  gt_cc_option_DDEBUG     "-DDEBUG"
