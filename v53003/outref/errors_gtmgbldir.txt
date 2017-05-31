@@ -16,7 +16,7 @@
 %GTM-E-ZGBLDIRACC, Cannot access global directory $gtmgbldir.
 %GTM-E-PARBUFSM, Parse buffer too small
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtmgbldir/gtmgbldir_MUPIP_DOWNGRADE.log
-##TEST_AWK%GTM-E-SYSCALL, Error received from system call ftok.. -- called from module ##SOURCE_SRC_PATH##/mu_all_version_standalone.c at line [1-9][0-9]*
+##TEST_AWK%GTM-E-SYSCALL, Error received from system call ftok.. -- called from module .*/mu_all_version_standalone.c at line [1-9][0-9]*
 ##TEST_AWK.*No such file or directory.*
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtmgbldir/gtmgbldir_MUPIP_EXTRACT.log
 %GTM-E-ZGBLDIRACC, Cannot access global directory $gtmgbldir.
@@ -35,5 +35,5 @@
 %GTM-E-ZGBLDIRACC, Cannot access global directory $gtmgbldir.
 %GTM-E-PARBUFSM, Parse buffer too small
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtmgbldir/gtmgbldir_MUPIP_UPGRADE.log
-##TEST_AWK%GTM-E-SYSCALL, Error received from system call ftok.. -- called from module ##SOURCE_SRC_PATH##/mu_all_version_standalone.c at line [1-9][0-9]*
+##TEST_AWK%GTM-E-SYSCALL, Error received from system call ftok.. -- called from module .*/mu_all_version_standalone.c at line [1-9][0-9]*
 ##TEST_AWK.*No such file or directory.*

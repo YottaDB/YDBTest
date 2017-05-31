@@ -2850,7 +2850,7 @@ chmod.csh rwro
 $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/b.mjl
-##TEST_AWK%GTM-E-SYSCALL, Error received from system call open -- called from module ##SOURCE_SRC_PATH##/mur_read_file_sp.c at line [0-9]*
+##TEST_AWK%GTM-E-SYSCALL, Error received from system call open -- called from module .*/mur_read_file_sp.c at line [0-9]*
 %SYSTEM-E-ENO13, Permission denied
 %GTM-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
@@ -2876,7 +2876,7 @@ chmod.csh roro
 $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/b.mjl
-##TEST_AWK%GTM-E-SYSCALL, Error received from system call open -- called from module ##SOURCE_SRC_PATH##/mur_read_file_sp.c at line [0-9]*
+##TEST_AWK%GTM-E-SYSCALL, Error received from system call open -- called from module .*/mur_read_file_sp.c at line [0-9]*
 %SYSTEM-E-ENO13, Permission denied
 %GTM-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
