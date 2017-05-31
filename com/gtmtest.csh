@@ -235,7 +235,6 @@ source $gtm_tst/com/set_fips_support.csh
 if ($?gtm_test_noggsetup) then
 	setenv gtm_test_nomultihost 1
 	setenv gtm_test_noggusers 1
-	setenv gtm_test_noggbuilddir 1
 	setenv gtm_test_noggtoolsdir 1
 	setenv gtm_test_noIGS 1
 endif
