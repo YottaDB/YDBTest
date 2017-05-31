@@ -84,6 +84,11 @@ if (("Linux" != $HOSTOS) || ("L" == $LFE)) then
 	setenv subtest_exclude_list "$subtest_exclude_list bigrctl"
 endif
 
+# If IGS is not available, filter out subtests that need it
+if ($?gtm_test_noIGS) then
+	setenv subtest_exclude_list "$subtest_exclude_list bigrctl"
+endif
+
 # The following boxes cannot cope with large memory allocations exercised in the shmalloc test.
 if ("atlst2000" == "$hostn") then
 	setenv subtest_exclude_list "$subtest_exclude_list shmalloc"
