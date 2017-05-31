@@ -54,54 +54,5 @@ check_setenv_echo  gt_cc_option_DDEBUG     "-DDEBUG"
 check_setenv_echo  gt_cc_option_I          "-I$gtm_inc"
 check_setenv_echo  gt_ld_option_output    "-o"
 
-if ( $?HOSTOS == "0" )  setenv HOSTOS `uname -s`
-switch($HOSTOS)
-case "Linux":
-   check_setenv_echo  gt_cc_compiler		"cc"
-   check_setenv_echo  gt_cc_shl_options		"-c"
-   check_setenv_echo  gt_cc_option_debug	"-g"
-   check_setenv_echo  gt_cc_option_nooptimize	""
-   check_setenv_echo  gt_cc_option_optimize  	"-O"
-   check_setenv_echo  gt_cc_options_common	"-c"
-   check_setenv_echo  gt_cc_shl_options      	"-c"
-   check_setenv_echo  gt_ld_linker		"$gt_cc_compiler"
-   check_setenv_echo  gt_ld_shl_linker       	"cc"
-   check_setenv_echo  gt_ld_shl_options      	"-shared"
-   check_setenv_echo  gt_ld_shl_suffix       	".so"
-breaksw
-
-case("SunOS"):
-   check_setenv_echo  gt_cc_compiler		"/opt/SUNWspro/SC4.2/bin/acc"
-   check_setenv_echo  gt_cc_shl_options		"-c"
-   check_setenv_echo  gt_cc_option_debug	"-g"
-   check_setenv_echo  gt_cc_option_nooptimize	""
-   check_setenv_echo  gt_cc_option_optimize  	"-O"
-   check_setenv_echo  gt_cc_options_common	"-c -D_LARGEFILE64_SOURCE=1 -D_FILE_OFFSET_BITS=64"
-   check_setenv_echo  gt_cc_shl_options      	"-c"
-   check_setenv_echo  gt_ld_linker		"$gt_cc_compiler"
-   check_setenv_echo  gt_ld_shl_linker       	"ld"
-   check_setenv_echo  gt_ld_shl_options      	"-G"
-   check_setenv_echo  gt_ld_shl_suffix       	".so"
-breaksw
-case("AIX"):
-      check_setenv_echo  gt_cc_shl_options    	"-c"
-      check_setenv_echo  gt_cc_option_debug  	"-g"
-      check_setenv_echo  gt_cc_option_nooptimize	""
-      check_setenv_echo  gt_cc_option_optimize 	"-O"
-      check_setenv_echo  gt_cc_shl_options      "-c"
-      check_setenv_echo  gt_ld_shl_suffix      	".so"
-      check_setenv_echo  gt_ld_linker		"$gt_cc_compiler"
-   if ("`uname -v`" == "3") then
-      check_setenv_echo  gt_cc_compiler      	"svcc"
-      check_setenv_echo  gt_cc_options_common   "-qchars=signed -qsrcmsg -D_BSD=43"
-      check_setenv_echo  gt_ld_shl_linker       "svcc"
-      check_setenv_echo  gt_ld_shl_options     	"-H512 -T512 -bM:SRE -bh:4"
-      check_setenv_echo  gt_ld_option_output
-   else
-      check_setenv_echo  gt_cc_compiler      	"cc"
-      check_setenv_echo  gt_cc_options_common   "-c -qchars=signed -qsrcmsg -D_BSD=43 -D_LARGE_FILES"
-      check_setenv_echo  gt_ld_shl_linker      	"ld"
-      check_setenv_echo  gt_ld_shl_options      "-G -bexpall -bnoentry -bh:4"
-   endif
-breaksw
-endsw
+setenv gtm_version_change 1	# to force gtm_env.csh to go into the codepath that initializes a lot of gt_* variables
+source $gtm_tools/gtm_env.csh
