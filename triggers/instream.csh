@@ -216,6 +216,13 @@ else
 	# triginvchset is a unicode specific test, so it must be remove here.
 	setenv subtest_exclude_list "$subtest_exclude_list triginvchset"
 endif
+
+# On a non-gg server, filter out tests that require specific GG setup
+if ($?gtm_test_noggtoolsdir) then
+	# trigthrash subtest requires $cms_tools/gtmpcatfldbld.csh
+	setenv subtest_exclude_list "$subtest_exclude_list trigthrash"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 
