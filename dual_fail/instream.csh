@@ -48,6 +48,9 @@ endif
 # use a tst_buffsize of 8MB for all dual fail tests, per C9D06-002314
 setenv tst_buffsize 8388608
 setenv subtest_list "dual_fail1 dual_fail2 dual_fail3 dual_fail4 dual_fail4a dual_fail5 dual_fail6"
+if ($?gtm_test_temporary_disable) then
+	setenv subtest_exclude_list "dual_fail6"
+endif
 
 # all tests use the same for uniform and deterministic output. if spanning
 # nodes testing is enabled, choose among some pre-defined testing values.

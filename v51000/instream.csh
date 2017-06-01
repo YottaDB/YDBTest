@@ -42,5 +42,8 @@ else
 		setenv subtest_list "$subtest_list $subtest_list_non_replic_FE"
 	endif
 endif
+if ($?gtm_test_temporary_disable) then
+	setenv subtest_exclude_list "mu_bkup_stop"
+endif
 $gtm_tst/com/submit_subtest.csh
 echo "V51000 test DONE."

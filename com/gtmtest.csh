@@ -237,6 +237,7 @@ if ($?gtm_test_noggsetup) then
 	setenv gtm_test_noggusers 1
 	setenv gtm_test_noggtoolsdir 1
 	setenv gtm_test_noIGS 1
+	setenv gtm_test_temporary_disable 1	# env var to temporarily disable a few tests to get clean E_ALL in non-GG setup
 endif
 # get machine endian type
 source $gtm_tst/com/set_gtm_machtype.csh
@@ -327,6 +328,10 @@ if ($?gtm_test_nomultihost) then
 	echo "-x GT.CM"		>>! $test_list
 	echo "-x tcp_bkup"	>>! $test_list
 	echo "-x endiancvt"	>>! $test_list
+endif
+
+if ($?gtm_test_temporary_disable) then
+	echo "-x env_xlate" >>! $test_list
 endif
 
 #############

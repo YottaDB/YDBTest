@@ -43,6 +43,10 @@ endif
 #
 setenv subtest_list "C9901000794 full_qual virtual_end seqno_chk D9D12002408 D9E02002426 C9E03002539"
 setenv subtest_list "$subtest_list D9E04002440 D9E04002447"
+
+if ($?gtm_test_temporary_disable) then
+	setenv subtest_exclude_list "D9D12002408"
+endif
 #
 $gtm_tst/com/submit_subtest.csh
 #
