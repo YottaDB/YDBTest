@@ -84,6 +84,9 @@ endif
 if ($?gtm_test_nopriorgtmver) then
 	setenv subtest_exclude_list "$subtest_exclude_list mupip_update_db_header"
 endif
+if ($?gtm_test_temporary_disable) then
+       setenv subtest_exclude_list "$subtest_exclude_list intrpt_timer_handler"
+endif
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 

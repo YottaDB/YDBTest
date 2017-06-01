@@ -45,7 +45,9 @@ endif
 if ($?gtm_test_noIGS) then
 	setenv subtest_exclude_list "$subtest_exclude_list basic"
 endif
-
+if ($?gtm_test_temporary_disable) then
+       setenv subtest_exclude_list "$subtest_exclude_list gtm7617"
+endif
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 

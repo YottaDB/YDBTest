@@ -112,6 +112,9 @@ endif
 if ($?gtm_test_noIGS) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm7312 gtm7294 inst_freeze_enospc"
 endif
+if ($?gtm_test_temporary_disable) then
+       setenv subtest_exclude_list "$subtest_exclude_list gtm7413"
+endif
 #
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh

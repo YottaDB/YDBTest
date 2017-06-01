@@ -140,7 +140,9 @@ endif
 if ($?gtm_test_nopriorgtmver) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm7926rcvr"
 endif
-
+if ($?gtm_test_temporary_disable) then
+       setenv subtest_exclude_list "$subtest_exclude_list gtm7926isgtmdist"
+endif
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 

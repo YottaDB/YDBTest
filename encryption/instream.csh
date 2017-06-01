@@ -153,6 +153,10 @@ if ("HOST_HP-UX_IA64" == "$gtm_test_os_machtype") then
 	setenv subtest_exclude_list "$subtest_exclude_list eotf_backup"
 endif
 
+if ($?gtm_test_temporary_disable) then
+       setenv subtest_exclude_list "$subtest_exclude_list extract_load gpghome_perms err_maskpass encr_env iv_ops helper_scripts eotf_basic"
+endif
+
 setenv GNUPGHOME	"$tst_working_dir/.gnupg"
 setenv gtm_pubkey	"$tst_working_dir/pubkey.asc"
 setenv gtm_com_gnupg	"$gtm_com/gnupg"
