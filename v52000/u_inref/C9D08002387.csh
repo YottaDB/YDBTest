@@ -24,12 +24,24 @@ if ("$prior_ver" =~ "*-E-*") then
 	echo "No prior versions available: $prior_ver"
 	exit -1
 endif
-# This is not a GG setup. And so versions prior to V63000A were not built from source and so the encryption
-# plugin even though present needs to be rebuilt. Since we do not have the sources, we do not rebuild here.
-# So disable encryption in case prior version is < V63000A.
-if ("ENCRYPT" == "$test_encryption" ) then
+if ($?ydb_environment_init) then
+	# This is not a GG setup. And so versions prior to V63000A have issues running in UTF-8 mode (due to icu
+	# library naming conventions that changed). So disable UTF8 mode testing in case the older version is < V63000A.
 	if (`expr "V63000A" \> "$prior_ver"`) then
-		setenv test_encryption NON_ENCRYPT
+		if ($?gtm_chset) then
+			if ("UTF-8" == $gtm_chset) then
+				unsetenv gtm_chset
+			endif
+		endif
+	endif
+endif
+if ($?gtm_test_temporary_disable) then
+	# With encryption enabled, we get a CRYPTKEYFETCHFAILED error currently (hash mismatch).
+	# Temporarily disable encryption until this issue is fixed.
+	if ("ENCRYPT" == "$test_encryption" ) then
+		if (`expr "V63000A" \> "$prior_ver"`) then
+			setenv test_encryption NON_ENCRYPT
+		endif
 	endif
 endif
 echo "$prior_ver" > priorver.txt

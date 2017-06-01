@@ -97,6 +97,26 @@ if ("$prior_ver" =~ "*-E-*") then
 	echo "No prior versions available: $prior_ver"
 	exit -1
 endif
+if ($?ydb_environment_init) then
+	# This is not a GG setup. And so versions prior to V63000A have issues running in UTF-8 mode (due to icu
+	# library naming conventions that changed). So disable UTF8 mode testing in case the older version is < V63000A.
+	if (`expr "V63000A" \> "$prior_ver"`) then
+		if ($?gtm_chset) then
+			if ("UTF-8" == $gtm_chset) then
+				unsetenv gtm_chset
+			endif
+		endif
+	endif
+endif
+if ($?gtm_test_temporary_disable) then
+	# With encryption enabled, we get a CRYPTKEYFETCHFAILED error currently (hash mismatch).
+	# Temporarily disable encryption until this issue is fixed.
+	if ("ENCRYPT" == "$test_encryption" ) then
+		if (`expr "V63000A" \> "$prior_ver"`) then
+			setenv test_encryption NON_ENCRYPT
+		endif
+	endif
+endif
 echo "$prior_ver" > priorver_nofilter.txt
 echo "Randomly chosen prior V5 version is : GTM_TEST_DEBUGINFO [$prior_ver]"
 echo ""
@@ -113,7 +133,9 @@ source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
 mv mumps.gld priorver.gld
 $GDE exit
 echo "# Test that endiancvt does not proceed if minor_dbver is different"
-$gtm_tools/offset.csh sgmnt_data t_end.c |  $grep minor_dbver >& offset_from_header.logx
+source $gtm_tools/gtm_env.csh
+$gtm_tools/offset.csh sgmnt_data t_end.c >& offset.logx
+$grep minor_dbver offset.logx >& offset_from_header.logx
 @ offset_minor_ver = `$tst_awk '{print $3}' offset_from_header.logx`
 @ size_minor_ver = `$tst_awk '{print $7}' offset_from_header.logx`
 set prev_minor_ver = `od -A d -t d -N $size_minor_ver -j $offset_minor_ver mumps.dat | $tst_awk '{print $2}'`
