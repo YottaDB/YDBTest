@@ -36,11 +36,12 @@ echo "================"
 mkdir upgradegld
 cd upgradegld
 
-set prior_ver = `$gtm_tst/com/random_ver.csh -gte V50000 -lt V55000`
+set prior_ver = `$gtm_tst/com/random_ver.csh -type any`
 if ("$prior_ver" =~ "*-E-*") then
         echo "No prior versions available: $prior_ver"
         exit -1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh
 echo "$prior_ver" > priorver.txt
 rm *.o
 
@@ -52,7 +53,7 @@ source $gtm_tst/com/switch_gtm_version.csh $prior_ver $tst_image
 echo "# Create database using prior V5 version"
 
 setenv gtm_test_jnl "SETJNL"
-setenv tst_jnl_str "-journal=enable,$b4nob4image,alloc=200,ext=2048"
+setenv tst_jnl_str "-journal=enable,$b4nob4image,alloc=2048,ext=2048"
 
 $gtm_tst/com/dbcreate.csh mumps 1
 
