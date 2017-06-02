@@ -22,6 +22,7 @@ if ("$prior_ver" =~ "*-E-*") then
 	echo "No prior versions available: $prior_ver"
 	exit -1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 echo $prior_ver >& prior_ver.txt
 source $gtm_test/$tst_src/com/switch_gtm_version.csh $prior_ver $tst_image
 $GDE_SAFE > gde_safe.txt

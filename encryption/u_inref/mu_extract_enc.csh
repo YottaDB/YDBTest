@@ -46,7 +46,7 @@ if (! $?gtm_test_replay) then
 	echo "setenv global1 $global1"				>>&! settings.csh
 	echo "setenv global2 $global2"				>>&! settings.csh
 endif
-
+source $gtm_tst/com/ydb_prior_ver_check.csh $extr_enc_prior_ver
 
 echo "# Switch to the random version"
 source $gtm_test/$tst_src/com/switch_gtm_version.csh $extr_enc_prior_ver $tst_image

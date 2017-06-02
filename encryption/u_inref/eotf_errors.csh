@@ -197,6 +197,7 @@ if (("AIX" != "$HOSTOS") && ("pro" != "$tst_image")) then
 		echo "setenv prior_ver $prior_ver" >> settings.csh
 	endif
 	echo "$prior_ver" > priorver.out
+	source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 	source $gtm_tst/com/switch_gtm_version.csh $prior_ver $tst_image
 	source $gtm_tst/$tst/u_inref/set_encr_algorithm.csh
 	echo

@@ -55,6 +55,7 @@ if (! $?gtm_test_replay) then
 			exit 1
 		endif
 		echo "setenv prior_ver1 $prior_ver1" >> settings.csh
+		source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver1
 
 		# Pick a random prior version for the second case.
 		set prior_ver2 = `$gtm_tst/com/random_ver.csh -lte V62002 -gte V53004`
@@ -63,6 +64,7 @@ if (! $?gtm_test_replay) then
 			exit 1
 		endif
 		echo "setenv prior_ver2 $prior_ver2" >> settings.csh
+		source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver2
 	endif
 
 	# Optionally make the database encryptable in the first case.

@@ -40,6 +40,8 @@ if ( ("${ver_V62000}" =~ "*-E-*") || ("${ver_V62000}" =~ "*-E-*") ) then
 	echo "Picking one of the prior versions failed : $ver_V62000 ; $ver_rand"
 	exit 1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $ver_V62000
+source $gtm_tst/com/ydb_prior_ver_check.csh $ver_rand
 
 cp msr_instance_config.txt msr_instance_config.bak1
 $tst_awk '{	\

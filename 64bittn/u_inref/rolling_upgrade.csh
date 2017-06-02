@@ -41,6 +41,8 @@ if ("$msver" =~ "*-E-*") then
 	exit -1
 endif
 
+source $gtm_tst/com/ydb_prior_ver_check.csh $msver
+
 if (`expr "$msver" "<" "V62000"`) then
 	# disable triggers for versions prior to V62000 as replication between pre and post V62000 isn't supported
 	setenv gtm_test_trigger 0

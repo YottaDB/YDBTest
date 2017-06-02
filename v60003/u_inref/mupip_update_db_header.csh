@@ -42,6 +42,7 @@ else
 	endif
 	echo "setenv gtm_test_rand_prior_ver $prior_ver" >> settings.csh
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 
 # Switch to the chosen old version.
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver pro

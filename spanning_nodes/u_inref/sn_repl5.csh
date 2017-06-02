@@ -66,6 +66,7 @@ else
 	endif
 	echo "setenv gtm_test_rand_prior_ver $prior_ver" >> settings.csh
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 
 # Disabled settings that do not work with MSR and prior versions
 source $gtm_tst/com/disable_settings_msr_priorver.csh hugepages spanning_regions

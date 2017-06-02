@@ -30,6 +30,7 @@ if (! $?gtm_test_replay) then
 	set inst = `$gtm_exe/mumps -run chooseamong "INST1" "INST2"`
 	echo "setenv inst $inst"				>>&! settings.csh
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $remote_prior_ver
 
 echo "$inst will run with prior version $remote_prior_ver" >>&! priorver_on_inst.txt
 setenv gtm_test_repl_skipsrcchkhlth

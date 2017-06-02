@@ -37,6 +37,7 @@ else
 	endif
 	echo "setenv gtm7083_priorver $prior_ver"	>>&! settings.csh
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 
 cat > a.trg << CAT_EOF
 +^a -commands=set -xecute="write ""trigger executed"",!" -name=x

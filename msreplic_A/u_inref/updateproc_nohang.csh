@@ -16,7 +16,7 @@ source $gtm_tst/com/disable_settings_msr_priorver.csh
 
 setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn 1
-# double random prior versoins are used. Avoid complex checking and disable UTF-8 (not important in this test case)
+# double random prior versions are used. Avoid complex checking and disable UTF-8 (not important in this test case)
 $switch_chset "M" >&! switch_chset1.out
 
 $MULTISITE_REPLIC_PREPARE 3
@@ -37,6 +37,8 @@ if ( "${prior_ver2}" =~ "*-E-*" || "${prior_ver3}" =~ "*-E-*" ) then
 endif
 echo "$prior_ver2" > priorver2.txt
 echo "$prior_ver3" > priorver3.txt
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver2
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver3
 
 # If either random version is prior to V60002 disable IPv6
 if ( `expr "$prior_ver2" \<= "V60002"` || `expr "$prior_ver3" \<= "V60002"` ) then

@@ -24,6 +24,7 @@ if ("$prior_ver" =~ "*-E-*") then
 	echo "No prior versions available: $prior_ver"
 	exit -1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 echo "$prior_ver" > priorver.txt
 cp msr_instance_config.txt msr_instance_config.bak
 $tst_awk '{if (("INST2" == $1) && ("VERSION:" == $2)) {sub("'$tst_ver'","'$prior_ver'")} ; if (("INST2" == $1) && ("IMAGE:" == $2)) sub("dbg","pro") ; print }' msr_instance_config.txt >&! msr_instance_config.txt1

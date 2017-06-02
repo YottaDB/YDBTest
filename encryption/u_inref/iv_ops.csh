@@ -114,6 +114,7 @@ if ("AIX" != "$HOSTOS") then
 		echo "No prior versions available: $prior_ver"
 		exit -1
 	endif
+	source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 	echo "$prior_ver" > priorver.out
 	source $gtm_tst/com/switch_gtm_version.csh $prior_ver $tst_image
 	source $gtm_tst/$tst/u_inref/set_encr_algorithm.csh
@@ -189,6 +190,7 @@ if ("$prior_ver" =~ "*-E-*") then
         echo "No prior versions available: $prior_ver"
         exit -1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 echo "$prior_ver" > priorver.out
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver $tst_image
 source $gtm_tst/$tst/u_inref/set_encr_algorithm.csh
@@ -283,6 +285,7 @@ if ("$prior_ver" =~ "*-E-*") then
         echo "No prior versions available: $prior_ver"
         exit -1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 echo "$prior_ver" > priorver.out
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver $tst_image
 source $gtm_tst/$tst/u_inref/set_encr_algorithm.csh
@@ -364,6 +367,7 @@ if ("$prior_ver" =~ "*-E-*") then
         echo "No prior versions available: $prior_ver"
         exit -1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 echo "$prior_ver" > priorver.out
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver $tst_image
 source $gtm_tst/$tst/u_inref/set_encr_algorithm.csh
@@ -424,6 +428,7 @@ if ("$prior_ver" =~ "*-E-*") then
         echo "No prior versions available: $prior_ver"
         exit -1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 echo "$prior_ver" > priorver.out
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver $tst_image
 source $gtm_tst/$tst/u_inref/set_encr_algorithm.csh

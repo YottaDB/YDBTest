@@ -26,6 +26,7 @@ if (! $?gtm_test_nopriorgtmver) then
 		endif
 		echo "setenv prior_ver ${prior_ver}"				>>&! settings.csh
 	endif
+	source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 
 	source $gtm_tst/com/switch_gtm_version.csh ${prior_ver} $tst_image
 	$MUPIP replicate -instance_create -name=INST1 $gtm_test_qdbrundown_parms

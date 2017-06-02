@@ -17,6 +17,7 @@ if ("$prior_ver" =~ "*-E-*") then
 	echo "No such prior version : $prior_ver"
 	exit -1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver pro
 set prior_gtm_dist = "$gtm_dist"
 source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image

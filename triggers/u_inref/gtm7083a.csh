@@ -42,6 +42,7 @@ else
 	endif
 	echo "setenv gtm7083_priorver $prior_ver"	>>&! settings.csh
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 
 $MULTISITE_REPLIC_PREPARE 4
 cp msr_instance_config.txt msr_instance_config.bak1

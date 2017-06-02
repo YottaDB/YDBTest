@@ -31,6 +31,7 @@ if ("$prior_ver" =~ "*-E-*") then
 	echo "No such prior version : $prior_ver"
 	exit -1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 echo "# Launching a source and a receiver with $prior_ver"
 
 # Do not use DBG version below as it can create a core in MUPIP RUNDOWN

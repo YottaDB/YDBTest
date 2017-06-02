@@ -43,6 +43,7 @@ if ("$remote_prior_ver" =~ "*-E-*") then
 	echo "No prior versions available: $remote_prior_ver"
 	exit -1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $remote_prior_ver
 echo $remote_prior_ver >& prior_ver.txt
 echo "Randomly chosen pre-V54000 version is GTM_TEST_DEBUGINFO: [$remote_prior_ver]"
 

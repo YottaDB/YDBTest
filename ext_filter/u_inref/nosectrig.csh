@@ -32,6 +32,7 @@ if ("$remote_prior_ver" =~ "*-E-*") then
 	echo "No prior versions available: $remote_prior_ver"
 	exit -1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $remote_prior_ver
 echo $remote_prior_ver >! priorver.txt     # for the reference file
 setenv gtm_tst_ext_filter_rcvr "/usr/library/$remote_prior_ver/pro/mumps -run ^nosectrig"
 # Tweak the config file so that the INST2 runs with remove version chosen

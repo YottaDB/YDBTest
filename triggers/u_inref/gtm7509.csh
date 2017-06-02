@@ -30,8 +30,8 @@ if (! $?gtm_test_replay) then
 		exit 1
 	endif
 	echo "setenv gtm7509_prior_ver $gtm7509_prior_ver"	>>&! settings.csh
-
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $gtm7509_prior_ver
 
 $MULTISITE_REPLIC_PREPARE 2
 echo "# Test case 1 : Trying mupip trigger -select using a prior version, with a multi-line trigger created with current version"

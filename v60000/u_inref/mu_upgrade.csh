@@ -28,6 +28,7 @@ if ("$prior_ver" =~ "*-E-*") then
         echo "No prior versions available: $prior_ver"
         exit -1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 echo "$prior_ver" > priorver.txt
 echo "Randomly chosen prior V5 version is : GTM_TEST_DEBUGINFO [$prior_ver]"
 set linestr = "----------------------------------------------------------------------"

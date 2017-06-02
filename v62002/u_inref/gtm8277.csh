@@ -22,9 +22,10 @@ $switch_chset "M" >&! switch_chset.out
 $gtm_tst/com/random_ver.csh -gte V54000 -lte V54001 > priorver.txt
 set priorver = `cat priorver.txt`
 if ("$priorver" =~ "*-E-*") then
-	echo "No such prior version : $prior_ver"
+	echo "No such prior version : $priorver"
 	exit -1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $priorver
 
 # Switch to the prior version and load the trigger file
 source $gtm_tst/com/switch_gtm_version.csh $priorver $tst_image

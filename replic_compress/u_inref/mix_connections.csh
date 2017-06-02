@@ -31,6 +31,7 @@ if ("$prior_ver" =~ "*-E-*") then
 	echo "No prior versions available: $prior_ver"
 	exit -1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 # Disable IPv6 on versions prior to its introduction
 if ( `expr "$prior_ver" \<= "V60002"` ) setenv test_no_ipv6_ver 1
 echo "$prior_ver" > priorver.txt
