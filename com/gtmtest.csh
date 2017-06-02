@@ -331,7 +331,8 @@ if ($?gtm_test_nomultihost) then
 endif
 
 if ($?gtm_test_temporary_disable) then
-	echo "-x env_xlate" >>! $test_list
+	echo "-x env_xlate" >>! $test_list	# need to spend time analyzing why it does not work
+	echo "-x dbload" >>! $test_list		# needs $gtm_test/big_files/dbload/*.go
 endif
 
 #############

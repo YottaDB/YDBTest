@@ -97,6 +97,11 @@ if ("atlst2000" == "$hostn") then
 	setenv subtest_exclude_list "$subtest_exclude_list profileOLI"
 endif
 
+if ($?gtm_test_temporary_disable) then
+	# All of the below need $gtm_test/big_files/online_integ/
+	setenv subtest_exclude_list "$subtest_exclude_list 4GBOLI profileOLI ointeg9"
+endif
+
 # default to V5 database (ointeg2 will change to V4) and randomly enable journalling
 setenv gtm_test_mupip_set_version "disable"
 source $gtm_tst/com/set_env_random.csh gtm_test_jnl
