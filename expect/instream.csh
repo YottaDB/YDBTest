@@ -65,7 +65,7 @@ if ("pro" == "$tst_image") then
 endif
 
 if ($?gtm_test_temporary_disable) then
-	setenv subtest_exclude_list "terminal5"
+	setenv subtest_exclude_list "$subtest_exclude_list terminal5"
 endif
 
 # Use sed filters to remove subtests that are to be disabled on a particular host or OS
