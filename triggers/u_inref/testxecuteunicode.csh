@@ -18,5 +18,5 @@ $gtm_exe/mumps -run testxecuteunicode
 echo "Disable Unicode numeric pattern matching"
 unsetenv gtm_patnumeric
 $gtm_exe/mumps -run patterns^testxecuteunicode
-
+source $gtm_tst/com/ydb_trig_upgrade_check.csh
 $gtm_tst/com/dbcheck.csh -extract

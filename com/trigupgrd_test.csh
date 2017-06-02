@@ -52,6 +52,7 @@ if (`expr ${priorver} \< "V62001"`) then
 	# Versions prior to V62001 do not support triggers AND spanning regions; disable it. GTM-7877 added support
 	setenv gtm_test_spanreg 0
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $priorver
 source $gtm_tst/com/switch_gtm_version.csh $priorver $tst_image
 if ($status != 0) then
 	echo "TRIGUPGRD_TEST-E-FAIL : Fail when SWITCHING to $priorver in $curpwd"

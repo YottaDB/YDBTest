@@ -68,6 +68,7 @@ $gtm_tst/com/dbcreate.csh mumps
 echo "Should see %GTM-E-TRIGSUBSCRANGE"
 $gtm_exe/mumps -run trigcolunicode >&! shoulderror.outx
 $grep '%GTM-E-TRIGSUBSCRANGE' shoulderror.outx >&! /dev/null && echo "PASS %GTM-E-TRIGSUBSCRANGE seen"
+source $gtm_tst/com/ydb_trig_upgrade_check.csh
 $gtm_tst/com/dbcheck.csh
 $echoline
 
@@ -87,5 +88,6 @@ $gtm_tst/com/dbcreate.csh mumps
 echo "Should not see %GTM-E-TRIGSUBSCRANGE"
 $gtm_exe/mumps -run trigcolunicode >&! shouldnoterror.outx
 $grep '%GTM-E-TRIGSUBSCRANGE' shouldnoterror.outx || echo "PASS %GTM-E-TRIGSUBSCRANGE not seen"
+source $gtm_tst/com/ydb_trig_upgrade_check.csh
 $gtm_tst/com/dbcheck.csh -extract
 

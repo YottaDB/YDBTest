@@ -12,4 +12,5 @@ $gtm_tst/com/dbcreate.csh mumps 1
 #
 # * test pieces while doing some of the delim tests
 $gtm_exe/mumps -run testpiecesunicode
+source $gtm_tst/com/ydb_trig_upgrade_check.csh
 $gtm_tst/com/dbcheck.csh -extract
