@@ -4,7 +4,7 @@
 
 set dlltest_version = $1
 # switch to version
-source $gtm_tst/com/switch_gtm_version.csh $dlltest_version #$gtm_ver_save will be set to the original version set
+source $gtm_tst/com/switch_gtm_version.csh $dlltest_version $tst_image #$gtm_ver_save will be set to the original version set
 
 # Setting gt_ld_m_shl_options is needed because previous versions did not have these
 # set in gtm_env_sp.csh for these system types and ver commands overwrites the ones from the instream
@@ -27,7 +27,7 @@ halt
 eof
 
 # switch back to V5 version
-source $gtm_tst/com/switch_gtm_version.csh $gtm_ver_save
+source $gtm_tst/com/switch_gtm_version.csh $gtm_ver_save $tst_image
 setenv gtmroutines "./shlib"
 $GTM << eof
 w \$ZV,!
