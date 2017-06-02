@@ -33,6 +33,7 @@ if ("$msver" =~ "*-E-*") then
 	echo "No prior versions available: $msver"
 	exit -1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $msver
 
 # Remember the selected old version
 source $gtm_tst/com/switch_gtm_version.csh $msver pro

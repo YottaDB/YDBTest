@@ -45,13 +45,13 @@ echo "# Switch to prior version"
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver $tst_image
 
 echo "Creating database using prior V5 version"
-rm *.o >&! /dev/null # remove .o files created by current version (in case the format is different)
+\rm -f *.o >& rm1.out	# remove .o files created by current version (in case the format is different)
 # Disable mupip-set-version to V4 as that will disturb Fully Upgraded flag and in turn affect the static reference file
 setenv gtm_test_mupip_set_version "disable"
 $gtm_tst/com/dbcreate.csh mumps >&! dbcreate_V5.out
 
 echo "# Switch to current version"
-rm *.o >&! /dev/null # remove .o files created by current version (in case the format is different)
+\rm -f *.o >& rm2.out	# remove .o files created by current version (in case the format is different)
 source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
 $GDE exit
 

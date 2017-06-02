@@ -97,7 +97,7 @@ if ("$prior_ver" =~ "*-E-*") then
 	echo "No prior versions available: $prior_ver"
 	exit -1
 endif
-source $gtm_tst/com/ydb_prior_ver_check.csh
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 source $gtm_tst/com/ydb_temporary_disable.csh
 echo "$prior_ver" > priorver_nofilter.txt
 echo "Randomly chosen prior V5 version is : GTM_TEST_DEBUGINFO [$prior_ver]"
@@ -105,13 +105,13 @@ echo ""
 echo "# Switch to prior version"
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver $tst_image
 echo "Creating database using prior V5 version"
-\rm *.o	>& rm1.out # remove .o files created by current version (in case the format is different)
+\rm -f *.o >& rm1.out	# remove .o files created by current version (in case the format is different)
 if (-e mumps.mjl) then
 	mv -f mumps.mjl mumps.mjl_newver # needed to avoid FILEEXISTS message from the older version if .mjl format is different
 endif
 $gtm_tst/com/dbcreate.csh mumps
 echo "# Switch to current version"
-\rm *.o	>& rm2.out # remove .o files created by prior version (in case the format is different)
+\rm -f *.o >& rm2.out	# remove .o files created by prior version (in case the format is different)
 source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
 # For some 64-bit platforms, the gld format could be different between prior_ver and curver
 # So recreate gld file unconditionally.

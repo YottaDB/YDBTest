@@ -24,7 +24,7 @@ if ("$prior_ver" =~ "*-E-*") then
 	echo "No prior versions available: $prior_ver"
 	exit -1
 endif
-source $gtm_tst/com/ydb_prior_ver_check.csh
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 source $gtm_tst/com/ydb_temporary_disable.csh
 echo "$prior_ver" > priorver.txt
 \rm -f rand.o	# rand.o created by current version might have incompatible object format for older version in dbcreate.csh below

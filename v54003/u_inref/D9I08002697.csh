@@ -41,9 +41,9 @@ if ("$prior_ver" =~ "*-E-*") then
         echo "No prior versions available: $prior_ver"
         exit -1
 endif
-source $gtm_tst/com/ydb_prior_ver_check.csh
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 echo "$prior_ver" > priorver.txt
-rm *.o
+\rm -f *.o >& rm1.out	# remove .o files created by current version (in case the format is different)
 
 echo "Randomly chosen prior V5 version is : GTM_TEST_DEBUGINFO [$prior_ver]"
 echo "----------------------------------------------------------------------"
@@ -57,7 +57,7 @@ setenv tst_jnl_str "-journal=enable,$b4nob4image,alloc=2048,ext=2048"
 
 $gtm_tst/com/dbcreate.csh mumps 1
 
-rm *.o
+\rm -f *.o >& rm2.out	# remove .o files created by prior version (in case the format is different)
 
 echo ""
 echo "# Switch to current version"

@@ -18,7 +18,7 @@ if ("$prior_ver" =~ "*-E-*") then
 	echo "No prior versions available: $prior_ver"
 	exit -1
 endif
-source $gtm_tst/com/ydb_prior_ver_check.csh
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 source $gtm_tst/com/ydb_temporary_disable.csh
 echo "$prior_ver" > priorver.txt
 echo "Randomly chosen prior V5 version is : GTM_TEST_DEBUGINFO [$prior_ver]"
@@ -29,13 +29,13 @@ echo "# Switch to prior version"
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver $tst_image
 
 echo "Creating database using prior V5 version"
-rm *.o	# remove .o files created by current version (in case the format is different)
+\rm -f *.o >& rm1.out	# remove .o files created by current version (in case the format is different)
 # Disable mupip-set-version to V4 as that will disturb Fully Upgraded flag and in turn affect the static reference file
 setenv gtm_test_mupip_set_version "disable"
 $gtm_tst/com/dbcreate.csh mumps
 
 echo "# Switch to current version"
-rm *.o	# remove .o files created by prior version (in case the format is different)
+\rm -f *.o >& rm2.out	# remove .o files created by prior version (in case the format is different)
 source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
 
 if ("$test_encryption" == "ENCRYPT") then

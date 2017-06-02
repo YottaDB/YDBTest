@@ -19,6 +19,7 @@ if ("$gtm_test_dbformat_version" =~ "*-E-*") then
 	echo "No prior versions available: $gtm_test_dbformat_version"
 	exit -1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $gtm_test_dbformat_version
 #
 if (`expr $gtm_test_dbformat_version "<" "V53002"`) then
 	# MM access method works well only from versions V5.3-002.

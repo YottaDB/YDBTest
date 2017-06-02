@@ -47,7 +47,7 @@ endif
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver pro
 
 # Create a database, enable journaling, and save the database header dump.
-\rm *.o
+\rm -f *.o >& rm1.out	# remove .o files created by current version (in case the format is different)
 $gtm_tst/com/dbcreate.csh mumps >&! db_create.out
 $gtm_dist/mupip set $tst_jnl_str -reg DEFAULT >&! mupip_set_jnl1.out
 $gtm_dist/dse dump -f >&! dse_dump1.txt

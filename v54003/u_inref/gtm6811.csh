@@ -25,7 +25,7 @@ if ("$prior_ver" =~ "*-E-*") then
         exit -1
 endif
 echo "$prior_ver" > priorver.txt
-rm *.o
+\rm -f *.o >& rm1.out	# remove .o files created by current version (in case the format is different)
 
 echo "Randomly chosen prior version is : GTM_TEST_DEBUGINFO [$prior_ver]"
 echo "------------------------------------------------------------------"
