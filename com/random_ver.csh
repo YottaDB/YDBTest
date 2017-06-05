@@ -263,57 +263,6 @@ foreach ver ($actualverlist)
 	endif
 end
 
-if (1 == $isutf8) then
-	set utf8list = ""
-	# Limit applicable versions for UTF-8 mode
-	foreach ver ($filteredlist)
-		# Allow all versions before V52000 because they don't support UTF-8
-		if (`expr $ver "<" "V52000"`) then
-			set utf8list = ($utf8list $ver)
-			continue
-		endif
-		# all versions are V52000+
-		####
-
-		# Exclude versions V52000 to V53001A because they require libicu 3.6 to be the default libicu*.so
-		if (`expr $ver "<" "V53002"`) then
-			continue
-		endif
-		# all versions are V53002+
-		####
-
-		# Exclude version prior to V53004 if these is no libicu 3.6 (WARNING: must be built with symbol renaming!)
-		if ((`expr $ver "<" "V53004"`) && (0 == $libicu36)) then
-			continue
-		endif
-		# all versions are V53002+ if libicu 36 exists otherwise V53004+
-		####
-
-		# (Done for AIX 7) if gtm_icu_version is not defined, and the OS is AIX, exclude versions without GTM-6592
-		if ((0 == $?gtm_icu_version) && ("HOST_AIX_RS6000" == $gtm_test_os_machtype) && (6 < $gtm_test_osver)) then
-			if (`expr $ver "<" "V54001"`) then
-				touch must_define_gtm_icu_version
-				continue
-			endif
-		endif
-		# On AIX 7 servers w/o gtm_icu_version defined, versions are V54001+
-		####
-
-		# Exclude all versions prior to V53002 and from V53004 to before V54002 if using NEW ICU naming scheme
-		if (((`expr $ver ">=" "V53004"`) && (`expr $ver "<" "V54002"`)) && ($icu_new_naming_scheme == 1)) then
-			continue
-		endif
-		# W/O the new naming scheme  - versions remain unchanged
-		# WITH the new naming scheme - versions are V54002+ and with ICU 3.6 V53002 to V53003A
-		####
-
-		set utf8list = ($utf8list $ver)
-	end
-	if ( "" == "$utf8list") touch must_force_nounicode
-	# replace filteredlist with utf8list
-	set filteredlist = ($utf8list)
-endif
-
 # Disable gtmcompile, including the -dynamic_literals qualifer, since prior versions complain. See comment in switch_gtm_version.csh
 unsetenv gtmcompile
 
