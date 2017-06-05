@@ -52,6 +52,10 @@ endif
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list	""
 
+if ($?gtm_test_temporary_disable) then
+	setenv subtest_exclude_list	"$subtest_exclude_list repeat_rollback_after_crash"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 
