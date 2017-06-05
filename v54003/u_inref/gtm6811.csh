@@ -25,6 +25,7 @@ if ("$prior_ver" =~ "*-E-*") then
         exit -1
 endif
 source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
+source $gtm_tst/com/ydb_temporary_disable.csh
 echo "$prior_ver" > priorver.txt
 \rm -f *.o >& rm1.out	# remove .o files created by current version (in case the format is different)
 
