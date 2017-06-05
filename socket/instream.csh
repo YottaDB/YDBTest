@@ -78,6 +78,10 @@ if ($?gtm_test_noggusers) then
 	setenv subtest_exclude_list "$subtest_exclude_list lsocparms"
 endif
 
+if ($?gtm_test_temporary_disable) then
+	setenv subtest_exclude_list "$subtest_exclude_list tsocerrors"
+endif
+
 $gtm_tst/com/submit_subtest.csh
 echo "SOCKET test DONE."
 
