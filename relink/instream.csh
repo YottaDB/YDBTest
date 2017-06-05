@@ -94,6 +94,10 @@ if ("atlst2000" == "$hostn") then
 	setenv subtest_exclude_list "$subtest_exclude_list shmalloc"
 endif
 
+if ($?gtm_test_temporary_disable) then
+	setenv subtest_exclude_list "$subtest_exclude_list trigger"
+endif
+
 # This suite's subtests make their own choices about autorelink-enabled directories.
 unsetenv gtm_test_autorelink_always
 
