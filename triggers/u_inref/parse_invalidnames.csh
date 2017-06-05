@@ -14,5 +14,5 @@ end
 echo "Failures `$grep -c '^;' invalid.fail`"
 echo "Number of times MUPIP rejected invalid names `$grep -c GTM-E-MUNOACTION invalidnametest.txt`"
 $gtm_exe/mumps -run run^invalidnames
-
+source $gtm_tst/com/ydb_trig_upgrade_check.csh
 $gtm_tst/com/dbcheck.csh -extract
