@@ -154,7 +154,7 @@ if ("HOST_HP-UX_IA64" == "$gtm_test_os_machtype") then
 endif
 
 if ($?gtm_test_temporary_disable) then
-       setenv subtest_exclude_list "$subtest_exclude_list extract_load gpghome_perms err_maskpass encr_env iv_ops helper_scripts eotf_basic"
+       setenv subtest_exclude_list "$subtest_exclude_list extract_load gpghome_perms err_maskpass encr_env iv_ops helper_scripts eotf_basic mu_extract_enc"
 endif
 
 setenv GNUPGHOME	"$tst_working_dir/.gnupg"
