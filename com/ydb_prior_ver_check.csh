@@ -8,7 +8,7 @@ if ($?ydb_environment_init) then
 	if (`expr "V63000A" \> "$1"`) then
 		if ($?gtm_chset) then
 			if ("UTF-8" == $gtm_chset) then
-				unsetenv gtm_chset
+				$switch_chset M >>&! switch_chset_ydb.out
 				rm -f rand.o >& /dev/null # usually created by random_ver.csh and could cause INVOBJFILE due to CHSET mismatch
 			endif
 		endif
