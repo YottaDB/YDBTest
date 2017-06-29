@@ -53,7 +53,7 @@ endif
 setenv subtest_exclude_list	""
 
 if ($?gtm_test_temporary_disable) then
-	setenv subtest_exclude_list	"$subtest_exclude_list repl_nonrepl_crash"
+	setenv subtest_exclude_list	"$subtest_exclude_list repl_nonrepl_crash repeat_rollback_after_crash "
 endif
 
 # Submit the list of subtests
