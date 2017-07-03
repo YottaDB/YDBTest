@@ -18,13 +18,14 @@
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
 # zlen2arg [estess]	Test two argument form of $[Z]LENGTH() and its use of $[Z]PIECE() cache
+# prmptchk [estess]	Test prompt that it defaults to "YDB>" but can be overridden to "GTM>" if desired
 #-------------------------------------------------------------------------------------
 
 echo "r100 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "zlen2arg"
+setenv subtest_list_non_replic "zlen2arg prmptchk"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
