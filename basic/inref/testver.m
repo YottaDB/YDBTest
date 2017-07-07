@@ -1,6 +1,11 @@
 testver	;
 	;
-	s out="ver.txt" o out u out
-	w $ZV,!
-	c out u $p
-	q
+	; Construct version from $ZVERSION & $ZYRELEASE
+	;
+	set zv=$translate($piece($zversion," ",2),".-")
+	set zyre=$translate($piece($zyrelease," ",2),".-")
+	set testver=$zconvert(zv_"_"_zyre,"U")
+	set gtmverno=$ztrnlnm("gtm_verno")
+	if testver=gtmverno write "Passed the version test",!
+	else                write "Should be ",gtmverno," but is ",testver,!
+	quit
