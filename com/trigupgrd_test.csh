@@ -38,6 +38,11 @@ if ("${less_than_ver}" == "") then
 	echo "TRIGUPGRD_TEST-E-FAIL : Could not determine less than version"
 	@ exit_status++
 endif
+if (($less_than_ver == "V62002") && ("dbg" == "$tst_image")) then
+	# We are about to default the search for prior version in the interval [V60000,V62002).
+	# No dbg builds for such versions exist in a non-gg setup. So skip this entire script in that case.
+	exit 0
+endif
 $gtm_tst/com/random_ver.csh -gte V60000 -lt $less_than_ver > prior_ver.txt
 $grep -q -- '-E-' prior_ver.txt
 if ($status == 0) then

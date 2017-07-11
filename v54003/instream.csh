@@ -148,6 +148,9 @@ endif
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?gtm_test_nopriorgtmver) then
 	setenv subtest_exclude_list "$subtest_exclude_list D9I08002697 gtm6811"
+else if ("dbg" == "$tst_image") then
+       # We do not have dbg V54002B builds needed by the gtm6811 subtest so disable it.
+       setenv subtest_exclude_list "$subtest_exclude_list gtm6811"
 endif
 
 if ("ENCRYPT" == $test_encryption) then

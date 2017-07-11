@@ -64,12 +64,14 @@ endif
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?gtm_test_nopriorgtmver) then
 	setenv subtest_exclude_list "$subtest_exclude_list C9I05002987"
+else if ("dbg" == "$tst_image") then
+	# We do not have dbg V5 builds needed by the C9805002987 subtest so disable it.
+	setenv subtest_exclude_list "$subtest_exclude_list C9I05002987"
 endif
 # If the platform/host does not have GG structured build directory, disable tests that require them
 if ($?gtm_test_noggbuilddir) then
 	setenv subtest_exclude_list "$subtest_exclude_list D9I10002703"
 endif
-
 
 $gtm_tst/com/submit_subtest.csh
 echo "v53003 test DONE."

@@ -200,11 +200,6 @@ setenv subtest_exclude_list "$subtest_exclude_list zbspfortrig "
 # The following subtest is temporarily disabled. Remove the below line when GTM-7507 is fixed.
 setenv subtest_exclude_list "$subtest_exclude_list trigrlbk"
 
-# If the platform/host does not have prior GT.M versions, disable tests that require them
-if ($?gtm_test_nopriorgtmver) then
-	setenv subtest_exclude_list "$subtest_exclude_list trig2notrig"
-endif
-
 # filter out some subtests for some servers
 set hostn = $HOST:r:r:r
 
@@ -221,6 +216,22 @@ endif
 if ($?gtm_test_noggtoolsdir) then
 	# trigthrash subtest requires $cms_tools/gtmpcatfldbld.csh
 	setenv subtest_exclude_list "$subtest_exclude_list trigthrash"
+endif
+
+# If the platform/host does not have prior GT.M versions, disable tests that require them
+if ($?gtm_test_nopriorgtmver) then
+       setenv subtest_exclude_list "$subtest_exclude_list gtm7083 trig2notrig gtm7509 gtm7083a trigrepl_priorver"
+else if ("dbg" == "$tst_image") then
+       # We do not have dbg builds of versions [V54002,V62000] needed by the gtm7083 subtest so disable it.
+       setenv subtest_exclude_list "$subtest_exclude_list gtm7083"
+       # We do not have dbg builds of versions [V51000,V54000) needed by the trig2notrig subtest so disable it.
+       setenv subtest_exclude_list "$subtest_exclude_list trig2notrig"
+       # We do not have dbg builds of versions [V54002,V61000] needed by the gtm7509 subtest so disable it.
+       setenv subtest_exclude_list "$subtest_exclude_list gtm7509"
+       # We do not have dbg builds of V62000 needed by the gtm7083a subtest so disable it.
+       setenv subtest_exclude_list "$subtest_exclude_list gtm7083a"
+       # We do not have dbg builds of V62000 or [V54000,V61000] needed by the trigrepl_priorver subtest so disable it.
+       setenv subtest_exclude_list "$subtest_exclude_list trigrepl_priorver"
 endif
 
 # Submit the list of subtests

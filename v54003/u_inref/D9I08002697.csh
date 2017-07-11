@@ -36,7 +36,7 @@ echo "================"
 mkdir upgradegld
 cd upgradegld
 
-set prior_ver = `$gtm_tst/com/random_ver.csh -type any`
+set prior_ver = `$gtm_tst/com/random_ver.csh -type "gld_mismatch"`
 if ("$prior_ver" =~ "*-E-*") then
         echo "No prior versions available: $prior_ver"
         exit -1
