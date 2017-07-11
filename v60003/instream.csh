@@ -83,6 +83,9 @@ endif
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?gtm_test_nopriorgtmver) then
 	setenv subtest_exclude_list "$subtest_exclude_list mupip_update_db_header"
+else if ("dbg" == "$tst_image") then
+	# We do not have dbg V5 builds needed by the mupip_update_db_header subtest so disable it.
+	setenv subtest_exclude_list "$subtest_exclude_list mupip_update_db_header"
 endif
 if ($?gtm_test_temporary_disable) then
        setenv subtest_exclude_list "$subtest_exclude_list intrpt_timer_handler"

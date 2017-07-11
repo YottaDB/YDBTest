@@ -74,11 +74,17 @@ foreach host ($remotehosts)
 	set allverlist = "$newlist"
 end
 
+set allverlist = `echo $allverlist`
 @ numvers = $#allverlist
 @ cnt = 1
 set actualverlist = ""
+# Ensure actualverlist never contains any version > gtm_verno
+set maxver = "$gtm_verno"
+if ("$maxver" == "V63000A_R100") then
+	set maxver = "V63000A"
+endif
 while ($cnt <= $numvers)
-	if ("$allverlist[$cnt]" != "$gtm_verno") then
+	if (`expr "$allverlist[$cnt]" "<" "$maxver"`) then
 		set actualverlist = `echo $actualverlist $allverlist[$cnt]`
 	endif
 	@ cnt = $cnt + 1
