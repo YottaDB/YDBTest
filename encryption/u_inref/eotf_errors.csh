@@ -184,7 +184,8 @@ end
 echo
 
 # Encryption plug-ins within the prior version range enforced below are unstable on AIX boxes and cannot be used.
-if (("AIX" != "$HOSTOS") && ("pro" != "$tst_image")) then
+# In non-gg setup, dbg builds of [V53004,V60000) don't exist so disable this part of the test in that case.
+if (("AIX" != "$HOSTOS") && ("pro" != "$tst_image") && ("dbg" != "$tst_image")) then
 	echo "# Case 13. Attempt to downgrade a partially (re)encrypted database."
 
 	echo "# Randomly choose any version with null IVs."

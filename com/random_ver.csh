@@ -53,8 +53,16 @@ source $gtm_tst/com/getargs.csh $argv
 
 if (! $?remotehosts) set remotehosts = ""
 set localallverlist = `\ls $gtm_root/ | $grep -E '^V[4-8][0-9][0-9][0-9][0-9][A-Z]?$'`
+set allverlist = ""
+foreach ver ($localallverlist)
+	# Even though the version directory exists, it is possible the specific image subdirectory
+	# does not exist. e.g. Builds before V63000A on non-gg boxes only have pro builds setup,
+	# not the dbg builds. In that case, skip this version from the list of available versions.
+	if (-e $gtm_root/$ver/$tst_image) then
+		set allverlist = "$allverlist $ver"
+	endif
+end
 
-set allverlist = "$localallverlist "
 foreach host ($remotehosts)
 	set vers = `ssh -x $host "ls $gtm_root/" | $grep -E '^V[4-8][0-9][0-9][0-9][0-9][A-Z]?$'`
 	set newlist = ""
@@ -256,6 +264,16 @@ if ($?gtm_chset) then
 endif
 
 # filter out versions based on the minimum and maximum
+#
+# Note: V63000A and V63000A_R100 are identical in terms of $zversion. Account for that below.
+#
+if (("$minimum" == "V63000A") && ("$isgt" == ">")) then
+	set minimum = "V63000A_R100"
+endif
+if (("$maximum" == "V63000A_R100") && ("$islt" == "<")) then
+	set maximum = "V63000A"
+endif
+
 set filteredlist = ""
 foreach ver ($actualverlist)
 	if ((`expr $ver $isgt $minimum`) && (`expr $ver $islt $maximum`)) then

@@ -98,7 +98,7 @@ Region DEFAULT : MUPIP REORG ENCRYPT finished
 %GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT UPGRADE
 %GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME SELECT TRUNCATE UPGRADE USER_DEFINED_REORG ENCRYPT
 
-##SUSPEND_OUTPUT HOST_AIX_RS6000 PRO
+##SUSPEND_OUTPUT HOST_AIX_RS6000 PRO DBG
 # Case 13. Attempt to downgrade a partially (re)encrypted database.
 # Randomly choose any version with null IVs.
 
@@ -114,7 +114,7 @@ An abnormal termination will damage the database during the operation !!
 %GTM-E-TEXT, Database is being (re)encrypted
 %GTM-E-MUNODWNGRD, Database not downgraded because of preceding errors
 
-##ALLOW_OUTPUT HOST_AIX_RS6000 PRO
+##ALLOW_OUTPUT HOST_AIX_RS6000 PRO DBG
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

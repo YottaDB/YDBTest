@@ -107,6 +107,11 @@ endif
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?gtm_test_nopriorgtmver) then
 	setenv subtest_exclude_list "$subtest_exclude_list mu_downgrade mu_upgrade"
+else if ("dbg" == "$tst_image") then
+       # We do not have dbg builds in the range [V50000, V53003] needed by the mu_upgrade subtest so disable it.
+       setenv subtest_exclude_list "$subtest_exclude_list mu_upgrade"
+       # We do not have dbg V5* builds needed by the mu_downgrade subtest so disable it.
+       setenv subtest_exclude_list "$subtest_exclude_list mu_downgrade"
 endif
 # If IGS is not available, filter out tests that need it
 if ($?gtm_test_noIGS) then
