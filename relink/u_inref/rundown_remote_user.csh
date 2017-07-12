@@ -18,8 +18,8 @@ echo "User Name          : " `whoami`
 echo "Version            : " $1
 echo "Image              : " $2
 
-source $gtm_com/gtm_cshrc.csh
 setenv gtm_tst $4
+source $gtm_tst/com/set_specific.csh
 source $gtm_tst/com/remote_getenv.csh $3
 if ( $?gtm_chset ) then
 	echo $gtm_chset
@@ -28,7 +28,7 @@ else
 endif
 
 locale
-version $1 $2
+source $gtm_tst/com/set_active_version.csh $1 $2
 cd $3
 setenv gtmgbldir "mumps.gld"
 setenv gtmroutines ".*"

@@ -23,10 +23,12 @@ endif
 set dom = $4
 echo "Will run           : $dom"
 
-source $gtm_com/gtm_cshrc.csh
 cd $3
 # since $gtm_tst is not defined at this moment, use V990:
 source $gtm_test/T990/com/remote_getenv.csh $3
+# Below "version" alias use would error out in a non-GG (i.e. YDB) setup.
+# But we don't need to worry about it for now because the mupjnl subtests that call this script
+# are currently disabled due to $?gtm_test_noggusers being non-zero (in mupjnl/instream.csh).
 version $1 $2
 echo $gtm_exe
 setenv GTM "$gtm_exe/mumps -direct"

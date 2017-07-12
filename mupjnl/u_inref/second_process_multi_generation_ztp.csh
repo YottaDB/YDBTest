@@ -16,8 +16,10 @@ echo "User Name          : " `whoami`
 echo "Version            : " $1
 echo "Image              : " $2
 
-source $gtm_com/gtm_cshrc.csh
 source $gtm_test/T990/com/remote_getenv.csh $3
+# Below "version" alias use would error out in a non-GG (i.e. YDB) setup.
+# But we don't need to worry about it for now because the mupjnl subtests that call this script
+# are currently disabled due to $?gtm_test_noggusers being non-zero (in mupjnl/instream.csh).
 version $1 $2
 echo $gtm_exe
 setenv GTM "$gtm_exe/mumps -direct"

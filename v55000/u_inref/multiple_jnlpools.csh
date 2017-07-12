@@ -152,9 +152,9 @@ echo '# The database has 600 permission. An argumentless mupip rundown as $gtmte
 
 cat > otheruser_rundown.csh << EOM
 #!/usr/local/bin/tcsh -f
-source \$gtm_com/gtm_cshrc.csh
 cd \$3
-version \$1 \$2
+source $gtm_tst/com/set_specific.csh
+source $gtm_tst/com/set_active_version.csh \$1 \$2
 setenv gtmgbldir user1.gld
 \$gtm_exe/mupip rundown
 EOM
