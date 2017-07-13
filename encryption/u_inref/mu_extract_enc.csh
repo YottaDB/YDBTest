@@ -18,7 +18,7 @@
 setenv gtm_test_spanreg 0
 
 if (! $?gtm_test_replay) then
-	set extr_enc_prior_ver = `$gtm_tst/com/random_ver.csh -gt V53004`
+	set extr_enc_prior_ver = `$gtm_tst/com/random_ver.csh -gte V63000A`
 	if ("$extr_enc_prior_ver" =~ "*-E-*") then
 		echo "The requested prior version is not available: $extr_enc_prior_ver"
 		exit 1

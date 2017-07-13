@@ -44,7 +44,10 @@ if (! $?gtm_test_replay) then
 	echo "setenv use_journaling $use_journaling" >> settings.csh
 
 	# Choose whether to use NULL IVs.
-	@ use_null_iv = $random_options[2]
+	# But in a YDB environment, running pre-V63000A versions with encryption results in CRYPTKEYFETCHFAILED (hash mismatch)
+	# so do not use null iv that way the test does not choose those random versions.
+	# @ use_null_iv = $random_options[2]
+	@ use_null_iv = 0
 	echo "setenv use_null_iv $use_null_iv" >> settings.csh
 
 	if ($use_null_iv) then

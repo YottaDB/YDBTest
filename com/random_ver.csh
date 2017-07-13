@@ -84,7 +84,7 @@ if ("$maxver" == "V63000A_R100") then
 	set maxver = "V63000A"
 endif
 while ($cnt <= $numvers)
-	if (`expr "$allverlist[$cnt]" "<" "$maxver"`) then
+	if (`expr "$allverlist[$cnt]" "<=" "$maxver"`) then
 		set actualverlist = `echo $actualverlist $allverlist[$cnt]`
 	endif
 	@ cnt = $cnt + 1
@@ -208,7 +208,7 @@ if ($?vertype) then
 endif
 
 # On non-gg boxes, V63000 is minimum version that has dbg builds. Account for that below.
-if (("dbg" == $tst_image) && ($minimum < "V63000")) then
+if (("dbg" == $tst_image) && (`expr $minimum "<" "V63000"`)) then
 	set minimum = "V63000"
 endif
 
