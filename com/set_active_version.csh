@@ -52,10 +52,19 @@ else
 	endif
 	setenv gtm_dist $gtm_root/$verno/$image
 	setenv gtm_exe $gtm_dist
-	if ($?gtmroutines) then
-		setenv gtmroutines ". $gtm_dist $gtmroutines"
+	if ($?gtm_chset) then
+		if ("$gtm_chset" != "UTF-8") then
+			set objdir = $gtm_exe
+		else
+			set objdir = $gtm_exe/utf8	# so UTF-8 .o files are picked in $gtmroutines
+		endif
 	else
-		setenv gtmroutines ". $gtm_dist"
+		set objdir = $gtm_exe
+	endif
+	if ($?gtmroutines) then
+		setenv gtmroutines ". $objdir $gtmroutines"
+	else
+		setenv gtmroutines ". $objdir"
 	endif
 	setenv gtm_tools $gtm_root/$verno/tools
 	setenv gtm_inc $gtm_root/$verno/inc

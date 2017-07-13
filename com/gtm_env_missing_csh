@@ -43,8 +43,16 @@ check_setenv_echo gtm_log $__dir/$__ver/log
 check_setenv_echo gtm_pct_list $__dir/$__ver/pct
 check_setenv_echo gtm_pct $gtm_pct_list
 check_setenv_echo gtm_inc_list $gtm_ver/inc
-check_setenv_echo gtmroutines ". $gtm_exe"
-
+if ($?gtm_chset) then
+	if ("$gtm_chset" != "UTF-8") then
+		set objdir = $gtm_exe
+	else
+		set objdir = $gtm_exe/utf8	# so UTF-8 .o files are picked in $gtmroutines
+	endif
+else
+	set objdir = $gtm_exe
+endif
+check_setenv_echo gtmroutines ". $objdir"
 check_setenv_echo gtm_inc $gtm_ver/inc
 check_setenv_echo gtm_src_list $gtm_ver/src
 check_setenv_echo gtm_src $gtm_ver/src
