@@ -153,6 +153,12 @@ else if ("dbg" == "$tst_image") then
        setenv subtest_exclude_list "$subtest_exclude_list gtm6811"
 endif
 
+if ($?gtm_test_temporary_disable) then
+	# We have seen the below test hang with V63000A_R100/T63000. And hope this will not happen with
+	# V63001A_R100/T63001A or V63002_R100/T63002. So disabling this until then.
+	setenv subtest_exclude_list "$subtest_exclude_list D9L04002809"
+endif
+
 if ("ENCRYPT" == $test_encryption) then
 	# This test does not ship databases across hosts, but it renames databases
 	# Sourcing the below script would result in both the databases using the same key and hence would work

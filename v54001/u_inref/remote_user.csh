@@ -14,11 +14,11 @@ echo "User Name          : " `whoami`
 echo "Version            : " $1
 echo "Image              : " $2
 
-source $gtm_com/gtm_cshrc.csh
 setenv gtm_tst $4
+source $gtm_tst/com/set_specific.csh
 source $gtm_tst/com/remote_getenv.csh $3
 
-version $1 $2
+source $gtm_tst/com/set_active_version.csh $1 $2
 echo $gtm_exe
 setenv MUPIP $gtm_exe/mupip
 cd $3

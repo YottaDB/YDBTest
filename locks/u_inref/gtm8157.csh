@@ -12,13 +12,10 @@
 
 cd $3
 setenv gtmgbldir "mumps.gld"
-source $gtm_com/gtm_cshrc.csh
 setenv gtm_tst $4
+source $gtm_tst/com/set_specific.csh
 source $gtm_tst/com/remote_getenv.csh $3
-
-setenv gtm_dist $PWD/$tst_ver/$tst_image
-setenv gtm_exe $gtm_dist
-setenv gtm_ver $gtm_dist:h
+source $gtm_tst/com/set_active_version.csh $1 $2
 setenv GTM "$gtm_exe/mumps -direct"
 
 source $tst_working_dir/encr_env_remote_user.csh

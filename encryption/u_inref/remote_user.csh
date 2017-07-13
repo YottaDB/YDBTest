@@ -18,12 +18,12 @@ echo "Directory	         : " $3
 echo "Test version	 : " $4
 echo "GNUPGHOME	         : " $5
 
-source $gtm_com/gtm_cshrc.csh
 setenv gtm_tst $4
+source $gtm_tst/com/set_specific.csh
 source $gtm_tst/com/remote_getenv.csh $3
 setenv GNUPGHOME $5
 
-version $1 $2
+source $gtm_tst/com/set_active_version.csh $1 $2
 echo $gtm_exe
 setenv GTM "$gtm_exe/mumps -direct"
 cd $3

@@ -31,11 +31,13 @@ if ( "ENCRYPT" != "$test_encryption" ) exit 0
 
 set gtmtest1_gnupghome = "$gtm_com/gnupg_${gtmtest1}"
 
+# Below use of defaults.csh is to define $gt_cc_compiler etc. needed later by modconfig.csh
 cat << CAT_EOF > $res_file
 touch $dbk_file
 setenv gtm_obfuscation_key $gtmtest1_gnupghome/gtmtest1@fnis.com_pubkey.txt
 setenv gtm_pinentry_log /tmp/__${gtmtest1}_pinentry.log
 setenv gtm_passwd \`echo $gtmtest1 | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '\`
+source $gtm_tst/com/defaults.csh $gtm_tst/com/defaults_common_csh
 $gtm_tst/com/modconfig.csh $dbk_file append-keypair $dat_file $key_file
 
 if ($dat_file !~ /*) set dat_file = $PWD/$dat_file

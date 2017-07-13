@@ -56,7 +56,7 @@ set localallverlist = `\ls $gtm_root/ | $grep -E '^V[4-8][0-9][0-9][0-9][0-9][A-
 set allverlist = ""
 foreach ver ($localallverlist)
 	# Even though the version directory exists, it is possible the specific image subdirectory
-	# does not exist. e.g. Builds before V63000A on non-gg boxes only have pro builds setup,
+	# does not exist. e.g. Builds before V63000 on non-gg boxes only have pro builds setup,
 	# not the dbg builds. In that case, skip this version from the list of available versions.
 	if (-e $gtm_root/$ver/$tst_image) then
 		set allverlist = "$allverlist $ver"
@@ -74,11 +74,17 @@ foreach host ($remotehosts)
 	set allverlist = "$newlist"
 end
 
+set allverlist = `echo $allverlist`
 @ numvers = $#allverlist
 @ cnt = 1
 set actualverlist = ""
+# Ensure actualverlist never contains any version > gtm_verno
+set maxver = "$gtm_verno"
+if ("$maxver" == "V63000A_R100") then
+	set maxver = "V63000A"
+endif
 while ($cnt <= $numvers)
-	if ("$allverlist[$cnt]" != "$gtm_verno") then
+	if (`expr "$allverlist[$cnt]" "<" "$maxver"`) then
 		set actualverlist = `echo $actualverlist $allverlist[$cnt]`
 	endif
 	@ cnt = $cnt + 1
@@ -199,6 +205,11 @@ if ($?vertype) then
 		set islt    = "<="
 	breaksw
 	endsw
+endif
+
+# On non-gg boxes, V63000 is minimum version that has dbg builds. Account for that below.
+if (("dbg" == $tst_image) && ($minimum < "V63000")) then
+	set minimum = "V63000"
 endif
 
 if !($?islt) then
