@@ -23,7 +23,7 @@ else
 endif
 
 source $source_dir/set_specific.csh
-set outfile = ipcrm_`date +%H_%M_%S`.outx
+set outfile = ipcrm_${USER}_`date +%H_%M_%S`.outx
 # If $gtm_tst is not defined, it is called by tools. Define gtm_tst and redirect the log to ~/logs/ directory
 if !($?gtm_tst) then
 	setenv gtm_tst $gtm_test/T990

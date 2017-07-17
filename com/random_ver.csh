@@ -208,8 +208,14 @@ if ($?vertype) then
 endif
 
 # On non-gg boxes, V63000 is minimum version that has dbg builds. Account for that below.
-if (("dbg" == $tst_image) && (`expr $minimum "<" "V63000"`)) then
-	set minimum = "V63000"
+if ("dbg" == $tst_image) then
+	if (! $?minimum) then
+		set minimum = "V63000"
+	else
+		if (`expr $minimum "<" "V63000"`)) then
+			set minimum = "V63000"
+		endif
+	endif
 endif
 
 if !($?islt) then
