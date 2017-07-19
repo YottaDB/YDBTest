@@ -232,6 +232,10 @@ else if ("dbg" == "$tst_image") then
        setenv subtest_exclude_list "$subtest_exclude_list gtm7083a"
        # We do not have dbg builds of V62000 or [V54000,V61000] needed by the trigrepl_priorver subtest so disable it.
        setenv subtest_exclude_list "$subtest_exclude_list trigrepl_priorver"
+else if ($?ydb_environment_init) then
+	# In a YDB environment (i.e. non-GG setup), we do not have prior versions that are needed
+	# by the below subtest. Therefore disable it.
+       setenv subtest_exclude_list "$subtest_exclude_list trig2notrig"
 endif
 
 # Submit the list of subtests
