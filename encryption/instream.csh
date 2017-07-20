@@ -153,8 +153,14 @@ if ("HOST_HP-UX_IA64" == "$gtm_test_os_machtype") then
 	setenv subtest_exclude_list "$subtest_exclude_list eotf_backup"
 endif
 
+if ($?ydb_environment_init) then
+	# In a YDB environment (i.e. non-GG setup), we do not have V5* prior versions that can run with encryption support.
+	# Therefore disable subtests that use such a prior version.
+	setenv subtest_exclude_list "$subtest_exclude_list extract_load iv_ops"
+endif
+
 if ($?gtm_test_temporary_disable) then
-       setenv subtest_exclude_list "$subtest_exclude_list extract_load gpghome_perms err_maskpass encr_env iv_ops helper_scripts eotf_basic mu_extract_enc"
+       setenv subtest_exclude_list "$subtest_exclude_list err_maskpass encr_env helper_scripts"
 endif
 
 setenv GNUPGHOME	"$tst_working_dir/.gnupg"

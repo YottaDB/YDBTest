@@ -17,12 +17,13 @@ setenv subtest_list "basic notalive badconv stress multimods badconv2 badconv4 n
 if ( "TRUE" == $gtm_test_unicode_support ) setenv subtest_list "$subtest_list ubasic"
 
 setenv subtest_exclude_list ""
-if ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtype") then
-	setenv subtest_exclude_list "$subtest_exclude_list nosectrig"
-endif
 
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?gtm_test_nopriorgtmver) then
+	setenv subtest_exclude_list "$subtest_exclude_list nosectrig"
+else if ($?ydb_environment_init) then
+	# In a YDB environment (i.e. non-GG setup), we do not have prior versions that are needed
+	# by the below subtest. Therefore disable it.
 	setenv subtest_exclude_list "$subtest_exclude_list nosectrig"
 endif
 

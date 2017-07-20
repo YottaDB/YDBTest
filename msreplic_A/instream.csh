@@ -73,7 +73,7 @@ endif
 endif
 
 # Filter out tests requiring specific gg-user setup, if the setup is not available
-if ($?gtm_test_noggusers) then
+if ($?gtm_test_noggusers || $?gtm_test_noIGS) then
 	setenv subtest_exclude_list "$subtest_exclude_list log_error"
 endif
 

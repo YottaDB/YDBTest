@@ -51,11 +51,7 @@ if ($test_align > $align_limit) then
     echo "setenv tst_jnl_str $tst_jnl_str"            >>&! settings.csh
 endif
 
-set minver = "V51000"
-# Cross endian replication sometimes errors with %GTM-E-REPLXENDIANFAIL which was fixed in V62000
-if (2 == "$test_replic_mh_type") then
-	set minver = "V62000"
-endif
+set minver = "V63000A"
 set prior_ver = `$gtm_tst/com/random_ver.csh -gte $minver -rh $tst_remote_host`
 if ("$prior_ver" =~ "*-E-*") then
 	echo "No prior versions available: $prior_ver"

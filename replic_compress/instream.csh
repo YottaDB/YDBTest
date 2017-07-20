@@ -36,6 +36,10 @@ endif
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ( (1 == $gtm_platform_no_compress_ver) || ($?gtm_test_nopriorgtmver) ) then
 	setenv subtest_exclude_list "mix_connections"
+else if ($?ydb_environment_init) then
+	# In a YDB environment (i.e. non-GG setup), we do not have prior versions that are needed
+	# by the below subtest. Therefore disable it.
+	setenv subtest_exclude_list "mix_connections"
 endif
 
 $gtm_tst/com/submit_subtest.csh

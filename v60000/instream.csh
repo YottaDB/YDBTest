@@ -112,6 +112,10 @@ else if ("dbg" == "$tst_image") then
        setenv subtest_exclude_list "$subtest_exclude_list mu_upgrade"
        # We do not have dbg V5* builds needed by the mu_downgrade subtest so disable it.
        setenv subtest_exclude_list "$subtest_exclude_list mu_downgrade"
+else if ($?ydb_environment_init) then
+	# In a YDB environment (i.e. non-GG setup), we do not have prior versions that are needed
+	# by the below subtest. Therefore disable it.
+       setenv subtest_exclude_list "$subtest_exclude_list mu_upgrade"
 endif
 # If IGS is not available, filter out tests that need it
 if ($?gtm_test_noIGS) then
