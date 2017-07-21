@@ -89,7 +89,24 @@ foreach chset("M" "UTF-8")
 	# Also the 1 byte filler in the record header structure (rec_hdr) on UNIX platform in uninitialized.
 	# Due to this, the dse dump output will not be the same everytime.  Remove this filter and recreate the reference file once it is fixed
 	$tst_awk -f $gtm_tst/com/dse_filter_header.awk dseunicode_dump_$chset.outx >&! dseunicode_dump_$chset.out
-	$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/outref.awk dseunicode_dump_$chset.out $gtm_tst/$tst/outref/dseunicode_dump_${chset}_${endian}.txt >&! dseunicode_dump_${chset}_${endian}.cmp
+	# ICU 59.1 had fixes to the way a few unicode codepoints were displayed in a DSE DUMP -FILE output. An example diff follows.
+	#
+	#       ... : | .. .. .. .. 73 61 6D 70 6C 65 67 62 6C  0 FF E2 99 88 E2 99|
+	# -           |  .  .  . ..  s  a  m  p  l  e  g  b  l  .  .        ♈      |	<-- Pre-ICU59.1
+	# +           |  .  .  . ..  s  a  m  p  l  e  g  b  l  .  .       ♈      |	<-- ICU59.1 and onwards
+	#        24 : | 89 E2 99 8A E2 99 8B E2 99 8C E2 99 8D E2 99 8E E2 99 8F E2|
+	#
+	# To work with systems which have ICU versions before and after 59.1, we maintain 2 reference files.
+	# For example, in case of a little-endian machine, we maintain the below files
+	#	dseunicode_dump_UTF-8_little.txt		--> For ICU versions >= 59.1
+	#	dseunicode_dump_UTF-8_little_pre_ICU_59.txt	--> For ICU versions <  59.1
+	# And choose the appropriate reference file based on the ICU version.
+	#
+	set reference_file = $gtm_tst/$tst/outref/dseunicode_dump_${chset}_${endian}.txt
+	if (("UTF-8" == $chset) && (1 == `echo "if ($gtm_icu_version < 59.1) 1" | bc`)) then
+		set reference_file = $gtm_tst/$tst/outref/dseunicode_dump_${chset}_${endian}_pre_ICU_59.txt
+	endif
+	$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/outref.awk dseunicode_dump_$chset.out $reference_file >&! dseunicode_dump_${chset}_${endian}.cmp
 	diff dseunicode_dump_${chset}_${endian}.cmp dseunicode_dump_$chset.out
 	if ($status) then
 		echo "TEST-E-ERROR, DSE dump behavior on gtm_chset $chset incorrect"
