@@ -19,20 +19,21 @@
 #   3. [** Future expansion once a version of YDB is available with an incremented object version **] An
 #      object created by a previous version of YDB is recompiled appropriately with the new YDB version.
 #
-set gtmver = `$gtm_tst/com/random_ver.csh -lt V63001A>& rand_ver.txt; cat rand_ver.txt`
-source $gtm_tst/com/switch_gtm_version.csh $gtmver pro
-#echo "Selected GT.M version [$gtmver] to do initial compile"
+set prior_ver = `$gtm_tst/com/random_ver.csh -lt V63001A>& rand_ver.txt; cat rand_ver.txt`
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
+source $gtm_tst/com/switch_gtm_version.csh $prior_ver pro
+#echo "Selected GT.M version [$prior_ver] to do initial compile"
 #
 # Now that a random GT.M version is ready to go, just compile an M routine from this test after saving original.
 #
 $gtm_exe/mumps $gtm_tst/$tst/inref/zlen2arg.m
-cp -p zlen2arg.o zlen2arg.o.gtmver
+cp -p zlen2arg.o zlen2arg.o.priorver
 #
 # Now switch back to our test version and recompile. Verify object file changed
 #
 source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
 $gtm_exe/mumps -run %XCMD 'zlink "zlen2arg"' # zlink won't recompile if it likes the existing object label
-diff -q zlen2arg.o.gtmver zlen2arg.o >& diff-output.txt
+diff -q zlen2arg.o.priorver zlen2arg.o >& diff-output.txt
 set diffstat = $status
 if (0 == $diffstat) then
     echo "FAIL - YDB did not recompile a file built by GT.M"
