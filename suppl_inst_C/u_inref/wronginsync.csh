@@ -19,7 +19,6 @@
 
 $MULTISITE_REPLIC_PREPARE 7
 $gtm_tst/com/dbcreate.csh mumps -rec=1000
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
 
 mkdir orig
 cp *.dat *.mjl orig/
@@ -50,7 +49,7 @@ setenv gtm_test_repl_skiprcvrchkhlth 1 ; $MSR STARTRCV INST2 INST3 >&! STARTRCV_
 get_msrtime
 $MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message INSNOTJOINED -duration 120 -waitcreation'
 $MSR RUN INST3 "$msr_err_chk RCVR_$time_msr.log INSNOTJOINED"
-knownerror $msr_execute_last_out GTM-E-INSNOTJOINED
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-INSNOTJOINED
 echo "# The receiver would have exited with the above error. Manually shutdown the update process and passive server"
 $MSR RUN INST3 'set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_IST2INST3.out'
 $MSR RUN RCV=INST3 SRC=INST2 '$MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__ >&! passivesrc_shut_INST2INST3.out'

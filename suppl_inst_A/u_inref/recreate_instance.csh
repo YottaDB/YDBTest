@@ -70,7 +70,6 @@ endif
 # So, even if no-before is randomly selected, force it to before images now.
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
 $MULTISITE_REPLIC_PREPARE 2
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
 
 $gtm_tst/com/dbcreate.csh mumps 1 -rec=1000
 
@@ -142,7 +141,7 @@ echo "# Start the receiver with -updateresync and expect the source server to th
 setenv gtm_test_repl_skiprcvrchkhlth 1 ; $MSR STARTRCV INST1 INST2 "updateresync=srcinstback.repl $resume_initialize">&! startrcv_inst1inst2_2.out ; unsetenv gtm_test_repl_skiprcvrchkhlth
 $MSR RUN INST1 '$gtm_tst/com/wait_for_log.csh -log 'SRC_$time_msr.log' -message REPLINSTNOHIST'
 $MSR RUN INST1 '$msr_err_chk 'SRC_$time_msr.log' E-REPLINSTNOHIST'
-knownerror $msr_execute_last_out GTM-E-REPLINSTNOHIST
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-REPLINSTNOHIST
 echo "# The receiver would have exited with the above error. Manually shutdown the passive server"
 $MSR RUN RCV=INST2 SRC=INST1 '$MUPIP replic -source -shutdown -timeout=0 >&! passivesrc_shut.out'
 if (1 == $test_replic_suppl_type) then

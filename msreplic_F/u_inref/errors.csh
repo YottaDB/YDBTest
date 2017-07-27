@@ -204,22 +204,21 @@ cat << EOF
 EOF
 
 $MSR RUN INST2 "set msr_dont_trace ; source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0" # do rundown if needed since a backed up mumps.repl file is copied over
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
 $MSR RUN INST2 'cp save1/mumps.repl .'
 $MSR STARTRCV INST1 INST2
 get_msrtime
 $MSR RUN INST2 "$msr_err_chk passive_$time_msr.log REPLINSTDBMATCH"
-knownerror $msr_execute_last_out GTM-E-REPLINSTDBMATCH
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-REPLINSTDBMATCH
 $MSR RUN INST2 "$msr_err_chk START_$time_msr.out NOJNLPOOL"
-knownerror $msr_execute_last_out GTM-E-NOJNLPOOL
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-NOJNLPOOL
 
 # When the passive source server fails to start, the subsequent checkhealth statement will error with GTM-E-NOJNLPOOL
 # Below backward rollback invocation is expected to fail. Therefore pass "-backward" explicitly to mupip_rollback.csh
 # (and avoid implicit "-forward" rollback invocation that would otherwise happen by default.
 $MSR RUN RCV=INST2 'set msr_dont_chk_stat ; $gtm_tst/com/mupip_rollback.csh -backward -fetchresync=__RCV_PORTNO__ -losttrans=fetch.glo "*" >&! rollback_REPLINSTDBMATCH.out'
 $MSR RUN INST2 "$msr_err_chk rollback_REPLINSTDBMATCH.out REPLINSTDBMATCH MUNOACTION"
-knownerror $msr_execute_last_out "GTM-E-REPLINSTDBMATCH"
-knownerror $msr_execute_last_out "GTM-E-MUNOACTION"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-E-REPLINSTDBMATCH"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-E-MUNOACTION"
 
 $echoline
 
@@ -252,7 +251,7 @@ unsetenv gtm_test_repl_skiprcvrchkhlth
 get_msrtime
 $MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message REPLINSTNOHIST -duration 120 -waitcreation'
 $MSR RUN INST2 "$msr_err_chk RCVR_$time_msr.log REPLINSTNOHIST"
-knownerror $msr_execute_last_out GTM-E-REPLINSTNOHIST
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-REPLINSTNOHIST
 
 $MSR RUN RCV=INST2 SRC=INST1 '$MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST1INST2.out'
  #The above is done because, the receiver will be shut down but the passive server will be alive still. The next STARTRCV will complain.
@@ -281,7 +280,7 @@ get_msrtime
 $MSR RUN INST5 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message REPLINSTNOHIST -duration 120 -waitcreation'
 
 $MSR RUN INST5 "$msr_err_chk RCVR_$time_msr.log REPLINSTNOHIST"
-knownerror $msr_execute_last_out GTM-E-REPLINSTNOHIST
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-REPLINSTNOHIST
 
 $MSR RUN RCV=INST5 SRC=INST1 'set msr_dont_trace ; $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST1INST5.out'
  #The above is done because, the receiver will be shut down but the passive server will be alive still.
@@ -310,7 +309,7 @@ get_msrtime
 $MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log 'SRC_$time_msr.log' -message REPLINSTNOHIST -duration 120 -waitcreation'
 
 $MSR RUN INST2 "$msr_err_chk SRC_$time_msr.log REPLINSTNOHIST"
-knownerror $msr_execute_last_out GTM-E-REPLINSTNOHIST
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-REPLINSTNOHIST
 
 $MSR CHECKHEALTH INST2 INST3 SRC
 

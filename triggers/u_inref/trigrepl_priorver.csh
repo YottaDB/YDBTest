@@ -28,7 +28,6 @@
 # Disabled settings that do not work with MSR and prior versions
 source $gtm_tst/com/disable_settings_msr_priorver.csh
 
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
 # prepare local and remote directories
 $MULTISITE_REPLIC_PREPARE 7
 
@@ -97,7 +96,7 @@ $MSR RUN INST7 '$gtm_exe/mumps -run %XCMD "zwrite ^?.E"'
 $MSR RUN INST6 '$MUPIP trigger -triggerfile=c.trg >& load_ctrig.out'
 $MSR RUN INST7 "$gtm_tst/com/wait_for_log.csh -log RCVR_${time_msr}.log -message REPLNOHASHTREC"
 $MSR RUN INST7 "set msr_dont_chk_stat ; $gtm_tst/com/check_error_exist.csh RCVR_${time_msr}.log REPLNOHASHTREC"
-knownerror $msr_execute_last_out GTM-E-REPLNOHASHTREC
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-REPLNOHASHTREC
 echo "# The receiver would have exited with the above error. Manually shutdown the update process and passive server"
 $MSR RUN INST7 'set msr_dont_chk_stat ;$MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut.out'
 $MSR RUN INST7 '$MUPIP replic -source -shutdown -timeout=0 >&! passive_shut.out'

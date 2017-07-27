@@ -26,7 +26,6 @@ source $gtm_tst/com/gtm_test_setbeforeimage.csh
 $MULTISITE_REPLIC_PREPARE 1 2
 $gtm_tst/com/dbcreate.csh mumps -rec=1000
 
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
 
 setenv needupdatersync 1
 $MSR START INST2 INST3 RP
@@ -52,7 +51,7 @@ get_msrtime
 $MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message INSUNKNOWN -duration 120 -waitcreation'
 $MSR RUN INST3 "$msr_err_chk RCVR_$time_msr.log INSUNKNOWN"
 # Receiver server would have exited with the above error. Manually shutdown update process
-knownerror $msr_execute_last_out GTM-E-INSUNKNOWN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-INSUNKNOWN
 $MSR RUN INST3 'set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_INST1INST3.out'
 $MSR STOPSRC INST1 INST3
 $MSR STOPSRC INST3 INST2

@@ -26,7 +26,6 @@ foreach i (1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 )
 	$MSR STOP INST$i INST17
 end
 
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
 #%GTM-E-UPDSYNCINSTFILE, Error with instance file name specified in UPDATERESYNC qualifier
 #%GTM-I-TEXT, No empty slot found. Specify REUSE to choose one for reuse
 echo "# Expect the rcvr to exit with UPDSYNCINSTFILE if a 16th server is connected to supplementary instance P"
@@ -35,7 +34,7 @@ setenv gtm_test_repl_skiprcvrchkhlth 1 ; $MSR STARTRCV INST16 INST17  >&! STARTR
 get_msrtime
 $MSR RUN INST17 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message UPDSYNCINSTFILE -duration 120 -waitcreation'
 $MSR RUN INST17 "$msr_err_chk RCVR_$time_msr.log UPDSYNCINSTFILE"
-knownerror $msr_execute_last_out GTM-E-UPDSYNCINSTFILE
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-UPDSYNCINSTFILE
 echo "# The receiver would have exited with the above error. Manually shutdown the update process and passive server"
 $MSR RUN INST17 'set msr_dont_chk_stat ;$MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_INST16INST17.out'
 $MSR RUN INST17 '$MUPIP replic -source -shutdown -timeout=0 >&! suppl_shut_INST17.out'

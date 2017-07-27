@@ -14,8 +14,6 @@
 # Disabled settings that do not work with MSR and prior versions
 source $gtm_tst/com/disable_settings_msr_priorver.csh hugepages triggers tls
 
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
-
 # We just need 2 instances
 $MULTISITE_REPLIC_PREPARE 2
 
@@ -77,8 +75,8 @@ $MSR RUN $target_inst "set msr_dont_trace; $msr_err_chk $logfile 'GTM-E-REPLNOTL
 $tst_awk '{gsub(/((RCVR|SRC)[_0-9]*.log|Receiver|Source)/,"##FILTERED##");print}' capture_REPLNOTLS.logx
 
 # Get rid of the -E-REPLNOTLS from the last MSR script that was executed as well as from the multisite_replic.log.
-knownerror $msr_execute_last_out "GTM-E-REPLNOTLS"
-knownerror multisite_replic.log "GTM-E-REPLNOTLS"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-E-REPLNOTLS"
+$gtm_tst/com/knownerror.csh multisite_replic.log "GTM-E-REPLNOTLS"
 
 if ("INST1" == "$target_inst") then
 	# The source server would have exited, leaving behind ipcs. Manually remove them

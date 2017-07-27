@@ -16,7 +16,6 @@
 # It is done here instead of just before dbcheck.csh because, the env.txt at the beginning of the test is used to set the environment till the end
 unsetenv gtm_custom_errors
 $MULTISITE_REPLIC_PREPARE 2 2
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
 
 $gtm_tst/com/dbcreate.csh mumps  5 125 1000 1024 4096 1024 4096 >&! dbcreate.out
 
@@ -39,7 +38,7 @@ $MSR RUN SRC=INST2 RCV=INST3 '$MUPIP replic -source -start -log=SRC_INST2INST3.l
 # %GTM-E-INSUNKNOWN, Supplementary Instance INSTANCE3 has no instance definition for non-Supplementary Instance INSTANCE2
 $MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log RCVR_'$time_msr'.log -message INSUNKNOWN'
 $MSR RUN INST3 "$msr_err_chk RCVR_$time_msr.log INSUNKNOWN"
-knownerror $msr_execute_last_out INSUNKNOWN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out INSUNKNOWN
 $MSR REFRESHLINK INST1 INST3
 $MSR RUN INST2 '$MUPIP backup -replinstance=INST2bak.repl >&! INST2_repl_backup.out'
 $MSR RUN SRC=INST2 RCV=INST3 '$gtm_tst/com/cp_remote_file.csh __SRC_DIR__/INST2bak.repl  _REMOTEINFO___RCV_DIR__/INST2bak.repl'

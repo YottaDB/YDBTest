@@ -22,7 +22,6 @@ cat << EOF
 ##   \$MULTISITE_REPLIC_PREPARE 3
 ##   INST1 --> INST2 --> INST3
 EOF
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
 
 echo " "
 $echoline
@@ -37,21 +36,21 @@ setenv tmp_portno `$MSR RUN INST2 'set msr_dont_trace;source $gtm_tst/com/portno
 $MSR RUN SRC=INST1 RCV=INST2 'set msr_dont_chk_stat; $MUPIP replic -source -start -log=test/gen_source1.log -secondary=__RCV_HOST__:$tmp_portno -buff=$tst_buffsize -instsecondary=__RCV_INSTNAME__' >& src_log_dir_not_exist1.out
 echo "#         --> We expect a REPLLOGOPN error"
 $gtm_tst/com/check_error_exist.csh src_log_dir_not_exist1.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 
 echo "# Attempt 2: to start source server for INST1 with a log, but the directory containing the log file is not writable"
 $MSR RUN INST1 'mkdir test1; chmod =r test1'
 $MSR RUN SRC=INST1 RCV=INST2 'set msr_dont_chk_stat; $MUPIP replic -source -start -log=test1/gen_source1.log -secondary=__RCV_HOST__:$tmp_portno -buff=$tst_buffsize -inst=__RCV_INSTNAME__' >& src_log_dir_unwritable1.out
 echo "#         --> We expect a REPLLOGOPN error"
 $gtm_tst/com/check_error_exist.csh src_log_dir_unwritable1.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 
 echo "# Attempt 3: to start source server for INST1 with a log not accessible"
 $MSR RUN INST1 'touch mumps.dat.log; chmod og-rwx mumps.dat.log; $gtm_com/IGS mumps.dat.log CHOWN gtmtest1 gtc'
 $MSR RUN SRC=INST1 RCV=INST2 'set msr_dont_chk_stat; $MUPIP replic -source -start -log=mumps.dat.log -secondary=__RCV_HOST__:$tmp_portno -buff=$tst_buffsize -inst=__RCV_INSTNAME__' >& src_log_unwritable1.out
 echo "#         --> We expect a REPLLOGOPN error"
 $gtm_tst/com/check_error_exist.csh src_log_unwritable1.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 echo "============Test1 ends=========="
 
 echo " "
@@ -69,21 +68,21 @@ echo "# Attempt 1: to start passive server for INST2, but the directory containi
 $MSR RUN SRC=INST2 RCV=INST3 'set msr_dont_chk_stat; $MUPIP replic -source -start -passive -log=test/passive3.log -inst=__RCV_INSTNAME__ -root' >&src_log_dir_not_exist3.out
 echo "#  	--> We expect a REPLLOGOPN error"
 $gtm_tst/com/check_error_exist.csh src_log_dir_not_exist3.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 
 echo "# Attempt 2: to start passive server for INST2, but the directory containing the log file is not writable"
 $MSR RUN INST2 ' mkdir test2; chmod =r test2'
 $MSR RUN SRC=INST2 RCV=INST3 'set msr_dont_chk_stat; $MUPIP replic -source -start -passive -log=test2/passive3.log -inst=__RCV_INSTNAME__ -root' >&src_log_dir_unwritable3.out
 echo "#         --> We expect a REPLLOGOPN error"
 $gtm_tst/com/check_error_exist.csh src_log_dir_unwritable3.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 
 echo "# Attempt 3: to start passive server for INST2 with a log not accessible"
 $MSR RUN INST2 'touch mumps.dat.log; chmod og-rwx mumps.dat.log; $gtm_com/IGS mumps.dat.log CHOWN gtmtest1 gtc'
 $MSR RUN SRC=INST2 RCV=INST3 'set msr_dont_chk_stat; $MUPIP replic -source -start -passive -log=mumps.dat.log -inst=__RCV_INSTNAME__ -root' >&src_log_unwritable3.out
 echo "#         --> We expect a REPLLOGOPN error"
 $gtm_tst/com/check_error_exist.csh src_log_unwritable3.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 echo "============Test3 ends=========="
 
 echo " "
@@ -102,20 +101,20 @@ echo "#- Attempt 1: to start receiver server of INST2, but the directory contain
 $MSR RUN RCV=INST2 'set msr_dont_chk_stat; $MUPIP replic -receiv -start -listen='$tmp_portno' -log=test/receiver.log -buf=$tst_buffsize'>&rcv_log_dir_not_exist5.out
 echo "#         --> We expect a REPLLOGOPN error"
 $gtm_tst/com/check_error_exist.csh rcv_log_dir_not_exist5.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 
 echo "# Attempt 2: to start receiver server of INST2, but the directory containing the log file is not writable"
 $MSR RUN RCV=INST2 'set msr_dont_chk_stat; $MUPIP replic -receiv -start -listen='$tmp_portno' -log=test2/receiver.log -buf=$tst_buffsize'>>&rcv_log_dir_unwritable5.out
 echo "#         --> We expect a REPLLOGOPN error"
 $gtm_tst/com/check_error_exist.csh rcv_log_dir_unwritable5.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 
 
 echo "# Attempt 3: to start receiver server of INST2 with a log not accessible"
 $MSR RUN RCV=INST2 'set msr_dont_chk_stat; $MUPIP replic -receiv -start -listen='$tmp_portno' -log=mumps.dat.log -buf=$tst_buffsize' >& rcv_log_unwritable5.out
 echo "#         --> We expect a REPLLOGOPN error"
 $gtm_tst/com/check_error_exist.csh rcv_log_unwritable5.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 echo "============Test5 ends=========="
 
 
@@ -134,19 +133,19 @@ echo "#- Attempt 1: Directory containing the log file does not exist"
 $MSR RUN SRC=INST2 RCV=INST3 'set msr_dont_chk_stat; $MUPIP replic -source -activate -secondary=__RCV_HOST__:'$tmp_portno2' -log=test/activate.log -inst=__RCV_INSTNAME__ -propagate' >& src_activ_log_dir_not_exist6.out
 echo "#         --> We expect a REPLLOGOPN error"
 $gtm_tst/com/check_error_exist.csh src_activ_log_dir_not_exist6.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 
 echo "# Attempt 2: Directory containing the log file is not writable"
 $MSR RUN SRC=INST2 RCV=INST3 'set msr_dont_chk_stat; $MUPIP replic -source -activate -secondary=__RCV_HOST__:'$tmp_portno2' -log=test2/activate.log -inst=__RCV_INSTNAME__ -propagate' >& src_activ_log_dir_unwritable6.out
 echo "#         --> We expect a REPLLOGOPN error"
 $gtm_tst/com/check_error_exist.csh src_activ_log_dir_unwritable6.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 
 echo "# Attempt 3: The log is not accessible"
 $MSR RUN SRC=INST2 RCV=INST3 'set msr_dont_chk_stat; $MUPIP replic -source -activate -secondary=__RCV_HOST__:'$tmp_portno2' -log=mumps.dat.log -inst=__RCV_INSTNAME__ -propagate' >& src_activ_log_unwritable6.out
 echo "#         --> We expect a REPLLOGOPN error"
 $gtm_tst/com/check_error_exist.csh src_activ_log_unwritable6.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 
 
 echo "#Now activate passive server of INST2 with writable log file. Expect no failure"
@@ -174,19 +173,19 @@ $MSR RUN SRC=INST1 RCV=INST2 'set msr_dont_chk_stat; $MUPIP replic -source -chan
 
 echo "#         --> We expect a REPLLOGOPN error "
 $gtm_tst/com/check_error_exist.csh src_chang_log_dir_not_exist9.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 
 echo "# Attempt 2: Directory containing the log file is not writable"
 $MSR RUN SRC=INST1 RCV=INST2 'set msr_dont_chk_stat; $MUPIP replic -source -changelog -log=test1/source_new.log -inst=__RCV_INSTNAME__'>& src_chang_log_dir_unwritable9.out
 echo "#         --> We expect a REPLLOGOPN error"
 $gtm_tst/com/check_error_exist.csh src_chang_log_dir_unwritable9.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 
 echo "# Attempt 3: New log not accessible"
 $MSR RUN SRC=INST1 RCV=INST2 'set msr_dont_chk_stat; $MUPIP replic -source -changelog -log=mumps.dat.log -inst=__RCV_INSTNAME__'>& src_chang_log_unwritable9.out
 echo "#         --> We expect a REPLLOGOPN error"
 $gtm_tst/com/check_error_exist.csh src_chang_log_unwritable9.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 
 echo " "
 echo "#Now change the log to a writable log. Expect no failure"
@@ -203,19 +202,19 @@ echo "#- Attempt 1: The directory containing the log file does not exist"
 $MSR RUN RCV=INST2 'set msr_dont_chk_stat; $MUPIP replic -receiv -changelog -log=test/receiver_new.log'>& rcv_chang_log_dir_not_exist10.out
 echo "#         --> We expect a REPLLOGOPN error "
 $gtm_tst/com/check_error_exist.csh rcv_chang_log_dir_not_exist10.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 
 echo "# Attempt 2: Directory containing the log file is not writable"
 $MSR RUN RCV=INST2 'set msr_dont_chk_stat; $MUPIP replic -receiv -changelog -log=test2/receiver_new.log'>& rcv_chang_log_dir_unwritable10.out
 echo "#         --> We expect a REPLLOGOPN error"
 $gtm_tst/com/check_error_exist.csh rcv_chang_log_dir_unwritable10.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 
 echo "# Attempt 3: New log not accessible"
 $MSR RUN RCV=INST2 'set msr_dont_chk_stat; $MUPIP replic -receiv -changelog -log=mumps.dat.log'>& rcv_chang_log_unwritable10.out
 echo "#         --> We expect a REPLLOGOPN error"
 $gtm_tst/com/check_error_exist.csh rcv_chang_log_unwritable10.out REPLLOGOPN
-knownerror $msr_execute_last_out REPLLOGOPN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REPLLOGOPN
 
 echo " "
 echo "# Now change the log to a writable log. Expect no failure"
