@@ -54,6 +54,14 @@ endif
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list	""
 
+if ($?ydb_environment_init) then
+	# We are in a YDB environment (i.e. non-GG setup)
+	if ("dbg" == "$tst_image") then
+		# We do not have dbg builds of versions [V53000,V55000] needed by the below subtest so disable it.
+		setenv subtest_exclude_list "$subtest_exclude_list sn_jnl5"
+	endif
+endif
+
 if ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtype") then
 	setenv subtest_exclude_list "trigger"
 endif

@@ -58,6 +58,8 @@ setenv subtest_exclude_list	""
 if ("pro" == "$tst_image") then
         setenv subtest_exclude_list "$subtest_exclude_list gtm8094updproc gtm8094hlpproc gtm8094zedproc gtm8094secproc"
         setenv subtest_exclude_list "$subtest_exclude_list gtm8094pipproc"
+else if ($?gtm_test_noIGS) then
+	setenv subtest_exclude_list "$subtest_exclude_list gtm8094secproc"
 endif
 
 # Filter out certain subtests for some servers.

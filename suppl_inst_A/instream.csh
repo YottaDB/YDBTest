@@ -44,6 +44,14 @@ if ("MULTISITE" == "$test_replic") then
 	setenv subtest_exclude_list "$subtest_exclude_list rest_back_inst "
 endif
 
+if ($?ydb_environment_init) then
+	# We are in a YDB environment (i.e. non-GG setup)
+	if ("dbg" == "$tst_image") then
+	       # We do not have dbg builds of versions [V51000,V55000] needed by the below subtest so disable it.
+	       setenv subtest_exclude_list "$subtest_exclude_list recreate_instance"
+	endif
+endif
+
 # Randomization of replication type is disable since it is all handled by the subtests.
 setenv test_replic_suppl_type 0
 
