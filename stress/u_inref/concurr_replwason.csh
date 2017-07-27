@@ -30,7 +30,6 @@ if ("1" == "$test_replic_suppl_type") then
 endif
 setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn 1
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
 
 # Until fake_enospc fixes go in, unsetenv gtm_custom_errors for this test to avoid failures due to rts_errors in
 # jnl_file_lost. See GTM-7575 for more details.
@@ -242,7 +241,7 @@ echo '=>Check for absence of REPLJNLCLOSED error in any *.mjo* has been deferred
 # Check that a checkhealth at this point indicates the REPLJNLCLOSED error
 echo "=>Check that checkhealth now indicates REPLJNLCLOSED error"
 $MSR RUN SRC=INST1 RCV=INST2 'set msr_dont_chk_stat ; $MUPIP replic -source -checkhealth -instsecondary=__RCV_INSTNAME__'
-knownerror $msr_execute_last_out "GTM-E-REPLJNLCLOSED"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-E-REPLJNLCLOSED"
 
 # Start reorg AFTER REPLJNLCLOSED message was generated
 # This is necessary to avoid the case where reorg encounters permission errors in CRE_JNL_FILE.C
@@ -422,7 +421,7 @@ xyz
 # Application level check on INST3 (should FAIL)
 echo "=>Application level check on INST3 : Should FAIL since replication from INST1 was incomplete due to jnl_file_lost error"
 $MSR RUN INST3 "$gtm_exe/mumps -run allverify^replwason"
-knownerror $msr_execute_last_out "GTM-E-GVUNDEF"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-E-GVUNDEF"
 
 # Replicate remaining transactions from INST2 to INST3 (since INST2 does not have REPLJNLCLOSED issues)
 echo ""

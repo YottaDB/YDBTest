@@ -17,8 +17,6 @@
 $MULTISITE_REPLIC_PREPARE 4 1
 $gtm_tst/com/dbcreate.csh mumps -rec=1000
 
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
-
 echo "# A non-supplementary replicating receiver will report the error UPDSYNC2MTINS if its instance file is not empty."
 setenv needupdatersync 1
 $MSR START INST1 INST2 RP
@@ -30,8 +28,8 @@ $MSR STARTSRC INST1 INST2 RP
 $MSR STARTRCV INST1 INST2 "updateresync -initialize"
 get_msrtime
 $MSR RUN INST2 "$msr_err_chk START_$time_msr.out UPDSYNC2MTINS NORECVPOOL"
-knownerror $msr_execute_last_out GTM-E-UPDSYNC2MTINS
-knownerror $msr_execute_last_out GTM-E-NORECVPOOL
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-UPDSYNC2MTINS
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-NORECVPOOL
 # the receiver will be shut down but the passive server will be alive. Manually stop it
 $MSR RUN RCV=INST2 SRC=INST1 '$MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST1INST2.out'
 $MSR STOP ALL_LINKS
@@ -44,7 +42,7 @@ get_msrtime
 $MSR RUN INST5 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message INSUNKNOWN -duration 120 -waitcreation'
 $MSR RUN INST5 "$msr_err_chk RCVR_$time_msr.log INSUNKNOWN"
 # Receiver server would have exited with the above error. Manually shutdown update process
-knownerror $msr_execute_last_out GTM-E-INSUNKNOWN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-INSUNKNOWN
 $MSR RUN INST5 'set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_INST1INST5.out'
 $MSR STOPSRC INST5 INST3
 $MSR STOPSRC INST1 INST5

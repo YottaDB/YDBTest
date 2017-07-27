@@ -21,8 +21,6 @@ setenv gtm_test_jnlfileonly	0	# With a huge flush_time, nothing would be replica
 unsetenv gtm_test_jnlpool_sync		# ditto
 setenv gtm_test_updhelpers	0	# As described below, we don't want extra flushing.
 
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
-
 $MULTISITE_REPLIC_PREPARE 3
 $gtm_tst/com/dbcreate.csh mumps 1 125 256 512 -g=256
 
@@ -46,9 +44,9 @@ echo "# Expect ACTIVATEFAIL error, as receiver and update process is still runni
 setenv msr_dont_chk_stat
 $MSR ACTIVATE INST2 INST1
 get_msrtime
-knownerror $msr_execute_last_out "ACTIVATEFAIL"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "ACTIVATEFAIL"
 $MSR RUN INST2 "$msr_err_chk ACTIVATE_${time_msr}.out ACTIVATEFAIL"
-knownerror $msr_execute_last_out "ACTIVATEFAIL"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "ACTIVATEFAIL"
 unsetenv msr_dont_chk_stat
 # ACTIVATE would have reserved a port, but not used. Clean it up manually
 $gtm_tst/com/portno_release.csh `cat portno`
@@ -62,9 +60,9 @@ setenv msr_dont_chk_stat
 echo "# Expect ACTIVATEFAIL error, as update process is still running in INST2"
 $MSR ACTIVATE INST2 INST1
 get_msrtime
-knownerror $msr_execute_last_out "ACTIVATEFAIL"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "ACTIVATEFAIL"
 $MSR RUN INST2 "$msr_err_chk ACTIVATE_${time_msr}.out ACTIVATEFAIL"
-knownerror $msr_execute_last_out "ACTIVATEFAIL"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "ACTIVATEFAIL"
 unsetenv msr_dont_chk_stat
 # ACTIVATE would have reserved a port, but not used. Clean it up manually
 $gtm_tst/com/portno_release.csh `cat portno`
@@ -88,12 +86,12 @@ $MSR RUN INST2 "set msr_dont_trace ; touch bkgrndjobs.stop ; $gtm_tst/com/wait_f
 echo "# The below two errors should have happened. Make sure they did"
 # gtm8023.m should have encountered GTM-E-SCNDDBNOUPD attempting to do an update when the instance is secondary
 $MSR RUN INST2 "$msr_err_chk bgmumps1.out SCNDDBNOUPD"
-knownerror $msr_execute_last_out "SCNDDBNOUPD"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "SCNDDBNOUPD"
 
 # gtm8023_bgprocess.csh makes sure zwrite ^noreorg does NOT happen. i.e wait for ^noreorg(1) should have failed
 # Searching for TEST-E-NOTFOUND would result in the framework error catching mechanism find that in multisite_replic.log.
 # So search only for E-NOTFOUND
 $MSR RUN INST2 "$msr_err_chk bgprocess.out E-NOTFOUND"
-knownerror $msr_execute_last_out "E-NOTFOUND"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "E-NOTFOUND"
 
 $gtm_tst/com/dbcheck.csh -extract

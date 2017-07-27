@@ -13,8 +13,6 @@
 
 # Various tests to verify that the plugin reports appropriate errors.
 
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
-
 set CA="openssl ca"
 
 set SH = "/bin/sh"
@@ -190,7 +188,7 @@ $MSR STARTRCV INST1 INST2
 
 $MSR RUN INST1 "set msr_dont_trace; $gtm_tst/com/wait_for_log.csh -log $src_logfile -message TLSCONVSOCK"
 $MSR RUN INST1 "set msr_dont_trace; $msr_err_chk $src_logfile 'W-TLSCONVSOCK' 'GTM-I-TEXT'"
-knownerror $msr_execute_last_out "GTM-W-TLSCONVSOCK"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-W-TLSCONVSOCK"
 
 $MSR STOP INST1 INST2
 

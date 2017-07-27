@@ -17,7 +17,6 @@
 source $gtm_tst/com/disable_settings_msr_priorver.csh spanning_regions triggers
 
 $MULTISITE_REPLIC_PREPARE 3 3
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
 
 setenv prior_ver `$gtm_tst/com/random_ver.csh -gte V51000 -lt V54003`
 if ("$prior_ver" =~ "*-E-*") then
@@ -58,7 +57,7 @@ setenv port_41 `$MSR RUN INST4 'set msr_dont_trace ; $gtm_tst/com/portno_acquire
 $MSR RUN RCV=INST4 SRC=INST1 "set msr_dont_trace ; $MUPIP replic -receiv -start -listen=$port_41 -log=RCVR_INST4INST1.log -updateresync"
 echo "# Now activate the passive source server"
 $MSR RUN RCV=INST4 SRC=INST1 'set msr_dont_chk_stat ; $MUPIP replic -source -activate -secondary=__RCV_HOST__:12345 -instsecondary=$gtm_test_msr_INSTNAME1'
-knownerror $msr_execute_last_out GTM-E-ACTIVATEFAIL
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-ACTIVATEFAIL
 $MSR RUN INST4 '$MUPIP replic -receiver -shutdown -timeout=0 >&! rcvr_shut.out'
 $MSR RUN INST4 '$MUPIP replic -source -shutdown -timeout=0 >&! passive_shut.out'
 $MSR RUN INST4 'set msr_dont_trace ; mkdir test40 ; mv *.repl test40'
@@ -78,7 +77,7 @@ setenv gtm_test_repl_skiprcvrchkhlth 1 ; $MSR STARTRCV INST4 INST5 'updateresync
 get_msrtime
 $MSR RUN INST5 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message UPDSYNCINSTFILE -duration 120 -waitcreation'
 $MSR RUN INST5 "$msr_err_chk RCVR_$time_msr.log UPDSYNCINSTFILE"
-knownerror $msr_execute_last_out GTM-E-UPDSYNCINSTFILE
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-UPDSYNCINSTFILE
 echo "# The receiver would have exited with the above error. Manually shutdown the update process and passive server"
 $MSR RUN INST5 'set msr_dont_chk_stat ;$MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_IST4INST5.out'
 $MSR RUN RCV=INST5 SRC=INST4 '$MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__ >&! passivesrc_shut_INST4INST5.out'
@@ -93,7 +92,7 @@ setenv gtm_test_repl_skiprcvrchkhlth 1 ; $MSR STARTRCV INST2 INST4 >&! STARTRCV_
 get_msrtime
 $MSR RUN INST4 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message REPL2OLD -duration 120 -waitcreation'
 $MSR RUN INST4 "$msr_err_chk RCVR_$time_msr.log REPL2OLD"
-knownerror $msr_execute_last_out GTM-E-REPL2OLD
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-REPL2OLD
 echo "# The receiver would have exited with the above error. Manually shutdown the update process and passive server"
 $MSR RUN INST4 'set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_IST2INST4.out'
 $MSR RUN RCV=INST4 SRC=INST2 '$MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__ >&! passivesrc_shut_INST2INST4.out'
@@ -106,7 +105,7 @@ setenv gtm_test_repl_skipsrcchkhlth 1 ; $MSR STARTSRC INST4 INST2 RP >&! STARTSR
 get_msrtime
 $MSR RUN INST4 '$gtm_tst/com/wait_for_log.csh -log 'SRC_$time_msr.log' -message REPL2OLD -duration 120 -waitcreation'
 $MSR RUN INST4 "$msr_err_chk SRC_$time_msr.log REPL2OLD"
-knownerror $msr_execute_last_out GTM-E-REPL2OLD
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-REPL2OLD
 $MSR RUN SRC=INST4 RCV=INST2 'set msr_dont_trace ; set msr_dont_chk_stat ; $MUPIP replic -source -checkhealth -instsecondary=__RCV_INSTNAME__ >& checkhealth42.outx ; $grep "Source server is alive" checkhealth42.outx' >&! INST4_INST2_SRC.out
 set pid42 = `$tst_awk '/Source server is alive/ { print $2}' INST4_INST2_SRC.out`
 if ("" != "$pid42") then
@@ -127,7 +126,7 @@ setenv gtm_test_repl_skipsrcchkhlth 1 ; $MSR STARTSRC INST4 INST1 RP >&! STARTSR
 get_msrtime
 $MSR RUN INST4 '$gtm_tst/com/wait_for_log.csh -log 'SRC_$time_msr.log' -message SECNOTSUPPLEMENTARY -duration 120 -waitcreation'
 $MSR RUN INST4 "$msr_err_chk SRC_$time_msr.log SECNOTSUPPLEMENTARY"
-knownerror $msr_execute_last_out GTM-E-SECNOTSUPPLEMENTARY
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-SECNOTSUPPLEMENTARY
 $MSR RUN SRC=INST4 RCV=INST1 'set msr_dont_trace ; set msr_dont_chk_stat ; $MUPIP replic -source -checkhealth -instsecondary=__RCV_INSTNAME__ >& checkhealth41.outx ; $grep "Source server is alive" checkhealth41.outx' >&! INST4_INST1_SRC.out
 set pid41 = `$tst_awk '/Source server is alive/ { print $2}' INST4_INST1_SRC.out`
 if ("" != "$pid41") then
@@ -144,7 +143,7 @@ setenv gtm_test_repl_skiprcvrchkhlth 1 ; $MSR STARTRCV INST1 INST5 >&! STARTRCV_
 get_msrtime
 $MSR RUN INST5 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message SUPRCVRNEEDSSUPSRC -duration 120 -waitcreation'
 $MSR RUN INST5 "$msr_err_chk RCVR_$time_msr.log SUPRCVRNEEDSSUPSRC"
-knownerror $msr_execute_last_out GTM-E-SUPRCVRNEEDSSUPSRC
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-SUPRCVRNEEDSSUPSRC
 echo "# The receiver would have exited with the above error. Manually shutdown the update process and passive server"
 $MSR RUN INST5 'set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_IST1INST5.out'
 $MSR RUN RCV=INST5 SRC=INST1 '$MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__ >&! passivesrc_shut_INST1INST5.out'
@@ -160,7 +159,7 @@ setenv gtm_test_repl_skiprcvrchkhlth 1 ; $MSR STARTRCV INST4 INST6 >&! STARTRCV_
 get_msrtime
 $MSR RUN INST6 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message NOSUPPLSUPP -duration 120 -waitcreation'
 $MSR RUN INST6 "$msr_err_chk RCVR_$time_msr.log NOSUPPLSUPP"
-knownerror $msr_execute_last_out GTM-E-NOSUPPLSUPP
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-NOSUPPLSUPP
 $MSR RUN INST6 'set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_INST6INST4.out'
 $MSR STOPSRC INST6 INST5
 $MSR REFRESHLINK INST4 INST6
@@ -179,15 +178,15 @@ setenv gtm_test_repl_skipsrcchkhlth 1
 $MSR STARTSRC INST1 INST2 RP >&! STARTSRC_INST1_INST2_RP.outx
 get_msrtime
 $MSR RUN INST1 "$msr_err_chk START_$time_msr.out REPLINSTSECLEN MUPCLIERR"
-knownerror $msr_execute_last_out GTM-E-REPLINSTSECLEN
-knownerror $msr_execute_last_out GTM-E-MUPCLIERR
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-REPLINSTSECLEN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-MUPCLIERR
 # The above STARTSRC would have reserved a port in INST2 and wouldn't have removed it.
 $MSR RUN INST2 'set msr_dont_trace ; source $gtm_tst/com/portno_release.csh'
 $MSR STARTSRC INST4 INST5 RP >&! STARTSRC_INST4_INT5_RP.outx
 get_msrtime
 $MSR RUN INST4 "$msr_err_chk START_$time_msr.out REPLINSTSECLEN MUPCLIERR"
-knownerror $msr_execute_last_out GTM-E-REPLINSTSECLEN
-knownerror $msr_execute_last_out GTM-E-MUPCLIERR
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-REPLINSTSECLEN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-MUPCLIERR
 unsetenv gtm_test_repl_skipsrcchkhlth
 # The above STARTSRC would have reserved a port in INST5 and wouldn't have removed it.
 $MSR RUN INST5 'set msr_dont_trace ; source $gtm_tst/com/portno_release.csh'
@@ -208,7 +207,7 @@ setenv gtm_test_repl_skiprcvrchkhlth 1 ; $MSR STARTRCV INST1 INST3 >&! STARTRCV_
 get_msrtime
 $MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message INSROLECHANGE -duration 120 -waitcreation'
 $MSR RUN INST3 "$msr_err_chk RCVR_$time_msr.log INSROLECHANGE"
-knownerror $msr_execute_last_out GTM-E-INSROLECHANGE
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-INSROLECHANGE
 echo "# The receiver would have exited with the above error. Manually shutdown the update process"
 $MSR RUN INST3 'set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_IST1INST5.out'
 $MSR REFRESHLINK INST1 INST3

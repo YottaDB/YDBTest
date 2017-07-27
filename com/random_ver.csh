@@ -212,7 +212,7 @@ if ("dbg" == $tst_image) then
 	if (! $?minimum) then
 		set minimum = "V63000"
 	else
-		if (`expr $minimum "<" "V63000"`)) then
+		if (`expr $minimum "<" "V63000"`) then
 			set minimum = "V63000"
 		endif
 	endif
@@ -286,9 +286,11 @@ endif
 #
 if (("$minimum" == "V63000A") && ("$isgt" == ">")) then
 	set minimum = "V63000A_R100"
+	set isgt = ">="
 endif
 if (("$maximum" == "V63000A_R100") && ("$islt" == "<")) then
 	set maximum = "V63000A"
+	set islt = "<="
 endif
 
 set filteredlist = ""

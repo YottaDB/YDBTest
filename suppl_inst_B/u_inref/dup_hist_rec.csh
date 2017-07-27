@@ -21,7 +21,6 @@
 #	because the "Start Sequence Number" field of those two A history records are different. The test should verify this.
 
 $MULTISITE_REPLIC_PREPARE 2 2
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
 
 $gtm_tst/com/dbcreate.csh mumps 1 125 1000 1024 4096 1024 4096
 
@@ -45,7 +44,7 @@ $MSR STARTSRC INST1 INST3 RP
 $MSR STARTRCV INST1 INST3 "updateresync=srcinstback.repl"
 get_msrtime
 $MSR RUN INST3 "$msr_err_chk START_$time_msr.out INITORRESUME"
-knownerror $msr_execute_last_out GTM-E-INITORRESUME
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-INITORRESUME
 $MSR STARTRCV INST1 INST3 "updateresync=srcinstback.repl -initialize"
 get_msrtime
 $MSR RUN INST3 "set msr_dont_trace ; $gtm_tst/com/wait_for_log.csh -log RCVR_$time_msr.log.updproc -message 'New History Content'"

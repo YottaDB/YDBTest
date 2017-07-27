@@ -51,7 +51,6 @@ if (! $?errlog) then
 endif
 
 $grep BKUPRUNNING $errlog |& sed 's/Process [0-9][0-9]* is/Process ##PID## is/'
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
-knownerror $errlog "BKUPRUNNING\|MUNOFINISH"
+$gtm_tst/com/knownerror.csh $errlog "BKUPRUNNING|MUNOFINISH"
 
 $gtm_tst/com/dbcheck.csh

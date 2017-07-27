@@ -26,7 +26,6 @@ echo
 # is an option, this test does multiple dbcreates so saving and restoring for each dbcreate is an overkill. So, unsetenv the
 # environment variable for the entire duration of the test.
 unsetenv gtm_custom_errors
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
 
 if ($?gtm_test_replay) then
 	# Get previous limits
@@ -149,7 +148,7 @@ $gtm_tst/com/backup_dbjnl.csh $dir1 "" mv
 
 # Ensure that the expected REC2BIG was issued and also move things out of the way on secondary
 $MSR RUN INST2 'set update_log = `ls RCVR_*.updproc`; $gtm_tst/com/check_error_exist.csh $update_log REC2BIG; $gtm_tst/com/backup_dbjnl.csh '$dir1' "$update_log *dat *.mjl* *.gld" mv'
-knownerror $msr_execute_last_out REC2BIG
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REC2BIG
 echo
 
 ###################
@@ -238,7 +237,7 @@ $gtm_tst/com/backup_dbjnl.csh $dir2 "" mv
 
 # Ensure that the expected REC2BIG was issued and also move things out of the way on secondary
 $MSR RUN INST2 'set update_log = `ls RCVR_*.updproc`; $gtm_tst/com/check_error_exist.csh $update_log REC2BIG; $gtm_tst/com/backup_dbjnl.csh '$dir2' "$update_log *dat *.mjl* *.gld" mv'
-knownerror $msr_execute_last_out REC2BIG
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REC2BIG
 echo
 
 ###################
@@ -330,5 +329,5 @@ $gtm_tst/com/backup_dbjnl.csh $dir3 "" mv
 
 # Ensure that the expected REC2BIG was issued and also move things out of the way on secondary
 $MSR RUN INST2 'set update_log = `ls RCVR_*.updproc`; $gtm_tst/com/check_error_exist.csh $update_log REC2BIG; $gtm_tst/com/backup_dbjnl.csh '$dir3' "$update_log *dat *.mjl* *.gld" mv'
-knownerror $msr_execute_last_out REC2BIG
+$gtm_tst/com/knownerror.csh $msr_execute_last_out REC2BIG
 echo

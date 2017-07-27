@@ -13,7 +13,6 @@
 # Test the -REUSE qualifier
 
 $MULTISITE_REPLIC_PREPARE 2 2
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
 $gtm_tst/com/dbcreate.csh mumps -rec=1000
 
 setenv needupdatersync 1
@@ -31,7 +30,7 @@ $MSR RUN SRC=INST1 RCV=INST3 '$gtm_tst/com/cp_remote_file.csh __SRC_DIR__/back_r
 $MSR STARTRCV INST1 INST3 "updateresync=INSTANCE1.repl -reuse=INSTANCE2"
 get_msrtime
 $MSR RUN INST3 "$msr_err_chk START_$time_msr.out INITORRESUME"
-knownerror $msr_execute_last_out GTM-E-INITORRESUME
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-INITORRESUME
 $MSR STARTRCV INST1 INST3 "updateresync=INSTANCE1.repl -initialize -reuse=INSTANCE2"
 get_msrtime
 $MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log RCVR_'$time_msr'.log.updproc -message "New History Content" -duration 30'

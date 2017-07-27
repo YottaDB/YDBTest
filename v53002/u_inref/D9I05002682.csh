@@ -36,8 +36,7 @@ EOF
 $MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log.updproc' -message UPDREPLSTATEOFF'
 $MSR RUN INST2 "$msr_err_chk RCVR_$time_msr.log.updproc UPDREPLSTATEOFF"
 # The above MSR run will have UPDREPLSTATEOFF in the msr_execute_xx.out file, filter it out
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
-knownerror $msr_execute_last_out UPDREPLSTATEOFF
+$gtm_tst/com/knownerror.csh $msr_execute_last_out UPDREPLSTATEOFF
 
 $MSR RUN INST2 'set msr_dont_trace ; $gtm_tst/com/wait_for_proc_to_die.csh '$updproc_pid' 120'
 
@@ -56,7 +55,7 @@ get_msrtime
 $MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log.updproc' -message UPDREPLSTATEOFF'
 $MSR RUN INST2 "$msr_err_chk RCVR_$time_msr.log.updproc UPDREPLSTATEOFF"
 # The above MSR run will have UPDREPLSTATEOFF in the msr_execute_xx.out file, filter it out
-knownerror $msr_execute_last_out UPDREPLSTATEOFF
+$gtm_tst/com/knownerror.csh $msr_execute_last_out UPDREPLSTATEOFF
 $MSR RUN INST2 'set msr_dont_chk_stat ; $MUPIP replicate -receiver -checkhealth' >&! checkhealth_INST2_3.out
 set updproc_pid = `$tst_awk '/Update process/ {print $2}' checkhealth_INST2_3.out`
 $MSR RUN INST2 'set msr_dont_trace ; $gtm_tst/com/wait_for_proc_to_die.csh '$updproc_pid' 120'

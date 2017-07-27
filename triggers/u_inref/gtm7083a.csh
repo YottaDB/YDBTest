@@ -24,8 +24,6 @@ unsetenv gtm_custom_errors
 # Helpers can log FILERENAME messages that would normally appear in the outref, so disable them.
 setenv gtm_test_updhelpers 0
 ##
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
-
 
 if ($?gtm_test_replay) then
 	set prior_ver = $gtm7083_priorver
@@ -106,9 +104,9 @@ $MSR START INST3 INST4
 get_msrtime
 echo "# Anything that requires examining triggers should issue NEEDTRIGUPGRD error"
 $MSR RUN INST3 'set msr_dont_chk_stat ; echo "" | $MUPIP trigger -select '
-knownerror $msr_execute_last_out GTM-E-NEEDTRIGUPGRD
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-NEEDTRIGUPGRD
 $MSR RUN INST3 'set msr_dont_chk_stat ; $gtm_exe/mumps -run %XCMD "set ^GBL(1)=1"'
-knownerror $msr_execute_last_out GTM-E-NEEDTRIGUPGRD
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-NEEDTRIGUPGRD
 echo "# The same commands should work fine after trigger -upgrade"
 $MSR RUN INST3 '$MUPIP trigger -upgrade'
 echo "# trigger -upgrade should cut new journal file with no back link"
@@ -124,12 +122,12 @@ $MSR RUN INST3 'echo "" | $MUPIP trigger -select '
 echo "# When the new trigger gets replicated to the receiver, updproc would exit with NEEDTRIGUPGRD"
 $MSR RUN INST4 "set msr_dont_trace ; $gtm_tst/com/wait_for_log.csh -log RCVR_${time_msr}.log.updproc -message NEEDTRIGUPGRD"
 $MSR RUN INST4 "$msr_err_chk RCVR_$time_msr.log.updproc NEEDTRIGUPGRD"
-knownerror $msr_execute_last_out GTM-E-NEEDTRIGUPGRD
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-NEEDTRIGUPGRD
 echo "# Simply restarting update process will still result in the same NEEDTRIGUPGRD error"
 $MSR RUN INST4 '$MUPIP replicate -receiver -start -updateonly'
 $MSR RUN INST4 "set msr_dont_trace ; $gtm_tst/com/wait_for_log.csh -log RCVR_${time_msr}.log.updproc -message NEEDTRIGUPGRD"
 $MSR RUN INST4 "$msr_err_chk RCVR_$time_msr.log.updproc NEEDTRIGUPGRD"
-knownerror $msr_execute_last_out GTM-E-NEEDTRIGUPGRD
+$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-NEEDTRIGUPGRD
 echo "# Restarting update process after upgrading the triggers on the reciever side should work fine"
 $MSR RUN INST4 '$MUPIP trigger -upgrade'
 $MSR RUN INST4 '$MUPIP replicate -receiver -start -updateonly'

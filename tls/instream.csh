@@ -48,6 +48,12 @@ endif
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?gtm_test_nopriorgtmver) then
 	setenv subtest_exclude_list "$subtest_exclude_list replnotls"
+else if ($?ydb_environment_init) then
+	# We are in a YDB environment (i.e. non-GG setup)
+	if ("dbg" == "$tst_image") then
+		# We do not have dbg builds of versions [V53004,V60003] needed by the below subtest so disable it.
+		setenv subtest_exclude_list "$subtest_exclude_list replnotls"
+	endif
 endif
 
 # Submit the list of subtests

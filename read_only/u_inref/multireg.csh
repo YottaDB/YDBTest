@@ -65,8 +65,7 @@ $gtm_tst/$tst/u_inref/tstmjlveri.csh 4
 if (-e leftover_ipc_cleanup_if_needed.out) then
 	# This test creates read-only databases which could cause a DBRDONLY error from mupip rundown in case it got executed
 	# through the leftover_ipc_cleanup_if_needed.csh script. So filter those out as expected.
-	alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
-	knownerror leftover_ipc_cleanup_if_needed.out "GTM-E-DBRDONLY\|GTM-W-MUNOTALLSEC"
+	$gtm_tst/com/knownerror.csh leftover_ipc_cleanup_if_needed.out "GTM-E-DBRDONLY|GTM-W-MUNOTALLSEC"
 endif
 
 ##########################################################################

@@ -17,7 +17,6 @@
 setenv gtm_test_mupip_set_version "disable"	# ONLINE INTEG is supported only on V5 databases
 setenv gtm_test_jobcnt 1
 setenv gtm_test_dbfill "IMPTP"
-alias knownerror 'mv \!:1 {\!:1}x ; $grep -vE "\!:2" {\!:1}x >&! \!:1 '
 
 $gtm_tst/com/dbcreate.csh mumps 1 255 1000 -allocation=2048 -extension_count=2048
 
@@ -69,6 +68,6 @@ echo ""
 
 # remote_user.log could contain a bunch of INTEG errors which could change with each run and hence not deterministically
 # captured with check_error_exist script. All these errors are expected owing due to the failed snapshot. Filter them all.
-knownerror remote_user.log "INTEGERRS\|REGSSFAIL"
+$gtm_tst/com/knownerror.csh remote_user.log "INTEGERRS|REGSSFAIL"
 
 $gtm_tst/com/dbcheck.csh		# Final INTEG should come out clean

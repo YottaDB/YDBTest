@@ -80,7 +80,11 @@ if ($?gtm_test_nopriorgtmver) then
 else if ($?ydb_environment_init) then
 	# In a YDB environment (i.e. non-GG setup), we do not have prior versions that are needed
 	# by the below subtest. Therefore disable it.
-       setenv subtest_exclude_list "$subtest_exclude_list gtm8277"
+	setenv subtest_exclude_list "$subtest_exclude_list gtm8277"
+	if ("dbg" == "$tst_image") then
+		# We do not have dbg builds of versions [V62001] needed by the below subtest so disable it.
+		setenv subtest_exclude_list "$subtest_exclude_list gtm7949"
+	endif
 endif
 # If the platform/host does not have GG structured build directory, disable tests that require them
 if ($?gtm_test_noggbuilddir) then
