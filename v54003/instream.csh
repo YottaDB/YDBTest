@@ -154,6 +154,8 @@ else if ($?ydb_environment_init) then
 		# We do not have dbg V54002B builds needed by the gtm6811 subtest so disable it.
 		setenv subtest_exclude_list "$subtest_exclude_list gtm6811"
 	endif
+	# Temporarily disable below subtest as it requires "gld_mismatch" prior version which will be there once T63002 is released.
+	setenv subtest_exclude_list "$subtest_exclude_list D9I08002697"
 endif
 
 if ($?gtm_test_temporary_disable) then
