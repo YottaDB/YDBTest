@@ -232,7 +232,7 @@ set src_logfile = SRC_${time_msr}.log
 $MSR STARTRCV INST1 INST2
 $MSR RUN INST1 "set msr_dont_trace; $gtm_tst/com/wait_for_log.csh -log $src_logfile -message TLSCONVSOCK"
 $MSR RUN INST1 "set msr_dont_trace; $msr_err_chk $src_logfile 'W-TLSCONVSOCK' 'GTM-I-TEXT'"
-knownerror $msr_execute_last_out "GTM-W-TLSCONVSOCK"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-W-TLSCONVSOCK"
 
 $MSR STOP INST1 INST2
 
@@ -289,7 +289,7 @@ set rcv_logfile = RCVR_${time_msr}.log
 
 $MSR RUN INST2 "set msr_dont_trace; $gtm_tst/com/wait_for_log.csh -log $rcv_logfile -message TLSCONVSOCK"
 $MSR RUN INST2 "set msr_dont_trace; $msr_err_chk $rcv_logfile 'W-TLSCONVSOCK' 'GTM-I-TEXT'"
-knownerror $msr_execute_last_out "GTM-W-TLSCONVSOCK"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-W-TLSCONVSOCK"
 
 $MSR STOP INST1 INST2
 

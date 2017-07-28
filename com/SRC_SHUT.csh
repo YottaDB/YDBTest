@@ -21,8 +21,6 @@ if ( ("V4" == `echo $gtm_exe:h:t|cut -c1-2`) || ("V50000" == `echo $gtm_exe:h:t|
 	$gtm_tst/com/v4_SRC_SHUT.csh $argv
 	exit
 endif
-# Include -l option to have the "Process State" information. But not including it in the default $ps as it has some column issues
-set ps = "${ps:s/ps /ps -l /}"	#BYPASSOK ps
 if (! $?gtm_test_instsecondary ) then
 	setenv gtm_test_instsecondary "-instsecondary=$gtm_test_cur_sec_name"
 endif
@@ -40,10 +38,9 @@ set mupipstat = $status
 if ($mupipstat) then
 	if (! $?gtm_test_other_bg_processes) then
 		echo "Primary server shutdown command failed (status was $mupipstat)!"
-		echo "Check the file $debuginfo_file for ipcs and ps details"	#BYPASSOK
+		echo "Check the file $debuginfo_file for ps/ipcs/netstat/lsof -i details"	#BYPASSOK
 		echo "Primary server shutdown command failed (status was $mupipstat)!"	>>&! $debuginfo_file
-		$gtm_tst/com/ipcs -a							>>&! $debuginfo_file
-		$ps									>>&! $debuginfo_file
+		$gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh				>>&! $debuginfo_file
 		set exit_stat = $mupipstat
 	else
 		echo "TEST-I-SRC_SHUT there are other background GTM processes, so MUPIP might have returned non-zero, ignoring error"
@@ -56,10 +53,9 @@ if ( "off" == $repl_state ) then
 	set mupipstat = $status
 	if ($mupipstat) then
 		echo  "TEST-E-SRC_SHUT Turning replication off for all regions on primary side failed (status was $mupipstat)!"
-		echo  "Check the file $debuginfo_file for ipcs and ps details"	#BYPASSOK
+		echo "Check the file $debuginfo_file for ps/ipcs/netstat/lsof -i details"	#BYPASSOK
 		echo  "Turning replication off for all regions on primary side failed (status was $mupipstat)!" >>&! $debuginfo_file
-		$gtm_tst/com/ipcs -a 										>>&! $debuginfo_file
-		$ps												>>&! $debuginfo_file
+		$gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh							>>&! $debuginfo_file
 		set exit_stat = 1
 	endif
 endif
