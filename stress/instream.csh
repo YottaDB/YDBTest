@@ -68,5 +68,11 @@ setenv subtest_exclude_list ""
 if ("os390" == "$gtm_test_osname" || "HOST_OSF1_ALPHA" == "$gtm_test_os_machtype") then
 	setenv subtest_exclude_list "concurr_replwason"
 endif
+if ($?ydb_environment_init) then
+	# We are in a YDB environment (i.e. non-GG setup)
+	# concurr and concurr_replwason frequently fail with REPLFILIOERR so disable those until we get T63002
+	# which is what will let us run E_ALL with V63001+ builds that have this error fixed.
+	setenv subtest_exclude_list "$subtest_exclude_list concurr concurr_replwason"
+endif
 $gtm_tst/com/submit_subtest.csh
 echo "STRESS test done."
