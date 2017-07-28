@@ -65,8 +65,8 @@ if ( "SRC_START_SUCCESSFUL" != "$src_start" ) then
 	echo "################################################################"
 	echo "TEST-E-ERROR_SRC, Error from SRC.csh, test cannot continue! Check $PRI_SIDE/START_${start_time}.out"
 	$pri_shell "cat $PRI_SIDE/START_${start_time}.out"
-	echo "Check ps_ipcs_${start_time}.out for ps ipcs and env output." # BYPASSOK ps
-	$pri_shell "cd $PRI_SIDE; ($ps ;$gtm_tst/com/ipcs -a ; env ; set) >>& ps_ipcs_${start_time}.out"
+	echo "Check capture_ps_ipcs_netstat_lsof_${start_time}.out for ps/ipcs/netstat/lsof -i/env output." # BYPASSOK ps
+	$pri_shell "cd $PRI_SIDE; ($gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh; env ; set) >>& capture_ps_ipcs_netstat_lsof_${start_time}.out"
 	echo "################################################################"
 	exit 1
 endif
@@ -80,8 +80,8 @@ if ( "RCVR_START_SUCCESSFUL" != "$rcvr_start" ) then
 	echo "################################################################"
 	echo "TEST-E-ERROR_RCVR, Error from RCVR.csh, test cannot continue! Check $SEC_SIDE/START_${start_time}.out"
 	$sec_shell "cat $SEC_SIDE/START_${start_time}.out"
-	echo "Check ps_ipcs_${start_time}.out for ps ipcs and env output." # BYPASSOK ps
-	$sec_shell "cd $SEC_SIDE; ($ps ; $gtm_tst/com/ipcs -a ; env ; set) >>& ps_ipcs_${start_time}.out"
+	echo "Check capture_ps_ipcs_netstat_lsof_${start_time}.out for ps/ipcs/netstat/lsof -i/env output." # BYPASSOK ps
+	$sec_shell "cd $SEC_SIDE; ($gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh; env ; set) >>& capture_ps_ipcs_netstat_lsof_${start_time}.out"
 	echo "################################################################"
 	exit 1
 endif
