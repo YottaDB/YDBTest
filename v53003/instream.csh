@@ -64,9 +64,16 @@ endif
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?gtm_test_nopriorgtmver) then
 	setenv subtest_exclude_list "$subtest_exclude_list C9I05002987"
-else if ("dbg" == "$tst_image") then
-	# We do not have dbg V5 builds needed by the C9805002987 subtest so disable it.
-	setenv subtest_exclude_list "$subtest_exclude_list C9I05002987"
+else if ($?ydb_environment_init) then
+	# We are in a YDB environment (i.e. non-GG setup)
+	if ("dbg" == "$tst_image") then
+		# We do not have dbg V5 builds needed by the C9805002987 subtest so disable it.
+		setenv subtest_exclude_list "$subtest_exclude_list C9I05002987"
+	endif
+	# The below subtest needs V63000 dbg build which is not available.
+	# Once T63002 is available, we can test with V63002 and then enhance the test to use V63001A
+	# as the prior version for which we have a dbg build. Disable this subtest until then.
+	setenv subtest_exclude_list "$subtest_exclude_list C9I06002996"
 endif
 # If the platform/host does not have GG structured build directory, disable tests that require them
 if ($?gtm_test_noggbuilddir) then
