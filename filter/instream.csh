@@ -134,7 +134,7 @@ endif
 setenv gtm_tools "${gtm_root}/$tst_ver/tools"
 
 $gtm_test/$tst_src/com/gtmtest.csh $sub_test_options -rv $tst_ver -v $prior_ver -pro -ri $tst_image \
-	$gtm_chset_mode >>! ${prior_ver}.out2
+	$gtm_chset_mode >>&! ${prior_ver}.out2
 if ($status) then
    echo "FAILED $tst_ver vs $prior_ver"
    cat  $prior_ver.out2
