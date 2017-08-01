@@ -50,10 +50,11 @@ if ($?gtm_test_nopriorgtmver) then
 	setenv subtest_exclude_list "$subtest_exclude_list replnotls"
 else if ($?ydb_environment_init) then
 	# We are in a YDB environment (i.e. non-GG setup)
-	if ("dbg" == "$tst_image") then
-		# We do not have dbg builds of versions [V53004,V60003] needed by the below subtest so disable it.
-		setenv subtest_exclude_list "$subtest_exclude_list replnotls"
-	endif
+	# The replnotls subtest requires versions in the range [V53004,V60003].
+	# We do not have dbg builds of those versions. And in pro, the only build we have is V54002B
+	# which on Arch linux issues a SIG-11 on the secondary when trying to create the gld (known issue
+	# that is fixed in V55000) but we do not have V55000 installed. So disable this subtest in a ydb environment.
+	setenv subtest_exclude_list "$subtest_exclude_list replnotls"
 endif
 
 # Submit the list of subtests
