@@ -54,6 +54,14 @@ if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm8535 gtm8538 gtm7922"
 endif
 
+if ($?ydb_environment_init) then
+       # We are in a YDB environment (i.e. non-GG setup)
+       if ("dbg" == "$tst_image") then
+               # Disable gtm8177 subtest until V63002 is available as it can assert fail in V63000A (has been fixed post-V63001A)
+               setenv subtest_exclude_list "$subtest_exclude_list gtm8177"
+       endif
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 

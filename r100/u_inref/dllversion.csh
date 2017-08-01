@@ -22,6 +22,7 @@ if ("$gtm_test_shlib_versions" =~ "*-E-*") then
     exit -1
 endif
 echo "$gtm_test_shlib_versions" > version_list.txt
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 #
 # Test building shared library with each version that isn't us
 #
