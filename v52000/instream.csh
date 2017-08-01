@@ -61,7 +61,7 @@ else if ($?ydb_environment_init) then
 	# Disable C9D08002387 subtest until V63002 is available as it needs a version with VERMISMATCH abilities
 	# and we currently only have V63000A_R100 and V63000A both of which are identical relative to VERMISMATCH.
 	# And V63001A is unusable until T63001A is available.
-	setenv subtest_exclude_list "$subtest_exclude_list gtm8177"
+	setenv subtest_exclude_list "$subtest_exclude_list C9D08002387"
 endif
 
 $gtm_tst/com/submit_subtest.csh
