@@ -63,10 +63,17 @@ endif
 # autoswitchbigtp	BEFORE image journaling/backward recovery
 # autoswitchtp		BEFORE image journaling/backward recovery
 # autoswitch_chng_auto
+setenv subtest_exclude_list ""
 if ("MM" == $acc_meth) then
 	setenv subtest_exclude_list "jnlmsg basic jnl_filename jnl_state_switch replic_qualifier repl_stand_alone"
 	setenv subtest_exclude_list "$subtest_exclude_list jnl_stand_alone autoswitch1 autoswitch2 autoswitchbigtp"
 	setenv subtest_exclude_list "$subtest_exclude_list autoswitchtp autoswitch_chng_auto"
+endif
+
+if ($?ydb_environment_init) then
+	# We are in a YDB environment (i.e. non-GG setup)
+	# Disable below subtest until T63002 is available as it fails occasionally with JNLFILEOPNERR/ENO2 errors.
+	setenv subtest_exclude_list "$subtest_exclude_list unicode_dir_autoswitch_replic"
 endif
 $gtm_tst/com/submit_subtest.csh
 echo "MUPIP SET JNL test DONE."
