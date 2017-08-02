@@ -51,6 +51,11 @@ else if ($?ydb_environment_init) then
 	if ("dbg" == "$tst_image") then
 		# We do not have dbg builds of versions [V51000,V54003] needed by the below subtest so disable it.
 		setenv subtest_exclude_list "$subtest_exclude_list supplementary_err"
+	else if ($HOST:ar == "nars") then
+		# The pro builds of versions [V51000,V54003] needed by the below subtest occasionally get SIG-11 on certain hosts.
+		# This is due to a known issue that is fixed in V55000 but this test requires those older versions.
+		# So disable this test on those hosts.
+		setenv subtest_exclude_list "$subtest_exclude_list supplementary_err"
 	endif
 endif
 
