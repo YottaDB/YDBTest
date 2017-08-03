@@ -1,4 +1,15 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 cp $gtm_tst/$tst/inref/validtriggersutf8.trg testxecuteunicode.trg
 setenv test_specific_trig_file "$PWD/testxecuteunicode.trg"
 $gtm_tst/com/dbcreate.csh mumps 5 255 4096 8192
