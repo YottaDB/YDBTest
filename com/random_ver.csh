@@ -176,7 +176,12 @@ if ($?vertype) then
 	case "shlib_mismatch":
 		# First 64 bit supported versions on these platforms which will work with the current versions
 		if ("HOST_LINUX_X86_64" == $gtm_test_os_machtype || "HOST_AIX_RS6000" == $gtm_test_os_machtype) then
-			set minimum = "V53001"
+			if (! $?ydb_environment_init) then
+				set minimum = "V53001"
+			else
+				# Below is minimum 64-bit build we have on a YDB environment.
+				set minimum = "V54001"
+			endif
 		else if ("HOST_SUNOS_SPARC" == $gtm_test_os_machtype) then
 			set minimum = "V53002"
 		else if ("HOST_OS390_S390" == $gtm_test_os_machtype) then
