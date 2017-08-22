@@ -9,6 +9,13 @@
 ;	the license, please stop and do not read further.	;
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	write "This is a shared library version of ^helloworld",!!
-	write "Hello World",!
+rqtest05;
+	set querydir=+$piece($zcmdline," ",1)
+	set nullcoll=$select($$getncol^%LCLCOL=1:"STDNULLCOLL",1:"GTMNULLCOLL")
+	write !,"##### Executing ",$text(+0)," with ",nullcoll," #####",!
+	set x(1)=1
+	set x("")=2
+	set x("abcd")=3
+	set y="x("""")"
+	for  set prevy=$query(@y,querydir) write "$query(",y,"),",querydir,")=",prevy,!  set y=prevy  quit:y=""
 	quit

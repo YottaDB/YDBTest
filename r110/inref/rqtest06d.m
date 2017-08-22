@@ -9,6 +9,14 @@
 ;	the license, please stop and do not read further.	;
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	write "This is a shared library version of ^helloworld",!!
-	write "Hello World",!
+rqtest06d;
+	set querydir=+$zcmdline
+	set y=4,x(1)="",x(3)="",x(5)="",x(7)=""
+	if $get(^x(2))
+	write "$query(x(y),$$I())=",$select($random(2):$query(x(y),$$I()),1:$query(@"x(y)",$$I())),!
+	write "$reference=",$reference,!
 	quit
+I()	;
+	if $get(^x(3))
+	if $incr(y,-2)
+	quit querydir

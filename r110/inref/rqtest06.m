@@ -9,6 +9,9 @@
 ;	the license, please stop and do not read further.	;
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	write "This is a shared library version of ^helloworld",!!
-	write "Hello World",!
+rqtest06	;
+	; See rqtest06a.m
+	; See rqtest06b.m
+	; See rqtest06c.m
+	; See rqtest06d.m
 	quit

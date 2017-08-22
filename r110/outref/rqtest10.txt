@@ -1,0 +1,79 @@
+# Test of $query on global variables for NULL subscript handling to avoid infinite loops
+Files Created in ##TEST_PATH##/rqtest10/1:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+##### Executing rqtest10 with STDNULLCOLL #####
+nullcoll = STDNULLCOLL : $query(^x("zz")),-1)=^x("a","a","a")
+nullcoll = STDNULLCOLL : $query(^x("a","a","a")),-1)=^x("a","a",0)
+nullcoll = STDNULLCOLL : $query(^x("a","a",0)),-1)=^x("a","a","")
+nullcoll = STDNULLCOLL : $query(^x("a","a","")),-1)=^x("a",0,"a")
+nullcoll = STDNULLCOLL : $query(^x("a",0,"a")),-1)=^x("a",0,0)
+nullcoll = STDNULLCOLL : $query(^x("a",0,0)),-1)=^x("a",0,"")
+nullcoll = STDNULLCOLL : $query(^x("a",0,"")),-1)=^x("a","","a")
+nullcoll = STDNULLCOLL : $query(^x("a","","a")),-1)=^x("a","",0)
+nullcoll = STDNULLCOLL : $query(^x("a","",0)),-1)=^x("a","","")
+nullcoll = STDNULLCOLL : $query(^x("a","","")),-1)=^x(0,"a","a")
+nullcoll = STDNULLCOLL : $query(^x(0,"a","a")),-1)=^x(0,"a",0)
+nullcoll = STDNULLCOLL : $query(^x(0,"a",0)),-1)=^x(0,"a","")
+nullcoll = STDNULLCOLL : $query(^x(0,"a","")),-1)=^x(0,0,"a")
+nullcoll = STDNULLCOLL : $query(^x(0,0,"a")),-1)=^x(0,0,0)
+nullcoll = STDNULLCOLL : $query(^x(0,0,0)),-1)=^x(0,0,"")
+nullcoll = STDNULLCOLL : $query(^x(0,0,"")),-1)=^x(0,"","a")
+nullcoll = STDNULLCOLL : $query(^x(0,"","a")),-1)=^x(0,"",0)
+nullcoll = STDNULLCOLL : $query(^x(0,"",0)),-1)=^x(0,"","")
+nullcoll = STDNULLCOLL : $query(^x(0,"","")),-1)=^x("","a","a")
+nullcoll = STDNULLCOLL : $query(^x("","a","a")),-1)=^x("","a",0)
+nullcoll = STDNULLCOLL : $query(^x("","a",0)),-1)=^x("","a","")
+nullcoll = STDNULLCOLL : $query(^x("","a","")),-1)=^x("",0,"a")
+nullcoll = STDNULLCOLL : $query(^x("",0,"a")),-1)=^x("",0,0)
+nullcoll = STDNULLCOLL : $query(^x("",0,0)),-1)=^x("",0,"")
+nullcoll = STDNULLCOLL : $query(^x("",0,"")),-1)=^x("","","a")
+nullcoll = STDNULLCOLL : $query(^x("","","a")),-1)=^x("","",0)
+nullcoll = STDNULLCOLL : $query(^x("","",0)),-1)=^x("","","")
+nullcoll = STDNULLCOLL : $query(^x("","","")),-1)=^x
+nullcoll = STDNULLCOLL : $query(^x),-1)=
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Files Created in ##TEST_PATH##/rqtest10/2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+##### Executing rqtest10 with GTMNULLCOLL #####
+nullcoll = GTMNULLCOLL : $query(^x("zz")),-1)=^x("a","a","a")
+nullcoll = GTMNULLCOLL : $query(^x("a","a","a")),-1)=^x("a","a","")
+nullcoll = GTMNULLCOLL : $query(^x("a","a","")),-1)=^x("a","a",0)
+nullcoll = GTMNULLCOLL : $query(^x("a","a",0)),-1)=^x("a","","a")
+nullcoll = GTMNULLCOLL : $query(^x("a","","a")),-1)=^x("a","","")
+nullcoll = GTMNULLCOLL : $query(^x("a","","")),-1)=^x("a","",0)
+nullcoll = GTMNULLCOLL : $query(^x("a","",0)),-1)=^x("a",0,"a")
+nullcoll = GTMNULLCOLL : $query(^x("a",0,"a")),-1)=^x("a",0,"")
+nullcoll = GTMNULLCOLL : $query(^x("a",0,"")),-1)=^x("a",0,0)
+nullcoll = GTMNULLCOLL : $query(^x("a",0,0)),-1)=^x("","a","a")
+nullcoll = GTMNULLCOLL : $query(^x("","a","a")),-1)=^x("","a","")
+nullcoll = GTMNULLCOLL : $query(^x("","a","")),-1)=^x("","a",0)
+nullcoll = GTMNULLCOLL : $query(^x("","a",0)),-1)=^x("","","a")
+nullcoll = GTMNULLCOLL : $query(^x("","","a")),-1)=^x("","","")
+nullcoll = GTMNULLCOLL : $query(^x("","","")),-1)=^x("","",0)
+nullcoll = GTMNULLCOLL : $query(^x("","",0)),-1)=^x("",0,"a")
+nullcoll = GTMNULLCOLL : $query(^x("",0,"a")),-1)=^x("",0,"")
+nullcoll = GTMNULLCOLL : $query(^x("",0,"")),-1)=^x("",0,0)
+nullcoll = GTMNULLCOLL : $query(^x("",0,0)),-1)=^x(0,"a","a")
+nullcoll = GTMNULLCOLL : $query(^x(0,"a","a")),-1)=^x(0,"a","")
+nullcoll = GTMNULLCOLL : $query(^x(0,"a","")),-1)=^x(0,"a",0)
+nullcoll = GTMNULLCOLL : $query(^x(0,"a",0)),-1)=^x(0,"","a")
+nullcoll = GTMNULLCOLL : $query(^x(0,"","a")),-1)=^x(0,"","")
+nullcoll = GTMNULLCOLL : $query(^x(0,"","")),-1)=^x(0,"",0)
+nullcoll = GTMNULLCOLL : $query(^x(0,"",0)),-1)=^x(0,0,"a")
+nullcoll = GTMNULLCOLL : $query(^x(0,0,"a")),-1)=^x(0,0,"")
+nullcoll = GTMNULLCOLL : $query(^x(0,0,"")),-1)=^x(0,0,0)
+nullcoll = GTMNULLCOLL : $query(^x(0,0,0)),-1)=^x
+nullcoll = GTMNULLCOLL : $query(^x),-1)=
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

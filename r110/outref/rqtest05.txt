@@ -1,0 +1,25 @@
+# Test that $query(lvn,...) does not infinite loop with null subscripts & GT.M Null Collation
+
+##### Executing rqtest05 with STDNULLCOLL #####
+$query(x("")),1)=x("")
+$query(x("")),1)=x(1)
+$query(x(1)),1)=x("abcd")
+$query(x("abcd")),1)=
+
+##### Executing rqtest05 with GTMNULLCOLL #####
+$query(x("")),1)=x(1)
+$query(x(1)),1)=x("")
+$query(x("")),1)=x("abcd")
+$query(x("abcd")),1)=
+
+##### Executing rqtest05 with STDNULLCOLL #####
+$query(x("")),-1)=x("abcd")
+$query(x("abcd")),-1)=x(1)
+$query(x(1)),-1)=x("")
+$query(x("")),-1)=
+
+##### Executing rqtest05 with GTMNULLCOLL #####
+$query(x("")),-1)=x("abcd")
+$query(x("abcd")),-1)=x("")
+$query(x("")),-1)=x(1)
+$query(x(1)),-1)=

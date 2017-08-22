@@ -161,6 +161,54 @@ TESTING $QUERY...
 val("G",0)="GLD:*,REG:*,SET:0,KIL:0,GET:42,DTA:0,ORD:0,ZPR:0,QRY:44,LKS:0,LKF:0,CTN:0,DRD:XX,DWT:XX,NTW:0,NTR:87,NBW:0,NBR:174,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:XX,DFS:0,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:0,CAT:XX,CFE:XX,CFS:XX,CFT:XX,CQS:XX,CQT:XX,CYS:XX,CYT:XX"
 val("G",1)="GLD:##TEST_PATH##/mumps.gld,REG:AREG,SET:0,KIL:0,GET:42,DTA:0,ORD:0,ZPR:0,QRY:44,LKS:0,LKF:0,CTN:0,DRD:XX,DWT:XX,NTW:0,NTR:87,NBW:0,NBR:174,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:XX,DFS:0,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:0,CAT:XX,CFE:XX,CFS:XX,CFT:XX,CQS:XX,CQT:XX,CYS:XX,CYT:XX"
 
+TESTING Reverse $QUERY...
+^A("d/")=d/
+^A("cd")=cd
+^A("bc")=bc
+^A("ab")=ab
+^A("_-")=_-
+^A("D1",12)=D1
+^A("CD","D1")=CD
+^A("BC","CD")=BC
+^A("AB","BC")=AB
+^A("4Z","ZY")=4Z
+^A("/.")=/.
+^A("._")=._
+^A("-")=-
+^A(34,"4Z")=34
+^A(23,34)=23
+^A(12,23)=12
+^A(5)=    5
+^A(4)=   4
+^A(3)=  3
+^A(2)= 2
+^A(1)=1
+^A=5
+^D("d/")=d/
+^D("cd")=cd
+^D("bc")=bc
+^D("ab")=ab
+^D("_-")=_-
+^D("D1",12)=D1
+^D("CD","D1")=CD
+^D("BC","CD")=BC
+^D("AB","BC")=AB
+^D("4Z","ZY")=4Z
+^D("/.")=/.
+^D("._")=._
+^D("-")=-
+^D(34,"4Z")=34
+^D(23,34)=23
+^D(12,23)=12
+^D(5)=    5
+^D(4)=   4
+^D(3)=  3
+^D(2)= 2
+^D(1)=1
+^D=5
+val("G",0)="GLD:*,REG:*,SET:0,KIL:0,GET:44,DTA:0,ORD:0,ZPR:0,QRY:46,LKS:0,LKF:0,CTN:0,DRD:XX,DWT:XX,NTW:0,NTR:91,NBW:0,NBR:182,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:XX,DFS:0,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:0,CAT:XX,CFE:XX,CFS:XX,CFT:XX,CQS:XX,CQT:XX,CYS:XX,CYT:XX"
+val("G",1)="GLD:##TEST_PATH##/mumps.gld,REG:AREG,SET:0,KIL:0,GET:44,DTA:0,ORD:0,ZPR:0,QRY:46,LKS:0,LKF:0,CTN:0,DRD:XX,DWT:XX,NTW:0,NTR:91,NBW:0,NBR:182,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:XX,DFS:0,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:0,CAT:XX,CFE:XX,CFS:XX,CFT:XX,CQS:XX,CQT:XX,CYS:XX,CYT:XX"
+
 TESTING $GET...
 $GET(^A(1))=1
 $GET(^BLONGGLOBALVARIABLE(1))=1
@@ -290,16 +338,9 @@ kill some...
 1111111111
 then, kill all...
 Any data left?:00000
-##SUSPEND_OUTPUT  MM
 val("G",0)="GLD:*,REG:*,SET:0,KIL:11,GET:0,DTA:3,ORD:0,ZPR:0,QRY:0,LKS:0,LKF:0,CTN:0,DRD:XX,DWT:XX,NTW:7,NTR:9,NBW:9,NBR:52,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:XX,DFS:0,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:0,CAT:XX,CFE:XX,CFS:XX,CFT:XX,CQS:XX,CQT:XX,CYS:XX,CYT:XX"
 val("G",1)="GLD:##TEST_PATH##/mumps.gld,REG:AREG,SET:0,KIL:11,GET:0,DTA:3,ORD:0,ZPR:0,QRY:0,LKS:0,LKF:0,CTN:52,DRD:XX,DWT:XX,NTW:7,NTR:9,NBW:9,NBR:52,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:XX,DFS:0,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:0,CAT:XX,CFE:XX,CFS:XX,CFT:XX,CQS:XX,CQT:XX,CYS:XX,CYT:XX"
-$VIEW("GVSTATS",AREG)=SET:45,KIL:11,GET:135,DTA:64,ORD:68,ZPR:50,QRY:44,LKS:0,LKF:0,CTN:53,DRD:XX,DWT:XX,NTW:52,NTR:383,NBW:69,NBR:890,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:XX,DFS:0,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:0,CAT:XX,CFE:XX,CFS:XX,CFT:XX,CQS:XX,CQT:XX,CYS:XX,CYT:XX
-##ALLOW_OUTPUT  MM
-##SUSPEND_OUTPUT BG
-val("G",0)="GLD:*,REG:*,SET:0,KIL:11,GET:0,DTA:3,ORD:0,ZPR:0,QRY:0,LKS:0,LKF:0,CTN:0,DRD:XX,DWT:XX,NTW:7,NTR:9,NBW:9,NBR:52,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:XX,DFS:0,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:0,CAT:XX,CFE:XX,CFS:XX,CFT:XX,CQS:XX,CQT:XX,CYS:XX,CYT:XX"
-val("G",1)="GLD:##TEST_PATH##/mumps.gld,REG:AREG,SET:0,KIL:11,GET:0,DTA:3,ORD:0,ZPR:0,QRY:0,LKS:0,LKF:0,CTN:52,DRD:XX,DWT:XX,NTW:7,NTR:9,NBW:9,NBR:52,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:XX,DFS:0,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:0,CAT:XX,CFE:XX,CFS:XX,CFT:XX,CQS:XX,CQT:XX,CYS:XX,CYT:XX"
-$VIEW("GVSTATS",AREG)=SET:45,KIL:11,GET:135,DTA:64,ORD:68,ZPR:50,QRY:44,LKS:0,LKF:0,CTN:53,DRD:XX,DWT:XX,NTW:52,NTR:383,NBW:69,NBR:890,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:XX,DFS:0,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:0,CAT:XX,CFE:XX,CFS:XX,CFT:XX,CQS:XX,CQT:XX,CYS:XX,CYT:XX
-##ALLOW_OUTPUT  BG
+$VIEW("GVSTATS",AREG)=SET:45,KIL:11,GET:179,DTA:64,ORD:68,ZPR:50,QRY:90,LKS:0,LKF:0,CTN:53,DRD:XX,DWT:XX,NTW:52,NTR:474,NBW:69,NBR:1072,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:XX,DFS:0,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:0,CAT:XX,CFE:XX,CFS:XX,CFT:XX,CQS:XX,CQT:XX,CYS:XX,CYT:XX
 $VIEW("GVSTATS",BREG)=
 $VIEW("GVSTATS",CREG)=
 $VIEW("GVSTATS",DEFAULT)=
@@ -312,6 +353,169 @@ Check local (client) database...
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ a.dat
 No errors detected by integ.
+# Run rqtest08, rqtest07 and rqtest10 sections of the r110/reversequery subtest using GT.CM GNP
+# To avoid duplicating that test code here, we copy it explicitly even though it is in a different test
+Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
+##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
+##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
+##GT.CM##mumps.gld
+##GT.CM##Using: ##SOURCE_PATH##/mupip
+Create local (client) database...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+The database layout is:
+ASEG	a.dat
+BSEG	##TEST_REMOTE_NODE_PATH_GTCM##/b.dat
+CSEG	##TEST_REMOTE_NODE_PATH_GTCM##/c.dat
+DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
+Starting the GT.CM Servers...
+ --> Global variable tree on which $query operations are performed
+^x=0
+^x(1,0)=1
+^x(1,2,1)=2
+^x(1,2,2)=3
+^x(1,2,2,4)=5
+^x(1,2,3)=4
+
+ ---> $query(gvn,1) and $query(gvn,-1) on existing gv tree nodes
+$query(^x,1)=^x(1,0)
+$query(^x(1,0),-1)=^x
+$query(^x(1,0),1)=^x(1,2,1)
+$query(^x(1,2,1),-1)=^x(1,0)
+$query(^x(1,2,1),1)=^x(1,2,2)
+$query(^x(1,2,2),-1)=^x(1,2,1)
+$query(^x(1,2,2),1)=^x(1,2,2,4)
+$query(^x(1,2,2,4),-1)=^x(1,2,2)
+$query(^x(1,2,2,4),1)=^x(1,2,3)
+$query(^x(1,2,3),-1)=^x(1,2,2,4)
+$query(^x(1,2,3),1)=
+
+ ---> $query(gvn,1) on non-existing gv tree nodes
+$query(^x(-0.5),1)=^x(1,0)
+$query(^x(0.5),1)=^x(1,0)
+$query(^x(1.5),1)=
+$query(^x(1,-1),1)=^x(1,0)
+$query(^x(1,0.5),1)=^x(1,2,1)
+$query(^x(1,2.5),1)=
+$query(^x(1,2,0.5),1)=^x(1,2,1)
+$query(^x(1,2,1.5),1)=^x(1,2,2)
+$query(^x(1,2,2.5),1)=^x(1,2,3)
+$query(^x(1,2,3.5),1)=
+$query(^x(1,2,2,3.5),1)=^x(1,2,2,4)
+$query(^x(1,2,2,4.5),1)=^x(1,2,3)
+
+ ---> $query(gvn,-1) on non-existing gv tree nodes
+$query(^x(-0.5),-1)=^x
+$query(^x(0.5),-1)=^x
+$query(^x(1.5),-1)=^x(1,2,3)
+$query(^x(1,-1),-1)=^x
+$query(^x(1,0.5),-1)=^x(1,0)
+$query(^x(1,2.5),-1)=^x(1,2,3)
+$query(^x(1,2,0.5),-1)=^x(1,0)
+$query(^x(1,2,1.5),-1)=^x(1,2,1)
+$query(^x(1,2,2.5),-1)=^x(1,2,2,4)
+$query(^x(1,2,3.5),-1)=^x(1,2,3)
+$query(^x(1,2,2,3.5),-1)=^x(1,2,2)
+$query(^x(1,2,2,4.5),-1)=^x(1,2,2,4)
+
+##### Executing rqtest07 : querydir=1 : nullcoll=STDNULLCOLL #####
+$query(^x,1)=^x("")
+$query(^x(""),1)=^x(1)
+$query(^x(1),1)=^x("abcd")
+$query(^x("abcd"),1)=
+
+##### Executing rqtest07 : querydir=-1 : nullcoll=STDNULLCOLL #####
+$query(^x("z"),-1)=^x("abcd")
+$query(^x("abcd"),-1)=^x(1)
+$query(^x(1),-1)=^x("")
+$query(^x(""),-1)=
+
+##### Executing rqtest10 with STDNULLCOLL #####
+nullcoll = STDNULLCOLL : $query(^x("zz")),-1)=^x("a","a","a")
+nullcoll = STDNULLCOLL : $query(^x("a","a","a")),-1)=^x("a","a",0)
+nullcoll = STDNULLCOLL : $query(^x("a","a",0)),-1)=^x("a","a","")
+nullcoll = STDNULLCOLL : $query(^x("a","a","")),-1)=^x("a",0,"a")
+nullcoll = STDNULLCOLL : $query(^x("a",0,"a")),-1)=^x("a",0,0)
+nullcoll = STDNULLCOLL : $query(^x("a",0,0)),-1)=^x("a",0,"")
+nullcoll = STDNULLCOLL : $query(^x("a",0,"")),-1)=^x("a","","a")
+nullcoll = STDNULLCOLL : $query(^x("a","","a")),-1)=^x("a","",0)
+nullcoll = STDNULLCOLL : $query(^x("a","",0)),-1)=^x("a","","")
+nullcoll = STDNULLCOLL : $query(^x("a","","")),-1)=^x(0,"a","a")
+nullcoll = STDNULLCOLL : $query(^x(0,"a","a")),-1)=^x(0,"a",0)
+nullcoll = STDNULLCOLL : $query(^x(0,"a",0)),-1)=^x(0,"a","")
+nullcoll = STDNULLCOLL : $query(^x(0,"a","")),-1)=^x(0,0,"a")
+nullcoll = STDNULLCOLL : $query(^x(0,0,"a")),-1)=^x(0,0,0)
+nullcoll = STDNULLCOLL : $query(^x(0,0,0)),-1)=^x(0,0,"")
+nullcoll = STDNULLCOLL : $query(^x(0,0,"")),-1)=^x(0,"","a")
+nullcoll = STDNULLCOLL : $query(^x(0,"","a")),-1)=^x(0,"",0)
+nullcoll = STDNULLCOLL : $query(^x(0,"",0)),-1)=^x(0,"","")
+nullcoll = STDNULLCOLL : $query(^x(0,"","")),-1)=^x("","a","a")
+nullcoll = STDNULLCOLL : $query(^x("","a","a")),-1)=^x("","a",0)
+nullcoll = STDNULLCOLL : $query(^x("","a",0)),-1)=^x("","a","")
+nullcoll = STDNULLCOLL : $query(^x("","a","")),-1)=^x("",0,"a")
+nullcoll = STDNULLCOLL : $query(^x("",0,"a")),-1)=^x("",0,0)
+nullcoll = STDNULLCOLL : $query(^x("",0,0)),-1)=^x("",0,"")
+nullcoll = STDNULLCOLL : $query(^x("",0,"")),-1)=^x("","","a")
+nullcoll = STDNULLCOLL : $query(^x("","","a")),-1)=^x("","",0)
+nullcoll = STDNULLCOLL : $query(^x("","",0)),-1)=^x("","","")
+nullcoll = STDNULLCOLL : $query(^x("","","")),-1)=^x
+nullcoll = STDNULLCOLL : $query(^x),-1)=
+
+##### Executing rqtest07 : querydir=1 : nullcoll=GTMNULLCOLL #####
+$query(^x,1)=^x(1)
+$query(^x(1),1)=^x("")
+$query(^x(""),1)=^x("abcd")
+$query(^x("abcd"),1)=
+
+##### Executing rqtest07 : querydir=-1 : nullcoll=GTMNULLCOLL #####
+$query(^x("z"),-1)=^x("abcd")
+$query(^x("abcd"),-1)=^x("")
+$query(^x(""),-1)=^x(1)
+$query(^x(1),-1)=
+
+##### Executing rqtest10 with GTMNULLCOLL #####
+nullcoll = GTMNULLCOLL : $query(^x("zz")),-1)=^x("a","a","a")
+nullcoll = GTMNULLCOLL : $query(^x("a","a","a")),-1)=^x("a","a","")
+nullcoll = GTMNULLCOLL : $query(^x("a","a","")),-1)=^x("a","a",0)
+nullcoll = GTMNULLCOLL : $query(^x("a","a",0)),-1)=^x("a","","a")
+nullcoll = GTMNULLCOLL : $query(^x("a","","a")),-1)=^x("a","","")
+nullcoll = GTMNULLCOLL : $query(^x("a","","")),-1)=^x("a","",0)
+nullcoll = GTMNULLCOLL : $query(^x("a","",0)),-1)=^x("a",0,"a")
+nullcoll = GTMNULLCOLL : $query(^x("a",0,"a")),-1)=^x("a",0,"")
+nullcoll = GTMNULLCOLL : $query(^x("a",0,"")),-1)=^x("a",0,0)
+nullcoll = GTMNULLCOLL : $query(^x("a",0,0)),-1)=^x("","a","a")
+nullcoll = GTMNULLCOLL : $query(^x("","a","a")),-1)=^x("","a","")
+nullcoll = GTMNULLCOLL : $query(^x("","a","")),-1)=^x("","a",0)
+nullcoll = GTMNULLCOLL : $query(^x("","a",0)),-1)=^x("","","a")
+nullcoll = GTMNULLCOLL : $query(^x("","","a")),-1)=^x("","","")
+nullcoll = GTMNULLCOLL : $query(^x("","","")),-1)=^x("","",0)
+nullcoll = GTMNULLCOLL : $query(^x("","",0)),-1)=^x("",0,"a")
+nullcoll = GTMNULLCOLL : $query(^x("",0,"a")),-1)=^x("",0,"")
+nullcoll = GTMNULLCOLL : $query(^x("",0,"")),-1)=^x("",0,0)
+nullcoll = GTMNULLCOLL : $query(^x("",0,0)),-1)=^x(0,"a","a")
+nullcoll = GTMNULLCOLL : $query(^x(0,"a","a")),-1)=^x(0,"a","")
+nullcoll = GTMNULLCOLL : $query(^x(0,"a","")),-1)=^x(0,"a",0)
+nullcoll = GTMNULLCOLL : $query(^x(0,"a",0)),-1)=^x(0,"","a")
+nullcoll = GTMNULLCOLL : $query(^x(0,"","a")),-1)=^x(0,"","")
+nullcoll = GTMNULLCOLL : $query(^x(0,"","")),-1)=^x(0,"",0)
+nullcoll = GTMNULLCOLL : $query(^x(0,"",0)),-1)=^x(0,0,"a")
+nullcoll = GTMNULLCOLL : $query(^x(0,0,"a")),-1)=^x(0,0,"")
+nullcoll = GTMNULLCOLL : $query(^x(0,0,"")),-1)=^x(0,0,0)
+nullcoll = GTMNULLCOLL : $query(^x(0,0,0)),-1)=^x
+nullcoll = GTMNULLCOLL : $query(^x),-1)=
+Stopping the GT.CM Servers...
+Check the databases on the GT.CM Servers...
+##GT.CM####SOURCE_PATH##/mupip
+##GT.CM####SOURCE_PATH##/mupip integ -REG *
+##GT.CM##No errors detected by integ.
+Check local (client) database...
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ a.dat
+No errors detected by integ.
+# Run C9E10002648 test using GT.CM GNP
+# To avoid duplicating that test code here, we copy it explicitly even though it is in a different test
 Create database on GT.CM Servers ( ##TEST_GTCM_SERVER_LIST##)...
 ##GT.CM##Files Created in ##TEST_REMOTE_PATH_GTCM##:
 ##GT.CM##Using: ##SOURCE_PATH##/mumps -run GDE
