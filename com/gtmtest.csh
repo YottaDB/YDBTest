@@ -609,6 +609,9 @@ if ($?cms_tools) then
 		# and server location is already determined in var. gtm_server_location
 	endif
 endif
+if ($?ydb_environment_init) then
+	setenv gtm_test_server_serial_no `grep -vE "^#" $gtm_test/tstdirs.csh | gawk -F "#" '/_'$HOST'( |)/ {print $NF}'`
+endif
 if ("" == "$gtm_test_server_serial_no") setenv gtm_test_server_serial_no "00" # default, in case no serial no is found (such as linux boxes)
 setenv gtm_test_port_range $gtm_test_server_serial_no
 if ("ATL" != "$gtm_server_location") then
