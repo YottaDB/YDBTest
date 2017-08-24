@@ -236,7 +236,6 @@ source $gtm_tst/com/set_fips_support.csh
 #############################################
 ####System specific test excludes
 if ($?gtm_test_noggsetup) then
-	setenv gtm_test_nomultihost 1
 	setenv gtm_test_noggusers 1
 	setenv gtm_test_noggtoolsdir 1
 	setenv gtm_test_noIGS 1
@@ -332,6 +331,11 @@ if ($?gtm_test_nomultihost) then
 	echo "-x tcp_bkup"	>>! $test_list
 	echo "-x endiancvt"	>>! $test_list
 endif
+
+# if ($?ydb_environment_init) then
+# 	# We do not have a cross-endian platform in a YDB setup. So disable endianvt permanently.
+# 	echo "-x endiancvt"	>>! $test_list
+# endif
 
 if ($?gtm_test_temporary_disable) then
 	echo "-x env_xlate"		>>! $test_list	# need to spend time analyzing why it does not work

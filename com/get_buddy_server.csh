@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -22,13 +25,6 @@ if ("" == "$2") then
 	set hostn = $HOST:ar
 else
 	set hostn = "$2"
-endif
-
-# If used outside the test system
-if !($?gtm_tst) then
-	set gtm_tst = "$gtm_test/T995"
-	source $gtm_tst/com/set_specific.csh
-	set TMP_FILE_PREFIX = "/tmp/__${USER}_"
 endif
 
 set gg_servers_file = "${TMP_FILE_PREFIX}_gg_servers_copy.txt"

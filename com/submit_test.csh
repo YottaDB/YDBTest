@@ -3,6 +3,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -119,6 +122,10 @@ set echo ; set verbose
 set se_buddy1 = `$gtm_tst/com/get_buddy_server.csh SE1`
 set se_buddy2 = `$gtm_tst/com/get_buddy_server.csh SE2`
 set re_buddy1 = `$gtm_tst/com/get_buddy_server.csh RE`
+if ("NA" == "$re_buddy1") then
+	# If remote endian buddy is the special string "NA", then use same endian buddy for $test_replic_mh_type=2 tests
+	set re_buddy1 = $se_buddy1
+endif
 if ($?test_replic) then
 	if ("MULTISITE" == "$test_replic") then
 		if (2 == $test_replic_mh_type) then
