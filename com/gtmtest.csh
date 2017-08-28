@@ -332,10 +332,10 @@ if ($?gtm_test_nomultihost) then
 	echo "-x endiancvt"	>>! $test_list
 endif
 
-# if ($?ydb_environment_init) then
-# 	# We do not have a cross-endian platform in a YDB setup. So disable endianvt permanently.
-# 	echo "-x endiancvt"	>>! $test_list
-# endif
+if ($?ydb_environment_init) then
+	# We do not have a cross-endian platform in a YDB setup. So disable endianvt permanently.
+	echo "-x endiancvt"	>>! $test_list
+endif
 
 if ($?gtm_test_temporary_disable) then
 	echo "-x env_xlate"		>>! $test_list	# need to spend time analyzing why it does not work
