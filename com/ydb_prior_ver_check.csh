@@ -14,7 +14,9 @@
 # $1 - prior version to do checks against
 #
 if ($?ydb_environment_init) then
-	# This is a YDB setup. And so versions prior to V63000A have issues running in UTF-8 mode (due to icu
+	# This is a YDB setup.
+	#
+	# Versions prior to V63000A have issues running in UTF-8 mode (due to icu
 	# library naming conventions that changed). So disable UTF8 mode testing in case the older version is < V63000A.
 	if (`expr "V63000A" \> "$1"`) then
 		if ($?gtm_chset) then
@@ -24,10 +26,15 @@ if ($?ydb_environment_init) then
 			endif
 		endif
 	endif
-	# This is a YDB setup. On Arch Linux, versions <= V63000A have issues running with TLS (source server
-	# issues TLSDLLNOOPEN error with detail "libgtmtls.so: undefined symbol: SSLv23_method"). So disable
-	# TLS in case a version <= V63000A gets chosen.
+	# On Arch Linux, versions <= V63000A have issues running with TLS (source server issues TLSDLLNOOPEN error
+	# with detail "libgtmtls.so: undefined symbol: SSLv23_method"). So disable TLS in case a version <= V63000A gets chosen.
+	# Since it is not straightforward to disable this only for Arch Linux, we disable it for all linux distributions.
 	if (`expr "V63000A" \>= "$1"`) then
 		setenv gtm_test_tls "FALSE"
+	endif
+	# On Arch Linux, GT.M V62001 binaries installed from Sourceforge issue SIG-11 when trying to create multi-region gld
+	# files with a gtmdbglvl setting of 0x1F0. Therefore disable gtmdbglvl in that case.
+	if (`expr "V63000A" \> "$1"`) then
+		unsetenv gtmdbglvl
 	endif
 endif
