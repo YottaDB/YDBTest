@@ -335,6 +335,7 @@ endif
 if ($?ydb_environment_init) then
 	# We do not have a cross-endian platform in a YDB setup. So disable endianvt permanently.
 	echo "-x endiancvt"	>>! $test_list
+	setenv gtmtest_noxendian 1
 endif
 
 if ($?gtm_test_temporary_disable) then
