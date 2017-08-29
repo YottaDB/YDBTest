@@ -38,9 +38,14 @@ if ($?gtmroutines) then
 	unset rtns
 endif
 
-if (-e $gtm_tools/setactive.csh) then
-	set setactive_parms=($1 $2); source $gtm_tools/setactive.csh
-else
+@ ydbenv = 1
+if ($?gtm_tools) then
+	if (-e $gtm_tools/setactive.csh) then
+		set setactive_parms=($1 $2); source $gtm_tools/setactive.csh
+		@ ydbenv = 0
+	endif
+endif
+if ($ydbenv) then
 	# Not a GG environment. So simulate $gtm_tools/setactive.csh
 	if (($2 == "p") || ($2 == "pro")) then
 		set image = "pro"
