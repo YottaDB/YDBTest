@@ -51,10 +51,11 @@ if ($?gtm_test_nopriorgtmver) then
 	setenv subtest_exclude_list "$subtest_exclude_list supplementary_err"
 else if ($?ydb_environment_init) then
 	# We are in a YDB environment (i.e. non-GG setup)
+	source $gtm_tst/com/set_gtm_machtype.csh	# to setenv "gtm_test_linux_distrib"
 	if ("dbg" == "$tst_image") then
 		# We do not have dbg builds of versions [V51000,V54003] needed by the below subtest so disable it.
 		setenv subtest_exclude_list "$subtest_exclude_list supplementary_err"
-	else if ($HOST:ar == "nars") then
+	else if ("arch" == $gtm_test_linux_distrib) then
 		# The pro builds of versions [V51000,V54003] needed by the below subtest occasionally get SIG-11 on certain hosts.
 		# This is due to a known issue that is fixed in V55000 but this test requires those older versions.
 		# So disable this test on those hosts.

@@ -21,20 +21,28 @@ if ($?ydb_environment_init) then
 	if (`expr "V63000A" \> "$1"`) then
 		if ($?gtm_chset) then
 			if ("UTF-8" == $gtm_chset) then
+				echo "# Overriding setting of gtm_chset by ydb_prior_ver_check.csh (prior_ver = $1)" >>&! settings.csh
+				echo "setenv gtm_chset M" >>&! settings.csh
 				$switch_chset M >>&! switch_chset_ydb.out
 				rm -f rand.o >& /dev/null # usually created by random_ver.csh and could cause INVOBJFILE due to CHSET mismatch
 			endif
 		endif
 	endif
-	# On Arch Linux, versions <= V63000A have issues running with TLS (source server issues TLSDLLNOOPEN error
-	# with detail "libgtmtls.so: undefined symbol: SSLv23_method"). So disable TLS in case a version <= V63000A gets chosen.
-	# Since it is not straightforward to disable this only for Arch Linux, we disable it for all linux distributions.
-	if (`expr "V63000A" \>= "$1"`) then
-		setenv gtm_test_tls "FALSE"
+	if ("arch" == $gtm_test_linux_distrib) then
+		# On Arch Linux, versions <= V63000A have issues running with TLS (source server issues TLSDLLNOOPEN error
+		# with detail "libgtmtls.so: undefined symbol: SSLv23_method"). So disable TLS in case a version <= V63000A
+		# gets chosen on an Arch linux host
+		if (`expr "V63000A" \>= "$1"`) then
+			echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh (prior_ver = $1)" >>&! settings.csh
+			echo "setenv gtm_test_tls FALSE" >>&! settings.csh
+			setenv gtm_test_tls "FALSE"
+		endif
 	endif
 	# On Arch Linux, GT.M V62001 binaries installed from Sourceforge issue SIG-11 when trying to create multi-region gld
 	# files with a gtmdbglvl setting of 0x1F0. Therefore disable gtmdbglvl in that case.
 	if (`expr "V63000A" \> "$1"`) then
+		echo "# Overriding setting of gtmdbglvl by ydb_prior_ver_check.csh (prior_ver = $1)" >>&! settings.csh
+		echo "unsetenv gtmdbglvl" >>&! settings.csh
 		unsetenv gtmdbglvl
 	endif
 endif
