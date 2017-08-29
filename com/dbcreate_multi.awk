@@ -3,6 +3,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -90,7 +93,7 @@ END {
 	total_gtcm_serv_no=split(value["test_gtcm"],gtcm_servers,",")
 	if (this_is_a_gtcm_server)
 		for (serv in gtcm_servers)
-			if (!index(gtcm_servers[serv],this_host)) gtcm_servers[serv]=""
+			if (!index(gtcm_servers[serv],this_host":")) gtcm_servers[serv]=""
 	gtcm_serv_no=1
 	cur_gtcm_server = gtcm_servers[gtcm_serv_no++]
       }
