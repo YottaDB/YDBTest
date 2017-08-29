@@ -4,6 +4,9 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -96,9 +99,12 @@ endif
 # Set endianness
 setenv gtm_endian `echo -n A | od -h | awk '{if ($2 == "0041") {print "LITTLE_ENDIAN"} else if ($2 == "4100") {print "BIG_ENDIAN"} else {print "ENDIAN_UNDETERMINED"}; exit}'` #BYPASSOK awk
 # Set the linux distribution name if the current server is a linux server
-# gtm_test_linux_distrib will be set to one of ubuntu, redhatenterpriseserver, debian, centos, fedora, suselinux on a linux server. It will be set to "" on other servers
+# gtm_test_linux_distrib will be set to one of ubuntu, redhatenterpriseserver, debian, centos, fedora, suselinux, arch
+# on a linux server. It will be set to "" on other servers
 if (-X lsb_release) then
 	setenv gtm_test_linux_distrib `lsb_release -is | sed 's/ //g' | tr '[A-Z]' '[a-z]'`
+else if (-f /etc/os-release) then
+	setenv gtm_test_linux_distrib `awk -F= '$1 == "ID" {print $2}' /etc/os-release`
 else
 	setenv gtm_test_linux_distrib ""
 endif
