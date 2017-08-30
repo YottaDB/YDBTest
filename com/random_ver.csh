@@ -27,8 +27,6 @@
 # gtmtest.csh, add -env gtm_force_prior_ver=VERSION to the command.
 #
 
-set echo
-set verbose
 if ( 0 == $#argv ) then
 	echo "Usage: \$gtm_tst/com/random_ver.csh [-gt|-gte] <version> ||  [-lt|-lte] <version> || -type <version>"
 	echo "Sample usage:"
