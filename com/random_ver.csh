@@ -27,6 +27,8 @@
 # gtmtest.csh, add -env gtm_force_prior_ver=VERSION to the command.
 #
 
+set echo
+set verbose
 if ( 0 == $#argv ) then
 	echo "Usage: \$gtm_tst/com/random_ver.csh [-gt|-gte] <version> ||  [-lt|-lte] <version> || -type <version>"
 	echo "Sample usage:"
@@ -160,6 +162,12 @@ if ($?vertype) then
 		set isgt    = ">="
 		set maximum = "$tst_ver" # A version before the current version
 		set islt    = "<"
+		if ("$maxver" == "V998_R100") then
+			# V998_R100 is actually V63000A + R100 + more fixes and so V63001A* releases should never be chosen
+			# as the older version so limit maximum to < V63000A
+			# This is a temporary fix until V63002/T63002 is released.
+			set maximum = "V63000A"
+		endif
 	breaksw
 	case "any":
 		set minimum = "V44002" # V44002 is the min supported version after triggers
