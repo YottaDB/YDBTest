@@ -159,7 +159,7 @@ if ($?vertype) then
 		set minimum = "V51000" # V51000 is the first multisite version.
 		set isgt    = ">="
 		set maximum = "$tst_ver" # A version before the current version
-		set islt    = "<"
+		set islt    = "<="
 		if ("$maxver" == "V998_R100") then
 			# V998_R100 is actually V63000A + R100 + more fixes and so V63001A* releases should never be chosen
 			# as the older version so limit maximum to < V63000A
