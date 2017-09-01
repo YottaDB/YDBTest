@@ -1,4 +1,15 @@
 #!/usr/bin/expect -f
+#################################################################
+#                                                               #
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 #Everything must match initially
 set timeout -1
 match_max 100000
@@ -28,6 +39,10 @@ send -- "stty intr '^c'\r"
 # Set the terminal columns
 expect -exact "terminal>"
 send -- "stty cols 132\r"
+
+# Set the terminal rows (need it > ~20 to avoid false failures)
+expect -exact "terminal>"
+send -- "stty rows 40\r"
 
 # Check it all
 expect "terminal>"
