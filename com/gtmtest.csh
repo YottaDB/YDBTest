@@ -339,7 +339,6 @@ if ($?ydb_environment_init) then
 endif
 
 if ($?gtm_test_temporary_disable) then
-	echo "-x env_xlate"		>>! $test_list	# need to spend time analyzing why it does not work
 	echo "-x dbload"		>>! $test_list	# needs $gtm_test/big_files/dbload/*.go
 	echo "-x dbcompatibility"	>>! $test_list	# can be re-enabled once V63002/T63002 is released (wait for "gld_mismatch")
 	echo "-x filter"		>>! $test_list	# can be re-enabled once V63002/T63002 is released
