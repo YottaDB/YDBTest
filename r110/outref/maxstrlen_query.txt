@@ -1,0 +1,34 @@
+# Test that $query(lvn) never returns a string whose length is > MAX_STRLEN (1Mb)
+
+# Test of $query(lvn,1)
+
+GTM>
+i = 1 : $zlength(z)=6
+i = 2 : $zlength(z)=20
+i = 3 : $zlength(z)=56
+i = 4 : $zlength(z)=160
+i = 5 : $zlength(z)=496
+i = 6 : $zlength(z)=1680
+i = 7 : $zlength(z)=6096
+i = 8 : $zlength(z)=23120
+i = 9 : $zlength(z)=89936
+i = 10 : $zlength(z)=354640
+%GTM-E-MAXSTRLEN, Maximum string length exceeded
+
+GTM>
+# Test of $query(lvn,-1)
+
+GTM>
+i = 1 : $zlength(z)=6
+i = 2 : $zlength(z)=20
+i = 3 : $zlength(z)=56
+i = 4 : $zlength(z)=160
+i = 5 : $zlength(z)=496
+i = 6 : $zlength(z)=1680
+i = 7 : $zlength(z)=6096
+i = 8 : $zlength(z)=23120
+i = 9 : $zlength(z)=89936
+i = 10 : $zlength(z)=354640
+%GTM-E-MAXSTRLEN, Maximum string length exceeded
+
+GTM>

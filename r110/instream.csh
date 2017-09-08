@@ -11,17 +11,18 @@
 #								#
 #################################################################
 #
-#-------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
-#-------------------------------------------------------------------------------------
-# reversequery [nars]	Test of $query(lvn,-1) and $query(gvn,-1)
-#-------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------
+# reversequery    [nars] Test of $query(lvn,-1) and $query(gvn,-1)
+# maxstrlen_query [nars] Test that $query(lvn) never returns a string whose length is > MAX_STRLEN (1Mb)
+#--------------------------------------------------------------------------------------------------------
 
 echo "r110 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "reversequery"
+setenv subtest_list_non_replic "reversequery maxstrlen_query"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
