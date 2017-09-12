@@ -18,25 +18,26 @@ GDE>
 GDE> 
 GDE> 
 
-                               *** TEMPLATES ***
+                                *** TEMPLATES ***
                                                                           Std      Inst
-                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- -----------------------------------------------------------------------------------------------------------
- <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                             Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ ----------------------------------------------------------------------------------------------------------------------
+ <default>                                     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  1024        100   100 GLOB =1024
-                                                                     LOCK = 40
-##TEST_AWK                                                                     RES  = *[0-9]*
+ <default>          *                 BG  DYN  4096        100   100 GLOB =1024
+                                                                     LOCK =  40
+                                                                     RES  =   0
                                                                      ENCR = OFF
                                                                      MSLT =1024
-                                                                     DALL=YES
- <default>                            MM  DYN  1024        100   100 DEFER
-                                                                     LOCK = 40
+                                                                     DALL = YES
+                                                                     AIO  = OFF
+ <default>                            MM  DYN  4096        100   100 DEFER
+                                                                     LOCK =  40
                                                                      MSLT =1024
-                                                                     DALL=YES
+                                                                     DALL = YES
 
          *** NAMES ***
  Global                             Region
@@ -50,48 +51,52 @@ GDE>
  c*                                 CREG
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- AREG                            ASEG                               0      256    64 NEVER      N    Y   DISABLED DISABLED ENABLED
- BREG                            BSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- CREG                            CSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 NEVER     N    Y   N      N     Y     N      Y     Sep
+ BREG                            BSEG                               0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ CREG                            CSEG                               0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ DEFAULT                         DEFAULT                            0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
                           *** JOURNALING INFORMATION ***
  Region                          Jnl File (def ext: .mjl)  Before Buff      Alloc      Exten   AutoSwitch
  --------------------------------------------------------------------------------------------------------
- AREG                            xxx.mjl                   Y      2308       2048       2048      8386560
+ AREG                            xxx.mjl                   Y      2312       2048       2048      8386560
 
 
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- ASEG                            a.dat               BG  DYN  1024        100   100 GLOB=1024
+ ASEG                            a.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- BSEG                            b.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ BSEG                            b.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- CSEG                            c.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ CSEG                            c.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 
                                   *** MAP ***
    -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
@@ -138,10 +143,10 @@ $gtm_tst/com/create_key_file.csh > & create_key_file_dbload.out
 endif
 ##ALLOW_OUTPUT NON_ENCRYPT
 $MUPIP create
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/b.dat
-Created file ##TEST_PATH##/c.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 $MUPIP set -journal=enable,before -region "*" | & sort -f
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
@@ -164,25 +169,26 @@ $GDE << FIN
 
 GDE> 
 
-                               *** TEMPLATES ***
+                                *** TEMPLATES ***
                                                                           Std      Inst
-                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- -----------------------------------------------------------------------------------------------------------
- <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                             Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ ----------------------------------------------------------------------------------------------------------------------
+ <default>                                     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  1024        100   100 GLOB =1024
-                                                                     LOCK = 40
-##TEST_AWK                                                                     RES  = *[0-9]*
+ <default>          *                 BG  DYN  4096        100   100 GLOB =1024
+                                                                     LOCK =  40
+                                                                     RES  =   0
                                                                      ENCR = OFF
                                                                      MSLT =1024
-                                                                     DALL=YES
- <default>                            MM  DYN  1024        100   100 DEFER
-                                                                     LOCK = 40
+                                                                     DALL = YES
+                                                                     AIO  = OFF
+ <default>                            MM  DYN  4096        100   100 DEFER
+                                                                     LOCK =  40
                                                                      MSLT =1024
-                                                                     DALL=YES
+                                                                     DALL = YES
 
          *** NAMES ***
  Global                             Region
@@ -196,68 +202,72 @@ GDE>
  c*                                 CREG
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- AREG                            ASEG                               0      256    64 NEVER      N    Y   DISABLED DISABLED ENABLED
- BREG                            BSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- CREG                            CSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 NEVER     N    Y   N      N     Y     N      Y     Sep
+ BREG                            BSEG                               0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ CREG                            CSEG                               0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ DEFAULT                         DEFAULT                            0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
                           *** JOURNALING INFORMATION ***
  Region                          Jnl File (def ext: .mjl)  Before Buff      Alloc      Exten   AutoSwitch
  --------------------------------------------------------------------------------------------------------
- AREG                            xxx.mjl                   Y      2308       2048       2048      8386560
+ AREG                            xxx.mjl                   Y      2312       2048       2048      8386560
 
 
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- ASEG                            a.dat               BG  DYN  1024        100   100 GLOB=1024
+ ASEG                            a.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-                                                                                    ENCR=ON
+                                                                                    ENCR=  ON
 ##ALLOW_OUTPUT ENCRYPT NON_ENCRYPT
 ##SUSPEND_OUTPUT ENCRYPT
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT NON_ENCRYPT
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- BSEG                            b.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ BSEG                            b.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-                                                                                    ENCR=ON
+                                                                                    ENCR=  ON
 ##ALLOW_OUTPUT ENCRYPT NON_ENCRYPT
 ##SUSPEND_OUTPUT ENCRYPT
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT NON_ENCRYPT
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- CSEG                            c.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ CSEG                            c.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-                                                                                    ENCR=ON
+                                                                                    ENCR=  ON
 ##ALLOW_OUTPUT ENCRYPT NON_ENCRYPT
 ##SUSPEND_OUTPUT ENCRYPT
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT NON_ENCRYPT
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-                                                                                    ENCR=ON
+                                                                                    ENCR=  ON
 ##ALLOW_OUTPUT ENCRYPT NON_ENCRYPT
 ##SUSPEND_OUTPUT ENCRYPT
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT NON_ENCRYPT
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 
                                   *** MAP ***
    -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
@@ -363,10 +373,10 @@ $MUPIP set -jour="enable,before" -reg "*" | & sort -f
 %GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 rm *.dat
 $MUPIP create
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/b.dat
-Created file ##TEST_PATH##/c.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ls *.mjl*
 b.mjl
 ##TEST_AWKb.mjl_[0-9]*(_[0-9][0-9]*|[0-9])

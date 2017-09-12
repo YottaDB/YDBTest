@@ -39,7 +39,12 @@ do badvarname^GTMBadVariableNameTest5
 Error Number=5
 STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
 do badvarname^GTMBadVariableNameTest6
-	       set 12345678901234567890
+##SUSPEND_OUTPUT UNICODE_MODE
+	       set 12345678901234567890=1
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+	       set 12345678901234567890....=1
+##ALLOW_OUTPUT NONUNICODE_MODE
 	           ^-----
 		At column 12, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest6.m
 %GTM-E-VAREXPECTED, Variable expected in this context

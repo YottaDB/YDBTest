@@ -1263,7 +1263,8 @@ Lock removed : ^A234567890123456789012345678901
 $LKE clear -nointeractive -reg=BNONEXISTENTREGION
 %GTM-E-NOREGION, REGION not found: BNONEXISTENTREGION
 $LKE clear -nointeractive -reg=BNONEXISTENTREGIONTHISTIMEAVERYVERYLOGNREGION6789012345678901234567890
-%GTM-E-NOREGION, REGION not found: BNONEXISTENTREGIONTHISTIMEAVERY
+%GTM-E-CLISTRTOOLONG, REGION specified is 70 bytes long which is greater than the allowed maximum of 31 bytes
+Error getting REGION parameter
 #####################################################################
 $LKE show -all
 
@@ -1330,4 +1331,4 @@ GTM>
 No errors detected by integ.
 ##TEST_PATH##/lock_output.out
 %GTM-E-NOREGION, REGION not found: BNONEXISTENTREGION
-%GTM-E-NOREGION, REGION not found: BNONEXISTENTREGIONTHISTIMEAVERY
+%GTM-E-CLISTRTOOLONG, REGION specified is 70 bytes long which is greater than the allowed maximum of 31 bytes

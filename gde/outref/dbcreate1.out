@@ -28,25 +28,26 @@ GDE>
 GDE> 
 GDE> 
 
-                               *** TEMPLATES ***
+                                *** TEMPLATES ***
                                                                           Std      Inst
-                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- -----------------------------------------------------------------------------------------------------------
- <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                             Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ ----------------------------------------------------------------------------------------------------------------------
+ <default>                                     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  1024        100   100 GLOB =1024
-                                                                     LOCK = 40
-##TEST_AWK                                                                     RES  = *[0-9]*
+ <default>          *                 BG  DYN  4096        100   100 GLOB =1024
+                                                                     LOCK =  40
+                                                                     RES  =   0
                                                                      ENCR = OFF
                                                                      MSLT =1024
-                                                                     DALL=YES
- <default>                            MM  DYN  1024        100   100 DEFER
-                                                                     LOCK = 40
+                                                                     DALL = YES
+                                                                     AIO  = OFF
+ <default>                            MM  DYN  4096        100   100 DEFER
+                                                                     LOCK =  40
                                                                      MSLT =1024
-                                                                     DALL=YES
+                                                                     DALL = YES
 
          *** NAMES ***
  Global                             Region
@@ -69,56 +70,62 @@ GDE>
  Ed3456789012345678901234567890     EE34567890123456789012345678901
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- AA345678901                     AA345678901                        0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- BB3456789012345678901           BB3456789012345678901              0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- CC345678901234567890123456789   CC345678901234567890123456789      0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- DD3456789012345678901234567890  DD3456789012345678901234567890     0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- EE34567890123456789012345678901 EE34567890123456789012345678901    0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ AA345678901                     AA345678901                        0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ BB3456789012345678901           BB3456789012345678901              0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ CC345678901234567890123456789   CC345678901234567890123456789      0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ DD3456789012345678901234567890  DD3456789012345678901234567890     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ DEFAULT                         DEFAULT                            0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ EE34567890123456789012345678901 EE34567890123456789012345678901    0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- AA345678901                     a.dat               BG  DYN  1024        100   100 GLOB=1024
+ AA345678901                     a.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- BB3456789012345678901           b.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ BB3456789012345678901           b.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- CC345678901234567890123456789   c.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ CC345678901234567890123456789   c.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- DD3456789012345678901234567890  d.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ DD3456789012345678901234567890  d.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- EE34567890123456789012345678901 e.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ EE34567890123456789012345678901 e.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 
                                   *** MAP ***
    -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
@@ -229,19 +236,19 @@ GDE>
 GDE> 
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- DD3456789012345678901234567890  DD3456789012345678901234567890     0      256   128 NEVER      N    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ DD3456789012345678901234567890  DD3456789012345678901234567890     0      256   128 NEVER     N    N   N      N     Y     N      Y     Sep
 GDE> 
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- EE34567890123456789012345678901 TEMP                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ EE34567890123456789012345678901 TEMP                               0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 GDE> 
 GDE> 
 GDE> 
@@ -250,25 +257,26 @@ GDE>
 GDE> 
 GDE> 
 
-                               *** TEMPLATES ***
+                                *** TEMPLATES ***
                                                                           Std      Inst
-                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- -----------------------------------------------------------------------------------------------------------
- <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                             Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ ----------------------------------------------------------------------------------------------------------------------
+ <default>                                     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  1024        100   100 GLOB =1024
-                                                                     LOCK = 40
-##TEST_AWK                                                                     RES  = *[0-9]*
+ <default>          *                 BG  DYN  4096        100   100 GLOB =1024
+                                                                     LOCK =  40
+                                                                     RES  =   0
                                                                      ENCR = OFF
                                                                      MSLT =1024
-                                                                     DALL=YES
- <default>                            MM  DYN  1024        100   100 DEFER
-                                                                     LOCK = 40
+                                                                     DALL = YES
+                                                                     AIO  = OFF
+ <default>                            MM  DYN  4096        100   100 DEFER
+                                                                     LOCK =  40
                                                                      MSLT =1024
-                                                                     DALL=YES
+                                                                     DALL = YES
 
          *** NAMES ***
  Global                             Region
@@ -291,49 +299,54 @@ GDE>
  Ed3456789012345678901234567890     EE34567890123456789012345678901
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- AA345678901                     AA345678901                        0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- BB3456789012345678901           BB3456789012345678901              0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- CC345678901234567890123456789   TEMP                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- DD3456789012345678901234567890  DD3456789012345678901234567890     0      256   128 NEVER      N    N   DISABLED DISABLED ENABLED
- DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ AA345678901                     AA345678901                        0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ BB3456789012345678901           BB3456789012345678901              0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ CC345678901234567890123456789   TEMP                               0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ DD3456789012345678901234567890  DD3456789012345678901234567890     0      256   128 NEVER     N    N   N      N     Y     N      Y     Sep
+ DEFAULT                         DEFAULT                            0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- AA345678901                     a.dat               BG  DYN  1024        100   100 GLOB=1024
+ AA345678901                     a.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- BB3456789012345678901           b.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ BB3456789012345678901           b.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- DD3456789012345678901234567890  d.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ DD3456789012345678901234567890  d.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- TEMP                            temp.dat            BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ TEMP                            temp.dat            BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 
                                   *** MAP ***
    -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
@@ -439,25 +452,26 @@ GDE>
 GDE> 
 GDE> 
 
-                               *** TEMPLATES ***
+                                *** TEMPLATES ***
                                                                           Std      Inst
-                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- -----------------------------------------------------------------------------------------------------------
- <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                             Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ ----------------------------------------------------------------------------------------------------------------------
+ <default>                                     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  1024        100   100 GLOB =1024
-                                                                     LOCK = 40
-##TEST_AWK                                                                     RES  = *[0-9]*
+ <default>          *                 BG  DYN  4096        100   100 GLOB =1024
+                                                                     LOCK =  40
+                                                                     RES  =   0
                                                                      ENCR = OFF
                                                                      MSLT =1024
-                                                                     DALL=YES
- <default>                            MM  DYN  1024        100   100 DEFER
-                                                                     LOCK = 40
+                                                                     DALL = YES
+                                                                     AIO  = OFF
+ <default>                            MM  DYN  4096        100   100 DEFER
+                                                                     LOCK =  40
                                                                      MSLT =1024
-                                                                     DALL=YES
+                                                                     DALL = YES
 
          *** NAMES ***
  Global                             Region
@@ -478,49 +492,54 @@ GDE>
  Dd34567890123456789012345678901    CC345678901234567890123456789
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- AA345678901                     AA345678901                        0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- BB3456789012345678901           BB3456789012345678901              0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- CC345678901234567890123456789   TEMP                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- DD3456789012345678901234567890  DD3456789012345678901234567890     0      256   128 NEVER      N    N   DISABLED DISABLED ENABLED
- DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ AA345678901                     AA345678901                        0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ BB3456789012345678901           BB3456789012345678901              0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ CC345678901234567890123456789   TEMP                               0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ DD3456789012345678901234567890  DD3456789012345678901234567890     0      256   128 NEVER     N    N   N      N     Y     N      Y     Sep
+ DEFAULT                         DEFAULT                            0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- AA345678901                     a.dat               BG  DYN  1024        100   100 GLOB=1024
+ AA345678901                     a.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- BB3456789012345678901           b.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ BB3456789012345678901           b.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- DD3456789012345678901234567890  d.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ DD3456789012345678901234567890  d.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- TEMP                            temp.dat            BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ TEMP                            temp.dat            BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 
                                   *** MAP ***
    -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
@@ -817,25 +836,26 @@ GDE>
                                                                   FILE = mumps.dat
 GDE> 
 
-                               *** TEMPLATES ***
+                                *** TEMPLATES ***
                                                                           Std      Inst
-                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- -----------------------------------------------------------------------------------------------------------
- <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                             Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ ----------------------------------------------------------------------------------------------------------------------
+ <default>                                     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  1024        100   100 GLOB =1024
-                                                                     LOCK = 40
-##TEST_AWK                                                                     RES  = *[0-9]*
+ <default>          *                 BG  DYN  4096        100   100 GLOB =1024
+                                                                     LOCK =  40
+                                                                     RES  =   0
                                                                      ENCR = OFF
                                                                      MSLT =1024
-                                                                     DALL=YES
- <default>                            MM  DYN  1024        100   100 DEFER
-                                                                     LOCK = 40
+                                                                     DALL = YES
+                                                                     AIO  = OFF
+ <default>                            MM  DYN  4096        100   100 DEFER
+                                                                     LOCK =  40
                                                                      MSLT =1024
-                                                                     DALL=YES
+                                                                     DALL = YES
 
          *** NAMES ***
  Global                             Region
@@ -856,49 +876,54 @@ GDE>
  Dd34567890123456789012345678901    CC345678901234567890123456789
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- AA345678901                     AA345678901                        0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- BB3456789012345678901           BB3456789012345678901              0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- CC345678901234567890123456789   TEMP                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
- DD3456789012345678901234567890  DD3456789012345678901234567890     0      256   128 NEVER      N    N   DISABLED DISABLED ENABLED
- DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ AA345678901                     AA345678901                        0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ BB3456789012345678901           BB3456789012345678901              0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ CC345678901234567890123456789   TEMP                               0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ DD3456789012345678901234567890  DD3456789012345678901234567890     0      256   128 NEVER     N    N   N      N     Y     N      Y     Sep
+ DEFAULT                         DEFAULT                            0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- AA345678901                     a.dat               BG  DYN  1024        100   100 GLOB=1024
+ AA345678901                     a.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- BB3456789012345678901           b.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ BB3456789012345678901           b.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- DD3456789012345678901234567890  d.dat               BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ DD3456789012345678901234567890  d.dat               BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- TEMP                            temp.dat            BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ TEMP                            temp.dat            BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 
                                   *** MAP ***
    -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -

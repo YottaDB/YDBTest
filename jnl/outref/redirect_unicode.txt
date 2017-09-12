@@ -6,6 +6,7 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 Using: ##SOURCE_PATH##/mupip
 ＡＢＣＤＥＦＧ.dat
 ##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤＥＦＧ.mjl created for region DEFAULT with (|NO)BEFORE_IMAGES
+%GTM-W-JNLBUFFREGUPD, Journal file buffer size for region DEFAULT has been adjusted from 2308 to 2312.
 %GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
 GTM>
@@ -16,7 +17,7 @@ GTM>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ ＡＢＣＤＥＦＧ.dat
 No errors detected by integ.
-Created file ##TEST_PATH##/ＡＢＣＤＥＦＧ.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/ＡＢＣＤＥＦＧ.dat created
 cp ＡＢＣＤＥＦＧ.dat ＲＥＤＩＲ.dat
 Redirect forward TEST FAILED
 ##SOURCE_PATH##/mupip journal -recover -forward -redir=ＡＢＣＤＥＦＧ.dat=ＲＥＤＩＲ.dat -fences=NONE -verify ＡＢＣＤＥＦＧ.mjl

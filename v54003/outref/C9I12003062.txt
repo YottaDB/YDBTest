@@ -6,10 +6,11 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
 ###################################################################
 ==> Set access method in database to MM
 ###################################################################
+Database file ##TEST_PATH##/mumps.dat now has MM access method
   Access method                          MM  Global Buffers                1024
 ###################################################################
 ==> Do a TP transaction to ensure that the operation works fine.
@@ -30,10 +31,11 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
- DEFAULT                         mumps.dat           MM  DYN  1024        100   100 DEFER
+ DEFAULT                         mumps.dat           MM  DYN  4096        100   100 DEFER
 ###################################################################
 ==> Set access method in database to BG
 ###################################################################
+Database file ##TEST_PATH##/mumps.dat now has BG access method
   Access method                          BG  Global Buffers                1024
 ###################################################################
 ==> Do a TP transaction to ensure that the operation works fine.

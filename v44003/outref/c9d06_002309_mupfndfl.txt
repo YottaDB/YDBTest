@@ -65,18 +65,12 @@ GDE>
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
 $MUPIP create
-Created file ##TEST_PATH##/dir2/a.dat
-Error opening file ##TEST_PATH##/dir1/mumps.dat
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-: No such file or directory (errno2=0x0594003D)
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
-: No such file or directory
-##ALLOW_OUTPUT HOST_OS390_S390
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/dir2/a.dat created
+%GTM-E-DBOPNERR, Error opening database file ##TEST_PATH##/dir1/mumps.dat
+%SYSTEM-E-ENO2, No such file or directory
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 $MUPIP set -journal=enable,on,before -reg "*"
-REGION DEFAULT's file ./dir1/mumps.dat cannot be found.
+%GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 %GTM-E-NOREGION, REGION not found: DEFAULT
 %GTM-E-MUNOACTION, MUPIP unable to perform requested action
@@ -85,7 +79,7 @@ Fill Factor:: Index blocks 100%: Data blocks 100%
 %GTM-E-DBFILERR, Error with database file ##TEST_PATH##/dir1/mumps.dat
 %SYSTEM-E-ENO2, No such file or directory
 $MUPIP backup "*" ./back1
-REGION DEFAULT's file ./dir1/mumps.dat cannot be found.
+%GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 %GTM-E-NOREGION, REGION not found: DEFAULT
 
@@ -93,7 +87,7 @@ MUPIP cannot start backup with above errors
 
 %GTM-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP integ -r "*"
-REGION DEFAULT's file ./dir1/mumps.dat cannot be found.
+%GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 %GTM-E-NOREGION, REGION not found: DEFAULT
 
@@ -104,19 +98,19 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               1           1.953            NA
+Directory           2               1           0.488            NA
 Index               0               0           0.000             0
 Data                0               0           0.000             0
 Free               98              NA              NA            NA
 Total             100               1              NA             0
 %GTM-E-INTEGERRS, Database integrity errors
 $MUPIP set -reg DEFAULT -exten=100
-REGION DEFAULT's file ./dir1/mumps.dat cannot be found.
+%GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 %GTM-E-NOREGION, REGION not found: DEFAULT
 %GTM-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP rundown -reg "*"
-REGION DEFAULT's file ./dir1/mumps.dat cannot be found.
+%GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 %GTM-E-NOREGION, REGION not found: DEFAULT
 %GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/dir2/a.dat successfully rundown
@@ -127,7 +121,7 @@ $MUPIP extr extr.gbl2
 %GTM-E-DBFILERR, Error with database file ##TEST_PATH##/dir1/mumps.dat
 %SYSTEM-E-ENO2, No such file or directory
 $MUPIP fr -on "*"
-REGION DEFAULT's file ./dir1/mumps.dat cannot be found.
+%GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 %GTM-E-NOREGION, REGION not found: DEFAULT
 
@@ -135,7 +129,7 @@ MUPIP cannot start freeze with above errors
 
 %GTM-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP fr -off "*"
-REGION DEFAULT's file ./dir1/mumps.dat cannot be found.
+%GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 %GTM-E-NOREGION, REGION not found: DEFAULT
 
@@ -150,15 +144,9 @@ echo "#"
 #
 mkdir ./dir1
 $MUPIP create
-##SUSPEND_OUTPUT HOST_OS390_S390
-Error opening file ##TEST_PATH##/dir2/a.dat
-: File exists
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-Error opening file ##TEST_PATH##/dir2/a.dat
-: EDC5117I File exists. (errno2=0x05620063)
-##ALLOW_OUTPUT HOST_ALL
-Created file ##TEST_PATH##/dir1/mumps.dat
+%GTM-E-DBOPNERR, Error opening database file ##TEST_PATH##/dir2/a.dat
+%SYSTEM-E-ENO17, File exists
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/dir1/mumps.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 $MUPIP set -journal=enable,on,before -reg "*" > & mupip_set_jnl.out
 sort -f mupip_set_jnl.out
@@ -226,14 +214,14 @@ sort -f mupip_integ_r.out
 
 
 
-Data                1              10           9.863             1
-Data                2              20           9.863             2
-##TEST_AWKDirectory           2               2           2....            NA
-##TEST_AWKDirectory           2               3           3....            NA
+Data                1              10           2.465             1
+Data                2              20           2.465             2
+##TEST_AWKDirectory           2               2           0....            NA
+##TEST_AWKDirectory           2               3           0....            NA
 Free               94              NA              NA            NA
 Free               96              NA              NA            NA
-Index               1               1           2.343             1
-Index               2               2           2.343             2
+Index               1               1           0.585             1
+Index               2               2           0.585             2
 Integ of region AREG
 Integ of region DEFAULT
 No errors detected by integ.
@@ -335,8 +323,8 @@ $MUPIP journal -recover -for ./dir2/a.mjl,./dir1/mumps.mjl
 %GTM-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 $MUPIP crea
-Created file ##TEST_PATH##/dir2/a.dat
-Created file ##TEST_PATH##/dir1/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/dir2/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/dir1/mumps.dat created
 rm -f ./dir1/*.dat ;
 $MUPIP journal -recover -for ./dir2/a.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -368,9 +356,9 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-##TEST_AWKDirectory           2               3           3....            NA
-Index               2               2           2.343             2
-Data                2              12           6.738             2
+##TEST_AWKDirectory           2               3           0....            NA
+Index               2               2           0.585             2
+Data                2              12           1.684             2
 Free               94              NA              NA            NA
 Total             100              17              NA             4
 unset verbose

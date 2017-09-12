@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -16,7 +19,7 @@ echo "TEST DSE - SHIFT COMMAND "
 
 #create a global directory with two regions -- DEFAULT, REGX
 
-$gtm_tst/com/dbcreate.csh mumps 2
+$gtm_tst/com/dbcreate.csh mumps 2 -block_size=1024
 
 # Set some global variables - to fill some blocks
 
@@ -25,6 +28,7 @@ do ^createdb
 halt
 GTM_EOF
 
+cp mumps.dat x.dat
 # shift the last record in the block by 0x10 bytes forward
 # dumping should show 4 empty records each of size 4 bytes
 # then do integ

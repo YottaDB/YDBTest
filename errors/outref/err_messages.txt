@@ -11,27 +11,27 @@ ANSI ERRORS
 
 	 Write $apple
 	        ^-----
-		At column 9, line 59, source module ##IN_TEST_PATH##/inref/erransi.m
+		At column 9, line 70, source module ##IN_TEST_PATH##/inref/erransi.m
 %GTM-E-INVSVN, Invalid special variable name
 	 Write ^$Routine($Text(+0),"SantaClaus")
 	        ^-----
-		At column 9, line 221, source module ##IN_TEST_PATH##/inref/erransi.m
+		At column 9, line 232, source module ##IN_TEST_PATH##/inref/erransi.m
 %GTM-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
 	 Write $Name(12345)
 	             ^-----
-		At column 14, line 226, source module ##IN_TEST_PATH##/inref/erransi.m
+		At column 14, line 237, source module ##IN_TEST_PATH##/inref/erransi.m
 %GTM-E-VAREXPECTED, Variable expected in this context
 	 Job pass(.x)
 	          ^-----
-		At column 11, line 231, source module ##IN_TEST_PATH##/inref/erransi.m
+		At column 11, line 242, source module ##IN_TEST_PATH##/inref/erransi.m
 %GTM-E-JOBACTREF, Actual parameter in job command passed by reference
 	same(a,a) ; Does this generate an M21?
 	       ^-----
-		At column 8, line 622, source module ##IN_TEST_PATH##/inref/erransi.m
+		At column 8, line 633, source module ##IN_TEST_PATH##/inref/erransi.m
 %GTM-E-MULTFORMPARM, This formal parameter is multiply defined
 	double ; second
 	^-----
-		At column 0, line 626, source module ##IN_TEST_PATH##/inref/erransi.m
+		At column 0, line 637, source module ##IN_TEST_PATH##/inref/erransi.m
 %GTM-E-MULTLAB, This label has been previously defined
 %GTM-E-LABELMISSING, Label referenced but not defined: unknown
 %GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/erransi.m
@@ -117,7 +117,7 @@ M9 ; Divide by zero
 ,M9,Z150373210,
 
 M10 ; Invalid pattern match range
- If "abc"?3B
+ xecute "If ""abc""?3B"	; wrap literal evaluation inside xecute to avoid compiler from evaluating it (and erroring out)
  Set $ECode=",Z10-Error didn't happen,"
  Quit
  ;
@@ -786,7 +786,7 @@ M90 ; Invalid _namevalue_
  Set $ECode=",Z90-Error didn't happen,"
  Quit
  ;
-150379530,M90+1^erransi,%GTM-E-NOCANONICNAME, Value is not a canonic name (123456)
+150379530,M90+1^erransi,%GTM-E-NOCANONICNAME, Value is not a canonic name ("123456")
 ,M90,Z150379530,
 
 M91 ; Routine source is not available
@@ -823,7 +823,7 @@ M94 ; Attempt to compute zero to the zero-th power
 ,Z94-Error didn't happen,
 
 M95 ; Exponentiation returns complex number with non-zero imaginary part
- Write -2**.5
+ xecute "Write -2**.5"	; wrap literal evaluation inside xecute to avoid compiler from evaluating it (and erroring out)
  Set $ECode=",Z95-Error didn't happen,"
  Quit
  ;

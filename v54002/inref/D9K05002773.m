@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 D9K05002773
 	new flop
 	do ^echoline
@@ -84,12 +95,6 @@ load	;
 	.	.	if istp  tcommit
 	.	set numupds=numupds-updstodo
 	zshow "*"
-	quit
-
-setup
-	do text^dollartext("gdefile^trigblocksplit","trigblocksplit.gde")
-	write "setenv tst_jnl_str ""-journal=enable,on,before""",!
-	write "setenv test_specific_gde $tst_working_dir/trigblocksplit.gde",!
 	quit
 
 pipe

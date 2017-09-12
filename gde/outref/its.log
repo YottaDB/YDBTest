@@ -3,21 +3,24 @@
 !
 !                              *** TEMPLATES ***
 !                                                                         Std      Inst
-!                                            Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
-!Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
-!-----------------------------------------------------------------------------------------------------------
-!<default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+!                                            Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+!Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+!----------------------------------------------------------------------------------------------------------------------
+!<default>                                     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 !
 !Segment          Active              Acc Typ Block      Alloc Exten Options
 !------------------------------------------------------------------------------
 !<default>          *                 BG  DYN  1024        100   100 GLOB =1024
-!                                                                    LOCK = 40
+!                                                                    LOCK =  40
 ##TEST_AWK!                                                                    RES  = *[0-9]*
 !                                                                    ENCR = OFF
 !                                                                    MSLT =1024
+!                                                                    DALL = YES
+!                                                                    AIO  = OFF
 !<default>                            MM  DYN  1024        100   100 DEFER
-!                                                                    LOCK = 40
+!                                                                    LOCK =  40
 !                                                                    MSLT =1024
+!                                                                    DALL = YES
 !
 !
 !        *** NAMES ***
@@ -177,16 +180,16 @@
 !
 !
 !                               *** REGIONS ***
-!                                                                                               Std      Inst
-!                                Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
-!Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
-!----------------------------------------------------------------------------------------------------------------------------------
-!COMMON                          COMMON                             0      256    64 NEVER      N    Y   DISABLED DISABLED ENABLED
-!CTS                             CTS                                0      600    72 NEVER      N    Y   DISABLED DISABLED ENABLED
-!LIB                             LIB                                0      600    72 NEVER      N    Y   DISABLED DISABLED ENABLED
-!MISC                            MISC                               0      600    72 NEVER      N    Y   DISABLED DISABLED ENABLED
-!SCRATCH                         SCRATCH                            0      800   255 NEVER      N    N   DISABLED DISABLED ENABLED
-!TABLES                          TABLES                             0      600    72 NEVER      N    Y   DISABLED DISABLED ENABLED
+!                                                                                              Std      Inst
+!                                Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+!Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+!-------------------------------------------------------------------------------------------------------------------------------------------
+!COMMON                          COMMON                             0      256    64 NEVER     N    Y   N      N     Y     N      Y     Sep
+!CTS                             CTS                                0      600    72 NEVER     N    Y   N      N     Y     N      Y     Sep
+!LIB                             LIB                                0      600    72 NEVER     N    Y   N      N     Y     N      Y     Sep
+!MISC                            MISC                               0      600    72 NEVER     N    Y   N      N     Y     N      Y     Sep
+!SCRATCH                         SCRATCH                            0      800   255 NEVER     N    N   N      N     Y     N      Y     Sep
+!TABLES                          TABLES                             0      600    72 NEVER     N    Y   N      N     Y     N      Y     Sep
 !
 !                         *** JOURNALING INFORMATION ***
 !Region                          Jnl File (def ext: .mjl)  Before Buff      Alloc      Exten   AutoSwitch
@@ -210,68 +213,74 @@
 !                                                                                   LOCK=  40
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-!                                                                                   ENCR=OFF
+!                                                                                   ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-!                                                                                   ENCR=ON
+!                                                                                   ENCR=  ON
 ##ALLOW_OUTPUT NON_ENCRYPT
 !                                                                                   MSLT=1024
-!                                                                                   DALL=YES
+!                                                                                   DALL= YES
+!                                                                                   AIO = OFF
 !CTS                             MUMPS_CTS           BG  DYN  2048        100   100 GLOB=  64
 !                                                                                   LOCK=  40
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-!                                                                                   ENCR=OFF
+!                                                                                   ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-!                                                                                   ENCR=ON
+!                                                                                   ENCR=  ON
 ##ALLOW_OUTPUT NON_ENCRYPT
 !                                                                                   MSLT=1024
-!                                                                                   DALL=YES
+!                                                                                   DALL= YES
+!                                                                                   AIO = OFF
 !LIB                             MUMPS_LIB           BG  DYN  2048        100   100 GLOB=  64
 !                                                                                   LOCK=  40
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-!                                                                                   ENCR=OFF
+!                                                                                   ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-!                                                                                   ENCR=ON
+!                                                                                   ENCR=  ON
 ##ALLOW_OUTPUT NON_ENCRYPT
 !                                                                                   MSLT=1024
-!                                                                                   DALL=YES
+!                                                                                   DALL= YES
+!                                                                                   AIO = OFF
 !MISC                            MUMPS_MISC          BG  DYN  2048        500   100 GLOB=  64
 !                                                                                   LOCK=  40
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-!                                                                                   ENCR=OFF
+!                                                                                   ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-!                                                                                   ENCR=ON
+!                                                                                   ENCR=  ON
 ##ALLOW_OUTPUT NON_ENCRYPT
 !                                                                                   MSLT=1024
-!                                                                                   DALL=YES
+!                                                                                   DALL= YES
+!                                                                                   AIO = OFF
 !SCRATCH                         MUMPS_SCRA          BG  DYN  2048        100   100 GLOB=  64
 !                                                                                   LOCK=  40
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-!                                                                                   ENCR=OFF
+!                                                                                   ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-!                                                                                   ENCR=ON
+!                                                                                   ENCR=  ON
 ##ALLOW_OUTPUT NON_ENCRYPT
 !                                                                                   MSLT=1024
-!                                                                                   DALL=YES
+!                                                                                   DALL= YES
+!                                                                                   AIO = OFF
 !TABLES                          MUMPS_TABL          BG  DYN  2048        100   100 GLOB=  64
 !                                                                                   LOCK=  40
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-!                                                                                   ENCR=OFF
+!                                                                                   ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-!                                                                                   ENCR=ON
+!                                                                                   ENCR=  ON
 ##ALLOW_OUTPUT NON_ENCRYPT
 !                                                                                   MSLT=1024
-!                                                                                   DALL=YES
+!                                                                                   DALL= YES
+!                                                                                   AIO = OFF
 !
 !
 !                                 *** MAP ***

@@ -3,6 +3,9 @@
 ; Copyright (c) 2015-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -12,7 +15,13 @@
 gtm8296
 	; Setting $ztrap so that it doesn't rethrow the error (therefore terminate gtm8296) and proceeds to the next command
 	set $ztrap="set $ecode="""" write $zstatus,!"
-	write "# Pass gd_region.jnl_state",!
+	; Since V63001A, $zpeek does not open the database region to access "gd_region.*" fields.
+	; But we want gd_region.jnl_state to be reported correctly and that is filled in only after db open time.
+	; So check that before db open, the field is 0 and after the db open, it is 2.
+	write "# Pass gd_region.jnl_state : BEFORE DB open",!
+	write:0=$$^%PEEKBYNAME("gd_region.jnl_state","DEFAULT") "PASS",!
+	if $view("GVFILE","DEFAULT")	; to open DEFAULT region
+	write "# Pass gd_region.jnl_state : AFTER  DB open",!
 	write:2=$$^%PEEKBYNAME("gd_region.jnl_state","DEFAULT") "PASS",!
 	write "# Pass gd_region.jnl_file_name",!
 	write:$find($$^%PEEKBYNAME("gd_region.jnl_file_name","DEFAULT"),"mumps.mjl")'=0 "PASS",!

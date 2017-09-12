@@ -51,21 +51,21 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> 
-Key found in block  3.
+Key found in block  27.
     Directory path
     Path--blk:off
 	1:10,	2:10,
     Global tree path
     Path--blk:off
-	4:1C0,	3:70,
+	4:1C0,	27:70,
 DSE> 
-Key not found, would be in block  3.
+Key not found, would be in block  27.
     Directory path
     Path--blk:off
 	1:10,	2:10,
     Global tree path
     Path--blk:off
-	4:1C0,	3:11B,
+	4:1C0,	27:11B,
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -87,6 +87,12 @@ Region	AREG
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
+
+##TEST_AWKFile  	/tmp/2b.*.a.dat.gst
+Region	areg
+
+##TEST_AWKFile  	/tmp/2b.*.mumps.dat.gst
+Region	default
 DSE> List of global directory:	
 
 
@@ -95,6 +101,12 @@ Region	AREG
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
+
+##TEST_AWKFile  	/tmp/2b.*.a.dat.gst
+Region	areg
+
+##TEST_AWKFile  	/tmp/2b.*.mumps.dat.gst
+Region	default
 DSE> Error:  already in region: AREG
 DSE> Error:  already in region: AREG
 DSE> 
@@ -108,11 +120,11 @@ Region	AREG
 
 DSE> DSE> 
 	Left sibling	Current block	Right sibling
-	0x00000027	0x00000003	none
+	none		0x00000003	0x00000005
 
 DSE> 
 	Left sibling	Current block	Right sibling
-	0x00000026	0x00000027	0x00000003
+	0x00000026	0x00000027	none
 
 DSE> 
 	Left sibling	Current block	Right sibling

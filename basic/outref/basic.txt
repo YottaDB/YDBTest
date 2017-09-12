@@ -861,7 +861,8 @@ Testing ZYERROR containing erroneous indirection
 GTM>
 do ZTERR^zeiref1
 Testing ZYERROR with syntactically erroneous ZTRAP value
-%GTM-E-INDEXTRACHARS, Indirection string contains extra trailing characters
+ZSTATUS = 150373850,ZTERR+4^zeiref1,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+%GTM-E-LABELMISSING, Label referenced but not defined: w
 
 GTM>
 do TST1^zeiref2

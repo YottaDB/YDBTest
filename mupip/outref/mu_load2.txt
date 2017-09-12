@@ -23,28 +23,28 @@ set PASS
 
 GTM>
 ##SOURCE_PATH##/mupip extract -format=go -label=test extr.go
-%GTM-I-RECORDSTAT, ^afill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 56
-%GTM-I-RECORDSTAT, ^bfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 56
-%GTM-I-RECORDSTAT, ^cfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 56
-%GTM-I-RECORDSTAT, ^dfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 56
-%GTM-I-RECORDSTAT, ^efill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 56
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 5040  max subsc len: 38  max rec len: 14  max node len: 56
+%GTM-I-RECORDSTAT, ^afill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 54
+%GTM-I-RECORDSTAT, ^bfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 54
+%GTM-I-RECORDSTAT, ^cfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 54
+%GTM-I-RECORDSTAT, ^dfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 54
+%GTM-I-RECORDSTAT, ^efill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 54
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 5040  max subsc len: 38  max rec len: 14  max node len: 54
 ##SOURCE_PATH##/mupip extract -format=bin -label=test extr.bin
-%GTM-I-RECORDSTAT, ^afill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 56
-%GTM-I-RECORDSTAT, ^bfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 56
-%GTM-I-RECORDSTAT, ^cfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 56
-%GTM-I-RECORDSTAT, ^dfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 56
-%GTM-I-RECORDSTAT, ^efill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 56
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 5040  max subsc len: 38  max rec len: 14  max node len: 56
+%GTM-I-RECORDSTAT, ^afill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 54
+%GTM-I-RECORDSTAT, ^bfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 54
+%GTM-I-RECORDSTAT, ^cfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 54
+%GTM-I-RECORDSTAT, ^dfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 54
+%GTM-I-RECORDSTAT, ^efill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 54
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 5040  max subsc len: 38  max rec len: 14  max node len: 54
 ##SOURCE_PATH##/mupip extract -format=zwr -label=test extr.zwr
-%GTM-I-RECORDSTAT, ^afill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 56
-%GTM-I-RECORDSTAT, ^bfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 56
-%GTM-I-RECORDSTAT, ^cfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 56
-%GTM-I-RECORDSTAT, ^dfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 56
-%GTM-I-RECORDSTAT, ^efill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 56
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 5040  max subsc len: 38  max rec len: 14  max node len: 56
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/load.dat
+%GTM-I-RECORDSTAT, ^afill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 54
+%GTM-I-RECORDSTAT, ^bfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 54
+%GTM-I-RECORDSTAT, ^cfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 54
+%GTM-I-RECORDSTAT, ^dfill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 54
+%GTM-I-RECORDSTAT, ^efill:	  Key cnt: 1008  max subsc len: 38  max rec len: 14  max node len: 54
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 5040  max subsc len: 38  max rec len: 14  max node len: 54
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/load.dat created
 ##SOURCE_PATH##/mupip load extr.zwr -format=zwr
 test
 ##FILTERED##..-...-....  ..:..:.. ZWR
@@ -53,8 +53,8 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 5040  Max Subsc Len: 38  Max Data Len: 14
 Last LOAD record number: 5042
 
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/load.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/load.dat created
 ##SOURCE_PATH##/mupip load extr.go -format=go
 test
 ##FILTERED##..-...-....  ..:..:..
@@ -63,38 +63,28 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 5040  Max Subsc Len: 38  Max Data Len: 14
 Last LOAD record number: 10082
 
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/load.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/load.dat created
 ##SOURCE_PATH##/mupip load extr.bin -format=bin
 Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................test                            
 
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 5040  Max Subsc Len: 38  Max Data Len: 14
-##SUSPEND_OUTPUT  COLLATION
-Last LOAD record number: 186
-##ALLOW_OUTPUT  COLLATION
-##SUSPEND_OUTPUT NON_COLLATION
-Last LOAD record number: 206
-##ALLOW_OUTPUT NON_COLLATION
+Last LOAD record number: 51
 
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/load.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/load.dat created
 ##SOURCE_PATH##/mupip load -stdin < extr.bin
 Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................test                            
 
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 5040  Max Subsc Len: 38  Max Data Len: 14
-##SUSPEND_OUTPUT  COLLATION
-Last LOAD record number: 186
-##ALLOW_OUTPUT  COLLATION
-##SUSPEND_OUTPUT NON_COLLATION
-Last LOAD record number: 206
-##ALLOW_OUTPUT NON_COLLATION
+Last LOAD record number: 51
 
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/load.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/load.dat created
 ##SOURCE_PATH##/mupip load extr.zwr -format=bin
 test
 ##FILTERED##..-...-....  ..:..:.. ZWR
@@ -127,11 +117,11 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 # MUPIP extract fextr.zwr -format=zwr
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 150  max subsc len: 7  max rec len: 1  max node len: 12
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 150  max subsc len: 7  max rec len: 1  max node len: 12
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 150  max subsc len: 7  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 150  max subsc len: 7  max rec len: 1  max node len: 11
 # MUPIP extract fextr.bin -format=bin
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 150  max subsc len: 7  max rec len: 1  max node len: 12
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 150  max subsc len: 7  max rec len: 1  max node len: 12
+%GTM-I-RECORDSTAT, ^x:	  Key cnt: 150  max subsc len: 7  max rec len: 1  max node len: 11
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 150  max subsc len: 7  max rec len: 1  max node len: 11
 # Setup white box test cases WBTEST_FAKE_BIG_KEY_COUNT to get a fake big key count.
 # MUPIP load fextr.zwr
 GT.M MUPIP EXTRACT
@@ -146,7 +136,7 @@ Last LOAD record number: 152
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 4294967346  Max Subsc Len: 7  Max Data Len: 1
-Last LOAD record number: 3
+Last LOAD record number: 2
 
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##

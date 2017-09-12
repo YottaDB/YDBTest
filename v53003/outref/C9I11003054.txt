@@ -17,7 +17,7 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ###################################################################
 Test 2
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
@@ -38,7 +38,7 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ###################################################################
 Test 3
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
@@ -58,7 +58,7 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ###################################################################
 Test 101
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
@@ -67,7 +67,8 @@ Test 101
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+Database file mumps.dat now has MM access method
 %GTM-W-MMBEFOREJNL, BEFORE image journaling cannot be set with MM access method in database file ##TEST_PATH##/mumps.dat
 %GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
 ###################################################################
@@ -78,7 +79,8 @@ Test 102
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+Database file mumps.dat now has MM access method
 %GTM-W-MMBEFOREJNL, BEFORE image journaling cannot be set with MM access method in database file ##TEST_PATH##/mumps.dat
 %GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
@@ -91,7 +93,8 @@ Test 103
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+Database file mumps.dat now has MM access method
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 %GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
@@ -103,7 +106,8 @@ Test 104
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+Database file mumps.dat now has MM access method
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
@@ -119,7 +123,7 @@ Test 105
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 MM access method cannot be set with BEFORE image journaling
@@ -133,7 +137,7 @@ Test 106
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 MM access method cannot be set with BEFORE image journaling
@@ -150,7 +154,7 @@ Test 107
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 MM access method cannot be set with BEFORE image journaling
@@ -159,6 +163,7 @@ Database file mumps.dat not changed
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+Database file mumps.dat now has MM access method
 ###################################################################
 Test 108
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
@@ -167,7 +172,8 @@ Test 108
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+Database file mumps.dat now has MM access method
 %GTM-W-MMBEFOREJNL, BEFORE image journaling cannot be set with MM access method in database file ##TEST_PATH##/mumps.dat
 %GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
 ###################################################################
@@ -178,7 +184,8 @@ Test 109
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+Database file mumps.dat now has MM access method
 %GTM-W-MMBEFOREJNL, BEFORE image journaling cannot be set with MM access method in database file ##TEST_PATH##/mumps.dat
 %GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES

@@ -8,29 +8,29 @@ Verify epoch tapering is on by default
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-  Epoch taper     TRUE
+  Epoch taper                          TRUE
 Verify GDE with -noepochtaper
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-  Epoch taper    FALSE
+  Epoch taper                         FALSE
 Verify GDE with -epochtaper
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-  Epoch taper     TRUE
+  Epoch taper                          TRUE
 Turn off tapering and verify it is off
 Database file ##TEST_PATH##/mumps.dat now has epoch taper flag set to FALSE
 Turn on tapering and verify it is on
 Database file ##TEST_PATH##/mumps.dat now has epoch taper flag set to  TRUE
 Verify if epoch taper is disabled in the template a new region picks it up
 Examine the before and after for the template
-##TEST_AWK.*ENABLED
-##TEST_AWK.*DISABLED
+<default> Y
+<default> N
 Examine the just added region
-##TEST_AWK.*DISABLED
+AREG N
 Bump up the global buffers so we can accumulate some dirty buffers
 Database file ##TEST_PATH##/mumps.dat now has 32767 global buffers
 Set time based epoch to 90 seconds and autoswitch based epoch to 1 GB.

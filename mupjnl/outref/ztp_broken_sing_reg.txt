@@ -288,7 +288,7 @@ GTM>
 
 GTM>
 ------------------------------------------------------------------
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip journal -recover -forw -verify mumps.mjl -before=time2
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -313,7 +313,7 @@ GTM>
 
 GTM>
 ------------------------------------------------------------------
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip journal -recover -forw -verify mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -363,7 +363,7 @@ SHOW output for journal file ##TEST_PATH##/mumps.mjl
 %GTM-S-JNLSUCCESS, Verify successful
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ------------------------------------------------------------------
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip journal -recover -forw -verify mumps.mjl -fences
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -403,7 +403,7 @@ GTM>
 
 GTM>
 ------------------------------------------------------------------
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip journal -recover -forw -verify mumps.mjl -fences=process
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -453,7 +453,7 @@ SHOW output for journal file ##TEST_PATH##/mumps.mjl
 %GTM-S-JNLSUCCESS, Verify successful
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ------------------------------------------------------------------
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip journal -recover -forw -verify mumps.mjl -fences=none
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -478,7 +478,7 @@ GTM>
 
 GTM>
 ------------------------------------------------------------------
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip journal -extract -forw mumps.mjl -after=time2
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -492,7 +492,7 @@ mupip journal -extract -forw mumps.mjl -after=time2
 %GTM-S-JNLSUCCESS, Verify successful
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ------------------------------------------------------------------
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip journal -extract=mumps1.mjf -broken=mumps1.broken -lost=mumps1.lost -forw mumps.mjl -after=time2 -fences
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -504,7 +504,7 @@ mupip journal -extract=mumps1.mjf -broken=mumps1.broken -lost=mumps1.lost -forw 
 %GTM-S-JNLSUCCESS, Verify successful
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ------------------------------------------------------------------
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ##TEST_AWKmupip journal -extract=mumps2.mjf -forw mumps.mjl -after=".*" -fences=none
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..

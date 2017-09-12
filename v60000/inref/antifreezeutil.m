@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 antifreezeRundown	;
 	write "This entryref is not allowed",!
 	quit
@@ -26,7 +37,6 @@ suicide	;
 	quit
 
 updates4reorg	;
-	for i=1:1:200  do
-	. set ^a($incr(^i))=$j(i,200)
-	. set ^x($incr(^i))=$j(i,200)
+	for i=1:1:200 set (^a($incr(^i)),^x($incr(^i)))=$j(i,200)
+	for i=1:2:200 kill ^a(i),^x(i) ; kill needed to ensure MUPIP REORG in caller script issues a MUINSTFROZEN message
 	quit

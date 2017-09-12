@@ -206,11 +206,6 @@ BEGIN {
 	else
 		envir[no_options] = "NOTLS"
 	#
-	option_names[++no_options] = "gtm_platform_triggers_support"
-	if (1 == ENVIRON["gtm_platform_triggers_support"])
-		envir[no_options] = "PLATFORM_TRIGGER"
-	else
-		envir[no_options] = "PLATFORM_NOTRIGGER"
 	option_names[++no_options] = "gtm_test_java_support"
 	if (1 == ENVIRON["gtm_test_java_support"])
 		envir[no_options] = "PLATFORM_JAVA"

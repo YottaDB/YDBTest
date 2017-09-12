@@ -2,23 +2,23 @@
 ###################################################################
 ## Attemp to add a new region with the null_subscript qualifier as 'exist' 
 ## Output for 'gde show -r', 'EXISTING' expected to be shown in null_subscript field :
- AREG                            ASEG                               0      256    64 EXISTING   N    N   DISABLED DISABLED ENABLED
+ AREG                            ASEG                               0      256    64 EXISTING  N    N   N      N     Y     N      Y     Sep
  
 ## Attemp to add a new region with the null_subscript qualifier as 'al'(always) 
 ## Output for 'gde show -r':
- BREG                            BSEG                               0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+ BREG                            BSEG                               0      256    64 ALWAYS    N    N   N      N     Y     N      Y     Sep
  
 ## Attemp to add a new region with the null_subscript qualifier as 't'(true) 
 ## Output for 'gde show -r':
- CREG                            CSEG                               0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+ CREG                            CSEG                               0      256    64 ALWAYS    N    N   N      N     Y     N      Y     Sep
  
 ## Attemp to add a new region with the null_subscript qualifier as 'fal'(false) 
 ## Output for 'gde show -r':
- DREG                            DSEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ DREG                            DSEG                               0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
  
 ## Attemp to add a new region with the null_subscript qualifier as 'neve'(never) 
 ## Output for 'gde show -r':
- EREG                            ESEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ EREG                            ESEG                               0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
  
 ## Attemp to add a new region with an invalid null_subscript qualifier
 #         --> We expect a VALUEBAD error
@@ -39,26 +39,26 @@ Error VALUEREQD seen in log1.log as expected:
 ###################################################################
 ## Change the null_subscript to 'alw' 
 ## Output: 
- AREG                            ASEG                               0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+ AREG                            ASEG                               0      256    64 ALWAYS    N    N   N      N     Y     N      Y     Sep
  
 ## Change the null_subscript to 'true' 
 ## Output: 
- AREG                            ASEG                               0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+ AREG                            ASEG                               0      256    64 ALWAYS    N    N   N      N     Y     N      Y     Sep
  
 ## Change the null_subscript to 'n' 
 ## Output: 
- AREG                            ASEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ AREG                            ASEG                               0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
  
 ## Change the null_subscript to 'fals' 
 ## Output: 
- AREG                            ASEG                               0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ AREG                            ASEG                               0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
  
 ## Change the null_subscript with 'exist' qualifier
 ## Output:
- AREG                            ASEG                               0      256    64 EXISTING   N    N   DISABLED DISABLED ENABLED
+ AREG                            ASEG                               0      256    64 EXISTING  N    N   N      N     Y     N      Y     Sep
  
 ## Change the null_subscript with 'existi' qualifier
- AREG                            ASEG                               0      256    64 EXISTING   N    N   DISABLED DISABLED ENABLED
+ AREG                            ASEG                               0      256    64 EXISTING  N    N   N      N     Y     N      Y     Sep
  
 ## Attemp to change a region with an invalid null_subscript qualifier
 #         --> We expect a VALUEBAD error
@@ -79,26 +79,26 @@ Error VALUEREQD seen in log2.log as expected:
 ###################################################################
 ## Set the template with the null_subscript qualifier as 'a'
 ## Output:
- <default>                                     0     256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+ <default>                                     0      256    64 ALWAYS    N    N   N      N     Y     N      Y     Sep
  
 ## Set the template with the null_subscript qualifier as 'never'
 ## Output:
- <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ <default>                                     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
  
 ## Set the template with the null_subscript qualifier as 'exist'
 ##Output:
- <default>                                     0     256    64 EXISTING   N    N   DISABLED DISABLED ENABLED
+ <default>                                     0      256    64 EXISTING  N    N   N      N     Y     N      Y     Sep
  
 ## Set the template with the null_subscript qualifier as 'tru'
- <default>                                     0     256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+ <default>                                     0      256    64 ALWAYS    N    N   N      N     Y     N      Y     Sep
  
 ## Set the template with the null_subscript qualifier as 'false'
 ##Output:
- <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+ <default>                                     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
  
 ## Set the template with the null_subscript qualifier as 'e'
 ## Output:
- <default>                                     0     256    64 EXISTING   N    N   DISABLED DISABLED ENABLED
+ <default>                                     0      256    64 EXISTING  N    N   N      N     Y     N      Y     Sep
  
 ## Attemp to set the template with an invalid null_subscript qualifier
 #         --> We expect a VALUEBAD error

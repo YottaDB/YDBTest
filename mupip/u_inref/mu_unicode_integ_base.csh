@@ -1,4 +1,15 @@
 #! /usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 #
 setenv gtmgbldir integneg.gld
 $gtm_tst/com/dbcreate.csh integneg 1 128 256 1024 100 256
@@ -36,12 +47,12 @@ unset verbose
 # Please make sure below does corrupt the subscrip collation
 $DSE << EOF
 add -rec=2 -bl=3 -data="DSEDAT1" -key="^a(1111)"
-add -rec=2 -bl=5 -data="DSEDAT2" -key="^a(2222)"
+add -rec=2 -bl=6 -data="DSEDAT2" -key="^a(2222)"
 quit
 EOF
 $MUPIP integ -reg "*" -full
 $DSE <<EOF
 remove -rec=2 -bl=3
-remove -rec=2 -bl=5
+remove -rec=2 -bl=6
 EOF
 $gtm_tst/com/dbcheck.csh

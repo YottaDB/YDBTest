@@ -1,5 +1,17 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
 ; This is a helper M script for testing various local collation features used in ylct subtest.
-
+;
 setparmwithlcl
 	set $ztrap="goto incrtrap^incrtrap"
 	set incrtrapNODISP=1
@@ -41,19 +53,11 @@ setparm
 	quit
 
 sortsafter
-	write "0]]8 = "_(0]]8),!
-	write "1]]7 = "_(1]]7),!
-	write """0""]]8 = "_("0"]]8),!
-	write "0]]""8"" = "_(0]]"8"),!
-	write """0""]]""8"" = "_("0"]]"8"),!
-	write """0.0""]]8 = "_("0.0"]]8),!
-	write "0]]""08"" = "_(0]]"08"),!
-	write "0]]""00"" = "_(0]]"00"),!
-	write """0""]]""00"" = "_("0"]]"00"),!
-	write "0]]$char(0) = "_(0]]$char(0)),!
-	write """a""]]5 = "_("a"]]5),!
-	write """a""]]""8"" = "_("a"]]"8"),!
-	write """a""]]""b"" = "_("a"]]"b"),!
+	; Use @y to evaluate the ]] operator as otherwise compiling it causes literal expressions to be evaluated
+	; at compile time which might be incorrect for example when called from "sortsafterwithoutcolwithnct"
+	; when "nct" is set to 1 (causing numbers to be treated as strings).
+	for y="0]]8","1]]7","""0""]]8","0]]""8""","""0""]]""8""","""0.0""]]8","0]]""08""","0]]""00""","""0""]]""00""","0]]$char(0)","""a""]]5","""a""]]""8""","""a""]]""b""" do
+	. write y," = ",@y,!
 	quit
 
 sortsafterwithoutcol

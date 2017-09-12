@@ -10,7 +10,7 @@ Check default value of allocation (2048 blocks), extension (2048 blocks), autosw
 Alignsize (4096 blocks), ......
 ##TEST_AWK  Journal State               \[inactive\] ON  Journal Before imaging       (FALSE| TRUE)
   Journal Allocation                   2048  Journal Extension             2048
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
 ##TEST_AWK  Journal AutoSwitchLimit           8386560  Journal Epoch Interval         (300| 30)
   Journal Yield Limit                     8  Journal Sync IO              FALSE
   Journal File: ##TEST_PATH##/mumps.mjl
@@ -112,25 +112,27 @@ BUFFER_SIZE option
 ##SOURCE_PATH##/mupip set -journal=[no]before,buffer_size=2307 -file mumps.dat
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with (NO|)BEFORE_IMAGES
-%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2307 to 2308.
+%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2307 to 2312.
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-journal buffer_size=: expected 2308 : actual 2308
+journal buffer_size=: expected 2308 : actual 2312
 ##SOURCE_PATH##/mupip set -journal=[no]before,buffer_size=2308 -file mumps.dat
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with (NO|)BEFORE_IMAGES
+%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-journal buffer_size=: expected 2308, but actual 2308
+journal buffer_size=: expected 2308, but actual 2312
 ##SOURCE_PATH##/mupip set -journal=[no]before,buffer_size=2315 -file mumps.dat
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with (NO|)BEFORE_IMAGES
-%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2315 to 2316.
+%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2315 to 2320.
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-journal buffer_size=: expected 2316, but actual 2316
+journal buffer_size=: expected 2316, but actual 2320
 ##SOURCE_PATH##/mupip set -journal=[no]before,buffer_size=2316 -file mumps.dat
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with (NO|)BEFORE_IMAGES
+%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2316 to 2320.
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-journal buffer_size=: expected 2316, but actual 2316
+journal buffer_size=: expected 2316, but actual 2320
 ##SOURCE_PATH##/mupip set -journal=[no]before,buffer_size=2447 -file mumps.dat
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with (NO|)BEFORE_IMAGES

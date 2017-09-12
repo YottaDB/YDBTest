@@ -11,19 +11,19 @@ MUPIP CREATE
 #
 %GTM-E-NOREGION, REGION not found: FREELUNCH
 %GTM-E-MUPCLIERR, Action not taken due to CLI errors
-Created file ##TEST_PATH##/create1.dat
-Created file ##TEST_PATH##/create2.dat
-Created file ##TEST_PATH##/create.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create1.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create2.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
 ##SUSPEND_OUTPUT HOST_OS390_S390
-Error opening file ##TEST_PATH##/create1.dat
-: File exists
-Error opening file ##TEST_PATH##/create2.dat
-: File exists
+%GTM-E-DBOPNERR, Error opening database file ##TEST_PATH##/create1.dat
+%SYSTEM-E-ENO17, File exists
+%GTM-E-DBOPNERR, Error opening database file ##TEST_PATH##/create2.dat
+%SYSTEM-E-ENO17, File exists
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
-Error opening file ##TEST_PATH##/create1.dat
+%GTM-E-DBOPNERR, Error opening database file ##TEST_PATH##/create1.dat
 : EDC5117I File exists. (errno2=0x05620063)
-Error opening file ##TEST_PATH##/create2.dat
+%GTM-E-DBOPNERR, Error opening database file ##TEST_PATH##/create2.dat
 : EDC5117I File exists. (errno2=0x05620063)
 ##ALLOW_OUTPUT HOST_ALL
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created

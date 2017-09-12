@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ansi ; Test that all ANSI standardized error messages do appear
  Set $ET="Do Trap"
  For ansi=1:1:112 Do
@@ -66,7 +77,7 @@ M9 ; Divide by zero
  Quit
  ;
 M10 ; Invalid pattern match range
- If "abc"?3B
+ xecute "If ""abc""?3B"	; wrap literal evaluation inside xecute to avoid compiler from evaluating it (and erroring out)
  Set $ECode=",Z10-Error didn't happen,"
  Quit
  ;
@@ -511,7 +522,7 @@ M94 ; Attempt to compute zero to the zero-th power
  Quit
  ;
 M95 ; Exponentiation returns complex number with non-zero imaginary part
- Write -2**.5
+ xecute "Write -2**.5"	; wrap literal evaluation inside xecute to avoid compiler from evaluating it (and erroring out)
  Set $ECode=",Z95-Error didn't happen,"
  Quit
  ;

@@ -2,11 +2,12 @@
 	##TEST_PATH##/mumps.gld
 
 GDE> 
+GDE> 
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
@@ -20,7 +21,7 @@ GTM>
 
 *** TSTBAKNJ ***
 
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 -rw-rw-rw- mumps.dat
 mupip backup -noonline DEFAULT back.dat
 DB file ##TEST_PATH##/mumps.dat backed up in file back.dat
@@ -147,7 +148,7 @@ No errors detected by integ.
 
 *** TSTEXTRNJ.CSH ***
 
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 -rw-rw-rw- mumps.dat
 
 GTM>
@@ -174,7 +175,7 @@ No errors detected by integ.
 
 *** TSTEXTRNJ.CSH ***
 
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 -rw-rw-rw- mumps.dat
 
 GTM>
@@ -368,7 +369,7 @@ No errors detected by integ.
 
 *** TSTINTEGF.CSH ***
 
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 -rw-rw-rw- mumps.dat
 
 First with no journal
@@ -551,7 +552,7 @@ OK.
 
 *** First database with no journal***
 
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 do init
@@ -754,7 +755,7 @@ OK.
 
 *** First database with no journal***
 
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 do init
@@ -1373,7 +1374,7 @@ BACKUP COMPLETED.
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ***** mumps.dat R/W mumps.mjl R/W *****
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
@@ -1458,6 +1459,7 @@ No errors detected by integ.
 mupip rundown -f mumps.dat
 %GTM-E-DBRDONLY, Database file mumps.dat read only
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+%GTM-I-MUFILRNDWNSUC, File mumps.dat successfully rundown
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1469,6 +1471,7 @@ No errors detected by integ.
 mupip rundown -f mumps.dat
 %GTM-E-DBRDONLY, Database file mumps.dat read only
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+%GTM-I-MUFILRNDWNSUC, File mumps.dat successfully rundown
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1674,7 +1677,7 @@ GTM>
 *** Recovering on R/W mumps.dat R/W mumps.mjl ***
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip journal -recover -forward mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -1688,7 +1691,7 @@ OK.
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 *** Recovering on R/W mumps.dat R/O mumps.mjl ***
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 -rw-rw-rw- mumps.dat
 -r--r--r-- mumps.mjl
 mupip journal -recover -forward mumps.mjl

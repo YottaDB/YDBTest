@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2013 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -237,10 +240,10 @@ test16	do init^misceval set testid=16
 test17	do init^misceval set testid=17
 	kill ^a
 	set str="^a("""_$c(0,1)_""")"
-	set @str=1				; This shouldn't wind up setting ^a...
+	set @str=1			; This should wind up setting ^a...
 	set ^VCOMP("Exp")=errcnt_"|"_$data(^a)
-	set ^VCORR("Exp")=1_"|"_0
-	do check^misceval		; Fails with V60001 and earlier versions. Fixed with GTM-5284.
+	set ^VCORR("Exp")=0_"|"_10
+	do check^misceval		; Fails with V60001 and earlier versions. Fixed with GTM-5284. Fixed again in V63001A
 	quit
 	;
 test18	do init^misceval set testid=18

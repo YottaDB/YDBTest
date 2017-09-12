@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 lotsvar ;
 	; create/verify/kill/etc. a lot of names that are of length: [1,31]
 	; will create of varying lengths, in a pseudo-random way (predetermined)
@@ -119,10 +130,14 @@ onevar(len,looparg)	;
 	set str=""
 	if 0=len set strnosub="" quit
 	;there is also the first char added later, so this loop should be up to maxlen-1
+	new firstch,secondch
 	for vari=1:1:len-1  do
 	. set cnt=((cnt+inc)#ncharacters)+1
 	. set str=characters(cnt)_str	; [a-z]
-	set str=firstcharacters(((cnt+inc)#nfirstcharacters)+1)_str
+	set firstch=firstcharacters(((cnt+inc)#nfirstcharacters)+1)
+	set secondch=$select(len=1:"",1:characters(cnt))
+	if ("%"=firstch)&("Y"=secondch) set firstch="A" ; if ^%Y.. change it to ^AY... as ^%Y is reserved for statsdbs
+	set str=firstch_str
 	set countvar=countvar+1
 	set subsc=""""_str_""","_countvar
 	set strnosub=str

@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2012, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -38,7 +41,7 @@ set DEF_JOURNAL_ALIGN_SIZE = 4096
 # two maximum IO blocks (256) + 1
 set MIN_JOURNAL_BUFFER_SIZE = 2307
 set MAX_JOURNAL_BUFFER_SIZE = 32768
-set DEF_JOURNAL_BUFFER_SIZE = 2308
+set DEF_JOURNAL_BUFFER_SIZE = 2312
 # Journal autoswitch needs to be greater than or equal to allocation limit
 set MIN_AUTOSWITCH_LIMIT = 16384
 set MAX_AUTOSWITCH_LIMIT = 8388607
