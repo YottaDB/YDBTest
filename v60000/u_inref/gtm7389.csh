@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -23,7 +26,7 @@ setenv gtm_test_jnl "SETJNL"
 # set allocation and extension higher than the current defaults (2048) so that
 # if the defaults are increased later, the number of updates required to make exactly one JEX and DEX need not change
 setenv tst_jnl_str "$tst_jnl_str,epoch_interval=300,allocation=10240,extension=10240"
-$gtm_tst/com/dbcreate.csh mumps 1
+$gtm_tst/com/dbcreate.csh mumps 1 -block_size=1024
 
 echo "# jnl str : GTM_TEST_DEBUGINFO $tst_jnl_str"
 # Note down if it is before or nobefore image journaling, in order to compare against the right reference file

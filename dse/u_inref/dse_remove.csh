@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -12,7 +15,7 @@
 
 #create a global directory with two regions -- DEFAULT, REGX
 
-$gtm_tst/com/dbcreate.csh mumps 2
+$gtm_tst/com/dbcreate.csh mumps 2 -block_size=1024
 
 # Set some global variables - to fill some blocks
 
@@ -54,9 +57,9 @@ DSE_EOF
 $DSE << DSE_EOF
 
 find -key="^aglobal(1224,44064)"
-remove  -re=4 -bl=3
+remove  -re=4 -bl=27
 find -key="^aglobal(1224,44064)"
-add -bl=3 -re=4 -key="^aglobal(1224,44064)" -data="xyz"
+add -bl=27 -re=4 -key="^aglobal(1224,44064)" -data="xyz"
 
 DSE_EOF
 
@@ -64,8 +67,8 @@ DSE_EOF
 
 $DSE << DSE_EOF
 
-remove -re=0 -bl=3
-remove -re=23 -bl=3
+remove -re=0 -bl=27
+remove -re=23 -bl=27
 
 DSE_EOF
 
@@ -73,13 +76,13 @@ DSE_EOF
 
 $DSE << DSE_EOF
 
-find -bl=3
-remove  -offset=0 -bl=3
-remove  -offset=261 -bl=3
-dump -bl=3 -off=10 -hea
-remove  -offset=10 -bl=3
-dump -bl=3 -off=10 -hea
-add -bl=3 -re=1 -key="^aglobal(1221,43956)" -data="xyz"
+find -bl=27
+remove  -offset=0 -bl=27
+remove  -offset=261 -bl=27
+dump -bl=27 -off=10 -hea
+remove  -offset=10 -bl=27
+dump -bl=27 -off=10 -hea
+add -bl=27 -re=1 -key="^aglobal(1221,43956)" -data="xyz"
 
 DSE_EOF
 

@@ -23,12 +23,12 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: a2 (region AREG)
-Blocks processed    : 253 
-Blocks coalesced    : 125 
+Blocks processed    : 53 
+Blocks coalesced    : 26 
 Blocks split        : 0 
-Blocks swapped      : 127 
-Blocks freed        : 250 
-Blocks reused       : 125 
+Blocks swapped      : 26 
+Blocks freed        : 52 
+Blocks reused       : 26 
 Blocks extended     : 0 
    
 Global: b1 (region DEFAULT)
@@ -41,16 +41,16 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: b2 (region DEFAULT)
-Blocks processed    : 2531 
-Blocks coalesced    : 1250 
+Blocks processed    : 529 
+Blocks coalesced    : 263 
 Blocks split        : 0 
-Blocks swapped      : 1280 
-Blocks freed        : 2525 
-Blocks reused       : 1275 
+Blocks swapped      : 265 
+Blocks freed        : 526 
+Blocks reused       : 263 
 Blocks extended     : 0 
 Total root blocks moved: 2
 %GTM-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 0
-Truncated region: DEFAULT. Reduced total blocks from [2606] to [1536]. Reduced free blocks from [1314] to [247].
+Truncated region: DEFAULT. Reduced total blocks from [602] to [512]. Reduced free blocks from [329] to [240].
 
 Run MUPIP reorg -truncate one more time and verify no more truncation happens (i.e. previous truncate was optimal)
 Fill Factor:: Index blocks 100%: Data blocks 100%
@@ -65,12 +65,12 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: a2 (region AREG)
-Blocks processed    : 128 
-Blocks coalesced    : 2 
+Blocks processed    : 27 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 80 
-Blocks freed        : 39 
-Blocks reused       : 38 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: b1 (region DEFAULT)
@@ -83,14 +83,15 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: b2 (region DEFAULT)
-Blocks processed    : 1281 
-Blocks coalesced    : 20 
+Blocks processed    : 266 
+Blocks coalesced    : 1 
 Blocks split        : 0 
-Blocks swapped      : 1218 
-Blocks freed        : 1141 
-Blocks reused       : 1126 
+Blocks swapped      : 95 
+Blocks freed        : 97 
+Blocks reused       : 96 
+Levels Eliminated   : 1 
 Blocks extended     : 0 
-Total root blocks moved: 2
+Total root blocks moved: 1
 %GTM-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 0
 %GTM-I-MUTRUNCNOSPACE, Region DEFAULT has insufficient space to meet truncate target percentage of 0
 
@@ -113,7 +114,7 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: b2 (region DEFAULT)
-Blocks processed    : 1266 
+Blocks processed    : 264 
 Blocks coalesced    : 0 
 Blocks split        : 0 
 Blocks swapped      : 0 

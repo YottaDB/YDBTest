@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -87,7 +90,7 @@ else
 		@ jobnum++
 		set mjofiles="$mjofiles impjob_imptp1.mjo${jobnum}"
 	end
-	$gtm_tst/com/wait_for_log.csh -log "$mjofiles" -message JNLEXTEND >& wfl.out
+	$gtm_tst/com/wait_for_log.csh -log "$mjofiles" -message 'JNLEXTEND|JNLSWITCHFAIL' -useE >& wfl.out
 endif
 
 ls -al $jnldir >& jnldir_files.out
@@ -123,7 +126,7 @@ while ($jobnum < $gtm_test_jobcnt)
 	@ jobnum++
 	# Can't use check_error_exist.csh since not all errors will always occur in all files
 	mv impjob_imptp1.mjo${jobnum} impjob_imptp1.xmjo${jobnum}x
-	$grep -vE 'JNLEXTEND' impjob_imptp1.xmjo${jobnum}x > impjob_imptp1.mjo${jobnum}
+	$grep -vE 'JNLEXTEND|JNLSWITCHFAIL' impjob_imptp1.xmjo${jobnum}x > impjob_imptp1.mjo${jobnum}
 	mv impjob_imptp1.mje${jobnum} impjob_imptp1.xmje${jobnum}x
 	$grep -vE 'JNLEXTEND|JNLCLOSE|NOTALLDBRNDWN|GVRUNDOWN' impjob_imptp1.xmje${jobnum}x > impjob_imptp1.mje${jobnum}
 end

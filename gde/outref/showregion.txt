@@ -37,13 +37,13 @@ GDE>
 
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- AREG                            ASEG                               1      512   256 ALWAYS     Y    Y   ENABLED  ENABLED  ENABLED
- BREG                            BSEG                               0      256    64 NEVER      N    Y   DISABLED DISABLED ENABLED
- DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               1      512   256 ALWAYS    Y    Y   Y      Y     Y     N      Y     Sep
+ BREG                            BSEG                               0      256    64 NEVER     N    Y   N      N     Y     N      Y     Sep
+ DEFAULT                         DEFAULT                            0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
                           *** JOURNALING INFORMATION ***
  Region                          Jnl File (def ext: .mjl)  Before Buff      Alloc      Exten   AutoSwitch
@@ -51,7 +51,7 @@ GDE>
  AREG                            abcd-efgh=ijkl/?ijk!a(.)bc
                                                            Y     32768        200        100        32768
 
- BREG                            x.mjl                     N      2308       2048       2048      8386560
+ BREG                            x.mjl                     N      2312       2048       2048      8386560
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
@@ -59,17 +59,17 @@ GDE>
 
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 # Display the difference between the default show -commands and the show -commands output after modifications above
-12d11
+15d14
 < TEMPLATE -REGION -NOJOURNAL
-41c40,42
+46c45,47
 < ADD -REGION DEFAULT -DYNAMIC_SEGMENT=DEFAULT
 ---
 > ADD -REGION AREG -COLLATION_DEFAULT=1 -DYNAMIC_SEGMENT=ASEG -INST_FREEZE_ON_ERROR -JOURNAL=(ALLOCATION=200,AUTOSWITCHLIMIT=32768,BUFFER_SIZE=32768,EXTENSION=100,FILE_NAME="abcd-efgh=ijkl/?ijk!a(.)bc") -KEY_SIZE=256 -NULL_SUBSCRIPTS=ALWAYS -QDBRUNDOWN -RECORD_SIZE=512 -STDNULLCOLL
 > ADD -REGION BREG -DYNAMIC_SEGMENT=BSEG -JOURNAL=(NOBEFORE_IMAGE,FILE_NAME="x.mjl")
 > ADD -REGION DEFAULT -DYNAMIC_SEGMENT=DEFAULT -NOJOURNAL
-42a44,45
+47a49,50
 > ADD -SEGMENT ASEG -FILE_NAME="a.dat -acc=BG"
 > ADD -SEGMENT BSEG -FILE_NAME="b.dat"
-45a49,50
+50a54,55
 > ADD -NAME A -REGION=AREG
 > ADD -NAME B -REGION=BREG

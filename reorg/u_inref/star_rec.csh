@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -13,7 +16,7 @@
 #
 setenv test_reorg "NON_REORG"
 echo "Create some star-record-only blocks:"
-$gtm_tst/com/dbcreate.csh mumps 1 255 1001
+$gtm_tst/com/dbcreate.csh mumps 1 255 1001 -block_size=1024
 $GTM << EOF
 S limit=200
 f i=limit:-1:1 s ^a(i)=\$j(i,990)

@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -36,6 +39,7 @@ echo "add -name a* -region=rega"         >>! tempse.com
 echo "add -name b* -region=regb"         >>! tempse.com
 echo "add -region rega -d=sega"          >>! tempse.com
 echo "add -region regb -d=segb"          >>! tempse.com
+echo "template -segment -block_size=1024" >>! tempse.com	# later part of the test relies on 1K block size
 echo "add -segment sega -file=set1"      >>! tempse.com
 echo "add -segment segb -file=set2"      >>! tempse.com
 if (("MM" == $acc_meth) && (0 == $gtm_platform_mmfile_ext)) then
@@ -60,7 +64,7 @@ $MUPIP set -file FREELUNCH.dat -g=3096
 echo "#"
 echo "# Set with a bad access method"
 echo "#"
-$MUPIP set -file set.dat -a=foo
+$MUPIP set -file set.dat -access_method=foo
 echo "#"
 echo "# Set with a bad extension_count"
 echo "#"

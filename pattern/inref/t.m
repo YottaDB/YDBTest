@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 t ;
  s f="edmpattable"
  v "PATLOAD":f
@@ -8,7 +19,7 @@ t ;
 m ;
  ; NOTE: the following line can always be compiled
  s h1=$h
- w !,"abc"?1v2k
+ set patstr="""abc""?1v2k" w !,@patstr
  s h2=$h
  s dif=$$^difftime(h2,h1)
  w !,"TIME: (t.m) ",dif,!

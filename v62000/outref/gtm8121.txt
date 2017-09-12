@@ -198,13 +198,13 @@ Remove database semaphore to induce REQROLLBACK situation
 Try to start GT.M. Expect REQROLLBACK error now
 
 GTM>
-%GTM-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL ROLLBACK on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%GTM-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 
 GTM>
 Try to start DSE. Should get REQROLLBACK error
-%GTM-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL ROLLBACK on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%GTM-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 %GTM-E-DBNOREGION, None of the database regions accessible
@@ -285,13 +285,13 @@ Remove database semaphore to induce REQROLLBACK situation
 Try to start GT.M. Expect REQROLLBACK error now
 
 GTM>
-%GTM-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL ROLLBACK on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%GTM-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 
 GTM>
 Try to start DSE. Should get REQROLLBACK error
-%GTM-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL ROLLBACK on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%GTM-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 %GTM-E-DBNOREGION, None of the database regions accessible

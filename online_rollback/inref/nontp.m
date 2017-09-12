@@ -3,6 +3,9 @@
 ; Copyright (c) 2012-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -27,13 +30,14 @@ test1	; Two updates to same instance with interleaving online rollback
 	set ^b=1	; Should issue a DBROLLEDBACK error
 	quit
 
-test2	; Should issue a DBROLLEDBACK error because online rollback increments cycles on non-journaled regions on the current
-	; instance as well.
+test2	; Should NOT issue a DBROLLEDBACK error because starting V63001A, online rollback does not increment cycles
+	; on non-journaled regions on the current instance. For this, use an error trap "noerr" that signals failure.
 	new $etrap
-	set $etrap="do err^nontp"
+	set $etrap="do noerr^nontp"
 	set ^hnonjnld=1
 	zsystem "$MUPIP journal -online -rollback -backward -resync=700 -verbose ""*"" >&! orlbk2.out"
 	set ^b=2
+	write "PASS",!
 	quit
 
 test3	; Should NOT issue a DBROLLEDBACK error because ^a in mumps2.gld maps to ab.dat which rollback won't touch
@@ -55,10 +59,11 @@ test4	; Should issue a DBROLLEDBACK error because ^x in mumps2.gld maps to mumps
 
 test5	; This is test4 done in the reverse direction
 	new $etrap
-	set $etrap="do err^nontp"
+	set $etrap="do noerr^nontp"
 	set ^a=1
 	zsystem "$MUPIP journal -online -rollback -backward -resync=400 -verbose ""*"" >&! orlbk5.out"
-	set ^|"mumps2.gld"|b=1	; Should issue a DBROLLEDBACK error
+	set ^|"mumps2.gld"|b=1	; Should NOT issue a DBROLLEDBACK error since ^b in mumps2.gld has replication OFF
+	write "PASS",!
 	quit
 
 test6	; Should NOT issue a DBROLLEDBACK error because ^a mapped to other instance's gld which rollback won't touch
@@ -89,8 +94,13 @@ test8	; Update of same value during simultaneous rollback - expect DBROLLEDBACK 
 	set ^a=$j(" ",3999)
 	quit
 
-err	; Error handler
+err	; Error handler that signals PASS
 	if $ZSTATUS["DBROLLEDBACK",0=$TLEVEL  write "PASS",!
 	else  zshow "*"  write "FAIL",!
+	set $ecode=""
+	quit
+
+noerr	; Error handler that signals FAIL
+	zshow "*" write "FAIL",!
 	set $ecode=""
 	quit

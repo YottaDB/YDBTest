@@ -5,6 +5,7 @@ Using: ##SOURCE_PATH##/mupip
 myjnl2.dat
 ##SUSPEND_OUTPUT  REPLIC
 ##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/myjnl2.mjl created for database file ##TEST_PATH##/myjnl2.dat with (NO|)BEFORE_IMAGES
+%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/myjnl2.dat has been adjusted from 2308 to 2312.
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/myjnl2.dat is now ON
 ##SUSPEND_OUTPUT  NON_REPLIC
 ##ALLOW_OUTPUT  REPLIC
@@ -64,7 +65,7 @@ No errors detected by integ.
 ##ALLOW_OUTPUT  NON_REPLIC
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/myjnl2.dat is now OFF
 ##SUSPEND_OUTPUT  NON_REPLIC
-Created file ##TEST_PATH##/myjnl2.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/myjnl2.dat created
 ##ALLOW_OUTPUT  NON_REPLIC
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful

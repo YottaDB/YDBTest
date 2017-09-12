@@ -37,8 +37,7 @@ DSE> DSE> DSE>
 Rec:1  Blk 30  Off 10  Size 16  Cmpc 0  Key ^aglobal(23)
 
 DSE> Error: last record in blk is 2
-DSE> Error: record too large for remaining space in block.
-DSE> DSE> DSE> DSE> 
+DSE> DSE> DSE> DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
@@ -63,7 +62,7 @@ DSE> DSE> DSE>
 Rec:1  Blk 4  Off 10  Size 14  Cmpc 0  Ptr 50  Key ^aglobal(27)
 
 DSE> DSE> Error: block pointer must be specified for this index block record.
-DSE> Error: last record in blk is 25
+DSE> Error: last record in blk is A
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -132,19 +131,20 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> Error:  Null subscripts not allowed
-DSE> DSE> DSE> 
-Rec:2  Blk 3  Off 45  Size A  Cmpc 8  Key ^aglobal("")
+DSE> DSE> Error: record too large for remaining space in block.
+DSE> 
+Rec:2  Blk 3  Off 23  Size A  Cmpc 9  Key ^aglobal(2,72)
 
 DSE> DSE> DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> 
-Block 0  Size 90  Level -1  TN 4C5 V6   Master Status: Free Space
+Block 0  Size 90  Level -1  TN 476 V6   Master Status: Free Space
 
 DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
 DSE> 
-Block 0  Size 90  Level -1  TN 4C5 V6   Master Status: Free Space
+Block 0  Size 90  Level -1  TN 476 V6   Master Status: Free Space
 
 ##SUSPEND_OUTPUT  REPLIC
 DSE> DSE> ##SOURCE_PATH##/mupip

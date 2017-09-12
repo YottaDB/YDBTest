@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -15,8 +18,6 @@
 # the particular error we expect to happen.
 unsetenv gtm_test_freeze_on_error
 unsetenv gtm_test_fake_enospc
-
-setenv gtm_poollimit 0 # Poollimit settings causes issues because of the way we try to mimic DBDANGER.
 
 # With 16K counter semaphore bump per process, the 32K counter overflow happens with just 2 processes
 # and prevents exercising white-box code which this test relies upon so disable counter overflow
@@ -109,16 +110,11 @@ if ("MM" != $acc_meth) then
     ($gtm_exe/mumps -run %XCMD 'write $job,! set ^x=2' >&! $pidf &)
     endwithkill
 
-    # This error can take time to generate. Be patient.
-    prepare DBDANGER 71
-    ($gtm_exe/mumps -run %XCMD 'write $job,! set ^x=3 set ^x=4' >&! $pidf &)
-    endwithkill
-
     prepare DBFSYNCERR 72
     ($gtm_exe/mumps -run %XCMD 'write $job,! set ^x=5' >&! $pidf &)
     testend
 else
-    setenv pnum `expr $pnum + 3`
+    setenv pnum `expr $pnum + 2`
 endif
 
 # -999 is bogus value because we don't need WB test case to cause this error.

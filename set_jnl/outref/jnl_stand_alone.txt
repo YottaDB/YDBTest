@@ -217,10 +217,10 @@ Switch journal state to 2
 GTM Process starts in background...
 # Expect all the below buffer_size change commands to error out with 'File is in use/File already open'
 Journal Buffer Size:(expected 2308)
-  Journal Buffer Size                  2308  Journal Alignsize             4096
-  Journal Buffer Size                  2308  Journal Alignsize             4096
-  Journal Buffer Size                  2308  Journal Alignsize             4096
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
 Some qualifiers do not need standalone access
 With nobefore option
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
@@ -249,25 +249,25 @@ With nobefore option
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
   Journal State                          ON  Journal Before imaging        TRUE
   Journal Allocation                   2048  Journal Extension             2048
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
   Journal AutoSwitchLimit           8386560  Journal Epoch Interval          30
   Journal Yield Limit                     8  Journal Sync IO              FALSE
   Journal File: ##TEST_PATH##/a.mjl
   Journal State                          ON  Journal Before imaging        TRUE
   Journal Allocation                   2048  Journal Extension             2048
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
   Journal AutoSwitchLimit           8386560  Journal Epoch Interval          30
   Journal Yield Limit                     8  Journal Sync IO              FALSE
   Journal File: ##TEST_PATH##/b.mjl
   Journal State                          ON  Journal Before imaging        TRUE
   Journal Allocation                   2048  Journal Extension             2048
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
   Journal AutoSwitchLimit           8386560  Journal Epoch Interval          30
   Journal Yield Limit                     8  Journal Sync IO              FALSE
   Journal File: ##TEST_PATH##/c.mjl
   Journal State                          ON  Journal Before imaging       FALSE
   Journal Allocation                   2048  Journal Extension              300
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
   Journal AutoSwitchLimit           2096948  Journal Epoch Interval           1
   Journal Yield Limit                   900  Journal Sync IO              FALSE
   Journal File: ##TEST_PATH##/mumps_standalone_nobefore.mjl
@@ -355,25 +355,25 @@ With before option
 %GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
   Journal State                          ON  Journal Before imaging        TRUE
   Journal Allocation                   4000  Journal Extension              200
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
   Journal AutoSwitchLimit           8386400  Journal Epoch Interval           1
   Journal Yield Limit                  1000  Journal Sync IO              FALSE
   Journal File: ##TEST_PATH##/a_standalone_before.mjl
   Journal State                          ON  Journal Before imaging        TRUE
   Journal Allocation                   4000  Journal Extension              200
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
   Journal AutoSwitchLimit           8386400  Journal Epoch Interval           1
   Journal Yield Limit                  1000  Journal Sync IO              FALSE
   Journal File: ##TEST_PATH##/b.mjl
   Journal State                          ON  Journal Before imaging        TRUE
   Journal Allocation                   4000  Journal Extension              200
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
   Journal AutoSwitchLimit           8386400  Journal Epoch Interval           1
   Journal Yield Limit                  1000  Journal Sync IO              FALSE
   Journal File: ##TEST_PATH##/c.mjl
   Journal State                          ON  Journal Before imaging        TRUE
   Journal Allocation                   4000  Journal Extension              200
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
   Journal AutoSwitchLimit           2096800  Journal Epoch Interval           1
   Journal Yield Limit                  1000  Journal Sync IO              FALSE
   Journal File: ##TEST_PATH##/mumps_standalone_nobefore.mjl

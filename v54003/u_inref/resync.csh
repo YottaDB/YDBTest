@@ -4,6 +4,9 @@
 # Copyright (c) 2011-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -82,19 +85,15 @@ $MSR STOPSRC INST1 INST2
 END
 
 # The value of the tracebuffsize is defined in repl_comm.c by constants REPL_SEND_TRACE_BUFF_SIZE and REPL_RECV_TRACE_BUFF_SIZE.
-# If the value of these constants are chagned in repl_comm.c; following constants should also be chanded.
+# If the value of these constants are chagned in repl_comm.c; following constants should also be changed.
 BEGIN "Set the size of tracebuffsize depending upon the platform"
-if ($gtm_test_machtype == 'pa_risc') then
-	set tracebuffsize=65536
-else
-	set tracebuffsize=1048576
-endif
+set tracebuffsize=4194304
 END
 
 BEGIN "Compare the memory usage for fetchresync ROLLBACK and resync ROLLBACK"
-# The repl_send() function allocates a trace buffers (1Mb in size) for debugging purposes. In response to the REPL_FETCH_RESYNC message,
-# the fetchresync rollback will invoke repl_recv() which again allocates trace buffer of 1Mb in size.
-# So we need to subtract these 2MB from FETCHRESYNC ROLLBACK memory usage.
+# The repl_send() function allocates a trace buffers (4Mb in size) for debugging purposes.
+# In response to the REPL_FETCH_RESYNC message, the fetchresync rollback will invoke repl_recv() which again
+# allocates trace buffer of 4Mb in size. So we need to subtract these 8MB from FETCHRESYNC ROLLBACK memory usage.
 @ tmp=`cat count1.txt` - $tracebuffsize
 @ fresync_musage=$tmp - $tracebuffsize
 @ resync_musage=`cat count2.txt`

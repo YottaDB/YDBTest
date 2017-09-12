@@ -11,25 +11,26 @@
 
 
 
-                               *** TEMPLATES ***
+                                *** TEMPLATES ***
                                                                           Std      Inst
-                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- -----------------------------------------------------------------------------------------------------------
- <default>                                     0     256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+                                             Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ ----------------------------------------------------------------------------------------------------------------------
+ <default>                                     0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  1024        100   100 GLOB =1024
-                                                                     LOCK = 40
+ <default>          *                 BG  DYN  4096        100   100 GLOB =1024
+                                                                     LOCK =  40
                                                                      RES  =   0
                                                                      ENCR = OFF
                                                                      MSLT =1024
-                                                                     DALL=YES
- <default>                            MM  DYN  1024        100   100 DEFER
-                                                                     LOCK = 40
+                                                                     DALL = YES
+                                                                     AIO  = OFF
+ <default>                            MM  DYN  4096        100   100 DEFER
+                                                                     LOCK =  40
                                                                      MSLT =1024
-                                                                     DALL=YES
+                                                                     DALL = YES
 
          *** NAMES ***
  Global                                 Region
@@ -57,161 +58,182 @@
  population("USA","WestCoast")          USWC
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- AFRICAAH                        AFRICAAH                           0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- AFRICAIY                        AFRICAIY                           0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- ASIAAI                          ASIAAI                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- ASIAJZ                          ASIAJZ                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- AUSTRALIA                       AUSTRALIA                          0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- DEFAULT                         DEFAULT                            0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- EUROPEAG                        EUROPEAG                           0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- EUROPEHO                        EUROPEHO                           0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- EUROPEPZ                        EUROPEPZ                           0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- NA                              NA                                 0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- SA                              SA                                 0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- USMWAD                          USMWAD                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- USMWEL                          USMWEL                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- USMWMZ                          USMWMZ                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- USNEAG                          USNEAG                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- USNEHL                          USNEHL                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- USNEMR                          USNEMR                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- USNESZ                          USNESZ                             0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- USSAL                           USSAL                              0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- USSMZ                           USSMZ                              0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
- USWC                            USWC                               0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ AFRICAAH                        AFRICAAH                           0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ AFRICAIY                        AFRICAIY                           0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ ASIAAI                          ASIAAI                             0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ ASIAJZ                          ASIAJZ                             0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ AUSTRALIA                       AUSTRALIA                          0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ DEFAULT                         DEFAULT                            0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ EUROPEAG                        EUROPEAG                           0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ EUROPEHO                        EUROPEHO                           0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ EUROPEPZ                        EUROPEPZ                           0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ NA                              NA                                 0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ SA                              SA                                 0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ USMWAD                          USMWAD                             0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ USMWEL                          USMWEL                             0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ USMWMZ                          USMWMZ                             0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ USNEAG                          USNEAG                             0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ USNEHL                          USNEHL                             0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ USNEMR                          USNEMR                             0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ USNESZ                          USNESZ                             0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ USSAL                           USSAL                              0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ USSMZ                           USSMZ                              0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ USWC                            USWC                               0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- AFRICAAH                        AFRICAAH.dat        BG  DYN  1024        100   100 GLOB=1024
+ AFRICAAH                        AFRICAAH.dat        BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- AFRICAIY                        AFRICAIY.dat        BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ AFRICAIY                        AFRICAIY.dat        BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- ASIAAI                          ASIAAI.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ ASIAAI                          ASIAAI.dat          BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- ASIAJZ                          ASIAJZ.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ ASIAJZ                          ASIAJZ.dat          BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- AUSTRALIA                       AUSTRALIA.dat       BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ AUSTRALIA                       AUSTRALIA.dat       BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- EUROPEAG                        EUROPEAG.dat        BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ EUROPEAG                        EUROPEAG.dat        BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- EUROPEHO                        EUROPEHO.dat        BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ EUROPEHO                        EUROPEHO.dat        BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- EUROPEPZ                        EUROPEPZ.dat        BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ EUROPEPZ                        EUROPEPZ.dat        BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- NA                              NA.dat              BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ NA                              NA.dat              BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- SA                              SA.dat              BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ SA                              SA.dat              BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- USMWAD                          USMWAD.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ USMWAD                          USMWAD.dat          BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- USMWEL                          USMWEL.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ USMWEL                          USMWEL.dat          BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- USMWMZ                          USMWMZ.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ USMWMZ                          USMWMZ.dat          BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- USNEAG                          USNEAG.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ USNEAG                          USNEAG.dat          BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- USNEHL                          USNEHL.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ USNEHL                          USNEHL.dat          BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- USNEMR                          USNEMR.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ USNEMR                          USNEMR.dat          BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- USNESZ                          USNESZ.dat          BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ USNESZ                          USNESZ.dat          BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- USSAL                           USSAL.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ USSAL                           USSAL.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- USSMZ                           USSMZ.dat           BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ USSMZ                           USSMZ.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
- USWC                            USWC.dat            BG  DYN  1024        100   100 GLOB=1024
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
+ USWC                            USWC.dat            BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 
                                   *** MAP ***
    -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -

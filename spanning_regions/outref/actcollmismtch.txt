@@ -5,7 +5,7 @@
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 # Create ^x entry in directory tree with collation of 0
 # Switch to collation 1
 # Add a global with collation 1
@@ -44,7 +44,7 @@ GTM>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/b.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 # Randomly change the fileheader collation to 2, but do not set any globals
 # Now try to do $get(^x) first with a.gld and then with b.gld
 # expect ACTCOLLMISMTCH error whenever accessed via b.gld but not when accessed with a.gld again
@@ -68,7 +68,7 @@ GTM>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -117,8 +117,8 @@ GTM>
 %GDE-I-VERIFY, Verification OK
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/b.gld
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 # Within the same process try accessing |"a.gld"|^x(11), |"b.gld"|^x(11) -> expect ACTCOLLMISMTCH
 
 GTM>
@@ -161,7 +161,7 @@ GTM>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/b.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 # Without doing any global update (after creating the db), change the col of gblname a. It should work
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/b.gld

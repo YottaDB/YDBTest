@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 incrgv4;
 	; create 8 globals ^INCREMENTGV1, ^INCREMENTGV2, ... ^INCREMENTGV8
 	; do $increment(^INCREMENTGVi(100)) with multiple processes
@@ -59,17 +70,14 @@ child	;
 	for index=1:1 quit:^stop=1  do
 	.	set global7890123456789012345678901="^"_gblname_(index#numgbls+1)
 	.	set global789012345678901234567890="this should fail"
-	.	; give non-TP 60%, TP 20%, ZTP 20% chances
-	.	; if running with replic, ZTP is not supported so give non-TP 80% and TP 20%
-	.	set istp=$random(4+$select(""'=$ztrnlnm("test_replic"):0,1:1))
+	.	; give non-TP 60%, TP 40%
+	.	set istp=($random(5)<2)
 	.	if istp=1 tstart ():(serial:transaction="BA")
-	.	if istp=4 ztstart
 	.	set x=$incr(@global7890123456789012345678901@(incrindx))
 	.	set @global7890123456789012345678901@("y",x)=x+1
 	.	set @global7890123456789012345678901@("z",x)=-x
 	.	; set finalcnt(global7890123456789012345678901)=finalcnt(global7890123456789012345678901)+1
 	.	if istp=1 tcommit
-	.	if istp=4 ztcommit
 	.	set tmp=$incr(finalcnt(global7890123456789012345678901))
 	.	; Do whatever "update^incrgv4" does to try trigger DBKEYORD error scenario (C9J07-003162)
 	.	; as that requires the process which does the $INCR (and has the bad clue) to

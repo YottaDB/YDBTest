@@ -135,15 +135,15 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 
 GTM>
 DEFAULT
 GTM>
-%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+%GTM-E-NOCANONICNAME, Value is not a canonic name ("^abcd(1E4)")
 
 GTM>
 DEFAULT
@@ -152,19 +152,19 @@ AREG
 GTM>
 DEFAULT
 GTM>
-%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+%GTM-E-NOCANONICNAME, Value is not a canonic name ("^abcd(1,x)")
 
 GTM>
-%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+%GTM-E-NOCANONICNAME, Value is not a canonic name ("^abcd(1,x(2)")
 
 GTM>
-%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+%GTM-E-NOCANONICNAME, Value is not a canonic name ("^abcd(1,x(2))")
 
 GTM>
-%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+%GTM-E-NOCANONICNAME, Value is not a canonic name ("^abcd(1,3(2))")
 
 GTM>
-%GTM-E-GVSUBSERR, Invalid subscripted global name specification in $VIEW() function
+%GTM-E-NOCANONICNAME, Value is not a canonic name ("^abcd(1,2")
 
 GTM>
 DEFAULT,AREG

@@ -14,6 +14,7 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##SUSPEND_OUTPUT  REPLIC
 ##ALLOW_OUTPUT  NON_REPLIC
 ##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with (|NO)BEFORE_IMAGES
+%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 ##ALLOW_OUTPUT  REPLIC
 
@@ -36,7 +37,7 @@ No errors detected by integ.
 ##REMOTE_SOURCE_PATH##/mupip integ -REG *
 ##SUSPEND_OUTPUT  REPLIC
 ##ALLOW_OUTPUT  NON_REPLIC
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
 %GTM-S-JNLSUCCESS, Recover successful
@@ -56,7 +57,7 @@ h
 ##ALLOW_OUTPUT  REPLIC
 No errors detected by integ.
 ##SUSPEND_OUTPUT  NON_REPLIC
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
 %GTM-S-JNLSUCCESS, Recover successful

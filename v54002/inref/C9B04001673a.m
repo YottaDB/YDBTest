@@ -3,6 +3,9 @@
 ; Copyright (c) 2010-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -60,10 +63,10 @@ C9B04001673a ; test boolean side-effect behavior for $r and evidence of what ran
   .. set ^a(1,2)=1,d=a&($name(@b)=b),r=$reference if r'="^a(1,2)"!(d'=a),$increment(cnt) xecute act
   .. set ^a(1,2)=1,d=a!($name(@^b)=b),r=$reference if r'="^b"!'d,$increment(cnt) xecute act
   .. set ^a(1,2)=1,d=a&($name(@^b)=b),r=$reference if r'="^b"!(d'=a),$increment(cnt) xecute act
-  .. set ^a(1,2)=1,d=a!($order(@b)="c0"),r=$reference if r'=$select("^c"=b:"",1:"^a(1,2)")!(d'=("c"=b!a)),$increment(cnt) x act
-  .. set ^a(1,2)=1,d=a&($order(@b)="c0"),r=$reference if r'=$select("^c"=b:"",1:"^a(1,2)")!(d'=("c"=b&a)),$increment(cnt) x act
-  .. set ^a(1,2)=1,d=a!($order(@^b)="c0"),r=$reference if r'=$select("^c"=b:"",1:"^b")!(d'=("c"=b!a)),$increment(cnt) x act
-  .. set ^a(1,2)=1,d=a&($order(@^b)="c0"),r=$reference if r'=$select("^c"=b:"",1:"^b")!(d'=("c"=b&a)),$increment(cnt) x act
+  .. set ^a(1,2)=1,d=a!($order(@b)="c0"),r=$reference if r'=$select("^c"=b:"^c",1:"^a(1,2)")!(d'=("c"=b!a)),$increment(cnt) x act
+  .. set ^a(1,2)=1,d=a&($order(@b)="c0"),r=$reference if r'=$select("^c"=b:"^c",1:"^a(1,2)")!(d'=("c"=b&a)),$increment(cnt) x act
+  .. set ^a(1,2)=1,d=a!($order(@^b)="c0"),r=$reference if r'=$select("^c"=b:"^c",1:"^b")!(d'=("c"=b!a)),$increment(cnt) x act
+  .. set ^a(1,2)=1,d=a&($order(@^b)="c0"),r=$reference if r'=$select("^c"=b:"^c",1:"^b")!(d'=("c"=b&a)),$increment(cnt) x act
   .. ; the following $QUERY() section shows behavior that does not appear to meet the standard for $REFERENCE maintenance
   .. set ^a(1,2)=1,d=a!($query(@b)="c(1)"),r=$reference if r'=$select("^c"=b:"^c",1:"^a(1,2)")!(d'=("c"=b!a)),$increment(cnt) x act
   .. set ^a(1,2)=1,d=a&($query(@b)="c(1)"),r=$reference if r'=$select("^c"=b:"^c",1:"^a(1,2)")!(d'=("c"=b&a)),$increment(cnt) x act
@@ -90,21 +93,21 @@ C9B04001673a ; test boolean side-effect behavior for $r and evidence of what ran
   .. set ^a(1,2)=1,d=a&$zdata(@b),r=$reference if r'=$select("^c"=b:"^c",1:"^a(1,2)")!(d'=a),$increment(cnt) xecute act
   .. set ^a(1,2)=1,d=a!$zdata(@^b),r=$reference if r'=$select("^c"=b:"^c",1:"^b")!'d,$increment(cnt) xecute act
   .. set ^a(1,2)=1,d=a&$zdata(@^b),r=$reference if r'=$select("^c"=b:"^c",1:"^b")!(d'=a),$increment(cnt) xecute act
-  .. set ^a(1,2)=1,d=a!($zprevious(@b)="bz"),r=$reference if r'=$select("^c"=b:"",1:"^a(1,2)")!(d'=("c"=b!a)),$increment(cnt) x act
-  .. set ^a(1,2)=1,d=a&($zprevious(@b)="bz"),r=$reference if r'=$select("^c"=b:"",1:"^a(1,2)")!(d'=("c"=b&a)),$increment(cnt) x act
-  .. set ^a(1,2)=1,d=a!($zprevious(@^b)="bz"),r=$reference if r'=$select("^c"=b:"",1:"^b")!(d'=("c"=b!a)),$increment(cnt) xecute act
-  .. set ^a(1,2)=1,d=a&($zprevious(@^b)="bz"),r=$reference if r'=$select("^c"=b:"",1:"^b")!(d'=("c"=b&a)),$increment(cnt) xecute act
+  .. set ^a(1,2)=1,d=a!($zprevious(@b)="bz"),r=$reference if r'=$select("^c"=b:"^c",1:"^a(1,2)")!(d'=("c"=b!a)),$increment(cnt) x act
+  .. set ^a(1,2)=1,d=a&($zprevious(@b)="bz"),r=$reference if r'=$select("^c"=b:"^c",1:"^a(1,2)")!(d'=("c"=b&a)),$increment(cnt) x act
+  .. set ^a(1,2)=1,d=a!($zprevious(@^b)="bz"),r=$reference if r'=$select("^c"=b:"^c",1:"^b")!(d'=("c"=b!a)),$increment(cnt) xecute act
+  .. set ^a(1,2)=1,d=a&($zprevious(@^b)="bz"),r=$reference if r'=$select("^c"=b:"^c",1:"^b")!(d'=("c"=b&a)),$increment(cnt) xecute act
   .. if "^c"=b do
   ... set ^a(1,2)=1,d=a!$zqgblmod(@b),r=$reference if r'="^c"!'d,$increment(cnt) xecute act
   ... set ^a(1,2)=1,d=a&$zqgblmod(@b),r=$reference if r'="^c"!(d'=a),$increment(cnt) xecute act
   ... set ^a(1,2)=1,d=a!$zqgblmod(@^b),r=$reference if r'="^c"!'d,$increment(cnt) xecute act
   ... set ^a(1,2)=1,d=a&$zqgblmod(@^b),r=$reference if r'="^c"!(d'=a),$increment(cnt) xecute act
-  ; the following section tests intermixing of other operators with booleam combinations
-  set i="@^a",^a="1N",y=(type="full")
+  ; the following section tests intermixing of other operators with boolean combinations
+  set i="@^a",^a="1N",y=1
   for a=0,1 do
   . for b="c","^c" set ^b=b do
-  .. set rexpect2=$select((b="c"):"^b",1:"^c"),rexpect=$select((type'="full"):"^dummy",1:rexpect2)
-  .. set rexpect3=$select((type="full")&'a&(b'="^c"):"^b",1:"^c")
+  .. set rexpect2=$select((b="c"):"^b",1:"^c"),rexpect=$select('y:"^dummy",1:rexpect2)
+  .. set rexpect3=$select(y&'a&(b'="^c"):"^b",1:"^c")
   .. set b=1,d=(@^b[1)!$select(a:$$one(.b),1:$$zero(.b)),r=$reference if r'=$select("^c"=^b:"^c",1:"^b")!'d!(b=y),$i(cnt) x act
   .. set b=1,d=(@^b[1)!$select(a:$$one(.b),1:$$zero(.b),1:^dummy),r=$reference if (r'=rexpect)!'d!b,$i(cnt) x act
   .. kill uu set b=1,bb="a",d=(@^b[1)!$select(a:@bb,1:$incr(uu)),r=$reference if (r'=rexpect2)!'d!'b!($data(uu)=a),$i(cnt) x act

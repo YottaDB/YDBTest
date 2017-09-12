@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -38,7 +41,7 @@ setenv gtm_test_sprgde_id "ID2"	# to differentiate multiple dbcreates done in th
 source $gtm_tst/com/dbcreate.csh . 3
 # mupip set journal command to set journaling and nonjournaling charateristics
 $MUPIP set -journal=disable -file mumps.dat
-$MUPIP set -res=1000 -journal=enable,nobefore -file mumps.dat
+$MUPIP set -res=4096 -journal=enable,nobefore -file mumps.dat
 $MUPIP set -res=600 -journal=enable,nobefore -file mumps.dat
 $MUPIP set -journal=enable,on,off,nobefore -res=600 -file mumps.dat
 echo "============================================================"

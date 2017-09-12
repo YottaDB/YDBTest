@@ -3,6 +3,9 @@
 ; Copyright (c) 2013-2015 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -196,54 +199,49 @@ dmpargs
 ; Routine to fetch fields related to specific region
 ;
 fetchregflds(reg)
-	New uselc,tstreg
-	;
-	; Randomly reset the region name to lower case to test upper-casing of region name in $ZPEEK().
-	;
-	Set uselc=$Random(2)
-	Set tstreg=$Select(uselc:$Translate(reg,"ABCDEFGHIJKLMNOPQRSTUVWXYZ","abcdefghijklmnopqrstuvwxyz"),1:reg)
+	New uselc
 	;
 	; Fetch some fields from node_local
 	;
-	Set nldbfile(reg)=$$fetchfld("nlReg:"_tstreg,"node_local.fname","s")
-	Set nlnowrunning(reg)=$$fetchfld("NL:"_tstreg,"node_local.now_running","S")
-	Set nlrefcnt(reg)=$$fetchfld("NLreg:"_tstreg,"node_local.ref_cnt","U")
+	Set nldbfile(reg)=$$fetchfld("nlReg:"_reg,"node_local.fname","s")
+	Set nlnowrunning(reg)=$$fetchfld("NL:"_reg,"node_local.now_running","S")
+	Set nlrefcnt(reg)=$$fetchfld("NLreg:"_reg,"node_local.ref_cnt","U")
 	If (nlnowrunning(reg)=$ZVersion) Kill nlnowrunning	; Verify and remove from reference file
 	;
 	; Fetch some fields from the file header (sgmnt_data)
 	;
-	Set fhlabel(reg)=$$fetchfld("Fhreg:"_tstreg,"sgmnt_data.label")
-	Set fhaccmeth(reg)=$$fetchfld("Fh:"_tstreg,"sgmnt_data.acc_meth","i")
-	Set fhblksiz(reg)=$$fetchfld("FHReg:"_tstreg,"sgmnt_data.blk_size","u")
-	Set fhcurrtn1(reg)=$$fetchfld("FH:"_tstreg,"sgmnt_data.trans_hist.curr_tn","X")
-	Set fhcurrtn2(reg)=$$fetchfld("fHREG:"_tstreg,"sgmnt_data.trans_hist.curr_tn","Z")
-	Set fhcurrtn3(reg)=$$fetchfld("Fh:"_tstreg,"sgmnt_data.trans_hist.curr_tn","i")
-	Set fhcurrtn4(reg)=$$fetchfld("FHReg:"_tstreg,"sgmnt_data.trans_hist.curr_tn","u")
+	Set fhlabel(reg)=$$fetchfld("Fhreg:"_reg,"sgmnt_data.label")
+	Set fhaccmeth(reg)=$$fetchfld("Fh:"_reg,"sgmnt_data.acc_meth","i")
+	Set fhblksiz(reg)=$$fetchfld("FHReg:"_reg,"sgmnt_data.blk_size","u")
+	Set fhcurrtn1(reg)=$$fetchfld("FH:"_reg,"sgmnt_data.trans_hist.curr_tn","X")
+	Set fhcurrtn2(reg)=$$fetchfld("fHREG:"_reg,"sgmnt_data.trans_hist.curr_tn","Z")
+	Set fhcurrtn3(reg)=$$fetchfld("Fh:"_reg,"sgmnt_data.trans_hist.curr_tn","i")
+	Set fhcurrtn4(reg)=$$fetchfld("FHReg:"_reg,"sgmnt_data.trans_hist.curr_tn","u")
 	;
 	; Fetch some fields from sgmnt_addrs
 	;
-	Set csatotblk(reg)=$$fetchfld("CSAreg:"_tstreg,"sgmnt_addrs.total_blks","U")
-	Set csarefcnt(reg)=$$fetchfld("Csa:"_tstreg,"sgmnt_addrs.ref_cnt","i")
+	Set csatotblk(reg)=$$fetchfld("CSAreg:"_reg,"sgmnt_addrs.total_blks","U")
+	Set csarefcnt(reg)=$$fetchfld("Csa:"_reg,"sgmnt_addrs.ref_cnt","i")
 	;
 	; Fetch from fields from gd_region
 	;
-	Set gdrrname(reg)=$$fetchfld("gDrreg:"_tstreg,"gd_region.rname")
-	Set gdrrnamelen(reg)=$$fetchfld("gDrreg:"_tstreg,"gd_region.rname_len","i")
+	Set gdrrname(reg)=$$fetchfld("gDrreg:"_reg,"gd_region.rname")
+	Set gdrrnamelen(reg)=$$fetchfld("gDrreg:"_reg,"gd_region.rname_len","i")
 	Set gdrrname(reg)=$ZExtract(gdrrname(reg),1,gdrrnamelen(reg))
 	;
 	; Fetch some fields from jnl_private_control
 	;
-	Set jpcchannel(reg)=$$fetchfld("JnLReg:"_tstreg,"jnl_private_control.channel","i")
-	Set jpcjnlbuff(reg)=$$fetchfld("Jnl:"_tstreg,"jnl_private_control.jnl_buff","X")
+	Set jpcchannel(reg)=$$fetchfld("JnLReg:"_reg,"jnl_private_control.channel","i")
+	Set jpcjnlbuff(reg)=$$fetchfld("Jnl:"_reg,"jnl_private_control.jnl_buff","X")
 	;
 	; Fetch some fields from jnl_buffer
 ;
-	Set jbfepochitvl(reg)=$$fetchfld("JbFrEg:"_tstreg,"jnl_buffer.epoch_interval","I")
-	Set jbfnxtepoch(reg)=$$fetchfld("jbf:"_tstreg,"jnl_buffer.next_epoch_time","t")
+	Set jbfepochitvl(reg)=$$fetchfld("JbFrEg:"_reg,"jnl_buffer.epoch_interval","I")
+	Set jbfnxtepoch(reg)=$$fetchfld("jbf:"_reg,"jnl_buffer.next_epoch_time","t")
 	;
 	; Fetch some free-form fields using PEEK operator and and address fetched from cs_addrs
 	;
-	Set csahdr(reg)=$$fetchfld("csa:"_tstreg,"sgmnt_addrs.hdr","X")		; Fetch the fileheader address
+	Set csahdr(reg)=$$fetchfld("csa:"_reg,"sgmnt_addrs.hdr","X")		; Fetch the fileheader address
 	Set fhlabel2(reg)=$$fetchfld("Peek:"_csahdr(reg),"sgmnt_data.label")	; Fetch the label
 	If (fhlabel2(reg)=fhlabel(reg)) Kill csahdr(reg),fhlabel2(reg)		; Verify and remove from reference file
 	Quit

@@ -56,7 +56,7 @@ File            ##TEST_PATH##/a.dat
 Region          AREG
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
   Access method                          BG  Global Buffers                1024
-  Reserved Bytes                          0  Block size (in bytes)         1024
+  Reserved Bytes                          0  Block size (in bytes)         4096
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                       64  Total blocks            0x00000065
   Null subscripts                    ALWAYS  Free blocks             0x00000062
@@ -67,6 +67,7 @@ Region          AREG
   In critical section            0x00000000  Timers pending                   0
   Cache freeze id                0x00000000  Flush timer            00:00:01:00
   Freeze match                   0x00000000  Flush trigger                  960
+  Freeze online                       FALSE  Freeze online autorelease    FALSE
   Current transaction    0x0000000000000001  No. of writes/flush              7
   Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
   Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
@@ -82,6 +83,9 @@ Region          AREG
   Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
   Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Async IO                              OFF  WIP queue cache blocks           0
+  DB is auto-created                  FALSE  DB shares gvstats             TRUE
+  LOCK shares DB critical section     FALSE
 DSE> 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -91,7 +95,7 @@ File            ##TEST_PATH##/mumps.dat
 Region          DEFAULT
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
   Access method                          BG  Global Buffers                1024
-  Reserved Bytes                          0  Block size (in bytes)         1024
+  Reserved Bytes                          0  Block size (in bytes)         4096
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                       64  Total blocks            0x00000065
   Null subscripts                    ALWAYS  Free blocks             0x00000062
@@ -102,6 +106,7 @@ Region          DEFAULT
   In critical section            0x00000000  Timers pending                   0
   Cache freeze id                0x00000000  Flush timer            00:00:01:00
   Freeze match                   0x00000000  Flush trigger                  960
+  Freeze online                       FALSE  Freeze online autorelease    FALSE
   Current transaction    0x0000000000000001  No. of writes/flush              7
   Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
   Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
@@ -117,6 +122,9 @@ Region          DEFAULT
   Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
   Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Async IO                              OFF  WIP queue cache blocks           0
+  DB is auto-created                  FALSE  DB shares gvstats             TRUE
+  LOCK shares DB critical section     FALSE
 DSE> 
 GTM>
 Collating orders changed thro' DSE
@@ -144,7 +152,7 @@ File            ##TEST_PATH##/a.dat
 Region          AREG
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
   Access method                          BG  Global Buffers                1024
-  Reserved Bytes                          0  Block size (in bytes)         1024
+  Reserved Bytes                          0  Block size (in bytes)         4096
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                       64  Total blocks            0x00000065
   Null subscripts                    ALWAYS  Free blocks             0x00000062
@@ -155,6 +163,7 @@ Region          AREG
   In critical section            0x00000000  Timers pending                   0
   Cache freeze id                0x00000000  Flush timer            00:00:01:00
   Freeze match                   0x00000000  Flush trigger                  960
+  Freeze online                       FALSE  Freeze online autorelease    FALSE
   Current transaction    0x0000000000000001  No. of writes/flush              7
   Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
   Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
@@ -170,6 +179,9 @@ Region          AREG
   Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
   Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Async IO                              OFF  WIP queue cache blocks           0
+  DB is auto-created                  FALSE  DB shares gvstats             TRUE
+  LOCK shares DB critical section     FALSE
 DSE> 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -179,7 +191,7 @@ File            ##TEST_PATH##/mumps.dat
 Region          DEFAULT
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
   Access method                          BG  Global Buffers                1024
-  Reserved Bytes                          0  Block size (in bytes)         1024
+  Reserved Bytes                          0  Block size (in bytes)         4096
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                       64  Total blocks            0x00000065
   Null subscripts                    ALWAYS  Free blocks             0x00000062
@@ -190,6 +202,7 @@ Region          DEFAULT
   In critical section            0x00000000  Timers pending                   0
   Cache freeze id                0x00000000  Flush timer            00:00:01:00
   Freeze match                   0x00000000  Flush trigger                  960
+  Freeze online                       FALSE  Freeze online autorelease    FALSE
   Current transaction    0x0000000000000001  No. of writes/flush              7
   Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
   Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
@@ -205,6 +218,9 @@ Region          DEFAULT
   Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
   Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Async IO                              OFF  WIP queue cache blocks           0
+  DB is auto-created                  FALSE  DB shares gvstats             TRUE
+  LOCK shares DB critical section     FALSE
 DSE> 
 GTM>
 collating orders again changed thro' DSE
@@ -271,7 +287,7 @@ File            ##TEST_PATH##/a.dat
 Region          AREG
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
   Access method                          BG  Global Buffers                1024
-  Reserved Bytes                          0  Block size (in bytes)         1024
+  Reserved Bytes                          0  Block size (in bytes)         4096
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                       64  Total blocks            0x00000065
   Null subscripts                    ALWAYS  Free blocks             0x00000062
@@ -282,6 +298,7 @@ Region          AREG
   In critical section            0x00000000  Timers pending                   0
   Cache freeze id                0x00000000  Flush timer            00:00:01:00
   Freeze match                   0x00000000  Flush trigger                  960
+  Freeze online                       FALSE  Freeze online autorelease    FALSE
   Current transaction    0x0000000000000001  No. of writes/flush              7
   Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
   Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
@@ -297,6 +314,9 @@ Region          AREG
   Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
   Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Async IO                              OFF  WIP queue cache blocks           0
+  DB is auto-created                  FALSE  DB shares gvstats             TRUE
+  LOCK shares DB critical section     FALSE
 DSE> 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -306,7 +326,7 @@ File            ##TEST_PATH##/mumps.dat
 Region          DEFAULT
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
   Access method                          BG  Global Buffers                1024
-  Reserved Bytes                          0  Block size (in bytes)         1024
+  Reserved Bytes                          0  Block size (in bytes)         4096
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                       64  Total blocks            0x00000065
   Null subscripts                    ALWAYS  Free blocks             0x00000062
@@ -317,6 +337,7 @@ Region          DEFAULT
   In critical section            0x00000000  Timers pending                   0
   Cache freeze id                0x00000000  Flush timer            00:00:01:00
   Freeze match                   0x00000000  Flush trigger                  960
+  Freeze online                       FALSE  Freeze online autorelease    FALSE
   Current transaction    0x0000000000000001  No. of writes/flush              7
   Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
   Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
@@ -332,6 +353,9 @@ Region          DEFAULT
   Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
   Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Async IO                              OFF  WIP queue cache blocks           0
+  DB is auto-created                  FALSE  DB shares gvstats             TRUE
+  LOCK shares DB critical section     FALSE
 DSE> 
 GTM>
 Collating orders changed thro' DSE
@@ -359,7 +383,7 @@ File            ##TEST_PATH##/a.dat
 Region          AREG
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
   Access method                          BG  Global Buffers                1024
-  Reserved Bytes                          0  Block size (in bytes)         1024
+  Reserved Bytes                          0  Block size (in bytes)         4096
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                       64  Total blocks            0x00000065
   Null subscripts                    ALWAYS  Free blocks             0x00000062
@@ -370,6 +394,7 @@ Region          AREG
   In critical section            0x00000000  Timers pending                   0
   Cache freeze id                0x00000000  Flush timer            00:00:01:00
   Freeze match                   0x00000000  Flush trigger                  960
+  Freeze online                       FALSE  Freeze online autorelease    FALSE
   Current transaction    0x0000000000000001  No. of writes/flush              7
   Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
   Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
@@ -385,6 +410,9 @@ Region          AREG
   Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
   Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Async IO                              OFF  WIP queue cache blocks           0
+  DB is auto-created                  FALSE  DB shares gvstats             TRUE
+  LOCK shares DB critical section     FALSE
 DSE> 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -394,7 +422,7 @@ File            ##TEST_PATH##/mumps.dat
 Region          DEFAULT
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
   Access method                          BG  Global Buffers                1024
-  Reserved Bytes                          0  Block size (in bytes)         1024
+  Reserved Bytes                          0  Block size (in bytes)         4096
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                       64  Total blocks            0x00000065
   Null subscripts                    ALWAYS  Free blocks             0x00000062
@@ -405,6 +433,7 @@ Region          DEFAULT
   In critical section            0x00000000  Timers pending                   0
   Cache freeze id                0x00000000  Flush timer            00:00:01:00
   Freeze match                   0x00000000  Flush trigger                  960
+  Freeze online                       FALSE  Freeze online autorelease    FALSE
   Current transaction    0x0000000000000001  No. of writes/flush              7
   Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
   Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
@@ -420,6 +449,9 @@ Region          DEFAULT
   Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
   Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Async IO                              OFF  WIP queue cache blocks           0
+  DB is auto-created                  FALSE  DB shares gvstats             TRUE
+  LOCK shares DB critical section     FALSE
 DSE> 
 GTM>
 collating orders again changed thro' DSE

@@ -76,7 +76,7 @@ No errors detected by integ.
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 #Start $query with larger values test
 #End $query with larger values test
 #Start $data test
@@ -109,12 +109,12 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               5           5.078            NA
-Index               4              88          28.857             1
-Data               88             113          80.418            76
-Free                6              NA              NA            NA
-Total             100             206              NA            77
-[Spanning Nodes:12 ; Blocks:90]
+Directory           2               5           1.269            NA
+Index               4              28           2.673             1
+Data               28              45          61.208            25
+Free               66              NA              NA            NA
+Total             100              78              NA            26
+[Spanning Nodes:7 ; Blocks:22]
 #############RECORD SIZE 10000 without -stdnull. This used to fail.#############
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/mumps.gld
@@ -122,7 +122,7 @@ Total             100             206              NA            77
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 #Start zwrite test
 Verify that zwrite prints  ^nsgbl(1) and ^nsgbl(1,1,1)
 ^nsgbl="root"
@@ -146,11 +146,11 @@ Verify that zwrite prints  ^nsgbl(1) and ^nsgbl(1,1,1)
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 #Start zshow
 ===================zshow "G"===================
-val("G",0)="GLD:*,REG:*,SET:100,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:0,LKS:0,LKF:0,CTN:0,DRD:3,DWT:XX,NTW:1,NTR:1,NBW:4,NBR:4,NR0:0,NR1:0,NR2:0,NR3:0,TTW:99,TTR:0,TRB:0,TBW:600,TBR:272,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:0,DFS:6,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:3,CAT:XX,CFE:0,CFS:0,CFT:0,CQS:0,CQT:0,CYS:0,CYT:0"
-val("G",1)="GLD:##TEST_PATH##/mumps.gld,REG:DEFAULT,SET:100,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:0,LKS:0,LKF:0,CTN:103,DRD:3,DWT:XX,NTW:1,NTR:1,NBW:4,NBR:4,NR0:0,NR1:0,NR2:0,NR3:0,TTW:99,TTR:0,TRB:0,TBW:600,TBR:272,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:0,DFS:6,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:3,CAT:XX,CFE:0,CFS:0,CFT:0,CQS:0,CQT:0,CYS:0,CYT:0"
+val("G",0)="GLD:*,REG:*,SET:100,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:0,LKS:0,LKF:0,CTN:0,DRD:3,DWT:XX,NTW:1,NTR:1,NBW:4,NBR:4,NR0:0,NR1:0,NR2:0,NR3:0,TTW:99,TTR:0,TRB:0,TBW:600,TBR:272,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:0,DFS:6,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:3,CAT:XX,CFE:0,CFS:0,CFT:0,CQS:0,CQT:0,CYS:0,CYT:0,BTD:305"
+val("G",1)="GLD:##TEST_PATH##/mumps.gld,REG:DEFAULT,SET:100,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:0,LKS:0,LKF:0,CTN:103,DRD:3,DWT:XX,NTW:1,NTR:1,NBW:4,NBR:4,NR0:0,NR1:0,NR2:0,NR3:0,TTW:99,TTR:0,TRB:0,TBW:600,TBR:272,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:0,DFS:6,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:3,CAT:XX,CFE:0,CFS:0,CFT:0,CQS:0,CQT:0,CYS:0,CYT:0,BTD:305"
 #End zshow
 #Generating random keys and values with varying sizes (justkeys.txt,justvalues.txt).
 #Putting key-value pairs in database (global ^tmpgbl).
@@ -194,7 +194,7 @@ Make sure max recordsize can be set to 0
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 #Start $increment
 
 GTM>
@@ -225,8 +225,8 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               2           2.832            NA
-Index               1               1           2.343             1
-Data                1               1           2.832             1
+Directory           2               2           0.708            NA
+Index               1               1           0.585             1
+Data                1               1           0.708             1
 Free               96              NA              NA            NA
 Total             100               4              NA             2

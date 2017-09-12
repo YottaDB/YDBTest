@@ -894,10 +894,10 @@ echo ""
 
 
 $MUPIP create
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/b.dat
-Created file ##TEST_PATH##/c.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 $MUPIP set -journal=enable,on,before -reg "*" | & sort -f
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
@@ -1411,57 +1411,57 @@ Fill Factor:: Index blocks 100%: Data blocks 100%
    
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 Global: afill (region AREG)
-Blocks processed    : 2 
-Blocks coalesced    : 1 
+Blocks processed    : 1 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 2 
+Blocks swapped      : 0 
 Blocks freed        : 0 
 Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: afill (region CREG)
-Blocks processed    : 10 
-Blocks coalesced    : 9 
+Blocks processed    : 2 
+Blocks coalesced    : 1 
 Blocks split        : 0 
-Blocks swapped      : 5 
-Blocks freed        : 5 
+Blocks swapped      : 1 
+Blocks freed        : 0 
 Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: bfill (region BREG)
-Blocks processed    : 9 
-Blocks coalesced    : 7 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 5 
-Blocks freed        : 6 
-Blocks reused       : 3 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: bfill (region DEFAULT)
-Blocks processed    : 3 
-Blocks coalesced    : 1 
+Blocks processed    : 1 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 2 
-Blocks freed        : 2 
-Blocks reused       : 1 
+Blocks swapped      : 1 
+Blocks freed        : 0 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: cfill (region AREG)
-Blocks processed    : 4 
-Blocks coalesced    : 3 
+Blocks processed    : 1 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 2 
-Blocks freed        : 2 
+Blocks swapped      : 0 
+Blocks freed        : 0 
 Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: cfill (region CREG)
-Blocks processed    : 9 
-Blocks coalesced    : 8 
+Blocks processed    : 2 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 5 
-Blocks freed        : 7 
-Blocks reused       : 3 
+Blocks swapped      : 1 
+Blocks freed        : 0 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: dfill (region AREG)
@@ -1474,49 +1474,49 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: dfill (region DEFAULT)
-Blocks processed    : 12 
-Blocks coalesced    : 11 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 7 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Global: afill (region AREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: bfill (region BREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: cfill (region CREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: dfill (region DEFAULT)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
 ##ALLOW_OUTPUT SPANNING_REGIONS
  ------- After reorg --------
@@ -1547,51 +1547,51 @@ Fill Factor:: Index blocks 100%: Data blocks 100%
    
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 Global: afill (region AREG)
-Blocks processed    : 2 
-Blocks coalesced    : 1 
+Blocks processed    : 1 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 2 
+Blocks swapped      : 0 
 Blocks freed        : 0 
 Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: afill (region CREG)
-Blocks processed    : 10 
-Blocks coalesced    : 9 
+Blocks processed    : 2 
+Blocks coalesced    : 1 
 Blocks split        : 0 
-Blocks swapped      : 5 
-Blocks freed        : 5 
+Blocks swapped      : 1 
+Blocks freed        : 0 
 Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: bfill (region BREG)
-Blocks processed    : 9 
-Blocks coalesced    : 7 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 5 
-Blocks freed        : 6 
-Blocks reused       : 3 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: bfill (region DEFAULT)
 %GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: cfill (region AREG)
-Blocks processed    : 4 
-Blocks coalesced    : 3 
+Blocks processed    : 1 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 2 
-Blocks freed        : 2 
+Blocks swapped      : 0 
+Blocks freed        : 0 
 Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: cfill (region CREG)
-Blocks processed    : 9 
-Blocks coalesced    : 8 
+Blocks processed    : 2 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 5 
-Blocks freed        : 7 
-Blocks reused       : 3 
+Blocks swapped      : 1 
+Blocks freed        : 0 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: dfill (region AREG)
@@ -1609,30 +1609,30 @@ Global: dfill (region DEFAULT)
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Global: afill (region AREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: bfill (region BREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: cfill (region CREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: dfill (region DEFAULT)
@@ -1669,6 +1669,15 @@ Fill Factor:: Index blocks 100%: Data blocks 100%
    
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 Global: afill (region AREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: afill (region CREG)
 Blocks processed    : 2 
 Blocks coalesced    : 1 
 Blocks split        : 0 
@@ -1677,49 +1686,40 @@ Blocks freed        : 0
 Blocks reused       : 0 
 Blocks extended     : 0 
    
-Global: afill (region CREG)
-Blocks processed    : 10 
-Blocks coalesced    : 9 
-Blocks split        : 0 
-Blocks swapped      : 4 
-Blocks freed        : 5 
-Blocks reused       : 0 
-Blocks extended     : 0 
-   
 Global: bfill (region BREG)
-Blocks processed    : 9 
-Blocks coalesced    : 7 
-Blocks split        : 0 
-Blocks swapped      : 5 
-Blocks freed        : 6 
-Blocks reused       : 3 
-Blocks extended     : 0 
-   
-Global: bfill (region DEFAULT)
 Blocks processed    : 3 
-Blocks coalesced    : 1 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 2 
+Blocks swapped      : 1 
 Blocks freed        : 1 
 Blocks reused       : 0 
 Blocks extended     : 0 
    
-Global: cfill (region AREG)
-Blocks processed    : 4 
-Blocks coalesced    : 3 
+Global: bfill (region DEFAULT)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 2 
-Blocks freed        : 2 
+Blocks swapped      : 1 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: cfill (region AREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
 Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: cfill (region CREG)
-Blocks processed    : 9 
-Blocks coalesced    : 8 
+Blocks processed    : 2 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 5 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 0 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: dfill (region AREG)
@@ -1732,76 +1732,76 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: dfill (region DEFAULT)
-Blocks processed    : 12 
-Blocks coalesced    : 11 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 7 
-Blocks reused       : 2 
+Blocks swapped      : 2 
+Blocks freed        : 2 
+Blocks reused       : 1 
 Blocks extended     : 0 
    
 Global: efill (region CREG)
-Blocks processed    : 6 
-Blocks coalesced    : 3 
+Blocks processed    : 1 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 3 
-Blocks freed        : 5 
-Blocks reused       : 3 
-Blocks extended     : 0 
-   
-Global: efill (region DEFAULT)
-Blocks processed    : 6 
-Blocks coalesced    : 4 
-Blocks split        : 0 
-Blocks swapped      : 3 
-Blocks freed        : 5 
-Blocks reused       : 2 
-Blocks extended     : 0 
-##ALLOW_OUTPUT NONSPANNING_REGIONS
-##SUSPEND_OUTPUT SPANNING_REGIONS
-Global: afill (region AREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
-Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
-Blocks extended     : 0 
-   
-Global: bfill (region BREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
-Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
-Blocks extended     : 0 
-   
-Global: cfill (region CREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
-Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
-Blocks extended     : 0 
-   
-Global: dfill (region DEFAULT)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
-Blocks split        : 0 
-Blocks swapped      : 5 
-Blocks freed        : 4 
+Blocks swapped      : 0 
+Blocks freed        : 0 
 Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: efill (region DEFAULT)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
+Blocks processed    : 1 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 5 
-Blocks freed        : 7 
-Blocks reused       : 3 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 1 
+Blocks extended     : 0 
+##ALLOW_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT SPANNING_REGIONS
+Global: afill (region AREG)
+Blocks processed    : 3 
+Blocks coalesced    : 2 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: bfill (region BREG)
+Blocks processed    : 3 
+Blocks coalesced    : 2 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: cfill (region CREG)
+Blocks processed    : 3 
+Blocks coalesced    : 2 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: dfill (region DEFAULT)
+Blocks processed    : 3 
+Blocks coalesced    : 2 
+Blocks split        : 0 
+Blocks swapped      : 2 
+Blocks freed        : 1 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: efill (region DEFAULT)
+Blocks processed    : 3 
+Blocks coalesced    : 2 
+Blocks split        : 0 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ------- Test last reorg -------
@@ -1831,6 +1831,15 @@ Fill Factor:: Index blocks 100%: Data blocks 100%
    
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 Global: afill (region AREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: afill (region CREG)
 Blocks processed    : 2 
 Blocks coalesced    : 1 
 Blocks split        : 0 
@@ -1839,43 +1848,34 @@ Blocks freed        : 0
 Blocks reused       : 0 
 Blocks extended     : 0 
    
-Global: afill (region CREG)
-Blocks processed    : 10 
-Blocks coalesced    : 9 
-Blocks split        : 0 
-Blocks swapped      : 4 
-Blocks freed        : 5 
-Blocks reused       : 0 
-Blocks extended     : 0 
-   
 Global: bfill (region BREG)
-Blocks processed    : 9 
-Blocks coalesced    : 7 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 5 
-Blocks freed        : 6 
-Blocks reused       : 3 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: bfill (region DEFAULT)
 %GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: cfill (region AREG)
-Blocks processed    : 4 
-Blocks coalesced    : 3 
+Blocks processed    : 1 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 2 
-Blocks freed        : 2 
+Blocks swapped      : 0 
+Blocks freed        : 0 
 Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: cfill (region CREG)
-Blocks processed    : 9 
-Blocks coalesced    : 8 
+Blocks processed    : 2 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 5 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 0 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: dfill (region AREG)
@@ -1891,12 +1891,12 @@ Global: dfill (region DEFAULT)
 %GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: efill (region CREG)
-Blocks processed    : 6 
-Blocks coalesced    : 3 
+Blocks processed    : 1 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 3 
-Blocks freed        : 5 
-Blocks reused       : 3 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: efill (region DEFAULT)
@@ -1905,30 +1905,30 @@ Global: efill (region DEFAULT)
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Global: afill (region AREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: bfill (region BREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: cfill (region CREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: dfill (region DEFAULT)
@@ -1965,6 +1965,15 @@ Fill Factor:: Index blocks 100%: Data blocks 100%
    
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 Global: afill (region AREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: afill (region CREG)
 Blocks processed    : 2 
 Blocks coalesced    : 1 
 Blocks split        : 0 
@@ -1973,22 +1982,13 @@ Blocks freed        : 0
 Blocks reused       : 0 
 Blocks extended     : 0 
    
-Global: afill (region CREG)
-Blocks processed    : 10 
-Blocks coalesced    : 9 
-Blocks split        : 0 
-Blocks swapped      : 4 
-Blocks freed        : 5 
-Blocks reused       : 0 
-Blocks extended     : 0 
-   
 Global: bfill (region BREG)
-Blocks processed    : 9 
-Blocks coalesced    : 7 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 5 
-Blocks freed        : 6 
-Blocks reused       : 3 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: bfill (region DEFAULT)
@@ -1996,30 +1996,30 @@ Global: bfill (region DEFAULT)
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Global: afill (region AREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: bfill (region BREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: cfill (region CREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: dfill (region DEFAULT)
@@ -2052,6 +2052,15 @@ Fill Factor:: Index blocks 100%: Data blocks 100%
    
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 Global: afill (region AREG)
+Blocks processed    : 1 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+   
+Global: afill (region CREG)
 Blocks processed    : 2 
 Blocks coalesced    : 1 
 Blocks split        : 0 
@@ -2060,43 +2069,34 @@ Blocks freed        : 0
 Blocks reused       : 0 
 Blocks extended     : 0 
    
-Global: afill (region CREG)
-Blocks processed    : 10 
-Blocks coalesced    : 9 
-Blocks split        : 0 
-Blocks swapped      : 4 
-Blocks freed        : 5 
-Blocks reused       : 0 
-Blocks extended     : 0 
-   
 Global: bfill (region BREG)
-Blocks processed    : 9 
-Blocks coalesced    : 7 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 5 
-Blocks freed        : 6 
-Blocks reused       : 3 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: bfill (region DEFAULT)
 %GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: cfill (region AREG)
-Blocks processed    : 4 
-Blocks coalesced    : 3 
+Blocks processed    : 1 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 2 
-Blocks freed        : 2 
+Blocks swapped      : 0 
+Blocks freed        : 0 
 Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: cfill (region CREG)
-Blocks processed    : 9 
-Blocks coalesced    : 8 
+Blocks processed    : 2 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 5 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 0 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: dfill (region AREG)
@@ -2112,12 +2112,12 @@ Global: dfill (region DEFAULT)
 %GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: efill (region CREG)
-Blocks processed    : 6 
-Blocks coalesced    : 3 
+Blocks processed    : 1 
+Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 3 
-Blocks freed        : 5 
-Blocks reused       : 3 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: efill (region DEFAULT)
@@ -2126,30 +2126,30 @@ Global: efill (region DEFAULT)
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Global: afill (region AREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: bfill (region BREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: cfill (region CREG)
-Blocks processed    : 11 
-Blocks coalesced    : 9 
+Blocks processed    : 3 
+Blocks coalesced    : 2 
 Blocks split        : 0 
-Blocks swapped      : 7 
-Blocks freed        : 6 
-Blocks reused       : 2 
+Blocks swapped      : 1 
+Blocks freed        : 1 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: dfill (region DEFAULT)
@@ -2216,10 +2216,10 @@ No errors detected by integ.
 
 \rm -f *.dat
 $MUPIP create
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/b.dat
-Created file ##TEST_PATH##/c.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
 res mumps.dat a.dat b.dat c.dat
@@ -2246,10 +2246,10 @@ No errors detected by integ.
 
 \rm -f *.dat
 $MUPIP create
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/b.dat
-Created file ##TEST_PATH##/c.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 chmod.csh rwro
 **** R/W b.dat R/O b.mjl ****
 res mumps.dat a.dat b.dat c.dat
@@ -2276,10 +2276,10 @@ No errors detected by integ.
 
 \rm -f *.dat
 $MUPIP create
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/b.dat
-Created file ##TEST_PATH##/c.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 chmod.csh rorw
 **** R/O b.dat R/W b.mjl ****
 res mumps.dat a.dat b.dat c.dat
@@ -2306,10 +2306,10 @@ No errors detected by integ.
 
 \rm -f *.dat
 $MUPIP create
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/b.dat
-Created file ##TEST_PATH##/c.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 chmod.csh roro
 **** R/O b.dat R/O b.mjl ****
 res mumps.dat a.dat b.dat c.dat
@@ -2430,6 +2430,13 @@ $MUPIP rundown -reg "*" | & sort -f
 %GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
 %GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+chmod.csh rwrw
+**** R/W b.dat R/W b.mjl ****
+$MUPIP rundown -reg "*" | & sort -f
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -2462,6 +2469,13 @@ $MUPIP rundown -reg "*" | & sort -f
 %GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
 %GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+chmod.csh rwrw
+**** R/W b.dat R/W b.mjl ****
+$MUPIP rundown -reg "*" | & sort -f
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip

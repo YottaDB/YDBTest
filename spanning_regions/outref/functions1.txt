@@ -5,10 +5,10 @@
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
-Created file ##TEST_PATH##/REG1.dat
-Created file ##TEST_PATH##/REG2.dat
-Created file ##TEST_PATH##/REG3.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/REG1.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/REG2.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/REG3.dat created
 #### Make sure triggers work with spanning regions ####
 File func1.trg, Line 1: Added SET trigger on ^z named z#1
 File func1.trg, Line 2: Added SET trigger on ^y named y#1
@@ -472,10 +472,10 @@ GTM>
 
 GTM>
 #### GTM-7853 : MUPIP INTEG -SUBSCRIPTS terminates with SIG-11 if null-subscripts are specified
-Data                1               0           2.636             1
-Data                1               0           5.175             1
-Data                1               1           5.859             1
-Data                1               2           6.640             1
+Data                1               0           0.659             1
+Data                1               0           1.293             1
+Data                1               1           1.464             1
+Data                1               2           1.660             1
 #### Test DSE find -key scenarios with spanning regions ####
 #### Create a second global directory and set ^a(1) in mumps.dat ####
 
@@ -486,46 +486,46 @@ DSE>
 Key not found, no root present.
 
 DSE> 
-Key not found, would be in block  8.
+Key not found, would be in block  7.
     Directory path
     Path--blk:off
 	1:10,	2:2F,
     Global tree path
     Path--blk:off
-	7:10,	8:0,
+	6:10,	7:0,
 Key ^x(1) maps to Region REG1; Run "find -region=REG1" before looking for this node
 DSE> 
-Key not found, would be in block  8.
+Key not found, would be in block  7.
     Directory path
     Path--blk:off
 	1:10,	2:2F,
     Global tree path
     Path--blk:off
-	7:10,	8:0,
+	6:10,	7:0,
 DSE> 
-Key not found, would be in block  A.
+Key not found, would be in block  9.
     Directory path
     Path--blk:off
 	1:10,	2:20,
     Global tree path
     Path--blk:off
-	9:10,	A:21,
+	8:10,	9:21,
 DSE> 
-Key not found, would be in block  A.
+Key not found, would be in block  9.
     Directory path
     Path--blk:off
 	1:10,	2:20,
     Global tree path
     Path--blk:off
-	9:10,	A:21,
+	8:10,	9:21,
 DSE> 
-Key not found, would be in block  A.
+Key not found, would be in block  9.
     Directory path
     Path--blk:off
 	1:10,	2:20,
     Global tree path
     Path--blk:off
-	9:10,	A:21,
+	8:10,	9:21,
 Key ^a(40,5,6) maps to Region REG3; Run "find -region=REG3" before looking for this node
 DSE> 
 File  	##TEST_PATH##/REG3.dat
@@ -589,20 +589,20 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 DSE> 
-Key found in block  A.
+Key found in block  9.
     Directory path
     Path--blk:off
 	1:10,	2:20,
     Global tree path
     Path--blk:off
-	9:10,	A:10,
+	8:10,	9:10,
 Key ^a(1) maps to Region REG1; Run "find -region=REG1" before looking for this node
 DSE> 
-Key found in block  A.
+Key found in block  9.
     Directory path
     Path--blk:off
 	1:10,	2:20,
     Global tree path
     Path--blk:off
-	9:10,	A:10,
+	8:10,	9:10,
 DSE> 
