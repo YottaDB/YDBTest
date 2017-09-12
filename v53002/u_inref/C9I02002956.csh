@@ -4,6 +4,9 @@
 # Copyright (c) 2008-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -24,7 +27,7 @@ setenv gtm_test_jnl NON_SETJNL
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1
 foreach value (1 2 3)
-	$gtm_tst/com/dbcreate.csh mumps
+	$gtm_tst/com/dbcreate.csh mumps -block_size=1024
 	$GTM <<GTM_EOF
 		do test${value}^c002956
 GTM_EOF

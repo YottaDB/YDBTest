@@ -115,11 +115,11 @@ gdeshowdiff.csh oldgdegdemaptst.log newgdegdemaptst.log
 %GDE-I-LOGON, Logging to file ##TEST_PATH##/reload.log
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/gdetst.gld
 gdeshowdiff.csh gdemaptst.cmp gdemaptst.log
-Created file ##TEST_PATH##/maptst.dat
-Created file ##TEST_PATH##/name1.dat
-Created file ##TEST_PATH##/name2.dat
-Created file ##TEST_PATH##/star1.dat
-Created file ##TEST_PATH##/star2.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/maptst.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/name1.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/name2.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/star1.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/star2.dat created
 
 GTM>
 
@@ -140,12 +140,12 @@ gdeshowdiff.csh oldgdedmi.log newgdedmi.log
 %GDE-I-LOGON, Logging to file ##TEST_PATH##/reload.log
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/gdetst.gld
 gdeshowdiff.csh dmi.cmp dmi.log
-Created file ##TEST_PATH##/max_db.dat
-Created file ##TEST_PATH##/MAX_CD.DAT
-Created file ##TEST_PATH##/MAX_CM.DAT
-Created file ##TEST_PATH##/MAX_TMP.DAT
-Created file ##TEST_PATH##/MAX_TW.DAT
-Created file ##TEST_PATH##/MAX_XRF.DAT
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/max_db.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/MAX_CD.DAT created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/MAX_CM.DAT created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/MAX_TMP.DAT created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/MAX_TW.DAT created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/MAX_XRF.DAT created
 
 GTM>
 
@@ -166,12 +166,12 @@ gdeshowdiff.csh oldgdetnt.log newgdetnt.log
 %GDE-I-LOGON, Logging to file ##TEST_PATH##/reload.log
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/gdetst.gld
 gdeshowdiff.csh tnt.cmp tnt.log
-Created file ##TEST_PATH##/ACCOUNT.dat
-Created file ##TEST_PATH##/ACCOUNT0.dat
-Created file ##TEST_PATH##/ARCHCER.dat
-Created file ##TEST_PATH##/ARCHCERT.dat
-Created file ##TEST_PATH##/ARCHGROT.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/ACCOUNT.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/ACCOUNT0.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/ARCHCER.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/ARCHCERT.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/ARCHGROT.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 
@@ -192,12 +192,12 @@ gdeshowdiff.csh oldgdeits.log newgdeits.log
 %GDE-I-LOGON, Logging to file ##TEST_PATH##/reload.log
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/gdetst.gld
 gdeshowdiff.csh its.cmp its.log
-Created file ##TEST_PATH##/MUMPS_COMM.dat
-Created file ##TEST_PATH##/MUMPS_CTS.dat
-Created file ##TEST_PATH##/MUMPS_LIB.dat
-Created file ##TEST_PATH##/MUMPS_MISC.dat
-Created file ##TEST_PATH##/MUMPS_SCRA.dat
-Created file ##TEST_PATH##/MUMPS_TABL.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/MUMPS_COMM.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/MUMPS_CTS.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/MUMPS_LIB.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/MUMPS_MISC.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/MUMPS_SCRA.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/MUMPS_TABL.dat created
 
 GTM>
 
@@ -209,8 +209,7 @@ GTM>
 GDE> 
 GDE> 
 GDE> 
-%GDE-I-CRYPTNOMM,  is an encrypted database. Cannot support MM access method.
-%GDE-I-SEGIS, in MM segment DEFAULT
+%GDE-I-GDECRYPTNOMM, DEFAULT segment has encryption turned on. Cannot support MM access method.
 %GDE-I-VERIFY, Verification FAILED
 
 %GDE-I-NOEXIT, Cannot exit because of verification failure

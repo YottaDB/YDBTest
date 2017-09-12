@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -18,7 +21,7 @@ setenv gtm_test_spanreg 0   # because this test output is sensitive to block lay
 # Disable this env var as the test output is sensitive to block layout and the allocation clue can change it
 unsetenv gtm_tp_allocation_clue
 
-$gtm_tst/com/dbcreate.csh mumps 3 -key=255 -rec=1000
+$gtm_tst/com/dbcreate.csh mumps 3 -key=255 -rec=1000 -block_size=1024
 
 $gtm_exe/mumps -run gtm8084
 

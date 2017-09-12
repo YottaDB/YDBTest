@@ -15,25 +15,26 @@ GDE>
 
 GDE> 
 
-                               *** TEMPLATES ***
+                                *** TEMPLATES ***
                                                                           Std      Inst
-                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- -----------------------------------------------------------------------------------------------------------
- <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                             Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ ----------------------------------------------------------------------------------------------------------------------
+ <default>                                     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  1024        100   100 GLOB =1024
-                                                                     LOCK = 40
-##TEST_AWK                                                                     RES  = *[0-9]*
+ <default>          *                 BG  DYN  4096        100   100 GLOB =1024
+                                                                     LOCK =  40
+                                                                     RES  =   0
                                                                      ENCR = OFF
                                                                      MSLT =1024
-                                                                     DALL=YES
- <default>                            MM  DYN  1024        100   100 DEFER
-                                                                     LOCK = 40
+                                                                     DALL = YES
+                                                                     AIO  = OFF
+ <default>                            MM  DYN  4096        100   100 DEFER
+                                                                     LOCK =  40
                                                                      MSLT =1024
-                                                                     DALL=YES
+                                                                     DALL = YES
 
          *** NAMES ***
  Global                             Region
@@ -41,21 +42,22 @@ GDE>
  *                                  DEFAULT
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                            0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=  40
                                                                                     RES =   0
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 
                                   *** MAP ***
    -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
@@ -71,32 +73,20 @@ GDE>
 GDE> 
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                            0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 GDE> 
 GDE> 
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- DEFAULT                         DEFAULT                            0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
-GDE> 
-GDE> 
-GDE> 
-GDE> 
-GDE> 
-
-                                *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- AREG                            ASEG                               0      256    64 ALWAYS     Y    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                            0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 GDE> 
 GDE> 
 GDE> 
@@ -104,11 +94,23 @@ GDE>
 GDE> 
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- BREG                            BSEG                               0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 ALWAYS    Y    N   N      N     Y     N      Y     Sep
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+
+                                *** REGIONS ***
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ BREG                            BSEG                               0      256    64 ALWAYS    N    N   N      N     Y     N      Y     Sep
 GDE> 
 %GDE-I-VERIFY, Verification OK
 
@@ -122,13 +124,13 @@ GDE>
 GDE> 
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- AREG                            ASEG                               0      256    64 ALWAYS     Y    N   DISABLED DISABLED ENABLED
- BREG                            BSEG                               0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
- DEFAULT                         DEFAULT                            0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ AREG                            ASEG                               0      256    64 ALWAYS    Y    N   N      N     Y     N      Y     Sep
+ BREG                            BSEG                               0      256    64 ALWAYS    N    N   N      N     Y     N      Y     Sep
+ DEFAULT                         DEFAULT                            0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 GDE> 
 GDE> 
 GDE> 
@@ -137,43 +139,44 @@ GDE>
 GDE> 
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- CREG                            CSEG                               0      256    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ CREG                            CSEG                               0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 GDE> 
 GDE> 
 
-                               *** TEMPLATES ***
+                                *** TEMPLATES ***
                                                                           Std      Inst
-                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- -----------------------------------------------------------------------------------------------------------
- <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                             Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ ----------------------------------------------------------------------------------------------------------------------
+ <default>                                     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  1024        100   100 GLOB =1024
-                                                                     LOCK = 40
-##TEST_AWK                                                                     RES  = *[0-9]*
+ <default>          *                 BG  DYN  4096        100   100 GLOB =1024
+                                                                     LOCK =  40
+                                                                     RES  =   0
                                                                      ENCR = OFF
                                                                      MSLT =1024
-                                                                     DALL=YES
- <default>                            MM  DYN  1024        100   100 DEFER
-                                                                     LOCK = 40
+                                                                     DALL = YES
+                                                                     AIO  = OFF
+ <default>                            MM  DYN  4096        100   100 DEFER
+                                                                     LOCK =  40
                                                                      MSLT =1024
-                                                                     DALL=YES
+                                                                     DALL = YES
 GDE> 
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
 Now create databases
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/b.dat
-Created file ##TEST_PATH##/c.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -183,7 +186,7 @@ File            ##TEST_PATH##/a.dat
 Region          AREG
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
   Access method                          BG  Global Buffers                1024
-  Reserved Bytes                          0  Block size (in bytes)         1024
+  Reserved Bytes                          0  Block size (in bytes)         4096
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                       64  Total blocks            0x00000065
   Null subscripts                    ALWAYS  Free blocks             0x00000062
@@ -194,6 +197,7 @@ Region          AREG
   In critical section            0x00000000  Timers pending                   0
   Cache freeze id                0x00000000  Flush timer            00:00:01:00
   Freeze match                   0x00000000  Flush trigger                  960
+  Freeze online                       FALSE  Freeze online autorelease    FALSE
   Current transaction    0x0000000000000001  No. of writes/flush              7
   Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
   Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
@@ -209,12 +213,15 @@ Region          AREG
   Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
   Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Async IO                              OFF  WIP queue cache blocks           0
+  DB is auto-created                  FALSE  DB shares gvstats             TRUE
+  LOCK shares DB critical section     FALSE
 DSE> DSE> 
 File            ##TEST_PATH##/a.dat
 Region          AREG
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
   Access method                          BG  Global Buffers                1024
-  Reserved Bytes                          0  Block size (in bytes)         1024
+  Reserved Bytes                          0  Block size (in bytes)         4096
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                       64  Total blocks            0x00000065
   Null subscripts                    ALWAYS  Free blocks             0x00000062
@@ -225,6 +232,7 @@ Region          AREG
   In critical section            0x00000000  Timers pending                   0
   Cache freeze id                0x00000000  Flush timer            00:00:01:00
   Freeze match                   0x00000000  Flush trigger                  960
+  Freeze online                       FALSE  Freeze online autorelease    FALSE
   Current transaction    0x0000000000000001  No. of writes/flush              7
   Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
   Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
@@ -240,6 +248,9 @@ Region          AREG
   Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
   Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Async IO                              OFF  WIP queue cache blocks           0
+  DB is auto-created                  FALSE  DB shares gvstats             TRUE
+  LOCK shares DB critical section     FALSE
 DSE> DSE  dump output 
 
 GTM>
@@ -297,17 +308,17 @@ GDE>
 GDE> 
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- DEFAULT                         DEFAULT                            0      256    64 ALWAYS     Y    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                            0      256    64 ALWAYS    Y    N   N      N     Y     N      Y     Sep
 GDE> 
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 
@@ -778,17 +789,17 @@ GDE>
 GDE> 
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- DEFAULT                         DEFAULT                           10      256    64 ALWAYS     Y    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                           10      256    64 ALWAYS    Y    N   N      N     Y     N      Y     Sep
 GDE> 
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 
@@ -1247,17 +1258,17 @@ GDE>
 GDE> 
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- DEFAULT                         DEFAULT                            0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                            0      256    64 ALWAYS    N    N   N      N     Y     N      Y     Sep
 GDE> 
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 
@@ -1606,17 +1617,17 @@ GDE>
 GDE> 
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- DEFAULT                         DEFAULT                           10      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                           10      256    64 ALWAYS    N    N   N      N     Y     N      Y     Sep
 GDE> 
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 
@@ -1945,17 +1956,17 @@ GDE>
 GDE> 
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- DEFAULT                         DEFAULT                           10      256    64 ALWAYS     Y    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                           10      256    64 ALWAYS    Y    N   N      N     Y     N      Y     Sep
 GDE> 
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 ^aregionvar collates with nct=1 & act=10
@@ -2335,17 +2346,17 @@ GDE>
 GDE> 
 
                                 *** REGIONS ***
-                                                                                                Std      Inst
-                                 Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- ----------------------------------------------------------------------------------------------------------------------------------
- DEFAULT                         DEFAULT                           10      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+                                                                                               Std      Inst
+                                 Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ -------------------------------------------------------------------------------------------------------------------------------------------
+ DEFAULT                         DEFAULT                           10      256    64 ALWAYS    N    N   N      N     Y     N      Y     Sep
 GDE> 
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 ^aregionvar collates with nct=1 & act=10
@@ -2736,8 +2747,8 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 AREG GLOBALS COLLATES IN NOSTDNULLCOLL

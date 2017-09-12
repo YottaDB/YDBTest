@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -13,7 +16,7 @@
 #create a global directory with two regions -- DEFAULT, REGX
 setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn
-$gtm_tst/com/dbcreate.csh mumps 2
+$gtm_tst/com/dbcreate.csh mumps 2 -block_size=1024
 
 # Set some global variables - to fill some blocks
 
@@ -72,11 +75,11 @@ echo "--------------------- Test 4 ---------------------"
 
 $DSE << DSE_EOF
 
-change  -leve=1 -block=3
-dump -block=3 -header
+change  -leve=1 -block=27
+dump -block=27 -header
 
-change -bloc=3 -level=0
-dump -block=3 -header
+change -block=27 -level=0
+dump -block=27 -header
 
 DSE_EOF
 
@@ -86,15 +89,15 @@ echo "--------------------- Test 5 ---------------------"
 
 $DSE << DSE_EOF
 
-change  -tn=1000 -block=3
-dump -block=3 -header
-change  -tn=4D2 -block=3
+change  -tn=1000 -block=27
+dump -block=27 -header
+change  -tn=4D2 -block=27
 
-change  -reco=4 -cmpc=0 -block=3
-dump -block=3 -record=4 -hea
+change  -reco=4 -cmpc=0 -block=27
+dump -block=27 -record=4 -hea
 
-change -reco=4 -cm=A -block=3
-dump -block=3 -record=4 -hea
+change -reco=4 -cm=A -block=27
+dump -block=27 -record=4 -hea
 
 DSE_EOF
 
@@ -106,16 +109,16 @@ echo "--------------------- Test 6 ---------------------"
 
 $DSE << DSE_EOF
 
-change -record=4 -rs=0  -block=3
+change -record=4 -rs=0  -block=27
 
-change -record=4 -rs=4 -block=3
-dump -block=3 -record=4 -hea
+change -record=4 -rs=4 -block=27
+dump -block=27 -record=4 -hea
 
-change -record=4 -rsiz=3B  -block=3
-dump -block=3 -record=4 -hea
+change -record=4 -rsiz=3B  -block=27
+dump -block=27 -record=4 -hea
 
-change -record=4 -rsiz=2B -block=3
-dump -block=3 -record=4 -hea
+change -record=4 -rsiz=2B -block=27
+dump -block=27 -record=4 -hea
 
 DSE_EOF
 
@@ -124,22 +127,22 @@ echo "--------------------- Test 7 ---------------------"
 
 $DSE << DSE_EOF
 
-change  -offs=9E -cmpc=0 -block=3
-dump -block=3 -record=4 -hea
+change  -offs=9E -cmpc=0 -block=27
+dump -block=27 -record=4 -hea
 
-change -offs=9E -cmpc=A -block=3
-dump -block=3 -record=4 -hea
+change -offs=9E -cmpc=A -block=27
+dump -block=27 -record=4 -hea
 
-change -offset=9E -rsiz=0 -block=3
+change -offset=9E -rsiz=0 -block=27
 
-change -offset=9E -rsiz=4 -block=3
-dump -block=3 -offset=9E         -hea
+change -offset=9E -rsiz=4 -block=27
+dump -block=27 -offset=9E         -hea
 
-change -offset=9E -rsiz=3B -blo=3
-dump -block=3 -offset=9E -hea
+change -offset=9E -rsiz=3B -block=27
+dump -block=27 -offset=9E -hea
 
-change -offset=9E -rsiz=2B -blo=3
-dump -block=3 -offset=9E -hea
+change -offset=9E -rsiz=2B -block=27
+dump -block=27 -offset=9E -hea
 
 DSE_EOF
 
@@ -150,15 +153,15 @@ echo "--------------------- Test 8 ---------------------"
 
 $DSE << DSE_EOF
 
-change -bsiz=0 -block=3
+change -bsiz=0 -block=27
 
-change -bsiz=10 -block=3
-dump -bloc=3 -hea
+change -bsiz=10 -block=27
+dump -block=27 -hea
 
-change -bsiz=2300  -block=3
+change -bsiz=2300  -block=27
 
-change  -bsiz=272  -block=3
-dump -bloc=3 -header
+change  -bsiz=272  -block=27
+dump -block=27 -header
 
 DSE_EOF
 
@@ -167,8 +170,8 @@ echo "--------------------- Test 9 ---------------------"
 
 $DSE << DSE_EOF
 
-change -reco=F -cmpc=0 -block=3
-change -reco=0 -cmpc=0 -block=3
+change -reco=F -cmpc=0 -block=27
+change -reco=0 -cmpc=0 -block=27
 
 DSE_EOF
 
@@ -177,15 +180,15 @@ echo "--------------------- Test 10 ---------------------"
 
 $DSE << DSE_EOF
 
-change -offset=0 -cmpc=0 -block=3
-change -offset=10 -cmpc=A -block=3
+change -offset=0 -cmpc=0 -block=27
+change -offset=10 -cmpc=A -block=27
 dump -offset=10 -hea
-change -offset=10 -cmpc=0 -block=3
+change -offset=10 -cmpc=0 -block=27
 dump -offset=10 -hea
-change -offset=2BE -cmpc=0 -block=3
-change -offset=271 -cmpc=0 -block=3
+change -offset=2BE -cmpc=0 -block=27
+change -offset=271 -cmpc=0 -block=27
 dump -record=E -hea
-change -offset=271 -cmpc=A -block=3
+change -offset=271 -cmpc=A -block=27
 dump -record=E -hea
 
 DSE_EOF
@@ -277,9 +280,9 @@ echo "--------------------- Test 18 ---------------------"
 $DSE << DSE_EOF
 crit -all
 change -fileheader -key_max_size=20
-add -reco=2 -key="^aglobal(""abcdefghijklmnop"")" -data="dont add" -bloc=3
-add -reco=2 -key="^aglobal(""abcdefgh"")" -data="add it" -bloc=3
-remove  -reco=2 -bloc=3
+add -reco=2 -key="^aglobal(""abcdefghijklmnop"")" -data="dont add" -block=27
+add -reco=2 -key="^aglobal(""abcdefgh"")" -data="add it" -block=27
+remove  -reco=2 -block=27
 crit -all
 DSE_EOF
 
@@ -291,7 +294,7 @@ $DSE << DSE_EOF
 crit -all
 crit -seize
 change -fileheader -record_max_size=22
-add -bloc=3 -reco=2 -key="^aglobal(""abcdefghi"")" -data="too big a record to fit"
+add -block=27 -reco=2 -key="^aglobal(""abcdefghi"")" -data="too big a record to fit"
 crit -all
 DSE_EOF
 
@@ -304,9 +307,9 @@ $DSE << DSE_EOF
 change -fileheader -key_m=64
 change -fileheader -reco=256
 
-add -bloc=3 -reco=2 -key="^aglobal(""abcdefghij"",""klmnopqrstuvwxyz"")" -data="record big enough to hold this data abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijlmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
-dump -bloc=3 -reco=2 -hea
-remove  -reco=2 -bloc=3
+add -block=27 -reco=2 -key="^aglobal(""abcdefghij"",""klmnopqrstuvwxyz"")" -data="record big enough to hold this data abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijlmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+dump -block=27 -reco=2 -hea
+remove  -reco=2 -block=27
 
 DSE_EOF
 
@@ -320,14 +323,14 @@ if (("MM" != $acc_meth) || (1 == $gtm_platform_mmfile_ext)) then
 	$DSE << DSE_EOF
 
 	change -fileheader -total_blks=10
-	dump -bloc=27 -reco=10 -hea
+	dump -bloc=27 -reco=E -hea
 	change -bl=11 -level=2
 
 	change -fileheader -tota=230
-	dump -bloc=27 -reco=10 -hea
+	dump -bloc=27 -reco=E -hea
 
 	change -fileheader -tota=65
-	dump -bloc=27 -reco=10 -hea
+	dump -bloc=27 -reco=E -hea
 
 DSE_EOF
 endif

@@ -12,26 +12,24 @@ d in4^sfill("set",1,1)set PASS
 GTM>
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 # Data blocks, records, % used and adjacency before reorg
-Data              356           10006          54.493            12
+Data               84           10006          55.841            17
 # Data blocks, records, % used and adjacency after reorg
-Data              194           10006          98.041           194
-##ALLOW_OUTPUT SPANNING_REGIONS
+Data               47           10006          99.340            47
+##ALLOW_OUTPUT   SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
+##SUSPEND_OUTPUT COLLATION
 # Data blocks, records, % used and adjacency before reorg
-##SUSPEND_OUTPUT NON_COLLATION
-Data              337            9217          53.088            14
-##ALLOW_OUTPUT NON_COLLATION
-##SUSPEND_OUTPUT COLLATION
-Data              397           11488          56.009            11
-##ALLOW_OUTPUT COLLATION
+Data               99           11488          54.389             8
 # Data blocks, records, % used and adjacency after reorg
+Data               74           11488          72.566            39
+##ALLOW_OUTPUT   COLLATION
 ##SUSPEND_OUTPUT NON_COLLATION
-Data              222            9217          79.377           137
-##ALLOW_OUTPUT NON_COLLATION
-##SUSPEND_OUTPUT COLLATION
-Data              293           11488          75.059           138
-##ALLOW_OUTPUT COLLATION
-##ALLOW_OUTPUT NONSPANNING_REGIONS
+# Data blocks, records, % used and adjacency before reorg
+Data               88            9217          49.169            23
+# Data blocks, records, % used and adjacency after reorg
+Data               58            9217          74.299            43
+##ALLOW_OUTPUT   NON_COLLATION
+##ALLOW_OUTPUT   NONSPANNING_REGIONS
 # If a global spans multiple regions, when -reg is passed, mupip reorg should act only on the select regions
 Global: afill (region AREG)
 ##SOURCE_PATH##/mupip

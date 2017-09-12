@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -13,7 +16,7 @@
 # This is based off of the switch_over test
 #
 setenv gtm_test_tptype "ONLINE"
-setenv test_sleep_sec 90
+setenv test_sleep_sec 30
 setenv maxwaittime 300
 # This test does a failover. A->P won't work in this case.
 if ("1" == "$test_replic_suppl_type") then
@@ -46,11 +49,11 @@ echo $status
 $gtm_tst/com/wait_for_log.csh -log SRC_$start_time.log -message "End statistics logging" -duration 120
 $MUPIP replicate -source -statslog=ON >>& SRC3_ignore.out
 $MUPIP replicate -source -statslog=ON >>& SRC4_ignore.out
-sleep 10
+sleep 4
 $MUPIP replicate -source -statslog=OFF >>& SRC5_ignore.out
 $MUPIP replicate -source -statslog=OFF >>& SRC6_ignore.out
 $MUPIP replicate -source -statslog=OFF -changelog -log=SRC7.log
-sleep 10
+sleep 4
 $MUPIP replicate -source -changelog -log=SRC8.log
 echo $status
 $MUPIP replicate -source -changelog -log=SRC9.log >>& SRC9_ignore.out
@@ -115,7 +118,7 @@ $MUPIP replicate -receiv -statslog=ON >>& RCVR4_ignore.out
 $MUPIP replicate -receiv -statslog=OFF >>& RCVR5_ignore.out
 $MUPIP replicate -receiv -statslog=OFF >>& RCVR6_ignore.out
 $MUPIP replicate -receiv -statslog=OFF -changelog -log=RCVR7.log
-sleep 10
+sleep 4
 $MUPIP replicate -receiv -changelog -log=RCVR8.log
 echo $status
 $MUPIP replicate -receiv -changelog -log=RCVR9.log >>& RCVR9_ignore.out
@@ -137,7 +140,7 @@ date > outputdateAftrRCVR12_2.log
 $MUPIP replicate -receiv -changelog -log=RCVR12.log
 echo $status
 unset verbose
-sleep 10
+sleep 4
 ###
 echo "Stopping GTM on primary side..."
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/endtp.csh  < /dev/null "">>&!"" endtp.out"

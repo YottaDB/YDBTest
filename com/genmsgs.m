@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2014 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -75,17 +78,20 @@ genmsgs
 	.	if (debug) use dbg write mnemonic,!
 	.	use argsOut
 	.	write mnemonic,!
-	.	set isZGBLDIRACC=mnemonic["ZGBLDIRACC"
 	.
 	.	; Generate the required number of arguments for the current message.
 	.	set count=messages(mnemonic,"args")
+	.	set cumul=1
 	.	for i=1:1:count do
 	.	.	set type=messages(mnemonic,"args",i,"type")
 	.	.	set arg(i)=$$generateArg(type,.expValue)
 	.	.	write expValue
-	.	.	write:('isZGBLDIRACC) !
+	.	.	if (""=messages(mnemonic,"args",i,"postChars")) do
+	.	.	.	if $incr(cumul)
+	.	.	else  do
+	.	.	.	for j=1:1:cumul write !
+	.	.	.	set cumul=1
 	.	.	if (debug) use dbg write arg(i),! use argsOut
-	.	write:(isZGBLDIRACC) !,!,!
 	.
 	.	write !
 	.	if (debug) use dbg write !

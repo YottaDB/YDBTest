@@ -31,11 +31,11 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> 
-Block 0  Size 90  Level -1  TN 4C5 V6   Master Status: Free Space
+Block 0  Size 90  Level -1  TN 476 V6   Master Status: Free Space
 
            	Low order                         High order
-Block        0:	|  XXXXXXXX  XXXXXXXX  XXXXXXXX  XXXXXXXX  |
-Block       20:	|  XXXXXXXX  ........  ........  ........  |
+Block        0:	|  XXXXXXXX  XXXXX...  ........  ........  |
+Block       20:	|  ........  ........  ........  ........  |
 Block       40:	|  ........  ........  ........  ........  |
 Block       60:	|  ........  ........  ........  ........  |
 Block       80:	|  ........  ........  ........  ........  |
@@ -62,11 +62,11 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> 
-Block 0  Size 90  Level -1  TN 4C5 V6   Master Status: Free Space
+Block 0  Size 90  Level -1  TN 476 V6   Master Status: Free Space
 
            	Low order                         High order
-Block        0:	|  XXXXXXXX  XXXXXXXX  XXXXXXXX  XXXXXXXX  |
-Block       20:	|  XXXXXXXX  ........  ........  ........  |
+Block        0:	|  XXXXXXXX  XXXXX...  ........  ........  |
+Block       20:	|  ........  ........  ........  ........  |
 Block       40:	|  ........  ........  ........  ........  |
 Block       60:	|  ........  ........  ........  ........  |
 Block       80:	|  ........  ........  ........  ........  |
@@ -89,12 +89,12 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> 
-Block 0  Size 90  Level -1  TN 4C5 V6   Master Status: Free Space
+Block 0  Size 90  Level -1  TN 476 V6   Master Status: Free Space
 
 DSE> 
            	Low order                         High order
-Block        0:	|  XXXXXXXX  XXXXXXXX  XXXXXXXX  XXXXXXXX  |
-Block       20:	|  XXXXXXXX  ........  ........  ........  |
+Block        0:	|  XXXXXXXX  XXXXX...  ........  ........  |
+Block       20:	|  ........  ........  ........  ........  |
 Block       40:	|  ........  ........  ........  ........  |
 Block       60:	|  ........  ........  ........  ........  |
 Block       80:	|  ........  ........  ........  ........  |
@@ -125,7 +125,7 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> 
-Block 4   Size 1C8   Level 1   TN 4C5 V6
+Block 4   Size 83   Level 1   TN 476 V6
 
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
@@ -170,9 +170,9 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> 
-Rec:2  Blk 3  Off 45  Size 2B  Cmpc A  Key ^aglobal(1222,43992)
+Rec:2  Blk 3  Off 23  Size A  Cmpc 9  Key ^aglobal(2,72)
 
-Rec:3  Blk 3  Off 70  Size 2B  Cmpc A  Key ^aglobal(1223,44028)
+Rec:3  Blk 3  Off 2D  Size B  Cmpc 9  Key ^aglobal(3,108)
 
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
@@ -184,9 +184,9 @@ Rec:1  Blk 1  Off 10  Size 8  Cmpc 0  Ptr 2  Key *
 
 DSE> DSE> Error: offset greater than blk size of 18
 DSE> 
-Rec:1  Blk 3  Off 10  Size 35  Cmpc 0  Key ^aglobal(1221,43956)
+Rec:1  Blk 3  Off 10  Size 13  Cmpc 0  Key ^aglobal(1,36)
 
-Rec:2  Blk 3  Off 45  Size 2B  Cmpc A  Key ^aglobal(1222,43992)
+Rec:2  Blk 3  Off 23  Size A  Cmpc 9  Key ^aglobal(2,72)
 
 DSE> DSE> DSE> 
 File  	##TEST_PATH##/a.dat
@@ -217,8 +217,8 @@ DSE>
 Block 5   Size 1D   Level 0   TN 8 V6
 
 Rec:1  Blk 5  Off 10  Size D  Cmpc 0  Key ^NULLGBL
-##TEST_AWK.*
-##TEST_AWK           .  .  .  .  .  N  U  L  L  G  B  L  .  .                     .
+##TEST_AWK      10 : |  D  0  0 .. 4E 55 4C 4C 47 42 4C  0  0                     |
+           |  .  .  .  .  N  U  L  L  G  B  L  .  .                     |
 
 DSE> 
 1 ZWR records written.

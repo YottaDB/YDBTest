@@ -175,6 +175,7 @@ Region          AREG
 ##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
 ##ALLOW_OUTPUT BG
   Freeze match                   0x00000000  Flush trigger                  240
+  Freeze online                       FALSE  Freeze online autorelease    FALSE
   Current transaction    0x0000000000000002  No. of writes/flush              7
   Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
   Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
@@ -187,7 +188,7 @@ Region          AREG
 ##ALLOW_OUTPUT  REPLIC
 ##TEST_AWK  Journal State               .inactive. ON  Journal Before imaging       .*
   Journal Allocation                   2048  Journal Extension             2048
-##TEST_AWK  Journal Buffer Size                  2308  Journal Alignsize  *[1-9][0-9]*
+##TEST_AWK  Journal Buffer Size                  2312  Journal Alignsize  *[1-9][0-9]*
 ##TEST_AWK.*
   Journal Yield Limit                     8  Journal Sync IO              FALSE
   Journal File: ##TEST_PATH##/a.mjl
@@ -205,6 +206,9 @@ Region          AREG
   Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
   Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Async IO                              OFF  WIP queue cache blocks           0
+  DB is auto-created                  FALSE  DB shares gvstats             TRUE
+  LOCK shares DB critical section     FALSE
 DSE> $MUPIP integ integ.dat
 
 No errors detected by integ.
@@ -429,20 +433,20 @@ DSE>
 	1:10,	2:10,
     Global tree path
     Path--blk:off
-	4:7F,	3
+	4:10,	3
 
 DSE> 
-Block 3   Size 390   Level 0   TN 3E8 V6
+Block 3   Size FFD   Level 0   TN 1A2 V6
 
 DSE> 
 File            ##TEST_PATH##/mumps.dat
 Region          DEFAULT
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
 ##TEST_AWK  Access method                          (BG|MM)  Global Buffers                1024
-  Reserved Bytes                          0  Block size (in bytes)         1024
+  Reserved Bytes                          0  Block size (in bytes)         4096
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                       64  Total blocks            0x00000065
-  Null subscripts                     NEVER  Free blocks             0x00000057
+  Null subscripts                     NEVER  Free blocks             0x0000005E
   Standard Null Collation             FALSE  Free space              0x00000000
   Last Record Backup     0x0000000000000001  Extension Count                100
   Last Database Backup   0x0000000000000001  Number of local maps             1
@@ -455,6 +459,7 @@ Region          DEFAULT
 ##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
 ##ALLOW_OUTPUT BG
   Freeze match                   0x00000000  Flush trigger                  960
+  Freeze online                       FALSE  Freeze online autorelease    FALSE
   Current transaction    0x00000000000003E9  No. of writes/flush              7
   Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
   Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
@@ -473,6 +478,9 @@ Region          DEFAULT
   Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
   Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Async IO                              OFF  WIP queue cache blocks           0
+  DB is auto-created                  FALSE  DB shares gvstats             TRUE
+  LOCK shares DB critical section     FALSE
 DSE> Test is valid, if a(1000) is in block 3
 Test is valid, if block 3 has transaction number 3e8
 Test is valid, if file header has curr_tn = 3e9
@@ -485,10 +493,10 @@ File            ##TEST_PATH##/mumps.dat
 Region          DEFAULT
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
 ##TEST_AWK  Access method                          (BG|MM)  Global Buffers                1024
-  Reserved Bytes                          0  Block size (in bytes)         1024
+  Reserved Bytes                          0  Block size (in bytes)         4096
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                       64  Total blocks            0x00000065
-  Null subscripts                     NEVER  Free blocks             0x00000057
+  Null subscripts                     NEVER  Free blocks             0x0000005E
   Standard Null Collation             FALSE  Free space              0x00000000
   Last Record Backup     0x0000000000000001  Extension Count                100
   Last Database Backup   0x0000000000000001  Number of local maps             1
@@ -501,6 +509,7 @@ Region          DEFAULT
 ##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
 ##ALLOW_OUTPUT BG
   Freeze match                   0x00000000  Flush trigger                  960
+  Freeze online                       FALSE  Freeze online autorelease    FALSE
   Current transaction    0x00000000000003E8  No. of writes/flush              7
   Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
   Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
@@ -519,24 +528,27 @@ Region          DEFAULT
   Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
   Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Async IO                              OFF  WIP queue cache blocks           0
+  DB is auto-created                  FALSE  DB shares gvstats             TRUE
+  LOCK shares DB critical section     FALSE
 DSE> 
 Block:Offset Level
 %GTM-I-DBTNTOOLG, 
-       3:0      0  Block transaction number too large
+       6:0      0  Block transaction number too large
                    Directory Path:  1:10, 2:10
-                   Path:  4:7F, 3:0
-Keys from ^a(911.1) to the end are suspect.
+                   Path:  4:2B, 6:0
+Keys from ^a(825.1) to the end are suspect.
 %GTM-I-DBTN, Block TN is 0x00000000000003E8
 
 Total error count from integ:		1.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               2           2.685            NA
-Index               1              10          13.183             1
-Data               10            1000          98.583            10
-Free               87              NA              NA            NA
-Total             100            1012              NA            11
+Directory           2               2           0.671            NA
+Index               1               3           1.245             1
+Data                3            1000          81.013             3
+Free               94              NA              NA            NA
+Total             100            1005              NA             4
 %GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
 
 Largest transaction number found in database was 3E8
@@ -552,21 +564,21 @@ Integ of region DEFAULT
 
 Block:Offset Level
 %GTM-I-DBTNTOOLG, 
-       3:0      0  Block transaction number too large
+       6:0      0  Block transaction number too large
                    Directory Path:  1:10, 2:10
-                   Path:  4:7F, 3:0
-Keys from ^a(911.1) to the end are suspect.
+                   Path:  4:2B, 6:0
+Keys from ^a(825.1) to the end are suspect.
 %GTM-I-DBTN, Block TN is 0x00000000000003E8
 
 Total error count from integ:		1.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               2           2.685            NA
-Index               1              10          13.183             1
-Data               10            1000          98.583            10
-Free               87              NA              NA            NA
-Total             100            1012              NA            11
+Directory           2               2           0.671            NA
+Index               1               3           1.245             1
+Data                3            1000          81.013             3
+Free               94              NA              NA            NA
+Total             100            1005              NA             4
 %GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
 
 Largest transaction number found in database was 3E8
@@ -583,6 +595,7 @@ c.dat
 integ.dat
 %GTM-E-INTEGERRS, Database integrity errors
 %GTM-E-NOREGION, REGION not found: BREG
+%GTM-I-REGFILENOTFOUND, Database file b.dat corresponding to region BREG cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 No errors detected by integ.
 No errors detected by integ.

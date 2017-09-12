@@ -126,11 +126,12 @@ Test Case 36
 replication=on and other journal qualifiers
 ##SOURCE_PATH##/mupip set -journal=enable,before,alignsize=4096,allocation=2048,autoswitchlimit=16448,bu=2308,EP=600,extension=100,filename=abcd.mjl,sync_io,yield_limit=1000 -replic=on -file mumps.dat
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 %GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
   Journal State               [inactive] ON  Journal Before imaging        TRUE
   Journal Allocation                   2048  Journal Extension              100
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
   Journal AutoSwitchLimit             16448  Journal Epoch Interval         600
   Journal Yield Limit                  1000  Journal Sync IO               TRUE
   Journal File: ##TEST_PATH##/abcd.mjl
@@ -139,11 +140,12 @@ Test Case 37
 replication=off and other journal qualifiers
 ##SOURCE_PATH##/mupip set -journal=enable,before,alignsize=4096,allocation=2048,autoswitchlimit=16448,bu=2308,EP=600,extension=100,filename=test_37.mjl,sync_io,yteld_limit=1000 -replic=off -file mumps.dat
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/test_37.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 %GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
   Journal State               [inactive] ON  Journal Before imaging        TRUE
   Journal Allocation                   2048  Journal Extension              100
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
   Journal AutoSwitchLimit             16448  Journal Epoch Interval         600
   Journal Yield Limit                  1000  Journal Sync IO               TRUE
   Journal File: ##TEST_PATH##/test_37.mjl

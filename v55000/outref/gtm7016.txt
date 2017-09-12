@@ -89,10 +89,13 @@ GTM>
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 Testing mupip load -stdin foo.glo < test.glo fails...
+STDIN and FILE (foo.glo) cannot be specified at the same time
 %GTM-E-MUPCLIERR, Action not taken due to CLI errors
 Testing mupip load -stdin test.glo fails...
+STDIN and FILE (test.glo) cannot be specified at the same time
 %GTM-E-MUPCLIERR, Action not taken due to CLI errors
 Testing mupip load test.glo -stdin fails...
+STDIN and FILE (test.glo) cannot be specified at the same time
 %GTM-E-MUPCLIERR, Action not taken due to CLI errors
 Testing mupip load test.glo foo.glo fails...
 %GTM-E-CLIERR, Too many parameters

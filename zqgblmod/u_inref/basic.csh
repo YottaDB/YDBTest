@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -24,7 +27,7 @@ endif
 #
 # LOG files makes it slower
 # create database on A side (secondary)
-$gtm_tst/com/dbcreate.csh mumps 4 255 1000
+$gtm_tst/com/dbcreate.csh mumps 4 255 1000 -block_size=1024
 
 setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
 setenv start_time `cat start_time`

@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -25,10 +28,10 @@ $gtm_tst/com/dbcreate.csh mumps 1 125 1000 4096 2000 4096 2000 >&! dbcreate.out
 setenv gtm_test_jobid 1
 setenv gtm_test_dbfill "IMPTP"
 setenv gtm_test_jobcnt 2
-
-setenv gtm_white_box_test_case_count `$gtm_exe/mumps -run %XCMD 'write $random(2)'`
-
-echo "# Is db_init() retry limit is reduced to 1? [1 if yes, 0 otherwise]: $gtm_white_box_test_case_count"
+# Previously the below env var could take on values 0 or 1. But as of V63001A, db_init() has been reworked to never bypass
+# the ftok lock in the final retry loop. So if the env var is 1, there is no bypasser dse process which this test relies on.
+# Therefore hardcode the env var to only take on the value 0.
+setenv gtm_white_box_test_case_count 0
 
 echo "# Launching $gtm_test_jobcnt jobs."
 $gtm_tst/com/imptp.csh >& imptp.out
@@ -40,20 +43,17 @@ setenv gtm_white_box_test_case_enable 1
 setenv gtm_white_box_test_case_number 96 # WBTEST_HOLD_FTOK_UNTIL_BYPASS
 
 echo "# Launching a DSE process which will hold the ftok semaphore"
-($DSE dump -nocrit >& dse1_out &)
+($DSE dump -nocrit >& dse1_out &; echo $! >&! dse_pid1) >& dse1.out
 $gtm_tst/com/wait_for_log.csh -log dse1_out -message "Holding the ftok semaphore until a new process comes along" -duration 300
 echo "# Launching another DSE process which will bypass the ftok semaphore"
 set syslog_before = `date +"%b %e %H:%M:%S"`
-($DSE dump -nocrit >& dse2_out &)
+($DSE dump -nocrit >& dse2_out &; echo $! >&! dse_pid2) >& dse2.out
 $gtm_tst/com/getoper.csh "$syslog_before" "" syslog1.txt "" "RESRCWAIT" # Make sure FTOK bypass occurred
-$gtm_tst/com/wait_for_log.csh -log dse2_out -message "Waiting for all processes to quit" -duration 300
 unsetenv gtm_white_box_test_case_enable
 unsetenv gtm_white_box_test_case_number
 echo "# Stopping mumps processes"
 $gtm_tst/com/endtp.csh >& endtp.out
+set dse_pid1 = `cat dse_pid1`; $gtm_tst/com/wait_for_proc_to_die.csh $dse_pid1
+set dse_pid2 = `cat dse_pid2`; $gtm_tst/com/wait_for_proc_to_die.csh $dse_pid2
 echo "# Bypasser DSE process should continue with db_init. Verify if this is done"
-$gtm_tst/com/wait_for_log.csh -log dse2_out -message "REGOPENRETRY" -duration 300
-if (1 == $gtm_white_box_test_case_count) then
-    $gtm_tst/com/wait_for_log.csh -log dse2_out -message "REGOPENFAIL" -duration 300
-endif
 $gtm_tst/com/dbcheck.csh

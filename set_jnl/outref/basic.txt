@@ -12,11 +12,11 @@ Using: ##SOURCE_PATH##/mupip
 a.dat
 b.dat
 mumps.dat
-REGION AREG's file a.dat cannot be found.
+%GTM-I-REGFILENOTFOUND, Database file a.dat corresponding to region AREG cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 %GTM-E-NOREGION, REGION not found: AREG
 %GTM-E-MUNOACTION, MUPIP unable to perform requested action
-REGION AREG's file a.dat cannot be found.
+%GTM-I-REGFILENOTFOUND, Database file a.dat corresponding to region AREG cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 %GTM-E-NOREGION, REGION not found: AREG
 %GTM-E-MUNOACTION, MUPIP unable to perform requested action
@@ -33,7 +33,7 @@ a.dat
 b.dat
 mumps.dat
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
-%GTM-W-MUPIPSET2BIG, 1000 too large, maximum RESERVED_BYTES allowed is 940
+%GTM-W-MUPIPSET2BIG, 4096 too large, maximum RESERVED_BYTES allowed is 4012
 %GTM-W-WCWRNNOTCHG, Not all specified database files were changed
 Database file mumps.dat now has 600 reserved bytes
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
@@ -46,10 +46,11 @@ DISABLE option
 ##SOURCE_PATH##/mupip set -journal=disable -file mumps.dat
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
   Journal State               [inactive] ON  Journal Before imaging       FALSE
   Journal Allocation                   2048  Journal Extension              100
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
 ##TEST_AWK  Journal AutoSwitchLimit             16448  Journal Epoch Interval         ( 30|300)
   Journal Yield Limit                  1000  Journal Sync IO               TRUE
   Journal File: ##TEST_PATH##/abcd.mjl
@@ -60,7 +61,7 @@ DISABLE option
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
   Journal State               [inactive] ON  Journal Before imaging       FALSE
   Journal Allocation                   2048  Journal Extension             2048
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
 ##TEST_AWK  Journal AutoSwitchLimit           8386560  Journal Epoch Interval         ( 30|300)
   Journal Yield Limit                     8  Journal Sync IO              FALSE
   Journal File: ##TEST_PATH##/mumps.mjl
@@ -89,10 +90,11 @@ NOJOURNAL option
 NOJOURANL qualifier is equivalent to DISABLE option
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
   Journal State               [inactive] ON  Journal Before imaging       FALSE
   Journal Allocation                   2048  Journal Extension              100
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
 ##TEST_AWK  Journal AutoSwitchLimit             16448  Journal Epoch Interval         ( 30|300)
   Journal Yield Limit                  1000  Journal Sync IO               TRUE
   Journal File: ##TEST_PATH##/abcd.mjl
@@ -102,7 +104,7 @@ Journal state (expected DISABLED): DISABLED
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
   Journal State               [inactive] ON  Journal Before imaging       FALSE
   Journal Allocation                   2048  Journal Extension             2048
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
 ##TEST_AWK  Journal AutoSwitchLimit           8386560  Journal Epoch Interval         ( 30|300)
   Journal Yield Limit                     8  Journal Sync IO              FALSE
   Journal File: ##TEST_PATH##/mumps.mjl
@@ -164,10 +166,11 @@ OFF option does have any effect if journaling is not enabled
 %GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
 %GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
 ##SOURCE_PATH##/mupip set -journal=enable,off,alignsize=4096,allocation=2048,autoswitchlimit=16448,buffer_size=2308,extension=100,filename=abcd.mjl,sync_io,yield_limit=1000 -file mumps.dat
+%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
   Journal State                         OFF  Journal Before imaging       FALSE
   Journal Allocation                   2048  Journal Extension              100
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
 ##TEST_AWK  Journal AutoSwitchLimit             16448  Journal Epoch Interval         ( 30|300)
   Journal Yield Limit                  1000  Journal Sync IO               TRUE
   Journal File: ##TEST_PATH##/abcd.mjl
@@ -176,7 +179,7 @@ OFF option does have any effect if journaling is not enabled
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
   Journal State               [inactive] ON  Journal Before imaging       FALSE
   Journal Allocation                   2048  Journal Extension              100
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                  2312  Journal Alignsize             4096
 ##TEST_AWK  Journal AutoSwitchLimit             16448  Journal Epoch Interval         ( 30|300)
   Journal Yield Limit                  1000  Journal Sync IO               TRUE
   Journal File: ##TEST_PATH##/abcd.mjl

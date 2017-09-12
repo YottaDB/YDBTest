@@ -11,25 +11,25 @@ Region	AREG
 
 DSE> Error:  already in region: AREG
 DSE> 
-Key not found, would be in block  5.
+Key not found, would be in block  3.
     Directory path
     Path--blk:off
 	1:10,	2:10,
     Global tree path
     Path--blk:off
-	4:10,	5:10,
+	4:10,	3:10,
 DSE> 
 File  	##TEST_PATH##/b.dat
 Region	BREG
 
 DSE> 
-Key not found, would be in block  AD.
+Key not found, would be in block  AC.
     Directory path
     Path--blk:off
 	1:10,	2:10,
     Global tree path
     Path--blk:off
-	4:1F,	B6:39B,	AD:149,
+	4:1F,	B6:39B,	AC:149,
 DSE> 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -56,9 +56,9 @@ Type           Blocks         Records          % Used      Adjacent
 
 Directory           2               2           2.685            NA
 Index               1              28          34.277             1
-Data               28            1000          96.107            27
+Data               28            1000          96.107            28
 Free               69              NA              NA            NA
-Total             100            1030              NA            28
+Total             100            1030              NA            29
 ##SOURCE_PATH##/mupip integ -block=5 -reg AREG
 
 
@@ -70,7 +70,7 @@ Type           Blocks         Records          % Used      Adjacent
 
 Directory           0               0           0.000            NA
 Index               0               0           0.000             0
-Data                1              37          99.511             1
+Data                1              37          99.414             1
 Total               1              37              NA             1
 ##SOURCE_PATH##/mupip integ -block=4 -reg AREG
 
@@ -83,8 +83,8 @@ Type           Blocks         Records          % Used      Adjacent
 
 Directory           0               0           0.000            NA
 Index               1              28          34.277             1
-Data               28            1000          96.107            27
-Total              29            1028              NA            28
+Data               28            1000          96.107            28
+Total              29            1028              NA            29
 # Induce DBINVGBL error at BLOCK=5 in AREG
 
 File  	##TEST_PATH##/a.dat
@@ -103,7 +103,7 @@ Type           Blocks         Records          % Used      Adjacent
 
 Directory           0               0           0.000            NA
 Index               0               0           0.000             0
-Data                1              37          99.511             1
+Data                1              37          99.414             1
 Total               1              37              NA             1
 ##SOURCE_PATH##/mupip integ -block=4 -reg AREG : Should give a DBINVGBL error since 4 and 5 have different global names in same tree
 
@@ -114,8 +114,8 @@ Block:Offset Level
 %GTM-E-DBINVGBL, 
        5:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  4:10, 5:10
-Keys from ^ to ^a(37.0) are suspect.
+                   Path:  4:1F, 5:10
+Keys from ^a(37.0) to ^a(74.0) are suspect.
 
 Total error count from integ:		1.
 
@@ -123,8 +123,8 @@ Type           Blocks         Records          % Used      Adjacent
 
 Directory           0               0           0.000            NA
 Index               1              28          34.277             1
-Data               28             964          96.107            27
-Total              29             992              NA            28
+Data               28             964          96.107            28
+Total              29             992              NA            29
 %GTM-E-INTEGERRS, Database integrity errors
 ###################################################################
 # Test MUPIP INTEG -BLOCK= for block in GVT at each level in BREG
@@ -139,9 +139,9 @@ Type           Blocks         Records          % Used      Adjacent
 
 Directory           2               2           2.685            NA
 Index               5             338          76.582             1
-Data              334            1000          92.281           333
+Data              334            1000          92.281           334
 Free               59              NA              NA            NA
-Total             400            1340              NA           334
+Total             400            1340              NA           335
 ##SOURCE_PATH##/mupip integ -block=AD -reg BREG
 
 
@@ -179,8 +179,8 @@ Type           Blocks         Records          % Used      Adjacent
 
 Directory           0               0           0.000            NA
 Index               5             338          76.582             1
-Data              334            1000          92.281           333
-Total             339            1338              NA           334
+Data              334            1000          92.281           334
+Total             339            1338              NA           335
 # Induce DBINVGBL error at BLOCK=B6 in BREG
 
 File  	##TEST_PATH##/a.dat
@@ -211,444 +211,444 @@ Integ of region BREG
 
 Block:Offset Level
 %GTM-E-DBINVGBL, 
+      5A:10     0  Invalid mixing of global names
+                   Directory Path:  0:0
+                   Path:  B6:10, 5A:10
+Keys from ^ to ^c(261.1) are suspect.
+%GTM-E-DBINVGBL, 
       5B:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:10, 5B:10
-Keys from ^ to ^c(261.1) are suspect.
+                   Path:  B6:1F, 5B:10
+Keys from ^c(261.1) to ^c(264.1) are suspect.
 %GTM-E-DBINVGBL, 
       5E:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:1F, 5E:10
-Keys from ^c(261.1) to ^c(264.1) are suspect.
+                   Path:  B6:2A, 5E:10
+Keys from ^c(264.1) to ^c(267.1) are suspect.
 %GTM-E-DBINVGBL, 
       5F:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:2A, 5F:10
-Keys from ^c(264.1) to ^c(267.1) are suspect.
+                   Path:  B6:35, 5F:10
+Keys from ^c(267.1) to ^c(270) are suspect.
 %GTM-E-DBINVGBL, 
       60:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:35, 60:10
-Keys from ^c(267.1) to ^c(270) are suspect.
+                   Path:  B6:41, 60:10
+Keys from ^c(270) to ^c(273.1) are suspect.
 %GTM-E-DBINVGBL, 
       61:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:41, 61:10
-Keys from ^c(270) to ^c(273.1) are suspect.
+                   Path:  B6:4C, 61:10
+Keys from ^c(273.1) to ^c(276.1) are suspect.
 %GTM-E-DBINVGBL, 
       62:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:4C, 62:10
-Keys from ^c(273.1) to ^c(276.1) are suspect.
+                   Path:  B6:57, 62:10
+Keys from ^c(276.1) to ^c(279.1) are suspect.
 %GTM-E-DBINVGBL, 
       63:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:57, 63:10
-Keys from ^c(276.1) to ^c(279.1) are suspect.
+                   Path:  B6:62, 63:10
+Keys from ^c(279.1) to ^c(282.1) are suspect.
 %GTM-E-DBINVGBL, 
       64:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:62, 64:10
-Keys from ^c(279.1) to ^c(282.1) are suspect.
+                   Path:  B6:6E, 64:10
+Keys from ^c(282.1) to ^c(285.1) are suspect.
 %GTM-E-DBINVGBL, 
       65:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:6E, 65:10
-Keys from ^c(282.1) to ^c(285.1) are suspect.
+                   Path:  B6:79, 65:10
+Keys from ^c(285.1) to ^c(288.1) are suspect.
 %GTM-E-DBINVGBL, 
       66:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:79, 66:10
-Keys from ^c(285.1) to ^c(288.1) are suspect.
+                   Path:  B6:84, 66:10
+Keys from ^c(288.1) to ^c(291.1) are suspect.
 %GTM-E-DBINVGBL, 
       67:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:84, 67:10
-Keys from ^c(288.1) to ^c(291.1) are suspect.
+                   Path:  B6:90, 67:10
+Keys from ^c(291.1) to ^c(294.1) are suspect.
 %GTM-E-DBINVGBL, 
       68:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:90, 68:10
-Keys from ^c(291.1) to ^c(294.1) are suspect.
+                   Path:  B6:9B, 68:10
+Keys from ^c(294.1) to ^c(297.1) are suspect.
 %GTM-E-DBINVGBL, 
       69:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:9B, 69:10
-Keys from ^c(294.1) to ^c(297.1) are suspect.
+                   Path:  B6:A6, 69:10
+Keys from ^c(297.1) to ^c(300) are suspect.
 %GTM-E-DBINVGBL, 
       6A:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:A6, 6A:10
-Keys from ^c(297.1) to ^c(300) are suspect.
+                   Path:  B6:B2, 6A:10
+Keys from ^c(300) to ^c(303.1) are suspect.
 %GTM-E-DBINVGBL, 
       6B:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:B2, 6B:10
-Keys from ^c(300) to ^c(303.1) are suspect.
+                   Path:  B6:BD, 6B:10
+Keys from ^c(303.1) to ^c(306.1) are suspect.
 %GTM-E-DBINVGBL, 
       6C:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:BD, 6C:10
-Keys from ^c(303.1) to ^c(306.1) are suspect.
+                   Path:  B6:C8, 6C:10
+Keys from ^c(306.1) to ^c(309.1) are suspect.
 %GTM-E-DBINVGBL, 
       6D:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:C8, 6D:10
-Keys from ^c(306.1) to ^c(309.1) are suspect.
+                   Path:  B6:D3, 6D:10
+Keys from ^c(309.1) to ^c(312.1) are suspect.
 %GTM-E-DBINVGBL, 
       6E:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:D3, 6E:10
-Keys from ^c(309.1) to ^c(312.1) are suspect.
+                   Path:  B6:DF, 6E:10
+Keys from ^c(312.1) to ^c(315.1) are suspect.
 %GTM-E-DBINVGBL, 
       6F:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:DF, 6F:10
-Keys from ^c(312.1) to ^c(315.1) are suspect.
+                   Path:  B6:EA, 6F:10
+Keys from ^c(315.1) to ^c(318.1) are suspect.
 %GTM-E-DBINVGBL, 
       70:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:EA, 70:10
-Keys from ^c(315.1) to ^c(318.1) are suspect.
+                   Path:  B6:F5, 70:10
+Keys from ^c(318.1) to ^c(321.1) are suspect.
 %GTM-E-DBINVGBL, 
       71:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:F5, 71:10
-Keys from ^c(318.1) to ^c(321.1) are suspect.
+                   Path:  B6:101, 71:10
+Keys from ^c(321.1) to ^c(324.1) are suspect.
 %GTM-E-DBINVGBL, 
       72:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:101, 72:10
-Keys from ^c(321.1) to ^c(324.1) are suspect.
+                   Path:  B6:10C, 72:10
+Keys from ^c(324.1) to ^c(327.1) are suspect.
 %GTM-E-DBINVGBL, 
       73:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:10C, 73:10
-Keys from ^c(324.1) to ^c(327.1) are suspect.
+                   Path:  B6:117, 73:10
+Keys from ^c(327.1) to ^c(330) are suspect.
 %GTM-E-DBINVGBL, 
       74:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:117, 74:10
-Keys from ^c(327.1) to ^c(330) are suspect.
+                   Path:  B6:123, 74:10
+Keys from ^c(330) to ^c(333.1) are suspect.
 %GTM-E-DBINVGBL, 
       75:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:123, 75:10
-Keys from ^c(330) to ^c(333.1) are suspect.
+                   Path:  B6:12E, 75:10
+Keys from ^c(333.1) to ^c(336.1) are suspect.
 %GTM-E-DBINVGBL, 
       76:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:12E, 76:10
-Keys from ^c(333.1) to ^c(336.1) are suspect.
+                   Path:  B6:139, 76:10
+Keys from ^c(336.1) to ^c(339.1) are suspect.
 %GTM-E-DBINVGBL, 
       77:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:139, 77:10
-Keys from ^c(336.1) to ^c(339.1) are suspect.
+                   Path:  B6:144, 77:10
+Keys from ^c(339.1) to ^c(342.1) are suspect.
 %GTM-E-DBINVGBL, 
       78:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:144, 78:10
-Keys from ^c(339.1) to ^c(342.1) are suspect.
+                   Path:  B6:150, 78:10
+Keys from ^c(342.1) to ^c(345.1) are suspect.
 %GTM-E-DBINVGBL, 
       79:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:150, 79:10
-Keys from ^c(342.1) to ^c(345.1) are suspect.
+                   Path:  B6:15B, 79:10
+Keys from ^c(345.1) to ^c(348.1) are suspect.
 %GTM-E-DBINVGBL, 
       7A:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:15B, 7A:10
-Keys from ^c(345.1) to ^c(348.1) are suspect.
+                   Path:  B6:166, 7A:10
+Keys from ^c(348.1) to ^c(351.1) are suspect.
 %GTM-E-DBINVGBL, 
       7B:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:166, 7B:10
-Keys from ^c(348.1) to ^c(351.1) are suspect.
+                   Path:  B6:172, 7B:10
+Keys from ^c(351.1) to ^c(354.1) are suspect.
 %GTM-E-DBINVGBL, 
       7C:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:172, 7C:10
-Keys from ^c(351.1) to ^c(354.1) are suspect.
+                   Path:  B6:17D, 7C:10
+Keys from ^c(354.1) to ^c(357.1) are suspect.
 %GTM-E-DBINVGBL, 
       7D:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:17D, 7D:10
-Keys from ^c(354.1) to ^c(357.1) are suspect.
+                   Path:  B6:188, 7D:10
+Keys from ^c(357.1) to ^c(360) are suspect.
 %GTM-E-DBINVGBL, 
       7E:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:188, 7E:10
-Keys from ^c(357.1) to ^c(360) are suspect.
+                   Path:  B6:194, 7E:10
+Keys from ^c(360) to ^c(363.1) are suspect.
 %GTM-E-DBINVGBL, 
       7F:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:194, 7F:10
-Keys from ^c(360) to ^c(363.1) are suspect.
+                   Path:  B6:19F, 7F:10
+Keys from ^c(363.1) to ^c(366.1) are suspect.
 %GTM-E-DBINVGBL, 
       80:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:19F, 80:10
-Keys from ^c(363.1) to ^c(366.1) are suspect.
+                   Path:  B6:1AA, 80:10
+Keys from ^c(366.1) to ^c(369.1) are suspect.
 %GTM-E-DBINVGBL, 
       81:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:1AA, 81:10
-Keys from ^c(366.1) to ^c(369.1) are suspect.
+                   Path:  B6:1B5, 81:10
+Keys from ^c(369.1) to ^c(372.1) are suspect.
 %GTM-E-DBINVGBL, 
       82:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:1B5, 82:10
-Keys from ^c(369.1) to ^c(372.1) are suspect.
+                   Path:  B6:1C1, 82:10
+Keys from ^c(372.1) to ^c(375.1) are suspect.
 %GTM-E-DBINVGBL, 
       83:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:1C1, 83:10
-Keys from ^c(372.1) to ^c(375.1) are suspect.
+                   Path:  B6:1CC, 83:10
+Keys from ^c(375.1) to ^c(378.1) are suspect.
 %GTM-E-DBINVGBL, 
       84:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:1CC, 84:10
-Keys from ^c(375.1) to ^c(378.1) are suspect.
+                   Path:  B6:1D7, 84:10
+Keys from ^c(378.1) to ^c(381.1) are suspect.
 %GTM-E-DBINVGBL, 
       85:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:1D7, 85:10
-Keys from ^c(378.1) to ^c(381.1) are suspect.
+                   Path:  B6:1E3, 85:10
+Keys from ^c(381.1) to ^c(384.1) are suspect.
 %GTM-E-DBINVGBL, 
       86:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:1E3, 86:10
-Keys from ^c(381.1) to ^c(384.1) are suspect.
+                   Path:  B6:1EE, 86:10
+Keys from ^c(384.1) to ^c(387.1) are suspect.
 %GTM-E-DBINVGBL, 
       87:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:1EE, 87:10
-Keys from ^c(384.1) to ^c(387.1) are suspect.
+                   Path:  B6:1F9, 87:10
+Keys from ^c(387.1) to ^c(390) are suspect.
 %GTM-E-DBINVGBL, 
       88:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:1F9, 88:10
-Keys from ^c(387.1) to ^c(390) are suspect.
+                   Path:  B6:205, 88:10
+Keys from ^c(390) to ^c(393.1) are suspect.
 %GTM-E-DBINVGBL, 
       89:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:205, 89:10
-Keys from ^c(390) to ^c(393.1) are suspect.
+                   Path:  B6:210, 89:10
+Keys from ^c(393.1) to ^c(396.1) are suspect.
 %GTM-E-DBINVGBL, 
       8A:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:210, 8A:10
-Keys from ^c(393.1) to ^c(396.1) are suspect.
+                   Path:  B6:21B, 8A:10
+Keys from ^c(396.1) to ^c(3*0) are suspect.
 %GTM-E-DBINVGBL, 
       8B:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:21B, 8B:10
-Keys from ^c(396.1) to ^c(3*0) are suspect.
+                   Path:  B6:226, 8B:10
+Keys from ^c(3*0) to ^c(402.1) are suspect.
 %GTM-E-DBINVGBL, 
       8C:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:226, 8C:10
-Keys from ^c(3*0) to ^c(402.1) are suspect.
+                   Path:  B6:232, 8C:10
+Keys from ^c(402.1) to ^c(405.1) are suspect.
 %GTM-E-DBINVGBL, 
       8D:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:232, 8D:10
-Keys from ^c(402.1) to ^c(405.1) are suspect.
+                   Path:  B6:23D, 8D:10
+Keys from ^c(405.1) to ^c(408.1) are suspect.
 %GTM-E-DBINVGBL, 
       8E:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:23D, 8E:10
-Keys from ^c(405.1) to ^c(408.1) are suspect.
+                   Path:  B6:248, 8E:10
+Keys from ^c(408.1) to ^c(411.1) are suspect.
 %GTM-E-DBINVGBL, 
       8F:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:248, 8F:10
-Keys from ^c(408.1) to ^c(411.1) are suspect.
+                   Path:  B6:254, 8F:10
+Keys from ^c(411.1) to ^c(414.1) are suspect.
 %GTM-E-DBINVGBL, 
       90:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:254, 90:10
-Keys from ^c(411.1) to ^c(414.1) are suspect.
+                   Path:  B6:25F, 90:10
+Keys from ^c(414.1) to ^c(417.1) are suspect.
 %GTM-E-DBINVGBL, 
       91:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:25F, 91:10
-Keys from ^c(414.1) to ^c(417.1) are suspect.
+                   Path:  B6:26A, 91:10
+Keys from ^c(417.1) to ^c(420) are suspect.
 %GTM-E-DBINVGBL, 
       92:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:26A, 92:10
-Keys from ^c(417.1) to ^c(420) are suspect.
+                   Path:  B6:276, 92:10
+Keys from ^c(420) to ^c(423.1) are suspect.
 %GTM-E-DBINVGBL, 
       93:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:276, 93:10
-Keys from ^c(420) to ^c(423.1) are suspect.
+                   Path:  B6:281, 93:10
+Keys from ^c(423.1) to ^c(426.1) are suspect.
 %GTM-E-DBINVGBL, 
       94:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:281, 94:10
-Keys from ^c(423.1) to ^c(426.1) are suspect.
+                   Path:  B6:28C, 94:10
+Keys from ^c(426.1) to ^c(429.1) are suspect.
 %GTM-E-DBINVGBL, 
       95:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:28C, 95:10
-Keys from ^c(426.1) to ^c(429.1) are suspect.
+                   Path:  B6:297, 95:10
+Keys from ^c(429.1) to ^c(432.1) are suspect.
 %GTM-E-DBINVGBL, 
       96:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:297, 96:10
-Keys from ^c(429.1) to ^c(432.1) are suspect.
+                   Path:  B6:2A3, 96:10
+Keys from ^c(432.1) to ^c(435.1) are suspect.
 %GTM-E-DBINVGBL, 
       97:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:2A3, 97:10
-Keys from ^c(432.1) to ^c(435.1) are suspect.
+                   Path:  B6:2AE, 97:10
+Keys from ^c(435.1) to ^c(438.1) are suspect.
 %GTM-E-DBINVGBL, 
       98:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:2AE, 98:10
-Keys from ^c(435.1) to ^c(438.1) are suspect.
+                   Path:  B6:2B9, 98:10
+Keys from ^c(438.1) to ^c(441.1) are suspect.
 %GTM-E-DBINVGBL, 
       99:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:2B9, 99:10
-Keys from ^c(438.1) to ^c(441.1) are suspect.
+                   Path:  B6:2C5, 99:10
+Keys from ^c(441.1) to ^c(444.1) are suspect.
 %GTM-E-DBINVGBL, 
       9A:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:2C5, 9A:10
-Keys from ^c(441.1) to ^c(444.1) are suspect.
+                   Path:  B6:2D0, 9A:10
+Keys from ^c(444.1) to ^c(447.1) are suspect.
 %GTM-E-DBINVGBL, 
       9B:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:2D0, 9B:10
-Keys from ^c(444.1) to ^c(447.1) are suspect.
+                   Path:  B6:2DB, 9B:10
+Keys from ^c(447.1) to ^c(450) are suspect.
 %GTM-E-DBINVGBL, 
       9C:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:2DB, 9C:10
-Keys from ^c(447.1) to ^c(450) are suspect.
+                   Path:  B6:2E7, 9C:10
+Keys from ^c(450) to ^c(453.1) are suspect.
 %GTM-E-DBINVGBL, 
       9D:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:2E7, 9D:10
-Keys from ^c(450) to ^c(453.1) are suspect.
+                   Path:  B6:2F2, 9D:10
+Keys from ^c(453.1) to ^c(456.1) are suspect.
 %GTM-E-DBINVGBL, 
       9E:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:2F2, 9E:10
-Keys from ^c(453.1) to ^c(456.1) are suspect.
+                   Path:  B6:2FD, 9E:10
+Keys from ^c(456.1) to ^c(459.1) are suspect.
 %GTM-E-DBINVGBL, 
       9F:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:2FD, 9F:10
-Keys from ^c(456.1) to ^c(459.1) are suspect.
+                   Path:  B6:308, 9F:10
+Keys from ^c(459.1) to ^c(462.1) are suspect.
 %GTM-E-DBINVGBL, 
       A0:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:308, A0:10
-Keys from ^c(459.1) to ^c(462.1) are suspect.
+                   Path:  B6:314, A0:10
+Keys from ^c(462.1) to ^c(465.1) are suspect.
 %GTM-E-DBINVGBL, 
       A1:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:314, A1:10
-Keys from ^c(462.1) to ^c(465.1) are suspect.
+                   Path:  B6:31F, A1:10
+Keys from ^c(465.1) to ^c(468.1) are suspect.
 %GTM-E-DBINVGBL, 
       A2:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:31F, A2:10
-Keys from ^c(465.1) to ^c(468.1) are suspect.
+                   Path:  B6:32A, A2:10
+Keys from ^c(468.1) to ^c(471.1) are suspect.
 %GTM-E-DBINVGBL, 
       A3:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:32A, A3:10
-Keys from ^c(468.1) to ^c(471.1) are suspect.
+                   Path:  B6:336, A3:10
+Keys from ^c(471.1) to ^c(474.1) are suspect.
 %GTM-E-DBINVGBL, 
       A4:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:336, A4:10
-Keys from ^c(471.1) to ^c(474.1) are suspect.
+                   Path:  B6:341, A4:10
+Keys from ^c(474.1) to ^c(477.1) are suspect.
 %GTM-E-DBINVGBL, 
       A5:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:341, A5:10
-Keys from ^c(474.1) to ^c(477.1) are suspect.
+                   Path:  B6:34C, A5:10
+Keys from ^c(477.1) to ^c(480) are suspect.
 %GTM-E-DBINVGBL, 
       A6:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:34C, A6:10
-Keys from ^c(477.1) to ^c(480) are suspect.
+                   Path:  B6:358, A6:10
+Keys from ^c(480) to ^c(483.1) are suspect.
 %GTM-E-DBINVGBL, 
       A7:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:358, A7:10
-Keys from ^c(480) to ^c(483.1) are suspect.
+                   Path:  B6:363, A7:10
+Keys from ^c(483.1) to ^c(486.1) are suspect.
 %GTM-E-DBINVGBL, 
       A8:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:363, A8:10
-Keys from ^c(483.1) to ^c(486.1) are suspect.
+                   Path:  B6:36E, A8:10
+Keys from ^c(486.1) to ^c(489.1) are suspect.
 %GTM-E-DBINVGBL, 
       A9:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:36E, A9:10
-Keys from ^c(486.1) to ^c(489.1) are suspect.
+                   Path:  B6:379, A9:10
+Keys from ^c(489.1) to ^c(492.1) are suspect.
 %GTM-E-DBINVGBL, 
       AA:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:379, AA:10
-Keys from ^c(489.1) to ^c(492.1) are suspect.
+                   Path:  B6:385, AA:10
+Keys from ^c(492.1) to ^c(495.1) are suspect.
 %GTM-E-DBINVGBL, 
       AB:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:385, AB:10
-Keys from ^c(492.1) to ^c(495.1) are suspect.
+                   Path:  B6:390, AB:10
+Keys from ^c(495.1) to ^c(498.1) are suspect.
 %GTM-E-DBINVGBL, 
       AC:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:390, AC:10
-Keys from ^c(495.1) to ^c(498.1) are suspect.
+                   Path:  B6:39B, AC:10
+Keys from ^c(498.1) to ^c(501.1) are suspect.
 %GTM-E-DBINVGBL, 
       AD:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:39B, AD:10
-Keys from ^c(498.1) to ^c(501.1) are suspect.
+                   Path:  B6:3A7, AD:10
+Keys from ^c(501.1) to ^c(504.1) are suspect.
 %GTM-E-DBINVGBL, 
       AE:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:3A7, AE:10
-Keys from ^c(501.1) to ^c(504.1) are suspect.
+                   Path:  B6:3B2, AE:10
+Keys from ^c(504.1) to ^c(507.1) are suspect.
 %GTM-E-DBINVGBL, 
       AF:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:3B2, AF:10
-Keys from ^c(504.1) to ^c(507.1) are suspect.
+                   Path:  B6:3BD, AF:10
+Keys from ^c(507.1) to ^c(510) are suspect.
 %GTM-E-DBINVGBL, 
       B0:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:3BD, B0:10
-Keys from ^c(507.1) to ^c(510) are suspect.
+                   Path:  B6:3C9, B0:10
+Keys from ^c(510) to ^c(513.1) are suspect.
 %GTM-E-DBINVGBL, 
       B1:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:3C9, B1:10
-Keys from ^c(510) to ^c(513.1) are suspect.
+                   Path:  B6:3D4, B1:10
+Keys from ^c(513.1) to ^c(516.1) are suspect.
 %GTM-E-DBINVGBL, 
       B2:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:3D4, B2:10
-Keys from ^c(513.1) to ^c(516.1) are suspect.
+                   Path:  B6:3DF, B2:10
+Keys from ^c(516.1) to ^c(519.1) are suspect.
 %GTM-E-DBINVGBL, 
       B3:10     0  Invalid mixing of global names
                    Directory Path:  0:0
-                   Path:  B6:3DF, B3:10
-Keys from ^c(516.1) to ^c(519.1) are suspect.
-%GTM-E-DBINVGBL, 
-      B4:10     0  Invalid mixing of global names
-                   Directory Path:  0:0
-                   Path:  B6:3EA, B4:10
+                   Path:  B6:3EA, B3:10
 Keys from ^c(519.1) to the end are suspect.
 
 Total error count from integ:		88.
@@ -678,8 +678,8 @@ Type           Blocks         Records          % Used      Adjacent
 
 Directory           0               0           0.000            NA
 Index               5             251          76.582             1
-Data              246             736          92.213           244
-Total             251             987              NA           245
+Data              246             736          92.213           245
+Total             251             987              NA           246
 %GTM-E-INTEGERRS, Database integrity errors
 ###################################################################
 # Test MUPIP INTEG -BLOCK= for block in GVT at each level in DEFAULT
@@ -1025,7 +1025,7 @@ $MUPIP integ -block=5 -reg "*" |& sort
 Block:Offset Level
 Data                1               2          23.828             1
 Data                1               3          92.382             1
-Data                1              37          99.511             1
+Data                1              37          99.414             1
 Directory           0               0           0.000            NA
 Directory           0               0           0.000            NA
 Directory           0               0           0.000            NA
@@ -1155,96 +1155,97 @@ $MUPIP integ -block=B6 -reg "*" |& sort
                    Directory Path:  0:0
                    Directory Path:  0:0
                    Directory Path:  0:0
-                   Path:  B6:10, 5B:10
+                   Path:  B6:10, 5A:10
                    Path:  B6:10, AC:1B8
-                   Path:  B6:101, 72:10
-                   Path:  B6:10C, 73:10
-                   Path:  B6:117, 74:10
-                   Path:  B6:123, 75:10
-                   Path:  B6:12E, 76:10
-                   Path:  B6:139, 77:10
-                   Path:  B6:144, 78:10
-                   Path:  B6:150, 79:10
-                   Path:  B6:15B, 7A:10
-                   Path:  B6:166, 7B:10
-                   Path:  B6:172, 7C:10
-                   Path:  B6:17D, 7D:10
-                   Path:  B6:188, 7E:10
-                   Path:  B6:194, 7F:10
-                   Path:  B6:19F, 80:10
-                   Path:  B6:1AA, 81:10
-                   Path:  B6:1B5, 82:10
-                   Path:  B6:1C1, 83:10
-                   Path:  B6:1CC, 84:10
-                   Path:  B6:1D7, 85:10
-                   Path:  B6:1E3, 86:10
-                   Path:  B6:1EE, 87:10
-                   Path:  B6:1F, 5E:10
-                   Path:  B6:1F9, 88:10
-                   Path:  B6:205, 89:10
-                   Path:  B6:210, 8A:10
-                   Path:  B6:21B, 8B:10
-                   Path:  B6:226, 8C:10
-                   Path:  B6:232, 8D:10
-                   Path:  B6:23D, 8E:10
-                   Path:  B6:248, 8F:10
-                   Path:  B6:254, 90:10
-                   Path:  B6:25F, 91:10
-                   Path:  B6:26A, 92:10
-                   Path:  B6:276, 93:10
-                   Path:  B6:281, 94:10
-                   Path:  B6:28C, 95:10
-                   Path:  B6:297, 96:10
-                   Path:  B6:2A, 5F:10
-                   Path:  B6:2A3, 97:10
-                   Path:  B6:2AE, 98:10
-                   Path:  B6:2B9, 99:10
-                   Path:  B6:2C5, 9A:10
-                   Path:  B6:2D0, 9B:10
-                   Path:  B6:2DB, 9C:10
-                   Path:  B6:2E7, 9D:10
-                   Path:  B6:2F2, 9E:10
-                   Path:  B6:2FD, 9F:10
-                   Path:  B6:308, A0:10
-                   Path:  B6:314, A1:10
-                   Path:  B6:31F, A2:10
-                   Path:  B6:32A, A3:10
-                   Path:  B6:336, A4:10
-                   Path:  B6:341, A5:10
-                   Path:  B6:34C, A6:10
-                   Path:  B6:35, 60:10
-                   Path:  B6:358, A7:10
-                   Path:  B6:363, A8:10
-                   Path:  B6:36E, A9:10
-                   Path:  B6:379, AA:10
-                   Path:  B6:385, AB:10
-                   Path:  B6:390, AC:10
-                   Path:  B6:39B, AD:10
+                   Path:  B6:101, 71:10
+                   Path:  B6:10C, 72:10
+                   Path:  B6:117, 73:10
+                   Path:  B6:123, 74:10
+                   Path:  B6:12E, 75:10
+                   Path:  B6:139, 76:10
+                   Path:  B6:144, 77:10
+                   Path:  B6:150, 78:10
+                   Path:  B6:15B, 79:10
+                   Path:  B6:166, 7A:10
+                   Path:  B6:172, 7B:10
+                   Path:  B6:17D, 7C:10
+                   Path:  B6:188, 7D:10
+                   Path:  B6:194, 7E:10
+                   Path:  B6:19F, 7F:10
+                   Path:  B6:1AA, 80:10
+                   Path:  B6:1B5, 81:10
+                   Path:  B6:1C1, 82:10
+                   Path:  B6:1CC, 83:10
+                   Path:  B6:1D7, 84:10
+                   Path:  B6:1E3, 85:10
+                   Path:  B6:1EE, 86:10
+                   Path:  B6:1F, 5B:10
+                   Path:  B6:1F9, 87:10
+                   Path:  B6:205, 88:10
+                   Path:  B6:210, 89:10
+                   Path:  B6:21B, 8A:10
+                   Path:  B6:226, 8B:10
+                   Path:  B6:232, 8C:10
+                   Path:  B6:23D, 8D:10
+                   Path:  B6:248, 8E:10
+                   Path:  B6:254, 8F:10
+                   Path:  B6:25F, 90:10
+                   Path:  B6:26A, 91:10
+                   Path:  B6:276, 92:10
+                   Path:  B6:281, 93:10
+                   Path:  B6:28C, 94:10
+                   Path:  B6:297, 95:10
+                   Path:  B6:2A, 5E:10
+                   Path:  B6:2A3, 96:10
+                   Path:  B6:2AE, 97:10
+                   Path:  B6:2B9, 98:10
+                   Path:  B6:2C5, 99:10
+                   Path:  B6:2D0, 9A:10
+                   Path:  B6:2DB, 9B:10
+                   Path:  B6:2E7, 9C:10
+                   Path:  B6:2F2, 9D:10
+                   Path:  B6:2FD, 9E:10
+                   Path:  B6:308, 9F:10
+                   Path:  B6:314, A0:10
+                   Path:  B6:31F, A1:10
+                   Path:  B6:32A, A2:10
+                   Path:  B6:336, A3:10
+                   Path:  B6:341, A4:10
+                   Path:  B6:34C, A5:10
+                   Path:  B6:35, 5F:10
+                   Path:  B6:358, A6:10
+                   Path:  B6:363, A7:10
+                   Path:  B6:36E, A8:10
+                   Path:  B6:379, A9:10
+                   Path:  B6:385, AA:10
+                   Path:  B6:390, AB:10
+                   Path:  B6:39B, AC:10
                    Path:  B6:39F, B4:10
-                   Path:  B6:3A7, AE:10
-                   Path:  B6:3B2, AF:10
-                   Path:  B6:3BD, B0:10
-                   Path:  B6:3C9, B1:10
-                   Path:  B6:3D4, B2:10
-                   Path:  B6:3DF, B3:10
-                   Path:  B6:3EA, B4:10
-                   Path:  B6:41, 61:10
-                   Path:  B6:4C, 62:10
-                   Path:  B6:57, 63:10
-                   Path:  B6:62, 64:10
-                   Path:  B6:6E, 65:10
-                   Path:  B6:79, 66:10
-                   Path:  B6:84, 67:10
-                   Path:  B6:90, 68:10
-                   Path:  B6:9B, 69:10
-                   Path:  B6:A6, 6A:10
-                   Path:  B6:B2, 6B:10
-                   Path:  B6:BD, 6C:10
-                   Path:  B6:C8, 6D:10
-                   Path:  B6:D3, 6E:10
-                   Path:  B6:DF, 6F:10
-                   Path:  B6:EA, 70:10
-                   Path:  B6:F5, 71:10
+                   Path:  B6:3A7, AD:10
+                   Path:  B6:3B2, AE:10
+                   Path:  B6:3BD, AF:10
+                   Path:  B6:3C9, B0:10
+                   Path:  B6:3D4, B1:10
+                   Path:  B6:3DF, B2:10
+                   Path:  B6:3EA, B3:10
+                   Path:  B6:41, 60:10
+                   Path:  B6:4C, 61:10
+                   Path:  B6:57, 62:10
+                   Path:  B6:62, 63:10
+                   Path:  B6:6E, 64:10
+                   Path:  B6:79, 65:10
+                   Path:  B6:84, 66:10
+                   Path:  B6:90, 67:10
+                   Path:  B6:9B, 68:10
+                   Path:  B6:A6, 69:10
+                   Path:  B6:B2, 6A:10
+                   Path:  B6:BD, 6B:10
+                   Path:  B6:C8, 6C:10
+                   Path:  B6:D3, 6D:10
+                   Path:  B6:DF, 6E:10
+                   Path:  B6:EA, 6F:10
+                   Path:  B6:F5, 70:10
+      5A:10     0  Invalid mixing of global names
       5B:10     0  Invalid mixing of global names
       5E:10     0  Invalid mixing of global names
       5F:10     0  Invalid mixing of global names
@@ -1333,7 +1334,6 @@ $MUPIP integ -block=B6 -reg "*" |& sort
       B1:10     0  Invalid mixing of global names
       B2:10     0  Invalid mixing of global names
       B3:10     0  Invalid mixing of global names
-      B4:10     0  Invalid mixing of global names
       B4:10     0  Spanning node is missing. Block no 3 of spanning node is missing
       B6:0     FF  Root block number greater than last block number in file
 %GTM-E-DBINVGBL, 

@@ -1,30 +1,30 @@
 	show -all
 !
 !
-!                              *** TEMPLATES ***
 !                                                                         Std      Inst
-!                                            Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
-!Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
-!-----------------------------------------------------------------------------------------------------------
-!<default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+!                                            Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+!Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+!----------------------------------------------------------------------------------------------------------------------
+!<default>                                     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 !
 !Segment          Active              Acc Typ Block      Alloc Exten Options
 !------------------------------------------------------------------------------
-!<default>          *                 BG  DYN  1024        400   100 GLOB =1024
+!<default>          *                 BG  DYN  4096        400   100 GLOB =1024
 !                                                                    LOCK = 40
 ##TEST_AWK!                                                                    RES  = *[0-9]*
 ##SUSPEND_OUTPUT HOST_HP-UX_PA_RISC HOST_OSF1_ALPHA
-!                                                                    ENCR = ON
+!                                                                    ENCR =  ON
 ##ALLOW_OUTPUT HOST_HP-UX_PA_RISC HOST_OSF1_ALPHA
 ##SUSPEND_OUTPUT HOST_LINUX_IA64 HOST_HP-UX_IA64 HOST_AIX_RS6000 HOST_LINUX_IX86 HOST_LINUX_S390X HOST_LINUX_X86_64 HOST_OS390_S390 HOST_SUNOS_SPARC HOST_CYGWIN_IX86
-!                                                                    ENCR = OFF
+!                                                                    ENCR =  OFF
 ##ALLOW_OUTPUT HOST_LINUX_IA64 HOST_HP-UX_IA64 HOST_AIX_RS6000 HOST_LINUX_IX86 HOST_LINUX_S390X HOST_LINUX_X86_64 HOST_OS390_S390 HOST_SUNOS_SPARC HOST_CYGWIN_IX86
 !                                                                    MSLT =1024
-!                                                                    DALL=YES
-!<default>                            MM  DYN  1024        100   100 DEFER
-!                                                                    LOCK = 40
+!                                                                    DALL = YES
+!                                                                    AIO  = OFF
+!<default>                            MM  DYN  4096        100   100 DEFER
+!                                                                    LOCK =  40
 !                                                                    MSLT =1024
-!                                                                    DALL=YES
+!                                                                    DALL = YES
 !
 !
 !        *** NAMES ***
@@ -270,15 +270,15 @@
 !
 !
 !                               *** REGIONS ***
-!                                                                                               Std      Inst
-!                                Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
-!Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
-!----------------------------------------------------------------------------------------------------------------------------------
-!DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
-!NAME1                           NAME1                              0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
-!NAME2                           NAME2                              0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
-!STAR1                           STAR1                              0      256    64 EXISTING   N    Y   DISABLED DISABLED ENABLED
-!STAR2                           STAR2                              0      256    64 ALWAYS     N    N   DISABLED DISABLED ENABLED
+!                                                                                              Std      Inst
+!                                Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+!Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+!-------------------------------------------------------------------------------------------------------------------------------------------
+!DEFAULT                         DEFAULT                            0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+!NAME1                           NAME1                              0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+!NAME2                           NAME2                              0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+!STAR1                           STAR1                              0      256    64 EXISTING  N    Y   N      N     Y     N      Y     Sep
+!STAR2                           STAR2                              0      256    64 ALWAYS    N    N   N      N     Y     N      Y     Sep
 !
 !                         *** JOURNALING INFORMATION ***
 !Region                          Jnl File (def ext: .mjl)  Before Buff      Alloc      Exten   AutoSwitch
@@ -290,61 +290,66 @@
 !                               *** SEGMENTS ***
 !Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
 !-------------------------------------------------------------------------------------------
-!DEFAULT                         maptst              BG  DYN  1024        400   100 GLOB=1024
+!DEFAULT                         maptst              BG  DYN  4096        400   100 GLOB=1024
 !                                                                                   LOCK=  40
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-!                                                                                   ENCR=OFF
+!                                                                                   ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-!                                                                                   ENCR=ON
+!                                                                                   ENCR=  ON
 ##ALLOW_OUTPUT NON_ENCRYPT
 !                                                                                   MSLT=1024
-!                                                                                   DALL=YES
-!NAME1                           name1               BG  DYN  1024        400   100 GLOB=1024
+!                                                                                   DALL= YES
+!                                                                                   AIO = OFF
+!NAME1                           name1               BG  DYN  4096        400   100 GLOB=1024
 !                                                                                   LOCK=  40
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-!                                                                                   ENCR=OFF
+!                                                                                   ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-!                                                                                   ENCR=ON
+!                                                                                   ENCR=  ON
 ##ALLOW_OUTPUT NON_ENCRYPT
 !                                                                                   MSLT=1024
-!                                                                                   DALL=YES
-!NAME2                           name2               BG  DYN  1024        400   100 GLOB=1024
+!                                                                                   DALL= YES
+!                                                                                   AIO = OFF
+!NAME2                           name2               BG  DYN  4096        400   100 GLOB=1024
 !                                                                                   LOCK=  40
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-!                                                                                   ENCR=OFF
+!                                                                                   ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-!                                                                                   ENCR=ON
+!                                                                                   ENCR=  ON
 ##ALLOW_OUTPUT NON_ENCRYPT
 !                                                                                   MSLT=1024
-!                                                                                   DALL=YES
-!STAR1                           star1               BG  DYN  1024        400   100 GLOB=1024
+!                                                                                   DALL= YES
+!                                                                                   AIO = OFF
+!STAR1                           star1               BG  DYN  4096        400   100 GLOB=1024
 !                                                                                   LOCK=  40
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-!                                                                                   ENCR=OFF
+!                                                                                   ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-!                                                                                   ENCR=ON
+!                                                                                   ENCR=  ON
 ##ALLOW_OUTPUT NON_ENCRYPT
 !                                                                                   MSLT=1024
-!                                                                                   DALL=YES
-!STAR2                           star2               BG  DYN  1024        400   100 GLOB=1024
+!                                                                                   DALL= YES
+!                                                                                   AIO = OFF
+!STAR2                           star2               BG  DYN  4096        400   100 GLOB=1024
 !                                                                                   LOCK=  40
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-!                                                                                   ENCR=OFF
+!                                                                                   ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-!                                                                                   ENCR=ON
+!                                                                                   ENCR=  ON
 ##ALLOW_OUTPUT NON_ENCRYPT
 !                                                                                   MSLT=1024
-!                                                                                   DALL=YES
+!                                                                                   DALL= YES
+!                                                                                   AIO = OFF
 !
 !
 !                                 *** MAP ***

@@ -35,10 +35,10 @@ Type           Blocks         Records          % Used      Adjacent
 Directory           2               2           2.685            NA
 ##SUSPEND_OUTPUT  NON_COLLATION
 Index               1              14          32.617             1
-Data               14             800          60.295            13
-Total              17             816              NA            14
-##SUSPEND_OUTPUT  COLLATION
+Data               14             800          60.295            14
+Total              17             816              NA            15
 ##ALLOW_OUTPUT  NON_COLLATION
+##SUSPEND_OUTPUT  COLLATION
 Index               1              13          31.542             1
 Data               13             800          64.190            12
 Total              16             815              NA            13
@@ -55,9 +55,9 @@ Type           Blocks         Records          % Used      Adjacent
 Directory           2               2           2.685            NA
 ##SUSPEND_OUTPUT  NON_COLLATION
 Index               1               1          32.617             1
-Data                1               0           8.789             1
-##SUSPEND_OUTPUT  COLLATION
+Data                1               0           8.789             0
 ##ALLOW_OUTPUT  NON_COLLATION
+##SUSPEND_OUTPUT  COLLATION
 Index               1               1          31.542             1
 Data                1               0          90.332             0
 Total               4               3              NA             1
@@ -105,13 +105,14 @@ Type           Blocks         Records          % Used      Adjacent
 Directory           2               2           2.685            NA
 ##SUSPEND_OUTPUT  NON_COLLATION
 Index               1               1          32.617             1
-Data                1               0           8.789             1
-##SUSPEND_OUTPUT  COLLATION
+Data                1               0           8.789             0
+Total               4               3              NA             1
 ##ALLOW_OUTPUT  NON_COLLATION
+##SUSPEND_OUTPUT  COLLATION
 Index               1               1          31.542             1
 Data                1               0          11.035             1
-##ALLOW_OUTPUT  COLLATION
 Total               4               3              NA             2
+##ALLOW_OUTPUT  COLLATION
 ##SUSPEND_OUTPUT  NON_COLLATION
 $MUPIP integ -reg "*" -subscript=\"^a\(\"\"$subs1\*\"\"\)\"
 ##SUSPEND_OUTPUT  COLLATION
@@ -129,11 +130,11 @@ Type           Blocks         Records          % Used      Adjacent
 Directory           2               2           2.685            NA
 ##SUSPEND_OUTPUT  NON_COLLATION
 Index               1               1          32.617             1
-Data                1               0           8.789             1
-Total               4               3              NA             2
+Data                1               0           8.789             0
+Total               4               3              NA             1
 $MUPIP integ -reg "*" -subscript=\"^a\(\"\"$subs2\"\"\)\"
-##SUSPEND_OUTPUT  COLLATION
 ##ALLOW_OUTPUT  NON_COLLATION
+##SUSPEND_OUTPUT  COLLATION
 Index               1               1          31.542             1
 Data                1               0          99.902             0
 Total               4               3              NA             1
@@ -150,8 +151,8 @@ Type           Blocks         Records          % Used      Adjacent
 Directory           2               2           2.685            NA
 ##SUSPEND_OUTPUT  NON_COLLATION
 Index               1               1          32.617             1
-Data                1               0           8.789             1
-Total               4               3              NA             2
+Data                1               0           8.789             0
+Total               4               3              NA             1
 $MUPIP integ -reg "*" -subscript=\"^a\(\"\"$subs3\*\"\"\)\"
 ##SUSPEND_OUTPUT  COLLATION
 ##ALLOW_OUTPUT  NON_COLLATION
@@ -171,8 +172,8 @@ Type           Blocks         Records          % Used      Adjacent
 Directory           2               2           2.685            NA
 ##SUSPEND_OUTPUT  NON_COLLATION
 Index               1               1          32.617             1
-Data                1               0           8.789             1
-Total               4               3              NA             2
+Data                1               0           8.789             0
+Total               4               3              NA             1
 $MUPIP integ -reg "*" -subscript=\"^a\(\"\"$subs12\"\"\)\":\"^a\(\"\"$subs12\"\",450\)\"
 ##SUSPEND_OUTPUT  COLLATION
 ##ALLOW_OUTPUT  NON_COLLATION
@@ -192,8 +193,8 @@ Type           Blocks         Records          % Used      Adjacent
 Directory           2               2           2.685            NA
 ##SUSPEND_OUTPUT  NON_COLLATION
 Index               1               1          32.617             1
-Data                1               0           8.789             1
-Total               4               3              NA             2
+Data                1               0           8.789             0
+Total               4               3              NA             1
 $MUPIP integ -reg "*" -subscript=\"^a\(\"\"$subs34\"\"\)\"
 ##SUSPEND_OUTPUT  COLLATION
 ##ALLOW_OUTPUT  NON_COLLATION
@@ -213,8 +214,8 @@ Type           Blocks         Records          % Used      Adjacent
 Directory           2               2           2.685            NA
 ##SUSPEND_OUTPUT  NON_COLLATION
 Index               1               1          32.617             1
-Data                1               0           8.789             1
-Total               4               3              NA             2
+Data                1               0           8.789             0
+Total               4               3              NA             1
 $MUPIP integ -reg "*" -subscript=\"^a\(\"\"$subs1\"\"\):^a\(\"\"$subs2\"\"\)\"
 ##SUSPEND_OUTPUT  COLLATION
 ##ALLOW_OUTPUT  NON_COLLATION
@@ -234,8 +235,8 @@ Type           Blocks         Records          % Used      Adjacent
 Directory           2               2           2.685            NA
 ##SUSPEND_OUTPUT  NON_COLLATION
 Index               1               1          32.617             1
-Data                1               0           8.789             1
-Total               4               3              NA             2
+Data                1               0           8.789             0
+Total               4               3              NA             1
 $MUPIP integ -reg "*" -subscript=\"^a\(\"\"$subs1\"\"\):^a\(\"\"$subs4\*\"\"\)\"
 ##SUSPEND_OUTPUT  COLLATION
 ##ALLOW_OUTPUT  NON_COLLATION
@@ -274,21 +275,21 @@ Level          Blocks         Records          % Used      Adjacent
 ##SUSPEND_OUTPUT  COLLATION
 Block:Offset Level
 %GTM-E-DBKEYORD, 
-       5:2B     0  Keys out of order
+       6:35     0  Keys out of order
                    Directory Path:  1:10, 2:10
-                   Path:  4:122, 5:2B
-Keys from ^a("ＡＤＩＲ",1) to ^a("ＡＤＩＲ",8.1) are suspect.
+                   Path:  4:6D, 6:35
+Keys from ^a("αβγδεＡＤＩＲ",1) to ^a("αβγδεＡＤＩＲ",8.1) are suspect.
 %GTM-E-DBKEYORD, 
        3:2B     0  Keys out of order
                    Directory Path:  1:10, 2:10
-                   Path:  4:13B, 3:2B
-Keys from ^a("ＡＤＩＲ",9) to the end are suspect.
+                   Path:  4:122, 3:2B
+Keys from ^a("ＡＤＩＲ",1) to ^a("ＡＤＩＲ",8.1) are suspect.
 
 Global variable ^a
 Total error count for global a:	2.
 Level          Blocks         Records          % Used      Adjacent
     1               1              13          31.542             1
-    0              13             704          64.648            12
+    0              13             788          64.731            12
 
 Total error count from integ:		2.
 
@@ -298,15 +299,15 @@ Type           Blocks         Records          % Used      Adjacent
 Directory           2               2           2.685            NA
 ##SUSPEND_OUTPUT  NON_COLLATION
 Index               1               1          32.617             1
-Data                1               0           8.789             1
-Total               4               3              NA             2
+Data                1               0           8.789             0
+Total               4               3              NA             1
 $MUPIP integ -reg "*"
 ##SUSPEND_OUTPUT  COLLATION
 ##ALLOW_OUTPUT  NON_COLLATION
 Index               1              13          31.542             1
-Data               13             704          64.648            12
+Data               13             788          64.731            12
 Free               84              NA              NA            NA
-Total             100             719              NA            13
+Total             100             803              NA            13
 %GTM-E-INTEGERRS, Database integrity errors
 ##ALLOW_OUTPUT  COLLATION
 
@@ -320,9 +321,9 @@ Type           Blocks         Records          % Used      Adjacent
 
 Directory           2               2           2.685            NA
 Index               1              14          32.617             1
-Data               14             800          60.295            13
+Data               14             800          60.295            14
 Free               83              NA              NA            NA
-Total             100             816              NA            14
+Total             100             816              NA            15
 unset verbose
 
 File  	##TEST_PATH##/integneg.dat
@@ -339,21 +340,21 @@ Level          Blocks         Records          % Used      Adjacent
 
 Block:Offset Level
 %GTM-E-DBKEYORD, 
-       5:2B     0  Keys out of order
+       6:2B     0  Keys out of order
                    Directory Path:  1:10, 2:10
-                   Path:  4:66, 5:2B
+                   Path:  4:66, 6:2B
 Keys from ^a("ＡＤＩＲ",100) to ^a(".") are suspect.
 %GTM-E-DBKEYORD, 
-       3:4F     0  Keys out of order
+       3:2E     0  Keys out of order
                    Directory Path:  1:10, 2:10
-                   Path:  4:146, 3:4F
-Keys from ^a("লায়েক我能吞下玻璃而不伤身体",99) to the end are suspect.
+                   Path:  4:EF, 3:2E
+Keys from ^a("লায়েক",1) to ^a("লায়েক",8.1) are suspect.
 
 Global variable ^a
 Total error count for global a:	2.
 Level          Blocks         Records          % Used      Adjacent
     1               1              14          32.617             1
-    0              14             801          60.867            13
+    0              14             795          60.644            14
 
 Total error count from integ:		2.
 
@@ -361,9 +362,9 @@ Type           Blocks         Records          % Used      Adjacent
 
 Directory           2               2           2.685            NA
 Index               1              14          32.617             1
-Data               14             801          60.867            13
+Data               14             795          60.644            14
 Free               83              NA              NA            NA
-Total             100             817              NA            14
+Total             100             811              NA            15
 %GTM-E-INTEGERRS, Database integrity errors
 
 ##ALLOW_OUTPUT NON_COLLATION

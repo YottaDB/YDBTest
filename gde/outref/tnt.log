@@ -3,23 +3,24 @@
 !
 !                              *** TEMPLATES ***
 !                                                                         Std      Inst
-!                                            Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
-!Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
-!-----------------------------------------------------------------------------------------------------------
-!<default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+!                                            Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+!Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+!----------------------------------------------------------------------------------------------------------------------
+!<default>                                     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 !
 !Segment          Active              Acc Typ Block      Alloc Exten Options
 !------------------------------------------------------------------------------
-!<default>          *                 BG  DYN  1024        100   100 GLOB = 64
-!                                                                    LOCK = 40
+!<default>          *                 BG  DYN  4096        100   100 GLOB =  64
+!                                                                    LOCK =  40
 ##TEST_AWK!                                                                    RES  = *[0-9]*
 !                                                                    ENCR = OFF
 !                                                                    MSLT =1024
-!                                                                    DALL=YES
-!<default>                            MM  DYN  1024        100   100 DEFER
-!                                                                    LOCK = 40
+!                                                                    DALL = YES
+!                                                                    AIO  = OFF
+!<default>                            MM  DYN  4096        100   100 DEFER
+!                                                                    LOCK =  40
 !                                                                    MSLT =1024
-!                                                                    DALL=YES
+!                                                                    DALL = YES
 !
 !
 !        *** NAMES ***
@@ -41,87 +42,93 @@
 !
 !
 !                               *** REGIONS ***
-!                                                                                               Std      Inst
-!                                Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
-!Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
-!----------------------------------------------------------------------------------------------------------------------------------
-!ACCOUNT                         ACCOUNT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
-!ACCOUNT0                        ACCOUNT0                           0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
-!ARCHCER                         ARCHCER                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
-!ARCHCERT                        ARCHCERT                           0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
-!ARCHGROT                        ARCHGROT                           0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
-!DEFAULT                         DEFAULT                            0      256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+!                                                                                              Std      Inst
+!                                Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+!Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+!-------------------------------------------------------------------------------------------------------------------------------------------
+!ACCOUNT                         ACCOUNT                            0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+!ACCOUNT0                        ACCOUNT0                           0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+!ARCHCER                         ARCHCER                            0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+!ARCHCERT                        ARCHCERT                           0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+!ARCHGROT                        ARCHGROT                           0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+!DEFAULT                         DEFAULT                            0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 !
 !
 !                               *** SEGMENTS ***
 !Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
 !-------------------------------------------------------------------------------------------
-!ACCOUNT                         ACCOUNT             BG  DYN  1024        100   100 GLOB=  64
+!ACCOUNT                         ACCOUNT             BG  DYN  4096        100   100 GLOB=  64
 !                                                                                   LOCK=  40
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-!                                                                                   ENCR=OFF
+!                                                                                   ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-!                                                                                   ENCR=ON
+!                                                                                   ENCR=  ON
 ##ALLOW_OUTPUT NON_ENCRYPT
 !                                                                                   MSLT=1024
-!                                                                                   DALL=YES
-!ACCOUNT0                        ACCOUNT0            BG  DYN  1024        100   100 GLOB=  64
+!                                                                                   DALL= YES
+!                                                                                   AIO = OFF
+!ACCOUNT0                        ACCOUNT0            BG  DYN  4096        100   100 GLOB=  64
 !                                                                                   LOCK=  40
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-!                                                                                   ENCR=OFF
+!                                                                                   ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-!                                                                                   ENCR=ON
+!                                                                                   ENCR=  ON
 ##ALLOW_OUTPUT NON_ENCRYPT
 !                                                                                   MSLT=1024
-!                                                                                   DALL=YES
-!ARCHCER                         ARCHCER             BG  DYN  1024        100   100 GLOB=  64
+!                                                                                   DALL= YES
+!                                                                                   AIO = OFF
+!ARCHCER                         ARCHCER             BG  DYN  4096        100   100 GLOB=  64
 !                                                                                   LOCK=  40
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-!                                                                                   ENCR=OFF
+!                                                                                   ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-!                                                                                   ENCR=ON
+!                                                                                   ENCR=  ON
 ##ALLOW_OUTPUT NON_ENCRYPT
 !                                                                                   MSLT=1024
-!                                                                                   DALL=YES
-!ARCHCERT                        ARCHCERT            BG  DYN  1024        100   100 GLOB=  64
+!                                                                                   DALL= YES
+!                                                                                   AIO = OFF
+!ARCHCERT                        ARCHCERT            BG  DYN  4096        100   100 GLOB=  64
 !                                                                                   LOCK=  40
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-!                                                                                   ENCR=OFF
+!                                                                                   ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-!                                                                                   ENCR=ON
+!                                                                                   ENCR=  ON
 ##ALLOW_OUTPUT NON_ENCRYPT
 !                                                                                   MSLT=1024
-!                                                                                   DALL=YES
-!ARCHGROT                        ARCHGROT            BG  DYN  1024        100   100 GLOB=  64
+!                                                                                   DALL= YES
+!                                                                                   AIO = OFF
+!ARCHGROT                        ARCHGROT            BG  DYN  4096        100   100 GLOB=  64
 !                                                                                   LOCK=  40
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-!                                                                                   ENCR=OFF
+!                                                                                   ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-!                                                                                   ENCR=ON
+!                                                                                   ENCR=  ON
 ##ALLOW_OUTPUT NON_ENCRYPT
 !                                                                                   MSLT=1024
-!                                                                                   DALL=YES
-!DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=  64
+!                                                                                   DALL= YES
+!                                                                                   AIO = OFF
+!DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=  64
 !                                                                                   LOCK=  40
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-!                                                                                   ENCR=OFF
+!                                                                                   ENCR= OFF
 ##ALLOW_OUTPUT ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-!                                                                                   ENCR=ON
+!                                                                                   ENCR=  ON
 ##ALLOW_OUTPUT NON_ENCRYPT
 !                                                                                   MSLT=1024
-!                                                                                   DALL=YES
+!                                                                                   DALL= YES
+!                                                                                   AIO = OFF
 !
 !
 !                                 *** MAP ***

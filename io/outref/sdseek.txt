@@ -685,7 +685,7 @@ x= STAT=results+4^utfseek,%GTM-E-BADCHAR, $ZCHAR(254,255) is not a valid charact
 ** close nodestroy then reopen ICHSET="UTF-16":OCHSET="UTF-16BE":append:seek="-52" to read last line
 
 zshow "d" output for useek16withbom:
-useek16withbom OPEN RMS ICHSET=UTF-16 OCHSET=UTF-16BE 
+useek16withbom OPEN RMS ICHSET=UTF-16BE OCHSET=UTF-16BE 
 
 x= 103 - ցՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4210
 
@@ -717,7 +717,7 @@ x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4309
 ** close nodestroy then reopen ICHSET="UTF-16":OCHSET="UTF-16BE":seek="4270" to read line expecting an error
 
 zshow "d" output for useek16withbom:
-useek16withbom OPEN RMS ICHSET=UTF-16 OCHSET=UTF-16BE 
+useek16withbom OPEN RMS ICHSET=UTF-16BE OCHSET=UTF-16BE 
 
 STAT=utfseek+404^utfseek,%GTM-E-BADCHAR, $ZCHAR(10) is not a valid character in the UTF-16BE encoding form
 

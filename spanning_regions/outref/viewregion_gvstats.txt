@@ -22,10 +22,10 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/b.dat
-Created file ##TEST_PATH##/c.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 $view("REGION","^a")=AREG,BREG,CREG,DFLT
 $view("REGION","^a(1)")=BREG,CREG,DFLT
 $view("REGION","^a(1,2)")=CREG,DFLT
@@ -53,7 +53,7 @@ $order(^a,-1)=
 REG:AREG,SET:0,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:0
 REG:BREG,SET:0,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:0
 REG:CREG,SET:0,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:0
-REG:DFLT,SET:0,KIL:0,GET:0,DTA:0,ORD:0,ZPR:1,QRY:0
+REG:DFLT,SET:0,KIL:0,GET:0,DTA:0,ORD:0,ZPR:2,QRY:0
 
 $query(^a)=^a(1)
 REG:AREG,SET:0,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:1

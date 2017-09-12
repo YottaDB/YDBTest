@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -15,7 +18,7 @@
 setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn
 #define allocation to be 3000 to avoid extensions during the test and hence sporadic DBFGTBC integrity errors on crash.
-$gtm_tst/com/dbcreate.csh . -alloc=3000
+$gtm_tst/com/dbcreate.csh . -alloc=3000 -block_size=1024
 cp mumps.dat mumps.bak
 
 echo "Start fileheader tests..."
