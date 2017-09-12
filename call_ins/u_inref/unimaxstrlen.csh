@@ -67,5 +67,5 @@ if ($?gtm_custom_errors_save_umsl) then
 endif
 #
 cd ..
-unsetenv $GTMCI
+unsetenv GTMCI
 

@@ -27,4 +27,4 @@ endif
 rm -f link1.map
 
 gtm_cip
-unsetenv $GTMCI
+unsetenv GTMCI

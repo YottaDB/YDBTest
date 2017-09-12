@@ -1,0 +1,54 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+File environment.trg, Line 1: No matching triggers found for deletion
+File environment.trg, Line 2: Added SET trigger on ^A named A#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+Return value from $VIEW("ENVIRONMENT") in runtime code: MUMPS
+
+Driving external call/callin to check value in that environment (follows):
+
+Return value from $VIEW("ENVIRONMENT") in call-in mode: MUMPS,CALLIN
+
+Driving trigger to show $VIEW("ENVIRONMENT") from inside a CALL-IN - value there follows:
+$VIEW("ENVIRONMENT")=MUMPS,TRIGGER,CALLIN
+M-Stack follows:
++1^A#1#
+environci+6^environment
+    (Call-In Level Entry)
+environment+10^environment
+
+Driving trigger to show $VIEW("ENVIRONMENT") - value there follows:
+$VIEW("ENVIRONMENT")=MUMPS,TRIGGER
+M-Stack follows:
++1^A#1#
+environment+16^environment
+
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+Looking for message from update process trigger giving value for $VIEW(ENVIRONMENT):
+$VIEW("ENVIRONMENT")=MUPIP,TRIGGER
+$VIEW("ENVIRONMENT")=MUPIP,TRIGGER
+End of environment subtest

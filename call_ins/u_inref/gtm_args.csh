@@ -36,7 +36,7 @@ endif
 rm -f  link.map
 #
 args
-unsetenv $GTMCI
+unsetenv GTMCI
 if (1 == $gtm_test_trigger) then
 	# Since same triggers can be loaded in multiple regions, ignore the runtime disambiguator and count
 	# i.e all of the below are counted as the same trigger "ACCT"

@@ -1,3 +1,4 @@
+##SUSPEND_OUTPUT  REPLIC
 PASS from 32args
 PASS from argcnt
 PASS from c_args
@@ -24,10 +25,18 @@ PASS from gtm_cip
 PASS from timers
 PASS from empty_table
 PASS from stack_leak
+PASS from test_rtn_replace
+PASS from test_mprof_hidden_rtn
+PASS from test_ci_z_halt
+PASS from test_ci_zgoto0
 ##SUSPEND_OUTPUT NON_UTF8
 ##SUSPEND_OUTPUT PLATFORM_NO_4BYTE_UTF8
 PASS from unic2m2c2m
 ##ALLOW_OUTPUT PLATFORM_NO_4BYTE_UTF8
 PASS from unimaxstrlen
 ##ALLOW_OUTPUT NON_UTF8
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+PASS from environment
+##ALLOW_OUTPUT  NON_REPLIC REPLIC
 CALL IN tests DONE

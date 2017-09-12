@@ -1,0 +1,28 @@
+testrtnreplc1: Entered - initialize some vars to play with
+testrtnreplc1: Driving call-in
+testrtnreplcA: Entered -- driving call-in
+testrtnreplc2: Entered - creating alternate testrtnreplcA routine
+testrtnreplc2: ZLINKing new version of ^testrtnreplcA
+testrtnreplc2: Driving replaced ^testrtnreplcA
+testrtnreplcA (replaced): Entered - do some variable play
+testrtnreplcA (replaced): Returning
+testrtnreplc2: Back in testrtnreplc2 -- returning
+testrtnreplcA: Back in testrtnreplcA
+testrtnreplcA: Driving ^testrtnreplc3
+testrtnreplc3: Entered - set 3 (different) var with different values
+testrtnreplc3: Returning
+testrtnreplcA: Use variables to see if l_symtab was corrupted
+testrtnreplcA: Returning
+testrtnreplc1: Back in testrtnreplc1 - variable values:
+a=84
+b=8484
+c=848484
+d=168
+e=7198538256
+f=7199395476
+fn="testrtnreplcA.m"
+rtnname="testrtnreplc2"
+x=-1
+y=0
+z=1
+End of test_rtn_replace subtest

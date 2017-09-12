@@ -11,7 +11,7 @@
 #################################################################
 #
 #	nest_err_zt2.csh
-#       
+#
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/nesterr.c
 $gt_ld_shl_linker ${gt_ld_option_output}libnesterr1${gt_ld_shl_suffix} $gt_ld_shl_options nesterr.o $gt_ld_syslibs $tst_ld_sidedeck >&! link1.map 
 
@@ -31,16 +31,15 @@ inmult:		void	xc_inmult(I:xc_float_t *, I:xc_double_t *, I:xc_char_t *, I:xc_cha
 xx
 #
 # call_in
-# 
+#
 setenv GTMCI ctom.tab
 cat >> $GTMCI << yy
 divbyzro:  void ^dvzrozt4()
 yy
-unsetenv $GTMCI
-#
 #
 $GTM <<EOF
 Write "Do ^nestzt2",!  Do ^nestzt2
 Halt
 EOF
 unsetenv GTMXC
+unsetenv GTMCI

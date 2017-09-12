@@ -26,7 +26,7 @@ endif
 rm -f  link.map
 #
 lngargs
-unsetenv $GTMCI
+unsetenv GTMCI
 
 
 

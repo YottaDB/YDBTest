@@ -56,5 +56,5 @@ rm -f link2.map
 
 cmcm_uni
 cd ..
-unsetenv $GTMCI
-unsetenv $GTMXC
+unsetenv GTMCI
+unsetenv GTMXC
