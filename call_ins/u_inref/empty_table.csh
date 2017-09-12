@@ -34,4 +34,4 @@ rm -f link.map
 empty_table
 
 # Unset GTMCI.
-unsetenv $GTMCI
+unsetenv GTMCI

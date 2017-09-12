@@ -39,4 +39,4 @@ rm -f link.map
 stack_leak >&! stack_leak.out
 
 # Unset GTMCI.
-unsetenv $GTMCI
+unsetenv GTMCI

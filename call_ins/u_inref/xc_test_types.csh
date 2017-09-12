@@ -51,7 +51,7 @@ endif
 rm -f  link.map
 #
 xc_test_types
-unsetenv $GTMCI
+unsetenv GTMCI
 #$gtm_tst/com/dbcheck.csh -extract
 
 

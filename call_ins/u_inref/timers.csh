@@ -36,4 +36,4 @@ rm -f link.map
 timers
 
 # Unset GTMCI.
-unsetenv $GTMCI
+unsetenv GTMCI
