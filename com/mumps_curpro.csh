@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -27,6 +30,12 @@ while ("$argv[1]:s/-//" =~ {utf8,cur_routines,cur_dist_rtns})
 end
 
 set curprodir = "${gtm_root}/${gtm_curpro}/pro"
+# If "pro" dir does not exist but "dbg" dir exists, use that instead
+if (! -e $curprodir) then
+	if (-e ${gtm_root}/${gtm_curpro}/dbg) then
+		set curprodir = "${gtm_root}/${gtm_curpro}/dbg"
+	endif
+endif
 
 set distdir = "${curprodir}"
 if ($?opt_utf8) set distdir = "${curprodir}/utf8"
