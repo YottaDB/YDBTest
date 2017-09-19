@@ -91,7 +91,7 @@ GTM>
 ##SOURCE_PATH##/mupip extract -format=zwr -nolog -label=我能吞下玻璃而不伤身体 ＤＡＴＡ.ＺＷＲ
 %GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 543981  max subsc len: 130  max rec len: 78  max node len: 140
 ##SOURCE_PATH##/mupip create
-Created file ##TEST_PATH##/load.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/load.dat created
 ##SOURCE_PATH##/mupip load -format=binary ＸＹ.ＢＩＮ
 Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................UTF-8 YXdutf8                   
 
@@ -116,7 +116,7 @@ h
 
 GTM>
 ##SOURCE_PATH##/mupip create
-Created file ##TEST_PATH##/load.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/load.dat created
 ##SOURCE_PATH##/mupip load -format=zwr ＤＡＴＡ.ＺＷＲ
 我能吞下玻璃而不伤身体 UTF-8
 ##SUSPEND_OUTPUT  COLLATION
@@ -159,7 +159,7 @@ h
 
 GTM>
 Now load from different encoding
-Created file ##TEST_PATH##/load.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/load.dat created
 ##SOURCE_PATH##/mupip load -format=binary ＸＹ.ＢＩＮ
 %GTM-E-LOADINVCHSET, Extract file CHSET (UTF-8) is incompatible with gtm_chset
 Loading was unsuccessful as expected
@@ -168,7 +168,7 @@ unset echo
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-Created file ##TEST_PATH##/load.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/load.dat created
 ##SOURCE_PATH##/mupip load -format=zwr ＤＡＴＡ.ＺＷＲ
 我能吞下玻璃而不伤身体 UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR

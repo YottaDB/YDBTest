@@ -51,9 +51,9 @@ GTM>
 GTM>
 rm a.dat b.dat mumps.dat
 ##SOURCE_PATH##/mupip create
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/b.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ##SOURCE_PATH##/mupip journal -recover -noapply_after_image -forward mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..

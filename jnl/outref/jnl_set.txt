@@ -14,7 +14,7 @@ File            ##TEST_PATH##/mumps.dat
 Region          DEFAULT
 ##TEST_AWKDate/Time       .*
 ##TEST_AWK  Access method                          (BG|MM)  Global Buffers                1024
-  Reserved Bytes                          0  Block size (in bytes)         1024
+  Reserved Bytes                          0  Block size (in bytes)         4096
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                       64  Total blocks            0x00000065
   Null subscripts                     NEVER  Free blocks             0x00000062
@@ -30,6 +30,7 @@ Region          DEFAULT
 ##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
 ##ALLOW_OUTPUT BG
   Freeze match                   0x00000000  Flush trigger                  960
+  Freeze online                       FALSE  Freeze online autorelease    FALSE
   Current transaction    0x0000000000000001  No. of writes/flush              7
   Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
   Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
@@ -41,7 +42,7 @@ Region          DEFAULT
   Reference count                         1  Wait Disk                        0
 ##TEST_AWK  Journal State               \[inactive\] ON  Journal Before imaging       ( TRUE|FALSE)
   Journal Allocation                   2048  Journal Extension             2048
-##TEST_AWK  Journal Buffer Size                  2308  Journal Alignsize  *[1-9][0-9]*
+##TEST_AWK  Journal Buffer Size                  2312  Journal Alignsize  *[1-9][0-9]*
 ##TEST_AWK  Journal AutoSwitchLimit           8386560  Journal Epoch Interval         ( 30|300)
   Journal Yield Limit                     8  Journal Sync IO              FALSE
   Journal File: ##TEST_PATH##/mumps.mjl
@@ -53,6 +54,9 @@ Region          DEFAULT
   Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
   Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Async IO                              OFF  WIP queue cache blocks           0
+  DB is auto-created                  FALSE  DB shares gvstats             TRUE
+  LOCK shares DB critical section     FALSE
 
 GTM>
 %GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
@@ -67,7 +71,7 @@ File            ##TEST_PATH##/mumps.dat
 Region          DEFAULT
 ##TEST_AWKDate/Time       .*
 ##TEST_AWK  Access method                          (BG|MM)  Global Buffers                1024
-  Reserved Bytes                          0  Block size (in bytes)         1024
+  Reserved Bytes                          0  Block size (in bytes)         4096
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                       64  Total blocks            0x00000065
   Null subscripts                     NEVER  Free blocks             0x00000062
@@ -83,6 +87,7 @@ Region          DEFAULT
 ##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
 ##ALLOW_OUTPUT BG
   Freeze match                   0x00000000  Flush trigger                  960
+  Freeze online                       FALSE  Freeze online autorelease    FALSE
   Current transaction    0x0000000000000001  No. of writes/flush              7
   Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
   Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
@@ -94,7 +99,7 @@ Region          DEFAULT
   Reference count                         1  Wait Disk                        0
 ##TEST_AWK  Journal State               \[inactive\] ON  Journal Before imaging       ( TRUE|FALSE)
   Journal Allocation                   2048  Journal Extension             2048
-##TEST_AWK  Journal Buffer Size                  2308  Journal Alignsize  *[1-9][0-9]*
+##TEST_AWK  Journal Buffer Size                  2312  Journal Alignsize  *[1-9][0-9]*
 ##TEST_AWK  Journal AutoSwitchLimit           8386560  Journal Epoch Interval         ( 30|300)
   Journal Yield Limit                     8  Journal Sync IO              FALSE
   Journal File: ##TEST_PATH##/mumps.mjl
@@ -106,6 +111,9 @@ Region          DEFAULT
   Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
   Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Async IO                              OFF  WIP queue cache blocks           0
+  DB is auto-created                  FALSE  DB shares gvstats             TRUE
+  LOCK shares DB critical section     FALSE
 End jnl_set test.
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

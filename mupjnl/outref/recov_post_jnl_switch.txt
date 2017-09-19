@@ -96,11 +96,11 @@ mupip journal -recov -forw -verify "*"
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 -------------------------------------------------------------------------
 move databases and journals and create new ones
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/b.dat
-Created file ##TEST_PATH##/c.dat
-Created file ##TEST_PATH##/d.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/d.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip set -journal=enable,before -reg *
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES

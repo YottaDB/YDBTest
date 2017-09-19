@@ -176,10 +176,10 @@ GTM>
 GTM>
 ----------------------------------------------------------------------------------
 Again delete databases
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/b.dat
-Created file ##TEST_PATH##/c.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip journal -recover -forward -verify a.mjl,b.mjl -lost=a1.lost
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -251,10 +251,10 @@ GTM>
 ^b(10)="B10"
 ----------------------------------------------------------------------------------
 Again delete databases
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/b.dat
-Created file ##TEST_PATH##/c.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip journal -recover -forward -verify a.mjl,b.mjl,c.mjl -broken=a.broken -lost=a2.lost
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -347,10 +347,10 @@ GTM>
 ^c(10)="C10"
 ----------------------------------------------------------------------------------
 Again delete databases
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/b.dat
-Created file ##TEST_PATH##/c.dat
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip journal -recover -forward -verify a.mjl,b.mjl,c.mjl,mumps.mjl -broken=a.broken
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..

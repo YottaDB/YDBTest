@@ -222,12 +222,6 @@ if (! $?gtm_test_unicode_support) then
 		endif
 	endif
 endif
-# Triggers support
-if ( -e $gtm_tools/check_trigger_support.csh ) then
-	set triggers_supported = `$gtm_tools/check_trigger_support.csh`
-else
-	set triggers_supported = "FALSE"
-endif
 # Encryption support
 set encrypt_supported = `$gtm_tst/com/is_encrypt_support.csh $tst_ver $tst_image`
 # FIPS support
@@ -286,9 +280,8 @@ if ("FALSE" == "$gtm_test_unicode_support") then
 	echo "-x unicode_io"		>>! $test_list
 endif
 
-# disable triggers tests if not supported
-if ( "TRUE" != "$triggers_supported" ) echo "-x triggers"	>>! $test_list
-# if gtm_test_trigger is set to zero, disable the triggers test
+# Assume triggers are always supported unless specified otherwise by gtm_test_trigger env var
+# If gtm_test_trigger is set to zero, disable the triggers test
 if ( $?gtm_test_trigger ) then
 	if ( $gtm_test_trigger == 0 ) echo "-x triggers"	>>! $test_list
 endif
@@ -682,15 +675,6 @@ if ("default" != "$tst_bakdir") echo "rm -rf $tst_bakdir/$gtm_tst_out" >>! $clea
 # take care of the renaming (test assignments) in cleanup.csh:
 sed 's,\(_[0-9][0-9]_[0-9][0-9]\)/,\1/*,g' $cleanup_script >! ${TMP_FILE_PREFIX}_cleanup_csh
 mv ${TMP_FILE_PREFIX}_cleanup_csh $cleanup_script
-
-############################################################################################################
-#### Are triggers supported on this platform?  If not, unconditionally disable triggers
-if ( "TRUE" != "$triggers_supported" ) then
-	setenv gtm_test_trigger 0
-	setenv gtm_platform_triggers_support 0
-else
-	setenv gtm_platform_triggers_support 1
-endif
 
 ############################################################################################################
 #### Is encryption supported on this platform ? If not, unconditionally disable encryption

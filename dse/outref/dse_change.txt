@@ -51,10 +51,10 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> DSE> 
-Block 3   Size 272   Level 1   TN 4D6 V6
+Block 27   Size 272   Level 1   TN 4D6 V6
 
 DSE> DSE> DSE> 
-Block 3   Size 272   Level 0   TN 4D7 V6
+Block 27   Size 272   Level 0   TN 4D7 V6
 
 DSE> DSE> --------------------- Test 5 ---------------------
 
@@ -62,13 +62,13 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> DSE> 
-Block 3   Size 272   Level 0   TN 1000 V6
+Block 27   Size 272   Level 0   TN 1000 V6
 
 DSE> DSE> DSE> DSE> 
-Rec:4  Blk 3  Off 9B  Size 2B  Cmpc 0  Key ^%(44064)
+Rec:4  Blk 27  Off 9B  Size 2B  Cmpc 0  Key ^%(44064)
 
 DSE> DSE> DSE> 
-Rec:4  Blk 3  Off 9B  Size 2B  Cmpc A  Key ^aglobal(1224,44064)
+Rec:4  Blk 27  Off 9B  Size 2B  Cmpc A  Key ^aglobal(1224,44064)
 
 DSE> DSE> --------------------- Test 6 ---------------------
 
@@ -77,13 +77,13 @@ Region	AREG
 
 DSE> DSE> Error: invalid rsiz.
 DSE> DSE> DSE> 
-Rec:4  Blk 3  Off 9B  Size 4  Cmpc A  Key ^aglobal(1200)
+Rec:4  Blk 27  Off 9B  Size 4  Cmpc A  Key ^aglobal(1200)
 
 DSE> DSE> DSE> 
-Rec:4  Blk 3  Off 9B  Size 3B  Cmpc A  Key ^aglobal(1224,44064)
+Rec:4  Blk 27  Off 9B  Size 3B  Cmpc A  Key ^aglobal(1224,44064)
 
 DSE> DSE> DSE> 
-Rec:4  Blk 3  Off 9B  Size 2B  Cmpc A  Key ^aglobal(1224,44064)
+Rec:4  Blk 27  Off 9B  Size 2B  Cmpc A  Key ^aglobal(1224,44064)
 
 DSE> DSE> --------------------- Test 7 ---------------------
 
@@ -91,20 +91,20 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> DSE> 
-Rec:4  Blk 3  Off 9B  Size 2B  Cmpc 0  Key ^%(44064)
+Rec:4  Blk 27  Off 9B  Size 2B  Cmpc 0  Key ^%(44064)
 
 DSE> DSE> DSE> 
-Rec:4  Blk 3  Off 9B  Size 2B  Cmpc A  Key ^aglobal(1224,44064)
+Rec:4  Blk 27  Off 9B  Size 2B  Cmpc A  Key ^aglobal(1224,44064)
 
 DSE> DSE> Error: invalid rsiz.
 DSE> DSE> DSE> 
-Rec:4  Blk 3  Off 9B  Size 4  Cmpc A  Key ^aglobal(1200)
+Rec:4  Blk 27  Off 9B  Size 4  Cmpc A  Key ^aglobal(1200)
 
 DSE> DSE> DSE> 
-Rec:4  Blk 3  Off 9B  Size 3B  Cmpc A  Key ^aglobal(1224,44064)
+Rec:4  Blk 27  Off 9B  Size 3B  Cmpc A  Key ^aglobal(1224,44064)
 
 DSE> DSE> DSE> 
-Rec:4  Blk 3  Off 9B  Size 2B  Cmpc A  Key ^aglobal(1224,44064)
+Rec:4  Blk 27  Off 9B  Size 2B  Cmpc A  Key ^aglobal(1224,44064)
 
 DSE> DSE> --------------------- Test 8 ---------------------
 
@@ -113,11 +113,11 @@ Region	AREG
 
 DSE> DSE> Error: invalid bsiz.
 DSE> DSE> DSE> 
-Block 3   Size 10   Level 0   TN 4E4 V6
+Block 27   Size 10   Level 0   TN 4E4 V6
 
 DSE> DSE> Error: invalid bsiz.
 DSE> DSE> DSE> 
-Block 3   Size 272   Level 0   TN 4E5 V6
+Block 27   Size 272   Level 0   TN 4E5 V6
 
 DSE> DSE> --------------------- Test 9 ---------------------
 
@@ -134,17 +134,17 @@ Region	AREG
 DSE> DSE> Error: offset less than blk header
 DSE> Warning:  specified compression count is larger than the current expanded key size.
 DSE> 
-Rec:1  Blk 3  Off 10  Size 35  Cmpc A  Key ^aglobal(1221,43956)
+Rec:1  Blk 27  Off 10  Size 35  Cmpc A  Key ^aglobal(1221,43956)
 
 DSE> DSE> 
-Rec:1  Blk 3  Off 10  Size 35  Cmpc 0  Key ^aglobal(1221,43956)
+Rec:1  Blk 27  Off 10  Size 35  Cmpc 0  Key ^aglobal(1221,43956)
 
 DSE> Error: offset greater than blk size of 272
 DSE> DSE> 
-Rec:E  Blk 3  Off 247  Size 2B  Cmpc 0  Key ^5(44424)
+Rec:E  Blk 27  Off 247  Size 2B  Cmpc 0  Key ^5(44424)
 
 DSE> DSE> 
-Rec:E  Blk 3  Off 247  Size 2B  Cmpc A  Key ^aglobal(1234,44424)
+Rec:E  Blk 27  Off 247  Size 2B  Cmpc A  Key ^aglobal(1234,44424)
 
 DSE> DSE> --------------------- Test 11 ---------------------
 
@@ -201,7 +201,7 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> DSE> DSE> DSE> DSE> 
-Rec:2  Blk 3  Off 45  Size AE  Cmpc 8  Key ^aglobal("abcdefghij","klmnopqrstuvwxyz")
+Rec:2  Blk 27  Off 45  Size AE  Cmpc 8  Key ^aglobal("abcdefghij","klmnopqrstuvwxyz")
 
 ##SUSPEND_OUTPUT MM_FILE_NO_EXT
 DSE> DSE> DSE> --------------------- Test 21 ---------------------
@@ -212,10 +212,10 @@ Region	AREG
 DSE> DSE> DSE> %GTM-E-BLKINVALID, 00000027 is not a valid block as database file ##TEST_PATH##/a.dat has 00000010 total blocks
 DSE> %GTM-E-BLKINVALID, 00000011 is not a valid block as database file ##TEST_PATH##/a.dat has 00000010 total blocks
 DSE> DSE> DSE> 
-Rec:10  Blk 27  Off 23F  Size C  Cmpc A  Key ^aglobal(1191,42876)
+Rec:E  Blk 27  Off 247  Size 2B  Cmpc A  Key ^aglobal(1234,44424)
 
 DSE> DSE> DSE> 
-Rec:10  Blk 27  Off 23F  Size C  Cmpc A  Key ^aglobal(1191,42876)
+Rec:E  Blk 27  Off 247  Size 2B  Cmpc A  Key ^aglobal(1234,44424)
 
 DSE> DSE> --------------------- Test 22 ---------------------
 ##ALLOW_OUTPUT   MM_FILE_NO_EXT

@@ -14,7 +14,7 @@ GTM>
 GTM>
 delete the database
 MUPIP create
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 -----------------------------------------------------------
 mupip journal -recover -forward mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -95,6 +95,8 @@ Database file name      ##TEST_PATH##/mumps.dat
  Jnlfile Extension                            2048 [0x00000800] blocks
  Maximum Journal Record Length             1049696 [0x00100460]
  Turn Around Point Offset                        0 [0x00000000]
+ Last EOF Written                            FALSE
+ Was a Previous Generation Journal File      FALSE
  Turn Around Point Time                          0
  Start Region Sequence Number                    1 [0x0000000000000001]
  End Region Sequence Number                      0 [0x0000000000000000]
@@ -234,6 +236,8 @@ Database file name      ##TEST_PATH##/mumps.dat
  Jnlfile Extension                            2048 [0x00000800] blocks
  Maximum Journal Record Length             1049696 [0x00100460]
  Turn Around Point Offset                        0 [0x00000000]
+ Last EOF Written                            FALSE
+ Was a Previous Generation Journal File      FALSE
  Turn Around Point Time                          0
  Start Region Sequence Number                    1 [0x0000000000000001]
  End Region Sequence Number                      0 [0x0000000000000000]
@@ -303,7 +307,7 @@ Record type    Count
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 PASSED
 -----------------------------------------------------------
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 

@@ -7,47 +7,49 @@
 
 GDE> 
 
-                               *** TEMPLATES ***
+                                *** TEMPLATES ***
                                                                           Std      Inst
-                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- -----------------------------------------------------------------------------------------------------------
- <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                             Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ ----------------------------------------------------------------------------------------------------------------------
+ <default>                                     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  1024        100   100 GLOB =1024
-                                                                     LOCK = 40
-##TEST_AWK                                                                     RES  = *[0-9]*
+ <default>          *                 BG  DYN  4096        100   100 GLOB =1024
+                                                                     LOCK =  40
+                                                                     RES  =   0
                                                                      ENCR = OFF
                                                                      MSLT =1024
-                                                                     DALL=YES
- <default>                            MM  DYN  1024        100   100 DEFER
-                                                                     LOCK = 40
+                                                                     DALL = YES
+                                                                     AIO  = OFF
+ <default>                            MM  DYN  4096        100   100 DEFER
+                                                                     LOCK =  40
                                                                      MSLT =1024
-                                                                     DALL=YES
+                                                                     DALL = YES
 GDE> 
 GDE> 
 
-                               *** TEMPLATES ***
+                                *** TEMPLATES ***
                                                                           Std      Inst
-                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- -----------------------------------------------------------------------------------------------------------
- <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                             Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ ----------------------------------------------------------------------------------------------------------------------
+ <default>                                     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+ <default>          *                 BG  DYN  4096        100   100 GLOB =1024
                                                                      LOCK =1000
-##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     RES  =   0
                                                                      ENCR = OFF
                                                                      MSLT =1024
-                                                                     DALL=YES
- <default>                            MM  DYN  1024        100   100 DEFER
-                                                                     LOCK = 40
+                                                                     DALL = YES
+                                                                     AIO  = OFF
+ <default>                            MM  DYN  4096        100   100 DEFER
+                                                                     LOCK =  40
                                                                      MSLT =1024
-                                                                     DALL=YES
+                                                                     DALL = YES
 GDE> 
 %GDE-I-VERIFY, Verification OK
 
@@ -64,48 +66,50 @@ GDE>
 
 GDE> 
 
-                               *** TEMPLATES ***
+                                *** TEMPLATES ***
                                                                           Std      Inst
-                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- -----------------------------------------------------------------------------------------------------------
- <default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                             Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ ----------------------------------------------------------------------------------------------------------------------
+ <default>                                     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  1024        100   100 GLOB =1024
+ <default>          *                 BG  DYN  4096        100   100 GLOB =1024
                                                                      LOCK =1000
-##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     RES  =   0
                                                                      ENCR = OFF
                                                                      MSLT =1024
-                                                                     DALL=YES
- <default>                            MM  DYN  1024        100   100 DEFER
-                                                                     LOCK = 40
+                                                                     DALL = YES
+                                                                     AIO  = OFF
+ <default>                            MM  DYN  4096        100   100 DEFER
+                                                                     LOCK =  40
                                                                      MSLT =1024
-                                                                     DALL=YES
+                                                                     DALL = YES
 GDE> 
 GDE> 
 GDE> 
 
-                               *** TEMPLATES ***
+                                *** TEMPLATES ***
                                                                           Std      Inst
-                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- -----------------------------------------------------------------------------------------------------------
- <default>                                     0    8176    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                             Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ ----------------------------------------------------------------------------------------------------------------------
+ <default>                                     0     8176    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
  <default>          *                 BG  DYN  8192        100   100 GLOB =1024
                                                                      LOCK =1000
-##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     RES  =   0
                                                                      ENCR = OFF
                                                                      MSLT =1024
-                                                                     DALL=YES
- <default>                            MM  DYN  1024        100   100 DEFER
-                                                                     LOCK = 40
+                                                                     DALL = YES
+                                                                     AIO  = OFF
+ <default>                            MM  DYN  4096        100   100 DEFER
+                                                                     LOCK =  40
                                                                      MSLT =1024
-                                                                     DALL=YES
+                                                                     DALL = YES
 GDE> 
 %GDE-I-VERIFY, Verification OK
 
@@ -122,47 +126,49 @@ GDE>
 
 GDE> 
 
-                               *** TEMPLATES ***
+                                *** TEMPLATES ***
                                                                           Std      Inst
-                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- -----------------------------------------------------------------------------------------------------------
- <default>                                     0    8176    64 NEVER      N    N   DISABLED DISABLED ENABLED
+                                             Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ ----------------------------------------------------------------------------------------------------------------------
+ <default>                                     0     8176    64 NEVER     N    N   N      N     Y     N      Y     Sep
 
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
  <default>          *                 BG  DYN  8192        100   100 GLOB =1024
                                                                      LOCK =1000
-##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     RES  =   0
                                                                      ENCR = OFF
                                                                      MSLT =1024
-                                                                     DALL=YES
- <default>                            MM  DYN  1024        100   100 DEFER
-                                                                     LOCK = 40
+                                                                     DALL = YES
+                                                                     AIO  = OFF
+ <default>                            MM  DYN  4096        100   100 DEFER
+                                                                     LOCK =  40
                                                                      MSLT =1024
-                                                                     DALL=YES
+                                                                     DALL = YES
 GDE> 
 GDE> 
 
-                               *** TEMPLATES ***
+                                *** TEMPLATES ***
                                                                           Std      Inst
-                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- -----------------------------------------------------------------------------------------------------------
- <default>                                     0    8176    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+                                             Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ ----------------------------------------------------------------------------------------------------------------------
+ <default>                                     0     8176    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
  <default>          *                 BG  DYN  8192        100   100 GLOB =1024
                                                                      LOCK =1000
-##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     RES  =   0
                                                                      ENCR = OFF
                                                                      MSLT =1024
-                                                                     DALL=YES
- <default>                            MM  DYN  1024        100   100 DEFER
-                                                                     LOCK = 40
+                                                                     DALL = YES
+                                                                     AIO  = OFF
+ <default>                            MM  DYN  4096        100   100 DEFER
+                                                                     LOCK =  40
                                                                      MSLT =1024
-                                                                     DALL=YES
+                                                                     DALL = YES
 GDE> 
 %GDE-I-VERIFY, Verification OK
 
@@ -179,24 +185,25 @@ GDE>
 
 GDE> 
 
-                               *** TEMPLATES ***
+                                *** TEMPLATES ***
                                                                           Std      Inst
-                                             Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
- Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
- -----------------------------------------------------------------------------------------------------------
- <default>                                     0    8176    64 NEVER      Y    N   DISABLED DISABLED ENABLED
+                                             Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
+ Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
+ ----------------------------------------------------------------------------------------------------------------------
+ <default>                                     0     8176    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
  <default>          *                 BG  DYN  8192        100   100 GLOB =1024
                                                                      LOCK =1000
-##TEST_AWK                                                                     RES  = *[0-9]*
+                                                                     RES  =   0
                                                                      ENCR = OFF
                                                                      MSLT =1024
-                                                                     DALL=YES
- <default>                            MM  DYN  1024        100   100 DEFER
-                                                                     LOCK = 40
+                                                                     DALL = YES
+                                                                     AIO  = OFF
+ <default>                            MM  DYN  4096        100   100 DEFER
+                                                                     LOCK =  40
                                                                      MSLT =1024
-                                                                     DALL=YES
+                                                                     DALL = YES
 GDE> 
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld

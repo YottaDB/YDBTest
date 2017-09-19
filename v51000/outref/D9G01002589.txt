@@ -24,17 +24,18 @@ $GDE show -seg DEFAULT
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=1024
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
 ##ALLOW_OUTPUT  ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-                                                                                    ENCR=ON
+                                                                                    ENCR=  ON
 ##ALLOW_OUTPUT   NON_ENCRYPT
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 
 $GDE change -seg DEFAULT -lock=2048
@@ -56,17 +57,18 @@ $GDE show -seg DEFAULT
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=2048
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
 ##ALLOW_OUTPUT  ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-                                                                                    ENCR=ON
+                                                                                    ENCR=  ON
 ##ALLOW_OUTPUT   NON_ENCRYPT
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 
 $GDE change -seg DEFAULT -lock=4096
@@ -88,17 +90,18 @@ $GDE show -seg DEFAULT
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=4096
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
 ##ALLOW_OUTPUT  ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-                                                                                    ENCR=ON
+                                                                                    ENCR=  ON
 ##ALLOW_OUTPUT   NON_ENCRYPT
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 
 $GDE change -seg DEFAULT -lock=16384
@@ -120,17 +123,18 @@ $GDE show -seg DEFAULT
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=16384
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
 ##ALLOW_OUTPUT  ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-                                                                                    ENCR=ON
+                                                                                    ENCR=  ON
 ##ALLOW_OUTPUT   NON_ENCRYPT
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 
 $GDE change -seg DEFAULT -lock=32768
@@ -152,17 +156,18 @@ $GDE show -seg DEFAULT
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=32768
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
 ##ALLOW_OUTPUT  ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-                                                                                    ENCR=ON
+                                                                                    ENCR=  ON
 ##ALLOW_OUTPUT   NON_ENCRYPT
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 
 $GDE change -seg DEFAULT -lock=65536
@@ -184,17 +189,18 @@ $GDE show -seg DEFAULT
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=65536
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
 ##ALLOW_OUTPUT  ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-                                                                                    ENCR=ON
+                                                                                    ENCR=  ON
 ##ALLOW_OUTPUT   NON_ENCRYPT
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 
 $GDE change -seg DEFAULT -lock=131072
@@ -219,17 +225,18 @@ $GDE show -seg DEFAULT
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=65536
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
 ##ALLOW_OUTPUT  ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-                                                                                    ENCR=ON
+                                                                                    ENCR=  ON
 ##ALLOW_OUTPUT   NON_ENCRYPT
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 
 $GDE change -seg DEFAULT -lock=65537
@@ -254,17 +261,18 @@ $GDE show -seg DEFAULT
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=65536
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
 ##ALLOW_OUTPUT  ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-                                                                                    ENCR=ON
+                                                                                    ENCR=  ON
 ##ALLOW_OUTPUT   NON_ENCRYPT
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 
 $GDE change -seg DEFAULT -lock=65535
@@ -286,17 +294,18 @@ $GDE show -seg DEFAULT
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=65535
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
 ##ALLOW_OUTPUT  ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-                                                                                    ENCR=ON
+                                                                                    ENCR=  ON
 ##ALLOW_OUTPUT   NON_ENCRYPT
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 
 $GDE change -seg DEFAULT -lock=32768
@@ -318,17 +327,18 @@ $GDE show -seg DEFAULT
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
- DEFAULT                         mumps.dat           BG  DYN  1024        100   100 GLOB=1024
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
                                                                                     LOCK=32768
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
-                                                                                    ENCR=OFF
+                                                                                    ENCR= OFF
 ##ALLOW_OUTPUT  ENCRYPT
 ##SUSPEND_OUTPUT  NON_ENCRYPT
-                                                                                    ENCR=ON
+                                                                                    ENCR=  ON
 ##ALLOW_OUTPUT   NON_ENCRYPT
                                                                                     MSLT=1024
-                                                                                    DALL=YES
+                                                                                    DALL= YES
+                                                                                    AIO = OFF
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 
 unset verbose
@@ -337,7 +347,7 @@ unset verbose
            Test that GDE setting of LOCK_SPACE gets carried over to the database        
 ########################################################################################
 $MUPIP create
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 $gtm_tst/com/get_dse_df.csh
 $grep -E "Region          |Lock space" dse_df.log
 Region          DEFAULT

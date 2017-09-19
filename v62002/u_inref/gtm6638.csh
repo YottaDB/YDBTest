@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -69,10 +72,10 @@ quit
 END
 
 echo "Examine the before and after for the template"
-$grep ABLED gde_et3.out| $grep \<default\>
+$tst_awk '/<default>.*Sep/ {print $1,$10}' gde_et3.out
 
 echo "Examine the just added region"
-$grep ABLED gde_et3.out | $grep AREG
+$tst_awk '/AREG.*Sep/ {print $1,$11}' gde_et3.out
 
 echo "Bump up the global buffers so we can accumulate some dirty buffers"
 $MUPIP set -global_buffers=32767 -region "*"

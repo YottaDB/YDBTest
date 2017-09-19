@@ -8,7 +8,7 @@ TEST-I-PASS database has been fully allocated.
 # Triggering an auto extend and checking if the database is fully allocated
 TEST-I-PASS database has been fully allocated.
 # Create mumps.dat with -defer_allocate
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 TEST-I-PASS The mumps.dat is sparse as expected during database creation with defer_allocate.
 # Fill the database, trigger autoextend
 TEST-I-PASS The mumps.dat is sparse as expected after filling the database with defer_allocate.
@@ -26,7 +26,7 @@ TEST-I-PASS Data OK
 Extension successful, file ##TEST_PATH##/mumps.dat extended by 100 blocks.  Total blocks = 1625.
 TEST-I-PASS database has been fully allocated with nodefer_allocate.
 TEST-I-PASS Data OK
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 # Fill the database, trigger autoextend
 TEST-I-PASS The mumps.dat is fully allocated after filling the database with nodefer_allocate.
 Database file ##TEST_PATH##/mumps.dat now has defer allocation flag set to  TRUE

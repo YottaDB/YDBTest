@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2014 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -22,18 +25,10 @@ gtm8174	;test that raising 0 to a negative power gives an DIVZERO error
 	. set x=a**-b if $increment(cnt) xecute act
 	. kill expect
 	set expect="DIVZERO"
-	set x=0**-1 if $increment(cnt) xecute act
-	set x=0**-1E10 if $increment(cnt) xecute act
-	set x=0**-123456789 if $increment(cnt) xecute act
-	set x=0**-123456.789 if $increment(cnt) xecute act
-	set x=0**-.123456789 if $increment(cnt) xecute act
-	set x=0**-.123456789E10 if $increment(cnt) xecute act
-	set x=-0**-1 if $increment(cnt) xecute act
-	set x=-0**-1E10 if $increment(cnt) xecute act
-	set x=-0**-123456789 if $increment(cnt) xecute act
-	set x=-0**-123456.789 if $increment(cnt) xecute act
-	set x=-0**-.123456789 if $increment(cnt) xecute act
-	set x=-0**-.123456789E10 if $increment(cnt) xecute act
+	; Use variable in the ** operator to avoid compiler from evaluating literal expressions and erroring at compile time
+	for exp=-1,-1E10,-123456789,-123456.789,-.123456789,-.123456789E10  do
+	. set x=0**exp if $increment(cnt) xecute act
+	. set x=-0**exp if $increment(cnt) xecute act
 	write !,$select($get(cnt):"FAIL",1:"PASS")," from ",$text(+0),!
 	quit
 err	if $estack write:'$stack !,"error handling failed",$zstatus zgoto @($zlevel-1_":"_$zposition)

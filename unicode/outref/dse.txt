@@ -58,7 +58,7 @@ DSE> DSE>
 4 ZWR records written.
 
 DSE> 
-7 ZWR records written.
+1 ZWR records written.
 
 DSE> Closing output file:  ｄｕｍｐ1.out
 DSE> # Contents of ｄｕｍｐ1.out i.e dump of blocks 22 and 6 in zwr format
@@ -68,13 +68,7 @@ DSE> # Contents of ｄｕｍｐ1.out i.e dump of blocks 22 and 6 in zwr format
 ^samplegbl("色")="Kanji"
 ^samplegbl($C(57344))=$C(57344)_", U+E000 - private use section"
 ^samplegbl($C(57344,57345,57345,57346,57353))=$C(57344,57345,57345,57346,57353)
-^samplegbl("Α")="this is actually Greek Alpha Α, should look like A"
-^samplegbl("Α","Α")="this is actually Greek Alpha Α, should look like A,A"
-^samplegbl("Α","ΑΑ")="this is actually Greek Alpha ΑΑ, should look like A,AA"
-^samplegbl("Α","Β")="this is actually Greek Beta Β, should look like A,B"
-^samplegbl("ΑΑ","ΑΑ")="this is actually Greek Alpha ΑΑ, should look like AA,AA"
-^samplegbl("ΑΑ","Β")="this is actually Greek Beta Β, should look like AA,B"
-^samplegbl("Β")="this is actually Greek Beta Β, should look like B"
+^samplegbl("Β","Α","Ε","Ζ","Μ","Ν","Ο","Τ","Υ","Χ","Β","Α","Ε")="this is actually in Greek, should look like B,A,E,Z,M,N,O,T,Y,X,B,A,E"
 ###################################################################
 #- DSE OPEN and OCHSET
 Error expected for the below DSE dump
@@ -171,9 +165,9 @@ Type           Blocks         Records          % Used      Adjacent
 
 Directory           2               6          13.378            NA
 Index               5              40          22.851             1
-Data               40             264          63.754            24
+Data               40             264          63.754            23
 Free               53              NA              NA            NA
-Total             100             310              NA            25
+Total             100             310              NA            24
 ###################################################################
 #- DSE ADD
 
@@ -190,9 +184,9 @@ Type           Blocks         Records          % Used      Adjacent
 
 Directory           2               6          13.378            NA
 Index               5              40          22.851             1
-Data               40             266          64.248            24
+Data               40             266          64.248            23
 Free               53              NA              NA            NA
-Total             100             312              NA            25
+Total             100             312              NA            24
 TEST-I-PASS, DSE add key passed
 
 GTM>
@@ -219,9 +213,9 @@ Type           Blocks         Records          % Used      Adjacent
 
 Directory           2               6          13.378            NA
 Index               5              40          22.851             1
-Data               40             267          64.350            24
+Data               40             267          64.350            23
 Free               53              NA              NA            NA
-Total             100             313              NA            25
+Total             100             313              NA            24
 ###################################################################
 #- DSE FIND
 

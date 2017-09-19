@@ -22,15 +22,15 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               2           2.783            NA
-Index              53            3894          96.460             ##TEST_AWK[12]
-Data             3842            4608          96.205          ##TEST_AWK38([1-3][0-9]|40)
-Free              203              NA              NA            NA
-Total            4100            8504              NA          ##TEST_AWK38([1-3][0-9]|41)
-[Spanning Nodes:384 ; Blocks:4224]
+Directory           2               2           0.695            NA
+Index               6            1159          64.982             1
+Data             1154            1920          75.356          1152
+Free              138              NA              NA            NA
+Total            1300            3081              NA          1153
+[Spanning Nodes:384 ; Blocks:1536]
 ### -format=zwr ###
-%GTM-I-RECORDSTAT, ^var:	  Key cnt: 384  max subsc len: 59  max rec len: 9004  max node len: 1008
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 384  max subsc len: 59  max rec len: 9004  max node len: 1008
+%GTM-I-RECORDSTAT, ^var:	  Key cnt: 384  max subsc len: 59  max rec len: 9004  max node len: 4080
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 384  max subsc len: 59  max rec len: 9004  max node len: 4080
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -39,8 +39,8 @@ LOAD TOTAL		Key Cnt: 384  Max Subsc Len: 59  Max Data Len: 9004
 Last LOAD record number: 386
 
 ### -format=go ###
-%GTM-I-RECORDSTAT, ^var:	  Key cnt: 384  max subsc len: 59  max rec len: 9004  max node len: 1008
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 384  max subsc len: 59  max rec len: 9004  max node len: 1008
+%GTM-I-RECORDSTAT, ^var:	  Key cnt: 384  max subsc len: 59  max rec len: 9004  max node len: 4080
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 384  max subsc len: 59  max rec len: 9004  max node len: 4080
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
@@ -49,14 +49,14 @@ LOAD TOTAL		Key Cnt: 384  Max Subsc Len: 59  Max Data Len: 9004
 Last LOAD record number: 770
 
 ### -format=bin ###
-%GTM-I-RECORDSTAT, ^var:	  Key cnt: 384  max subsc len: 59  max rec len: 9004  max node len: 1008
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 384  max subsc len: 59  max rec len: 9004  max node len: 1008
+%GTM-I-RECORDSTAT, ^var:	  Key cnt: 384  max subsc len: 59  max rec len: 9004  max node len: 4080
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 384  max subsc len: 59  max rec len: 9004  max node len: 4080
 Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................GT.M MUPIP EXTRACT              
 
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 384  Max Subsc Len: 59  Max Data Len: 9004
-Last LOAD record number: 3842
+Last LOAD record number: 1154
 
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/mumps.gld
@@ -68,7 +68,7 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 %GTM-I-RECORDSTAT, ^a:	  Key cnt: 24  max subsc len: 16  max rec len: 1048576  max node len: 496
 %GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 24  max subsc len: 16  max rec len: 1048576  max node len: 496
 GT.M MUPIP EXTRACT

@@ -3,6 +3,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -70,8 +73,6 @@ else if (option ~ /^PLATFORM_NO_GGUSERS/)	{oput="PLATFORM_NO_GGUSERS";		var="gtm
 else if (option ~ /^PLATFORM_NO_GGBUILDDIR/)	{oput="PLATFORM_NO_GGBUILDDIR";		var="gtm_test_noggbuilddir"		}
 else if (option ~ /^PLATFORM_NO_IGS/)		{oput="PLATFORM_NO_IGS";		var="gtm_test_noIGS"			}
 else if (option ~ /^PLATFORM_NO_4BYTE_UTF8/)	{oput="PLATFORM_NO_4BYTE_UTF8";		var="gtm_platform_no_4byte_utf8"	}
-else if (option ~ /^PLATFORM_TRIGGER/)		{oput="PLATFORM_TRIGGER";		var="gtm_platform_triggers_support"	}
-else if (option ~ /^PLATFORM_NOTRIGGER/)	{oput="PLATFORM_NOTRIGGER";		var="gtm_platform_triggers_support"	}
 else if (option ~ /^PLATFORM_JAVA/)		{oput="PLATFORM_JAVA";			var="gtm_test_java_support"		}
 else if (option ~ /^PLATFORM_NOJAVA/)		{oput="PLATFORM_NOJAVA";		var="gtm_test_java_support"		}
 else if (option ~ /^MM_FILE_EXT/)	{oput="MM_FILE_EXT";	var="gtm_platform_mmfile_ext"	}

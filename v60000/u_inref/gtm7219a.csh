@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -24,7 +27,7 @@ setenv gtm_white_box_test_case_enable 1
 setenv gtm_white_box_test_case_number 67
 setenv gtm_test_mupip_set_version "disable"
 #create database with one region
-$gtm_tst/com/dbcreate.csh mumps
+$gtm_tst/com/dbcreate.csh mumps -block_size=1024
 
 foreach image_type ( "MUMPS" "MUPIP" "DSE" "LKE" "DBCERTIFY" "GTCM" "GTCM_GNP" )
 	set syslog_before = `date +"%b %e %H:%M:%S"`

@@ -25,203 +25,203 @@ Test1.1-- 'database' => 'databases'
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Configuration file gtmcrypt.cfg contains neither 'database.keys' section nor 'files' section, or both sections are empty.
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.2-- Missing curly brace
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 2 - syntax error
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 2 - syntax error
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.3-- Missing parentheses
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'dat' item
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'dat' item
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.4-- 'dat' => 'dAt'; 'key' => 'kEy'
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'dat' item
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'dat' item
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.5-- Empty keys set
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Database file ##TEST_PATH##/a.dat missing in configuration file or does not exist
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/create.dat
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.6-- Missing 'dat' field
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'dat' item
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'dat' item
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.7-- Missing 'key' field
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'key' item
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'key' item
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.8-- Extraneous field
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Database file ##TEST_PATH##/a.dat missing in configuration file or does not exist
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/create.dat
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.9-- Missing quotes
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 3 - syntax error
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 3 - syntax error
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.10-- Missing colons
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 3 - syntax error
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 3 - syntax error
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.11-- Missing keys section
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Configuration file gtmcrypt.cfg contains neither 'database.keys' section nor 'files' section, or both sections are empty.
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Configuration file gtmcrypt.cfg contains neither 'database.keys' section nor 'files' section, or both sections are empty.
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.12-- Dat points to an invalid path
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Database file ##TEST_PATH##/a.dat missing in configuration file or does not exist
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Database file ##TEST_PATH##/create.dat missing in configuration file or does not exist
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.13-- Key points to an invalid path
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'database.keys' entry #1's key. No such file or directory
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'database.keys' entry #1's key. No such file or directory
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.14-- Dat points to something other than a database file
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Database file ##TEST_PATH##/a.dat missing in configuration file or does not exist
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Database file ##TEST_PATH##/create.dat missing in configuration file or does not exist
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.15-- Key points to something other than a symmetric key
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Database file ##TEST_PATH##/a.dat missing in configuration file or does not exist
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Error while accessing key file ##TEST_PATH##/gtmcrypt.cfg: No data
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.16-- Same database listed twice with different keys
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Database file ##TEST_PATH##/a.dat missing in configuration file or does not exist
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/create.dat
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.17-- Same database listed twice with the same key
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Database file ##TEST_PATH##/a.dat missing in configuration file or does not exist
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/create.dat
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.18-- Database path is very long (over 4096)
 ##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. In config file gtmcrypt.cfg, in entry #1 corresponding to 'database.keys' file name exceeds [0-9]*
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 ##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. In config file gtmcrypt.cfg, in entry #1 corresponding to 'database.keys' file name exceeds [0-9]*
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.19-- Key path for database is very long (over 4096)
 ##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'database.keys' entry #1's key.*
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 ##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'database.keys' entry #1's key.*
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.20-- Key path for devices is very long (over 4096)
 ##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'files' entry #1's key.*
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 ##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'files' entry #1's key.*
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.21-- Key name for devices is very long (over 4096)
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 8 - syntax error
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 8 - syntax error
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.22-- Several keyname fields are identical
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/create.dat
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.23-- Empty braces after database block
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 6 - syntax error
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 6 - syntax error
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.24-- Multiple dat entries within a key set
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 4 - duplicate setting name
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 4 - duplicate setting name
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.25-- Multiple key entries within a key set
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 5 - duplicate setting name
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 5 - duplicate setting name
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.26-- Multiple key,dat entries within a key set
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 5 - duplicate setting name
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 5 - duplicate setting name
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.27-- Filename fields are identical
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 9 - duplicate setting name
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 9 - duplicate setting name
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.28-- Empty braces and a tls block after database section
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 6 - syntax error
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 6 - syntax error
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.29-- Empty tls block
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Database file ##TEST_PATH##/a.dat missing in configuration file or does not exist
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-Created file ##TEST_PATH##/create.dat
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 
 Test1.30-- Normal setup
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/b.dat
-Created file ##TEST_PATH##/create.dat
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -231,239 +231,239 @@ Test2.1-- 'database' => 'databases'
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Configuration file gtmcrypt.cfg contains neither 'database.keys' section nor 'files' section, or both sections are empty.
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Database file ##TEST_PATH##/b.dat missing in configuration file or does not exist
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Database file ##TEST_PATH##/create.dat missing in configuration file or does not exist
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.2-- Missing curly brace
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 2 - syntax error
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Cannot read config file gtmcrypt.cfg. At line# 2 - syntax error
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 2 - syntax error
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.3-- Missing parentheses
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'dat' item
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'dat' item
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'dat' item
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.4-- 'dat' => 'dAt'; 'key' => 'kEy'
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'dat' item
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'dat' item
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'dat' item
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.5-- Empty keys set
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Database file ##TEST_PATH##/a.dat missing in configuration file or does not exist
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Database file ##TEST_PATH##/b.dat missing in configuration file or does not exist
-Created file ##TEST_PATH##/create.dat
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.6-- Missing 'dat' field
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'dat' item
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'dat' item
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'dat' item
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.7-- Missing 'key' field
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'key' item
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'key' item
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. In config file gtmcrypt.cfg, entry #1 corresponding to 'database.keys' does not have a 'key' item
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.8-- Extraneous field
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Database file ##TEST_PATH##/a.dat missing in configuration file or does not exist
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Database file ##TEST_PATH##/b.dat missing in configuration file or does not exist
-Created file ##TEST_PATH##/create.dat
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.9-- Missing quotes
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 3 - syntax error
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Cannot read config file gtmcrypt.cfg. At line# 3 - syntax error
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 3 - syntax error
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.10-- Missing colons
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 3 - syntax error
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Cannot read config file gtmcrypt.cfg. At line# 3 - syntax error
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 3 - syntax error
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.11-- Missing keys section
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Configuration file gtmcrypt.cfg contains neither 'database.keys' section nor 'files' section, or both sections are empty.
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Database file ##TEST_PATH##/b.dat missing in configuration file or does not exist
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Database file ##TEST_PATH##/create.dat missing in configuration file or does not exist
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.12-- Dat points to an invalid path
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Database file ##TEST_PATH##/a.dat missing in configuration file or does not exist
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Database file ##TEST_PATH##/b.dat missing in configuration file or does not exist
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Database file ##TEST_PATH##/create.dat missing in configuration file or does not exist
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.13-- Key points to an invalid path
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'database.keys' entry #1's key. No such file or directory
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'database.keys' entry #1's key. No such file or directory
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'database.keys' entry #1's key. No such file or directory
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.14-- Dat points to something other than a database file
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Database file ##TEST_PATH##/a.dat missing in configuration file or does not exist
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Database file ##TEST_PATH##/b.dat missing in configuration file or does not exist
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Database file ##TEST_PATH##/create.dat missing in configuration file or does not exist
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.15-- Key points to something other than a symmetric key
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Database file ##TEST_PATH##/a.dat missing in configuration file or does not exist
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Database file ##TEST_PATH##/b.dat missing in configuration file or does not exist
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Error while accessing key file ##TEST_PATH##/gtmcrypt.cfg: No data
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.16-- Same database listed twice with different keys
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Database file ##TEST_PATH##/a.dat missing in configuration file or does not exist
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Database file ##TEST_PATH##/b.dat missing in configuration file or does not exist
-Created file ##TEST_PATH##/create.dat
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.17-- Same database listed twice with the same key
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Database file ##TEST_PATH##/a.dat missing in configuration file or does not exist
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Database file ##TEST_PATH##/b.dat missing in configuration file or does not exist
-Created file ##TEST_PATH##/create.dat
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.18-- Database path is very long (over 4096)
 ##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. In config file gtmcrypt.cfg, in entry #1 corresponding to 'database.keys' file name exceeds [0-9]*
 ##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. In config file gtmcrypt.cfg, in entry #1 corresponding to 'database.keys' file name exceeds [0-9]*
 ##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. In config file gtmcrypt.cfg, in entry #1 corresponding to 'database.keys' file name exceeds [0-9]*
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.19-- Key path for database is very long (over 4096)
 ##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'database.keys' entry #1's key.*
 ##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'database.keys' entry #1's key.*
 ##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'database.keys' entry #1's key.*
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.20-- Key path for devices is very long (over 4096)
 ##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'files' entry #1's key.*
 ##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'files' entry #1's key.*
 ##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'files' entry #1's key.*
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.21-- Key name for devices is very long (over 4096)
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 8 - syntax error
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Cannot read config file gtmcrypt.cfg. At line# 8 - syntax error
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 8 - syntax error
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.22-- Several keyname fields are identical
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/b.dat
-Created file ##TEST_PATH##/create.dat
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 
 Test2.23-- Empty braces after database block
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 6 - syntax error
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Cannot read config file gtmcrypt.cfg. At line# 6 - syntax error
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 6 - syntax error
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.24-- Multiple dat entries within a key set
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 4 - duplicate setting name
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Cannot read config file gtmcrypt.cfg. At line# 4 - duplicate setting name
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 4 - duplicate setting name
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.25-- Multiple key entries within a key set
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 5 - duplicate setting name
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Cannot read config file gtmcrypt.cfg. At line# 5 - duplicate setting name
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 5 - duplicate setting name
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.26-- Multiple key,dat entries within a key set
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 5 - duplicate setting name
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Cannot read config file gtmcrypt.cfg. At line# 5 - duplicate setting name
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 5 - duplicate setting name
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.27-- Filename fields are identical
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 9 - duplicate setting name
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Cannot read config file gtmcrypt.cfg. At line# 9 - duplicate setting name
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 9 - duplicate setting name
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.28-- Empty braces and a tls block after database section
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot read config file gtmcrypt.cfg. At line# 6 - syntax error
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Cannot read config file gtmcrypt.cfg. At line# 6 - syntax error
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Cannot read config file gtmcrypt.cfg. At line# 6 - syntax error
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.29-- Empty tls block
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Database file ##TEST_PATH##/a.dat missing in configuration file or does not exist
 %GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Database file ##TEST_PATH##/b.dat missing in configuration file or does not exist
-Created file ##TEST_PATH##/create.dat
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 Test2.30-- Normal setup
-Created file ##TEST_PATH##/a.dat
-Created file ##TEST_PATH##/b.dat
-Created file ##TEST_PATH##/create.dat
-Created file ##TEST_PATH##/y.dat
-Created file ##TEST_PATH##/z.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

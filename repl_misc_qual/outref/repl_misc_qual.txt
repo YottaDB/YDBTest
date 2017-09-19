@@ -33,12 +33,12 @@ echo $status
 $gtm_tst/com/wait_for_log.csh -log SRC_$start_time.log -message "End statistics logging" -duration 120
 $MUPIP replicate -source -statslog=ON >> & SRC3_ignore.out
 $MUPIP replicate -source -statslog=ON >> & SRC4_ignore.out
-sleep 10
+sleep 4
 $MUPIP replicate -source -statslog=OFF >> & SRC5_ignore.out
 $MUPIP replicate -source -statslog=OFF >> & SRC6_ignore.out
 $MUPIP replicate -source -statslog=OFF -changelog -log=SRC7.log
 %GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
-sleep 10
+sleep 4
 $MUPIP replicate -source -changelog -log=SRC8.log
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHANGELOG operation on source server pid [##PID##] for secondary instance [INSTANCE2]
 Change log initiated with file SRC8.log
@@ -60,7 +60,7 @@ $MUPIP replicate -source -changelog -log=SRC12.log
 Log file is already SRC12.log. Not initiating change in log file
 No change to log file or log interval
 echo $status
-1
+0
 unset verbose
 Shut down current receiver server/update process in side (B)
 Passive source server will start in side (A)
@@ -93,7 +93,7 @@ $MUPIP replicate -receiv -statslog=OFF >> & RCVR5_ignore.out
 $MUPIP replicate -receiv -statslog=OFF >> & RCVR6_ignore.out
 $MUPIP replicate -receiv -statslog=OFF -changelog -log=RCVR7.log
 %GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
-sleep 10
+sleep 4
 $MUPIP replicate -receiv -changelog -log=RCVR8.log
 Change log initiated with file RCVR8.log
 echo $status
@@ -115,7 +115,7 @@ $MUPIP replicate -receiv -changelog -log=RCVR12.log
 Log file is already RCVR12.log. Not initiating change in log file
 No change to log file or log interval
 echo $status
-1
+0
 unset verbose
 Stopping GTM on primary side...
 Shutting down Passive Source Server and Receiver Server in ##TEST_PATH##

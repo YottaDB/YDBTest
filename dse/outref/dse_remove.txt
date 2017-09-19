@@ -52,21 +52,21 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> 
-Key found in block  3.
+Key found in block  27.
     Directory path
     Path--blk:off
 	1:10,	2:10,
     Global tree path
     Path--blk:off
-	4:1C0,	3:9B,
+	4:1C0,	27:9B,
 DSE> DSE> 
-Key not found, would be in block  3.
+Key not found, would be in block  27.
     Directory path
     Path--blk:off
 	1:10,	2:10,
     Global tree path
     Path--blk:off
-	4:1C0,	3:9B,
+	4:1C0,	27:9B,
 DSE> DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -83,15 +83,15 @@ DSE> DSE>
 	1:10,	2:10,
     Global tree path
     Path--blk:off
-	4:1C0,	3
+	4:1C0,	27
 
 DSE> Error: offset less than blk header
 DSE> Error: offset greater than blk size of 256
 DSE> 
-Rec:1  Blk 3  Off 10  Size 35  Cmpc 0  Key ^aglobal(1221,43956)
+Rec:1  Blk 27  Off 10  Size 35  Cmpc 0  Key ^aglobal(1221,43956)
 
 DSE> DSE> 
-Rec:1  Blk 3  Off 10  Size 35  Cmpc 0  Key ^aglobal(1222,43992)
+Rec:1  Blk 27  Off 10  Size 35  Cmpc 0  Key ^aglobal(1222,43992)
 
 DSE> DSE> DSE> 
 File  	##TEST_PATH##/a.dat
@@ -113,10 +113,10 @@ Region	AREG
 DSE> DSE> 
 Saving version 1 of block 4
 DSE> 
-Rec:2  Blk 4  Off 25  Size C  Cmpc 9  Ptr 6  Key ^aglobal(63.0)
+Rec:2  Blk 4  Off 25  Size C  Cmpc 9  Ptr 5  Key ^aglobal(63.0)
 
 DSE> DSE> 
-Rec:2  Blk 4  Off 25  Size C  Cmpc 9  Ptr 6  Key ^aglobal(63.0)
+Rec:2  Blk 4  Off 25  Size C  Cmpc 9  Ptr 5  Key ^aglobal(63.0)
 
 DSE> DSE> 
 Restoring block 4 from version 1

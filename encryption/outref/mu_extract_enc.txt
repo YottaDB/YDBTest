@@ -1,8 +1,8 @@
 # Switch to the random version
 # Create databases with encryption
 # Create two more regions and db without encryption
-Created file ##TEST_PATH##/z.dat
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 # Update a few random globals
 
 GTM>
@@ -27,7 +27,7 @@ Last LOAD record number: 11
 
 ###################################################################
 # Create a non-encrypted database
-Created file ##TEST_PATH##/mumps.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 # Load the binary extract into the non-encrypted database
 
 Beginning LOAD at record number: 2
@@ -44,7 +44,7 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 a.dat
 mumps.dat
-Created file ##TEST_PATH##/y.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 # Load the binary extract into this mixed databases
 
 Beginning LOAD at record number: 2
@@ -63,7 +63,7 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 a.dat
 mumps.dat
-Created file ##TEST_PATH##/m.dat
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/m.dat created
 
 Beginning LOAD at record number: 2
 

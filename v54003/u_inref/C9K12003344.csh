@@ -4,6 +4,9 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -17,7 +20,7 @@ setenv gtm_test_jnl "SETJNL"			# For journal creation at database creation time
 setenv test_encryption "NON_ENCRYPT"		# As the test plays with V4 - V6 formats
 source $gtm_tst/com/gtm_test_setbeforeimage.csh	# We need before image journaling enabled so that PBLKs gets written
 
-$gtm_tst/com/dbcreate.csh mumps 1
+$gtm_tst/com/dbcreate.csh mumps 1 -block_size=1024
 
 $echoline
 echo "STEP 1 ==> Create some V6 blocks (global ^a)"
