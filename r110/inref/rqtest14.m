@@ -13,9 +13,14 @@
 ;
 rqtest14;
 	set dir=+$piece($zcmdline," ",1),dir1="dir",dir2="@dir1"
-	set z(1)=1,z(2)=2,z(3)=3,x="@y"
-	set ^z(1)=1,^z(2)=2,^z(3)=3,x="@y"
 	for y="z(2)","^z(2)" do
-	. for dir=1,-1 do
-	. . write "set x="_$zwrite(x)_",y="_$zwrite(y)_",dir="_$zwrite(dir)_" : $query(@x,dir)=",$query(@x,@dir2),!
+	. ; Test cases where direction is -1 or 1 or variable (potentially with indirection)
+	. if y="z(2)" set xstr="set z(1)=1,z(2)=2,z(3)=3,x=""@y"""
+	. if y="^z(2)" set xstr="set ^z(1)=1,^z(2)=2,^z(3)=3,x=""@y"""
+	. write xstr,! xecute xstr
+	. write "set y="_$zwrite(y)_" : $query(@x,-1)=",$query(@x,-1),!
+	. write "set y="_$zwrite(y)_" : $query(@x,1)=",$query(@x,1),!
+	. for dir=-1,1 do
+	. . write "set y="_$zwrite(y)_",dir="_$zwrite(dir)_",dir1="_$zwrite(dir1)_",dir2="_$zwrite(dir2)_" : $query(@x,@dir1)=",$query(@x,@dir1),!
+	. . write "set y="_$zwrite(y)_",dir="_$zwrite(dir)_",dir1="_$zwrite(dir1)_",dir2="_$zwrite(dir2)_" : $query(@x,@dir2)=",$query(@x,@dir2),!
 	quit

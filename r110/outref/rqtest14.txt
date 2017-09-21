@@ -4,10 +4,20 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
-set x="@y",y="z(2)",dir=1 : $query(@x,dir)=z(3)
-set x="@y",y="z(2)",dir=-1 : $query(@x,dir)=z(1)
-set x="@y",y="^z(2)",dir=1 : $query(@x,dir)=^z(3)
-set x="@y",y="^z(2)",dir=-1 : $query(@x,dir)=^z(1)
+set z(1)=1,z(2)=2,z(3)=3,x="@y"
+set y="z(2)" : $query(@x,-1)=z(1)
+set y="z(2)" : $query(@x,1)=z(3)
+set y="z(2)",dir=-1,dir1="dir",dir2="@dir1" : $query(@x,@dir1)=z(1)
+set y="z(2)",dir=-1,dir1="dir",dir2="@dir1" : $query(@x,@dir2)=z(1)
+set y="z(2)",dir=1,dir1="dir",dir2="@dir1" : $query(@x,@dir1)=z(3)
+set y="z(2)",dir=1,dir1="dir",dir2="@dir1" : $query(@x,@dir2)=z(3)
+set ^z(1)=1,^z(2)=2,^z(3)=3,x="@y"
+set y="^z(2)" : $query(@x,-1)=^z(1)
+set y="^z(2)" : $query(@x,1)=^z(3)
+set y="^z(2)",dir=-1,dir1="dir",dir2="@dir1" : $query(@x,@dir1)=^z(1)
+set y="^z(2)",dir=-1,dir1="dir",dir2="@dir1" : $query(@x,@dir2)=^z(1)
+set y="^z(2)",dir=1,dir1="dir",dir2="@dir1" : $query(@x,@dir1)=^z(3)
+set y="^z(2)",dir=1,dir1="dir",dir2="@dir1" : $query(@x,@dir2)=^z(3)
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
