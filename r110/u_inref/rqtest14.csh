@@ -11,11 +11,10 @@
 #								#
 #################################################################
 
-echo '# Test that $query(lvn,...) does not infinite loop with null subscripts & GT.M Null Collation'
+echo '# Test $query(lvn,dir) and $query(gvn,dir) where lvn and gvn have nested indirection and dir is -1 or 1'
 
-foreach querydir (1 -1)
-	foreach lctstdnull (1 0)
-		setenv gtm_lct_stdnull $lctstdnull
-		$gtm_dist/mumps -run rqtest05 $querydir
-	end
-end
+$gtm_tst/com/dbcreate.csh mumps
+
+$gtm_dist/mumps -run rqtest14
+
+$gtm_tst/com/dbcheck.csh

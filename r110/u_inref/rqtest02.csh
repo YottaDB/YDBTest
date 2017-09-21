@@ -1,9 +1,6 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2001-2016 Fidelity National Information		#
-# Services, Inc. and/or its subsidiaries. All rights reserved.	#
-#								#
 # Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
