@@ -13,7 +13,10 @@
 #
 # Test for $query(lvn,-1) and $query(gvn,-1)
 #
-
+# There are various tests each embedded in scripts numbered rqtest00.csh, rqtest01.csh etc.
+# Each in turn invoke helper M programs rqtest00.m, rqtest01.m etc.
+# And each test has its own reference file rqtest00.txt, rqtest01.txt etc. to decide PASS or FAIL for each test.
+#
 foreach file ($gtm_tst/$tst/u_inref/rqtest*.csh)
         set subtst = $file:t:r
 	mkdir $subtst

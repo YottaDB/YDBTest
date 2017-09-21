@@ -9,6 +9,8 @@
 ;	the license, please stop and do not read further.	;
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; See u_inref/rqtest00.csh for purpose of test. Also see reference file outref/rqtest00.txt for a better picture.
+;
 rqtest00 ;
 	for dir=0,-2,"1E1","abcd" do tstlvn(dir)
 	for dir=0,-2,"1E1","abcd" do tstgvn(dir)

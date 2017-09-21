@@ -14,8 +14,7 @@
 #								#
 #################################################################
 
-# This test is similar to rqtest05 csh and hence this test only does reverse $query.
-# rqtest05 does reverse and forward query.
+# This test is similar to rqtest05.csh (which does reverse and forward query) but this test only does reverse $query.
 echo '# Test of reverse $query on local variables for NULL subscript handling to avoid infinite loops'
 
 foreach lctstdnull (1 0)

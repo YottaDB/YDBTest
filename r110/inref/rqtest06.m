@@ -9,6 +9,8 @@
 ;	the license, please stop and do not read further.	;
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; See u_inref/rqtest06.csh for purpose of test. Also see reference file outref/rqtest06.txt for a better picture.
+;
 rqtest06	;
 	; See rqtest06a.m
 	; See rqtest06b.m

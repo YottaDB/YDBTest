@@ -9,6 +9,8 @@
 ;	the license, please stop and do not read further.	;
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; See u_inref/rqtest01.csh for purpose of test. Also see reference file outref/rqtest01.txt for a better picture.
+;
 rqtest01	;
 	set num=+$piece($zcmdline," ",1)
 	set querydir=+$piece($zcmdline," ",2)

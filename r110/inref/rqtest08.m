@@ -9,6 +9,8 @@
 ;	the license, please stop and do not read further.	;
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; See u_inref/rqtest08.csh for purpose of test. Also see reference file outref/rqtest08.txt for a better picture.
+;
 rqtest08 ;
 	set ^x=0
 	set ^x(1,0)=1

@@ -9,6 +9,8 @@
 ;	the license, please stop and do not read further.	;
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; See u_inref/rqtest03.csh for purpose of test. Also see reference file outref/rqtest03.txt for a better picture.
+;
 rqtest03;
 	set x="" for i="0","","a" for j="0","","a" for k="0","","a" set x(i,j,k)=""
 	set y="x"

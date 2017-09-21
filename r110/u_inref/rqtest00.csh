@@ -14,7 +14,7 @@
 #								#
 #################################################################
 
-echo '# Simplistic tests of direction (2nd) parameter to $query'
+echo '# Simplistic tests of invalid direction (2nd) parameter to $query'
 
 $gtm_tst/com/dbcreate.csh mumps
 $gtm_dist/mumps -run rqtest00

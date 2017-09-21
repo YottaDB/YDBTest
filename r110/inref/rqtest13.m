@@ -9,6 +9,8 @@
 ;	the license, please stop and do not read further.	;
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; See u_inref/rqtest13.csh for purpose of test. Also see reference file outref/rqtest13.txt for a better picture.
+;
 rqtest13;
 	set dir=+$piece($zcmdline," ",1)
 	if dir=1 do

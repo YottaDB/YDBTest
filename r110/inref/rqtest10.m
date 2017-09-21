@@ -9,6 +9,8 @@
 ;	the license, please stop and do not read further.	;
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; See u_inref/rqtest10.csh for purpose of test. Also see reference file outref/rqtest10.txt for a better picture.
+;
 rqtest10;
 	set stdnullcoll=$piece($zcmdline," ",1)
 	set nullcoll=$select(stdnullcoll="true":"STDNULLCOLL",1:"GTMNULLCOLL")
