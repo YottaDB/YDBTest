@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -57,7 +60,7 @@ foreach fmt (${extract_format_list})
 	$truss -o extract.${fmt}.trace $gtm_dist/mupip extract -format=${fmt} \
 		extract.${fmt} >>& traced.${fmt}.log
 	printf "%4s:" ${fmt}
-	$tst_awk -F"=" '/open..extract/{$2=+$2;fdmatch="write[^a-zA-Z0-9]"$2} $0 ~ fdmatch {if(length(fdmatch))total++} END{print total}' \
+	$tst_awk -F"=" '/open.*extract/{$2=+$2;fdmatch="write[^a-zA-Z0-9]"$2} $0 ~ fdmatch {if(length(fdmatch))total++} END{print total}' \
 		extract.${fmt}.trace
 end
 
