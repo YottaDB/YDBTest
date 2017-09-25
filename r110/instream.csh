@@ -23,7 +23,7 @@ echo "r110 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "reversequery maxstrlen_query"
-setenv subtest_list_replic     ""
+setenv subtest_list_replic     "srcsrv_extfilter_sig11"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
