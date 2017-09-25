@@ -29,22 +29,30 @@ endif
 set testfilesdir = $tst_general_dir/testfiles
 if (! -e $testfilesdir) mkdir -p $testfilesdir
 
+set subtest_exclude_list_merged = ""
 # Filter out tests from $subtest_exclude_list.
 if ($?subtest_exclude_list) then
-	foreach sub_test ($subtest_exclude_list)
-		# We double all space in the sed command so multiple occurence of the same ' $sub_test ' will all be removed.
-		# We add a space at the start and end of $subtest_list so ' $sub_test ' can be matched in those position.
-		# We have to use spaces around $sub_test to ensure no partial string match.
-		setenv subtest_list `echo " $subtest_list " | sed "s/ /  /g; s/ $sub_test / /g"`
-		if ($?gtm_test_st_list) then
-			# -st passed : Check if this excluded subtest is part of the list and if so alert about it in outstream.log
-			echo "$gtm_test_st_list" | $grep -q -w $sub_test
-			if (! $status) then
-				echo "$sub_test included in -st but EXCLUDED by instream.csh"
-			endif
-		endif
-	end
+	set subtest_exclude_list_merged = ($subtest_exclude_list_merged $subtest_exclude_list)
 endif
+# Filter out tests from $gtm_test_<testname>_exclude_list (both $gtm_test_triggers_exclude_list and $gtm_test_triggers_1_exclude_list)
+# Subtests can temporarily disabled by setting this environment variable via say ~/.testrc or -env
+if (`eval echo '$?gtm_test_'$tst'_exclude_list'`) then
+	set subtest_exclude_list_merged = ($subtest_exclude_list_merged `eval echo '$gtm_test_'$tst'_exclude_list'` )
+endif
+if (`eval echo '$?gtm_test_'$testname'_exclude_list'`) then
+	set subtest_exclude_list_merged = ($subtest_exclude_list_merged `eval echo '$gtm_test_'$testname'_exclude_list'` )
+endif
+# Note that if say gtm_test_triggers_1_exclude_list is set to "trig2notrig" but the test is run as -replic -num_runs 10,
+# the value of testname will be triggers_0_1,triggers_0_2 etc which won't match gtm_test_triggers_1_exclude_list.
+# Setting gtm_test_triggers_exclude_list "trig2notrig" would still work in that case.
+
+foreach sub_test ($subtest_exclude_list_merged)
+	# We double all space in the sed command so multiple occurence of the same ' $sub_test ' will all be removed.
+	# We add a space at the start and end of $subtest_list so ' $sub_test ' can be matched in those position.
+	# We have to use spaces around $sub_test to ensure no partial string match.
+	setenv subtest_list `echo " $subtest_list " | sed "s/ /  /g; s/ $sub_test / /g"`
+	echo "$testname/$sub_test" >> $gtm_test_local_debugdir/excluded_subtests.list
+end
 
 if ($?test_gtm_gtcm) then
 	if ("GT.CM" == $test_gtm_gtcm) then
@@ -60,6 +68,22 @@ endif
 # If instream.csh hasn't modified it, it will be the same as the copy in the test directory. So copy it without any checks
 set settings_file_to_copy = "$tst_general_dir/settings.csh.$tst"
 cp $tst_working_dir/settings.csh $settings_file_to_copy
+
+foreach sub_test ($subtest_list)
+	echo "PASS from $sub_test" >>&! $tst_general_dir/outstream.cmp
+	if ($?gtm_test_dryrun) then
+		echo PASS from $sub_test
+	endif
+end
+if (! -e $tst_general_dir/outstream.cmp) then
+	# Probably no subtests were applicable/included. Just touch outstream.cmp to make the framework happy
+	touch $tst_general_dir/outstream.cmp
+endif
+if ($?gtm_test_dryrun) then
+	# If it is a -dry run, skip the entire script. Just print PASS for each of the subtests in $subtest_list (done above) and exit
+	exit
+endif
+
 foreach sub_test ($subtest_list) # Mega for - practically all this script is in this for loop
 	setenv test_subtest_name $sub_test
 	setenv tst_working_dir "$tst_working_dir:h/$sub_test"
