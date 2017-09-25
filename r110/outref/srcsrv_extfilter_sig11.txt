@@ -1,0 +1,27 @@
+Create databases and start replication servers with an external filter on the source side
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+# Wait for the initial connection to be established
+# Deactivate source server
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating DEACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE2]
+# Wait for <Filter Stopped> message in source server log to signal deactivation is complete
+# Shutdown replication servers. This used to cause SIG-11 in the passive source server previously.
+RFSYNC-I-PASSIVEMODE. Source server not replicating at this point in time.Cannot Sync this link.
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
