@@ -26,6 +26,10 @@ echo $tst_dir/$gtm_tst_out >>! $test_pid_file
 setenv gtm_tst_out_save $gtm_tst_out
 setenv gtm_test_debuglogs_dir $ggdata/tests/debuglogs/$gtm_tst_out
 mkdir -p $gtm_test_debuglogs_dir
+setenv gtm_test_local_debugdir $tst_dir/$gtm_tst_out/debugfiles/
+if (! -e $gtm_test_local_debugdir) mkdir -p $gtm_test_local_debugdir
+touch $gtm_test_local_debugdir/excluded_subtests.list
+touch $gtm_test_local_debugdir/test_subtest.info
 
 # Don't log timing info if only a subset of subtests will run or if dryrun of test is done
 if (($?gtm_test_st_list)||($?gtm_test_dryrun)) then
@@ -90,7 +94,11 @@ if ("$test_send_report" == "ON") then
 	endif
 	@ countall = $countfail + $countnotrun + $countpass
 	@ countall_full = $countall + $count_skipped_distributed
-	echo "Total runtime : $total_runtime " >&!  ${TMP_FILE_PREFIX}_final_report
+	set st_passed = `$tst_awk '{cnt=cnt+$2} END {print cnt}' $gtm_test_local_debugdir/test_subtest.info`
+	set st_failed = `$tst_awk '{cnt=cnt+$3} END {print cnt}' $gtm_test_local_debugdir/test_subtest.info`
+	set st_excluded = `$tst_awk '{cnt=cnt+$4} END {print cnt}' $gtm_test_local_debugdir/test_subtest.info`
+	echo "Total runtime : $total_runtime " 							>&!  ${TMP_FILE_PREFIX}_final_report
+	echo "Subtests - Passed : $st_passed ; Failed : $st_failed ; Excluded : $st_excluded"	>>&! ${TMP_FILE_PREFIX}_final_report
 	if ($no_tests != $countall_full) then
 		# This means the no.of tests in submitted_tests doesn't match with report.txt
 		# List the missing tests in the final report mail
