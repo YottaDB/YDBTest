@@ -27,6 +27,7 @@
 #HOST_HP-UX_IA64
 #HOST_CYGWIN_IX86
 #HOST_LINUX_X86_64
+#HOST_LINUX_ARMV7L
 # and machine type. For example:
 #IA64 (for Itanium machines)
 # and OS name. For example: AIX
