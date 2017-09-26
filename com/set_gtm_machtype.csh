@@ -54,7 +54,7 @@ else
 endif
 
 # Set the variable for 32 bit architectures. Adding more 32bit platforms isn't likely
-if ($gtm_test_machtype == "ix86") then
+if (($gtm_test_machtype == "ix86") || ($gtm_test_machtype == "armv7l")) then
 	setenv gtm_platform_size 32
 else
 	setenv gtm_platform_size 64
