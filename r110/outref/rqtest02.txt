@@ -1,0 +1,49 @@
+# Test of reverse $query on local variables for slightly complex subscripted local variable trees
+ --> Local variable tree on which $query operations are performed
+x=0
+x(1,0)=1
+x(1,2,1)=2
+x(1,2,2)=3
+x(1,2,2,4)=5
+x(1,2,3)=4
+
+ ---> $query(lvn,1) and $query(lvn,-1) on existing lv tree nodes
+$query(x,1)=x(1,0)
+$query(x(1,0),-1)=x
+$query(x(1,0),1)=x(1,2,1)
+$query(x(1,2,1),-1)=x(1,0)
+$query(x(1,2,1),1)=x(1,2,2)
+$query(x(1,2,2),-1)=x(1,2,1)
+$query(x(1,2,2),1)=x(1,2,2,4)
+$query(x(1,2,2,4),-1)=x(1,2,2)
+$query(x(1,2,2,4),1)=x(1,2,3)
+$query(x(1,2,3),-1)=x(1,2,2,4)
+$query(x(1,2,3),1)=
+
+ ---> $query(lvn,1) on non-existing lv tree nodes
+$query(x(-0.5),1)=x(1,0)
+$query(x(0.5),1)=x(1,0)
+$query(x(1.5),1)=
+$query(x(1,-1),1)=x(1,0)
+$query(x(1,0.5),1)=x(1,2,1)
+$query(x(1,2.5),1)=
+$query(x(1,2,0.5),1)=x(1,2,1)
+$query(x(1,2,1.5),1)=x(1,2,2)
+$query(x(1,2,2.5),1)=x(1,2,3)
+$query(x(1,2,3.5),1)=
+$query(x(1,2,2,3.5),1)=x(1,2,2,4)
+$query(x(1,2,2,4.5),1)=x(1,2,3)
+
+ ---> $query(lvn,-1) on non-existing lv tree nodes
+$query(x(-0.5),-1)=x
+$query(x(0.5),-1)=x
+$query(x(1.5),-1)=x(1,2,3)
+$query(x(1,-1),-1)=x
+$query(x(1,0.5),-1)=x(1,0)
+$query(x(1,2.5),-1)=x(1,2,3)
+$query(x(1,2,0.5),-1)=x(1,0)
+$query(x(1,2,1.5),-1)=x(1,2,1)
+$query(x(1,2,2.5),-1)=x(1,2,2,4)
+$query(x(1,2,3.5),-1)=x(1,2,3)
+$query(x(1,2,2,3.5),-1)=x(1,2,2)
+$query(x(1,2,2,4.5),-1)=x(1,2,2,4)

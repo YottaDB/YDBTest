@@ -3,6 +3,9 @@
 ; Copyright (c) 2002-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.                                          ;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -68,18 +71,25 @@ tdata	; Test $DATA
 	q
 tquery	; Test $QUERY and also that the globals are equal (in every item of the array)
 	W !,"TESTING $QUERY..."
+	do tquerydir(1)
+	quit
+trevquery; Test reverse $QUERY and also that the globals are equal (in every item of the array)
+	W !,"TESTING Reverse $QUERY..."
+	do tquerydir(-1)
+	quit
+tquerydir(dir)
 	F gbl="^A","^D"  D
-	. s y=gbl F  S y=$QUERY(@y) Q:y=""  W !,y,"=",@y
+	. do tyqueryinit(.y,gbl,dir) F  do tyquery(.y,dir) Q:y=""  W !,y,"=",@y
 	W !
 	F gbl="^A","^BLONGGLOBALVARIABLE","^CGLOBALVARIABLE","^D"  D
-	. s y=gbl F  S y=$QUERY(@y) Q:y=""  S len=$L($P(y,"(",1))+1 S string(gbl,$E(y,len,50))=@y
+	. do tyqueryinit(.y,gbl,dir) F  do tyquery(.y,dir) Q:y=""  S len=$L($P(y,"(",1))+1 S string(gbl,$E(y,len,50))=@y
 	s gbl="^BWITHKEYLENGRTRTHANLOCAL"
-	s y=gbl F  S y=$QUERY(@y) Q:y=""  S len=$L($P(y,",",1))+2 S string(gbl,"("_$E(y,len,100))=@y
+	do tyqueryinit(.y,gbl,dir) F  do tyquery(.y,dir) Q:y=""  S len=$L($P(y,",",1))+2 S string(gbl,"("_$E(y,len,100))=@y
 	; CHECK THE VALUES:
 	; ^A is local, compare against that
 	F gbl="^BLONGGLOBALVARIABLE","^CGLOBALVARIABLE","^D","BWITHKEYLENGRTRTHANLOCAL"  D
-	. s y=gbl
-	. F  S y=$QUERY(@y) Q:y=""  d
+	. do tyqueryinit(.y,gbl,dir)
+	. F  do tyquery(.y,dir) Q:y=""  d
 	. . s cmp=""_gbl_""
 	. . s len=$L($P(y,"(",1))+1
 	. . s len1=$Select(gbl="^BWITHKEYLENGRTRTHANLOCAL":$L($P(y,",",1))+2,1:len)
@@ -95,6 +105,21 @@ tquery	; Test $QUERY and also that the globals are equal (in every item of the a
 	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT")	; filter out any that could contain varying output
 	zwrite val
 	q
+tyqueryinit(y,gbl,dir)
+	if dir=1  set y=gbl
+	else      set y=gbl_"(""zzzz"")"	; start from maximum subscript for reverse $query
+	quit
+tyquery(y,dir);
+	if dir=1 do
+	. ; randomly use $query(gvn,1) vs $query(gvn) i.e. to test that both are equivalent
+	. if $random(2) set y=$query(@y)
+	. else  do
+	. . if $random(2) set y=$query(@y,dir)
+	. . else          set y=$query(@y,1)
+	else  do
+	. if $random(2) set y=$query(@y,dir)
+	. else          set y=$query(@y,-1)
+	quit
 tget	; Test $GET
 	W !,"TESTING $GET...",!
 	F ind="1)","10000)","""AB"",""BC"")" d

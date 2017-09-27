@@ -1,0 +1,33 @@
+# Simplistic tests of invalid direction (2nd) parameter to $query
+Files Created in ##TEST_PATH##/rqtest00:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+$query(lvn,0)=
+tstlvn+2^rqtest00,%YDB-E-QUERY2, Invalid second argument to $QUERY. Must be -1 or 1.
+$query(lvn,-2)=
+tstlvn+2^rqtest00,%YDB-E-QUERY2, Invalid second argument to $QUERY. Must be -1 or 1.
+$query(lvn,1E1)=
+tstlvn+2^rqtest00,%YDB-E-QUERY2, Invalid second argument to $QUERY. Must be -1 or 1.
+$query(lvn,abcd)=
+tstlvn+2^rqtest00,%YDB-E-QUERY2, Invalid second argument to $QUERY. Must be -1 or 1.
+$query(gvn,0)=
+tstgvn+2^rqtest00,%YDB-E-QUERY2, Invalid second argument to $QUERY. Must be -1 or 1.
+$query(gvn,-2)=
+tstgvn+2^rqtest00,%YDB-E-QUERY2, Invalid second argument to $QUERY. Must be -1 or 1.
+$query(gvn,1E1)=
+tstgvn+2^rqtest00,%YDB-E-QUERY2, Invalid second argument to $QUERY. Must be -1 or 1.
+$query(gvn,abcd)=
+tstgvn+2^rqtest00,%YDB-E-QUERY2, Invalid second argument to $QUERY. Must be -1 or 1.
+$query(@indir,0)=
+tstindir+4^rqtest00,%YDB-E-QUERY2, Invalid second argument to $QUERY. Must be -1 or 1.
+$query(@indir,-2)=
+tstindir+4^rqtest00,%YDB-E-QUERY2, Invalid second argument to $QUERY. Must be -1 or 1.
+$query(@indir,1E1)=
+tstindir+4^rqtest00,%YDB-E-QUERY2, Invalid second argument to $QUERY. Must be -1 or 1.
+$query(@indir,abcd)=
+tstindir+4^rqtest00,%YDB-E-QUERY2, Invalid second argument to $QUERY. Must be -1 or 1.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

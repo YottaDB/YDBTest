@@ -1,0 +1,57 @@
+# Test that $query(gvn,...) does not infinite loop with null subscripts & GT.M Null Collation
+Files Created in ##TEST_PATH##/rqtest07/1:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+##### Executing rqtest07 : querydir=1 : nullcoll=STDNULLCOLL #####
+$query(^x,1)=^x("")
+$query(^x(""),1)=^x(1)
+$query(^x(1),1)=^x("abcd")
+$query(^x("abcd"),1)=
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Files Created in ##TEST_PATH##/rqtest07/2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+##### Executing rqtest07 : querydir=1 : nullcoll=GTMNULLCOLL #####
+$query(^x,1)=^x(1)
+$query(^x(1),1)=^x("")
+$query(^x(""),1)=^x("abcd")
+$query(^x("abcd"),1)=
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Files Created in ##TEST_PATH##/rqtest07/3:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+##### Executing rqtest07 : querydir=-1 : nullcoll=STDNULLCOLL #####
+$query(^x("z"),-1)=^x("abcd")
+$query(^x("abcd"),-1)=^x(1)
+$query(^x(1),-1)=^x("")
+$query(^x(""),-1)=
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Files Created in ##TEST_PATH##/rqtest07/4:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+##### Executing rqtest07 : querydir=-1 : nullcoll=GTMNULLCOLL #####
+$query(^x("z"),-1)=^x("abcd")
+$query(^x("abcd"),-1)=^x("")
+$query(^x(""),-1)=^x(1)
+$query(^x(1),-1)=
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

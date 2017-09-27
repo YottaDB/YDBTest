@@ -1,0 +1,34 @@
+# Test that naked indicator is maintained and side-effects are properly handled in $query(gvn,...)
+# Also randomly test indirection for first parameter to $query
+Files Created in ##TEST_PATH##/rqtest11:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##### Executing rqtest11a with querydir=1 #####
+$query(^x(y),$$I())=^x(5)
+$reference=^x(4)
+##### Executing rqtest11b with querydir=1 #####
+$query(^x(y),$$I())=^x(5)
+$reference=^xy(3)
+##### Executing rqtest11c with querydir=1 #####
+$query(^x(y),$$I())=^x(5)
+$reference=^x(4)
+##### Executing rqtest11d with querydir=1 #####
+$query(^x(y),$$I())=^x(5)
+$reference=^xy(3)
+##### Executing rqtest11a with querydir=-1 #####
+$query(^x(y),$$I())=^x(3)
+$reference=^x(4)
+##### Executing rqtest11b with querydir=-1 #####
+$query(^x(y),$$I())=^x(3)
+$reference=^xy(3)
+##### Executing rqtest11c with querydir=-1 #####
+$query(^x(y),$$I())=^x(3)
+$reference=^x(4)
+##### Executing rqtest11d with querydir=-1 #####
+$query(^x(y),$$I())=^x(3)
+$reference=^xy(3)
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

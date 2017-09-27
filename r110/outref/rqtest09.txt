@@ -1,0 +1,57 @@
+# Test of reverse $query on global variable subtree that contains just the null subscript
+Files Created in ##TEST_PATH##/rqtest09/1:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+##### Executing rqtest09 : querydir=1 : nullcoll=STDNULLCOLL #####
+$query(^x,1)=^x(2)
+$query(^x(2),1)=^x(2,"")
+$query(^x(2,""),1)=^x(3)
+$query(^x(3),1)=
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Files Created in ##TEST_PATH##/rqtest09/2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+##### Executing rqtest09 : querydir=1 : nullcoll=GTMNULLCOLL #####
+$query(^x,1)=^x(2)
+$query(^x(2),1)=^x(2,"")
+$query(^x(2,""),1)=^x(3)
+$query(^x(3),1)=
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Files Created in ##TEST_PATH##/rqtest09/3:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+##### Executing rqtest09 : querydir=-1 : nullcoll=STDNULLCOLL #####
+$query(^x("zz"),-1)=^x(3)
+$query(^x(3),-1)=^x(2,"")
+$query(^x(2,""),-1)=^x(2)
+$query(^x(2),-1)=
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Files Created in ##TEST_PATH##/rqtest09/4:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+##### Executing rqtest09 : querydir=-1 : nullcoll=GTMNULLCOLL #####
+$query(^x("zz"),-1)=^x(3)
+$query(^x(3),-1)=^x(2,"")
+$query(^x(2,""),-1)=^x(2)
+$query(^x(2),-1)=
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

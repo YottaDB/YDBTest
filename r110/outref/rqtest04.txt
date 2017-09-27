@@ -1,0 +1,25 @@
+# Test of reverse $query on local variable subtree that contains just the null subscript
+
+##### Executing rqtest04 : querydir=1 : nullcoll=STDNULLCOLL #####
+$query(x,1)=x(2)
+$query(x(2),1)=x(2,"")
+$query(x(2,""),1)=x(3)
+$query(x(3),1)=
+
+##### Executing rqtest04 : querydir=1 : nullcoll=GTMNULLCOLL #####
+$query(x,1)=x(2)
+$query(x(2),1)=x(2,"")
+$query(x(2,""),1)=x(3)
+$query(x(3),1)=
+
+##### Executing rqtest04 : querydir=-1 : nullcoll=STDNULLCOLL #####
+$query(x("zz"),-1)=x(3)
+$query(x(3),-1)=x(2,"")
+$query(x(2,""),-1)=x(2)
+$query(x(2),-1)=
+
+##### Executing rqtest04 : querydir=-1 : nullcoll=GTMNULLCOLL #####
+$query(x("zz"),-1)=x(3)
+$query(x(3),-1)=x(2,"")
+$query(x(2,""),-1)=x(2)
+$query(x(2),-1)=

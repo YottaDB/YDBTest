@@ -1,0 +1,28 @@
+# Test $query(gvn,-1) for spanning nodes
+Files Created in ##TEST_PATH##/rqtest12:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##### Executing rqtest12 with querydir=1 #####
+$query(^x,1)=^x(1)
+$query(^x(1),1)=^x(1,2)
+$query(^x(1,2),1)=^x(1,2,3)
+$query(^x(1,2,3),1)=^x(1,2,3,"")
+$query(^x(1,2,3,""),1)=^x(1,2,3,"","")
+$query(^x(1,2,3,"",""),1)=^x(1,2,3,"","","")
+$query(^x(1,2,3,"","",""),1)=^x(1,2,3,7)
+$query(^x(1,2,3,7),1)=
+##### Executing rqtest12 with querydir=-1 #####
+$query(^x("z"),-1)=^x(1,2,3,7)
+$query(^x(1,2,3,7),-1)=^x(1,2,3,"","","")
+$query(^x(1,2,3,"","",""),-1)=^x(1,2,3,"","")
+$query(^x(1,2,3,"",""),-1)=^x(1,2,3,"")
+$query(^x(1,2,3,""),-1)=^x(1,2,3)
+$query(^x(1,2,3),-1)=^x(1,2)
+$query(^x(1,2),-1)=^x(1)
+$query(^x(1),-1)=^x
+$query(^x,-1)=
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
