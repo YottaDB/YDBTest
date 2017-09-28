@@ -10,12 +10,13 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-set log=crea_$$_`date +%H_%M_%S`.log
-echo DBCREATE >>& $log
-\rm -f mumps.gld	# make sure we don't have a left over global directory
-$gtm_tst/com/dbcreate.csh mumps $1 >>& $log
-echo MUPIP SET -JOURNAL >>& $log
-$MUPIP set -journal=enable,on,before -reg "*" >>& $log
-echo DATABASE FILES >>& $log
-$gtm_tst/com/lsminusl.csh *.dat *.mjl |& $tst_awk '{print($1,$NF);}' | tee -a $log
-# dbcheck.csh is called by callers of this script.
+
+# SELinux adds a . at the end of the permissions column in an ls -l output.
+# But test reference files that rely on ls -l output need to not see the dot.
+# This script helps by removing the dot from the ls -l output.
+# For example "-rwxr-xr-x." gets changed to "-rwxr-xr-x"
+
+# All test scripts that do an "ls -l" and redirect that output to a test reference file need to use
+# "$gtm_tst/com/lsminusl.csh" instead to have a portable reference file.
+
+ls -l $* | $tst_awk '{if ($1 ~ /-.*\./) gsub("\\.","",$1); print $0}'

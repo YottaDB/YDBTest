@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 fifo	;FIFO - RECORDSIZE and WIDTH limits for FIFO devices"
 	;there is a comprehensive fifo test in basic
 	set $ZTRAP="do error^fifo"
@@ -138,7 +149,7 @@ fifo4(file) ;
 	quit
 checkfile(file)	;
 	set tmpfile="tmpfile.out"
-	zsystem "ls -l "_file_" >&! "_tmpfile
+	zsystem "$gtm_tst/com/lsminusl.csh "_file_" >&! "_tmpfile
 	open tmpfile:(READONLY:REWIND)
 	kill notfound
 	for i=1:1 use tmpfile read line quit:$ZEOF  do
