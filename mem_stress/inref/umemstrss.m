@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2006, 2014 Fidelity Information Services, Inc	;
+; Copyright 2004, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -110,7 +113,6 @@ fillop(act,arrlen);
 	. . set efill(index)=$order(afill(index,bigstr(index),""))
 	. . set ffill(index)=$zprevious(afill(index,bigstr(index),""))
 	. . set bbbb5678(index)=$data(afill(index,bigstr(index),adata))
-	. . set %123456789012345678901234567890(index)=$query(afill(index,bigstr(index),""))
 	. . set subs=$$^ugenstr(index)
 	. . set ^afill(subs)=gblval
 	. . set ^bbbb567890123456789012345678901(subs)=gblval
@@ -144,7 +146,6 @@ fillop(act,arrlen);
 	. . kill efill(index)
 	. . kill ffill(index)
 	. . kill bbbb5678(index)
-	. . kill %123456789012345678901234567890(index)
 	. if $data(afill) write "TEST-E-afill still has data",! zwr afill
 	. if $data(bbbb567890123456789012345678901) write "TEST-E-bbbb567890123456789012345678901 still has data",! zwr bbbb567890123456789012345678901
 	. if $data(cfill) write "TEST-E-cfill still has data",! zwr cfill
@@ -152,7 +153,6 @@ fillop(act,arrlen);
 	. if $data(efill) write "TEST-E-efill still has data",! zwr efill
 	. if $data(ffill) write "TEST-E-ffill still has data",! zwr ffill
 	. if $data(bbbb5678) write "TEST-E-bbbb5678 still has data",! zwr bbbb5678
-	. if $data(%123456789012345678901234567890) write "TEST-E-%123456789012345678901234567890 still has data",! zwr %123456789012345678901234567890
 	;
 	if act="ver" do
 	. for index=1:1:arrlen do
@@ -165,7 +165,6 @@ fillop(act,arrlen);
 	. . if $GET(efill(index))'=$order(afill(index,bigstr(index),"")) write "TEST-E-Verify failed :: efill index =",index," Found=",$GET(efill(index)),!
 	. . if $GET(ffill(index))'=$zprevious(afill(index,bigstr(index),"")) write "TEST-E-Verify failed :: ffill index =",index," Found=",$GET(ffill(index)),!
 	. . if $GET(bbbb5678(index))'=$data(afill(index,bigstr(index),adata)) write "TEST-E-Verify failed :: bbbb5678 index =",index," Found=",$GET(bbbb5678(index)),!
-	. . if $GET(%123456789012345678901234567890(index))'=$query(afill(index,bigstr(index),"")) write "TEST-E-Verify failed :: %123456789012345678901234567890 index =",index," Found=",$GET(%123456789012345678901234567890(index)),!
 	quit
 	;
 lclcrea(avar,bvar,cvar,dvar,index)
