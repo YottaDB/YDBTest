@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 fnlgstr;; This tests the functionality of various functions with
 	;; with large string
 	write "Create five strings of length: 32k,65k,130k,196k,and 1MB",!
@@ -22,11 +33,11 @@ fnlgstr;; This tests the functionality of various functions with
 	set x="" for  s x=$n(lclarr(x)) q:x="-1"  w $length(x),!
 	write "================== $query() ====================================",!
 	set y="lclarr"
-	set p=$q(@y) w $length(p)," ",$extract(p,9,11),!
+	do query1ma
 	set q=$q(lclarr(str1)) if $length(q)>0 write $length(q)," ",$extract(q,9,11),! else  write $length(q),!
 	set r=$q(lclarr(str2)) w $length(r)," ",$extract(r,9,11),!
 	set t=$q(lclarr(str3)) w $length(t)," ",$extract(t,9,11),!
-	set u=$q(lclarr(str4)) w $length(u)," ",$extract(u,9,11),!
+	do query1mb
 	set v=$q(lclarr(str5)) w $length(v)," ",$extract(v,9,11),!
 	write "======================= $extract() =========================",!
 	set x=$e(str5,1048570,1048576) w x,!
@@ -43,3 +54,19 @@ fnlgstr;; This tests the functionality of various functions with
 	write $length($p(s1,"delim")),!
 	write $length($p(s1,"delim",1)),!
 	q
+query1ma
+	; $query will not return strings > 1Mb in length so we expect an error for the below operation
+	; in the longstr/ac_loc_coll subtest where the first subscript is 1Mb in length (and the base-variable name etc.
+	; together take it to > 1Mb). so set an error trap to expect an error and move on
+	new $etrap
+	set $etrap="write $zstatus,!  set $ecode="""" quit"
+	set p=$q(@y) w $length(p)," ",$extract(p,9,11),!
+	quit
+query1mb;
+	; $query will not return strings > 1Mb in length so we expect an error for the below operation
+	; in the longstr/max_strlen subtest where the subscript itself is 1Mb in length (and the base-variable name etc.
+	; together take it to > 1Mb). so set an error trap to expect an error and move on
+	new $etrap
+	set $etrap="write $zstatus,!  set $ecode="""" quit"
+	set u=$q(lclarr(str4)) w $length(u)," ",$extract(u,9,11),!
+	quit
