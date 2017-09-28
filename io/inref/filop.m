@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	; tools to aid file operations
         ; writfile: write into a file
         ; readfile: read the contents of a file
@@ -62,7 +73,7 @@ dirdev(device) ; Will print certain fields of dir/full output
 	else  do vmsdir
 	quit
 unixdir	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	zsystem "ls -l "_device_" >&! "_tmpfile
+	zsystem "$gtm_tst/com/lsminusl.csh "_device_" >&! "_tmpfile
 	open tmpfile:(READONLY:REWIND)
 	kill notfound
 	for i=1:1 use tmpfile read line quit:$ZEOF  do

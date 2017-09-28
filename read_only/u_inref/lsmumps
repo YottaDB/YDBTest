@@ -1,7 +1,18 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 if (-f mumps.dat) then
-	ls -l mumps.dat | $tst_awk '{print($1,$NF);}'
+	$gtm_tst/com/lsminusl.csh mumps.dat | $tst_awk '{print($1,$NF);}'
 endif
 if (-f mumps.mjl) then
-	ls -l mumps.mjl | $tst_awk '{print($1,$NF);}'
+	$gtm_tst/com/lsminusl.csh mumps.mjl | $tst_awk '{print($1,$NF);}'
 endif
