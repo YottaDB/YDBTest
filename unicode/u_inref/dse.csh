@@ -106,7 +106,7 @@ foreach chset("M" "UTF-8")
 	# And choose the appropriate reference file based on the ICU version.
 	#
 	set reference_file = $gtm_tst/$tst/outref/dseunicode_dump_${chset}_${endian}.txt
-	if (("UTF-8" == $chset) && (1 == `echo "if ($gtm_icu_version < 59.1) 1" | bc`)) then
+	if (("UTF-8" == $chset) && (1 == `echo "if ($gtm_icu_version < 5.9) 1" | bc`)) then
 		set reference_file = $gtm_tst/$tst/outref/dseunicode_dump_${chset}_${endian}_pre_ICU_59.txt
 	endif
 	$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/outref.awk dseunicode_dump_$chset.out $reference_file >&! dseunicode_dump_${chset}_${endian}.cmp
