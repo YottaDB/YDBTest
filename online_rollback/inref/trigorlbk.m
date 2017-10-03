@@ -3,6 +3,9 @@
 ; Copyright (c) 2012, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -51,7 +54,7 @@ roll(seqno)
 	set $ETRAP="use $p zshow ""*"" halt"
 	set pass=0
 	set pipe="pipe"
-	open pipe:(shell="/bin/sh":command="$MUPIP journal -rollback -backward -online -resync="_seqno_" ""*"" 2>&1 | tee -a orlbk.outx")::"pipe"
+	open pipe:(shell="/bin/sh":command="$MUPIP journal -rollback -backward -verbose -online -resync="_seqno_" ""*"" 2>&1 | tee -a orlbk.outx")::"pipe"
 	use pipe
 	for i=1:1 quit:$zeof  read line(i)
 	close pipe
@@ -66,6 +69,18 @@ stop
 	set incretrap("INTRA")="do etraphandler^trigorlbk(%MYSTAT)"
 	set ^%stop=1  ; trip DBROLLEDBACK
 	do ^endtp
+	quit
+
+waitreadseqnoupdate	;
+	; See parent script (u_inref/trigorlbk.csh) for more comments on why this routine is invoked.
+	; wait for source server to update gtmsource_local->read_jnl_seqno after reconnection with receiver server
+	; after an online rollback
+	;
+	for  do  quit:lastjnlseqno>=lastsentseqno  hang 0.1
+	. ; $extract needed below to remove 0x before passing it on to HD to convert hex number to a decimal number
+	. set lastjnlseqno=$$FUNC^%HD($extract($$^%PEEKBYNAME("jnlpool_ctl_struct.jnl_seqno"),3,99))
+	. set lastsentseqno=$$FUNC^%HD($extract($$^%PEEKBYNAME("gtmsource_local_struct.read_jnl_seqno",0),3,99))
+	. write "$zh=",$zh," : lastjnlseqno = ",lastjnlseqno," : lastsentseqno = ",lastsentseqno,!
 	quit
 
 etraphandler(err)
