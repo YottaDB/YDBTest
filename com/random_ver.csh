@@ -83,9 +83,6 @@ set allverlist = `echo $allverlist`
 set actualverlist = ""
 # Ensure actualverlist never contains any version > gtm_verno
 set maxver = "$gtm_verno"
-if ("$maxver" == "V63000A_R100") then
-	set maxver = "V63000A"
-endif
 while ($cnt <= $numvers)
 	if (`expr "$allverlist[$cnt]" "<=" "$maxver"`) then
 		set actualverlist = `echo $actualverlist $allverlist[$cnt]`
@@ -160,12 +157,6 @@ if ($?vertype) then
 		set isgt    = ">="
 		set maximum = "$tst_ver" # A version before the current version
 		set islt    = "<="
-		if ("$maxver" == "V998_R100") then
-			# V998_R100 is actually V63000A + R100 + more fixes and so V63001A* releases should never be chosen
-			# as the older version so limit maximum to < V63000A
-			# This is a temporary fix until V63002/T63002 is released.
-			set maximum = "V63000A"
-		endif
 	breaksw
 	case "any":
 		set minimum = "V44002" # V44002 is the min supported version after triggers
@@ -295,17 +286,6 @@ if ($?gtm_chset) then
 endif
 
 # filter out versions based on the minimum and maximum
-#
-# Note: V63000A and V63000A_R100 are identical in terms of $zversion. Account for that below.
-#
-if (("$minimum" == "V63000A") && ("$isgt" == ">")) then
-	set minimum = "V63000A_R100"
-	set isgt = ">="
-endif
-if (("$maximum" == "V63000A_R100") && ("$islt" == "<")) then
-	set maximum = "V63000A"
-	set islt = "<="
-endif
 
 set filteredlist = ""
 foreach ver ($actualverlist)
