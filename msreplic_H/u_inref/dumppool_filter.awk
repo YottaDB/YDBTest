@@ -3,6 +3,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -69,7 +72,7 @@ BEGIN {
 	# Filter out the date (all time related fields)
 	gsub(/[0-9][0-9][0-9][0-9]\/[0-9][0-9]\/[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]/,"..../../.. ..:..:..");
 	# The following are run specific fields
-	gsub(/CTL GT.M Version            *GT.M [a-zA-Z0-9_\-\. ]*/, "CTL GT.M Version                            ##GTMVERSION##");
+	gsub(/CTL YottaDB Version         *YottaDB r[a-zA-Z0-9_\-\. ]*/, "CTL YottaDB Version                         ##YDBVERSION##");
 	gsub(/CTL Instance file name      *[a-zA-Z0-9_\.\/]*/,      "CTL Instance file name                        ##INSTFILE##");
 	gsub(/Journal Pool Sem Id                          *[0-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "Journal Pool Sem Id             .......... [0x........]");
 	gsub(/Journal Pool Shm Id                          *[0-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "Journal Pool Shm Id             .......... [0x........]");
