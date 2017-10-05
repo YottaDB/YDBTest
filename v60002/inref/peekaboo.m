@@ -57,7 +57,7 @@
 	Set jpcnowrunning=$$fetchfld("JPCrepl","jnlpool_ctl_struct.jnlpool_id.now_running","S")
 	Set jpcinstfn=$$fetchfld("jpc","jnlpool_ctl_struct.jnlpool_id.instfilename","S")
 	Set jpcseqno=$$fetchfld("Jpcrepl","jnlpool_ctl_struct.jnl_seqno","x")
-	If (jpcnowrunning=$ZVersion) Kill jpcnowrunning	; Verify and remove from reference file
+	If (jpcnowrunning=$ZYRelease) Kill jpcnowrunning	; Verify and remove from reference file
 	;
 	; Fetch some fields from the replication instance header
 	;
@@ -83,8 +83,8 @@ nojnlpool
 	Set rpclabel=$$fetchfld("RpCrEpL","recvpool_ctl_struct.recvpool_id.label","S")
 	Set rpcnowrunning=$$fetchfld("RpCrEpL","recvpool_ctl_struct.recvpool_id.now_running","s")
 	Set rpcinstname=$$fetchfld("rPc","recvpool_ctl_struct.recvpool_id.now_running","S")
-	If (rpcnowrunning=$ZVersion) Kill rpcnowrunning	; Verify and remove from reference file
-	If (rpcinstname=$ZVersion) Kill rpcinstname	; ditto
+	If (rpcnowrunning=$ZYRelease) Kill rpcnowrunning	; Verify and remove from reference file
+	If (rpcinstname=$ZYRelease) Kill rpcinstname	; ditto
 	;
 	; Fetch some fields from upd_proc_local
 	;
@@ -206,7 +206,7 @@ fetchregflds(reg)
 	Set nldbfile(reg)=$$fetchfld("nlReg:"_reg,"node_local.fname","s")
 	Set nlnowrunning(reg)=$$fetchfld("NL:"_reg,"node_local.now_running","S")
 	Set nlrefcnt(reg)=$$fetchfld("NLreg:"_reg,"node_local.ref_cnt","U")
-	If (nlnowrunning(reg)=$ZVersion) Kill nlnowrunning	; Verify and remove from reference file
+	If (nlnowrunning(reg)=$ZYRelease) Kill nlnowrunning	; Verify and remove from reference file
 	;
 	; Fetch some fields from the file header (sgmnt_data)
 	;
