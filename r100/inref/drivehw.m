@@ -9,7 +9,7 @@
 ;	the license, please stop and do not read further.	;
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	zwrite $zversion
+	write "$ZVERSION=",$zversion,!
 	do
 	. new $etrap
 	. set $etrap="set $ecode="""" write ""This is an original GT.M release"",! quit"
