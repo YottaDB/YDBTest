@@ -11,7 +11,6 @@
  ****************************************************************/
 
 #ifdef __linux__
-#	define _XOPEN_SOURCE 500	/* For the nftw() function. */
 #	define LINUX_ONLY(X) X
 #else
 #	define LINUX_ONLY(X)

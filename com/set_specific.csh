@@ -3,6 +3,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -202,6 +205,17 @@ setenv pstack /usr/bin/pstack
 if !(-e $pstack) setenv pstack /usr/ccs/bin/pstack
 if !(-e $pstack) setenv pstack echo
 if !(-e $gcore) setenv gcore echo
+
+if ($?gt_cc_shl_options && $?gt_cc_options_common) then
+	# gt_cc_options_common env var defined in environment. Add that to all C compiles done by test system.
+	# This is needed particularly on the ARM to ensure -march=v7-a (defined in $gt_cc_options_common) is included
+	# in the C compiler flags which in turn undefs BIGENDIAN in mdefsp.h. Not doing so could result in Linux on ARM
+	# being treated incorrectly as a bigendian platform.
+	# But gt_cc_options_common contains Wmissing-prototypes which can cause lots of warnings in the test. Instead
+	# of fixing all the test C programs to define prototypes we just disable that benign warning for the test system.
+	# Similarly, -Wreturn-type can cause lots of benign warnings (and in turn test failures). Disable that too.
+	setenv gt_cc_shl_options "$gt_cc_shl_options $gt_cc_options_common -Wno-missing-prototypes -Wno-return-type"
+endif
 
 which gpg2 >&! /dev/null
 if ($status) then
