@@ -47,6 +47,11 @@ setenv subtest_exclude_list	""
 #	setenv subtest_exclude_list "$subtest_exclude_list xxxx"
 #endif
 
+# If the platform/host does not have prior GT.M versions, disable tests that require them
+if ($?gtm_test_nopriorgtmver) then
+	setenv subtest_exclude_list "$subtest_exclude_list objlvlchk dllversion"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 
