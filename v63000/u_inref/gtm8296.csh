@@ -11,6 +11,11 @@
 #								#
 #################################################################
 
+# This test opens the help database (using PEEKBYNAME) and since other concurrent tests could also be doing
+# PEEKBYNAME concurrently, we want to avoid semaphore counter overflow to affect this or the concurrent test.
+# Therefore disable counter overflow in this test by setting the increment value to default value of 1 (aka unset).
+unsetenv gtm_db_counter_sem_incr
+
 $MULTISITE_REPLIC_PREPARE 2
 
 $gtm_tst/com/dbcreate.csh mumps 3 125 1000 4096 2000 4096 2000
