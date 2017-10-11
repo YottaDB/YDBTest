@@ -52,10 +52,11 @@ set opt_array      = ("\-gt"  "\-lt"  "\-gte"  "\-lte"  "\-type"  "\-rh")
 set opt_name_array = ("vergt" "verlt" "vergte" "verlte" "vertype" "remotehosts")
 source $gtm_tst/com/getargs.csh $argv
 # First list out all versions available in the server. Skip V3 and V9 versions
-# A production version is identified as having a V followed by 4 digits followed by an optional alphabet.
+# A production version is identified as having a GT.M version # followed by an optional YottaDB release #
+# i.e. V63001A, V63002_R110 etc.
 
 if (! $?remotehosts) set remotehosts = ""
-set localallverlist = `\ls $gtm_root/ | $grep -E '^V[4-8][0-9][0-9][0-9][0-9][A-Z]?$'`
+set localallverlist = `\ls $gtm_root/ | $grep -E '^V[4-8][0-9][0-9][0-9][0-9][A-Z]?(_R.*)?$'`
 set allverlist = ""
 foreach ver ($localallverlist)
 	# Even though the version directory exists, it is possible the specific image subdirectory
