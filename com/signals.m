@@ -6,7 +6,7 @@ signals()
 	. if $ZVersion["CYGWIN" set platform="x86cygwin"
 	. else  if $ZVersion["64" set platform="x8664"
 	. else  set platform="x86"
-	else  if $ZVersion["AIX" set platform="aix" 
+	else  if $ZVersion["AIX" set platform="aix"
 	else  if $ZVersion["OSF1" set platform="osf"
 	else  if $ZVersion["Solaris" set platform="solaris"
 	else  if $ZVersion["HP-PA" set platform="hppa"
@@ -16,6 +16,7 @@ signals()
 	else  If $ZVersion["S390" do
 	. if $ZVersion["Linux" set platform="linuxs390"
 	. else  set platform="s390"
+	else  if $ZVersion["armv7l" set platform="armv7l"
 	else  set platform="default"
 	quit $PIECE($TEXT(@platform+1),"#",2)
 
@@ -27,7 +28,7 @@ x86	;x86 which is not CYGWIN
 x8664	;x86_64
 	;signum #10
 
-x86cygwin	;x86 which is CYGWIN 
+x86cygwin	;x86 which is CYGWIN
 	;signum #30
 
 aix	;an AIX
@@ -52,6 +53,9 @@ s390	;S390 and not Linux
 	;signum #16
 
 linuxs390	;S390 and Linux
+	;signum #10
+
+armv7l	;ARMV7L
 	;signum #10
 
 default	;default platform
