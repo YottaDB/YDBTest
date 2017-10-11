@@ -92,10 +92,10 @@ if ($?gtm_test_nopriorgtmver) then
 endif
 
 echo "# Test that endiancvt does not proceed if minor-dbver is not same as current version"
-echo "# We know that any version <= V63000 has a minor db-ver different from the current or any future version"
+echo "# We know that any version <= V63000A_R100 has a minor db-ver different from the current or any future version"
 echo "# So create database using that older version and try to endiancvt it using the current version"
-echo "# Randomly choose a prior V5 version that is <= V63000 to create the database first."
-set prior_ver = `$gtm_tst/com/random_ver.csh -gte V50000 -lte V63000`
+echo "# Randomly choose a prior V5 version that is <= V63000A_R100 to create the database first."
+set prior_ver = `$gtm_tst/com/random_ver.csh -gte V50000 -lte V63000A_R100`
 if ("$prior_ver" =~ "*-E-*") then
 	echo "No prior versions available: $prior_ver"
 	exit -1
