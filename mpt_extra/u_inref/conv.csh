@@ -1,4 +1,16 @@
-#!/usr/local/bin/tcsh 
+#!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 # test for conversion utility routines
 # these are the tests in the manual
 
@@ -81,6 +93,13 @@ echo "#####################"$cnt"###################"
 @ cnt = $cnt + 1
 $GTM << \GTMEND
 WRITE "E:",$$FUNC^%HD("E")
+WRITE "0xE:",$$FUNC^%HD("0xE")
+WRITE "0xe:",$$FUNC^%HD("0xe")
+WRITE "0XE:",$$FUNC^%HD("0XE")
+WRITE "0Xe:",$$FUNC^%HD("0Xe")
+WRITE "0xax3:",$$FUNC^%HD("0xax3")
+WRITE "1xa:",$$FUNC^%HD("1xa")
+WRITE "1xax3:",$$FUNC^%HD("1xax3")
 \GTMEND
 
 echo "#####################"$cnt"###################"
