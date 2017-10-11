@@ -20,6 +20,7 @@ fifointrdriver
 	else  If $ZVersion["S390" do
 	. if $ZVersion["Linux" do initplatform("linuxs390")
 	. else  do initplatform("s390")
+	else  if $ZVersion["armv7l" do initplatform("armv7l")
 	else  do initplatform("default")
 	set ^Zreadcnt($zcmdline)=0
 	set ^NumIntrSent($zcmdline)=0
@@ -88,6 +89,11 @@ s390	;S390 and not Linux
 	;reduce #1
 
 linuxs390	;S390 and Linux
+	;minsnooze #200
+	;maxsnooze #800
+	;reduce #1
+
+armv7l	;32-bit ARM
 	;minsnooze #200
 	;maxsnooze #800
 	;reduce #1
