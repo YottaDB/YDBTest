@@ -1,8 +1,21 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright 2013 Fidelity Information Services, Inc		;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 intrdriver
 	; Interrupt read process until we are requested to shutdown or we reach a system defined limit of interrupts
         ; which probably means we were orphaned and are just chewing up cpu time.
 	; we reduce the number of iterations on some processors to keep runtimes similar across platforms
-	; To add a new platform, create a <new platform> profile similar to the "x86" label shown under the platform section.  
+	; To add a new platform, create a <new platform> profile similar to the "x86" label shown under the platform section.
 	; Add the $ZVersion search in the test below and do initplaform(<new platform>) if found.
 	; After setting up the interrupt parameters and doing some initialization we use the commandline parameter to job off
 	; the specified version(like fixednonutf) of fifosenddata, fiforeadintr, and sendintr.  Quit when told to via ^quit.
@@ -11,7 +24,7 @@ intrdriver
 	. if $ZVersion["CYGWIN" do initplatform("x86cygwin")
 	. else  if $ZVersion["64" do initplatform("x8664")
 	. else  do initplatform("x86")
-	else  if $ZVersion["AIX" do initplatform("aix") 
+	else  if $ZVersion["AIX" do initplatform("aix")
 	else  if $ZVersion["OSF1" do initplatform("osf")
 	else  if $ZVersion["Solaris" do initplatform("solaris")
 	else  if $ZVersion["HP-PA" do initplatform("hppa")
@@ -29,7 +42,7 @@ intrdriver
 	kill ^quit,^start,^doreadpid($zcmdline)
 	set ^numint=0
 	set ^readcnt=5000/^reduce
-	if $data(^morereads) set ^readcnt=^readcnt+^morereads 
+	if $data(^morereads) set ^readcnt=^readcnt+^morereads
 	job @($zcmdline_"^readintr("""_$zcmdline_"""):(output="""_$zcmdline_"read.mjo"":error="""_$zcmdline_"read.mje"""_")")
 	job @("^sendintr("""_$zcmdline_"""):(output="""_$zcmdline_"doint.mjo"":error="""_$zcmdline_"doint.mje"""_")")
 	for  do  quit:$data(^quit)
@@ -49,7 +62,7 @@ x8664	;x86_64
 	;maxsnooze #200
 	;reduce #1
 
-x86cygwin	;x86 which is CYGWIN 
+x86cygwin	;x86 which is CYGWIN
 	;minsnooze #50
 	;maxsnooze #200
 	;reduce #1

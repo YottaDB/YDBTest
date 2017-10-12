@@ -1,7 +1,18 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 fifointrdriver
-	; This function is executed via mumps in fifointrpt.csh 
+	; This function is executed via mumps in fifointrpt.csh
 	; We reduce the number of iterations on some processors to keep runtimes similar across platforms
-	; To add a new platform, create a <new platform> profile similar to the "x86" label shown under the platform section.  
+	; To add a new platform, create a <new platform> profile similar to the "x86" label shown under the platform section.
 	; Add the $ZVersion search in the test below and do initplaform(<new platform>) if found.
 	; After setting up the interrupt parameters and doing some initialization we use the commandline parameter to job off
 	; the specified version(like fixednonutf) of fifosenddata, fiforeadintr, and sendintr.  Quit when told to via ^quit.
@@ -10,7 +21,7 @@ fifointrdriver
 	. if $ZVersion["CYGWIN" do initplatform("x86cygwin")
 	. else  if $ZVersion["64" do initplatform("x8664")
 	. else  do initplatform("x86")
-	else  if $ZVersion["AIX" do initplatform("aix") 
+	else  if $ZVersion["AIX" do initplatform("aix")
 	else  if $ZVersion["OSF1" do initplatform("osf")
 	else  if $ZVersion["Solaris" do initplatform("solaris")
 	else  if $ZVersion["HP-PA" do initplatform("hppa")
@@ -36,7 +47,7 @@ fifointrdriver
 	if 0=^Zreadcnt($zcmdline) write "No interrupts seen by read job."
 	quit
 
-	; for each platform enter minsnooze, maxsnooze, and reduce 
+	; for each platform enter minsnooze, maxsnooze, and reduce
 
 x86	;x86 which is not CYGWIN
 	;minsnooze #200
@@ -48,7 +59,7 @@ x8664	;x86_64
 	;maxsnooze #800
 	;reduce #1
 
-x86cygwin	;x86 which is CYGWIN 
+x86cygwin	;x86 which is CYGWIN
 	;minsnooze #200
 	;maxsnooze #800
 	;reduce #1
