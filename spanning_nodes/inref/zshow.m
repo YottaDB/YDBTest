@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2012, 2014 Fidelity Information Services, Inc	;
+; Copyright 2012, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -15,6 +18,6 @@ zshow
     for i=1:1:99 set ^x(i)=$justify(" ",2500)
     write "===================zshow ""G""===================",!
     zshow "G":val
-    do out^zshowgfilter(.val,"DWT,CAT")	; filter out DWT and CAT categories as they could contain varying output
+    do out^zshowgfilter(.val,"DWT,CAT,BTD")	; filter out DWT/CAT/BTD as they could contain varying output
     zwrite val
     quit
