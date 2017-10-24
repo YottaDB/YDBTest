@@ -4,6 +4,9 @@
 # Copyright (c) 2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -30,6 +33,10 @@ endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list	""
+if ("sugar" == "$HOST:ar") then
+	# sugar is a Beaglebone Black box with minimal Memory/CPU/IO capabilities so disable this heavyweight test there
+	setenv subtest_exclude_list "$subtest_exclude_list resil"
+endif
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
