@@ -4,6 +4,9 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -20,8 +23,8 @@ if ( 2 > $# ) then
 	echo "timeframe - beginning and end in format like Nov 16 10:11:39"
 	echo "output file to write the log is optional.If not provided it writes to syslog.txt in the current dir"
 	echo "syslog_file to search is optional.If not provided it takes the default syslog on that host"
-	echo "message (optional): If provided, the script will wait for a maximum duaration of 300 seconds for the"
-	echo "message to appear in the syslog"
+	echo "message (optional): If provided, the script will wait for a maximum duration of 300 seconds "
+	echo "(900 seconds on ARM Linux) for the message to appear in the syslog"
 	echo "Sample Usage:"
 	echo "$gtm_tst/com/getoper.csh time_before time_after <output_file> <syslog_file> <message> <count>"
 	exit 1
@@ -83,7 +86,12 @@ if ($?message) then
 	set end_time = "$time_after"
 	set nowtime = `date +%s`
 	set starttime = $nowtime
-	set maxwait = 600
+	if ("HOST_LINUX_ARMV7L" != $gtm_test_os_machtype) then
+		set maxwait = 300
+	else
+		# Linux on ARM has been seen to be slow (IO, CPU etc.) so give it more time for syslog message to show up
+		set maxwait = 900
+	endif
 	@ timeout = $starttime + $maxwait
 	while ($nowtime <= $timeout)
 		set nowtime = `date +%s`
