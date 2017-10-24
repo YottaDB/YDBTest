@@ -320,19 +320,26 @@ setenv tst_random_all "$tst_random_all gtm_test_do_eotf"
 # Do this only 20% of the time. Note on versions V6.2-001 and prior, the $gtmdbglvl setting of 0x40000 and 0x1F0 could cause major
 # performance issues with align sizes exceeding 16MB. Versions after that limit the amount of backfilling of allocated and/or freed
 # memory setting and/or memory backfill verification checking to the first 16KB of a given memory area eliminating the worst of the
-# performance issues.
+# performance issues. Nevertheless, single-CPU systems are better not additionally stressed with gtmdbglvl-related activity so
+# keep gtmdbglvl unset on those systems.
 if !($?gtmdbglvl) then
 	if (8 < $randnumbers[6]) then
-		# if decided to set (20%), do this : 10% - 0x1F0 ; 60% - 0x40000 ; 30% - 0x30(48)
-		if (6 >= $randnumbers[7]) then
-			setenv gtmdbglvl "0x40000"	# 6/10 chance
-		else if (9 >= $randnumbers[7]) then
-			setenv gtmdbglvl "0x30"		# 3/10 chance
+		@ numcpus = `grep -c processor /proc/cpuinfo`
+		if ($numcpus == 1) then
+			echo "# gtmdbglvl is chosen to be UNDEFINED by do_random_settings.csh due to 1 CDU"	>>&! $settingsfile
+			echo "unsetenv gtmdbglvl"								>>&! $settingsfile
 		else
-			setenv gtmdbglvl "0x1F0"	# 1/10 chance
+			# if decided to set (20%), do this : 10% - 0x1F0 ; 60% - 0x40000 ; 30% - 0x30(48)
+			if (6 >= $randnumbers[7]) then
+				setenv gtmdbglvl "0x40000"	# 6/10 chance
+			else if (9 >= $randnumbers[7]) then
+				setenv gtmdbglvl "0x30"		# 3/10 chance
+			else
+				setenv gtmdbglvl "0x1F0"	# 1/10 chance
+			endif
+			echo "# gtmdbglvl set by do_random_settings.csh"				>>&! $settingsfile
+			echo "setenv gtmdbglvl $gtmdbglvl"						>>&! $settingsfile
 		endif
-		echo "# gtmdbglvl set by do_random_settings.csh"				>>&! $settingsfile
-		echo "setenv gtmdbglvl $gtmdbglvl"						>>&! $settingsfile
 	else
 		echo "# gtmdbglvl is chosen to be UNDEFINED by do_random_settings.csh"		>>&! $settingsfile
 		echo "unsetenv gtmdbglvl"							>>&! $settingsfile
