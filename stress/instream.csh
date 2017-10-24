@@ -65,17 +65,11 @@ unset echo
 unset verbose
 setenv subtest_list "manyvars concurr_small concurr concurr_replwason"
 setenv subtest_exclude_list ""
-# concurr_replwason fails on z/OS due to slow pipes issue
-# On beowulf, temporarily disable concurr_replwason until the test/code change is made to monitor backlog size and accordingly
-# reduce the speed of the updates. See <backlog_caught_up_journalpoolsize> for more details.
-if ("os390" == "$gtm_test_osname" || "HOST_OSF1_ALPHA" == "$gtm_test_os_machtype") then
-	setenv subtest_exclude_list "concurr_replwason"
+
+if ("sugar" == "$HOST:ar") then
+	# sugar is a Beaglebone Black box with minimal Memory/CPU/IO capabilities so disable this heavyweight test there
+	setenv subtest_exclude_list "$subtest_exclude_list concurr"
 endif
-if ($?ydb_environment_init) then
-	# We are in a YDB environment (i.e. non-GG setup)
-	# concurr and concurr_replwason frequently fail with REPLFILIOERR so disable those until we get T63002
-	# which is what will let us run E_ALL with V63001+ builds that have this error fixed.
-	setenv subtest_exclude_list "$subtest_exclude_list concurr concurr_replwason"
-endif
+
 $gtm_tst/com/submit_subtest.csh
 echo "STRESS test done."
