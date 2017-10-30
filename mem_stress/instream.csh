@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -24,6 +27,12 @@ if (("1" == "$gtm_test_trigger") && ("GT.CM" == "$test_gtm_gtcm")) then
 endif
 
 setenv subtest_list "memleak"
+
+setenv subtest_exclude_list ""
+if ("sugar" == "$HOST:ar") then
+	# sugar is a Beaglebone Black box with minimal Memory/CPU/IO capabilities so disable this heavyweight test there
+	setenv subtest_exclude_list "$subtest_exclude_list memleak"
+endif
 
 $gtm_tst/com/submit_subtest.csh
 echo "MEM_STRESS test done."
