@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;test1 : is the original test case that started this (Assert fail
 	;GVCST_PUT.C line 435)
 	;test2 : is a test where the explicit update causes an extra block split
@@ -76,7 +87,7 @@ verify(a2val);
 	.	if ^a(1)'=$j(2,400)  do fail
 	.	if ^a(2)'=a2val  do fail
 	.	if ^a(3)'=$j(2,400)  do fail
-	if $data(^conflict)
+	if $data(^conflict) do
 	.	if ^a(1)'=$j(2,400)  do fail
 	.	if ^a(2)'=$j(2,620)  do fail
 	.	if ^a(3)'=$j(2,400)  do fail
