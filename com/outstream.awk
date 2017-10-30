@@ -3,6 +3,9 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -290,11 +293,11 @@ BEGIN {
 		if (0 == substatus) jnl_flag1line = 0
 	}
 	if (1 == jnl_flag1line)
-		if ($0 ~ /----------------------------/) jnl_flag1line++
-	if ($0 ~ /PID        NODE         USER     TERM JPV_TIME/) jnl_flag1line++
+		if ($0 ~ /-----------------------------------------------------------------/) jnl_flag1line++
+	if ($0 ~ /PID        NODE             USER         TERM JPV_TIME/) jnl_flag1line++
 	###
 	# Journal file label
-	strexp = "Journal file label      GDSJNL26"
+	strexp = "Journal file label      GDSJNL27"
 	strrep = "Journal file label      ##FILTERED##"
 	gsub(strexp,strrep)
 	# Journal Creation Time         2009/03/12 08:24:17
