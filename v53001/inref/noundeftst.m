@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 noundeftst	; test for noundef operation with local variables
 	;
 	N (act,cmdline)
@@ -29,7 +40,7 @@ badfile	. B
 	. S nound("ocnt")=$P(nound("case"),";",3),nound("varlst")=$P(nound("case"),";",4)
 	. S nound("ee")=$P(nound("case"),";",$S($V("UNDEF"):6,1:5))
 	. I $ZVER["VMS" D
-	.. S nound("temp")=$P(nound("case"),";",$S($V("UNDEF"):8,1:7)) 
+	.. S nound("temp")=$P(nound("case"),";",$S($V("UNDEF"):8,1:7))
 	.. I $L(nound("temp")) S nound("ee")=nound("temp"),nound("ocnt")=0
 	. S nound("case")=$P(nound("case"),";",2),$ZS=""
 	. I "M"=$ZCHSET,nound("case")["$ZCO" Q
@@ -59,8 +70,8 @@ chk(cnt,var)
 	. I "B"'=$E(act),nound("save")'=nound("temp"),$I(nound("cnt")) S nound("save")=nound("temp")
 	I "B"'=$E(act),cnt'=nound("cnt"),$I(nound("errors")) D
 	. W !,"**** Expected ",cnt-4," test case locals, but ZSH/ZWR found ",nound("cnt")-4;,! ZWR ^noundef("V",*)
-	S nound("imyqi")=cnt-4,nound("nam")="%" 
-	F cnt=cnt+$S("B"=$E(act):nound("cnt"),1:0)-$S($D(%):1,1:0):-1 S nound("nam")=$O(@nound("nam")) Q:""=nound("nam") 
+	S nound("imyqi")=cnt-4,nound("nam")="%"
+	F cnt=cnt+$S("B"=$E(act):nound("cnt"),1:0)-$S($D(%):1,1:0):-1 S nound("nam")=$O(@nound("nam")) Q:""=nound("nam")
 	I cnt,$I(nound("errors")) D
 	. W !,"***** Expected ",nound("imyqi")," test case locals, but name-level $O() found ",nound("imyqi")-cnt;,! ZWR
 	Q
@@ -70,7 +81,7 @@ err	I '$D(act) Q ; get ourselves reinvoked down a frame after we get act back.
 	. S $EC=""
 	. K oops
 	. I $ZS'[nound("ee"),$I(nound("errors")) D  X act
-	.. W !,"Test case: ",nound("case"),!,"****** Expected error: ",nound("ee")," but got:",!,$ZS 
+	.. W !,"Test case: ",nound("case"),!,"****** Expected error: ",nound("ee")," but got:",!,$ZS
 	I  ZG @nound("ret")
 	W !,"****** Unexpected error location",! X act
 	B
@@ -82,7 +93,7 @@ dummy1(a,b)
 	Q:$Q b Q
 dummy2(a,b)
 	S oops=1
-	Q k	
+	Q k
 	; The casetab has the following format
 	; cnt;varlst;ee (noundef);ee (undef) WHERE
 	; cnt is the # of lvns defined by the (passing) case
@@ -233,7 +244,7 @@ casevms	;C k;0;k
 	;X k;0;k
 	;X @k;0;k;EXPR
 	;ZA j(k):k L;0;j,k
-	;ZA @k;0;k
+	;ZA @k;0;k;LKNAMEXPECTED
 	;ZCOM k;0;k;FNF
 	;ZCOM @k;0;k
 	;ZD j(k),@k;0;j,k
