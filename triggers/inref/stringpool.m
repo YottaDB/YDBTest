@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Routine to stress the stringpool inside and outside a trigger making sure garbage
 ; collection works correctly.
@@ -11,12 +22,12 @@
 	ZShow "V":zs
 	View "STP_GCOL"			; One final GC before validation
 	For v=1:1:10 Do
-	. If (x(v)'=^a(v))
+	. If (x(v)'=^a(v)) Do
 	. . Write "x(",v,") not equal to ^a(",v,") - terminating",!
 	. . ZShow "*"
 	. . ZWrite ^a
 	. . ZHalt 1
-	. If (y(v)'=^b(v))
+	. If (y(v)'=^b(v)) Do
 	. . Write "y(",v,") not equal to ^b(",v,") - terminating",!
 	. . ZShow "*"
 	. . ZWrite ^b
