@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -19,7 +22,12 @@ set shorthost = $HOST:r:r:r:r
 set format="%Y.%m.%d.%H.%M.%S.%Z"
 set timestart = `date +"$format"`
 if (! $?gtm_test_hang_alert_sec) then
-	set gtm_test_hang_alert_sec = 18000 # A test running for 5 hours is suspected to be hung
+	if ("HOST_LINUX_ARMV7L" != $gtm_test_os_machtype) then
+		set gtm_test_hang_alert_sec = 9000 # A subtest running for 2.5 hours is suspected to be hung
+	else
+		# ARM boxes are usually slower so give them a bigger timeout for the hang alert
+		set gtm_test_hang_alert_sec = 18000 # A subtest running for 5.0 hours is suspected to be hung
+	endif
 endif
 set mailinterval = 1800 # Send mail to the user ever 30 minutes
 # Kill submit_test.csh after waiting $killtime, to let the other tests continue
