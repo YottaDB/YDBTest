@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2007, 2013 Fidelity Information Services, Inc	;
+; Copyright 2007, 2013 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -93,7 +96,7 @@ receiver
         Write /listen(1)
         Set ^recvractive=1               ; signal main we are running (listening)
         Write /wait(timeout)
-        Else
+        Else  Do
 	. Use $P
 	. Write "Open to main failed during wait for connection: $zstatus=",$Zstatus,!
 	. Set ^done=1

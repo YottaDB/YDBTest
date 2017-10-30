@@ -3,6 +3,9 @@
 ; Copyright (c) 2010, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -38,7 +41,7 @@ incretrap
 	; HP-UX PARISC does not support triggers and therefore does not support trigger related ISVs.
 	set %ZTLEVEL=$select($ztrnlnm("gtm_test_os_machtype")="HOST_HP-UX_PA_RISC":0,1:$ztlevel)
 	; save zstatus in case some external action, e.g. online rollback, causes incretrap to hit an error
-	if %ZTLEVEL set %ZTSLATE=$ztslate,$ztslate="%ZLEVEL="_$zlevel_",%ZSTATUS="_$zwrite($zstatus)
+	if %ZTLEVEL set %ZTSLATE=$ztslate,$ztslate="%ZLEVEL="_$zlevel_",%ZSTATUS="_$zwrite($zstatus),%ZLEVEL=$zlevel
 	else  set %ZLEVEL=$zlevel,(%ZSTATUS,%SAVESTAT($increment(%SAVESTAT)))=$zstatus,%MCODE=$stack($stack-1,"MCODE")
 	goto:$text(+0)=$piece($piece($zstatus,"^",2),",") fail	; cannot trap a failure in incretrap !
 	set $ecode=""					; let incretrap report it's own errors rather than dumping more stack
@@ -72,7 +75,7 @@ incretrap
 	.	.	write ".ZSTATUS=",%MYSTAT
 	.	.	write ".Destination=",%PLACE
 	.	.	write ".$ZLEVEL=",%ZLEVEL,".$TLEVEL=",$tlevel,".$ZTLEVEL=",%ZTLEVEL,!
-	.	else  ; when inside a trigger push the error information into $ZTSLate
+	.	else  do; when inside a trigger push the error information into $ZTSLate
 	.	.	new destinfo,destp
 	.	.	set $piece(destinfo,".",$increment(destp))="ETRAP"
 	.	.	set $piece(destinfo,".",$increment(destp))=%PLACE
