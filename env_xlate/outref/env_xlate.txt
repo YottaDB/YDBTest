@@ -109,7 +109,7 @@ Now the SQ translation routine
 mumps.gld
 The status of the link is:  0
 undefined environment variable (gtm_gblxlate)...
-^["/a/b/c","beowulf"]GBL= 
+^["/a/b/c","sphere"]GBL= 
 %GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot translate environment variable gtm_gblxlate
 		At M source location tsq+3^sq
 
@@ -117,13 +117,13 @@ GTM>
 
 bad file name for gtm_gblxlate...
 gtm_gblxlate = ##IN_TEST_PATH##/inref/notthere.dat
-^["/a/b/c","beowulf"]GBL= 
+^["/a/b/c","sphere"]GBL= 
 ##SUSPEND_OUTPUT HOST_OS390_S390
 %GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (2) - No such file or directory
 		At M source location tsq+3^sq
 
 GTM>
-^["/a/b/c","beowulf"]GBL= 
+^["/a/b/c","sphere"]GBL= 
 %GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (2) - No such file or directory
 		At M source location tsq+3^sq
 
@@ -134,7 +134,7 @@ GTM>
 		At M source location tsq+3^sq
 
 GTM>
-^["/a/b/c","beowulf"]GBL= 
+^["/a/b/c","sphere"]GBL= 
 %GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (129) - No such file or directory
 		At M source location tsq+3^sq
 
@@ -148,26 +148,26 @@ gtm_gblxlate = ##IN_TEST_PATH##/inref/table.dat
 		At M source location tsq+3^sq
 
 GTM>
-^["/b/c","beowulf"]GBL= 
+^["/b/c","sphere"]GBL= 
 %GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  No translation available
 		At M source location tsq+3^sq
 
 GTM>
-^["a/a/b/c","beowulf"]GBL= 
+^["a/a/b/c","sphere"]GBL= 
 %GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  No translation available
 		At M source location tsq+3^sq
 
 GTM>
-^["/a/b/c","beowulf"]GBL= 
+^["/a/b/c","sphere"]GBL= 
 THIS IS A
-^["/a/b/c","beowulf"]GBL= 
+^["/a/b/c","sphere"]GBL= 
 THIS IS A
 ===========================================
 string:
 THIS IS A
 variables:
 THIS IS A
-vara:/this/sample;var:lespaul
+vara:/this/sample;var:strato
 indirection:
 THIS IS A
 functions:
@@ -177,7 +177,7 @@ THIS IS A
 Now let's test an error - no-existent host
 
 gtm_gblxlate = ##IN_TEST_PATH##/inref/table_bad.dat
-^["/a/b/c","beowulf"]GBL= 
+^["/a/b/c","sphere"]GBL= 
 %GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Can't get IP address for host in /not/here
 		At M source location tsq+3^sq
 
@@ -188,9 +188,9 @@ Now let's test LOCKS...
 --LOCKS TESTING--
 $ZGBLDIR is: ##TEST_PATH##/mumps.gld
 .................TEST1.....................
-L +^["/a/b/c","beowulf"]GBL1:5
+L +^["/a/b/c","sphere"]GBL1:5
 $T=1
-L +["/a/b/c","beowulf"]LCL1:5
+L +["/a/b/c","sphere"]LCL1:5
 $T=1
 ZSHOW "L":
 MLG:2,MLT:0
@@ -250,9 +250,9 @@ ZSHOW "L":
 ..............END OF TEST2.................
 Released locks, waiting for ^othloc to finish step 2...
 .................TEST1.....................
-L +^["/a/b/c","beowulf"]GBL1:5
+L +^["/a/b/c","sphere"]GBL1:5
 $T=0
-L +["/a/b/c","beowulf"]LCL1:5
+L +["/a/b/c","sphere"]LCL1:5
 $T=0
 ZSHOW "L":
 ##TEST_AWKMLG.[0-9]*,MLT.[0-9]*
@@ -322,9 +322,9 @@ $T=0
 l +LCL1:5
 $T=0
 MLG:0,MLT:2
-L +^["/a/b/c","beowulf"]GBL1:5
+L +^["/a/b/c","sphere"]GBL1:5
 $T=0
-L +["/a/b/c","beowulf"]LCL1:5
+L +["/a/b/c","sphere"]LCL1:5
 $T=0
 MLG:0,MLT:4
 ..............END OF TEST..................
@@ -343,9 +343,9 @@ $T=1
 LOCK LCL1 LEVEL=1
 LOCK ^GBL1 LEVEL=1
 LOCK ^othloc1 LEVEL=1
-L +^["/a/b/c","beowulf"]GBL1:5
+L +^["/a/b/c","sphere"]GBL1:5
 $T=1
-L +["/a/b/c","beowulf"]LCL1:5
+L +["/a/b/c","sphere"]LCL1:5
 $T=1
 ##TEST_AWKMLG.[0-9]*,MLT.[0-9]*
 LOCK LCL1 LEVEL=1
