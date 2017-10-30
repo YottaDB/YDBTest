@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2007, 2013 Fidelity Information Services, Inc	;
+; Copyright 2007, 2013 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -27,7 +30,7 @@ d002636	;
 	if $d(zshowdev)=0 zshow "D":zshowdev zwrite zshowdev	;just in case
 	s indx="" f  s indx=$o(zshowdev("D",indx)) q:indx=""  do
 	. s dev=zshowdev("D",indx)
-	. if $piece(dev," ",1)=$ZIO,$piece(dev," ",3)'="TERMINAL"
+	. if $piece(dev," ",1)=$ZIO,$piece(dev," ",3)'="TERMINAL" do
 	. . W !,"FAIL $PRINCIPAL is not a TERMINAL",!
 	. else  if $find(dev,"ZINTERRUPT")=0 w !,"FAIL no ZINTERRUPT in zshow ""D""",!
 	;u priorio

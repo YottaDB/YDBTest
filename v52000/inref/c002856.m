@@ -1,16 +1,27 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 c002856	;	Test that incorrect usages of ISV/FCNs ALWAYS generate object code
  ;
  ; --------------------------------------------------------------------------------------------
  ; Stefan's testcase (#1)
  ; --------------------------------------------------------------------------------------------
  ;
- . set $zy=$p(%z,"[",2)-1
+ set $zy=$p(%z,"[",2)-1
  ;
  ; --------------------------------------------------------------------------------------------
  ; Stefan's testcase (#2)
  ; --------------------------------------------------------------------------------------------
  ;
- . for  quit:$zpriv(r1wait)   ; On Unix, this will generate a FNOTONSYS error
+ for  quit:$zpriv(r1wait)   ; On Unix, this will generate a FNOTONSYS error
  ;. for  quit:$zascii(r1wait)  ; On VMS,  this will generate a FNOTONSYS error - [no longer generates error - leave in to preserve reference file linenumbers]
  ;
  ; --------------------------------------------------------------------------------------------
@@ -48,14 +59,14 @@ c002856	;	Test that incorrect usages of ISV/FCNs ALWAYS generate object code
  I $MN>50 W #
  e  i %ZNOGTM s %device=$ZU(53)
  i %ZNOGTM  use %device:(::"S":$C(28):packSz:packSz) i 1
- . f i=1:1:($MN(7)+1) s glob=glob_$MN(x,$MN(52)+1) 
- . do ^a($MN(strt,$MN(206,240)),9,"a")
- . Use $MN 
- . . i $MN(%lnam)+$MN(%sub1)+$MN(%sub2)>%maxkey q
- . . s locstr=locstr_"a"_$MN(nowexam,6,$MN(nowexam,"a")-7)
- . X "a"_subs_"a""a"_$MN(alpha,i)_"a""a""a""a"
- . i kills<kil,'$MN(3) s count=count-1,kills=kills+1 k ^a(sub2) s:'$MN(@glob) globals=globals-1
- . write $MN($MN(1000),1000000),!
+ f i=1:1:($MN(7)+1) s glob=glob_$MN(x,$MN(52)+1)
+ do ^a($MN(strt,$MN(206,240)),9,"a")
+ Use $MN
+ i $MN(%lnam)+$MN(%sub1)+$MN(%sub2)>%maxkey q
+ s locstr=locstr_"a"_$MN(nowexam,6,$MN(nowexam,"a")-7)
+ X "a"_subs_"a""a"_$MN(alpha,i)_"a""a""a""a"
+ i kills<kil,'$MN(3) s count=count-1,kills=kills+1 k ^a(sub2) s:'$MN(@glob) globals=globals-1
+ write $MN($MN(1000),1000000),!
  D:$MN(@^a1A(@A))=1 98+1^a@@^a1A(1),AT^a1IDDO1:@C(1),AT+1^a1IDDO1:@C(2)
  G:$MN(@^a1A(@A))=1 192+1^a@@^a1A(1):"a",AT^a1IDGOB:@C(1),AT+1^a1IDGOB:1
  K:$MN("a")>2 ^a1 S VCOMP=VCOMP_$MN(^a1)

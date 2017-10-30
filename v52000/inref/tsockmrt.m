@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; [C9H03-002835] Test the MOREREADTIME socket device option.
 ;
 ; - Create a string to send 1000 bytes long.
@@ -39,7 +50,7 @@
 	Set strblk="abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	Set $Piece(sdata,strblk,(^maxdatalen\$Length(strblk))+2)=""
 	Set sdata=$Extract(sdata,1,^maxdatalen)
- 
+
         ; Fork off receiver
         Write "Spawning receiver process",!
         If unix Job @("receiver^tsockmrt():(output=""receiver.mjo"":error=""receiver.mje"")")
@@ -65,7 +76,7 @@
 	For mrtindx=1:1:^mrtmaxindx Do  quit:^done
 	. Set mrt=^mrt(mrtindx)
 	. ; Need to do USE with MRT set here so it is properly reflected in the ZSHOW below
-	. ; The first iteration (-2) does not define MOREREADTIME.  The code will do the initial read of one or 
+	. ; The first iteration (-2) does not define MOREREADTIME.  The code will do the initial read of one or
 	. ; more characters with timeout set to 200ms and then switch to the default of 10ms for additional reads
 	. if 1=mrtindx Use tcpdev
 	. else  Use tcpdev:MOREREADTIME=mrt
@@ -101,7 +112,7 @@
 	. ; At conclusion of loop record end time, compute elapsed and verify echoed string is what we sent.
 	. Set endtime=$H
 	. Set elapsecs=$$^difftime(endtime,starttime)
-	. Use $P 
+	. Use $P
 	. If ^done Do
 	. . Write "Terminating early due to ^done being set",!
 	. . Halt
@@ -157,10 +168,10 @@ receiver
         Write /listen(1)
         Set ^recvractive=1               ; signal main we are running (listening)
         Write /wait(timeout)
-        Else  
-	. Use $P 
-	. Write "Open to main failed during wait for connection: $zstatus=",$Zstatus,! 
-	. Set ^done=1 
+        Else  Do
+	. Use $P
+	. Write "Open to main failed during wait for connection: $zstatus=",$Zstatus,!
+	. Set ^done=1
 	. Halt
         Set key=$Key,childsocket=$Piece(key,"|",2),ip=$p(key,"|",3)
         Use $P
@@ -168,7 +179,7 @@ receiver
         Write !,"Receiver now connected to main process",!
 
 	Set mrtindx=1
-	; do no set morereadtime for first iteration 
+	; do no set morereadtime for first iteration
 	Use tcpdev
 	Set charcnt=0
 	Set maxcharcnt=^maxdatalen
