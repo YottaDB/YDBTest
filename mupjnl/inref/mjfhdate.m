@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 mjfhdate ;convert $H in mjf output to DATE format
 	s mjf=$ZCMDLINE
 	s outfile=$P
@@ -13,9 +24,3 @@ mjfhdate ;convert $H in mjf output to DATE format
 	. w line,!
 	. u mjf r line
 	q
-	. s %DT=$P(dollarh,",",1)
-	. s %TM=$P(dollarh,",",2)
-	. if 0<%DT d
-	. . d %CDS^%H
-	. . d %CTS^%H
-	. . s $E(line,4,14)="#"_%DAT_" "_%TIM_"#"
