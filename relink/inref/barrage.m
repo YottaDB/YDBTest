@@ -3,6 +3,9 @@
 ; Copyright (c) 2014-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -1500,7 +1503,7 @@ validateFileVersions
 	set zdirectory=$zdirectory
 	; Then go through all the object directories, temporarily changing $zroutines and $zdirectory to avoid potential compilations, and execute
 	; every routine, making sure that the ascertained version is correct.
-	for  set dir=$order(OBJDIRS(dir)) quit:(""=dir)
+	for  set dir=$order(OBJDIRS(dir)) quit:(""=dir)  do
 	.	set name=""
 	.	for  set (name,invName)=$order(OBJDIRS(dir,name)) quit:(""=name)  do:($data(OBJDIRS(dir,name))#10)
 	.	.	set ver=OBJDIRS(dir,name,"ver")

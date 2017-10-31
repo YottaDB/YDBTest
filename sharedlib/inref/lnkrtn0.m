@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 lnkrtn;
 	w "in lnkrtn0",!
 	quit
@@ -34,7 +45,7 @@ entry4;
 	do entry3^lnkrtn
 	quit
 	;
-entry5; 
+entry5;
 	w "in entry5^lnkrtn0",!
 	merge lnkrtn1Tolnkrtn0Merge=data1
 	quit
@@ -54,8 +65,8 @@ verifyall;
 	;
 	set maxerr=10
 	set errcnt=0
-	for cnt=0:1:max do  q:errcnt>maxerr 
-	. for datastr="data","mrgdata","lnkrtn2Tolnkrtn1Merge","lnkrtn1Tolnkrtn2Merge","lnkrtn1Tolnkrtn0Merge"
+	for cnt=0:1:max do  q:errcnt>maxerr
+	. for datastr="data","mrgdata","lnkrtn2Tolnkrtn1Merge","lnkrtn1Tolnkrtn2Merge","lnkrtn1Tolnkrtn0Merge" do
 	. . do exam("datastr"_cnt_"(""digits"")",digits)
 	. . do exam("datastr"_cnt_"(""alpha"")",alpha)
 	. . do exam("datastr"_cnt_"(""wspace"")",wspace)
@@ -97,7 +108,7 @@ exam(lhs,rhs);
 	if $get(@lhs)'=rhs do
 	.  write "Verify Failed: for ",lhs,!
 	.  write "      Expected:",rhs,!
-	.  write "      Found   :",$get(@lhs),! 
+	.  write "      Found   :",$get(@lhs),!
 	.  set errcnt=errcnt+1
 	quit
 examnew(type,rhs);
