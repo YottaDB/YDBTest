@@ -11,9 +11,8 @@ CTL Journal Seqno                            ##JNLSEQNO1##
 CTL Last histinfo Seqno                                  1 [0x0000000000000001]
 CTL Journal Data Base Offset                  ##JNLDBOFF## [0x........]
 CTL Journal Pool Size (in bytes)            ##JNLPOOLSIZ## [0x........]
-CTL Early Write Offset                         ##OFFSET1##
+CTL Reserved Write Offset                      ##OFFSET1##
 CTL Absolute Write Offset                      ##OFFSET1##
-CTL Relative Write Offset                      ##OFFSET1##
 CTL Updates Disabled                                 FALSE
 CTL Last Write Length (in bytes)                        88 [0x00000058]
 CTL Send LostTN Complete                             FALSE
@@ -21,14 +20,25 @@ CTL Primary Instance Name
 CTL Zqgblmod Seqno                                       0 [0x0000000000000000]
 CTL Prev JnlSeqno Time                 ..../../.. ..:..:..
 CTL Protocol Version                                     6 [0x00000006]
-CTL Journal Version                                     26 [0x0000001A]
+CTL Journal Version                                     27 [0x0000001B]
 CTL Standard Null Collation                          FALSE
 CTL Trigger Supported                    ##TRUE_OR_FALSE##
 CTL Supplementary Instance               ##TRUE_OR_FALSE##
 CTL Online Rollback PID                                  0 [0x00000000]
 CTL Online Rollback Cycle                                0 [0x00000000]
 CTL Freeze                                           FALSE
+CTL Custom Errors Loaded                 ##TRUE_OR_FALSE##
 CTL FTOK Counter Halted                  ##TRUE_OR_FALSE##
+CTL Phase2 Commit Index1                   ##PHS2CMTINDX## [0x........]
+CTL Phase2 Commit Index2                   ##PHS2CMTINDX## [0x........]
+CTL Phase2 Commit IndexMax                           16384 [0x00004000]
+CTL Phase2 Commit Latch Pid                              0 [0x00000000]
+CTL JnlPoolWrite Sleep       Cntr                        0 [0x00000000]
+CTL JnlPoolWrite Sleep       Seqno                       0 [0x00000000]
+CTL Phs2CmtArrayFull Sleep   Cntr                        0 [0x00000000]
+CTL Phs2CmtArrayFull Sleep   Seqno                       0 [0x00000000]
+CTL ReplPhs2Clnup IsPrcAlv   Cntr                        0 [0x00000000]
+CTL ReplPhs2Clnup IsPrcAlv   Seqno                       0 [0x00000000]
 
 ----------------------------------------------------------
 File Header
@@ -140,7 +150,7 @@ SRC # 0 : Processing State                 SENDING_JNLRECS
 SRC # 0 : Slot Index                                     0
 SRC # 0 : Journal record Compression Level         ##LVL##
 SRC # 0 : Remote Protocol Version                        6 [0x00000006]
-SRC # 0 : Remote Journal Version                        26 [0x0000001A]
+SRC # 0 : Remote Journal Version                        27 [0x0000001B]
 SRC # 0 : Remote has Standard Null Collation         FALSE
 SRC # 0 : Remote Supports Triggers       ##TRUE_OR_FALSE##
 SRC # 0 : Remote is Cross Endian         ##TRUE_OR_FALSE##
@@ -188,7 +198,7 @@ SRC # 1 : Processing State                 SENDING_JNLRECS
 SRC # 1 : Slot Index                                     1
 SRC # 1 : Journal record Compression Level         ##LVL##
 SRC # 1 : Remote Protocol Version                        6 [0x00000006]
-SRC # 1 : Remote Journal Version                        26 [0x0000001A]
+SRC # 1 : Remote Journal Version                        27 [0x0000001B]
 SRC # 1 : Remote has Standard Null Collation         FALSE
 SRC # 1 : Remote Supports Triggers       ##TRUE_OR_FALSE##
 SRC # 1 : Remote is Cross Endian         ##TRUE_OR_FALSE##
@@ -236,7 +246,7 @@ SRC # 2 : Processing State                     DUMMY_STATE
 SRC # 2 : Slot Index                                     2
 SRC # 2 : Journal record Compression Level         ##LVL##
 SRC # 2 : Remote Protocol Version                       -1 [0xFFFFFFFF]
-SRC # 2 : Remote Journal Version                        26 [0x0000001A]
+SRC # 2 : Remote Journal Version                        27 [0x0000001B]
 SRC # 2 : Remote has Standard Null Collation         FALSE
 SRC # 2 : Remote Supports Triggers       ##TRUE_OR_FALSE##
 SRC # 2 : Remote is Cross Endian         ##TRUE_OR_FALSE##
@@ -284,7 +294,7 @@ SRC # 3 : Processing State                           START
 SRC # 3 : Slot Index                                     3
 SRC # 3 : Journal record Compression Level         ##LVL##
 SRC # 3 : Remote Protocol Version                        6 [0x00000006]
-SRC # 3 : Remote Journal Version                        26 [0x0000001A]
+SRC # 3 : Remote Journal Version                        27 [0x0000001B]
 SRC # 3 : Remote has Standard Null Collation         FALSE
 SRC # 3 : Remote Supports Triggers       ##TRUE_OR_FALSE##
 SRC # 3 : Remote is Cross Endian         ##TRUE_OR_FALSE##
@@ -332,7 +342,7 @@ SRC # 4 : Processing State                 SENDING_JNLRECS
 SRC # 4 : Slot Index                                     4
 SRC # 4 : Journal record Compression Level         ##LVL##
 SRC # 4 : Remote Protocol Version                        6 [0x00000006]
-SRC # 4 : Remote Journal Version                        26 [0x0000001A]
+SRC # 4 : Remote Journal Version                        27 [0x0000001B]
 SRC # 4 : Remote has Standard Null Collation         FALSE
 SRC # 4 : Remote Supports Triggers       ##TRUE_OR_FALSE##
 SRC # 4 : Remote is Cross Endian         ##TRUE_OR_FALSE##
@@ -380,7 +390,7 @@ SRC # 5 : Processing State                 SENDING_JNLRECS
 SRC # 5 : Slot Index                                     5
 SRC # 5 : Journal record Compression Level         ##LVL##
 SRC # 5 : Remote Protocol Version                        6 [0x00000006]
-SRC # 5 : Remote Journal Version                        26 [0x0000001A]
+SRC # 5 : Remote Journal Version                        27 [0x0000001B]
 SRC # 5 : Remote has Standard Null Collation         FALSE
 SRC # 5 : Remote Supports Triggers       ##TRUE_OR_FALSE##
 SRC # 5 : Remote is Cross Endian         ##TRUE_OR_FALSE##
@@ -428,7 +438,7 @@ SRC # 6 : Processing State                 SENDING_JNLRECS
 SRC # 6 : Slot Index                                     6
 SRC # 6 : Journal record Compression Level         ##LVL##
 SRC # 6 : Remote Protocol Version                        6 [0x00000006]
-SRC # 6 : Remote Journal Version                        26 [0x0000001A]
+SRC # 6 : Remote Journal Version                        27 [0x0000001B]
 SRC # 6 : Remote has Standard Null Collation         FALSE
 SRC # 6 : Remote Supports Triggers       ##TRUE_OR_FALSE##
 SRC # 6 : Remote is Cross Endian         ##TRUE_OR_FALSE##
@@ -476,7 +486,7 @@ SRC # 7 : Processing State                 SENDING_JNLRECS
 SRC # 7 : Slot Index                                     7
 SRC # 7 : Journal record Compression Level         ##LVL##
 SRC # 7 : Remote Protocol Version                        6 [0x00000006]
-SRC # 7 : Remote Journal Version                        26 [0x0000001A]
+SRC # 7 : Remote Journal Version                        27 [0x0000001B]
 SRC # 7 : Remote has Standard Null Collation         FALSE
 SRC # 7 : Remote Supports Triggers       ##TRUE_OR_FALSE##
 SRC # 7 : Remote is Cross Endian         ##TRUE_OR_FALSE##
@@ -524,7 +534,7 @@ SRC # 8 : Processing State                 SENDING_JNLRECS
 SRC # 8 : Slot Index                                     8
 SRC # 8 : Journal record Compression Level         ##LVL##
 SRC # 8 : Remote Protocol Version                        6 [0x00000006]
-SRC # 8 : Remote Journal Version                        26 [0x0000001A]
+SRC # 8 : Remote Journal Version                        27 [0x0000001B]
 SRC # 8 : Remote has Standard Null Collation         FALSE
 SRC # 8 : Remote Supports Triggers       ##TRUE_OR_FALSE##
 SRC # 8 : Remote is Cross Endian         ##TRUE_OR_FALSE##
@@ -572,7 +582,7 @@ SRC # 9 : Processing State                 SENDING_JNLRECS
 SRC # 9 : Slot Index                                     9
 SRC # 9 : Journal record Compression Level         ##LVL##
 SRC # 9 : Remote Protocol Version                        6 [0x00000006]
-SRC # 9 : Remote Journal Version                        26 [0x0000001A]
+SRC # 9 : Remote Journal Version                        27 [0x0000001B]
 SRC # 9 : Remote has Standard Null Collation         FALSE
 SRC # 9 : Remote Supports Triggers       ##TRUE_OR_FALSE##
 SRC # 9 : Remote is Cross Endian         ##TRUE_OR_FALSE##
@@ -620,7 +630,7 @@ SRC #10 : Processing State                 SENDING_JNLRECS
 SRC #10 : Slot Index                                    10
 SRC #10 : Journal record Compression Level         ##LVL##
 SRC #10 : Remote Protocol Version                        6 [0x00000006]
-SRC #10 : Remote Journal Version                        26 [0x0000001A]
+SRC #10 : Remote Journal Version                        27 [0x0000001B]
 SRC #10 : Remote has Standard Null Collation         FALSE
 SRC #10 : Remote Supports Triggers       ##TRUE_OR_FALSE##
 SRC #10 : Remote is Cross Endian         ##TRUE_OR_FALSE##
@@ -668,7 +678,7 @@ SRC #11 : Processing State                 SENDING_JNLRECS
 SRC #11 : Slot Index                                    11
 SRC #11 : Journal record Compression Level         ##LVL##
 SRC #11 : Remote Protocol Version                        6 [0x00000006]
-SRC #11 : Remote Journal Version                        26 [0x0000001A]
+SRC #11 : Remote Journal Version                        27 [0x0000001B]
 SRC #11 : Remote has Standard Null Collation         FALSE
 SRC #11 : Remote Supports Triggers       ##TRUE_OR_FALSE##
 SRC #11 : Remote is Cross Endian         ##TRUE_OR_FALSE##
@@ -716,7 +726,7 @@ SRC #12 : Processing State                 SENDING_JNLRECS
 SRC #12 : Slot Index                                    12
 SRC #12 : Journal record Compression Level         ##LVL##
 SRC #12 : Remote Protocol Version                        6 [0x00000006]
-SRC #12 : Remote Journal Version                        26 [0x0000001A]
+SRC #12 : Remote Journal Version                        27 [0x0000001B]
 SRC #12 : Remote has Standard Null Collation         FALSE
 SRC #12 : Remote Supports Triggers       ##TRUE_OR_FALSE##
 SRC #12 : Remote is Cross Endian         ##TRUE_OR_FALSE##
@@ -764,7 +774,7 @@ SRC #13 : Processing State                 SENDING_JNLRECS
 SRC #13 : Slot Index                                    13
 SRC #13 : Journal record Compression Level         ##LVL##
 SRC #13 : Remote Protocol Version                        6 [0x00000006]
-SRC #13 : Remote Journal Version                        26 [0x0000001A]
+SRC #13 : Remote Journal Version                        27 [0x0000001B]
 SRC #13 : Remote has Standard Null Collation         FALSE
 SRC #13 : Remote Supports Triggers       ##TRUE_OR_FALSE##
 SRC #13 : Remote is Cross Endian         ##TRUE_OR_FALSE##
@@ -812,7 +822,7 @@ SRC #14 : Processing State                 SENDING_JNLRECS
 SRC #14 : Slot Index                                    14
 SRC #14 : Journal record Compression Level         ##LVL##
 SRC #14 : Remote Protocol Version                        6 [0x00000006]
-SRC #14 : Remote Journal Version                        26 [0x0000001A]
+SRC #14 : Remote Journal Version                        27 [0x0000001B]
 SRC #14 : Remote has Standard Null Collation         FALSE
 SRC #14 : Remote Supports Triggers       ##TRUE_OR_FALSE##
 SRC #14 : Remote is Cross Endian         ##TRUE_OR_FALSE##
@@ -860,7 +870,7 @@ SRC #15 : Processing State                 SENDING_JNLRECS
 SRC #15 : Slot Index                                    15
 SRC #15 : Journal record Compression Level         ##LVL##
 SRC #15 : Remote Protocol Version                        6 [0x00000006]
-SRC #15 : Remote Journal Version                        26 [0x0000001A]
+SRC #15 : Remote Journal Version                        27 [0x0000001B]
 SRC #15 : Remote has Standard Null Collation         FALSE
 SRC #15 : Remote Supports Triggers       ##TRUE_OR_FALSE##
 SRC #15 : Remote is Cross Endian         ##TRUE_OR_FALSE##

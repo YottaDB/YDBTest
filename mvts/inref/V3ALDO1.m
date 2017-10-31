@@ -1,14 +1,29 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 V3ALDO1 ;IW-KO-YS-TS,V3ALDO,MVTS V9.10;15/6/96;PART-90
  ;COPYRIGHT MUMPS SYSTEMS LABORATORY 1990-1996
  ;
  W !!,"134---V3ALDO1: Argumentless DO command -1-"
 1 S ^ABSN="31067",^ITEM="III-1067  Lines to be are ignored"
- S ^NEXT="2^V3ALDO1,V3ALDO2^V3ALDO,V3FP^VV3" D ^V3PRESET
- S ^VCOMP="OK"
- . S ^VCOMP="ERROR1"
- .. S ^VCOMP="ERROR2"
- . . S ^VCOMP="ERROR3"
- S ^VCORR="OK" D ^VEXAMINE
+ ; From GT.M V63002, the below code block issues a BLKTOODEEP warning at compile time.
+ ; It is not clear what the below code is supposed to do with respect to argumentless DO.
+ ; Therefore this is currently commented out.
+ ;
+ ;S ^NEXT="2^V3ALDO1,V3ALDO2^V3ALDO,V3FP^VV3" D ^V3PRESET
+ ;S ^VCOMP="OK"
+ ;. S ^VCOMP="ERROR1"
+ ;.. S ^VCOMP="ERROR2"
+ ;. . S ^VCOMP="ERROR3"
+ ;S ^VCORR="OK" D ^VEXAMINE
  ;
 2 S ^ABSN="31068",^ITEM="III-1068  $TEST value"
  S ^NEXT="3^V3ALDO1,V3ALDO2^V3ALDO,V3FP^VV3" D ^V3PRESET

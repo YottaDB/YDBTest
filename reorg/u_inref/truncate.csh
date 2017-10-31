@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -26,7 +29,7 @@ setenv gtm_test_spanreg 0 	# The calculated number of sets below doesn't work wi
 #
 setenv test_reorg NON_REORG
 setenv gtm_test_mupip_set_version "V5"
-$gtm_tst/com/dbcreate.csh mumps 3
+$gtm_tst/com/dbcreate.csh mumps 3 -block_size=1024	# The truncate tests below are sensitive to block layout
 $GDE << EOF
 add -name c* -region=breg
 add -name C* -region=breg
@@ -159,12 +162,12 @@ echo "# do not kill ^x entirely; keep node ^x and kill ^x(1,*) subtree"
 if ($?use_test_specific_gde) then
 	setenv test_specific_gde $use_test_specific_gde
 endif
-$gtm_tst/com/dbcreate.csh mumps 1
+$gtm_tst/com/dbcreate.csh mumps 1 -block_size=1024      # The truncate output below is sensitive to block layout
 $gtm_exe/mumps -run gtm7820 0 $?use_test_specific_gde
 $MUPIP reorg -truncate -select="^x*"
 $gtm_tst/com/dbcheck.csh
 echo "# kill ^x entirely (i.e. kill node ^x and kill ^x(1,*) subtree)"
-$gtm_tst/com/dbcreate.csh mumps 1
+$gtm_tst/com/dbcreate.csh mumps 1 -block_size=1024      # The truncate output below is sensitive to block layout
 $gtm_exe/mumps -run gtm7820 1 $?use_test_specific_gde
 $MUPIP reorg -truncate -select="^x*"
 $gtm_tst/com/dbcheck.csh

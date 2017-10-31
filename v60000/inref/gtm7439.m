@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2012, 2013 Fidelity Information Services, Inc	;
+; Copyright 2012, 2013 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -45,7 +48,7 @@ getjb(reg)	; routine to get the address of "jb" which will be later used to get 
 	set index=$$fetchfld(struct,member),offset=gtmtypes(struct,index,"off"),len=gtmtypes(struct,index,"len")
 	set jb=$zpeek("PEEK:"_jpc,offset,len,"X")
 	;
-	set struct="jnl_buffer",member="freeaddr"
+	set struct="jnl_buffer",member="rsrv_freeaddr"
 	set index=$$fetchfld(struct,member),offset=gtmtypes(struct,index,"off"),len=gtmtypes(struct,index,"len")
 	quit jb
 fetchfld(struct,member)

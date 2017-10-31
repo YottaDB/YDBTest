@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 zextract ;
 		; Identify the $ZCHSET value and set corresponding local vars to proceed appropriately
 		; since the steps and the M-arrays used from unicodesampledata.m will vary based on that
@@ -72,7 +83,7 @@ replace;
 	. . . set $ZEXTRACT(strbx(cnti),xi)="a"
 	. . . do ^examine(strbx(cnti),stra(xi)_$ZEXTRACT(^str(cnti),xi+1,^maxutf8len),"replacing "_xi_" characters of str("_xi_") with ""a""")
 	. . . do ^examine($ZLENGTH(strbx(cnti)),^utf8len(cnti),"$ZLENGTH() of the string should not have changed for "_^comments(cnti)_" "_strbx(cnti))
-	; the same test, character by character:
+	. ; the same test, character by character:
 	. for cnti=1:1:^cntstr do
 	. . set strcx(cnti)=^str(cnti)
 	. . for xi=1:1:^ucplen(cnti) do

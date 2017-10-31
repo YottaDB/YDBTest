@@ -3,6 +3,9 @@
 ; Copyright (c) 2006-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -69,8 +72,8 @@ basic;
 	write "After second zbreak actions: Show the break points and stack:",!  zshow "BS"
 	write "Now verify data",!
 	write "do verify^zbbasicexec",!  do verify^zbbasicexec
-	for lineno=begline:1:maxline  do
 	set zbreakfailed=0
+	for lineno=begline:1:maxline  do
 	. if zbbasic("ｂｙｔｅ_後漢書_？？_4",lineno)'=step write "TEST-E-ZBREAK Test Failed in zbreak action in step ",step," for lineno: ",lineno,! set zbreakfailed=1
 	if (1=zbreakfailed) zwrite zbbasic
 	;

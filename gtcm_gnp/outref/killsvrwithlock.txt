@@ -30,7 +30,7 @@ b Owned by PID= <PID> which is an existing process
 ##TEST_AWKI will now lock .b.*
 %GTM-E-NETLCKFAIL, Lock operation across Net failed
 ##TEST_AWK.SYSTEM-E-.*
-,%GTM-E-LCKSCANCELLED, Error on remote node holding locks or zallocates.  All locks and zallocates cancelled.
+,%GTM-E-LCKSCANCELLED, Error on remote node holding LOCKs or ZALLOCATEs.  All LOCKs and ZALLOCATEs cancelled.
 		At M source location lock+12^lbcl
 
 GTM>
@@ -72,4 +72,4 @@ No errors detected by integ.
 ##TEST_REMOTE_HOST_SHORT##:##TEST_PATH##/lockb_on_client.log
 %GTM-E-NETLCKFAIL, Lock operation across Net failed
 ##TEST_AWK.SYSTEM-E-.*
-,%GTM-E-LCKSCANCELLED, Error on remote node holding locks or zallocates.  All locks and zallocates cancelled.
+,%GTM-E-LCKSCANCELLED, Error on remote node holding LOCKs or ZALLOCATEs.  All LOCKs and ZALLOCATEs cancelled.

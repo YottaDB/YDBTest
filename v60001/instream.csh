@@ -39,7 +39,6 @@
 # gtm7443	[nars]		Test that idle EPOCHs (JRI gvstat) are not written unnecessarily
 # gtm7292	[fayazia]	MUPIP SIZE interface
 # gtm3907	[rog]		Order of evaluation tests for side effects
-# gtm7160	[shaha]		test ^%DSEWRAP
 # gtm7168 	[zouc] 		test keep_alive setting output in the replication log file
 # gtm7478 	[bahirs] 	Verify the usage of gtm_extract_nocol environment variable. Verify that JOURNAL EXTRACT does
 #				not get hung when INSTANCE is frozen.
@@ -67,7 +66,7 @@ setenv subtest_list_non_replic "gtm7395 gtm7475 gtm7461 gtm7415 gtm7281 gtm7254 
 setenv subtest_list_non_replic "${subtest_list_non_replic} concbkup gtm6395 gtm7492 gtm7510 tprestart verifyview gtm_posix"
 setenv subtest_list_non_replic "${subtest_list_non_replic} gtm7443 gtm7292 gtm3907 gtm7478 misceval gtm7541 gtm6015 gtm7355 gtm7553"
 setenv subtest_list_non_replic "${subtest_list_non_replic} gtm7501 gtm7525 gtm7495 gtm7454 gtm7552"
-setenv subtest_list_replic     "gtm7160 gtm7168 gtm7538 gtm7530 gtm7458"
+setenv subtest_list_replic     "gtm7168 gtm7538 gtm7530 gtm7458"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"

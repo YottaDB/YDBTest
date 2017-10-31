@@ -37,9 +37,9 @@ echo ""
 echo $linestr
 echo "# Turn ON freeze"
 $MUPIP freeze -on DEFAULT
-if (3 != `$DSE dump -file |& $grep -i "freeze" | $grep -v 0x00000000 | wc -l`) then
+if (4 != `$DSE dump -file |& $grep -i "freeze" | $grep -v 0x00000000 | wc -l`) then
 	# We expect to see TWO lines with non-zero values "Cache freeze id" and "Freeze match",
-	# plus the "Anticipatory Freeze" line.
+	# plus the "Anticipatory Freeze" line and the "Freeze online" line.
 	# If that is not the case, then dump the actual values.
 	$DSE dump -file |& $grep -i "freeze"
 endif

@@ -360,20 +360,29 @@ test1j;
 	set y="G"
 	zshow "G"
 	kill v
+	; the below RESETGVSTATS usages are needed because we have seen variable output in a few stats in testing due to timer pops
+	view "RESETGVSTATS"
 	zshow @x:v
+	do out^zshowgfilter(.v,"CAT,DFL,JFB,JFW")
 	zwrite v
 	kill v
 	new a
 	set a="""G"":v"
+	view "RESETGVSTATS"
 	zshow @a
+	do out^zshowgfilter(.v,"CAT,DFL,JFB,JFW")
 	zwrite v
 	kill v
 	new t
 	set t="v"
+	view "RESETGVSTATS"
 	zshow "G":@t
+	do out^zshowgfilter(.v,"CAT,DFL,JFB,JFW")
 	zwrite v
 	kill v
+	view "RESETGVSTATS"
 	zshow @x:@t
+	do out^zshowgfilter(.v,"CAT,DFL,JFB,JFW")
 	zwrite v
 	;
 	; Move all testcases, where target is a global to the end as that causes least disturbance to the reference file.
