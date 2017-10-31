@@ -1,11 +1,22 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 $gtm_dist/mumps $gtm_tst/$tst/inref/length.m
 setenv LANG "univ.utf8"
 #On HPIA64, we see lots of unenecessary warnings for "Variable declared but never used" and after confirmation from Steve, its decided supress these kind of warnings. These are the variables which are used only inside DEBUG* macros but declared for all.
 if ( "HOST_HP-UX_IA64" == $gtm_test_os_machtype ) then
-    $gt_cc_compiler $gt_cc_shl_options -I$gtm_tst/com +W2550 -I$gtm_dist $gtm_tst/$tst/inref/string_xcall.c
+    $gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com +W2550 -I$gtm_dist $gtm_tst/$tst/inref/string_xcall.c
 else
-    $gt_cc_compiler $gt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/string_xcall.c
+    $gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/string_xcall.c
 endif
 $gt_ld_shl_linker ${gt_ld_option_output}libxstring$gt_ld_shl_suffix $gt_ld_shl_options string_xcall.o $gt_ld_syslibs >& string_ld.outx 
 #

@@ -114,8 +114,8 @@ unsetenv gtm_test_autorelink_always
 
 # Compile a shared library with useful functions for in-process use.
 cp $gtm_src/mmrhash.c .
-$gt_cc_compiler $gt_cc_shl_options $gt_cc_option_debug -I$gtm_dist $gt_cc_option_I $gtm_tst/$tst/inref/relink.c -o relink.o
-$gt_cc_compiler $gt_cc_shl_options $gt_cc_option_debug -I$gtm_dist $gt_cc_option_I mmrhash.c -o mmrhash.o
+$gt_cc_compiler $gtt_cc_shl_options $gt_cc_option_debug -I$gtm_dist $gt_cc_option_I $gtm_tst/$tst/inref/relink.c -o relink.o
+$gt_cc_compiler $gtt_cc_shl_options $gt_cc_option_debug -I$gtm_dist $gt_cc_option_I mmrhash.c -o mmrhash.o
 $gt_ld_shl_linker ${gt_ld_option_output}librelink${gt_ld_shl_suffix} $gt_ld_shl_options relink.o mmrhash.o $gt_ld_sysrtns $gt_ld_syslibs > ld.out
 
 setenv GTMXC_relink $PWD/relink.xc

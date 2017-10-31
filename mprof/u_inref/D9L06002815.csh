@@ -3,6 +3,9 @@
 # Copyright (c) 2011-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -160,7 +163,7 @@ $echoline
 echo "External calls testing..."
 
 # compile the library
-$gt_cc_compiler $gt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/threeen.c
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/threeen.c
 $gt_ld_shl_linker ${gt_ld_option_output}libthreeenr${gt_ld_shl_suffix} $gt_ld_shl_options threeen.o $gt_ld_syslibs $tst_ld_sidedeck >&! threeenlink.map
 
 # make sure compilation went fine

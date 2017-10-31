@@ -1,4 +1,15 @@
 #!/usr/local/bin/tcsh
+#################################################################
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 # Initially the collation library was to support multiple encodings.  This is
 # why this script take input variables to build more than one library.
 
@@ -20,8 +31,8 @@ if (-e ${slname}${gt_ld_shl_suffix}) \rm ${slname}${gt_ld_shl_suffix}
 cp $gtm_tst/com/col_unicode_numeric.c .
 
 echo "Compile" >> ${slname}.log
-echo "$gt_cc_compiler $gt_cc_option_I $gt_cc_shl_options -I$gtm_inc ${build} col_unicode_numeric.c" >>& ${slname}.log
-$gt_cc_compiler $gt_cc_option_I $gt_cc_shl_options -I$gtm_inc ${build} col_unicode_numeric.c >>& ${slname}.log
+echo "$gt_cc_compiler $gt_cc_option_I $gtt_cc_shl_options -I$gtm_inc ${build} col_unicode_numeric.c" >>& ${slname}.log
+$gt_cc_compiler $gt_cc_option_I $gtt_cc_shl_options -I$gtm_inc ${build} col_unicode_numeric.c >>& ${slname}.log
 
 echo "Link" >> ${slname}.log
 echo "$gt_ld_shl_linker ${gt_ld_option_output}${slname}${gt_ld_shl_suffix} $gt_ld_shl_options col_unicode_numeric.o" >>& ${slname}.log

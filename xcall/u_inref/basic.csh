@@ -1,6 +1,9 @@
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -37,9 +40,9 @@ if ($HOSTOS == "SunOS") then
 	setenv GTMXC_DLL 1
 endif
 
-if ( $?gt_cc_shl_options == "0"  ||  $?gt_ld_shl_options == "0" ) then
+if ( $?gtt_cc_shl_options == "0"  ||  $?gt_ld_shl_options == "0" ) then
 	echo ""		# attempt to match first line of expected output so warnings appear at begining of diff file
-	echo "xcall-F-noenv, Cannot test external calls; either gt_cc_shl_options or gt_ld_shl_options is undefined."
+	echo "xcall-F-noenv, Cannot test external calls; either gtt_cc_shl_options or gt_ld_shl_options is undefined."
 	echo "xcall-I-noenv, These should be defined in gtm_env_sp.csh"
 	exit
 endif

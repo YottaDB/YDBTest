@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -81,7 +84,7 @@ echo
 echo "3. Preload a library to return ENOMEM on relinkctl shmget() allocations and have a process allocate relinkctl shared memory."
 
 # Compile a special library to fail shmget() when we need it.
-$gt_cc_compiler $gt_cc_shl_options -I$gtm_dist $gtm_tst/$tst/inref/shmget.c -o shmget.o
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_dist $gtm_tst/$tst/inref/shmget.c -o shmget.o
 $gt_ld_shl_linker ${gt_ld_option_output}libshmget${gt_ld_shl_suffix} $gt_ld_shl_options shmget.o $gt_ld_sysrtns -ldl
 
 # We want the loading of libhugetlbfs.so to fail, thus making GT.M reference the shmget() we provide.
@@ -110,7 +113,7 @@ echo
 echo "4. Preload a library to return ENOMEM on relinkctl shmat() and have a process allocate and attach to relinkctl shared memory."
 
 # Compile a special library to fail shmat() when we need it.
-$gt_cc_compiler $gt_cc_shl_options -I$gtm_dist $gtm_tst/$tst/inref/shmat.c -o shmat.o
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_dist $gtm_tst/$tst/inref/shmat.c -o shmat.o
 $gt_ld_shl_linker ${gt_ld_option_output}libshmat${gt_ld_shl_suffix} $gt_ld_shl_options shmat.o $gt_ld_sysrtns -ldl
 
 # Fail shmat() on the first attempt.

@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013, 2014 Fidelity Information Services, Inc	#
+# Copyright 2013, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -13,7 +16,7 @@ source $gtm_tst/com/portno_acquire.csh > portno.out
 @ portno=`cat portno.out`
 set host=`$gtm_exe/mumps -run %XCMD 'set rand=2+$Random(6) write $$^findhost(rand),!'`
 
-$gt_cc_compiler -o nanoinetd.o $gt_cc_options_common $gt_cc_option_debug $gtm_tst/$tst/inref/nanoinetd.c # >& makeobj.out
+$gt_cc_compiler -o nanoinetd.o $gtt_cc_shl_options $gt_cc_option_debug $gtm_tst/$tst/inref/nanoinetd.c # >& makeobj.out
 $gt_ld_linker $gt_ld_option_output nanoinetd $gt_ld_options_common $gt_ld_options_dbg nanoinetd.o $gt_ld_sysrtns $gt_ld_syslibs >& makeexe.out
 
 (nanoinetd $portno $gtm_exe/mumps -run dollarp >& nanoinetd.out & ; echo $! > nanoinetd.pid) >& /dev/null

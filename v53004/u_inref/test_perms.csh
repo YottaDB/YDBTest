@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2012, 2014 Fidelity Information Services, Inc	#
+# Copyright 2012, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -48,7 +51,7 @@ if ( $?work_dir) then
 	if ( -f $work_dir/tools/library/usr_library_com/IGS.c ) then
 		if ( ! -x `pwd`/IGS ) then
 			cp $work_dir/tools/library/usr_library_com/IGS.c .
-			$gt_cc_compiler $gt_cc_options_common $gt_cc_option_I $gt_cc_option_DDEBUG $gt_cc_option_debug $gt_cc_option_nooptimize IGS.c
+			$gt_cc_compiler $gtt_cc_shl_options $gt_cc_option_I $gt_cc_option_DDEBUG $gt_cc_option_debug $gt_cc_option_nooptimize IGS.c
 			$gt_ld_linker $gt_ld_options_common $gt_ld_option_output IGS IGS.o >& IGS_link.out
 			$IGS `pwd`/IGS "IGSCHOWN"
 		endif

@@ -1,6 +1,9 @@
 #################################################################
 #								#
-#	Copyright 2004, 2014 Fidelity Information Services, Inc	#
+# Copyright 2004, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -25,7 +28,7 @@ longtab
 # Prepare CALL IN library
 #
 #
-$gt_cc_compiler $gt_cc_option_debug $gt_cc_options_common $gtm_tst/$tst/inref/sharedlibc.c -I$gtm_dist
+$gt_cc_compiler $gt_cc_option_debug $gtt_cc_shl_options $gtm_tst/$tst/inref/sharedlibc.c -I$gtm_dist
 #
 $gt_ld_linker $gt_ld_option_output shlibexe $gt_ld_options_common sharedlibc.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_gtmshr $gt_ld_syslibs >& link.map
 if( $status != 0 ) then
