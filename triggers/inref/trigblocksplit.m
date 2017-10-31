@@ -91,7 +91,6 @@ verify(a2val);
 	.	if ^a(1)'=$j(2,400)  do fail
 	.	if ^a(2)'=$j(2,620)  do fail
 	.	if ^a(3)'=$j(2,400)  do fail
-	.	if ^b(2)'=$j(2,400)  do fail
 	zwrite ^repetitions
 	write ^tst," ---> PASS",!
 	do ^echoline

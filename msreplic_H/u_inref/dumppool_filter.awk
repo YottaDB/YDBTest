@@ -30,33 +30,9 @@ BEGIN {
 	numspaces2 = length("##JNLSEQNO2##") - length(jnlcount_2)
 
 }
-/CTL Early Write Offset/ {
-	split($0,line," ");
-	offset1 = line[NF-1];
-	# offset2 below is the write offset of INST4 and INST5. They will be 800 bytes less because
-	# after stopping the 2 connections, we do 10 updates (10 * 80 = 800)
-	offset2 = offset1 - 800;
-	# Earlier, The number of spaces was hard coded to 6 as the offset
-	# will normally be a 5 digit number, But now we see it can vary
-	# so calculate it based on the length of offset, The below calculations
-	# are strictly for right alignment of the filter in the reference file
-	numspacesoff1 = length("##OFFSET1##") - length(offset1)
-	numspacesoff2 = length("##OFFSET2##") - length(offset2)
-}
 /Secondary INET Address/ {
 	# The size of sockaddr_storage can differ across systems
 	gsub(/^0x........ 0x..../, "0x........ 0x....");
-}
-/Offset/ {
-  if ("-1" != offset1 )
-	{
-		spaces = ""
-		for(i=1 ; i<=numspacesoff1 ; i++ ) { spaces = spaces" " }
-		gsub(spaces""offset1 hex, "##OFFSET1##");
-		spaces = ""
-		for(i=1 ; i<=numspacesoff2 ; i++ ) { spaces = spaces" " }
-		gsub(spaces""offset2 hex, "##OFFSET2##");
-	}
 }
 
 {
@@ -87,6 +63,12 @@ BEGIN {
 	gsub(/Trigger Supported                                FALSE/, "Trigger Supported                    ##TRUE_OR_FALSE##");
 	gsub(/FTOK Counter Halted                               TRUE/, "FTOK Counter Halted                  ##TRUE_OR_FALSE##");
 	gsub(/FTOK Counter Halted                              FALSE/, "FTOK Counter Halted                  ##TRUE_OR_FALSE##");
+	gsub(/Custom Errors Loaded                             ( TRUE|FALSE)/, "Custom Errors Loaded                 ##TRUE_OR_FALSE##");
+	gsub(/CTL Phase2 Commit Index1 *[1-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "CTL Phase2 Commit Index1                   ##PHS2CMTINDX## [0x........]");
+	gsub(/CTL Phase2 Commit Index2 *[1-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "CTL Phase2 Commit Index2                   ##PHS2CMTINDX## [0x........]");
+	# Most below can sometime be non-zero (depending on system load when running test) so convert a non-zero value into 0 for a deterministic reference file.
+	gsub(/CTL ReplPhs2Clnup IsPrcAlv   Cntr  *[1-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "CTL ReplPhs2Clnup IsPrcAlv   Cntr                        0 [0x00000000]");
+	gsub(/CTL ReplPhs2Clnup IsPrcAlv   Seqno *[1-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "CTL ReplPhs2Clnup IsPrcAlv   Seqno                       0 [0x00000000]");
 	gsub(/Remote Supports Triggers                    TRUE/, "Remote Supports Triggers       ##TRUE_OR_FALSE##");
 	gsub(/Remote Supports Triggers                   FALSE/, "Remote Supports Triggers       ##TRUE_OR_FALSE##");
 	gsub(/Remote is Cross Endian                      TRUE/, "Remote is Cross Endian         ##TRUE_OR_FALSE##");

@@ -3,6 +3,9 @@
 ; Copyright (c) 2013-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -12,7 +15,7 @@
 gtm6181
 	set $etrap="goto error^gtm6181"
 	set showcmdstr="$LKE show -lock="
-	set postfix=" |& $tst_awk '""'""'/Owned/ {gsub(/PID= [0-9]*/,""PIDVAL"",$0); print }'""'""'"
+	set postfix=" |& $tst_awk '/Owned/ {gsub(/PID= [0-9]*/,""PIDVAL"",$0); print }'"
 	lock n("x"_$c(0))
 	lock +n($c(0)_"x")
 	lock +n("x"_$c(0)_"y")
@@ -25,7 +28,7 @@ gtm6181
 	write !,"-----------------------------",!
 	write "***BEGIN List of all locks***"
 	write !,"-----------------------------",!
-	zsystem "$LKE show | & $tst_awk '""'""'$0 !~ /LOCKSPACEUSE/ {gsub(/PID= [0-9]*/,""PIDVAL"",$0); print }'""'""'"
+	zsystem "$LKE show | & $tst_awk '$0 !~ /LOCKSPACEUSE/ {gsub(/PID= [0-9]*/,""PIDVAL"",$0); print }'"
 	write !,"-----------------------------",!
 	write "***END List of all locks***"
 	write !,"-----------------------------",!

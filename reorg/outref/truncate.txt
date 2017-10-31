@@ -89,7 +89,7 @@ Global: x (region DEFAULT)
 Blocks processed    : 2 
 Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 1 
+Blocks swapped      : 2 
 Blocks freed        : 2 
 Blocks reused       : 2 
 Levels Eliminated   : 1 
@@ -148,13 +148,12 @@ mumps.dat
 Fill Factor:: Index blocks 100%: Data blocks 100%
    
 Global: x (region REG1)
-Blocks processed    : 2 
+Blocks processed    : 1 
 Blocks coalesced    : 0 
 Blocks split        : 0 
-Blocks swapped      : 1 
-Blocks freed        : 2 
-Blocks reused       : 2 
-Levels Eliminated   : 1 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
 Blocks extended     : 0 
    
 Global: x (region REG2)
@@ -184,9 +183,9 @@ Blocks freed        : 1
 Blocks reused       : 1 
 Blocks extended     : 0 
 Total root blocks moved: 2
-Truncated region: REG1. Reduced total blocks from [802] to [512]. Reduced free blocks from [796] to [507].
-Truncated region: REG2. Reduced total blocks from [802] to [512]. Reduced free blocks from [796] to [507].
-Truncated region: REG3. Reduced total blocks from [802] to [512]. Reduced free blocks from [794] to [505].
+%GTM-I-MUTRUNCNOSPACE, Region REG1 has insufficient space to meet truncate target percentage of 0
+%GTM-I-MUTRUNCNOSPACE, Region REG2 has insufficient space to meet truncate target percentage of 0
+%GTM-I-MUTRUNCNOSPACE, Region REG3 has insufficient space to meet truncate target percentage of 0
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -236,10 +235,10 @@ Blocks swapped      : 1
 Blocks freed        : 1 
 Blocks reused       : 1 
 Blocks extended     : 0 
-Total root blocks moved: 1
-Truncated region: REG1. Reduced total blocks from [802] to [512]. Reduced free blocks from [796] to [507].
-Truncated region: REG2. Reduced total blocks from [802] to [512]. Reduced free blocks from [796] to [507].
-Truncated region: REG3. Reduced total blocks from [802] to [512]. Reduced free blocks from [794] to [505].
+Total root blocks moved: 2
+%GTM-I-MUTRUNCNOSPACE, Region REG1 has insufficient space to meet truncate target percentage of 0
+%GTM-I-MUTRUNCNOSPACE, Region REG2 has insufficient space to meet truncate target percentage of 0
+%GTM-I-MUTRUNCNOSPACE, Region REG3 has insufficient space to meet truncate target percentage of 0
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

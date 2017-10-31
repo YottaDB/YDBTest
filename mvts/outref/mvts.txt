@@ -34,6 +34,7 @@ PART-77-OPT    PASS       FAIL     ABORTED      SKIP
 20011 *FAILO*   20012 *FAILO*   20013  PASS     20014  PASS     20015  PASS 
 20096 *FAIL90*  20097  PASS     20098  PASS     20099  PASS     20100  PASS 
 PART-84     PASS  PASSO         FAIL  FAILO        ABORTED   SKIP
+31071 *FAIL*    31072  PASS     31073  PASS     31074  PASS     31075  PASS 
 PART-90     PASS  PASSO         FAIL  FAILO        ABORTED   SKIP
 40626 *SKIP*    40627 *FAIL*    40628 *FAIL*    40629  PASS     40630  PASS 
 40746 *FAIL*    40747  PASS     40748  PASS     40749  PASS     40750  PASS 
@@ -59,6 +60,7 @@ PART-94     PASS  PASSO         FAIL  FAILO        ABORTED   SKIP
 20156 *SKIP*    20157 *SKIP*    20158 *SKIP*    20159 *SKIP*    20160 *SKIP*
 20161 *SKIP*    20162 *SKIP*    20163 *SKIP*    20164  PASS     20165  PASS 
 30326  PASS     30327  PASS     30328  PASS     30329 *SKIP*    30330  PASS 
+31066  PASS     31067 *SKIP*    31068 *WITHDR*  31069  PASS     31070  PASS 
 40336  PASS     40337  PASS     40338 *SKIP*    40339 *SKIP*    40340  PASS 
 40341  PASS     40342 *SKIP*    40343  PASS     40344  PASS     40345 *SKIP*
 40346  PASS     40347  PASS     40348  PASS     40349 *SKIP*    40350 *SKIP*
@@ -83,6 +85,7 @@ PART-94     PASS  PASSO         FAIL  FAILO        ABORTED   SKIP
 40921 *SKIP*    40922 *SKIP*    40923 *SKIP*    
 FAILs minus operator stuff
 ** FAIL90  20096 II-95.2  ls has multi spaces
+** FAIL  31071 III-1071  QUIT by an implicit QUIT command
 Test has FAILed.
 ** FAIL  40627 IV-627  terminated by CR
 Test has FAILed.
@@ -99,7 +102,8 @@ No errors detected by integ.
 70---V1BOR6F: Binary operator  relational: '=   -F-
 83---V1BOR10E: Binary operator  relational: ']   -E-
 84---V1BOR10F: Binary operator  relational: ']   -F-
+%GTM-W-BLKTOODEEP, Block level too deep
 88---V4MERGEE:  MERGE Command  -E-
 89---V4MERGEF:  MERGE Command  -F-
 ##TEST_PATH##/V4TPE11.mje
-%GTM-E-TPLOCK, Cannot release lock(s) held prior to current TSTART
+%GTM-E-TPLOCK, Cannot release LOCK(s) held prior to current TSTART

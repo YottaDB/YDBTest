@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2010, 2014 Fidelity Information Services, Inc	#
+# Copyright 2010, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -37,16 +40,13 @@ while ($cntx <= $cnt)
 	# Use short variable names for the long $rsh commands that will follow
 	set serv = $gtcm_server_list[$cntx]
 	set serv_dir = $gtcm_server_dir_list[$cntx]
-	set remote_trig_support = `$rsh $serv  "source $gtm_tst/com/remote_getenv.csh $serv_dir ; $gtm_root/$remote_ver/tools/check_trigger_support.csh"`
-	if ("TRUE" == $remote_trig_support) then
-		set trigload_log = "trigload_$serv.out"
-		echo "Load triggers on "$serv":$serv_dir" >>&! $trigload_log
-		$rcp ./remote.trg "$serv":$serv_dir
-		if ($status) then
-			echo "TEST-E-RCPFAILED: Failed to copy remote.trg to "$serv":$serv_dir"
-		endif
-		$rsh $serv  "source $gtm_tst/com/remote_getenv.csh $serv_dir ; cd $serv_dir ; $MUPIP trigger -triggerfile=remote.trg" >>&! $trigload_log
+	set trigload_log = "trigload_$serv.out"
+	echo "Load triggers on "$serv":$serv_dir" >>&! $trigload_log
+	$rcp ./remote.trg "$serv":$serv_dir
+	if ($status) then
+		echo "TEST-E-RCPFAILED: Failed to copy remote.trg to "$serv":$serv_dir"
 	endif
+	$rsh $serv  "source $gtm_tst/com/remote_getenv.csh $serv_dir ; cd $serv_dir ; $MUPIP trigger -triggerfile=remote.trg" >>&! $trigload_log
 	@ cntx = $cntx + 1
 end
 
