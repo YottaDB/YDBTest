@@ -106,6 +106,7 @@ case "Linux":
    setenv rsh_to_vms "rsh"
    setenv rcp_to_vms "rcp"
    setenv ci_ldpath "-Wl,-rpath,"
+   setenv gtt_cc_shl_options 	"-c -fPIC"
    if (-e /usr/local/bin/gdb) then
 	   setenv dbx /usr/local/bin/gdb
    else
@@ -206,7 +207,7 @@ if !(-e $pstack) setenv pstack /usr/ccs/bin/pstack
 if !(-e $pstack) setenv pstack echo
 if !(-e $gcore) setenv gcore echo
 
-if ($?gt_cc_shl_options && $?gt_cc_options_common) then
+if ($?gtt_cc_shl_options && $?gt_cc_options_common) then
 	# gt_cc_options_common env var defined in environment. Add that to all C compiles done by test system.
 	# This is needed particularly on the ARM to ensure -march=v7-a (defined in $gt_cc_options_common) is included
 	# in the C compiler flags which in turn undefs BIGENDIAN in mdefsp.h. Not doing so could result in Linux on ARM
@@ -214,7 +215,7 @@ if ($?gt_cc_shl_options && $?gt_cc_options_common) then
 	# But gt_cc_options_common contains Wmissing-prototypes which can cause lots of warnings in the test. Instead
 	# of fixing all the test C programs to define prototypes we just disable that benign warning for the test system.
 	# Similarly, -Wreturn-type can cause lots of benign warnings (and in turn test failures). Disable that too.
-	setenv gt_cc_shl_options "$gt_cc_shl_options $gt_cc_options_common -Wno-missing-prototypes -Wno-return-type"
+	setenv gtt_cc_shl_options "$gtt_cc_shl_options $gt_cc_options_common -Wno-missing-prototypes -Wno-return-type"
 endif
 
 which gpg2 >&! /dev/null

@@ -1,6 +1,17 @@
-# 
+#################################################################
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
 # gtmxc_test_types.csh
-# 
+#
 #source $gtm_tst/com/dbcreate.csh mumps 7
 setenv GTMCI args1.tab
 cat >> $GTMCI << args1tab
@@ -31,7 +42,7 @@ gtmxc_test24: gtm_string_t* test24^testtypes(O:gtm_int_t *, O:gtm_uint_t *, O:gt
 args1tab
 #
 #
-$gt_cc_compiler $gt_cc_options_common -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/gtmxc_test_types.c
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/gtmxc_test_types.c
 $gt_ld_linker $gt_ld_option_output gtmxc_test_types $gt_ld_options_common gtmxc_test_types.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_gtmshr $gt_ld_syslibs >& link.map
 
 if( $status != 0 ) then

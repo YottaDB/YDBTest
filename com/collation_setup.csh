@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -42,7 +45,7 @@ if ($test_collation == "COLLATION") then
 		setenv test_collation_def_c `basename $test_collation_def_file`
 		setenv test_collation_def_base `echo  $test_collation_def_c | sed  's/\..*//g'`
 		cp $test_collation_def_file `pwd`
-                $gt_cc_compiler $gt_cc_shl_options -I$gtm_inc $test_collation_def_c >>&! collation.log
+                $gt_cc_compiler $gtt_cc_shl_options -I$gtm_inc $test_collation_def_c >>&! collation.log
 		if ($status) echo "TEST-E-COLL_CC Error from Compiler ($gt_cc_compiler)" >>&! collation.log
 		\rm -f lib${test_collation_def_base}${gt_ld_shl_suffix}
                 $gt_ld_shl_linker ${gt_ld_option_output}lib${test_collation_def_base}${gt_ld_shl_suffix} $gt_ld_shl_options $test_collation_def_base.o -lc >>&! collation.log

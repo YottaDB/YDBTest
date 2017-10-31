@@ -4,6 +4,9 @@
 # Copyright (c) 2015 Fidelity National Information 		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -17,8 +20,8 @@ $gtm_tst/com/dbcreate.csh mumps 1 64
 setenv gtm_test_disable_randomdbtn 1
 
 # Compile a shared library with sample external calls.
-$gt_cc_compiler $gt_cc_shl_options $gt_cc_option_debug -I$gtm_dist $gt_cc_option_I $gtm_tst/v62002/inref/gtm8087xcalls1.c -o gtm8087xcalls1.o
-$gt_cc_compiler $gt_cc_shl_options $gt_cc_option_debug -I$gtm_dist $gt_cc_option_I $gtm_tst/v62002/inref/gtm8087xcalls2.c -o gtm8087xcalls2.o
+$gt_cc_compiler $gtt_cc_shl_options $gt_cc_option_debug -I$gtm_dist $gt_cc_option_I $gtm_tst/v62002/inref/gtm8087xcalls1.c -o gtm8087xcalls1.o
+$gt_cc_compiler $gtt_cc_shl_options $gt_cc_option_debug -I$gtm_dist $gt_cc_option_I $gtm_tst/v62002/inref/gtm8087xcalls2.c -o gtm8087xcalls2.o
 $gt_ld_shl_linker ${gt_ld_option_output}libgtm8087xcalls1${gt_ld_shl_suffix} $gt_ld_shl_options gtm8087xcalls1.o gtm8087xcalls2.o $gt_ld_sysrtns $gt_ld_syslibs > ld.out
 
 setenv GTMXC_gtm8087xcalls1 $PWD/gtm8087xcalls1.xc
@@ -36,7 +39,7 @@ iamjustrightforanexternalcallnm:	gtm_status_t remove_file(I:gtm_int_t)
 iamtoolongforanexternalcallname1: gtm_status_t remove_file(I:gtm_int_t)
 1234567890123456789012345678901234567890
 
-$gt_cc_compiler $gt_cc_shl_options $gt_cc_option_debug -I$gtm_dist $gt_cc_option_I $gtm_tst/v62002/inref/gtm8087xcalls3.c -o gtm8087xcalls3.o
+$gt_cc_compiler $gtt_cc_shl_options $gt_cc_option_debug -I$gtm_dist $gt_cc_option_I $gtm_tst/v62002/inref/gtm8087xcalls3.c -o gtm8087xcalls3.o
 $gt_ld_shl_linker ${gt_ld_option_output}libgtm8087xcalls3${gt_ld_shl_suffix} $gt_ld_shl_options gtm8087xcalls3.o $gt_ld_sysrtns $gt_ld_syslibs > ld.out
 
 setenv GTMXC_gtm8087xcalls3 $PWD/gtm8087xcalls3.xc

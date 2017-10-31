@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -16,7 +19,7 @@ if ( ! -d $gtm_obj ) then
 	exit 1
 endif
 \rm -rf *.o* runfaotest
-$gt_cc_compiler $gt_cc_options_common -I$gtm_inc $gtm_tst/$tst/inref/test_fao.c >& compiler.out
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_inc $gtm_tst/$tst/inref/test_fao.c >& compiler.out
 if ($status) then
 	echo "TEST-E-CC Error from Compiler ($gt_cc_compiler).  See file compiler.out for details"
 	exit 1

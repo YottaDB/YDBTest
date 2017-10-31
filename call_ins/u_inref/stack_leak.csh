@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -23,7 +26,7 @@ stackLeak	:void stackLeak^stackLeak(I:gtm_int_t)
 EOF
 
 # Compile and link stack_leak.c.
-$gt_cc_compiler $gt_cc_options_common $gtm_tst/$tst/inref/stack_leak.c -I$gtm_dist -g -DDEBUG
+$gt_cc_compiler $gtt_cc_shl_options $gtm_tst/$tst/inref/stack_leak.c -I$gtm_dist -g -DDEBUG
 $gt_ld_linker $gt_ld_option_output stack_leak $gt_ld_options_common stack_leak.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_gtmshr $gt_ld_syslibs >& link.map
 if ($status) then
 	echo "Linking failed:"

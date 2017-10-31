@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-#	Copyright 2014 Fidelity Information Services, Inc	#
+# Copyright 2014 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -56,7 +59,7 @@ secshr7926  : void secshr^gtm7926callins()
 callin
 
 # Build the C programs
-$gt_cc_compiler $gt_cc_options_common $gtm_tst/$tst/inref/gtm7926callinproxy.c -I$gtm_dist
+$gt_cc_compiler $gtt_cc_shl_options $gtm_tst/$tst/inref/gtm7926callinproxy.c -I$gtm_dist
 $gt_ld_linker $gt_ld_option_output gtm7926callinproxy $gt_ld_options_common gtm7926callinproxy.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_gtmshr $gt_ld_syslibs >& link.map
 ln gtm7926callinproxy job7926
 ln gtm7926callinproxy secshr7926

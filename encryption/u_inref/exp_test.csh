@@ -4,6 +4,9 @@
 # Copyright (c) 2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -29,7 +32,7 @@ setenv gtm_wrong_passwd_masked `echo badpasswd | $gtm_dist/plugin/gtmcrypt/maskp
 
 # Compile the external call program
 cp $gtm_tst/$tst/inref/passwd_external_call.c .
-$gt_cc_compiler $gt_cc_shl_options passwd_external_call.c >&! compile.out
+$gt_cc_compiler $gtt_cc_shl_options passwd_external_call.c >&! compile.out
 $gt_ld_shl_linker ${gt_ld_option_output}libpasswdxc${gt_ld_shl_suffix} $gt_ld_shl_options passwd_external_call.o >&! link.map
 
 # Create the .xc file for the external call

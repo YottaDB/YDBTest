@@ -1,4 +1,15 @@
 #! /usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 
 #	Maximum 10 journal files can be passed argument. Pass name without ".mjl"
 set totarg = $#
@@ -10,7 +21,7 @@ set totarg = $#
 setenv cur_dir `pwd`
 \cp $gtm_tst/com/corrupt_jnlrec.c $cur_dir
 \cp $gtm_tst/com/ostype.h $cur_dir
-$gt_cc_compiler $gt_cc_options_common $cur_dir/corrupt_jnlrec.c
+$gt_cc_compiler $gtt_cc_shl_options $cur_dir/corrupt_jnlrec.c
 if ($status) then
 	echo "TEST-E-CC Error while trying to compile corrupt_jnlrec.c"
 	exit 1

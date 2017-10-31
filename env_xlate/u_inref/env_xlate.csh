@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -22,7 +25,7 @@
 #rm *.so
 
 unsetenv gtm_env_translate
-  setenv compile  "$gt_cc_compiler $gt_cc_shl_options $gt_cc_option_debug -I$gtm_dist -I$gtm_tst/com"
+  setenv compile  "$gt_cc_compiler $gtt_cc_shl_options $gt_cc_option_debug -I$gtm_dist -I$gtm_tst/com"
 if ( "hp-ux"  == "$gtm_test_osname" && $gtm_test_machtype == "ia64") then
 	setenv compile 	"$compile +W 2550 "
 endif

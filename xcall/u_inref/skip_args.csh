@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -12,7 +15,7 @@
 
 # This test verifies that arguments skipped in external calls are nullified.
 
-$gt_cc_compiler $gt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/skip_args.c -g
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/skip_args.c -g
 $gt_ld_shl_linker ${gt_ld_option_output}libskipargs${gt_ld_shl_suffix} $gt_ld_shl_options skip_args.o $gt_ld_syslibs
 
 setenv GTMXC skip_args.tab

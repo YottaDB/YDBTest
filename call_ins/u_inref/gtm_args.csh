@@ -1,6 +1,9 @@
 #################################################################
 #								#
-#	Copyright 2003, 2014 Fidelity Information Services, Inc	#
+# Copyright 2003, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -24,7 +27,7 @@ change_int: void chgint^getrec2(I:gtm_long_t,IO:gtm_float_t*)
 args1tab
 #
 #
-$gt_cc_compiler $gt_cc_options_common -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/gtmci_args.c
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/gtmci_args.c
 $gt_ld_linker $gt_ld_option_output args $gt_ld_options_common gtmci_args.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_gtmshr $gt_ld_syslibs >& link.map
 
 if( $status != 0 ) then

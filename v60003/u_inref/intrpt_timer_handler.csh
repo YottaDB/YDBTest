@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -43,13 +46,13 @@ unsetenv gtm_db_counter_sem_incr
 $gtm_tst/com/dbcreate.csh mumps >&! db_create.out
 
 # Ensure we can invoke call-outs.
-if (($?gt_cc_shl_options == "0") || ($?gt_ld_shl_options == "0")) then
-	echo "TEST-E-FAIL, Cannot test external calls; either gt_cc_shl_options or gt_ld_shl_options is undefined."
+if (($?gtt_cc_shl_options == "0") || ($?gt_ld_shl_options == "0")) then
+	echo "TEST-E-FAIL, Cannot test external calls; either gtt_cc_shl_options or gt_ld_shl_options is undefined."
 	exit 1
 endif
 
 # Compile and link the test program.
-$gt_cc_compiler $gt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/intrpt_timer_handler.c
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/intrpt_timer_handler.c
 $gt_ld_shl_linker ${gt_ld_option_output}libintrpt_timer_handler${gt_ld_shl_suffix} $gt_ld_shl_options intrpt_timer_handler.o $gt_ld_syslibs -L$gtm_dist -lgtmshr
 
 # Make sure libgtmshr.so can be found.

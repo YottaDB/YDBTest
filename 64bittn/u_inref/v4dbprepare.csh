@@ -1,4 +1,15 @@
 #!/usr/local/bin/tcsh
+#################################################################
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 \rm -f *.o *.gld *.dat *.ext *.out >&! /dev/null
 #
 # the "setbig" and "killbig" labels in upgrdtst.m rely on the fact that this is a 512 byte sized block.
@@ -28,7 +39,7 @@ if ( 1 == $rand_collation) then
 	# in case of x86_64 linux, we need to force 32bit sharedlib
 	set mach_type = `uname -m`
 	if ( "x86_64" == $mach_type && "linux" == "$gtm_test_osname" ) then
-		setenv gt_cc_shl_options "$gt_cc_shl_options -m32"
+		setenv gtt_cc_shl_options "$gtt_cc_shl_options -m32"
 		setenv gt_ld_shl_options "$gt_ld_shl_options -m32"
 	endif
 	source $gtm_tst/com/cre_coll_sl_reverse.csh 10

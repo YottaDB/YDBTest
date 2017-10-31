@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2014 Fidelity Information Services, Inc	#
+# Copyright 2014 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -32,7 +35,7 @@ int main()
  return 0;
 }
 EOF
-$gt_cc_compiler $gt_cc_shl_options $file.c
+$gt_cc_compiler $gtt_cc_shl_options $file.c
 $gt_ld_shl_linker ${gt_ld_option_output}lib${file}${gt_ld_shl_suffix} $gt_ld_shl_options $file.o $gt_ld_syslibs
 set lib = lib${file}${gt_ld_shl_suffix}
 

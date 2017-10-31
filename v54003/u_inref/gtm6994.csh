@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-#	Copyright 2011, 2014 Fidelity Information Services, Inc	#
+# Copyright 2011, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -10,7 +13,7 @@
 #								#
 #################################################################
 
-$gt_cc_compiler $gt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gt_cc_option_I -I$gtm_tst/$tst/inref $gtm_tst/$tst/inref/gtm6994co.c
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gt_cc_option_I -I$gtm_tst/$tst/inref $gtm_tst/$tst/inref/gtm6994co.c
 $gt_ld_shl_linker ${gt_ld_option_output}libgtm6994co${gt_ld_shl_suffix} $gt_ld_shl_options gtm6994co.o $gt_ld_syslibs >&! link1.map
 
 if( $status != 0 ) then
@@ -36,7 +39,7 @@ do callout^gtm6994
 halt
 ENDGTM
 
-$gt_cc_compiler $gt_cc_options_common $gtm_tst/$tst/inref/gtm6994ci.c -I$gtm_dist $gt_cc_option_I -I$gtm_tst/$tst/inref
+$gt_cc_compiler $gtt_cc_shl_options $gtm_tst/$tst/inref/gtm6994ci.c -I$gtm_dist $gt_cc_option_I -I$gtm_tst/$tst/inref
 $gt_ld_linker $gt_ld_option_output gtm6994ci $gt_ld_options_common gtm6994ci.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_gtmshr $gt_ld_syslibs >&! link2.map
 
 if( $status != 0 ) then
