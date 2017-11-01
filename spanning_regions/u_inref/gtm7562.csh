@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013, 2014 Fidelity Information Services, Inc	#
+# Copyright 2013, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -22,16 +25,16 @@ setenv gtmgbldir mumps1.gld
 $GDE << GDE_EOF >&! gde_mumps1.out
 add -name a -region=areg
 add -region areg -dyn=aseg
-add -segment aseg -file=mumps
-change -segment DEFAULT -file=a
+add -segment aseg -block_size=1024 -file=mumps
+change -segment DEFAULT -block_size=1024 -file=a
 GDE_EOF
 
 setenv gtmgbldir mumps2.gld
 $GDE << GDE_EOF >&! gde_mumps2.out
 add -name a -region=areg
 add -region areg -dyn=aseg
-add -segment aseg -file=a
-change -segment DEFAULT -file=mumps.dat
+add -segment aseg -block_size=1024 -file=a
+change -segment DEFAULT -block_size=1024 -file=mumps.dat
 GDE_EOF
 
 if (0 == $gtm7562_gde_dse) then

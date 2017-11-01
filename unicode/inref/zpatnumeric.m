@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 zpatnumeric ;
 		;do lnumeric^unicodesampledata
 		for i=^cntstrnumerics:1:^cntstrnumerice do
@@ -30,8 +41,8 @@ basic ;
 		set store(5)="0 0 0 1 1"
 		if ("UTF-8"=$ZPATNUMERIC) do
 		. for i=1:1:5 do
-		. set j=0
-		. . for pattern="3N","3N1""small""","1.3N1P.2N",".E.11N","1.AN1""unicodeあさきゆめみじ　ゑひもせず""1P.N" do ^examine(samplestr(i)?@pattern,$PIECE(store(i)," ",j+1),"pattern match incorrect for "_samplestr(i)_"in piece "_i_" for pattern "_pattern)
+		. . set j=0
+		. . for pattern="3N","3N1""small""","1.3N1P.2N",".E.11N","1.AN1""unicodeあさきゆめみじ　ゑひもせず""1P.N" do ^examine(samplestr(i)?@pattern,$PIECE(store(i)," ",$incr(j)),"pattern match incorrect for "_samplestr(i)_"in piece "_i_" for pattern "_pattern)
 		if ("M"=$ZPATNUMERIC) do
 		. for i=1:1:5 do
 		. . for pattern="3N","3N1""small""","1.3N1P.2N","1.AN1""unicodeあさきゆめみじ　ゑひもせず""1P.N" do ^examine(samplestr(i)?@pattern,0,"pattern match incorrect for "_samplestr(i)_"in piece "_i_" for pattern "_pattern)

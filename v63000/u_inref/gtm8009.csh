@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -25,7 +28,8 @@ cp $gtm_tst/com/showopenfiles.c .
 cc -o showopenfiles showopenfiles.c
 
 # Let's use sh since tcsh is nice enough to close the open file descriptors for us
-setenv SHELL sh
+# Expand full path of sh or else the zsystem (done inside gtm8009.m) silently fails.
+setenv SHELL `which sh`
 
 echo "Verify open database and journal fds does not get passed via zsystem"
 $gtm_dist/mumps -r zsystemset^gtm8009

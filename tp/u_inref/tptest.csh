@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -288,17 +291,19 @@ w "do ^tptestz",! do ^tptestz
 h
 GTM_EOF
 $gtm_tst/com/dbcheck.csh -extract
-if(! $?test_replic) then
-	\rm -f mumps.mjl
-	setenv sub_test tpztsztc
-	setenv gtm_test_sprgde_id ${sub_test}	# to differentiate multiple dbcreates done in the same subtest
-	$gtm_tst/com/dbcreate.csh mumps
-	if(! $?test_replic) $MUPIP set -file -journal=enable,on,before,file=mumps.mjl mumps.dat
-	$GTM << GTM_EOF
-w "do ^tpztsztc",!  do ^tpztsztc
-h
-GTM_EOF
-	$gtm_tst/com/dbcheck.csh -extract
-	$grep "TEST FAILED" *.mjo*
-endif
 
+# The below section tests ZTP which is no longer supported. And it fails asserts from V63002 onwards. Hence it is commented out.
+# if(! $?test_replic) then
+# 	\rm -f mumps.mjl
+# 	setenv sub_test tpztsztc
+# 	setenv gtm_test_sprgde_id ${sub_test}	# to differentiate multiple dbcreates done in the same subtest
+# 	$gtm_tst/com/dbcreate.csh mumps
+# 	if(! $?test_replic) $MUPIP set -file -journal=enable,on,before,file=mumps.mjl mumps.dat
+# 	$GTM << GTM_EOF
+# w "do ^tpztsztc",!  do ^tpztsztc
+# h
+# GTM_EOF
+# 	$gtm_tst/com/dbcheck.csh -extract
+# 	$grep "TEST FAILED" *.mjo*
+# endif
+# 

@@ -77,7 +77,7 @@ M9 ; Divide by zero
  Quit
  ;
 M10 ; Invalid pattern match range
- xecute "If ""abc""?3B"	; wrap literal evaluation inside xecute to avoid compiler from evaluating it (and erroring out)
+ Set x="abc" If x?3B
  Set $ECode=",Z10-Error didn't happen,"
  Quit
  ;
@@ -522,7 +522,7 @@ M94 ; Attempt to compute zero to the zero-th power
  Quit
  ;
 M95 ; Exponentiation returns complex number with non-zero imaginary part
- xecute "Write -2**.5"	; wrap literal evaluation inside xecute to avoid compiler from evaluating it (and erroring out)
+ Set x=-2 Write x**.5
  Set $ECode=",Z95-Error didn't happen,"
  Quit
  ;

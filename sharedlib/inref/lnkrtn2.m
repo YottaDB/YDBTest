@@ -1,7 +1,18 @@
-lnkrtn; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+lnkrtn;
 	w "in lnkrtn2",!
 	quit
-entry1; 
+entry1;
 	w "in entry1^lnkrtn2",!
 	set data2("digits")="0123456789"
 	set data2("alpha")="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -14,7 +25,7 @@ entry1;
 	if cnt=1 set data2("cnt5")="This is literal number 5"
 	if cnt=2 set x="data2(""cnt6"")" set @x="This is literal number 6"
 	quit
-entry2; 
+entry2;
 	w "in entry2^lnkrtn2",!
 	set newdata2(data2("digits"))="digits"
 	set newdata2(data2("alpha"))="alpha"
@@ -25,17 +36,17 @@ entry2;
 	set newdata2(data2("numeric"))="numeric"
 	set newdata2(data2("float"))="float"
 	quit
-entry3; 
+entry3;
 	w "in entry3^lnkrtn2",!
 	merge mrgdata2=data2
 	quit
-entry4; 
+entry4;
 	w "in entry4^lnkrtn2",!
 	do entry4^lnkrtn0
 	quit
-entry5; 
+entry5;
 	w "in entry5^lnkrtn2",!
-	merge lnkrtn1Tolnkrtn2Merge=data1
+	merge lnkrtn1Tolnkrtn2Merge0=data1
 	quit
 half(num)
 	new halfnum

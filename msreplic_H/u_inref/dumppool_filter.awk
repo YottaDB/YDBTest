@@ -99,6 +99,8 @@ BEGIN {
 	gsub(/^0x........ 0x000[48] HDR Instance File Create Time/, "0x........ 0x000. HDR Instance File Create Time");
 	gsub(/Relative Read Offset.*/, "Relative Read Offset                 ##OFFSET1##");
 	gsub(/Absolute Read Offset.*/, "Absolute Read Offset                 ##OFFSET1##");
+	gsub(/Absolute Write Offset.*/, "Absolute Write Offset                      ##OFFSET1##");
+	gsub(/Reserved Write Offset.*/, "Reserved Write Offset                      ##OFFSET1##");
 	# LITTLE or BIG Endian should be converted to a static value
 	gsub(/HDR Endian Format                                   LITTLE/,"HDR Endian Format                                   ......");
 	gsub(/HDR Endian Format                                      BIG/,"HDR Endian Format                                   ......");
