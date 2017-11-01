@@ -3,6 +3,9 @@
 ; Copyright (c) 2006, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -121,9 +124,9 @@ convert ;
 		. set ccc=^comments(i)
 		. for case="L","U","T" do
 		. . kill flag
-		. . set dummy="set blah="_$ZCONVERT(^str(i),case)
+		. . set dummy="set blah="""_$ZCONVERT(^str(i),case)_""""
 		. . x dummy
-		. . if (0=$DATA(flag)) write "TEST-E-EXPECTED BADCHAR NOT ISSUED for ZCONVERT of - "_ccc,!
+		. . if (0=$DATA(flag))&($view("BADCHAR")) write "TEST-E-EXPECTED BADCHAR NOT ISSUED for ZCONVERT of - "_ccc,!
 		close file3
 		quit
 errortrap ;

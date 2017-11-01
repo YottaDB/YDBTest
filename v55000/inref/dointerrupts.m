@@ -63,6 +63,7 @@ dointerrupts
 	do wait^job
 
 	; calculate the reference value
+	set:intrptcnt>maxintrptcnt i=i-1
 	set sum=(1+i)*(i\2)
 	if i#2 set sum=sum+(i\2)+1
 

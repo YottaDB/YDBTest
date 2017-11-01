@@ -25,6 +25,10 @@ ANSI ERRORS
 	          ^-----
 		At column 11, line 242, source module ##IN_TEST_PATH##/inref/erransi.m
 %GTM-E-JOBACTREF, Actual parameter in job command passed by reference
+	indent . Write "This should be an error"
+	         ^-----
+		At column 10, line 630, source module ##IN_TEST_PATH##/inref/erransi.m
+%GTM-W-BLKTOODEEP, Block level too deep
 	same(a,a) ; Does this generate an M21?
 	       ^-----
 		At column 8, line 633, source module ##IN_TEST_PATH##/inref/erransi.m
@@ -117,7 +121,7 @@ M9 ; Divide by zero
 ,M9,Z150373210,
 
 M10 ; Invalid pattern match range
- xecute "If ""abc""?3B"	; wrap literal evaluation inside xecute to avoid compiler from evaluating it (and erroring out)
+ Set x="abc" If x?3B
  Set $ECode=",Z10-Error didn't happen,"
  Quit
  ;
@@ -377,7 +381,7 @@ M41 ; Invalid LOCK argument within a TRANSACTION
  Set $ECode=",Z41-Error didn't happen,"
  Quit
  ;
-150376074,M41+3^erransi,%GTM-E-TPLOCK, Cannot release lock(s) held prior to current TSTART
+150376074,M41+3^erransi,%GTM-E-TPLOCK, Cannot release LOCK(s) held prior to current TSTART
 ,M41,Z150376074,
 
 M42 ; Invalid QUIT within a TRANSACTION
@@ -823,7 +827,7 @@ M94 ; Attempt to compute zero to the zero-th power
 ,Z94-Error didn't happen,
 
 M95 ; Exponentiation returns complex number with non-zero imaginary part
- xecute "Write -2**.5"	; wrap literal evaluation inside xecute to avoid compiler from evaluating it (and erroring out)
+ Set x=-2 Write x**.5
  Set $ECode=",Z95-Error didn't happen,"
  Quit
  ;

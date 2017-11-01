@@ -20,7 +20,7 @@ GTM>
 ************
 DSE dump -f -all
 
-##TEST_AWK  Full Block Writes                      ON  Full Block Write Len          [0-9]*
+##TEST_AWK  Full Block Writes                       [012]  Full Block Write Len          [0-9]*
 ************
 MUPIP integ -reg *
 
@@ -105,7 +105,7 @@ MUPIP journal -recov -back * -since=0 0:0:1
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 Turn the Full Block writes off
-  Full Block Writes                     OFF  Full Block Write Len             0
+##TEST_AWK  Full Block Writes                       [012]  Full Block Write Len             0
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

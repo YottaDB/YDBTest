@@ -52,7 +52,7 @@ basic;
 	write section,!
 	write "Set break points again",!
 	for lineno=begline:1:maxline  do
-	. set cmd(lineno)="set zbbasic(""ｂｙｔｅ_後漢書_？？_4"",""3bytevariable"","_lineno_")=$get(zbbasic(""ｂｙｔｅ_後漢書_？？_4"","_lineno_"))+1"
+	. set cmd(lineno)="set zbbasic(""ｂｙｔｅ_後漢書_？？_4"",""3bytevariable"","_lineno_")=$increment(zbbasic(""ｂｙｔｅ_後漢書_？？_4"","_lineno_"))"
 	. zbreak zbbasic+lineno^zbbasicexec:cmd(lineno)
 	;
 	write "Test xecute cmd",!
@@ -74,7 +74,7 @@ basic;
 	write "do verify^zbbasicexec",!  do verify^zbbasicexec
 	set zbreakfailed=0
 	for lineno=begline:1:maxline  do
-	. if zbbasic("ｂｙｔｅ_後漢書_？？_4",lineno)'=step write "TEST-E-ZBREAK Test Failed in zbreak action in step ",step," for lineno: ",lineno,! set zbreakfailed=1
+	. if zbbasic("ｂｙｔｅ_後漢書_？？_4","3bytevariable",lineno)'=step write "TEST-E-ZBREAK Test Failed in zbreak action in step ",step," for lineno: ",lineno,! set zbreakfailed=1
 	if (1=zbreakfailed) zwrite zbbasic
 	;
 	write "Simple zbreak test ends...",!

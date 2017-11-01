@@ -158,6 +158,9 @@ $msr_err_chk $msr_execute_last_out PRIMARYNOTROOT
 #  |--- INST4
 # The replication servers should be stopped before copying the databases and then restarted
 
+# Note: REPLINSTSTNDALN error assert fails in dbg starting V63002 so disable that using white-box settings.
+setenv gtm_white_box_test_case_enable 1
+setenv gtm_white_box_test_case_number 134
 $echoline
 echo "Stop the servers - backup the files - restart the servers"
 $MSR STOP INST1 INST2 ON
@@ -176,7 +179,7 @@ $echoline
 $MSR RUN INST1 "$gtm_tst/com/simpleinstanceupdate.csh 10"
 $MSR RUN INST1 'set msr_dont_chk_stat ; $MUPIP replic -instance_create -name=CANIRECREATE'
 $msr_err_chk $msr_execute_last_out REPLINSTSTNDALN
-$MSR RUN INST2 'set msr_dont_chk_stat ; $MUPIP replic -instance_create -name=CANIRECREATE >& err_recreate.tmp; cat err_recreate.tmp'
+$MSR RUN INST2 'set msr_dont_chk_stat ; setenv gtm_white_box_test_case_enable 1 ; setenv gtm_white_box_test_case_number 134 ; $MUPIP replic -instance_create -name=CANIRECREATE'
 $msr_err_chk $msr_execute_last_out REPLINSTSTNDALN
 # Make sure the receiver gets all the updates before shutting the server down.
 $MSR SYNC ALL_LINKS
@@ -184,6 +187,8 @@ $MSR STOP INST2
 $MSR STOPSRC INST1 INST2 RESERVEPORT
 $MSR RUN INST1 "$gtm_tst/com/simpleinstanceupdate.csh 10"
 
+unsetenv gtm_white_box_test_case_enable
+unsetenv gtm_white_box_test_case_number
 
 # At this stage the replication configuration is
 # INST1 --- --- INST3 		#(INST1 has the source for INST2 running, INST2 is not running, INST3 has the reciever for INST2 running)

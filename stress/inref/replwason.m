@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2007, 2014 Fidelity Information Services, Inc	;
+; Copyright 2007, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -86,8 +89,8 @@ run	;
 	for i=0:1  quit:^stop=1  do
 	.	if unix do
 	.	. 	set readaddr=$$fetchfld^zpeekhelper("GSlrEPL:"_0,"gtmsource_local_struct.read_addr","U")
-	.	. 	set earlywriteaddr=$$fetchfld^zpeekhelper("Jpcrepl","jnlpool_ctl_struct.early_write_addr","U")
-	.	. 	set poolused=earlywriteaddr-readaddr
+	.	. 	set rsrvwriteaddr=$$fetchfld^zpeekhelper("Jpcrepl","jnlpool_ctl_struct.rsrv_write_addr","U")
+	.	. 	set poolused=rsrvwriteaddr-readaddr
 	.	. 	if (poolused>limit) do
 	.	. 	.	set waittime=waittime+1
 	.	. 	.	write "Journal pool used :  ",poolused,!

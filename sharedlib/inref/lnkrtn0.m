@@ -47,7 +47,7 @@ entry4;
 	;
 entry5;
 	w "in entry5^lnkrtn0",!
-	merge lnkrtn1Tolnkrtn0Merge=data1
+	merge lnkrtn1Tolnkrtn0Merge0=data1
 	quit
 verifyall;
 	;
@@ -65,16 +65,16 @@ verifyall;
 	;
 	set maxerr=10
 	set errcnt=0
-	for cnt=0:1:max do  q:errcnt>maxerr
-	. for datastr="data","mrgdata","lnkrtn2Tolnkrtn1Merge","lnkrtn1Tolnkrtn2Merge","lnkrtn1Tolnkrtn0Merge" do
-	. . do exam("datastr"_cnt_"(""digits"")",digits)
-	. . do exam("datastr"_cnt_"(""alpha"")",alpha)
-	. . do exam("datastr"_cnt_"(""wspace"")",wspace)
-	. . do exam("datastr"_cnt_"(""special"")",special)
-	. . do exam("datastr"_cnt_"(""mixed"")",mixed)
-	. . do exam("datastr"_cnt_"(""percent"")",percent)
-	. . do exam("datastr"_cnt_"(""numeric"")",numeric)
-	. . do exam("datastr"_cnt_"(""float"")",float)
+	set cnt=0
+	for datastr="data","mrgdata","lnkrtn2Tolnkrtn1Merge","lnkrtn1Tolnkrtn2Merge","lnkrtn1Tolnkrtn0Merge" do
+	. do exam(datastr_cnt_"(""digits"")",digits)
+	. do exam(datastr_cnt_"(""alpha"")",alpha)
+	. do exam(datastr_cnt_"(""wspace"")",wspace)
+	. do exam(datastr_cnt_"(""special"")",special)
+	. do exam(datastr_cnt_"(""mixed"")",mixed)
+	. do exam(datastr_cnt_"(""percent"")",percent)
+	. do exam(datastr_cnt_"(""numeric"")",numeric)
+	. do exam(datastr_cnt_"(""float"")",float)
 	;
 	do exam("data0(""cnt1"")","This is literal number 1")
 	do exam("data0(""cnt2"")","This is literal number 2")

@@ -141,7 +141,7 @@ GTM>
 Error REPLINSTSTNDALN seen in msr_execute_##FILTERED##NO.out as expected:
 %GTM-E-REPLINSTSTNDALN, Could not get exclusive access to replication instance file ##TEST_PATH##/mumps.repl
 ----------
-==Executing MULTISITE_REPLIC 'RUN INST2 set msr_dont_chk_stat ; $MUPIP replic -instance_create -name=CANIRECREATE >& err_recreate.tmp; cat err_recreate.tmp'==
+==Executing MULTISITE_REPLIC 'RUN INST2 set msr_dont_chk_stat ; setenv gtm_white_box_test_case_enable 1 ; setenv gtm_white_box_test_case_number 134 ; $MUPIP replic -instance_create -name=CANIRECREATE'==
 ##TEST_AWK%GTM-E-REPLINSTSTNDALN, Could not get exclusive access to replication instance file .*/instance2/mumps.repl
 ----------
 Error REPLINSTSTNDALN seen in msr_execute_##FILTERED##NO.out as expected:
