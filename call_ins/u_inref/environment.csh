@@ -39,8 +39,8 @@ EOF
 #
 # Build shared library to hold the external call in
 #
-$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/environci.c
-$gt_ld_shl_linker ${gt_ld_option_output}libenviron${gt_ld_shl_suffix} $gt_ld_shl_options environci.o $gt_ld_syslibs >& link1.map
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/drivecirtn.c
+$gt_ld_shl_linker ${gt_ld_option_output}libdrivecirtn${gt_ld_shl_suffix} $gt_ld_shl_options drivecirtn.o $gt_ld_syslibs >& link1.map
 if (0 != $status) then
     cat link1.map
 endif
