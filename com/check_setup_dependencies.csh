@@ -4,6 +4,9 @@
 # Copyright (c) 2009-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -157,6 +160,29 @@ if (! $?check_bypass) then
 	if (0 != $status) then
 		echo "TEST-E-GNUPGHOMEDIR failed to create a GNUPGHOME directory."
 		echo "Ensure that test_encryption is set to NON_ENCRYPT on each box where you want this check bypassed ;"
+		@ error++
+	endif
+endif
+
+# Check that $ggdata and its subdirectories are write-accessible
+if (-e $ggdata) then
+	if (-e $ggdata/tests) then
+		if ((! -r $ggdata/tests) || (! -w $ggdata/tests)) then
+			echo "$ggdata/tests is not readable or writeable (to create $ggdata/tests/timinginfo etc.)"
+			@ error++
+		else
+			foreach subdir (debuglogs timinginfo testresults)
+				if (! -e $ggdata/tests/$subdir) then
+					continue
+				endif
+				if ((! -r $ggdata/tests/$subdir) || (! -w $ggdata/tests/$subdir)) then
+					echo "$ggdata/tests/$subdir is not readable or writeable"
+					@ error++
+				endif
+			end
+		endif
+	else if (! -w $ggdata) then
+		echo "$ggdata is not writeable (to create $ggdata/tests)"
 		@ error++
 	endif
 endif
