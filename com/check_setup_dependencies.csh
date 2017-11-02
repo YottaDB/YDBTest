@@ -182,7 +182,7 @@ if (-e $ggdata) then
 			end
 		endif
 	else if (! -w $ggdata) then
-		echo "$ggdata is not writeable (to create $ggdata/tests)"
+		echo "$ggdata is not readable or writeable (to create $ggdata/tests)"
 		@ error++
 	endif
 endif
