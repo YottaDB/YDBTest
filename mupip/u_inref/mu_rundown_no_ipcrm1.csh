@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -19,6 +22,15 @@
 # A change made to one test should immediately be duplicated to the other.
 ## !!! NOTE !!! ##
 setenv gtm_test_crash 1
+
+if ($?gtm_custom_errors) then
+	# Since this test does a kill -9, it is possible we get a DBDANGER in the syslog. If custom errors is turned on,
+	# that would cause an instance freeze which would hang this test. So remove DBDANGER from the list of errors
+	# that can turn on instance freeze.
+	$grep -v 'DBDANGER' $gtm_custom_errors >&! new_custom_errors_sample.txt
+	$cprcp new_custom_errors_sample.txt $SEC_SIDE
+	setenv gtm_custom_errors new_custom_errors_sample.txt
+endif
 
 $gtm_tst/com/dbcreate.csh mumps 8 125 1000
 

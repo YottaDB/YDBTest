@@ -86,37 +86,21 @@ $MUPIP set -journal="enable,on,before,epoch=90,auto=2097152" -reg "*" >& jnl.log
 ($gtm_dist/mumps -run %XCMD 'do showdbuffs^epochmon("DEFAULT",1,2000)' >taperdata.txt & ; echo $! >! mon_pid.log) >&! mon.outx
 set mon_pid = `cat mon_pid.log`
 
-# We expect new servers to be really fast
-set upperbound=3000000
-set expected=559
-
-# For existing really slow servers
-set really_slow_servers="atlst2000 inti liza cronem estess lespaul pfloyd jackal"
-echo $really_slow_servers | $grep -w "$hostn" > /dev/null
-if (!($status)) then
+# We expect servers to be fast by default
+# ARM boxes are relatively slower so have a smaller limit for them
+if ("HOST_LINUX_ARMV7L" != $gtm_test_os_machtype) then
+	set upperbound=3000000
+	set expected=559
+else
 	set upperbound=250000
 	set expected=442
-endif
-
-# For existing slow servers
-if ($hostn =~ {atlhxit1,carmen,charybdis,scylla,sphere}) then
-	set upperbound=500000
-	set expected=448
-endif
-
-# For existing fast servers
-set fast_servers="titan tuatara"
-set fast_servers="$fast_servers bahirs base hathawayc duzang maimoneb rajamanin shaha kishoreh"
-echo $fast_servers | $grep -w "$hostn" > /dev/null
-if (!($status)) then
-	set upperbound=1000000
-	set expected=524
 endif
 
 echo "upperbound=$upperbound expected=$expected" >3nparms.out
 
 echo "Run 3n+1 to generate some dirty buffers"
-echo 1 $upperbound 16 100 | $gtm_dist/mumps -run threeen1f > threeen1f.out
+set nthreads = `grep -c processor /proc/cpuinfo`	# Use # of CPUs as the # of threads to avoid swamping the system
+echo 1 $upperbound $nthreads 100 | $gtm_dist/mumps -run threeen1f > threeen1f.out
 
 set actual=`cat threeen1f.out | cut -f5 -d" "`
 
