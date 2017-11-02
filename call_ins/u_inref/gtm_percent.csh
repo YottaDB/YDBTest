@@ -30,4 +30,4 @@ endif
 rm -f link.map
 
 gtmpercent
-unsetenv $GTMCI
+unsetenv GTMCI

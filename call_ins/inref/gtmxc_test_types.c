@@ -1,13 +1,17 @@
 /****************************************************************
-*								*
-*	Copyright 2007, 2014 Fidelity Information Services, Inc	*
-*								*
-*	This source code contains the intellectual property	*
-*	of its copyright holder(s), and is made available	*
-*	under a license.  If you do not know the terms of	*
-*	the license, please stop and do not read further.	*
-*								*
-****************************************************************/
+ *								*
+ * Copyright (c) 2007-2014 Fidelity National Information	*
+ * Services, Inc. and/or its subsidiaries. All rights reserved.	*
+ *								*
+ * Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	*
+ * All rights reserved.						*
+ *								*
+ *	This source code contains the intellectual property	*
+ *	of its copyright holder(s), and is made available	*
+ *	under a license.  If you do not know the terms of	*
+ *	the license, please stop and do not read further.	*
+ *								*
+ ****************************************************************/
 /* The following tests exercise call_ins to M from C routines using all the gtm types from
    gtmxc_types.h.  For the I: types pointer and non-pointer arguments are valid.  For the IO:
    and O: types only pointer arguments are valid.  The first 8 are I: tests where the C routine
@@ -54,6 +58,7 @@ int main()
 	gtm_string_t arg8;
 	gtm_char_t buf0[100];
 	gtm_char_t buf[100];
+	ci_name_descriptor	ydb_test9;
 
 	fflush(stdout);
 	retval8.address = buf;
@@ -216,7 +221,10 @@ int main()
 	fflush(stdout);
 
 	/* test9 returns gtm_int_t * */
-	status = gtm_ci("gtmxc_test9", &retval1, &arg1, &arg2, &arg3, &arg4, &arg5, &arg6, arg7, &arg8);
+	ydb_test9.rtn_name.address = "gtmxc_test9";
+	ydb_test9.rtn_name.length = sizeof("gtmxc_test9") - 1;
+	ydb_test9.handle = NULL;
+	status = gtm_cip(&ydb_test9, &retval1, &arg1, &arg2, &arg3, &arg4, &arg5, &arg6, arg7, &arg8);
 	if (status)
 	{
 		gtm_zstatus(&errmsg[0], 800);

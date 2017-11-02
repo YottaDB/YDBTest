@@ -1,0 +1,18 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+testmprofhiddenrtn1: Entered - Driving ^testmprofhiddenrtnA
+testmprofhiddenrtnA: Entered -- driving call-in
+testmprofhiddenrtn2: Entered
+testmprofhiddenrtn2: Returning
+testmprofhiddenrtnA: Back in testmprofhiddenrtnA
+testmprofhiddenrtnA: Returning
+testmprofhiddenrtn1: Back in testmprofhiddenrtn1 - writing out mprof trace and exiting
+testmprofhiddenrtn1: PASS
+testmprofhiddenrtn1: Test complete
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+End of test_mprof_hidden_rtn subtest

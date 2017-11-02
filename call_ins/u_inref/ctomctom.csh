@@ -13,6 +13,7 @@
 # ctomctom.csh
 #
 # call in to M from C
+#
 setenv GTMCI cmcm.tab
 cat >> $GTMCI << cmcm.tab
 sqroot: void  sqroot^sqrt2(I:gtm_long_t,I:gtm_long_t)
@@ -28,7 +29,6 @@ endif
 
 rm -f  link1.map
 rm -f squarec.o
-
 
 #
 # external call to C from M
@@ -48,5 +48,5 @@ endif
 rm -f link2.map
 
 cmcm
-unsetenv $GTMCI
-unsetenv $GTMXC
+unsetenv GTMCI
+unsetenv GTMXC
