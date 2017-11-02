@@ -30,4 +30,4 @@ rm -f  link.map
 #
 echo "Two calls both should go to Greaterthan31charlabelshouldnot^multlabm"
 multlab
-unsetenv $GTMCI
+unsetenv GTMCI

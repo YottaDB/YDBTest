@@ -34,4 +34,4 @@ endif
 rm -f  link.map
 #
 args
-unsetenv $GTMCI
+unsetenv GTMCI

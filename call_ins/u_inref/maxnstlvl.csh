@@ -49,6 +49,6 @@ endif
 rm -f link2.map
 
 dmain
-unsetenv $GTMCI
-unsetenv $GTMXC_xcall
+unsetenv GTMCI
+unsetenv GTMXC_xcall
 

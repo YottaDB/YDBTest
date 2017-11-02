@@ -41,4 +41,4 @@ endif
 rm -f  link.map
 #
 argcnt_more
-unsetenv $GTMCI
+unsetenv GTMCI
