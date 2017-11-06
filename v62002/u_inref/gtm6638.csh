@@ -86,9 +86,9 @@ $MUPIP set -journal="enable,on,before,epoch=90,auto=2097152" -reg "*" >& jnl.log
 ($gtm_dist/mumps -run %XCMD 'do showdbuffs^epochmon("DEFAULT",1,2000)' >taperdata.txt & ; echo $! >! mon_pid.log) >&! mon.outx
 set mon_pid = `cat mon_pid.log`
 
-# We expect servers to be fast by default
-# ARM boxes are relatively slower so have a smaller limit for them
-if ("HOST_LINUX_ARMV7L" != $gtm_test_os_machtype) then
+# If server has more than 4 CPUs, then consider it fast and have a higher limit. Else a lower limit.
+@ numcpus = `grep -c processor /proc/cpuinfo`
+if (4 < $numcpus) then
 	set upperbound=3000000
 	set expected=559
 else
