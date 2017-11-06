@@ -43,8 +43,8 @@ if ( "GT.CM" != $test_gtm_gtcm) then
 endif
 setenv subtest_exclude_list ""
 
-if ("sugar" == "$HOST:ar") then
-	# sugar is a Beaglebone Black box with minimal Memory/CPU/IO capabilities so disable this heavyweight test there
+# Disable certain heavyweight tests on single-cpu systems
+if ($gtm_test_singlecpu) then
 	setenv subtest_exclude_list "$subtest_exclude_list tp_stress"
 endif
 
