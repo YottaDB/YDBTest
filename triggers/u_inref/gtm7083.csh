@@ -104,6 +104,12 @@ source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
 cp tst_ver_mumps.gld mumps.gld
 $gtm_exe/mumps -run %XCMD 'write $ztrigger("item","-*"),!'
 
+# Database files starting V63001 have a 4Kb 0-filled block at the end of the file (assuming default block size of 4K).
+# Whereas pre-V63001 database files had a 512-byte 0-filled block at the end.
+# Before switching to an older version (which is clearly pre-V63001) to use a post-V63001 created database file, truncate
+# the 4Kb block to 512 bytes. The MUPIP DOWNGRADE command has a special -version=V63000A qualifier to achieve this.
+yes | $MUPIP downgrade -version=V63000A mumps.dat >& mupip_downgrade.out
+
 echo "# switch to prior ver and load the trigger extract"
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver pro
 cp prior_ver_mumps.gld mumps.gld

@@ -6,27 +6,27 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 1153 to 2308.
+%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 1153 to 2312.
 %GTM-I-TEXT, The previous value was outside the allowable range of 2307 to 32768
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
 
 Journal State OFF Journal
-Journal Buffer Size 2308
+Journal Buffer Size 2312
 
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
-%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 1153 to 2308.
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 1153 to 2312.
 %GTM-I-TEXT, The previous value was outside the allowable range of 2307 to 32768
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
 Journal State [inactive] ON
-Journal Buffer Size 2308
+Journal Buffer Size 2312
 
-%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 1153 to 2308.
+%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 1153 to 2312.
 %GTM-I-TEXT, The previous value was outside the allowable range of 2307 to 32768
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
 
 Journal State OFF Journal
-Journal Buffer Size 2308
+Journal Buffer Size 2312
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -40,22 +40,22 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
 Journal State [inactive] ON
-Journal Buffer Size 2308
+Journal Buffer Size 2312
 
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
 
-Journal State DISABLED 
+Journal State DISABLED
 
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
 Journal State [inactive] ON
-Journal Buffer Size 2308
+Journal Buffer Size 2312
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -64,20 +64,20 @@ No errors detected by integ.
 ##SUSPEND_OUTPUT PLATFORM_NO_PRIORGTM
 Case 3.
 
-%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory
 	##TEST_PATH##/mumps.gld
 %GDE-I-EXECOM, Executing command file ##TEST_PATH##/setlowbuffer.gde
 %GDE-I-VERIFY, Verification OK
 
-%GDE-I-GDCREATE, Creating Global Directory file 
+%GDE-I-GDCREATE, Creating Global Directory file
 	##TEST_PATH##/mumps.gld
-%GDE-I-LOADGD, Loading Global Directory file 
+%GDE-I-LOADGD, Loading Global Directory file
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-VERIFY, Verification OK
 
-%GDE-I-GDUPDATE, Updating Global Directory file 
+%GDE-I-GDUPDATE, Updating Global Directory file
 	##TEST_PATH##/mumps.gld
 
 %GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
@@ -91,26 +91,26 @@ No errors detected by integ.
 ###################################################################
 Case 4.
 
-%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
 
-%GDE-I-GDCREATE, Creating Global Directory file 
+%GDE-I-GDCREATE, Creating Global Directory file
 	##TEST_PATH##/mumps.gld
 
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+Created file ##TEST_PATH##/mumps.dat
 
 ##TEST_AWKJournal file buffer size for database file ##TEST_PATH##/mumps.dat is now 11[0-9][0-9]
 ##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
-%GDE-I-LOADGD, Loading Global Directory file 
+%GDE-I-LOADGD, Loading Global Directory file
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-VERIFY, Verification OK
 
-%GDE-I-GDUPDATE, Updating Global Directory file 
+%GDE-I-GDUPDATE, Updating Global Directory file
 	##TEST_PATH##/mumps.gld
 
 GTM>
@@ -126,26 +126,26 @@ No errors detected by integ.
 ###################################################################
 Case 5.
 
-%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
 
-%GDE-I-GDCREATE, Creating Global Directory file 
+%GDE-I-GDCREATE, Creating Global Directory file
 	##TEST_PATH##/mumps.gld
 
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+Created file ##TEST_PATH##/mumps.dat
 
 ##TEST_AWKJournal file buffer size for database file ##TEST_PATH##/mumps.dat is now 11[0-9][0-9]
 ##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
-%GDE-I-LOADGD, Loading Global Directory file 
+%GDE-I-LOADGD, Loading Global Directory file
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-VERIFY, Verification OK
 
-%GDE-I-GDUPDATE, Updating Global Directory file 
+%GDE-I-GDUPDATE, Updating Global Directory file
 	##TEST_PATH##/mumps.gld
 
 %GTM-I-JNLFNF, Journal file ##TEST_PATH##/mumps.mjl not found
@@ -164,26 +164,26 @@ No errors detected by integ.
 ###################################################################
 Case 6.
 
-%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
 
-%GDE-I-GDCREATE, Creating Global Directory file 
+%GDE-I-GDCREATE, Creating Global Directory file
 	##TEST_PATH##/mumps.gld
 
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+Created file ##TEST_PATH##/mumps.dat
 
 ##TEST_AWKJournal file buffer size for database file ##TEST_PATH##/mumps.dat is now 11[0-9][0-9]
 ##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
-%GDE-I-LOADGD, Loading Global Directory file 
+%GDE-I-LOADGD, Loading Global Directory file
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-VERIFY, Verification OK
 
-%GDE-I-GDUPDATE, Updating Global Directory file 
+%GDE-I-GDUPDATE, Updating Global Directory file
 	##TEST_PATH##/mumps.gld
 
 %GTM-W-JNLMINALIGN, Journal Record Alignment 1 is less than the minimum value of 4096
@@ -195,26 +195,26 @@ No errors detected by integ.
 ###################################################################
 Case 7.
 
-%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
 
-%GDE-I-GDCREATE, Creating Global Directory file 
+%GDE-I-GDCREATE, Creating Global Directory file
 	##TEST_PATH##/mumps.gld
 
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+Created file ##TEST_PATH##/mumps.dat
 
 ##TEST_AWKJournal file buffer size for database file ##TEST_PATH##/mumps.dat is now 11[0-9][0-9]
 ##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
-%GDE-I-LOADGD, Loading Global Directory file 
+%GDE-I-LOADGD, Loading Global Directory file
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-VERIFY, Verification OK
 
-%GDE-I-GDUPDATE, Updating Global Directory file 
+%GDE-I-GDUPDATE, Updating Global Directory file
 	##TEST_PATH##/mumps.gld
 
 %GTM-I-JNLFNF, Journal file ##TEST_PATH##/mumps.mjl not found
@@ -231,22 +231,22 @@ No errors detected by integ.
 ###################################################################
 Case 8.
 
-%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
 
-%GDE-I-GDCREATE, Creating Global Directory file 
+%GDE-I-GDCREATE, Creating Global Directory file
 	##TEST_PATH##/mumps.gld
 
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+Created file ##TEST_PATH##/mumps.dat
 
-%GDE-I-LOADGD, Loading Global Directory file 
+%GDE-I-LOADGD, Loading Global Directory file
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-VERIFY, Verification OK
 
-%GDE-I-GDUPDATE, Updating Global Directory file 
+%GDE-I-GDUPDATE, Updating Global Directory file
 	##TEST_PATH##/mumps.gld
 
 
@@ -266,25 +266,25 @@ No errors detected by integ.
 ###################################################################
 Case 9.
 
-%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory
 	##TEST_PATH##/mumps.gld
 
-GDE> 
-GDE> 
+GDE>
+GDE>
 %GDE-I-VERIFY, Verification OK
 
-%GDE-I-GDCREATE, Creating Global Directory file 
+%GDE-I-GDCREATE, Creating Global Directory file
 	##TEST_PATH##/mumps.gld
-%GDE-I-LOADGD, Loading Global Directory file 
+%GDE-I-LOADGD, Loading Global Directory file
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
 
 
-GDE> 
-GDE> 
+GDE>
+GDE>
 %GDE-I-VERIFY, Verification OK
 
-%GDE-I-GDUPDATE, Updating Global Directory file 
+%GDE-I-GDUPDATE, Updating Global Directory file
 	##TEST_PATH##/mumps.gld
 %GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
