@@ -63,8 +63,8 @@ if ($?ydb_environment_init) then
                # Disable gtm8177 subtest until V63002 is available as it can assert fail in V63000A (has been fixed post-V63001A)
                setenv subtest_exclude_list "$subtest_exclude_list gtm8177"
        endif
-	if ("sugar" == "$HOST:ar") then
-		# sugar is a Beaglebone Black box with minimal Memory/CPU/IO capabilities so disable this heavyweight test there
+	# Disable certain heavyweight tests on single-cpu systems
+	if ($gtm_test_singlecpu) then
 		setenv subtest_exclude_list "$subtest_exclude_list gtm8539"
 	endif
 endif

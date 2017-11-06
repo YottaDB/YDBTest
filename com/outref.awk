@@ -246,6 +246,10 @@ BEGIN {
 	if ("arch" == ENVIRON["gtm_test_linux_distrib"])
 		envir[no_options] = "ARCH_LINUX"
 	#
+	option_names[++no_options] = "gtm_test_singlecpu"
+	if (1 == ENVIRON["gtm_test_singlecpu"])
+		envir[no_options] = "ONECPU"
+	#
 	#
 	#
 	split(tst_hostos_machtype_all, all_platforms, " ")
