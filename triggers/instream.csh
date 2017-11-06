@@ -134,8 +134,10 @@ setenv remove "$gtm_tst/com/trigger_load.csh"
 setenv drop "$gtm_tst/com/trigger_unload.csh"
 setenv show "$gtm_tst/com/trigger_select.csh"
 
-# Test on-the-fly trigger upgrade code
-setenv gtm_test_trig_upgrade 1
+# Test on-the-fly trigger upgrade code if prior GT.M versions are available
+if (! $?gtm_test_nopriorgtmver) then
+	setenv gtm_test_trig_upgrade 1
+endif
 
 # the tst_ld_sidedeck change is required for external call in trig_nest_err
 if ( "os390" == $gtm_test_osname ) then
