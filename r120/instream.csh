@@ -15,13 +15,14 @@
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
 # zindcacheoverflow [ashok]	Test fix to indirect code cache stats 4-byte overflow error
+# largelvarray       [nars]	Test local array performance does not deteriorate exponentially with large # of nodes
 #-------------------------------------------------------------------------------------
 
 echo "r120 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "zindcacheoverflow"
+setenv subtest_list_non_replic "zindcacheoverflow largelvarray"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
