@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -30,6 +33,12 @@ setenv tst_buffsize 1048576
 # if multiple job compliles a module at the same time, sometimes they fail. So pre-compile M code.
 $gtm_exe/mumps $gtm_tst/com/npfill.m
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_exe/mumps $gtm_tst/com/npfill.m"
+
+# This test does kill -9 of a GT.M process. Set the below white box env vars to indicate this is a crash test.
+# Otherwise the test might fail asserts (e.g. in wcs_recover.c, if it finds cr->in_tend non-zero etc.)
+setenv gtm_white_box_test_case_enable 1
+setenv gtm_white_box_test_case_number 29
+
 $gtm_tst/com/dbcreate.csh mumps 9 125 1000 1024 500 8192
 
 setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
