@@ -35,14 +35,6 @@ endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list	""
-#if ("HOST_LINUX_IX86" == "$gtm_test_os_machtype") then
-#        setenv subtest_exclude_list "$subtest_exclude_list xxxx"
-#endif
-
-# filter out tests that cannot run in pro
-#if ("pro" == "$tst_image") then
-#	setenv subtest_exclude_list "$subtest_exclude_list xxxx"
-#endif
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh

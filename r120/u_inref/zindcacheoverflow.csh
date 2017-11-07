@@ -12,6 +12,7 @@
 #################################################################
 #
 # Test for fix to indirect code cache stats 4-byte overflow error
+# "Hit Ratio" used to sometimes show up incorrectly as 0% before
 #
 setenv gtmdbglvl 0x00001000
 $gtm_dist/mumps -run zindcacheoverflow
