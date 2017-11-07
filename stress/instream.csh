@@ -68,7 +68,7 @@ setenv subtest_exclude_list ""
 
 # Disable certain heavyweight tests on single-cpu systems
 if ($gtm_test_singlecpu) then
-	setenv subtest_exclude_list "$subtest_exclude_list concurr"
+	setenv subtest_exclude_list "$subtest_exclude_list concurr_small concurr"
 endif
 
 $gtm_tst/com/submit_subtest.csh
