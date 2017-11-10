@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -16,7 +19,17 @@
 # (by sourcing this script) to set up environment for Java call-ins and call-outs.
 
 setenv JAVA_HOME `awk '$0 ~ /^#/ {next;} $1 ~ /^'$HOST:r:r:r'/ {print $10}' $gtm_test_serverconf_file`	# BYPASSOK
-if (("NA" == $JAVA_HOME) || ("" == $JAVA_HOME)) then
+if ("NA" == $JAVA_HOME) then
+	# Check if /usr/lib/jvm/*/jre directory can be found. If so use that.
+	set nonomatch = 1 ; set jrelist = /usr/lib/jvm/*/jre; unset nonomatch
+	if ("$jrelist" != '/usr/lib/jvm/*/jre') then
+		# There might be multiple versions. In that case, choose the last one (hopefully the latest in terms of version)
+		setenv JAVA_HOME $jrelist[$#jrelist]:h
+	else
+		setenv JAVA_HOME ""
+	endif
+endif
+if ("" == $JAVA_HOME) then
 	echo "Java is not available on this platform, or the installation path is missing in $gtm_test_serverconf_file"
 	exit 1
 endif

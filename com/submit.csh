@@ -19,7 +19,6 @@
 set format="%Y.%m.%d.%H.%M.%S.%Z"
 set alltests_begin = `date +"$format"`
 source $gtm_tst/com/set_gtm_machtype.csh
-source $gtm_tst/com/set_java_supported.csh
 
 setenv test_pid_file /tmp/__${USER}_test_suite_$$.pid
 echo $tst_dir/$gtm_tst_out >>! $test_pid_file
@@ -30,6 +29,8 @@ setenv gtm_test_local_debugdir $tst_dir/$gtm_tst_out/debugfiles/
 if (! -e $gtm_test_local_debugdir) mkdir -p $gtm_test_local_debugdir
 touch $gtm_test_local_debugdir/excluded_subtests.list
 touch $gtm_test_local_debugdir/test_subtest.info
+
+source $gtm_tst/com/set_java_supported.csh >>! $gtm_test_local_debugdir/set_java_supported.log
 
 # Don't log timing info if only a subset of subtests will run or if dryrun of test is done
 if (($?gtm_test_st_list)||($?gtm_test_dryrun)) then

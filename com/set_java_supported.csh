@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -11,7 +14,7 @@
 #################################################################
 
 # Get relevant paths initialized for Java.
-source $gtm_tst/com/set_java_paths.csh >&! /dev/null
+source $gtm_tst/com/set_java_paths.csh
 
 # Set gtm_test_java_supported if applicable.
 if (! $status) then

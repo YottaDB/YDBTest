@@ -1,6 +1,9 @@
 /****************************************************************
 *								*
-*	Copyright 2013 Fidelity Information Services, Inc	*
+* Copyright 2013 Fidelity Information Services, Inc		*
+*								*
+* Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	*
+* All rights reserved.						*
 *								*
 *	This source code contains the intellectual property	*
 *	of its copyright holder(s), and is made available	*
@@ -357,10 +360,14 @@ public abstract class TestCase {
 	/* Write the call-in or call-out table to a file. */
 	private static void writeTable(String tableFile, String tableEntries, boolean callin) throws IOException {
 		StringBuilder mBuilder = new StringBuilder();
+		String	gtmDist;
 		if (!callin)
-			mBuilder.append("/usr/library/com/gtmji/libgtmm2j.so\n");
+		{
+			gtmDist = System.getenv("gtm_dist");
+			mBuilder.append(gtmDist);
+			mBuilder.append("/plugin/libgtmm2j.so\n");
+		}
 		mBuilder.append(tableEntries);
-
 		BufferedWriter writer = getWriter(tableFile);
 		writer.write(mBuilder.toString());
 		writer.close();
