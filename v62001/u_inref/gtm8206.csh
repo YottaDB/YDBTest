@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2014 Fidelity Information Services, Inc	#
+# Copyright 2014 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -11,8 +14,6 @@
 #################################################################
 
 setenv TERM vt320
-echo "# Running expect (output: expect.out)"
+echo "# Running expect (output: expect.out) : Expecting a GTM-I-CTRLC message"
 expect $gtm_tst/$tst/u_inref/gtm8206.exp > expect.out
-$grep -c CTRL_C expect.out
-$grep -c "PASS" expect.out
-endif
+$grep CTRL_C expect.out
