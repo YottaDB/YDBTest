@@ -3,6 +3,9 @@
 ; Copyright (c) 2012-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -43,7 +46,13 @@ tpbitmaprestart;
 child;
 	set gname="^a"_jobindex
 	for i=1:1 do  quit:^stop
+	. ; We want to ensure the TP transaction restarts with a BITMAP conflict. For that, one needs to make
+	. ; sure the TP transaction uses up at least half a bitmap in terms of space that way two processes that
+	. ; converge on the same bitmap for allocation cannot both commit (i.e. at least one will have to restart).
+	. ; Since there are 512 bytes in a bitmap block, allocate 300 blocks in the TP transaction.
+	. ; This can be achieved by setting 300 nodes, each of which take up more than half a GDS block (size 4K)
+	. ; so set the node size to be 3K.
 	. tstart ():serial
-	. for j=0:1:9 set @gname@(i*10+j)=$j(i,1000)
+	. for j=0:1:300 set @gname@(i*10+j)=$j(i,3000)
 	. tcommit
 	quit
