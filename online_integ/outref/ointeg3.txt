@@ -16,9 +16,9 @@ Total error count from integ:		2.
 Integ of region DEFAULT
 
 Block:Offset Level
-%GTM-W-DBLOCMBINC,
+%GTM-W-DBLOCMBINC, 
        0:0     FF  Local bit map incorrect
-%GTM-E-DBMRKFREE,
+%GTM-E-DBMRKFREE, 
        3:0     FF  Block incorrectly marked free
 
 Total error count from integ:		2.
@@ -44,12 +44,12 @@ Total error count from integ:		2.
 Integ of region DEFAULT
 
 Block:Offset Level
-%GTM-E-DBINVGBL,
+%GTM-E-DBINVGBL, 
        3:10     0  Invalid mixing of global names
                    Directory Path:  1:10, 2:10
                    Path:  4:10, 3:10
 Keys from ^a to the end are suspect.
-%GTM-E-DBBDBALLOC,
+%GTM-E-DBBDBALLOC, 
        3:0      0  Block doubly allocated
                    Directory Path:  1:10, 2:1F
                    Path:  5:10, 3:0
@@ -66,10 +66,10 @@ Free               95              NA              NA            NA
 Total             100               6              NA             3
 %GTM-E-INTEGERRS, Database integrity errors
 ##TEST_PATH##/mupip.err_##TEST_AWK.*
-%GTM-W-DBLOCMBINC,
-%GTM-E-DBMRKFREE,
+%GTM-W-DBLOCMBINC, 
+%GTM-E-DBMRKFREE, 
 %GTM-E-INTEGERRS, Database integrity errors
 ##TEST_PATH##/mupip.err_##TEST_AWK.*
-%GTM-E-DBINVGBL,
-%GTM-E-DBBDBALLOC,
+%GTM-E-DBINVGBL, 
+%GTM-E-DBBDBALLOC, 
 %GTM-E-INTEGERRS, Database integrity errors
