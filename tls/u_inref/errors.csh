@@ -107,12 +107,14 @@ endif
 
 cat gtm-inter-1.crl gtm-inter-2.crl gtm-rootca.crl >>&! gtm.crl
 
-# Create the config file with a verify depth of 2. This should cause a failure as there are 3 certificates involved in the
-# verification chain (rootca, intermediate-ca-1 and intermediate-ca-2).
+# Create the config file with a verify depth of 1. This should cause a failure as there are 2 intermediate certificates
+# involved in the verification chain (intermediate-ca-1 and intermediate-ca-2). In OpenSSL 1.0, having verify depth of 2
+# was good enough to cause a failure because it counted rootca too towards the depth. But starting OpenSSL 1.1, the
+# verify depth does not count rootca hence the need to go with a depth of 1 below.
 setenv gtmcrypt_config `pwd`/config.cfg
 cat << EOF >&! $gtmcrypt_config
 tls: {
-	verify-depth: 2;
+	verify-depth: 1;
 	CAfile: "$PWD/calist.pem";
 	crl: "$PWD/gtm.crl";
 	dh512: "$gtm_tst/com/tls/dh512.pem";
@@ -174,7 +176,7 @@ echo
 
 # First fix the config file so that we don't end up with the same error.
 cp $gtmcrypt_config $gtmcrypt_config.bad1
-sed 's/verify-depth: 2/verify-depth: 7/g' $gtmcrypt_config.bad1 >&! $gtmcrypt_config
+sed 's/verify-depth: 1/verify-depth: 7/g' $gtmcrypt_config.bad1 >&! $gtmcrypt_config
 # Mess up the private key by adding bad text in the middle of the client's private key.
 cp $PWD/demoCA/private/client.key $PWD/demoCA/private/client.key.bak
 set linecnt = `wc -l $PWD/demoCA/private/client.key | $tst_awk '{print $1}'`
