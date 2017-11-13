@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -192,7 +195,9 @@ endif
 echo $echoline
 echo "x) gtm_tprestart_log_first and gtm_tprestart_log_delta both are defined - looking for a bitmap conflict."
 source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0 # do rundown if needed before requiring standalone access
-$MUPIP set -file mumps.dat -record=1000
+# Starting V63001A, the default GDS block size is 4K. The child^restart in v60001/inref/restart.m needs to create
+# nodes whose size is greater than half the GDS block size and so uses a 3K value so use the same here for record_size.
+$MUPIP set -file mumps.dat -record=3000
 setenv gtm_tprestart_log_delta 1
 setenv gtm_tprestart_log_first 1
 set syslog_begin = `date +"%b %e %H:%M:%S"`
