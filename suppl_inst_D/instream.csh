@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2012, 2014 Fidelity Information Services, Inc	#
+# Copyright 2012, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -40,6 +43,11 @@ setenv subtest_exclude_list	""
 # updateresync_pp copies mumps.repl across instances and starts replication server. Since copying .repl file across endian, 32/64bit machines won't work.
 if ("MULTISITE" == "$test_replic") then
 	setenv subtest_exclude_list "$subtest_exclude_list updateresync_pp "
+endif
+
+# Disable certain heavyweight tests on single-cpu systems
+if ($gtm_test_singlecpu) then
+	setenv subtest_exclude_list "$subtest_exclude_list fetchresync_supplgroup"
 endif
 
 # Randomization of replication type is disable since it is all handled by the subtests.
