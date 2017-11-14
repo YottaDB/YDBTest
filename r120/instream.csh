@@ -16,13 +16,14 @@
 #-------------------------------------------------------------------------------------
 # zindcacheoverflow [ashok]	Test fix to indirect code cache stats 4-byte overflow error
 # largelvarray       [nars]	Test local array performance does not deteriorate exponentially with large # of nodes
+# gctest             [nars]	Test stringpool garbage collection performance with lots of strings in the pool
 #-------------------------------------------------------------------------------------
 
 echo "r120 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "zindcacheoverflow largelvarray"
+setenv subtest_list_non_replic "zindcacheoverflow largelvarray gctest"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
@@ -37,6 +38,11 @@ setenv subtest_exclude_list	""
 # Disable certain heavyweight tests on single-cpu systems
 if ($gtm_test_singlecpu) then
 	setenv subtest_exclude_list "$subtest_exclude_list largelvarray"
+endif
+
+if ("dbg" == "$tst_image") then
+	# gctest subtest stresses the stringpool garbage collection and runs very slow in dbg so disable it there.
+	setenv subtest_exclude_list "$subtest_exclude_list gctest"
 endif
 
 # Submit the list of subtests
