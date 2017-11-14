@@ -12,43 +12,40 @@
 gcTest   ; Examine some GT.M GC issues.
 
 gcTest1  ; Basic test - 94.8s.
-   d dotest()
-   q  ; >>> gcTest1
+   do dotest()
+   quit  ; >>> gcTest1
 
 zhtm(zh,ms)  ; Return timestamp based on $zh value
    ;
-   n (z,zh,ms)
-   s zh=$g(zh,$zh)
-   s t=$p(zh,",")*3600*24+$p(zh,",",2)+($p(zh,",",3)/1E6)
-   i '$quit d
-   .  s z("lszh")=$g(z("lszh"),t)
-   .  w "tm:"_$j(t-z("lszh"),14,7)_"s"_" "_$VIEW("SPSIZE")_" "_$g(ms),!
-   .  s z("lszh")=t
-   q:$quit t q  ; >>> zhtm
+   new (z,zh,ms)
+   set zh=$g(zh,$zh)
+   set t=$piece(zh,",")*3600*24+$piece(zh,",",2)+($piece(zh,",",3)/1E6)
+   if '$quit do
+   .  set z("lszh")=$g(z("lszh"),t)
+   .  write "tm:"_$j(t-z("lszh"),14,7)_"s"_" "_$VIEW("SPSIZE")_" "_$g(ms),!
+   .  set z("lszh")=t
+   quit:$quit t quit  ; >>> zhtm
 
 dotest()  ; Try to produce a catastrophic GC situation.
    ;
-   n (z)
+   new (z)
    ;
-   d zhtm(,"test-Start")
+   do zhtm(,"test-Start")
    ;
    ; 200,000 * 10 * (15+6) = ~42,000,000
-   s lsspsz=""
-   s numiters=+$piece($zcmdline," ",1)
-   f i=0:1:numiters d
-   .  s spsz=$VIEW("SPSIZE")
-   .  i (+spsz'=+lsspsz)!($p(spsz,",",2)<$p(lsspsz,",",2)) d zhtm(,"test-"_i_" "_lsspsz)
-   .  s lsspsz=spsz
-   .  k rc
-   .  f r=1:1:10 d
-   .  .  s rc($ze("abcdefghijklmnopqrstuvwxyz",r,r+5))=$zj("",15) ; ="aaaaabbbbbccccc" (constant here results in interesting optimizations)
-   .  m rs("foo",i)=rc
-   .  ;m rs("foo",300000-i)=rc ; Reversing subscripts - no help
-   .  ;m rs("foo",-i)=rc   ; Negative subscript - no help
-   .  ;s n="" f  s n=$o(rc(n)) q:n=""  s rs("foo",i,n)=rc(n)  ; No change here.
+   set lsspsz=""
+   set numiters=+$piece($zcmdline," ",1)
+   for i=0:1:numiters do
+   .  set spsz=$VIEW("SPSIZE")
+   .  if (+spsz'=+lsspsz)!($piece(spsz,",",2)<$piece(lsspsz,",",2)) do zhtm(,"test-"_i_" "_lsspsz)
+   .  set lsspsz=spsz
+   .  kill rc
+   .  for r=1:1:10 do
+   .  .  set rc($ze("abcdefghijklmnopqrstuvwxyz",r,r+5))=$zj("",15) ; ="aaaaabbbbbccccc" (constant here results in interesting optimizations)
+   .  merge rs("foo",i)=rc
    ;
-   d zhtm(,"test-DONE")
-   q  ; >>> dotest
+   do zhtm(,"test-DONE")
+   quit  ; >>> dotest
 
 check	;
 	;
