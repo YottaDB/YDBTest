@@ -66,6 +66,10 @@ else if ($?ydb_environment_init) then
 	# And V63001A is unusable until T63001A is available.
 	setenv subtest_exclude_list "$subtest_exclude_list C9D08002387"
 endif
+# Disable certain timing-sensitive tests on slower single-cpu systems
+if ($gtm_test_singlecpu) then
+	setenv subtest_exclude_list "$subtest_exclude_list D9G12002636"
+endif
 
 $gtm_tst/com/submit_subtest.csh
 echo "V52000 test DONE."
