@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "ydbxc_types.h"
+#include "libyottadb.h"
 
 #define ERRBUF_SIZE	1024
 
