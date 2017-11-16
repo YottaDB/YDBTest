@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -13,9 +16,6 @@
 
 # This test verifies that call-ins from Java into GT.M work as expected. The test uses Java code to generate the actual
 # test M and Java routines, call-in tables, and expected output files on-the-fly.
-
-# In case there is no Java on the box, exit right away.
-if ("NA" == $JAVA_HOME) exit
 
 # Get the generic Java settings file.
 cp $tst_general_dir/set_java_env.csh .

@@ -1,14 +1,17 @@
 /****************************************************************
-*								*
+ *								*
  * Copyright (c) 2013-2015 Fidelity National Information 	*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
-*								*
-*	This source code contains the intellectual property	*
-*	of its copyright holder(s), and is made available	*
-*	under a license.  If you do not know the terms of	*
-*	the license, please stop and do not read further.	*
-*								*
-****************************************************************/
+ *								*
+ * Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	*
+ * All rights reserved.						*
+ *								*
+ *	This source code contains the intellectual property	*
+ *	of its copyright holder(s), and is made available	*
+ *	under a license.  If you do not know the terms of	*
+ *	the license, please stop and do not read further.	*
+ *								*
+ ****************************************************************/
 package com.test.ji;
 
 import java.io.UnsupportedEncodingException;
@@ -857,12 +860,21 @@ public class TestCI {
 					builder.append(javaHeader);
 					builder.append("\t\ttry {\n");
 					builder.append("\t\t\tGTMCI.doVoidJob(\"" + name + "\");\n");
-					builder.append("\t\t\tSystem.out.println(\"TEST-F-FAIL, This should not get printed!\");\n");
+					/* Starting r1.10, due to issue #32, a HALT inside a call-in returns to the caller
+					 * instead of exiting and therefore we should expect the next line to be displayed
+					 * even though the previous line did a call-in that in turn did a HALT.
+					 */
+					builder.append("\t\t\tSystem.out.println(\"This should get displayed even though previous call-in did a HALT!\");\n");
 					builder.append("\t\t} catch (Exception e) {\n");
 					builder.append("\t\t\tSystem.out.println(e.getMessage());\n");
 					builder.append("\t\t}\n");
 					builder.append("\t}\n");
 					return builder.toString();
+				}
+
+				@Override
+				public String getJavaResponse() {
+					return "This should get displayed even though previous call-in did a HALT!\n";
 				}
 			}
 		};
