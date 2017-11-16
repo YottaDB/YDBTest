@@ -35,15 +35,19 @@ if ("" == $JAVA_HOME) then
 endif
 
 if ("Linux" == $HOSTOS) then
-	if (-d $JAVA_HOME/jre/lib/amd64) then
-		setenv JAVA_SO_HOME $JAVA_HOME/jre/lib/amd64
-		setenv JVM_SO_HOME $JAVA_HOME/jre/lib/amd64/server
-	else if (-d $JAVA_HOME/jre/lib/i386) then
-		setenv JAVA_SO_HOME $JAVA_HOME/jre/lib/i386
-		setenv JVM_SO_HOME $JAVA_HOME/jre/lib/i386/server
-	else
-		setenv JAVA_SO_HOME $JAVA_HOME/jre/lib/i686
-		setenv JVM_SO_HOME $JAVA_HOME/jre/lib/i686/server
+	foreach dir (amd64 i386 arm i686 doesnotexist)
+		if (-d $JAVA_HOME/jre/lib/$dir) then
+			set sodir = $dir
+			break
+		endif
+	end
+	setenv JAVA_SO_HOME $JAVA_HOME/jre/lib/$sodir
+	if (! -e $JAVA_SO_HOME) then
+		echo "YDB_CSHRC-E-FAIL : JAVA_SO_HOME = $JAVA_SO_HOME does not exist"
+	endif
+	setenv JVM_SO_HOME $JAVA_HOME/jre/lib/$sodir/server
+	if (! -e $JVM_SO_HOME) then
+		echo "YDB_CSHRC-E-FAIL : JVM_SO_HOME = $JVM_SO_HOME does not exist"
 	endif
 else if ("SunOS" == $HOSTOS) then
 	setenv JAVA_SO_HOME $JAVA_HOME/jre/lib/sparcv9
