@@ -178,6 +178,37 @@ int main(void)
 	}
 	printf("main: Return from QUIT with (an unexpected string) return value\n\n");
 
+	/* Make a call to routines we have already called (using a different entry id) but with 2 args instead
+	 * of 1 which is 1 more than expected. Should get an error - once for int and once for string retvals.
+	 */
+
+	printf("main: Setting up for call to routine with an extra (unexpected) argument\n");
+	retintval = -99;
+	status = ydb_ci("testcizhalt2manyargsint", &retintval, useHALT);
+	if (status)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("Return code: %d\n", status);
+		printf("%s\n", errbuf);
+		fflush(stdout);
+	}
+	printf("main: Return from calling routine with an unexpected arg (integer retval flavor)\n\n");
+
+	printf("main: Setting up for call to routine with an extra (unexpected) argument\n");
+	retstrval.address = retbuf;
+	strcpy(retbuf, "snarf");
+	retstrval.length = sizeof("snarf") - 1;
+	status = ydb_ci("testcizhalt2manyargsint", &retstrval, useHALT);
+	if (status)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("Return code: %d\n", status);
+		printf("%s\n", errbuf);
+		fflush(stdout);
+	}
+	printf("main: Return from calling routine with an unexpected arg (string retval flavor)\n\n");
+
+
 	/* Now make a call with arguments to a routine that isn't expecting any - expect error */
 
 	printf("main: Initializing return value to -99 for the call with args to routine with no parms test\n");

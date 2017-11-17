@@ -22,14 +22,18 @@
 #
 
 #
-# Define the set of call-in routines we are testing
+# Define the set of call-in routines we are testing. Note we define entries for testcizhaltrcint() and
+# testcizhaltrcstr() twice - once with one arg (which we expect to work) and once with 2 args which we
+# expect to fail.
 #
 setenv GTMCI testcizhaltrc.xc
 cat >> $GTMCI << EOF
-testcizhaltrcint:  ydb_int_t    *testcizhaltrcint^testcizhaltrc(I:ydb_int_t)
-testcizhaltrcstr:  ydb_string_t *testcizhaltrcstr^testcizhaltrc(I:ydb_int_t)
-testcizhaltnoargs: ydb_int_t    *testcizhaltnoargs^testcizhaltrc(I:ydb_int_t)
-testcizhaltnoretv: void          testcizhaltnoretval^testcizhaltrc(I:ydb_int_t)
+testcizhaltrcint:         ydb_int_t    *testcizhaltrcint^testcizhaltrc(I:ydb_int_t)
+testcizhaltrcstr:         ydb_string_t *testcizhaltrcstr^testcizhaltrc(I:ydb_int_t)
+testcizhaltnoargs:        ydb_int_t    *testcizhaltnoargs^testcizhaltrc(I:ydb_int_t)
+testcizhalt2manyargsint:  ydb_int_t    *testcizhaltrcint^testcizhaltrc(I:ydb_int_t, I:ydb_int_t)
+testcizhalt2manyargsstr:  ydb_string_t *testcizhaltrcstr^testcizhaltrc(I:ydb_int_t, I:ydb_int_t)
+testcizhaltnoretv:        void          testcizhaltnoretval^testcizhaltrc(I:ydb_int_t)
 EOF
 #
 # Compile/build C main routine
