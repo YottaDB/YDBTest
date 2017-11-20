@@ -22,7 +22,6 @@ cmcm.tab
 #
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/squarec.c
 $gt_ld_shl_linker ${gt_ld_option_output}libsquare${gt_ld_shl_suffix} $gt_ld_shl_options squarec.o $gt_ld_syslibs $tst_ld_sidedeck >&! link1.map
-
 if( $status != 0 ) then
     cat link1.map
 endif
@@ -41,7 +40,6 @@ xx
 
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/ctomctom.c
 $gt_ld_linker $gt_ld_option_output cmcm $gt_ld_options_common ctomctom.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_gtmshr $gt_ld_syslibs >&! link2.map
-
 if( $status != 0 ) then
     cat link2.map
 endif

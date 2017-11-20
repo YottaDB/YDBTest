@@ -14,6 +14,6 @@
 ;
 testcizhalt3
 	new $etrap
-	set $etrap="write ""testcizhalt3: ** Error** : "",$zstatus,!,""Aborting testcizhalt3"",!"
-	write "testcizhalt3: Entered - driving ZHALT now to return to call-in caller",!
-	zhalt 1		     ; Note if any rc but 0 or 1, intoduces a blank line in reference file
+	set $etrap="write ""testcizhalt3: ** Error caught ** : "",$zstatus,!,""Aborting testcizhalt3"",! set $ecode="""" quit"
+	write "testcizhalt3: Entered - driving ZHALT now to return to call-in caller (expect NOTEXTRINSIC error)",!
+	zhalt 42	     ; Not expecting a return value - this will drive an error
