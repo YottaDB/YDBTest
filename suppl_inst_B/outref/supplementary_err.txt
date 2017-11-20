@@ -33,7 +33,7 @@ Error UPDSYNCINSTFILE seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
 ==Executing MULTISITE_REPLIC 'RUN INST4 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log REPL2OLD'==
 ----------
 Error REPL2OLD seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%GTM-E-REPL2OLD, Instance INSTANCE2 uses a GT.M version that does not support connection with the current version on instance INSTANCE4
+%GTM-E-REPL2OLD, Instance INSTANCE2 uses a GT.M/YottaDB version that does not support connection with the current version on instance INSTANCE4
 ----------
 # The receiver would have exited with the above error. Manually shutdown the update process and passive server
 ==Executing MULTISITE_REPLIC 'RUN INST4 set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_IST2INST4.out'==
@@ -46,7 +46,7 @@ Error REPL2OLD seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
 ==Executing MULTISITE_REPLIC 'RUN INST4 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##SRC_##TIMESTAMP##.log REPL2OLD'==
 ----------
 Error REPL2OLD seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-%GTM-E-REPL2OLD, Instance INSTANCE2 uses a GT.M version that does not support connection with the current version on instance INSTANCE4
+%GTM-E-REPL2OLD, Instance INSTANCE2 uses a GT.M/YottaDB version that does not support connection with the current version on instance INSTANCE4
 ----------
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST4 INST2'==
 ==Executing MULTISITE_REPLIC 'STOPRCV INST4 INST2'==
