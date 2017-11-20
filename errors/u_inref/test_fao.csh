@@ -25,8 +25,7 @@ if ($status) then
 	exit 1
 endif
 # Don't change the following gt_cc_compiler to gt_ld_linker -- hppa needs gt_cc_compiler
-$gt_cc_compiler $gt_ld_options_common -o runfaotest test_fao.o -L$gtm_obj -lmumps \
-	-lgnpclient -lcmisockettcp $gt_ld_extra_libs $gt_ld_syslibs >& linker.out
+$gt_cc_compiler $gt_ld_options_common -o runfaotest test_fao.o -L$gtm_obj -lmumps $gt_ld_extra_libs $gt_ld_syslibs >& linker.out
 if ($status) then
 	echo "TEST-E-LINK Error from Linker ($gt_cc_compiler).  See file linker.out for details"
 	exit 1

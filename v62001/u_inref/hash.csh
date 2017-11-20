@@ -22,7 +22,7 @@ if ($tst_image == "dbg") set opts=($gt_cc_option_debug $gt_cc_option_DDEBUG)
 echo "Compiling Hash Test"
 $gt_cc_compiler -o ./hash.o $gtt_cc_shl_options $gt_cc_option_I $opts $gtm_tst/$tst/inref/hash.c
 echo "Linking Hash Test"
-$gt_ld_linker $gt_ld_option_output ./hash $gt_ld_options_common ./hash.o -L$gtm_dist/obj -lmumps -lstub $gt_ld_sysrtns $gt_ld_syslibs >& makeexe.out
+$gt_ld_linker $gt_ld_option_output ./hash $gt_ld_options_common ./hash.o -L$gtm_dist/obj -lmumps $gt_ld_sysrtns $gt_ld_syslibs >& makeexe.out
 
 echo "Starting Hash Test"
 ./hash
