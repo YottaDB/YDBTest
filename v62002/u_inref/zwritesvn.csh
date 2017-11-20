@@ -20,7 +20,7 @@ if ($tst_image == "dbg") set opts=($gt_cc_option_debug $gt_cc_option_DDEBUG)
 
 # Compile and link svndump
 $gt_cc_compiler $gtt_cc_shl_options $opts $gtm_tst/$tst/inref/svndump.c -o svndump.o -I$gtm_inc >&! compile.out && \
-	$gt_ld_linker $gt_ld_options_common -o svndump svndump.o -L$gtm_dist/obj -lmumps -lstub $gt_ld_sysrtns $gt_ld_syslibs >&! link.out
+	$gt_ld_linker $gt_ld_options_common -o svndump svndump.o -L$gtm_dist/obj -lmumps $gt_ld_sysrtns $gt_ld_syslibs >&! link.out
 if ( ! -e svndump ) then
 	echo "Compilation of svndump failed, exiting"
 	exit 0

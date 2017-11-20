@@ -1,9 +1,11 @@
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_dist/gtm_dist_DBCERTIFY.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_dist is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%GTM-E-DISTPATHMAX, .gtm_dist path is greater than maximum .[0-9][0-9]*.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_dist/gtm_dist_DSE.log
 ##TEST_AWK%GTM-E-DISTPATHMAX, .gtm_dist path is greater than maximum .[0-9][0-9]*.
-##TEST_HOST_SHORT##:##TEST_PATH##/gtm_dist/gtm_dist_GTCM_GNP_SERVER2.log
-%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
+##TEST_HOST_SHORT##:##TEST_PATH##/gtm_dist/gtm_dist_GTCM_GNP_SERVER.log
+##TEST_AWK%GTM-E-DISTPATHMAX, .gtm_dist path is greater than maximum .[0-9][0-9]*.
+##TEST_HOST_SHORT##:##TEST_PATH##/gtm_dist/gtm_dist_GTCM_SERVER.log
+##TEST_AWK%GTM-E-DISTPATHMAX, .gtm_dist path is greater than maximum .[0-9][0-9]*.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_dist/gtm_dist_GTM.log
 ##TEST_AWK%GTM-E-DISTPATHMAX, .gtm_dist path is greater than maximum .[0-9][0-9]*.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_dist/gtm_dist_LKE.log
