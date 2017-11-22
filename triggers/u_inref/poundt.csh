@@ -4,6 +4,9 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -329,9 +332,16 @@ echo "After Final incremental restore"
 $gtm_exe/mumps -run datatest
 
 # Temporarily disable on the fly trigger upgrade testing
+# Save current value and use that to restore the env var instead of restoring it always to 1
+# since it is possible the env var is 0 coming into this script (e.g. on ARM where gtm_test_nopriorgtmver is set)
+if ($?gtm_test_trig_upgrade) then
+	set save_trig_upgrade = $gtm_test_trig_upgrade
+endif
 unsetenv gtm_test_trig_upgrade
 $gtm_tst/com/dbcheck.csh -extract
-setenv gtm_test_trig_upgrade 1
+if ($?save_trig_upgrade) then
+	setenv gtm_test_trig_upgrade $save_trig_upgrade
+endif
 
 echo ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
 echo "6. ZTrigger"
