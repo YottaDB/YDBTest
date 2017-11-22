@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -14,7 +17,7 @@ setenv gtm_test_jnl NON_SETJNL
 setenv test_encryption NON_ENCRYPT	# Since -acc_meth=MM is passed to dbcreate
 unsetenv acc_meth
 # We need database extension to be 1 and access_method to be MM.
-$gtm_tst/com/dbcreate.csh mumps 1 -extension=1 -acc_meth=MM
+$gtm_tst/com/dbcreate.csh mumps 1 -extension=1 -acc_meth=MM -block_size=1024
 $gtm_exe/mumps -run %XCMD 'do update^gtm7756'
 @ updcnt = `$gtm_exe/mumps -run %XCMD 'write $order(^x(""),-1)'`
 $MUPIP set -acc=BG -reg "*"
