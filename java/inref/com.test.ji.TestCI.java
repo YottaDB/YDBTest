@@ -1951,16 +1951,7 @@ public class TestCI {
 
 				@Override
 				public String getJavaResponse() {
-					String retValue;
-					if (retType == GTMType.GTM_BOOLEAN)
-						retValue = "false";
-					else if (retType == GTMType.GTM_INTEGER || retType == GTMType.GTM_LONG)
-						retValue = "0";
-					else if (retType == GTMType.GTM_FLOAT || retType == GTMType.GTM_DOUBLE)
-						retValue = "0.0";
-					else	/* JAVA_STRING or JAVA_BYTE_ARRAY */
-						retValue = "";
-					return retValue + "\n";
+					return "150374554,%GTM-E-QUITARGREQD, Quit from an extrinsic must have an argument" + "\n";
 				}
 			};
 		}
