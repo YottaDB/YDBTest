@@ -19,13 +19,14 @@
 # gctest            [nars]  Test stringpool garbage collection performance with lots of strings in the pool
 # patnotfound       [nars]  Test runtime behavior after PATNOTFOUND compile-time error
 # readtimeout       [nars]  Test that READ X:TIMEOUT works correctly if TIMEOUT is a fraction with more than 3 decimal digits
+# miximage          [nars]  Test MIXIMAGE error is appropriately issued when multiple images are mixed in same process
 #-------------------------------------------------------------------------------------
 
 echo "r120 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "zindcacheoverflow largelvarray gctest patnotfound readtimeout"
+setenv subtest_list_non_replic "zindcacheoverflow largelvarray gctest patnotfound readtimeout miximage"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
