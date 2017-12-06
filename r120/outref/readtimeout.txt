@@ -1,0 +1,11 @@
+# Running expect with readtimeout.exp (unfiltered output: expect.out) : Expecting ZWRITE output following timed READ
+GTM>read x:1.234
+GTM>zwrite $test
+$TEST=0
+GTM>read y:1.2345
+GTM>zwrite $test
+$TEST=0
+GTM>zwrite
+x=""
+y=""
+GTM>halt
