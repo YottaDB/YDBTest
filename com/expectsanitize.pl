@@ -13,7 +13,7 @@
 # This perl script removes control characters from an expect session. A few portions of it is copied from
 #	https://unix.stackexchange.com/questions/14684/removing-control-chars-including-console-codes-colours-from-script-output
 #
-# Removing the control characters helps it possible to paste the entire expect output in the test reference file.
+# Removing the control characters makes it possible to paste the entire expect output in the test reference file.
 #
 #################################################################
 

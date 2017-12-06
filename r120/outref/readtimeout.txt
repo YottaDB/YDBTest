@@ -1,4 +1,5 @@
-# Running expect with readtimeout.exp (unfiltered output: expect.out) : Expecting ZWRITE output following timed READ
+# Expecting ZWRITE output of x and y to be "" after timeouts from timed READ of 1.234 and 1.2345 seconds
+# With YottaDB r110 and GTM V63002, the timed READ of 1.2345 seconds would not timeout thus causing y to not be "" below
 GTM>read x:1.234
 GTM>zwrite $test
 $TEST=0

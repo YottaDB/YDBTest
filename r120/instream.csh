@@ -14,11 +14,11 @@
 #-------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
-# zindcacheoverflow [ashok]	Test fix to indirect code cache stats 4-byte overflow error
-# largelvarray      [nars]	Test local array performance does not deteriorate exponentially with large # of nodes
-# gctest            [nars]	Test stringpool garbage collection performance with lots of strings in the pool
-# patnotfound       [nars]	Test runtime behavior after PATNOTFOUND compile-time error
-# readtimeout       [nars]      Test that READ X:TIMEOUT works correctly if TIMEOUT is a fraction with more than 3 decimal digits
+# zindcacheoverflow [ashok] Test fix to indirect code cache stats 4-byte overflow error
+# largelvarray      [nars]  Test local array performance does not deteriorate exponentially with large # of nodes
+# gctest            [nars]  Test stringpool garbage collection performance with lots of strings in the pool
+# patnotfound       [nars]  Test runtime behavior after PATNOTFOUND compile-time error
+# readtimeout       [nars]  Test that READ X:TIMEOUT works correctly if TIMEOUT is a fraction with more than 3 decimal digits
 #-------------------------------------------------------------------------------------
 
 echo "r120 test starts..."

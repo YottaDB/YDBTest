@@ -11,8 +11,11 @@
 #								#
 #################################################################
 
+# Test that READ X:TIMEOUT works correctly if TIMEOUT is a fraction with more than 3 decimal digits
+
 setenv TERM xterm
-echo "# Running expect with readtimeout.exp (unfiltered output: expect.out) : Expecting ZWRITE output following timed READ"
+echo '# Expecting ZWRITE output of x and y to be "" after timeouts from timed READ of 1.234 and 1.2345 seconds'
+echo '# With YottaDB r110 and GTM V63002, the timed READ of 1.2345 seconds would not timeout thus causing y to not be "" below'
 setenv gtm_prompt "GTM>" # needed by expect script to look for GTM> prompt. We use this instead of YDB> to be able to run
 			 # this test against GT.M V63002 (which does not know about gtm_prompt but instead uses a prompt of GTM>
 # Turn on expect debugging using "-d". The debug output would be in expect.dbg in case needed to analyze stray timing failures.
