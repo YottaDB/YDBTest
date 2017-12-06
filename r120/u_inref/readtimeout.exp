@@ -1,0 +1,41 @@
+#################################################################
+#								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+set timeout 60
+spawn /usr/local/bin/tcsh -f
+send -- "\$gtm_dist/mumps -direct\r"
+expect -exact "GTM>"
+# Do read with timeout of 1.234. This should return after 1.234 seconds
+send -- "read x:1.234\r"
+# sleep > 1.234 seconds to ensure the read times out
+sleep 3
+expect -exact "GTM>"
+# Check value of $test to confirm read timed out
+send -- "zwrite \$test\r"
+expect -exact "GTM>"
+# Do read with timeout of 1.2345. This should return after 1.2345 seconds
+send -- "read y:1.2345\r"
+# sleep > 1.2345 seconds to ensure the read times out
+sleep 3
+expect -exact "GTM>"
+# Check value of $test to confirm read timed out
+send -- "zwrite \$test\r"
+# Note that if the above read does not time out (as was the case with r110) but the expect timeout (60 seconds) kicks in,
+# the above send of "zwrite $test" would end up going into the read so the zwrite below would show the variable "y"
+# as having the value "zwrite $test". If such a failure happens, it means the read is not timing out like it should.
+expect -exact "GTM>"
+# Do zwrite to check variables are indeed set correctly
+send -- "zwrite\r"
+expect -exact "GTM>"
+# Halt
+send -- "halt\r"
+expect -exact ">"
