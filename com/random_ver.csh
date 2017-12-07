@@ -327,6 +327,7 @@ if ($?test_encryption && ("ENCRYPT" == "$test_encryption")) then
 		endif
 		# On AIX, the AES256 cipher in versions [V53004; V60000] and Blowfish cipher in versions [V53004; V54000A] were
 		# either unsupported or caused hangs in tests, and thus are not usable.
+		# Note: From V6.3-001 onwards, BLOWFISHCFB is not supported.
 		if ("AES256CFB" == $encryption_algorithm) then
 			set actualverlist = "$filteredlist"
 			set filteredlist = ""
@@ -339,13 +340,7 @@ if ($?test_encryption && ("ENCRYPT" == "$test_encryption")) then
 				echo "No encryption versions found supporting AES256CFB cipher" >> must_force_non_encrypt
 			endif
 		else if ("BLOWFISHCFB" == $encryption_algorithm) then
-			set actualverlist = "$filteredlist"
 			set filteredlist = ""
-			foreach ver ($actualverlist)
-				if ((`expr $ver ">=" "V54001"`) || (`expr $ver "<" "V53004"`)) then
-					set filteredlist = ($filteredlist $ver)
-				endif
-			end
 			if ("" == "$filteredlist") then
 				echo "No encryption versions found supporting BLOWFISHCFB cipher" >> must_force_non_encrypt
 			endif
