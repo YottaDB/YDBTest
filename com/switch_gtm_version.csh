@@ -3,6 +3,9 @@
 # Copyright (c) 2004-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -105,14 +108,14 @@ if ( ( "ENCRYPT" == "$test_encryption" ) && ( -x $gtm_tools/check_encrypt_suppor
 		# If the prior version is pre-V6.0-001, then set an environment variable pointing to the library that knows to work
 		# with the database created by the prior version. This way, the current version ($ver_to_switch) can decrypt the
 		# encrypted content created by the prior version.
+		# Note: From V6.3-001 onwards, BLOWFISHCFB is not supported.
 		if ($ver_to_switch =~ "V9*" || `expr $ver_to_switch ">" "V60000"`) then
 			if ("AIX" == $HOSTOS) then
-				set encryption_algorithm = "BLOWFISHCFB"
 				set encryption_lib = "openssl"
 			else
-				set encryption_algorithm = "AES256CFB"
 				set encryption_lib = "gcrypt"
 			endif
+			set encryption_algorithm = "AES256CFB"
 			setenv gtm_crypt_plugin libgtmcrypt_${encryption_lib}_${encryption_algorithm}${gt_ld_shl_suffix}
 		endif
 		setenv GTMXC_gpgagent $gtm_dist/plugin/gpgagent.tab

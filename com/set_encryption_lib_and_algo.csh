@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -23,11 +26,10 @@ if ( "TRUE" == "`$gtm_tst/com/is_encrypt_support.csh ${gtm_dist:h:t} ${gtm_dist:
 		set default_only
 		if ("aix" == "$gtm_test_osname") then
 			set default_lib = "openssl"
-			set default_algo = "BLOWFISHCFB"
 		else
 			set default_lib = "gcrypt"
-			set default_algo = "AES256CFB"
 		endif
+		set default_algo = "AES256CFB"
 		set available_list = ( $default_lib )
 	else
 		unset default_only
@@ -75,11 +77,11 @@ else if (! $?gtm_crypt_plugin) then
 		# 2. Library = libcrypto; Algo = AES256CFB
 		# 3. Library = libcrypto; Algo = BLOWFISHCFB
 		# Randomly choose one of the three. Also randomly let the test pick default one pointed by libgtmcrypt.so
+		# Note: From V6.3-001 onwards, BLOWFISHCFB is not supported.
 		setenv encryption_lib `$gtm_dist/mumps -run chooseamong $supported_list`
 		set algorithms = "AES256CFB"
 		if ("openssl" == $encryption_lib) then
-			set algorithms = "AES256CFB AES256CFB BLOWFISHCFB"
-			# increase the probability of AES256CFB which is the industry standard and is what we officially support.
+			set algorithms = "AES256CFB"
 		endif
 		set available_algo = "$algorithms"
 		if ($?gtm_test_exclude_encralgo) then
