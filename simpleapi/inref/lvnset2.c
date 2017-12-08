@@ -30,6 +30,7 @@ int main()
 	int		status, subs;
 	ydb_buffer_t	basevar, subscr1, subscr2, value1, value2, value3, subsbuff[MAX_SUBS + 1];
 	char		errbuf[ERRBUF_SIZE], subsstrlit[MAX_SUBS][3];	/* 3 to hold 2 digit decimal # + trailing null char */
+	ydb_string_t	zwrarg;
 
 	/* Initialize varname, subscript, and value buffers */
 	LYDB_BUFFER_LITERAL(&basevar, BASEVAR);
@@ -328,7 +329,9 @@ int main()
 		return 0;
 	}
 	/* Demonstrate our progress by executing a ZWRITE in a call-in */
-	status = ydb_ci("driveZWRITE");
+	zwrarg.address = NULL;
+	zwrarg.length = 0;
+	status = ydb_ci("driveZWRITE", &zwrarg);
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);

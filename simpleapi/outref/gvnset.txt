@@ -1,0 +1,20 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Copy all C programs that need to be tested
+ --> Running gvnset1.c <---
+^baselv="A question"
+^baselv(42)="One less than 43"
+^baselv(42,"answer:")="Life, the universe, and everything"
+Attempting set of bad basevar ^B%dbasevarInvChar
+ydb_set_s() [a]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+Attempting set of bad basevar ^Verylongbasevarthatexceedsmaxlength
+ydb_set_s() [b]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+Attempting set of basevar with NULL subscript address parameter
+ydb_set_s() [c]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

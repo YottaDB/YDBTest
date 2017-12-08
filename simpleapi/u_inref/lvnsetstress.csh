@@ -14,7 +14,7 @@
 # Stress test of ydb_set_s() function for Local variables in the simpleAPI
 #
 cat > lvnset.xc << CAT_EOF
-driveZWRITE: void driveZWRITE()
+driveZWRITE: void driveZWRITE(I:ydb_string_t *)
 CAT_EOF
 
 setenv GTMCI lvnset.xc	# needed to invoke driveZWRITE.m from lvnset*.c below
@@ -31,10 +31,11 @@ if (0 != $status) then
 	echo "LVNSET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 	continue
 endif
-./$exefile >& $exefile.log
+./$exefile | grep -v zwrarg >& $exefile.log
 mv $exefile.o $exefile.c.o	# move it away for the M program (of the same name) to be compiled and a .o created
 				# or else an INVOBJFILE error would be issued (due to unexpected format)
 $gtm_dist/mumps -run genlvnsetstress >& $exefile.cmp
+
 diff $exefile.cmp $exefile.log >& $exefile.diff
 if ($status) then
 	echo "LVNSETSTRESS-E-FAIL : diff $exefile.cmp $exefile.log returned non-zero status. See $exefile.diff for details"

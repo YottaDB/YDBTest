@@ -31,6 +31,7 @@ lvnsetstress;
 	write "{",!
 	write " int status;",!
 	write " char errbuf[ERRBUF_SIZE];",!
+	write " ydb_string_t zwrarg;",!
 	write "",!
 	;
 	; Generate random sets of lvns in M and C programs
@@ -44,7 +45,9 @@ lvnsetstress;
 	close mfile
 	;
 	use cfile
-	write " status = ydb_ci(""driveZWRITE"");",!
+	write " zwrarg.address = NULL;",!
+	write " zwrarg.length = 0;",!
+	write " status = ydb_ci(""driveZWRITE"", &zwrarg);",!
 	write " if (YDB_OK != status) { ydb_zstatus(errbuf, ERRBUF_SIZE); printf(""driveZWRITE() : %s\n"", errbuf); fflush(stdout); }",!
 	write " return status;",!
 	write "}",!
