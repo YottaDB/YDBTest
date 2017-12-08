@@ -11,27 +11,30 @@
 #								#
 #################################################################
 #
-# Test of ydb_set_s() function for Local variables in the simpleAPI
+# Test of ydb_set_s() function for Global variables in the simpleAPI
 #
-echo "Copy all C programs that need to be tested"
-cp $gtm_tst/$tst/inref/lvnset*.c .
+$gtm_tst/com/dbcreate.csh mumps 1
 
-cat > lvnset.xc << CAT_EOF
+echo "Copy all C programs that need to be tested"
+cp $gtm_tst/$tst/inref/gvnset*.c .
+
+cat > gvnset.xc << CAT_EOF
 driveZWRITE: void driveZWRITE(I:ydb_string_t *)
 CAT_EOF
 
-setenv GTMCI lvnset.xc	# needed to invoke driveZWRITE.m from lvnset*.c below
+setenv GTMCI gvnset.xc	# needed to invoke driveZWRITE.m from gvnset*.c below
 
-foreach file (lvnset*.c)
+foreach file (gvnset*.c)
 	echo " --> Running $file <---"
 	set exefile = $file:r
 	$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $file
 	$gt_ld_linker $gt_ld_option_output $exefile $gt_ld_options_common $exefile.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_gtmshr $gt_ld_syslibs >& $exefile.map
 	if (0 != $status) then
-		echo "LVNSET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
+		echo "GVNSET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 		continue
 	endif
 	./$exefile
 	echo ""
 end
 
+$gtm_tst/com/dbcheck.csh

@@ -12,5 +12,6 @@
 ;
 ; Just execute a ZWRITE in our process space to see what local vars got set
 ;
-	zwrite
+driveZWRITE(zwrarg)
+	zwrite @zwrarg
 	quit

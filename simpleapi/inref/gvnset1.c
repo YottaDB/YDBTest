@@ -16,16 +16,15 @@
 
 #define ERRBUF_SIZE	1024
 
-#define BADBASEVAR1 "B%dbasevarInvChar"
-#define BADBASEVAR2 "Verylongbasevarthatexceedsmaxlength"
-#define BASEVAR "baselv"
+#define BADBASEVAR1 "^B%dbasevarInvChar"
+#define BADBASEVAR2 "^Verylongbasevarthatexceedsmaxlength"
+#define BASEVAR "^baselv"
 #define SUBSCR1	"42"
 #define SUBSCR2 "answer:"
 #define VALUE1	"A question"
 #define VALUE2	"One less than 43"
 #define VALUE3 	"Life, the universe, and everything"
 
-/* Test simple sets of unsubscripted and subscripted Local Variables */
 int main()
 {
 	int		status;
@@ -77,8 +76,8 @@ int main()
 		return 0;
 	}
 	/* Demonstrate our progress by executing a ZWRITE in a call-in */
-	zwrarg.address = NULL;			/* Create a null string argument so dumps all locals */
-	zwrarg.length = 0;
+	zwrarg.address = BASEVAR;
+	zwrarg.length = sizeof(BASEVAR) - 1;
 	status = ydb_ci("driveZWRITE", &zwrarg);
 	if (status)
 	{
