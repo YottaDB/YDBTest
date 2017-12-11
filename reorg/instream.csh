@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -85,6 +88,11 @@ endif
 if ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtype") then
         setenv subtest_exclude_list "$subtest_exclude_list truncate_hasht"
 endif
+# Disable certain heavyweight tests on single-cpu systems
+if ($gtm_test_singlecpu) then
+	setenv subtest_exclude_list "$subtest_exclude_list on_ntp_njnl_reorg"
+endif
+
 $gtm_tst/com/submit_subtest.csh
 echo "REORG test DONE."
 #
