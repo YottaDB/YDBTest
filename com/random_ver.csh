@@ -177,8 +177,11 @@ if ($?vertype) then
 			if (! $?ydb_environment_init) then
 				set minimum = "V53001"
 			else
-				# Below is minimum 64-bit build we have on a YDB environment.
-				set minimum = "V54001"
+				# The oldest version we have in a YottaDB environment is V54001. But V54001 and V54002B pro
+				# fail with SIG-11 only on Ubuntu 17.04 when running a shared library created from M routines
+				# (suspect is a regression in the Ubuntu 17.04 patch but not sure). Therefore set V62000
+				# (the next available version) as the minimum 64-bit build as that works fine across all flavors.
+				set minimum = "V62000"
 			endif
 		else if ("HOST_SUNOS_SPARC" == $gtm_test_os_machtype) then
 			set minimum = "V53002"
