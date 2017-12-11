@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -133,6 +136,11 @@ $gtm_tst/com/rfstatus.csh "BEFORE"
 $sec_shell "$sec_getenv; $gtm_tst/com/rfstatus.csh "BEFORE:" < /dev/null"
 #
 $gtm_tst/$tst/u_inref/callstress.csh run 12
+@ status1 = $status
+if ($status1) then
+	echo "TEST failed in callstress.csh run 12. Exit status = $status1. Exiting test abruptly..."
+	exit 1
+endif
 #
 $gtm_tst/com/rfstatus.csh "AFTER"
 $sec_shell "$sec_getenv; $gtm_tst/com/rfstatus.csh "AFTER:" < /dev/null"
@@ -207,7 +215,7 @@ $tail -n +3  tmp.glo >! forwglo.glo
 echo "diff origdata.glo forwglo.glo"
 $tst_cmpsilent origdata.glo forwglo.glo
 if ($status) then
-	echo "TEST falied in MUPIP recover -FORWARD"
+	echo "TEST failed in MUPIP recover -FORWARD"
 	exit 1
 endif
 #
@@ -232,7 +240,7 @@ if (! $gtm_test_jnl_nobefore) then
 	echo "diff origdata.glo backglo.glo"
 	$tst_cmpsilent origdata.glo backglo.glo
 	if ($status) then
-		echo "TEST falied in MUPIP recover -BACKWARD"
+		echo "TEST failed in MUPIP recover -BACKWARD"
 		exit 1
 	endif
 	#
@@ -247,7 +255,7 @@ if (! $gtm_test_jnl_nobefore) then
 	$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/dbcheck_filter.csh -nosprgde"
 	$sec_shell "$sec_getenv; cd $SEC_SIDE/$bkupdir1; unsetenv gtm_repl_instance; "'$MUPIP extract backed.gbl >>&! backed.out; $tail -n +3 backed.gbl >! backed.glo'
 	$sec_shell "$sec_getenv; cd $SEC_SIDE;"'$MUPIP extract srcextr.gbl >>&! srcextr.out; $tail -n +3 srcextr.gbl >! srcextr.glo'
-	$sec_shell "$sec_getenv; cd $SEC_SIDE; $tst_cmpsilent ./$bkupdir1/backed.glo srcextr.glo ;if ($status) echo Rollback falied"
+	$sec_shell "$sec_getenv; cd $SEC_SIDE; $tst_cmpsilent ./$bkupdir1/backed.glo srcextr.glo ;if ($status) echo Rollback failed"
 	#
 endif
 foreach x ( 1 2 )
