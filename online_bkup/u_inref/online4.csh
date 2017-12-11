@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -96,7 +99,8 @@ if ($status != 0) then
 endif
 #
 $MUPIP journal -recover -forward acct.mjl,acnm.mjl,jnl.mjl,mumps.mjl >& jnl.log
-$grep -v MUJNLPREVGEN jnl.log # filter out the MUJNLPREVGEN messages.
+echo "Verify that journaling is turned OFF at the end of forward recovery and that it finished successfully"
+$grep -E "JNLSTATE|JNLSUCCESS" jnl.log | sort # Need to sort as output can be non-deterministic based on inode/ftok allocation for .dat files
 $gtm_exe/mumps -run %XCMD 'do ^mrverify'
 $gtm_exe/mumps -run %XCMD 'write "value of ^a in source database after recovery = ",$GET(^a),!'
 #

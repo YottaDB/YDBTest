@@ -67,16 +67,13 @@ No errors detected by integ.
 ##REMOTE_SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 ##ALLOW_OUTPUT NON_REPLIC
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+Verify that journaling is turned OFF at the end of forward recovery and that it finished successfully
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/acct.dat is now OFF
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/acnm.dat is now OFF
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/jnl.dat is now OFF
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
-%GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Recover successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+%GTM-S-JNLSUCCESS, Show successful
  PBank verify started
  PBank verify ended
 value of ^a in source database after recovery = 2
