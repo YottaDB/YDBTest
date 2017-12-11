@@ -45,10 +45,11 @@ if ("Linux" == $HOSTOS) then
 	if (! -e $JAVA_SO_HOME) then
 		echo "YDB_CSHRC-E-FAIL : JAVA_SO_HOME = $JAVA_SO_HOME does not exist"
 	endif
-	setenv JVM_SO_HOME $JAVA_HOME/jre/lib/$sodir/server
-	if (! -e $JVM_SO_HOME) then
-		echo "YDB_CSHRC-E-FAIL : JVM_SO_HOME = $JVM_SO_HOME does not exist"
+	set jvm_so_fullpath = `find $JAVA_SO_HOME -name libjvm.so | head -1`
+	if (! -e $jvm_so_fullpath) then
+		echo "YDB_CSHRC-E-FAIL : JVM_SO_HOME = $jvm_so_fullpath does not exist"
 	endif
+	setenv JVM_SO_HOME $jvm_so_fullpath:h
 else if ("SunOS" == $HOSTOS) then
 	setenv JAVA_SO_HOME $JAVA_HOME/jre/lib/sparcv9
 	setenv JVM_SO_HOME $JAVA_HOME/jre/lib/sparcv9/server
