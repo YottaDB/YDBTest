@@ -18,6 +18,7 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <string.h>
+#include <errno.h>
 
 #define	YDB_EOF		0
 #define	YDB_SET_S	1
@@ -30,13 +31,17 @@ int	fullread(char *buff, int len);
 /* Read "len" bytes. If "read()" system call returns less than "len", keep retrying until we have "len" bytes */
 int	fullread(char *buff, int len)
 {
-	int	toread = len, cnt;
+	int	toread = len, cnt, save_errno;
 	char	*ptr = buff;
 
 	do
 	{
-		cnt = read(0, ptr, toread);
-		assert(cnt > 0);
+		do
+		{
+			cnt = read(0, ptr, toread);
+			save_errno = errno;
+		} while ((-1 == cnt) && (EINTR == save_errno));
+		assert(0 < cnt);
 		toread -= cnt;
 		ptr += cnt;
 	} while (toread);
