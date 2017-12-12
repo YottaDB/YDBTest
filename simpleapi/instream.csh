@@ -16,6 +16,7 @@
 #-------------------------------------------------------------------------------------
 # lvnset       [nars]   Test of ydb_set_s() function for Local variables in the simpleAPI
 # lvnsetstress [nars]   Stress test of ydb_set_s() function for Local variables in the simpleAPI
+# stresstest   [nars]   Stress test of all ydb_*() functions in the simpleAPI
 # gvnset       [estess] Test of ydb_set_s() function for Global variables in the simpleAPI
 # isvset       [estess] Test of ydb_set_s() function for Intrinsic Special Variables in the simpleAPI
 #-------------------------------------------------------------------------------------
@@ -24,7 +25,7 @@ echo "simpleapi test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "lvnset lvnsetstress gvnset isvset"
+setenv subtest_list_non_replic "lvnset lvnsetstress stresstest gvnset isvset"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
