@@ -116,7 +116,7 @@ getsubs();
 	. ; string subscript
 	. set strloglen=1+$random(5)
 	. set strlen=$random(2**strloglen)
-	. set string="%:;=>'`{}|~#$^*()-+!~/abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	. set string="%:;=>'`{}|~#$^*()+!~/abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	. set stringlen=$length(string)
 	. for i=1:1:strlen set sub=sub_$extract(string,1+$random(stringlen))
 	quit sub
