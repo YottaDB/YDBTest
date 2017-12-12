@@ -22,7 +22,8 @@
 #define	YDB_EOF		0
 #define	YDB_SET_S	1
 
-#define assert(x) ((x) ? 1 : (fprintf(stderr, "Assert failed at %s line %d : %s\n", __FILE__, __LINE__, #x), kill(getpid(), SIGQUIT)))
+/* Use SIGILL below to generate a core when an assertion fails */
+#define assert(x) ((x) ? 1 : (fprintf(stderr, "Assert failed at %s line %d : %s\n", __FILE__, __LINE__, #x), kill(getpid(), SIGILL)))
 
 int	fullread(char *buff, int len);
 
@@ -104,10 +105,13 @@ int main()
 				&subscr[28], &subscr[29], &subscr[30], &subscr[31]);
 		assert(YDB_OK == status);
 	}
-	/* Demonstrate our progress by executing a ZWRITE in a call-in */
+	/* List all lvns created by us */
 	zwrarg.address = NULL;
 	zwrarg.length = 0;
 	status = ydb_ci("driveZWRITE", &zwrarg);
+	assert(0 == status);
+	/* List all gvns created by us */
+	status = ydb_ci("gvnZWRITE");
 	assert(0 == status);
 	return 0;
 }

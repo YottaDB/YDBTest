@@ -38,7 +38,10 @@ stresstest;
 	;
 	; Finish writing M program
 	use mfile
+	write " ; List all lvns created by us",!
 	write " zwrite",!
+	write " ; List all gvns created by us",!
+	write " do ^gvnZWRITE",!
 	close mfile
 	;
 	; Signal EOF to C program
@@ -80,13 +83,16 @@ helper	;
 	quit
 
 getvarname();
-	new loglen2,i
+	new loglen2,i,name
 	if ('$data(varnamesetlen)) do
 	. ; initialize "varnameset" array with choices of variable names
 	. set loglen2=1+$random(7)
 	. for i=1:1:1+$random(2**loglen2) set varnameset(i)=$$getvarnamehelper()
 	. set varnamesetlen=i
-	quit varnameset(1+$random(varnamesetlen))
+	set name=varnameset(1+$random(varnamesetlen))
+	if ($random(2)) quit name     ; local  variable name
+	else            quit "^"_name ; global variable name
+	quit
 
 getvarnamehelper();
 	; returns a random valid local variable name

@@ -13,11 +13,17 @@
 
 unsetenv gtmdbglvl # or else test runs for too long
 
+echo "Create database using maximum keysize of ~1K and record size = 4K"
+$gtm_tst/com/dbcreate.csh mumps -key_size=1019 -record_size=4096
+echo "Allow null subscripts in database since randomly generated subscripts could be null"
+$gtm_dist/dse change -file -null=TRUE >& dse_change.out
+
 #
 # Stress test of ALL ydb_*_s() functions in the simpleAPI
 #
 cat > stresstest.xc << CAT_EOF
-driveZWRITE: void driveZWRITE(I:ydb_string_t *)
+driveZWRITE: void ^driveZWRITE(I:ydb_string_t *)
+gvnZWRITE: void ^gvnZWRITE()
 CAT_EOF
 
 setenv GTMCI stresstest.xc	# needed to invoke driveZWRITE.m from stresstest.c below
@@ -46,9 +52,11 @@ set exefile=genstresstest
 mv $exefile.log $exefile.log_unfiltered
 grep -v zwrarg $exefile.log_unfiltered > $exefile.log
 diff $exefile.{cmp,log} >& $exefile.diff
+echo "Verify operations done through the simpleAPI by the C program against the same operations done by an M program"
 if ($status) then
 	echo "STRESSTEST-E-FAIL : diff $exefile.cmp $exefile.log returned non-zero status. See $exefile.diff for details"
 else
 	echo "PASS from stresstest"
 endif
 
+$gtm_tst/com/dbcheck.csh
