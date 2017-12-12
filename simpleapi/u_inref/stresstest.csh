@@ -10,6 +10,9 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+unsetenv gtmdbglvl # or else test runs for too long
+
 #
 # Stress test of ALL ydb_*_s() functions in the simpleAPI
 #

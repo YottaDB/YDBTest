@@ -17,6 +17,9 @@ stresstest;
 	; M program and C program do a ZWRITE to verify both have the same Local variable state.
 	; As other operations in the simpleAPI are implemented (ydb_get_s etc.), those would be added here.
 	;
+	; Set etrap first
+	set $etrap="use $principal zshow ""*"" halt"
+	;
 	; ------------------------------------------------------
 	; Do initializations
 	set mfile="genstresstest.m"
@@ -77,8 +80,17 @@ helper	;
 	quit
 
 getvarname();
+	new loglen2,i
+	if ('$data(varnamesetlen)) do
+	. ; initialize "varnameset" array with choices of variable names
+	. set loglen2=1+$random(7)
+	. for i=1:1:1+$random(2**loglen2) set varnameset(i)=$$getvarnamehelper()
+	. set varnamesetlen=i
+	quit varnameset(1+$random(varnamesetlen))
+
+getvarnamehelper();
 	; returns a random valid local variable name
-	new first,firstlen,rest,restlen,firstletter,name,len,restletter
+	new first,firstlen,rest,restlen,firstletter,name,len,restletter,i
 	set first="%abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"	; first letter can include %
 	set firstlen=$length(first)
 	set rest=$extract(first,2,99)_"0123456789"	; rest of letters cannot include %
