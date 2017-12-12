@@ -10,6 +10,9 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+unsetenv gtmdbglvl # or else test runs for too long
+
 #
 # Stress test of ydb_set_s() function for Local variables in the simpleAPI
 #
