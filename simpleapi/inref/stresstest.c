@@ -48,16 +48,20 @@ int	fullread(char *buff, int len)
 	return len;
 }
 
+#define	DBG_BUFF_SIZE	65536
+#define	READCNT_SIZE	256
+
 int main()
 {
-	int		i, status, bufflen = 0, reclen, varnamelen, nsubs, valuelen, len, action;
+	int		i, status, bufflen = 0, reclen, copylen, varnamelen, nsubs, valuelen, len, action, reccnt;
 	ydb_buffer_t	basevar, subscr[32], value;
 	char		hdrbuff[8], *buff, *ptr;
 	ssize_t		cnt;
 	ydb_string_t	zwrarg;
 	int		process_id = getpid();
+	int		dbg_buff[DBG_BUFF_SIZE], dbg_buff_index = 0, readcnt[READCNT_SIZE], readcnt_buff_index[READCNT_SIZE], readcnt_index = 0;
 
-	for ( ; ; )
+	for (reccnt = 0; ; reccnt++)
 	{
 		cnt = fullread(hdrbuff, 8);
 		assert(8 == cnt);
@@ -66,8 +70,8 @@ int main()
 		{
 			if (0 != bufflen)
 				free(buff);
-			bufflen = reclen;
-			buff = malloc(reclen * 2);
+			bufflen = reclen * 2;
+			buff = malloc(bufflen);
 			assert(NULL != buff);
 		}
 		action = *(int *)(hdrbuff + 4);
@@ -76,6 +80,26 @@ int main()
 		assert(YDB_SET_S == action);	/* for now only ydb_set_s is supported; more as other ydb_*_s functions are ready */
 		cnt = fullread(buff, reclen);
 		assert(cnt == reclen);
+		readcnt[readcnt_index] = cnt;
+		readcnt_buff_index[readcnt_index] = dbg_buff_index;
+		readcnt_index++;
+		if (READCNT_SIZE == readcnt_index)
+			readcnt_index = 0;
+		if ((dbg_buff_index + reclen) <= DBG_BUFF_SIZE)
+			copylen = reclen;
+		else
+			copylen = DBG_BUFF_SIZE - dbg_buff_index;
+		memcpy(&dbg_buff[dbg_buff_index], buff, copylen);
+		dbg_buff_index += copylen;
+		if (DBG_BUFF_SIZE <= dbg_buff_index)
+			dbg_buff_index -= DBG_BUFF_SIZE;
+		if (copylen < reclen)
+		{
+			copylen = reclen - copylen;
+			memcpy(&dbg_buff[dbg_buff_index], buff, copylen);
+			dbg_buff_index += copylen;
+			assert(DBG_BUFF_SIZE > dbg_buff_index);
+		}
 		ptr = buff;
 		varnamelen = *(int *)buff;
 		ptr += 4;
