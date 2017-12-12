@@ -33,12 +33,12 @@ int main()
 	ydb_string_t	zwrarg;
 
 	/* Initialize varname, subscript, and value buffers */
-	LYDB_BUFFER_LITERAL(&basevar, BASEVAR);
-	LYDB_BUFFER_LITERAL(&subscr1, SUBSCR1);
-	LYDB_BUFFER_LITERAL(&subscr2, SUBSCR2);
-	LYDB_BUFFER_LITERAL(&value1, VALUE1);
-	LYDB_BUFFER_LITERAL(&value2, VALUE2);
-	LYDB_BUFFER_LITERAL(&value3, VALUE3);
+	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
+	YDB_STRLIT_TO_BUFFER(&subscr1, SUBSCR1);
+	YDB_STRLIT_TO_BUFFER(&subscr2, SUBSCR2);
+	YDB_STRLIT_TO_BUFFER(&value1, VALUE1);
+	YDB_STRLIT_TO_BUFFER(&value2, VALUE2);
+	YDB_STRLIT_TO_BUFFER(&value3, VALUE3);
 	/* Set a base variable, no subscripts */
 	status = ydb_set_s(&value1, 0, &basevar);
 	if (YDB_OK != status)

@@ -1,0 +1,161 @@
+Copy all C programs that need to be tested
+ --> Running isvset1.c <---
+ZSHOW prior to setting new values for some ISVs
+$DEVICE=""
+$ECODE=""
+$ESTACK=0
+$ETRAP=""
+##TEST_AWK\$HOROLOG="[1-9][0-9]*,[1-9][0-9]*"
+$IO=0
+##TEST_AWK\$JOB=[1-9][0-9]*
+$KEY=""
+$PRINCIPAL=0
+$QUIT=0
+$REFERENCE=""
+$STACK=0
+##TEST_AWK\$STORAGE=[1-9][0-9]*
+##TEST_AWK\$SYSTEM="[1-9][0-9]*,gtm_sysid"
+$TEST=1
+$TLEVEL=0
+$TRESTART=0
+##TEST_AWK\$X=[0-9]*
+##TEST_AWK\$Y=[0-9]*
+$ZA=0
+##TEST_AWK\$ZALLOCSTOR=[1-9][0-9]*
+$ZB=""
+##TEST_AWK\$ZCHSET=".*"
+$ZCLOSE=0
+$ZCMDLINE=""
+##TEST_AWK\$ZCOMPILE=".*"
+$ZCSTATUS=0
+$ZDATEFORM=0
+$ZDIRECTORY="##TEST_PATH##/"
+$ZEDITOR=0
+$ZEOF=0
+##TEST_AWK\$ZERROR=".*"
+$ZGBLDIR="##TEST_PATH##/mumps.gld"
+##TEST_AWK.ZHOROLOG="[0-9]*,[0-9]*,[0-9]*,[0-9]*"
+$ZININTERRUPT=0
+##TEST_AWK\$ZINTERRUPT=".*"
+$ZIO=0
+$ZJOB=0
+$ZKEY=""
+$ZLEVEL=1
+$ZMAXTPTIME=0
+##TEST_AWK\$ZMODE=".*"
+$ZONLNRLBK=0
+##TEST_AWK\$ZPATNUMERIC=".*"
+$ZPIN="0< /"
+##TEST_AWK\$ZPOSITION=".*"
+$ZPOUT="0> /"
+$ZPROCESS=""
+$ZPROMPT="GTM>"
+$ZQUIT=0
+##TEST_AWK\$ZREALSTOR=[1-9][0-9]*
+##TEST_AWK\$ZROUTINES=".*"
+$ZSOURCE=""
+$ZSTATUS=""
+##TEST_AWK\$ZSTEP=".*"
+$ZSYSTEM=0
+$ZTNAME=""
+$ZTDATA=0
+$ZTDELIM=""
+$ZTEXIT=""
+$ZTLEVEL=0
+$ZTOLDVAL=""
+##TEST_AWK\$ZTRAP=".*"
+$ZTRIGGEROP=""
+$ZTSLATE=""
+$ZTUPDATE=""
+$ZTVALUE=""
+$ZTWORMHOLE=""
+##TEST_AWK\$ZUSEDSTOR=[1-9][0-9]*
+##TEST_AWK\$ZUT=[1-9][0-9]*
+$ZVERSION="GT.M V9.9-4CIS Linux x86_64"
+$ZYERROR=""
+##TEST_AWK.ZYRELEASE=".*"
+ydb_set_s() of $ECODE and value ,Z151027730,: 150379506,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+ydb_set_s() set $ETRAP to value set $ecode=""
+ydb_set_s() set $ZMAXTPTIME to value 55
+ydb_set_s() set $ZPROMPT to value YottaDB>
+ydb_set_s() set $ZINTERRUPT to value zwrite "*"
+ydb_set_s() of $NOTEXIST and value N/A: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+ydb_set_s() of $HOROLOG and value 0: 150373770,%GTM-E-SVNOSET, Cannot SET this special variable
+
+
+
+ZSHOW *after* setting new values for some ISVs
+$DEVICE=""
+$ECODE=",Z151027730,Z151027738,Z150373770,"
+$ESTACK=0
+$ETRAP="set $ecode="""""
+##TEST_AWK\$HOROLOG="[1-9][0-9]*,[1-9][0-9]*"
+$IO=0
+##TEST_AWK\$JOB=[1-9][0-9]*
+$KEY=""
+$PRINCIPAL=0
+$QUIT=0
+$REFERENCE=""
+$STACK=0
+##TEST_AWK\$STORAGE=[1-9][0-9]*
+##TEST_AWK\$SYSTEM="[1-9][0-9]*,gtm_sysid"
+$TEST=1
+$TLEVEL=0
+$TRESTART=0
+##TEST_AWK\$X=[0-9]*
+##TEST_AWK\$Y=[0-9]*
+$ZA=0
+##TEST_AWK\$ZALLOCSTOR=[1-9][0-9]*
+$ZB=""
+##TEST_AWK\$ZCHSET=".*"
+$ZCLOSE=0
+$ZCMDLINE=""
+##TEST_AWK\$ZCOMPILE=".*"
+$ZCSTATUS=0
+$ZDATEFORM=0
+$ZDIRECTORY="##TEST_PATH##/"
+$ZEDITOR=0
+$ZEOF=0
+##TEST_AWK\$ZERROR=".*"
+$ZGBLDIR="##TEST_PATH##/mumps.gld"
+##TEST_AWK.ZHOROLOG="[0-9]*,[0-9]*,[0-9]*,[0-9]*"
+$ZININTERRUPT=0
+$ZINTERRUPT="zwrite ""*"""
+$ZIO=0
+$ZJOB=0
+$ZKEY=""
+$ZLEVEL=1
+$ZMAXTPTIME=55
+##TEST_AWK\$ZMODE=".*"
+$ZONLNRLBK=0
+##TEST_AWK\$ZPATNUMERIC=".*"
+$ZPIN="0< /"
+##TEST_AWK\$ZPOSITION=".*"
+$ZPOUT="0> /"
+$ZPROCESS=""
+$ZPROMPT="YottaDB>"
+$ZQUIT=0
+##TEST_AWK\$ZREALSTOR=[1-9][0-9]*
+##TEST_AWK\$ZROUTINES=".*"
+$ZSOURCE=""
+$ZSTATUS="150373770,%GTM-E-SVNOSET, Cannot SET this special variable"
+##TEST_AWK\$ZSTEP=".*"
+$ZSYSTEM=0
+$ZTNAME=""
+$ZTDATA=0
+$ZTDELIM=""
+$ZTEXIT=""
+$ZTLEVEL=0
+$ZTOLDVAL=""
+##TEST_AWK\$ZTRAP=".*"
+$ZTRIGGEROP=""
+$ZTSLATE=""
+$ZTUPDATE=""
+$ZTVALUE=""
+$ZTWORMHOLE=""
+##TEST_AWK\$ZUSEDSTOR=[1-9][0-9]*
+##TEST_AWK.ZUT=[0-9]*
+##TEST_AWK\$ZVERSION=".*"
+$ZYERROR=""
+##TEST_AWK.ZYRELEASE=".*"
+

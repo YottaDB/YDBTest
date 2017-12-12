@@ -10,8 +10,8 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; Just execute a ZWRITE in our process space with the given argument
+; Just execute a ZSHOW in our process space with the given argument
 ;
-driveZWRITE(zwrarg)
-	zwrite @zwrarg
+driveZSHOW(zshowarg)
+	zshow @zshowarg
 	quit
