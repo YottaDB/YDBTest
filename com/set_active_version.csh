@@ -53,6 +53,12 @@ if ($ydbenv) then
 		set image = "bta"
 	else
 		set image = "dbg"
+		if ($?gtt_cc_shl_options) then
+			# If using dbg image, make compilations of .c programs in test system also happen with
+			# debugging information turned on (just like the YottaDB executable is compiled).
+			# This helps debug test failures (e.g. SIG-11) in the C program.
+			setenv gtt_cc_shl_options "$gtt_cc_shl_options -g"
+		endif
 	endif
 	if (! -e $gtm_root/$verno/$image) then
 		echo "VERSION-E-VERNOTEXIST : Directory $gtm_root/$verno/$image does not exist. Exiting..."
