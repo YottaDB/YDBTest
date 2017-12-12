@@ -97,11 +97,13 @@ getvarname();
 getvarnamehelper();
 	; returns a random valid local variable name
 	new first,firstlen,rest,restlen,firstletter,name,len,restletter,i
-	set first="%abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"	; first letter can include %
+	set restminusy="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ"
+	set first="%"_restminusy_"Y"	; first letter can include %
 	set firstlen=$length(first)
-	set rest=$extract(first,2,99)_"0123456789"	; rest of letters cannot include %
-	set restlen=$length(rest)
 	set firstletter=$extract(first,1+$random(firstlen))
+	set rest=restminusy_"0123456789"	; rest of letters cannot include %
+	if (firstletter'="%") set rest=rest_"Y"	; Exclude %Y to avoid PCTYRESERVED error in case of globals
+	set restlen=$length(rest)
 	set name=firstletter
 	set len=$random(31)
 	for i=1:1:len do
