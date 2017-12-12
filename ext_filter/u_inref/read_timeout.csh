@@ -4,12 +4,22 @@
 # Copyright (c) 2012-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# Test framework sets the below env var to 4x the default value on the ARM boxes to avoid test failures due to
+# FILTERTIMEDOUT error in various tests. But in this test we do want to see a FILTERTIMEDOUT error and
+# readtimeout.m (the external filter M program) waits for a hardcoded time of 40 seconds all of which
+# is coded around the default filter timeout of 64 seconds. So unset the env var.
+unsetenv ydb_repl_filter_timeout
+
 echo "External Filter test with delay on 6th entry on receiver side"
 # this test has jnl extract output, so let's not change the tn
 setenv gtm_test_disable_randomdbtn
