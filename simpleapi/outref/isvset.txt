@@ -71,9 +71,9 @@ $ZTVALUE=""
 $ZTWORMHOLE=""
 ##TEST_AWK\$ZUSEDSTOR=[1-9][0-9]*
 ##TEST_AWK\$ZUT=[1-9][0-9]*
-$ZVERSION="GT.M V9.9-4CIS Linux x86_64"
+##TEST_AWK\$ZVERSION="GT.M V.*"
 $ZYERROR=""
-##TEST_AWK.ZYRELEASE=".*"
+##TEST_AWK.ZYRELEASE="YottaDB r.*"
 ydb_set_s() of $ECODE and value ,Z151027730,: 150379506,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ydb_set_s() set $ETRAP to value set $ecode=""
 ydb_set_s() set $ZMAXTPTIME to value 55
