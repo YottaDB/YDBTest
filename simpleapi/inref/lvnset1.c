@@ -34,12 +34,12 @@ int main()
 	char		errbuf[ERRBUF_SIZE];
 
 	/* Initialize varname, subscript, and value buffers */
-	LYDB_BUFFER_LITERAL(&basevar, BASEVAR);
-	LYDB_BUFFER_LITERAL(&subscr1, SUBSCR1);
-	LYDB_BUFFER_LITERAL(&subscr2, SUBSCR2);
-	LYDB_BUFFER_LITERAL(&value1, VALUE1);
-	LYDB_BUFFER_LITERAL(&value2, VALUE2);
-	LYDB_BUFFER_LITERAL(&value3, VALUE3);
+	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
+	YDB_STRLIT_TO_BUFFER(&subscr1, SUBSCR1);
+	YDB_STRLIT_TO_BUFFER(&subscr2, SUBSCR2);
+	YDB_STRLIT_TO_BUFFER(&value1, VALUE1);
+	YDB_STRLIT_TO_BUFFER(&value2, VALUE2);
+	YDB_STRLIT_TO_BUFFER(&value3, VALUE3);
 	/* Initialize call-in environment */
 	status = ydb_init();
 	if (0 != status)
@@ -89,7 +89,7 @@ int main()
 	}
 	/* Now for a few error cases - first up, bad basevar names */
 	printf("Attempting set of bad basevar %s\n", BADBASEVAR1);
-	LYDB_BUFFER_LITERAL(&badbasevar, BADBASEVAR1);
+	YDB_STRLIT_TO_BUFFER(&badbasevar, BADBASEVAR1);
 	status = ydb_set_s(&value1, 0, &badbasevar);
 	if (YDB_OK != status)
 	{
@@ -99,7 +99,7 @@ int main()
 		/* Keep going after get expected error */
 	}
 	printf("Attempting set of bad basevar %s\n", BADBASEVAR2);
-	LYDB_BUFFER_LITERAL(&badbasevar, BADBASEVAR2);
+	YDB_STRLIT_TO_BUFFER(&badbasevar, BADBASEVAR2);
 	status = ydb_set_s(&value1, 0, &badbasevar);
 	if (YDB_OK != status)
 	{
