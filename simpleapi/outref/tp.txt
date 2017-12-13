@@ -1,0 +1,15 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Copy all C programs that need to be tested
+ --> Running tp1.c <---
+zwrarg=""
+^baselv="A question"
+^baselv(42)="One less than 43"
+^baselv(42,"answer:")="Life, the universe, and everything"
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
