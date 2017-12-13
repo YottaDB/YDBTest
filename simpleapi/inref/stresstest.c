@@ -13,10 +13,10 @@
 #include "libyottadb.h"
 
 #include <stdio.h>
-#include <unistd.h>
+#include <sys/types.h>	/* needed for "kill" in assert */
+#include <signal.h>	/* needed for "kill" in assert */
+#include <unistd.h>	/* needed for "getpid" in assert */
 #include <stdlib.h>
-#include <sys/types.h>
-#include <signal.h>
 #include <string.h>
 #include <errno.h>
 
