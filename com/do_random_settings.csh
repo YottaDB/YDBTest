@@ -45,9 +45,9 @@ set randnumbers = `$gtm_tst/com/genrandnumbers.csh 44 1 10`
 setenv tst_random_all ""
 
 ###########################################################################
-### Random option - 39 ### Randomly enable journaling for v[4-9]* tests (Can be expanded when required)
+### Random option - 39 ### Randomly enable journaling for v[4-9]*, r[1-9]* and simpleapi tests (Can be expanded when required)
 if !($?gtm_test_jnl) then
-	if ( ( $tst =~ v[4-9]* ) && ( 5 >= $randnumbers[39] ) ) then
+	if ( (( $tst == "simpleapi" ) || ( $tst =~ r[1-9]* ) || ( $tst =~ v[4-9]* )) && ( 5 >= $randnumbers[39] ) ) then
 		setenv gtm_test_jnl SETJNL
 	else
 		setenv gtm_test_jnl NON_SETJNL
