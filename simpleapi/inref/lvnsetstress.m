@@ -96,7 +96,7 @@ forcequote(str);
 
 getvarname();
 	; returns a random valid local variable name
-	new first,firstlen,rest,restlen,firstletter,name,len,restletter
+	new first,firstlen,rest,restlen,firstletter,name,i,len,restletter
 	set first="%abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"	; first letter can include %
 	set firstlen=$length(first)
 	set rest=$extract(first,2,99)_"0123456789"	; rest of letters cannot include %
@@ -111,7 +111,7 @@ getvarname();
 
 getsubs();
 	; returns a random valid local variable subscript (integer or string)
-	new sub,choice,intlen,i,declen
+	new digits,digitslen,sub,intlen,i,declen,strloglen,strlen,string,stringlen
 	set digits="0123456789",digitslen=$length(digits)
 	set sub=""
 	if ($random(2)) do
