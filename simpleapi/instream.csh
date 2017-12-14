@@ -19,6 +19,8 @@
 # stresstest   [nars]   Stress test of all ydb_*() functions in the simpleAPI
 # gvnset       [estess] Test of ydb_set_s() function for Global variables in the simpleAPI
 # isvset       [estess] Test of ydb_set_s() function for Intrinsic Special Variables in the simpleAPI
+# tp           [nars]   Test of ydb_tp_s() function in the simpleAPI
+# transid      [nars]   Test that transid specified in ydb_tp_s() does go into journal file
 #-------------------------------------------------------------------------------------
 
 echo "simpleapi test starts..."
