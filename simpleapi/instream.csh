@@ -25,7 +25,7 @@ echo "simpleapi test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "lvnset lvnsetstress stresstest gvnset isvset tp"
+setenv subtest_list_non_replic "lvnset lvnsetstress stresstest gvnset isvset tp transid"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

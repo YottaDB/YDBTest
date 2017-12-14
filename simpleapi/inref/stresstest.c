@@ -142,5 +142,5 @@ int main()
 	/* List all gvns created by us */
 	status = ydb_ci("gvnZWRITE");
 	assert(0 == status);
-	return 0;
+	return YDB_OK;
 }
