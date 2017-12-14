@@ -21,13 +21,14 @@
 # isvset       [estess] Test of ydb_set_s() function for Intrinsic Special Variables in the simpleAPI
 # tp           [nars]   Test of ydb_tp_s() function in the simpleAPI
 # transid      [nars]   Test that transid specified in ydb_tp_s() does go into journal file
+# lvnget       [estess] Test of ydb_get_s() function for Local variables in the simpleAPI
 #-------------------------------------------------------------------------------------
 
 echo "simpleapi test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "lvnset lvnsetstress stresstest gvnset isvset tp transid"
+setenv subtest_list_non_replic "lvnset lvnsetstress stresstest gvnset isvset tp transid lvnget"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
