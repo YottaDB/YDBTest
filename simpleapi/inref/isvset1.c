@@ -57,7 +57,7 @@ int main()
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("driveZSHOW error: %s\n", errbuf);
 		fflush(stdout);
-		return 0;
+		return YDB_OK;
 	}
 	usleep(325000);							/* Terminal flush after 300K us */
 	fflush(stdout); fflush(stderr);
@@ -91,6 +91,6 @@ int main()
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("driveZSHOW error: %s\n", errbuf);
 		fflush(stdout);
-		return 0;
+		return YDB_OK;
 	}
 }

@@ -47,7 +47,7 @@ int main()
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_init: %s\n", errbuf);
 		fflush(stdout);
-		return 0;
+		return YDB_OK;
 	}
 	/* Set a base variable, no subscripts */
 	status = ydb_set_s(&value1, 0, &basevar);
@@ -56,7 +56,7 @@ int main()
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_set_s() [1]: %s\n", errbuf);
 		fflush(stdout);
-		return 0;
+		return YDB_OK;
 	}
 	/* Set single subscript value */
 	status = ydb_set_s(&value2, 1, &basevar, &subscr1);
@@ -65,7 +65,7 @@ int main()
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_set_s() [2]: %s\n", errbuf);
 		fflush(stdout);
-		return 0;
+		return YDB_OK;
 	}
 	/* Set two subscript value */
 	status = ydb_set_s(&value3, 2, &basevar, &subscr1, &subscr2);
@@ -74,7 +74,7 @@ int main()
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_set_s() [3]: %s\n", errbuf);
 		fflush(stdout);
-		return 0;
+		return YDB_OK;
 	}
 	/* Demonstrate our progress by executing a ZWRITE in a call-in */
 	zwrarg.address = NULL;			/* Create a null string argument so dumps all locals */
@@ -85,7 +85,7 @@ int main()
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("driveZWRITE error: %s\n", errbuf);
 		fflush(stdout);
-		return 0;
+		return YDB_OK;
 	}
 	/* Now for a few error cases - first up, bad basevar names */
 	printf("Attempting set of bad basevar %s\n", BADBASEVAR1);
@@ -117,5 +117,5 @@ int main()
 		printf("ydb_set_s() [c]: %s\n", errbuf);
 		fflush(stdout);
 	}
-	return 0;
+	return YDB_OK;
 }

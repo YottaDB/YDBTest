@@ -20,8 +20,6 @@
 
 #define ERRBUF_SIZE	1024
 
-#define BADBASEVAR1 "^B%dbasevarInvChar"
-#define BADBASEVAR2 "^Verylongbasevarthatexceedsmaxlength"
 #define BASEVAR "^baselv"
 #define SUBSCR1	"42"
 #define SUBSCR2 "answer:"
@@ -50,7 +48,7 @@ int main()
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_tp_s() [1]: %s\n", errbuf);
 		fflush(stdout);
-		return 0;
+		return YDB_OK;
 	}
 	/* List all lvns created by us inside of TP */
 	zwrarg.address = NULL;
@@ -60,7 +58,7 @@ int main()
 	/* List all gvns created by us */
 	status = ydb_ci("gvnZWRITE");
 	assert(0 == status);
-	return 0;
+	return YDB_OK;
 }
 
 /* Function to set a global variable */
@@ -86,7 +84,7 @@ int gvnset()
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_set_s() [1]: %s\n", errbuf);
 		fflush(stdout);
-		return 0;
+		return YDB_OK;
 	}
 	/* Set single subscript value */
 	status = ydb_set_s(&value2, 1, &basevar, &subscr1);
@@ -95,7 +93,7 @@ int gvnset()
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_set_s() [2]: %s\n", errbuf);
 		fflush(stdout);
-		return 0;
+		return YDB_OK;
 	}
 	/* Set two subscript value */
 	status = ydb_set_s(&value3, 2, &basevar, &subscr1, &subscr2);
@@ -104,7 +102,7 @@ int gvnset()
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_set_s() [3]: %s\n", errbuf);
 		fflush(stdout);
-		return 0;
+		return YDB_OK;
 	}
-	return 0;
+	return YDB_OK;
 }
