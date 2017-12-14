@@ -21,7 +21,7 @@
 #define ERRBUF_SIZE	1024
 
 #define BASEVAR "^baselv"
-#define VALUE1	"TP with transid"
+#define VALUE1	"TP with comma-separated list of variable names to be preserved"
 
 /* Use SIGILL below to generate a core when an assertion fails */
 #define assert(x) ((x) ? 1 : (fprintf(stderr, "Assert failed at %s line %d : %s\n", __FILE__, __LINE__, #x), kill(getpid(), SIGILL)))
@@ -31,11 +31,11 @@ ydb_buffer_t	basevar, value1, badbasevar;
 
 int	gvnset();
 
-/* Function to test TID specified in ydb_tp_s() is honored (by finally going into TCOM record in journal file) */
+/* Function to test that list of variable names to be preserved (across TP restarts) works fine */
 int main()
 {
 	int		status;
-	ydb_buffer_t	tid;
+	ydb_buffer_t	namelist;
 	ydb_tpfnptr_t	tpfn;
 	ydb_string_t	zwrarg;
 
@@ -44,21 +44,17 @@ int main()
 	YDB_STRLIT_TO_BUFFER(&value1, VALUE1);
 
 	tpfn = &gvnset;
-	/* TID = "BA" */
-	YDB_STRLIT_TO_BUFFER(&tid, "BA");
-	status = ydb_tp_s(&tid, NULL, tpfn, NULL);
+	YDB_STRLIT_TO_BUFFER(&namelist, "x,y");
+	status = ydb_tp_s(NULL, &namelist, tpfn, NULL);
 	assert(YDB_OK == status);
-	/* TID = "CS" */
-	YDB_STRLIT_TO_BUFFER(&tid, "CS");
-	status = ydb_tp_s(&tid, NULL, tpfn, NULL);
+	YDB_STRLIT_TO_BUFFER(&namelist, "x,y,z");
+	status = ydb_tp_s(NULL, &namelist, tpfn, NULL);
 	assert(YDB_OK == status);
-	/* TID = "arbitrary str" */
-	YDB_STRLIT_TO_BUFFER(&tid, "any str");
-	status = ydb_tp_s(&tid, NULL, tpfn, NULL);
+	YDB_STRLIT_TO_BUFFER(&namelist, "x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17,x18,x19,x20,x21,x22,x23,x24,x25,x26,x27,x28,x29,x30,x31,x32,x33,x34,x35,x36,x37,x38,x39,x40,x41,x42,x43,x44,x45,x46,x47,x48,x49,x50");
+	status = ydb_tp_s(NULL, &namelist, tpfn, NULL);
 	assert(YDB_OK == status);
-	/* TID = "verylongstr" : Test that TID gets truncated to 8 bytes if input is longer than 8 bytes */
-	YDB_STRLIT_TO_BUFFER(&tid, "verylongstr");
-	status = ydb_tp_s(&tid, NULL, tpfn, NULL);
+	YDB_STRLIT_TO_BUFFER(&namelist, "*");
+	status = ydb_tp_s(NULL, &namelist, tpfn, NULL);
 	assert(YDB_OK == status);
 	return YDB_OK;
 }
