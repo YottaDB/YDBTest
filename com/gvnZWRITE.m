@@ -13,8 +13,9 @@
 ; Routine to list all nodes in the database files accessible through the gld pointed to by $gtmgbldir
 ;
 gvnZWRITE ;
+	set (printit(1),printit(11))=1
 	set x="^%" for  set x=$order(@x,1) quit:x=""  set y=x  do
-	. if $data(@y) do print(y)
+	. if ($get(printit($data(@y)),0)) do print(y)
 	. for  set y=$query(@y) quit:y=""  do print(y)
 	quit
 

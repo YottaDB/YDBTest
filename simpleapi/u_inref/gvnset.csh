@@ -36,5 +36,5 @@ foreach file (gvnset*.c)
 	./$exefile
 	echo ""
 end
-
+#
 $gtm_tst/com/dbcheck.csh
