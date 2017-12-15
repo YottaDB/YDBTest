@@ -28,13 +28,25 @@ stresstest;
 	set dev="mtocpipe"
 	open dev:(command="./stresstest >& genstresstest.log":stream:nowrap:exception="goto done")::"pipe"
 	for i=8,16,24 set TWO(i)=2**i
-	s YDBEOF=0,YDBSETS=1	; these mirror YDB_EOF/YDB_SET_S etc. in stresstest.c
+	s YDBEOF=0,YDBSETS=1,YDBGETS=2	; these mirror YDBEOF/YDBSETS etc. in stresstest.c
 	;
 	; ------------------------------------------------------
 	; Generate random sets of lvns in M and C programs
 	;
 	set loglen=1+$random(16)
-	for i=1:1:$random(2**loglen) do helper
+	for i=1:1:1+$random(2**loglen) do helper
+	;
+	; Check some random nodes before halting that they are indeed what we expect them to be (test of ydb_get_s())
+	use dev
+	for i=1:1:256  do
+	. set idx=1+$random(index)
+	. set cumulstr2=cumulstr2(idx)
+	. set cumullen=cumullen(idx)
+	. set value=value(idx)
+	. set valuelen=$length(value)
+	. write $$num2bin(cumullen),$$num2bin(YDBGETS),cumulstr2_$$num2bin(valuelen)_value
+	. set $x=0
+	use $p
 	;
 	; Finish writing M program
 	use mfile
@@ -64,10 +76,17 @@ helper	;
 	;
 	set subslen=$length(cumulsubstr)
 	set cumullen=(4+varnamelen)+nsubslen+subslen+(4+valuelen)
-	set cumulstr=$$num2bin(varnamelen)_varname_$$num2bin(nsubs)_cumulsubstr_$$num2bin(valuelen)_value;
+	set cumulstr2=$$num2bin(varnamelen)_varname_$$num2bin(nsubs)_cumulsubstr
+	set cumulstr=cumulstr2_$$num2bin(valuelen)_value;
 	;
 	; write total length and 1 (to indicate this is ydb_set_s); need $x=0 set to avoid newline being inserted in middle of lines
 	use dev  write $$num2bin(cumullen),$$num2bin(YDBSETS),cumulstr  set $x=0 use $p
+	; verify immediately afterwards that a ydb_get_s of that exact same node returns the exact same value
+	use dev  write $$num2bin(cumullen),$$num2bin(YDBGETS),cumulstr  set $x=0 use $p
+	; store lvn/gvn for later ydb_get_s (at end of this M program)
+	if '$data(index(cumulstr2)) set index(cumulstr2)=$incr(index),idx=index
+	else                        set idx=index(cumulstr2)
+	set value(idx)=value,cumulstr2(idx)=cumulstr2,cumullen(idx)=cumullen
 	;
 	; Write lvn set in M program
 	use mfile
@@ -112,6 +131,15 @@ getvarnamehelper();
 	quit name
 
 getsubs();
+	new loglen2,i,name
+	if ('$data(subssetlen)) do
+	. ; initialize "subsset" array with choices of variable names
+	. set loglen2=1+$random(10)
+	. for i=1:1:1+$random(2**loglen2) set subsset(i)=$$getsubshelper()
+	. set subssetlen=i
+	quit subsset(1+$random(subssetlen))
+
+getsubshelper();
 	; returns a random valid local variable subscript (integer or string)
 	new sub,choice,intlen,i,declen
 	set digits="0123456789",digitslen=$length(digits)
