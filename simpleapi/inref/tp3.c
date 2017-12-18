@@ -20,7 +20,7 @@
 
 #define ERRBUF_SIZE	1024
 
-#define BASEVAR "^baselv"
+#define BASEVAR "^tp3"
 #define VALUE1	"TP with comma-separated list of variable names to be preserved"
 
 /* Use SIGILL below to generate a core when an assertion fails */

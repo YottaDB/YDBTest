@@ -26,6 +26,7 @@
 
 #define	TESTTIME	15		/* Run tp2.c test for max of 15 seconds */
 #define BASEVAR		"^tp2"
+#define TRIGVAR		"^tp2trig"
 #define	NCHILDREN	8
 #define	MAXNUMINCRS	1000
 
@@ -43,10 +44,13 @@ char		valuebuff[16];
 /* Function to do a test $increment implemented inside TP across multiple processes using the simpleAPI */
 int main(int argc, char *argv[])
 {
-	int		child, numincrs, cumulincrs, stat[NCHILDREN], ret[NCHILDREN], status;
+	int		child, i, numincrs, cumulincrs, stat[NCHILDREN], ret[NCHILDREN], status, seed, pass;
 	unsigned long	result;
 	pid_t		child_pid[NCHILDREN];
-	time_t		start_time, end_time;
+	time_t		start_time, end_time, test_time;
+	char		*trig_val;
+	ydb_buffer_t	subs;
+	char		subsbuff[16];
 
 	/* Initialize varname, subscript, and value buffers */
 	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
@@ -55,6 +59,9 @@ int main(int argc, char *argv[])
 	value.len_alloc = sizeof(valuebuff);
 
 	/* Run test for a max of TESTTIME seconds and do as many sets as possible */
+	seed = (time(NULL) * getpid());
+	srand48(seed);
+	test_time = (TESTTIME * drand48());
 	start_time = time(NULL);
 	numincrs = 10;
 	cumulincrs = 0;
@@ -74,7 +81,7 @@ int main(int argc, char *argv[])
 		}
 		cumulincrs += (NCHILDREN * numincrs);
 		end_time = time(NULL);
-		if (TESTTIME < (end_time - start_time))
+		if (test_time < (end_time - start_time))
 			break;
 		if (MAXNUMINCRS > numincrs)
 			numincrs *= 10;
@@ -83,10 +90,30 @@ int main(int argc, char *argv[])
 	status = ydb_get_s(&value, 0, &basevar);
 	assert(YDB_OK == status);
 	result = strtoul(value.buf_addr, NULL, 10);
-	if ((int)result == cumulincrs)
-		printf("PASS from tp2\n");
-	else
+	if ((int)result != cumulincrs)
 		printf("FAIL from tp2 : Expected %s=%d : Actual %s=%d\n", BASEVAR, cumulincrs, BASEVAR, (int)result);
+	else
+		printf("PASS from tp2\n");
+	trig_val = getenv("gtm_test_trigger");
+	if ((NULL != trig_val) && atoi(trig_val))
+	{	/* "gtm_test_trigger" is defined. Check that ^tp2trig(1) to ^tp2trig(cumulincrs) exists. */
+		pass = 0;
+		YDB_STRLIT_TO_BUFFER(&basevar, TRIGVAR);
+		subs.buf_addr = &subsbuff[0];
+		subs.len_used = 0;
+		subs.len_alloc = sizeof(subsbuff);
+		for (i = 1; i <= cumulincrs; i++)
+		{
+			subs.len_used = sprintf(subs.buf_addr, "%d", i);
+			status = ydb_get_s(&value, 1, &basevar, &subs);
+			assert(YDB_OK == status);
+			assert(0 == value.len_used);
+		}
+		/* NARSTODO: Also check that no other ^tp2trig(xxx) node exists.
+		 * Need ydb_subscript_next() implemented for that check.
+		 */
+		printf("PASS from tp2trig\n");
+	}
 	return YDB_OK;
 }
 
