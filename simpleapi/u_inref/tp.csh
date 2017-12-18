@@ -15,6 +15,28 @@
 #
 $gtm_tst/com/dbcreate.csh mumps 1
 
+if ($?gtm_test_trigger) then
+	if ($gtm_test_trigger) then
+		# ----------------------------------------------------------------------
+		# If test framework has defined triggers, test those too with ydb_tp_s()
+		# ----------------------------------------------------------------------
+		#
+		# Trigger file for tp1.c (to test TP + triggers with simpleAPI)
+		set trgfile = tp1.trg
+		cat > $trgfile << CAT_EOF
++^tp1 -command=set -xecute="set ^tp1lvtrig=\$ztval"
+CAT_EOF
+		$MUPIP trigger -noprompt -triggerfile=$trgfile >& $trgfile.out
+
+		# Trigger file for tp2.c (to test TP + triggers with simpleAPI)
+		set trgfile = tp2.trg
+		cat > $trgfile << CAT_EOF
++^tp2 -command=set -xecute="set ^tp2trig(\$ztval)="""""
+CAT_EOF
+		$MUPIP trigger -noprompt -triggerfile=$trgfile >& $trgfile.out
+	endif
+endif
+
 echo "Copy all C programs that need to be tested"
 cp $gtm_tst/$tst/inref/tp*.c .
 

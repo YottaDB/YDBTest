@@ -20,7 +20,7 @@
 
 #define ERRBUF_SIZE	1024
 
-#define BASEVAR "^baselv"
+#define BASEVAR "^tp1"
 #define SUBSCR1	"42"
 #define SUBSCR2 "answer:"
 #define VALUE1	"A question"

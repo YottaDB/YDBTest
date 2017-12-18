@@ -6,12 +6,18 @@ mumps.dat
 Copy all C programs that need to be tested
  --> Running tp1.c <---
 zwrarg=""
-^baselv="A question"
-^baselv(42)="One less than 43"
-^baselv(42,"answer:")="Life, the universe, and everything"
+^tp1="A question"
+^tp1(42)="One less than 43"
+^tp1(42,"answer:")="Life, the universe, and everything"
+##SUSPEND_OUTPUT NOTRIGGER
+^tp1lvtrig="A question"
+##ALLOW_OUTPUT NOTRIGGER
 
  --> Running tp2.c <---
 PASS from tp2
+##SUSPEND_OUTPUT NOTRIGGER
+PASS from tp2trig
+##ALLOW_OUTPUT NOTRIGGER
 
  --> Running tp3.c <---
 
