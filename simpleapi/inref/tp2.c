@@ -126,7 +126,7 @@ int do_tp(int numincrs)
 	tpfn = &gvnincr;
 	for (i = 0; i < numincrs; i++)
 	{
-		status = ydb_tp_s(NULL, NULL, tpfn, &i);
+		status = ydb_tp_s(tpfn, &i, NULL, NULL);
 		assert(YDB_OK == status);
 	}
 	return YDB_OK;
