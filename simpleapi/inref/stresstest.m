@@ -28,7 +28,7 @@ stresstest;
 	set dev="mtocpipe"
 	open dev:(command="./stresstest >& genstresstest.log":stream:nowrap:exception="goto done")::"pipe"
 	for i=8,16,24 set TWO(i)=2**i
-	s YDBEOF=0,YDBSETS=1,YDBGETS=2	; these mirror YDBEOF/YDBSETS etc. in stresstest.c
+	s YDBEOF=0,YDBSETS=1,YDBGETS=2,YDBSUBSNEXT=3,YDBSUBSPREV=4	; these mirror YDBEOF/YDBSETS etc. in stresstest.c
 	;
 	; ------------------------------------------------------
 	; Generate random sets of lvns in M and C programs
@@ -109,6 +109,7 @@ getvarname();
 	. for i=1:1:1+$random(2**loglen2) set varnameset(i)=$$getvarnamehelper()
 	. set varnamesetlen=i
 	set name=varnameset(1+$random(varnamesetlen))
+	quit name	; NARSTODO: remove this line
 	if ($random(2)) quit name     ; local  variable name
 	else            quit "^"_name ; global variable name
 	quit
