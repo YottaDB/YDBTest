@@ -28,7 +28,7 @@ setenv test_encryption NON_ENCRYPT
 source $gtm_tst/com/portno_acquire.csh >>& portno.out
 
 # Get an alternate prior version
-set prior_ver = `$gtm_tst/com/random_ver.csh -lte V61000`
+set prior_ver = `$gtm_tst/com/random_ver.csh -lte V61000 -gte V54001`
 if ("$prior_ver" =~ "*-E-*") then
         echo "No prior versions available: $prior_ver"
         exit -1
