@@ -39,26 +39,22 @@ int main()
 	ydb_tpfnptr_t	tpfn;
 	ydb_string_t	zwrarg;
 
-	/* Initialize varname, and value buffers */
+	/* Initialize varname, and value buffers (needed by later "gvnset" invocation inside "ydb_tp_s" */
 	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
 	YDB_STRLIT_TO_BUFFER(&value1, VALUE1);
 
 	tpfn = &gvnset;
 	/* TID = "BA" */
-	YDB_STRLIT_TO_BUFFER(&tid, "BA");
-	status = ydb_tp_s(&tid, NULL, tpfn, NULL);
+	status = ydb_tp_s(tpfn, NULL, "BA", NULL);
 	assert(YDB_OK == status);
 	/* TID = "CS" */
-	YDB_STRLIT_TO_BUFFER(&tid, "CS");
-	status = ydb_tp_s(&tid, NULL, tpfn, NULL);
+	status = ydb_tp_s(tpfn, NULL, "CS", NULL);
 	assert(YDB_OK == status);
 	/* TID = "arbitrary str" */
-	YDB_STRLIT_TO_BUFFER(&tid, "any str");
-	status = ydb_tp_s(&tid, NULL, tpfn, NULL);
+	status = ydb_tp_s(tpfn, NULL, "any str", NULL);
 	assert(YDB_OK == status);
 	/* TID = "verylongstr" : Test that TID gets truncated to 8 bytes if input is longer than 8 bytes */
-	YDB_STRLIT_TO_BUFFER(&tid, "verylongstr");
-	status = ydb_tp_s(&tid, NULL, tpfn, NULL);
+	status = ydb_tp_s(tpfn, NULL, "verylongstr", NULL);
 	assert(YDB_OK == status);
 	return YDB_OK;
 }
