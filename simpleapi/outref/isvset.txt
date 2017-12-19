@@ -79,14 +79,14 @@ ydb_set_s() set $ETRAP to value set $ecode=""
 ydb_set_s() set $ZMAXTPTIME to value 55
 ydb_set_s() set $ZPROMPT to value YottaDB>
 ydb_set_s() set $ZINTERRUPT to value zwrite "*"
-ydb_set_s() of $NOTEXIST and value N/A: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+ydb_set_s() of $NOTEXIST and value N/A: 150373074,%GTM-E-INVSVN, Invalid special variable name
 ydb_set_s() of $HOROLOG and value 0: 150373770,%GTM-E-SVNOSET, Cannot SET this special variable
 
 
 
 ZSHOW *after* setting new values for some ISVs
 $DEVICE=""
-$ECODE=",Z151027730,Z151027738,Z150373770,"
+$ECODE=",Z151027730,M8,Z150373074,Z150373770,"
 $ESTACK=0
 $ETRAP="set $ecode="""""
 ##TEST_AWK\$HOROLOG="[1-9][0-9]*,[1-9][0-9]*"
