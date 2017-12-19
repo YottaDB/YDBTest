@@ -20,14 +20,17 @@
 #include <string.h>
 #include <errno.h>
 
-/* The below mirror YDBEOF/YDBSETS etc. in stresstest.m */
+/* The below mirrors YDBEOF/YDBSETS etc. in stresstest.m */
 #define	YDBEOF		0
 #define	YDBSETS		1
 #define	YDBGETS		2
+#define	YDBSUBSNEXT	3
+#define	YDBSUBSPREV	4
 
 /* Use SIGILL below to generate a core when an assertion fails */
 #define assert(x) ((x) ? 1 : (fprintf(stderr, "Assert failed at %s line %d : %s\n", __FILE__, __LINE__, #x), kill(getpid(), SIGILL)))
 
+void	lvnZWRITE(void);
 int	fullread(char *buff, int len);
 
 /* Read "len" bytes. If "read()" system call returns less than "len", keep retrying until we have "len" bytes */
@@ -53,15 +56,18 @@ int	fullread(char *buff, int len)
 #define	DBG_BUFF_SIZE	65536
 #define	READCNT_SIZE	256
 
+typedef int (*ydb_retvalue_fnptr_t)(ydb_buffer_t *value, int subs_used, ydb_buffer_t *varname, ...);
+
 int main()
 {
 	int		i, status, bufflen = 0, reclen, copylen, varnamelen, nsubs, valuelen, len, action, reccnt;
-	ydb_buffer_t	basevar, subscr[32], value, getvalue;
-	char		hdrbuff[8], *buff, *ptr, getvaluebuff[64];
+	ydb_buffer_t	basevar, subscr[32], value, retvalue;
+	char		hdrbuff[8], *buff, *ptr, retvaluebuff[64];
 	ssize_t		cnt;
 	ydb_string_t	zwrarg;
 	int		process_id = getpid();
 	int		dbg_buff[DBG_BUFF_SIZE], dbg_buff_index = 0, readcnt[READCNT_SIZE], readcnt_buff_index[READCNT_SIZE], readcnt_index = 0;
+	ydb_retvalue_fnptr_t	ydb_fn_array[] = {NULL, &ydb_set_s, &ydb_get_s, &ydb_subscript_next_s, &ydb_subscript_previous_s};
 
 	for (reccnt = 0; ; reccnt++)
 	{
@@ -79,7 +85,7 @@ int main()
 		action = *(int *)(hdrbuff + 4);
 		if (YDBEOF == action)
 			break;
-		assert((YDBSETS == action) || (YDBGETS == action));	/* for now only ydb_set_s is supported; more as other ydb_*_s functions are ready */
+		assert((YDBSETS == action) || (YDBGETS == action) || (YDBSUBSNEXT == action) || (YDBSUBSPREV == action));
 		cnt = fullread(buff, reclen);
 		assert(cnt == reclen);
 		readcnt[readcnt_index] = cnt;
@@ -137,12 +143,12 @@ int main()
 					&subscr[24], &subscr[25], &subscr[26], &subscr[27],
 					&subscr[28], &subscr[29], &subscr[30], &subscr[31]);
 			assert(YDB_OK == status);
-		} else if (YDBGETS == action)
+		} else if ((YDBGETS == action) || (YDBSUBSNEXT == action) || (YDBSUBSPREV == action))
 		{
-			getvalue.buf_addr = getvaluebuff;
-			getvalue.len_alloc = sizeof(getvaluebuff);
-			getvalue.len_used = 0;
-			status = ydb_get_s(&getvalue, nsubs, &basevar,
+			retvalue.buf_addr = retvaluebuff;
+			retvalue.len_alloc = sizeof(retvaluebuff);
+			retvalue.len_used = 0;
+			status = (*ydb_fn_array[action])(&retvalue, nsubs, &basevar,
 					&subscr[0], &subscr[1], &subscr[2], &subscr[3],
 					&subscr[4], &subscr[5], &subscr[6], &subscr[7],
 					&subscr[8], &subscr[9], &subscr[10], &subscr[11],
@@ -152,17 +158,12 @@ int main()
 					&subscr[24], &subscr[25], &subscr[26], &subscr[27],
 					&subscr[28], &subscr[29], &subscr[30], &subscr[31]);
 			assert(YDB_OK == status);
-			assert((getvalue.len_used == value.len_used)
-				&& (!memcmp(getvalue.buf_addr, value.buf_addr, value.len_used)));
+			assert((retvalue.len_used == value.len_used)
+				&& (!memcmp(retvalue.buf_addr, value.buf_addr, value.len_used)));
 		}
 	}
 	/* List all lvns created by us */
-	zwrarg.address = NULL;
-	zwrarg.length = 0;
-	status = ydb_ci("driveZWRITE", &zwrarg);
-	assert(0 == status);
-	/* List all gvns created by us */
-	status = ydb_ci("gvnZWRITE");
-	assert(0 == status);
+	lvnZWRITE();
+	/* NARSTODO: gvnZWRITE(); */
 	return YDB_OK;
 }
