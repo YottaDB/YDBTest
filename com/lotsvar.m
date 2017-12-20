@@ -186,7 +186,7 @@ onevar(len,looparg)	;
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 exam(item) ; EXAMINE if the value is correct
 	set vard=$DATA(@item)
-	if ('vard)!(10=vard) set errcnt=errcnt+1 write:(maxerr>errcnt) "LOTSVAR-E-UNDEF:",item,! quit
+	if ('vard)!(10=vard) set errcnt=errcnt+1 write:(maxerr>errcnt) "LOTSVAR-E-LVUNDEF:",item,! quit
 	else  if item'=@item set errcnt=errcnt+1 write:(maxerr>errcnt) "LOTSVAR-E-VAL:",item," vs ",@item,! quit
 	if $NAME(@item)'=@item set errcnt=errcnt+1 write:(maxerr>errcnt) "LOTSVAR-E-NAME:",$NAME(@item)," vs ",@item,! quit
 	; note that because the value was set to str, it uses the value of the unsubscripted

@@ -1,14 +1,17 @@
 /****************************************************************
-*								*
+ *								*
  * Copyright (c) 2013, 2015 Fidelity National Information	*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
-*								*
-*	This source code contains the intellectual property	*
-*	of its copyright holder(s), and is made available	*
-*	under a license.  If you do not know the terms of	*
-*	the license, please stop and do not read further.	*
-*								*
-****************************************************************/
+ *								*
+ * Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	*
+ * All rights reserved.						*
+ *								*
+ *	This source code contains the intellectual property	*
+ *	of its copyright holder(s), and is made available	*
+ *	under a license.  If you do not know the terms of	*
+ *	the license, please stop and do not read further.	*
+ *								*
+ ****************************************************************/
 package com.test.ji;
 
 import java.io.BufferedWriter;
@@ -1821,7 +1824,7 @@ public class TestXC {
 					StringBuilder builder = new StringBuilder();
 
 					if (error[0]) {
-						builder.append("%GTM-E-UNDEF, Undefined local variable: " + undefVar + "\n");
+						builder.append("%GTM-E-LVUNDEF, Undefined local variable: " + undefVar + "\n");
 						return builder.toString();
 					}
 

@@ -10,17 +10,17 @@ Test case 2 : ZSHOW B onto a subscripted lvn
 Test case 3 : SET @ onto a subscripted lvn where rhs of set is an undefined unsubscripted variable
 --------------------------------------------------------------------------------------------------
 --> Running with gtm_noundef=0, gtm_side_effects=0
-%GTM-E-UNDEF, Undefined local variable: dflt
+%GTM-E-LVUNDEF, Undefined local variable: dflt
 		At M source location test3+1^gtm8108
 
 GTM>
 --> Running with gtm_noundef=0, gtm_side_effects=1
-%GTM-E-UNDEF, Undefined local variable: dflt
+%GTM-E-LVUNDEF, Undefined local variable: dflt
 		At M source location test3+1^gtm8108
 
 GTM>
 --> Running with gtm_noundef=0, gtm_side_effects=2
-%GTM-E-UNDEF, Undefined local variable: dflt
+%GTM-E-LVUNDEF, Undefined local variable: dflt
 		At M source location test3+1^gtm8108
 
 GTM>

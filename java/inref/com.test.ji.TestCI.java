@@ -444,7 +444,7 @@ public class TestCI {
 				"\twrite " + var2 + "\n",
 				"\tset a=1/0\n"};
 		final String[] errorTexts = new String[]{
-				"150373850,%s,%%GTM-E-UNDEF, Undefined local variable: " + var1 + "\n",
+				"150373850,%s,%%GTM-E-LVUNDEF, Undefined local variable: " + var1 + "\n",
 				"150372994,%s,%%GTM-E-GVUNDEF, Global variable undefined: " + var2 + "\n",
 				"150373210,%s,%%GTM-E-DIVZERO, Attempt to divide by zero\n"};
 
@@ -536,7 +536,7 @@ public class TestCI {
 
 						@Override
 						public String getJavaResponse() {
-							return "150373850," + name + "+1^" + "test4" + ",%GTM-E-UNDEF, Undefined local variable: " + args[0].name + "\n";
+							return "150373850," + name + "+1^" + "test4" + ",%GTM-E-LVUNDEF, Undefined local variable: " + args[0].name + "\n";
 						}
 					};
 				}
@@ -1134,7 +1134,7 @@ public class TestCI {
 
 				@Override
 				public String getJavaResponse() {
-					return "150373850,lbl0+1^test14,%GTM-E-UNDEF, Undefined local variable: " + args[numOfFormals - 1].name + "\n";
+					return "150373850,lbl0+1^test14,%GTM-E-LVUNDEF, Undefined local variable: " + args[numOfFormals - 1].name + "\n";
 				}
 			}
 		};
