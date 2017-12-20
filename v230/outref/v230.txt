@@ -1836,7 +1836,7 @@ d ^bug31
 
 GTM>
 d ^bug32
-%GTM-E-UNDEF, Undefined local variable: z(0)
+%GTM-E-LVUNDEF, Undefined local variable: z(0)
 		At M source location proc+1^bug32
 
 GTM>
@@ -1844,7 +1844,7 @@ d ^bug33
 
 GTM>
 d ^bug34
-%GTM-E-UNDEF, Undefined local variable: Q1
+%GTM-E-LVUNDEF, Undefined local variable: Q1
 		At M source location PROC+1^bug34
 
 GTM>
@@ -1968,7 +1968,7 @@ S/B EQU:  ABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 GTM>
 d ^bug80
-%GTM-E-UNDEF, Undefined local variable: y
+%GTM-E-LVUNDEF, Undefined local variable: y
 		At M source location main+4^bug80
 
 GTM>
@@ -1992,7 +1992,7 @@ at chk
 
 GTM>
 d ^bug93
-%GTM-E-UNDEF, Undefined local variable: O
+%GTM-E-LVUNDEF, Undefined local variable: O
 		At M source location +1^bug93
 
 GTM>
@@ -2234,9 +2234,9 @@ OK from test ZB on last line of a ZLinked routine
 GTM>
 d ^per0369
 
-150373850,per0369+5^per0369,%GTM-E-UNDEF, Undefined local variable: x
-150373850,per0369+6^per0369,%GTM-E-UNDEF, Undefined local variable: x
-150373850,per0369+7^per0369,%GTM-E-UNDEF, Undefined local variable: x
+150373850,per0369+5^per0369,%GTM-E-LVUNDEF, Undefined local variable: x
+150373850,per0369+6^per0369,%GTM-E-LVUNDEF, Undefined local variable: x
+150373850,per0369+7^per0369,%GTM-E-LVUNDEF, Undefined local variable: x
 OK from test of open/use/close detecting UNDEF
 GTM>
 d ^per0371
@@ -2262,10 +2262,10 @@ OK from test of compile as written missing label
 GTM>
 d ^per0429
 
-150373850,per0429+5^per0429,%GTM-E-UNDEF, Undefined local variable: a
-150373850,per0429+6^per0429,%GTM-E-UNDEF, Undefined local variable: a
-150373850,per0429+7^per0429,%GTM-E-UNDEF, Undefined local variable: a
-150373850,per0429+8^per0429,%GTM-E-UNDEF, Undefined local variable: a
+150373850,per0429+5^per0429,%GTM-E-LVUNDEF, Undefined local variable: a
+150373850,per0429+6^per0429,%GTM-E-LVUNDEF, Undefined local variable: a
+150373850,per0429+7^per0429,%GTM-E-LVUNDEF, Undefined local variable: a
+150373850,per0429+8^per0429,%GTM-E-LVUNDEF, Undefined local variable: a
 OK from test of retry of @$p
 GTM>
 d ^per0431
@@ -2465,8 +2465,8 @@ sttm7> 1
 GTM>
 d ^per0318
 
-150373850,per0318+18^per0318,%GTM-E-UNDEF, Undefined local variable: x
-150373850,per0318+19^per0318,%GTM-E-UNDEF, Undefined local variable: n
+150373850,per0318+18^per0318,%GTM-E-LVUNDEF, Undefined local variable: x
+150373850,per0318+19^per0318,%GTM-E-LVUNDEF, Undefined local variable: n
 OK from test of kill and new indirect null arguments
 GTM>
 d ^per0335

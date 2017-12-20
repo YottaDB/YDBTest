@@ -15,7 +15,7 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ###################################################################
 ###################################################################
 set $ztwormhole to an undef variable
-ZSTATUS=ztwoundeftest+3^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+ZSTATUS=ztwoundeftest+3^ztslate,%GTM-E-LVUNDEF, Undefined local variable: undef
 ###################################################################
 set $ztslate to a valid variable
 before:                         
@@ -26,7 +26,7 @@ set $ztslate to an undef variable
 You will see two error messages from the trigger's $etrap handler
 before:AB10                     
 inside:
-ZSTATUS=undefslate+2^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+ZSTATUS=undefslate+2^ztslate,%GTM-E-LVUNDEF, Undefined local variable: undef
 5:undefslate+3^ztslate	$ZTLEVEL=1	$ZLEVEL=6
 after:                          
 ###################################################################
@@ -34,7 +34,7 @@ set $ztwormhole to an undef variable in a trigger
 You will see two error messages from the trigger's $etrap handler
 before:                         
 inside:
-ZSTATUS=undefztwo+2^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+ZSTATUS=undefztwo+2^ztslate,%GTM-E-LVUNDEF, Undefined local variable: undef
 5:undefztwo+3^ztslate	$ZTLEVEL=1	$ZLEVEL=6
 after: set undef ztwo           
 ###################################################################
@@ -84,7 +84,7 @@ Repeat the same tests, but wrap them in an explicit transaction
 ###################################################################
 ###################################################################
 set $ztwormhole to an undef variable
-ZSTATUS=ztwoundeftest+3^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+ZSTATUS=ztwoundeftest+3^ztslate,%GTM-E-LVUNDEF, Undefined local variable: undef
 ###################################################################
 set $ztslate to a valid variable
 before:                         
@@ -95,7 +95,7 @@ set $ztslate to an undef variable
 You will see two error messages from the trigger's $etrap handler
 before:                         
 inside:
-ZSTATUS=undefslate+2^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+ZSTATUS=undefslate+2^ztslate,%GTM-E-LVUNDEF, Undefined local variable: undef
 5:undefslate+3^ztslate	$ZTLEVEL=1	$ZLEVEL=6
 after:                          
 ###################################################################
@@ -103,7 +103,7 @@ set $ztwormhole to an undef variable in a trigger
 You will see two error messages from the trigger's $etrap handler
 before:                         
 inside:
-ZSTATUS=undefztwo+2^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+ZSTATUS=undefztwo+2^ztslate,%GTM-E-LVUNDEF, Undefined local variable: undef
 5:undefztwo+3^ztslate	$ZTLEVEL=1	$ZLEVEL=6
 after: set undef ztwo           
 ###################################################################
@@ -195,9 +195,9 @@ No errors detected by integ.
 %GTM-E-SVNOSET, Cannot SET this special variable
 %GTM-E-SVNOSET, Cannot SET this special variable
 %GTM-E-SVNOSET, Cannot SET this special variable
-ZSTATUS=undefslate+2^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
-ZSTATUS=undefztwo+2^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+ZSTATUS=undefslate+2^ztslate,%GTM-E-LVUNDEF, Undefined local variable: undef
+ZSTATUS=undefztwo+2^ztslate,%GTM-E-LVUNDEF, Undefined local variable: undef
 ZSTATUS=commit+4^ztslate,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
-ZSTATUS=undefslate+2^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
-ZSTATUS=undefztwo+2^ztslate,%GTM-E-UNDEF, Undefined local variable: undef
+ZSTATUS=undefslate+2^ztslate,%GTM-E-LVUNDEF, Undefined local variable: undef
+ZSTATUS=undefztwo+2^ztslate,%GTM-E-LVUNDEF, Undefined local variable: undef
 ZSTATUS=commit+4^ztslate,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0

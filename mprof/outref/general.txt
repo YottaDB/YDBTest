@@ -1459,7 +1459,7 @@ GTM>
 do ^zevref1
 Testing ZYERROR Label...
 done(SUB2)
-ZSTATUS = 150373850,SUB1+4^zevref1,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+ZSTATUS = 150373850,SUB1+4^zevref1,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
 end of SUB2
 Testing ZYERROR Label+offset...done(SUB3+1)
 ZSTATUS = 150373210,SUB1+8^zevref1,%GTM-E-DIVZERO, Attempt to divide by zero  ZERROR = GTM-E-DIVZERO, Attempt to divide by zero
@@ -1468,13 +1468,13 @@ end of SUB3
 ZSTATUS = 150372778,SUB1+12^zevref1,%GTM-E-EXPR, Expression expected but not found  ZERROR = GTM-E-EXPR, Expression expected but not found
 1
 Testing ZYERROR Label+offset+module...done(lab+1^zeleaf)
-ZSTATUS = 150373850,SUB1+16^zevref1,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+ZSTATUS = 150373850,SUB1+16^zevref1,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
 end of SUB1
 
 GTM>
 do ^zevref2
 Testing ZYERROR Label^module...done(SUB2)
-ZSTATUS = 150373850,SUB1+4^zevref2,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+ZSTATUS = 150373850,SUB1+4^zevref2,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
 end of SUB2
 end of SUB1
 
@@ -1482,7 +1482,7 @@ GTM>
 do ^zevref3
 Testing ZYERROR @Label...
 done(SUB2)
-ZSTATUS = 150373850,SUB1+4^zevref3,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+ZSTATUS = 150373850,SUB1+4^zevref3,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
 end of SUB2
 Testing ZYERROR @Lable+offset...done(SUB3+1)
 ZSTATUS = 150373210,SUB1+9^zevref3,%GTM-E-DIVZERO, Attempt to divide by zero  ZERROR = GTM-E-DIVZERO, Attempt to divide by zero
@@ -1493,9 +1493,9 @@ ZSTATUS = 150372778,SUB1+14^zevref3,%GTM-E-EXPR, Expression expected but not fou
 1
 Testing ZYERROR @(Label+offset+module)...
 done(lab+1^zeleaf)
-ZSTATUS = 150373850,SUB1+19^zevref3,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+ZSTATUS = 150373850,SUB1+19^zevref3,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
 Testing ZYERROR with no quit cmd in its handler...
-ZSTATUS = 150373850,SUB1+24^zevref3,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+ZSTATUS = 150373850,SUB1+24^zevref3,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
 end of SUB1
 
 GTM>
@@ -1522,14 +1522,14 @@ Testing ZYERROR containing erroneous indirection
 GTM>
 do ZTERR^zeiref1
 Testing ZYERROR with syntactically erroneous ZTRAP value
-ZSTATUS = 150373850,ZTERR+4^zeiref1,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+ZSTATUS = 150373850,ZTERR+4^zeiref1,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
 %GTM-E-LABELMISSING, Label referenced but not defined: w
 
 GTM>
 do TST1^zeiref2
 Testing ZYERROR Label...
 done(SUB2)
-ZSTATUS = 150373850,TST1+4^zeiref2,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+ZSTATUS = 150373850,TST1+4^zeiref2,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
 Testing ZYERROR Label+offset...
 done(SUB3+1)
 ZSTATUS = 150373210,TST1+8^zeiref2,%GTM-E-DIVZERO, Attempt to divide by zero  ZERROR = GTM-E-DIVZERO, Attempt to divide by zero
@@ -1558,7 +1558,7 @@ GTM>
 do TST1^zevref4
 Testing ZYERROR Label...
 done(SUB2)
-ZSTATUS = 150373850,TST1+3^zevref4,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+ZSTATUS = 150373850,TST1+3^zevref4,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
 end of SUB2
 
 GTM>
@@ -1587,7 +1587,7 @@ GTM>
 GTM>
 do TST4^zevref4
 Testing ZYERROR Label+offset+module...done(lab+1^zeleaf)
-ZSTATUS = 150373850,TST4+3^zevref4,%GTM-E-UNDEF, Undefined local variable: x  ZERROR = GTM-E-UNDEF, Undefined local variable: x
+ZSTATUS = 150373850,TST4+3^zevref4,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
 
 GTM>
 
