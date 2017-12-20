@@ -48,7 +48,7 @@ void	lvnZWRITE(void)
 	/* First go through all local variable names in symbol table */
 	for ( ; ; )
 	{
-		status = ydb_subscript_next_s(&retvalue, 0, &basevar);
+		status = ydb_subscript_next_s(&retvalue, &basevar, 0, NULL);
 		assert(YDB_OK == status);
 		if (!retvalue.len_used)
 			break;
@@ -79,15 +79,7 @@ void lvnZWRITEsubtree(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr)
 	/* First go through all local variable names in symbol table */
 	for ( ; ; )
 	{
-		status = ydb_subscript_next_s(&retvalue, nsubs + 1, basevar,
-					&subscr[0], &subscr[1], &subscr[2], &subscr[3],
-					&subscr[4], &subscr[5], &subscr[6], &subscr[7],
-					&subscr[8], &subscr[9], &subscr[10], &subscr[11],
-					&subscr[12], &subscr[13], &subscr[14], &subscr[15],
-					&subscr[16], &subscr[17], &subscr[18], &subscr[19],
-					&subscr[20], &subscr[21], &subscr[22], &subscr[23],
-					&subscr[24], &subscr[25], &subscr[26], &subscr[27],
-					&subscr[28], &subscr[29], &subscr[30], &subscr[31]);
+		status = ydb_subscript_next_s(&retvalue, basevar, nsubs + 1, subscr);
 		assert(YDB_OK == status);
 		if (!retvalue.len_used)
 			break;
@@ -110,16 +102,8 @@ void	lvnPrintNodeIfExists(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr
 	retvalue.buf_addr = retvaluebuff;
 	retvalue.len_alloc = sizeof(retvaluebuff);
 	retvalue.len_used = 0;
-	status = ydb_get_s(&retvalue, nsubs, basevar,
-				&subscr[0], &subscr[1], &subscr[2], &subscr[3],
-				&subscr[4], &subscr[5], &subscr[6], &subscr[7],
-				&subscr[8], &subscr[9], &subscr[10], &subscr[11],
-				&subscr[12], &subscr[13], &subscr[14], &subscr[15],
-				&subscr[16], &subscr[17], &subscr[18], &subscr[19],
-				&subscr[20], &subscr[21], &subscr[22], &subscr[23],
-				&subscr[24], &subscr[25], &subscr[26], &subscr[27],
-				&subscr[28], &subscr[29], &subscr[30], &subscr[31]);
-	if (YDB_ERR_UNDEF == status)
+	status = ydb_get_s(&retvalue, basevar, nsubs, subscr);
+	if (YDB_ERR_LVUNDEF == status)
 		return;
 	assert(YDB_OK == status);
 	ptr = &strbuff[0];

@@ -71,7 +71,7 @@ int main()
 
 		/* Note - no call to ydb_init() to verify it happens automatically */
 
-		status = ydb_set_s(&isvvalue, 0, &isvvar);
+		status = ydb_set_s(&isvvalue, &isvvar, 0, NULL);
 		if (YDB_OK != status)
 		{
 			ydb_zstatus(errbuf, ERRBUF_SIZE);

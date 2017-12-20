@@ -65,12 +65,12 @@ int main()
 int gvnset()
 {
 	int		status;
-	ydb_buffer_t	basevar, subscr1, subscr2, value1, value2, value3, badbasevar;
+	ydb_buffer_t	basevar, subscr[2], value1, value2, value3, badbasevar;
 
 	/* Initialize varname, subscript, and value buffers */
 	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
-	YDB_STRLIT_TO_BUFFER(&subscr1, SUBSCR1);
-	YDB_STRLIT_TO_BUFFER(&subscr2, SUBSCR2);
+	YDB_STRLIT_TO_BUFFER(&subscr[0], SUBSCR1);
+	YDB_STRLIT_TO_BUFFER(&subscr[1], SUBSCR2);
 	YDB_STRLIT_TO_BUFFER(&value1, VALUE1);
 	YDB_STRLIT_TO_BUFFER(&value2, VALUE2);
 	YDB_STRLIT_TO_BUFFER(&value3, VALUE3);
@@ -78,7 +78,7 @@ int gvnset()
 	/* Note - no call to ydb_init() to verify it happens automatically */
 
 	/* Set a base variable, no subscripts */
-	status = ydb_set_s(&value1, 0, &basevar);
+	status = ydb_set_s(&value1, &basevar, 0, NULL);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -87,7 +87,7 @@ int gvnset()
 		return YDB_OK;
 	}
 	/* Set single subscript value */
-	status = ydb_set_s(&value2, 1, &basevar, &subscr1);
+	status = ydb_set_s(&value2, &basevar, 1, subscr);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -96,7 +96,7 @@ int gvnset()
 		return YDB_OK;
 	}
 	/* Set two subscript value */
-	status = ydb_set_s(&value3, 2, &basevar, &subscr1, &subscr2);
+	status = ydb_set_s(&value3, &basevar, 2, subscr);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
