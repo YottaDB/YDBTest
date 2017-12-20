@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
 			numincrs *= 10;
 	} while(1);
 	/* List the final value of global BASEVAR. That should be the same irrespective of order of TP operations inside children */
-	status = ydb_get_s(&value, 0, &basevar);
+	status = ydb_get_s(&value, &basevar, 0, NULL);
 	assert(YDB_OK == status);
 	result = strtoul(value.buf_addr, NULL, 10);
 	if ((int)result != cumulincrs)
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
 		for (i = 1; i <= cumulincrs; i++)
 		{
 			subs.len_used = sprintf(subs.buf_addr, "%d", i);
-			status = ydb_get_s(&value, 1, &basevar, &subs);
+			status = ydb_get_s(&value, &basevar, 1, &subs);
 			assert(YDB_OK == status);
 			assert(0 == value.len_used);
 		}
@@ -139,7 +139,7 @@ int gvnincr(int *i)
 	unsigned long	result;
 
 	/* Implement $INCR(^x) */
-	status = ydb_get_s(&value, 0, &basevar);
+	status = ydb_get_s(&value, &basevar, 0, NULL);
 	if (YDB_TP_RESTART == status)
 		return status;
 	if (YDB_ERR_GVUNDEF != status)
@@ -150,7 +150,7 @@ int gvnincr(int *i)
 	} else
 		result = (*i + 1);
 	value.len_used = sprintf(value.buf_addr, "%d", (int)result);
-	status = ydb_set_s(&value, 0, &basevar);
+	status = ydb_set_s(&value, &basevar, 0, NULL);
 	if (YDB_TP_RESTART == status)
 		return status;
 	assert(YDB_OK == status);

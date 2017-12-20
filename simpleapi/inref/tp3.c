@@ -56,6 +56,6 @@ int gvnset()
 	int		status;
 
 	/* Set a base variable, no subscripts */
-	status = ydb_set_s(&value1, 0, &basevar);
+	status = ydb_set_s(&value1, &basevar, 0, NULL);
 	return status;
 }

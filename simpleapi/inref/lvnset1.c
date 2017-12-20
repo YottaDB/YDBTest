@@ -29,14 +29,14 @@
 int main()
 {
 	int		status;
-	ydb_buffer_t	basevar, subscr1, subscr2, value1, value2, value3, badbasevar;
+	ydb_buffer_t	basevar, subscr[2], value1, value2, value3, badbasevar;
 	ydb_string_t	zwrarg;
 	char		errbuf[ERRBUF_SIZE];
 
 	/* Initialize varname, subscript, and value buffers */
 	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
-	YDB_STRLIT_TO_BUFFER(&subscr1, SUBSCR1);
-	YDB_STRLIT_TO_BUFFER(&subscr2, SUBSCR2);
+	YDB_STRLIT_TO_BUFFER(&subscr[0], SUBSCR1);
+	YDB_STRLIT_TO_BUFFER(&subscr[1], SUBSCR2);
 	YDB_STRLIT_TO_BUFFER(&value1, VALUE1);
 	YDB_STRLIT_TO_BUFFER(&value2, VALUE2);
 	YDB_STRLIT_TO_BUFFER(&value3, VALUE3);
@@ -50,7 +50,7 @@ int main()
 		return YDB_OK;
 	}
 	/* Set a base variable, no subscripts */
-	status = ydb_set_s(&value1, 0, &basevar);
+	status = ydb_set_s(&value1, &basevar, 0, NULL);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -59,7 +59,7 @@ int main()
 		return YDB_OK;
 	}
 	/* Set single subscript value */
-	status = ydb_set_s(&value2, 1, &basevar, &subscr1);
+	status = ydb_set_s(&value2, &basevar, 1, subscr);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -68,7 +68,7 @@ int main()
 		return YDB_OK;
 	}
 	/* Set two subscript value */
-	status = ydb_set_s(&value3, 2, &basevar, &subscr1, &subscr2);
+	status = ydb_set_s(&value3, &basevar, 2, subscr);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -90,7 +90,7 @@ int main()
 	/* Now for a few error cases - first up, bad basevar names */
 	printf("Attempting set of bad basevar %s\n", BADBASEVAR1);
 	YDB_STRLIT_TO_BUFFER(&badbasevar, BADBASEVAR1);
-	status = ydb_set_s(&value1, 0, &badbasevar);
+	status = ydb_set_s(&value1, &badbasevar, 0, NULL);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -100,7 +100,7 @@ int main()
 	}
 	printf("Attempting set of bad basevar %s\n", BADBASEVAR2);
 	YDB_STRLIT_TO_BUFFER(&badbasevar, BADBASEVAR2);
-	status = ydb_set_s(&value1, 0, &badbasevar);
+	status = ydb_set_s(&value1, &badbasevar, 0, NULL);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -110,7 +110,7 @@ int main()
 	}
 	/* Now try sending in a non-existant subscript */
 	printf("Attempting set of basevar with NULL subscript address parameter\n");
-	status = ydb_set_s(&value1, 1, &basevar, NULL);
+	status = ydb_set_s(&value1, &basevar, 1, NULL);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);

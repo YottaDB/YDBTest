@@ -56,7 +56,7 @@ int	fullread(char *buff, int len)
 #define	DBG_BUFF_SIZE	65536
 #define	READCNT_SIZE	256
 
-typedef int (*ydb_retvalue_fnptr_t)(ydb_buffer_t *value, int subs_used, ydb_buffer_t *varname, ...);
+typedef int (*ydb_retvalue_fnptr_t)(ydb_buffer_t *value, ydb_buffer_t *varname, int subs_used, ydb_buffer_t *subsarray);
 
 int main()
 {
@@ -133,30 +133,14 @@ int main()
 		/* Now do the set. Since we don't know the # of subscripts, we code it for the max # = 32 */
 		if (YDBSETS == action)
 		{
-			status = ydb_set_s(&value, nsubs, &basevar,
-					&subscr[0], &subscr[1], &subscr[2], &subscr[3],
-					&subscr[4], &subscr[5], &subscr[6], &subscr[7],
-					&subscr[8], &subscr[9], &subscr[10], &subscr[11],
-					&subscr[12], &subscr[13], &subscr[14], &subscr[15],
-					&subscr[16], &subscr[17], &subscr[18], &subscr[19],
-					&subscr[20], &subscr[21], &subscr[22], &subscr[23],
-					&subscr[24], &subscr[25], &subscr[26], &subscr[27],
-					&subscr[28], &subscr[29], &subscr[30], &subscr[31]);
+			status = ydb_set_s(&value, &basevar, nsubs, subscr);
 			assert(YDB_OK == status);
 		} else if ((YDBGETS == action) || (YDBSUBSNEXT == action) || (YDBSUBSPREV == action))
 		{
 			retvalue.buf_addr = retvaluebuff;
 			retvalue.len_alloc = sizeof(retvaluebuff);
 			retvalue.len_used = 0;
-			status = (*ydb_fn_array[action])(&retvalue, nsubs, &basevar,
-					&subscr[0], &subscr[1], &subscr[2], &subscr[3],
-					&subscr[4], &subscr[5], &subscr[6], &subscr[7],
-					&subscr[8], &subscr[9], &subscr[10], &subscr[11],
-					&subscr[12], &subscr[13], &subscr[14], &subscr[15],
-					&subscr[16], &subscr[17], &subscr[18], &subscr[19],
-					&subscr[20], &subscr[21], &subscr[22], &subscr[23],
-					&subscr[24], &subscr[25], &subscr[26], &subscr[27],
-					&subscr[28], &subscr[29], &subscr[30], &subscr[31]);
+			status = (*ydb_fn_array[action])(&retvalue, &basevar, nsubs, subscr);
 			assert(YDB_OK == status);
 			assert((retvalue.len_used == value.len_used)
 				&& (!memcmp(retvalue.buf_addr, value.buf_addr, value.len_used)));
