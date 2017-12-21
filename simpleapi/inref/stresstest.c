@@ -31,6 +31,7 @@
 #define assert(x) ((x) ? 1 : (fprintf(stderr, "Assert failed at %s line %d : %s\n", __FILE__, __LINE__, #x), kill(getpid(), SIGILL)))
 
 void	lvnZWRITE(void);
+void	gvnZWRITE(void);
 int	fullread(char *buff, int len);
 
 /* Read "len" bytes. If "read()" system call returns less than "len", keep retrying until we have "len" bytes */
@@ -148,6 +149,7 @@ int main()
 	}
 	/* List all lvns created by us */
 	lvnZWRITE();
-	/* NARSTODO: gvnZWRITE(); */
+	/* List all glvns in database (== created by us since we are the only one accessing the db) */
+	gvnZWRITE();
 	return YDB_OK;
 }
