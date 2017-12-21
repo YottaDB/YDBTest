@@ -48,7 +48,7 @@ void	lvnZWRITE(void)
 	/* First go through all local variable names in symbol table */
 	for ( ; ; )
 	{
-		status = ydb_subscript_next_s(&retvalue, &basevar, 0, NULL);
+		status = ydb_subscript_next_s(&basevar, 0, NULL, &retvalue);
 		assert(YDB_OK == status);
 		if (!retvalue.len_used)
 			break;
@@ -69,6 +69,8 @@ void lvnZWRITEsubtree(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr)
 	char		retvaluebuff[BUFFALLOCLEN];
 
 	lvnPrintNodeIfExists(basevar, nsubs, subscr);
+	if (YDB_MAX_SUBS == nsubs)	/* cannot have a subtree if we are already at MAXNRSUBSCRIPTS level */
+		return;
 	retvalue.buf_addr = retvaluebuff;
 	retvalue.len_alloc = sizeof(retvaluebuff);
 	retvalue.len_used = 0;
@@ -76,10 +78,9 @@ void lvnZWRITEsubtree(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr)
 	cursubs->buf_addr = subsbuff;
 	cursubs->len_alloc = sizeof(subsbuff);
 	cursubs->len_used = 0;
-	/* First go through all local variable names in symbol table */
 	for ( ; ; )
 	{
-		status = ydb_subscript_next_s(&retvalue, basevar, nsubs + 1, subscr);
+		status = ydb_subscript_next_s(basevar, nsubs + 1, subscr, &retvalue);
 		assert(YDB_OK == status);
 		if (!retvalue.len_used)
 			break;
@@ -102,7 +103,7 @@ void	lvnPrintNodeIfExists(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr
 	retvalue.buf_addr = retvaluebuff;
 	retvalue.len_alloc = sizeof(retvaluebuff);
 	retvalue.len_used = 0;
-	status = ydb_get_s(&retvalue, basevar, nsubs, subscr);
+	status = ydb_get_s(basevar, nsubs, subscr, &retvalue);
 	if (YDB_ERR_LVUNDEF == status)
 		return;
 	assert(YDB_OK == status);

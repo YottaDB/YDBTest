@@ -110,7 +110,7 @@ void isvget1cb(int count, ydb_string_t *ISVlist, ydb_string_t *ISVvals)
 		ISVname.len_used = ISVname.len_alloc = toklen;
 		ISVvalue.buf_addr = ISVbuffer;
 		ISVvalue.len_used = ISVvalue.len_alloc = MAX_VALUE_LEN;
-		status = ydb_get_s(&ISVvalue, &ISVname, 0, NULL);
+		status = ydb_get_s(&ISVname, 0, NULL, &ISVvalue);
 		if (YDB_OK != status)
 		{
 			ydb_zstatus(errbuf, ERRBUF_SIZE);

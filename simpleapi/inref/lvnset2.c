@@ -40,7 +40,7 @@ int main()
 	YDB_STRLIT_TO_BUFFER(&value2, VALUE2);
 	YDB_STRLIT_TO_BUFFER(&value3, VALUE3);
 	/* Set a base variable, no subscripts */
-	status = ydb_set_s(&value1, &basevar, 0, NULL);
+	status = ydb_set_s(&basevar, 0, NULL, &value1);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -49,7 +49,7 @@ int main()
 		return YDB_OK;
 	}
 	/* Set single subscript value */
-	status = ydb_set_s(&value2, &basevar, 1, subscr);
+	status = ydb_set_s(&basevar, 1, subscr, &value2);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -58,7 +58,7 @@ int main()
 		return YDB_OK;
 	}
 	/* Set two subscript value */
-	status = ydb_set_s(&value3, &basevar, 2, subscr);
+	status = ydb_set_s(&basevar, 2, subscr, &value3);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -71,7 +71,7 @@ int main()
 	{
 		subsbuff[subs].len_used = sprintf(subsstrlit[subs], "%d", subs);
 		subsbuff[subs].buf_addr = subsstrlit[subs];
-		status = ydb_set_s(&subsbuff[subs], &basevar, subs, subsbuff);
+		status = ydb_set_s(&basevar, subs, subsbuff, &subsbuff[subs]);
 		if (YDB_OK != status)
 		{
 			ydb_zstatus(errbuf, ERRBUF_SIZE);
