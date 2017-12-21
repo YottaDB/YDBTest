@@ -23,7 +23,7 @@ $gtm_dist/dse change -file -null=TRUE >& dse_change.out
 #
 echo "Prepare stresstest executable from stresstest.c"
 set objlist = ""
-set filelist = "stresstest.c lvnZWRITE.c"
+set filelist = "stresstest.c glvnZWRITE.c"
 foreach file ($filelist)
 	cp $gtm_tst/$tst/inref/$file .
 	$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $file
