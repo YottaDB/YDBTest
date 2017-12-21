@@ -27,60 +27,57 @@
 #define	BUFFALLOCLEN	64
 
 void	lvnZWRITE(void);
+void	gvnZWRITE(void);
+void	glvnZWRITE(char *startname);
 void	glvnZWRITEsubtree(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr);
 void	glvnPrintNodeIfExists(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr);
 
 /* Lists ALL local variable nodes in a process in ZWRITE order */
 void	lvnZWRITE(void)
 {
-	ydb_buffer_t	retvalue, basevar;
-	int		status;
-	char		retvaluebuff[BUFFALLOCLEN], basevarbuff[BUFFALLOCLEN];
-	ydb_buffer_t	subscr[YDB_MAX_SUBS + 1];
-
-	retvalue.buf_addr = retvaluebuff;
-	retvalue.len_alloc = sizeof(retvaluebuff);
-	retvalue.len_used = 0;
-	basevar.buf_addr = basevarbuff;
-	basevar.len_alloc = sizeof(basevarbuff);
-	basevar.buf_addr[0] = '%';
-	basevar.len_used = 1;
-	/* First go through all local variable names in symbol table */
-	for ( ; ; )
-	{
-		status = ydb_subscript_next_s(&basevar, 0, NULL, &retvalue);
-		assert(YDB_OK == status);
-		if (!retvalue.len_used)
-			break;
-		assert(basevar.len_alloc >= retvalue.len_used);
-		memcpy(basevar.buf_addr, retvalue.buf_addr, retvalue.len_used);
-		basevar.len_used = retvalue.len_used;
-		glvnZWRITEsubtree(&basevar, 0, &subscr[0]);
-	}
-	return;
+	return glvnZWRITE("%"); /* Go through all local variable nodes */
 }
 
 /* Lists ALL global variable nodes in the database in ZWRITE order */
 void	gvnZWRITE(void)
 {
-	ydb_buffer_t	retvalue, basevar;
-	int		status;
-	char		retvaluebuff[BUFFALLOCLEN], basevarbuff[BUFFALLOCLEN];
+	return glvnZWRITE("^%"); /* Go through all global variable nodes */
+}
+
+void glvnZWRITE(char *startname)
+{
+	ydb_buffer_t	basevar;
+	char		basevarbuff[BUFFALLOCLEN];
+	ydb_buffer_t	retvalue, tmpvalue;
+	int		status, startnamelen, iters;
+	char		retvaluebuff[BUFFALLOCLEN], tmpvaluebuff[BUFFALLOCLEN];
 	ydb_buffer_t	subscr[YDB_MAX_SUBS + 1];
 
+	basevar.buf_addr = basevarbuff;
+	basevar.len_alloc = sizeof(basevarbuff);
+	startnamelen = strlen(startname);
+	basevar.len_used = startnamelen;
+	memcpy(basevar.buf_addr, startname, basevar.len_used);
+	tmpvalue.buf_addr = tmpvaluebuff;
+	tmpvalue.len_alloc = sizeof(tmpvaluebuff);
+	tmpvalue.len_used = 0;
 	retvalue.buf_addr = retvaluebuff;
 	retvalue.len_alloc = sizeof(retvaluebuff);
 	retvalue.len_used = 0;
-	basevar.buf_addr = basevarbuff;
-	basevar.len_alloc = sizeof(basevarbuff);
-	basevar.buf_addr[0] = '^';
-	basevar.buf_addr[1] = '%';
-	basevar.len_used = 2;
-	/* First go through all local variable names in symbol table */
-	for ( ; ; )
+	for (iters=0; ; iters++)
 	{
 		status = ydb_subscript_next_s(&basevar, 0, NULL, &retvalue);
 		assert(YDB_OK == status);
+		/* NARSTODO: If retvalue.len_used is 0, need to do reverse $order of "zzzzzzzzzzzzzz...". */
+		if (retvalue.len_used)
+		{
+			status = ydb_subscript_previous_s(&retvalue, 0, NULL, &tmpvalue);
+			assert(YDB_OK == status);
+			assert((tmpvalue.len_used == basevar.len_used)
+				|| (!tmpvalue.len_used && !iters)
+				|| !tmpvalue.len_used
+				|| (!memcmp(tmpvalue.buf_addr, basevar.buf_addr, basevar.len_used)));
+		}
 		if (!retvalue.len_used)
 			break;
 		assert(basevar.len_alloc >= retvalue.len_used);
@@ -88,17 +85,16 @@ void	gvnZWRITE(void)
 		basevar.len_used = retvalue.len_used;
 		glvnZWRITEsubtree(&basevar, 0, &subscr[0]);
 	}
-	return;
 }
 
 void glvnZWRITEsubtree(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr)
 {
-	ydb_buffer_t	*cursubs;
+	ydb_buffer_t	*cursubs, tmpvalue, tmpvalue2;
 	char		subsbuff[BUFFALLOCLEN];
 	int		status;
 	unsigned int	ret_dlrdata;
 	ydb_buffer_t	retvalue;
-	char		retvaluebuff[BUFFALLOCLEN];
+	char		retvaluebuff[BUFFALLOCLEN], tmpvaluebuff[BUFFALLOCLEN];
 
 	glvnPrintNodeIfExists(basevar, nsubs, subscr);
 	if (YDB_MAX_SUBS == nsubs)	/* cannot have a subtree if we are already at MAXNRSUBSCRIPTS level */
@@ -113,10 +109,20 @@ void glvnZWRITEsubtree(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr)
 	status = ydb_data_s(basevar, nsubs + 1, subscr, &ret_dlrdata);
 	if (ret_dlrdata)
 		glvnZWRITEsubtree(basevar, nsubs + 1, subscr);
+	tmpvalue.buf_addr = tmpvaluebuff;
+	tmpvalue.len_alloc = sizeof(tmpvaluebuff);
+	tmpvalue.len_used = 0;
 	for ( ; ; )
 	{
 		status = ydb_subscript_next_s(basevar, nsubs + 1, subscr, &retvalue);
 		assert(YDB_OK == status);
+		tmpvalue2 = subscr[nsubs];
+		subscr[nsubs] = retvalue;
+		status = ydb_subscript_previous_s(basevar, nsubs + 1, subscr, &tmpvalue);
+		assert(YDB_OK == status);
+		assert(tmpvalue.len_used == tmpvalue2.len_used);
+		assert(!tmpvalue.len_used || (!memcmp(tmpvalue.buf_addr, tmpvalue2.buf_addr, tmpvalue2.len_used)));
+		subscr[nsubs] = tmpvalue2;
 		if (!retvalue.len_used)
 			break;
 		memcpy(cursubs->buf_addr, retvalue.buf_addr, retvalue.len_used);
