@@ -26,7 +26,8 @@ stresstest;
 	open mfile:(newversion)
 	;
 	set dev="mtocpipe"
-	open dev:(command="./stresstest >& genstresstest.log":stream:nowrap:exception="goto done")::"pipe"
+	; open device in M mode to avoid BADCHAR errors if this test ran in UTF-8 mode
+	open dev:(command="./stresstest >& genstresstest.log":stream:nowrap:chset="M")::"pipe"
 	for i=8,16,24 set TWO(i)=2**i
 	s YDBEOF=0,YDBSETS=1,YDBGETS=2,YDBSUBSNEXT=3,YDBSUBSPREV=4	; these mirror YDBEOF/YDBSETS etc. in stresstest.c
 	;
@@ -60,8 +61,6 @@ stresstest;
 	use dev  write $$num2bin(0),$$num2bin(YDBEOF)
 	read x	; wait for C program to die at which point the read will return with no data
 	use $p
-done	;
-	;
 	quit
 
 helper	;
@@ -77,7 +76,7 @@ helper	;
 	set subslen=$length(cumulsubstr)
 	set cumullen=(4+varnamelen)+nsubslen+subslen+(4+valuelen)
 	set cumulstr2=$$num2bin(varnamelen)_varname_$$num2bin(nsubs)_cumulsubstr
-	set cumulstr=cumulstr2_$$num2bin(valuelen)_value;
+	set cumulstr=cumulstr2_$$num2bin(valuelen)_value
 	;
 	; write total length and 1 (to indicate this is ydb_set_s); need $x=0 set to avoid newline being inserted in middle of lines
 	use dev  write $$num2bin(cumullen),$$num2bin(YDBSETS),cumulstr  set $x=0 use $p
@@ -109,7 +108,6 @@ getvarname();
 	. for i=1:1:1+$random(2**loglen2) set varnameset(i)=$$getvarnamehelper()
 	. set varnamesetlen=i
 	set name=varnameset(1+$random(varnamesetlen))
-	quit name	; NARSTODO: remove this line
 	if ($random(2)) quit name     ; local  variable name
 	else            quit "^"_name ; global variable name
 	quit

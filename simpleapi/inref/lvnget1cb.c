@@ -191,7 +191,7 @@ int drive_ydb_get_s(ydb_buffer_t *varvalue, int subcnt, ydb_buffer_t *varname, y
 	int	status;
 	char	errbuf[ERRBUF_SIZE];
 
-	status = ydb_get_s(varvalue, varname, subcnt, subscrs);
+	status = ydb_get_s(varname, subcnt, subscrs, varvalue);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
