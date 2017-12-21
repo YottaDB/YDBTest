@@ -20,6 +20,21 @@ PASS from tp2trig
 ##ALLOW_OUTPUT NOTRIGGER
 
  --> Running tp3.c <---
+TSTART : dollar_trestart = 0
+  --> Verifying x is UNDEFINED
+  --> set x to a value
+  --> Verifying x is DEFINED
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 1
+  --> Verifying x is UNDEFINED
+  --> set x to a value
+  --> Verifying x is DEFINED
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 2
+  --> Verifying x is UNDEFINED
+  --> set x to a value
+  --> Verifying x is DEFINED
+  --> Committing the TP transaction
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
