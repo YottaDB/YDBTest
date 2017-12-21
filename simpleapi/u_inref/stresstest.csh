@@ -13,15 +13,18 @@
 
 unsetenv gtmdbglvl # or else test runs for too long
 
-echo "Create database using maximum keysize of ~1K and record size = 4K"
-$gtm_tst/com/dbcreate.csh mumps -key_size=1019 -record_size=4096
-echo "Allow null subscripts in database since randomly generated subscripts could be null"
-$gtm_dist/dse change -file -null=TRUE >& dse_change.out
+echo "# Set gtm_lct_stdnull to 1 to enable Standard Null Collation (needed for simpleAPI when using null subscripts)"
+setenv gtm_lct_stdnull 1
+
+echo "# Create database using maximum keysize of ~1K and record size = 4K"
+echo "# Allow null subscripts in database since randomly generated subscripts could be null"
+echo "# Set Standard Null Collation (needed for simpleAPI when using null subscripts) on all created database files"
+$gtm_tst/com/dbcreate.csh mumps -key_size=1019 -record_size=4096 -stdnull -null_subscripts=TRUE
 
 #
 # Stress test of ALL ydb_*_s() functions in the simpleAPI
 #
-echo "Prepare stresstest executable from stresstest.c"
+echo "# Prepare stresstest executable from stresstest.c"
 set objlist = ""
 set filelist = "stresstest.c glvnZWRITE.c"
 foreach file ($filelist)
@@ -40,16 +43,16 @@ endif
 mv $exefile.o $exefile.c.o	# move it away for the M program (of the same name) to be compiled and a .o created
 				# or else an INVOBJFILE error would be issued (due to unexpected format)
 
-echo "Run stresstest.m (will talk to stresstest.c and generate genstresstest.m and genstresstest.cmp)"
+echo "# Run stresstest.m (will talk to stresstest.c and generate genstresstest.m and genstresstest.cmp)"
 $gtm_dist/mumps -run stresstest
 
-echo "Run genstresstest.m to generate genstresstest.log"
+echo "# Run genstresstest.m to generate genstresstest.log"
 $gtm_dist/mumps -run genstresstest >& genstresstest.cmp
 
 set exefile=genstresstest
 mv $exefile.log $exefile.log_unfiltered
 grep -v zwrarg $exefile.log_unfiltered > $exefile.log
-echo "Verify operations done through the simpleAPI by the C program against the same operations done by an M program"
+echo "# Verify operations done through the simpleAPI by the C program against the same operations done by an M program"
 diff $exefile.{cmp,log} >& $exefile.diff
 if ($status) then
 	echo "STRESSTEST-E-FAIL : diff $exefile.cmp $exefile.log returned non-zero status. See $exefile.diff for details"
