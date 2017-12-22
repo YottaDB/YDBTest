@@ -25,6 +25,8 @@
 #define assert(x) ((x) ? 1 : (fprintf(stderr, "Assert failed at %s line %d : %s\n", __FILE__, __LINE__, #x), kill(getpid(), SIGILL)))
 
 #define	BUFFALLOCLEN	64
+#define	LASTLVNAME	"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+#define	LASTGVNAME	"^zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
 
 void	lvnZWRITE(void);
 void	gvnZWRITE(void);
@@ -47,9 +49,9 @@ void	gvnZWRITE(void)
 void glvnZWRITE(char *startname)
 {
 	ydb_buffer_t	basevar;
-	char		basevarbuff[BUFFALLOCLEN];
+	char		basevarbuff[BUFFALLOCLEN], *name;
 	ydb_buffer_t	retvalue, tmpvalue;
-	int		status, startnamelen, iters;
+	int		status, startnamelen, iters, reached_end;
 	char		retvaluebuff[BUFFALLOCLEN], tmpvaluebuff[BUFFALLOCLEN];
 	ydb_buffer_t	subscr[YDB_MAX_SUBS + 1];
 
@@ -68,17 +70,23 @@ void glvnZWRITE(char *startname)
 	{
 		status = ydb_subscript_next_s(&basevar, 0, NULL, &retvalue);
 		assert(YDB_OK == status);
-		/* NARSTODO: If retvalue.len_used is 0, need to do reverse $order of "zzzzzzzzzzzzzz...". */
-		if (retvalue.len_used)
-		{
-			status = ydb_subscript_previous_s(&retvalue, 0, NULL, &tmpvalue);
-			assert(YDB_OK == status);
-			assert((tmpvalue.len_used == basevar.len_used)
-				|| (!tmpvalue.len_used && !iters)
-				|| !tmpvalue.len_used
-				|| (!memcmp(tmpvalue.buf_addr, basevar.buf_addr, basevar.len_used)));
+		reached_end = (0 == retvalue.len_used);
+		if (reached_end)
+		{	/* Reached end of subscripts. In order to find last subscript do reverse $order of "zzzzzzzzzzzzzz...". */
+			if ('^' == basevar.buf_addr[0])
+				name = LASTGVNAME;
+			else
+				name = LASTLVNAME;
+			retvalue.len_used = strlen(name);
+			memcpy(retvalue.buf_addr, name, retvalue.len_used);
 		}
-		if (!retvalue.len_used)
+		status = ydb_subscript_previous_s(&retvalue, 0, NULL, &tmpvalue);
+		assert(YDB_OK == status);
+		assert((tmpvalue.len_used == basevar.len_used)
+			|| (!tmpvalue.len_used && !iters)
+			|| !tmpvalue.len_used
+			|| (!memcmp(tmpvalue.buf_addr, basevar.buf_addr, basevar.len_used)));
+		if (reached_end)
 			break;
 		assert(basevar.len_alloc >= retvalue.len_used);
 		memcpy(basevar.buf_addr, retvalue.buf_addr, retvalue.len_used);
