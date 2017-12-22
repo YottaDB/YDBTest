@@ -24,13 +24,15 @@
 # lvnget       [estess] Test of ydb_get_s() function for local variables in the simpleAPI
 # gvnget       [estess] Test of ydb_get_s() function for global variables in the simpleAPI
 # isvget       [estess] Test of ydb_get_s() function for ISVs in the simpleAPI
+# threen1g     [nars]   Use simpleAPI to find the maximum number of steps for the 3n+1 problem
+#                       for all integers through two input integers.
 #-------------------------------------------------------------------------------------
 
 echo "simpleapi test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "lvnset lvnsetstress stresstest gvnset isvset tp transid lvnget gvnget isvget"
+setenv subtest_list_non_replic "lvnset lvnsetstress stresstest gvnset isvset tp transid lvnget gvnget isvget threen1g"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
@@ -44,7 +46,7 @@ setenv subtest_exclude_list	""
 
 # Disable certain heavyweight tests on single-cpu systems
 if ($gtm_test_singlecpu) then
-	setenv subtest_exclude_list "$subtest_exclude_list lvnsetstress stresstest"
+	setenv subtest_exclude_list "$subtest_exclude_list lvnsetstress stresstest threen1g"
 endif
 
 # Submit the list of subtests
