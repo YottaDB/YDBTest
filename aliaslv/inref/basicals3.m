@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Test additional basic alias-return aspects of alias support [C9J12-003217]
 ;
 ; Test combinations of:
@@ -89,7 +100,7 @@
 	Write "test of Set *x(1)=$$funcals() with Quit *y "
 	Kill  Kill *
 	Set *x(1)=$$funcals(0)
-	Set *z=x(1) 
+	Set *z=x(1)
 	Kill x
 	Write "Refcnt  z: ",$View("LV_REF","z"),!
 	Write "CRefcnt z: ",$View("LV_CREF","z"),!
@@ -99,7 +110,7 @@
 	Write "test of Set *x(1)=$$funcals() with Quit *y "
 	Kill  Kill *
 	Set *x(1)=$$funcals(1)
-	Set *z=x(1) 
+	Set *z=x(1)
 	Kill x
 	Write "Refcnt  z: ",$View("LV_REF","z"),!
 	Write "CRefcnt z: ",$View("LV_CREF","z"),!
@@ -109,7 +120,7 @@
 	Write "test of Set *x(1)=$$funcals^basicals3funcs() with Quit *y "
 	Kill  Kill *
 	Set *x(1)=$$funcals^basicals3funcs(0)
-	Set *z=x(1) 
+	Set *z=x(1)
 	Kill x
 	Write "Refcnt  z: ",$View("LV_REF","z"),!
 	Write "CRefcnt z: ",$View("LV_CREF","z"),!
@@ -119,7 +130,7 @@
 	Write "test of Set *x(1)=$$funcals^basicals3funcs() with Quit *y "
 	Kill  Kill *
 	Set *x(1)=$$funcals^basicals3funcs(1)
-	Set *z=x(1) 
+	Set *z=x(1)
 	Kill x
 	Write "Refcnt  z: ",$View("LV_REF","z"),!
 	Write "CRefcnt z: ",$View("LV_CREF","z"),!
@@ -212,7 +223,7 @@ resumelbl1
 	; Test for error with routine returning a non-existant alias container
 	Kill  Kill *
 	Set lvl=$ZLevel
-	Set $ETrap="Do errorcheck(""UNDEF"",lvl,""resumelbl2"")"
+	Set $ETrap="Do errorcheck(""LVUNDEF"",lvl,""resumelbl2"")"
 	Set *x=$$funcbadalsct(.errorok)
 resumelbl2
 	Set $ETrap=""
@@ -350,7 +361,7 @@ getnewelem()
 addelem(newelem,order)
 	New (anchor,newelem,order)	; Fun with exclusive new passing new element plus chain through
 	; Add an "auxilliary component" to the new element -- basically a 2ndary new element that will need to be
-	; resolved via the exclusive new unwind logic. The value will the order the element was allocated in 
+	; resolved via the exclusive new unwind logic. The value will the order the element was allocated in
 	; (i.e. the "item" number).
 	Set auxelem=order
 	Set *newelem("itm")=auxelem
