@@ -1,11 +1,22 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Based on test from Iselin report for bug D9K03-002759, setting invalid subscripts.
 ; Known to fail on V5.3-001 through V5.4-000
 ;
 	; Failure expectation grid:
 	;
-	Set expect("UNDEF","NOLVNULLSUBS")="UNDEF"
-	Set expect("UNDEF","LVNULLSUBS")="UNDEF"
-	Set expect("UNDEF","NEVERLVNULLSUBS")="UNDEF"
+	Set expect("UNDEF","NOLVNULLSUBS")="LVUNDEF"
+	Set expect("UNDEF","LVNULLSUBS")="LVUNDEF"
+	Set expect("UNDEF","NEVERLVNULLSUBS")="LVUNDEF"
 	Set expect("NOUNDEF","NOLVNULLSUBS")="LVNULLSUBS"
 	Set expect("NOUNDEF","LVNULLSUBS")=""
 	Set expect("NOUNDEF","NEVERLVNULLSUBS")="LVNULLSUBS"
@@ -27,7 +38,7 @@
 	. . Write !
 	Quit
 
-prime4 
+prime4
 	New fake,fake2,fake3,fake4
 	Set fake="hello"
 	Set fake2="philadelphia"
