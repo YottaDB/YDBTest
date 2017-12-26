@@ -171,5 +171,5 @@ char *find_char(char fchr, char *lineptr, char *lineend)
 			return lineptr;
 		lineptr++;
 	}
-	return NULL;			/* Character was not found */
+	return lineend;			/* Character was not found */
 }
