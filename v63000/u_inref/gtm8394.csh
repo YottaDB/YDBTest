@@ -30,7 +30,7 @@
 # overrides that logic and continue to log this error in stderr.
 #
 setenv LIBC_FATAL_STDERR_ 1
-set gccabort = "libgcc_s.so.1 must be installed for pthread_cancel to work"
+set gccabort = "libgcc_s.so.* must be installed for pthread_cancel to work"
 
 setenv mupjnl_check_leftover_files 1	# check for leftover extract files from the many mupip_rollback.csh invocations below
 
