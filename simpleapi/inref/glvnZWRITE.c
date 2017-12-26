@@ -54,6 +54,7 @@ void glvnZWRITE(char *startname)
 	int		status, startnamelen, iters, reached_end;
 	char		retvaluebuff[BUFFALLOCLEN], tmpvaluebuff[BUFFALLOCLEN];
 	ydb_buffer_t	subscr[YDB_MAX_SUBS + 1];
+	unsigned int	ret_dlrdata;
 
 	basevar.buf_addr = basevarbuff;
 	basevar.len_alloc = sizeof(basevarbuff);
@@ -66,6 +67,9 @@ void glvnZWRITE(char *startname)
 	retvalue.buf_addr = retvaluebuff;
 	retvalue.len_alloc = sizeof(retvaluebuff);
 	retvalue.len_used = 0;
+	status = ydb_data_s(&basevar, 0, subscr, &ret_dlrdata);
+	if (ret_dlrdata)
+		glvnZWRITEsubtree(&basevar, 0, subscr);
 	for (iters=0; ; iters++)
 	{
 		status = ydb_subscript_next_s(&basevar, 0, NULL, &retvalue);
@@ -117,6 +121,7 @@ void glvnZWRITEsubtree(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr)
 	status = ydb_data_s(basevar, nsubs + 1, subscr, &ret_dlrdata);
 	if (ret_dlrdata)
 		glvnZWRITEsubtree(basevar, nsubs + 1, subscr);
+	cursubs->len_used = 0;
 	tmpvalue.buf_addr = tmpvaluebuff;
 	tmpvalue.len_alloc = sizeof(tmpvaluebuff);
 	tmpvalue.len_used = 0;

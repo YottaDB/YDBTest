@@ -14,7 +14,7 @@
 ;
 gvnZWRITE ;
 	set (printit(1),printit(11))=1
-	set x="^%" for  set x=$order(@x,1) quit:x=""  set y=x  do
+	set x="^%",y=x do  for  set x=$order(@x,1) quit:x=""  set y=x  do
 	. if ($get(printit($data(@y)),0)) do print(y)
 	. for  set y=$query(@y) quit:y=""  do print(y)
 	quit
