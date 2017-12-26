@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -13,6 +16,21 @@
 #
 # GTM-8394 [nars] GTMASSERT in mur_insert_prev.c line 148 using V62000 after GTM-F-MEMORY interrupted rollbacks
 #
+
+# This test runs with limited memory setting and glibc does dlopen() of certain libraries (e.g. libgcc_s.so.1) on the fly
+# (instead of opening them as part of the dlopen of libc.so) and so it is possible if/when those libraries are needed
+# (e.g. pthread_cancel is one place where we have seen it), we might not have enough memory for the dlopen. In that case,
+# the following message is issued by libc.
+#
+#	libgcc_s.so.1 must be installed for pthread_cancel to work
+#
+# This message is issued on the terminal where this test was issued from even if the test stdout/stderr have been
+# redirected to a file. This is because the above message is treated as a fatal libc error and those go through
+# a special function that tries to open the terminal (if available) to log the error. The following env var
+# overrides that logic and continue to log this error in stderr.
+#
+setenv LIBC_FATAL_STDERR_ 1
+set gccabort = "libgcc_s.so.* must be installed for pthread_cancel to work"
 
 setenv mupjnl_check_leftover_files 1	# check for leftover extract files from the many mupip_rollback.csh invocations below
 
@@ -76,7 +94,7 @@ while (1)
 	$gtm_tst/$tst/u_inref/gtm8394_helper.sh $mem >>& $file.outx
 	source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0 # do rundown if needed before cp/rm of dat files
 	rm -f *.gld *.repl *.dat *.mjl*
-	$grep -q "GTM-F-MEMORY" $file.outx
+	$grep -qE "GTM-F-MEMORY|$gccabort" $file.outx
 	if (0 == $status) then
 		# move core file (from FATAL GTM-F-MEMORY) to avoid test framework from treating this as a test failure
 		@ num = 1
@@ -117,10 +135,10 @@ while (1)
 	$gtm_tst/$tst/u_inref/gtm8394_helper.sh $mid >>& $file.outx
 	rm -f *.gld *.repl *.dat *.mjl*
 	# See test/v62000/u_inref/gtm8047.csh for comment on why we need to also search for ENO12 in addition to GTM-F-MEMORY
-	$grep -Eq "$oompattern|SYSTEM-E-ENO12|Cannot allocate memory" $file.outx
+	$grep -Eq "$oompattern|SYSTEM-E-ENO12|Cannot allocate memory|$gccabort" $file.outx
 	if (0 == $status) then
 		# Found a setting that causes GTM-F-MEMORY or a memory-related error.
-		$grep -q "GTM-F-MEMORY" $file.outx
+		$grep -qE "GTM-F-MEMORY|$gccabort" $file.outx
 		if (0 == $status) then
 			# move core file (from FATAL GTM-F-MEMORY) to avoid test framework from treating this as a failure
 			@ num = 1
