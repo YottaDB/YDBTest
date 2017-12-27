@@ -30,6 +30,9 @@
 #define	NCHILDREN	8
 #define	MAXNUMINCRS	1000
 
+#define	FALSE	0
+#define	TRUE	1
+
 /* Use SIGILL below to generate a core when an assertion fails */
 #define assert(x) ((x) ? 1 : (fprintf(stderr, "Assert failed at %s line %d : %s\n", __FILE__, __LINE__, #x), kill(getpid(), SIGILL)))
 
@@ -40,6 +43,7 @@ int	gvnincr();
 
 ydb_buffer_t	basevar, value;
 char		valuebuff[16];
+int		use_ydb_incr_s_inside_tp, use_ydb_incr_s_outside_tp;
 
 /* Function to do a test $increment implemented inside TP across multiple processes using the simpleAPI */
 int main(int argc, char *argv[])
@@ -119,38 +123,51 @@ int main(int argc, char *argv[])
 
 int do_tp(int numincrs)
 {
-	int		status, i;
+	int		seed, status, i;
 	ydb_tpfnptr_t	tpfn;
 	ydb_string_t	zwrarg;
 
+	/* Reset random number seed so all children don't inherit same seed from parent */
+	seed = (time(NULL) * getpid());
+	srand48(seed);
+	use_ydb_incr_s_inside_tp = (2 * drand48());
+	use_ydb_incr_s_outside_tp = (2 * drand48());
 	tpfn = &gvnincr;
 	for (i = 0; i < numincrs; i++)
 	{
-		status = ydb_tp_s(tpfn, &i, NULL, NULL);
+		if (use_ydb_incr_s_outside_tp)
+			status = ydb_incr_s(&basevar, 0, NULL, NULL, &value);
+		else
+			status = ydb_tp_s(tpfn, &i, NULL, NULL);
 		assert(YDB_OK == status);
 	}
 	return YDB_OK;
 }
 
-/* Function to set a global variable */
+/* Function to do a $increment on a global variable node */
 int gvnincr(int *i)
 {
 	int		status;
 	unsigned long	result;
 
-	/* Implement $INCR(^x) */
-	status = ydb_get_s(&basevar, 0, NULL, &value);
-	if (YDB_TP_RESTART == status)
-		return status;
-	if (YDB_ERR_GVUNDEF != status)
+	/* Implement $INCR(^x) using ydb_incr_s() or a ydb_get_s()/ydb_set_s() sequence */
+	if (use_ydb_incr_s_inside_tp)
+		status = ydb_incr_s(&basevar, 0, NULL, NULL, &value);
+	else
 	{
-		assert(YDB_OK == status);
-		result = strtoul(value.buf_addr, NULL, 10);
-		result++;
-	} else
-		result = (*i + 1);
-	value.len_used = sprintf(value.buf_addr, "%d", (int)result);
-	status = ydb_set_s(&basevar, 0, NULL, &value);
+		status = ydb_get_s(&basevar, 0, NULL, &value);
+		if (YDB_TP_RESTART == status)
+			return status;
+		if (YDB_ERR_GVUNDEF != status)
+		{
+			assert(YDB_OK == status);
+			result = strtoul(value.buf_addr, NULL, 10);
+			result++;
+		} else
+			result = (*i + 1);
+		value.len_used = sprintf(value.buf_addr, "%d", (int)result);
+		status = ydb_set_s(&basevar, 0, NULL, &value);
+	}
 	if (YDB_TP_RESTART == status)
 		return status;
 	assert(YDB_OK == status);
