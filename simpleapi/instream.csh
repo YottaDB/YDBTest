@@ -26,6 +26,7 @@
 # isvget       [estess] Test of ydb_get_s() function for ISVs in the simpleAPI
 # threen1g     [nars]   Use simpleAPI to find the maximum number of steps for the 3n+1 problem
 #                       for all integers through two input integers.
+# wordfreq     [nars]   Use simpleAPI to find the frequency of words in an input text file
 #-------------------------------------------------------------------------------------
 
 echo "simpleapi test starts..."
@@ -33,6 +34,7 @@ echo "simpleapi test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "lvnset lvnsetstress stresstest gvnset isvset tp transid lvnget gvnget isvget threen1g"
+setenv subtest_list_non_replic "$subtest_list_non_replic wordfreq"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
