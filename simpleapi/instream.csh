@@ -46,7 +46,7 @@ setenv subtest_exclude_list	""
 
 # Disable certain heavyweight tests on single-cpu systems
 if ($gtm_test_singlecpu) then
-	setenv subtest_exclude_list "$subtest_exclude_list lvnsetstress stresstest threen1g"
+	setenv subtest_exclude_list "$subtest_exclude_list lvnsetstress stresstest lvnget gvnget threen1g"
 endif
 
 # Submit the list of subtests
