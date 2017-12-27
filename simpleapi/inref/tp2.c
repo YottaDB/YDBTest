@@ -18,8 +18,8 @@
 #include <signal.h>	/* needed for "kill" in assert */
 #include <unistd.h>	/* needed for "getpid" in assert */
 #include <sys/wait.h>	/* needed for "waitpid" */
-#include <time.h>	/* needed for "time()" */
-#include <stdlib.h>
+#include <time.h>	/* needed for "time" */
+#include <stdlib.h>	/* needed for "drand48" */
 #include "libydberrors.h"
 
 #define ERRBUF_SIZE	1024
