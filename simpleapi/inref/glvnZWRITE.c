@@ -17,9 +17,10 @@
 #include <sys/types.h>	/* needed for "kill" in assert */
 #include <signal.h>	/* needed for "kill" in assert */
 #include <unistd.h>	/* needed for "getpid" in assert */
-#include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <time.h>	/* needed for "time" */
+#include <stdlib.h>	/* needed for "drand48" and others */
 
 /* Use SIGILL below to generate a core when an assertion fails */
 #define assert(x) ((x) ? 1 : (fprintf(stderr, "Assert failed at %s line %d : %s\n", __FILE__, __LINE__, #x), kill(getpid(), SIGILL)))
@@ -28,11 +29,19 @@
 #define	LASTLVNAME	"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
 #define	LASTGVNAME	"^zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
 
+#define	FALSE	0
+#define	TRUE	1
+
+#define	NODE_MUST_EXIST_FALSE	FALSE
+#define	NODE_MUST_EXIST_TRUE	TRUE
+
+static int	rand_value;
+
 void	lvnZWRITE(void);
 void	gvnZWRITE(void);
 void	glvnZWRITE(char *startname);
 void	glvnZWRITEsubtree(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr);
-void	glvnPrintNodeIfExists(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr);
+void	glvnPrintNodeIfExists(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr, int node_must_exist);
 
 /* Lists ALL local variable nodes in a process in ZWRITE order */
 void	lvnZWRITE(void)
@@ -51,11 +60,19 @@ void glvnZWRITE(char *startname)
 	ydb_buffer_t	basevar;
 	char		basevarbuff[BUFFALLOCLEN], *name;
 	ydb_buffer_t	retvalue, tmpvalue;
-	int		status, startnamelen, iters, reached_end;
+	int		seed, status, startnamelen, iters, reached_end;
 	char		retvaluebuff[BUFFALLOCLEN], tmpvaluebuff[BUFFALLOCLEN];
 	ydb_buffer_t	subscr[YDB_MAX_SUBS + 1];
 	unsigned int	ret_dlrdata;
+	static int	rand_chosen = FALSE;
 
+	if (!rand_chosen)
+	{
+		seed = (time(NULL) * getpid());
+		srand48(seed);
+		/* Randomly choose ydb_subscript_next_s() or ydb_node_next_s() to traverse the Global/Local Variable Tree */
+		rand_value = (2 * drand48());
+	}
 	basevar.buf_addr = basevarbuff;
 	basevar.len_alloc = sizeof(basevarbuff);
 	startnamelen = strlen(startname);
@@ -101,51 +118,95 @@ void glvnZWRITE(char *startname)
 
 void glvnZWRITEsubtree(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr)
 {
-	ydb_buffer_t	*cursubs, tmpvalue, tmpvalue2;
-	char		subsbuff[BUFFALLOCLEN];
 	int		status;
-	unsigned int	ret_dlrdata;
-	ydb_buffer_t	retvalue;
-	char		retvaluebuff[BUFFALLOCLEN], tmpvaluebuff[BUFFALLOCLEN];
 
-	glvnPrintNodeIfExists(basevar, nsubs, subscr);
-	if (YDB_MAX_SUBS == nsubs)	/* cannot have a subtree if we are already at MAXNRSUBSCRIPTS level */
-		return;
-	retvalue.buf_addr = retvaluebuff;
-	retvalue.len_alloc = sizeof(retvaluebuff);
-	retvalue.len_used = 0;
-	cursubs = &subscr[nsubs];
-	cursubs->buf_addr = subsbuff;
-	cursubs->len_alloc = sizeof(subsbuff);
-	cursubs->len_used = 0;
-	status = ydb_data_s(basevar, nsubs + 1, subscr, &ret_dlrdata);
-	if (ret_dlrdata)
-		glvnZWRITEsubtree(basevar, nsubs + 1, subscr);
-	cursubs->len_used = 0;
-	tmpvalue.buf_addr = tmpvaluebuff;
-	tmpvalue.len_alloc = sizeof(tmpvaluebuff);
-	tmpvalue.len_used = 0;
-	for ( ; ; )
-	{
-		status = ydb_subscript_next_s(basevar, nsubs + 1, subscr, &retvalue);
-		assert(YDB_OK == status);
-		tmpvalue2 = subscr[nsubs];
-		subscr[nsubs] = retvalue;
-		status = ydb_subscript_previous_s(basevar, nsubs + 1, subscr, &tmpvalue);
-		assert(YDB_OK == status);
-		assert(tmpvalue.len_used == tmpvalue2.len_used);
-		assert(!tmpvalue.len_used || (!memcmp(tmpvalue.buf_addr, tmpvalue2.buf_addr, tmpvalue2.len_used)));
-		subscr[nsubs] = tmpvalue2;
-		if (!retvalue.len_used)
-			break;
-		memcpy(cursubs->buf_addr, retvalue.buf_addr, retvalue.len_used);
-		cursubs->len_used = retvalue.len_used;
-		glvnZWRITEsubtree(basevar, nsubs + 1, subscr);
+	if (!rand_value)
+	{	/* Use ydb_subscript_next_s to traverse the Global/Local Variable Tree */
+		ydb_buffer_t	*cursubs, tmpvalue, tmpvalue2;
+		char		subsbuff[BUFFALLOCLEN];
+		unsigned int	ret_dlrdata;
+		ydb_buffer_t	retvalue;
+		char		retvaluebuff[BUFFALLOCLEN], tmpvaluebuff[BUFFALLOCLEN];
+
+		glvnPrintNodeIfExists(basevar, nsubs, subscr, NODE_MUST_EXIST_FALSE);
+		if (YDB_MAX_SUBS == nsubs)	/* cannot have a subtree if we are already at MAXNRSUBSCRIPTS level */
+			return;
+		retvalue.buf_addr = retvaluebuff;
+		retvalue.len_alloc = sizeof(retvaluebuff);
+		retvalue.len_used = 0;
+		cursubs = &subscr[nsubs];
+		cursubs->buf_addr = subsbuff;
+		cursubs->len_alloc = sizeof(subsbuff);
+		cursubs->len_used = 0;
+		status = ydb_data_s(basevar, nsubs + 1, subscr, &ret_dlrdata);
+		if (ret_dlrdata)
+			glvnZWRITEsubtree(basevar, nsubs + 1, subscr);
+		cursubs->len_used = 0;
+		tmpvalue.buf_addr = tmpvaluebuff;
+		tmpvalue.len_alloc = sizeof(tmpvaluebuff);
+		tmpvalue.len_used = 0;
+		for ( ; ; )
+		{
+			status = ydb_subscript_next_s(basevar, nsubs + 1, subscr, &retvalue);
+			assert(YDB_OK == status);
+			tmpvalue2 = subscr[nsubs];
+			subscr[nsubs] = retvalue;
+			status = ydb_subscript_previous_s(basevar, nsubs + 1, subscr, &tmpvalue);
+			assert(YDB_OK == status);
+			assert(tmpvalue.len_used == tmpvalue2.len_used);
+			assert(!tmpvalue.len_used || (!memcmp(tmpvalue.buf_addr, tmpvalue2.buf_addr, tmpvalue2.len_used)));
+			subscr[nsubs] = tmpvalue2;
+			if (!retvalue.len_used)
+				break;
+			memcpy(cursubs->buf_addr, retvalue.buf_addr, retvalue.len_used);
+			cursubs->len_used = retvalue.len_used;
+			glvnZWRITEsubtree(basevar, nsubs + 1, subscr);
+		}
+	} else
+	{	/* Use ydb_node_next_s to traverse the Global/Local Variable Tree */
+		/* NARSTODO: Test ydb_node_previous_s too */
+
+		ydb_buffer_t	src_subscr[YDB_MAX_SUBS + 1], dst_subscr[YDB_MAX_SUBS + 1], *src, *dst, *tmp;
+		char		src_subscr_buff[YDB_MAX_SUBS + 1][BUFFALLOCLEN];
+		char		dst_subscr_buff[YDB_MAX_SUBS + 1][BUFFALLOCLEN];
+		int		i, src_used, dst_used, node_must_exist;
+
+		assert(0 == nsubs);
+		for (i = 0; i < YDB_MAX_SUBS + 1; i++)
+		{
+			src = &src_subscr[i];
+			src->buf_addr = src_subscr_buff[i];
+			src->len_alloc = sizeof(src_subscr_buff[i]);
+			src->len_used = 0;
+			dst = &dst_subscr[i];
+			dst->buf_addr = dst_subscr_buff[i];
+			dst->len_alloc = sizeof(dst_subscr_buff[i]);
+			dst->len_used = 0;
+		}
+		src_used = 0;
+		src = src_subscr;
+		dst = dst_subscr;
+		dst_used = YDB_MAX_SUBS + 1;
+		node_must_exist = NODE_MUST_EXIST_FALSE;
+		do
+		{
+			glvnPrintNodeIfExists(basevar, src_used, src, node_must_exist);
+			status = ydb_node_next_s(basevar, src_used, src, &dst_used, dst);
+			assert(YDB_OK == status);
+			if (YDB_NODE_END == dst_used)
+				break;
+			node_must_exist = NODE_MUST_EXIST_TRUE;
+			src_used = dst_used;
+			dst_used = YDB_MAX_SUBS + 1;
+			tmp = src;
+			src = dst;
+			dst = tmp;
+		} while (1);
 	}
 	return;
 }
 
-void	glvnPrintNodeIfExists(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr)
+void	glvnPrintNodeIfExists(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr, int node_must_exist)
 {
 	int		i, len;
 	char		strbuff[1024], zwrbuff[1024], *ptr;
@@ -160,7 +221,10 @@ void	glvnPrintNodeIfExists(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subsc
 	status = ydb_get_s(basevar, nsubs, subscr, &retvalue);
 	if ((('^' != basevar->buf_addr[0]) && (YDB_ERR_LVUNDEF == status))
 			|| (('^' == basevar->buf_addr[0]) && (YDB_ERR_GVUNDEF == status)))
+	{
+		assert(NODE_MUST_EXIST_FALSE == node_must_exist);
 		return;
+	}
 	assert(YDB_OK == status);
 	ptr = &strbuff[0];
 	len = basevar->len_used;
@@ -195,4 +259,3 @@ void	glvnPrintNodeIfExists(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subsc
 	printf("%s\n", strbuff);
 	return;
 }
-
