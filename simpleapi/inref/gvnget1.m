@@ -17,6 +17,9 @@ gvnget1
 	set MAXSUBS=10							; Keep within key size
 	set $etrap="use $principal write ""Error occurred: "",!! zshow ""*"" quit"
 	write "gvnget1: Generating ",GENVARCNT," variables",!
+	set mfile="gengvnget.m"
+	open mfile:(newversion)
+	use mfile
 	do								; Vars NEWed/created in this block go away after
 	. new vars,varname,varref,subcnt,subidx
 	. for vars=1:1:GENVARCNT do
@@ -34,8 +37,10 @@ gvnget1
 	. . . . for  quit:(""'=sub)  set sub=$$getsubs^lvnsetstress()	; Spin till sub is non-NULL as not allowed
 	. . . . set varref=varref_$zwrite(sub)
 	. . . set varref=varref_")"
-	. . set @varref=42
+	. . write " set ",varref,"=",42,!
 	. kill GENVARCNT,MAXSUBS					; Makes for clean zshow of locals
+	close mfile
+	do ^gengvnget
 	;
 	; Add one more record with the maximum subscripts for good measure
 	;
