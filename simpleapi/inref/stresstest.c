@@ -55,7 +55,7 @@ int	fullread(char *buff, int len)
 
 typedef int (*ydb_retvalue_fnptr_t)(ydb_buffer_t *varname, int subs_used, ydb_buffer_t *subsarray, ydb_buffer_t *value);
 
-int main()
+int main(int argc, char *argv[])
 {
 	int		i, status, bufflen = 0, reclen, copylen, varnamelen, nsubs, valuelen, len, action, reccnt;
 	ydb_buffer_t	basevar, subscr[32], value, retvalue;
@@ -66,6 +66,14 @@ int main()
 	int		dbg_buff[DBG_BUFF_SIZE], dbg_buff_index = 0, readcnt[READCNT_SIZE], readcnt_buff_index[READCNT_SIZE], readcnt_index = 0;
 	ydb_retvalue_fnptr_t	ydb_fn_array[] = {NULL, &ydb_set_s, &ydb_get_s, &ydb_subscript_next_s, &ydb_subscript_previous_s};
 
+	if (argc != 1)
+	{	/* This is for debug purposes. To rerun as say "./stresstest 1 < /dev/zero" and that will invoke genstresstest.m
+		 * and do exactly the same set of updates (through a call-in) that the test did and then invoke zwrite of
+		 * local nodes and global nodes using simpleAPI.
+		 */
+		status = ydb_ci("genstresstest");
+		assert(0 == status);
+	}
 	for (reccnt = 0; ; reccnt++)
 	{
 		cnt = fullread(hdrbuff, 8);
