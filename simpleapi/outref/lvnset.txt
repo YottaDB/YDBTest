@@ -8,8 +8,14 @@ Attempting set of bad basevar B%dbasevarInvChar
 ydb_set_s() [a]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
 Attempting set of bad basevar Verylongbasevarthatexceedsmaxlength
 ydb_set_s() [b]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
-Attempting set of basevar with NULL subscript address parameter
+Attempting set of bad basevar 1namestartswithdigit
 ydb_set_s() [c]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+Attempting set of basevar with NULL subscript address parameter
+ydb_set_s() [d]: 151027778,%YDB-E-SUBSARRAYNULL, Non-zero # of subscripts [1] specified but subscript array parameter is NULL
+Attempting set of basevar with 32 subscripts
+ydb_set_s() [e]: 150373282,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+Attempting set of basevar with -1 subscripts
+ydb_set_s() [f]: 151027770,%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
 
  --> Running lvnset2.c <---
 baselv=0

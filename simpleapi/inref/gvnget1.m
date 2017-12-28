@@ -13,7 +13,7 @@
 ; Routine to test global variable fetching with or without subscripts via ydb_get_s() simple API interface
 ;
 gvnget1
-	set GENVARCNT=30000						; Count of variables to generate
+	set GENVARCNT=3000						; Count of variables to generate
 	set MAXSUBS=10							; Keep within key size
 	set $etrap="use $principal write ""Error occurred: "",!! zshow ""*"" quit"
 	write "gvnget1: Generating ",GENVARCNT," variables",!

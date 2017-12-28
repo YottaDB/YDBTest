@@ -18,17 +18,19 @@
 
 #define BADBASEVAR1 "^B%dbasevarInvChar"
 #define BADBASEVAR2 "^Verylongbasevarthatexceedsmaxlength"
+#define BADBASEVAR3 "^1namestartswithdigit"
 #define BASEVAR "^baselv"
 #define SUBSCR1	"42"
 #define SUBSCR2 "answer:"
+#define SUBSCR32 "x"
 #define VALUE1	"A question"
 #define VALUE2	"One less than 43"
 #define VALUE3 	"Life, the universe, and everything"
 
 int main()
 {
-	int		status;
-	ydb_buffer_t	basevar, subscr[2], value1, value2, value3, badbasevar;
+	int		i, status;
+	ydb_buffer_t	basevar, subscr[2], subscr32[32], value1, value2, value3, badbasevar;
 	ydb_string_t	zwrarg;
 	char		errbuf[ERRBUF_SIZE];
 
@@ -101,13 +103,43 @@ int main()
 		fflush(stdout);
 		/* Keep going after get expected error */
 	}
+	printf("Attempting set of bad basevar %s\n", BADBASEVAR3);
+	YDB_STRLIT_TO_BUFFER(&badbasevar, BADBASEVAR3);
+	status = ydb_set_s(&badbasevar, 0, NULL, &value1);
+	if (YDB_OK != status)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("ydb_set_s() [c]: %s\n", errbuf);
+		fflush(stdout);
+		/* Keep going after get expected error */
+	}
 	/* Now try sending in a non-existant subscript */
 	printf("Attempting set of basevar with NULL subscript address parameter\n");
 	status = ydb_set_s(&basevar, 1, NULL, &value1);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s() [c]: %s\n", errbuf);
+		printf("ydb_set_s() [d]: %s\n", errbuf);
+		fflush(stdout);
+	}
+	/* Now try setting > 31 subscripts */
+	printf("Attempting set of basevar with 32 subscripts\n");
+	for (i = 0; i < 32; i++)
+		YDB_STRLIT_TO_BUFFER(&subscr32[i], SUBSCR32);
+	status = ydb_set_s(&basevar, 32, subscr32, &value1);
+	if (YDB_OK != status)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("ydb_set_s() [e]: %s\n", errbuf);
+		fflush(stdout);
+	}
+	/* Now try setting < 0 subscripts */
+	printf("Attempting set of basevar with -1 subscripts\n");
+	status = ydb_set_s(&basevar, -1, NULL, &value1);
+	if (YDB_OK != status)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("ydb_set_s() [f]: %s\n", errbuf);
 		fflush(stdout);
 	}
 	return YDB_OK;
