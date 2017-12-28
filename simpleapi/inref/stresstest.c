@@ -37,16 +37,12 @@ int	fullread(char *buff, int len);
 /* Read "len" bytes. If "read()" system call returns less than "len", keep retrying until we have "len" bytes */
 int	fullread(char *buff, int len)
 {
-	int	toread = len, cnt, save_errno;
+	int	toread = len, cnt;
 	char	*ptr = buff;
 
 	do
 	{
-		do
-		{
-			cnt = read(0, ptr, toread);
-			save_errno = errno;
-		} while ((-1 == cnt) && (EINTR == save_errno));
+		cnt = fread(ptr, 1, toread, stdin);
 		assert(0 <= cnt);
 		toread -= cnt;
 		ptr += cnt;
