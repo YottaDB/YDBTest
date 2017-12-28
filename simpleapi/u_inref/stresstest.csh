@@ -21,6 +21,12 @@ echo "# Allow null subscripts in database since randomly generated subscripts co
 echo "# Set Standard Null Collation (needed for simpleAPI when using null subscripts) on all created database files"
 $gtm_tst/com/dbcreate.csh mumps -key_size=1019 -record_size=4096 -stdnull -null_subscripts=TRUE
 
+cat > stresstest.xc << CAT_EOF
+genstresstest: void ^genstresstest()
+CAT_EOF
+
+# setenv GTMCI stresstest.xc	# not needed for actual test run but might be needed for later debugging purposes
+
 #
 # Stress test of ALL ydb_*_s() functions in the simpleAPI
 #
