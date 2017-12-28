@@ -3,12 +3,32 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
-gvnget1: Generating 30000 variables
+gvnget1: Generating 3000 variables
 gvnget1: Variables generated - writing them to file gvnget1-M-extract.txt
 gvnget1: Variables written - driving external call for call-backs via tp_get_s() in the simpleAPI
 gvnget1cb: Entered external call - processing key/value pair file..
 
 gvnget1: Complete
+ --> Running gvnget_errors.c <---
+Attempting get of bad basevar ^B%dbasevarInvChar
+ydb_get_s() [a]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+Attempting get of bad basevar ^Verylongbasevarthatexceedsmaxlength
+ydb_get_s() [b]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+Attempting get of bad basevar ^1namestartswithdigit
+ydb_get_s() [c]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+Attempting get of basevar with NULL subscript address parameter
+ydb_get_s() [d]: 151027778,%YDB-E-SUBSARRAYNULL, Non-zero # of subscripts [1] specified but subscript array parameter is NULL
+Attempting get of basevar with 32 subscripts
+ydb_get_s() [e]: 150373282,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+Attempting get of basevar with -1 subscripts
+ydb_get_s() [f]: 151027770,%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
+Attempting get with ret_value->len_alloc == 0
+ydb_get_s() [g]: 151027754,%YDB-E-NORETBUFFER, No return/output buffer provided for ydb_get_s() call
+Attempting get with ret_value->buf_addr == NULL
+ydb_get_s() [h]: 151027754,%YDB-E-NORETBUFFER, No return/output buffer provided for ydb_get_s() call
+Attempting get with ret_value == NULL
+ydb_get_s() [i]: 151027754,%YDB-E-NORETBUFFER, No return/output buffer provided for ydb_get_s() call
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

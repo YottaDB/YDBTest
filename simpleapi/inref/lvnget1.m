@@ -13,7 +13,7 @@
 ; Routine to test local variable fetching with or without subscripts via ydb_get_s() simple API interface
 ;
 lvnget1
-	set GENVARCNT=10000						; Count of variables to generate
+	set GENVARCNT=3000						; Count of variables to generate
 	set MAXSUBS=31
 	write "lvnget1: Generating ",GENVARCNT," variables",!
 	do								; Vars NEWed/created in this block go away after
