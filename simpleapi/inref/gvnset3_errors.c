@@ -16,10 +16,10 @@
 
 #define ERRBUF_SIZE	1024
 
-#define BADBASEVAR1 "B%dbasevarInvChar"
-#define BADBASEVAR2 "Verylongbasevarthatexceedsmaxlength"
-#define BADBASEVAR3 "1namestartswithdigit"
-#define BASEVAR "baselv"
+#define BADBASEVAR1 "^B%dbasevarInvChar"
+#define BADBASEVAR2 "^Verylongbasevarthatexceedsmaxlength"
+#define BADBASEVAR3 "^1namestartswithdigit"
+#define BASEVAR "^baselv"
 #define SUBSCR32 "x"
 #define VALUE1	"A question"
 
@@ -28,9 +28,8 @@ int main()
 	int		i, status;
 	ydb_buffer_t	subscr32[32], value1, badbasevar, basevar;
 	char		errbuf[ERRBUF_SIZE];
-	ydb_string_t	zwrarg;
 
-	printf("# Test error scenarios in ydb_set_s() of Local Variables\n"); fflush(stdout);
+	printf("# Test error scenarios in ydb_set_s() of Global Variables\n"); fflush(stdout);
 	/* Initialize varname and value buffers */
 	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
 	YDB_STRLIT_TO_BUFFER(&value1, VALUE1);
@@ -129,14 +128,12 @@ int main()
 		printf("ydb_set_s() [h]: %s\n", errbuf);
 		fflush(stdout);
 	}
-	printf("Demonstrate our progress by executing a ZWRITE in a call-in\n"); fflush(stdout);
-	zwrarg.address = NULL;
-	zwrarg.length = 0;
-	status = ydb_ci("driveZWRITE", &zwrarg);
+	printf("Demonstrate our progress by executing a gvnZWRITE in a call-in\n"); fflush(stdout);
+	status = ydb_ci("gvnZWRITE");
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("driveZWRITE error: %s\n", errbuf);
+		printf("gvnZWRITE error: %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}

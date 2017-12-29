@@ -13,13 +13,11 @@
 #
 # Test of ydb_set_s() function for Global variables in the simpleAPI
 #
-$gtm_tst/com/dbcreate.csh mumps 1
-
 echo "Copy all C programs that need to be tested"
 cp $gtm_tst/$tst/inref/gvnset*.c .
 
 cat > gvnset.xc << CAT_EOF
-driveZWRITE: void driveZWRITE(I:ydb_string_t *)
+gvnZWRITE: void ^gvnZWRITE()
 CAT_EOF
 
 setenv GTMCI gvnset.xc	# needed to invoke driveZWRITE.m from gvnset*.c below
@@ -33,8 +31,9 @@ foreach file (gvnset*.c)
 		echo "GVNSET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 		continue
 	endif
+	$gtm_tst/com/dbcreate.csh mumps 1 -key_size=256		# more than default keysize needed for gvnset2_31subs.c
 	./$exefile
 	echo ""
+	$gtm_tst/com/dbcheck.csh
+	$gtm_tst/com/backup_dbjnl.csh bak_$exefile "*.dat *.mjl*" mv
 end
-#
-$gtm_tst/com/dbcheck.csh
