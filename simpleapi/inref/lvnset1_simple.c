@@ -27,7 +27,6 @@
 #define VALUE2	"One less than 43"
 #define VALUE3 	"Life, the universe, and everything"
 
-/* Test simple sets of unsubscripted and subscripted Local Variables */
 int main()
 {
 	int		i, status;
@@ -35,6 +34,7 @@ int main()
 	ydb_string_t	zwrarg;
 	char		errbuf[ERRBUF_SIZE];
 
+	printf("# Test simple sets in ydb_set_s() of Local Variables\n"); fflush(stdout);
 	/* Initialize varname, subscript, and value buffers */
 	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
 	YDB_STRLIT_TO_BUFFER(&subscr[0], SUBSCR1);
@@ -42,7 +42,7 @@ int main()
 	YDB_STRLIT_TO_BUFFER(&value1, VALUE1);
 	YDB_STRLIT_TO_BUFFER(&value2, VALUE2);
 	YDB_STRLIT_TO_BUFFER(&value3, VALUE3);
-	/* Initialize call-in environment */
+	printf("Initialize call-in environment\n"); fflush(stdout);
 	status = ydb_init();
 	if (0 != status)
 	{
@@ -51,7 +51,7 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	/* Set a base variable, no subscripts */
+	printf("Set a local variable with 0 subscripts\n"); fflush(stdout);
 	status = ydb_set_s(&basevar, 0, NULL, &value1);
 	if (YDB_OK != status)
 	{
@@ -60,7 +60,7 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	/* Set single subscript value */
+	printf("Set a local variable with 1 subscript\n"); fflush(stdout);
 	status = ydb_set_s(&basevar, 1, subscr, &value2);
 	if (YDB_OK != status)
 	{
@@ -69,7 +69,7 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	/* Set two subscript value */
+	printf("Set a local variable with 2 subscripts\n"); fflush(stdout);
 	status = ydb_set_s(&basevar, 2, subscr, &value3);
 	if (YDB_OK != status)
 	{
@@ -78,7 +78,7 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	/* Demonstrate our progress by executing a ZWRITE in a call-in */
+	printf("Demonstrate our progress by executing a ZWRITE in a call-in\n"); fflush(stdout);
 	zwrarg.address = NULL;			/* Create a null string argument so dumps all locals */
 	zwrarg.length = 0;
 	status = ydb_ci("driveZWRITE", &zwrarg);
@@ -88,66 +88,6 @@ int main()
 		printf("driveZWRITE error: %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
-	}
-	/* Now for a few error cases - first up, bad basevar names */
-	printf("Attempting set of bad basevar %s\n", BADBASEVAR1);
-	YDB_STRLIT_TO_BUFFER(&badbasevar, BADBASEVAR1);
-	status = ydb_set_s(&badbasevar, 0, NULL, &value1);
-	if (YDB_OK != status)
-	{
-		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s() [a]: %s\n", errbuf);
-		fflush(stdout);
-		/* Keep going after get expected error */
-	}
-	printf("Attempting set of bad basevar %s\n", BADBASEVAR2);
-	YDB_STRLIT_TO_BUFFER(&badbasevar, BADBASEVAR2);
-	status = ydb_set_s(&badbasevar, 0, NULL, &value1);
-	if (YDB_OK != status)
-	{
-		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s() [b]: %s\n", errbuf);
-		fflush(stdout);
-		/* Keep going after get expected error */
-	}
-	printf("Attempting set of bad basevar %s\n", BADBASEVAR3);
-	YDB_STRLIT_TO_BUFFER(&badbasevar, BADBASEVAR3);
-	status = ydb_set_s(&badbasevar, 0, NULL, &value1);
-	if (YDB_OK != status)
-	{
-		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s() [c]: %s\n", errbuf);
-		fflush(stdout);
-		/* Keep going after get expected error */
-	}
-	/* Now try sending in a non-existant subscript */
-	printf("Attempting set of basevar with NULL subscript address parameter\n");
-	status = ydb_set_s(&basevar, 1, NULL, &value1);
-	if (YDB_OK != status)
-	{
-		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s() [d]: %s\n", errbuf);
-		fflush(stdout);
-	}
-	/* Now try setting > 31 subscripts */
-	printf("Attempting set of basevar with 32 subscripts\n");
-	for (i = 0; i < 32; i++)
-		YDB_STRLIT_TO_BUFFER(&subscr32[i], SUBSCR32);
-	status = ydb_set_s(&basevar, 32, subscr32, &value1);
-	if (YDB_OK != status)
-	{
-		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s() [e]: %s\n", errbuf);
-		fflush(stdout);
-	}
-	/* Now try setting < 0 subscripts */
-	printf("Attempting set of basevar with -1 subscripts\n");
-	status = ydb_set_s(&basevar, -1, NULL, &value1);
-	if (YDB_OK != status)
-	{
-		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s() [f]: %s\n", errbuf);
-		fflush(stdout);
 	}
 	return YDB_OK;
 }
