@@ -35,7 +35,13 @@ lvnsetstress;
 	write "",!
 	;
 	; Generate random sets of lvns in M and C programs
-	set loglen=1+$random(14)
+	; But take into account total system memory before deciding the maximum number of lvn sets that are generated
+	; This is particularly needed as otherwise the generated C program becomes too big for the system memory to handle
+	; and takes the system down (at least on the Raspberry Pi where memory is limited, at least currently).
+	set totmeminkb=+$zcmdline
+	set totmeminmb=totmeminkb\1024\2
+	for maxmem=1:1  quit:((2**maxmem)>totmeminmb)
+	set loglen=1+$random(maxmem)
 	for i=1:1:$random(2**loglen) do lvnsetstresshelper
 	;
 	; Apply finishing touches to M and C programs
