@@ -16,28 +16,28 @@
 #include <stdlib.h>
 #include <string.h>
 
-#undef DEBUGGVN			/* Change to define to enable debugging */
+#undef DEBUGLVN			/* Change to define to enable debugging */
 #define ERRBUF_SIZE	1024
 #define MAX_LINE_BUF	1024
 #define MAX_VALUE_LEN	8	/* Current value is always '42' but that could change */
-#define INFILE		"gvnget1-M-extract.txt"
+#define INFILE		"lvngetcb-M-extract.txt"
 
-#ifdef DEBUGGVN
-# define DBGGVN(x) {printf x; fflush(stderr); fflush(stdout);}
-# define DBGGVN_ONLY(x) x
+#ifdef DEBUGLVN
+# define DBGLVN(x) {printf x; fflush(stderr); fflush(stdout);}
+# define DBGLVN_ONLY(x) x
 #else
-# define DBGGVN(x)
-# define DBGGVN_ONLY(x)
+# define DBGLVN(x)
+# define DBGLVN_ONLY(x)
 #endif
 
-void gvnget1cb(void);
+void lvngetcb(void);
 char *find_char(char fchr, char *lineptr, char *lineend);
 int drive_ydb_get_s(ydb_buffer_t *varvalue, int subcnt, ydb_buffer_t *varname, ydb_buffer_t subscrs[YDB_MAX_SUBS]);
 
 /* Read file created by M code in this process, separate the variable, subscripts, etc and
  * read the variable. Then compare the value from the file with the value we fetched.
  */
-void gvnget1cb(void)
+void lvngetcb(void)
 {
 	FILE		*infile;
 	char		linebuf[MAX_LINE_BUF + 1], *lineptr, *lineend;
@@ -46,21 +46,19 @@ void gvnget1cb(void)
 	ydb_buffer_t	varname, subscrs[YDB_MAX_SUBS], varvalue;
 	int		toklen, linenum, subscridx, valuelen;
 
-	printf("gvnget1cb: Entered external call - processing key/value pair file..\n");
+	printf("lvngetcb: Entered external call - processing key/value pair file..\n");
 	fflush(stdout);
 	infile = fopen(INFILE, "r");
-	lineptr = fgets(linebuf, sizeof(linebuf), infile);	/* Waste/ignore the first 2 records in this file */
-	lineptr = fgets(linebuf, sizeof(linebuf), infile);
-	for (linenum = 3; ; linenum++)
+	for (linenum = 1; ; linenum++)
 	{	/* Obtain and parse key/value pair */
-		DBGGVN(("\ngvnget1cb(): ***** Starting new key/value pair\n"));
+		DBGLVN(("\nlvngetcb(): ***** Starting new key/value pair\n"));
 		lineptr = fgets(linebuf, sizeof(linebuf), infile);
 		if (NULL == lineptr)
 		{
-			DBGGVN(("gvnget1cb(): NULL pointer from read - assumed EOF\n"));
+			DBGLVN(("lvngetcb(): NULL pointer from read - assumed EOF\n"));
 			break;						/* Assume end-of-file */
 		}
-		DBGGVN(("gvnget1cb(): Input line: %s\n", lineptr));
+		DBGLVN(("lvngetcb(): Input line: %s\n", lineptr));
 		lineend = valueend = lineptr + strlen(lineptr) - 1;	/* Pull the newline char off the end with -1 */
 		/* Have a var=value pair - break it down into its pieces */
 		varstart = lineptr;
@@ -68,7 +66,7 @@ void gvnget1cb(void)
 		lineptr = find_char('=', lineptr, lineend);
 		if (NULL == lineptr)
 		{
-			printf("gvnget1cb(): Error - could not locate unquoted '=' in line %d\n", linenum);
+			printf("lvngetcb(): Error - could not locate unquoted '=' in line %d\n", linenum);
 			fflush(stdout);
 			exit(1);
 		}
@@ -80,15 +78,15 @@ void gvnget1cb(void)
 		{	/* No subscripts found so this whole thing is just a variable name */
 			varend = varrefend;
 			subscridx = 0;
-			DBGGVN(("gvnget1cb(): No subscripts found for varname %.*s\n", (int)(varend - varstart), varstart));
+			DBGLVN(("lvngetcb(): No subscripts found for varname %.*s\n", (int)(varend - varstart), varstart));
 		} else
 		{	/* Scan our subscripts (all strings) into the subscrs array */
 			varend = subliststart;
-			DBGGVN(("gvnget1cb(): Beginning subscript parse for varname %.*s\n", (int)(varend - varstart), varstart));
+			DBGLVN(("lvngetcb(): Beginning subscript parse for varname %.*s\n", (int)(varend - varstart), varstart));
 			sublistend = --varrefend;			/* Back up to the closing ')' */
 			if (')' != *sublistend)
 			{
-				printf("gvnget1cb(): Error - char prior to '=' was not ')' in line %d\n", linenum);
+				printf("lvngetcb(): Error - char prior to '=' was not ')' in line %d\n", linenum);
 				fflush(stdout);
 				exit(1);
 			}
@@ -105,11 +103,11 @@ void gvnget1cb(void)
 					subend = sublistend;
 					if (')' != *subend)
 					{
-						printf("gvnget1cb(): Error - subend char is not ')' as expected\n");
+						printf("lvngetcb(): Error - subend char is not ')' as expected\n");
 						fflush(stdout);
 						exit(1);
 					}
-					DBGGVN(("gvnget1cb(): The next subscript is the LAST subscript\n"));
+					DBGLVN(("lvngetcb(): The next subscript is the LAST subscript\n"));
 				}
 				if ('"' == *substart)
 				{	/* This is a quoted string value. Remove the first and last characters from
@@ -117,13 +115,13 @@ void gvnget1cb(void)
 					 */
 					subscrs[subscridx].buf_addr = substart + 1;
 					subscrs[subscridx].len_alloc = subscrs[subscridx].len_used = subend - substart - 2;
-					DBGGVN(("gvnget1cb(): String subscript specified: %.*s\n", subscrs[subscridx].len_alloc,
+					DBGLVN(("lvngetcb(): String subscript specified: %.*s\n", subscrs[subscridx].len_alloc,
 						subscrs[subscridx].buf_addr));
 				} else
 				{	/* This is a numeric string value - pass as-is */
 					subscrs[subscridx].buf_addr = substart;
 					subscrs[subscridx].len_alloc = subscrs[subscridx].len_used = subend - substart;
-					DBGGVN(("gvnget1cb(): Numeric specified: %.*s\n", subscrs[subscridx].len_alloc,
+					DBGLVN(("lvngetcb(): Numeric specified: %.*s\n", subscrs[subscridx].len_alloc,
 						subscrs[subscridx].buf_addr));
 				}
 				substart = subend + 1;			/* Next subscript (if any) starts after ',' */
@@ -131,27 +129,16 @@ void gvnget1cb(void)
 		}
 		varname.buf_addr = varstart;
 		varname.len_alloc = varname.len_used = varend - varstart;
-		/* Value at this time is only numeric but mupip extract returns it as a string. Dequote the value returned */
+		/* Value at this time is only numeric - if that changes, add quote stripping stuff here */
 		varvalue.buf_addr = valuebuf;
 		varvalue.len_alloc = sizeof(valuebuf);			/* Where value is stored */
 		varvalue.len_used = 0;
 		drive_ydb_get_s(&varvalue, subscridx, &varname, subscrs);
-		if ((1 < varvalue.len_used) && ('"' == *varvalue.buf_addr))
-		{	/* This is a quoted value - remove quotes */
-			varvalue.buf_addr++;				/* Bump past open quote */
-			varvalue.len_used -= 2;				/* Remove count for open and close quote */
-		}
 		/* Fetched value should be in varvalue - compare it with what we expect to find there */
-		DBGGVN(("gvnget1cb(): Varname: %.*s, value: %.*s\n", (int)(varrefend - varstart), varstart,
+		DBGLVN(("lvngetcb(): Varname: %.*s, value: %.*s\n", (int)(varrefend - varstart), varstart,
 			varvalue.len_used, varvalue.buf_addr));
-		DBGGVN_ONLY(fflush(stdout));
-		/* Again, check the source value if it is quoted and remove the quotes if so */
+		DBGLVN_ONLY(fflush(stdout));
 		valuelen = valueend - valuestart;
-		if ((1 < valuelen) && ('"' == *valuestart))
-		{	/* Value is quoted - remove quotes */
-			valuestart++;
-			valuelen -= 2;
-		}
 		if ((varvalue.len_used != valuelen) || (0 != memcmp(valuestart, varvalue.buf_addr, valuelen)))
 		{
 			printf("Line %i, fetched and actual value are not the same for var with basevar %.*s - "
@@ -208,7 +195,7 @@ int drive_ydb_get_s(ydb_buffer_t *varvalue, int subcnt, ydb_buffer_t *varname, y
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("gvnget1cb(): %s\n", errbuf);
+		printf("lvngetcb(): %s\n", errbuf);
 		fflush(stdout);
 		exit(status);
 	}

@@ -1,11 +1,16 @@
-lvnget1: Generating 3000 variables
-lvnget1: Variables generated - ZSHOWing them to internal array
-lvnget1: Variables generated - writing out to lvnget1-M-extract.txt
-lvnget1: Variables written - driving external call for call-backs via tp_get_s() in the simpleAPI
-lvnget1cb: Entered external call - processing key/value pair file..
+# Run lvngetcb.m first since it is driven by an M routine
+ --> Running lvngetcb.m <--
+lvngetcb: Generating 3000 variables
+lvngetcb: Variables generated - ZSHOWing them to internal array
+lvngetcb: Variables generated - writing out to lvngetcb-M-extract.txt
+lvngetcb: Variables written - driving external call for call-backs via tp_get_s() in the simpleAPI
+lvngetcb: Entered external call - processing key/value pair file..
 
-lvnget1: Complete
- --> Running lvnget_errors.c <---
+lvngetcb: Complete
+
+# Now run lvnget*.c (all tests driven by a C routine)
+
+ --> Running lvnget3_errors.c <---
 Attempting get of bad basevar B%dbasevarInvChar
 ydb_get_s() [a]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
 Attempting get of bad basevar Verylongbasevarthatexceedsmaxlength
@@ -13,9 +18,9 @@ ydb_get_s() [b]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV varia
 Attempting get of bad basevar 1namestartswithdigit
 ydb_get_s() [c]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
 Attempting get of basevar with NULL subscript address parameter where basevar is undefined
-ydb_get_s() [d]: 150373850,%GTM-E-LVUNDEF, Undefined local variable:
+ydb_get_s() [d]: 150373850,%GTM-E-LVUNDEF, Undefined local variable: 
 Attempting get of basevar with NULL subscript address parameter where basevar is defined
-ydb_get_s() [d]: 151027778,%YDB-E-SUBSARRAYNULL, Non-zero # of subscripts [1] specified but subscript array parameter is NULL
+ydb_get_s() [d]: 151027778,%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL
 Attempting get of basevar with 32 subscripts
 ydb_get_s() [e]: 150373282,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 Attempting get of basevar with -1 subscripts
@@ -26,4 +31,3 @@ Attempting get with ret_value->buf_addr == NULL
 ydb_get_s() [h]: 151027754,%YDB-E-NORETBUFFER, No return/output buffer provided for ydb_get_s() call
 Attempting get with ret_value == NULL
 ydb_get_s() [i]: 151027754,%YDB-E-NORETBUFFER, No return/output buffer provided for ydb_get_s() call
-

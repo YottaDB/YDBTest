@@ -109,7 +109,7 @@ int main()
 		printf("ydb_set_s() [f]: %s\n", errbuf);
 		fflush(stdout);
 	}
-	/* Test of NORETBUFFER */
+	/* Test of YDBPARAMINVALID */
 	printf("Attempting set with value->len_alloc == 0\n");
 	value1.len_alloc = 0;
 	status = ydb_set_s(&basevar, 0, NULL, &value1);

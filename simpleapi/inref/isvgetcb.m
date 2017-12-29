@@ -24,8 +24,8 @@
 ;     that created the $ZSTATUS (undefined variable error we purposely create) so $ZSTATUS is not cleared by "handling"
 ;     the error.
 ;
-isvget1
-	write "isvget1: entered function - fetch ISV values",!
+isvgetcb
+	write "isvgetcb: entered function - fetch ISV values",!
 	set ($etrap,baseetrap)="write ""Error occurred: "",$zstatus,! zshow ""*"" zhalt 1"	; General error handler
 	;
 	; Build piece string of ISV names and another of the expected values
@@ -48,10 +48,10 @@ isvget1
 	;
 	; Drive an error to set $zstatus
 	;
-	write "isvget1: resetting $etrap for purposeful UNDEF error",!
-	set $etrap="do isvget1cont"
+	write "isvgetcb: resetting $etrap for purposeful UNDEF error",!
+	set $etrap="do isvgetcbcont"
 	set x=IamANundefinedVAR			; Drive an (expected) UNDEF error to get us to the handler
-	write "isvget1: Error - UNDEF error did not occur - unexpected result",!
+	write "isvgetcb: Error - UNDEF error did not occur - unexpected result",!
 	zshow "*"
 	zhalt 1
 
@@ -60,9 +60,9 @@ isvget1
 ; form, we'll go ahead and drive the fetches from this "error handler" environment. First fetch and save the value
 ; so we can compare it later.
 ;
-isvget1cont
+isvgetcbcont
 	new errnum
-	write "isvget1: Error handler now in control - fetching $ZSTATUS and driving isvget1cb",!
+	write "isvgetcb: Error handler now in control - fetching $ZSTATUS and driving isvgetcb",!
 	set errnum=+$zstatus			; Get actual error value
 	do:(150373850'=errnum) @baseetrap	; Drive base etrap handler if not the error we expect
 	set $etrap=baseetrap			; Put default handler back into use
@@ -71,15 +71,15 @@ isvget1cont
 	; Now drive external call that will call back in via ydb_get_s() to fetch these same ISVs and their values
 	; returning a value string to us that we can compare.
 	;
-	do &isvget1cb(.ISVnames,.ISVvals)
+	do &isvgetcb(.ISVnames,.ISVvals)
 	;
 	; We now can compare the two strings we built. A simple compare is sufficient for equality but if there's
 	; a difference, we'll need to break it down to what differed and how.
 	;
-	if (ISVvals=ISVvalues) write "isvget1: Success - Output value (len ",$zlength(ISVvalues),") has the expected value",!
+	if (ISVvals=ISVvalues) write "isvgetcb: Success - Output value (len ",$zlength(ISVvalues),") has the expected value",!
 	else  do
 	. new i
-	. write "isvget1: Output value differs from expected - details follow:",!
+	. write "isvgetcb: Output value differs from expected - details follow:",!
 	. for i=1:1 do  quit:(""=isv)
 	. . set isv=$zpiece(ISVnames,"|",i)
 	. . quit:(""=isv)
@@ -88,5 +88,5 @@ isvget1cont
 	. . write "ISV: ",isv,!,"   Expected Value: ",?20,isvexpval,!,"   Actual Value: ",?20,isvactval
 	. . write:(isvexpval'=isvactval) "   ** Mismatch**"
 	. . write !
-	write !,"isvget1: Complete",!
+	write !,"isvgetcb: Complete",!
 	zhalt 0

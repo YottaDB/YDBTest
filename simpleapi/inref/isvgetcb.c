@@ -19,7 +19,7 @@
 #undef DEBUGISV				/* Change to define to enable debugging */
 #define ERRBUF_SIZE		1024
 #define MAX_RETVALUE_LEN	4096	/* Hold string of return values from passed-in ISVs. Note this value must match the value
-					 * being used in isvget1.tab where the call out is defined in isvget.csh.
+					 * being used in isvgetcb.tab where the call out is defined in isvget.csh.
 					 */
 #define MAX_VALUE_LEN		1024	/* Buffer to hold return value from each individual call */
 
@@ -31,14 +31,14 @@
 # define DBGISV_ONLY(x)
 #endif
 
-void isvget1cb(int count, ydb_string_t *ISVlist, ydb_string_t *ISVvals);
+void isvgetcb(int count, ydb_string_t *ISVlist, ydb_string_t *ISVvals);
 char *find_char(char fchr, char *lineptr, char *lineend);
 
 /* Read the parameter string into a list of ISV names we are to fetch. Return a string with the delimited list of the return
  * values of those ISVs. Note we are doing fflush() after any stream output here to lessen the likelyhood of interference from
  * YDBs M output which can get intermixed with the output of this function.
  */
-void isvget1cb(int count, ydb_string_t *ISVlist, ydb_string_t *ISVvals)
+void isvgetcb(int count, ydb_string_t *ISVlist, ydb_string_t *ISVvals)
 {
 	char		*rbendptr, *rbcurptr, *listendptr, *listcurptr, *tokstart, *tokend;
 	char		ISVbuffer[MAX_VALUE_LEN];
@@ -46,25 +46,25 @@ void isvget1cb(int count, ydb_string_t *ISVlist, ydb_string_t *ISVvals)
 	ydb_buffer_t	ISVname, ISVvalue;
 	int		toklen, ISVcnt, status, lenavail;
 
-	printf("isvget1cb: Entered external call - processing ISV list..\n");
+	printf("isvgetcb: Entered external call - processing ISV list..\n");
 	fflush(stdout);
 	/* Simple argument validation */
 	if (2 != count)
 	{
-		printf("isvget1cg: Error - insufficient arguments passed in - expecting 2, got %d\n", count);
+		printf("isvgetcb: Error - insufficient arguments passed in - expecting 2, got %d\n", count);
 		fflush(stdout);
 		exit(1);
 	}
 	if (MAX_RETVALUE_LEN != ISVvals->length)
 	{
-		printf("isvget1cg: Error - ISVvals->length (pre-allocated buffer) not the expected length (expected %d, got %d\n",
+		printf("isvgetcb: Error - ISVvals->length (pre-allocated buffer) not the expected length (expected %d, got %d\n",
 		       MAX_RETVALUE_LEN, (int)ISVvals->length);
 		fflush(stdout);
 		exit(1);
 	}
 	if ((NULL == ISVlist) || (NULL == ISVlist->address) || (0 >= ISVlist->length))
 	{
-		printf("isvget1cg: Error - ISVlist is not setup correctly (missing or no list supplied)\n");
+		printf("isvgetcb: Error - ISVlist is not setup correctly (missing or no list supplied)\n");
 		fflush(stdout);
 		exit(1);
 	}
@@ -102,7 +102,7 @@ void isvget1cb(int count, ydb_string_t *ISVlist, ydb_string_t *ISVvals)
 		 */
 		if ((0 >= toklen) || ((YDB_MAX_IDENT + 1) < toklen) || ('$' != *tokstart))
 		{
-			printf("isvget1cg: Error - invalid ISV name: %.*s\n", toklen, tokstart);
+			printf("isvgetcb: Error - invalid ISV name: %.*s\n", toklen, tokstart);
 			fflush(stdout);
 			exit(1);
 		}
@@ -114,7 +114,7 @@ void isvget1cb(int count, ydb_string_t *ISVlist, ydb_string_t *ISVvals)
 		if (YDB_OK != status)
 		{
 			ydb_zstatus(errbuf, ERRBUF_SIZE);
-			printf("isvget1cb: Error - Fetch failed for ISV %.*s : %s\n", ISVname.len_used, ISVname.buf_addr,
+			printf("isvgetcb: Error - Fetch failed for ISV %.*s : %s\n", ISVname.len_used, ISVname.buf_addr,
 			       errbuf);
 			fflush(stdout);
 			/* We expect some errors (SVNOSET for example) so no exit after error - keep trying */
@@ -124,7 +124,7 @@ void isvget1cb(int count, ydb_string_t *ISVlist, ydb_string_t *ISVvals)
 		lenavail = rbcurptr - rbendptr - 1;		/* Hold onto one space as need room for delimiter char too */
 		if (ISVvalue.len_used > lenavail)
 		{
-			printf("isvget1cg: Error - output value won't fit in buffer for ISV %.*s - value: %.*s/n", ISVname.len_used,
+			printf("isvgetcb: Error - output value won't fit in buffer for ISV %.*s - value: %.*s/n", ISVname.len_used,
 			       ISVname.buf_addr, ISVvalue.len_used, ISVvalue.buf_addr);
 			exit(1);
 		}
@@ -134,12 +134,12 @@ void isvget1cb(int count, ydb_string_t *ISVlist, ydb_string_t *ISVvals)
 		}
 		memcpy(rbcurptr, ISVvalue.buf_addr, ISVvalue.len_used);
 		rbcurptr += ISVvalue.len_used;
-		DBGISV(("isvget1cb: Adding ISV %.*s with value %.*s\n", ISVname.len_used, ISVname.buf_addr,
+		DBGISV(("isvgetcb: Adding ISV %.*s with value %.*s\n", ISVname.len_used, ISVname.buf_addr,
 			ISVvalue.len_used, ISVvalue.buf_addr));
 	}
 	/* Update the used length in the output ydb_buffer_t for the return value */
 	ISVvals->length = rbcurptr - ISVvals->address;
-	printf("isvget1cb: Processed %d ISVs and returned a value length of %d bytes\n", ISVcnt, (int)ISVvals->length);
+	printf("isvgetcb: Processed %d ISVs and returned a value length of %d bytes\n", ISVcnt, (int)ISVvals->length);
 	fflush(stdout);
 	return;
 }

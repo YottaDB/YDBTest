@@ -64,7 +64,7 @@ int main()
 		fflush(stdout);
 		/* Keep going after get expected error */
 	}
-	/* Now try sending in a non-existant subscript */
+	/* Now try sending in a non-existent subscript */
 	printf("Attempting get of basevar with NULL subscript address parameter\n");
 	status = ydb_get_s(&basevar, 1, NULL, &value1);
 	if (YDB_OK != status)
@@ -93,7 +93,7 @@ int main()
 		printf("ydb_get_s() [f]: %s\n", errbuf);
 		fflush(stdout);
 	}
-	/* Test of NORETBUFFER */
+	/* Test of YDBPARAMINVALID */
 	printf("Attempting get with ret_value->len_alloc == 0\n");
 	value1.len_alloc = 0;
 	status = ydb_get_s(&basevar, 0, NULL, &value1);
