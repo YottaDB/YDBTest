@@ -16,7 +16,7 @@
 
 #define ERRBUF_SIZE	1024
 
-#define BASEVAR "baselv"
+#define BASEVAR "^baselv"
 #define SUBSCR1	"42"
 #define SUBSCR2 "answer:"
 #define VALUE1	"A question"
@@ -27,10 +27,9 @@ int main()
 {
 	int		i, status;
 	ydb_buffer_t	basevar, subscr[2], subscr32[32], value1, value2, value3, badbasevar;
-	ydb_string_t	zwrarg;
 	char		errbuf[ERRBUF_SIZE];
 
-	printf("# Test simple sets in ydb_set_s() of Local Variables\n"); fflush(stdout);
+	printf("# Test simple sets in ydb_set_s() of Global Variables\n"); fflush(stdout);
 	/* Initialize varname, subscript, and value buffers */
 	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
 	YDB_STRLIT_TO_BUFFER(&subscr[0], SUBSCR1);
@@ -47,7 +46,7 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	printf("Set a local variable with 0 subscripts\n"); fflush(stdout);
+	printf("Set a global variable with 0 subscripts\n"); fflush(stdout);
 	status = ydb_set_s(&basevar, 0, NULL, &value1);
 	if (YDB_OK != status)
 	{
@@ -56,7 +55,7 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	printf("Set a local variable with 1 subscript\n"); fflush(stdout);
+	printf("Set a global variable with 1 subscript\n"); fflush(stdout);
 	status = ydb_set_s(&basevar, 1, subscr, &value2);
 	if (YDB_OK != status)
 	{
@@ -65,7 +64,7 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	printf("Set a local variable with 2 subscripts\n"); fflush(stdout);
+	printf("Set a global variable with 2 subscripts\n"); fflush(stdout);
 	status = ydb_set_s(&basevar, 2, subscr, &value3);
 	if (YDB_OK != status)
 	{
@@ -74,14 +73,12 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	printf("Demonstrate our progress by executing a ZWRITE in a call-in\n"); fflush(stdout);
-	zwrarg.address = NULL;			/* Create a null string argument so dumps all locals */
-	zwrarg.length = 0;
-	status = ydb_ci("driveZWRITE", &zwrarg);
+	printf("Demonstrate our progress by executing a gvnZWRITE in a call-in\n"); fflush(stdout);
+	status = ydb_ci("gvnZWRITE");
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("driveZWRITE error: %s\n", errbuf);
+		printf("gvnZWRITE error: %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}

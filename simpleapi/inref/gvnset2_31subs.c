@@ -17,22 +17,21 @@
 #define ERRBUF_SIZE	1024
 #define	MAX_SUBS	32
 
-#define BASEVAR "baselv"
+#define BASEVAR "^baselv"
 
 int main()
 {
 	int		status, subs;
 	ydb_buffer_t	basevar, subsbuff[MAX_SUBS + 1];
 	char		errbuf[ERRBUF_SIZE], subsstrlit[MAX_SUBS][3];	/* 3 to hold 2 digit decimal # + trailing null char */
-	ydb_string_t	zwrarg;
 
-	printf("# Test 31-level (max-deep) subscripts can be set using ydb_set_s() of Local Variables\n"); fflush(stdout);
+	printf("# Test 31-level (max-deep) subscripts can be set using ydb_set_s() of Global Variables\n"); fflush(stdout);
 	printf("# Also test that passing in a NULL value results in null string value\n"); fflush(stdout);
 	/* Initialize varname, subscript, and value buffers */
 	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
 	for (subs = 0; subs < MAX_SUBS; subs++)
 	{
-		printf("Set a local variable with %d subscripts\n", subs); fflush(stdout);
+		printf("Set a global variable with %d subscripts\n", subs); fflush(stdout);
 		subsbuff[subs].len_used = subsbuff[subs].len_alloc = sprintf(subsstrlit[subs], "%d", subs);
 		subsbuff[subs].buf_addr = subsstrlit[subs];
 		if (subs % 2)
@@ -47,14 +46,12 @@ int main()
 			return YDB_OK;
 		}
 	}
-	printf("Demonstrate our progress by executing a ZWRITE in a call-in\n"); fflush(stdout);
-	zwrarg.address = NULL;
-	zwrarg.length = 0;
-	status = ydb_ci("driveZWRITE", &zwrarg);
+	printf("Demonstrate our progress by executing a gvnZWRITE in a call-in\n"); fflush(stdout);
+	status = ydb_ci("gvnZWRITE");
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("driveZWRITE error: %s\n", errbuf);
+		printf("gvnZWRITE error: %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}

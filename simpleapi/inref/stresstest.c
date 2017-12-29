@@ -134,6 +134,7 @@ int main(int argc, char *argv[])
 		ptr += 4;
 		value.buf_addr = ptr;
 		value.len_used = valuelen;
+		value.len_alloc = valuelen;
 		ptr += valuelen;
 		/* Now do the set. Since we don't know the # of subscripts, we code it for the max # = 32 */
 		if (YDBSETS == action)
