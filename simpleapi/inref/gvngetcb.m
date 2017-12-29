@@ -12,11 +12,11 @@
 ;
 ; Routine to test global variable fetching with or without subscripts via ydb_get_s() simple API interface
 ;
-gvnget1
+gvngetcb
 	set GENVARCNT=3000						; Count of variables to generate
 	set MAXSUBS=10							; Keep within key size
 	set $etrap="use $principal write ""Error occurred: "",!! zshow ""*"" quit"
-	write "gvnget1: Generating ",GENVARCNT," variables",!
+	write "gvngetcb: Generating ",GENVARCNT," variables",!
 	set mfile="gengvnget.m"
 	open mfile:(newversion)
 	use mfile
@@ -45,14 +45,14 @@ gvnget1
 	; Add one more record with the maximum subscripts for good measure
 	;
 	set ^MaNySuBs(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)=4242
-	set %outfn="gvnget1-M-extract.txt"
-	write "gvnget1: Variables generated - writing them to file ",%outfn,!
+	set %outfn="gvngetcb-M-extract.txt"
+	write "gvngetcb: Variables generated - writing them to file ",%outfn,!
 	zsystem "$gtm_dist/mupip extract -format=zwr "_%outfn_" >& mupip-extract-out.txt"
-	write "gvnget1: Variables written - driving external call for call-backs via tp_get_s() in the simpleAPI",!
+	write "gvngetcb: Variables written - driving external call for call-backs via tp_get_s() in the simpleAPI",!
 	;
 	; Now drive external call that will call back in via ydb_get_s() to fetch these same vars/values
 	; and will write its own file that we will compare afterwards.
 	;
-	do &gvnget1cb
-	write !,"gvnget1: Complete",!
+	do &gvngetcb
+	write !,"gvngetcb: Complete",!
 	quit

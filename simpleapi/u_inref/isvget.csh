@@ -13,15 +13,15 @@
 #
 # Test of ydb_get_s() function for ISVs in the simpleAPI
 #
-$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/isvget1cb.c
-$gt_ld_shl_linker ${gt_ld_option_output}libisvget1cb${gt_ld_shl_suffix} $gt_ld_shl_options isvget1cb.o $gt_ld_syslibs
-\rm isvget1cb.o
-setenv	GTMXC	isvget1.tab
-echo "`pwd`/libisvget1cb${gt_ld_shl_suffix}" > $GTMXC
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/isvgetcb.c
+$gt_ld_shl_linker ${gt_ld_option_output}libisvgetcb${gt_ld_shl_suffix} $gt_ld_shl_options isvgetcb.o $gt_ld_syslibs
+\rm isvgetcb.o
+setenv	GTMXC	isvgetcb.tab
+echo "`pwd`/libisvgetcb${gt_ld_shl_suffix}" > $GTMXC
 cat >> $GTMXC << xx
-isvget1cb:	void	isvget1cb(I:ydb_string_t *, O:ydb_string_t *[4096])
+isvgetcb:	void	isvgetcb(I:ydb_string_t *, O:ydb_string_t *[4096])
 xx
 #
 # Drive main M routine
 #
-$gtm_dist/mumps -run isvget1
+$gtm_dist/mumps -run isvgetcb
