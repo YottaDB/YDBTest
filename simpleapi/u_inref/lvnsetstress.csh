@@ -23,7 +23,12 @@ CAT_EOF
 setenv GTMCI lvnset.xc	# needed to invoke driveZWRITE.m from lvnset*.c below
 
 echo "Generate genlvnsetstress.m and genlvnsetstress.c that each do LOTS of SETs of lvns"
-$gtm_dist/mumps -run lvnsetstress
+# The below M program generates a C program that takes up huge amounts of memory and can cause the system to go down.
+# So limit the size of that based on available memory.
+# Pass the current total memory on the system in the command line.
+# Let the M program figure out the maximum size of the generated C program.
+set totMemInKb = `grep MemTotal /proc/meminfo | $tst_awk '{print $2}'`
+$gtm_dist/mumps -run lvnsetstress $totMemInKb
 
 set file = "genlvnsetstress.c"
 echo " --> Running $file <---"
@@ -37,6 +42,7 @@ endif
 ./$exefile | grep -v zwrarg >& $exefile.log
 mv $exefile.o $exefile.c.o	# move it away for the M program (of the same name) to be compiled and a .o created
 				# or else an INVOBJFILE error would be issued (due to unexpected format)
+
 $gtm_dist/mumps -run genlvnsetstress >& $exefile.cmp
 
 diff $exefile.cmp $exefile.log >& $exefile.diff
