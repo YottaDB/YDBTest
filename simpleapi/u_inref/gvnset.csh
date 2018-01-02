@@ -31,7 +31,10 @@ foreach file (gvnset*.c)
 		echo "GVNSET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 		continue
 	endif
-	$gtm_tst/com/dbcreate.csh mumps 1 -key_size=256		# more than default keysize needed for gvnset2_31subs.c
+	# In the below dbcreate.csh call,
+	#	more than default keysize needed for gvnset2_31subs.c
+	#	null subscripts needed for gvnset3_errors.c
+	$gtm_tst/com/dbcreate.csh mumps 1 -key_size=256 -null_subscripts=TRUE
 	./$exefile
 	echo ""
 	$gtm_tst/com/dbcheck.csh
