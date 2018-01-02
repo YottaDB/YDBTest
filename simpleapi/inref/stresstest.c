@@ -128,6 +128,7 @@ int main(int argc, char *argv[])
 			ptr += 4;
 			subscr[i].buf_addr = ptr;
 			subscr[i].len_used = len;
+			subscr[i].len_alloc = len;
 			ptr += len;
 		}
 		valuelen = *(int *)ptr;
