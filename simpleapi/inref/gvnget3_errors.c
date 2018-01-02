@@ -93,7 +93,7 @@ int main()
 		printf("ydb_get_s() [f]: %s\n", errbuf);
 		fflush(stdout);
 	}
-	/* Test of YDBPARAMINVALID */
+	/* Test of PARAMINVALID */
 	printf("Attempting get with ret_value->len_alloc == 0\n");
 	value1.len_alloc = 0;
 	status = ydb_get_s(&basevar, 0, NULL, &value1);
