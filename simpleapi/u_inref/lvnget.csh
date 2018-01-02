@@ -26,6 +26,12 @@ lvngetcb:		void	lvngetcb()
 xx
 $gtm_dist/mumps -run lvngetcb
 
+cat > lvnget.xc << CAT_EOF
+driveZWRITE: void driveZWRITE(I:ydb_string_t *)
+CAT_EOF
+
+setenv GTMCI lvnget.xc	# needed to invoke driveZWRITE.m from lvnget*.c below
+
 echo ""
 echo "# Now run lvnget*.c (all tests driven by a C routine)"
 cp $gtm_tst/$tst/inref/lvnget*.c .
