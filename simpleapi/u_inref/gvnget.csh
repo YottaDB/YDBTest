@@ -27,7 +27,14 @@ cat >> $GTMXC << xx
 gvngetcb:		void	gvngetcb()
 xx
 $gtm_dist/mumps -run gvngetcb
+$gtm_tst/com/dbcheck.csh
+$gtm_tst/com/backup_dbjnl.csh bak_gvngetcb "*.dat *.mjl*" mv
 
+cat > gvnget.xc << CAT_EOF
+gvnZWRITE: void ^gvnZWRITE()
+CAT_EOF
+
+setenv GTMCI gvnget.xc	# needed to invoke driveZWRITE.m from gvnget*.c below
 echo ""
 echo "# Now run gvnget*.c (all tests driven by a C routine)"
 cp $gtm_tst/$tst/inref/gvnget*.c .
@@ -44,7 +51,11 @@ foreach file (gvnget*.c)
 		echo "GVNGET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 		exit -1
 	endif
+	# In the below dbcreate.csh call,
+	#	more than default keysize needed for gvnget2_31subs.c
+	#	null subscripts needed for gvnget3_errors.c
+	$gtm_tst/com/dbcreate.csh mumps 1 -key_size=256 -null_subscripts=TRUE
 	./$exefile
+	$gtm_tst/com/dbcheck.csh
+	$gtm_tst/com/backup_dbjnl.csh bak_$exefile "*.dat *.mjl*" mv
 end
-
-$gtm_tst/com/dbcheck.csh

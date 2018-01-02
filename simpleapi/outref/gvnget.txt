@@ -11,28 +11,203 @@ gvngetcb: Variables written - driving external call for call-backs via tp_get_s(
 gvngetcb: Entered external call - processing key/value pair file..
 
 gvngetcb: Complete
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
 
 # Now run gvnget*.c (all tests driven by a C routine)
 
+ --> Running gvnget1_simple.c <---
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+### Test simple gets in ydb_get_s() of Global Variables ###
+Initialize call-in environment
+Set a global variable with 0 subscripts
+Set a global variable with 1 subscript
+Set a global variable with 2 subscripts
+Get the global variable with 0 subscripts
+ydb_get_s() [1b] : ydb_get_s() returned [A question]
+Get the global variable with 1 subscript
+ydb_get_s() [1b] : ydb_get_s() returned [One less than 43]
+Get the global variable with 2 subscripts
+ydb_get_s() [1b] : ydb_get_s() returned [Life, the universe, and everything]
+Demonstrate our progress by executing a gvnZWRITE in a call-in
+^baselv="A question"
+^baselv(42)="One less than 43"
+^baselv(42,"answer:")="Life, the universe, and everything"
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+ --> Running gvnget2_31subs.c <---
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+### Test 31-level (max-deep) subscripts can be got using ydb_get_s() of Global Variables ###
+Set a global variable with 0 subscripts
+ydb_get_s() : subsbuff [0] : ydb_get_s() returned []
+Set a global variable with 1 subscripts
+ydb_get_s() : subsbuff [1] : ydb_get_s() returned [1]
+Set a global variable with 2 subscripts
+ydb_get_s() : subsbuff [2] : ydb_get_s() returned []
+Set a global variable with 3 subscripts
+ydb_get_s() : subsbuff [3] : ydb_get_s() returned [3]
+Set a global variable with 4 subscripts
+ydb_get_s() : subsbuff [4] : ydb_get_s() returned []
+Set a global variable with 5 subscripts
+ydb_get_s() : subsbuff [5] : ydb_get_s() returned [5]
+Set a global variable with 6 subscripts
+ydb_get_s() : subsbuff [6] : ydb_get_s() returned []
+Set a global variable with 7 subscripts
+ydb_get_s() : subsbuff [7] : ydb_get_s() returned [7]
+Set a global variable with 8 subscripts
+ydb_get_s() : subsbuff [8] : ydb_get_s() returned []
+Set a global variable with 9 subscripts
+ydb_get_s() : subsbuff [9] : ydb_get_s() returned [9]
+Set a global variable with 10 subscripts
+ydb_get_s() : subsbuff [10] : ydb_get_s() returned []
+Set a global variable with 11 subscripts
+ydb_get_s() : subsbuff [11] : ydb_get_s() returned [11]
+Set a global variable with 12 subscripts
+ydb_get_s() : subsbuff [12] : ydb_get_s() returned []
+Set a global variable with 13 subscripts
+ydb_get_s() : subsbuff [13] : ydb_get_s() returned [13]
+Set a global variable with 14 subscripts
+ydb_get_s() : subsbuff [14] : ydb_get_s() returned []
+Set a global variable with 15 subscripts
+ydb_get_s() : subsbuff [15] : ydb_get_s() returned [15]
+Set a global variable with 16 subscripts
+ydb_get_s() : subsbuff [16] : ydb_get_s() returned []
+Set a global variable with 17 subscripts
+ydb_get_s() : subsbuff [17] : ydb_get_s() returned [17]
+Set a global variable with 18 subscripts
+ydb_get_s() : subsbuff [18] : ydb_get_s() returned []
+Set a global variable with 19 subscripts
+ydb_get_s() : subsbuff [19] : ydb_get_s() returned [19]
+Set a global variable with 20 subscripts
+ydb_get_s() : subsbuff [20] : ydb_get_s() returned []
+Set a global variable with 21 subscripts
+ydb_get_s() : subsbuff [21] : ydb_get_s() returned [21]
+Set a global variable with 22 subscripts
+ydb_get_s() : subsbuff [22] : ydb_get_s() returned []
+Set a global variable with 23 subscripts
+ydb_get_s() : subsbuff [23] : ydb_get_s() returned [23]
+Set a global variable with 24 subscripts
+ydb_get_s() : subsbuff [24] : ydb_get_s() returned []
+Set a global variable with 25 subscripts
+ydb_get_s() : subsbuff [25] : ydb_get_s() returned [25]
+Set a global variable with 26 subscripts
+ydb_get_s() : subsbuff [26] : ydb_get_s() returned []
+Set a global variable with 27 subscripts
+ydb_get_s() : subsbuff [27] : ydb_get_s() returned [27]
+Set a global variable with 28 subscripts
+ydb_get_s() : subsbuff [28] : ydb_get_s() returned []
+Set a global variable with 29 subscripts
+ydb_get_s() : subsbuff [29] : ydb_get_s() returned [29]
+Set a global variable with 30 subscripts
+ydb_get_s() : subsbuff [30] : ydb_get_s() returned []
+Set a global variable with 31 subscripts
+ydb_get_s() : subsbuff [31] : ydb_get_s() returned [31]
+Demonstrate our progress by executing a gvnZWRITE in a call-in
+^baselv=""
+^baselv(0)=1
+^baselv(0,1)=""
+^baselv(0,1,2)=3
+^baselv(0,1,2,3)=""
+^baselv(0,1,2,3,4)=5
+^baselv(0,1,2,3,4,5)=""
+^baselv(0,1,2,3,4,5,6)=7
+^baselv(0,1,2,3,4,5,6,7)=""
+^baselv(0,1,2,3,4,5,6,7,8)=9
+^baselv(0,1,2,3,4,5,6,7,8,9)=""
+^baselv(0,1,2,3,4,5,6,7,8,9,10)=11
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11)=""
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12)=13
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13)=""
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14)=15
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)=""
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)=17
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17)=""
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18)=19
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19)=""
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20)=21
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21)=""
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22)=23
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23)=""
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24)=25
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)=""
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26)=27
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)=""
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28)=29
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29)=""
+^baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30)=31
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
  --> Running gvnget3_errors.c <---
-Attempting get of bad basevar ^B%dbasevarInvChar
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+### Test error scenarios in ydb_get_s() of Global Variables ###
+
+# Test of VARNAMEINVALID error
+Attempting get of bad basevar (% in middle of name) ^B%dbasevarInvChar
 ydb_get_s() [a]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
-Attempting get of bad basevar ^Verylongbasevarthatexceedsmaxlength
+Attempting get of bad basevar (> 31 characters) ^Verylongbasevarthatexceedsmaxlength
 ydb_get_s() [b]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
-Attempting get of bad basevar ^1namestartswithdigit
+Attempting get of bad basevar (first letter in name is digit) ^1namestartswithdigit
 ydb_get_s() [c]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
-Attempting get of basevar with NULL subscript address parameter
-ydb_get_s() [d]: 151027770,%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL
+# Test of MAXNRSUBSCRIPTS error
 Attempting get of basevar with 32 subscripts
-ydb_get_s() [e]: 150373282,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+ydb_get_s() [d]: 150373282,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+# Test of MINNRSUBSCRIPTS error
 Attempting get of basevar with -1 subscripts
-ydb_get_s() [f]: 151027762,%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
-Attempting get with ret_value->len_alloc == 0
-ydb_get_s() [g]: 150372994,%GTM-E-GVUNDEF, Global variable undefined: ^baselv
-Attempting get with ret_value->buf_addr == NULL
-ydb_get_s() [h]: 150372994,%GTM-E-GVUNDEF, Global variable undefined: ^baselv
-Attempting get with ret_value == NULL
-ydb_get_s() [i]: 151027746,%YDB-E-PARAMINVALID, NULL ret_value parameter specified in ydb_get_s() call
+ydb_get_s() [e]: 151027762,%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
+# Test of PARAMINVALID error in ret_value parameter
+Attempting get with NULL ret_value : Expect PARAMINVALID error
+ydb_get_s() [f]: 151027746,%YDB-E-PARAMINVALID, NULL ret_value parameter specified in ydb_get_s() call
+Attempting get with ret_value->buf_addr=NULL (ret_value->len_used does not matter) : Expect PARAMINVALID error
+ydb_get_s() [i]: 151027746,%YDB-E-PARAMINVALID, NULL ret_value->buf_addr parameter specified in ydb_get_s() call
+# Test of INVSTRLEN error
+Attempting get with ret_value->len_alloc=0 (ret_value->len_used does not matter) : Expect INVSTRLEN error
+ydb_get_s() [g]: 150375522,%GTM-E-INVSTRLEN, Invalid string length 0: max 0 : ret_value->len_used = 10 after call
+Attempting get with ret_value->len_alloc set to value returned in ret_value->len_used after INVSTRLEN error. Expect NO error
+ydb_get_s() [h]: ydb_get_s() returned [A question]
+# Test of SUBSARRAYNULL error
+Attempting get of basevar with NULL subsarray parameter. Expect SUBSARRAYNULL error
+ydb_get_s() [j]: 151027770,%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL
+# Test of PARAMINVALID error in subsarray parameter
+Attempting get with subsarray[0].len_alloc=0 and subsarray[0].len_used=2 : Expect PARAMINVALID error
+ydb_get_s() [k]: 151027746,%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_get_s() call
+Attempting get with subsarray[0].len_alloc=0 and subsarray[0].len_used=0 : Expect NO PARAMINVALID error
+Attempting get with subsarray[0].len_alloc=1 and subsarray[0].len_used=0 : Expect NO PARAMINVALID error
+Attempting get with subsarray[0].len_alloc=1 and subsarray[0].len_used=1 : Expect NO PARAMINVALID error
+Attempting get with subscr32[0].buf_addr=NULL and subscr32[0].len_used=1 : Expect PARAMINVALID error
+ydb_get_s() [p]: 151027746,%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_get_s() call
+Attempting get with subscr32[0].buf_addr=NULL and subscr32[0].len_used=0 : Expect NO PARAMINVALID error
+Attempting get with subsarray[3].len_alloc=0 and subsarray[3].len_used=2 : Expect PARAMINVALID error
+ydb_get_s() [k]: 151027746,%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_get_s() call
+Attempting get with subsarray[3].len_alloc=0 and subsarray[3].len_used=0 : Expect NO PARAMINVALID error
+Attempting get with subsarray[3].len_alloc=1 and subsarray[3].len_used=0 : Expect NO PARAMINVALID error
+Attempting get with subsarray[3].len_alloc=1 and subsarray[3].len_used=1 : Expect NO PARAMINVALID error
+Attempting get with subscr32[3].buf_addr=NULL and subscr32[3].len_used=1 : Expect PARAMINVALID error
+ydb_get_s() [p]: 151027746,%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_get_s() call
+Attempting get with subscr32[3].buf_addr=NULL and subscr32[3].len_used=0 : Expect NO PARAMINVALID error
+# Test of GVUNDEF error from ydb_get_s()
+ydb_get_s() [r]: 150372994,%GTM-E-GVUNDEF, Global variable undefined: ^baselv("x","x")
+# Demonstrate our progress by executing a gvnZWRITE in a call-in
+^baselv="A question"
+^baselv("","x","x","x","x")="A question"
+^baselv("x","x","x","","x")="A question"
+^baselv("x","x","x","x","x")="A question"
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
