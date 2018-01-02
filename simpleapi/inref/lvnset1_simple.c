@@ -30,7 +30,7 @@ int main()
 	ydb_string_t	zwrarg;
 	char		errbuf[ERRBUF_SIZE];
 
-	printf("# Test simple sets in ydb_set_s() of Local Variables\n"); fflush(stdout);
+	printf("### Test simple sets in ydb_set_s() of Local Variables ###\n"); fflush(stdout);
 	/* Initialize varname, subscript, and value buffers */
 	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
 	YDB_STRLIT_TO_BUFFER(&subscr[0], SUBSCR1);

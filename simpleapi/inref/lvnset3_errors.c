@@ -25,17 +25,19 @@
 
 int main()
 {
-	int		i, status;
+	int		i, cnt, status;
 	ydb_buffer_t	subscr32[32], value1, badbasevar, basevar;
+	ydb_buffer_t	save_subscr32, save_value1;
 	char		errbuf[ERRBUF_SIZE];
 	ydb_string_t	zwrarg;
 
-	printf("# Test error scenarios in ydb_set_s() of Local Variables\n"); fflush(stdout);
+	printf("### Test error scenarios in ydb_set_s() of Local Variables ###\n\n"); fflush(stdout);
 	/* Initialize varname and value buffers */
 	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
 	YDB_STRLIT_TO_BUFFER(&value1, VALUE1);
+	save_value1 = value1;
 
-	/* Now for a few error cases - first up, bad basevar names */
+	printf("# Test of VARNAMEINVALID error\n"); fflush(stdout);
 	printf("Attempting set of bad basevar (%% in middle of name) %s\n", BADBASEVAR1);
 	fflush(stdout);
 	YDB_STRLIT_TO_BUFFER(&badbasevar, BADBASEVAR1);
@@ -64,31 +66,7 @@ int main()
 		printf("ydb_set_s() [c]: %s\n", errbuf);
 		fflush(stdout);
 	}
-	/* Now try setting a non-existent subscript */
-	printf("Attempting set of basevar with NULL subscript address parameter where basevar is undefined\n");
-	status = ydb_set_s(&basevar, 1, NULL, &value1);
-	if (YDB_OK != status)
-	{
-		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s() [d]: %s\n", errbuf);
-		fflush(stdout);
-	}
-	printf("Attempting set of basevar with NULL subscript address parameter where basevar is defined\n");
-	/* Set a base variable, and then retry the set of a non-existent subscript */
-	status = ydb_set_s(&basevar, 0, NULL, &value1);
-	if (YDB_OK != status)
-	{
-		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s() [1]: %s\n", errbuf);
-		fflush(stdout);
-	}
-	status = ydb_set_s(&basevar, 1, NULL, &value1);
-	if (YDB_OK != status)
-	{
-		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s() [d]: %s\n", errbuf);
-		fflush(stdout);
-	}
+	printf("# Test of MAXNRSUBSCRIPTS error\n"); fflush(stdout);
 	/* Now try setting > 31 subscripts */
 	printf("Attempting set of basevar with 32 subscripts\n");
 	for (i = 0; i < 32; i++)
@@ -97,21 +75,33 @@ int main()
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s() [e]: %s\n", errbuf);
+		printf("ydb_set_s() [d]: %s\n", errbuf);
 		fflush(stdout);
 	}
+	printf("# Test of MINNRSUBSCRIPTS error\n"); fflush(stdout);
 	/* Now try setting < 0 subscripts */
 	printf("Attempting set of basevar with -1 subscripts\n");
 	status = ydb_set_s(&basevar, -1, NULL, &value1);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("ydb_set_s() [e]: %s\n", errbuf);
+		fflush(stdout);
+	}
+	printf("# Test of PARAMINVALID error in value parameter\n"); fflush(stdout);
+	printf("Attempting set with value->len_alloc=0 and value->len_used=1 : Expect PARAMINVALID error\n");
+	value1.len_alloc = 0;
+	value1.len_used = 1;
+	status = ydb_set_s(&basevar, 0, NULL, &value1);
+	if (YDB_OK != status)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_set_s() [f]: %s\n", errbuf);
 		fflush(stdout);
 	}
-	/* Test of PARAMINVALID */
-	printf("Attempting set with value->len_alloc == 0\n");
+	printf("Attempting set with value->len_alloc=0 and value->len_used=0 : Expect NO PARAMINVALID error\n");
 	value1.len_alloc = 0;
+	value1.len_used = 0;
 	status = ydb_set_s(&basevar, 0, NULL, &value1);
 	if (YDB_OK != status)
 	{
@@ -119,9 +109,9 @@ int main()
 		printf("ydb_set_s() [g]: %s\n", errbuf);
 		fflush(stdout);
 	}
-	printf("Attempting set with value->buf_addr == NULL\n");
-	YDB_STRLIT_TO_BUFFER(&value1, VALUE1);
-	value1.buf_addr = NULL;
+	printf("Attempting set with value->len_alloc=1 and value->len_used=0 : Expect NO PARAMINVALID error\n");
+	value1.len_alloc = 1;
+	value1.len_used = 0;
 	status = ydb_set_s(&basevar, 0, NULL, &value1);
 	if (YDB_OK != status)
 	{
@@ -129,7 +119,114 @@ int main()
 		printf("ydb_set_s() [h]: %s\n", errbuf);
 		fflush(stdout);
 	}
-	printf("Demonstrate our progress by executing a ZWRITE in a call-in\n"); fflush(stdout);
+	printf("Attempting set with value->len_alloc=1 and value->len_used=1 : Expect NO PARAMINVALID error\n");
+	value1.len_alloc = 1;
+	value1.len_used = 1;
+	status = ydb_set_s(&basevar, 0, NULL, &value1);
+	if (YDB_OK != status)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("ydb_set_s() [i]: %s\n", errbuf);
+		fflush(stdout);
+	}
+	printf("Attempting set with value->buf_addr=NULL and value->len_used=1 : Expect PARAMINVALID error\n");
+	value1.buf_addr = NULL;
+	value1.len_used = 1;
+	status = ydb_set_s(&basevar, 0, NULL, &value1);
+	if (YDB_OK != status)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("ydb_set_s() [j]: %s\n", errbuf);
+		fflush(stdout);
+	}
+	printf("Attempting set with value->buf_addr=NULL and value->len_used=0 : Expect NO PARAMINVALID error\n");
+	value1 = save_value1;	/* Restore value1 to its good original value */
+	value1.buf_addr = NULL;
+	value1.len_used = 0;
+	status = ydb_set_s(&basevar, 0, NULL, &value1);
+	if (YDB_OK != status)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("ydb_set_s() [k]: %s\n", errbuf);
+		fflush(stdout);
+	}
+	printf("# Test of SUBSARRAYNULL error\n"); fflush(stdout);
+	printf("Attempting set of basevar with NULL subsarray parameter. Expect SUBSARRAYNULL error\n");
+	status = ydb_set_s(&basevar, 1, NULL, &value1);
+	if (YDB_OK != status)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("ydb_set_s() [l]: %s\n", errbuf);
+		fflush(stdout);
+	}
+	value1 = save_value1;	/* Restore value1 to its good original value */
+	printf("# Test of PARAMINVALID error in subsarray parameter\n"); fflush(stdout);
+	for (i = 0, cnt = 0; cnt < 2; i = 3, cnt++)
+	{
+		printf("Attempting set with subsarray[%d].len_alloc=0 and subsarray[%d].len_used=2 : Expect PARAMINVALID error\n", i, i);
+		save_subscr32 = subscr32[i];
+		subscr32[i].len_alloc = 0;
+		subscr32[i].len_used = 2;
+		status = ydb_set_s(&basevar, 5, subscr32, &value1);
+		if (YDB_OK != status)
+		{
+			ydb_zstatus(errbuf, ERRBUF_SIZE);
+			printf("ydb_set_s() [m]: %s\n", errbuf);
+			fflush(stdout);
+		}
+		printf("Attempting set with subsarray[%d].len_alloc=0 and subsarray[%d].len_used=0 : Expect NO PARAMINVALID error\n", i, i);
+		subscr32[i].len_alloc = 0;
+		subscr32[i].len_used = 0;
+		status = ydb_set_s(&basevar, 5, subscr32, &value1);
+		if (YDB_OK != status)
+		{
+			ydb_zstatus(errbuf, ERRBUF_SIZE);
+			printf("ydb_set_s() [n]: %s\n", errbuf);
+			fflush(stdout);
+		}
+		printf("Attempting set with subsarray[%d].len_alloc=1 and subsarray[%d].len_used=0 : Expect NO PARAMINVALID error\n", i, i);
+		subscr32[i].len_alloc = 1;
+		subscr32[i].len_used = 0;
+		status = ydb_set_s(&basevar, 5, subscr32, &value1);
+		if (YDB_OK != status)
+		{
+			ydb_zstatus(errbuf, ERRBUF_SIZE);
+			printf("ydb_set_s() [o]: %s\n", errbuf);
+			fflush(stdout);
+		}
+		printf("Attempting set with subsarray[%d].len_alloc=1 and subsarray[%d].len_used=1 : Expect NO PARAMINVALID error\n", i, i);
+		subscr32[i].len_alloc = 1;
+		subscr32[i].len_used = 1;
+		status = ydb_set_s(&basevar, 5, subscr32, &value1);
+		if (YDB_OK != status)
+		{
+			ydb_zstatus(errbuf, ERRBUF_SIZE);
+			printf("ydb_set_s() [p]: %s\n", errbuf);
+			fflush(stdout);
+		}
+		printf("Attempting set with subscr32[%d].buf_addr=NULL and subscr32[%d].len_used=1 : Expect PARAMINVALID error\n", i, i);
+		subscr32[i].buf_addr = NULL;
+		subscr32[i].len_used = 1;
+		status = ydb_set_s(&basevar, 5, subscr32, &value1);
+		if (YDB_OK != status)
+		{
+			ydb_zstatus(errbuf, ERRBUF_SIZE);
+			printf("ydb_set_s() [q]: %s\n", errbuf);
+			fflush(stdout);
+		}
+		printf("Attempting set with subscr32[%d].buf_addr=NULL and subscr32[%d].len_used=0 : Expect NO PARAMINVALID error\n", i, i);
+		subscr32[i].buf_addr = NULL;
+		subscr32[i].len_used = 0;
+		status = ydb_set_s(&basevar, 5, subscr32, &value1);
+		if (YDB_OK != status)
+		{
+			ydb_zstatus(errbuf, ERRBUF_SIZE);
+			printf("ydb_set_s() [r]: %s\n", errbuf);
+			fflush(stdout);
+		}
+		subscr32[i] = save_subscr32;
+	}
+	printf("# Demonstrate our progress by executing a ZWRITE in a call-in\n"); fflush(stdout);
 	zwrarg.address = NULL;
 	zwrarg.length = 0;
 	status = ydb_ci("driveZWRITE", &zwrarg);
