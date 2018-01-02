@@ -29,7 +29,7 @@ int main()
 	ydb_buffer_t	basevar, subscr[2], subscr32[32], value1, value2, value3, badbasevar;
 	char		errbuf[ERRBUF_SIZE];
 
-	printf("# Test simple sets in ydb_set_s() of Global Variables\n"); fflush(stdout);
+	printf("### Test simple sets in ydb_set_s() of Global Variables ###\n"); fflush(stdout);
 	/* Initialize varname, subscript, and value buffers */
 	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
 	YDB_STRLIT_TO_BUFFER(&subscr[0], SUBSCR1);

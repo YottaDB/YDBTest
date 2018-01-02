@@ -25,8 +25,8 @@ int main()
 	ydb_buffer_t	basevar, subsbuff[MAX_SUBS + 1];
 	char		errbuf[ERRBUF_SIZE], subsstrlit[MAX_SUBS][3];	/* 3 to hold 2 digit decimal # + trailing null char */
 
-	printf("# Test 31-level (max-deep) subscripts can be set using ydb_set_s() of Global Variables\n"); fflush(stdout);
-	printf("# Also test that passing in a NULL value results in null string value\n"); fflush(stdout);
+	printf("### Test 31-level (max-deep) subscripts can be set using ydb_set_s() of Global Variables ###\n"); fflush(stdout);
+	printf("### Also test that passing in a NULL value results in null string value ###\n"); fflush(stdout);
 	/* Initialize varname, subscript, and value buffers */
 	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
 	for (subs = 0; subs < MAX_SUBS; subs++)
