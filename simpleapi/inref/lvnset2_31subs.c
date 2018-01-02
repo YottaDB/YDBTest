@@ -26,8 +26,8 @@ int main()
 	char		errbuf[ERRBUF_SIZE], subsstrlit[MAX_SUBS][3];	/* 3 to hold 2 digit decimal # + trailing null char */
 	ydb_string_t	zwrarg;
 
-	printf("# Test 31-level (max-deep) subscripts can be set using ydb_set_s() of Local Variables\n"); fflush(stdout);
-	printf("# Also test that passing in a NULL value results in null string value\n"); fflush(stdout);
+	printf("### Test 31-level (max-deep) subscripts can be set using ydb_set_s() of Local Variables ###\n"); fflush(stdout);
+	printf("### Also test that passing in a NULL value results in null string value ###\n"); fflush(stdout);
 	/* Initialize varname, subscript, and value buffers */
 	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
 	for (subs = 0; subs < MAX_SUBS; subs++)

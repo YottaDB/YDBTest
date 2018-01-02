@@ -1,6 +1,6 @@
 Copy all C programs that need to be tested
  --> Running lvnset1_simple.c <---
-# Test simple sets in ydb_set_s() of Local Variables
+### Test simple sets in ydb_set_s() of Local Variables ###
 Initialize call-in environment
 Set a local variable with 0 subscripts
 Set a local variable with 1 subscript
@@ -12,8 +12,8 @@ baselv(42,"answer:")="Life, the universe, and everything"
 zwrarg=""
 
  --> Running lvnset2_31subs.c <---
-# Test 31-level (max-deep) subscripts can be set using ydb_set_s() of Local Variables
-# Also test that passing in a NULL value results in null string value
+### Test 31-level (max-deep) subscripts can be set using ydb_set_s() of Local Variables ###
+### Also test that passing in a NULL value results in null string value ###
 Set a local variable with 0 subscripts
 Set a local variable with 1 subscripts
 Set a local variable with 2 subscripts
@@ -82,26 +82,54 @@ baselv(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27
 zwrarg=""
 
  --> Running lvnset3_errors.c <---
-# Test error scenarios in ydb_set_s() of Local Variables
+### Test error scenarios in ydb_set_s() of Local Variables ###
+
+# Test of VARNAMEINVALID error
 Attempting set of bad basevar (% in middle of name) B%dbasevarInvChar
 ydb_set_s() [a]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
 Attempting set of bad basevar (> 31 characters) Verylongbasevarthatexceedsmaxlength
 ydb_set_s() [b]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
 Attempting set of bad basevar (first letter in name is digit) 1namestartswithdigit
 ydb_set_s() [c]: 151027738,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
-Attempting set of basevar with NULL subscript address parameter where basevar is undefined
-ydb_set_s() [d]: 151027770,%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL
-Attempting set of basevar with NULL subscript address parameter where basevar is defined
-ydb_set_s() [d]: 151027770,%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL
+# Test of MAXNRSUBSCRIPTS error
 Attempting set of basevar with 32 subscripts
-ydb_set_s() [e]: 150373282,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+ydb_set_s() [d]: 150373282,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+# Test of MINNRSUBSCRIPTS error
 Attempting set of basevar with -1 subscripts
-ydb_set_s() [f]: 151027762,%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
-Attempting set with value->len_alloc == 0
-ydb_set_s() [g]: 151027746,%YDB-E-PARAMINVALID, Invalid value parameter specified in ydb_set_s() call
-Attempting set with value->buf_addr == NULL
-ydb_set_s() [h]: 151027746,%YDB-E-PARAMINVALID, Invalid value parameter specified in ydb_set_s() call
-Demonstrate our progress by executing a ZWRITE in a call-in
-baselv="A question"
+ydb_set_s() [e]: 151027762,%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
+# Test of PARAMINVALID error in value parameter
+Attempting set with value->len_alloc=0 and value->len_used=1 : Expect PARAMINVALID error
+ydb_set_s() [f]: 151027746,%YDB-E-PARAMINVALID, Invalid value parameter specified in ydb_set_s() call
+Attempting set with value->len_alloc=0 and value->len_used=0 : Expect NO PARAMINVALID error
+Attempting set with value->len_alloc=1 and value->len_used=0 : Expect NO PARAMINVALID error
+Attempting set with value->len_alloc=1 and value->len_used=1 : Expect NO PARAMINVALID error
+Attempting set with value->buf_addr=NULL and value->len_used=1 : Expect PARAMINVALID error
+ydb_set_s() [j]: 151027746,%YDB-E-PARAMINVALID, Invalid value parameter specified in ydb_set_s() call
+Attempting set with value->buf_addr=NULL and value->len_used=0 : Expect NO PARAMINVALID error
+# Test of SUBSARRAYNULL error
+Attempting set of basevar with NULL subsarray parameter. Expect SUBSARRAYNULL error
+ydb_set_s() [l]: 151027770,%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL
+# Test of PARAMINVALID error in subsarray parameter
+Attempting set with subsarray[0].len_alloc=0 and subsarray[0].len_used=2 : Expect PARAMINVALID error
+ydb_set_s() [m]: 151027746,%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_set_s() call
+Attempting set with subsarray[0].len_alloc=0 and subsarray[0].len_used=0 : Expect NO PARAMINVALID error
+Attempting set with subsarray[0].len_alloc=1 and subsarray[0].len_used=0 : Expect NO PARAMINVALID error
+Attempting set with subsarray[0].len_alloc=1 and subsarray[0].len_used=1 : Expect NO PARAMINVALID error
+Attempting set with subscr32[0].buf_addr=NULL and subscr32[0].len_used=1 : Expect PARAMINVALID error
+ydb_set_s() [q]: 151027746,%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_set_s() call
+Attempting set with subscr32[0].buf_addr=NULL and subscr32[0].len_used=0 : Expect NO PARAMINVALID error
+Attempting set with subsarray[3].len_alloc=0 and subsarray[3].len_used=2 : Expect PARAMINVALID error
+ydb_set_s() [m]: 151027746,%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_set_s() call
+Attempting set with subsarray[3].len_alloc=0 and subsarray[3].len_used=0 : Expect NO PARAMINVALID error
+Attempting set with subsarray[3].len_alloc=1 and subsarray[3].len_used=0 : Expect NO PARAMINVALID error
+Attempting set with subsarray[3].len_alloc=1 and subsarray[3].len_used=1 : Expect NO PARAMINVALID error
+Attempting set with subscr32[3].buf_addr=NULL and subscr32[3].len_used=1 : Expect PARAMINVALID error
+ydb_set_s() [q]: 151027746,%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_set_s() call
+Attempting set with subscr32[3].buf_addr=NULL and subscr32[3].len_used=0 : Expect NO PARAMINVALID error
+# Demonstrate our progress by executing a ZWRITE in a call-in
+baselv=""
+baselv("","x","x","x","x")="A question"
+baselv("x","x","x","","x")="A question"
+baselv("x","x","x","x","x")="A question"
 zwrarg=""
 
