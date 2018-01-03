@@ -141,11 +141,11 @@ int main(int argc, char *argv[])
 			assert(YDB_OK == status);
 		} else if (YDBKILL == action)
 		{
-			status = ydb_delete_s(&basevar, nsubs, subscr, LYDB_DEL_TREE);
+			status = ydb_delete_s(&basevar, nsubs, subscr, YDB_DEL_TREE);
 			assert(YDB_OK == status);
 		} else if (YDBZKILL == action)
 		{
-			status = ydb_delete_s(&basevar, nsubs, subscr, LYDB_DEL_NODE);
+			status = ydb_delete_s(&basevar, nsubs, subscr, YDB_DEL_NODE);
 			assert(YDB_OK == status);
 		} else if (YDBGET == action)
 		{

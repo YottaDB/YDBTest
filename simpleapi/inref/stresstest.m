@@ -74,8 +74,8 @@ stresstest;
 helper	;
 	new i,varname,nsubs,subs,optype
 	set oprtype=$select(killchoice=0:9,1:$random(10))
-	; oprtype=0       implies ZKILL i.e. ydb_delete_s(..., LYDB_DEL_NODE)
-	; oprtype=1,2     implies KILL  i.e. ydb_delete_s(..., LYDB_DEL_TREE)
+	; oprtype=0       implies ZKILL i.e. ydb_delete_s(..., YDB_DEL_NODE)
+	; oprtype=1,2     implies KILL  i.e. ydb_delete_s(..., YDB_DEL_TREE)
 	; oprtype=3,...,9 implies SET   i.e. ydb_set_s()
 	set optype=$select(oprtype=0:YDBZKILL,(oprtype=1)!(oprtype=2):YDBKILL,1:YDBSET)
 	set varname=$$getvarname(),varnamelen=$length(varname)	; Generate random variable name to do set/kill on
