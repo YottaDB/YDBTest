@@ -27,7 +27,7 @@
 int main()
 {
 	int		i, status;
-	ydb_buffer_t	basevar, subscr[2], subscr32[32], value1, value2, value3, badbasevar, ret_value;
+	ydb_buffer_t	basevar, subscr[2], value1, value2, value3, ret_value;
 	char		errbuf[ERRBUF_SIZE], retvaluebuff[64];
 
 	printf("### Test simple gets in ydb_get_s() of Global Variables ###\n"); fflush(stdout);
@@ -82,23 +82,23 @@ int main()
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_get_s() [1a]: %s\n", errbuf);
+		printf("ydb_get_s() [0a]: %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}
 	ret_value.buf_addr[ret_value.len_used] = '\0';
-	printf("ydb_get_s() [1b] : ydb_get_s() returned [%s]\n", ret_value.buf_addr);
+	printf("ydb_get_s() returned [%s]\n", ret_value.buf_addr);
 	printf("Get the global variable with 1 subscript\n"); fflush(stdout);
 	status = ydb_get_s(&basevar, 1, subscr, &ret_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_get_s() [2a]: %s\n", errbuf);
+		printf("ydb_get_s() [1a]: %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}
 	ret_value.buf_addr[ret_value.len_used] = '\0';
-	printf("ydb_get_s() [1b] : ydb_get_s() returned [%s]\n", ret_value.buf_addr);
+	printf("ydb_get_s() returned [%s]\n", ret_value.buf_addr);
 	printf("Get the global variable with 2 subscripts\n"); fflush(stdout);
 	status = ydb_get_s(&basevar, 2, subscr, &ret_value);
 	if (YDB_OK != status)
@@ -109,7 +109,7 @@ int main()
 		return YDB_OK;
 	}
 	ret_value.buf_addr[ret_value.len_used] = '\0';
-	printf("ydb_get_s() [1b] : ydb_get_s() returned [%s]\n", ret_value.buf_addr);
+	printf("ydb_get_s() returned [%s]\n", ret_value.buf_addr);
 	printf("Demonstrate our progress by executing a gvnZWRITE in a call-in\n"); fflush(stdout);
 	status = ydb_ci("gvnZWRITE");
 	if (status)

@@ -54,11 +54,14 @@ echo "simpleapi test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "lvnset lvnsetstress stresstest gvnset isvset tp transid lvnget gvnget isvget threen1g wordfreq"
-#NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic gvnsubsnext gvnsubsprev gvnnodenext gvnnodeprev gvndata gvnincr"
-#NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic lvnsubsnext lvnsubsprev lvnnodenext lvnnodeprev lvndata lvnincr"
-setenv subtest_list_non_replic "$subtest_list_non_replic isvsubsnext isvsubsprev isvnodenext isvdata isvincr"
-##NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic isvnodeprev"
+setenv subtest_list_non_replic "$subtest_list_non_replic gvnsubsnext"
+#NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic gvnsubsprev gvnnodenext gvndata gvnincr"
+#NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic lvnsubsnext lvnsubsprev lvnnodenext lvndata lvnincr"
+#NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic isvsubsnext isvsubsprev isvnodenext isvdata isvincr"
 #NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic str2zwr zwr2str"
+#NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic gvnnodeprev"
+#NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic lvnnodeprev"
+##NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic isvnodeprev"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

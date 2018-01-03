@@ -34,7 +34,7 @@ cat > gvnget.xc << CAT_EOF
 gvnZWRITE: void ^gvnZWRITE()
 CAT_EOF
 
-setenv GTMCI gvnget.xc	# needed to invoke driveZWRITE.m from gvnget*.c below
+setenv GTMCI gvnget.xc	# needed to invoke gvnZWRITE.m from gvnget*.c below
 echo ""
 echo "# Now run gvnget*.c (all tests driven by a C routine)"
 cp $gtm_tst/$tst/inref/gvnget*.c .
