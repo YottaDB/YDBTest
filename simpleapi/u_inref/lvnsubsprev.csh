@@ -11,18 +11,18 @@
 #								#
 #################################################################
 #
-# Test of ydb_subscript_next_s() function for Global variables in the simpleAPI
+# Test of ydb_subscript_prev_s() function for Global variables in the simpleAPI
 #
 
-cat > gvnsubsnext.xc << CAT_EOF
-gvnZWRITE: void ^gvnZWRITE()
+cat > lvnsubsprev.xc << CAT_EOF
+driveZWRITE: void driveZWRITE(I:ydb_string_t *)
 CAT_EOF
 
-setenv GTMCI gvnsubsnext.xc	# needed to invoke gvnZWRITE.m from gvnsubsnext*.c below
+setenv GTMCI lvnsubsprev.xc	# needed to invoke driveZWRITE.m from lvnsubsprev*.c below
 echo ""
-echo "# Now run gvnsubsnext*.c (all tests driven by a C routine)"
-cp $gtm_tst/$tst/inref/gvnsubsnext*.c .
-foreach file (gvnsubsnext*.c)
+echo "# Now run lvnsubsprev*.c (all tests driven by a C routine)"
+cp $gtm_tst/$tst/inref/lvnsubsprev*.c .
+foreach file (lvnsubsprev*.c)
 	echo ""
 	echo " --> Running $file <---"
 	cp $gtm_tst/$tst/inref/$file .
@@ -30,12 +30,12 @@ foreach file (gvnsubsnext*.c)
 	$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $file
 	$gt_ld_linker $gt_ld_option_output $exefile $gt_ld_options_common $exefile.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_gtmshr $gt_ld_syslibs >& $exefile.map
 	if (0 != $status) then
-		echo "GVNSUBSNEXT-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
+		echo "LVNSUBSPREV-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 		exit -1
 	endif
 	# In the below dbcreate.csh call,
-	#	more than default keysize needed for gvnsubsnext2_31subs.c
-	#	null subscripts needed for gvnsubsnext3_errors.c
+	#	more than default keysize needed for lvnsubsprev2_31subs.c
+	#	null subscripts needed for lvnsubsprev3_errors.c
 	$gtm_tst/com/dbcreate.csh mumps 1 -key_size=256 -null_subscripts=TRUE
 	./$exefile
 	$gtm_tst/com/dbcheck.csh
