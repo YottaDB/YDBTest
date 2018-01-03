@@ -22,10 +22,10 @@
 
 /* The below mirrors YDBEOF/YDBSETS etc. in stresstest.m */
 #define	YDBEOF		0
-#define	YDBSETS		1
-#define	YDBGETS		2
-#define	YDBSUBSNEXT	3
-#define	YDBSUBSPREV	4
+#define	YDBSET		1
+#define	YDBGET		2
+#define	YDBKILL		3
+#define	YDBZKILL	4
 
 /* Use SIGILL below to generate a core when an assertion fails */
 #define assert(x) ((x) ? 1 : (fprintf(stderr, "Assert failed at %s line %d : %s\n", __FILE__, __LINE__, #x), kill(getpid(), SIGILL)))
@@ -53,8 +53,6 @@ int	fullread(char *buff, int len)
 #define	DBG_BUFF_SIZE	65536
 #define	READCNT_SIZE	256
 
-typedef int (*ydb_retvalue_fnptr_t)(ydb_buffer_t *varname, int subs_used, ydb_buffer_t *subsarray, ydb_buffer_t *value);
-
 int main(int argc, char *argv[])
 {
 	int		i, status, bufflen = 0, reclen, copylen, varnamelen, nsubs, valuelen, len, action, reccnt;
@@ -64,7 +62,6 @@ int main(int argc, char *argv[])
 	ydb_string_t	zwrarg;
 	int		process_id = getpid();
 	int		dbg_buff[DBG_BUFF_SIZE], dbg_buff_index = 0, readcnt[READCNT_SIZE], readcnt_buff_index[READCNT_SIZE], readcnt_index = 0;
-	ydb_retvalue_fnptr_t	ydb_fn_array[] = {NULL, &ydb_set_s, &ydb_get_s, &ydb_subscript_next_s, &ydb_subscript_previous_s};
 
 	if (argc != 1)
 	{	/* This is for debug purposes. To rerun as say "./stresstest 1 < /dev/zero" and that will invoke genstresstest.m
@@ -90,7 +87,7 @@ int main(int argc, char *argv[])
 		action = *(int *)(hdrbuff + 4);
 		if (YDBEOF == action)
 			break;
-		assert((YDBSETS == action) || (YDBGETS == action) || (YDBSUBSNEXT == action) || (YDBSUBSPREV == action));
+		assert((YDBSET == action) || (YDBGET == action) || (YDBKILL == action) || (YDBZKILL == action));
 		cnt = fullread(buff, reclen);
 		assert(cnt == reclen);
 		readcnt[readcnt_index] = cnt;
@@ -138,16 +135,24 @@ int main(int argc, char *argv[])
 		value.len_alloc = valuelen;
 		ptr += valuelen;
 		/* Now do the set. Since we don't know the # of subscripts, we code it for the max # = 32 */
-		if (YDBSETS == action)
+		if (YDBSET == action)
 		{
 			status = ydb_set_s(&basevar, nsubs, subscr, &value);
 			assert(YDB_OK == status);
-		} else if ((YDBGETS == action) || (YDBSUBSNEXT == action) || (YDBSUBSPREV == action))
+		} else if (YDBKILL == action)
+		{
+			status = ydb_delete_s(&basevar, nsubs, subscr, LYDB_DEL_TREE);
+			assert(YDB_OK == status);
+		} else if (YDBZKILL == action)
+		{
+			status = ydb_delete_s(&basevar, nsubs, subscr, LYDB_DEL_NODE);
+			assert(YDB_OK == status);
+		} else if (YDBGET == action)
 		{
 			retvalue.buf_addr = retvaluebuff;
 			retvalue.len_alloc = sizeof(retvaluebuff);
 			retvalue.len_used = 0;
-			status = (*ydb_fn_array[action])(&basevar, nsubs, subscr, &retvalue);
+			status = ydb_get_s(&basevar, nsubs, subscr, &retvalue);
 			assert(YDB_OK == status);
 			assert((retvalue.len_used == value.len_used)
 				&& (!memcmp(retvalue.buf_addr, value.buf_addr, value.len_used)));
