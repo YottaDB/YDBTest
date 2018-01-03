@@ -157,7 +157,7 @@ Attempting get with ret_value->len_alloc set to value returned in ret_value->len
 ydb_get_s() [h]: ydb_get_s() returned [A question]
 # Test of SUBSARRAYNULL error
 Attempting get of basevar with NULL subsarray parameter. Expect SUBSARRAYNULL error
-ydb_get_s() [j]: 151027770,%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL
+ydb_get_s() [j]: 151027770,%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL in ydb_get_s() call
 # Test of PARAMINVALID error in subsarray parameter
 Attempting get with subsarray[0].len_alloc=0 and subsarray[0].len_used=2 : Expect PARAMINVALID error
 ydb_get_s() [k]: 151027746,%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_get_s() call
