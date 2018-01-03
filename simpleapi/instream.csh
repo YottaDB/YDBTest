@@ -54,7 +54,7 @@ echo "simpleapi test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "lvnset lvnsetstress stresstest gvnset isvset tp transid lvnget gvnget isvget threen1g wordfreq"
-setenv subtest_list_non_replic "$subtest_list_non_replic gvnsubsnext"
+setenv subtest_list_non_replic "$subtest_list_non_replic gvnsubsnext gvnsubsprev"
 #NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic gvnsubsprev gvnnodenext gvndata gvnincr"
 #NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic lvnsubsnext lvnsubsprev lvnnodenext lvndata lvnincr"
 #NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic isvsubsnext isvsubsprev isvnodenext isvdata isvincr"
