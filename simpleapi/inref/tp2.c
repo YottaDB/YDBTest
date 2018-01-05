@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 	{
 		for (child = 0; child < NCHILDREN; child++)
 		{
-			child_pid[child] = fork(); /* BYPASSOK */
+			child_pid[child] = fork();
 			assert(0 <= child_pid[child]);
 			if (0 == child_pid[child])
 				return do_tp(numincrs);	/* this is the child */

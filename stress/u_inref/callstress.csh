@@ -4,6 +4,9 @@
 # Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -22,13 +25,19 @@ endif
 @ exit_status = 0
 
 if ("run" == "$1") then
-$GTM << GTM_EOF
-do run^concurr($2)
-do verify^concurr
-GTM_EOF
-
-set exit_status = $status # run^concurr could return non-zero exit status through "zhalt 255" done in stress/inref/stress.m
-
+	set usesimpleapi = `$gtm_exe/mumps -run rand 2`
+	set usesimpleapi = 1	# NARSTODO : remove this
+	if ($usesimpleapi) then
+		set exit_status = $status # run^concurr could return non-zero exit status through "zhalt 255" done in stress/inref/stress.m
+		./run_concurr $2
+	else
+		$gtm_exe/mumps -run %XCMD 'do run^concurr('$2')'
+		set exit_status = $status # run^concurr could return non-zero exit status through "zhalt 255" done in stress/inref/stress.m
+	endif
+	if (0 == $exit_status) then
+		$gtm_exe/mumps -run %XCMD 'do verify^concurr'
+		set exit_status = $status
+	endif
 endif
 
 exit $exit_status
