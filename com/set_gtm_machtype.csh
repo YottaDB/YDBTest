@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017,2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -28,6 +28,7 @@ set gtm_platform=`echo 'write $piece($zversion," ",4),! halt' | $gtm_exe/mumps -
 # Handle 32 bit testing on a 64 bit x86 machine
 set mach_type = `echo $MACHTYPE | sed 's/\///g' | tr '[A-Z]' '[a-z]' | sed 's/i.86/ix86/g'`
 if ($mach_type =~ "x86_64*") set mach_type = "x86_64"
+if ($mach_type =~ "armv*l") set mach_type = "armvxl"	# ARMV6L and ARMV7L are together considered ARMVXL
 if ( ($gtm_platform != "x86_64") && ($mach_type == "x86_64") ) then
         set mach_type = "ix86"
 endif
@@ -54,7 +55,7 @@ else
 endif
 
 # Set the variable for 32 bit architectures. Adding more 32bit platforms isn't likely
-if (($gtm_test_machtype == "ix86") || ($gtm_test_machtype == "armv7l")) then
+if (($gtm_test_machtype == "ix86") || ($gtm_test_machtype == "armvxl")) then
 	setenv gtm_platform_size 32
 	# Increase replication filter timeout on the ARM as we have seen test failures
 	# due to FILTERTIMEDOUT error in the source server log.

@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; Copyright (c) 2017,2018 YottaDB LLC. and/or its subsidiaries.	;
 ; All rights reserved.	     	  	     			;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -27,7 +27,8 @@ signals()
 	else  If $ZVersion["S390" do
 	. if $ZVersion["Linux" set platform="linuxs390"
 	. else  set platform="s390"
-	else  if $ZVersion["armv7l" set platform="armv7l"
+	else  if $ZVersion["armv7l" set platform="armvxl"
+	else  if $ZVersion["armv6l" set platform="armvxl"
 	else  set platform="default"
 	quit $PIECE($TEXT(@platform+1),"#",2)
 
@@ -66,7 +67,7 @@ s390	;S390 and not Linux
 linuxs390	;S390 and Linux
 	;signum #10
 
-armv7l	;ARMV7L
+armvxl	;ARMV7L or ARMV6L
 	;signum #10
 
 default	;default platform

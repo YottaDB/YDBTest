@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017,2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,7 +22,7 @@ set shorthost = $HOST:r:r:r:r
 set format="%Y.%m.%d.%H.%M.%S.%Z"
 set timestart = `date +"$format"`
 if (! $?gtm_test_hang_alert_sec) then
-	if ("HOST_LINUX_ARMV7L" != $gtm_test_os_machtype) then
+	if ("HOST_LINUX_ARMVXL" != $gtm_test_os_machtype) then
 		set gtm_test_hang_alert_sec = 9000 # A subtest running for 2.5 hours is suspected to be hung
 	else
 		# ARM boxes are usually slower so give them a bigger timeout for the hang alert

@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017,2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -37,7 +37,7 @@ setenv gtm_test_disable_randomdbtn
 setenv subtest_list "zro_search incr_link excall objfile_test gtm6330 gtm7905"
 setenv unicode_testlist "uniexcall shared_lib_unicode_zb incr_link_unicode gtm_chset_recompile"
 
-if (("HOST_LINUX_X86_64" != $gtm_test_os_machtype) && ("HOST_LINUX_ARMV7L" != $gtm_test_os_machtype)			\
+if (("HOST_LINUX_X86_64" != $gtm_test_os_machtype) && ("HOST_LINUX_ARMVXL" != $gtm_test_os_machtype)			\
 		&& ("HOST_AIX_RS6000" != $gtm_test_os_machtype) && ("HOST_SUNOS_SPARC" != $gtm_test_os_machtype)	\
 		&& ("HOST_OS390_S390" != $gtm_test_os_machtype) && ("HOST_LINUX_S390X" != $gtm_test_os_machtype)) then
     	setenv subtest_list "$subtest_list dllversion"

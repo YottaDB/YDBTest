@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017,2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,7 +27,7 @@
 #HOST_HP-UX_IA64
 #HOST_CYGWIN_IX86
 #HOST_LINUX_X86_64
-#HOST_LINUX_ARMV7L
+#HOST_LINUX_ARMVXL	# ARMVXL is for ARMV6L, ARMV7L etc.
 # and machine type. For example:
 #IA64 (for Itanium machines)
 # and OS name. For example: AIX
