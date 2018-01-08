@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2004, 2014 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; Copyright (c) 2017,2018 YottaDB LLC. and/or its subsidiaries.	;
 ; All rights reserved.	     	  	     			;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -56,7 +56,7 @@ stress(ntpj,tprj,tpcj) ; ; ; Test of Concurrent transactions
 	; Check if processes have completed
 	; Setting a very long time out here because NON-TP job does not even complete its first iteration before every other TP
 	; process is done. It makes a big impact on slow boxes that does only 1 iteration per 1-2 minutes.
-	set timeout=4800 ; in seconds = 80 minutes
+	set timeout=9600 ; in seconds = 160 minutes
 	For I=1:1:tpcj do
 	. set done=0
 	. kill savelasti
