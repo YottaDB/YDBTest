@@ -3,6 +3,9 @@
 ; Copyright (c) 2015-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2017,2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -89,7 +92,8 @@ digits  ;zero;eins;deux;tres;quattro;пять;ستة;सात;捌;ஒன்ப�
         ..  Set err=$Text(+0)_"_"_$Job_"_"_s_".mje"                               ; STDERR for Jobbed process
         ..  Set out=$Extract(err,1,$Length(err)-1)_"o"                            ; STDOUT for Jobbed process
         ..  Set cmd="doblk(i):(ERROR="""_err_""":OUTPUT="""_out_""":DEFAULT="""_def_""")"     ; Command to Job
-        ..  Job @cmd                             ; Job child process for next block of numbers
+        ..  Job @cmd				; Job child process for next block of numbers
+	..  set childpid(s)=$zjob		; Note down child pids
         . For i=1:1:3000 Quit:'^count  Hang 0.1  ; Wait up to 5 minutes for processes to start (^count goes to 0 when they do)
 	. if ^count write !,^count," jobs did not start"
         . Lock -l1                               ; Release lock so processes can run
@@ -110,6 +114,8 @@ digits  ;zero;eins;deux;tres;quattro;пять;ستة;सात;捌;ஒன்ப�
         . Write:duration " ",$FNumber(^updates/duration,",",0)," ",$FNumber(^reads/duration,",",0)
         . Write !
         . Lock -l2                               ; Release lock for next run
+	. ; Wait for child processes to terminate before moving on to next run
+        . For s=1:1:k do ^waitforproctodie(childpid(s),300)
         . Do dbinit                              ; Initialize database for next run
         Quit
 
