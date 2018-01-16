@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 
 	/* Write parent process PID to stress.mjo0 : stress^stress */
 	value.len_used = sprintf(value.buf_addr, "PID: %d\n", process_id);
-	nbytes = write(newfd, value.buf_addr, value.len_used);
+	nbytes = write(outfd, value.buf_addr, value.len_used);
 	assert(nbytes == value.len_used);
 	assert(nbytes < value.len_alloc);
 
@@ -129,6 +129,7 @@ int main(int argc, char *argv[])
 	assert(-1 != errfd);
 	newfd = dup2(errfd, 2);
 	assert(2 == newfd);
+	newfd = 1;
 
 	/* SET localinstance=^instance : stress^stress */
 	YDB_STRLIT_TO_BUFFER(&ygbl_instance, "^instance");
@@ -176,7 +177,6 @@ int	m_job_stress(void)
 	ydb_buffer_t	ylcl_jobno;
 	char		*tpflagstr[] = {"NTP", "TPR", "TPC"};
 	int		loop, status, childcnt, iterate;
-	pid_t		process_id;
 	ydb_buffer_t	ylcl_efill, ylcl_ffill, ylcl_gfill, ylcl_hfill, ylcl_loop;
 
 	process_id = getpid();
@@ -197,7 +197,7 @@ int	m_job_stress(void)
 
 	/* Write child process PID to stress.mjo1, stress.mjo2 etc. : job^stress */
 	value.len_used = sprintf(value.buf_addr, "PID: %d : TYPE:%s\n", process_id, tpflagstr[tpflag]);
-	nbytes = write(newfd, value.buf_addr, value.len_used);
+	nbytes = write(outfd, value.buf_addr, value.len_used);
 	assert(nbytes == value.len_used);
 	assert(nbytes < value.len_alloc);
 
@@ -205,8 +205,8 @@ int	m_job_stress(void)
 	sprintf(errfile, "stress.mje%d", child);
 	errfd = creat(errfile, 0666);
 	assert(-1 != errfd);
-	newfd = dup2(errfd, 1);
-	assert(1 == newfd);
+	newfd = dup2(errfd, 2);
+	assert(2 == newfd);
 
 	/* Wait for all children to reach this point before continuing forward : job^stress */
 	status = ydb_incr_s(&ygbl_permit, 0, NULL, NULL, &value);
@@ -263,12 +263,12 @@ int	m_job_stress(void)
 	{
 		/* write "iteration number : ",loop,! : job^stress */
 		value.len_used = sprintf(value.buf_addr, "iteration number : %d\n", loop);
-		nbytes = write(newfd, value.buf_addr, value.len_used);
+		nbytes = write(outfd, value.buf_addr, value.len_used);
 		assert(nbytes == value.len_used);
 		assert(nbytes < value.len_alloc);
 		/* write "Wating for the parent to release lock : ",$zdate($H,"24:60:SS"),! */
 		value.len_used = sprintf(value.buf_addr, "Waiting for the parent to release lock : %s\n", get_curtime());
-		nbytes = write(newfd, value.buf_addr, value.len_used);
+		nbytes = write(outfd, value.buf_addr, value.len_used);
 		assert(nbytes == value.len_used);
 		assert(nbytes < value.len_alloc);
 
@@ -320,7 +320,7 @@ int	m_job_stress(void)
 	}
 	/* w "Successful : ",$zdate($H,"24:60:SS"),! */
 	value.len_used = sprintf(value.buf_addr, "Successful : %s\n", get_curtime());
-	nbytes = write(newfd, value.buf_addr, value.len_used);
+	nbytes = write(outfd, value.buf_addr, value.len_used);
 	assert(nbytes == value.len_used);
 	assert(nbytes < value.len_alloc);
 
@@ -356,7 +356,7 @@ int	job_stress_tpfn(int *loop_ptr)
 		tlevel = atoi(value.buf_addr);
 
 		value.len_used = sprintf(value.buf_addr, "TRESTART = %d For Loop=%d TLEVEL=%d\n", trestart, loop, tlevel);
-		nbytes = write(newfd, value.buf_addr, value.len_used);
+		nbytes = write(outfd, value.buf_addr, value.len_used);
 		assert(nbytes == value.len_used);
 		assert(nbytes < value.len_alloc);
 	}
@@ -380,7 +380,7 @@ int	m_randfill(act_t act, int pno, int iter)
 
 	/* Get root(pno) */
 	YDB_STRLIT_TO_BUFFER(&ygbl_root, "^root");
-	subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d\n", pno);
+	subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d", pno);
 	status = ydb_get_s(&ygbl_root, 1, subscr, &value);
 	if (YDB_TP_RESTART == status)
 		return status;
@@ -530,7 +530,7 @@ int	m_filling_randfill(act_t act, int prime, int root, int iter)
 			status = ydb_get_s(&ygbl_pct1, 4, subscr, &value);
 			if (YDB_TP_RESTART == status)
 				return status;
-			if (YDB_ERR_LVUNDEF == status)
+			if (YDB_ERR_GVUNDEF == status)
 				tmp = 0;
 			else
 			{
@@ -842,7 +842,7 @@ int	m_filling_randfill(act_t act, int prime, int root, int iter)
 	if (0 != ERR)
 	{
 		value.len_used = sprintf(value.buf_addr, "%s FAIL\n", ((SET == act) ? "set" : ((KILL == act) ? "kill" : "ver")));
-		nbytes = write(newfd, value.buf_addr, value.len_used);
+		nbytes = write(outfd, value.buf_addr, value.len_used);
 		assert(nbytes == value.len_used);
 		assert(nbytes < value.len_alloc);
 	}
@@ -860,21 +860,21 @@ void	m_EXAM_randfill(char *pos, ydb_buffer_t *vcorr, ydb_buffer_t *vcomp)
 
 	/* w " ** FAIL verifying global ",pos,! */
 	value.len_used = sprintf(value.buf_addr, " ** FAIL verifying global %s\n", pos);
-	nbytes = write(newfd, value.buf_addr, value.len_used);
+	nbytes = write(outfd, value.buf_addr, value.len_used);
 	assert(nbytes == value.len_used);
 	assert(nbytes < value.len_alloc);
 
 	/* w ?10,"CORRECT  = ",vcorr,! */
 	vcorr->buf_addr[vcorr->len_used] = '\0';
 	value.len_used = sprintf(value.buf_addr, "	CORRECT = %s\n", vcorr->buf_addr);
-	nbytes = write(newfd, value.buf_addr, value.len_used);
+	nbytes = write(outfd, value.buf_addr, value.len_used);
 	assert(nbytes == value.len_used);
 	assert(nbytes < value.len_alloc);
 
 	/* w ?10,"COMPUTED = ",vcomp,! */
 	vcomp->buf_addr[vcomp->len_used] = '\0';
 	value.len_used = sprintf(value.buf_addr, "	COMPUTED = %s\n", vcomp->buf_addr);
-	nbytes = write(newfd, value.buf_addr, value.len_used);
+	nbytes = write(outfd, value.buf_addr, value.len_used);
 	assert(nbytes == value.len_used);
 	assert(nbytes < value.len_alloc);
 
