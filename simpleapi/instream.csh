@@ -49,6 +49,7 @@
 # zwr2str      [nars]        Test of ydb_zwr2str_s() function in the simpleAPI
 # nodenext     [estess]      Test of ydb_node_next_s() function in the simpleAPI (both local and global vars)
 # forkncore    [estess]	     Test of ydb_fork_n_core() function in the simpleAPI
+# locks        [estess]      Test of ydb_lock_s() function in the simpleAPI
 #-------------------------------------------------------------------------------------
 
 echo "simpleapi test starts..."
@@ -65,7 +66,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic lvnsubsnext lvnsubsprev
 #NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic gvnnodeprev"
 #NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic lvnnodeprev"
 ##NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic isvnodeprev"
-setenv subtest_list_non_replic "$subtest_list_non_replic nodenext nodeprev forkncore"
+setenv subtest_list_non_replic "$subtest_list_non_replic nodenext nodeprev forkncore locks"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
