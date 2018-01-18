@@ -33,15 +33,13 @@
 #define	TPCJ		10
 #define	NCHILDREN	TPCJ
 
-#define	YDB_COPY_BUFF_TO_BUFF(SRC, DST)					\
-{									\
-	assert((SRC)->len_used <= (DST)->len_alloc);			\
-	memcpy((DST)->buf_addr, (SRC)->buf_addr, (SRC)->len_used);	\
-	(DST)->len_used = (SRC)->len_used;				\
+#define	YDB_COPY_BUFF_TO_BUFF(SRC, DST)				\
+{								\
+	int	copy_done;					\
+								\
+	YDB_COPY_BUFFER_TO_BUFFER(SRC, DST, copy_done);		\
+	assert(copy_done);					\
 }
-
-#define YDB_BUFF_T_IS_IDENTICAL(vcorr, vcomp)									\
-	((vcorr->len_used == vcomp->len_used) && !memcmp(vcorr->buf_addr, vcomp->buf_addr, vcomp->len_used))
 
 typedef enum
 {
@@ -59,11 +57,13 @@ typedef enum
 
 char timeString[9];  /* space for "HH:MM:SS\0" */
 
+#define	MAXVALUELEN	128
+
 /* Global variables (set in parent, but visible to children too) */
 int		child;
 int		outfd, errfd, newfd;
 ydb_buffer_t	value, pidvalue;
-char		valuebuff[64], pidvaluebuff[64], subscrbuff[YDB_MAX_SUBS + 1][64];
+char		valuebuff[MAXVALUELEN], pidvaluebuff[MAXVALUELEN], subscrbuff[YDB_MAX_SUBS + 1][MAXVALUELEN];
 ydb_buffer_t	subscr[YDB_MAX_SUBS + 1];
 size_t		nbytes;
 pid_t		process_id;
@@ -259,7 +259,7 @@ int	m_job_stress(void)
 	assert(YDB_OK == status);
 
 	/* F loop=1:1:iterate DO : job^stress */
-	for (loop = 1; loop < iterate; loop++)
+	for (loop = 1; loop <= iterate; loop++)
 	{
 		/* write "iteration number : ",loop,! : job^stress */
 		value.len_used = sprintf(value.buf_addr, "iteration number : %d\n", loop);
@@ -335,9 +335,15 @@ int	job_stress_tpfn(int *loop_ptr)
 
 	loop = *loop_ptr;
 	pno = (2 * loop) % 10 + 1;	/* loop+loop#10+1 */
-	m_randfill(KILL, pno, loop);
-	m_randfill(SET, pno, loop);
-	m_randfill(VER, pno, loop);
+	status = m_randfill(KILL, pno, loop);
+	if (YDB_TP_RESTART == status)
+		return status;
+	status = m_randfill(SET, pno, loop);
+	if (YDB_TP_RESTART == status)
+		return status;
+	status = m_randfill(VER, pno, loop);
+	if (YDB_TP_RESTART == status)
+		return status;
 
 	/* if $TRESTART WRITE "TRESTART = ",$TRESTART," For Loop=",loop," TLEVEL=",$TLEVEL,! */
 	YDB_STRLIT_TO_BUFFER(&yisv_trestart, "$trestart");
@@ -408,7 +414,7 @@ int	m_filling_randfill(act_t act, int prime, int root, int iter)
 	ydb_buffer_t	ygbl_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, ygbl_pct1;
 	ydb_buffer_t	ylcl_obj;
 	ydb_buffer_t	tmp1, tmp2;
-	char		tmp1buff[64], tmp2buff[64], errstrbuff[64];
+	char		tmp1buff[MAXVALUELEN], tmp2buff[MAXVALUELEN], errstrbuff[MAXVALUELEN];
 	int		ERR, MAXERR;
 	int		i, j, ndx, status, tmp, len;
 
@@ -447,7 +453,7 @@ int	m_filling_randfill(act_t act, int prime, int root, int iter)
 	YDB_STRLIT_TO_BUFFER(&ygbl_efill, "^efill");
 	YDB_STRLIT_TO_BUFFER(&ygbl_ffill, "^ffill");
 	YDB_STRLIT_TO_BUFFER(&ygbl_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, "^bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-	YDB_STRLIT_TO_BUFFER(&ygbl_pct1, "^pct1");
+	YDB_STRLIT_TO_BUFFER(&ygbl_pct1, "^%1");
 
 	switch(act)
 	{
@@ -465,12 +471,12 @@ int	m_filling_randfill(act_t act, int prime, int root, int iter)
 			if (YDB_TP_RESTART == status)
 				return status;
 			assert(YDB_OK == status);
-			status = ydb_set_s(&ylcl_obj, 0, NULL, &subscr[1]);
+			status = ydb_set_s(&ylcl_obj, 0, NULL, &value);
 			assert(YDB_OK == status);
 
 			/* SET ^afill(ndx,obj,iter)=ndx*/
 			/* subscr[0] already holds "ndx" */
-			/* subscr[1] already holds "obj" */
+			YDB_COPY_BUFF_TO_BUFF(&value, &subscr[1]);	/* copy over "obj" to subscr[1] */
 			subscr[2].len_used = sprintf(subscr[2].buf_addr, "%d", iter);
 			status = ydb_set_s(&ygbl_afill, 3, subscr, &subscr[0]);
 			if (YDB_TP_RESTART == status)
@@ -621,12 +627,12 @@ int	m_filling_randfill(act_t act, int prime, int root, int iter)
 			if (YDB_TP_RESTART == status)
 				return status;
 			assert(YDB_OK == status);
-			status = ydb_set_s(&ylcl_obj, 0, NULL, &subscr[1]);
+			status = ydb_set_s(&ylcl_obj, 0, NULL, &value);
 			assert(YDB_OK == status);
 
 			/*  do EXAM("^afill("_ndx_","_obj_","_iter_")",ndx,^afill(ndx,obj,iter)) */
 			/* subscr[0] already holds "ndx" */
-			/* subscr[1] already holds "obj" */
+			YDB_COPY_BUFF_TO_BUFF(&value, &subscr[1]);	/* copy over "obj" to subscr[1] */
 			subscr[2].len_used = sprintf(subscr[2].buf_addr, "%d", iter);
 			status = ydb_get_s(&ygbl_afill, 3, subscr, &tmp2);
 			if (YDB_TP_RESTART == status)
@@ -736,8 +742,7 @@ int	m_filling_randfill(act_t act, int prime, int root, int iter)
 		}
 		break;
 	case KILL:
-		for (i = 0; i < prime - 1; i++)
-		{
+		for (i = 0; i < prime - 1; i++) {
 			/* SET obj=^cust(ndx,^instance)*/
 			status = ydb_get_s(&ylcl_ndx, 0, NULL, &subscr[0]);
 			assert(YDB_OK == status);
@@ -749,12 +754,12 @@ int	m_filling_randfill(act_t act, int prime, int root, int iter)
 			if (YDB_TP_RESTART == status)
 				return status;
 			assert(YDB_OK == status);
-			status = ydb_set_s(&ylcl_obj, 0, NULL, &subscr[1]);
+			status = ydb_set_s(&ylcl_obj, 0, NULL, &value);
 			assert(YDB_OK == status);
 
 			/* KILL ^afill(ndx,obj,iter) */
 			/* subscr[0] already holds "ndx" */
-			/* subscr[1] already holds "obj" */
+			YDB_COPY_BUFF_TO_BUFF(&value, &subscr[1]);	/* copy over "obj" to subscr[1] */
 			subscr[2].len_used = sprintf(subscr[2].buf_addr, "%d", iter);
 			status = ydb_delete_s(&ygbl_afill, 3, subscr, YDB_DEL_TREE);
 			if (YDB_TP_RESTART == status)
@@ -855,7 +860,7 @@ void	m_EXAM_randfill(char *pos, ydb_buffer_t *vcorr, ydb_buffer_t *vcomp)
 	int	status;
 
 	/* i vcorr=vcomp  q */
-	if (YDB_BUFF_T_IS_IDENTICAL(vcorr, vcomp))
+	if (YDB_BUFFER_IS_IDENTICAL(vcorr, vcomp))
 		return;
 
 	/* w " ** FAIL verifying global ",pos,! */

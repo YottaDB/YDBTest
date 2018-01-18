@@ -4,6 +4,9 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -15,7 +18,11 @@
 # Since both the subtests are almost the same, any change to settings will always happen to both subtests
 # Any setting specific to one of the subtests should be handled either in the subtest or in the correponding section in this script
 
-setenv gtm_gvundef_fatal 1	# want assert failures in case of GVUNDEF errors
+# Below setting is turned off for now since in simpleAPI there is no distinction between get and $get
+# and that matters to the gtm_gvundef_fatal setting. The test does $GETs where a GVUNDEF is expected and
+# bypasses the setting in the M version of run^concurr but in the simpleapi_run_concurr.c version this
+# is not possible. And since the simpleapi version is randomly chosen, we turn this off for now.
+# setenv gtm_gvundef_fatal 1	# want assert failures in case of GVUNDEF errors
 setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn 1
 
