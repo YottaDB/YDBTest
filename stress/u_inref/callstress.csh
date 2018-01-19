@@ -25,8 +25,11 @@ endif
 @ exit_status = 0
 
 if ("run" == "$1") then
-	set usesimpleapi = `$gtm_exe/mumps -run rand 2`
-	set usesimpleapi = 1	# NARSTODO : remove this
+	# Randomly choose to run M or C (simpleAPI) version of the test
+	if !($?gtm_test_replay) then
+		set usesimpleapi = `$gtm_exe/mumps -run rand 2`
+		echo "setenv usesimpleapi $usesimpleapi" >> settings.csh
+	endif
 	if ($usesimpleapi) then
 		# Run simpleAPI equivalent of run^concurr
 		set exit_status = $status # run^concurr could return non-zero exit status through "zhalt 255" done in stress/inref/stress.m
@@ -40,6 +43,7 @@ if ("run" == "$1") then
 			continue
 		endif
 		./$exefile $2
+		set exit_status = $status
 	else
 		$gtm_exe/mumps -run %XCMD 'do run^concurr('$2')'
 		set exit_status = $status # run^concurr could return non-zero exit status through "zhalt 255" done in stress/inref/stress.m
