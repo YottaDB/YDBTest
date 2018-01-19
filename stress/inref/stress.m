@@ -65,7 +65,7 @@ stress(ntpj,tprj,tpcj) ; ; ; Test of Concurrent transactions
 	. . set savelasti=^lasti(I,localinstance)
 	. . set done=(savelasti=iterate)
 	. if 'done write "TEST-E-FAIL job ",I," did not complete its iteration. It did: ",$get(savelasti)," iterations.",! zhalt 255
-	write !,"Each job will exit now",!
+	write !,"Each job will exit now or has already exited",!
 	q
 
 

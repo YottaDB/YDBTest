@@ -32,6 +32,7 @@
 #define	TPRJ		5
 #define	TPCJ		10
 #define	NCHILDREN	TPCJ
+#define	LOCK_TIMEOUT	100000000	/* 100 * 10^6 microseconds == 100 seconds */
 
 #define	YDB_COPY_BUFF_TO_BUFF(SRC, DST)				\
 {								\
@@ -57,7 +58,7 @@ typedef enum
 
 char timeString[9];  /* space for "HH:MM:SS\0" */
 
-#define	MAXVALUELEN	128
+#define	MAXVALUELEN	256
 
 /* Global variables (set in parent, but visible to children too) */
 int		child;
@@ -91,7 +92,7 @@ char	*get_curtime(void);
 /* Implements M entryref run^concurr */
 int main(int argc, char *argv[])
 {
-	int		i, status, stat[NCHILDREN + 1], ret[NCHILDREN + 1];
+	int		childcnt, i, status, stat[NCHILDREN + 1], ret[NCHILDREN + 1];
 	pid_t		child_pid[NCHILDREN + 1];
 
 	process_id = getpid();
@@ -112,24 +113,14 @@ int main(int argc, char *argv[])
 		subscr[i].buf_addr = subscrbuff[i];
 		subscr[i].len_alloc = sizeof(subscrbuff[i]);
 	}
-	/* Make stress.mje0 the stdout : stress^stress */
-	outfd = creat("stress.mjo0", 0666);
-	assert(-1 != outfd);
-	newfd = dup2(outfd, 1);
-	assert(1 == newfd);
 
 	/* Write parent process PID to stress.mjo0 : stress^stress */
+	outfd = creat("stress.mjo0", 0666);
+	assert(-1 != outfd);
 	value.len_used = sprintf(value.buf_addr, "PID: %d\n", process_id);
 	nbytes = write(outfd, value.buf_addr, value.len_used);
 	assert(nbytes == value.len_used);
 	assert(nbytes < value.len_alloc);
-
-	/* Make stress.mje0 the stderr : stress^stress */
-	errfd = creat("stress.mje0", 0666);
-	assert(-1 != errfd);
-	newfd = dup2(errfd, 2);
-	assert(2 == newfd);
-	newfd = 1;
 
 	/* SET localinstance=^instance : stress^stress */
 	YDB_STRLIT_TO_BUFFER(&ygbl_instance, "^instance");
@@ -143,12 +134,8 @@ int main(int argc, char *argv[])
 	YDB_STRLIT_TO_BUFFER(&ygbl_permit, "^permit");
 	YDB_STRLIT_TO_BUFFER(&ygbl_PID, "^PID");
 
-	/* NARSTODO:
-	 *
-	 * lock +^permit
-	 * Wait until each child has set ^PID(jobno,localinstance)
-	 * lock -^permit
-	 */
+	status = ydb_lock_incr_s(LOCK_TIMEOUT, &ygbl_permit, 0, NULL);
+	assert(YDB_OK == status);
 
 	/* Spawn NCHILDREN children */
 	for (child = 1; child <= NCHILDREN; child++)
@@ -162,11 +149,49 @@ int main(int argc, char *argv[])
 			return m_job_stress();	/* this is the child */
 		}
 	}
+
+	/* Wait for all children to reach this point before continuing forward : job^stress */
+	assert(YDB_OK == status);
+	for ( ; ; )
+	{
+		status = ydb_get_s(&ygbl_permit, 0, NULL, &value);
+		if (YDB_ERR_GVUNDEF != status)
+		{
+			assert(YDB_OK == status);
+			value.buf_addr[value.len_used] = '\0';
+			childcnt = atoi(value.buf_addr);
+			if (NCHILDREN == childcnt)
+				break;
+		}
+		sleep(1);
+	}
+
+	/* write "Releasing jobs...",! : stress^stress */
+	value.len_used = sprintf(value.buf_addr, "Releasing jobs...\n");
+	nbytes = write(1, value.buf_addr, value.len_used);
+	assert(nbytes == value.len_used);
+	assert(nbytes < value.len_alloc);
+
+	status = ydb_lock_decr_s(&ygbl_permit, 0, NULL);
+	assert(YDB_OK == status);
+
+	/* write "Each job will start now...",! : stress^stress */
+	value.len_used = sprintf(value.buf_addr, "Each job will start now...\n");
+	nbytes = write(1, value.buf_addr, value.len_used);
+	assert(nbytes == value.len_used);
+	assert(nbytes < value.len_alloc);
+
+	/* Wait for children to terminate */
 	for (child = 1; child <= NCHILDREN; child++)
 	{
 		ret[child] = waitpid(child_pid[child], &stat[child], 0);
 		assert(-1 != ret[child]);
 	}
+	/* write !,"Each job will exit now or has already exited",! : stress^stress */
+	value.len_used = sprintf(value.buf_addr, "\nEach job will exit now or has already exited\n");
+	nbytes = write(1, value.buf_addr, value.len_used);
+	assert(nbytes == value.len_used);
+	assert(nbytes < value.len_alloc);
 	return YDB_OK;
 }
 
@@ -176,10 +201,11 @@ int	m_job_stress(void)
 	char		outfile[64], errfile[64];
 	ydb_buffer_t	ylcl_jobno;
 	char		*tpflagstr[] = {"NTP", "TPR", "TPC"};
-	int		loop, status, childcnt, iterate;
+	int		loop, status, iterate;
 	ydb_buffer_t	ylcl_efill, ylcl_ffill, ylcl_gfill, ylcl_hfill, ylcl_loop;
 
 	process_id = getpid();
+	pidvalue.len_used = sprintf(pidvalue.buf_addr, "%d", (int)process_id);
 
 	if (NTPJ >= child)
 		tpflag = NTP;
@@ -208,19 +234,14 @@ int	m_job_stress(void)
 	newfd = dup2(errfd, 2);
 	assert(2 == newfd);
 
-	/* Wait for all children to reach this point before continuing forward : job^stress */
+	/* Do the increment so parent can know when all children have reached this point */
 	status = ydb_incr_s(&ygbl_permit, 0, NULL, NULL, &value);
+
+	/* Wait for parent to release lock for children */
+	/* lock +^permit($j) : job^stress */
+	YDB_COPY_BUFF_TO_BUFF(&pidvalue, &subscr[0]);	/* copy over "$j" into 1st subscript */
+	status = ydb_lock_incr_s(LOCK_TIMEOUT, &ygbl_permit, 1, subscr);
 	assert(YDB_OK == status);
-	for ( ; ; )
-	{
-		status = ydb_get_s(&ygbl_permit, 0, NULL, &value);
-		assert(YDB_OK == status);
-		value.buf_addr[value.len_used] = '\0';
-		childcnt = atoi(value.buf_addr);
-		if (NCHILDREN == childcnt)
-			break;
-		sleep(1);
-	}
 
 	/* SET jobno=child# : job^stress */
 	YDB_STRLIT_TO_BUFFER(&ylcl_jobno, "jobno");
@@ -233,11 +254,8 @@ int	m_job_stress(void)
 	assert(YDB_OK == status);
 	status = ydb_get_s(&ylcl_localinstance, 0, NULL, &subscr[1]);
 	assert(YDB_OK == status);
-	pidvalue.len_used = sprintf(pidvalue.buf_addr, "%d", (int)process_id);
 	status = ydb_set_s(&ygbl_PID, 2, subscr, &pidvalue);
 	assert(YDB_OK == status);
-
-	/* NARSTODO: lock +^permit($j) : job^stress */
 
 	status = ydb_get_s(&ylcl_iterate, 0, NULL, &value);
 	assert(YDB_OK == status);
@@ -839,7 +857,7 @@ int	m_filling_randfill(act_t act, int prime, int root, int iter)
 		assert(FALSE);
 		break;
 	}
-	/* NARSTODO: i ERR'=0 w act," FAIL",! */
+	/* i ERR'=0 w act," FAIL",! */
 	status = ydb_get_s(&ylcl_ERR, 0, NULL, &value);
 	assert(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
