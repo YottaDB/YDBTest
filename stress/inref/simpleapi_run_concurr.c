@@ -150,11 +150,12 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	/* Wait for all children to reach this point before continuing forward : job^stress */
+	/* Wait for all children to reach the "lock +^permit($j)" point before continuing forward : job^stress */
+	YDB_COPY_BUFF_TO_BUFF(&value, &subscr[0]);	/* copy over "localinstance" into 1st subscript */
 	assert(YDB_OK == status);
 	for ( ; ; )
 	{
-		status = ydb_get_s(&ygbl_permit, 0, NULL, &value);
+		status = ydb_get_s(&ygbl_permit, 1, subscr, &value);
 		if (YDB_ERR_GVUNDEF != status)
 		{
 			assert(YDB_OK == status);
@@ -234,14 +235,11 @@ int	m_job_stress(void)
 	newfd = dup2(errfd, 2);
 	assert(2 == newfd);
 
-	/* Do the increment so parent can know when all children have reached this point */
-	status = ydb_incr_s(&ygbl_permit, 0, NULL, NULL, &value);
-
-	/* Wait for parent to release lock for children */
-	/* lock +^permit($j) : job^stress */
-	YDB_COPY_BUFF_TO_BUFF(&pidvalue, &subscr[0]);	/* copy over "$j" into 1st subscript */
-	status = ydb_lock_incr_s(LOCK_TIMEOUT, &ygbl_permit, 1, subscr);
-	assert(YDB_OK == status);
+	/* write "Wating for the parent to release lock : ",$zdate($H,"24:60:SS"),! : job^stress */
+	value.len_used = sprintf(value.buf_addr, "Waiting for the parent to release lock : %s\n", get_curtime());
+	nbytes = write(outfd, value.buf_addr, value.len_used);
+	assert(nbytes == value.len_used);
+	assert(nbytes < value.len_alloc);
 
 	/* SET jobno=child# : job^stress */
 	YDB_STRLIT_TO_BUFFER(&ylcl_jobno, "jobno");
@@ -255,6 +253,16 @@ int	m_job_stress(void)
 	status = ydb_get_s(&ylcl_localinstance, 0, NULL, &subscr[1]);
 	assert(YDB_OK == status);
 	status = ydb_set_s(&ygbl_PID, 2, subscr, &pidvalue);
+	assert(YDB_OK == status);
+
+	/* Do the increment so parent can know when all children have reached this point */
+	YDB_COPY_BUFF_TO_BUFF(&subscr[1], &subscr[0]);	/* copy over "localinstance" into 1st subscript */
+	status = ydb_incr_s(&ygbl_permit, 1, subscr, NULL, &value);
+
+	/* Wait for parent to release lock for children */
+	/* lock +^permit($j) : job^stress */
+	YDB_COPY_BUFF_TO_BUFF(&pidvalue, &subscr[0]);	/* copy over "$j" into 1st subscript */
+	status = ydb_lock_incr_s(LOCK_TIMEOUT, &ygbl_permit, 1, subscr);
 	assert(YDB_OK == status);
 
 	status = ydb_get_s(&ylcl_iterate, 0, NULL, &value);
@@ -285,7 +293,7 @@ int	m_job_stress(void)
 		assert(nbytes == value.len_used);
 		assert(nbytes < value.len_alloc);
 		/* write "Wating for the parent to release lock : ",$zdate($H,"24:60:SS"),! */
-		value.len_used = sprintf(value.buf_addr, "Waiting for the parent to release lock : %s\n", get_curtime());
+		value.len_used = sprintf(value.buf_addr, "time : %s\n", get_curtime());
 		nbytes = write(outfd, value.buf_addr, value.len_used);
 		assert(nbytes == value.len_used);
 		assert(nbytes < value.len_alloc);
