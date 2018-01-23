@@ -1,7 +1,7 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -36,5 +36,8 @@ $gtm_tst/com/endtp.csh >>&! endtp.out
 echo "All GTM Processes exited"
 $gtm_tst/com/dbcheck.csh -extract
 $gtm_tst/com/checkdb.csh
-echo "$MUPIP journal -recover -back * -since=0 0:0:50\"
-$MUPIP journal -recover -back "*" -since=\"0 0:0:50\"
+echo "$MUPIP journal -recover -back * -since=0 0:0:50"
+$MUPIP journal -recover -back "*" -since=\"0 0:0:50\" >& recover.log
+# The FILERENAME messages could show up out-of-order due to ftok differences in *.dat files so sort them before displaying
+$grep FILERENAME recover.log |& sort -f
+$grep -v FILERENAME recover.log

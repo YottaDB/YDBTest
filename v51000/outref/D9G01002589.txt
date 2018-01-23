@@ -1,6 +1,6 @@
 
 ########################################################################################
-                      Test GDE allows LOCK_SPACE upto 65536                             
+                      Test GDE allows LOCK_SPACE upto 262144                            
 ########################################################################################
 $GDE change -seg DEFAULT -lock=1024
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
@@ -170,7 +170,7 @@ $GDE show -seg DEFAULT
                                                                                     AIO = OFF
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 
-$GDE change -seg DEFAULT -lock=65536
+$GDE change -seg DEFAULT -lock=262144
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
@@ -190,7 +190,7 @@ $GDE show -seg DEFAULT
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
  DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK=65536
+                                                                                    LOCK=262144
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
                                                                                     ENCR= OFF
@@ -203,12 +203,12 @@ $GDE show -seg DEFAULT
                                                                                     AIO = OFF
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 
-$GDE change -seg DEFAULT -lock=131072
+$GDE change -seg DEFAULT -lock=524288
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
 
-%GDE-I-VALTOOBIG, 131072 is larger than the maximum of 65536 for a LOCK_SPACE
+%GDE-I-VALTOOBIG, 524288 is larger than the maximum of 262144 for a LOCK_SPACE
 %GDE-I-SEGIS, in BG segment DEFAULT
 
 %GDE-E-OBJNOTCHG, Not changing segment DEFAULT
@@ -224,7 +224,7 @@ $GDE show -seg DEFAULT
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
  DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK=65536
+                                                                                    LOCK=262144
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
                                                                                     ENCR= OFF
@@ -237,12 +237,12 @@ $GDE show -seg DEFAULT
                                                                                     AIO = OFF
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 
-$GDE change -seg DEFAULT -lock=65537
+$GDE change -seg DEFAULT -lock=262145
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
 
-%GDE-I-VALTOOBIG, 65537 is larger than the maximum of 65536 for a LOCK_SPACE
+%GDE-I-VALTOOBIG, 262145 is larger than the maximum of 262144 for a LOCK_SPACE
 %GDE-I-SEGIS, in BG segment DEFAULT
 
 %GDE-E-OBJNOTCHG, Not changing segment DEFAULT
@@ -258,7 +258,7 @@ $GDE show -seg DEFAULT
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
  DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK=65536
+                                                                                    LOCK=262144
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
                                                                                     ENCR= OFF
@@ -271,7 +271,7 @@ $GDE show -seg DEFAULT
                                                                                     AIO = OFF
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 
-$GDE change -seg DEFAULT -lock=65535
+$GDE change -seg DEFAULT -lock=262143
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
@@ -291,7 +291,7 @@ $GDE show -seg DEFAULT
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
  DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK=65535
+                                                                                    LOCK=262143
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
                                                                                     ENCR= OFF
@@ -353,7 +353,7 @@ mv dse_df.log dse_df1.log
 unset verbose
 
 ########################################################################################
-                      Test MUPIP SET allows LOCK_SPACE upto 65536                       
+                      Test MUPIP SET allows LOCK_SPACE upto 262144                      
 ########################################################################################
 $MUPIP set -reg DEFAULT -lock=1024
 Database file ##TEST_PATH##/mumps.dat now has lock space 1024 pages
@@ -373,16 +373,16 @@ Region          DEFAULT
   Last Bytestream Backup 0x0000000000000001  Lock space              0x00008000
 mv dse_df.log dse_df2.log
 
-$MUPIP set -reg DEFAULT -lock=65536
-Database file ##TEST_PATH##/mumps.dat now has lock space 65536 pages
-$MUPIP set -reg DEFAULT -lock=131072
-%GTM-W-MUPIPSET2BIG, 131072 too large, maximum LOCK_SPACE allowed is 65536
+$MUPIP set -reg DEFAULT -lock=262144
+Database file ##TEST_PATH##/mumps.dat now has lock space 262144 pages
+$MUPIP set -reg DEFAULT -lock=524288
+%GTM-W-MUPIPSET2BIG, 524288 too large, maximum LOCK_SPACE allowed is 262144
 %GTM-E-WCERRNOTCHG, Not all specified database files were changed
-$MUPIP set -reg DEFAULT -lock=65537
-%GTM-W-MUPIPSET2BIG, 65537 too large, maximum LOCK_SPACE allowed is 65536
+$MUPIP set -reg DEFAULT -lock=262145
+%GTM-W-MUPIPSET2BIG, 262145 too large, maximum LOCK_SPACE allowed is 262144
 %GTM-E-WCERRNOTCHG, Not all specified database files were changed
-$MUPIP set -reg DEFAULT -lock=65535
-Database file ##TEST_PATH##/mumps.dat now has lock space 65535 pages
+$MUPIP set -reg DEFAULT -lock=262143
+Database file ##TEST_PATH##/mumps.dat now has lock space 262143 pages
 $MUPIP set -reg DEFAULT -lock=16383
 Database file ##TEST_PATH##/mumps.dat now has lock space 16383 pages
 

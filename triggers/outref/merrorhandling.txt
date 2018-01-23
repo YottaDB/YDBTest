@@ -62,38 +62,14 @@ The trigger etrap#3# is doing S
 	twork+7^twork	+1^etrap#3#	divbyzeropass+5^merrorhandling
 PASS
 ###################################################################
-Bad quoting in etrap
-The trigger etrap#1# is doing S
-	$Reference:^etrap("show")	$Test:1
-	$gtm_trigger_etrap:write $zstatus,! write ""HALT!"",! halt
-	$ZTDAta :0	$ZTVAlue:show me the ETrap
-	$ZTLEvel:1	$ZLevel:4	$TLevel:1
-	twork+7^twork	+1^etrap#1#	badquote+5^merrorhandling
-The trigger etrap#3# is doing S
-	$Reference:^etrap("div by zero")	$Test:1
-	$gtm_trigger_etrap:write $zstatus,! write ""HALT!"",! halt
-	$ZTDAta :1	$ZTOLdval:expect success	$ZTVAlue:99
-	$ZTLEvel:1	$ZLevel:4	$TLevel:1
-	twork+7^twork	+1^etrap#3#	badquote+8^merrorhandling
-     ecode     Z150373210,Z150373706
-     place     stacker+2^merrorhandling
-     mcode      write ?5,"mcode",?15,$text(@$zposition),!
-
-     ecode     
-     place     badquote+8^merrorhandling
-     mcode      set ^etrap("div by zero")=99
-
-     ecode     ,M9,Z150373210,
-     place     +1^etrap#3#
-     mcode      do ^twork write $ZTVAlue/0
-150373706,+1^etrap#3#,%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
-,M9,Z150373210,Z150373706,Z150379578,
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+%GTM-I-TEXT, in $gtm_trigger_etrap
 ###################################################################
 Show the default, installed and NEWed etraps
 The trigger etrap#1# is doing S
 	$Reference:^etrap("show")	$Test:1
 	$gtm_trigger_etrap:write $zstatus,! write "HALT!",! halt
-	$ZTDAta :1	$ZTOLdval:show me the ETrap	$ZTVAlue:show me an ETrap
+	$ZTDAta :0	$ZTVAlue:show me an ETrap
 	$ZTLEvel:1	$ZLevel:4	$TLevel:1
 	twork+7^twork	+1^etrap#1#	newedetrap+6^merrorhandling
 The trigger etrap#3# is doing S

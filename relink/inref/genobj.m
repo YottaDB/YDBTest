@@ -3,6 +3,9 @@
 ; Copyright (c) 2014, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -20,7 +23,7 @@ genobj(name,size)
 
 	set file=name_".m"
 	set object=name_".o"
-	set charsPerLine=30000	; Do not exceed the line output buffer
+	set charsPerLine=8000	; Do not exceed the line output buffer OR the maximum source line length allowed by compiler
 
 	; Print the routine name.
 	open file:newversion

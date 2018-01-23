@@ -3,6 +3,9 @@
 ; Copyright (c) 2015-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -67,6 +70,6 @@ eof	. close file
 before	;XX;XX;100;1024;0x00000028;64;256;1024;128;XX;0;0x00000000
 	;XX;XX;100;1024;0x00000028;64;256;1024;128;XX;0;0x00000000
 	;XX;XX;100;1024;0x00000028;64;256;1024;128;XX;0;0x00000000
-after	;BG;FALSE;2000;2048;0x00000FA0;255;2048;1500;4;TRUE;7;0x00000FFF
+after	;BG;FALSE;2000;2048;0x00000FA0;255;2048;1500;4;TRUE;7;0x00003000
 	;BG;FALSE;100;3096;0x00000FA0;255;256;1500;128;TRUE;7;0x00000000
 	;BG;FALSE;100;3096;0x00000FA0;255;256;1500;128;TRUE;7;0x00000000

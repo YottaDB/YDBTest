@@ -1,5 +1,16 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 main ;
-	w "begin(main)",!	
+	w "begin(main)",!
 	do sub1
 	w "end(main)",!
 	quit
@@ -7,7 +18,7 @@ main ;
 mtoc	; ; ; external call to c
 	;TSTART
 	w "begin(mtoc)",!
-	s $et="errh",$zt="do errh",zzz=0
+	s $et="do errh",$zt="do errh",zzz=0
 	w 1/zzz,!
 	w "before xcall: stack = ",$stack($stack,"MCODE"),!
 	s status=$&xcall.callc(10,20,.z)
@@ -16,7 +27,7 @@ mtoc	; ; ; external call to c
 	quit
 
 sub1	;
-	w !,"begin(sub1)",!	
+	w !,"begin(sub1)",!
 	do mtoc
 	w "end(sub1)",!
 	q
@@ -37,10 +48,10 @@ entry2(p,q,r,s,t)	;
 	q
 
 sub3(a,b,c)	;
-	w !,"begin(sub3)",!	
+	w !,"begin(sub3)",!
 	s c=a+b
 	;zgoto 0;
-	w "end(sub3)",!	
+	w "end(sub3)",!
 	q
 
 errh	;

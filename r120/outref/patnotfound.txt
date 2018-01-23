@@ -1,32 +1,21 @@
  --> Running test with patnotfound1.m <---
-		if 1?1B
-		       ^-----
-		At column 9, line 12, source module ##IN_TEST_PATH##/inref/patnotfound1.m
 %GTM-E-PATNOTFOUND, Current pattern table has no characters with pattern code B
-%GTM-E-PATNOTFOUND, Current pattern table has no characters with pattern code 
 		At M source location +12^patnotfound1
 
 GTM>
 
  --> Running test with patnotfound2.m <---
 %GTM-E-PATNOTFOUND, Current pattern table has no characters with pattern code B
-%GTM-E-ZLINKFILE, Error while zlinking "##IN_TEST_PATH##/inref/patnotfound2.m"
-%GTM-E-ZLNOOBJECT, No object module was produced
+		At M source location +12^patnotfound2
+
+GTM>
 
  --> Running test with patnotfound3.m <---
-		if 1?1B,!
-		       ^-----
-		At column 9, line 12, source module ##IN_TEST_PATH##/inref/patnotfound3.m
-%GTM-E-PATNOTFOUND, Current pattern table has no characters with pattern code B
-%GTM-E-PATNOTFOUND, Current pattern table has no characters with pattern code 
+%GTM-E-EXPR, Expression expected but not found
 		At M source location +12^patnotfound3
 
 GTM>
 
  --> Running test with patnotfound4.m <---
-		if 1?1B
-		       ^-----
-		At column 9, line 16, source module ##IN_TEST_PATH##/inref/patnotfound4.m
-%GTM-E-PATNOTFOUND, Current pattern table has no characters with pattern code B
 hello
 

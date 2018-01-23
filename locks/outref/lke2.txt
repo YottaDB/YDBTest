@@ -61,9 +61,12 @@ Show only one lock with embedded = and quote
 DEFAULT
 ^global("embedded = and""")
 ##TEST_AWK                         Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWK.GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1(0|4)/(120|184); name space not full
 ##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: REG1: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
 %GTM-I-NOLOCKMATCH, No matching locks were found in REG1
 ##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: REG2: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
 %GTM-I-NOLOCKMATCH, No matching locks were found in REG2
 ##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 Remove only one lock with embedded = and quote witout space

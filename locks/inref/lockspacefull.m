@@ -3,6 +3,9 @@
 ; Copyright (c) 2009-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -30,8 +33,8 @@ lockspacefull(test,show)
 	set plaunched=0
 	set:show file="jwait_queue.show_list"
 	set:'show file="jwait_queue.simlist_list"
-	; Added 3 below because there is one empty line, one region header line, and LOCKSPACEUSE message at the end
-	set zsywaitchld="$LKE show -wait >& "_file,expline=addlocks+3
+	; Added 4 below because there is one empty line, one region header line, one LOCKSPACEINFO line and one LOCKSPACEUSE message at the end
+	set zsywaitchld="$LKE show -wait >& "_file,expline=addlocks+4
 	; If we are running with show=0, we are trying to overload the memory. In that case, the last lock will not show up in the
 	; lke show -wait output. Substract one line due to the overloaded lock that doesn't show up in the lke output, add 2 lines
 	; due to LOCKSPACEFULL and LOCKSPACEINFO messages (+2-1=+1 below)

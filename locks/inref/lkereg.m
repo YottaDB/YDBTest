@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2002, 2013 Fidelity Information Services, Inc	;
+; Copyright 2002, 2013 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -88,7 +91,6 @@ exam(k,e0,e1,e2,l0,l1,l2)
 lkeexam(k,reg,e0,e1,e2,lcnt)
 	set fname="temp"_k_".out"
 	set cnt=0
-	set line="XXXX"
 	if unix do
 	. set lkecmd="$LKE show -r="_reg_" -OUTPUT="_fname_"; $convert_to_gtm_chset "_fname
 	else  do
@@ -98,7 +100,8 @@ lkeexam(k,reg,e0,e1,e2,lcnt)
 
 	open fname:(READONLY)
 	use fname
-	for  quit:line[reg!$ZEOF  read line
+	read line	; skip GTM-I-LOCKSPACEINFO line that shows up first
+	for  read line  quit:line[reg!$ZEOF
         if line'[reg close fname   w !,k,"FAIL:Check REGION"  q
 
 	if e0=".",e1=".",e2="." do
