@@ -324,7 +324,7 @@ setenv tst_random_all "$tst_random_all gtm_test_do_eotf"
 # keep gtmdbglvl unset on those systems.
 if !($?gtmdbglvl) then
 	if (8 < $randnumbers[6]) then
-		@ numcpus = `grep -c processor /proc/cpuinfo`
+		@ numcpus = `grep -c ^processor /proc/cpuinfo`
 		if ($numcpus == 1) then
 			echo "# gtmdbglvl is chosen to be UNDEFINED by do_random_settings.csh due to 1 CDU"	>>&! $settingsfile
 			echo "unsetenv gtmdbglvl"								>>&! $settingsfile
