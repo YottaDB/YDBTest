@@ -114,7 +114,7 @@ else
 endif
 
 # Determine whether this is a single-cpu system or not. This will be used later to disable certain heavyweight tests.
-@ numcpus = `grep -c processor /proc/cpuinfo`
+@ numcpus = `grep -c ^processor /proc/cpuinfo`
 if ($numcpus == 1) then
 	setenv gtm_test_singlecpu 1
 else

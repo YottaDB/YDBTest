@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -87,7 +87,7 @@ $MUPIP set -journal="enable,on,before,epoch=90,auto=2097152" -reg "*" >& jnl.log
 set mon_pid = `cat mon_pid.log`
 
 # If server has more than 4 CPUs, then consider it fast and have a higher limit. Else a lower limit.
-@ numcpus = `grep -c processor /proc/cpuinfo`
+@ numcpus = `grep -c ^processor /proc/cpuinfo`
 if (4 < $numcpus) then
 	set upperbound=3000000
 	set expected=559
@@ -99,7 +99,7 @@ endif
 echo "upperbound=$upperbound expected=$expected" >3nparms.out
 
 echo "Run 3n+1 to generate some dirty buffers"
-set nthreads = `grep -c processor /proc/cpuinfo`	# Use # of CPUs as the # of threads to avoid swamping the system
+set nthreads = `grep -c ^processor /proc/cpuinfo`	# Use # of CPUs as the # of threads to avoid swamping the system
 echo 1 $upperbound $nthreads 100 | $gtm_dist/mumps -run threeen1f > threeen1f.out
 
 set actual=`cat threeen1f.out | cut -f5 -d" "`
