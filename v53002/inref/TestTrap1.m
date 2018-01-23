@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2008, 2014 Fidelity Information Services, Inc	;
+; Copyright 2008, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -11,7 +14,7 @@
 TestTrap1
 	set cnt=0
 	s $zyerror="ZYERROR^TestTrap1"
-	s $ZT="TrapErr"
+	s $ZT="do TrapErr"
 	K ^ET,^IL,^L,^ZT
 	s (^ET,^IL,^L,^ZT)=0
 	d TT1

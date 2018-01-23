@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -78,7 +81,7 @@ $GTM << gtm_eof >&! $bytestr$check.out
 do ^$bytestr$check
 gtm_eof
 		# check and filter out the known expected errors
-		if ( "error" == $check ) $gtm_tst/com/check_error_exist.csh $bytestr$check.out "GTM-E-LSEXPECTED" "GTM-E-EXPR"
+		if ( "error" == $check ) $gtm_tst/com/check_error_exist.csh $bytestr$check.out "GTM-W-LSINSERTED" "GTM-E-LSEXPECTED" "GTM-E-EXPR"
 	end
 #
 $GTM << gtm_eof >&! rec_$check.out

@@ -346,7 +346,7 @@ Region          AREG
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
-  LOCK shares DB critical section     FALSE
+  LOCK shares DB critical section     FALSE  Read Only                      OFF
 DSE> DSE> 
 File            ##TEST_PATH##/a.dat
 Region          AREG
@@ -381,7 +381,7 @@ Region          AREG
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
-  LOCK shares DB critical section     FALSE
+  LOCK shares DB critical section     FALSE  Read Only                      OFF
 DSE> DSE> 
 File            ##TEST_PATH##/a.dat
 Region          AREG
@@ -416,7 +416,7 @@ Region          AREG
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
-  LOCK shares DB critical section     FALSE
+  LOCK shares DB critical section     FALSE  Read Only                      OFF
 DSE> DSE> 
 File            ##TEST_PATH##/a.dat
 Region          AREG
@@ -451,7 +451,7 @@ Region          AREG
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
-  LOCK shares DB critical section     FALSE
+  LOCK shares DB critical section     FALSE  Read Only                      OFF
 DSE> DSE> 
 File            ##TEST_PATH##/a.dat
 Region          AREG
@@ -486,7 +486,7 @@ Region          AREG
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
-  LOCK shares DB critical section     FALSE
+  LOCK shares DB critical section     FALSE  Read Only                      OFF
 DSE> 
 set global variables when null_subscripts=existing
 
@@ -522,12 +522,12 @@ GTM>
 ^a(1,"")="1_null"
 
 GTM>
-%GTM-E-NULSUBSC, Null subscripts are not allowed for region: AREG
+%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %GTM-I-GVIS, 		Global variable: ^a("")
 
 GTM>
 use of $incr function , should error out
-%GTM-E-NULSUBSC, Null subscripts are not allowed for region: AREG
+%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %GTM-I-GVIS, 		Global variable: ^a("",2)
 
 GTM>
@@ -650,7 +650,7 @@ GTM>
 GTM>
 
 GTM>
-%GTM-E-NULSUBSC, Null subscripts are not allowed for region: CREG
+%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %GTM-I-GVIS, 		Global variable: ^cregglobalvariable("",2)
 
 GTM>
@@ -677,7 +677,7 @@ GTM>
 set breg globals which is now EXISTING with null_subs,naked reference should error out
 
 GTM>
-%GTM-E-NULSUBSC, Null subscripts are not allowed for region: BREG
+%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %GTM-I-GVIS, 		Global variable: ^bglobalvar(1,"",2,7)
 
 GTM>
@@ -686,7 +686,7 @@ GTM>
 set breg globals which is now EXISTING with null_subs,naked reference should error out
 
 GTM>
-%GTM-E-NULSUBSC, Null subscripts are not allowed for region: BREG
+%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %GTM-I-GVIS, 		Global variable: ^bglobalvar(4,5,"")
 
 GTM>
@@ -732,7 +732,7 @@ GTM>
 set  null subscripts to extended.dat which is existing. Should Error out
 
 GTM>
-%GTM-E-NULSUBSC, Null subscripts are not allowed for region: DEFAULT
+%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %GTM-I-GVIS, 		Global variable: ^defaultregvariable("")
 
 GTM>
@@ -744,7 +744,7 @@ GTM>
 201
 GTM>
 Increment function used for extended gld(EXISTING),Should error out
-%GTM-E-NULSUBSC, Null subscripts are not allowed for region: DEFAULT
+%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %GTM-I-GVIS, 		Global variable: ^defaultregvariable("","extended")
 
 GTM>

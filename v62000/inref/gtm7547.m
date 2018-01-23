@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2014 Fidelity Information Services, Inc	;
+; Copyright 2014 Fidelity Information Services, Inc		;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -34,7 +37,7 @@ gtm7547b
 	do ; create a new frame
 	.	new $etrap ;$etrap is now in control
 	.	write:($ztrap'="") "gtm7547a FAIL! ztrap should be null because $etrap is in control",!
-	.	set $ztrap="junkb"
+	.	set $ztrap="do junkb"
 	.	quit
 	; Here, although $etrap was NEWed, $ztrap should have been saved
 	write:("B"=$ztrap)&(""=$etrap) "gtm7547b PASS!",!
@@ -44,20 +47,20 @@ gtm7547c
 	; Verify setting $etrap does not save $ztrap
 	; $ztrap=B by default
 	do ; create a new frame
-	.  set $etrap="junkc" ; This nullifies $ztrap without saving it first
+	.  set $etrap="do junkc" ; This nullifies $ztrap without saving it first
 	.  quit
 	; Here the SET $etrap should have cleared $ZTRAP and $ETRAP should still be in effect
-	write:(""=$ztrap)&("junkc"=$etrap) "gtm7547c PASS!",!
+	write:(""=$ztrap)&("do junkc"=$etrap) "gtm7547c PASS!",!
 	quit
 
 gtm7547d
 	; Verify setting $ztrap saves $etrap
 	; $ztrap=B by default
-	set $etrap="junkd1"
+	set $etrap="do junkd1"
 	do ; create a new frame
-	.  set $ztrap="junkd2" ; This should save $etrap in the stack
+	.  set $ztrap="do junkd2" ; This should save $etrap in the stack
 	.  quit
-	write:(""=$ztrap)&("junkd1"=$etrap) "gtm7547d PASS!",!
+	write:(""=$ztrap)&("do junkd1"=$etrap) "gtm7547d PASS!",!
 	quit
 callin
 	write 1/0

@@ -165,7 +165,19 @@ GDE>
 GDE> 
 GDE> 
 GDE> 
-%GDE-I-VALTOOBIG, 65537 is larger than the maximum of 65536 for a LOCK_SPACE
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VALTOOBIG, 262145 is larger than the maximum of 262144 for a LOCK_SPACE
 %GDE-I-SEGIS, in BG segment ASEG
 
 %GDE-E-OBJNOTCHG, Not changing segment ASEG
@@ -221,7 +233,7 @@ GDE>
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
  ASEG                            locksmutexa.dat     BG  DYN 65024        100   100 GLOB=1024
-                                                                                    LOCK=65536
+                                                                                    LOCK=262144
                                                                                     RES =63965
                                                                                     ENCR= OFF
                                                                                     MSLT=  64
@@ -257,7 +269,7 @@ TEMPLATE -SEGMENT -LOCK_SPACE=12345
 TEMPLATE -SEGMENT -MUTEX_SLOTS=32768
 TEMPLATE -SEGMENT -RESERVED_BYTES=4568
 TEMPLATE -SEGMENT -ACCESS_METHOD=BG
-ADD -SEGMENT ASEG -BLOCK_SIZE=65024 -FILE_NAME="locksmutexa.dat" -LOCK_SPACE=65536 -MUTEX_SLOTS=64 -RESERVED_BYTES=63965
+ADD -SEGMENT ASEG -BLOCK_SIZE=65024 -FILE_NAME="locksmutexa.dat" -LOCK_SPACE=262144 -MUTEX_SLOTS=64 -RESERVED_BYTES=63965
 ADD -SEGMENT BSEG -ACCESS_METHOD=MM -FILE_NAME="locksmutexb.dat"
 # DSE dump should reflect the modified values of lockspace, mutex slots and reserved bytes
 %GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/locksmutexa.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup

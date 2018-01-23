@@ -748,7 +748,17 @@ Testing Ztrap ^module with no module
 
 do SUB4^ztiref
 Testing Ztrap containing erroneous indirection
-150372762,SUB4+4^ztiref,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-LABELEXPECTED, Label expected in this context
+##SUSPEND_OUTPUT HOST_LINUX_ARMVXL
+##SUSPEND_OUTPUT  NODYNAMIC_LITERALS
+150372762,SUB4+4^ztiref,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-STACKCRIT, Stack space critical
+##ALLOW_OUTPUT  NODYNAMIC_LITERALS
+##SUSPEND_OUTPUT  DYNAMIC_LITERALS
+150373738,SUB4+4^ztiref,%GTM-E-STACKCRIT, Stack space critical
+##ALLOW_OUTPUT  DYNAMIC_LITERALS
+##ALLOW_OUTPUT HOST_LINUX_ARMVXL
+##SUSPEND_OUTPUT HOST_LINUX_X86_64
+150372762,SUB4+4^ztiref,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-STACKCRIT, Stack space critical
+##ALLOW_OUTPUT HOST_LINUX_X86_64
 
 do IND^ztiref
 Testing invalid indirection @(lab+off)^mod)

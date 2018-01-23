@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 lkeindr	;Test indirection in lock arguments
 	w !,"Test indirection in lock",!
 	Set fncnt=0
@@ -141,21 +152,22 @@ LKEEXAM(k,e0,e1,e2,lcnt)
 
 	set line="----"
 	open fname:(READONLY)
-	use fname  
+	use fname
 	if e0=".",e1=".",e2="." do
-	.  for  quit:line["DEFAULT"!$ZEOF  read line 
+	.  for  quit:line["DEFAULT"!$ZEOF  read line
+	.  if line["LOCKSPACEINFO" read line	; take into account LOCKSPACEINFO message in LKE SHOW output
 	.  close fname
-	.  if line["%GTM-I-NOLOCKMATCH, No matching locks were found in" w !,k,"   LKE PASS" 
-	.  else  w !,k,"   LKE FAIL ",line,!  
+	.  if line["%GTM-I-NOLOCKMATCH, No matching locks were found in" w !,k,"   LKE PASS"
+	.  else  w !,k,"   LKE FAIL ",line,!
 	.  q
 	else  do
 	.  for  quit:line["DEFAULT"!$ZEOF  read line
 	.  if line'["DEFAULT" close fname   w !,k,"Check REGION"  q
-	.  if unix,'($ZEOF) read line  
+	.  if unix,'($ZEOF) read line
 	.  if $find(line,e0)=$length(e0)+1,line[y,line[x set cnt=cnt+1
 	.  if '($ZEOF) read line  if $find(line,e1)=$length(e1)+1,line[y,line[x set cnt=cnt+1
 	.  if '($ZEOF) read line  if $find(line,e2)=$length(e2)+1,line[y,line[x set cnt=cnt+1
 	.  close fname
 	.  if lcnt=cnt w !,k,"   LKE PASS"
 	.  else  w !,k,"   LKE FAIL" zwrite
-	q 
+	q

@@ -56,7 +56,7 @@ Region          DEFAULT
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
-  LOCK shares DB critical section     FALSE
+  LOCK shares DB critical section     FALSE  Read Only                      OFF
 
 GTM>
 %GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
@@ -113,7 +113,7 @@ Region          DEFAULT
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
-  LOCK shares DB critical section     FALSE
+  LOCK shares DB critical section     FALSE  Read Only                      OFF
 End jnl_set test.
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

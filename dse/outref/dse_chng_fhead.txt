@@ -51,7 +51,7 @@ Region          DEFAULT
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
-  LOCK shares DB critical section     FALSE
+  LOCK shares DB critical section     FALSE  Read Only                      OFF
 command: change -fileheader -location=NULL -size=1 -value=1 ...
 command: change -fileheader -location=10 -size=z -value=1...
 command: change -fileheader -location=Z -size=1 -value=1...
@@ -131,7 +131,7 @@ Region          DEFAULT
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
-  LOCK shares DB critical section     FALSE
+  LOCK shares DB critical section     FALSE  Read Only                      OFF
 Check -nocrit qualifier...
 Seize critical section for process A-----------------------------
 

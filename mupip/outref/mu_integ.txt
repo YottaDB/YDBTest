@@ -208,7 +208,7 @@ Region          AREG
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
-  LOCK shares DB critical section     FALSE
+  LOCK shares DB critical section     FALSE  Read Only                      OFF
 DSE> $MUPIP integ integ.dat
 
 No errors detected by integ.
@@ -480,7 +480,7 @@ Region          DEFAULT
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
-  LOCK shares DB critical section     FALSE
+  LOCK shares DB critical section     FALSE  Read Only                      OFF
 DSE> Test is valid, if a(1000) is in block 3
 Test is valid, if block 3 has transaction number 3e8
 Test is valid, if file header has curr_tn = 3e9
@@ -530,7 +530,7 @@ Region          DEFAULT
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
-  LOCK shares DB critical section     FALSE
+  LOCK shares DB critical section     FALSE  Read Only                      OFF
 DSE> 
 Block:Offset Level
 %GTM-I-DBTNTOOLG, 

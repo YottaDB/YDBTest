@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017,2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -249,6 +249,12 @@ BEGIN {
 	option_names[++no_options] = "gtm_test_singlecpu"
 	if (1 == ENVIRON["gtm_test_singlecpu"])
 		envir[no_options] = "ONECPU"
+	#
+	option_names[++no_options] = "gtm_test_dynamic_literals"
+	if ("DYNAMIC_LITERALS" == ENVIRON["gtm_test_dynamic_literals"])
+		envir[no_options] = "DYNAMIC_LITERALS"
+	else
+		envir[no_options] = "NODYNAMIC_LITERALS"
 	#
 	#
 	#

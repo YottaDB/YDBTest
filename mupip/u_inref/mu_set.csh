@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -96,7 +96,7 @@ $MUPIP set -file set.dat -lock=9
 echo "#"
 echo "# Set with a bad lock space"
 echo "#"
-$MUPIP set -region RegA -lock=65537
+$MUPIP set -region RegA -lock=262145
 echo "#"
 echo "# Set with a bad mutex slots"
 echo "#"
