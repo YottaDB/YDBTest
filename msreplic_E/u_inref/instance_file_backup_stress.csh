@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -104,6 +107,14 @@ while ($cntx)
 	if ($randcrash[$cntx]) then
 		#crash
 		$MSR CRASH INST2			>>&! restore_loop.out
+		# The CRASH above does an unfreeze in case fake_enospc is turned on. And that could result in a REPLREQROLLBACK
+		# error (see com/primary_crash.csh). In that case, the ftok semaphore of the .repl file would be left over.
+		# We need to run it down here or else we would cause an orphaned semaphore for each iteration in the while loop.
+		if ($?gtm_test_fake_enospc) then
+			if (1 == $gtm_test_fake_enospc) then
+				$MSR RUN INST2 'set msr_dont_trace ; $MUPIP rundown -region "*" -override >&! inst2_rundown_'$cntx'.out'
+			endif
+		endif
 	else
 		#shutdown
 		$MSR STOPRCV INST1 INST2		>>&! restore_loop.out
