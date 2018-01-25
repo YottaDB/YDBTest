@@ -32,7 +32,7 @@
 #define	TPRJ		5
 #define	TPCJ		10
 #define	NCHILDREN	TPCJ
-#define	LOCK_TIMEOUT	100000000	/* 100 * 10^6 microseconds == 100 seconds */
+#define	LOCK_TIMEOUT	(unsigned long long)100000000000	/* 100 * 10^9 nanoseconds == 100 seconds */
 
 #define	YDB_COPY_BUFF_TO_BUFF(SRC, DST)				\
 {								\

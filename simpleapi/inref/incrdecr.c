@@ -31,6 +31,7 @@
 #define SUB33		"uh-huh"
 #define SUB34		"oooooh"
 #define SUB35		"shiney!"
+#define	LOCK_TIMEOUT	(unsigned long long)100000000000	/* 100 * 10^9 nanoseconds == 100 seconds */
 
 #define ERRBUF_SIZE	1024
 
@@ -81,16 +82,16 @@ int main()
 	YDB_STRLIT_TO_BUFFER(&subary3[4], SUB35);
 
 	/* Do the first and second lock sets */
-	status = ydb_lock_s(999, 2, &varname1, 0, NULL, &varname2, 0, NULL);
+	status = ydb_lock_s(LOCK_TIMEOUT, 2, &varname1, 0, NULL, &varname2, 0, NULL);
 	CHECK_FOR_ERROR(status);
 	/* Show list of locks we have obtained */
 	printf("\nincrdecr: List of locks after setting the 1st set of vars:\n");
 	fflush(stdout);
 	system("$gtm_dist/lke show -all -wait");
 	/* Add in the second set as incremental locks */
-	status = ydb_lock_incr_s(999, &varname1, 1, &subary2);
+	status = ydb_lock_incr_s(LOCK_TIMEOUT, &varname1, 1, &subary2);
 	CHECK_FOR_ERROR(status);
-	status = ydb_lock_incr_s(999, &varname2, 1, &subary2);
+	status = ydb_lock_incr_s(LOCK_TIMEOUT, &varname2, 1, &subary2);
 	CHECK_FOR_ERROR(status);
 	/* Show list of locks we have obtained to verify first and 2nd set are locked */
 	printf("\n\nincrdecr: List of locks after adding the 2nd set of vars:\n");
@@ -106,9 +107,9 @@ int main()
 	fflush(stdout);
 	system("$gtm_dist/lke show -all -wait");
 	/* Add in the 3rd set of vars */
-	status = ydb_lock_incr_s(999, &varname1, 5, (ydb_buffer_t *)&subary3);
+	status = ydb_lock_incr_s(LOCK_TIMEOUT, &varname1, 5, (ydb_buffer_t *)&subary3);
 	CHECK_FOR_ERROR(status);
-	status = ydb_lock_incr_s(999, &varname2, 5, (ydb_buffer_t *)&subary3);
+	status = ydb_lock_incr_s(LOCK_TIMEOUT, &varname2, 5, (ydb_buffer_t *)&subary3);
 	CHECK_FOR_ERROR(status);
 	/* Remove the second var from the second set */
 	status = ydb_lock_decr_s(&varname2, 1, &subary2);
@@ -118,7 +119,7 @@ int main()
 	fflush(stdout);
 	system("$gtm_dist/lke show -all -wait");
 	/* Now a final check to see if running ydb_lock_s with no parmcnt unlocks all locks */
-	status = ydb_lock_s(999, 0);
+	status = ydb_lock_s(LOCK_TIMEOUT, 0);
 	CHECK_FOR_ERROR(status);
 	/* See what locks are left if any (should all be gone) */
 	printf("\n\nincrdecr: List of locks after zero argument call to ydb_lock_s() which should release all locks:\n\n");
