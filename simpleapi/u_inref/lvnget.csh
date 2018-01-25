@@ -48,5 +48,5 @@ foreach file (lvnget*.c)
 		echo "LVNGET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 		exit -1
 	endif
-	./$exefile
+	`pwd`/$exefile
 end

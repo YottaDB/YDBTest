@@ -38,7 +38,7 @@ $gt_ld_linker $gt_ld_option_output forkncorewithenv $gt_ld_options_common forknc
 #
 echo
 echo "Driving forkncorewithenv"
-forkncorewithenv
+`pwd`/forkncorewithenv
 @ savestatus = $status
 if (0 != $savestatus) echo "forkncorewithenv: Got return code $savestatus when expected return code 0"
 ls -1 core* >& /dev/null

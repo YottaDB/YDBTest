@@ -25,6 +25,6 @@ foreach file (isvsubsnext*.c)
 		echo "GVNSET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 		continue
 	endif
-	./$exefile
+	`pwd`/$exefile
 	echo ""
 end

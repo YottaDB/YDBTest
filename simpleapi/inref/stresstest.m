@@ -27,7 +27,7 @@ stresstest;
 	;
 	set dev="mtocpipe"
 	; open device in M mode to avoid BADCHAR errors if this test ran in UTF-8 mode
-	open dev:(command="./stresstest >& genstresstest.log":stream:nowrap:chset="M")::"pipe"
+	open dev:(command="$PWD/stresstest >& genstresstest.log":stream:nowrap:chset="M")::"pipe"
 	for i=8,16,24 set TWO(i)=2**i
 	set maxsubs=(2**$random(6))
 	set YDBEOF=0,YDBSET=1,YDBGET=2,YDBKILL=3,YDBZKILL=4	; these mirror YDBEOF/YDBSET etc. in stresstest.c

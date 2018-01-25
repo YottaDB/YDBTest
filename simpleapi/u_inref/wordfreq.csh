@@ -27,7 +27,7 @@ if (0 != $status) then
 	echo "WORDFREQ-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 	exit -1
 endif
-./$exefile < $gtm_tst/$tst/outref/wordfreq_input.txt >& wordfreq.out
+`pwd`/$exefile < $gtm_tst/$tst/outref/wordfreq_input.txt >& wordfreq.out
 echo "# Running : diff $gtm_tst/$tst/outref/wordfreq_output.txt wordfreq.out"
 diff $gtm_tst/$tst/outref/wordfreq_output.txt wordfreq.out
 if ($status) then

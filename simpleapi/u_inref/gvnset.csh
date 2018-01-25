@@ -35,7 +35,7 @@ foreach file (gvnset*.c)
 	#	more than default keysize needed for gvnset2_31subs.c
 	#	null subscripts needed for gvnset3_errors.c
 	$gtm_tst/com/dbcreate.csh mumps 1 -key_size=256 -null_subscripts=TRUE
-	./$exefile
+	`pwd`/$exefile
 	echo ""
 	$gtm_tst/com/dbcheck.csh
 	$gtm_tst/com/backup_dbjnl.csh bak_$exefile "*.dat *.mjl*" mv

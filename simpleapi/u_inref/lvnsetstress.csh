@@ -39,7 +39,7 @@ if (0 != $status) then
 	echo "LVNSET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 	continue
 endif
-./$exefile | grep -v zwrarg >& $exefile.log
+`pwd`/$exefile | grep -v zwrarg >& $exefile.log
 mv $exefile.o $exefile.c.o	# move it away for the M program (of the same name) to be compiled and a .o created
 				# or else an INVOBJFILE error would be issued (due to unexpected format)
 
