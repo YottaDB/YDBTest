@@ -27,7 +27,7 @@ if (0 != $status) then
 	echo "THREEN1G-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 	exit -1
 endif
-./$exefile 10 20
+`pwd`/$exefile 10 20
 echo ""
 
 $gtm_tst/com/dbcheck.csh

@@ -30,7 +30,7 @@ if (0 != $status) then
 	echo "GVNSET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 	continue
 endif
-./$exefile
+`pwd`/$exefile
 echo ""
 
 echo "# Extract journal files and dump transid in TCOM record"

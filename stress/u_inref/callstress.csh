@@ -42,7 +42,7 @@ if ("run" == "$1") then
 			echo "LVNSET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 			continue
 		endif
-		./$exefile $2
+		`pwd`/$exefile $2
 		set exit_status = $status
 	else
 		$gtm_exe/mumps -run %XCMD 'do run^concurr('$2')'

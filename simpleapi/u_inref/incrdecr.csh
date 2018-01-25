@@ -27,6 +27,6 @@ if (0 != $status) then
 	echo "ISVSET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 	continue
 endif
-./$exefile
+`pwd`/$exefile
 
 $gtm_tst/com/dbcheck.csh
