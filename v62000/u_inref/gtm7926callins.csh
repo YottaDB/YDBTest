@@ -3,7 +3,7 @@
 #								#
 # Copyright 2014 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,9 +18,9 @@
 # use the JOB command and call gtmsecshr as needed.
 #
 # The tricky part with call-ins is that the external excutable dynamically
-# links to libgtmshr.so.  This means that the call-in code does not have an
+# links to libyottadb.so.  This means that the call-in code does not have an
 # argv[0] or other means like /proc to use to validate that $gtm_dist points to
-# the same location as libgtmshr.so.
+# the same location as libyottadb.so.
 #
 # Previously, the call-in code simply copied $gtm_dist from the environment
 # without any validation. The improvement sends a syslog message when $gtm_dist
@@ -60,7 +60,7 @@ callin
 
 # Build the C programs
 $gt_cc_compiler $gtt_cc_shl_options $gtm_tst/$tst/inref/gtm7926callinproxy.c -I$gtm_dist
-$gt_ld_linker $gt_ld_option_output gtm7926callinproxy $gt_ld_options_common gtm7926callinproxy.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_gtmshr $gt_ld_syslibs >& link.map
+$gt_ld_linker $gt_ld_option_output gtm7926callinproxy $gt_ld_options_common gtm7926callinproxy.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& link.map
 ln gtm7926callinproxy job7926
 ln gtm7926callinproxy secshr7926
 ln gtm7926callinproxy iopi7926

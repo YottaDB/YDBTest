@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,6 +21,7 @@
 # readtimeout       [nars]  Test that READ X:TIMEOUT works correctly if TIMEOUT is a fraction with more than 3 decimal digits
 # miximage          [nars]  Test MIXIMAGE error is appropriately issued when multiple images are mixed in same process
 # zeofprocfs        [nars]  Test that $ZEOF is correctly set after READ commands on procfs files (e.g. /proc/$J/io)
+# libyottadb        [nars]  Test that libgtmshr.so/libgtmutil.so are soft links to libyottadb.so/libyottadbutil.so
 #-------------------------------------------------------------------------------------
 
 echo "r120 test starts..."
@@ -28,6 +29,8 @@ echo "r120 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "zindcacheoverflow largelvarray gctest patnotfound readtimeout miximage zeofprocfs"
+setenv subtest_list_non_replic "$subtest_list_non_replic libyottadb"
+>>>>>>> ca34719... [#23] Rename all occurrences of libgtmshr.so/libgtmutil.so to libyottadb.so/libyottadbutil.so; Add r120/libyottadb subtest to check these are appropriately installed
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

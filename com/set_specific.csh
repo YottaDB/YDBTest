@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -55,7 +55,7 @@ setenv tst_od "od"
 setenv tst_ls "ls"
 setenv sort_T "sort -T "
 setenv lsof  /usr/local/bin/lsof
-setenv tst_ld_gtmshr "-lgtmshr"
+setenv tst_ld_yottadb "-lyottadb"
 setenv convert_to_gtm_chset :
 setenv strings "strings"
 switch ($HOSTOS)
@@ -118,8 +118,8 @@ case "OS/390":
    setenv ssh "$ssh -q"
    setenv rsh "$ssh"
    setenv netstat onetstat
-   # xlc wants to use the side deck file for libgtmshr.dll on the link line
-   setenv tst_ld_gtmshr "$gtm_exe/gtmshr_symbols.x"
+   # xlc wants to use the side deck file for libyottadb.dll on the link line
+   setenv tst_ld_yottadb "$gtm_exe/yottadb_symbols.x"
    setenv gtmtest1 "GTMTST1"
    setenv rsh_to_vms "rsh"
    setenv rcp_to_vms "rcp"

@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -142,8 +145,8 @@ rm -f *.o >& /dev/null
 
 echo
 
-chmod 775 $gtm_dist/libgtmshr.$libext
-chgrp $tst_group $gtm_dist/libgtmshr.$libext
+chmod 775 $gtm_dist/libyottadb.$libext
+chgrp $tst_group $gtm_dist/libyottadb.$libext
 
 
 #test 1
@@ -173,9 +176,9 @@ else if (("$gtm_test_osname" == "hp-ux") || ("aix" == "$gtm_test_osname") || ("s
 else
 endif
 echo ""
-echo "# Check permissions of libgtmshr. Expect the below"
-echo '# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libgtmshr.xx'
-$gtm_tst/$tst/u_inref/check_fileperm.csh $gtm_dist/libgtmshr.$libext "-rwxrwxr-x:${tst_user}:${tst_group}"
+echo "# Check permissions of libyottadb. Expect the below"
+echo '# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libyottadb.xx'
+$gtm_tst/$tst/u_inref/check_fileperm.csh $gtm_dist/libyottadb.$libext "-rwxrwxr-x:${tst_user}:${tst_group}"
 echo ""
 echo "# Check the permissions of database file. Expect the below"
 echo '# -rw-rw-rw- 1 $tst_user $tst_group 169472 Jun 18 05:29 mumps.dat'
@@ -185,7 +188,7 @@ echo "# Check the permissions of journal file. Expect the below"
 echo '# -rw-rw-rw- 1 $tst_user $tst_group .... ... .. ..... mumps.mjl'
 $gtm_tst/$tst/u_inref/check_fileperm.csh mumps.mjl "-rw-rw-rw-:${tst_user}:${tst_group}"
 echo ""
-echo "**** show gtmsecshr client socket for group unrestricted distribution, libgtmshr.xx mode = 775 ****"
+echo "**** show gtmsecshr client socket for group unrestricted distribution, libyottadb.xx mode = 775 ****"
 chmod 444 mumps.dat
 $gtm_dist/mumps -dir >& gtm_gtmsecshr_${tstno}.outx <<here
 set ^a=1
@@ -252,9 +255,9 @@ else if (("$gtm_test_osname" == "hp-ux") || ("aix" == "$gtm_test_osname") || ("s
 		"--rw-rw-rw-:${tst_user}:${tst_group}:${tst_user}:${tst_group}"
 endif
 echo ""
-echo "# Check permissions of libgtmshr. Expect the below"
-echo '# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libgtmshr.xx'
-$gtm_tst/$tst/u_inref/check_fileperm.csh $gtm_dist/libgtmshr.$libext "-rwxrwxr-x:${tst_user}:${tst_group}"
+echo "# Check permissions of libyottadb. Expect the below"
+echo '# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libyottadb.xx'
+$gtm_tst/$tst/u_inref/check_fileperm.csh $gtm_dist/libyottadb.$libext "-rwxrwxr-x:${tst_user}:${tst_group}"
 echo ""
 echo "# Check the permissions of database file. Expect the below"
 echo '# -rw-r--r-- 1 $tst_user $tst_group 169472 Jun 18 05:29 mumps.dat'
@@ -311,9 +314,9 @@ else if (("$gtm_test_osname" == "hp-ux") || ("aix" == "$gtm_test_osname") || ("s
 		"--rw-rw-rw-:${tst_user}:${tst_group}:${tst_user}:${tst_group}"
 endif
 echo ""
-echo "# Check permissions of libgtmshr. Expect the below"
-echo '# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libgtmshr.xx'
-$gtm_tst/$tst/u_inref/check_fileperm.csh $gtm_dist/libgtmshr.$libext "-rwxrwxr-x:${tst_user}:${tst_group}"
+echo "# Check permissions of libyottadb. Expect the below"
+echo '# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libyottadb.xx'
+$gtm_tst/$tst/u_inref/check_fileperm.csh $gtm_dist/libyottadb.$libext "-rwxrwxr-x:${tst_user}:${tst_group}"
 echo ""
 echo "# Check the permissions of database file. Expect the below"
 echo '# -rw-r--r-- 1 $tst_user $tst_group1 169472 Jun 18 05:30 mumps.dat'
@@ -372,9 +375,9 @@ else if (("$gtm_test_osname" == "hp-ux") || ("aix" == "$gtm_test_osname") || ("s
 		"--rw-rw-rw-:${tst_user}:${tst_group3}:${tst_user}:${tst_group}"
 endif
 echo ""
-echo "# Check permissions of libgtmshr. Expect the below"
-echo '# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libgtmshr.xx'
-$gtm_tst/$tst/u_inref/check_fileperm.csh $gtm_dist/libgtmshr.$libext "-rwxrwxr-x:${tst_user}:${tst_group}"
+echo "# Check permissions of libyottadb. Expect the below"
+echo '# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libyottadb.xx'
+$gtm_tst/$tst/u_inref/check_fileperm.csh $gtm_dist/libyottadb.$libext "-rwxrwxr-x:${tst_user}:${tst_group}"
 echo ""
 echo "# Check the permissions of database file. Expect the below"
 echo '# -rw-rw-r-- 1 $tst_user $tst_group3 169472 Jun 18 05:30 mumps.dat'
@@ -417,7 +420,7 @@ rm -f mumps.dat mumps.gld
 cp bak_mumps.gld mumps.gld ; cp bak_mumps.dat mumps.dat
 $gtm_com/IGS mumps.dat CHOWN $tst_user $tst_group1
 chmod 664 mumps.dat
-chown ${tst_user}:$tst_group3 $gtm_dist/libgtmshr.$libext
+chown ${tst_user}:$tst_group3 $gtm_dist/libyottadb.$libext
 $MUPIP set -region -journal=enable,on,nobefore "*" >& set_jnl_${tstno}.out
 $gtm_dist/mumps -dir >& gtm_${tstno}.out <<here
 set ^a=1
@@ -435,9 +438,9 @@ else if (("$gtm_test_osname" == "hp-ux") || ("aix" == "$gtm_test_osname") || ("s
 		"--rw-rw-rw-:${tst_user}:${tst_group}:${tst_user}:${tst_group}"
 endif
 echo ""
-echo "# Check permissions of libgtmshr. Expect the below"
-echo '# -rwxrwxr-x 1 $tst_user $tst_group3 14740547 Jun 17 11:25 libgtmshr.xx'
-$gtm_tst/$tst/u_inref/check_fileperm.csh $gtm_dist/libgtmshr.$libext "-rwxrwxr-x:${tst_user}:${tst_group3}"
+echo "# Check permissions of libyottadb. Expect the below"
+echo '# -rwxrwxr-x 1 $tst_user $tst_group3 14740547 Jun 17 11:25 libyottadb.xx'
+$gtm_tst/$tst/u_inref/check_fileperm.csh $gtm_dist/libyottadb.$libext "-rwxrwxr-x:${tst_user}:${tst_group3}"
 echo ""
 echo "# Check the permissions of database file. Expect the below"
 echo '# -rw-rw-r-- 1 $tst_user $tst_group1 169472 Jun 18 05:30 mumps.dat'
@@ -464,13 +467,13 @@ echo "# Check the permissions of the backed-up file"
 $gtm_tst/$tst/u_inref/check_fileperm.csh bb_${tstno}/mumps.dat "-rw-rw-rw-:${tst_user}:${tst_group}"
 echo ""
 
-chmod 770 $gtm_dist/libgtmshr.$libext
-$gtm_com/IGS $gtm_dist/libgtmshr.$libext CHOWN $tst_user $tst_group3
+chmod 770 $gtm_dist/libyottadb.$libext
+$gtm_com/IGS $gtm_dist/libyottadb.$libext CHOWN $tst_user $tst_group3
 rm -f mumps.dat mumps.gld
 cp bak_mumps.gld mumps.gld ; cp bak_mumps.dat mumps.dat ; chmod 444 mumps.dat
 
 
-echo "**** show gtmsecshr client socket for group restricted distribution, libgtmshr.xx mode = 770 ****"
+echo "**** show gtmsecshr client socket for group restricted distribution, libyottadb.xx mode = 770 ****"
 chmod 444 mumps.dat
 $gtm_dist/mumps -dir >& gtm_gtmsecshr_${tstno}.outx <<here
 set ^a=1
@@ -496,9 +499,9 @@ endif
 echo ""
 
 
-echo "# set the permissions of libgtmshr right"
-chown ${tst_user}:$tst_group $gtm_dist/libgtmshr.$libext
-chmod 775 $gtm_dist/libgtmshr.$libext
+echo "# set the permissions of libyottadb right"
+chown ${tst_user}:$tst_group $gtm_dist/libyottadb.$libext
+chmod 775 $gtm_dist/libyottadb.$libext
 echo ""
 echo ""
 
@@ -596,7 +599,7 @@ $gtm_tst/com/dbcheck.csh
 #	isowner:	user is the owner of the database file
 #	oingroup:	file owner is a member of the database file group. a.k.a. owneringroup
 #	ingroup:	user is a member of the database file group, either by OS config or setgid
-#	restrict:	GT.M installation is group restricted by setting libgtmshr o-x. a.k.a. gtmrestrict
+#	restrict:	GT.M installation is group restricted by setting libyottadb o-x. a.k.a. gtmrestrict
 #
 # A dash (-) indicates "don't care", in which case the test verifies all options.
 #

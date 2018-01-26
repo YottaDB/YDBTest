@@ -16,9 +16,9 @@ GTM>
 # 269287425  666        $tst_user   $tst_group        $tst_user   $tst_group       
 TEST-I-PASS ipcs permission check passed for the file ipcs_full_1.out
 
-# Check permissions of libgtmshr. Expect the below
-# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libgtmshr.xx
-TEST-I-PASS file permissions of libgtmshr##TEST_SHL_SUFFIX## is as expected
+# Check permissions of libyottadb. Expect the below
+# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libyottadb.xx
+TEST-I-PASS file permissions of libyottadb##TEST_SHL_SUFFIX## is as expected
 
 # Check the permissions of database file. Expect the below
 # -rw-rw-rw- 1 $tst_user $tst_group 169472 Jun 18 05:29 mumps.dat
@@ -28,7 +28,7 @@ TEST-I-PASS file permissions of mumps.dat is as expected
 # -rw-rw-rw- 1 $tst_user $tst_group .... ... .. ..... mumps.mjl
 TEST-I-PASS file permissions of mumps.mjl is as expected
 
-**** show gtmsecshr client socket for group unrestricted distribution, libgtmshr.xx mode = 775 ****
+**** show gtmsecshr client socket for group unrestricted distribution, libyottadb.xx mode = 775 ****
 # Check the permissions of gtm_secshr* file. Expect the below
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
@@ -56,9 +56,9 @@ TEST-I-PASS file permissions of mumps.dat is as expected
 # 269615105  666        $tst_user   $tst_group        $tst_user   $tst_group       
 TEST-I-PASS ipcs permission check passed for the file ipcs_full_2.out
 
-# Check permissions of libgtmshr. Expect the below
-# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libgtmshr.xx
-TEST-I-PASS file permissions of libgtmshr##TEST_SHL_SUFFIX## is as expected
+# Check permissions of libyottadb. Expect the below
+# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libyottadb.xx
+TEST-I-PASS file permissions of libyottadb##TEST_SHL_SUFFIX## is as expected
 
 # Check the permissions of database file. Expect the below
 # -rw-r--r-- 1 $tst_user $tst_group 169472 Jun 18 05:29 mumps.dat
@@ -87,9 +87,9 @@ TEST-I-PASS file permissions of mumps.dat is as expected
 # 269713409  666        $tst_user   $tst_group        $tst_user   $tst_group       
 TEST-I-PASS ipcs permission check passed for the file ipcs_full_3.out
 
-# Check permissions of libgtmshr. Expect the below
-# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libgtmshr.xx
-TEST-I-PASS file permissions of libgtmshr##TEST_SHL_SUFFIX## is as expected
+# Check permissions of libyottadb. Expect the below
+# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libyottadb.xx
+TEST-I-PASS file permissions of libyottadb##TEST_SHL_SUFFIX## is as expected
 
 # Check the permissions of database file. Expect the below
 # -rw-r--r-- 1 $tst_user $tst_group1 169472 Jun 18 05:30 mumps.dat
@@ -117,9 +117,9 @@ TEST-I-PASS file permissions of mumps.dat is as expected
 # 269811713  666        $tst_user   $tst_group        $tst_user   $tst_group3 
 TEST-I-PASS ipcs permission check passed for the file ipcs_full_4.out
 
-# Check permissions of libgtmshr. Expect the below
-# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libgtmshr.xx
-TEST-I-PASS file permissions of libgtmshr##TEST_SHL_SUFFIX## is as expected
+# Check permissions of libyottadb. Expect the below
+# -rwxrwxr-x 1 $tst_user $tst_group 14740547 Jun 17 11:25 libyottadb.xx
+TEST-I-PASS file permissions of libyottadb##TEST_SHL_SUFFIX## is as expected
 
 # Check the permissions of database file. Expect the below
 # -rw-rw-r-- 1 $tst_user $tst_group3 169472 Jun 18 05:30 mumps.dat
@@ -148,9 +148,9 @@ TEST-I-PASS file permissions of mumps.dat is as expected
 #269910017  666        $tst_user   $tst_group        $tst_user   $tst_group3 
 TEST-I-PASS ipcs permission check passed for the file ipcs_full_5.out
 
-# Check permissions of libgtmshr. Expect the below
-# -rwxrwxr-x 1 $tst_user $tst_group3 14740547 Jun 17 11:25 libgtmshr.xx
-TEST-I-PASS file permissions of libgtmshr##TEST_SHL_SUFFIX## is as expected
+# Check permissions of libyottadb. Expect the below
+# -rwxrwxr-x 1 $tst_user $tst_group3 14740547 Jun 17 11:25 libyottadb.xx
+TEST-I-PASS file permissions of libyottadb##TEST_SHL_SUFFIX## is as expected
 
 # Check the permissions of database file. Expect the below
 # -rw-rw-r-- 1 $tst_user $tst_group1 169472 Jun 18 05:30 mumps.dat
@@ -166,7 +166,7 @@ TEST-I-PASS file permissions of mumps.mjl is as expected
 # Check the permissions of the backed-up file
 TEST-I-PASS file permissions of mumps.dat is as expected
 
-**** show gtmsecshr client socket for group restricted distribution, libgtmshr.xx mode = 770 ****
+**** show gtmsecshr client socket for group restricted distribution, libyottadb.xx mode = 770 ****
 # Check the permissions of gtm_secshr* file. Expect the below
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
@@ -177,7 +177,7 @@ TEST-I-PASS file permissions of mumps.dat is as expected
 ##ALLOW_OUTPUT HOST_OS390_S390
 TEST-I-PASS file permissions of gtm_secshr are as expected
 
-# set the permissions of libgtmshr right
+# set the permissions of libyottadb right
 
 
 ######################################################################################

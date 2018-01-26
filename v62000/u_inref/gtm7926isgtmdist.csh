@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-#	Copyright 2014 Fidelity Information Services, Inc	#
+# Copyright 2014 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -16,7 +19,7 @@
 #
 
 #
-# MUMPS dlopen()s $gtm_dist/libgtmshr.so which in effect validates $gtm_dist.
+# MUMPS dlopen()s $gtm_dist/libyottadb.so which in effect validates $gtm_dist.
 # It uses $gtm_dist for help, the JOB command, as a search path for pipe
 # devices, and to call gtmsecshr.
 #

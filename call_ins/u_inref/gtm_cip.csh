@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,7 +19,7 @@ awk 'BEGIN { for (i=1; i<1000; i++) printf( "display%d: void print%d()\n", i, i)
 
 #
 $gt_cc_compiler $gtt_cc_shl_options $gtm_tst/$tst/inref/gtm_cip.c -I$gtm_inc
-$gt_ld_linker $gt_ld_option_output gtm_cip $gt_ld_options_common gtm_cip.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_gtmshr $gt_ld_syslibs >&! link1.map
+$gt_ld_linker $gt_ld_option_output gtm_cip $gt_ld_options_common gtm_cip.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >&! link1.map
 
 if( $status != 0 ) then
     cat link1.map

@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -53,9 +53,9 @@ endif
 
 # Compile and link the test program.
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/intrpt_timer_handler.c
-$gt_ld_shl_linker ${gt_ld_option_output}libintrpt_timer_handler${gt_ld_shl_suffix} $gt_ld_shl_options intrpt_timer_handler.o $gt_ld_syslibs -L$gtm_dist -lgtmshr
+$gt_ld_shl_linker ${gt_ld_option_output}libintrpt_timer_handler${gt_ld_shl_suffix} $gt_ld_shl_options intrpt_timer_handler.o $gt_ld_syslibs -L$gtm_dist -lyottadb
 
-# Make sure libgtmshr.so can be found.
+# Make sure libyottadb.so can be found.
 if (! ($?LD_LIBRARY_PATH) ) setenv LD_LIBRARY_PATH ""
 if (! ($?LIBPATH) ) setenv LIBPATH ""
 setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${gtm_dist}

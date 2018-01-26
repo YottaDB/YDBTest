@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -26,9 +26,9 @@ else if ("$gtm_test_osname" == "os390") then
 endif
 
 if (("$machine_type" == "x86_64") && ($is64bit_gtm == 0)) then
-	setenv  gtt_cc_shl_options    "$gtt_cc_shl_options -m32"
-	setenv  gt_ld_options_gtmshr    "$gt_ld_options_gtmshr -m32"
-	setenv  gtt_cc_shl_options       "$gtt_cc_shl_options -m32"
+	setenv  gtt_cc_shl_options      "$gtt_cc_shl_options -m32"
+	setenv  gt_ld_options_yottadb   "$gt_ld_options_yottadb -m32"
+	setenv  gtt_cc_shl_options      "$gtt_cc_shl_options -m32"
 	setenv  gt_ld_shl_options       "$gt_ld_shl_options -m32"
 	setenv  gt_ld_options_common    "$gt_ld_options_common -m32"
 endif
