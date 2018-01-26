@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -22,7 +25,9 @@ setenv pidsrc12 `$tst_awk '/Source server is alive in ACTIVE mode/ {print $2}' S
 $GTM << EOF
 s ^abc=1234
 EOF
-$gtm_tst/com/wait_for_log.csh -log $srclogfile -message FILTERNOTALIVE
+# Slow boxes (particularly those with 1-cpu) have been seen to take ~ 5 minutes to issue the FILTERNOTALIVE error
+# in the source server log file. Therefore wait for 10 minutes (higher than the default of 2 minutes).
+$gtm_tst/com/wait_for_log.csh -log $srclogfile -message FILTERNOTALIVE -duration 600
 $gtm_tst/com/check_error_exist.csh $srclogfile FILTERNOTALIVE
 # make sure source server process has stopped before removing jnlpool ipcs
 $gtm_tst/com/wait_for_proc_to_die.csh $pidsrc12 120
