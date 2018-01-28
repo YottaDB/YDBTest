@@ -21,7 +21,7 @@ zeofprocfs	;
 	; But this file is guaranteed to have more than one line and we expect all those lines in the output
 	new x,i,lines
 	for  read x  quit:$zeof  do
-	. set x=$translate(x,"0123456789","..........")	; remove the variable part of the output for reference file comparison
+	. set x=$translate(x,"0123456789","")	; remove the variable part of the output for reference file comparison
 	. set lines($incr(i))=x
 	close file
 	zwrite lines
