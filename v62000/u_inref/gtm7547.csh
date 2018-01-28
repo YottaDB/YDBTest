@@ -3,7 +3,7 @@
 #								#
 # Copyright 2014 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -41,7 +41,7 @@ else if ( $HOSTOS == "OS/390" ) then
     setenv ci_ldpath "-L$gtm_obj -blibpath"
 endif
 $gt_cc_compiler $gtt_cc_shl_options $gtm_tst/$tst/inref/callinerr.c -I$gtm_dist
-$gt_ld_linker $gt_ld_option_output callinerr $gt_ld_options_common callinerr.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_gtmshr $gt_ld_syslibs > link.map
+$gt_ld_linker $gt_ld_option_output callinerr $gt_ld_options_common callinerr.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs > link.map
 
 setenv gtm_etrap 'write "callin PASS!",!'
 ./callinerr

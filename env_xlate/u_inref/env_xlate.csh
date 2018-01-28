@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -67,7 +67,7 @@ if ( "os390" == $gtm_test_osname ) then
 	# Save the normal LIBPATH and append the desired paths for call ins to work
 	set old_libpath=${LIBPATH}
 	setenv LIBPATH ${tst_working_dir}:${gtm_exe}:.:${LIBPATH}
-	setenv link "$link $tst_ld_gtmshr"
+	setenv link "$link $tst_ld_yottadb"
 endif
 
 mv datbak/* .					# Move back the backed up files (to prevent dbcreate renaming them)

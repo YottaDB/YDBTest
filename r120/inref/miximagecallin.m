@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	;
 ; All rights reserved.	     	  	     			;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -10,7 +10,7 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 miximagecallin	;
-	; dummy M program invocation to ensure libgtmshr.so is loaded
+	; dummy M program invocation to ensure libyottadb.so is loaded
 	; this means the YottaDB image type is loaded.
 	; attempts to load any more types of images would result in MIXIMAGE error
 	quit

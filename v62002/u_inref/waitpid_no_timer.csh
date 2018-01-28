@@ -4,7 +4,7 @@
 # Copyright (c) 2015 Fidelity National Information 		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,9 +22,9 @@
 
 # Compile and link the test program.
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/waitpid_no_timer.c -g -DDEBUG
-$gt_ld_shl_linker ${gt_ld_option_output}libwaitpid_no_timer${gt_ld_shl_suffix} $gt_ld_shl_options waitpid_no_timer.o $gt_ld_syslibs -L$gtm_dist -lgtmshr
+$gt_ld_shl_linker ${gt_ld_option_output}libwaitpid_no_timer${gt_ld_shl_suffix} $gt_ld_shl_options waitpid_no_timer.o $gt_ld_syslibs -L$gtm_dist -lyottadb
 
-# Make sure libgtmshr.so can be found.
+# Make sure libyottadb.so can be found.
 if (! ($?LD_LIBRARY_PATH) ) setenv LD_LIBRARY_PATH ""
 if (! ($?LIBPATH) ) setenv LIBPATH ""
 setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${gtm_dist}

@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -12,7 +15,7 @@
 
 ps -p $1 | tail -n 1 >! $2	# BYPASSOK ps/tail : used by tools scripts
 set pname = ""
-foreach exe_name ( mumps mupip dbcertify dse ftok geteuid gtcm_gnp_server gtcm_pkdisp gtcm_play gtcm_server gtcm_shmclean gtmsecshr libgtmshr.so lke semstat2)
+foreach exe_name ( mumps mupip dbcertify dse ftok geteuid gtcm_gnp_server gtcm_pkdisp gtcm_play gtcm_server gtcm_shmclean gtmsecshr libyottadb.so libgtmshr.so lke semstat2)
 	grep $exe_name $2 >& /dev/null # BYPASSOK grep : used by tool scripts
 	if (! $status) then
 		set pname = "$gtm_exe/$exe_name"

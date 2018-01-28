@@ -3,7 +3,7 @@
 #								#
 # Copyright 2012, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,7 +22,7 @@
 #	ingroup or setgid	run in group of the database, statically or using setgid
 #	isroot			run as root
 #	owneringroup		set database group and owner so that owner is a member of the group
-#	gtmrestrict		set libgtmshr so that only owner and group members can use it
+#	gtmrestrict		set libyottadb so that only owner and group members can use it
 
 # Disable autorelink since we manually modify gtmroutines below
 set gtm_test_autorelink_dirs = 0
@@ -59,7 +59,7 @@ if ( $?work_dir) then
 	endif
 endif
 
-set libgtmshr="$gtm_dist/libgtmshr.$libext"
+set libyottadb="$gtm_dist/libyottadb.$libext"
 
 set DEF_USER=gtcusr1
 set DEF_GROUP=gtc
@@ -164,7 +164,7 @@ ls -l mumps.dat | $tst_awk "$file_awk_cmd"
 ###
 
 if ($?gtmrestrict) then
-	chmod o-x $libgtmshr
+	chmod o-x $libyottadb
 endif
 
 ###
@@ -234,5 +234,5 @@ endif
 rm -rf mumps.*
 
 if ($?gtmrestrict) then
-	chmod o+x $libgtmshr
+	chmod o+x $libyottadb
 endif

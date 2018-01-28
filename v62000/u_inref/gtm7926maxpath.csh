@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -15,7 +18,7 @@
 # This test case provides regression support that validates the maximum path
 # allowed for $gtm_dist. Previous code checks incorrectly calculated the length
 # of $gtm_dist, a slash and the executables name throughout the code prior to
-# using a target. This could lead to situations where libgtmshr.so,
+# using a target. This could lead to situations where libyottadb.so,
 # gtmsecshrdir or a plugin (encryption) library are inaccessible due to path
 # limitations.
 #

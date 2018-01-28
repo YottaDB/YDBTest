@@ -1,6 +1,9 @@
 #################################################################
 #								#
-#	Copyright 2002, 2014 Fidelity Information Services, Inc	#
+# Copyright 2002, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -46,7 +49,7 @@ if ( "os390" == $gtm_test_osname ) then
         set old_libpath=${LIBPATH}
         setenv LIBPATH ${tst_working_dir}:${gtm_exe}:.:${LIBPATH}
         # Apparently on z/OS the the sidedeck must be specified for the call out DLL
-        setenv tst_ld_sidedeck "-L$gtm_dist $tst_ld_gtmshr"
+        setenv tst_ld_sidedeck "-L$gtm_dist $tst_ld_yottadb"
 else
         setenv tst_ld_sidedeck ""
 endif
