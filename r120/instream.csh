@@ -30,7 +30,6 @@ echo "r120 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "zindcacheoverflow largelvarray gctest patnotfound readtimeout miximage zeofprocfs"
 setenv subtest_list_non_replic "$subtest_list_non_replic libyottadb"
->>>>>>> ca34719... [#23] Rename all occurrences of libgtmshr.so/libgtmutil.so to libyottadb.so/libyottadbutil.so; Add r120/libyottadb subtest to check these are appropriately installed
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
