@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,13 +20,14 @@
 # patnotfound       [nars]  Test runtime behavior after PATNOTFOUND compile-time error
 # readtimeout       [nars]  Test that READ X:TIMEOUT works correctly if TIMEOUT is a fraction with more than 3 decimal digits
 # miximage          [nars]  Test MIXIMAGE error is appropriately issued when multiple images are mixed in same process
+# zeofprocfs        [nars]  Test that $ZEOF is correctly set after READ commands on procfs files (e.g. /proc/$J/io)
 #-------------------------------------------------------------------------------------
 
 echo "r120 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "zindcacheoverflow largelvarray gctest patnotfound readtimeout miximage"
+setenv subtest_list_non_replic "zindcacheoverflow largelvarray gctest patnotfound readtimeout miximage zeofprocfs"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
