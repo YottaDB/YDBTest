@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -140,7 +140,7 @@ CAT_EOF
 	$MUPIP TRIGGER -UPGRADE >& $curline.newver.trigupgrd.out
 	$GTM << GTM_EOF >& $curline.newver.out
 		write \$zver,!
-		set \$etrap="write TRIGUPGRD_TEST-E-FAIL : Fail at trigger select stage. See $curpwd/$curline.newver.out,! zhalt 1"
+		set \$etrap="write ""TRIGUPGRD_TEST-E-FAIL : Fail at trigger select stage. See $curpwd/$curline.newver.out"",! zhalt 1"
 		set file="$curline.newver.trig_select"
 		open file:(newversion)
 		use file
