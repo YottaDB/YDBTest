@@ -18,18 +18,18 @@ cd $gtm_dist
 foreach subdir (. utf8)
 	echo 'Test that '$subdir'/libyottadb.so exists in $gtm_dist'
 	$echoline
-	ls -l $subdir/libyottadb.so | $tst_awk '{print $1,$2,$3,$4,$9,$10,$11}'
+	$gtm_tst/com/lsminusl.csh $subdir/libyottadb.so | $tst_awk '{print $1,$2,$3,$4,$9,$10,$11}'
 	echo ""
 	echo 'Test that '$subdir'/libgtmshr.so is a softlink to '$subdir'/libyottadb.so'
 	$echoline
-	ls -l $subdir/libgtmshr.so | $tst_awk '{print $1,$2,$3,$4,$9,$10,$11}'
+	$gtm_tst/com/lsminusl.csh $subdir/libgtmshr.so | $tst_awk '{print $1,$2,$3,$4,$9,$10,$11}'
 	echo ""
 	echo 'Test that '$subdir'/libyottadbutil.so exists in $gtm_dist'
 	$echoline
-	ls -l $subdir/libyottadbutil.so | $tst_awk '{print $1,$2,$3,$4,$9,$10,$11}'
+	$gtm_tst/com/lsminusl.csh $subdir/libyottadbutil.so | $tst_awk '{print $1,$2,$3,$4,$9,$10,$11}'
 	echo ""
 	echo 'Test that '$subdir'/libgtmutil.so is a softlink to '$subdir'/libyottadbutil.so'
 	$echoline
-	ls -l $subdir/libgtmutil.so | $tst_awk '{print $1,$2,$3,$4,$9,$10,$11}'
+	$gtm_tst/com/lsminusl.csh $subdir/libgtmutil.so | $tst_awk '{print $1,$2,$3,$4,$9,$10,$11}'
 	echo ""
 end

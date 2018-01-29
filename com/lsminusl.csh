@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,4 +19,4 @@
 # All test scripts that do an "ls -l" and redirect that output to a test reference file need to use
 # "$gtm_tst/com/lsminusl.csh" instead to have a portable reference file.
 
-ls -l $* | $tst_awk '{if ($1 ~ /-.*\./) gsub("\\.","",$1); print $0}'
+ls -l $* | $tst_awk '{if ($1 ~ /[-l].*\./) gsub("\\.","",$1); print $0}'
