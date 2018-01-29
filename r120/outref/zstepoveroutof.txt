@@ -1,0 +1,42 @@
+-------------------------------------------------------------------
+Test that ZSTEP INTO works with QUIT
+
+Stepping STARTED
+zstinto1+2^zstinto1           :	set x1=$$y
+y^zstinto1                    :y()
+y+1^zstinto1                  :	set x2=""
+y+2^zstinto1                  :	quit x2
+zstinto1+3^zstinto1           :	quit
+-------------------------------------------------------------------
+Test that ZSTEP INTO works with QUIT @
+
+Stepping STARTED
+zstinto2+2^zstinto2           :	set x1=$$y
+y^zstinto2                    :y()
+y+1^zstinto2                  :	set xx="x2",x2=""
+y+2^zstinto2                  :	quit @xx
+zstinto2+3^zstinto2           :	quit
+-------------------------------------------------------------------
+Test that ZSTEP OVER works with QUIT
+
+Stepping STARTED
+zstover1+2^zstover1           :	set x1=$$y
+zstover1+3^zstover1           :	quit
+-------------------------------------------------------------------
+Test that ZSTEP OVER works with QUIT @
+
+Stepping STARTED
+zstover2+2^zstover2           :	set x1=$$y
+zstover2+3^zstover2           :	quit
+-------------------------------------------------------------------
+Test that ZSTEP OUTOF works with QUIT
+
+Stepping STARTED
+helper+2^zstoutof1            :	set x2=$$y
+zstoutof1+2^zstoutof1         :	quit
+-------------------------------------------------------------------
+Test that ZSTEP OUTOF works with QUIT @
+
+Stepping STARTED
+helper+2^zstoutof2            :	set x2=$$y
+zstoutof2+2^zstoutof2         :	quit
