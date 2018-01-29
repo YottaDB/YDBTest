@@ -25,6 +25,7 @@ $gtm_exe/mumps -run %XCMD 'zprint ^x#'
 unset verbose
 # The below that does not require trigger access should work fine
 $LKE show -all
+##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
 %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 %GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 $DSE dump -block=3 > & ! dsedumpbl3.out
