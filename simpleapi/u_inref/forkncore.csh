@@ -17,7 +17,7 @@
 cp $gtm_tst/$tst/inref/forkncorenoenv.c .
 cp $gtm_tst/$tst/inref/forkncorewithenv.c .
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist forkncorenoenv.c forkncorewithenv.c
-$gt_ld_linker $gt_ld_option_output forkncorenoenv $gt_ld_options_common forkncorenoenv.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_gtmshr $gt_ld_syslibs >& forkncorenoenv.map
+$gt_ld_linker $gt_ld_option_output forkncorenoenv $gt_ld_options_common forkncorenoenv.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& forkncorenoenv.map
 #
 # Drive forkncorenoenv
 #
@@ -32,7 +32,7 @@ endif
 #
 # Try the "with environment" flavor
 #
-$gt_ld_linker $gt_ld_option_output forkncorewithenv $gt_ld_options_common forkncorewithenv.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_gtmshr $gt_ld_syslibs >& forkncorewithenv.map
+$gt_ld_linker $gt_ld_option_output forkncorewithenv $gt_ld_options_common forkncorewithenv.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& forkncorewithenv.map
 #
 # Drive forkncorewithenv
 #

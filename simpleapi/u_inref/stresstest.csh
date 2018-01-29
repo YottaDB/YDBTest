@@ -41,7 +41,7 @@ end
 
 set exefile = "stresstest"
 echo " --> Running $exefile.c <---"
-$gt_ld_linker $gt_ld_option_output $exefile $gt_ld_options_common $objlist $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_gtmshr $gt_ld_syslibs >& $exefile.map
+$gt_ld_linker $gt_ld_option_output $exefile $gt_ld_options_common $objlist $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& $exefile.map
 if (0 != $status) then
 	echo "LVNSET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 	continue
