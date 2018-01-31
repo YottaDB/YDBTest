@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -35,7 +38,7 @@ env gtm_dist=$uniquepath $uniquepath/mumps -run %XCMD \
 	'job ^%XCMD:(output="_XCMD.mjx":cmdline="zsystem ""$ps""") for i=1:1:120 quit:$zsigproc($zjob,0)  write:i=120 $ztrnlnm("testfail"),! hang 0.25'
 
 # Dump the paths
-$tst_awk '$0 ~ pwd {sub(/^.* \//,"/");sub(pwd,"/tmp/MASKED",$1);print $1}' pwd=${uniquepath} _XCMD.mjx
+grep 'zsystem .*"$ps"' _XCMD.mjx | $tst_awk '{sub(/^.* \//,"/");sub(pwd,"/tmp/MASKED",$1);print $0}' pwd=${uniquepath}
 
 # Delete the symlink
 rm $uniquepath

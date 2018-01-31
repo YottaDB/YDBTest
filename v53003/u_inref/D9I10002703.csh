@@ -4,6 +4,9 @@
 # Copyright (c) 2008-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -69,7 +72,8 @@ set command0 = "$gtm_dist/mumps -direct"
 set corecheck = "$tst_tcsh $gtm_tst/$tst/u_inref/D9I10002703_corecheck.csh"
 set maxstr = `$gtm_dist/mumps -run %XCMD 'Set $ZPiece(x,"0",9999)="" Write x,!'`
 echo "-------------------------------------------------------------------------------------------"
-foreach var ($envlist)
+# Add gtm_dist (supported for backward compatibility but absent in gtm_logicals.h) to buffer overflow check tests
+foreach var (gtm_dist $envlist)
 	setenv envvar $var
 	mkdir $envvar
 	# We do not want different output for $gtm_autorelink_keeprtn on platforms that support it and on those that do not.

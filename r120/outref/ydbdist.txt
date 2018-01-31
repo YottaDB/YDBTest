@@ -1,0 +1,217 @@
+###################################################################
+# Test of <ydb_dist/gtm_dist> env vars and how they affect how executables in ##SOURCE_PATH## are invoked
+###################################################################
+
+# Test 1 : mumps/mupip/dse/lke etc. invoked through a soft link of a different name should work
+#  Invoking executable : mumps
+What file: %GTM-E-FILENOTFND, File  not found
+#  Invoking executable : mupip
+MUPIP> #  Invoking executable : dbcertify
+%GTM-E-CLIERR, No parameters specified
+#  Invoking executable : dse
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+#  Invoking executable : ftok
+
+Usage:
+	##SOURCE_PATH##/ftok [-id=<number>] <file1> <file2> ... <filen>
+
+Reports IPC Key(s) (using id 1, or <number>) of <file1> <file2> ... <filen>
+
+#  Invoking executable : geteuid
+other
+#  Invoking executable : gtcm_gnp_server
+##TEST_AWK%GTM-I-FILERENAME, File ##GTM_LIBRARY_PATH##/.*/log/gtcm_gnp_server.log is renamed to ##GTM_LIBRARY_PATH##/.*/log/gtcm_gnp_server.log_.*
+#  Invoking executable : gtcm_pkdisp
+#  Invoking executable : gtcm_play
+0 seconds connect time
+0 OMI transactions
+0 OMI errors
+0 bytes recv'd
+0 bytes sent
+#  Invoking executable : gtcm_server
+%GTM-E-GETADDRINFO, Error in getting address info
+%GTM-I-TEXT, Name or service not known
+#  Invoking executable : gtcm_shmclean
+If this program is used to remove shared memory from running
+processes, it will cause the program to fail. Please make
+sure all GTM processes have been shut down cleanly before running
+this program.
+
+Do you want to contine? (y or n)  Error while reading response from user. Exiting
+#  Invoking executable : gtmsecshr
+#  Invoking executable : lke
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+#  Invoking executable : semstat2
+##TEST_PATH##/mysemstat2:  Report information about semaphores
+
+Usage-
+	##TEST_PATH##/mysemstat2 <semid1> <semid2> ... <semidn>
+
+information returned for each semaphore in set:
+	semval		current value of semaphore
+	semncnt		# of procs waiting for semval to increase
+	semzcnt		# of procs waiting for semval to become zero
+	sempid		PID of last proc performing operation on semaphore
+
+# Test 2 : Copy of mumps/mupip/dse/lke etc. invoked from a directory that also contains a copy of libyottadb##TEST_SHL_SUFFIX## should work
+#          Previously this would issue an IMAGENAME error for the "mumps" case. That is no longer the case
+#  Invoking executable : mumps
+What file: %GTM-E-FILENOTFND, File  not found
+#  Invoking executable : mupip
+MUPIP> #  Invoking executable : dbcertify
+%GTM-E-CLIERR, No parameters specified
+#  Invoking executable : dse
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+#  Invoking executable : ftok
+
+Usage:
+	##TEST_PATH##/myftok [-id=<number>] <file1> <file2> ... <filen>
+
+Reports IPC Key(s) (using id 1, or <number>) of <file1> <file2> ... <filen>
+
+#  Invoking executable : geteuid
+other
+#  Invoking executable : gtcm_gnp_server
+##TEST_AWK%GTM-I-FILERENAME, File ##GTM_LIBRARY_PATH##/.*/log/gtcm_gnp_server.log is renamed to ##GTM_LIBRARY_PATH##/.*/log/gtcm_gnp_server.log_.*
+#  Invoking executable : gtcm_pkdisp
+#  Invoking executable : gtcm_play
+0 seconds connect time
+0 OMI transactions
+0 OMI errors
+0 bytes recv'd
+0 bytes sent
+#  Invoking executable : gtcm_server
+%GTM-E-GETADDRINFO, Error in getting address info
+%GTM-I-TEXT, Name or service not known
+#  Invoking executable : gtcm_shmclean
+If this program is used to remove shared memory from running
+processes, it will cause the program to fail. Please make
+sure all GTM processes have been shut down cleanly before running
+this program.
+
+Do you want to contine? (y or n)  Error while reading response from user. Exiting
+#  Invoking executable : gtmsecshr
+#  Invoking executable : lke
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+#  Invoking executable : semstat2
+##TEST_PATH##/mysemstat2:  Report information about semaphores
+
+Usage-
+	##TEST_PATH##/mysemstat2 <semid1> <semid2> ... <semidn>
+
+information returned for each semaphore in set:
+	semval		current value of semaphore
+	semncnt		# of procs waiting for semval to increase
+	semzcnt		# of procs waiting for semval to become zero
+	sempid		PID of last proc performing operation on semaphore
+
+# Test 3 : Copy of mumps/mupip/dse/lke etc. invoked from a directory that does not also contain a copy of libyottadb##TEST_SHL_SUFFIX## should issue DLLNOOPEN error
+#          Previously this would issue a GTMDISTUNVERIF error.
+#  Invoking executable : mumps
+%GTM-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##
+%GTM-E-TEXT, ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##: cannot open shared object file: No such file or directory
+#  Invoking executable : mupip
+%GTM-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##
+%GTM-E-TEXT, ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##: cannot open shared object file: No such file or directory
+#  Invoking executable : dbcertify
+%GTM-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##
+%GTM-E-TEXT, ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##: cannot open shared object file: No such file or directory
+#  Invoking executable : dse
+%GTM-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##
+%GTM-E-TEXT, ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##: cannot open shared object file: No such file or directory
+#  Invoking executable : ftok
+%GTM-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##
+%GTM-E-TEXT, ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##: cannot open shared object file: No such file or directory
+#  Invoking executable : geteuid
+other
+#  Invoking executable : gtcm_gnp_server
+%GTM-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##
+%GTM-E-TEXT, ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##: cannot open shared object file: No such file or directory
+#  Invoking executable : gtcm_pkdisp
+#  Invoking executable : gtcm_play
+%GTM-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##
+%GTM-E-TEXT, ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##: cannot open shared object file: No such file or directory
+#  Invoking executable : gtcm_server
+%GTM-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##
+%GTM-E-TEXT, ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##: cannot open shared object file: No such file or directory
+#  Invoking executable : gtcm_shmclean
+%GTM-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##
+%GTM-E-TEXT, ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##: cannot open shared object file: No such file or directory
+#  Invoking executable : gtmsecshr
+#  Invoking executable : lke
+%GTM-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##
+%GTM-E-TEXT, ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##: cannot open shared object file: No such file or directory
+#  Invoking executable : semstat2
+##TEST_PATH##/mysemstat2:  Report information about semaphores
+
+Usage-
+	##TEST_PATH##/mysemstat2 <semid1> <semid2> ... <semidn>
+
+information returned for each semaphore in set:
+	semval		current value of semaphore
+	semncnt		# of procs waiting for semval to increase
+	semzcnt		# of procs waiting for semval to become zero
+	sempid		PID of last proc performing operation on semaphore
+
+# Test 4 : mumps/mupip/dse/lke etc. invoked from a current directory where they do not exist, but are found in $PATH, should work
+#  Invoking executable : mumps
+What file: %GTM-E-FILENOTFND, File  not found
+#  Invoking executable : mupip
+MUPIP> #  Invoking executable : dbcertify
+%GTM-E-CLIERR, No parameters specified
+#  Invoking executable : dse
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+#  Invoking executable : ftok
+
+Usage:
+	##SOURCE_PATH##/ftok [-id=<number>] <file1> <file2> ... <filen>
+
+Reports IPC Key(s) (using id 1, or <number>) of <file1> <file2> ... <filen>
+
+#  Invoking executable : geteuid
+other
+#  Invoking executable : gtcm_gnp_server
+##TEST_AWK%GTM-I-FILERENAME, File ##GTM_LIBRARY_PATH##/.*/log/gtcm_gnp_server.log is renamed to ##GTM_LIBRARY_PATH##/.*/log/gtcm_gnp_server.log_.*
+#  Invoking executable : gtcm_pkdisp
+#  Invoking executable : gtcm_play
+0 seconds connect time
+0 OMI transactions
+0 OMI errors
+0 bytes recv'd
+0 bytes sent
+#  Invoking executable : gtcm_server
+%GTM-E-GETADDRINFO, Error in getting address info
+%GTM-I-TEXT, Name or service not known
+#  Invoking executable : gtcm_shmclean
+If this program is used to remove shared memory from running
+processes, it will cause the program to fail. Please make
+sure all GTM processes have been shut down cleanly before running
+this program.
+
+Do you want to contine? (y or n)  Error while reading response from user. Exiting
+#  Invoking executable : gtmsecshr
+#  Invoking executable : lke
+%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory
+#  Invoking executable : semstat2
+semstat2:  Report information about semaphores
+
+Usage-
+	semstat2 <semid1> <semid2> ... <semidn>
+
+information returned for each semaphore in set:
+	semval		current value of semaphore
+	semncnt		# of procs waiting for semval to increase
+	semzcnt		# of procs waiting for semval to become zero
+	sempid		PID of last proc performing operation on semaphore
+
+# Test 5 : gtmsecshr issues a SECSHRNOYDBDIST error if ydb_dist env var is not set
+----------
+Error SECSHRNOYDBDIST seen in syslog1.txt as expected:
+##TEST_AWK.* GTMSECSHRINIT\[.*\]: %GTM-E-SECSHRNOYDBDIST, ydb_dist env var does not exist. gtmsecshr will not be started
+----------
