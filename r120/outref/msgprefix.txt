@@ -1,0 +1,33 @@
+###################################################################
+# Test of <ydb_msgprefix> environment variable
+###################################################################
+
+# Test that ydb_msgprefix undefined defaults to YDB
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
+
+# Test ydb_msgprefix set to strings of length 0, 3, 31, 32. For 32, the value is ignored. For < 32, it is honored.
+#   env ydb_msgprefix=
+%-I-BREAKZST, Break instruction encountered during ZSTEP action
+#   env ydb_msgprefix=abc
+%abc-I-BREAKZST, Break instruction encountered during ZSTEP action
+#   env ydb_msgprefix=ABCDEFGHIJKLMNOPWRSTUVWXYZ12345
+%ABCDEFGHIJKLMNOPWRSTUVWXYZ12345-I-BREAKZST, Break instruction encountered during ZSTEP action
+#   env ydb_msgprefix=ABCDEFGHIJKLMNOPWRSTUVWXYZ123456
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
+
+# Test that ydb_msgprefix set to some value (###) does not affect error messages in .msg files other than merrors.msg.
+#   Test Error codes in cmerrors.msg : INVPROT and CMSYSSRV
+%GTCM-E-INVPROT, Invalid protocol specified by remote partner
+%GTCM-E-CMSYSSRV, Error doing system service, status:
+#   Test Error codes in cmierrors.msg : DCNINPROG and REASON_CONFIRM
+%CMI-F-DCNINPROG, Attempt to initiate operation while disconnect was in progress
+%CMI-E-REASON_CONFIRM, Confirm
+#   Test Error codes in gdeerrors.msg : INPINTEG and NOPERCENTY
+%GDE-F-INPINTEG, Input integrity error -- aborting load
+%GDE-E-NOPERCENTY, ^%Y* is a reserved global name in YottaDB
+#   Test Error codes in merrors.msg : BREAKZST and STPCRIT
+%###-I-BREAKZST, Break instruction encountered during ZSTEP action
+%###-E-STPCRIT, String pool space critical
+#   Test Error codes in ydberrors.msg : QUERY2 and MIXIMAGE
+%YDB-E-QUERY2, Invalid second argument to $QUERY. Must be -1 or 1.
+%YDB-E-MIXIMAGE, Cannot load  image on process that already has  image loaded

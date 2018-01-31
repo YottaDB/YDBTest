@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -22,7 +25,7 @@ if ($HOSTOS == "SunOS") then
 	setenv | $grep -E "gtm_linktmpdir" | sed 's/\\\075/=/g' | sed 's/'$user'/$user/' >>&! ${TMP_FILE_PREFIX}_env_${USER}.txt
 
 else
-	setenv | $grep -E "^gtm|^acc_meth|^tst|^test|^PRI|^SEC|^remote_ver|^remote_image|^user|^mailing_list" | $grep -vE "gtm_icu_version" >&! ${TMP_FILE_PREFIX}_env_${USER}.txt
+	setenv | $grep -E "^ydb|^gtm|^acc_meth|^tst|^test|^PRI|^SEC|^remote_ver|^remote_image|^user|^mailing_list" | $grep -vE "gtm_icu_version" >&! ${TMP_FILE_PREFIX}_env_${USER}.txt
 	setenv | $grep -E "gtm_linktmpdir" | sed 's/'$user'/$user/' >>&! ${TMP_FILE_PREFIX}_env_${USER}.txt
 	# Fix user specific environment variables
 endif
