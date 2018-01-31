@@ -23,6 +23,7 @@
 # zeofprocfs        [nars]  Test that $ZEOF is correctly set after READ commands on procfs files (e.g. /proc/$J/io)
 # libyottadb        [nars]  Test that libgtmshr.so/libgtmutil.so are soft links to libyottadb.so/libyottadbutil.so
 # zstepoveroutof    [nars]  Test that ZSTEP OVER and ZSTEP OUTOF work if an extrinsic function returns using QUIT @ syntax
+# msgprefix         [nars]  Test of <ydb_msgprefix> environment variable
 #-------------------------------------------------------------------------------------
 
 echo "r120 test starts..."
@@ -30,7 +31,7 @@ echo "r120 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "zindcacheoverflow largelvarray gctest patnotfound readtimeout miximage zeofprocfs"
-setenv subtest_list_non_replic "$subtest_list_non_replic libyottadb zstepoveroutof"
+setenv subtest_list_non_replic "$subtest_list_non_replic libyottadb zstepoveroutof msgprefix"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
