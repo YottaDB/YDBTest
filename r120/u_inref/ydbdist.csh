@@ -57,7 +57,7 @@ end
 echo ""
 echo '# Test 4 : mumps/mupip/dse/lke etc. invoked from a current directory where they do not exist, but are found in $PATH, should work'
 set origpath = ($path)
-set path = ($origpath $saveydbdist)
+set path = ($saveydbdist $origpath)
 foreach exe ($executables)
 	echo "#  Invoking executable : $exe"
 	# Although we redirect the below to a file and immediately cat the file, not redirecting the output
