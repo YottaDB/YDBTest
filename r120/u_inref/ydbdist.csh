@@ -27,7 +27,6 @@ foreach exe ($executables)
 	echo "#  Invoking executable : $exe"
 	ln -s $saveydbdist/$exe $newexe
 	$newexe
-	wait	# in case the above starts any background processes
 	rm -f $newexe
 end
 
@@ -40,7 +39,6 @@ foreach exe ($executables)
 	echo "#  Invoking executable : $exe"
 	cp $saveydbdist/$exe $newexe
 	$newexe
-	wait	# in case the above starts any background processes
 	rm -f $newexe
 end
 rm -f libyottadb.so
@@ -53,7 +51,6 @@ foreach exe ($executables)
 	echo "#  Invoking executable : $exe"
 	cp $saveydbdist/$exe $newexe
 	$newexe
-	wait	# in case the above starts any background processes
 	rm -f $newexe
 end
 
@@ -63,8 +60,12 @@ set origpath = ($path)
 set path = ($origpath $saveydbdist)
 foreach exe ($executables)
 	echo "#  Invoking executable : $exe"
-	$exe
-	wait	# in case the above starts any background processes
+	# Although we redirect the below to a file and immediately cat the file, not redirecting the output
+	# results in some test output reordering issues. Not exactly sure what the cause is. But since redirection
+	# addresses that issue, it is not further investigated. Use logx (not log) to avoid test error framework
+	# from signaling errors in these files at the end of the test.
+	$exe >& $exe.logx
+	cat $exe.logx
 end
 set path = ($origpath)
 
