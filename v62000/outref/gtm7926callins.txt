@@ -3,25 +3,36 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
-This will not generate an error
-This will generate an undef error
-%GTM-E-GTMDISTUNDEF, Environment variable $gtm_dist is not defined
-This will generate a syscall error
-%GTM-E-SYSCALL, Error received from system call stat for $gtm_dist/gtmsecshr
-%SYSTEM-E-ENO2, No such file or directory
-This will not generate an error
+
+Test the JOB command execution with the correct and incorrect (null or invalid) \##SOURCE_PATH##
+###################################################################
+# Test of ydb_dist defined to a valid value. This will not generate an error
+# Test of ydb_dist undefined. This will not generate an error
+# Test of ydb_dist set to NULL. This will generate an error
+%YDB-E-LIBYOTTAMISMTCH, $ydb_dist/libyottadb##TEST_SHL_SUFFIX## (/libyottadb##TEST_SHL_SUFFIX##) does not match the shared library path (##SOURCE_PATH##/libyottadb##TEST_SHL_SUFFIX##)
+# Test of ydb_dist set to a non-existent path. This will generate a syscall error
+%YDB-E-LIBYOTTAMISMTCH, $ydb_dist/libyottadb##TEST_SHL_SUFFIX## (/no/such/path/libyottadb##TEST_SHL_SUFFIX##) does not match the shared library path (##SOURCE_PATH##/libyottadb##TEST_SHL_SUFFIX##)
+
+Test the default search path for PIPE device execution with the correct and incorrect (null or invalid) \##SOURCE_PATH##
+###################################################################
+# Test of ydb_dist defined to a valid value. This will not generate an error
 other
-This will generate an undef error
-%GTM-E-GTMDISTUNDEF, Environment variable $gtm_dist is not defined
-This will generate a syscall error
-%GTM-E-SYSCALL, Error received from system call stat for $gtm_dist/gtmsecshr
-%SYSTEM-E-ENO2, No such file or directory
-This will not generate an error
-This will generate an undef error
-%GTM-E-GTMDISTUNDEF, Environment variable $gtm_dist is not defined
-This will generate a syscall error
-%GTM-E-SYSCALL, Error received from system call stat for $gtm_dist/gtmsecshr
-%SYSTEM-E-ENO2, No such file or directory
+# Test of ydb_dist undefined. This will not generate an error
+other
+# Test of ydb_dist set to NULL. This will generate an error
+%YDB-E-LIBYOTTAMISMTCH, $ydb_dist/libyottadb##TEST_SHL_SUFFIX## (/libyottadb##TEST_SHL_SUFFIX##) does not match the shared library path (##SOURCE_PATH##/libyottadb##TEST_SHL_SUFFIX##)
+# Test of ydb_dist set to a non-existent path. This will generate a syscall error
+%YDB-E-LIBYOTTAMISMTCH, $ydb_dist/libyottadb##TEST_SHL_SUFFIX## (/no/such/path/libyottadb##TEST_SHL_SUFFIX##) does not match the shared library path (##SOURCE_PATH##/libyottadb##TEST_SHL_SUFFIX##)
+
+Test the access to gtmsecshr with the correct and incorrect (null or invalid) \##SOURCE_PATH##
+###################################################################
+# Test of ydb_dist defined to a valid value. This will not generate an error
+# Test of ydb_dist undefined. This will not generate an error
+# Test of ydb_dist set to NULL. This will generate an error
+%YDB-E-LIBYOTTAMISMTCH, $ydb_dist/libyottadb##TEST_SHL_SUFFIX## (/libyottadb##TEST_SHL_SUFFIX##) does not match the shared library path (##SOURCE_PATH##/libyottadb##TEST_SHL_SUFFIX##)
+# Test of ydb_dist set to a non-existent path. This will generate a syscall error
+%YDB-E-LIBYOTTAMISMTCH, $ydb_dist/libyottadb##TEST_SHL_SUFFIX## (/no/such/path/libyottadb##TEST_SHL_SUFFIX##) does not match the shared library path (##SOURCE_PATH##/libyottadb##TEST_SHL_SUFFIX##)
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
