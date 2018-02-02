@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -65,5 +65,6 @@ check_setenv_echo  gt_cc_option_DDEBUG     "-DDEBUG"
 check_setenv_echo  gt_cc_option_I          "-I$gtm_inc"
 check_setenv_echo  gt_ld_option_output    "-o"
 
+setenv gtm_exe_realpath	`realpath $gtm_exe`
 setenv gtm_version_change 1	# to force gtm_env.csh to go into the codepath that initializes a lot of gt_* variables
 source $gtm_tools/gtm_env.csh

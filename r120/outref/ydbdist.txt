@@ -1,3 +1,4 @@
+# Allocate a portno to be used for gtcm_gnp_server/gtcm_server
 ###################################################################
 # Test of <ydb_dist/gtm_dist> env vars and how they affect how executables in ##SOURCE_PATH## are invoked
 ###################################################################
@@ -14,24 +15,15 @@ MUPIP> #  Invoking executable : dbcertify
 #  Invoking executable : ftok
 
 Usage:
-	##SOURCE_PATH##/ftok [-id=<number>] <file1> <file2> ... <filen>
+	##SOURCE_REALPATH##/ftok [-id=<number>] <file1> <file2> ... <filen>
 
 Reports IPC Key(s) (using id 1, or <number>) of <file1> <file2> ... <filen>
 
 #  Invoking executable : geteuid
 other
 #  Invoking executable : gtcm_gnp_server
-##TEST_AWK%GTM-I-FILERENAME, File ##GTM_LIBRARY_PATH##/.*/log/gtcm_gnp_server.log is renamed to ##GTM_LIBRARY_PATH##/.*/log/gtcm_gnp_server.log_.*
 #  Invoking executable : gtcm_pkdisp
-#  Invoking executable : gtcm_play
-0 seconds connect time
-0 OMI transactions
-0 OMI errors
-0 bytes recv'd
-0 bytes sent
 #  Invoking executable : gtcm_server
-%GTM-E-GETADDRINFO, Error in getting address info
-%GTM-I-TEXT, Name or service not known
 #  Invoking executable : gtcm_shmclean
 If this program is used to remove shared memory from running
 processes, it will cause the program to fail. Please make
@@ -75,17 +67,8 @@ Reports IPC Key(s) (using id 1, or <number>) of <file1> <file2> ... <filen>
 #  Invoking executable : geteuid
 other
 #  Invoking executable : gtcm_gnp_server
-##TEST_AWK%GTM-I-FILERENAME, File ##GTM_LIBRARY_PATH##/.*/log/gtcm_gnp_server.log is renamed to ##GTM_LIBRARY_PATH##/.*/log/gtcm_gnp_server.log_.*
 #  Invoking executable : gtcm_pkdisp
-#  Invoking executable : gtcm_play
-0 seconds connect time
-0 OMI transactions
-0 OMI errors
-0 bytes recv'd
-0 bytes sent
 #  Invoking executable : gtcm_server
-%GTM-E-GETADDRINFO, Error in getting address info
-%GTM-I-TEXT, Name or service not known
 #  Invoking executable : gtcm_shmclean
 If this program is used to remove shared memory from running
 processes, it will cause the program to fail. Please make
@@ -132,9 +115,6 @@ other
 %GTM-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##
 %GTM-E-TEXT, ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##: cannot open shared object file: No such file or directory
 #  Invoking executable : gtcm_pkdisp
-#  Invoking executable : gtcm_play
-%GTM-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##
-%GTM-E-TEXT, ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##: cannot open shared object file: No such file or directory
 #  Invoking executable : gtcm_server
 %GTM-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##
 %GTM-E-TEXT, ##TEST_PATH##/libyottadb##TEST_SHL_SUFFIX##: cannot open shared object file: No such file or directory
@@ -169,24 +149,15 @@ MUPIP> #  Invoking executable : dbcertify
 #  Invoking executable : ftok
 
 Usage:
-	##SOURCE_PATH##/ftok [-id=<number>] <file1> <file2> ... <filen>
+	##SOURCE_REALPATH##/ftok [-id=<number>] <file1> <file2> ... <filen>
 
 Reports IPC Key(s) (using id 1, or <number>) of <file1> <file2> ... <filen>
 
 #  Invoking executable : geteuid
 other
 #  Invoking executable : gtcm_gnp_server
-##TEST_AWK%GTM-I-FILERENAME, File ##GTM_LIBRARY_PATH##/.*/log/gtcm_gnp_server.log is renamed to ##GTM_LIBRARY_PATH##/.*/log/gtcm_gnp_server.log_.*
 #  Invoking executable : gtcm_pkdisp
-#  Invoking executable : gtcm_play
-0 seconds connect time
-0 OMI transactions
-0 OMI errors
-0 bytes recv'd
-0 bytes sent
 #  Invoking executable : gtcm_server
-%GTM-E-GETADDRINFO, Error in getting address info
-%GTM-I-TEXT, Name or service not known
 #  Invoking executable : gtcm_shmclean
 If this program is used to remove shared memory from running
 processes, it will cause the program to fail. Please make
@@ -215,3 +186,4 @@ information returned for each semaphore in set:
 Error SECSHRNOYDBDIST seen in syslog1.txt as expected:
 ##TEST_AWK.* GTMSECSHRINIT\[.*\]: %GTM-E-SECSHRNOYDBDIST, ydb_dist env var does not exist. gtmsecshr will not be started
 ----------
+# Remove portno allocation file

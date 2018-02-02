@@ -1,2 +1,2 @@
 /tmp/MASKED/mumps -run %XCMD job ^%XCMD:(output="_XCMD.mjx":cmdline="zsystem ""$ps""") for i=1:1:120 quit:$zsigproc($zjob,0) write:i=120 $ztrnlnm("testfail"),! hang 0.25
-##SOURCE_PATH##/mumps -direct zsystem "$ps"
+##SOURCE_REALPATH##/mumps -direct zsystem "$ps"
