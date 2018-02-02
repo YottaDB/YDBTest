@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,6 +27,7 @@ BEGIN {
 	env["gtm_tst"] = ENVIRON[ "gtm_tst" ]
 	env["in_test_path"]=env["gtm_tst"] "/" env["tst"]
 	env["gtm_exe"] = ENVIRON[ "gtm_exe" ]
+	env["gtm_exe_realpath"] = ENVIRON[ "gtm_exe_realpath" ]
 	env["gtm_root"] = ENVIRON[ "gtm_root" ]
 	env["gtm_src"] = ENVIRON[ "gtm_src" ]
 	env["home"] = ENVIRON[ "HOME" ]
@@ -94,6 +95,7 @@ function replace_flags()
 	gsub(env["gtm_tst"]"/com", "##TEST_COM_PATH##")
 	gsub(env["remote_gtm_exe"], "##REMOTE_SOURCE_PATH##")
 	gsub(env["remote_test_path"], "##REMOTE_TEST_PATH##")
+	gsub(env["gtm_exe_realpath"], "##SOURCE_REALPATH##")
 	tosub="\\y"env["tst_org_host"]"\\y" ; gsub(tosub, "##TEST_HOST##")
 	tosub="\\y"env["tst_remote_host"]"\\y" ; gsub(tosub, "##TEST_REMOTE_HOST##")
 	tosub="\\y"env["tst_remote_host_ms_1"]"\\y" ; gsub(tosub, "##TEST_REMOTE_HOST_MS_1##")

@@ -63,6 +63,7 @@ BEGIN {
 	gtm_tst = ENVIRON[ "gtm_tst" ]
 	in_test_path = gtm_tst "/" tst
 	gtm_exe = ENVIRON[ "gtm_exe" ]
+	gtm_exe_realpath = ENVIRON[ "gtm_exe_realpath" ]
 	gtm_root = ENVIRON[ "gtm_root" ]
 	home = ENVIRON[ "HOME" ]
         tst_image = toupper(ENVIRON[ "tst_image" ])
@@ -455,6 +456,7 @@ function replace_flags()
 	gsub(/##IN_TEST_PATH##/, in_test_path)
 	gsub(/##REMOTE_SOURCE_PATH##/, remote_gtm_exe)
 	gsub(/##SOURCE_PATH##/, gtm_exe)
+	gsub(/##SOURCE_REALPATH##/, gtm_exe_realpath)
 	gsub(/##HOME_PATH##/, home)
 	gsub(/##TST_IMAGE##/, tolower(tst_image))
 	gsub(/##TEST_HOST##/, tst_org_host)
