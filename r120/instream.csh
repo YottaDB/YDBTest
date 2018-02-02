@@ -25,6 +25,7 @@
 # zstepoveroutof    [nars]  Test that ZSTEP OVER and ZSTEP OUTOF work if an extrinsic function returns using QUIT @ syntax
 # msgprefix         [nars]  Test of <ydb_msgprefix> environment variable
 # ydbdist           [nars]  Test of <ydb_dist/gtm_dist> env vars and how they affect how executables in $ydb_dist are invoked
+# divzero           [nars]  Test that division by zero issues DIVZERO error and not SIGINTDIV
 #-------------------------------------------------------------------------------------
 
 echo "r120 test starts..."
@@ -32,7 +33,7 @@ echo "r120 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "zindcacheoverflow largelvarray gctest patnotfound readtimeout miximage zeofprocfs"
-setenv subtest_list_non_replic "$subtest_list_non_replic libyottadb zstepoveroutof msgprefix ydbdist"
+setenv subtest_list_non_replic "$subtest_list_non_replic libyottadb zstepoveroutof msgprefix ydbdist divzero"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
