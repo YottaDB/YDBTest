@@ -10,6 +10,8 @@
  *								*
  ****************************************************************/
 
+/* This is a C program using simpleAPI to implement "do run^concurr(times)" */
+
 #include "libyottadb.h"	/* for ydb_* macros/prototypes/typedefs */
 
 #include <stdio.h>	/* for "printf" */
@@ -86,8 +88,6 @@ int	m_randfill(act_t act, int pno, int iter);
 int	m_filling_randfill(act_t act, int prime, int root, int iter);
 void	m_EXAM_randfill(char *pos, ydb_buffer_t *vcorr, ydb_buffer_t *vcomp);
 char	*get_curtime(void);
-
-/* This is a C program using simpleAPI to implement "do run^concurr(times)" */
 
 /* Implements M entryref run^concurr */
 int main(int argc, char *argv[])
