@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -144,10 +144,6 @@ if ($?gtm_test_nopriorgtmver) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm7926rcvr"
 else if ($?ydb_environment_init) then
 	# We are in a YDB environment (i.e. non-GG setup)
-	if ("dbg" == "$tst_image") then
-		# We do not have dbg builds of versions [...,V61000] needed by the below subtest so disable it.
-		setenv subtest_exclude_list "$subtest_exclude_list gtm7926rcvr"
-	endif
 endif
 if ($?gtm_test_temporary_disable) then
        setenv subtest_exclude_list "$subtest_exclude_list gtm7926isgtmdist"
