@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -28,7 +28,7 @@ setenv test_encryption NON_ENCRYPT
 source $gtm_tst/com/portno_acquire.csh >>& portno.out
 
 # Get an alternate prior version
-set prior_ver = `$gtm_tst/com/random_ver.csh -lte V61000 -gte V54001`
+set prior_ver = `$gtm_tst/com/random_ver.csh -type any`
 if ("$prior_ver" =~ "*-E-*") then
         echo "No prior versions available: $prior_ver"
         exit -1
@@ -50,24 +50,24 @@ $gtm_dist/mupip replicate -instance -name=nullreceiver $gtm_test_qdbrundown_parm
 $gtm_dist/mupip replic -source -start -passive -log=PASSIVE.log -instsecondary=nosource >&! start_passive.log
 
 $echoline
-env gtm_dist=$gtm_root/$prior_ver/pro $gtm_dist/mupip replic -receiv -start -listen=$portno -log=RCVR.log -helper >&! mismatched_dist.outx
-if !($status) then
-	echo "TEST-F-FAIL"
+env ydb_dist=$gtm_root/$prior_ver/$tst_image gtm_dist=$gtm_root/$prior_ver/$tst_image $ydb_dist/mupip replic -receiv -start -listen=$portno -log=RCVR.log -helper
+if ($status) then
+	echo "TEST-F-FAIL. Expecting no issues starting receiver server with a mismatched ydb_dist/gtm_dist"
+else
+	echo "TEST-I-PASS. Receiver server and Update process with a mismatched ydb_dist/gtm_dist started fine"
 	$gtm_dist/mupip replicate -receiver -shut -time=0 >&! shut_receiver1.log
 endif
-# realpath() canonicalizes $gtm_root/$prior_ver. Use sed to de-canonicalize the path
-sed "s;(.*/$prior_ver;($gtm_root/$prior_ver;" mismatched_dist.outx
 
 $echoline
 set origpath=($path)
 set path=($gtm_dist $origpath)
-env gtm_dist=$gtm_root/$prior_ver/pro mupip replic -receiv -start -listen=$portno -log=RCVR.log -helper >&! hidden_dist.outx
-if !($status) then
-	echo "TEST-F-FAIL"
+env ydb_dist=$gtm_root/$prior_ver/$tst_image gtm_dist=$gtm_root/$prior_ver/$tst_image mupip replic -receiv -start -listen=$portno -log=RCVR.log -helper
+if ($status) then
+	echo "TEST-F-FAIL. Expecting no issues starting receiver server with a hidden ydb_dist/gtm_dist"
+else
+	echo "TEST-I-PASS. Receiver server and Update process with a hidden ydb_dist/gtm_dist started fine"
 	$gtm_dist/mupip replicate -receiver -shut -time=0 >&! shut_receiver2.log
 endif
-# realpath() canonicalizes $gtm_root/$prior_ver. Use sed to de-canonicalize the path
-sed "s;(.*/$prior_ver;($gtm_root/$prior_ver;" hidden_dist.outx
 
 set path=($origpath)
 
