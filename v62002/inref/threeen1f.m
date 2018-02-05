@@ -24,9 +24,9 @@ threeen1f
         ; No input error checking is done.
 
         ; Although the problem can be solved by using strictly integer subscripts and values, this program is
-        ; written to show that the GT.M key-value store can use arbitrary strings for both keys and values -
+        ; written to show that the YottaDB key-value store can use arbitrary strings for both keys and values -
         ; each subscript and value is spelled out using the strings in the program source line labelled "digits".
-        ; Furthermore, the strings are in a number of international languages when GT.M is run in UTF-8 mode.
+        ; Furthermore, the strings are in a number of international languages when YottaDB is run in UTF-8 mode.
 
         ; K.S. Bhaskar 2010612
 

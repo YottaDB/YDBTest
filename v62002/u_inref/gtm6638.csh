@@ -83,7 +83,7 @@ echo "Set time based epoch to 90 seconds and autoswitch based epoch to 1 GB."
 echo "At this writing, this is what Profile runs with."
 $MUPIP set -journal="enable,on,before,epoch=90,auto=2097152" -reg "*" >& jnl.log
 
-($gtm_dist/mumps -run %XCMD 'do showdbuffs^epochmon("DEFAULT",1,2000)' >taperdata.txt & ; echo $! >! mon_pid.log) >&! mon.outx
+($ydb_dist/mumps -run %XCMD 'do showdbuffs^epochmon("DEFAULT",1,2000)' >taperdata.txt & ; echo $! >! mon_pid.log) >&! mon.outx
 set mon_pid = `cat mon_pid.log`
 
 # If server has more than 4 CPUs, then consider it fast and have a higher limit. Else a lower limit.
@@ -100,7 +100,28 @@ echo "upperbound=$upperbound expected=$expected" >3nparms.out
 
 echo "Run 3n+1 to generate some dirty buffers"
 set nthreads = `grep -c ^processor /proc/cpuinfo`	# Use # of CPUs as the # of threads to avoid swamping the system
-echo 1 $upperbound $nthreads 100 | $gtm_dist/mumps -run threeen1f > threeen1f.out
+# Randomly choose to run M or C (simpleAPI) version of the test
+if !($?gtm_test_replay) then
+	set usesimpleapi = `$gtm_exe/mumps -run rand 2`
+	echo "setenv usesimpleapi $usesimpleapi" >> settings.csh
+endif
+
+if ($usesimpleapi) then
+	# Run simpleAPI equivalent of run^concurr
+	set file="simpleapi_threeen1f.c"
+	cp $gtm_tst/$tst/inref/$file .
+	set exefile = $file:r
+	$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$ydb_dist $file
+	$gt_ld_linker $gt_ld_option_output $exefile $gt_ld_options_common $exefile.o $gt_ld_sysrtns $ci_ldpath$ydb_dist -L$ydb_dist $tst_ld_yottadb $gt_ld_syslibs >& $exefile.map
+	if (0 != $status) then
+		echo "LVNSET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
+		continue
+	endif
+	echo 1 $upperbound $nthreads 100 | `pwd`/$exefile > threeen1f.out
+	set exit_status = $status
+else
+	echo 1 $upperbound $nthreads 100 | $ydb_dist/mumps -run threeen1f > threeen1f.out
+endif
 
 set actual=`cat threeen1f.out | cut -f5 -d" "`
 
