@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -46,11 +49,43 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 		$gtm_exe/mumps -run ztrsupport 'if $ztrigger("file",$ztrnlnm("gtm_tst")_"/com/imptpztr.trg")'
 	endif
 	setenv gtm_badchar "no"
-	$GTM << xyz
-	set jobcnt=\$\$^jobcnt
-	w "do ^imptp(jobcnt)",!  do ^imptp(jobcnt)
-	h
+	# Randomly choose to run M or C (simpleAPI) version of the test
+	if !($?gtm_test_replay) then
+		set usesimpleapi = `$gtm_exe/mumps -run rand 2`
+		echo "setenv usesimpleapi $usesimpleapi" >> settings.csh
+		set usesimpleapi = 1	# NARSTODO
+		# NARSTODO : If online rollback test, then usesimpleapi has to be set to 0.
+		# this is because imptp.m transfers control to an M label "orlbkres^imptp" etc. for online rollbacks
+		# and that is not straightforward with simpleAPI.
+	endif
+
+	if (! $usesimpleapi) then
+		$GTM << xyz
+		set jobcnt=\$\$^jobcnt
+		w "do ^imptp(jobcnt)",!  do ^imptp(jobcnt)
+		h
 xyz
+
+	else
+		# Run simpleAPI equivalent of ^imptp
+		set file="simpleapi_imptp.c"
+		cp $gtm_tst/com/$file .
+		set exefile = $file:r
+		$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$ydb_dist $file
+		$gt_ld_linker $gt_ld_option_output $exefile $gt_ld_options_common $exefile.o $gt_ld_sysrtns $ci_ldpath$ydb_dist -L$ydb_dist $tst_ld_yottadb $gt_ld_syslibs >& $exefile.map
+		if (0 != $status) then
+			echo "LVNSET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
+			exit -1
+		endif
+		# Setup call-in table : Need call-ins to do a few tasks that are not easily done through simpleAPI
+		cat > imptp.xc << CAT_EOF
+getdatinfo: void getdatinfo^imptpxc()
+impjob: void impjob^imptp()
+CAT_EOF
+		setenv GTMCI imptp.xc
+		# Run simpleAPI executable
+		`pwd`/$exefile
+	endif
 else if ($gtm_test_dbfill == "IMPRTP") then
 	$GTM << xyz
 	w "do imprtp",!  do ^imprtp
