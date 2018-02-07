@@ -91,6 +91,7 @@ int main(int argc, char *argv[])
 	int		updates, reads;
 	int		save_errno;
 
+	process_id = getpid();
 	/* Initialize all array variable names we are planning to later use */
 	YDB_STRLIT_TO_BUFFER(&ygbl_limits, "^limits");
 	YDB_STRLIT_TO_BUFFER(&ygbl_count, "^count");
