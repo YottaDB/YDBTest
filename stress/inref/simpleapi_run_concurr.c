@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
 
 	/* set iterate=times (where times is specified in argv[1]) : run+1^concurr */
 	YDB_LITERAL_TO_BUFFER("iterate", &ylcl_iterate);
-	YDB_STRING_TO_BUFFER(argv[1], &value);
+	YDB_COPY_STRING_TO_BUFFER(argv[1], &value);
 	status = ydb_set_s(&ylcl_iterate, 0, NULL, &value);
 	assert(YDB_OK == status);
 
