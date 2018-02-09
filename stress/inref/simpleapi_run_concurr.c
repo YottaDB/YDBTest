@@ -44,6 +44,14 @@
 	assert(copy_done);					\
 }
 
+#define	YDB_COPY_STRING_TO_BUFF(SRC, DST)			\
+{								\
+	int	copy_done;					\
+								\
+	YDB_COPY_STRING_TO_BUFFER(SRC, DST, copy_done);		\
+	assert(copy_done);					\
+}
+
 typedef enum
 {
 	NTP = 0,
@@ -97,16 +105,16 @@ int main(int argc, char *argv[])
 
 	process_id = getpid();
 
-	/* set iterate=times (where times is specified in argv[1]) : run+1^concurr */
-	YDB_LITERAL_TO_BUFFER("iterate", &ylcl_iterate);
-	YDB_COPY_STRING_TO_BUFFER(argv[1], &value);
-	status = ydb_set_s(&ylcl_iterate, 0, NULL, &value);
-	assert(YDB_OK == status);
-
 	value.buf_addr = valuebuff;
 	value.len_alloc = sizeof(valuebuff);
 	pidvalue.buf_addr = pidvaluebuff;
 	pidvalue.len_alloc = sizeof(pidvaluebuff);
+
+	/* set iterate=times (where times is specified in argv[1]) : run+1^concurr */
+	YDB_LITERAL_TO_BUFFER("iterate", &ylcl_iterate);
+	YDB_COPY_STRING_TO_BUFF(argv[1], &value);
+	status = ydb_set_s(&ylcl_iterate, 0, NULL, &value);
+	assert(YDB_OK == status);
 
 	for (i = 0; i < YDB_MAX_SUBS + 1; i++)
 	{
