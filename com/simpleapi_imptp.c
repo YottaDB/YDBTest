@@ -41,11 +41,11 @@
 	assert(copy_done);					\
 }
 
-#define	YDB_COPY_STRLIT_TO_BUFF(SRC, DST)			\
+#define	YDB_COPY_STRING_TO_BUFF(SRC, DST)			\
 {								\
 	int	copy_done;					\
 								\
-	YDB_COPY_STRLIT_TO_BUFFER(SRC, DST, copy_done);		\
+	YDB_COPY_STRING_TO_BUFFER(SRC, DST, copy_done);		\
 	assert(copy_done);					\
 }
 
@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
 		}
 	}
 	YDB_COPY_BUFF_TO_BUFF(&value, &subscr[0]);
-	YDB_COPY_STRLIT_TO_BUFF("istp", &subscr[1]);
+	YDB_COPY_STRING_TO_BUFF("istp", &subscr[1]);
 	value.len_used = sprintf(value.buf_addr, "%d", istp);
 	status = ydb_set_s(&ylcl_istp, 0, NULL, &value);
 	assert(YDB_OK == status);
@@ -193,13 +193,13 @@ int main(int argc, char *argv[])
 	 * ;
 	 */
 	ptr = getenv("gtm_test_tptype");
-	YDB_COPY_STRLIT_TO_BUFF("tptype", &subscr[1]);
+	YDB_COPY_STRING_TO_BUFF("tptype", &subscr[1]);
 	if ((NULL != ptr) && !strcmp(ptr, "ONLINE"))
 	{
-		YDB_COPY_STRLIT_TO_BUFF("ONLINE", &value);
+		YDB_COPY_STRING_TO_BUFF("ONLINE", &value);
 	} else
 	{
-		YDB_COPY_STRLIT_TO_BUFF("BATCH", &value);
+		YDB_COPY_STRING_TO_BUFF("BATCH", &value);
 	}
 	status = ydb_set_s(&ygbl_pctimptp, 2, subscr, &value);
 	assert(YDB_OK == status);
@@ -210,7 +210,7 @@ int main(int argc, char *argv[])
 	 * .  if (istp=1)&(($ztrnlnm("gtm_test_noisolation")="TPNOISO")!($random(2)=1)) set ^%imptp(fillid,"tpnoiso")=1
 	 * .  else  set ^%imptp(fillid,"tpnoiso")=0
 	 */
-	YDB_COPY_STRLIT_TO_BUFF("tpnoiso", &subscr[1]);
+	YDB_COPY_STRING_TO_BUFF("tpnoiso", &subscr[1]);
 	status = ydb_data_s(&ygbl_pctimptp, 2, subscr, &data_value);
 	assert(YDB_OK == status);
 	if (!data_value)
@@ -233,7 +233,7 @@ int main(int argc, char *argv[])
 	 * .  if ($random(2)=1) set ^%imptp(fillid,"dupset")=1
 	 * .  else  set ^%imptp(fillid,"dupset")=0
 	 */
-	YDB_COPY_STRLIT_TO_BUFF("dupset", &subscr[1]);
+	YDB_COPY_STRING_TO_BUFF("dupset", &subscr[1]);
 	status = ydb_data_s(&ygbl_pctimptp, 2, subscr, &data_value);
 	assert(YDB_OK == status);
 	if (!data_value)
@@ -247,7 +247,7 @@ int main(int argc, char *argv[])
 	/* ;
 	 * set ^%imptp(fillid,"crash")=+$ztrnlnm("gtm_test_crash")
 	 */
-	YDB_COPY_STRLIT_TO_BUFF("crash", &subscr[1]);
+	YDB_COPY_STRING_TO_BUFF("crash", &subscr[1]);
 	ptr = getenv("gtm_test_crash");
 	crash = (NULL != ptr) ? atoi(ptr) : 0;
 	value.len_used = sprintf(value.buf_addr, "%d", crash);
@@ -257,7 +257,7 @@ int main(int argc, char *argv[])
 	/* ;
 	 * set ^%imptp(fillid,"gtcm")=+$ztrnlnm("gtm_test_is_gtcm")
 	 */
-	YDB_COPY_STRLIT_TO_BUFF("gtcm", &subscr[1]);
+	YDB_COPY_STRING_TO_BUFF("gtcm", &subscr[1]);
 	ptr = getenv("gtm_test_is_gtcm");
 	is_gtcm = (NULL != ptr) ? atoi(ptr) : 0;
 	value.len_used = sprintf(value.buf_addr, "%d", is_gtcm);
@@ -267,7 +267,7 @@ int main(int argc, char *argv[])
 	/* ;
 	 * set ^%imptp(fillid,"skipreg")=+$ztrnlnm("gtm_test_repl_norepl")	; How many regions to skip dbfill
 	 */
-	YDB_COPY_STRLIT_TO_BUFF("skipreg", &subscr[1]);
+	YDB_COPY_STRING_TO_BUFF("skipreg", &subscr[1]);
 	ptr = getenv("gtm_test_repl_norepl");
 	repl_norepl = (NULL != ptr) ? atoi(ptr) : 0;
 	value.len_used = sprintf(value.buf_addr, "%d", repl_norepl);
@@ -285,7 +285,7 @@ int main(int argc, char *argv[])
 
 	/* set ^%imptp("fillid",jobid)=fillid */
 	YDB_COPY_BUFF_TO_BUFF(&subscr[0], &tmpvalue);	/* save "fillid" subscript for later restore */
-	YDB_COPY_STRLIT_TO_BUFF("fillid", &subscr[0]);
+	YDB_COPY_STRING_TO_BUFF("fillid", &subscr[0]);
 	YDB_COPY_BUFF_TO_BUFF(&value, &subscr[1]);
 	status = ydb_set_s(&ygbl_pctimptp, 2, subscr, &tmpvalue);
 	assert(YDB_OK == status);
@@ -298,7 +298,7 @@ int main(int argc, char *argv[])
 
 	/* set ^%imptp(fillid,"gtm_test_spannode")=+$ztrnlnm("gtm_test_spannode") */
 	YDB_COPY_BUFF_TO_BUFF(&tmpvalue, &subscr[0]);	/* restore saved "fillid" subscript back into subscr[0] */
-	YDB_COPY_STRLIT_TO_BUFF("gtm_test_spannode", &subscr[1]);
+	YDB_COPY_STRING_TO_BUFF("gtm_test_spannode", &subscr[1]);
 	ptr = getenv("gtm_test_spannode");
 	spannode = (NULL != ptr) ? atoi(ptr) : 0;
 	value.len_used = sprintf(value.buf_addr, "%d", spannode);
@@ -311,7 +311,7 @@ int main(int argc, char *argv[])
 	 * ; ^%imptp(fillid,"trigger") to 1
 	 * set ^%imptp(fillid,"trigger")=0
 	 */
-	YDB_COPY_STRLIT_TO_BUFF("trigger", &subscr[1]);
+	YDB_COPY_STRING_TO_BUFF("trigger", &subscr[1]);
 	value.len_used = sprintf(value.buf_addr, "%d", 0);
 	status = ydb_set_s(&ygbl_pctimptp, 2, subscr, &value);
 	assert(YDB_OK == status);
@@ -320,7 +320,7 @@ int main(int argc, char *argv[])
 	 * if $DATA(^%imptp(fillid,"totaljob"))=0 set ^%imptp(fillid,"totaljob")=jobcnt
 	 * else  if ^%imptp(fillid,"totaljob")'=jobcnt  w "IMPTP-E-MISMATCH: Job number mismatch",!  zwr ^%imptp  h
 	 */
-	YDB_COPY_STRLIT_TO_BUFF("totaljob", &subscr[1]);
+	YDB_COPY_STRING_TO_BUFF("totaljob", &subscr[1]);
 	status = ydb_data_s(&ygbl_pctimptp, 2, subscr, &data_value);
 	assert(YDB_OK == status);
 	if (!data_value)
@@ -357,13 +357,13 @@ int main(int argc, char *argv[])
 	 * ;   Precalculate primitive root for a prime and set them here
 	 */
 	/* set ^%imptp(fillid,"prime")=50000017	;Precalculated */
-	YDB_COPY_STRLIT_TO_BUFF("prime", &subscr[1]);
+	YDB_COPY_STRING_TO_BUFF("prime", &subscr[1]);
 	value.len_used = sprintf(value.buf_addr, "%d", 50000017);
 	status = ydb_set_s(&ygbl_pctimptp, 2, subscr, &value);
 	assert(YDB_OK == status);
 
 	/* set ^%imptp(fillid,"root")=5		;Precalculated */
-	YDB_COPY_STRLIT_TO_BUFF("root", &subscr[1]);
+	YDB_COPY_STRING_TO_BUFF("root", &subscr[1]);
 	value.len_used = sprintf(value.buf_addr, "%d", 5);
 	status = ydb_set_s(&ygbl_pctimptp, 2, subscr, &value);
 	assert(YDB_OK == status);
@@ -396,7 +396,7 @@ int main(int argc, char *argv[])
 	/* ;
 	 * set ^%imptp(fillid,"jsyncnt")=0	; To count number of processes that are ready to be killed by crash scripts
 	 */
-	YDB_COPY_STRLIT_TO_BUFF("jsyncnt", &subscr[1]);
+	YDB_COPY_STRING_TO_BUFF("jsyncnt", &subscr[1]);
 	value.len_used = sprintf(value.buf_addr, "%d", 0);
 	status = ydb_set_s(&ygbl_pctimptp, 2, subscr, &value);
 	assert(YDB_OK == status);
@@ -410,8 +410,8 @@ int main(int argc, char *argv[])
 	 * for i=1:1:$length(gblprefix) set ^%sprgdeExcludeGbllist($extract(gblprefix,i)_"ndxarr")=""
 	 */
 	YDB_COPY_BUFF_TO_BUFF(&subscr[0], &tmpvalue);	/* save "fillid" subscript for later restore */
-	YDB_COPY_STRLIT_TO_BUFF("andxarr", &subscr[0]);
-	YDB_COPY_STRLIT_TO_BUFF("", &value);
+	YDB_COPY_STRING_TO_BUFF("andxarr", &subscr[0]);
+	YDB_COPY_STRING_TO_BUFF("", &value);
 	for (i = 0; i < 8; i++)
 	{
 		subscr[0].buf_addr[0] = 'a' + i;	/* Get 'a', 'b', 'c', ... 'h' in every iteration of loop */
@@ -463,9 +463,9 @@ int main(int argc, char *argv[])
 	 * . write "TEST-E-imptp.m time out for jobs to start and synch after ",timeout," seconds",!
 	 * . zwrite ^%imptp
 	 */
-	YDB_COPY_STRLIT_TO_BUFF("jsyncnt", &subscr[1]);
+	YDB_COPY_STRING_TO_BUFF("jsyncnt", &subscr[1]);
 	YDB_COPY_BUFF_TO_BUFF(&subscr[0], &subscr[2]);
-	YDB_COPY_STRLIT_TO_BUFF("totaljob", &subscr[3]);
+	YDB_COPY_STRING_TO_BUFF("totaljob", &subscr[3]);
 	for ( ; ; )
 	{
 		status = ydb_get_s(&ygbl_pctimptp, 2, subscr, &value);	/* Get ^%imptp(fillid,"jsyncnt") */
