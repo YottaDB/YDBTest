@@ -34,12 +34,12 @@ int main()
 	/* Initialize all array variable names we are planning to use. Randomly use locals vs globals to store word frequencies. */
 	if (getpid() % 2)
 	{
-		YDB_STRLIT_TO_BUFFER(&words, "words");
-		YDB_STRLIT_TO_BUFFER(&index, "index");
+		YDB_LITERAL_TO_BUFFER("words", &words);
+		YDB_LITERAL_TO_BUFFER("index", &index);
 	} else
 	{
-		YDB_STRLIT_TO_BUFFER(&words, "^words");
-		YDB_STRLIT_TO_BUFFER(&index, "^index");
+		YDB_LITERAL_TO_BUFFER("^words", &words);
+		YDB_LITERAL_TO_BUFFER("^index", &index);
 	}
 	value.buf_addr = &valuebuff[0];
 	value.len_used = 0;

@@ -40,8 +40,8 @@ int main()
 	ydb_string_t	zwrarg;
 
 	/* Initialize varname, and value buffers (needed by later "gvnset" invocation inside "ydb_tp_s" */
-	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
-	YDB_STRLIT_TO_BUFFER(&value1, VALUE1);
+	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
+	YDB_LITERAL_TO_BUFFER(VALUE1, &value1);
 
 	tpfn = &gvnset;
 	/* TID = "BA" */

@@ -69,17 +69,17 @@ int main()
 	int		status;
 	char		errbuf[ERRBUF_SIZE];
 
-	YDB_STRLIT_TO_BUFFER(&varname1, VARNAME1);
-	YDB_STRLIT_TO_BUFFER(&varname2, VARNAME2);
+	YDB_LITERAL_TO_BUFFER(VARNAME1, &varname1);
+	YDB_LITERAL_TO_BUFFER(VARNAME2, &varname2);
 	/* subary2 (single parm) is just a simple ydb_buffer_t so no need to get complex there. However, subary3
 	 * needs to have the subscript set into it.
 	 */
-	YDB_STRLIT_TO_BUFFER(&subary2, SUB21);
-	YDB_STRLIT_TO_BUFFER(&subary3[0], SUB31);
-	YDB_STRLIT_TO_BUFFER(&subary3[1], SUB32);
-	YDB_STRLIT_TO_BUFFER(&subary3[2], SUB33);
-	YDB_STRLIT_TO_BUFFER(&subary3[3], SUB34);
-	YDB_STRLIT_TO_BUFFER(&subary3[4], SUB35);
+	YDB_LITERAL_TO_BUFFER(SUB21, &subary2);
+	YDB_LITERAL_TO_BUFFER(SUB31, &subary3[0]);
+	YDB_LITERAL_TO_BUFFER(SUB32, &subary3[1]);
+	YDB_LITERAL_TO_BUFFER(SUB33, &subary3[2]);
+	YDB_LITERAL_TO_BUFFER(SUB34, &subary3[3]);
+	YDB_LITERAL_TO_BUFFER(SUB35, &subary3[4]);
 
 	/* Do the first and second lock sets */
 	status = ydb_lock_s(LOCK_TIMEOUT, 4, &varname1, 0, NULL, &varname2, 0, NULL, &varname1, 1, &subary2, &varname2, 1, &subary2);

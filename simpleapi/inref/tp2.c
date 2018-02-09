@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 	char		subsbuff[16];
 
 	/* Initialize varname, subscript, and value buffers */
-	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
+	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
 	value.buf_addr = &valuebuff[0];
 	value.len_used = 0;
 	value.len_alloc = sizeof(valuebuff);
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
 	if ((NULL != trig_val) && atoi(trig_val))
 	{	/* "gtm_test_trigger" is defined. Check that ^tp2trig(1) to ^tp2trig(cumulincrs) exists. */
 		pass = 0;
-		YDB_STRLIT_TO_BUFFER(&basevar, TRIGVAR);
+		YDB_LITERAL_TO_BUFFER(TRIGVAR, &basevar);
 		subs.buf_addr = &subsbuff[0];
 		subs.len_used = 0;
 		subs.len_alloc = sizeof(subsbuff);

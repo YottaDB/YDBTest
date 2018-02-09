@@ -37,8 +37,8 @@ int main()
 
 	printf("### Test error scenarios in ydb_subscript_previous_s() of Global Variables ###\n\n"); fflush(stdout);
 	/* Initialize varname and value buffers */
-	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
-	YDB_STRLIT_TO_BUFFER(&nextvar, NEXTVAR);
+	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
+	YDB_LITERAL_TO_BUFFER(NEXTVAR, &nextvar);
 	ret_value.buf_addr = retvaluebuff;
 	ret_value.len_alloc = sizeof(retvaluebuff);
 	ret_value.len_used = sizeof(VALUE1) - 1;
@@ -48,7 +48,7 @@ int main()
 	printf("# Test of VARNAMEINVALID error\n"); fflush(stdout);
 	printf("Attempting ydb_subscript_previous_s() of bad basevar (%% in middle of name) %s\n", BADBASEVAR1);
 	fflush(stdout);
-	YDB_STRLIT_TO_BUFFER(&badbasevar, BADBASEVAR1);
+	YDB_LITERAL_TO_BUFFER(BADBASEVAR1, &badbasevar);
 	status = ydb_subscript_previous_s(&badbasevar, 0, NULL, &ret_value);
 	if (YDB_OK != status)
 	{
@@ -57,7 +57,7 @@ int main()
 		fflush(stdout);
 	}
 	printf("Attempting ydb_subscript_previous_s() of bad basevar (> 31 characters) %s\n", BADBASEVAR2);
-	YDB_STRLIT_TO_BUFFER(&badbasevar, BADBASEVAR2);
+	YDB_LITERAL_TO_BUFFER(BADBASEVAR2, &badbasevar);
 	status = ydb_subscript_previous_s(&badbasevar, 0, NULL, &ret_value);
 	if (YDB_OK != status)
 	{
@@ -66,7 +66,7 @@ int main()
 		fflush(stdout);
 	}
 	printf("Attempting ydb_subscript_previous_s() of bad basevar (first letter in name is digit) %s\n", BADBASEVAR3);
-	YDB_STRLIT_TO_BUFFER(&badbasevar, BADBASEVAR3);
+	YDB_LITERAL_TO_BUFFER(BADBASEVAR3, &badbasevar);
 	status = ydb_subscript_previous_s(&badbasevar, 0, NULL, &ret_value);
 	if (YDB_OK != status)
 	{
@@ -78,7 +78,7 @@ int main()
 	/* Now try getting > 31 subscripts */
 	printf("Attempting ydb_subscript_previous_s() of basevar with 32 subscripts\n");
 	for (i = 0; i < 32; i++)
-		YDB_STRLIT_TO_BUFFER(&subscr32[i], SUBSCR32);
+		YDB_LITERAL_TO_BUFFER(SUBSCR32, &subscr32[i]);
 	status = ydb_subscript_previous_s(&basevar, 32, subscr32, &ret_value);
 	if (YDB_OK != status)
 	{

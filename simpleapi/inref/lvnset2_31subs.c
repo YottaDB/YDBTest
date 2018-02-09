@@ -29,7 +29,7 @@ int main()
 	printf("### Test 31-level (max-deep) subscripts can be set using ydb_set_s() of Local Variables ###\n"); fflush(stdout);
 	printf("### Also test that passing in a NULL value results in null string value ###\n"); fflush(stdout);
 	/* Initialize varname, subscript, and value buffers */
-	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
+	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
 	for (subs = 0; subs < MAX_SUBS; subs++)
 	{
 		printf("Set a local variable with %d subscripts\n", subs); fflush(stdout);

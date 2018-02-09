@@ -32,12 +32,12 @@ int main()
 
 	printf("### Test simple gets in ydb_get_s() of Global Variables ###\n"); fflush(stdout);
 	/* Initialize varname, subscript, and value buffers */
-	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
-	YDB_STRLIT_TO_BUFFER(&subscr[0], SUBSCR1);
-	YDB_STRLIT_TO_BUFFER(&subscr[1], SUBSCR2);
-	YDB_STRLIT_TO_BUFFER(&value1, VALUE1);
-	YDB_STRLIT_TO_BUFFER(&value2, VALUE2);
-	YDB_STRLIT_TO_BUFFER(&value3, VALUE3);
+	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
+	YDB_LITERAL_TO_BUFFER(SUBSCR1, &subscr[0]);
+	YDB_LITERAL_TO_BUFFER(SUBSCR2, &subscr[1]);
+	YDB_LITERAL_TO_BUFFER(VALUE1, &value1);
+	YDB_LITERAL_TO_BUFFER(VALUE2, &value2);
+	YDB_LITERAL_TO_BUFFER(VALUE3, &value3);
 	ret_value.buf_addr = retvaluebuff;
 	ret_value.len_alloc = sizeof(retvaluebuff);
 	ret_value.len_used = 0;

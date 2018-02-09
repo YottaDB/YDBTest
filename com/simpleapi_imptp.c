@@ -88,17 +88,17 @@ int main(int argc, char *argv[])
 	srand48(seed);
 
 	/* Initialize all array variable names we are planning to later use */
-	YDB_STRLIT_TO_BUFFER(&ylcl_jobcnt, "jobcnt");
-	YDB_STRLIT_TO_BUFFER(&ylcl_fillid, "fillid");
-	YDB_STRLIT_TO_BUFFER(&ylcl_istp, "istp");
-	YDB_STRLIT_TO_BUFFER(&ylcl_jobid, "jobid");
-	YDB_STRLIT_TO_BUFFER(&ylcl_jobindex, "jobindex");
-	YDB_STRLIT_TO_BUFFER(&ygbl_pctimptp, "^%imptp");
-	YDB_STRLIT_TO_BUFFER(&ygbl_endloop, "^endloop");
-	YDB_STRLIT_TO_BUFFER(&ygbl_cntloop, "^cntloop");
-	YDB_STRLIT_TO_BUFFER(&ygbl_cntseq, "^cntseq");
-	YDB_STRLIT_TO_BUFFER(&ygbl_pctsprgdeExcludeGbllist, "^%sprgdeExcludeGbllist");
-	YDB_STRLIT_TO_BUFFER(&yisv_zroutines, "$zroutines");
+	YDB_LITERAL_TO_BUFFER("jobcnt", &ylcl_jobcnt);
+	YDB_LITERAL_TO_BUFFER("fillid", &ylcl_fillid);
+	YDB_LITERAL_TO_BUFFER("istp", &ylcl_istp);
+	YDB_LITERAL_TO_BUFFER("jobid", &ylcl_jobid);
+	YDB_LITERAL_TO_BUFFER("jobindex", &ylcl_jobindex);
+	YDB_LITERAL_TO_BUFFER("^%imptp", &ygbl_pctimptp);
+	YDB_LITERAL_TO_BUFFER("^endloop", &ygbl_endloop);
+	YDB_LITERAL_TO_BUFFER("^cntloop", &ygbl_cntloop);
+	YDB_LITERAL_TO_BUFFER("^cntseq", &ygbl_cntseq);
+	YDB_LITERAL_TO_BUFFER("^%sprgdeExcludeGbllist", &ygbl_pctsprgdeExcludeGbllist);
+	YDB_LITERAL_TO_BUFFER("$zroutines", &yisv_zroutines);
 
 	value.buf_addr = valuebuff;
 	value.len_alloc = sizeof(valuebuff);

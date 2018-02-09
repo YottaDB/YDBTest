@@ -68,12 +68,12 @@ int gvnset()
 	ydb_buffer_t	basevar, subscr[2], value1, value2, value3, badbasevar;
 
 	/* Initialize varname, subscript, and value buffers */
-	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
-	YDB_STRLIT_TO_BUFFER(&subscr[0], SUBSCR1);
-	YDB_STRLIT_TO_BUFFER(&subscr[1], SUBSCR2);
-	YDB_STRLIT_TO_BUFFER(&value1, VALUE1);
-	YDB_STRLIT_TO_BUFFER(&value2, VALUE2);
-	YDB_STRLIT_TO_BUFFER(&value3, VALUE3);
+	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
+	YDB_LITERAL_TO_BUFFER(SUBSCR1, &subscr[0]);
+	YDB_LITERAL_TO_BUFFER(SUBSCR2, &subscr[1]);
+	YDB_LITERAL_TO_BUFFER(VALUE1, &value1);
+	YDB_LITERAL_TO_BUFFER(VALUE2, &value2);
+	YDB_LITERAL_TO_BUFFER(VALUE3, &value3);
 
 	/* Note - no call to ydb_init() to verify it happens automatically */
 

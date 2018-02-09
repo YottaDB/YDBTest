@@ -28,7 +28,7 @@ int main()
 
 	printf("### Test error scenarios in ydb_data_s() of Intrinsic Special Variables ###\n\n"); fflush(stdout);
 	/* Initialize varname and value buffers */
-	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
+	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
 
 	printf("# Attempting ydb_data_s() of ISV should issue UNIMPLOP error\n"); fflush(stdout);
 	status = ydb_data_s(&basevar, 0, NULL, &ret_value);
