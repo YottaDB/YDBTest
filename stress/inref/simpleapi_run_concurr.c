@@ -886,7 +886,7 @@ void	m_EXAM_randfill(char *pos, ydb_buffer_t *vcorr, ydb_buffer_t *vcomp)
 	int	status;
 
 	/* i vcorr=vcomp  q */
-	if (YDB_BUFFER_IS_IDENTICAL(vcorr, vcomp))
+	if (YDB_BUFFER_IS_SAME(vcorr, vcomp))
 		return;
 
 	/* w " ** FAIL verifying global ",pos,! */
