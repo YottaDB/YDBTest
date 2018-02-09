@@ -86,45 +86,45 @@ zwrarg=""
 
 # Test of VARNAMEINVALID error
 Attempting set of bad basevar (% in middle of name) B%dbasevarInvChar
-ydb_set_s() [a]: 151027746,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+ydb_set_s() [a]: 151027762,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
 Attempting set of bad basevar (> 31 characters) Verylongbasevarthatexceedsmaxlength
-ydb_set_s() [b]: 151027746,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+ydb_set_s() [b]: 151027762,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
 Attempting set of bad basevar (first letter in name is digit) 1namestartswithdigit
-ydb_set_s() [c]: 151027746,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+ydb_set_s() [c]: 151027762,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
 # Test of MAXNRSUBSCRIPTS error
 Attempting set of basevar with 32 subscripts
 ydb_set_s() [d]: 150373282,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 # Test of MINNRSUBSCRIPTS error
 Attempting set of basevar with -1 subscripts
-ydb_set_s() [e]: 151027770,%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
+ydb_set_s() [e]: 151027786,%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
 # Test of PARAMINVALID error in value parameter
 Attempting set with value->len_alloc=0 and value->len_used=1 : Expect PARAMINVALID error
-ydb_set_s() [f]: 151027754,%YDB-E-PARAMINVALID, Invalid value parameter specified in ydb_set_s() call
+ydb_set_s() [f]: 151027770,%YDB-E-PARAMINVALID, Invalid value parameter specified in ydb_set_s() call
 Attempting set with value->len_alloc=0 and value->len_used=0 : Expect NO PARAMINVALID error
 Attempting set with value->len_alloc=1 and value->len_used=0 : Expect NO PARAMINVALID error
 Attempting set with value->len_alloc=1 and value->len_used=1 : Expect NO PARAMINVALID error
 Attempting set with value->buf_addr=NULL and value->len_used=1 : Expect PARAMINVALID error
-ydb_set_s() [j]: 151027754,%YDB-E-PARAMINVALID, Invalid value parameter specified in ydb_set_s() call
+ydb_set_s() [j]: 151027770,%YDB-E-PARAMINVALID, Invalid value parameter specified in ydb_set_s() call
 Attempting set with value->buf_addr=NULL and value->len_used=0 : Expect NO PARAMINVALID error
 # Test of SUBSARRAYNULL error
 Attempting set of basevar with NULL subsarray parameter. Expect SUBSARRAYNULL error
-ydb_set_s() [l]: 151027778,%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL in ydb_set_s() call
+ydb_set_s() [l]: 151027794,%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL in ydb_set_s() call
 # Test of PARAMINVALID error in subsarray parameter
 Attempting set with subsarray[0].len_alloc=0 and subsarray[0].len_used=2 : Expect PARAMINVALID error
-ydb_set_s() [m]: 151027754,%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_set_s() call
+ydb_set_s() [m]: 151027770,%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_set_s() call
 Attempting set with subsarray[0].len_alloc=0 and subsarray[0].len_used=0 : Expect NO PARAMINVALID error
 Attempting set with subsarray[0].len_alloc=1 and subsarray[0].len_used=0 : Expect NO PARAMINVALID error
 Attempting set with subsarray[0].len_alloc=1 and subsarray[0].len_used=1 : Expect NO PARAMINVALID error
 Attempting set with subscr32[0].buf_addr=NULL and subscr32[0].len_used=1 : Expect PARAMINVALID error
-ydb_set_s() [q]: 151027754,%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_set_s() call
+ydb_set_s() [q]: 151027770,%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_set_s() call
 Attempting set with subscr32[0].buf_addr=NULL and subscr32[0].len_used=0 : Expect NO PARAMINVALID error
 Attempting set with subsarray[3].len_alloc=0 and subsarray[3].len_used=2 : Expect PARAMINVALID error
-ydb_set_s() [m]: 151027754,%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_set_s() call
+ydb_set_s() [m]: 151027770,%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_set_s() call
 Attempting set with subsarray[3].len_alloc=0 and subsarray[3].len_used=0 : Expect NO PARAMINVALID error
 Attempting set with subsarray[3].len_alloc=1 and subsarray[3].len_used=0 : Expect NO PARAMINVALID error
 Attempting set with subsarray[3].len_alloc=1 and subsarray[3].len_used=1 : Expect NO PARAMINVALID error
 Attempting set with subscr32[3].buf_addr=NULL and subscr32[3].len_used=1 : Expect PARAMINVALID error
-ydb_set_s() [q]: 151027754,%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_set_s() call
+ydb_set_s() [q]: 151027770,%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_set_s() call
 Attempting set with subscr32[3].buf_addr=NULL and subscr32[3].len_used=0 : Expect NO PARAMINVALID error
 # Demonstrate our progress by executing a ZWRITE in a call-in
 baselv=""
