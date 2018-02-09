@@ -1,0 +1,265 @@
+###################################################################
+Test various issues identified with the READ_ONLY db characteristic (new feature in GT.M V6.3-003)
+###################################################################
+
+# Create database with READ-WRITE permissions and READ_ONLY flag
+###################################################################
+
+# Test that READ_ONLY database with READ-WRITE permissions works fine even after argumentless mupip rundown
+# Test that help database works fine even after argumentless rundown
+
+GTM>
+Open the READ_ONLY database mumps.dat
+
+GTM>
+Open the help database
+
+GTM>
+Concurrently run argumentless MUPIP RUNDOWN
+
+GTM>
+Expect no errors while halting out
+GTM>
+
+GTM>
+
+# Test that READ_ONLY database works fine after a MUPIP command that gets standalone access
+
+GTM>
+Open the READ_ONLY database mumps.dat. Expect no errors during open
+
+GTM>
+Expect no errors while halting out
+GTM>
+
+GTM>
+
+# Test that ftok semaphore is not left around after halt from a READ_ONLY database
+
+GTM>
+Open the READ_ONLY database mumps.dat. Expect no errors during open
+
+GTM>
+Expect no errors while halting out
+GTM>
+
+GTM>
+
+# Test for cases where READONLYNOSTATS error should and should not be issued
+  --> Try setting STATS on a database that has READ_ONLY already set. This should error out.
+%YDB-E-READONLYNOSTATS, Read-only and Statistics sharing cannot both be enabled on database
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+  --> Try setting READ_ONLY on a database that has STATS already set. This should error out.
+Database file mumps.dat is no longer read-only
+Database file mumps.dat now has sharing of gvstats set to  TRUE
+%YDB-E-READONLYNOSTATS, Read-only and Statistics sharing cannot both be enabled on database
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+  --> Try setting READ_ONLY, STATS and MM on a database at the same time. This should error out.
+Database file mumps.dat is no longer read-only
+Database file mumps.dat now has sharing of gvstats set to FALSE
+%YDB-E-READONLYNOSTATS, Read-only and Statistics sharing cannot both be enabled on database
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+  --> Try setting READ_ONLY, STATS and BG on a database at the same time. This should error out.
+Database file mumps.dat is no longer read-only
+Database file mumps.dat now has sharing of gvstats set to FALSE
+%GTM-E-READONLYNOBG, Read-only cannot be enabled on non-MM databases
+%YDB-E-READONLYNOSTATS, Read-only and Statistics sharing cannot both be enabled on database
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+  --> Try setting READ_ONLY and NOSTATS on a database at the same time. This should NOT error out.
+Database file mumps.dat is now read-only
+Database file mumps.dat now has sharing of gvstats set to FALSE
+  --> Try setting NOREAD_ONLY and STATS on a database at the same time. This should NOT error out.
+Database file mumps.dat is no longer read-only
+Database file mumps.dat now has sharing of gvstats set to  TRUE
+  --> Try setting NOREAD_ONLY and NOSTATS on a database at the same time. This should NOT error out.
+Database file mumps.dat is no longer read-only
+Database file mumps.dat now has sharing of gvstats set to FALSE
+  --> Try setting READ_ONLY on a database that has NOSTATS already set. This should NOT error out.
+Database file mumps.dat now has sharing of gvstats set to FALSE
+Database file mumps.dat is now read-only
+  --> Try setting STATS on a database that has NOREAD_ONLY already set. This should NOT error out.
+Database file mumps.dat is no longer read-only
+Database file mumps.dat now has sharing of gvstats set to  TRUE
+
+# Test for cases where READONLYNOBG error should and should not be issued
+  --> Try setting BG on a database that has READ_ONLY already set. This should error out.
+Database file mumps.dat is now read-only
+Database file mumps.dat now has sharing of gvstats set to FALSE
+%GTM-E-READONLYNOBG, Read-only cannot be enabled on non-MM databases
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+  --> Try setting READ_ONLY on a database that has BG already set. This should error out.
+Database file mumps.dat now has BG access method
+Database file mumps.dat is no longer read-only
+%GTM-E-READONLYNOBG, Read-only cannot be enabled on non-MM databases
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+  --> Try setting READ_ONLY and BG on a database at the same time. This should error out.
+Database file mumps.dat now has MM access method
+Database file mumps.dat is no longer read-only
+%GTM-E-READONLYNOBG, Read-only cannot be enabled on non-MM databases
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+  --> Try setting NOREAD_ONLY and BG on a database at the same time. This should not error.
+Database file mumps.dat now has BG access method
+Database file mumps.dat is no longer read-only
+  --> Try setting READ_ONLY and MM on a database at the same time. This should not error.
+Database file mumps.dat now has MM access method
+Database file mumps.dat is now read-only
+  --> Try setting NOREAD_ONLY and MM on a database at the same time. This should not error.
+Database file mumps.dat now has MM access method
+Database file mumps.dat is no longer read-only
+  --> Try setting READ_ONLY on a database that has MM already set. This should NOT error out.
+Database file mumps.dat is now read-only
+  --> Try setting BG on a database that has NOREAD_ONLY already set. This should NOT error out.
+Database file mumps.dat is no longer read-only
+Database file mumps.dat now has BG access method
+
+# Test for cases where READONLYLKFAIL error should be issued
+  --> Test of READONLYLKFAIL error from MUPIP SET
+
+GTM>
+Open the READ_ONLY database mumps.dat.
+
+GTM>
+Concurrently run argumentless MUPIP SET -NOREAD_ONLY. It should error out
+%YDB-E-READONLYLKFAIL, Failed to get exclusive lock on READ_ONLY database file mumps.dat
+%SYSTEM-E-ENO11, Resource temporarily unavailable
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+
+GTM>
+Expect no errors while halting out
+GTM>
+
+GTM>
+  --> Test of READONLYLKFAIL error from a non-MUPIP-SET process
+%YDB-E-READONLYLKFAIL, Failed to get shared lock on READ_ONLY database file ##TEST_PATH##/mumps.dat
+%SYSTEM-E-ENO11, Resource temporarily unavailable
+
+# Create database with READ-ONLY permissions and READ_ONLY flag
+###################################################################
+
+# Test that READ_ONLY database with READ-ONLY permissions works fine even after argumentless mupip rundown
+# Test that help database works fine even after argumentless rundown
+
+GTM>
+Open the READ_ONLY database mumps.dat
+
+GTM>
+Open the help database
+
+GTM>
+Concurrently run argumentless MUPIP RUNDOWN
+
+GTM>
+Expect no errors while halting out
+GTM>
+
+GTM>
+
+# Test that READ_ONLY database works fine after a MUPIP command that gets standalone access
+
+GTM>
+Open the READ_ONLY database mumps.dat. Expect no errors during open
+
+GTM>
+Expect no errors while halting out
+GTM>
+
+GTM>
+
+# Test that ftok semaphore is not left around after halt from a READ_ONLY database
+
+GTM>
+Open the READ_ONLY database mumps.dat. Expect no errors during open
+
+GTM>
+Expect no errors while halting out
+GTM>
+
+GTM>
+
+# Test for cases where READONLYNOSTATS error should and should not be issued
+  --> Try setting STATS on a database that has READ_ONLY already set. This should error out.
+%YDB-E-READONLYNOSTATS, Read-only and Statistics sharing cannot both be enabled on database
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+  --> Try setting READ_ONLY on a database that has STATS already set. This should error out.
+Database file ##TEST_PATH##/mumps.dat is no longer read-only
+Database file ##TEST_PATH##/mumps.dat now has sharing of gvstats set to  TRUE
+%YDB-E-READONLYNOSTATS, Read-only and Statistics sharing cannot both be enabled on database
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+  --> Try setting READ_ONLY, STATS and MM on a database at the same time. This should error out.
+Database file ##TEST_PATH##/mumps.dat is no longer read-only
+Database file ##TEST_PATH##/mumps.dat now has sharing of gvstats set to FALSE
+%YDB-E-READONLYNOSTATS, Read-only and Statistics sharing cannot both be enabled on database
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+  --> Try setting READ_ONLY, STATS and BG on a database at the same time. This should error out.
+Database file ##TEST_PATH##/mumps.dat is no longer read-only
+Database file ##TEST_PATH##/mumps.dat now has sharing of gvstats set to FALSE
+%GTM-E-READONLYNOBG, Read-only cannot be enabled on non-MM databases
+%YDB-E-READONLYNOSTATS, Read-only and Statistics sharing cannot both be enabled on database
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+  --> Try setting READ_ONLY and NOSTATS on a database at the same time. This should NOT error out.
+Database file ##TEST_PATH##/mumps.dat is now read-only
+Database file ##TEST_PATH##/mumps.dat now has sharing of gvstats set to FALSE
+  --> Try setting NOREAD_ONLY and STATS on a database at the same time. This should NOT error out.
+Database file ##TEST_PATH##/mumps.dat is no longer read-only
+Database file ##TEST_PATH##/mumps.dat now has sharing of gvstats set to  TRUE
+  --> Try setting NOREAD_ONLY and NOSTATS on a database at the same time. This should NOT error out.
+Database file ##TEST_PATH##/mumps.dat is no longer read-only
+Database file ##TEST_PATH##/mumps.dat now has sharing of gvstats set to FALSE
+  --> Try setting READ_ONLY on a database that has NOSTATS already set. This should NOT error out.
+Database file ##TEST_PATH##/mumps.dat now has sharing of gvstats set to FALSE
+Database file ##TEST_PATH##/mumps.dat is now read-only
+  --> Try setting STATS on a database that has NOREAD_ONLY already set. This should NOT error out.
+Database file ##TEST_PATH##/mumps.dat is no longer read-only
+Database file ##TEST_PATH##/mumps.dat now has sharing of gvstats set to  TRUE
+
+# Test for cases where READONLYNOBG error should and should not be issued
+  --> Try setting BG on a database that has READ_ONLY already set. This should error out.
+Database file ##TEST_PATH##/mumps.dat is now read-only
+Database file ##TEST_PATH##/mumps.dat now has sharing of gvstats set to FALSE
+%GTM-E-READONLYNOBG, Read-only cannot be enabled on non-MM databases
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+  --> Try setting READ_ONLY on a database that has BG already set. This should error out.
+Database file ##TEST_PATH##/mumps.dat now has BG access method
+Database file ##TEST_PATH##/mumps.dat is no longer read-only
+%GTM-E-READONLYNOBG, Read-only cannot be enabled on non-MM databases
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+  --> Try setting READ_ONLY and BG on a database at the same time. This should error out.
+Database file ##TEST_PATH##/mumps.dat now has MM access method
+Database file ##TEST_PATH##/mumps.dat is no longer read-only
+%GTM-E-READONLYNOBG, Read-only cannot be enabled on non-MM databases
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+  --> Try setting NOREAD_ONLY and BG on a database at the same time. This should not error.
+Database file ##TEST_PATH##/mumps.dat now has BG access method
+Database file ##TEST_PATH##/mumps.dat is no longer read-only
+  --> Try setting READ_ONLY and MM on a database at the same time. This should not error.
+Database file ##TEST_PATH##/mumps.dat now has MM access method
+Database file ##TEST_PATH##/mumps.dat is now read-only
+  --> Try setting NOREAD_ONLY and MM on a database at the same time. This should not error.
+Database file ##TEST_PATH##/mumps.dat now has MM access method
+Database file ##TEST_PATH##/mumps.dat is no longer read-only
+  --> Try setting READ_ONLY on a database that has MM already set. This should NOT error out.
+Database file ##TEST_PATH##/mumps.dat is now read-only
+  --> Try setting BG on a database that has NOREAD_ONLY already set. This should NOT error out.
+Database file ##TEST_PATH##/mumps.dat is no longer read-only
+Database file ##TEST_PATH##/mumps.dat now has BG access method
+
+# Test for cases where READONLYLKFAIL error should be issued
+  --> Test of READONLYLKFAIL error from MUPIP SET
+
+GTM>
+Open the READ_ONLY database mumps.dat.
+
+GTM>
+Concurrently run argumentless MUPIP SET -NOREAD_ONLY. It should error out
+%YDB-E-READONLYLKFAIL, Failed to get exclusive lock on READ_ONLY database file ##TEST_PATH##/mumps.dat
+%SYSTEM-E-ENO11, Resource temporarily unavailable
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+
+GTM>
+Expect no errors while halting out
+GTM>
+
+GTM>
+  --> Test of READONLYLKFAIL error from a non-MUPIP-SET process
+%YDB-E-READONLYLKFAIL, Failed to get shared lock on READ_ONLY database file ##TEST_PATH##/mumps.dat
+%SYSTEM-E-ENO11, Resource temporarily unavailable
