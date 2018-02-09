@@ -84,9 +84,9 @@ lvnsetstresshelper	;
 	write "  ydb_buffer_t value;",!
 	write "  ydb_buffer_t subscr["_nsubs_"];",!
 	write "",!
-	write "  YDB_STRLIT_TO_BUFFER(&basevar, "_$zwrite(varname)_");",!
-	write "  YDB_STRLIT_TO_BUFFER(&value, "_$$forcequote($zwrite(value))_");",!
-	for i=0:1:(nsubs-1) write "  YDB_STRLIT_TO_BUFFER(&subscr["_i_"], "_$$forcequote($zwrite(subs((i+1))))_");",!
+	write "  YDB_LITERAL_TO_BUFFER("_$zwrite(varname)_", &basevar);",!
+	write "  YDB_LITERAL_TO_BUFFER("_$$forcequote($zwrite(value))_", &value);",!
+	for i=0:1:(nsubs-1) write "  YDB_LITERAL_TO_BUFFER("_$$forcequote($zwrite(subs((i+1))))_", &subscr["_i_"]);",!
 	write "",!
 	write "  status = ydb_set_s(&basevar, "_nsubs_", subscr, &value);",!
 	write "  if (YDB_OK != status) { ydb_zstatus(errbuf, ERRBUF_SIZE); printf(""ydb_set_s() : %s\n"", errbuf); fflush(stdout); }",!

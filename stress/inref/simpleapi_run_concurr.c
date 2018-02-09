@@ -98,8 +98,8 @@ int main(int argc, char *argv[])
 	process_id = getpid();
 
 	/* set iterate=times (where times is specified in argv[1]) : run+1^concurr */
-	YDB_STRLIT_TO_BUFFER(&ylcl_iterate, "iterate");
-	YDB_STR_TO_BUFFER(&value, argv[1]);
+	YDB_LITERAL_TO_BUFFER("iterate", &ylcl_iterate);
+	YDB_STRING_TO_BUFFER(argv[1], &value);
 	status = ydb_set_s(&ylcl_iterate, 0, NULL, &value);
 	assert(YDB_OK == status);
 
@@ -123,16 +123,16 @@ int main(int argc, char *argv[])
 	assert(nbytes < value.len_alloc);
 
 	/* SET localinstance=^instance : stress^stress */
-	YDB_STRLIT_TO_BUFFER(&ygbl_instance, "^instance");
+	YDB_LITERAL_TO_BUFFER("^instance", &ygbl_instance);
 	status = ydb_get_s(&ygbl_instance, 0, NULL, &value);
 	assert(YDB_OK == status);
-	YDB_STRLIT_TO_BUFFER(&ylcl_localinstance, "localinstance");
+	YDB_LITERAL_TO_BUFFER("localinstance", &ylcl_localinstance);
 	status = ydb_set_s(&ylcl_localinstance, 0, NULL, &value);
 	assert(YDB_OK == status);
 
 	/* Initialize ydb_buffer_t structures for M global variables that we will use */
-	YDB_STRLIT_TO_BUFFER(&ygbl_permit, "^permit");
-	YDB_STRLIT_TO_BUFFER(&ygbl_PID, "^PID");
+	YDB_LITERAL_TO_BUFFER("^permit", &ygbl_permit);
+	YDB_LITERAL_TO_BUFFER("^PID", &ygbl_PID);
 
 	status = ydb_lock_incr_s(LOCK_TIMEOUT, &ygbl_permit, 0, NULL);
 	assert(YDB_OK == status);
@@ -242,7 +242,7 @@ int	m_job_stress(void)
 	assert(nbytes < value.len_alloc);
 
 	/* SET jobno=child# : job^stress */
-	YDB_STRLIT_TO_BUFFER(&ylcl_jobno, "jobno");
+	YDB_LITERAL_TO_BUFFER("jobno", &ylcl_jobno);
 	value.len_used = sprintf(value.buf_addr, "%d", child);
 	status = ydb_set_s(&ylcl_jobno, 0, NULL, &value);
 	assert(YDB_OK == status);
@@ -271,14 +271,14 @@ int	m_job_stress(void)
 	iterate = atoi(value.buf_addr);
 
 	/* Define needed M local variables */
-	YDB_STRLIT_TO_BUFFER(&ylcl_efill, "efill");
-	YDB_STRLIT_TO_BUFFER(&ylcl_ffill, "ffill");
-	YDB_STRLIT_TO_BUFFER(&ylcl_gfill, "gfill");
-	YDB_STRLIT_TO_BUFFER(&ylcl_hfill, "hfill");
-	YDB_STRLIT_TO_BUFFER(&ylcl_loop, "loop");
+	YDB_LITERAL_TO_BUFFER("efill", &ylcl_efill);
+	YDB_LITERAL_TO_BUFFER("ffill", &ylcl_ffill);
+	YDB_LITERAL_TO_BUFFER("gfill", &ylcl_gfill);
+	YDB_LITERAL_TO_BUFFER("hfill", &ylcl_hfill);
+	YDB_LITERAL_TO_BUFFER("loop", &ylcl_loop);
 
 	/* Define needed M global variables */
-	YDB_STRLIT_TO_BUFFER(&ygbl_lasti, "^lasti");
+	YDB_LITERAL_TO_BUFFER("^lasti", &ygbl_lasti);
 
 	/* NEW loop */
 	status = ydb_delete_s(&ylcl_loop, 0, NULL, YDB_DEL_TREE);
@@ -372,7 +372,7 @@ int	job_stress_tpfn(int *loop_ptr)
 		return status;
 
 	/* if $TRESTART WRITE "TRESTART = ",$TRESTART," For Loop=",loop," TLEVEL=",$TLEVEL,! */
-	YDB_STRLIT_TO_BUFFER(&yisv_trestart, "$trestart");
+	YDB_LITERAL_TO_BUFFER("$trestart", &yisv_trestart);
 	status = ydb_get_s(&yisv_trestart, 0, NULL, &value);
 	assert(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
@@ -381,7 +381,7 @@ int	job_stress_tpfn(int *loop_ptr)
 	if (trestart)
 	{
 		assert(NTP != tpflag);
-		YDB_STRLIT_TO_BUFFER(&yisv_tlevel, "$tlevel");
+		YDB_LITERAL_TO_BUFFER("$tlevel", &yisv_tlevel);
 		status = ydb_get_s(&yisv_tlevel, 0, NULL, &value);
 		assert(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
@@ -411,7 +411,7 @@ int	m_randfill(act_t act, int pno, int iter)
 	int		status;
 
 	/* Get root(pno) */
-	YDB_STRLIT_TO_BUFFER(&ygbl_root, "^root");
+	YDB_LITERAL_TO_BUFFER("^root", &ygbl_root);
 	subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d", pno);
 	status = ydb_get_s(&ygbl_root, 1, subscr, &value);
 	if (YDB_TP_RESTART == status)
@@ -421,7 +421,7 @@ int	m_randfill(act_t act, int pno, int iter)
 	root = atoi(value.buf_addr);
 
 	/* Get ^prime */
-	YDB_STRLIT_TO_BUFFER(&ygbl_prime, "^prime");
+	YDB_LITERAL_TO_BUFFER("^prime", &ygbl_prime);
 	status = ydb_get_s(&ygbl_prime, 0, NULL, &value);
 	if (YDB_TP_RESTART == status)
 		return status;
@@ -450,36 +450,36 @@ int	m_filling_randfill(act_t act, int prime, int root, int iter)
 	tmp2.len_alloc = sizeof(tmp2buff);
 
 	/* set ERR=0 */
-	YDB_STRLIT_TO_BUFFER(&ylcl_ERR, "ERR");
+	YDB_LITERAL_TO_BUFFER("ERR", &ylcl_ERR);
 	value.len_used = sprintf(value.buf_addr, "%d", 0);
 	status = ydb_set_s(&ylcl_ERR, 0, NULL, &value);
 	assert(YDB_OK == status);
 
 	/* set MAXERR=10 */
-	YDB_STRLIT_TO_BUFFER(&ylcl_MAXERR, "MAXERR");
+	YDB_LITERAL_TO_BUFFER("MAXERR", &ylcl_MAXERR);
 	value.len_used = sprintf(value.buf_addr, "%d", 10);
 	status = ydb_set_s(&ylcl_MAXERR, 0, NULL, &value);
 	assert(YDB_OK == status);
 
 	/* set ndx=1 */
-	YDB_STRLIT_TO_BUFFER(&ylcl_ndx, "ndx");
+	YDB_LITERAL_TO_BUFFER("ndx", &ylcl_ndx);
 	ndx = 1;
 	value.len_used = sprintf(value.buf_addr, "%d", ndx);
 	status = ydb_set_s(&ylcl_ndx, 0, NULL, &value);
 	assert(YDB_OK == status);
 
-	YDB_STRLIT_TO_BUFFER(&ylcl_obj, "obj");
+	YDB_LITERAL_TO_BUFFER("obj", &ylcl_obj);
 
-	YDB_STRLIT_TO_BUFFER(&ygbl_cust, "^cust");
-	YDB_STRLIT_TO_BUFFER(&ygbl_afill, "^afill");
-	YDB_STRLIT_TO_BUFFER(&ygbl_b, "^b");
-	YDB_STRLIT_TO_BUFFER(&ygbl_cfill, "^cfill");
-	YDB_STRLIT_TO_BUFFER(&ygbl_dfill, "^dfill");
-	YDB_STRLIT_TO_BUFFER(&ygbl_e, "^e");
-	YDB_STRLIT_TO_BUFFER(&ygbl_efill, "^efill");
-	YDB_STRLIT_TO_BUFFER(&ygbl_ffill, "^ffill");
-	YDB_STRLIT_TO_BUFFER(&ygbl_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, "^bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-	YDB_STRLIT_TO_BUFFER(&ygbl_pct1, "^%1");
+	YDB_LITERAL_TO_BUFFER("^cust", &ygbl_cust);
+	YDB_LITERAL_TO_BUFFER("^afill", &ygbl_afill);
+	YDB_LITERAL_TO_BUFFER("^b", &ygbl_b);
+	YDB_LITERAL_TO_BUFFER("^cfill", &ygbl_cfill);
+	YDB_LITERAL_TO_BUFFER("^dfill", &ygbl_dfill);
+	YDB_LITERAL_TO_BUFFER("^e", &ygbl_e);
+	YDB_LITERAL_TO_BUFFER("^efill", &ygbl_efill);
+	YDB_LITERAL_TO_BUFFER("^ffill", &ygbl_ffill);
+	YDB_LITERAL_TO_BUFFER("^bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", &ygbl_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb);
+	YDB_LITERAL_TO_BUFFER("^%1", &ygbl_pct1);
 
 	switch(act)
 	{

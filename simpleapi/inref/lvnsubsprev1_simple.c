@@ -36,13 +36,13 @@ int main()
 
 	printf("### Test simple ydb_subscript_previous_s() of Local Variables ###\n"); fflush(stdout);
 	/* Initialize varname, subscript, and value buffers */
-	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
-	YDB_STRLIT_TO_BUFFER(&prevvar, PREVVAR);
-	YDB_STRLIT_TO_BUFFER(&subscr[0], SUBSCR1);
-	YDB_STRLIT_TO_BUFFER(&subscr[1], SUBSCR2);
-	YDB_STRLIT_TO_BUFFER(&value1, VALUE1);
-	YDB_STRLIT_TO_BUFFER(&value2, VALUE2);
-	YDB_STRLIT_TO_BUFFER(&value3, VALUE3);
+	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
+	YDB_LITERAL_TO_BUFFER(PREVVAR, &prevvar);
+	YDB_LITERAL_TO_BUFFER(SUBSCR1, &subscr[0]);
+	YDB_LITERAL_TO_BUFFER(SUBSCR2, &subscr[1]);
+	YDB_LITERAL_TO_BUFFER(VALUE1, &value1);
+	YDB_LITERAL_TO_BUFFER(VALUE2, &value2);
+	YDB_LITERAL_TO_BUFFER(VALUE3, &value3);
 	ret_value.buf_addr = retvaluebuff;
 	ret_value.len_alloc = sizeof(retvaluebuff);
 	ret_value.len_used = 0;
@@ -81,7 +81,7 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	YDB_STRLIT_TO_BUFFER(&prevsubscr[0], PREVSUBSCR1);
+	YDB_LITERAL_TO_BUFFER(PREVSUBSCR1, &prevsubscr[0]);
 	status = ydb_set_s(&basevar, 1, prevsubscr, &value2);
 	if (YDB_OK != status)
 	{
@@ -100,7 +100,7 @@ int main()
 		return YDB_OK;
 	}
 	prevsubscr[0] = subscr[0];
-	YDB_STRLIT_TO_BUFFER(&prevsubscr[1], PREVSUBSCR2);
+	YDB_LITERAL_TO_BUFFER(PREVSUBSCR2, &prevsubscr[1]);
 	status = ydb_set_s(&basevar, 2, prevsubscr, &value3);
 	if (YDB_OK != status)
 	{

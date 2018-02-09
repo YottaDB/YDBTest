@@ -35,13 +35,13 @@ int main()
 
 	printf("### Test simple ydb_subscript_next_s() of Global Variables ###\n"); fflush(stdout);
 	/* Initialize varname, subscript, and value buffers */
-	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
-	YDB_STRLIT_TO_BUFFER(&nextvar, NEXTVAR);
-	YDB_STRLIT_TO_BUFFER(&subscr[0], SUBSCR1);
-	YDB_STRLIT_TO_BUFFER(&subscr[1], SUBSCR2);
-	YDB_STRLIT_TO_BUFFER(&value1, VALUE1);
-	YDB_STRLIT_TO_BUFFER(&value2, VALUE2);
-	YDB_STRLIT_TO_BUFFER(&value3, VALUE3);
+	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
+	YDB_LITERAL_TO_BUFFER(NEXTVAR, &nextvar);
+	YDB_LITERAL_TO_BUFFER(SUBSCR1, &subscr[0]);
+	YDB_LITERAL_TO_BUFFER(SUBSCR2, &subscr[1]);
+	YDB_LITERAL_TO_BUFFER(VALUE1, &value1);
+	YDB_LITERAL_TO_BUFFER(VALUE2, &value2);
+	YDB_LITERAL_TO_BUFFER(VALUE3, &value3);
 	ret_value.buf_addr = retvaluebuff;
 	ret_value.len_alloc = sizeof(retvaluebuff);
 	ret_value.len_used = 0;
@@ -80,7 +80,7 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	YDB_STRLIT_TO_BUFFER(&nextsubscr[0], NEXTSUBSCR1);
+	YDB_LITERAL_TO_BUFFER(NEXTSUBSCR1, &nextsubscr[0]);
 	status = ydb_set_s(&basevar, 1, nextsubscr, &value2);
 	if (YDB_OK != status)
 	{
@@ -99,7 +99,7 @@ int main()
 		return YDB_OK;
 	}
 	nextsubscr[0] = subscr[0];
-	YDB_STRLIT_TO_BUFFER(&nextsubscr[1], NEXTSUBSCR2);
+	YDB_LITERAL_TO_BUFFER(NEXTSUBSCR2, &nextsubscr[1]);
 	status = ydb_set_s(&basevar, 2, nextsubscr, &value3);
 	if (YDB_OK != status)
 	{

@@ -29,7 +29,7 @@ int main()
 
 	printf("### Test 31-level (max-deep) subscripts can be got using ydb_subscript_next_s() of Global Variables ###\n"); fflush(stdout);
 	/* Initialize varname, subscript, and value buffers */
-	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
+	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
 	ret_value.buf_addr = retvaluebuff;
 	ret_value.len_alloc = sizeof(retvaluebuff);
 	ret_value.len_used = 0;
@@ -52,7 +52,7 @@ int main()
 		if (0 == subs)
 		{
 			tmpsubs = basevar;
-			YDB_STRLIT_TO_BUFFER(&basevar, NEXTVAR);
+			YDB_LITERAL_TO_BUFFER(NEXTVAR, &basevar);
 		} else
 		{
 			subs2 = subs - 1;

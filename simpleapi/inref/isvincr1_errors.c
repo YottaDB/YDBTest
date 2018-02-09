@@ -27,7 +27,7 @@ int main()
 
 	printf("### Test error scenarios in ydb_incr_s() of Intrinsic Special Variables ###\n\n"); fflush(stdout);
 	/* Initialize varname and value buffers */
-	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
+	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
 	ret_value.buf_addr = retvaluebuff;
 	ret_value.len_alloc = sizeof(retvaluebuff);
 	ret_value.len_used = 0;

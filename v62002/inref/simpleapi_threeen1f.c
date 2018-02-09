@@ -93,22 +93,22 @@ int main(int argc, char *argv[])
 
 	process_id = getpid();
 	/* Initialize all array variable names we are planning to later use */
-	YDB_STRLIT_TO_BUFFER(&ygbl_limits, "^limits");
-	YDB_STRLIT_TO_BUFFER(&ygbl_count, "^count");
-	YDB_STRLIT_TO_BUFFER(&ygbl_reads, "^reads");
-	YDB_STRLIT_TO_BUFFER(&ygbl_updates, "^updates");
-	YDB_STRLIT_TO_BUFFER(&ygbl_highest, "^highest");
-	YDB_STRLIT_TO_BUFFER(&ygbl_result, "^result");
-	YDB_STRLIT_TO_BUFFER(&ygbl_step, "^step");
+	YDB_LITERAL_TO_BUFFER("^limits", &ygbl_limits);
+	YDB_LITERAL_TO_BUFFER("^count", &ygbl_count);
+	YDB_LITERAL_TO_BUFFER("^reads", &ygbl_reads);
+	YDB_LITERAL_TO_BUFFER("^updates", &ygbl_updates);
+	YDB_LITERAL_TO_BUFFER("^highest", &ygbl_highest);
+	YDB_LITERAL_TO_BUFFER("^result", &ygbl_result);
+	YDB_LITERAL_TO_BUFFER("^step", &ygbl_step);
 
-	YDB_STRLIT_TO_BUFFER(&ylcl_di, "di");
-	YDB_STRLIT_TO_BUFFER(&ylcl_ds, "ds");
-	YDB_STRLIT_TO_BUFFER(&ylcl_l1, "l1");
-	YDB_STRLIT_TO_BUFFER(&ylcl_l2, "l2");
-	YDB_STRLIT_TO_BUFFER(&ylcl_reads, "reads");
-	YDB_STRLIT_TO_BUFFER(&ylcl_updates, "updates");
-	YDB_STRLIT_TO_BUFFER(&ylcl_highest, "highest");
-	YDB_STRLIT_TO_BUFFER(&ylcl_currpath, "currpath");
+	YDB_LITERAL_TO_BUFFER("di", &ylcl_di);
+	YDB_LITERAL_TO_BUFFER("ds", &ylcl_ds);
+	YDB_LITERAL_TO_BUFFER("l1", &ylcl_l1);
+	YDB_LITERAL_TO_BUFFER("l2", &ylcl_l2);
+	YDB_LITERAL_TO_BUFFER("reads", &ylcl_reads);
+	YDB_LITERAL_TO_BUFFER("updates", &ylcl_updates);
+	YDB_LITERAL_TO_BUFFER("highest", &ylcl_highest);
+	YDB_LITERAL_TO_BUFFER("currpath", &ylcl_currpath);
 
 	value.buf_addr = valuebuff;
 	value.len_alloc = sizeof(valuebuff);

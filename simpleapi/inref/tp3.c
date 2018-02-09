@@ -41,11 +41,11 @@ int main()
 	ydb_string_t	zwrarg;
 
 	/* Initialize varname, and value buffers */
-	YDB_STRLIT_TO_BUFFER(&basevar, BASEVAR);
-	YDB_STRLIT_TO_BUFFER(&value1, VALUE1);
-	YDB_STRLIT_TO_BUFFER(&x1var, "x1");
-	YDB_STRLIT_TO_BUFFER(&x2var, "x2");
-	YDB_STRLIT_TO_BUFFER(&y2var, "y2");
+	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
+	YDB_LITERAL_TO_BUFFER(VALUE1, &value1);
+	YDB_LITERAL_TO_BUFFER("x1", &x1var);
+	YDB_LITERAL_TO_BUFFER("x2", &x2var);
+	YDB_LITERAL_TO_BUFFER("y2", &y2var);
 
 	status = ydb_tp_s(&gvnset1, NULL, NULL, "x1");
 	assert(YDB_OK == status);
@@ -69,7 +69,7 @@ int gvnset1()
 	/* This TP transaction is done with "x" as local variable to be preserved across restarts. Test that works. */
 
 	/* Display $TRESTART */
-	YDB_STRLIT_TO_BUFFER(&dollar_trestart, "$TRESTART");
+	YDB_LITERAL_TO_BUFFER("$TRESTART", &dollar_trestart);
 	ret_value.buf_addr = ret_value_buff;
 	ret_value.len_used = 0;
 	ret_value.len_alloc = sizeof(ret_value_buff);
