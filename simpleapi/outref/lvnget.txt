@@ -134,22 +134,22 @@ zwrarg=""
 
 # Test of VARNAMEINVALID error
 Attempting get of bad basevar (% in middle of name) B%dbasevarInvChar
-ydb_get_s() [a]: 151027746,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+ydb_get_s() [a]: 151027762,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
 Attempting get of bad basevar (> 31 characters) Verylongbasevarthatexceedsmaxlength
-ydb_get_s() [b]: 151027746,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+ydb_get_s() [b]: 151027762,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
 Attempting get of bad basevar (first letter in name is digit) 1namestartswithdigit
-ydb_get_s() [c]: 151027746,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+ydb_get_s() [c]: 151027762,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
 # Test of MAXNRSUBSCRIPTS error
 Attempting get of basevar with 32 subscripts
 ydb_get_s() [d]: 150373282,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 # Test of MINNRSUBSCRIPTS error
 Attempting get of basevar with -1 subscripts
-ydb_get_s() [e]: 151027770,%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
+ydb_get_s() [e]: 151027786,%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
 # Test of PARAMINVALID error in ret_value parameter
 Attempting get with NULL ret_value : Expect PARAMINVALID error
-ydb_get_s() [f]: 151027754,%YDB-E-PARAMINVALID, NULL ret_value parameter specified in ydb_get_s() call
+ydb_get_s() [f]: 151027770,%YDB-E-PARAMINVALID, NULL ret_value parameter specified in ydb_get_s() call
 Attempting get with ret_value->buf_addr=NULL (ret_value->len_used does not matter) : Expect PARAMINVALID error
-ydb_get_s() [i]: 151027754,%YDB-E-PARAMINVALID, NULL ret_value->buf_addr parameter specified in ydb_get_s() call
+ydb_get_s() [i]: 151027770,%YDB-E-PARAMINVALID, NULL ret_value->buf_addr parameter specified in ydb_get_s() call
 # Test of INVSTRLEN error
 Attempting get with ret_value->len_alloc=0 (ret_value->len_used does not matter) : Expect INVSTRLEN error
 ydb_get_s() [g]: 150375522,%GTM-E-INVSTRLEN, Invalid string length 0: max 0 : ret_value->len_used = 10 after call
@@ -157,23 +157,23 @@ Attempting get with ret_value->len_alloc set to value returned in ret_value->len
 ydb_get_s() [h]: ydb_get_s() returned [A question]
 # Test of SUBSARRAYNULL error
 Attempting get of basevar with NULL subsarray parameter. Expect SUBSARRAYNULL error
-ydb_get_s() [j]: 151027778,%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL in ydb_get_s() call
+ydb_get_s() [j]: 151027794,%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL in ydb_get_s() call
 # Test of PARAMINVALID error in subsarray parameter
 Attempting get with subsarray[0].len_alloc=0 and subsarray[0].len_used=2 : Expect PARAMINVALID error
-ydb_get_s() [k]: 151027754,%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_get_s() call
+ydb_get_s() [k]: 151027770,%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_get_s() call
 Attempting get with subsarray[0].len_alloc=0 and subsarray[0].len_used=0 : Expect NO PARAMINVALID error
 Attempting get with subsarray[0].len_alloc=1 and subsarray[0].len_used=0 : Expect NO PARAMINVALID error
 Attempting get with subsarray[0].len_alloc=1 and subsarray[0].len_used=1 : Expect NO PARAMINVALID error
 Attempting get with subscr32[0].buf_addr=NULL and subscr32[0].len_used=1 : Expect PARAMINVALID error
-ydb_get_s() [p]: 151027754,%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_get_s() call
+ydb_get_s() [p]: 151027770,%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_get_s() call
 Attempting get with subscr32[0].buf_addr=NULL and subscr32[0].len_used=0 : Expect NO PARAMINVALID error
 Attempting get with subsarray[3].len_alloc=0 and subsarray[3].len_used=2 : Expect PARAMINVALID error
-ydb_get_s() [k]: 151027754,%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_get_s() call
+ydb_get_s() [k]: 151027770,%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_get_s() call
 Attempting get with subsarray[3].len_alloc=0 and subsarray[3].len_used=0 : Expect NO PARAMINVALID error
 Attempting get with subsarray[3].len_alloc=1 and subsarray[3].len_used=0 : Expect NO PARAMINVALID error
 Attempting get with subsarray[3].len_alloc=1 and subsarray[3].len_used=1 : Expect NO PARAMINVALID error
 Attempting get with subscr32[3].buf_addr=NULL and subscr32[3].len_used=1 : Expect PARAMINVALID error
-ydb_get_s() [p]: 151027754,%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_get_s() call
+ydb_get_s() [p]: 151027770,%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_get_s() call
 Attempting get with subscr32[3].buf_addr=NULL and subscr32[3].len_used=0 : Expect NO PARAMINVALID error
 # Test of LVUNDEF error from ydb_get_s()
 ydb_get_s() [r]: 150373850,%GTM-E-LVUNDEF, Undefined local variable: (x,x)

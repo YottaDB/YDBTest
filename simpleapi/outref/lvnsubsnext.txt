@@ -181,25 +181,25 @@ mumps.dat
 
 # Test of VARNAMEINVALID error
 Attempting ydb_subscript_next_s() of bad basevar (% in middle of name) B%dbasevarInvChar
-ydb_subscript_next_s() [57]: 151027746,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+ydb_subscript_next_s() [57]: 151027762,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
 Attempting ydb_subscript_next_s() of bad basevar (> 31 characters) Verylongbasevarthatexceedsmaxlength
-ydb_subscript_next_s() [66]: 151027746,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+ydb_subscript_next_s() [66]: 151027762,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
 Attempting ydb_subscript_next_s() of bad basevar (first letter in name is digit) 1namestartswithdigit
-ydb_subscript_next_s() [75]: 151027746,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+ydb_subscript_next_s() [75]: 151027762,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
 # Test of MAXNRSUBSCRIPTS error
 Attempting ydb_subscript_next_s() of basevar with 32 subscripts
 ydb_subscript_next_s() [87]: 150373282,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 # Test of MINNRSUBSCRIPTS error
 Attempting ydb_subscript_next_s() of basevar with -1 subscripts
-ydb_subscript_next_s() [97]: 151027770,%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
+ydb_subscript_next_s() [97]: 151027786,%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
 # Test of PARAMINVALID error in ret_value parameter
 Attempting ydb_subscript_next_s() with ret_value->buf_addr=NULL when return value is a NULL string : Expect NO PARAMINVALID error
 Attempting ydb_subscript_next_s() with NULL ret_value when return value is a NULL string : Expect PARAMINVALID error
-ydb_subscript_next_s() [123]: 151027754,%YDB-E-PARAMINVALID, NULL ret_value parameter specified in ydb_subscript_next_s() call
+ydb_subscript_next_s() [123]: 151027770,%YDB-E-PARAMINVALID, NULL ret_value parameter specified in ydb_subscript_next_s() call
 Attempting ydb_subscript_next_s() with NULL ret_value when return value is a non-NULL string : Expect PARAMINVALID error
-ydb_subscript_next_s() [138]: 151027754,%YDB-E-PARAMINVALID, NULL ret_value parameter specified in ydb_subscript_next_s() call
+ydb_subscript_next_s() [138]: 151027770,%YDB-E-PARAMINVALID, NULL ret_value parameter specified in ydb_subscript_next_s() call
 Attempting ydb_subscript_next_s() with ret_value->buf_addr=NULL when return value is a non-NULL string : Expect PARAMINVALID error
-ydb_subscript_next_s() [148]: 151027754,%YDB-E-PARAMINVALID, NULL ret_value->buf_addr parameter specified in ydb_subscript_next_s() call
+ydb_subscript_next_s() [148]: 151027770,%YDB-E-PARAMINVALID, NULL ret_value->buf_addr parameter specified in ydb_subscript_next_s() call
 # Test of INVSTRLEN error
 Attempting ydb_subscript_next_s() with ret_value->len_alloc=0 : Expect INVSTRLEN error
 ydb_subscript_next_s() [160]: 150375522,%GTM-E-INVSTRLEN, Invalid string length 0: max 0 : ret_value->len_used = 6 after call
@@ -207,23 +207,23 @@ Attempting ydb_subscript_next_s() with ret_value->len_alloc set to value returne
 ydb_subscript_next_s() returned [baselv]
 # Test of SUBSARRAYNULL error
 Attempting ydb_subscript_next_s() of basevar with NULL subsarray parameter. Expect SUBSARRAYNULL error
-ydb_subscript_next_s() [182]: 151027778,%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL in ydb_subscript_next_s() call
+ydb_subscript_next_s() [182]: 151027794,%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL in ydb_subscript_next_s() call
 # Test of PARAMINVALID error in subsarray parameter
 Attempting ydb_subscript_next_s() with subsarray[0].len_alloc=0 and subsarray[0].len_used=2 : Expect PARAMINVALID error
-ydb_subscript_next_s() [197]: 151027754,%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_subscript_next_s() call
+ydb_subscript_next_s() [197]: 151027770,%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_subscript_next_s() call
 Attempting ydb_subscript_next_s() with subsarray[0].len_alloc=0 and subsarray[0].len_used=0 : Expect NO PARAMINVALID error
 Attempting ydb_subscript_next_s() with subsarray[0].len_alloc=1 and subsarray[0].len_used=0 : Expect NO PARAMINVALID error
 Attempting ydb_subscript_next_s() with subsarray[0].len_alloc=1 and subsarray[0].len_used=1 : Expect NO PARAMINVALID error
 Attempting ydb_subscript_next_s() with subscr32[0].buf_addr=NULL and subscr32[0].len_used=1 : Expect PARAMINVALID error
-ydb_subscript_next_s() [258]: 151027754,%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_subscript_next_s() call
+ydb_subscript_next_s() [258]: 151027770,%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_subscript_next_s() call
 Attempting ydb_subscript_next_s() with subscr32[0].buf_addr=NULL and subscr32[0].len_used=0 : Expect NO PARAMINVALID error
 Attempting ydb_subscript_next_s() with subsarray[3].len_alloc=0 and subsarray[3].len_used=2 : Expect PARAMINVALID error
-ydb_subscript_next_s() [197]: 151027754,%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_subscript_next_s() call
+ydb_subscript_next_s() [197]: 151027770,%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_subscript_next_s() call
 Attempting ydb_subscript_next_s() with subsarray[3].len_alloc=0 and subsarray[3].len_used=0 : Expect NO PARAMINVALID error
 Attempting ydb_subscript_next_s() with subsarray[3].len_alloc=1 and subsarray[3].len_used=0 : Expect NO PARAMINVALID error
 Attempting ydb_subscript_next_s() with subsarray[3].len_alloc=1 and subsarray[3].len_used=1 : Expect NO PARAMINVALID error
 Attempting ydb_subscript_next_s() with subscr32[3].buf_addr=NULL and subscr32[3].len_used=1 : Expect PARAMINVALID error
-ydb_subscript_next_s() [258]: 151027754,%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_subscript_next_s() call
+ydb_subscript_next_s() [258]: 151027770,%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_subscript_next_s() call
 Attempting ydb_subscript_next_s() with subscr32[3].buf_addr=NULL and subscr32[3].len_used=0 : Expect NO PARAMINVALID error
 # Test that LVUNDEF error is NOT issued by ydb_subscript_next_s()
 ydb_subscript_next_s() returned []
