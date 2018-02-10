@@ -18,6 +18,11 @@ $echoline
 
 setenv gtm_test_db_format "NO_CHANGE"	# do not switch db format as that will cause incompatibilities with MM
 					# which this test sets the access method to in the early stages.
+# This test requires MM (READ_ONLY requires that access method).
+# So force MM and therefore disable encryption & nobefore as they are incompatible with MM
+setenv acc_meth MM
+setenv test_encryption NON_ENCRYPT
+source $gtm_tst/com/mm_nobefore.csh	# Force NOBEFORE image journaling with MM
 
 # Disable semaphore counter overflow in this test as otherwise we might see DBRDONLY errors in leftover_ipc_cleanup_if_needed.out
 unsetenv gtm_db_counter_sem_incr
@@ -28,6 +33,11 @@ foreach permission ("READ-WRITE" "READ-ONLY")
 	$echoline
 	$gtm_tst/com/dbcreate.csh mumps >& create_$permission.out
 	$MUPIP set -nostats -read_only -acc=MM -reg "*" >& mupipset_$permission.out
+	if ($status) then
+		echo "TEST-E-FAIL : mupip set -nostats -read_only -acc=MM -reg * : failed. Output of command follows"
+		cat mupipset_$permission.out
+		exit -1
+	endif
 	if ($permission == "READ-ONLY") then
 		chmod a-w mumps.dat
 	endif
