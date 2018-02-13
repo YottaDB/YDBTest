@@ -24,9 +24,6 @@ setenv acc_meth MM
 setenv test_encryption NON_ENCRYPT
 source $gtm_tst/com/mm_nobefore.csh	# Force NOBEFORE image journaling with MM
 
-# Disable semaphore counter overflow in this test as otherwise we might see DBRDONLY errors in leftover_ipc_cleanup_if_needed.out
-unsetenv gtm_db_counter_sem_incr
-
 foreach permission ("READ-WRITE" "READ-ONLY")
 	echo ""
 	echo "# Create database with $permission permissions and READ_ONLY flag"
@@ -41,6 +38,7 @@ foreach permission ("READ-WRITE" "READ-ONLY")
 	if ($permission == "READ-ONLY") then
 		chmod a-w mumps.dat
 	endif
+	source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0
 	$gtm_tst/com/backup_dbjnl.csh ${permission}_bak "*.gld *.dat *.mjl* *.repl*" cp nozip	# Take backup for later restore
 	echo ""
 	echo "# Test that READ_ONLY database with $permission permissions works fine even after argumentless mupip rundown"
@@ -53,6 +51,7 @@ foreach permission ("READ-WRITE" "READ-ONLY")
 	quit
 YDB_EOF
 	$gtm_tst/com/dbcheck.csh >& dbcheck_$permission.out
+	source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0
 	$gtm_tst/com/backup_dbjnl.csh ${permission}_bak1 "*.gld *.dat *.mjl* *.repl* *.out*" mv
 
 	echo ""
@@ -65,6 +64,7 @@ YDB_EOF
 	quit
 YDB_EOF
 	$gtm_tst/com/dbcheck.csh >& dbcheck_$permission.out
+	source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0
 	$gtm_tst/com/backup_dbjnl.csh ${permission}_bak2 "*.gld *.dat *.mjl* *.repl* *.out*" mv
 
 	echo ""
@@ -84,6 +84,7 @@ YDB_EOF
 		echo "ipcs after  = $after"
 	endif
 	$gtm_tst/com/dbcheck.csh >& dbcheck_$permission.out
+	source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0
 	$gtm_tst/com/backup_dbjnl.csh ${permission}_bak3 "*.gld *.dat *.mjl* *.repl* *.out*" mv
 
 	echo ""
@@ -121,6 +122,7 @@ YDB_EOF
 	$MUPIP set -noread_only $regorfile
 	$MUPIP set -stats $regorfile
 	$gtm_tst/com/dbcheck.csh >& dbcheck_$permission.out
+	source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0
 	$gtm_tst/com/backup_dbjnl.csh ${permission}_bak4 "*.gld *.dat *.mjl* *.repl* *.out*" mv
 
 	echo ""
@@ -153,6 +155,7 @@ YDB_EOF
 	$MUPIP set -noread_only $regorfile
 	$MUPIP set -access_method=BG $regorfile
 	$gtm_tst/com/dbcheck.csh >& dbcheck_$permission.out
+	source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0
 	$gtm_tst/com/backup_dbjnl.csh ${permission}_bak5 "*.gld *.dat *.mjl* *.repl* *.out*" mv
 
 	echo ""
@@ -183,6 +186,19 @@ YDB_EOF
 	# to get an exclusive lock on the file and running the non-MUPIP-SET command to access the READ_ONLY db.
 	flock -x mumps.dat $ydb_dist/mumps -run %XCMD 'write ^x'
 	$gtm_tst/com/dbcheck.csh >& dbcheck_$permission.out
+	source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0
 	$gtm_tst/com/backup_dbjnl.csh ${permission}_bak6 "*.gld *.dat *.mjl* *.repl* *.out*" mv
+
+	echo ""
+	echo "# Test for multiple processes accessing a READ_ONLY database with ftok semaphore counter overflow"
+	# Note that we do not explicitly set gtm_db_counter_sem_incr to 16K here. That is because we rely
+	# on the test framework to randomly set this env var thereby exercising more codepaths (16K, 8K, 4K, 1)
+	# than just the 16K one.
+	unset noglob	# need * expansion in below line
+	cp ${permission}_bak/* .
+	$ydb_dist/mumps -run readonlysemcntr
+	$gtm_tst/com/dbcheck.csh >& dbcheck_$permission.out
+	source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0
+	$gtm_tst/com/backup_dbjnl.csh ${permission}_bak7 "*.gld *.dat *.mjl* *.repl* *.out*" mv
 end
 
