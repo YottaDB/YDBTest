@@ -16,7 +16,7 @@
 #include "libydberrors.h"	/* for YDB_ERR_* macros */
 
 #include <stdio.h>	/* for "printf" */
-#include <unistd.h>	/* for "sysconf" */
+#include <unistd.h>	/* for "sysconf" and "usleep" */
 #include <stdlib.h>	/* for "atoi" and "drand48" */
 #include <string.h>	/* for "strtok" */
 #include <time.h>	/* for "time" */
@@ -57,7 +57,7 @@ pid_t		process_id;
 char		valuebuff[MAXVALUELEN], pidvaluebuff[MAXVALUELEN], tmpvaluebuff[MAXVALUELEN], subscrbuff[YDB_MAX_SUBS + 1][MAXVALUELEN];
 ydb_buffer_t	value, tmpvalue, pidvalue, subscr[YDB_MAX_SUBS + 1];
 ydb_buffer_t	ylcl_jobcnt, ylcl_fillid, ylcl_istp, ylcl_jobid, ylcl_jobindex;
-ydb_buffer_t	ygbl_pctimptp, ygbl_endloop, ygbl_cntloop, ygbl_cntseq, ygbl_pctsprgdeExcludeGbllist;
+ydb_buffer_t	ygbl_pctimptp, ygbl_endloop, ygbl_cntloop, ygbl_cntseq, ygbl_pctsprgdeExcludeGbllist, ygbl_pctjobwait;
 ydb_buffer_t	yisv_zroutines;
 char		timeString[21];  /* space for "DD-MON-YEAR HH:MM:SS\0" */
 
@@ -98,6 +98,7 @@ int main(int argc, char *argv[])
 	YDB_LITERAL_TO_BUFFER("^cntloop", &ygbl_cntloop);
 	YDB_LITERAL_TO_BUFFER("^cntseq", &ygbl_cntseq);
 	YDB_LITERAL_TO_BUFFER("^%sprgdeExcludeGbllist", &ygbl_pctsprgdeExcludeGbllist);
+	YDB_LITERAL_TO_BUFFER("^%jobwait", &ygbl_pctjobwait);
 	YDB_LITERAL_TO_BUFFER("$zroutines", &yisv_zroutines);
 
 	value.buf_addr = valuebuff;
@@ -418,16 +419,53 @@ int main(int argc, char *argv[])
 		status = ydb_set_s(&ygbl_pctsprgdeExcludeGbllist, 1, subscr, &value);
 		assert(YDB_OK == status);
 	}
-
-	/* ;
-	 * ; When rsh command exits after starting remote jobs, non-detached child processes will also die
-	 * ; So for gtcm_gnp test or multi_machine VMS tests we must use detach
-	 * ; If the terminal is gone after starting child processes, all child can also die
-	 * ; So it is safer to start detached job always
-	 * set jdetach=1		; VMS will start detached jobs
-	 * if ($data(jmaxwait))=0 set jmaxwait=0	; Child process will continue in background. So do not wait, just return.
-	 * do ^job("impjob^imptp",jobcnt,"""""")
+	/* Before forking off children, make sure all buffered IO is flushed out (or else the children would inherit
+	 * the unflushed buffers and will show up duplicated in the children's stdout/stderr.
 	 */
+	fflush(NULL);
+
+	/* Since "jmaxwait" local variable (in com/imptp.m) is undefined at this point, the caller
+	 * will invoke "endtp.csh" later to wait for the children to die. Therefore set ^%jobwait global
+	 * to point to those pids.
+	 */
+	/* set ^%jobwait(jobid,"njobs")=njobs (com/job.m) */
+	subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d", jobid);
+	YDB_COPY_STRING_TO_BUFF("njobs", &subscr[1]);
+	value.len_used = sprintf(value.buf_addr, "%d", jobcnt);
+	status = ydb_set_s(&ygbl_pctjobwait, 2, subscr, &value);
+	assert(YDB_OK == status);
+	/* set ^("jmaxwait")				: com/job.m */
+	YDB_COPY_STRING_TO_BUFF("jmaxwait", &subscr[1]);
+	value.len_used = sprintf(value.buf_addr, "%d", 7200);	/* 7200 value copied from "set jdefwait=7200" in com/job.m */
+	status = ydb_set_s(&ygbl_pctjobwait, 2, subscr, &value);
+	assert(YDB_OK == status);
+	/* set ^("jdefwait")				: com/job.m */
+	YDB_COPY_STRING_TO_BUFF("jdefwait", &subscr[1]);
+	status = ydb_set_s(&ygbl_pctjobwait, 2, subscr, &value);
+	assert(YDB_OK == status);
+	/* set ^("jprint")				: com/job.m */
+	YDB_COPY_STRING_TO_BUFF("jprint", &subscr[1]);
+	value.len_used = sprintf(value.buf_addr, "%d", 0);
+	status = ydb_set_s(&ygbl_pctjobwait, 2, subscr, &value);
+	assert(YDB_OK == status);
+	/* set ^("jroutine")				: com/job.m */
+	YDB_COPY_STRING_TO_BUFF("jroutine", &subscr[1]);
+	YDB_COPY_STRING_TO_BUFF("impjob_imptp", &value);
+	status = ydb_set_s(&ygbl_pctjobwait, 2, subscr, &value);
+	assert(YDB_OK == status);
+	/* set ^("jmjoname")				: com/job.m */
+	YDB_COPY_STRING_TO_BUFF("jmjoname", &subscr[1]);
+	status = ydb_set_s(&ygbl_pctjobwait, 2, subscr, &value);
+	assert(YDB_OK == status);
+	/* set ^("jnoerrchk")				: com/job.m */
+	YDB_COPY_STRING_TO_BUFF("jnoerrchk", &subscr[1]);
+	value.len_used = sprintf(value.buf_addr, "%d", 0);
+	status = ydb_set_s(&ygbl_pctjobwait, 2, subscr, &value);
+	assert(YDB_OK == status);
+	/* Call "ydb_child_init" in parent BEFORE fork to ensure it is a no-op */
+	status = ydb_child_init(NULL);
+	assert(YDB_OK == status);
+	/* do ^job("impjob^imptp",jobcnt,"""""")	: com/imptp.m */
 	for (child = 1; child <= jobcnt; child++)
 	{
 		child_pid[child] = fork();
@@ -436,10 +474,26 @@ int main(int argc, char *argv[])
 		{
 			status = ydb_child_init(NULL);	/* needed in child pid right after a fork() */
 			assert(YDB_OK == status);
+			status = ydb_child_init(NULL);	/* do it again to ensure it is a no-op the second time */
+			assert(YDB_OK == status);
 			impjob(child);	/* this is the child */
 			return YDB_OK;
 		}
+		/* for i=1:1:njobs  set ^(i)=jobindex(i)	: com/job.m */
+		subscr[1].len_used = sprintf(subscr[1].buf_addr, "%d", child);
+		value.len_used = sprintf(value.buf_addr, "%d", child_pid[child]);
+		status = ydb_set_s(&ygbl_pctjobwait, 2, subscr, &value);
+		assert(YDB_OK == status);
 	}
+	/* Call "ydb_child_init" in parent AFTER fork to ensure it is a no-op */
+	status = ydb_child_init(NULL);
+	assert(YDB_OK == status);
+	/* do writecrashfileifneeded			: com/job.m */
+	status = ydb_ci("writecrashfileifneeded");	/* Use call-in for this as it not worth migrating to simpleAPI */
+	assert(YDB_OK == status);
+	/* do writejobinfofileifneeded			: com/job.m */
+	status = ydb_ci("writejobinfofileifneeded");	/* Use call-in for this as it not worth migrating to simpleAPI */
+	assert(YDB_OK == status);
 	/* ; Wait until the first update on all regions happen
 	 * set start=$horolog
 	 * for  set stop=$horolog quit:^cntloop(fillid)  quit:($$^difftime(stop,start)>300)  hang 1
@@ -521,8 +575,9 @@ int	impjob(int childnum)
 	assert(YDB_OK == status);
 
 	/* NARSTODO : Temporarily use call-in until full simpleAPI migration is done */
+	/* NARSTODO : Randomize ydb_ci vs simpleAPI in the child */
 	/* do impjob^imptp */
-	status = ydb_ci("impjob");	/* Use call-in for this as it is a long M routine and not worth migrating to simpleAPI */
+	status = ydb_ci("impjob");
 	assert(YDB_OK == status);
 
 	return YDB_OK;

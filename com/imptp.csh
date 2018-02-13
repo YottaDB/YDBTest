@@ -81,6 +81,8 @@ xyz
 		cat > imptp.xc << CAT_EOF
 getdatinfo: void getdatinfo^imptpxc()
 impjob: void impjob^imptp()
+writecrashfileifneeded: void writecrashfileifneeded^job()
+writejobinfofileifneeded: void writejobinfofileifneeded^job()
 CAT_EOF
 		setenv GTMCI imptp.xc
 		# Run simpleAPI executable
