@@ -133,6 +133,8 @@ GTM>
 %YDB-E-READONLYLKFAIL, Failed to get shared lock on READ_ONLY database file ##TEST_PATH##/mumps.dat
 %SYSTEM-E-ENO11, Resource temporarily unavailable
 
+# Test for multiple processes accessing a READ_ONLY database with ftok semaphore counter overflow
+
 # Create database with READ-ONLY permissions and READ_ONLY flag
 ###################################################################
 
@@ -263,3 +265,5 @@ GTM>
   --> Test of READONLYLKFAIL error from a non-MUPIP-SET process
 %YDB-E-READONLYLKFAIL, Failed to get shared lock on READ_ONLY database file ##TEST_PATH##/mumps.dat
 %SYSTEM-E-ENO11, Resource temporarily unavailable
+
+# Test for multiple processes accessing a READ_ONLY database with ftok semaphore counter overflow
