@@ -484,6 +484,9 @@ int main(int argc, char *argv[])
 		value.len_used = sprintf(value.buf_addr, "%d", child_pid[child]);
 		status = ydb_set_s(&ygbl_pctjobwait, 2, subscr, &value);
 		assert(YDB_OK == status);
+		/* set jobindex(index)=$zjob			: com/job.m */
+		status = ydb_set_s(&ylcl_jobindex, 1, &subscr[1], &value);
+		assert(YDB_OK == status);
 	}
 	/* Call "ydb_child_init" in parent AFTER fork to ensure it is a no-op */
 	status = ydb_child_init(NULL);
