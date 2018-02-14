@@ -557,17 +557,28 @@ int	impjob(int childnum)
 	int	outfd, errfd, newfd;
 	char	outfile[64], errfile[64];
 	int	status;
+	int	jobid;
+	char	*ptr;
 
 	process_id = getpid();
 	pidvalue.len_used = sprintf(pidvalue.buf_addr, "%d", (int)process_id);
 
+	ptr = getenv("gtm_test_jobid");
+	jobid = (NULL != ptr) ? atoi(ptr) : 0;
+
 	/* Set stdout & stderr to child specific files */
-	sprintf(outfile, "impjob_imptp.mjo%d", childnum);
+	if (0 != jobid)
+		sprintf(outfile, "impjob_imptp%d.mjo%d", jobid, childnum);
+	else
+		sprintf(outfile, "impjob_imptp.mjo%d", childnum);
 	outfd = creat(outfile, 0666);
 	assert(-1 != outfd);
 	newfd = dup2(outfd, 1);
 	assert(1 == newfd);
-	sprintf(errfile, "impjob_imptp.mje%d", childnum);
+	if (0 != jobid)
+		sprintf(errfile, "impjob_imptp%d.mje%d", jobid, childnum);
+	else
+		sprintf(errfile, "impjob_imptp.mje%d", childnum);
 	errfd = creat(errfile, 0666);
 	assert(-1 != errfd);
 	newfd = dup2(errfd, 2);
