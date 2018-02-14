@@ -50,13 +50,15 @@ if ("$pidsrc" == "") then
 endif
 # PID for mumps
 if ($gtm_test_jobid != 0) then
-	$tst_awk '$1 ~ /PID/' *{$gtm_test_jobid.mjo}* >&! mpid.txt
+	$tst_awk '$1 ~ /PID/' *${gtm_test_jobid}.mjo* >&! mpid.txt
 else
 	$tst_awk '$1 ~ /PID/' *.mjo*  >&! mpid.txt
 endif
 # this check is introduced to avoid "grep: No match errors" in case of multisite actions which is
 # common for both receiver instance and source instance.In case of receiver there will be no *.mjo* files
 set mpid=`$tst_awk '$2 ~ /^[0-9]+$/ {printf("%s ",$2);}' mpid.txt`
+echo "Contents of mpid.txt (just in case it matters in test failures)" >>& $KILL_LOG
+cat mpid.txt >>& $KILL_LOG
 rm -f mpid.txt >& /dev/null
 setenv pidall "$mpid"
 # in case of MULTISITE - RCVR instance we will have to account for rcvr ipcs as well.
