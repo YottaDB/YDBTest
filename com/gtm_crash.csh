@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -19,7 +22,7 @@ setenv KILL_LOG pkill_${kill_time}.logx
 
 echo "Before Kill >>>>" >>& $KILL_LOG
 $gtm_tst/com/ipcs -a | $grep $USER >>  $KILL_LOG
-$psuser | $grep -E "mupip|mumps" >>& $KILL_LOG
+$psuser | $grep -E "mupip|mumps|simpleapi" >>& $KILL_LOG
 
 # PID for mumps
 set pids=`$tst_awk '$1 ~ /PID/ {print $2}' *${gtm_test_jobid}.mjo*`
@@ -65,6 +68,6 @@ if ($?test_replic && $?gtm_test_fake_enospc) then
 endif
 echo "After Kill >>>>" >>& $KILL_LOG
 $gtm_tst/com/ipcs -a | $grep $USER >>&  $KILL_LOG
-$psuser | $grep -E "mupip|mumps|$pidcheck" >>& $KILL_LOG
+$psuser | $grep -E "mupip|mumps|simpleapi|$pidcheck" >>& $KILL_LOG
 if ($1 == "") echo "GTM processes Killed!"
 #=== End Crash ===
