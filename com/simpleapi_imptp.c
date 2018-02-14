@@ -508,7 +508,7 @@ int main(int argc, char *argv[])
 		status = ydb_get_s(&ygbl_cntloop, 1, subscr, &value);
 		assert(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
-		if (0 == atoi(value.buf_addr))
+		if (0 != atoi(value.buf_addr))
 			break;
 		sleep(1);
 	}
