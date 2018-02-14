@@ -570,8 +570,9 @@ int	impjob(int childnum)
 	newfd = dup2(errfd, 2);
 	assert(2 == newfd);
 
-	/* set jobindex=$j */
-	status = ydb_set_s(&ylcl_jobindex, 0, NULL, &pidvalue);
+	/* set jobindex=index */
+	value.len_used = sprintf(value.buf_addr, "%d", childnum);
+	status = ydb_set_s(&ylcl_jobindex, 0, NULL, &value);
 	assert(YDB_OK == status);
 
 	/* NARSTODO : Temporarily use call-in until full simpleAPI migration is done */
