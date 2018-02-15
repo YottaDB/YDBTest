@@ -498,7 +498,7 @@ void	doblk(int allfirst, int childnum)
 	}
 	/* Update global statistics inside a transaction */
 	tpfn = &tp_gvstatsincr;
-	status = ydb_tp_s(tpfn, NULL, NULL, NULL);
+	status = ydb_tp_s(tpfn, NULL, NULL, 0, NULL);
 	assert(YDB_OK == status);
 
 	/* Release locks to tell parent this parent is done */
@@ -623,7 +623,7 @@ void	dostep(int first, int last)
 			}
 			/* Atomically set maximum */
 			tpfn = &tp_setmaximum;
-			status = ydb_tp_s(tpfn, &i, NULL, NULL);
+			status = ydb_tp_s(tpfn, &i, NULL, 0, NULL);
 			assert(YDB_OK == status);
 			subscr[0].len_used = 0;	/* to start $order */
 			for ( ; ; )

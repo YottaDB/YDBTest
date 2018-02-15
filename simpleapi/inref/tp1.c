@@ -42,7 +42,7 @@ int main()
 	ydb_string_t	zwrarg;
 
 	tpfn = &gvnset;
-	status = ydb_tp_s(tpfn, NULL, NULL, NULL);
+	status = ydb_tp_s(tpfn, NULL, NULL, 0, NULL);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);

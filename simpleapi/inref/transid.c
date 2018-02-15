@@ -45,16 +45,16 @@ int main()
 
 	tpfn = &gvnset;
 	/* TID = "BA" */
-	status = ydb_tp_s(tpfn, NULL, "BA", NULL);
+	status = ydb_tp_s(tpfn, NULL, "BA", 0, NULL);
 	assert(YDB_OK == status);
 	/* TID = "CS" */
-	status = ydb_tp_s(tpfn, NULL, "CS", NULL);
+	status = ydb_tp_s(tpfn, NULL, "CS", 0, NULL);
 	assert(YDB_OK == status);
 	/* TID = "arbitrary str" */
-	status = ydb_tp_s(tpfn, NULL, "any str", NULL);
+	status = ydb_tp_s(tpfn, NULL, "any str", 0, NULL);
 	assert(YDB_OK == status);
 	/* TID = "verylongstr" : Test that TID gets truncated to 8 bytes if input is longer than 8 bytes */
-	status = ydb_tp_s(tpfn, NULL, "verylongstr", NULL);
+	status = ydb_tp_s(tpfn, NULL, "verylongstr", 0, NULL);
 	assert(YDB_OK == status);
 	return YDB_OK;
 }

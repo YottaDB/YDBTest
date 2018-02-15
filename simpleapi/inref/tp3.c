@@ -20,13 +20,13 @@
 #include <signal.h>	/* needed for "kill" in assert */
 #include <unistd.h>	/* needed for "getpid" in assert */
 
-#define BASEVAR "^tp3"
-#define VALUE1	"TP with comma-separated list of variable names to be preserved"
+#define BASEVAR 	"^tp3"
+#define VALUE1		"TP with comma-separated list of variable names to be preserved"
 
 /* Use SIGILL below to generate a core when an assertion fails */
 #define assert(x) ((x) ? 1 : (fprintf(stderr, "Assert failed at %s line %d : %s\n", __FILE__, __LINE__, #x), kill(getpid(), SIGILL)))
 
-ydb_buffer_t	basevar, value1, x1var, x2var, y2var;
+ydb_buffer_t	basevar, value1, x1var, x2var, y2var, starvar;
 
 int	gvnset();
 int	gvnset1();
@@ -37,8 +37,10 @@ int	gvnset4();
 /* Function to test that list of variable names to be preserved (across TP restarts) works fine */
 int main()
 {
-	int		status;
+	int		status, i;
 	ydb_string_t	zwrarg;
+	ydb_buffer_t	varnames[50];
+	char		sprintfbuff[1024], *spfbufptr;
 
 	/* Initialize varname, and value buffers */
 	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
@@ -46,16 +48,26 @@ int main()
 	YDB_LITERAL_TO_BUFFER("x1", &x1var);
 	YDB_LITERAL_TO_BUFFER("x2", &x2var);
 	YDB_LITERAL_TO_BUFFER("y2", &y2var);
+	YDB_LITERAL_TO_BUFFER("*", &starvar);
 
-	status = ydb_tp_s(&gvnset1, NULL, NULL, "x1");
+	status = ydb_tp_s(&gvnset1, NULL, NULL, 1, &x1var);
 	assert(YDB_OK == status);
 	/* NARSTODO: Need to test kills of variables when ydb_kill_s() is available */
 	/* NARSTODO: Need tests for below list of variable names to be preserved */
-	status = ydb_tp_s(&gvnset, NULL, NULL, "x2,y2,x1");
+	varnames[0] = x2var;
+	varnames[1] = y2var;
+	varnames[2] = x1var;
+	status = ydb_tp_s(&gvnset, NULL, NULL, 3, (ydb_buffer_t *)&varnames);
 	assert(YDB_OK == status);
-	status = ydb_tp_s(&gvnset, NULL, NULL, "*");
+	status = ydb_tp_s(&gvnset, NULL, NULL, 1, &starvar);
 	assert(YDB_OK == status);
-	status = ydb_tp_s(&gvnset, NULL, NULL, "x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17,x18,x19,x20,x21,x22,x23,x24,x25,x26,x27,x28,x29,x30,x31,x32,x33,x34,x35,x36,x37,x38,x39,x40,x41,x42,x43,x44,x45,x46,x47,x48,x49,x50");
+	for (i = 0, spfbufptr = sprintfbuff; 50 > i; i++)
+	{	/* Generate ydb_buff_t for each of x1 to x50 */
+		varnames[i].buf_addr = spfbufptr;
+		varnames[i].len_used = varnames[i].len_alloc = sprintf(spfbufptr, "x%i", i + 1);
+		spfbufptr += varnames[i].len_used;
+	}
+	status = ydb_tp_s(&gvnset, NULL, NULL, 50, (ydb_buffer_t *)&varnames);
 	assert(YDB_OK == status);
 	return status;
 }

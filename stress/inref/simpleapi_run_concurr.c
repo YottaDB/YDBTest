@@ -212,6 +212,7 @@ int	m_job_stress(void)
 	char		*tpflagstr[] = {"NTP", "TPR", "TPC"};
 	int		loop, status, iterate;
 	ydb_buffer_t	ylcl_efill, ylcl_ffill, ylcl_gfill, ylcl_hfill, ylcl_loop;
+	ydb_buffer_t	varnames[4];
 
 	process_id = getpid();
 	pidvalue.len_used = sprintf(pidvalue.buf_addr, "%d", (int)process_id);
@@ -284,6 +285,10 @@ int	m_job_stress(void)
 	YDB_LITERAL_TO_BUFFER("gfill", &ylcl_gfill);
 	YDB_LITERAL_TO_BUFFER("hfill", &ylcl_hfill);
 	YDB_LITERAL_TO_BUFFER("loop", &ylcl_loop);
+	varnames[0] = ylcl_efill;
+	varnames[1] = ylcl_ffill;
+	varnames[2] = ylcl_gfill;
+	varnames[3] = ylcl_hfill;
 
 	/* Define needed M global variables */
 	YDB_LITERAL_TO_BUFFER("^lasti", &ygbl_lasti);
@@ -335,7 +340,7 @@ int	m_job_stress(void)
 		/* if tpflag'="NTP" TSTART (efill,ffill,gfill,hfill):(serial:transaction="BA") */
 		if (NTP != tpflag)
 		{
-			status = ydb_tp_s(&job_stress_tpfn, &loop, "BA", "efill,ffill,gfill,hfill");
+			status = ydb_tp_s(&job_stress_tpfn, &loop, "BA", 4, (ydb_buffer_t *)&varnames);
 			assert((YDB_OK == status) || (YDB_TP_ROLLBACK == status));
 		} else
 		{

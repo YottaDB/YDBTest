@@ -138,7 +138,7 @@ int do_tp(int numincrs)
 		if (use_ydb_incr_s_outside_tp)
 			status = ydb_incr_s(&basevar, 0, NULL, NULL, &value);
 		else
-			status = ydb_tp_s(tpfn, &i, NULL, NULL);
+			status = ydb_tp_s(tpfn, &i, NULL, 0, NULL);
 		assert(YDB_OK == status);
 	}
 	return YDB_OK;
