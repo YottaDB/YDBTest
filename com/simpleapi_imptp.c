@@ -567,18 +567,12 @@ int	impjob(int childnum)
 	jobid = (NULL != ptr) ? atoi(ptr) : 0;
 
 	/* Set stdout & stderr to child specific files */
-	if (0 != jobid)
-		sprintf(outfile, "impjob_imptp%d.mjo%d", jobid, childnum);
-	else
-		sprintf(outfile, "impjob_imptp.mjo%d", childnum);
+	sprintf(outfile, "impjob_imptp%d.mjo%d", jobid, childnum);
 	outfd = creat(outfile, 0666);
 	assert(-1 != outfd);
 	newfd = dup2(outfd, 1);
 	assert(1 == newfd);
-	if (0 != jobid)
-		sprintf(errfile, "impjob_imptp%d.mje%d", jobid, childnum);
-	else
-		sprintf(errfile, "impjob_imptp.mje%d", childnum);
+	sprintf(errfile, "impjob_imptp%d.mje%d", jobid, childnum);
 	errfd = creat(errfile, 0666);
 	assert(-1 != errfd);
 	newfd = dup2(errfd, 2);
