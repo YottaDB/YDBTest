@@ -86,8 +86,11 @@ xyz
 		endif
 		# Setup call-in table : Need call-ins to do a few tasks that are not easily done through simpleAPI
 		cat > imptp.xc << CAT_EOF
+dupsetnoop: void dupsetnoop^imptpxc()
 getdatinfo: void getdatinfo^imptpxc()
+helper1: void helper1^imptpxc()
 impjob: void impjob^imptp()
+tpnoiso: void tpnoiso^imptpxc()
 writecrashfileifneeded: void writecrashfileifneeded^job()
 writejobinfofileifneeded: void writejobinfofileifneeded^job()
 CAT_EOF
