@@ -584,6 +584,12 @@ int	impjob(int childnum)
 	newfd = dup2(errfd, 2);
 	assert(2 == newfd);
 
+	/* Since we reset 1 & 2 file descriptors, need to invoke the below function.
+	 * Or else we would end up with error messages in *.mjo (instead of *.mje).
+	 */
+	status = ydb_stdout_stderr_reset();
+	assert(YDB_OK == status);
+
 	/* set jobindex=index */
 	value.len_used = sprintf(value.buf_addr, "%d", childnum);
 	status = ydb_set_s(&ylcl_jobindex, 0, NULL, &value);
