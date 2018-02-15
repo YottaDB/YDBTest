@@ -54,15 +54,18 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 		set usesimpleapi = `$gtm_exe/mumps -run rand 2`
 		echo "setenv usesimpleapi $usesimpleapi" >> settings.csh
 		set usesimpleapi = 1	# NARSTODO
-		# NARSTODO : If online rollback test, then usesimpleapi has to be set to 0.
-		# this is because imptp.m transfers control to an M label "orlbkres^imptp" etc. for online rollbacks
-		# and that is not straightforward with simpleAPI.
 	endif
 	# If using a version that is other than the currently tested version, disable simpleapi for the older version.
 	if ("$gtm_verno" != "$tst_ver") then
 		set usesimpleapi = 0
 	endif
-
+	# If online rollback test, then disable simpleapi. This is because imptp.m transfers control to an M label
+	# "orlbkres^imptp" etc. for online rollbacks and that is not straightforward with simpleAPI.
+	if ($?gtm_test_onlinerollback) then
+		if ($gtm_test_onlinerollback == "TRUE") then
+			set usesimpleapi = 0
+		endif
+	endif
 	if (! $usesimpleapi) then
 		$GTM << xyz
 		set jobcnt=\$\$^jobcnt
