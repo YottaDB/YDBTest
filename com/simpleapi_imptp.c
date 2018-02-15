@@ -587,7 +587,7 @@ int	impjob(int childnum)
 	/* Since we reset 1 & 2 file descriptors, need to invoke the below function.
 	 * Or else we would end up with error messages in *.mjo (instead of *.mje).
 	 */
-	status = ydb_stdout_stderr_reset();
+	status = ydb_stdout_stderr_adjust();
 	assert(YDB_OK == status);
 
 	/* set jobindex=index */
