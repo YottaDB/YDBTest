@@ -599,8 +599,12 @@ int	impjob(int childnum)
 	/* NARSTODO : Randomize ydb_ci vs simpleAPI in the child */
 	/* do impjob^imptp */
 	status = ydb_ci("impjob");
-	assert(YDB_OK == status);
-
+	/* If the caller is the "gtm8086" subtest, it creates a situation where JNLEXTEND or JNLSWITCHFAIL
+	 * errors can happen in the imptp child process and that is expected. Account for that in the below assert.
+	 */
+	assert((YDB_OK == status)
+		|| (!memcmp(getenv("test_subtest_name"), "gtm8086", sizeof("gtm8086"))
+			&& (-YDB_ERR_JNLEXTEND == status) || (-YDB_ERR_JNLSWITCHFAIL == status)));
 	return YDB_OK;
 }
 
