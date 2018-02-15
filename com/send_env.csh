@@ -25,7 +25,7 @@ if ($HOSTOS == "SunOS") then
 	setenv | $grep -E "gtm_linktmpdir" | sed 's/\\\075/=/g' | sed 's/'$user'/$user/' >>&! ${TMP_FILE_PREFIX}_env_${USER}.txt
 
 else
-	setenv | $grep -E "^ydb|^gtm|^acc_meth|^tst|^test|^PRI|^SEC|^remote_ver|^remote_image|^user|^mailing_list" | $grep -vE "gtm_icu_version" >&! ${TMP_FILE_PREFIX}_env_${USER}.txt
+	setenv | $grep -E "^ydb|^gt_|^gtm|^acc_meth|^tst|^test|^PRI|^SEC|^remote_ver|^remote_image|^user|^mailing_list" | $grep -vE "gtm_icu_version" >&! ${TMP_FILE_PREFIX}_env_${USER}.txt
 	setenv | $grep -E "gtm_linktmpdir" | sed 's/'$user'/$user/' >>&! ${TMP_FILE_PREFIX}_env_${USER}.txt
 	# Fix user specific environment variables
 endif
