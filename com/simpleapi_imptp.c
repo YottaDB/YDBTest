@@ -60,7 +60,7 @@ ydb_buffer_t	ylcl_jobcnt, ylcl_fillid, ylcl_istp, ylcl_jobid, ylcl_jobindex;
 ydb_buffer_t	ylcl_jobno, ylcl_tptype, ylcl_ztrcmd, ylcl_trigname, ylcl_fulltrig, ylcl_dztrig, ylcl_I, ylcl_loop;
 ydb_buffer_t	ylcl_keysize, ylcl_recsize, ylcl_span;
 ydb_buffer_t	ylcl_subsMAX, ylcl_val, ylcl_valALT, ylcl_subs;
-ydb_buffer_t	ylcl_lfence, ylcl_trigger, ylcl_orlbkintp;
+ydb_buffer_t	ylcl_lfence, ylcl_trigger, ylcl_crash, ylcl_orlbkintp;
 ydb_buffer_t	ygbl_pctimptp, ygbl_endloop, ygbl_cntloop, ygbl_cntseq, ygbl_pctsprgdeExcludeGbllist, ygbl_pctjobwait, ygbl_lasti;
 ydb_buffer_t	ygbl_arandom, ygbl_brandomv, ygbl_zdummy, ygbl_crandomva, ygbl_drandomvariable, ygbl_erandomvariableimptp;
 ydb_buffer_t	ygbl_frandomvariableinimptp, ygbl_grandomvariableinimptpfill, ygbl_hrandomvariableinimptpfilling;
@@ -125,6 +125,7 @@ int main(int argc, char *argv[])
 	YDB_LITERAL_TO_BUFFER("subs", &ylcl_subs);
 	YDB_LITERAL_TO_BUFFER("lfence", &ylcl_lfence);
 	YDB_LITERAL_TO_BUFFER("trigger", &ylcl_trigger);
+	YDB_LITERAL_TO_BUFFER("crash", &ylcl_crash);
 	YDB_LITERAL_TO_BUFFER("orlbkintp", &ylcl_orlbkintp);
 	YDB_LITERAL_TO_BUFFER("^%imptp", &ygbl_pctimptp);
 	YDB_LITERAL_TO_BUFFER("^endloop", &ygbl_endloop);
@@ -790,6 +791,10 @@ int	impjob(int childnum)
 	assert(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	crash = atoi(value.buf_addr);
+	/* Set "crash" M variable */
+	value.len_used = sprintf(value.buf_addr, "%d", crash);
+	status = ydb_set_s(&ylcl_crash, 0, NULL, &value);
+	assert(YDB_OK == status);
 
 	/* set gtcm=^%imptp(fillid,"gtcm") */
 	YDB_COPY_STRING_TO_BUFF("gtcm", &subscr[1]);
@@ -1218,6 +1223,16 @@ int	impjob(int childnum)
 
 		/* . set I=(I*nroot)#prime */
 		I = (I * nroot) % prime;
+
+		/* quit:$get(^endloop(fillid),0) */
+		status = ydb_get_s(&ygbl_endloop, 1, subscr, &value);
+		if (YDB_ERR_GVUNDEF == status)
+			continue;
+		assert(YDB_OK == status);
+		value.buf_addr[value.len_used] = '\0';
+		if (atoi(value.buf_addr))
+			break;
+
 	}	/* ; End For Loop */
 
 	/* write "End index:",loop,! */
@@ -1269,6 +1284,8 @@ int	tpfn1(int *parm_array)
 	subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d", fillid);
 	YDB_COPY_BUFF_TO_BUFF(&ybuff_subsMAX, &subscr[1]);
 	status = ydb_set_s(&ygbl_arandom, 2, subscr, &ybuff_val);
+	if (YDB_TP_RESTART == status)
+		return status;
 	assert(YDB_OK == status);
 
 	/* . if ((istp=1)&(crash)) do */
@@ -1302,11 +1319,15 @@ int	tpfn1(int *parm_array)
 			YDB_COPY_BUFF_TO_BUFF(&value, &subscr[2]);
 			value.len_used = sprintf(value.buf_addr, "%d", jobno);
 			status = ydb_set_s(&ygbl_zdummy, 1, &subscr[2], &value);
+			if (YDB_TP_RESTART == status)
+				return status;
 			assert(YDB_OK == status);
 		}
 	}
 	/* . set ^brandomv(fillid,subsMAX)=valALT */
 	status = ydb_set_s(&ygbl_brandomv, 2, subscr, &ybuff_valALT);
+	if (YDB_TP_RESTART == status)
+		return status;
 	assert(YDB_OK == status);
 
 	/* . if 'trigger do */
@@ -1314,12 +1335,16 @@ int	tpfn1(int *parm_array)
 	{
 		/* . . set ^crandomva(fillid,subsMAX)=valALT */
 		status = ydb_set_s(&ygbl_crandomva, 2, subscr, &ybuff_valALT);
+		if (YDB_TP_RESTART == status)
+			return status;
 		assert(YDB_OK == status);
 	}
 
 	/* . set ^drandomvariable(fillid,subs)=valALT */
 	YDB_COPY_BUFF_TO_BUFF(&ybuff_subs, &subscr[1]);
 	status = ydb_set_s(&ygbl_drandomvariable, 2, subscr, &ybuff_valALT);
+	if (YDB_TP_RESTART == status)
+		return status;
 	assert(YDB_OK == status);
 
 	/* . if 'trigger do */
@@ -1327,15 +1352,21 @@ int	tpfn1(int *parm_array)
 	{
 		/* . . set ^erandomvariableimptp(fillid,subs)=valALT */
 		status = ydb_set_s(&ygbl_erandomvariableimptp, 2, subscr, &ybuff_valALT);
+		if (YDB_TP_RESTART == status)
+			return status;
 		assert(YDB_OK == status);
 
 		/* . . set ^frandomvariableinimptp(fillid,subs)=valALT */
 		status = ydb_set_s(&ygbl_frandomvariableinimptp, 2, subscr, &ybuff_valALT);
+		if (YDB_TP_RESTART == status)
+			return status;
 		assert(YDB_OK == status);
 	}
 
 	/* . set ^grandomvariableinimptpfill(fillid,subs)=val */
 	status = ydb_set_s(&ygbl_grandomvariableinimptpfill, 2, subscr, &ybuff_val);
+	if (YDB_TP_RESTART == status)
+		return status;
 	assert(YDB_OK == status);
 
 	/* . if 'trigger do */
@@ -1343,10 +1374,14 @@ int	tpfn1(int *parm_array)
 	{
 		/* . . set ^hrandomvariableinimptpfilling(fillid,subs)=val */
 		status = ydb_set_s(&ygbl_hrandomvariableinimptpfilling, 2, subscr, &ybuff_val);
+		if (YDB_TP_RESTART == status)
+			return status;
 		assert(YDB_OK == status);
 
 		/* . . set ^irandomvariableinimptpfillprgrm(fillid,subs)=val */
 		status = ydb_set_s(&ygbl_irandomvariableinimptpfillprgrm, 2, subscr, &ybuff_val);
+		if (YDB_TP_RESTART == status)
+			return status;
 		assert(YDB_OK == status);
 	} else
 	{
@@ -1358,6 +1393,8 @@ int	tpfn1(int *parm_array)
 	/* . set ^jrandomvariableinimptpfillprogram(fillid,I)=val */
 	YDB_COPY_BUFF_TO_BUFF(&ybuff_I, &subscr[1]);
 	status = ydb_set_s(&ygbl_jrandomvariableinimptpfillprogram, 2, subscr, &ybuff_val);
+	if (YDB_TP_RESTART == status)
+		return status;
 	assert(YDB_OK == status);
 
 	/* . if 'trigger do */
@@ -1366,11 +1403,15 @@ int	tpfn1(int *parm_array)
 		/* . . set ^jrandomvariableinimptpfillprogram(fillid,I,I)=val */
 		YDB_COPY_BUFF_TO_BUFF(&ybuff_I, &subscr[2]);
 		status = ydb_set_s(&ygbl_jrandomvariableinimptpfillprogram, 3, subscr, &ybuff_val);
+		if (YDB_TP_RESTART == status)
+			return status;
 		assert(YDB_OK == status);
 
 		/* . . set ^jrandomvariableinimptpfillprogram(fillid,I,I,subs)=val */
 		YDB_COPY_BUFF_TO_BUFF(&ybuff_subs, &subscr[3]);
 		status = ydb_set_s(&ygbl_jrandomvariableinimptpfillprogram, 4, subscr, &ybuff_val);
+		if (YDB_TP_RESTART == status)
+			return status;
 		assert(YDB_OK == status);
 	}
 
@@ -1385,6 +1426,8 @@ int	tpfn1(int *parm_array)
 		subscr[1].len_used = sprintf(subscr[1].buf_addr, "%d", jobno);
 		value.len_used = sprintf(value.buf_addr, "%d", loop);
 		status = ydb_set_s(&ygbl_lasti, 2, subscr, &value);
+		if (YDB_TP_RESTART == status)
+			return status;
 		assert(YDB_OK == status);
 	}
 }
