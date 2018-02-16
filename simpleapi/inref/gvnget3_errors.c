@@ -43,7 +43,7 @@ int main()
 	memcpy(ret_value.buf_addr, VALUE1, ret_value.len_used);
 	save_ret_value = ret_value;
 
-	printf("# Test of VARNAMEINVALID error\n"); fflush(stdout);
+	printf("# Test of INVVARNAME error\n"); fflush(stdout);
 	printf("Attempting get of bad basevar (%% in middle of name) %s\n", BADBASEVAR1);
 	fflush(stdout);
 	YDB_LITERAL_TO_BUFFER(BADBASEVAR1, &badbasevar);

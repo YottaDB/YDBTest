@@ -37,7 +37,7 @@ int main()
 	YDB_LITERAL_TO_BUFFER(VALUE1, &value1);
 	save_value1 = value1;
 
-	printf("# Test of VARNAMEINVALID error\n"); fflush(stdout);
+	printf("# Test of INVVARNAME error\n"); fflush(stdout);
 	printf("Attempting set of bad basevar (%% in middle of name) %s\n", BADBASEVAR1);
 	fflush(stdout);
 	YDB_LITERAL_TO_BUFFER(BADBASEVAR1, &badbasevar);
