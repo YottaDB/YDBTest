@@ -59,6 +59,7 @@ ztrcmd	;
 
 helper2	;
 	; Stage 2
+	set $etrap="write $zstatus,! zshow ""*"" halt"
 	set rndm=$random(10)
 	if (5>rndm)&(0=$tlevel)&trigger do  ; $ztrigger() operation 50% of the time: 10% del by name, 10% del, 80% add
 	. set rndm=$random(10),trig=$select(0=rndm:"-"_fulltrig,1=rndm:"-"_trigname,1:"+"_fulltrig)
@@ -182,6 +183,7 @@ helper2	;
 	; Stage 11
 	if lfence=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp=2 ifneeded^orlbkresume(istp)
 	do:dztrig ^imptpdztrig(1,istp<2)
+	set ztr=(trigger#10)>1  ; ZTRigger command testing
 	xecute:ztr "set $ztwormhole=I ztrigger ^andxarr(fillid,jobno,loop) set $ztwormhole="""""
 	set ^andxarr(fillid,jobno,loop)=I
 	if 'trigger do
