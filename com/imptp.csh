@@ -89,10 +89,14 @@ xyz
 dupsetnoop: void dupsetnoop^imptpxc()
 getdatinfo: void getdatinfo^imptpxc()
 helper1: void helper1^imptpxc()
+helper2: void helper2^imptpxc()
 impjob: void impjob^imptp()
+noop: void noop^imptp()
 tpnoiso: void tpnoiso^imptpxc()
 writecrashfileifneeded: void writecrashfileifneeded^job()
 writejobinfofileifneeded: void writejobinfofileifneeded^job()
+ztrcmd: void ztrcmd^imptpxc()
+ztwormstr: void ztwormstr^imptpxc()
 CAT_EOF
 		setenv GTMCI imptp.xc
 		# Run simpleAPI executable

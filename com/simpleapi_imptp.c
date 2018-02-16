@@ -59,12 +59,25 @@ ydb_buffer_t	value, tmpvalue, pidvalue, subscr[YDB_MAX_SUBS + 1];
 ydb_buffer_t	ylcl_jobcnt, ylcl_fillid, ylcl_istp, ylcl_jobid, ylcl_jobindex;
 ydb_buffer_t	ylcl_jobno, ylcl_tptype, ylcl_ztrcmd, ylcl_trigname, ylcl_fulltrig, ylcl_dztrig, ylcl_I, ylcl_loop;
 ydb_buffer_t	ylcl_keysize, ylcl_recsize, ylcl_span;
+ydb_buffer_t	ylcl_subsMAX, ylcl_val, ylcl_valALT, ylcl_subs;
+ydb_buffer_t	ylcl_lfence, ylcl_trigger, ylcl_orlbkintp;
 ydb_buffer_t	ygbl_pctimptp, ygbl_endloop, ygbl_cntloop, ygbl_cntseq, ygbl_pctsprgdeExcludeGbllist, ygbl_pctjobwait, ygbl_lasti;
-ydb_buffer_t	yisv_zroutines;
+ydb_buffer_t	ygbl_arandom, ygbl_brandomv, ygbl_zdummy, ygbl_crandomva, ygbl_drandomvariable, ygbl_erandomvariableimptp;
+ydb_buffer_t	ygbl_frandomvariableinimptp, ygbl_grandomvariableinimptpfill, ygbl_hrandomvariableinimptpfilling;
+ydb_buffer_t	ygbl_irandomvariableinimptpfillprgrm, ygbl_jrandomvariableinimptpfillprogram;
+ydb_buffer_t	yisv_zroutines, yisv_trestart;
 char		timeString[21];  /* space for "DD-MON-YEAR HH:MM:SS\0" */
+char		tptypebuff[MAXVALUELEN];
+char		subsMAXbuff[MAXVALUELEN], valbuff[MAXVALUELEN], valALTbuff[MAXVALUELEN], subsbuff[MAXVALUELEN], Ibuff[MAXVALUELEN];
+ydb_buffer_t	ybuff_tptype, ybuff_subsMAX, ybuff_val, ybuff_valALT, ybuff_subs, ybuff_I;
+int		crash, trigger;
 
 int	impjob(int child);
 char	*get_curtime(void);
+int	tpfn1();
+int	tpfn2();
+int	tpfn3();
+int	tpfn4();
 
 /* Implements below M code in com/imptp.csh.
  *
@@ -75,7 +88,7 @@ char	*get_curtime(void);
 int main(int argc, char *argv[])
 {
 	char		*ptr;
-	int		i, jobcnt, fillid, istp, tpnoiso, dupset, crash, is_gtcm, repl_norepl, jobid, spannode;
+	int		i, jobcnt, fillid, istp, tpnoiso, dupset, is_gtcm, repl_norepl, jobid, spannode;
 	int		seed;
 	int		status;
 	int		child;
@@ -106,6 +119,13 @@ int main(int argc, char *argv[])
 	YDB_LITERAL_TO_BUFFER("keysize", &ylcl_keysize);
 	YDB_LITERAL_TO_BUFFER("recsize", &ylcl_recsize);
 	YDB_LITERAL_TO_BUFFER("span", &ylcl_span);
+	YDB_LITERAL_TO_BUFFER("subsMAX", &ylcl_subsMAX);
+	YDB_LITERAL_TO_BUFFER("val", &ylcl_val);
+	YDB_LITERAL_TO_BUFFER("valALT", &ylcl_valALT);
+	YDB_LITERAL_TO_BUFFER("subs", &ylcl_subs);
+	YDB_LITERAL_TO_BUFFER("lfence", &ylcl_lfence);
+	YDB_LITERAL_TO_BUFFER("trigger", &ylcl_trigger);
+	YDB_LITERAL_TO_BUFFER("orlbkintp", &ylcl_orlbkintp);
 	YDB_LITERAL_TO_BUFFER("^%imptp", &ygbl_pctimptp);
 	YDB_LITERAL_TO_BUFFER("^endloop", &ygbl_endloop);
 	YDB_LITERAL_TO_BUFFER("^cntloop", &ygbl_cntloop);
@@ -113,7 +133,22 @@ int main(int argc, char *argv[])
 	YDB_LITERAL_TO_BUFFER("^%sprgdeExcludeGbllist", &ygbl_pctsprgdeExcludeGbllist);
 	YDB_LITERAL_TO_BUFFER("^%jobwait", &ygbl_pctjobwait);
 	YDB_LITERAL_TO_BUFFER("^lasti", &ygbl_lasti);
+	YDB_LITERAL_TO_BUFFER("^arandom", &ygbl_arandom);
+	YDB_LITERAL_TO_BUFFER("^brandomv", &ygbl_brandomv);
+	YDB_LITERAL_TO_BUFFER("^zdummy", &ygbl_zdummy);
+	YDB_LITERAL_TO_BUFFER("^crandomva", &ygbl_crandomva);
+	YDB_LITERAL_TO_BUFFER("^drandomvariable", &ygbl_drandomvariable);
+	YDB_LITERAL_TO_BUFFER("^erandomvariableimptp", &ygbl_erandomvariableimptp);
+	YDB_LITERAL_TO_BUFFER("^frandomvariableinimptp", &ygbl_frandomvariableinimptp);
+	YDB_LITERAL_TO_BUFFER("^grandomvariableinimptpfill", &ygbl_grandomvariableinimptpfill);
+	YDB_LITERAL_TO_BUFFER("^hrandomvariableinimptpfilling", &ygbl_hrandomvariableinimptpfilling);
+	YDB_LITERAL_TO_BUFFER("^irandomvariableinimptpfillprgrm", &ygbl_irandomvariableinimptpfillprgrm);
+	/* Note that simpleAPI issues an error if length is > 32 (unlike YottaDB M environment where the name is
+	 * silently truncated) so truncate the name as much as needed to kep it valid.
+	 */
+	YDB_LITERAL_TO_BUFFER("^jrandomvariableinimptpfillprogr", &ygbl_jrandomvariableinimptpfillprogram);
 	YDB_LITERAL_TO_BUFFER("$zroutines", &yisv_zroutines);
+	YDB_LITERAL_TO_BUFFER("$trestart", &yisv_trestart);
 
 	value.buf_addr = valuebuff;
 	value.len_alloc = sizeof(valuebuff);
@@ -126,6 +161,18 @@ int main(int argc, char *argv[])
 		subscr[i].buf_addr = subscrbuff[i];
 		subscr[i].len_alloc = sizeof(subscrbuff[i]);
 	}
+	ybuff_tptype.buf_addr = tptypebuff;
+	ybuff_tptype.len_alloc = sizeof(tptypebuff);
+	ybuff_subsMAX.buf_addr = subsMAXbuff;
+	ybuff_subsMAX.len_alloc = sizeof(subsMAXbuff);
+	ybuff_val.buf_addr = valbuff;
+	ybuff_val.len_alloc = sizeof(valbuff);
+	ybuff_valALT.buf_addr = valALTbuff;
+	ybuff_valALT.len_alloc = sizeof(valALTbuff);
+	ybuff_subs.buf_addr = subsbuff;
+	ybuff_subs.len_alloc = sizeof(subsbuff);
+	ybuff_I.buf_addr = Ibuff;
+	ybuff_I.len_alloc = sizeof(Ibuff);
 
 	/* Implement M code : set jobcnt=$$^jobcnt */
 	ptr = getenv("gtm_test_jobcnt");
@@ -305,10 +352,14 @@ int main(int argc, char *argv[])
 	status = ydb_set_s(&ygbl_pctimptp, 2, subscr, &tmpvalue);
 	assert(YDB_OK == status);
 
+	/* Throughout this C program small portions of code are implemented using call-ins (instead of simpleAPI)
+	 * because either it is not possible to migrate or because it is easier to keep it as is (no benefit of extra
+	 * test coverage for simpleAPI).
+	 */
 	/* ; Grab the key and record size from DSE
 	 * do get^datinfo("^%imptp("_fillid_")")
 	 */
-	status = ydb_ci("getdatinfo");	/* Use call-in for this as it is a long M routine and not worth migrating to simpleAPI */
+	status = ydb_ci("getdatinfo");
 	assert(YDB_OK == status);
 
 	/* set ^%imptp(fillid,"gtm_test_spannode")=+$ztrnlnm("gtm_test_spannode") */
@@ -506,10 +557,10 @@ int main(int argc, char *argv[])
 	status = ydb_child_init(NULL);
 	assert(YDB_OK == status);
 	/* do writecrashfileifneeded			: com/job.m */
-	status = ydb_ci("writecrashfileifneeded");	/* Use call-in for this as it not worth migrating to simpleAPI */
+	status = ydb_ci("writecrashfileifneeded");
 	assert(YDB_OK == status);
 	/* do writejobinfofileifneeded			: com/job.m */
-	status = ydb_ci("writejobinfofileifneeded");	/* Use call-in for this as it not worth migrating to simpleAPI */
+	status = ydb_ci("writejobinfofileifneeded");
 	assert(YDB_OK == status);
 	/* ; Wait until the first update on all regions happen
 	 * set start=$horolog
@@ -573,11 +624,13 @@ int	impjob(int childnum)
 	int		rand;
 	char		*ptr;
 	int		prime, root;
-	int		jobno, jobcnt, fillid, istp, tpnoiso, dupset, skipreg, crash, gtcm;
+	int		jobno, jobcnt, fillid, istp, tpnoiso, dupset, skipreg, gtcm;
 	int		keysize, recsize, span;
-	int		trigger, ztr, dztrig;
+	int		ztr, dztrig;
 	int		lfence, nroot, i, lasti, top;
 	int		I, J, loop;
+	int		parm_array[16];
+	ydb_buffer_t	starvar;
 
 	process_id = getpid();
 	pidvalue.len_used = sprintf(pidvalue.buf_addr, "%d", (int)process_id);
@@ -611,7 +664,7 @@ int	impjob(int childnum)
 	assert(YDB_OK == status);
 
 	rand = (int)(2 * drand48());
-	rand = 1;	/* NARSTODO : Remove this line */
+	rand = 0;	/* NARSTODO : Remove this line */
 	if (rand)
 	{	/* Randomly chose ydb_ci method to run child (impjob^imptp) */
 		/* do impjob^imptp */
@@ -648,8 +701,7 @@ int	impjob(int childnum)
 	/* Already done earlier in this function */
 
 	/* set fillid=^%imptp("fillid",jobid) */
-	status = ydb_get_s(&ylcl_fillid, 0, NULL, &subscr[0]);
-	assert(YDB_OK == status);
+	YDB_COPY_STRING_TO_BUFF("fillid", &subscr[0]);
 	subscr[1].len_used = sprintf(subscr[1].buf_addr, "%d", jobid);
 	status = ydb_get_s(&ygbl_pctimptp, 2, subscr, &value);
 	assert(YDB_OK == status);
@@ -657,6 +709,7 @@ int	impjob(int childnum)
 	fillid = atoi(value.buf_addr);
 
 	/* set jobcnt=^%imptp(fillid,"totaljob") */
+	subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d", fillid);
 	YDB_COPY_STRING_TO_BUFF("totaljob", &subscr[1]);
 	status = ydb_get_s(&ygbl_pctimptp, 2, subscr, &value);
 	assert(YDB_OK == status);
@@ -680,7 +733,7 @@ int	impjob(int childnum)
 	/* set top=+$GET(^%imptp(fillid,"top")) */
 	YDB_COPY_STRING_TO_BUFF("top", &subscr[1]);
 	status = ydb_get_s(&ygbl_pctimptp, 2, subscr, &value);
-	if (YDB_ERR_LVUNDEF == status)
+	if (YDB_ERR_GVUNDEF == status)
 		top = 0;
 	else
 	{
@@ -706,7 +759,9 @@ int	impjob(int childnum)
 	assert(YDB_OK == status);
 	status = ydb_set_s(&ylcl_tptype, 0, NULL, &value);
 	assert(YDB_OK == status);
-	YDB_COPY_BUFF_TO_BUFF(&value, &tmpvalue);	/* save "tptype" string for later use */
+	/* Initialize "tptype" global string for later use by various functions */
+	YDB_COPY_BUFF_TO_BUFF(&value, &ybuff_tptype);
+	ybuff_tptype.buf_addr[ybuff_tptype.len_used] = '\0';
 
 	/* set tpnoiso=^%imptp(fillid,"tpnoiso") */
 	YDB_COPY_STRING_TO_BUFF("tpnoiso", &subscr[1]);
@@ -754,6 +809,10 @@ int	impjob(int childnum)
 	 * ; ONLINE ROLLBACK -  END
 	 */
 	/* The above online rollback section does not need to be migrated since we never run simpleAPI against online rollback */
+	/* Set "orlbkintp" M variable */
+	value.len_used = sprintf(value.buf_addr, "%d", 0);
+	status = ydb_set_s(&ylcl_orlbkintp, 0, NULL, &value);
+	assert(YDB_OK == status);
 
 	/* ; Node Spanning Blocks - BEGIN */
 
@@ -800,6 +859,11 @@ int	impjob(int childnum)
 	assert(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	trigger = atoi(value.buf_addr);
+	/* Set "trigger" M variable */
+	value.len_used = sprintf(value.buf_addr, "%d", trigger);
+	status = ydb_set_s(&ylcl_trigger, 0, NULL, &value);
+	assert(YDB_OK == status);
+
 	YDB_COPY_STRING_TO_BUFF("ztrigger ^lasti(fillid,jobno,loop)", &value);
 	status = ydb_set_s(&ylcl_ztrcmd, 0, NULL, &value);
 	assert(YDB_OK == status);
@@ -836,7 +900,6 @@ int	impjob(int childnum)
 	/* xecute zwrcmd */
 	printf("jobno=%d\n", jobno);
 	printf("istp=%d\n", istp);
-	tmpvalue.buf_addr[tmpvalue.len_used] = '\0';
 	printf("tptype=%s\n", tmpvalue.buf_addr);
 	printf("tpnoiso=%d\n", tpnoiso);
 	printf("orlbkintp=0\n");
@@ -851,7 +914,7 @@ int	impjob(int childnum)
 
 	/* write "PID: ",$job,!,"In hex: ",$$FUNC^%DH($job),! */
 	printf("PID: %d\nIn hex: 0x%x\n", process_id, process_id);
-	fflush(stdout);	/* flush stdout after a bunch of printf() calls */
+	fflush(stdout);	/* flush stdout as soon as efficiently possible */
 
 	/* lock +^%imptp(fillid,"jsyncnt")  set ^%imptp(fillid,"jsyncnt")=^%imptp(fillid,"jsyncnt")+1  lock -^%imptp(fillid,"jsyncnt") */
 	/* The "ydb_lock_incr_s" and "ydb_lock_decr_s" usages below are unnecessary since "ydb_incr_s" is atomic.
@@ -879,6 +942,10 @@ int	impjob(int childnum)
 		lfence = 1;
 	if (gtcm)
 		lfence = 0;
+	/* Set "lfence" M variable */
+	value.len_used = sprintf(value.buf_addr, "%d", lfence);
+	status = ydb_set_s(&ylcl_lfence, 0, NULL, &value);
+	assert(YDB_OK == status);
 
 	/* if tpnoiso do tpnoiso^imptp */
 	if (tpnoiso)
@@ -939,6 +1006,8 @@ int	impjob(int childnum)
 	printf("Starting index:%d\n", lasti + 1);
 	fflush(stdout);	/* flush stdout as soon as possible after "printf" call */
 
+	YDB_LITERAL_TO_BUFFER("*", &starvar);
+
 	/* for loop=lasti+1:1:top do  quit:$get(^endloop(fillid),0) */
 	for (loop = lasti + 1; lasti <= top; lasti++)
 	{
@@ -965,196 +1034,205 @@ int	impjob(int childnum)
 		status = ydb_ci("helper1");	/* Use call-in to implement the block of M code commented above */
 		assert(YDB_OK == status);
 
-	/* . ; Stage 1 */
-	/* . if istp=1 tstart *:(serial:transaction=tptype) do:orlbkintp=2 ifneeded^orlbkresume(istp) */
-	/* . if istp=2 ztstart */
-	/* . set ^arandom(fillid,subsMAX)=val */
-	/* . if ((istp=1)&(crash)) do */
-	/* . . set rndm=$r(10) */
-	/* . . if rndm=1 if $TRESTART>2  do noop^imptp	; Just randomly hold crit for long time */
-	/* . . if rndm=2 if $TRESTART>2  h $r(10)		; Just randomly hold crit for long time */
-	/* . . if $TRESTART set ^zdummy($TRESTART)=jobno	; In case of restart cause different TP transaction flow */
-	/* . set ^brandomv(fillid,subsMAX)=valALT */
-	/* . if 'trigger do */
-	/* . . set ^crandomva(fillid,subsMAX)=valALT */
-	/* . set ^drandomvariable(fillid,subs)=valALT */
-	/* . if 'trigger do */
-	/* . . set ^erandomvariableimptp(fillid,subs)=valALT */
-	/* . . set ^frandomvariableinimptp(fillid,subs)=valALT */
-	/* . set ^grandomvariableinimptpfill(fillid,subs)=val */
-	/* . if 'trigger do */
-	/* . . set ^hrandomvariableinimptpfilling(fillid,subs)=val */
-	/* . . set ^irandomvariableinimptpfillprgrm(fillid,subs)=val */
-	/* . if trigger xecute ztwormstr	; fill in $ztwormhole for below update that requires "subs" */
-	/* . set ^jrandomvariableinimptpfillprogram(fillid,I)=val */
-	/* . if 'trigger do */
-	/* . . set ^jrandomvariableinimptpfillprogram(fillid,I,I)=val */
-	/* . . set ^jrandomvariableinimptpfillprogram(fillid,I,I,subs)=val */
-	/* . if istp'=0 xecute:ztr ztrcmd set ^lasti(fillid,jobno)=loop */
-	/* . if istp=1 tcommit */
-	/* . if istp=2 ztcommit */
-	/* . ; Stage 2 */
-	/* . set rndm=$random(10) */
-	/* . if (5>rndm)&(0=$tlevel)&trigger do  ; $ztrigger() operation 50% of the time: 10% del by name, 10% del, 80% add */
-	/* . . set rndm=$random(10),trig=$select(0=rndm:"-"_fulltrig,1=rndm:"-"_trigname,1:"+"_fulltrig) */
-	/* . . set ztrigstr="set ztrigret=$ztrigger(""item"",trig)"	; xecute needed so it compiles on non-trigger platforms */
-	/* . . xecute ztrigstr */
-	/* . . if (trig=("-"_trigname))&(ztrigret=0) set ztrigret=1	; trigger does not exist, ignore delete-by-name error */
-	/* . . goto:'ztrigret ERROR */
-	/* . set ^antp(fillid,subs)=val */
-	/* . if 'trigger do */
-	/* . . set ^bntp(fillid,subs)=val */
-	/* . . set ^cntp(fillid,subs)=val */
-	/* . . set ^dntp(fillid,subs)=valALT */
-	/* . else  do */
-	/* . . set ^dntp(fillid,subs)=valALT */
-	/* . ; Stage 3 */
-	/* . if istp=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp>0 ifneeded^orlbkresume(istp) */
-	/* . if istp=2 ztstart */
-	/* . do:dztrig ^imptpdztrig(2,istp<2) */
-	/* . set ^entp(fillid,subs)=val */
-	/* . if 'trigger do */
-	/* . . set ^fntp(fillid,subs)=val */
-	/* . if trigger do */
-	/* . . set ^fntp(fillid,subs)=$extract(^fntp(fillid,subs),1,$length(^fntp(fillid,subs))-$length("suffix")) */
-	/* . set ^gntp(fillid,subsMAX)=valMAX */
-	/* . if 'trigger do */
-	/* . . set ^hntp(fillid,subsMAX)=valMAX */
-	/* . . set ^intp(fillid,subsMAX)=valMAX */
-	/* . . set ^bntp(fillid,subsMAX)=valMAX */
-	/* . if istp=1 tcommit */
-	/* . if istp=2 ztcommit */
-	/* . ; Stage 4 */
-	/* . for J=1:1:jobcnt D */
-	/* . . set valj=valALT_J */
-	/* . . ; */
-	/* . . if istp=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp=2 ifneeded^orlbkresume(istp) */
-	/* . . if istp=2 ztstart */
-	/* . . set ^arandom(fillid,subs,J)=valj */
-	/* . . if 'trigger do */
-	/* . . . set ^brandomv(fillid,subs,J)=valj */
-	/* . . . set ^crandomva(fillid,subs,J)=valj */
-	/* . . . set ^drandomvariable(fillid,subs,J)=valj */
-	/* . . . set ^erandomvariableimptp(fillid,subs,J)=valj */
-	/* . . . set ^frandomvariableinimptp(fillid,subs,J)=valj */
-	/* . . . set ^grandomvariableinimptpfill(fillid,subs,J)=valj */
-	/* . . . set ^hrandomvariableinimptpfilling(fillid,subs,J)=valj */
-	/* . . . set ^irandomvariableinimptpfillprgrm(fillid,subs,J)=valj */
-	/* . . do:dztrig ^imptpdztrig(1,istp<2) */
-	/* . . if istp=1 tcommit */
-	/* . . if istp=2 ztcommit */
-	/* . . ; */
-	/* . ; Stage 5 */
-	/* . if istp=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp=2 ifneeded^orlbkresume(istp) */
-	/* . if istp=2 ztstart */
-	/* . do:dztrig ^imptpdztrig(2,istp<2) */
-	/* . if ((istp=1)&(crash)) do */
-	/* . . set rndm=$random(10) */
-	/* . . if rndm=1 if $TRESTART>2  do noop^imptp	; Just randomly hold crit for long time */
-	/* . . if rndm=2 if $TRESTART>2  hang $random(10)	; Just randomly hold crit for long time */
-	/* . kill ^arandom(fillid,subs,1) */
-	/* . if 'trigger do */
-	/* . . kill ^brandomv(fillid,subs,1) */
-	/* . . kill ^crandomva(fillid,subs,1) */
-	/* . . kill ^drandomvariable(fillid,subs,1) */
-	/* . . kill ^erandomvariableimptp(fillid,subs,1) */
-	/* . . kill ^frandomvariableinimptp(fillid,subs,1) */
-	/* . . kill ^grandomvariableinimptpfill(fillid,subs,1) */
-	/* . . kill ^hrandomvariableinimptpfilling(fillid,subs,1) */
-	/* . . kill ^irandomvariableinimptpfillprgrm(fillid,subs,1) */
-	/* . do:dztrig ^imptpdztrig(1,istp<2) */
-	/* . do:dztrig ^imptpdztrig(2,istp<2) */
-	/* . if istp=1 tcommit */
-	/* . if istp=2 ztcommit */
-	/* . ; Stage 6 */
-	/* . if istp=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp=2 ifneeded^orlbkresume(istp) */
-	/* . if istp=2 ztstart */
-	/* . zkill ^jrandomvariableinimptpfillprogram(fillid,I) */
-	/* . if 'trigger do */
-	/* . . zkill ^jrandomvariableinimptpfillprogram(fillid,I,I) */
-	/* . if istp=1 tcommit */
-	/* . if istp=2 ztcommit */
-	/* . ; Stage 7 : delimited spanning nodes to be changed in Stage 10 */
-	/* . ; At the end of ithis transaction, ^aspan=^espan and $tr(^aspan," ","")=^bspan */
-	/* . ; Partial completion due to crash results in: 1. ^aspan is defined and ^[be]span are undef */
-	/* . ;				 		2. ^aspan=^espan and ^bspan is undef */
-	/* . if istp=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp>0 ifneeded^orlbkresume(istp) */
-	/* . if istp=2 ztstart */
-	/* . ; divide up valMAX into a "|" delimited string with the delimiter placed at every 7th space char */
-	/* . set piecesize=7 */
-	/* . set valPIECE=valMAX */
-	/* . set totalpieces=($length(valPIECE)/piecesize)+1 */
-	/* . for i=1:1:totalpieces set:($extract(valPIECE,(piecesize*i))=" ") $extract(valPIECE,(piecesize*i))="|" ; $extract beyond $length returns a null character */
-	/* . set totalpieces=$length(valPIECE,"|") */
-	/* . set ^aspan(fillid,I)=valPIECE */
-	/* . if 'trigger do */
-	/* . . set ^espan(fillid,I)=$get(^aspan(fillid,I)) */
-	/* . . set ^bspan(fillid,I)=$tr($get(^aspan(fillid,I))," ","") */
-	/* . if istp=1 tcommit */
-	/* . if istp=2 ztcommit */
-	/* . ; Stage 8 */
-	/* . kill ^arandom(fillid,subs,1)	; This results nothing */
-	/* . kill ^antp(fillid,subs) */
-	/* . if 'trigger do */
-	/* . . kill ^bntp(fillid,subs) */
-	/* . . zkill ^brandomv(fillid,subs,1)	; This results nothing */
-	/* . . zkill ^cntp(fillid,subs) */
-	/* . . zkill ^dntp(fillid,subs) */
-	/* . kill ^bntp(fillid,subsMAX) */
-	/* . if istp=1 set ^dummy(fillid)=$h		; To test duplicate sets for TP. */
-	/* . ; Stage 9 */
-	/* . ; $incr on ^cntloop and ^cntseq exercize contention in CREG (regions > 3) or DEFAULT (regions <= 3) */
-	/* . set flag=$random(2) */
-	/* . if flag=1,lfence=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp=2 ifneeded^orlbkresume(istp) */
-	/* . if flag=1,lfence=2 ztstart */
-	/* . set cntloop=$incr(^cntloop(fillid)) */
-	/* . set cntseq=$incr(^cntseq(fillid),(13+jobcnt)) */
-	/* . if flag=1,lfence=1 tcommit */
-	/* . if flag=1,lfence=2 ztcommit */
-	/* . ; Stage 10 : More SET $piece */
-	/* . ; At the end of ithis transaction, $tr(^aspan," ","")=^bspan and $p(^aspan,"|",targetpiece)=$p(^espan,"|",targetpiece) */
-	/* . ; NOTE that ZKILL ^espan means that the SET $PIECE of ^espan will only create pieces up to the target piece */
-	/* . ; Partial completion due to crash results in: 1. ^espan is undef and $tr(^aspan," ","")=^bspan */
-	/* . ;				   		2. ^espan is undef and $p(^aspan,"|",targetpiece)=$tr($p(^bspan,"|",targetpiece)," ","X") */
-	/* . ;				   		3. $p(^aspan,"|",targetpiece)=$tr($p(^espan,"|",targetpiece) and $p(^aspan,"|",targetpiece)=$tr($p(^bspan,"|",targetpiece)," ","X") */
-	/* . if istp=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp>0 ifneeded^orlbkresume(istp) */
-	/* . if istp=2 ztstart */
-	/* . set targetpiece=(loop#(totalpieces)) */
-	/* . set subpiece=$tr($piece($get(^aspan(fillid,I)),"|",targetpiece)," ","X") */
-	/* . zkill ^espan(fillid,I) */
-	/* . set $piece(^aspan(fillid,I),"|",targetpiece)=subpiece */
-	/* . if 'trigger do */
-	/* . . set $piece(^espan(fillid,I),"|",targetpiece)=subpiece */
-	/* . . set $piece(^bspan(fillid,I),"|",targetpiece)=subpiece */
-	/* . if istp=1 tcommit */
-	/* . if istp=2 ztcommit */
-	/* . ; Stage 11 */
-	/* . if lfence=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp=2 ifneeded^orlbkresume(istp) */
-	/* . if lfence=2 ztstart */
-	/* . do:dztrig ^imptpdztrig(1,istp<2) */
-	/* . xecute:ztr "set $ztwormhole=I ztrigger ^andxarr(fillid,jobno,loop) set $ztwormhole=""""" */
-	/* . set ^andxarr(fillid,jobno,loop)=I */
-	/* . if 'trigger do */
-	/* . . set ^bndxarr(fillid,jobno,loop)=I */
-	/* . . set ^cndxarr(fillid,jobno,loop)=I */
-	/* . . set ^dndxarr(fillid,jobno,loop)=I */
-	/* . . set ^endxarr(fillid,jobno,loop)=I */
-	/* . . set ^fndxarr(fillid,jobno,loop)=I */
-	/* . . set ^gndxarr(fillid,jobno,loop)=I */
-	/* . . set ^hndxarr(fillid,jobno,loop)=I */
-	/* . . set ^indxarr(fillid,jobno,loop)=I */
-	/* . if istp=0 xecute:ztr ztrcmd set ^lasti(fillid,jobno)=loop */
-	/* . if lfence=1 tcommit */
-	/* . if lfence=2 ztcommit */
-	/* . set I=(I*nroot)#prime */
-	/* ; */
-	/* ; End For Loop */
-	/* ; */
+		/* Copy variable names to parameter array */
+		parm_array[0] = crash;
+		parm_array[1] = trigger;
+		parm_array[2] = istp;
+		parm_array[3] = fillid;
+		parm_array[4] = loop;
+		parm_array[5] = jobno;
+		parm_array[6] = I;
+		parm_array[7] = ztr;
+
+		/* Initialize variables subsMAX, val, valALT, subs for use by later function calls ("tpfn1", etc.) */
+		status = ydb_get_s(&ylcl_subsMAX, 0, NULL, &value);
+		assert(YDB_OK == status);
+		YDB_COPY_BUFF_TO_BUFF(&value, &ybuff_subsMAX);
+		status = ydb_get_s(&ylcl_val, 0, NULL, &value);
+		assert(YDB_OK == status);
+		YDB_COPY_BUFF_TO_BUFF(&value, &ybuff_val);
+		status = ydb_get_s(&ylcl_valALT, 0, NULL, &value);
+		assert(YDB_OK == status);
+		YDB_COPY_BUFF_TO_BUFF(&value, &ybuff_valALT);
+		status = ydb_get_s(&ylcl_subs, 0, NULL, &value);
+		assert(YDB_OK == status);
+		YDB_COPY_BUFF_TO_BUFF(&value, &ybuff_subs);
+		status = ydb_get_s(&ylcl_I, 0, NULL, &value);
+		assert(YDB_OK == status);
+		YDB_COPY_BUFF_TO_BUFF(&value, &ybuff_I);
+
+		/* . ; Stage 1 */
+		/* . if istp=1 tstart *:(serial:transaction=tptype) */
+		/* Run a block of code as a TP or non-TP transaction based on "istp" variable */
+		if (istp)
+		{
+			status = ydb_tp_s(&tpfn1, parm_array, (const char *)ybuff_tptype.buf_addr, 1, &starvar);
+			assert(YDB_OK == status);
+		} else
+		{
+			status = tpfn1(parm_array);
+			assert(YDB_OK == status);
+		}
+		/* if istp=1 tcommit */
+
+		status = ydb_ci("helper2");
+		assert(YDB_OK == status);
+
+		/* . ; Stage 2 */
+		/* . set rndm=$random(10) */
+		/* . if (5>rndm)&(0=$tlevel)&trigger do  ; $ztrigger() operation 50% of the time: 10% del by name, 10% del, 80% add */
+		/* . . set rndm=$random(10),trig=$select(0=rndm:"-"_fulltrig,1=rndm:"-"_trigname,1:"+"_fulltrig) */
+		/* . . set ztrigstr="set ztrigret=$ztrigger(""item"",trig)"	; xecute needed so it compiles on non-trigger platforms */
+		/* . . xecute ztrigstr */
+		/* . . if (trig=("-"_trigname))&(ztrigret=0) set ztrigret=1	; trigger does not exist, ignore delete-by-name error */
+		/* . . goto:'ztrigret ERROR */
+		/* . set ^antp(fillid,subs)=val */
+		/* . if 'trigger do */
+		/* . . set ^bntp(fillid,subs)=val */
+		/* . . set ^cntp(fillid,subs)=val */
+		/* . . set ^dntp(fillid,subs)=valALT */
+		/* . else  do */
+		/* . . set ^dntp(fillid,subs)=valALT */
+		/* . ; Stage 3 */
+		/* . if istp=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp>0 ifneeded^orlbkresume(istp) */
+		/* . do:dztrig ^imptpdztrig(2,istp<2) */
+		/* . set ^entp(fillid,subs)=val */
+		/* . if 'trigger do */
+		/* . . set ^fntp(fillid,subs)=val */
+		/* . if trigger do */
+		/* . . set ^fntp(fillid,subs)=$extract(^fntp(fillid,subs),1,$length(^fntp(fillid,subs))-$length("suffix")) */
+		/* . set ^gntp(fillid,subsMAX)=valMAX */
+		/* . if 'trigger do */
+		/* . . set ^hntp(fillid,subsMAX)=valMAX */
+		/* . . set ^intp(fillid,subsMAX)=valMAX */
+		/* . . set ^bntp(fillid,subsMAX)=valMAX */
+		/* . if istp=1 tcommit */
+		/* . ; Stage 4 */
+		/* . for J=1:1:jobcnt D */
+		/* . . set valj=valALT_J */
+		/* . . ; */
+		/* . . if istp=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp=2 ifneeded^orlbkresume(istp) */
+		/* . . set ^arandom(fillid,subs,J)=valj */
+		/* . . if 'trigger do */
+		/* . . . set ^brandomv(fillid,subs,J)=valj */
+		/* . . . set ^crandomva(fillid,subs,J)=valj */
+		/* . . . set ^drandomvariable(fillid,subs,J)=valj */
+		/* . . . set ^erandomvariableimptp(fillid,subs,J)=valj */
+		/* . . . set ^frandomvariableinimptp(fillid,subs,J)=valj */
+		/* . . . set ^grandomvariableinimptpfill(fillid,subs,J)=valj */
+		/* . . . set ^hrandomvariableinimptpfilling(fillid,subs,J)=valj */
+		/* . . . set ^irandomvariableinimptpfillprgrm(fillid,subs,J)=valj */
+		/* . . do:dztrig ^imptpdztrig(1,istp<2) */
+		/* . . if istp=1 tcommit */
+		/* . . ; */
+		/* . ; Stage 5 */
+		/* . if istp=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp=2 ifneeded^orlbkresume(istp) */
+		/* . do:dztrig ^imptpdztrig(2,istp<2) */
+		/* . if ((istp=1)&(crash)) do */
+		/* . . set rndm=$random(10) */
+		/* . . if rndm=1 if $TRESTART>2  do noop^imptp	; Just randomly hold crit for long time */
+		/* . . if rndm=2 if $TRESTART>2  hang $random(10)	; Just randomly hold crit for long time */
+		/* . kill ^arandom(fillid,subs,1) */
+		/* . if 'trigger do */
+		/* . . kill ^brandomv(fillid,subs,1) */
+		/* . . kill ^crandomva(fillid,subs,1) */
+		/* . . kill ^drandomvariable(fillid,subs,1) */
+		/* . . kill ^erandomvariableimptp(fillid,subs,1) */
+		/* . . kill ^frandomvariableinimptp(fillid,subs,1) */
+		/* . . kill ^grandomvariableinimptpfill(fillid,subs,1) */
+		/* . . kill ^hrandomvariableinimptpfilling(fillid,subs,1) */
+		/* . . kill ^irandomvariableinimptpfillprgrm(fillid,subs,1) */
+		/* . do:dztrig ^imptpdztrig(1,istp<2) */
+		/* . do:dztrig ^imptpdztrig(2,istp<2) */
+		/* . if istp=1 tcommit */
+		/* . ; Stage 6 */
+		/* . if istp=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp=2 ifneeded^orlbkresume(istp) */
+		/* . zkill ^jrandomvariableinimptpfillprogram(fillid,I) */
+		/* . if 'trigger do */
+		/* . . zkill ^jrandomvariableinimptpfillprogram(fillid,I,I) */
+		/* . if istp=1 tcommit */
+		/* . ; Stage 7 : delimited spanning nodes to be changed in Stage 10 */
+		/* . ; At the end of ithis transaction, ^aspan=^espan and $tr(^aspan," ","")=^bspan */
+		/* . ; Partial completion due to crash results in: 1. ^aspan is defined and ^[be]span are undef */
+		/* . ;				 		2. ^aspan=^espan and ^bspan is undef */
+		/* . if istp=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp>0 ifneeded^orlbkresume(istp) */
+		/* . ; divide up valMAX into a "|" delimited string with the delimiter placed at every 7th space char */
+		/* . set piecesize=7 */
+		/* . set valPIECE=valMAX */
+		/* . set totalpieces=($length(valPIECE)/piecesize)+1 */
+		/* . for i=1:1:totalpieces set:($extract(valPIECE,(piecesize*i))=" ") $extract(valPIECE,(piecesize*i))="|" ; $extract beyond $length returns a null character */
+		/* . set totalpieces=$length(valPIECE,"|") */
+		/* . set ^aspan(fillid,I)=valPIECE */
+		/* . if 'trigger do */
+		/* . . set ^espan(fillid,I)=$get(^aspan(fillid,I)) */
+		/* . . set ^bspan(fillid,I)=$tr($get(^aspan(fillid,I))," ","") */
+		/* . if istp=1 tcommit */
+		/* . ; Stage 8 */
+		/* . kill ^arandom(fillid,subs,1)	; This results nothing */
+		/* . kill ^antp(fillid,subs) */
+		/* . if 'trigger do */
+		/* . . kill ^bntp(fillid,subs) */
+		/* . . zkill ^brandomv(fillid,subs,1)	; This results nothing */
+		/* . . zkill ^cntp(fillid,subs) */
+		/* . . zkill ^dntp(fillid,subs) */
+		/* . kill ^bntp(fillid,subsMAX) */
+		/* . if istp=1 set ^dummy(fillid)=$h		; To test duplicate sets for TP. */
+		/* . ; Stage 9 */
+		/* . ; $incr on ^cntloop and ^cntseq exercize contention in CREG (regions > 3) or DEFAULT (regions <= 3) */
+		/* . set flag=$random(2) */
+		/* . if flag=1,lfence=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp=2 ifneeded^orlbkresume(istp) */
+		/* . set cntloop=$incr(^cntloop(fillid)) */
+		/* . set cntseq=$incr(^cntseq(fillid),(13+jobcnt)) */
+		/* . if flag=1,lfence=1 tcommit */
+		/* . ; Stage 10 : More SET $piece */
+		/* . ; At the end of ithis transaction, $tr(^aspan," ","")=^bspan and $p(^aspan,"|",targetpiece)=$p(^espan,"|",targetpiece) */
+		/* . ; NOTE that ZKILL ^espan means that the SET $PIECE of ^espan will only create pieces up to the target piece */
+		/* . ; Partial completion due to crash results in: 1. ^espan is undef and $tr(^aspan," ","")=^bspan */
+		/* . ;				   		2. ^espan is undef and $p(^aspan,"|",targetpiece)=$tr($p(^bspan,"|",targetpiece)," ","X") */
+		/* . ;				   		3. $p(^aspan,"|",targetpiece)=$tr($p(^espan,"|",targetpiece) and $p(^aspan,"|",targetpiece)=$tr($p(^bspan,"|",targetpiece)," ","X") */
+		/* . if istp=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp>0 ifneeded^orlbkresume(istp) */
+		/* . set targetpiece=(loop#(totalpieces)) */
+		/* . set subpiece=$tr($piece($get(^aspan(fillid,I)),"|",targetpiece)," ","X") */
+		/* . zkill ^espan(fillid,I) */
+		/* . set $piece(^aspan(fillid,I),"|",targetpiece)=subpiece */
+		/* . if 'trigger do */
+		/* . . set $piece(^espan(fillid,I),"|",targetpiece)=subpiece */
+		/* . . set $piece(^bspan(fillid,I),"|",targetpiece)=subpiece */
+		/* . if istp=1 tcommit */
+		/* . ; Stage 11 */
+		/* . if lfence=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp=2 ifneeded^orlbkresume(istp) */
+		/* . do:dztrig ^imptpdztrig(1,istp<2) */
+		/* . xecute:ztr "set $ztwormhole=I ztrigger ^andxarr(fillid,jobno,loop) set $ztwormhole=""""" */
+		/* . set ^andxarr(fillid,jobno,loop)=I */
+		/* . if 'trigger do */
+		/* . . set ^bndxarr(fillid,jobno,loop)=I */
+		/* . . set ^cndxarr(fillid,jobno,loop)=I */
+		/* . . set ^dndxarr(fillid,jobno,loop)=I */
+		/* . . set ^endxarr(fillid,jobno,loop)=I */
+		/* . . set ^fndxarr(fillid,jobno,loop)=I */
+		/* . . set ^gndxarr(fillid,jobno,loop)=I */
+		/* . . set ^hndxarr(fillid,jobno,loop)=I */
+		/* . . set ^indxarr(fillid,jobno,loop)=I */
+		/* . if istp=0 xecute:ztr ztrcmd set ^lasti(fillid,jobno)=loop */
+		/* . if lfence=1 tcommit */
+
+		/* . set I=(I*nroot)#prime */
+		I = (I * nroot) % prime;
+	}	/* ; End For Loop */
+
 	/* write "End index:",loop,! */
+	printf("End index:%d\n", loop);
+
 	/* write "Job completion successful",! */
+	printf("Job completion successful\n");
+
 	/* write "End Time : ",$ZD($H,"DD-MON-YEAR 24:60:SS"),! */
-	/* quit	*/
-	}
+	value.len_used = sprintf(value.buf_addr, "End Time : %s", get_curtime());
+	assert(value.len_used < value.len_alloc);
+	printf("%s\n", value.buf_addr);
+
+	fflush(stdout);	/* flush stdout as soon as efficiently possible */
+
 	return YDB_OK;
 }
 
@@ -1169,4 +1247,144 @@ char *get_curtime()
 
 	strftime(timeString, sizeof(timeString), "%d-%b-%Y %H:%M:%S", time_info);
 	return timeString;
+}
+
+int	tpfn1(int *parm_array)
+{
+	int	crash, trigger, istp, fillid, loop, jobno, I, ztr;
+	int	rndm, dollar_trestart;
+	int	status;
+
+	/* First copy down parmeter array into variables */
+	crash = parm_array[0];
+	trigger = parm_array[1];
+	istp = parm_array[2];
+	fillid = parm_array[3];
+	loop = parm_array[4];
+	jobno = parm_array[5];
+	I = parm_array[6];
+	ztr = parm_array[7];
+
+	/* . set ^arandom(fillid,subsMAX)=val */
+	subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d", fillid);
+	YDB_COPY_BUFF_TO_BUFF(&ybuff_subsMAX, &subscr[1]);
+	status = ydb_set_s(&ygbl_arandom, 2, subscr, &ybuff_val);
+	assert(YDB_OK == status);
+
+	/* . if ((istp=1)&(crash)) do */
+	if (istp & crash)
+	{
+		/* . . set rndm=$r(10) */
+		rndm = (int)(10 * drand48());
+
+		/* . . if rndm=1 if $TRESTART>2  do noop^imptp	; Just randomly hold crit for long time */
+		status = ydb_get_s(&yisv_trestart, 0, NULL, &value);
+		assert(YDB_OK == status);
+		value.buf_addr[value.len_used] = '\0';
+		dollar_trestart = atoi(value.buf_addr);
+		if (2 < dollar_trestart)
+		{
+			if (1 == rndm)
+			{
+				status = ydb_ci("noop");
+				assert(YDB_OK == status);
+			}
+			/* . . if rndm=2 if $TRESTART>2  h $r(10)		; Just randomly hold crit for long time */
+			if (2 == rndm)
+			{
+				rndm = (int)(10 * drand48());
+				sleep(rndm);
+			}
+		}
+		/* . . if $TRESTART set ^zdummy($TRESTART)=jobno	; In case of restart cause different TP transaction flow */
+		if (dollar_trestart)
+		{
+			YDB_COPY_BUFF_TO_BUFF(&value, &subscr[2]);
+			value.len_used = sprintf(value.buf_addr, "%d", jobno);
+			status = ydb_set_s(&ygbl_zdummy, 1, &subscr[2], &value);
+			assert(YDB_OK == status);
+		}
+	}
+	/* . set ^brandomv(fillid,subsMAX)=valALT */
+	status = ydb_set_s(&ygbl_brandomv, 2, subscr, &ybuff_valALT);
+	assert(YDB_OK == status);
+
+	/* . if 'trigger do */
+	if (!trigger)
+	{
+		/* . . set ^crandomva(fillid,subsMAX)=valALT */
+		status = ydb_set_s(&ygbl_crandomva, 2, subscr, &ybuff_valALT);
+		assert(YDB_OK == status);
+	}
+
+	/* . set ^drandomvariable(fillid,subs)=valALT */
+	YDB_COPY_BUFF_TO_BUFF(&ybuff_subs, &subscr[1]);
+	status = ydb_set_s(&ygbl_drandomvariable, 2, subscr, &ybuff_valALT);
+	assert(YDB_OK == status);
+
+	/* . if 'trigger do */
+	if (!trigger)
+	{
+		/* . . set ^erandomvariableimptp(fillid,subs)=valALT */
+		status = ydb_set_s(&ygbl_erandomvariableimptp, 2, subscr, &ybuff_valALT);
+		assert(YDB_OK == status);
+
+		/* . . set ^frandomvariableinimptp(fillid,subs)=valALT */
+		status = ydb_set_s(&ygbl_frandomvariableinimptp, 2, subscr, &ybuff_valALT);
+		assert(YDB_OK == status);
+	}
+
+	/* . set ^grandomvariableinimptpfill(fillid,subs)=val */
+	status = ydb_set_s(&ygbl_grandomvariableinimptpfill, 2, subscr, &ybuff_val);
+	assert(YDB_OK == status);
+
+	/* . if 'trigger do */
+	if (!trigger)
+	{
+		/* . . set ^hrandomvariableinimptpfilling(fillid,subs)=val */
+		status = ydb_set_s(&ygbl_hrandomvariableinimptpfilling, 2, subscr, &ybuff_val);
+		assert(YDB_OK == status);
+
+		/* . . set ^irandomvariableinimptpfillprgrm(fillid,subs)=val */
+		status = ydb_set_s(&ygbl_irandomvariableinimptpfillprgrm, 2, subscr, &ybuff_val);
+		assert(YDB_OK == status);
+	} else
+	{
+		/* . if trigger xecute ztwormstr	; fill in $ztwormhole for below update that requires "subs" */
+		status = ydb_ci("ztwormstr");
+		assert(YDB_OK == status);
+	}
+
+	/* . set ^jrandomvariableinimptpfillprogram(fillid,I)=val */
+	YDB_COPY_BUFF_TO_BUFF(&ybuff_I, &subscr[1]);
+	status = ydb_set_s(&ygbl_jrandomvariableinimptpfillprogram, 2, subscr, &ybuff_val);
+	assert(YDB_OK == status);
+
+	/* . if 'trigger do */
+	if (!trigger)
+	{
+		/* . . set ^jrandomvariableinimptpfillprogram(fillid,I,I)=val */
+		YDB_COPY_BUFF_TO_BUFF(&ybuff_I, &subscr[2]);
+		status = ydb_set_s(&ygbl_jrandomvariableinimptpfillprogram, 3, subscr, &ybuff_val);
+		assert(YDB_OK == status);
+
+		/* . . set ^jrandomvariableinimptpfillprogram(fillid,I,I,subs)=val */
+		YDB_COPY_BUFF_TO_BUFF(&ybuff_subs, &subscr[3]);
+		status = ydb_set_s(&ygbl_jrandomvariableinimptpfillprogram, 4, subscr, &ybuff_val);
+		assert(YDB_OK == status);
+	}
+
+	if (istp)
+	{
+		/* . if istp'=0 xecute:ztr ztrcmd set ^lasti(fillid,jobno)=loop */
+		if (ztr)
+		{
+			status = ydb_ci("ztrcmd");
+			assert(YDB_OK == status);
+		}
+		subscr[1].len_used = sprintf(subscr[1].buf_addr, "%d", jobno);
+		value.len_used = sprintf(value.buf_addr, "%d", loop);
+		status = ydb_set_s(&ygbl_lasti, 2, subscr, &value);
+		assert(YDB_OK == status);
+	}
 }
