@@ -179,13 +179,13 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 ### Test error scenarios in ydb_subscript_previous_s() of Local Variables ###
 
-# Test of VARNAMEINVALID error
+# Test of INVVARNAME error
 Attempting ydb_subscript_previous_s() of bad basevar (% in middle of name) B%dbasevarInvChar
-ydb_subscript_previous_s() [57]: 151027762,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+ydb_subscript_previous_s() [57]: 151027762,%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
 Attempting ydb_subscript_previous_s() of bad basevar (> 31 characters) Verylongbasevarthatexceedsmaxlength
-ydb_subscript_previous_s() [66]: 151027762,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+ydb_subscript_previous_s() [66]: 151027762,%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
 Attempting ydb_subscript_previous_s() of bad basevar (first letter in name is digit) 1namestartswithdigit
-ydb_subscript_previous_s() [75]: 151027762,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+ydb_subscript_previous_s() [75]: 151027762,%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
 # Test of MAXNRSUBSCRIPTS error
 Attempting ydb_subscript_previous_s() of basevar with 32 subscripts
 ydb_subscript_previous_s() [87]: 150373282,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded

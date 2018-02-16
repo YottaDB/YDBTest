@@ -132,13 +132,13 @@ zwrarg=""
  --> Running lvnget3_errors.c <---
 ### Test error scenarios in ydb_get_s() of Local Variables ###
 
-# Test of VARNAMEINVALID error
+# Test of INVVARNAME error
 Attempting get of bad basevar (% in middle of name) B%dbasevarInvChar
-ydb_get_s() [a]: 151027762,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+ydb_get_s() [a]: 151027762,%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
 Attempting get of bad basevar (> 31 characters) Verylongbasevarthatexceedsmaxlength
-ydb_get_s() [b]: 151027762,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+ydb_get_s() [b]: 151027762,%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
 Attempting get of bad basevar (first letter in name is digit) 1namestartswithdigit
-ydb_get_s() [c]: 151027762,%YDB-E-VARNAMEINVALID, Invalid local/global/ISV variable name supplied to API call
+ydb_get_s() [c]: 151027762,%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
 # Test of MAXNRSUBSCRIPTS error
 Attempting get of basevar with 32 subscripts
 ydb_get_s() [d]: 150373282,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
