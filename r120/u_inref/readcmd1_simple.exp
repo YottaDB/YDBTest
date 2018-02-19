@@ -1,0 +1,55 @@
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+source readcmd_common.exp
+
+set i 0
+puts "\n$dashline"
+puts "# Test that Up arrow after no previous input brings empty line"
+puts $dashline
+puts "# Do first read command"
+send -- "read x($i)\r"
+expect -exact "${keypad_local}\r\n${keypad_xmit}"
+puts "# Presss the UP arrow key"
+send -- "${uparrow}\r"
+puts "# Expect empty line"
+expect -exact "${keypad_local}\r\n\rYDB>${keypad_xmit}"
+puts "\n# Do zwrite to check variables are indeed set correctly"
+send -- "zwrite  new\r"
+expect -exact "YDB>"
+
+puts "\n$dashline"
+puts "# Test that Up arrow once after 1 previous input goes back 1 line"
+puts $dashline
+puts "# Do first read command"
+send -- "read x($i)\r"
+expect -exact "${keypad_local}\r\n${keypad_xmit}"
+send -- "$input($i)\r"
+expect -exact "YDB>"
+incr i 1
+send -- "read x($i)\r"
+incr i -1
+expect -exact "${keypad_local}\r\n${keypad_xmit}"
+puts "\n# Presss the UP arrow key. Expect $input($i)"
+send -- "${uparrow}"
+expect_string "" "$input($i)"
+send -- "\r"
+expect -exact "${keypad_local}\r\n\rYDB>${keypad_xmit}"
+puts "\n# Do zwrite to check variables are indeed set correctly"
+send -- "zwrite  new\r"
+expect -exact "YDB>"
+
+puts "\n# Halt"
+send -- "halt\r"
+expect -exact ">"
+exit
+

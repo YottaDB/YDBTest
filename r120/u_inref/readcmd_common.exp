@@ -1,0 +1,91 @@
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+#
+# This file contains setup common to readcmd1_simple.exp and readcmd2_complex.exp
+#
+
+set dashline "-----------------------------------------------------------------------"
+set keypad_local "\[?1l>"
+set keypad_xmit "\[?1h="
+set uparrow "OA"
+set downarrow "OB"
+
+set timeout 15
+
+spawn /usr/local/bin/tcsh -f
+
+# Note "expect_after" needs to be done AFTER spawn or else it won't take effect
+expect_after {
+	timeout { timeout_procedure }
+}
+
+expect -exact "> "
+send -- "\$gtm_dist/mumps -direct\r"
+expect -exact "YDB>"
+puts "# Enable EDITING mode for \$PRINCIPAL"
+send -- "use \$principal:editing\r"
+expect -exact "YDB>"
+
+proc timeout_procedure { } {
+	puts "timeout occurred"
+	exit -1
+}
+
+# Write procedure to check that a specific "newstr" was recalled
+# To recall the specific string, the current string "oldstr" must be erased from the display first.
+# Hence the calculation to find out how many backspace and space characters to draw on the display.
+proc expect_string { oldstr newstr } {
+	set length [string length $oldstr]
+	set bytelength [string bytelength $oldstr]
+	if { $length != $bytelength } {
+		# This is a pure UTF-8 string. The unicode character used in this test takes up 3-bytes in UTF8 mode
+		# but uses up 2 display columns. Use that to compute the display width (could not find an expect function
+		# that returns the display width.
+		set displaylength [expr $bytelength - 2]
+	} else {
+		set displaylength $length
+	}
+	set backspacechar ""
+	set spacechar " "
+	set backspacestr ""
+	set spacestr ""
+	for {set i 0} {$i < $displaylength} {incr i 1} {
+		append backspacestr $backspacechar
+		append spacestr $spacechar
+	}
+	expect -exact "${backspacestr}${spacestr}${backspacestr}${newstr}"
+}
+
+# the maximum supported read history by YottaDB
+set maxreadhist 99
+
+# some random number but preferably prime
+set stepsize 23
+
+# set it so we have more input than max supported read history
+set maxindex [expr $maxreadhist + $stepsize + 5]
+
+# Store values to supply for M READ command inputs
+for {set i 0} {$i < $maxindex} {incr i 1} {
+	# Do below modulo so input($i) length also decreases as i increases.
+	# This is later needed to test that Up arrow or Down arrow erases the right # of columns
+	set input($i) [expr $i % 17]
+	# If test is running in UTF-8 mode, add multi-byte chars to input too
+	global env
+	if {([info exists env(gtm_chset)]) && ($env(gtm_chset) == "UTF-8") && ($input($i) > 10)} {
+		# Set some multi-byte unicode data that also has multi-column display width
+		# Later needed to test that Up arrow or Down arrow erases the right # of display columns
+		set tmp "Ａ$input($i)Ａ"
+		set input($i) $tmp
+	}
+}

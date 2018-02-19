@@ -1,0 +1,127 @@
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+source readcmd_common.exp
+
+set nreadswithinput [expr {int(rand()*${maxindex}*2)}]
+send -- "set ^nreadswithinput=$nreadswithinput\r"
+expect -exact "YDB>"
+
+set ncursorupordowncnt [expr {int(rand()*8)} + 1]
+send -- "set ^ncursorupordowncnt=$ncursorupordowncnt\r"
+expect -exact "YDB>"
+
+set readhistindex 0
+for {set i 0} {$i < $maxreadhist} {incr i 1} {
+	set readhist($i) ""
+}
+puts "# Do $nreadswithinput reads with input first"
+for {set i 0} {$i < $nreadswithinput} {incr i 1} {
+	# Use READ x, READ *x, READ #x formats to ensure all of them share the same history
+	set readinput $input([expr $i % $maxindex])
+	set readhist($readhistindex) $readinput
+	set readhistindex [expr ($readhistindex + 1) % $maxreadhist]
+	set length [string length $readinput]
+	if {$length == 1} {
+		# Input is 1 digit so it is possible to use READ *x or READ x#1 or READ x
+		set choice [expr {int(rand()*3)}]
+		if {$choice == 0} {
+			# Choose READ *x
+			send "read *x($i)\r"
+		} elseif {$choice == 1} {
+			# Choose READ x#1
+			send "read x($i)#1\r"
+		} else {
+			# Choose READ x
+			send "read x($i)\r"
+		}
+	} else {
+		# Input is 2 or more digits so it is possible to use READ x#1 or READ x only (No READ *x)
+		set choice [expr 1 + {int(rand()*2)}]
+		if {$choice == 1} {
+			# Choose READ x#
+			send "read x($i)#$length\r"
+		} else {
+			# Choose READ x
+			send "read x($i)\r"
+		}
+	}
+	if {$choice == 2} {
+		expect -exact "${keypad_local}\r\n${keypad_xmit}"
+		send -- "$readinput\r"
+	} elseif {$choice == 1} {
+		expect -exact "${keypad_local}\r\n${keypad_xmit}"
+		send -- "$readinput"
+	} else {
+		expect -exact "\r\n"
+		send -- "$readinput"
+	}
+	expect -exact "YDB>"
+}
+set curreadhistindex $readhistindex
+if { $nreadswithinput != 0} {
+	set prevhist $readinput
+} else {
+	set prevhist ""
+}
+
+puts "# Do $ncursorupordowncnt reads with recalled input"
+for {set j 0} {$j < $ncursorupordowncnt} {incr j 1} {
+	set readhistindexfirsttime 1
+	set oldstr ""
+	send -- "read x($i)\r"
+	expect -exact "${keypad_local}\r\n${keypad_xmit}"
+	set upordown($j) [expr 1 + {int(rand()*${maxindex}*2)}]
+	puts "\n# Use Up/Down arrow $upordown($j) times"
+	for {set k 0} {$k < $upordown($j)} {incr k 1} {
+		set chooseuparrow [expr {int(rand()*2)}]
+		if {$chooseuparrow == 1} {
+			# Send up arrow escape sequence
+			send -- "${uparrow}"
+			puts "\n# Use Up arrow"
+			set readhistindex [expr ($readhistindex - 1) % $maxreadhist]
+		} else {
+			send -- "${downarrow}"
+			puts "\n# Use Down arrow"
+			if {0 == $readhistindexfirsttime} {
+				set readhistindex [expr ($readhistindex + 1) % $maxreadhist]
+			}
+		}
+		set readhistindexfirsttime 0
+		set newstr "$readhist($readhistindex)"
+		# Do not invoke "expect_string" procedure if both oldstr and newstr are "" since there is nothing to expect
+		if {(${oldstr} != "") || (${newstr} != "")} {
+			expect_string ${oldstr} ${newstr}
+		}
+		set oldstr ${newstr}
+	}
+	send -- "\r"
+	expect -exact "${keypad_local}\r\n\rYDB>${keypad_xmit}"
+	# Increment ^failcnt if test failed
+	send -- "if x($i)'=\"${newstr}\" write \"Expected x($i)=$newstr but actual=\",x($i),! if \$incr(^failcnt)\r"
+	# Increment ^passcnt if test passed
+	send -- "if x($i)=\"${newstr}\" if \$incr(^passcnt)\r"
+	expect -exact "YDB>"
+	if {($newstr != "") && ($newstr != $prevhist)} {
+		set readhist($curreadhistindex) $newstr
+		set curreadhistindex [expr ($curreadhistindex + 1) % $maxreadhist]
+		set prevhist $newstr
+	}
+	set readhistindex $curreadhistindex
+	incr i 1
+}
+
+puts "\n# Halt"
+send -- "halt\r"
+expect -exact ">"
+exit
+
