@@ -53,31 +53,31 @@
 #define	MAXCHILDREN	32
 #define	MAXVALUELEN	256
 
+/* valMAXbuff and valuebuff are defined as MAXVALUE*4 size (1K) because valMAX variable in imptp.m can go to lengths of 871 etc. */
 pid_t		process_id;
-char		valuebuff[MAXVALUELEN], pidvaluebuff[MAXVALUELEN], tmpvaluebuff[MAXVALUELEN], subscrbuff[YDB_MAX_SUBS + 1][MAXVALUELEN];
+char		valuebuff[MAXVALUELEN*4], pidvaluebuff[MAXVALUELEN], tmpvaluebuff[MAXVALUELEN], subscrbuff[YDB_MAX_SUBS + 1][MAXVALUELEN];
 ydb_buffer_t	value, tmpvalue, pidvalue, subscr[YDB_MAX_SUBS + 1];
 ydb_buffer_t	ylcl_jobcnt, ylcl_fillid, ylcl_istp, ylcl_jobid, ylcl_jobindex;
 ydb_buffer_t	ylcl_jobno, ylcl_tptype, ylcl_ztrcmd, ylcl_trigname, ylcl_fulltrig, ylcl_dztrig, ylcl_I, ylcl_loop;
 ydb_buffer_t	ylcl_keysize, ylcl_recsize, ylcl_span;
-ydb_buffer_t	ylcl_subsMAX, ylcl_val, ylcl_valALT, ylcl_subs;
+ydb_buffer_t	ylcl_subsMAX, ylcl_val, ylcl_valALT, ylcl_valMAX, ylcl_subs;
 ydb_buffer_t	ylcl_lfence, ylcl_trigger, ylcl_crash, ylcl_orlbkintp;
 ydb_buffer_t	ygbl_pctimptp, ygbl_endloop, ygbl_cntloop, ygbl_cntseq, ygbl_pctsprgdeExcludeGbllist, ygbl_pctjobwait, ygbl_lasti;
 ydb_buffer_t	ygbl_arandom, ygbl_brandomv, ygbl_zdummy, ygbl_crandomva, ygbl_drandomvariable, ygbl_erandomvariableimptp;
 ydb_buffer_t	ygbl_frandomvariableinimptp, ygbl_grandomvariableinimptpfill, ygbl_hrandomvariableinimptpfilling;
 ydb_buffer_t	ygbl_irandomvariableinimptpfillprgrm, ygbl_jrandomvariableinimptpfillprogram;
+ydb_buffer_t	ygbl_antp, ygbl_bntp, ygbl_cntp, ygbl_dntp, ygbl_entp, ygbl_fntp, ygbl_gntp, ygbl_hntp, ygbl_intp;
 ydb_buffer_t	yisv_zroutines, yisv_trestart;
 char		timeString[21];  /* space for "DD-MON-YEAR HH:MM:SS\0" */
 char		tptypebuff[MAXVALUELEN];
-char		subsMAXbuff[MAXVALUELEN], valbuff[MAXVALUELEN], valALTbuff[MAXVALUELEN], subsbuff[MAXVALUELEN], Ibuff[MAXVALUELEN];
-ydb_buffer_t	ybuff_tptype, ybuff_subsMAX, ybuff_val, ybuff_valALT, ybuff_subs, ybuff_I;
+char		subsMAXbuff[MAXVALUELEN], valbuff[MAXVALUELEN], valALTbuff[MAXVALUELEN], valMAXbuff[MAXVALUELEN*4], subsbuff[MAXVALUELEN], Ibuff[MAXVALUELEN];
+ydb_buffer_t	ybuff_tptype, ybuff_subsMAX, ybuff_val, ybuff_valALT, ybuff_valMAX, ybuff_subs, ybuff_I;
 int		crash, trigger;
 
 int	impjob(int child);
 char	*get_curtime(void);
-int	tpfn1();
-int	tpfn2();
-int	tpfn3();
-int	tpfn4();
+int	tpfn_stage1();
+int	tpfn_stage3();
 
 /* Implements below M code in com/imptp.csh.
  *
@@ -122,6 +122,7 @@ int main(int argc, char *argv[])
 	YDB_LITERAL_TO_BUFFER("subsMAX", &ylcl_subsMAX);
 	YDB_LITERAL_TO_BUFFER("val", &ylcl_val);
 	YDB_LITERAL_TO_BUFFER("valALT", &ylcl_valALT);
+	YDB_LITERAL_TO_BUFFER("valMAX", &ylcl_valMAX);
 	YDB_LITERAL_TO_BUFFER("subs", &ylcl_subs);
 	YDB_LITERAL_TO_BUFFER("lfence", &ylcl_lfence);
 	YDB_LITERAL_TO_BUFFER("trigger", &ylcl_trigger);
@@ -148,6 +149,15 @@ int main(int argc, char *argv[])
 	 * silently truncated) so truncate the name as much as needed to keep it valid.
 	 */
 	YDB_LITERAL_TO_BUFFER("^jrandomvariableinimptpfillprogr", &ygbl_jrandomvariableinimptpfillprogram);
+	YDB_LITERAL_TO_BUFFER("^antp", &ygbl_antp);
+	YDB_LITERAL_TO_BUFFER("^bntp", &ygbl_bntp);
+	YDB_LITERAL_TO_BUFFER("^cntp", &ygbl_cntp);
+	YDB_LITERAL_TO_BUFFER("^dntp", &ygbl_dntp);
+	YDB_LITERAL_TO_BUFFER("^entp", &ygbl_entp);
+	YDB_LITERAL_TO_BUFFER("^fntp", &ygbl_fntp);
+	YDB_LITERAL_TO_BUFFER("^gntp", &ygbl_gntp);
+	YDB_LITERAL_TO_BUFFER("^hntp", &ygbl_hntp);
+	YDB_LITERAL_TO_BUFFER("^intp", &ygbl_intp);
 	YDB_LITERAL_TO_BUFFER("$zroutines", &yisv_zroutines);
 	YDB_LITERAL_TO_BUFFER("$trestart", &yisv_trestart);
 
@@ -170,6 +180,8 @@ int main(int argc, char *argv[])
 	ybuff_val.len_alloc = sizeof(valbuff);
 	ybuff_valALT.buf_addr = valALTbuff;
 	ybuff_valALT.len_alloc = sizeof(valALTbuff);
+	ybuff_valMAX.buf_addr = valMAXbuff;
+	ybuff_valMAX.len_alloc = sizeof(valMAXbuff);
 	ybuff_subs.buf_addr = subsbuff;
 	ybuff_subs.len_alloc = sizeof(subsbuff);
 	ybuff_I.buf_addr = Ibuff;
@@ -1048,8 +1060,9 @@ int	impjob(int childnum)
 		parm_array[5] = jobno;
 		parm_array[6] = I;
 		parm_array[7] = ztr;
+		parm_array[8] = dztrig;
 
-		/* Initialize variables subsMAX, val, valALT, subs for use by later function calls ("tpfn1", etc.) */
+		/* Initialize variables subsMAX, val, valALT, valMAX, subs for use by later function calls ("tpfn_stage1", etc.) */
 		status = ydb_get_s(&ylcl_subsMAX, 0, NULL, &value);
 		assert(YDB_OK == status);
 		YDB_COPY_BUFF_TO_BUFF(&value, &ybuff_subsMAX);
@@ -1059,6 +1072,9 @@ int	impjob(int childnum)
 		status = ydb_get_s(&ylcl_valALT, 0, NULL, &value);
 		assert(YDB_OK == status);
 		YDB_COPY_BUFF_TO_BUFF(&value, &ybuff_valALT);
+		status = ydb_get_s(&ylcl_valMAX, 0, NULL, &value);
+		assert(YDB_OK == status);
+		YDB_COPY_BUFF_TO_BUFF(&value, &ybuff_valMAX);
 		status = ydb_get_s(&ylcl_subs, 0, NULL, &value);
 		assert(YDB_OK == status);
 		YDB_COPY_BUFF_TO_BUFF(&value, &ybuff_subs);
@@ -1071,19 +1087,17 @@ int	impjob(int childnum)
 		/* Run a block of code as a TP or non-TP transaction based on "istp" variable */
 		if (istp)
 		{
-			status = ydb_tp_s(&tpfn1, parm_array, (const char *)ybuff_tptype.buf_addr, 1, &starvar);
+			status = ydb_tp_s(&tpfn_stage1, parm_array, (const char *)ybuff_tptype.buf_addr, 1, &starvar);
 			assert(YDB_OK == status);
 		} else
 		{
-			status = tpfn1(parm_array);
+			status = tpfn_stage1(parm_array);
 			assert(YDB_OK == status);
 		}
 		/* if istp=1 tcommit */
 
-		status = ydb_ci("helper2");
-		assert(YDB_OK == status);
-
 		/* . ; Stage 2 */
+
 		/* . set rndm=$random(10) */
 		/* . if (5>rndm)&(0=$tlevel)&trigger do  ; $ztrigger() operation 50% of the time: 10% del by name, 10% del, 80% add */
 		/* . . set rndm=$random(10),trig=$select(0=rndm:"-"_fulltrig,1=rndm:"-"_trigname,1:"+"_fulltrig) */
@@ -1091,27 +1105,45 @@ int	impjob(int childnum)
 		/* . . xecute ztrigstr */
 		/* . . if (trig=("-"_trigname))&(ztrigret=0) set ztrigret=1	; trigger does not exist, ignore delete-by-name error */
 		/* . . goto:'ztrigret ERROR */
+		status = ydb_ci("helper2");	/* $ztrigger is anyways not supported in simpleAPI so use call-ins instead */
+		assert(YDB_OK == status);
+
 		/* . set ^antp(fillid,subs)=val */
+		/* subscr[0] already has <fillid> value in it */
+		YDB_COPY_BUFF_TO_BUFF(&ybuff_subs, &subscr[1]);
+		status = ydb_set_s(&ygbl_antp, 2, subscr, &ybuff_val);
+		assert(YDB_OK == status);
+
 		/* . if 'trigger do */
-		/* . . set ^bntp(fillid,subs)=val */
-		/* . . set ^cntp(fillid,subs)=val */
+		if (!trigger)
+		{
+			/* . . set ^bntp(fillid,subs)=val */
+			status = ydb_set_s(&ygbl_bntp, 2, subscr, &ybuff_val);
+			assert(YDB_OK == status);
+
+			/* . . set ^cntp(fillid,subs)=val */
+			status = ydb_set_s(&ygbl_cntp, 2, subscr, &ybuff_val);
+			assert(YDB_OK == status);
+		}
+
 		/* . . set ^dntp(fillid,subs)=valALT */
-		/* . else  do */
-		/* . . set ^dntp(fillid,subs)=valALT */
+		status = ydb_set_s(&ygbl_dntp, 2, subscr, &ybuff_valALT);
+		assert(YDB_OK == status);
+
 		/* . ; Stage 3 */
-		/* . if istp=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp>0 ifneeded^orlbkresume(istp) */
-		/* . do:dztrig ^imptpdztrig(2,istp<2) */
-		/* . set ^entp(fillid,subs)=val */
-		/* . if 'trigger do */
-		/* . . set ^fntp(fillid,subs)=val */
-		/* . if trigger do */
-		/* . . set ^fntp(fillid,subs)=$extract(^fntp(fillid,subs),1,$length(^fntp(fillid,subs))-$length("suffix")) */
-		/* . set ^gntp(fillid,subsMAX)=valMAX */
-		/* . if 'trigger do */
-		/* . . set ^hntp(fillid,subsMAX)=valMAX */
-		/* . . set ^intp(fillid,subsMAX)=valMAX */
-		/* . . set ^bntp(fillid,subsMAX)=valMAX */
-		/* . if istp=1 tcommit */
+		/* . if istp=1 tstart ():(serial:transaction=tptype) */
+		/* Run a block of code as a TP or non-TP transaction based on "istp" variable */
+		if (istp)
+		{
+			status = ydb_tp_s(&tpfn_stage3, parm_array, (const char *)ybuff_tptype.buf_addr, 0, NULL);
+			assert(YDB_OK == status);
+		} else
+		{
+			status = tpfn_stage3(parm_array);
+			assert(YDB_OK == status);
+		}
+		/* if istp=1 tcommit */
+
 		/* . ; Stage 4 */
 		/* . for J=1:1:jobcnt D */
 		/* . . set valj=valALT_J */
@@ -1264,7 +1296,7 @@ char *get_curtime()
 	return timeString;
 }
 
-int	tpfn1(int *parm_array)
+int	tpfn_stage1(int *parm_array)
 {
 	int	crash, trigger, istp, fillid, loop, jobno, I, ztr;
 	int	rndm, dollar_trestart;
@@ -1430,4 +1462,79 @@ int	tpfn1(int *parm_array)
 			return status;
 		assert(YDB_OK == status);
 	}
+	return YDB_OK;
+}
+
+int	tpfn_stage3(int *parm_array)
+{
+	int	dztrig;
+	int	status;
+
+	/* First copy down parmeter array into variables */
+	dztrig = parm_array[8];
+
+	/* . do:dztrig ^imptpdztrig(2,istp<2) */
+	if (dztrig)
+	{
+		status = ydb_ci("imptpdztrig");
+		assert(YDB_OK == status);
+	}
+
+	/* . set ^entp(fillid,subs)=val */
+	/* subscr[0] already has <fillid> value in it */
+	YDB_COPY_BUFF_TO_BUFF(&ybuff_subs, &subscr[1]);
+	status = ydb_set_s(&ygbl_entp, 2, subscr, &ybuff_val);
+	if (YDB_TP_RESTART == status)
+		return status;
+	assert(YDB_OK == status);
+
+	/* . if 'trigger do */
+	if (!trigger)
+	{
+		/* . . set ^fntp(fillid,subs)=val */
+		status = ydb_set_s(&ygbl_fntp, 2, subscr, &ybuff_val);
+		if (YDB_TP_RESTART == status)
+			return status;
+		assert(YDB_OK == status);
+	} else
+	{
+		/* . if trigger do */
+		/* . . set ^fntp(fillid,subs)=$extract(^fntp(fillid,subs),1,$length(^fntp(fillid,subs))-$length("suffix")) */
+		status = ydb_get_s(&ygbl_fntp, 2, subscr, &value);
+		if (YDB_TP_RESTART == status)
+			return status;
+		assert(YDB_OK == status);
+		value.len_used -= 6;	/* 6 is $length("suffix") */
+		status = ydb_set_s(&ygbl_fntp, 2, subscr, &value);
+		if (YDB_TP_RESTART == status)
+			return status;
+		assert(YDB_OK == status);
+	}
+	/* . set ^gntp(fillid,subsMAX)=valMAX */
+	YDB_COPY_BUFF_TO_BUFF(&ybuff_subsMAX, &subscr[1]);
+	status = ydb_set_s(&ygbl_gntp, 2, subscr, &ybuff_valMAX);
+	if (YDB_TP_RESTART == status)
+		return status;
+	assert(YDB_OK == status);
+
+	/* . if 'trigger do */
+	if (!trigger)
+	{
+		/* . . set ^hntp(fillid,subsMAX)=valMAX */
+		status = ydb_set_s(&ygbl_hntp, 2, subscr, &ybuff_valMAX);
+		if (YDB_TP_RESTART == status)
+			return status;
+		assert(YDB_OK == status);
+
+		/* . . set ^intp(fillid,subsMAX)=valMAX */
+		status = ydb_set_s(&ygbl_intp, 2, subscr, &ybuff_valMAX);
+		if (YDB_TP_RESTART == status)
+			return status;
+
+		/* . . set ^bntp(fillid,subsMAX)=valMAX */
+		status = ydb_set_s(&ygbl_bntp, 2, subscr, &ybuff_valMAX);
+		if (YDB_TP_RESTART == status)
+			return status;
+	}
+	return YDB_OK;
 }
