@@ -17,8 +17,12 @@ dupsetnoop;
 	quit
 
 getdatinfo;
-	 do get^datinfo("^%imptp("_fillid_")")
-	 quit
+	do get^datinfo("^%imptp("_fillid_")")
+	quit
+
+imptpdztrig;
+	do:dztrig ^imptpdztrig(2,istp<2)
+	quit
 
 tpnoiso;
 	view "NOISOLATION":"^arandom,^brandomv,^crandomva,^drandomvariable,^erandomvariableimptp,^frandomvariableinimptp,^grandomvariableinimptpfill,^hrandomvariableinimptpfilling,^irandomvariableinimptpfillprgrm,^jrandomvariableinimptpfillprogram"
@@ -40,7 +44,7 @@ helper1	;
 	set val=$$^ugenstr(loop)
 	do:dztrig ^imptpdztrig(1,istp<2)
 	set ztwormstr="set $ztwormhole=subs"
-	set recpad=recsize-($$^dzlenproxy(val)-$length(val))				; padded record size minus UTF-8 bytes
+	set recpad=recsize-($$^dzlenproxy(val)-$length(val))			; padded record size minus UTF-8 bytes
 	set recpad=$select((istp=2)&(recpad>800):800,1:recpad)			; ZTP uses the lower of the orig 800 or recpad
 	set valMAX=$j(val,recpad)
 	set valALT=$select(span>1:valMAX,1:val)
@@ -57,9 +61,13 @@ ztrcmd	;
 	xecute ztrcmd
 	quit
 
+helperinit;
+	set $etrap="write $zstatus,! zshow ""*"" halt"
+	quit
+
 helper2	;
 	; Stage 2
-	set $etrap="write $zstatus,! zshow ""*"" halt"
+	do helperinit
 	set rndm=$random(10)
 	if (5>rndm)&(0=$tlevel)&trigger do  ; $ztrigger() operation 50% of the time: 10% del by name, 10% del, 80% add
 	. set rndm=$random(10),trig=$select(0=rndm:"-"_fulltrig,1=rndm:"-"_trigname,1:"+"_fulltrig)
@@ -67,27 +75,10 @@ helper2	;
 	. xecute ztrigstr
 	. if (trig=("-"_trigname))&(ztrigret=0) set ztrigret=1	; trigger does not exist, ignore delete-by-name error
 	. goto:'ztrigret ERROR^imptp
-	set ^antp(fillid,subs)=val
-	if 'trigger do
-	. set ^bntp(fillid,subs)=val
-	. set ^cntp(fillid,subs)=val
-	. set ^dntp(fillid,subs)=valALT
-	else  do
-	. set ^dntp(fillid,subs)=valALT
-	; Stage 3
-	if istp=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp>0 ifneeded^orlbkresume(istp)
-	do:dztrig ^imptpdztrig(2,istp<2)
-	set ^entp(fillid,subs)=val
-	if 'trigger do
-	. set ^fntp(fillid,subs)=val
-	if trigger do
-	. set ^fntp(fillid,subs)=$extract(^fntp(fillid,subs),1,$length(^fntp(fillid,subs))-$length("suffix"))
-	set ^gntp(fillid,subsMAX)=valMAX
-	if 'trigger do
-	. set ^hntp(fillid,subsMAX)=valMAX
-	. set ^intp(fillid,subsMAX)=valMAX
-	. set ^bntp(fillid,subsMAX)=valMAX
-	if istp=1 tcommit
+	quit
+
+helper3	;
+	do helperinit
 	; Stage 4
 	for J=1:1:jobcnt D
 	. set valj=valALT_J
