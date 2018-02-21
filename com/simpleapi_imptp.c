@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
 	YDB_LITERAL_TO_BUFFER("^hrandomvariableinimptpfilling", &ygbl_hrandomvariableinimptpfilling);
 	YDB_LITERAL_TO_BUFFER("^irandomvariableinimptpfillprgrm", &ygbl_irandomvariableinimptpfillprgrm);
 	/* Note that simpleAPI issues an error if length is > 32 (unlike YottaDB M environment where the name is
-	 * silently truncated) so truncate the name as much as needed to kep it valid.
+	 * silently truncated) so truncate the name as much as needed to keep it valid.
 	 */
 	YDB_LITERAL_TO_BUFFER("^jrandomvariableinimptpfillprogr", &ygbl_jrandomvariableinimptpfillprogram);
 	YDB_LITERAL_TO_BUFFER("$zroutines", &yisv_zroutines);
@@ -884,7 +884,7 @@ int	impjob(int childnum)
 		assert(YDB_OK == status);
 
 		/* . set fulltrig="^unusedbyothersdummytrigger -commands=S -xecute=""do ^nothing"" -name="_trigname */
-		YDB_COPY_STRING_TO_BUFF("^unusedbyothersdummytrigger -commands=S -xecute=""do ^nothing"" -name=triggernameforinsertsanddels", &value);
+		YDB_COPY_STRING_TO_BUFF("^unusedbyothersdummytrigger -commands=S -xecute=\"do ^nothing\" -name=triggernameforinsertsanddels", &value);
 		status = ydb_set_s(&ylcl_fulltrig, 0, NULL, &value);
 		assert(YDB_OK == status);
 
