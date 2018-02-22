@@ -27,9 +27,6 @@
 #define	YDBKILL		3
 #define	YDBZKILL	4
 
-/* Use SIGILL below to generate a core when an assertion fails */
-#define assert(x) ((x) ? 1 : (fprintf(stderr, "Assert failed at %s line %d : %s\n", __FILE__, __LINE__, #x), kill(getpid(), SIGILL)))
-
 void	lvnZWRITE(void);
 void	gvnZWRITE(void);
 int	fullread(char *buff, int len);
@@ -43,7 +40,7 @@ int	fullread(char *buff, int len)
 	do
 	{
 		cnt = fread(ptr, 1, toread, stdin);
-		assert(0 <= cnt);
+		YDB_ASSERT(0 <= cnt);
 		toread -= cnt;
 		ptr += cnt;
 	} while (toread);
@@ -69,12 +66,12 @@ int main(int argc, char *argv[])
 		 * local nodes and global nodes using simpleAPI.
 		 */
 		status = ydb_ci("genstresstest");
-		assert(0 == status);
+		YDB_ASSERT(0 == status);
 	}
 	for (reccnt = 0; ; reccnt++)
 	{
 		cnt = fullread(hdrbuff, 8);
-		assert(8 == cnt);
+		YDB_ASSERT(8 == cnt);
 		reclen = *(int *)hdrbuff;
 		if (reclen > bufflen)
 		{
@@ -82,14 +79,14 @@ int main(int argc, char *argv[])
 				free(buff);
 			bufflen = reclen * 2;
 			buff = malloc(bufflen);
-			assert(NULL != buff);
+			YDB_ASSERT(NULL != buff);
 		}
 		action = *(int *)(hdrbuff + 4);
 		if (YDBEOF == action)
 			break;
-		assert((YDBSET == action) || (YDBGET == action) || (YDBKILL == action) || (YDBZKILL == action));
+		YDB_ASSERT((YDBSET == action) || (YDBGET == action) || (YDBKILL == action) || (YDBZKILL == action));
 		cnt = fullread(buff, reclen);
-		assert(cnt == reclen);
+		YDB_ASSERT(cnt == reclen);
 		readcnt[readcnt_index] = cnt;
 		readcnt_buff_index[readcnt_index] = dbg_buff_index;
 		readcnt_index++;
@@ -108,17 +105,17 @@ int main(int argc, char *argv[])
 			copylen = reclen - copylen;
 			memcpy(&dbg_buff[dbg_buff_index], buff, copylen);
 			dbg_buff_index += copylen;
-			assert(DBG_BUFF_SIZE > dbg_buff_index);
+			YDB_ASSERT(DBG_BUFF_SIZE > dbg_buff_index);
 		}
 		ptr = buff;
 		varnamelen = *(int *)buff;
 		ptr += 4;
 		basevar.buf_addr = ptr;
-		basevar.len_used = varnamelen;
+		basevar.len_used = basevar.len_alloc = varnamelen;
 		ptr += varnamelen;
 		nsubs = *(int *)ptr;
 		ptr += 4;
-		assert(32 > nsubs);
+		YDB_ASSERT(32 > nsubs);
 		for (i = 0; i < nsubs; i++)
 		{
 			len = *(int *)ptr;
@@ -138,24 +135,24 @@ int main(int argc, char *argv[])
 		if (YDBSET == action)
 		{
 			status = ydb_set_s(&basevar, nsubs, subscr, &value);
-			assert(YDB_OK == status);
+			YDB_ASSERT(YDB_OK == status);
 		} else if (YDBKILL == action)
 		{
 			status = ydb_delete_s(&basevar, nsubs, subscr, YDB_DEL_TREE);
-			assert(YDB_OK == status);
+			YDB_ASSERT(YDB_OK == status);
 		} else if (YDBZKILL == action)
 		{
 			status = ydb_delete_s(&basevar, nsubs, subscr, YDB_DEL_NODE);
-			assert(YDB_OK == status);
+			YDB_ASSERT(YDB_OK == status);
 		} else if (YDBGET == action)
 		{
 			retvalue.buf_addr = retvaluebuff;
 			retvalue.len_alloc = sizeof(retvaluebuff);
 			retvalue.len_used = 0;
 			status = ydb_get_s(&basevar, nsubs, subscr, &retvalue);
-			assert(YDB_OK == status);
-			assert((retvalue.len_used == value.len_used)
-				&& (!memcmp(retvalue.buf_addr, value.buf_addr, value.len_used)));
+			YDB_ASSERT(YDB_OK == status);
+			YDB_ASSERT((retvalue.len_used == value.len_used)
+				   && (!memcmp(retvalue.buf_addr, value.buf_addr, value.len_used)));
 		}
 	}
 	/* List all lvns created by us */
