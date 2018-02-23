@@ -51,12 +51,17 @@
 
 #define	LOCK_TIMEOUT	(unsigned long long)900000000000	/* 900 * 10^9 nanoseconds == 900 seconds == 15 minutes */
 #define	MAXCHILDREN	32
-#define	MAXVALUELEN	256
+#define	MAXVALUELEN	256		/* this is maximum length of value returned for most nodes (keeps buffers small) */
+#define	BIGMAXVALUELEN	(MAXVALUELEN*6)	/* certain values can go more than MAXVALUELEN so we need this in that case */
+#define	NUMSUBS		8		/* maximum number of subscripts needed */
 
-/* valMAXbuff and valuebuff are defined as MAXVALUE*4 size (1K) because valMAX variable in imptp.m can go to lengths of 871 etc. */
+/* valMAXbuff and valuebuff are defined as buffers of size BIGMAXVALUELEN (1K)
+ * as valMAX variable in imptp.m can go to lengths of 871 etc.
+ */
 pid_t		process_id;
-char		valuebuff[MAXVALUELEN*4], pidvaluebuff[MAXVALUELEN], tmpvaluebuff[MAXVALUELEN], subscrbuff[YDB_MAX_SUBS + 1][MAXVALUELEN];
-ydb_buffer_t	value, tmpvalue, pidvalue, subscr[YDB_MAX_SUBS + 1];
+char		valuebuff[BIGMAXVALUELEN], pidvaluebuff[MAXVALUELEN], tmpvaluebuff[MAXVALUELEN];
+char		subscrbuff[NUMSUBS][BIGMAXVALUELEN];
+ydb_buffer_t	value, tmpvalue, pidvalue, subscr[NUMSUBS];
 ydb_buffer_t	ylcl_jobcnt, ylcl_fillid, ylcl_istp, ylcl_jobid, ylcl_jobindex;
 ydb_buffer_t	ylcl_jobno, ylcl_tptype, ylcl_ztrcmd, ylcl_trigname, ylcl_fulltrig, ylcl_dztrig, ylcl_I, ylcl_loop;
 ydb_buffer_t	ylcl_keysize, ylcl_recsize, ylcl_span;
@@ -70,7 +75,8 @@ ydb_buffer_t	ygbl_antp, ygbl_bntp, ygbl_cntp, ygbl_dntp, ygbl_entp, ygbl_fntp, y
 ydb_buffer_t	yisv_zroutines, yisv_trestart;
 char		timeString[21];  /* space for "DD-MON-YEAR HH:MM:SS\0" */
 char		tptypebuff[MAXVALUELEN];
-char		subsMAXbuff[MAXVALUELEN], valbuff[MAXVALUELEN], valALTbuff[MAXVALUELEN], valMAXbuff[MAXVALUELEN*4], subsbuff[MAXVALUELEN], Ibuff[MAXVALUELEN];
+char		subsMAXbuff[BIGMAXVALUELEN], valbuff[MAXVALUELEN], valALTbuff[MAXVALUELEN], valMAXbuff[BIGMAXVALUELEN];
+char		subsbuff[MAXVALUELEN], Ibuff[MAXVALUELEN];
 ydb_buffer_t	ybuff_tptype, ybuff_subsMAX, ybuff_val, ybuff_valALT, ybuff_valMAX, ybuff_subs, ybuff_I;
 int		crash, trigger;
 
@@ -167,7 +173,7 @@ int main(int argc, char *argv[])
 	pidvalue.len_alloc = sizeof(pidvaluebuff);
 	tmpvalue.buf_addr = tmpvaluebuff;
 	tmpvalue.len_alloc = sizeof(tmpvaluebuff);
-	for (i = 0; i < YDB_MAX_SUBS + 1; i++)
+	for (i = 0; i < NUMSUBS; i++)
 	{
 		subscr[i].buf_addr = subscrbuff[i];
 		subscr[i].len_alloc = sizeof(subscrbuff[i]);
