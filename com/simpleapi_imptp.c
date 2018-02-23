@@ -1350,6 +1350,8 @@ int	tpfn_stage1(int *parm_array)
 			if (1 == rndm)
 			{
 				status = ydb_ci("noop");
+				if (YDB_TP_RESTART == status)
+					return status;
 				assert(YDB_OK == status);
 			}
 			/* . . if rndm=2 if $TRESTART>2  h $r(10)		; Just randomly hold crit for long time */
@@ -1433,6 +1435,8 @@ int	tpfn_stage1(int *parm_array)
 	{
 		/* . if trigger xecute ztwormstr	; fill in $ztwormhole for below update that requires "subs" */
 		status = ydb_ci("ztwormstr");
+		if (YDB_TP_RESTART == status)
+			return status;
 		assert(YDB_OK == status);
 	}
 
@@ -1467,6 +1471,8 @@ int	tpfn_stage1(int *parm_array)
 		if (ztr)
 		{
 			status = ydb_ci("ztrcmd");
+			if (YDB_TP_RESTART == status)
+				return status;
 			assert(YDB_OK == status);
 		}
 		subscr[1].len_used = sprintf(subscr[1].buf_addr, "%d", jobno);
@@ -1492,6 +1498,8 @@ int	tpfn_stage3(int *parm_array)
 	if (dztrig)
 	{
 		status = ydb_ci("imptpdztrig");
+		if (YDB_TP_RESTART == status)
+			return status;
 		assert(YDB_OK == status);
 	}
 
