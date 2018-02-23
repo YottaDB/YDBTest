@@ -643,6 +643,7 @@ int	impjob(int childnum)
 	int		lfence, nroot, i, lasti, top;
 	int		I, J, loop;
 	int		parm_array[16];
+	int		is_gtm8086_subtest;
 	ydb_buffer_t	starvar;
 
 	process_id = getpid();
@@ -678,6 +679,16 @@ int	impjob(int childnum)
 
 	rand = (int)(2 * drand48());
 	rand = 0;	/* NARSTODO : Remove this line */
+	is_gtm8086_subtest = (!memcmp(getenv("test_subtest_name"), "gtm8086", sizeof("gtm8086")));
+	/* If the caller is the "gtm8086" subtest, it creates a situation where JNLEXTEND or JNLSWITCHFAIL
+	 * errors can happen in the imptp child process and that is expected. This is easily handled if we
+	 * invoke the entire child process using impjob^imptp. If we use simpleAPI for this, all the ydb_*_s()
+	 * calls need to be checked for return status to allow for JNLEXTEND/JNLSWITCHFAIL and it gets clumsy.
+	 * Since simpleAPI gets good test coverage through imptp in many dozen tests, we choose to use call-ins
+	 * only for this specific test.
+	 */
+	if (is_gtm8086_subtest)
+		rand = 1;
 	if (rand)
 	{	/* Randomly chose ydb_ci method to run child (impjob^imptp) */
 		/* do impjob^imptp */
@@ -686,8 +697,7 @@ int	impjob(int childnum)
 		 * errors can happen in the imptp child process and that is expected. Account for that in the below assert.
 		 */
 		assert((YDB_OK == status)
-			|| (!memcmp(getenv("test_subtest_name"), "gtm8086", sizeof("gtm8086"))
-				&& (-YDB_ERR_JNLEXTEND == status) || (-YDB_ERR_JNLSWITCHFAIL == status)));
+			|| (is_gtm8086_subtest && (-YDB_ERR_JNLEXTEND == status) || (-YDB_ERR_JNLSWITCHFAIL == status)));
 		return YDB_OK;
 	}
 	/* Randomly chose simpleAPI method to run child (impjob^imptp) */
@@ -1015,9 +1025,9 @@ int	impjob(int childnum)
 	/* ; */
 	I = 1;
 	for (J = 2; J <= jobno; J++)
-		I = (I * root) % prime;
+		I = ((unsigned long long)I * root) % prime;
 	for (J = 1; J <= lasti; J++)
-		I = (I * nroot) % prime;
+		I = ((unsigned long long)I * nroot) % prime;
 
 	/* write "Starting index:",lasti+1,! */
 	printf("Starting index:%d\n", lasti + 1);
@@ -1026,7 +1036,7 @@ int	impjob(int childnum)
 	YDB_LITERAL_TO_BUFFER("*", &starvar);
 
 	/* for loop=lasti+1:1:top do  quit:$get(^endloop(fillid),0) */
-	for (loop = lasti + 1; lasti <= top; lasti++)
+	for (loop = lasti + 1; loop <= top; loop++)
 	{
 		/* Set I and loop M variables (needed by "helper1" call-in code) */
 		value.len_used = sprintf(value.buf_addr, "%d", I);
@@ -1144,6 +1154,10 @@ int	impjob(int childnum)
 		}
 		/* if istp=1 tcommit */
 
+		/* . ; Stage 4 thru 11*/
+		status = ydb_ci("helper3");
+		assert(YDB_OK == status);
+
 		/* . ; Stage 4 */
 		/* . for J=1:1:jobcnt D */
 		/* . . set valj=valALT_J */
@@ -1254,7 +1268,7 @@ int	impjob(int childnum)
 		/* . if lfence=1 tcommit */
 
 		/* . set I=(I*nroot)#prime */
-		I = (I * nroot) % prime;
+		I = ((unsigned long long)I * nroot) % prime;
 
 		/* quit:$get(^endloop(fillid),0) */
 		status = ydb_get_s(&ygbl_endloop, 1, subscr, &value);
@@ -1467,10 +1481,11 @@ int	tpfn_stage1(int *parm_array)
 
 int	tpfn_stage3(int *parm_array)
 {
-	int	dztrig;
+	int	dztrig, istp;
 	int	status;
 
 	/* First copy down parmeter array into variables */
+	istp = parm_array[2];
 	dztrig = parm_array[8];
 
 	/* . do:dztrig ^imptpdztrig(2,istp<2) */
@@ -1504,7 +1519,13 @@ int	tpfn_stage3(int *parm_array)
 		if (YDB_TP_RESTART == status)
 			return status;
 		assert(YDB_OK == status);
-		value.len_used -= 6;	/* 6 is $length("suffix") */
+		if (6 <= value.len_used)
+			value.len_used -= 6;	/* 6 is $length("suffix") */
+		else
+		{
+			assert(istp);
+			return YDB_TP_RESTART;	/* This is a restartable situation (TP isolation violated). Signal a restart. */
+		}
 		status = ydb_set_s(&ygbl_fntp, 2, subscr, &value);
 		if (YDB_TP_RESTART == status)
 			return status;
