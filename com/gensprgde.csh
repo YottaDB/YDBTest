@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -17,6 +20,9 @@
 # gtm_test_spanreg = Decimal 3 = Binary 11 => Do     use existing .sprgde files; Do     generate .sprgde files
 
 # Attempt to generate .sprgde files.
+
+set echo
+set verbose
 
 if (! ((2 == $gtm_test_spanreg) || (3 == $gtm_test_spanreg)) || ("GT.CM" == $test_gtm_gtcm)) then
 	exit 0	# test did not want .sprgde files to be generated
@@ -48,6 +54,14 @@ if ( `expr "V61000" ">" $gtm_verno` ) then
 endif
 
 source $gtm_tst/com/findsprgdefilename.csh	# sets the var "sprgdeoutdir" and "sprgdefile" accordingly
+
+if (! -e $sprgdeoutdir) then
+	mkdir -p $sprgdeoutdir
+	if ($status) then
+		# Directory does not exist but we are not able to create it. Exit.
+		exit 0
+	endif
+endif
 
 # If there is no write permission in the target directory, exit
 # (can happen with non-gtmtest user running T990 with gtm_test_spanreg=2/3)

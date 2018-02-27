@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -53,7 +56,14 @@ endif
 # Set sprgdeoutdir
 # As for output directory to generate .sprgde files, always choose T9xx specific directory (do not write to generic directory)
 # as multiple folks might be running tests and we dont want race conditions during concurrent overwrites.
-set sprgdeoutdir = $gtm_test/$tst_src/sprgdedata
+# Also if the env var "nfs_gtm_test" is defined, let it control where we place the .sprgde files.
+set outdir = $gtm_test
+if ($?nfs_gtm_test) then
+	if (-e $nfs_gtm_test) then
+		set outdir = $nfs_gtm_test
+	endif
+endif
+set sprgdeoutdir = $outdir/$tst_src/sprgdedata
 # gtmtest does not own any Txxx directory.
-if ("gtmtest" == "$USER") set sprgdeoutdir = $gtm_test/sprgdedata/$tst_src
+if ("gtmtest" == "$USER") set sprgdeoutdir = $outdir/sprgdedata/$tst_src
 
