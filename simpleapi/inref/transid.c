@@ -14,17 +14,10 @@
 
 #include <stdio.h>
 
-#include <sys/types.h>	/* needed for "kill" in assert */
-#include <signal.h>	/* needed for "kill" in assert */
-#include <unistd.h>	/* needed for "getpid" in assert */
-
 #define ERRBUF_SIZE	1024
 
 #define BASEVAR "^baselv"
 #define VALUE1	"TP with transid"
-
-/* Use SIGILL below to generate a core when an assertion fails */
-#define assert(x) ((x) ? 1 : (fprintf(stderr, "Assert failed at %s line %d : %s\n", __FILE__, __LINE__, #x), kill(getpid(), SIGILL)))
 
 char		errbuf[ERRBUF_SIZE];
 ydb_buffer_t	basevar, value1, badbasevar;
@@ -46,16 +39,16 @@ int main()
 	tpfn = &gvnset;
 	/* TID = "BA" */
 	status = ydb_tp_s(tpfn, NULL, "BA", 0, NULL);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	/* TID = "CS" */
 	status = ydb_tp_s(tpfn, NULL, "CS", 0, NULL);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	/* TID = "arbitrary str" */
 	status = ydb_tp_s(tpfn, NULL, "any str", 0, NULL);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	/* TID = "verylongstr" : Test that TID gets truncated to 8 bytes if input is longer than 8 bytes */
 	status = ydb_tp_s(tpfn, NULL, "verylongstr", 0, NULL);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	return YDB_OK;
 }
 
@@ -66,6 +59,6 @@ int gvnset()
 
 	/* Set a base variable, no subscripts */
 	status = ydb_set_s(&basevar, 0, NULL, &value1);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	return YDB_OK;
 }

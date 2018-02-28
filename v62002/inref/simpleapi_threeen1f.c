@@ -26,19 +26,12 @@
 #include <sys/stat.h>	/* needed for "creat" */
 #include <fcntl.h>	/* needed for "creat" */
 
-#include <sys/types.h>	/* needed for "kill" in assert */
-#include <signal.h>	/* needed for "kill" in assert */
-#include <unistd.h>	/* needed for "getpid" in assert */
-
-/* Use SIGILL below to generate a core when an assertion fails */
-#define assert(x) ((x) ? 1 : (fprintf(stderr, "Assert failed at %s line %d : %s\n", __FILE__, __LINE__, #x), kill(getpid(), SIGILL)))
-
 #define	YDB_COPY_BUFF_TO_BUFF(SRC, DST)				\
 {								\
 	int	copy_done;					\
 								\
 	YDB_COPY_BUFFER_TO_BUFFER(SRC, DST, copy_done);		\
-	assert(copy_done);					\
+	YDB_ASSERT(copy_done);					\
 }
 
 #define	LOCK_TIMEOUT	(unsigned long long)900000000000	/* 900 * 10^9 nanoseconds == 900 seconds == 15 minutes */
@@ -126,7 +119,7 @@ int main(int argc, char *argv[])
 
 	/* Determine # of CPUs in system. We will have as many parallel computation streams. */
 	streams = (int)sysconf(_SC_NPROCESSORS_ONLN);
-	assert(streams);
+	YDB_ASSERT(streams);
 
 	/* At the top level, the program reads and processes input lines, one at a time.  Each line specifies
          * one problem to solve.  Since the program is designed to resume after a crash and reuse partial
@@ -156,7 +149,7 @@ int main(int argc, char *argv[])
 			newk = k;
 		printf(" (%d->%d)", k, newk);	/* print number of execution streams, optionally corrected */
 		k = newk;
-		assert(k <= MAXCHILDREN);
+		YDB_ASSERT(k <= MAXCHILDREN);
 
 		ptr = strtok(NULL, " ");
 		blk = atoi(ptr);	/* blk - size of blocks of integers is optional fourth piece */
@@ -171,7 +164,7 @@ int main(int argc, char *argv[])
 
 		/* Define blocks of integers for child processes to work on */
 		status = ydb_delete_s(&ygbl_limits, 0, NULL, YDB_DEL_TREE);
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		tmp = i - 1;
 		for (count = 1; tmp != j; count++)
 		{
@@ -181,7 +174,7 @@ int main(int argc, char *argv[])
 			subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d", count);
 			value.len_used = sprintf(value.buf_addr, "%d", tmp);
 			status = ydb_set_s(&ygbl_limits, 1, subscr, &value);
-			assert(YDB_OK == status);
+			YDB_ASSERT(YDB_OK == status);
 		}
 
 		/* Launch jobs.  Grab lock l1, atomically increment counter, compute and launch one job for each block of numbers.
@@ -191,19 +184,19 @@ int main(int argc, char *argv[])
 		 */
 		value.len_used = sprintf(value.buf_addr, "%d", 0);
 		status = ydb_set_s(&ygbl_count, 0, NULL, &value);	/* Clear ^count - may have residual value if restarting from crash */
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		status = ydb_lock_incr_s(LOCK_TIMEOUT, &ylcl_l1, 0, NULL);	/* Set lock for process synchronization */
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		for (s = 1; s <= k; s++)
 		{
 			status = ydb_incr_s(&ygbl_count, 0, NULL, NULL, &value);	/* Atomic increment of counter in database for process synchronization */
-			assert(YDB_OK == status);
+			YDB_ASSERT(YDB_OK == status);
 			child_pid[s] = fork();
-			assert(0 <= child_pid[s]);
+			YDB_ASSERT(0 <= child_pid[s]);
 			if (0 == child_pid[s])
 			{
 				status = ydb_child_init(NULL);	/* needed in child pid right after a fork() */
-				assert(YDB_OK == status);
+				YDB_ASSERT(YDB_OK == status);
 				doblk(i, s);	/* this is the child */
 				return YDB_OK;
 			}
@@ -212,43 +205,43 @@ int main(int argc, char *argv[])
 		for ( ; ; )
 		{
 			status = ydb_get_s(&ygbl_count, 0, NULL, &value);
-			assert(YDB_OK == status);
+			YDB_ASSERT(YDB_OK == status);
 			value.buf_addr[value.len_used] = '\0';
 			if (0 == atoi(value.buf_addr))
 				break;
 			sleep(1);
 		}
 		status = ydb_lock_decr_s(&ylcl_l1, 0, NULL);	/* Release lock so processes can run */
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 
 		startat = time(NULL);	/* Get starting time */
 
 		status = ydb_lock_incr_s(LOCK_TIMEOUT, &ylcl_l2, 0, NULL);	/* Wait for processes to finish (may take longer with a poollimit) */
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 
 		endat = time(NULL);	/* Get ending time - time between startat and endat is the elapsed time */
 		duration = (int)(endat - startat);
 
 		status = ydb_get_s(&ygbl_result, 0, NULL, &value);
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		printf(" %s", value.buf_addr);
 
 		status = ydb_get_s(&ygbl_highest, 0, NULL, &value);
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		printf(" %s", value.buf_addr);
 
 		printf(" %d", duration);
 
 		status = ydb_get_s(&ygbl_updates, 0, NULL, &value);
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		updates = atoi(value.buf_addr);
 		printf(" %s", value.buf_addr);
 
 		status = ydb_get_s(&ygbl_reads, 0, NULL, &value);
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		reads = atoi(value.buf_addr);
 		printf(" %s", value.buf_addr);
@@ -260,7 +253,7 @@ int main(int argc, char *argv[])
 		printf("\n");
 
 		status = ydb_lock_decr_s(&ylcl_l2, 0, NULL);	/* Release lock for next run */
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 
 		/* Wait for children to terminate */
 		for (s = 1; s <= k; s++)
@@ -270,7 +263,7 @@ int main(int argc, char *argv[])
 				ret[s] = waitpid(child_pid[s], &stat[s], 0);
 				save_errno = errno;
 			} while ((-1 == ret[s]) && (EINTR == save_errno));
-			assert(-1 != ret[s]);
+			YDB_ASSERT(-1 != ret[s]);
 		}
 
 		dbinit();	/* Initialize database for next run */
@@ -286,17 +279,17 @@ void	dbinit()
 	/* Entryref dbinit clears database between lines */
 	value.len_used = sprintf(value.buf_addr, "%d", 0);
 	status = ydb_set_s(&ygbl_count, 0, NULL, &value);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	status = ydb_set_s(&ygbl_highest, 0, NULL, &value);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	status = ydb_set_s(&ygbl_reads, 0, NULL, &value);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	status = ydb_set_s(&ygbl_result, 0, NULL, &value);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	status = ydb_set_s(&ygbl_step, 0, NULL, &value);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	status = ydb_set_s(&ygbl_updates, 0, NULL, &value);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	return;
 }
 
@@ -322,9 +315,9 @@ void	digitsinit()
 		subscr[0].len_used = sprintf(subscr[0].buf_addr, "%s", digitstrings[i]);
 		value.len_used = sprintf(value.buf_addr, "%d", i);
 		status = ydb_set_s(&ylcl_di, 1, subscr, &value);
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		status = ydb_set_s(&ylcl_ds, 1, &value, subscr);
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 	}
 }
 
@@ -346,23 +339,23 @@ void	inttostr(long long n, ydb_buffer_t *buff)
 		tmpvalue2.len_alloc = sizeof(tmpvalue2buff);
 		first_time = 0;
 	}
-	assert(0 <= n);
+	YDB_ASSERT(0 <= n);
 	nstrlen = sprintf(nstr, "%lld", n);
 	for (i = 0; i < nstrlen; i++)
 	{
 		digit = nstr[i] - '0';
 		tmpvalue1.len_used = sprintf(tmpvalue1.buf_addr, "%d", digit);
 		status = ydb_get_s(&ylcl_ds, 1, &tmpvalue1, &tmpvalue2);
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		tmpvalue2.buf_addr[tmpvalue2.len_used] = '\0';	/* needed for sprintf below */
 		if (0 == i)
 			buff->len_used = sprintf(buff->buf_addr, "%s", tmpvalue2.buf_addr);
 		else
 		{
 			len = buff->len_used;
-			assert((len + tmpvalue2.len_used + 1) < MAXVALUELEN);
+			YDB_ASSERT((len + tmpvalue2.len_used + 1) < MAXVALUELEN);
 			len = sprintf(buff->buf_addr + len, " %s", tmpvalue2.buf_addr);
-			assert(len == (1 + tmpvalue2.len_used));
+			YDB_ASSERT(len == (1 + tmpvalue2.len_used));
 			buff->len_used += len;
 		}
 	}
@@ -398,7 +391,7 @@ long long strtoint(ydb_buffer_t *s)
 			break;
 		tmpvalue3.len_used = sprintf(tmpvalue3.buf_addr, "%s", ptr);
 		status = ydb_get_s(&ylcl_di, 1, &tmpvalue3, &tmpvalue4);
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		tmpvalue4.buf_addr[tmpvalue4.len_used] = '\0';
 		curdigit = atoi(tmpvalue4.buf_addr);
 		n = (10 * n) + curdigit;
@@ -423,39 +416,39 @@ void	doblk(int allfirst, int childnum)
 	/* Set stdout & stderr to child specific files */
 	sprintf(outfile, "simpleapi_threeen1f.mjo%d", childnum);
 	outfd = creat(outfile, 0666);
-	assert(-1 != outfd);
+	YDB_ASSERT(-1 != outfd);
 	newfd = dup2(outfd, 1);
-	assert(1 == newfd);
+	YDB_ASSERT(1 == newfd);
 	sprintf(errfile, "simpleapi_threeen1f.mje%d", childnum);
 	errfd = creat(errfile, 0666);
-	assert(-1 != errfd);
+	YDB_ASSERT(-1 != errfd);
 	newfd = dup2(errfd, 2);
-	assert(2 == newfd);
+	YDB_ASSERT(2 == newfd);
 
 	/* Start with zero reads, writes and highest number */
 	value.len_used = sprintf(value.buf_addr, "%d", 0);
 	status = ydb_set_s(&ylcl_reads, 0, NULL, &value);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	status = ydb_set_s(&ylcl_updates, 0, NULL, &value);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	status = ydb_set_s(&ylcl_highest, 0, NULL, &value);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 
 	/* No need to invoke "digitsinit()" as child process inherits all local variables of parent */
 
 	/* Get lock l2 that parent will wait on till this Jobbed processes is done */
 	YDB_COPY_BUFF_TO_BUFF(&pidvalue, &subscr[0]);	/* copy over "$j" into 1st subscript */
 	status = ydb_lock_incr_s(LOCK_TIMEOUT, &ylcl_l2, 1, subscr);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 
 	/* Decrement ^count to say this process is alive */
 	tmpvalue.len_used = sprintf(tmpvalue.buf_addr, "%d", -1);
 	status = ydb_incr_s(&ygbl_count, 0, NULL, &tmpvalue, &value);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 
 	/* This process will get lock l1($JOB) only after parent has released lock on l1 */
 	status = ydb_lock_incr_s(LOCK_TIMEOUT, &ylcl_l1, 1, subscr);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 
 	/* Process the next block in ^limits that needs processing; quit when done */
 	tmp = 0;
@@ -464,13 +457,13 @@ void	doblk(int allfirst, int childnum)
 		tmp++;
 		subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d", tmp);
 		status = ydb_data_s(&ygbl_limits, 1, subscr, &data_value);
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		if (0 == data_value)
 			break;
 
 		subscr[1].len_used = sprintf(subscr[1].buf_addr, "%d", 1);
 		status = ydb_incr_s(&ygbl_limits, 2, subscr, NULL, &value);
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		cnt = atoi(value.buf_addr);
 		if (1 != cnt)
@@ -480,7 +473,7 @@ void	doblk(int allfirst, int childnum)
 		status = ydb_get_s(&ygbl_limits, 1, subscr, &value);
 		if (YDB_ERR_GVUNDEF != status)
 		{
-			assert(YDB_OK == status);
+			YDB_ASSERT(YDB_OK == status);
 			value.buf_addr[value.len_used] = '\0';
 			cnt = atoi(value.buf_addr);
 			cnt++;
@@ -490,7 +483,7 @@ void	doblk(int allfirst, int childnum)
 
 		subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d", tmp);
 		status = ydb_get_s(&ygbl_limits, 1, subscr, &value);
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		cnt = atoi(value.buf_addr);
 		last = cnt;
@@ -499,14 +492,14 @@ void	doblk(int allfirst, int childnum)
 	/* Update global statistics inside a transaction */
 	tpfn = &tp_gvstatsincr;
 	status = ydb_tp_s(tpfn, NULL, NULL, 0, NULL);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 
 	/* Release locks to tell parent this parent is done */
 	YDB_COPY_BUFF_TO_BUFF(&pidvalue, &subscr[0]);	/* copy over "$j" into 1st subscript */
 	status = ydb_lock_decr_s(&ylcl_l1, 1, subscr);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	status = ydb_lock_decr_s(&ylcl_l2, 1, subscr);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	return;
 }
 
@@ -522,25 +515,25 @@ int tp_gvstatsincr(void *v)
 	status = ydb_incr_s(&ygbl_reads, 0, NULL, &ylcl_reads, &value);
 	if (YDB_TP_RESTART == status)
 		return status;
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 
 	status = ydb_incr_s(&ygbl_updates, 0, NULL, &ylcl_updates, &value);
 	if (YDB_TP_RESTART == status)
 		return status;
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 
 	status = ydb_get_s(&ygbl_highest, 0, NULL, &value);
 	if (YDB_TP_RESTART == status)
 		return status;
 	if (YDB_ERR_GVUNDEF != status)
 	{
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		highest_gbl = atoi(value.buf_addr);
 	} else
 		highest_gbl = 0;
 	status = ydb_get_s(&ylcl_highest, 0, NULL, &value);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	highest_lcl = atoi(value.buf_addr);
 	if (highest_lcl > highest_gbl)
@@ -548,7 +541,7 @@ int tp_gvstatsincr(void *v)
 		status = ydb_set_s(&ygbl_highest, 0, NULL, &value);
 		if (YDB_TP_RESTART == status)
 			return status;
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 	}
 	return YDB_OK;
 }
@@ -571,20 +564,20 @@ void	dostep(int first, int last)
 
 		/* Currpath holds path to 1 for current */
 		status = ydb_delete_s(&ylcl_currpath, 0, NULL, YDB_DEL_TREE);
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 
 		/* Go till we reach 1 or a number with a known number of steps */
 		for (i = 0; ; i++)
 		{
 			status = ydb_incr_s(&ylcl_reads, 0, NULL, NULL, &value);
-			assert(YDB_OK == status);
+			YDB_ASSERT(YDB_OK == status);
 
 			if (1 == n)
 				break;
 
 			inttostr(n, &subscr[0]);
 			status = ydb_data_s(&ygbl_step, 1, subscr, &data_value);
-			assert(YDB_OK == status);
+			YDB_ASSERT(YDB_OK == status);
 			if (data_value)
 				break;
 
@@ -592,7 +585,7 @@ void	dostep(int first, int last)
 			value.len_used = sprintf(value.buf_addr, "%lld", n);
 			subscr[0].len_used = sprintf(subscr[0].buf_addr, "%lld", i);
 			status = ydb_set_s(&ylcl_currpath, 1, subscr, &value);
-			assert(YDB_OK == status);
+			YDB_ASSERT(YDB_OK == status);
 
 			/* compute the next number */
 			if (0 == (n % 2))
@@ -602,13 +595,13 @@ void	dostep(int first, int last)
 
 			/* see if we have a new highest number reached */
 			status = ydb_get_s(&ylcl_highest, 0, NULL, &tmpvalue);
-			assert(YDB_OK == status);
+			YDB_ASSERT(YDB_OK == status);
 			tmpvalue.buf_addr[tmpvalue.len_used] = '\0';
 			highest_lcl = atoll(tmpvalue.buf_addr);
 			if (n > highest_lcl)
 			{
 				status = ydb_set_s(&ylcl_highest, 0, NULL, &value);
-				assert(YDB_OK == status);
+				YDB_ASSERT(YDB_OK == status);
 			}
 		}
 		/* if 0 == i we already have an answer for n, nothing to do here */
@@ -618,34 +611,34 @@ void	dostep(int first, int last)
 			{
 				inttostr(n, &subscr[0]);
 				status = ydb_get_s(&ygbl_step, 1, subscr, &value);
-				assert(YDB_OK == status);
+				YDB_ASSERT(YDB_OK == status);
 				i = i + strtoint(&value);
 			}
 			/* Atomically set maximum */
 			tpfn = &tp_setmaximum;
 			status = ydb_tp_s(tpfn, &i, NULL, 0, NULL);
-			assert(YDB_OK == status);
+			YDB_ASSERT(YDB_OK == status);
 			subscr[0].len_used = 0;	/* to start $order */
 			for ( ; ; )
 			{
 				status = ydb_subscript_next_s(&ylcl_currpath, 1, subscr, &value);
-				assert(YDB_OK == status);
+				YDB_ASSERT(YDB_OK == status);
 				if (0 == value.len_used)
 					break;
 				value.buf_addr[value.len_used] = '\0';
 				tmp1 = atoi(value.buf_addr);
 				YDB_COPY_BUFF_TO_BUFF(&value, &subscr[0]);	/* take a copy before it changes */
 				status = ydb_incr_s(&ylcl_updates, 0, NULL, NULL, &value);
-				assert(YDB_OK == status);
+				YDB_ASSERT(YDB_OK == status);
 
 				status = ydb_get_s(&ylcl_currpath, 1, subscr, &value);
-				assert(YDB_OK == status);
+				YDB_ASSERT(YDB_OK == status);
 				value.buf_addr[value.len_used] = '\0';
 				tmp2 = atoll(value.buf_addr);
 				inttostr(tmp2, &subscr[0]);
 				inttostr(i - tmp1, &value);
 				status = ydb_set_s(&ygbl_step, 1, subscr, &value);
-				assert(YDB_OK == status);
+				YDB_ASSERT(YDB_OK == status);
 				subscr[0].len_used = sprintf(subscr[0].buf_addr, "%lld", tmp1);
 			}
 		}
@@ -662,7 +655,7 @@ int tp_setmaximum(long long *i)
 		return status;
 	if (YDB_ERR_GVUNDEF != status)
 	{
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		result = atoi(value.buf_addr);
 	} else
@@ -673,7 +666,7 @@ int tp_setmaximum(long long *i)
 		status = ydb_set_s(&ygbl_result, 0, NULL, &value);
 		if (YDB_TP_RESTART == status)
 			return status;
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 	}
 	return YDB_OK;
 }

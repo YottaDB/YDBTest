@@ -14,10 +14,6 @@
 
 #include <stdio.h>
 
-#include <sys/types.h>	/* needed for "kill" in assert */
-#include <signal.h>	/* needed for "kill" in assert */
-#include <unistd.h>	/* needed for "getpid" in assert */
-
 #define ERRBUF_SIZE	1024
 
 #define BASEVAR "^tp1"
@@ -26,9 +22,6 @@
 #define VALUE1	"A question"
 #define VALUE2	"One less than 43"
 #define VALUE3 	"Life, the universe, and everything"
-
-/* Use SIGILL below to generate a core when an assertion fails */
-#define assert(x) ((x) ? 1 : (fprintf(stderr, "Assert failed at %s line %d : %s\n", __FILE__, __LINE__, #x), kill(getpid(), SIGILL)))
 
 char	errbuf[ERRBUF_SIZE];
 
@@ -54,10 +47,10 @@ int main()
 	zwrarg.address = NULL;
 	zwrarg.length = 0;
 	status = ydb_ci("driveZWRITE", &zwrarg);
-	assert(0 == status);
+	YDB_ASSERT(0 == status);
 	/* List all gvns created by us */
 	status = ydb_ci("gvnZWRITE");
-	assert(0 == status);
+	YDB_ASSERT(0 == status);
 	return YDB_OK;
 }
 
