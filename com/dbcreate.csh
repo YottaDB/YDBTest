@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -76,7 +79,7 @@ if (!($?test_replic)) then
    	$source_dir/send_env.csh
 	echo "Create database on GT.CM Servers ( $tst_gtcm_server_list)..."
 	set tmpenv = `$sec_shell "echo TST_REMOTE_HOST_GTCM:SEC_DIR_GTCM/"`
-	set tmpenv = `echo  $tmpenv | sed 's/ /,/g'`
+	set tmpenv = `echo  $tmpenv | sed 's/ /,/g;s/\.v46//g;s/\.v6//g;s/\.v4//g'`
 	echo "$sec_shell 'SEC_SHELL_GTCM SEC_GETENV_GTCM  ; cd SEC_DIR_GTCM ; source $source_dir/dbcreate_base.csh -GTCM_REMOTE $tmpenv $newargs'" > dbcreate.gtcm
 	$sec_shell "SEC_SHELL_GTCM SEC_GETENV_GTCM  ; cd SEC_DIR_GTCM ; source $source_dir/dbcreate_base.csh -GTCM_REMOTE $tmpenv $newargs"
 	if ($status != 0 ) exit 1
