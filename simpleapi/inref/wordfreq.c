@@ -12,16 +12,11 @@
 
 #include "libyottadb.h"	/* for ydb_* macros/prototypes/typedefs */
 
+#include <sys/types.h>	/* needed for "getpid" */
+#include <unistd.h>	/* needed for "getpid" */
 #include <stdio.h>	/* for "printf" */
 #include <string.h>	/* for "strtok" */
 #include <ctype.h>	/* for "toupper" */
-
-#include <sys/types.h>	/* needed for "kill" in assert */
-#include <signal.h>	/* needed for "kill" in assert */
-#include <unistd.h>	/* needed for "getpid" in assert */
-
-/* Use SIGILL below to generate a core when an assertion fails */
-#define assert(x) ((x) ? 1 : (fprintf(stderr, "Assert failed at %s line %d : %s\n", __FILE__, __LINE__, #x), kill(getpid(), SIGILL)))
 
 /* count and report word frequencies for http://www.cs.duke.edu/csed/code/code2007/ */
 int main()
@@ -67,7 +62,7 @@ int main()
 			{
 				tmp1.len_alloc = tmp1.len_used;
 				status = ydb_incr_s(&words, 1, &tmp1, NULL, &value);	/* M line : set value=$incr(words(tmp1)) */
-				assert(YDB_OK == status);
+				YDB_ASSERT(YDB_OK == status);
 			}
 			ptr = strtok(NULL, " ");
 		}
@@ -84,20 +79,20 @@ int main()
 	do
 	{
 		status = ydb_subscript_next_s(&words, 1, &tmp1, &tmp1);	/* M line : set tmp1=$order(words(tmp1)) */
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		if (0 == tmp1.len_used)
 			break;
 		status = ydb_get_s(&words, 1, &tmp1, &words_tmp1);	/* M line : set words_tmp1=words(tmp1) */
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		index_subscr[0] = words_tmp1;
 		index_subscr[1] = tmp1;
 		status = ydb_set_s(&index, 2, index_subscr, &null);	/* M line : set index(words_tmp1,tmp1)="" */
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 	} while (1);
 	do
 	{
 		status = ydb_subscript_previous_s(&index, 1, &tmp1, &tmp1);	/* M line : set tmp1=$order(index(tmp1),-1) */
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		if (0 == tmp1.len_used)
 			break;
 		tmp2.buf_addr = tmp2buff;			/* M line : set tmp2="" */
@@ -108,7 +103,7 @@ int main()
 		do
 		{
 			status = ydb_subscript_next_s(&index, 2, index_subscr, &tmp2); /* M line : set tmp2=$order(index(tmp1,tmp2)) */
-			assert(YDB_OK == status);
+			YDB_ASSERT(YDB_OK == status);
 			if (0 == tmp2.len_used)
 				break;
 			tmp1.buf_addr[tmp1.len_used] = '\0';

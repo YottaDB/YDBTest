@@ -14,9 +14,8 @@
 
 #include <stdio.h>
 
-#include <sys/types.h>	/* needed for "kill" in assert */
-#include <signal.h>	/* needed for "kill" in assert */
-#include <unistd.h>	/* needed for "getpid" in assert */
+#include <sys/types.h>	/* needed for "getpid" */
+#include <unistd.h>	/* needed for "getpid" and "fork" */
 #include <sys/wait.h>	/* needed for "waitpid" */
 #include <time.h>	/* needed for "time" */
 #include <stdlib.h>	/* needed for "drand48" */
@@ -32,9 +31,6 @@
 
 #define	FALSE	0
 #define	TRUE	1
-
-/* Use SIGILL below to generate a core when an assertion fails */
-#define assert(x) ((x) ? 1 : (fprintf(stderr, "Assert failed at %s line %d : %s\n", __FILE__, __LINE__, #x), kill(getpid(), SIGILL)))
 
 char	errbuf[ERRBUF_SIZE];
 
@@ -74,14 +70,14 @@ int main(int argc, char *argv[])
 		for (child = 0; child < NCHILDREN; child++)
 		{
 			child_pid[child] = fork();
-			assert(0 <= child_pid[child]);
+			YDB_ASSERT(0 <= child_pid[child]);
 			if (0 == child_pid[child])
 				return do_tp(numincrs);	/* this is the child */
 		}
 		for (child = 0; child < NCHILDREN; child++)
 		{
 			ret[child] = waitpid(child_pid[child], &stat[child], 0);
-			assert(-1 != ret[child]);
+			YDB_ASSERT(-1 != ret[child]);
 		}
 		cumulincrs += (NCHILDREN * numincrs);
 		end_time = time(NULL);
@@ -92,7 +88,7 @@ int main(int argc, char *argv[])
 	} while(1);
 	/* List the final value of global BASEVAR. That should be the same irrespective of order of TP operations inside children */
 	status = ydb_get_s(&basevar, 0, NULL, &value);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	result = strtoul(value.buf_addr, NULL, 10);
 	if ((int)result != cumulincrs)
 		printf("FAIL from tp2 : Expected %s=%d : Actual %s=%d\n", BASEVAR, cumulincrs, BASEVAR, (int)result);
@@ -110,8 +106,8 @@ int main(int argc, char *argv[])
 		{
 			subs.len_used = sprintf(subs.buf_addr, "%d", i);
 			status = ydb_get_s(&basevar, 1, &subs, &value);
-			assert(YDB_OK == status);
-			assert(0 == value.len_used);
+			YDB_ASSERT(YDB_OK == status);
+			YDB_ASSERT(0 == value.len_used);
 		}
 		/* NARSTODO: Also check that no other ^tp2trig(xxx) node exists.
 		 * Need ydb_subscript_next() implemented for that check.
@@ -139,7 +135,7 @@ int do_tp(int numincrs)
 			status = ydb_incr_s(&basevar, 0, NULL, NULL, &value);
 		else
 			status = ydb_tp_s(tpfn, &i, NULL, 0, NULL);
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 	}
 	return YDB_OK;
 }
@@ -160,7 +156,7 @@ int gvnincr(int *i)
 			return status;
 		if (YDB_ERR_GVUNDEF != status)
 		{
-			assert(YDB_OK == status);
+			YDB_ASSERT(YDB_OK == status);
 			result = strtoul(value.buf_addr, NULL, 10);
 			result++;
 		} else
@@ -170,6 +166,6 @@ int gvnincr(int *i)
 	}
 	if (YDB_TP_RESTART == status)
 		return status;
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	return YDB_OK;
 }

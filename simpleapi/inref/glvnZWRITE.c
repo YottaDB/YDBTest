@@ -13,17 +13,13 @@
 #include "libyottadb.h"
 #include "libydberrors.h"
 
+#include <sys/types.h>	/* needed for "getpid" */
+#include <unistd.h>	/* needed for "getpid" */
 #include <stdio.h>
-#include <sys/types.h>	/* needed for "kill" in assert */
-#include <signal.h>	/* needed for "kill" in assert */
-#include <unistd.h>	/* needed for "getpid" in assert */
 #include <string.h>
 #include <errno.h>
 #include <time.h>	/* needed for "time" */
 #include <stdlib.h>	/* needed for "drand48" and others */
-
-/* Use SIGILL below to generate a core when an assertion fails */
-#define assert(x) ((x) ? 1 : (fprintf(stderr, "Assert failed at %s line %d : %s\n", __FILE__, __LINE__, #x), kill(getpid(), SIGILL)))
 
 #define	BUFFALLOCLEN	64
 #define	LASTLVNAME	"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
@@ -90,7 +86,7 @@ void glvnZWRITE(char *startname)
 	for (iters=0; ; iters++)
 	{
 		status = ydb_subscript_next_s(&basevar, 0, NULL, &retvalue);
-		assert(YDB_OK == status);
+		YDB_ASSERT(YDB_OK == status);
 		reached_end = (0 == retvalue.len_used);
 		if (reached_end)
 		{	/* Reached end of subscripts. In order to find last subscript do reverse $order of "zzzzzzzzzzzzzz...". */
@@ -102,14 +98,14 @@ void glvnZWRITE(char *startname)
 			memcpy(retvalue.buf_addr, name, retvalue.len_used);
 		}
 		status = ydb_subscript_previous_s(&retvalue, 0, NULL, &tmpvalue);
-		assert(YDB_OK == status);
-		assert((tmpvalue.len_used == basevar.len_used)
+		YDB_ASSERT(YDB_OK == status);
+		YDB_ASSERT((tmpvalue.len_used == basevar.len_used)
 			|| (!tmpvalue.len_used && !iters)
 			|| !tmpvalue.len_used
 			|| (!memcmp(tmpvalue.buf_addr, basevar.buf_addr, basevar.len_used)));
 		if (reached_end)
 			break;
-		assert(basevar.len_alloc >= retvalue.len_used);
+		YDB_ASSERT(basevar.len_alloc >= retvalue.len_used);
 		memcpy(basevar.buf_addr, retvalue.buf_addr, retvalue.len_used);
 		basevar.len_used = retvalue.len_used;
 		glvnZWRITEsubtree(&basevar, 0, &subscr[0]);
@@ -148,13 +144,13 @@ void glvnZWRITEsubtree(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr)
 		for ( ; ; )
 		{
 			status = ydb_subscript_next_s(basevar, nsubs + 1, subscr, &retvalue);
-			assert(YDB_OK == status);
+			YDB_ASSERT(YDB_OK == status);
 			tmpvalue2 = subscr[nsubs];
 			subscr[nsubs] = retvalue;
 			status = ydb_subscript_previous_s(basevar, nsubs + 1, subscr, &tmpvalue);
-			assert(YDB_OK == status);
-			assert(tmpvalue.len_used == tmpvalue2.len_used);
-			assert(!tmpvalue.len_used || (!memcmp(tmpvalue.buf_addr, tmpvalue2.buf_addr, tmpvalue2.len_used)));
+			YDB_ASSERT(YDB_OK == status);
+			YDB_ASSERT(tmpvalue.len_used == tmpvalue2.len_used);
+			YDB_ASSERT(!tmpvalue.len_used || (!memcmp(tmpvalue.buf_addr, tmpvalue2.buf_addr, tmpvalue2.len_used)));
 			subscr[nsubs] = tmpvalue2;
 			if (!retvalue.len_used)
 				break;
@@ -171,7 +167,7 @@ void glvnZWRITEsubtree(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr)
 		char		dst_subscr_buff[YDB_MAX_SUBS + 1][BUFFALLOCLEN];
 		int		i, src_used, dst_used, node_must_exist;
 
-		assert(0 == nsubs);
+		YDB_ASSERT(0 == nsubs);
 		for (i = 0; i < YDB_MAX_SUBS + 1; i++)
 		{
 			src = &src_subscr[i];
@@ -192,7 +188,7 @@ void glvnZWRITEsubtree(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr)
 		{
 			glvnPrintNodeIfExists(basevar, src_used, src, node_must_exist);
 			status = ydb_node_next_s(basevar, src_used, src, &dst_used, dst);
-			assert(YDB_OK == status);
+			YDB_ASSERT(YDB_OK == status);
 			if (YDB_NODE_END == dst_used)
 				break;
 			node_must_exist = NODE_MUST_EXIST_TRUE;
@@ -222,10 +218,10 @@ void	glvnPrintNodeIfExists(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subsc
 	if ((('^' != basevar->buf_addr[0]) && (YDB_ERR_LVUNDEF == status))
 			|| (('^' == basevar->buf_addr[0]) && (YDB_ERR_GVUNDEF == status)))
 	{
-		assert(NODE_MUST_EXIST_FALSE == node_must_exist);
+		YDB_ASSERT(NODE_MUST_EXIST_FALSE == node_must_exist);
 		return;
 	}
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	ptr = &strbuff[0];
 	len = basevar->len_used;
 	memcpy(ptr, basevar->buf_addr, len);
@@ -239,7 +235,7 @@ void	glvnPrintNodeIfExists(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subsc
 		for (i = 0; ; )
 		{
 			status = ydb_str2zwr_s(&subscr[i], &zwr);
-			assert(YDB_OK == status);
+			YDB_ASSERT(YDB_OK == status);
 			memcpy(ptr, zwr.buf_addr, zwr.len_used);
 			ptr += zwr.len_used;
 			i++;
@@ -252,7 +248,7 @@ void	glvnPrintNodeIfExists(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subsc
 	}
 	*ptr++ = '=';
 	status = ydb_str2zwr_s(&retvalue, &zwr);
-	assert(YDB_OK == status);
+	YDB_ASSERT(YDB_OK == status);
 	memcpy(ptr, zwr.buf_addr, zwr.len_used);
 	ptr += zwr.len_used;
 	*ptr++ = '\0';
