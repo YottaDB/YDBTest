@@ -75,13 +75,13 @@ $ZTWORMHOLE=""
 ##TEST_AWK\$ZVERSION="GT.M V.*"
 $ZYERROR=""
 ##TEST_AWK.ZYRELEASE="YottaDB r.*"
-ydb_set_s() of $ECODE and value ,Z151027730,: 150379506,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+ydb_set_s() of $ECODE and value ,Z151027730,: 150379506,(SimpleAPI),%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ydb_set_s() set $ETRAP to value set $ecode=""
 ydb_set_s() set $ZMAXTPTIME to value 55
 ydb_set_s() set $ZPROMPT to value YottaDB>
 ydb_set_s() set $ZINTERRUPT to value zwrite "*"
-ydb_set_s() of $NOTEXIST and value N/A: 150373074,%GTM-E-INVSVN, Invalid special variable name
-ydb_set_s() of $HOROLOG and value 0: 150373770,%GTM-E-SVNOSET, Cannot SET this special variable
+ydb_set_s() of $NOTEXIST and value N/A: 150373074,(SimpleAPI),%GTM-E-INVSVN, Invalid special variable name
+ydb_set_s() of $HOROLOG and value 0: 150373770,(SimpleAPI),%GTM-E-SVNOSET, Cannot SET this special variable
 
 
 
@@ -139,7 +139,7 @@ $ZQUIT=0
 ##TEST_AWK\$ZREALSTOR=[1-9][0-9]*
 ##TEST_AWK\$ZROUTINES=".*"
 $ZSOURCE=""
-$ZSTATUS="150373770,%GTM-E-SVNOSET, Cannot SET this special variable"
+$ZSTATUS="150373770,(SimpleAPI),%GTM-E-SVNOSET, Cannot SET this special variable"
 ##TEST_AWK\$ZSTEP=".*"
 $ZSTRPLLIM=0
 $ZSYSTEM=0
