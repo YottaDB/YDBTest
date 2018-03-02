@@ -8,57 +8,57 @@ mumps.dat
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
- 150379666,(Call-In Level Entry),%GTM-E-CINOENTRY, No entry specified for getcode in the call-in table
+ 150379666,(Call-In),%GTM-E-CINOENTRY, No entry specified for getcode in the call-in table
 --------------------------------------------------------------------------------
 TEST: Invalid direction for passed parameters: 
 %GTM-I-EXTSRCLIN, 	getc: gtm_char_t* ccode^getrec2(gtm_long_t)
 
 						     ^-----
 %GTM-I-EXTSRCLOC, 		At column 29, line 1, source module dirctv.tab
- 150379642,(Call-In Level Entry),%GTM-E-CIDIRECTIVE, Invalid directive parameter passing.  Expected I, O or IO.
+ 150379642,(Call-In),%GTM-E-CIDIRECTIVE, Invalid directive parameter passing.  Expected I, O or IO.
 --------------------------------------------------------------------------------
 TEST: Missing/Invalid C identifier in call-in table: 
 %GTM-I-EXTSRCLIN, 	    :  void ^bldrecs()
 
 			    ^-----
 %GTM-I-EXTSRCLOC, 		At column 4, line 1, source module errors.tab
- 150379626,(Call-In Level Entry),%GTM-E-CIRCALLNAME, Call-in routine name expected but not found
+ 150379626,(Call-In),%GTM-E-CIRCALLNAME, Call-in routine name expected but not found
 --------------------------------------------------------------------------------
 TEST: Wrong type specification for O/IO, pointer type expected: 
 %GTM-I-EXTSRCLIN, 	get: gtm_char_t*  ccode^getrec2(O:gtm_long_t)
 
 							       ^-----
 %GTM-I-EXTSRCLOC, 		At column 39, line 1, source module partyp.tab
- 150379650,(Call-In Level Entry),%GTM-E-CIPARTYPE, Invalid type specification for O/IO directive - expected pointer type
+ 150379650,(Call-In),%GTM-E-CIPARTYPE, Invalid type specification for O/IO directive - expected pointer type
 --------------------------------------------------------------------------------
 TEST: Syntax errors in parameter specifications in call-in table: 
 %GTM-I-EXTSRCLIN, 	get: gtm_char_t*  ccode^getrec2(I:gtm_long_t,)
 
 							       ^-----
 %GTM-I-EXTSRCLOC, 		At column 39, line 1, source module parnam.tab
- 150379642,(Call-In Level Entry),%GTM-E-CIDIRECTIVE, Invalid directive parameter passing.  Expected I, O or IO.
+ 150379642,(Call-In),%GTM-E-CIDIRECTIVE, Invalid directive parameter passing.  Expected I, O or IO.
 --------------------------------------------------------------------------------
 TEST: Unknown parameter type specifcation:  
 %GTM-I-EXTSRCLIN, 	get: gtm_char_t*  ccode^getrec2(O:gtm_invalid_t)
 
 								  ^-----
 %GTM-I-EXTSRCLOC, 		At column 42, line 1, source module untype.tab
- 150379658,(Call-In Level Entry),%GTM-E-CIUNTYPE, Unknown parameter type encountered
+ 150379658,(Call-In),%GTM-E-CIUNTYPE, Unknown parameter type encountered
 --------------------------------------------------------------------------------
 TEST: Invalid return type specifcation:  
 %GTM-I-EXTSRCLIN, 	getcode: gtm_char_t  ccode^getrec2(I:gtm_long_t)
 
 					    ^-----
 %GTM-I-EXTSRCLOC, 		At column 20, line 1, source module rtntyp.tab
- 150379618,(Call-In Level Entry),%GTM-E-CIRTNTYP, Invalid return type
+ 150379618,(Call-In),%GTM-E-CIRTNTYP, Invalid return type
 --------------------------------------------------------------------------------
 TEST: Environment variable for call table:
 GTMCI: Undefined variable.
- 150379594,(Call-In Level Entry),%GTM-E-CITABENV, Environment variable for call-in table GTMCI not set
+ 150379594,(Call-In),%GTM-E-CITABENV, Environment variable for call-in table GTMCI not set
 --------------------------------------------------------------------------------
 TEST: Unable to open call table:
- 150379602,(Call-In Level Entry),%GTM-E-CITABOPN, Unable to open call-in table: call.tab,%GTM-E-SYSCALL, Error received from system call fopen -- called from module /Distrib/YottaDB/V998_R110/sr_unix/exttab_parse.c at line 723
+ 150379602,(Call-In),%GTM-E-CITABOPN, Unable to open call-in table: call.tab,%GTM-E-SYSCALL, Error received from system call fopen -- called from module /Distrib/YottaDB/V998_R110/sr_unix/exttab_parse.c at line 723
 --------------------------------------------------------------------------------
 TEST: Multiple caret:
- 150375994,(Call-In Level Entry),%GTM-E-RUNPARAMERR, Error accessing parameter for run command
+ 150375994,(Call-In),%GTM-E-RUNPARAMERR, Error accessing parameter for run command
 --------------------------------------------------------------------------------

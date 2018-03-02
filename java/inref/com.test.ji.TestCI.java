@@ -957,7 +957,7 @@ public class TestCI {
 				"\t\t\tabc += \"a\";\n" +
 				"\t\t\tGTMCI.doVoidJob(abc);\n" };
 		final String[] javaResponses = new String[]{
-			"150379666,(Call-In Level Entry),%GTM-E-CINOENTRY, No entry specified for abc123 in the call-in table\n",
+			"150379666,(Call-In),%GTM-E-CINOENTRY, No entry specified for abc123 in the call-in table\n",
 			"GTM-E-JNI, Entryref exceeds 2048 characters.\n" };
 
 		int numOfCases = javaCodes.length;
@@ -1088,7 +1088,7 @@ public class TestCI {
 
 				@Override
 				public String getJavaResponse() {
-					return "150374474,(Call-In Level Entry),%GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: lbl0\n";
+					return "150374474,(Call-In),%GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: lbl0\n";
 				}
 			}
 		};
@@ -1295,7 +1295,7 @@ public class TestCI {
 				public String getJavaResponse() {
 					return	"%GTM-I-EXTSRCLIN, \tlbl0\t:void lbl0^test17(I:" + invalidType + ")\n" +
 							"%GTM-I-EXTSRCLOC, \t\tAt column xx, line 1, source module ./Test17.ci\n" +
-							"150379658,(Call-In Level Entry),%GTM-E-CIUNTYPE, Unknown parameter type encountered\n";
+							"150379658,(Call-In),%GTM-E-CIUNTYPE, Unknown parameter type encountered\n";
 				}
 
 				@Override
@@ -1779,9 +1779,9 @@ public class TestCI {
 				@Override
 				public String getJavaResponse() {
 					if (codeIndex == 0)
-						return "150373978,(Call-In Level Entry),%GTM-E-ZLINKFILE, Error while zlinking \"abc\",%GTM-E-FILENOTFND, File abc not found\n";
+						return "150373978,(Call-In),%GTM-E-ZLINKFILE, Error while zlinking \"abc\",%GTM-E-FILENOTFND, File abc not found\n";
 					else
-						return "150373122,(Call-In Level Entry),%GTM-E-JOBLABOFF, Label and offset not found in created process\n";
+						return "150373122,(Call-In),%GTM-E-JOBLABOFF, Label and offset not found in created process\n";
 				}
 
 				@Override
@@ -1951,7 +1951,7 @@ public class TestCI {
 
 				@Override
 				public String getJavaResponse() {
-					return "150374554,(Call-In Level Entry),%GTM-E-QUITARGREQD, Quit from an extrinsic must have an argument" + "\n";
+					return "150374554,(Call-In),%GTM-E-QUITARGREQD, Quit from an extrinsic must have an argument" + "\n";
 				}
 			};
 		}
