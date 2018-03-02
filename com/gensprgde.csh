@@ -21,9 +21,6 @@
 
 # Attempt to generate .sprgde files.
 
-set echo
-set verbose
-
 if (! ((2 == $gtm_test_spanreg) || (3 == $gtm_test_spanreg)) || ("GT.CM" == $test_gtm_gtcm)) then
 	exit 0	# test did not want .sprgde files to be generated
 endif
