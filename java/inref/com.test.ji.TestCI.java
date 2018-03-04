@@ -97,7 +97,7 @@ public class TestCI {
 							error = true;
 							argValue = doubleValue + "";
 							argInit = J.genArgInit("x", "GTMDouble", argValue);
-							expValue = "150373506,%GTM-E-NUMOFLOW, Numeric overflow\n";
+							expValue = "150373506,(Call-In),%GTM-E-NUMOFLOW, Numeric overflow\n";
 						} else {
 							if (doubleValue < TestCommon.M_MIN) {
 								isZero = true;
