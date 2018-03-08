@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -603,7 +603,7 @@ if ($?cms_tools) then
 	endif
 endif
 if ($?ydb_environment_init) then
-	setenv gtm_test_server_serial_no `grep -vE "^#" $gtm_test/tstdirs.csh | gawk -F "#" '/_'$HOST'( |)/ {print $NF}'`
+	setenv gtm_test_server_serial_no `$tst_awk '($2 == "gtm_tstdir_'$HOST'") {print $0;}' $gtm_test/tstdirs.csh | $tst_awk -F "#" '/_'$HOST'( |)/ {print $NF}'`
 endif
 if ("" == "$gtm_test_server_serial_no") setenv gtm_test_server_serial_no "00" # default, in case no serial no is found (such as linux boxes)
 setenv gtm_test_port_range $gtm_test_server_serial_no
