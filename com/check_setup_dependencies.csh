@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -46,7 +46,7 @@ if ("defined" != $backdef) then
 endif
 
 # make sure system log file is readable
-set syslog_file=`$grep -v '^#' $gtm_test_serverconf_file | $grep "^$hostn" | $tst_awk '{print $8}'`
+set syslog_file=`$grep -v '^#' $gtm_test_serverconf_file | $tst_awk '$1 == "'$hostn'" {print $8}'`
 if ("" == $syslog_file) then
 	echo "TEST-E-UTILITY problem getting system log file for $hostn from $gtm_test_serverconf_file ;"
 	@ error++
