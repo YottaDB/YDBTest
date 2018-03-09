@@ -54,13 +54,13 @@ int main()
 	YDB_ASSERT(YDB_OK == status);
 	status = ydb_tp_s(&gvnset, NULL, NULL, 1, &starvar);
 	YDB_ASSERT(YDB_OK == status);
-	for (i = 0, spfbufptr = sprintfbuff; 50 > i; i++)
-	{	/* Generate ydb_buff_t for each of x1 to x50 */
+	for (i = 0, spfbufptr = sprintfbuff; 35 > i; i++)
+	{	/* Generate ydb_buff_t for each of x1 to x35 */
 		varnames[i].buf_addr = spfbufptr;
 		varnames[i].len_used = varnames[i].len_alloc = sprintf(spfbufptr, "x%i", i + 1);
 		spfbufptr += varnames[i].len_used;
 	}
-	status = ydb_tp_s(&gvnset, NULL, NULL, 50, (ydb_buffer_t *)&varnames);
+	status = ydb_tp_s(&gvnset, NULL, NULL, 35, (ydb_buffer_t *)&varnames);
 	YDB_ASSERT(YDB_OK == status);
 	return status;
 }
