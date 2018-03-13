@@ -14,6 +14,9 @@
 #								#
 #################################################################
 
+unsetenv ydb_gbldir	# since test system currently uses gtmgbldir and we don't want ydb_gbldir defined in parent
+			# environment nto override test system definitions of the current global directory.
+
 # Enable core dumping if unaligned access is detected on Tru64
 set chkhost=`uname -s`
 if ("OSF1" == $chkhost) then

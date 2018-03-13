@@ -3,13 +3,13 @@ undefined and doesn't exist - set to same...
 ls: No match.
 gtmgbldir is not defined: 0
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
-	##TEST_PATH##/$gtmgbldir.gld
+	##TEST_PATH##/$ydb_gbldir.gld
 
 GDE> 
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDCREATE, Creating Global Directory file 
-	##TEST_PATH##/$gtmgbldir.gld
+	##TEST_PATH##/$ydb_gbldir.gld
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/acct.gld
 
@@ -21,13 +21,13 @@ GDE>
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/acct.gld
 the *.gld's are:
-$gtmgbldir.gld
+$ydb_gbldir.gld
 acct.gld
 undefined and does exist - set to same...
-$gtmgbldir.gld
+$ydb_gbldir.gld
 acct.gld
 %GDE-I-LOADGD, Loading Global Directory file 
-	##TEST_PATH##/$gtmgbldir.gld
+	##TEST_PATH##/$ydb_gbldir.gld
 %GDE-I-VERIFY, Verification OK
 
 
@@ -45,13 +45,13 @@ GDE>
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/acct.gld
 the *.gld's are:
-$gtmgbldir.gld
+$ydb_gbldir.gld
 acct.gld
 undefined create new .gld set to same make change...
-$gtmgbldir.gld
+$ydb_gbldir.gld
 acct.gld
 %GDE-I-LOADGD, Loading Global Directory file 
-	##TEST_PATH##/$gtmgbldir.gld
+	##TEST_PATH##/$ydb_gbldir.gld
 %GDE-I-VERIFY, Verification OK
 
 
@@ -77,7 +77,7 @@ GDE>
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/acct.gld
 the *.gld's are:
-$gtmgbldir.gld
+$ydb_gbldir.gld
 acct.gld
 mumps.gld
 defined and doesn't exist - set to same...
