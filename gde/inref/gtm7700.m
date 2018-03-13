@@ -3,6 +3,9 @@
 ; Copyright (c) 2013-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -56,7 +59,7 @@ unix(i)	;
 	open file:(newversion)
 	use file
 	write "set echo",!
-	write "setenv gtmgbldir test"_i_".gld",!
+	write "setenv ydb_gbldir test"_i_".gld",!
 	write "$GDE @test"_i_".gde",!
 	write "$GDE show -commands > test_showcmd"_i_".gde",!
 	close file
@@ -66,7 +69,7 @@ unix(i)	;
 	open file:(newversion)
 	use file
 	write "set echo",!
-	write "setenv gtmgbldir test_showcmd"_i_".gld",!
+	write "setenv ydb_gbldir test_showcmd"_i_".gld",!
 	write "$GDE @test_showcmd"_i_".gde",!
 	close file
 	zsystem "tcsh "_file
