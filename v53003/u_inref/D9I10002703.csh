@@ -37,6 +37,14 @@ if (! $?test_replic) then
 	exit -1
 endif
 
+# Define global directory env var to create database.
+setenv gtmgbldir mumps.gld
+# Unsetenv ydb_gbldir in case it was set at entry into this script.
+# This way when we test "gtmgbldir" env var (which comes ahead of ydb_gbldir) in the test below,
+# we don't have an overriding env var. That is also the reason why we use gtmgbldir in the above test (and not ydb_gbldir)
+# as it provides a test of the fact that if ydb_gbldir is not defined, gtmgbldir is honored.
+unsetenv ydb_gbldir
+
 # Use minimum align size value to reduce the memory requirement to open all the journal files
 # Note : New align value is just appended to the end, instead of modifying the already set value. It works.
 setenv tst_jnl_str "$tst_jnl_str,align=4096"
@@ -72,6 +80,7 @@ set command0 = "$gtm_dist/mumps -direct"
 set corecheck = "$tst_tcsh $gtm_tst/$tst/u_inref/D9I10002703_corecheck.csh"
 set maxstr = `$gtm_dist/mumps -run %XCMD 'Set $ZPiece(x,"0",9999)="" Write x,!'`
 echo "-------------------------------------------------------------------------------------------"
+
 # Add gtm_dist (supported for backward compatibility but absent in gtm_logicals.h) to buffer overflow check tests
 foreach var (gtm_dist $envlist)
 	setenv envvar $var
