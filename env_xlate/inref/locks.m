@@ -3,7 +3,7 @@
 ; Copyright (c) 2015 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
+; Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	;
 ; All rights reserved.	     	  	     			;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -85,8 +85,8 @@ lkes	; use lke to check lock status
 	w "--------------",!
 	;if unix  d
 	d
-	. zsystem "echo $gtmgbldir; $LKE show -all"
+	. zsystem "echo $ydb_gbldir; $LKE show -all"
 	. w "--------------",!
-	. zsystem "setenv gtmgbldir a.gld; echo $gtmgbldir; $LKE show -all"
+	. zsystem "setenv ydb_gbldir a.gld; echo $ydb_gbldir; $LKE show -all"
 	w "--------------",!
 	w "..done with lke...",!
