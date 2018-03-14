@@ -53,7 +53,6 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 	if !($?gtm_test_replay) then
 		set usesimpleapi = `$gtm_exe/mumps -run rand 2`
 		echo "setenv usesimpleapi $usesimpleapi" >> settings.csh
-		set usesimpleapi = 1	# NARSTODO
 	endif
 	# If using a version that is other than the currently tested version, disable simpleapi for the older version.
 	if ("$gtm_verno" != "$tst_ver") then

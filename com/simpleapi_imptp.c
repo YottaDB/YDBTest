@@ -677,7 +677,6 @@ int	impjob(int childnum)
 	YDB_ASSERT(YDB_OK == status);
 
 	rand = (int)(2 * drand48());
-	rand = 0;	/* NARSTODO : Remove this line */
 	is_gtm8086_subtest = (!memcmp(getenv("test_subtest_name"), "gtm8086", sizeof("gtm8086")));
 	/* If the caller is the "gtm8086" subtest, it creates a situation where JNLEXTEND or JNLSWITCHFAIL
 	 * errors can happen in the imptp child process and that is expected. This is easily handled if we
