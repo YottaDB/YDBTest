@@ -10,14 +10,6 @@
  *								*
  ****************************************************************/
 
-/* To build:
- *   gt_cc_dbg lock1.c
- *   $gt_ld_linker $gt_ld_option_output lock1 $gt_ld_options_common lock1.o $gt_ld_sysrtns -Wl,-rpath,$gtm_dist -L$gtm_dist -lgtmshr $gt_ld_syslibs > lock1.map
- *
- * To run:
- *   lock1
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -85,7 +77,7 @@ int main()
 	status = ydb_lock_s(LOCK_TIMEOUT, 4, &varname1, 0, NULL, &varname2, 0, NULL, &varname1, 1, &subary2, &varname2, 1, &subary2);
 	CHECK_FOR_ERROR(status);
 	/* Show list of locks we have obtained */
-	printf("\nlock1: List of locks after setting groups 1 and 2:\n");
+	printf("\nlock1_simple: List of locks after setting groups 1 and 2:\n");
 	fflush(stdout);
 	system("$gtm_dist/lke show -all -wait");
 	/* Now to the 3rd set, this should release the previous locks */
@@ -102,7 +94,7 @@ int main()
 	printf("\n\nlocks1: List of locks after zero argument call to ydb_lock_s() which should release all locks\n");
 	fflush(stdout);
 	system("$gtm_dist/lke show -all -wait");
-	printf("lock1 complete\n");
+	printf("lock1_simple complete\n");
 	fflush(stdout);
 	return YDB_OK;
 }
