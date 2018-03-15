@@ -3,8 +3,10 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
+Copy all C programs that need to be tested
+ --> Running lock1_simple.c <---
 
-lock1: List of locks after setting groups 1 and 2:
+lock1_simple: List of locks after setting groups 1 and 2:
 
 DEFAULT
 ##TEST_AWK\^lockA Owned by PID= [1-9][0-9]* which is an existing process
@@ -30,7 +32,17 @@ locks1: List of locks after zero argument call to ydb_lock_s() which should rele
 ##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
 %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 %GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-lock1 complete
+lock1_simple complete
+
+ --> Running lock2_timeout.c <---
+### Test timeout in ydb_lock_s() and ydb_lock_incr_s() works correctly ###
+First lock ^lock2 in child
+Wait for child to have done LOCK ^lock2
+Attempt to lock ^lock2(42) in parent : Expect YDB_LOCK_TIMEOUT error
+Lock timeout test PASSED for ydb_lock_s() : Timeout expected = 1 second. Actual timeout = 1 seconds
+Attempt to lock +^lock2(42) in parent : Expect YDB_LOCK_TIMEOUT error
+Lock timeout test PASSED for ydb_lock_incr_s() : Timeout expected = 1 second. Actual timeout = 1 seconds
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
