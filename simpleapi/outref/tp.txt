@@ -165,6 +165,12 @@ Entering ydb_tp_s() : Level = 124
 Entering ydb_tp_s() : Level = 125
 ydb_tp_s() exit status = -150376106 : 150376106,(SimpleAPI),%GTM-E-TPTOODEEP, $TLEVEL cannot exceed 126
 
+ --> Running tp5_TPTIMEOUT.c <---
+### Test timeout in ydb_tp_s() works correctly ###
+Set $zmaxtptime to 1 second
+Timeout test PASSED for ydb_tp_s() : Timeout expected = 1 second. Actual timeout = 1 seconds
+ydb_tp_s() exit status = -150377322 : 150377322,(SimpleAPI),%GTM-E-TPTIMEOUT, Transaction timeout
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
