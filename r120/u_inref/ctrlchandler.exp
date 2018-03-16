@@ -1,0 +1,49 @@
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+set timeout 60
+spawn /usr/local/bin/tcsh -f
+set cenable(0) "CENABLE"
+set cenable(1) "NOCENABLE"
+for {set i 0} {$i < 2} {incr i 1} {
+	send -- "\$gtm_dist/mumps -run ctrlchandler $cenable($i)\r"
+	expect -exact "Hit ^C now\r"
+	# Send <Ctrl-C>
+	send -- "\003"
+	expect -exact "YDB>"
+	send -- "zshow \"S\"\r"
+	expect -exact "YDB>"
+	send -- "halt\r"
+	expect -exact ">"
+	send -- "\$gtm_dist/mumps -direct\r"
+	expect -exact "YDB>"
+	send -- "set savelvl=\$zlevel set \$etrap=\"do etraperror^ctrlchandler\"\r"
+	send -- "use \$Principal:(CTRAP=\$char(3):exception=\"do gotctrlc^ctrlchandler\":$cenable($i))\r"
+	send -- "write \"Hit ^C now\",!  hang 15\r"
+	expect -exact "Hit ^C now\r"
+	# Send <Ctrl-C>
+	send -- "\003"
+	expect -exact "YDB>"
+	send -- "zshow \"S\"\r"
+	expect -exact "YDB>"
+	send -- "set savelvl=\$zlevel set \$etrap=\"do etraperror^ctrlchandler\"\r"
+	send -- "use \$Principal:(CTRAP=\$char(3):exception=\"do gotctrlc^ctrlchandler\":$cenable($i))\r"
+	send -- "write \"Hit ^C now\",!  hang 15\r"
+	expect -exact "Hit ^C now\r"
+	# Send <Ctrl-C>
+	send -- "\003"
+	expect -exact "YDB>"
+	send -- "zshow \"S\"\r"
+	expect -exact "YDB>"
+	send -- "halt\r"
+	expect -exact ">"
+}
