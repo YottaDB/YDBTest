@@ -29,6 +29,7 @@
 # readonly_dbflag   [nars]  Test various issues identified with the READ_ONLY db characteristic (new feature in GT.M V6.3-003)
 # readcmdrecallhist [nars]  Test recall history for M READ command
 # nestedtriggers    [nars]  Test nested trigger reloads and TP restarts in multi-process setup
+# ctrlchandler      [nars]  Test that Device exception handlers are dispatched when Ctrl-C is entered
 #-------------------------------------------------------------------------------------
 
 echo "r120 test starts..."
@@ -38,6 +39,7 @@ setenv subtest_list_common     ""
 setenv subtest_list_non_replic "zindcacheoverflow largelvarray gctest patnotfound readtimeout miximage zeofprocfs"
 setenv subtest_list_non_replic "$subtest_list_non_replic libyottadb zstepoveroutof msgprefix ydbdist divzero"
 setenv subtest_list_non_replic "$subtest_list_non_replic readonly_dbflag readcmdrecallhist nestedtriggers"
+setenv subtest_list_non_replic "$subtest_list_non_replic ctrlchandler"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
