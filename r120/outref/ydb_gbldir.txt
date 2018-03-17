@@ -1,0 +1,7 @@
+# Test for ydb_gbldir env var
+# Test that gtmgbldir=x1.gld controls $zgbldir if ydb_gbldir is undefined
+$zgbldir=##TEST_PATH##/x1.gld
+# Test that ydb_gbldir=x2.gld controls $zgbldir if gtmgbldir is not defined
+$zgbldir=##TEST_PATH##/x2.gld
+# Test that ydb_gbldir=x3.gld controls $zgbldir even if gtmgbldir=y3.gld is defined
+$zgbldir=##TEST_PATH##/x3.gld
