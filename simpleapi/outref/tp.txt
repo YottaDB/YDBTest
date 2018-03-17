@@ -4,7 +4,7 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 Copy all C programs that need to be tested
- --> Running tp1.c <---
+ --> Running tp1_simple.c <---
 zwrarg=""
 ^tp1="A question"
 ^tp1(42)="One less than 43"
@@ -13,28 +13,250 @@ zwrarg=""
 ^tp1lvtrig="A question"
 ##ALLOW_OUTPUT NOTRIGGER
 
- --> Running tp2.c <---
+ --> Running tp2_complex_and_nested.c <---
 PASS from tp2
 ##SUSPEND_OUTPUT NOTRIGGER
 PASS from tp2trig
 ##ALLOW_OUTPUT NOTRIGGER
 
- --> Running tp3.c <---
+ --> Running tp3_preservelvn.c <---
+  --> set x0 to a value
+  --> set x2 to a value
 TSTART : dollar_trestart = 0
-  --> Verifying x is UNDEFINED
-  --> set x to a value
-  --> Verifying x is DEFINED
+  --> Verifying x1 is UNDEFINED
+  --> Verifying x2 is UNCHANGED after restart
+  --> x2 = 
+  --> Increment x2
+  --> set x1 to a value
+  --> Verifying x1 is DEFINED
   --> Signaling a TP restart
 TSTART : dollar_trestart = 1
-  --> Verifying x is UNDEFINED
-  --> set x to a value
-  --> Verifying x is DEFINED
+  --> Verifying x1 is UNDEFINED
+  --> Verifying x2 is UNCHANGED after restart
+  --> x2 = 1
+  --> Increment x2
+  --> set x1 to a value
+  --> Verifying x1 is DEFINED
   --> Signaling a TP restart
 TSTART : dollar_trestart = 2
-  --> Verifying x is UNDEFINED
-  --> set x to a value
-  --> Verifying x is DEFINED
+  --> Verifying x1 is UNDEFINED
+  --> Verifying x2 is UNCHANGED after restart
+  --> x2 = 2
+  --> Increment x2
+  --> set x1 to a value
+  --> Verifying x1 is DEFINED
   --> Committing the TP transaction
+TSTART : dollar_trestart = 0
+Do ZWRITE of lvns
+x0=""
+x2=3
+  --> Verifying x0 is UNCHANGED after restart
+  --> x0 = 
+  --> Increment x0
+  --> Increment x1, x2, ..., x35
+  --> set x1, x2, ... x35 to a value
+  --> Verifying x1, x2, ... x35 is DEFINED
+Do ZWRITE of lvns
+x0=1
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 1
+Do ZWRITE of lvns
+x0=1
+x2=3
+  --> Verifying x0 is UNCHANGED after restart
+  --> x0 = 1
+  --> Increment x0
+  --> Increment x1, x2, ..., x35
+  --> set x1, x2, ... x35 to a value
+  --> Verifying x1, x2, ... x35 is DEFINED
+Do ZWRITE of lvns
+x0=2
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 2
+Do ZWRITE of lvns
+x0=2
+x2=3
+  --> Verifying x0 is UNCHANGED after restart
+  --> x0 = 2
+  --> Increment x0
+  --> Increment x1, x2, ..., x35
+  --> set x1, x2, ... x35 to a value
+  --> Verifying x1, x2, ... x35 is DEFINED
+Do ZWRITE of lvns
+x0=3
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Committing the TP transaction
+Do ZWRITE of lvns
+x0=3
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+TSTART : dollar_trestart = 0
+Do ZWRITE of lvns
+x0=3
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Verifying x0 is UNCHANGED after restart
+  --> x0 = 3
+  --> Increment x0
+  --> Increment x1, x2, ..., x35
+  --> set x1, x2, ... x35 to a value
+  --> Verifying x1, x2, ... x35 is DEFINED
+Do ZWRITE of lvns
+x0=4
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 1
+Do ZWRITE of lvns
+x0=3
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Verifying x0 is UNCHANGED after restart
+  --> x0 = 3
+  --> Increment x0
+  --> Increment x1, x2, ..., x35
+  --> set x1, x2, ... x35 to a value
+  --> Verifying x1, x2, ... x35 is DEFINED
+Do ZWRITE of lvns
+x0=4
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 2
+Do ZWRITE of lvns
+x0=3
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Verifying x0 is UNCHANGED after restart
+  --> x0 = 3
+  --> Increment x0
+  --> Increment x1, x2, ..., x35
+  --> set x1, x2, ... x35 to a value
+  --> Verifying x1, x2, ... x35 is DEFINED
+Do ZWRITE of lvns
+x0=4
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Committing the TP transaction
+Do ZWRITE of lvns
+x0=4
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
 
  --> Running tp4_TPTOODEEP.c <---
 Entering ydb_tp_s() : Level = 0
