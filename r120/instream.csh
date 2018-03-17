@@ -31,6 +31,7 @@
 # nestedtriggers    [nars]  Test nested trigger reloads and TP restarts in multi-process setup
 # ctrlchandler      [nars]  Test that Device exception handlers are dispatched when Ctrl-C is entered
 # ydb_gbldir        [nars]  Test for new ydb_gbldir env var
+# ydb_maxtptime     [nars]  Test for new ydb_maxtptime env var
 #-------------------------------------------------------------------------------------
 
 echo "r120 test starts..."
@@ -40,7 +41,7 @@ setenv subtest_list_common     ""
 setenv subtest_list_non_replic "zindcacheoverflow largelvarray gctest patnotfound readtimeout miximage zeofprocfs"
 setenv subtest_list_non_replic "$subtest_list_non_replic libyottadb zstepoveroutof msgprefix ydbdist divzero"
 setenv subtest_list_non_replic "$subtest_list_non_replic readonly_dbflag readcmdrecallhist nestedtriggers"
-setenv subtest_list_non_replic "$subtest_list_non_replic ctrlchandler ydb_gbldir"
+setenv subtest_list_non_replic "$subtest_list_non_replic ctrlchandler ydb_gbldir ydb_maxtptime"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
