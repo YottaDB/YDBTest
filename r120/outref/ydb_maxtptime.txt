@@ -1,0 +1,7 @@
+# Test for ydb_maxtptime env var
+# Test that gtm_zmaxtptime=3 controls $zmaxtptime if ydb_maxtptime is undefined
+$zmaxtptime=3
+# Test that ydb_maxtptime=4 controls $zmaxtptime if gtm_zmaxtptime is not defined
+$zmaxtptime=4
+# Test that ydb_maxtptime=5 controls $zmaxtptime even if gtm_zmaxtptime=6 is defined
+$zmaxtptime=5
