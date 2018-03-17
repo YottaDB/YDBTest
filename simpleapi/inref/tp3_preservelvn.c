@@ -30,13 +30,15 @@ int	gvnset2();
 int	gvnset3();
 void	lvnZWRITE(void);
 
-/* Function to test that list of variable names to be preserved (across TP restarts) works fine */
 int main()
 {
 	int		status, i;
 	ydb_string_t	zwrarg;
 	char		sprintfbuff[1024], *spfbufptr;
 	int		seed;
+
+	printf("### Function to test that list of variable names to be preserved (across TP restarts) works fine###\n");
+	fflush(stdout);
 
 	seed = (time(NULL) * getpid());
 	srand48(seed);
@@ -201,12 +203,3 @@ int gvnset2()
 	return status;
 }
 
-/* Function to set a global variable */
-int gvnset()
-{
-	int		status;
-
-	/* Set a base variable, no subscripts */
-	status = ydb_set_s(&basevar, 0, NULL, &value1);
-	return status;
-}

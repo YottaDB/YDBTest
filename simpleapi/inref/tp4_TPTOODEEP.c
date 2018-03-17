@@ -21,10 +21,12 @@ int		gvnset();
 int		level;
 ydb_tpfnptr_t	tpfn;
 
-/* Function to do a simple set of 3 Global variable nodes (done in "gvnset()") inside of a TP transaction */
 int main()
 {
 	int		status;
+
+	printf(" ### Test TPTOODEEP error ###\n");
+	fflush(stdout);
 
 	tpfn = &gvnset;
 	status = ydb_tp_s(tpfn, NULL, NULL, 0, NULL);

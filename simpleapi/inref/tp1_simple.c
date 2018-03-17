@@ -27,12 +27,14 @@ char	errbuf[ERRBUF_SIZE];
 
 int	gvnset();
 
-/* Function to do a simple set of 3 Global variable nodes (done in "gvnset()") inside of a TP transaction */
 int main()
 {
 	int		status;
 	ydb_tpfnptr_t	tpfn;
 	ydb_string_t	zwrarg;
+
+	printf("### Function to do a simple set of 3 Global variable nodes inside of a TP transaction ###\n");
+	fflush(stdout);
 
 	tpfn = &gvnset;
 	status = ydb_tp_s(tpfn, NULL, NULL, 0, NULL);

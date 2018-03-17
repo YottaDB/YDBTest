@@ -42,7 +42,6 @@ ydb_buffer_t	basevar, value;
 char		valuebuff[16];
 int		use_ydb_incr_s_inside_tp, use_ydb_incr_s_outside_tp;
 
-/* Function to do a test $increment implemented inside TP across multiple processes using the simpleAPI */
 int main(int argc, char *argv[])
 {
 	int		child, i, numincrs, cumulincrs, stat[NCHILDREN], ret[NCHILDREN], status, seed, pass;
@@ -52,6 +51,10 @@ int main(int argc, char *argv[])
 	char		*trig_val;
 	ydb_buffer_t	subs;
 	char		subsbuff[16];
+
+	printf("### Function to test $increment implemented inside TP across multiple processes using ydb_tp_s()###\n");
+	printf("### Function to also test nested TP calls through ydb_tp_s()###\n");
+	fflush(stdout);
 
 	/* Initialize varname, subscript, and value buffers */
 	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
