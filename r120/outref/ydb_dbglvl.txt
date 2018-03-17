@@ -1,0 +1,10 @@
+# Test for ydb_dbglvl env var
+# Test that gtmdbglvl=2 (print usage statistics at process end) controls ydbDebugLevel if ydb_dbglvl is undefined
+Malloc small storage performance:
+Mmap small storage performance:
+# Test that ydb_dbglvl=2 (print usage statistics at process end) controls ydbDebugLevel if gtmdbglvl is not defined
+Malloc small storage performance:
+Mmap small storage performance:
+# Test that ydb_dbglvl=2 (print usage statistics at process end) controls ydbDebugLevel even if gtmdbglvl=4 (trace every malloc/free) is defined
+Malloc small storage performance:
+Mmap small storage performance:
