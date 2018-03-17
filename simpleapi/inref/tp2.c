@@ -36,6 +36,7 @@ char	errbuf[ERRBUF_SIZE];
 
 int	do_tp(int max);
 int	gvnincr();
+int	gvnincr2();
 
 ydb_buffer_t	basevar, value;
 char		valuebuff[16];
@@ -141,10 +142,11 @@ int do_tp(int numincrs)
 }
 
 /* Function to do a $increment on a global variable node */
-int gvnincr(int *i)
+int gvnincr(int *i)	/* $tlevel = 1 TP */
 {
-	int		status;
+	int		status, use_ydb_set_s_inside_nested_tp;
 	unsigned long	result;
+	ydb_tpfnptr_t	tpfn2;
 
 	/* Implement $INCR(^x) using ydb_incr_s() or a ydb_get_s()/ydb_set_s() sequence */
 	if (use_ydb_incr_s_inside_tp)
@@ -162,8 +164,26 @@ int gvnincr(int *i)
 		} else
 			result = (*i + 1);
 		value.len_used = sprintf(value.buf_addr, "%d", (int)result);
-		status = ydb_set_s(&basevar, 0, NULL, &value);
+		use_ydb_set_s_inside_nested_tp = (2 * drand48());
+		if (!use_ydb_set_s_inside_nested_tp)
+			status = ydb_set_s(&basevar, 0, NULL, &value);
+		else
+		{
+			tpfn2 = &gvnincr2;
+			status = ydb_tp_s(tpfn2, NULL, NULL, 0, NULL);
+		}
 	}
+	if (YDB_TP_RESTART == status)
+		return status;
+	YDB_ASSERT(YDB_OK == status);
+	return YDB_OK;
+}
+
+int gvnincr2(void *ptr)	/* $tlevel = 2 TP (i.e. nested TP) */
+{
+	int	status;
+
+	status = ydb_set_s(&basevar, 0, NULL, &value);
 	if (YDB_TP_RESTART == status)
 		return status;
 	YDB_ASSERT(YDB_OK == status);
