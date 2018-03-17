@@ -5,6 +5,7 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 Copy all C programs that need to be tested
  --> Running tp1_simple.c <---
+### Function to do a simple set of 3 Global variable nodes inside of a TP transaction ###
 zwrarg=""
 ^tp1="A question"
 ^tp1(42)="One less than 43"
@@ -14,12 +15,15 @@ zwrarg=""
 ##ALLOW_OUTPUT NOTRIGGER
 
  --> Running tp2_complex_and_nested.c <---
+### Function to test $increment implemented inside TP across multiple processes using ydb_tp_s()###
+### Function to also test nested TP calls through ydb_tp_s()###
 PASS from tp2
 ##SUSPEND_OUTPUT NOTRIGGER
 PASS from tp2trig
 ##ALLOW_OUTPUT NOTRIGGER
 
  --> Running tp3_preservelvn.c <---
+### Function to test that list of variable names to be preserved (across TP restarts) works fine###
   --> set x0 to a value
   --> set x2 to a value
 TSTART : dollar_trestart = 0
@@ -259,6 +263,7 @@ x5="TP with comma-separated list of variable names to be preserved"
 x8="TP with comma-separated list of variable names to be preserved"
 
  --> Running tp4_TPTOODEEP.c <---
+ ### Test TPTOODEEP error ###
 Entering ydb_tp_s() : Level = 0
 Entering ydb_tp_s() : Level = 1
 Entering ydb_tp_s() : Level = 2
@@ -388,10 +393,14 @@ Entering ydb_tp_s() : Level = 125
 ydb_tp_s() exit status = -150376106 : 150376106,(SimpleAPI),%GTM-E-TPTOODEEP, $TLEVEL cannot exceed 126
 
  --> Running tp5_TPTIMEOUT.c <---
-### Test timeout in ydb_tp_s() works correctly ###
+### Test timeout in ydb_tp_s() works correctly (TPTIMEOUT error)###
 Set $zmaxtptime to 1 second
 Timeout test PASSED for ydb_tp_s() : Timeout expected = 1 second. Actual timeout = 1 seconds
 ydb_tp_s() exit status = -150377322 : 150377322,(SimpleAPI),%GTM-E-TPTIMEOUT, Transaction timeout
+
+ --> Running tp6_TOOMANYVARNAMES.c <---
+### Test TOOMANYVARNAMES error ###
+ydb_tp_s() : Exit Status = -151027810 : Exit string = 151027810,(SimpleAPI),%YDB-E-TOOMANYVARNAMES, Number of varnames specified exceeds maximum (35)
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

@@ -29,7 +29,8 @@ int main()
 	ydb_tpfnptr_t	tpfn;
 	time_t		begin, end;
 
-	printf("### Test timeout in ydb_tp_s() works correctly ###\n"); fflush(stdout);
+	printf("### Test timeout in ydb_tp_s() works correctly (TPTIMEOUT error)###\n");
+	fflush(stdout);
 
 	value.buf_addr = valuebuff;
 	value.len_alloc = sizeof(valuebuff);
