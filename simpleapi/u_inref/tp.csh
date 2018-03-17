@@ -38,7 +38,7 @@ CAT_EOF
 endif
 
 echo "Copy all C programs that need to be tested"
-cp $gtm_tst/$tst/inref/tp*.c .
+cp $gtm_tst/$tst/inref/{tp*.c,glvnZWRITE.c} .
 
 cat > tp.xc << CAT_EOF
 driveZWRITE: void driveZWRITE(I:ydb_string_t *)
@@ -47,11 +47,16 @@ CAT_EOF
 
 setenv GTMCI tp.xc	# needed to invoke driveZWRITE.m from tp*.c below
 
+# Compile glvnZWRITE.c (needed by tp3_preservelvn.c)
+set file = glvnZWRITE.c
+set exefile = $file:r
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist -g $file
+
 foreach file (tp*.c)
 	echo " --> Running $file <---"
 	set exefile = $file:r
 	$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist -g $file
-	$gt_ld_linker $gt_ld_option_output $exefile $gt_ld_options_common $exefile.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& $exefile.map
+	$gt_ld_linker $gt_ld_option_output $exefile $gt_ld_options_common $exefile.o glvnZWRITE.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& $exefile.map
 	if (0 != $status) then
 		echo "TP-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 		continue
