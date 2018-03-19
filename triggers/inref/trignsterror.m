@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;  Nested calls : M1 -> C -> M2,          ;
 ;  with $ET not explicitly set in M1 & M2 ;
@@ -5,7 +16,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 trignsterror
 	if $data(^b) do
-	. write "We shouldn't get here because it would have to be via the call in from C"
+	. write "We should reach here even though it is via the call in from C (since CITPNESTED error is now nixed)"
 	. halt
 	set ^b=1
 	write "Nested calls: M1->C->M2",!!
