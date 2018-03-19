@@ -22,4 +22,4 @@ if ($status) then
 endif
 mv expect.out expect.outx	# move .out to .outx to avoid -E- from being caught by test framework
 perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
-$grep -vE '^>$|^\$' expect_sanitized.outx
+$grep -vE '^>|^\$' expect_sanitized.outx

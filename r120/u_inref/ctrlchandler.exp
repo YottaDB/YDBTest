@@ -26,6 +26,8 @@ for {set i 0} {$i < 2} {incr i 1} {
 	expect -exact ">"
 	send -- "\$gtm_dist/mumps -direct\r"
 	expect -exact "YDB>"
+	send -- "write \"Invoking mumps with \$zcmdline=\"\"\"\"\",!\r"
+	expect -exact "YDB>"
 	send -- "set savelvl=\$zlevel set \$etrap=\"do etraperror^ctrlchandler\"\r"
 	send -- "use \$Principal:(CTRAP=\$char(3):exception=\"do gotctrlc^ctrlchandler\":$cenable($i))\r"
 	send -- "write \"Hit ^C now\",!  hang 15\r"
