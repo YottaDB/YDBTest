@@ -43,6 +43,7 @@ cp $gtm_tst/$tst/inref/{tp*.c,glvnZWRITE.c} .
 cat > tp.xc << CAT_EOF
 driveZWRITE: void driveZWRITE(I:ydb_string_t *)
 gvnZWRITE: void ^gvnZWRITE()
+gvnincr2callin: void ^gvnincr2callin()
 CAT_EOF
 
 setenv GTMCI tp.xc	# needed to invoke driveZWRITE.m from tp*.c below

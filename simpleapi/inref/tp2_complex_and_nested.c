@@ -185,8 +185,13 @@ int gvnincr(int *i)	/* $tlevel = 1 TP */
 int gvnincr2(void *ptr)	/* $tlevel = 2 TP (i.e. nested TP) */
 {
 	int	status;
+	int	use_callin;
 
-	status = ydb_set_s(&basevar, 0, NULL, &value);
+	use_callin = (2 * drand48());
+	if (!use_callin)
+		status = ydb_set_s(&basevar, 0, NULL, &value);
+	else
+		status = ydb_ci("gvnincr2callin");
 	if (YDB_TP_RESTART == status)
 		return status;
 	YDB_ASSERT(YDB_OK == status);
