@@ -58,8 +58,7 @@ xc_inmult: sizeof(arg_stringp) = 8,	arg_stringp->length = 16
 	*arg_stringp = 'String structure'
 
 
- 150380258,(Call-In),%GTM-E-CITPNESTED, Call-ins can not be used inside a TP transaction 
-
+We should reach here even though it is via the call in from C (since CITPNESTED error is now nixed)
 Values returned from inmult:
 
     123.349
