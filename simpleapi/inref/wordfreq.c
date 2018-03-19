@@ -27,6 +27,7 @@ int main()
 	int		status;
 
 	/* Initialize all array variable names we are planning to use. Randomly use locals vs globals to store word frequencies. */
+	/* If using globals, delete any previous contents */
 	if (getpid() % 2)
 	{
 		YDB_LITERAL_TO_BUFFER("words", &words);
@@ -34,7 +35,9 @@ int main()
 	} else
 	{
 		YDB_LITERAL_TO_BUFFER("^words", &words);
+		ydb_delete_s(&words, 0, NULL, YDB_DEL_TREE);
 		YDB_LITERAL_TO_BUFFER("^index", &index);
+		ydb_delete_s(&index, 0, NULL, YDB_DEL_TREE);
 	}
 	value.buf_addr = &valuebuff[0];
 	value.len_used = 0;
