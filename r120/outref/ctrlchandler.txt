@@ -1,6 +1,6 @@
 # Test that Device exception handlers are dispatched when Ctrl-C is entered
 spawn /usr/local/bin/tcsh -f
-> $gtm_dist/mumps -run ctrlchandler CENABLE
+Invoking mumps with $zcmdline = CENABLE
 Hit ^C now
 Made it to ctrl-C handler
 %GTM-I-BREAK, Break instruction encountered
@@ -8,10 +8,12 @@ Made it to ctrl-C handler
 
 YDB>zshow "S"
 gotctrlc+2^ctrlchandler    (Direct mode) 
-+20^ctrlchandler    (Device Error)
++21^ctrlchandler    (Device Error)
 
 YDB>halt
-> $gtm_dist/mumps -direct
+
+YDB>write "Invoking mumps with $zcmdline=""""",!
+Invoking mumps with $zcmdline=""
 
 YDB>set savelvl=$zlevel set $etrap="do etraperror^ctrlchandler"
 
@@ -36,7 +38,7 @@ YDB>zshow "S"
 +1^GTM$DMOD    (Direct mode) 
 
 YDB>halt
-> $gtm_dist/mumps -run ctrlchandler NOCENABLE
+Invoking mumps with $zcmdline = NOCENABLE
 Hit ^C now
 Made it to ctrl-C handler
 %GTM-I-BREAK, Break instruction encountered
@@ -44,10 +46,12 @@ Made it to ctrl-C handler
 
 YDB>zshow "S"
 gotctrlc+2^ctrlchandler    (Direct mode) 
-+20^ctrlchandler    (Device Error)
++21^ctrlchandler    (Device Error)
 
 YDB>halt
-> $gtm_dist/mumps -direct
+
+YDB>write "Invoking mumps with $zcmdline=""""",!
+Invoking mumps with $zcmdline=""
 
 YDB>set savelvl=$zlevel set $etrap="do etraperror^ctrlchandler"
 

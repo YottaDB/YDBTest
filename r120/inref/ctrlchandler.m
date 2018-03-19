@@ -12,6 +12,7 @@
 ;
 ; Try to drive an error handler inside direct mode
 ;
+	write "Invoking mumps with $zcmdline = ",$zcmdline,!
         set savelvl=$zlevel
         set $etrap="do etraperror"
         set xstr="use $Principal:(CTRAP=$char(3):exception=""do gotctrlc^ctrlchandler"":"_$zcmdline_")"
