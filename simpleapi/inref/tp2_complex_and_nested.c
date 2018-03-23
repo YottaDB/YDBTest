@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
 	char		*trig_val;
 	ydb_buffer_t	subs;
 	char		subsbuff[16];
+	int		iters;
 
 	printf("### Function to test $increment implemented inside TP across multiple processes using ydb_tp_s()###\n");
 	printf("### Function to also test nested TP calls through ydb_tp_s()###\n");
@@ -69,14 +70,19 @@ int main(int argc, char *argv[])
 	start_time = time(NULL);
 	numincrs = 10;
 	cumulincrs = 0;
-	do
+	for (iters = 0; ; iters++)
 	{
 		for (child = 0; child < NCHILDREN; child++)
 		{
+			fflush(NULL);
 			child_pid[child] = fork();
 			YDB_ASSERT(0 <= child_pid[child]);
 			if (0 == child_pid[child])
+			{
+				status = ydb_child_init(NULL);	/* needed in child pid right after a fork() */
+				YDB_ASSERT(YDB_OK == status);
 				return do_tp(numincrs);	/* this is the child */
+			}
 		}
 		for (child = 0; child < NCHILDREN; child++)
 		{
@@ -84,19 +90,22 @@ int main(int argc, char *argv[])
 			YDB_ASSERT(-1 != ret[child]);
 		}
 		cumulincrs += (NCHILDREN * numincrs);
+		/* Check the value of global BASEVAR after each iteration. That should be the same irrespective of order of TP operations inside children */
+		status = ydb_get_s(&basevar, 0, NULL, &value);
+		YDB_ASSERT(YDB_OK == status);
+		result = strtoul(value.buf_addr, NULL, 10);
+		if ((int)result != cumulincrs)
+		{
+			printf("FAIL from tp2 : Expected %s=%d : Actual %s=%d\n", BASEVAR, cumulincrs, BASEVAR, (int)result);
+			break;
+		}
 		end_time = time(NULL);
 		if (test_time < (end_time - start_time))
 			break;
 		if (MAXNUMINCRS > numincrs)
 			numincrs *= 10;
-	} while(1);
-	/* List the final value of global BASEVAR. That should be the same irrespective of order of TP operations inside children */
-	status = ydb_get_s(&basevar, 0, NULL, &value);
-	YDB_ASSERT(YDB_OK == status);
-	result = strtoul(value.buf_addr, NULL, 10);
-	if ((int)result != cumulincrs)
-		printf("FAIL from tp2 : Expected %s=%d : Actual %s=%d\n", BASEVAR, cumulincrs, BASEVAR, (int)result);
-	else
+	}
+	if (iters && cumulincrs)
 		printf("PASS from tp2\n");
 	trig_val = getenv("gtm_test_trigger");
 	if ((NULL != trig_val) && atoi(trig_val))
@@ -191,7 +200,15 @@ int gvnincr2(void *ptr)	/* $tlevel = 2 TP (i.e. nested TP) */
 	if (!use_callin)
 		status = ydb_set_s(&basevar, 0, NULL, &value);
 	else
-		status = ydb_ci("gvnincr2callin");
+	{
+		status = ydb_ci("gvnincr2callin");	/* Test TP restarts in C->M and C->M->C->M */
+		/* Unlike simpleAPI which only returns YDB_ERR_* codes (all negative numbers),
+		 * "ydb_ci" can return ERR_TPRETRY (a positive number). An easy way to check that is to
+		 * take negation of YDB_ERR_TPRETRY (which is == ERR_TPRETRY) and compare that against the return value.
+		 */
+		if (-YDB_ERR_TPRETRY == status)
+			return YDB_TP_RESTART;
+	}
 	if (YDB_TP_RESTART == status)
 		return status;
 	YDB_ASSERT(YDB_OK == status);
