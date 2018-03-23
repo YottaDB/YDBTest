@@ -48,6 +48,21 @@ CAT_EOF
 
 setenv GTMCI tp.xc	# needed to invoke driveZWRITE.m from tp*.c below
 
+cat > c2m2c.xc << CAT_EOF
+`pwd`/libc2m2c.so
+c2m2c: int c2m2c()
+CAT_EOF
+
+setenv GTMXC c2m2c.xc
+
+# Compile c2m2c.c
+set file = c2m2c.c
+cp $gtm_tst/$tst/inref/$file .
+set exefile = $file:r
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist -g $file
+$gt_cc_compiler ${gt_ld_shl_options} ${gt_ld_option_output} libc2m2c.so $exefile.o
+
+
 # Compile glvnZWRITE.c (needed by tp3_preservelvn.c)
 set file = glvnZWRITE.c
 set exefile = $file:r

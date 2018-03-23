@@ -10,5 +10,13 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 gvnincr2callin	;
-	if $incr(^tp2)
+	; At this point, our call-stack is
+	;	ydb_tp_s -> ydb_tp_s -> ydb_ci
+	; Now randomly choose to finish the needed $increment in this M frame (i.e. test TP restarts in C -> M)
+	; or do it in a nested M frame which is invoked from a C frame (i.e. test TP restarts in C -> M -> C -> M)
+	; where the outermost C frame is what established the TP transaction.
+	;
+	if '$get(nest) set nest=1+$random(8)	; do not nest more than max supported call-in depth
+	if $incr(nest,-1) set x=$&c2m2c
+	else  if $incr(^tp2)
 	quit
