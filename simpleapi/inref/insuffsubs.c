@@ -26,7 +26,7 @@
 int main()
 {
 	int		i, j, status, nsubs, outsubscnt, newoutsubscnt, seed;
-	ydb_buffer_t	basevar, subs[MAX_SUBS + 1], outsubs[MAX_SUBS + 1], value, maxsub;
+	ydb_buffer_t	basevar, subs[MAX_SUBS + 1], outsubs[MAX_SUBS + 1], maxsub;
 	char		errbuf[ERRBUF_SIZE], subsstrlit[MAX_SUBS][3], outsubsstrlit[MAX_SUBS][3]; /* 3 to hold 2 digit decimal # + trailing null char */
 
 	seed = (time(NULL) * getpid());
