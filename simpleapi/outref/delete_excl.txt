@@ -1,0 +1,41 @@
+# Test of ydb_delete_excl_s() 
+Copy all C programs that need to be tested
+ --> Running delete_excl.c <---
+ --> Set a few local variables
+
+ --> Dump the local variables
+%z("arbitary",2)=3
+x(1)=1
+x(1,2,3,4,5)=1
+y(3)=5
+y("abcd")=2
+zwrarg=""
+
+ --> Use ydb_delete_excl_s() to delete all local variables except [y]
+
+ --> Dump the local variables
+y(3)=5
+y("abcd")=2
+zwrarg=""
+ --> Set the few local variables again
+
+ --> Use ydb_delete_excl_s() to delete all local variables except [x] and [%z]
+
+ --> Dump the local variables
+%z("arbitary",2)=3
+x(1)=1
+x(1,2,3,4,5)=1
+zwrarg=""
+ --> Set the few local variables again
+
+ --> Use ydb_delete_excl_s() to delete all local variables
+
+ --> Dump the local variables
+zwrarg=""
+
+ --> Check that ydb_delete_excl_s() issues INVVARNAME error if global variable name is input
+Returned error : 151027762,(SimpleAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+
+ --> Check that ydb_delete_excl_s() issues INVVARNAME error if intrinsic special variable is input
+Returned error : 151027762,(SimpleAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+
