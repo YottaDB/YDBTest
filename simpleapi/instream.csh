@@ -51,6 +51,7 @@
 # incrdecr      [estess]      Test of ydb_lock_incr_s() and ydb_lock_decr_s() functions in the simpleAPI
 # simpleapinest [nars]        Test of SIMPLEAPINEST error
 # time2long     [nars]        Test of TIME2LONG error
+# insuffsubs    [nars]        Test of INSUFFSUBS error
 #-------------------------------------------------------------------------------------
 
 echo "simpleapi test starts..."
@@ -68,7 +69,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic lvnsubsnext lvnsubsprev
 #NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic lvnnodeprev"
 ##NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic isvnodeprev"
 setenv subtest_list_non_replic "$subtest_list_non_replic nodenext nodeprev forkncore locks incrdecr simpleapinest"
-setenv subtest_list_non_replic "$subtest_list_non_replic time2long"
+setenv subtest_list_non_replic "$subtest_list_non_replic time2long insuffsubs"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
