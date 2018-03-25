@@ -55,6 +55,7 @@
 # invnamecount   [nars]        Test of INVNAMECOUNT error
 # namecounttoohi [nars]        Test of NAMECOUNTTOOHI error
 # delete_excl    [nars]        Test of ydb_delete_excl_s()
+# callintcommit  [nars]        Test of CALLINTCOMMIT error
 #-------------------------------------------------------------------------------------
 
 echo "simpleapi test starts..."
@@ -73,6 +74,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic lvnsubsnext lvnsubsprev
 ##NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic isvnodeprev"
 setenv subtest_list_non_replic "$subtest_list_non_replic nodenext nodeprev forkncore locks incrdecr simpleapinest"
 setenv subtest_list_non_replic "$subtest_list_non_replic time2long insuffsubs invnamecount namecounttoohi delete_excl"
+setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
