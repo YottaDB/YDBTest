@@ -11,27 +11,27 @@
 #								#
 #################################################################
 #
-echo "# Test of CALLINTCOMMIT error"
+echo "# Test of CALLINTROLLBACK error"
 #
 
 echo "Copy all C programs that need to be tested"
-cp $gtm_tst/$tst/inref/callintcommit*.c .
+cp $gtm_tst/$tst/inref/callintrollback*.c .
 
-cat > callintcommit.xc << CAT_EOF
-callintcommit: void ^callintcom()
+cat > callintrollback.xc << CAT_EOF
+callintrollback: void ^callintrlbk()
 CAT_EOF
 
-setenv GTMCI callintcommit.xc	# needed to invoke driveZWRITE.m
+setenv GTMCI callintrollback.xc	# needed to invoke driveZWRITE.m
 
 $gtm_tst/com/dbcreate.csh mumps 1
 
-foreach file (callintcommit*.c)
+foreach file (callintrollback*.c)
 	echo " --> Running $file <---"
 	set exefile = $file:r
 	$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $file
 	$gt_ld_linker $gt_ld_option_output $exefile $gt_ld_options_common $exefile.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& $exefile.map
 	if (0 != $status) then
-		echo "CALLINTCOMMIT-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
+		echo "CALLINTROLLBACK-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 		continue
 	endif
 	`pwd`/$exefile
