@@ -53,7 +53,7 @@
 # time2long      [nars]        Test of TIME2LONG error
 # insuffsubs     [nars]        Test of INSUFFSUBS error
 # invnamecount   [nars]        Test of INVNAMECOUNT error
-# namecounttoohi [nars]        Test of NAMECOUNTTOOHI error
+# namecount2hi   [nars]        Test of NAMECOUNT2HI error
 # delete_excl    [nars]        Test of ydb_delete_excl_s()
 # callintcommit  [nars]        Test of CALLINTCOMMIT error
 #-------------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic lvnsubsnext lvnsubsprev
 #NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic lvnnodeprev"
 ##NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic isvnodeprev"
 setenv subtest_list_non_replic "$subtest_list_non_replic nodenext nodeprev forkncore locks incrdecr simpleapinest"
-setenv subtest_list_non_replic "$subtest_list_non_replic time2long insuffsubs invnamecount namecounttoohi delete_excl"
+setenv subtest_list_non_replic "$subtest_list_non_replic time2long insuffsubs invnamecount namecount2hi delete_excl"
 setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit"
 setenv subtest_list_replic     ""
 

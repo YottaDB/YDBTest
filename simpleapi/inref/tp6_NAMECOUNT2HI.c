@@ -34,7 +34,7 @@ int main()
 	ydb_string_t	zwrarg;
 	char		sprintfbuff[1024], *spfbufptr;
 
-	printf("### Test TOOMANYVARNAMES error ###\n");
+	printf("### Test NAMECOUNT2HI error ###\n");
 	fflush(stdout);
 
 	/* Initialize varname, and value buffers */

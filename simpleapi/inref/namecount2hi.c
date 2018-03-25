@@ -41,7 +41,7 @@ int main()
 			status = ydb_lock_s(1000000000, namecount, NULL, 0, NULL);
 		else
 			status = ydb_delete_excl_s(namecount, NULL);
-		YDB_ASSERT(YDB_ERR_NAMECOUNTTOOHI == status)
+		YDB_ASSERT(YDB_ERR_NAMECOUNT2HI == status)
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("Returned error : %s\n", errbuf);
 		fflush(stdout);
