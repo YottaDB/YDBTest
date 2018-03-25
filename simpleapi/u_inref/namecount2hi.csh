@@ -11,13 +11,13 @@
 #								#
 #################################################################
 #
-echo "# Test of NAMECOUNTTOOHI error"
+echo "# Test of NAMECOUNT2HI error"
 #
 
 echo "Copy all C programs that need to be tested"
-cp $gtm_tst/$tst/inref/namecounttoohi*.c .
+cp $gtm_tst/$tst/inref/namecount2hi*.c .
 
-foreach file (namecounttoohi*.c)
+foreach file (namecount2hi*.c)
 	echo " --> Running $file <---"
 	set exefile = $file:r
 	$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $file

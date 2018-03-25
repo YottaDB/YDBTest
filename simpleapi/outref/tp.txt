@@ -398,9 +398,9 @@ Set $zmaxtptime to 1 second
 Timeout test PASSED for ydb_tp_s() : Timeout expected = 1 second. Actual timeout = 1 seconds
 ydb_tp_s() exit status = -150377322 : 150377322,(SimpleAPI),%GTM-E-TPTIMEOUT, Transaction timeout
 
- --> Running tp6_TOOMANYVARNAMES.c <---
-### Test TOOMANYVARNAMES error ###
-ydb_tp_s() : Exit Status = -151027810 : Exit string = 151027810,(SimpleAPI),%YDB-E-TOOMANYVARNAMES, Number of varnames specified exceeds maximum (35)
+ --> Running tp6_NAMECOUNT2HI.c <---
+### Test NAMECOUNT2HI error ###
+ydb_tp_s() : Exit Status = -151027810 : Exit string = 151027810,(SimpleAPI),%YDB-E-NAMECOUNT2HI, Number of varnames (namecount parameter in a ydb_tp_s() call) exceeds maximum (35)
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
