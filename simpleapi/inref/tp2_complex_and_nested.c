@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
 		if (MAXNUMINCRS > numincrs)
 			numincrs *= 10;
 	}
-	if (iters && cumulincrs)
+	if (cumulincrs)
 		printf("PASS from tp2\n");
 	trig_val = getenv("gtm_test_trigger");
 	if ((NULL != trig_val) && atoi(trig_val))
