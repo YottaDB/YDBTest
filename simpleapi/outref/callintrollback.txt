@@ -1,0 +1,17 @@
+# Test of CALLINTROLLBACK error
+Copy all C programs that need to be tested
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+ --> Running callintrollback.c <---
+Start a TP transaction through ydb_tp_s()
+Do a call-in inside the function driven by ydb_tp_s()
+Do TROLLBACK inside call-in driven from function invoked by ydb_tp_s(). Expect CALLINTROLLBACK error
+Returned error from gvnset() : 151027866,callintrlbk+2^callintrlbk,%YDB-E-CALLINTROLLBACK, TROLLBACK at call-in-level=2 not allowed as corresponding TSTART was done at lower call-in-level=1
+Returned error from ydb_tp_s() : 151027866,callintrlbk+2^callintrlbk,%YDB-E-CALLINTROLLBACK, TROLLBACK at call-in-level=2 not allowed as corresponding TSTART was done at lower call-in-level=1
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
