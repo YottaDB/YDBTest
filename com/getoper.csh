@@ -43,9 +43,9 @@ else
 	set output_file=$3
 endif
 # identify the syslog file for that host
-set syslog_host=$HOST:r:r:r:r
+set syslog_host=$HOST:ar
 if ( "" == $4 ) then
-	set syslog_file=`$tst_awk '/^'$syslog_host'/{print $8}' $gtm_test_serverconf_file`
+	set syslog_file=`$tst_awk '$1 == "'${syslog_host}'" {print $8}' $gtm_test_serverconf_file`
 else
 	set no_prev_search
 	set syslog_file=$4
