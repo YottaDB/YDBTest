@@ -15,6 +15,7 @@ mumps.dat
 ##TEST_AWK%GTM-F-MEMORY, Central memory exhausted during request for [0-9]* bytes from 0x[0-9A-Fa-f]*
 %SYSTEM-E-ENO12, Cannot allocate memory
 
+# Reset vmemoryuse back to unlimited to avoid memory errors in the getoper.csh call (or dbcheck.csh) below
 %YDB-F-FATALERROR2, Fatal error raised. Bypassing core generation and terminating process.
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
