@@ -57,6 +57,8 @@
 # delete_excl     [nars]        Test of ydb_delete_excl_s()
 # callintcommit   [nars]        Test of CALLINTCOMMIT error
 # callintrollback [nars]        Test of CALLINTROLLBACK error
+# fatalerror1     [nars]        Test of FATALERROR1 error
+# fatalerror2     [nars]        Test of FATALERROR2 error
 #-------------------------------------------------------------------------------------
 
 echo "simpleapi test starts..."
@@ -75,7 +77,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic lvnsubsnext lvnsubsprev
 ##NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic isvnodeprev"
 setenv subtest_list_non_replic "$subtest_list_non_replic nodenext nodeprev forkncore locks incrdecr simpleapinest"
 setenv subtest_list_non_replic "$subtest_list_non_replic time2long insuffsubs invnamecount namecount2hi delete_excl"
-setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit callintrollback"
+setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit callintrollback fatalerror1 fatalerror2"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

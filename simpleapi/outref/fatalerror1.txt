@@ -1,0 +1,21 @@
+# Test of FATALERROR1 error
+Copy all C programs that need to be tested
+# Set vmemoryuse limit to 160Mb; Eventually triggers GTM-F-MEMORY (and in turn FATALERROR1 error in syslog)
+# setenv gtmdbglvl 0x400 (needed for FATALERROR1)
+# Create database for TP transaction
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+ --> Running fatalerror.c <---
+ ### Test FATALERROR1 error ###
+ # This test triggers a GTM-F-MEMORY error which then sends the FATALERROR1 message to syslog #
+ # Set subscripts indefinitely to trigger a GTM-F-MEMORY error #
+##TEST_AWK%GTM-F-MEMORY, Central memory exhausted during request for [0-9]* bytes from 0x[0-9A-Fa-f]*
+%SYSTEM-E-ENO12, Cannot allocate memory
+
+%YDB-F-FATALERROR1, Fatal error raised. Generating core and terminating process.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
