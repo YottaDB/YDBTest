@@ -40,6 +40,9 @@ foreach file (fatalerror.c)
 	echo ""
 end
 
+echo "# Reset vmemoryuse back to unlimited to avoid memory errors in the getoper.csh call (or dbcheck.csh) below"
+limit vmemoryuse unlimited
+
 $gtm_tst/com/getoper.csh "$syslog_time1" "" syslog1.txt "" "FATALERROR1"
 $grep FATALERROR1 syslog1.txt | sed 's/.*%YDB/%YDB/;s/ Error:.*//;'
 if (-e core*) then
