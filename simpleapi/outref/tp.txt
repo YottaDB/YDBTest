@@ -26,6 +26,10 @@ PASS from tp2trig
 ### Function to test that list of variable names to be preserved (across TP restarts) works fine###
   --> set x0 to a value
   --> set x2 to a value
+
+----------------------------------------------------------
+## About to invoke gvnset2 with x1,x2,x3,...x35 as varlist
+----------------------------------------------------------
 TSTART : dollar_trestart = 0
   --> Verifying x1 is UNDEFINED
   --> Verifying x2 is UNCHANGED after restart
@@ -50,6 +54,10 @@ TSTART : dollar_trestart = 2
   --> set x1 to a value
   --> Verifying x1 is DEFINED
   --> Committing the TP transaction
+
+----------------------------------------------------------
+## About to invoke gvnset2 with x1,x2,x3,...x35 as varlist
+----------------------------------------------------------
 TSTART : dollar_trestart = 0
 Do ZWRITE of lvns
 x0=""
@@ -139,6 +147,10 @@ x32="TP with comma-separated list of variable names to be preserved"
 x35="TP with comma-separated list of variable names to be preserved"
 x5="TP with comma-separated list of variable names to be preserved"
 x8="TP with comma-separated list of variable names to be preserved"
+
+----------------------------------------------------------
+## About to invoke gvnset2 with * as varlist
+----------------------------------------------------------
 TSTART : dollar_trestart = 0
 Do ZWRITE of lvns
 x0=3
@@ -261,6 +273,54 @@ x32="TP with comma-separated list of variable names to be preserved"
 x35="TP with comma-separated list of variable names to be preserved"
 x5="TP with comma-separated list of variable names to be preserved"
 x8="TP with comma-separated list of variable names to be preserved"
+
+----------------------------------------------------------
+## About to invoke gvnset3A with * as varlist and x1 passed/bound as a parameter from C to M
+----------------------------------------------------------
+TSTART : dollar_trestart = 0
+Do ZWRITE of lvns. Verify x1 is UNDEFINED at the beginning of every restart
+Do call-in to set a few nodes in [x1] lv tree
+Do ZWRITE of lvns after call-in. Verify x1 is DEFINED
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 1
+Do ZWRITE of lvns. Verify x1 is UNDEFINED at the beginning of every restart
+Do call-in to set a few nodes in [x1] lv tree
+Do ZWRITE of lvns after call-in. Verify x1 is DEFINED
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 2
+Do ZWRITE of lvns. Verify x1 is UNDEFINED at the beginning of every restart
+Do call-in to set a few nodes in [x1] lv tree
+Do ZWRITE of lvns after call-in. Verify x1 is DEFINED
+  --> Committing the TP transaction
+Do ZWRITE of lvns
+
+----------------------------------------------------------
+## About to invoke gvnset3B with * as varlist and x1 not passed/bound as a parameter from C to M
+----------------------------------------------------------
+TSTART : dollar_trestart = 0
+Do ZWRITE of lvns. Verify x1 is UNDEFINED at the beginning of every restart
+Do call-in to set a few nodes in [x1] lv tree
+Do ZWRITE of lvns after call-in. Verify x1 is DEFINED
+x1(1)=1
+x1(1,2,3,4,5)=3
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 1
+Do ZWRITE of lvns. Verify x1 is UNDEFINED at the beginning of every restart
+Do call-in to set a few nodes in [x1] lv tree
+Do ZWRITE of lvns after call-in. Verify x1 is DEFINED
+x1(1)=1
+x1(1,2,3,4,5)=3
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 2
+Do ZWRITE of lvns. Verify x1 is UNDEFINED at the beginning of every restart
+Do call-in to set a few nodes in [x1] lv tree
+Do ZWRITE of lvns after call-in. Verify x1 is DEFINED
+x1(1)=1
+x1(1,2,3,4,5)=3
+  --> Committing the TP transaction
+Do ZWRITE of lvns
+x1(1)=1
+x1(1,2,3,4,5)=3
 
  --> Running tp4_TPTOODEEP.c <---
  ### Test TPTOODEEP error ###
