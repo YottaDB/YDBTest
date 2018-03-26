@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -52,7 +55,7 @@ set pid = `$tst_awk '/PID = / {print $NF}' mumps-dir.out`
 ls core*
 if (! $status) then
 	mv core* case-1.core
-	mv GTM_FATAL* case-1.ZSHOW_DMP
+	mv YDB_FATAL* case-1.ZSHOW_DMP
 endif
 
 # Make sure that an error was printed in the console.
@@ -97,7 +100,7 @@ $gtm_dist/mumps -run test >&! mumps-run.out
 ls core*
 if (! $status) then
 	mv core* case-2.core
-	mv GTM_FATAL* case-2.ZSHOW_DMP
+	mv YDB_FATAL* case-2.ZSHOW_DMP
 endif
 
 # Make sure that an error was printed in the console.

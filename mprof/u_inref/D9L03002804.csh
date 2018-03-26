@@ -3,6 +3,9 @@
 # Copyright (c) 2011-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -22,10 +25,10 @@ echo ""
 $gtm_exe/mumps -run overflow
 echo ""
 
-@ num_of_fatal_errors = `ls -l GTM_FATAL_ERROR* | wc -l`
+@ num_of_fatal_errors = `ls -l YDB_FATAL_ERROR* | wc -l`
 if ($num_of_fatal_errors == 1) then
-	# move the GTM_FATAL_ERROR.* files, so that error catching mechanism do not show invalid failures
-	foreach file ( `ls -l GTM_FATAL_ERROR* | $tst_awk '{print $NF}'` )
+	# move the YDB_FATAL_ERROR.* files, so that error catching mechanism do not show invalid failures
+	foreach file ( `ls -l YDB_FATAL_ERROR* | $tst_awk '{print $NF}'` )
 		mv $file `echo $file | $tst_awk -F 'GTM_' '{print $2}'`
 	end
 endif

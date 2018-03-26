@@ -4,6 +4,9 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -35,7 +38,7 @@
 # unlink		[estess] Tests unlink (zgoto 0:entry) code to unlink/unwind everything
 # zgoto			[estess] Test newly reworked ZGOTO to verify broken-as-designed issues are fixed.
 # C9L02003364		[cronem] Test job startup script
-# C9K08003318 		[estess] Verify we are creating the GTM_FATAL_ERROR file for fatal signals
+# C9K08003318 		[estess] Verify we are creating the YDB_FATAL_ERROR file for fatal signals
 # C9905001087 		[nars]   Tests for misc fixes that went in along with the LV project
 #-------------------------------------------------------------------------------------
 

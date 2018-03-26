@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -60,7 +63,7 @@ if !(-z err_file_names.logx) then
 		$tst_awk 'BEGIN{filelist = ""} {filelist=$0" "filelist} END{print filelist}' err_file_names.logx | xargs ls -lrt | $tst_awk '{print $NF}' | xargs $grep -f $gtm_tst/com/errors_catch.txt /dev/null | $grep -v -f $gtm_tst/com/errors_ignore.txt >! errs_found.logx
 endif
 \rm log_and_out_files.txt
-#check if there are cores or GTM_FATAL* files
+#check if there are cores or YDB_FATAL* files
 find . -type f -a \( -name 'core*' -o -name 'gtmcore*' \) -print >&! CORE.lis
 set stat = $status
 if ($stat) then
@@ -115,18 +118,18 @@ else if (! -z CORE.lis) then
 	end
 endif
 if (-z CORE.lis) rm CORE.lis
-find . -name 'GTM_FATAL*' >&! gtm_fatal.LIS
+find . -name 'YDB_FATAL*' >&! gtm_fatal.LIS
 set stat = $status
 if ($stat) then
-	echo "TEST-E-ERRORS_FIND, Could not determine if there were GTM_FATAL files generated under directory `pwd`"
+	echo "TEST-E-ERRORS_FIND, Could not determine if there were YDB_FATAL files generated under directory `pwd`"
 	echo $stat
 	cat gtm_fatal.LIS
 else if (! -z gtm_fatal.LIS) then
 	echo "################################################################"
 	if (($?test_replic) || ("GT.CM" == $test_gtm_gtcm)) then
-		echo "There are GTM_FATAL files ($shorthost, `pwd`):"
+		echo "There are YDB_FATAL files ($shorthost, `pwd`):"
 	else
-		echo "There are GTM_FATAL files"
+		echo "There are YDB_FATAL files"
 	endif
 	cat gtm_fatal.LIS
 	chmod a+r `cat gtm_fatal.LIS`
