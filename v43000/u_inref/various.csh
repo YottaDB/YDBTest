@@ -33,6 +33,6 @@ EOF
 /bin/echo "'various' tests complete"
 # Move the YDB_FATAL_ERROR.* files, so that error catching mechanism do not show invalid failures
 foreach file ( `ls -l YDB_FATAL_ERROR* | $tst_awk '{print $NF}'` )
-	mv $file `echo $file | $tst_awk -F 'GTM_' '{print $2}'`
+	mv $file `echo $file | $tst_awk -F 'YDB_' '{print $2}'`
 end
 $gtm_tst/com/dbcheck.csh

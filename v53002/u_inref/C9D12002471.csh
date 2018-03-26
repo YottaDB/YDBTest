@@ -77,7 +77,7 @@ foreach file ( YDB_FATAL_ERROR* )
 	# That last line may either be from the stack or external calls listing.
 	$tail -n1 $file | $grep -Ev "(26e87fc6a6b081a8a1bc641a1eddaff6|utils)"
 	# Move the YDB_FATAL_ERROR.* files, so that error catching mechanism do not show invalid failures
-	mv $file `echo $file | $tst_awk -F 'GTM_' '{print $2}'`
+	mv $file `echo $file | $tst_awk -F 'YDB_' '{print $2}'`
 end
 
 $gtm_tst/com/dbcheck.csh
