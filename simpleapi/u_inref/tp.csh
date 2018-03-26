@@ -44,6 +44,8 @@ cat > tp.xc << CAT_EOF
 driveZWRITE: void driveZWRITE(I:ydb_string_t *)
 gvnZWRITE: void ^gvnZWRITE()
 gvnincr2callin: void ^gvnincr2callin()
+tp3preserveA: void A^tp3preserve(I:ydb_string_t *)
+tp3preserveB: void B^tp3preserve()
 CAT_EOF
 
 setenv GTMCI tp.xc	# needed to invoke driveZWRITE.m from tp*.c below

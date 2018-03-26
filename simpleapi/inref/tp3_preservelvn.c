@@ -59,6 +59,10 @@ int main()
 	printf("  --> set x2 to a value\n");
 	status = ydb_set_s(&x2var, 0, NULL, NULL);
 	YDB_ASSERT(YDB_OK == status);
+
+	printf("\n----------------------------------------------------------\n");
+	printf("## About to invoke gvnset2 with x1,x2,x3,...x35 as varlist\n");
+	printf("----------------------------------------------------------\n");
 	status = ydb_tp_s(&gvnset1, NULL, NULL, 1, &x1var);
 	YDB_ASSERT(YDB_OK == status);
 	for (i = 1, spfbufptr = sprintfbuff; YDB_MAX_NAMES >= i; i++)
@@ -68,12 +72,38 @@ int main()
 		spfbufptr += varnames[i].len_used;
 	}
 	/* Get deterministic state before invoking gvnset2 */
+	printf("\n----------------------------------------------------------\n");
+	printf("## About to invoke gvnset2 with x1,x2,x3,...x35 as varlist\n");
+	printf("----------------------------------------------------------\n");
 	status = ydb_delete_s(&x1var, 0, NULL, YDB_DEL_TREE);
 	YDB_ASSERT(YDB_OK == status);
 	status = ydb_tp_s(&gvnset2, NULL, NULL, YDB_MAX_NAMES, (ydb_buffer_t *)&varnames[1]);
 	YDB_ASSERT(YDB_OK == status);
+
+	printf("\n----------------------------------------------------------\n");
+	printf("## About to invoke gvnset2 with * as varlist\n");
+	printf("----------------------------------------------------------\n");
 	status = ydb_tp_s(&gvnset2, NULL, NULL, 1, &starvar);
 	YDB_ASSERT(YDB_OK == status);
+
+	/* Get deterministic state before invoking gvnset3 */
+	status = ydb_delete_excl_s(0, NULL);
+	YDB_ASSERT(YDB_OK == status);
+
+	printf("\n----------------------------------------------------------\n");
+	printf("## About to invoke gvnset3A with * as varlist and x1 passed/bound as a parameter from C to M\n");
+	printf("----------------------------------------------------------\n");
+	i = 0;
+	status = ydb_tp_s(&gvnset3, &i, NULL, 1, &starvar);
+	YDB_ASSERT(YDB_OK == status);
+
+	printf("\n----------------------------------------------------------\n");
+	printf("## About to invoke gvnset3B with * as varlist and x1 not passed/bound as a parameter from C to M\n");
+	printf("----------------------------------------------------------\n");
+	i = 1;
+	status = ydb_tp_s(&gvnset3, &i, NULL, 1, &starvar);
+	YDB_ASSERT(YDB_OK == status);
+
 	return status;
 }
 
@@ -203,3 +233,46 @@ int gvnset2()
 	return status;
 }
 
+int gvnset3(int *i)
+{
+	int		status, dlr_trestart;
+	ydb_buffer_t	dollar_trestart, ret_value;
+	ydb_string_t	x1val;
+	char		ret_value_buff[1024];
+	int		choice;
+
+	/* Display $TRESTART */
+	YDB_LITERAL_TO_BUFFER("$TRESTART", &dollar_trestart);
+	ret_value.buf_addr = ret_value_buff;
+	ret_value.len_used = 0;
+	ret_value.len_alloc = sizeof(ret_value_buff);
+	status = ydb_get_s(&dollar_trestart, 0, NULL, &ret_value);
+	ret_value.buf_addr[ret_value.len_used] = '\0';
+	dlr_trestart = atoi(ret_value.buf_addr);
+	YDB_ASSERT(YDB_OK == status);
+	printf("TSTART : dollar_trestart = %s\n", ret_value.buf_addr);
+
+	printf("Do ZWRITE of lvns. Verify x1 is UNDEFINED at the beginning of every restart\n");
+	lvnZWRITE();
+
+	printf("Do call-in to set a few nodes in [x1] lv tree\n");
+	if (0 == *i)
+	{
+		x1val.address = "value";
+		x1val.length = sizeof("value") - 1;
+		status = ydb_ci("tp3preserveA", &x1val);
+	} else
+		status = ydb_ci("tp3preserveB");
+	printf("Do ZWRITE of lvns after call-in. Verify x1 is DEFINED\n");
+	lvnZWRITE();
+	if (2 > dlr_trestart)
+	{
+		printf("  --> Signaling a TP restart\n");
+		return YDB_TP_RESTART;
+	}
+	printf("  --> Committing the TP transaction\n");
+	printf("Do ZWRITE of lvns\n");
+	lvnZWRITE();
+
+	return status;
+}
