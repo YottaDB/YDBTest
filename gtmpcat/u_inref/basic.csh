@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -275,11 +278,11 @@ else
     echo 'No memory usage analysis done due to presence of $gtmpcat_test_versions'
 endif
 #
-# Before we skidaddle, if there's still a GTM_FATAL_ERROR file, remove it as it will cause the test to fail. The jobexam file created
+# Before we skidaddle, if there's still a YDB_FATAL_ERROR file, remove it as it will cause the test to fail. The jobexam file created
 # is just as good as it was created one (M) line of code before makedmp.m suicided.
 #
-rm -f GTM_FATAL_ERROR.* >& /dev/null
-rm -f repl2ndary/GTM_FATAL_ERROR.* >& /dev/null
+rm -f YDB_FATAL_ERROR.* >& /dev/null
+rm -f repl2ndary/YDB_FATAL_ERROR.* >& /dev/null
 #
 # Release both ports acquired. Needs $portno to be correct and match portno.out.
 #

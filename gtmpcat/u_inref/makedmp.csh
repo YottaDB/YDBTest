@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -18,7 +21,7 @@ alias dbglvlclr "unsetenv gtmdbglvl"
 setenv gtm_trace_groups ALL
 dbglvlclr
 
-rm -f mumps.gld *.o core* GTM_FATAL_ERR* GTM_JOBEXAM.* makedmp.gld makedmp.instance.* >& /dev/null
+rm -f mumps.gld *.o core* YDB_FATAL_ERR* GTM_JOBEXAM.* makedmp.gld makedmp.instance.* >& /dev/null
 rm -f mumps.dat acct*.dat acct*.mjl* acnm*.dat acnm*.mjl* jnl.dat jnl.mjl* mumps.mjl* unused.dat unused.mjl* makedmp_zwr.txt >& /dev/null
 rm -fr repl2ndary >& /dev/null
 rm -f repl.src.log >& /dev/null

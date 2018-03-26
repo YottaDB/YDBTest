@@ -3,6 +3,9 @@
 ; Copyright (c) 2008-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.	     	  	     			;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -30,7 +33,7 @@ setup;
 test1;
 	do:($zversion'["AIX")&($zversion'["HP-UX") setup
 	write "Starting test1",!
-	do makevars	; allocate some local vars to make the GTM_FATAL_ERROR file somewhat interesting
+	do makevars	; allocate some local vars to make the YDB_FATAL_ERROR file somewhat interesting
 	do bigtp	; do allocations inside TP until we explode
 	quit		; should never get here
 
@@ -38,7 +41,7 @@ test1;
 test2;
 	do:($zversion'["AIX")&($zversion'["HP-UX") setup
 	write "Starting test2",!
-	do makevars	; allocate some local vars to make the GTM_FATAL_ERROR file somewhat interesting
+	do makevars	; allocate some local vars to make the YDB_FATAL_ERROR file somewhat interesting
 	do makegblrefs	; make global references till we explode
 	quit		; should never get here
 

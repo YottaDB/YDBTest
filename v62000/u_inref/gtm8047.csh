@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -64,8 +67,8 @@ if !(("hp-ux" == "$gtm_test_osname") || ("aix" == "$gtm_test_osname")) then
 
 	$gtm_exe/mumps -run gtm8047 >& gtm8047.outx
 
-	# The test will create GTM_FATAL_* files in most cases but in some cases it might not. So filter that out.
-	mv -f GTM_FATAL* filter.ZSHOW_DMP >& mv.out
+	# The test will create YDB_FATAL_* files in most cases but in some cases it might not. So filter that out.
+	mv -f YDB_FATAL* filter.ZSHOW_DMP >& mv.out
 
 	# Test that GTM-F-MEMORY error does show up somewhere (either in zshow dump file or in output)
 	# Note that sometimes GT.M could end up with memory issues even while loading encryption libraries or so

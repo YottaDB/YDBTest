@@ -1,14 +1,14 @@
 
 GTM>
-Test 1: We expect this process to be killed and create a GTM_FATAL_ERROR* file
+Test 1: We expect this process to be killed and create a YDB_FATAL_ERROR* file
 
 GTM>
 ##TEST_AWK%GTM-F-KILLBYSIGUINFO, YottaDB process [0-9]* has been killed by a signal 4 from process [0-9]* with userid number [0-9]*
-Test 1: GTM_FATAL_ERROR file successfully created
+Test 1: YDB_FATAL_ERROR file successfully created
 
 GTM>
-Test 2: We expect this process to die with a KILLBYSIGUINFO message and create a GTM_FATAL_ERROR* file
+Test 2: We expect this process to die with a KILLBYSIGUINFO message and create a YDB_FATAL_ERROR* file
 
 GTM>
 %GTM-F-KILLBYSIGUINFO,  process 0 has been killed by a signal 0 from process 0 with userid number 0
-Test 2: GTM_FATAL_ERROR file successfully created
+Test 2: YDB_FATAL_ERROR file successfully created

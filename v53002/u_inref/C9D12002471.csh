@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -59,7 +59,7 @@ $gtm_exe/mumps -run test2^c002471
 # On Solaris (and on Linux when poollimit is set), move the cores away because we run out of backpocket occasionally
 if ("SunOS" == $HOSTOS || "Linux" == $HOSTOS) then
 	# Verify that there is at least one ENO12 error
-	$grep -q "ZSTATUS=.*ENO12" GTM_FATAL_ERROR.*
+	$grep -q "ZSTATUS=.*ENO12" YDB_FATAL_ERROR.*
 	if (0 == $status) then
 		# Move the cores without altering their creation relative time
 		set nonomatch; set cores=(core*); unset nonomatch
@@ -71,12 +71,12 @@ if ("SunOS" == $HOSTOS || "Linux" == $HOSTOS) then
 	endif
 endif
 
-foreach file ( GTM_FATAL_ERROR* )
-	# Check the last line from each of the two generated GTM_FATAL_ERROR files.
+foreach file ( YDB_FATAL_ERROR* )
+	# Check the last line from each of the two generated YDB_FATAL_ERROR files.
 	# This verifies the files were complete and correctly generated.
 	# That last line may either be from the stack or external calls listing.
 	$tail -n1 $file | $grep -Ev "(26e87fc6a6b081a8a1bc641a1eddaff6|utils)"
-	# Move the GTM_FATAL_ERROR.* files, so that error catching mechanism do not show invalid failures
+	# Move the YDB_FATAL_ERROR.* files, so that error catching mechanism do not show invalid failures
 	mv $file `echo $file | $tst_awk -F 'GTM_' '{print $2}'`
 end
 

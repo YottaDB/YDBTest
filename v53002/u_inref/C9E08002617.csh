@@ -1,4 +1,15 @@
 #!/usr/local/bin/tcsh
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 #
 # C9E08-002617 [Narayanan] GTMASSERT in get_symb_line.c in some $ETRAP testcases
 #
@@ -33,8 +44,8 @@ foreach realtnum (0 1 2 3 4 5 6)
 GTM_EOF
 	echo ""
 end
-# Move the GTM_FATAL_ERROR.* files, so that error catching mechanism do not show invalid failures
-foreach file ( `ls -l GTM_FATAL_ERROR* | $tst_awk '{print $NF}'` )
+# Move the YDB_FATAL_ERROR.* files, so that error catching mechanism do not show invalid failures
+foreach file ( `ls -l YDB_FATAL_ERROR* | $tst_awk '{print $NF}'` )
 	mv $file `echo $file | $tst_awk -F 'GTM_' '{print $2}'`
 end
 $gtm_tst/com/dbcheck.csh

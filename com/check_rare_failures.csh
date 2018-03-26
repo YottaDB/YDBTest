@@ -4,6 +4,9 @@
 # Copyright (c) 2010-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -32,7 +35,7 @@ if (-z $difffile) then
 	exit
 endif
 
-$grep -q -E 'There are (core|GTM_FATAL) files' $difffile
+$grep -q -E 'There are (core|YDB_FATAL) files' $difffile
 if (! $status) then
 	# There are core files. Strictly check for "Cores allowed"
 	set core = 1
