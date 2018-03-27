@@ -17,11 +17,6 @@ echo "# Test of FATALERROR1 error"
 echo "Copy all C programs that need to be tested"
 cp $gtm_tst/$tst/inref/fatalerror.c .
 
-echo "# Set vmemoryuse limit to 160Mb; Eventually triggers GTM-F-MEMORY (and in turn FATALERROR1 error in syslog)"
-limit vmemoryuse 160000
-echo "# setenv gtmdbglvl 0x400 (needed for FATALERROR1)"
-setenv gtmdbglvl 0x400
-
 echo "# Create database for TP transaction"
 $gtm_tst/com/dbcreate.csh mumps 1
 
@@ -36,7 +31,13 @@ foreach file (fatalerror.c)
 		echo "FATALERROR1-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 		continue
 	endif
+
+	echo "# Set vmemoryuse limit to 200Mb; Eventually triggers GTM-F-MEMORY (and in turn FATALERROR1 error in syslog)"
+	limit vmemoryuse 200000
+	echo "# setenv gtmdbglvl 0x400 (needed for FATALERROR1)"
+	setenv gtmdbglvl 0x400
 	`pwd`/$exefile
+
 	echo ""
 end
 
