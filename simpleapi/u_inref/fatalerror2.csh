@@ -17,8 +17,8 @@ echo "# Test of FATALERROR2 error"
 echo "Copy all C programs that need to be tested"
 cp $gtm_tst/$tst/inref/fatalerror.c .
 
-echo "# Set vmemoryuse limit to 160Mb; Eventually triggers GTM-F-MEMORY (and in turn FATALERROR2 error in syslog)"
-limit vmemoryuse 160000
+echo "# Set vmemoryuse limit to 200Mb; Eventually triggers GTM-F-MEMORY (and in turn FATALERROR2 error in syslog)"
+limit vmemoryuse 200000
 echo "# unsetenv gtmdbglvl (needed for FATALERROR2)"
 unsetenv gtmdbglvl
 
