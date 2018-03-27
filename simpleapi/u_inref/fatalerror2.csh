@@ -47,5 +47,11 @@ $gtm_tst/com/getoper.csh "$syslog_time1" "" syslog1.txt "" "FATALERROR2"
 $grep FATALERROR2 syslog1.txt | sed 's/.*%YDB/%YDB/;s/ Error:.*//;'
 # Unlike the FATALERROR1 case, we do not expect a core file in the FATALERROR2 case.
 # But we do not need to do any checks for this. The test framework will automatically fail the test if it finds a core file.
+if (-e YDB_FATAL_ERROR*) then
+	set ferrfile = YDB_FATAL_ERROR*
+	mv $ferrfile fatalerror1_$ferrfile
+else
+	echo "FATALERROR1-E-NOFATALERRFILE : YDB_FATAL_ERROR_* file expected but not found after FATALERROR1 error"
+endif
 
 $gtm_tst/com/dbcheck.csh

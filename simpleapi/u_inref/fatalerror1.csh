@@ -51,5 +51,11 @@ if (-e core*) then
 else
 	echo "FATALERROR1-E-NOCORE : Core file expected but not found after FATALERROR1 error"
 endif
+if (-e YDB_FATAL_ERROR*) then
+	set ferrfile = YDB_FATAL_ERROR*
+	mv $ferrfile fatalerror1_$ferrfile
+else
+	echo "FATALERROR1-E-NOFATALERRFILE : YDB_FATAL_ERROR_* file expected but not found after FATALERROR1 error"
+endif
 
 $gtm_tst/com/dbcheck.csh
