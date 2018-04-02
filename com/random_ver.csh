@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -154,10 +154,11 @@ if ($?vertype) then
 		set islt    = "<"
 	breaksw
 	case "ms":
-		set minimum = "V51000" # V51000 is the first multisite version.
+		set minimum = "V54001"	# V51000 is the first multisite version, but we have 64-bit build only from V54001
+					# hence this minimum choice.
 		set isgt    = ">="
 		set maximum = "$tst_ver" # A version before the current version
-		set islt    = "<="
+		set islt    = "<"
 	breaksw
 	case "any":
 		set minimum = "V44002" # V44002 is the min supported version after triggers
