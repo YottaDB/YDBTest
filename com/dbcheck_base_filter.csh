@@ -53,8 +53,8 @@ if ($?tst_offline_reorg == 1) then
         if ($status) then
                 echo "TEST FAILED in MUPIP REORG!"
         endif
-        $grep "GTM-F" offline_reorg.out
-        $grep "GTM-E" offline_reorg.out
+        $grep "YDB-F" offline_reorg.out
+        $grep "YDB-E" offline_reorg.out
 endif
 
 if ( $?HOSTOS == "0" )  setenv HOSTOS `uname -s`

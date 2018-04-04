@@ -585,7 +585,7 @@ Diffing instancefile_5.out and instancefile_6.out on INST3
 	    INST1/A: <seqno= 1, name=INSTANCE1, cycle=1>
 	             <seqno=71, name=INSTANCE3, cycle=1>
 ==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST2 RP'==
-==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST3 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=fetch23.glo "*" >& rollback23.tmp; $grep "%GTM-" rollback23.tmp'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST3 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=fetch23.glo "*" >& rollback23.tmp; $grep "%YDB-" rollback23.tmp'==
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, FETCHRESYNC processing started at... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..

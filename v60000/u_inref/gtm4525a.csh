@@ -241,6 +241,6 @@ $gtm_exe/mupip replicate -source -shutdown -timeout=0 >&! replicshutdown.log
 # Render any REPLINSTFROZEN errors in the source log harmless, but put anything
 # else in a log in case there are other errors.
 
-sed 's/YDB-E-REPLINSTFROZEN/GTM-X-REPLINSTFROZEN/' < ${instname}_SRC.logx > ${instname}_SRC.log
+sed 's/YDB-E-REPLINSTFROZEN/YDB-X-REPLINSTFROZEN/' < ${instname}_SRC.logx > ${instname}_SRC.log
 
 $gtm_tst/com/dbcheck.csh

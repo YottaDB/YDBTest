@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -181,9 +184,9 @@ else
 		#if there are "No errors .." as many as the regions, it must be ok
 		echo "No errors detected by integ."
 		set stat=0
-		$grep -q "GTM-E" tmp.mupip
+		$grep -q "YDB-E" tmp.mupip
 		set estat = $status
-		$grep -q "GTM-W" tmp.mupip
+		$grep -q "YDB-W" tmp.mupip
 		set wstat = $status
 		# mupip integ reports "No errors detected by integ." even though it sees the following errors. Lets report them
 		$grep "Free blocks counter in file header:" tmp.mupip

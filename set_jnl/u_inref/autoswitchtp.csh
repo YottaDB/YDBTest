@@ -71,7 +71,7 @@ $gtm_tst/com/get_dse_df.csh "After_dbcheck"
 ###############################################################
 $gtm_tst/$tst/u_inref/jnlverify.csh >& verification.out
 sleep 1
-$grep -E 'GTM-E|GTM-F'  verification.out
+$grep -E 'YDB-E|YDB-F'  verification.out
 if ($status == 0) then
 	echo "Please look at verification.out for details"
 endif

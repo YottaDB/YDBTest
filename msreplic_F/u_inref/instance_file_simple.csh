@@ -3,6 +3,9 @@
 # Copyright (c) 2006-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -103,7 +106,7 @@ cat << EOF
 	             <seqno=71, name=INSTANCE3, cycle=1>
 EOF
 $MSR STARTSRC INST3 INST2 RP
-$MSR RUN RCV=INST2 SRC=INST3 '$gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=fetch23.glo "*" >& rollback23.tmp; $grep "%GTM-" rollback23.tmp'
+$MSR RUN RCV=INST2 SRC=INST3 '$gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=fetch23.glo "*" >& rollback23.tmp; $grep "%YDB-" rollback23.tmp'
 echo "#  	--> INST2 should rollback to 70 (i.e. fetch23.glo should have seqno's 71-80)."
 $MSR RUN INST2 '$gtm_tst/com/analyze_jnl_extract.csh fetch23.glo 71 80'
 $gtm_tst/com/view_instancefiles.csh -diff	#no.7

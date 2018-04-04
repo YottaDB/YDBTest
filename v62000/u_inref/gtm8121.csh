@@ -319,7 +319,7 @@ GTM_EOF
 	$gtm_tst/com/dbcheck.csh -extract
 	# filter out messages from dbcheck which vary based on test variables (e.g., gtm_test_fake_enospc)
 	foreach file (dse_buffer_flush.out dse_df.log rf_sync_*_src_sc.out src_checkhealth.log)
-		foreach msg ("GTM-[EW]-DBFLCORRP" "YDB-E-DBNOREGION")
+		foreach msg ("YDB-[EW]-DBFLCORRP" "YDB-E-DBNOREGION")
 			$gtm_tst/com/check_error_exist.csh $file "$msg" >>& ${file:as/./_/}_err.outx
 		end
 	end

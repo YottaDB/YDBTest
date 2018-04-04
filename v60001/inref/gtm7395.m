@@ -16,7 +16,7 @@ gtm7395 ;
 	; handle EISDIR trap
 	new $ETRAP
 	set $ETRAP="do errorHandler"
-	write "Producing two GTM-EISDIRs",!
+	write "Producing two YDB-EISDIRs",!
 	do readonlyTest
 	do noreadonlyTest
 	write "Done",!

@@ -4,6 +4,9 @@
 # Copyright (c) 2007-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -96,7 +99,7 @@ $sec_shell "$sec_getenv ; cd $SEC_SIDE/$unidir; $gtm_tst/com/dbcheck_base.csh"
 $gtm_tst/$tst/u_inref/jnlverify.csh >& verification.out
 $sec_shell "$sec_getenv ; cd $SEC_SIDE/$unidir; $gtm_tst/$tst/u_inref/jnlverify.csh >& verification.out"
 sleep 1
-$grep -E 'GTM-E|GTM-F'  verification.out
+$grep -E 'YDB-E|YDB-F'  verification.out
 if ($status == 0) then
 	echo "Please look at verification.out for details"
 endif

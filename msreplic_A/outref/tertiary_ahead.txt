@@ -79,7 +79,7 @@ Instance INSTANCE1 crashed!
 ==Executing MULTISITE_REPLIC 'STOPSRC INST2 INST3 ON'==
 ==Executing MULTISITE_REPLIC 'STARTSRC INST4 INST2 RP'==
 rollback on INST2...
-==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST4 set msr_dont_chk_stat; $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >& rollback.tmp; $grep "%GTM-" rollback.tmp'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST4 set msr_dont_chk_stat; $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >& rollback.tmp; $grep "%YDB-" rollback.tmp'==
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, FETCHRESYNC processing started at... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..

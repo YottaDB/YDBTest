@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2003, 2014 Fidelity Information Services, Inc	#
+# Copyright 2003, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -123,7 +126,7 @@ check_mjf since3.mjf
 ################################################################################
 $MUPIP journal -extract=since4_err.mjf -since=\"$time00_abs\" -before=\"0 $delta2\" -backward mumps.mjl
 #Expected result: Error out because the since time precedes the first time recorded in the journal file
-#Return status: GTM-E
+#Return status: YDB-E
 #some other errors:
 $MUPIP journal -extract=error.mjf -since=\"$time4_abs\" -before=\"0 $delta2\" -backward mumps.mjl
 $MUPIP journal -extract=error.mjf -since=\"$time3_abs\" -before=\"$time2_abs\" -backward mumps.mjl

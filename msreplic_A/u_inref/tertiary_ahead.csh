@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -56,7 +59,7 @@ $MSR STOPRCV INST1 INST2 ON
 $MSR STOPSRC INST2 INST3 ON		# note receiver is still running on INST3
 $MSR STARTSRC INST4 INST2 RP
 echo "rollback on INST2..."
-$MSR RUN RCV=INST2 SRC=INST4 'set msr_dont_chk_stat; $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >& rollback.tmp; $grep "%GTM-" rollback.tmp'
+$MSR RUN RCV=INST2 SRC=INST4 'set msr_dont_chk_stat; $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >& rollback.tmp; $grep "%YDB-" rollback.tmp'
 echo "#  	--> Should rollback 71-80 (i.e. lost1.glo should have 71-80)"
 # analyze lost1.glo
 $MSR RUN INST2 '$gtm_tst/com/analyze_jnl_extract.csh lost1.glo 71 80'
