@@ -77,9 +77,9 @@ GTM>
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/d.mjl created for region DREG with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region DREG is now ON
 mupip journal -recov -back "*" -since=time1
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 -------------------------------------------------------------------------
 mupip journal -recov -forw -verify "*"
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -90,9 +90,9 @@ mupip journal -recov -forw -verify "*"
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/c.dat is now OFF
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/d.dat is now OFF
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 -------------------------------------------------------------------------
 move databases and journals and create new ones
@@ -119,9 +119,9 @@ GTM>
 
 GTM>
 mupip journal -recov -back '*' -since=time2
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 -------------------------------------------------------------------------
 mupip journal -recov -forw -verify "*"
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -132,9 +132,9 @@ mupip journal -recov -forw -verify "*"
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/c.dat is now OFF
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/d.dat is now OFF
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 GTM>

@@ -66,15 +66,15 @@ STEP 9 ==> Get the time of the last PBLK record. This will be our -SINCE and -BE
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Extract successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 ###################################################################
 STEP 10 ==> RECOVER the database with a SINCE time set to the LAST PBLK record so that all the updates by REORG are undone
 ###################################################################
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 
 ###################################################################
 ### At this point, cs_data->fully_upgraded should be FALSE ###

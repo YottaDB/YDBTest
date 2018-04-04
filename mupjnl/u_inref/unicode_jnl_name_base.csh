@@ -85,7 +85,7 @@ $grep '\^[ab]data' check_mjf_extract.out
 echo "Backward recovering"
 echo $MUPIP journal -recover -backward -extract Üäröß.mjl,ＥＦＧ.ＡＢＣＤ -since=gtm_test_since_time
 $MUPIP journal -recover -backward -extract Üäröß.mjl,ＥＦＧ.ＡＢＣＤ -since=\"$gtm_test_since_time\"  >&! journal_recover_back_extract.out
-$grep "GTM-S-JNLSUCCESS" journal_recover_back_extract.out
+$grep "YDB-S-JNLSUCCESS" journal_recover_back_extract.out
 if ($status != 0) then
 	echo "recover -back TEST FAILED"
 	exit 1

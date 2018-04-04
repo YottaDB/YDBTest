@@ -417,9 +417,9 @@ Error YDB-I-TEXT seen in log1.log as expected:
 log1.log:
 ##SOURCE_PATH##/mupip replic -source -start -buffsize=33554432 -passive -log=passive1.log -instsecondary=INSTANCE2
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE2]
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 #  	--> INST1 should rollback to 61 (i.e. verify that fetch12.glo is empty).
 lost transaction file empty
 ==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST1 waitforconnect'==
@@ -2363,19 +2363,19 @@ Diffing instancefile_7.out and instancefile_8.out on INST4
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST4 $MUPIP replic -source -instsecondary=__SRC_INSTNAME__ -shutdown -timeout=0 > SHUT_passivesource.log'==
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST4 INST1'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST4 $gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=fetch14.glo "*" >& rollback14.log'==
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST4 $gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=fetch24.glo "*" >& rollback24.log'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 $grep JNLSUCCESS rollback24.log'==
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST3 SRC=INST4 $gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=fetch34.glo "*" >& rollback34.log'==
 ==Executing MULTISITE_REPLIC 'RUN INST3 $grep JNLSUCCESS rollback34.log'==
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/analyze_jnl_extract.csh fetch14.glo 56 190'==
 05 56 ^GBL("INSTANCE1",56)="56"
 05 57 ^GBL("INSTANCE1",57)="57"

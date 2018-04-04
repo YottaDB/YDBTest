@@ -50,8 +50,8 @@ $MUPIP journal -extract=total.mjf -detail -broken=total.broken -lost=total.lost 
 %YDB-I-FILECREATE, Journal extract file total.mjf created
 %YDB-I-FILECREATE, Broken transactions extract file total.broken created
 %YDB-I-FILECREATE, Lost transactions extract file total.lost created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf total.mjf
 total.mjf
 #Number of records of type (in the order of appearance):
@@ -109,8 +109,8 @@ $grep -v PINI total.mjf_analysis > total.mjf_analysis_noPINI
 
 $MUPIP journal -global="^A*,^C" -extract=globalac.mjf -detail -forward mumps.mjl
 %YDB-I-FILECREATE, Journal extract file globalac.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf globalac.mjf
 globalac.mjf
 #Number of records of type (in the order of appearance):
@@ -139,8 +139,8 @@ $MUPIP journal -global="~(^*A*,^C,^*B*)" -extract=global_m_abc.mjf -detail -forw
 %YDB-I-FILECREATE, Journal extract file global_m_abc.mjf created
 %YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
 %YDB-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf global_m_abc.mjf
 global_m_abc.mjf
 #Number of records of type (in the order of appearance):
@@ -156,8 +156,8 @@ SET	10
 
 $MUPIP journal -global="^*A" -extract=globalstara.mjf -detail -forward mumps.mjl
 %YDB-I-FILECREATE, Journal extract file globalstara.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf globalstara.mjf
 globalstara.mjf
 #Number of records of type (in the order of appearance):
@@ -172,8 +172,8 @@ TCOM	2
 
 $MUPIP journal -extract=globalasub1.mjf -forward -global=\"^A\(1\),^AA\" mumps.mjl
 %YDB-I-FILECREATE, Journal extract file globalasub1.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf globalasub1.mjf
 globalasub1.mjf
 #Number of records of type (in the order of appearance):
@@ -192,8 +192,8 @@ globalasub1.mjf
 
 $MUPIP journal -extract=globalasub1a.mjf -forward -global=\"^A\(1\)\" -detail mumps.mjl
 %YDB-I-FILECREATE, Journal extract file globalasub1a.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf globalasub1a.mjf
 globalasub1a.mjf
 #Number of records of type (in the order of appearance):
@@ -209,8 +209,8 @@ TSET	1
 
 $MUPIP journal -extract=globalasub2.mjf -forward -global=\"^A\(1,\"\"str\"\"\),^AA\" -detail mumps.mjl
 %YDB-I-FILECREATE, Journal extract file globalasub2.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf globalasub2.mjf
 globalasub2.mjf
 #Number of records of type (in the order of appearance):
@@ -228,8 +228,8 @@ KILL	1
 
 $MUPIP journal -extract=globalasub3.mjf -forward -global=\"^A\(1,\*\),^AA\" -detail mumps.mjl
 %YDB-I-FILECREATE, Journal extract file globalasub3.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf globalasub3.mjf
 globalasub3.mjf
 #Number of records of type (in the order of appearance):
@@ -247,8 +247,8 @@ KILL	1
 
 $MUPIP journal -extract=globalasub4.mjf -forward -global=\"^A\(\*,\"\"str\"\"\),^AA\" -detail mumps.mjl
 %YDB-I-FILECREATE, Journal extract file globalasub4.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf globalasub4.mjf
 globalasub4.mjf
 #Number of records of type (in the order of appearance):
@@ -266,8 +266,8 @@ KILL	1
 
 $MUPIP journal -global="^*A,~^AA" -extract=globalstara_maa.mjf -detail -forward mumps.mjl
 %YDB-I-FILECREATE, Journal extract file globalstara_maa.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf globalstara_maa.mjf
 globalstara_maa.mjf
 #Number of records of type (in the order of appearance):
@@ -282,8 +282,8 @@ TCOM	2
 
 $MUPIP journal -global="^D" -extract=globald.mjf -detail -forward mumps.mjl
 %YDB-I-FILECREATE, Journal extract file globald.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf globald.mjf
 globald.mjf
 #Number of records of type (in the order of appearance):
@@ -297,8 +297,8 @@ $MUPIP journal -global="~^B" -extract=global_mb.mjf -detail -broken=global_mb.br
 %YDB-I-FILECREATE, Journal extract file global_mb.mjf created
 %YDB-I-FILECREATE, Broken transactions extract file global_mb.broken created
 %YDB-I-FILECREATE, Lost transactions extract file global_mb.lost created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf global_mb.mjf
 global_mb.mjf
 #Number of records of type (in the order of appearance):
@@ -356,8 +356,8 @@ $MUPIP journal -global="~^D" -extract=global_md.mjf -detail -broken=global_md.br
 %YDB-I-FILECREATE, Journal extract file global_md.mjf created
 %YDB-I-FILECREATE, Broken transactions extract file global_md.broken created
 %YDB-I-FILECREATE, Lost transactions extract file global_md.lost created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf global_md.mjf
 global_md.mjf
 #Number of records of type (in the order of appearance):
@@ -420,8 +420,8 @@ diff total.lost_analysis global_md.lost_analysis
 $MUPIP journal -global="^A*,^C" -extract=bglobal_as_c.mjf -detail -backward -since=\"$time1\" mumps.mjl
 %YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
 %YDB-I-FILECREATE, Journal extract file bglobal_as_c.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf bglobal_as_c.mjf
 bglobal_as_c.mjf
 #Number of records of type (in the order of appearance):
@@ -449,8 +449,8 @@ KILL	2
 $MUPIP journal -global="^D" -extract=bglobal_d.mjf -since=\"$time1\" -detail -backward mumps.mjl
 %YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
 %YDB-I-FILECREATE, Journal extract file bglobal_d.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 echo "check this one"
 check this one
 check_mjf bglobal_d.mjf
@@ -464,8 +464,8 @@ TCOM	2
 
 $MUPIP journal -global="~^B" -extract=bglobal_mb.mjf -detail -backward -since=\"$time1\" mumps.mjl -fences=none
 %YDB-I-FILECREATE, Journal extract file bglobal_mb.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf bglobal_mb.mjf
 bglobal_mb.mjf
 #Number of records of type (in the order of appearance):
@@ -510,8 +510,8 @@ $MUPIP journal -global="~^D" -extract=bglobal_md.mjf -detail -backward -since=\"
 %YDB-I-FILECREATE, Journal extract file bglobal_md.mjf created
 %YDB-I-FILECREATE, Broken transactions extract file bglobal_md.broken created
 %YDB-I-FILECREATE, Lost transactions extract file bglobal_md.lost created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf bglobal_md.mjf
 bglobal_md.mjf
 #Number of records of type (in the order of appearance):
@@ -575,8 +575,8 @@ diff total.lost_analysis bglobal_md.lost_analysis
 $MUPIP journal -user="$USER" -extract=buser.mjf -detail -backward -since=\"$time1\" mumps.mjl
 %YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
 %YDB-I-FILECREATE, Journal extract file buser.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf buser.mjf
 buser.mjf
 #Number of records of type (in the order of appearance):
@@ -608,8 +608,8 @@ $grep -v PINI buser.mjf_analysis > buser.mjf_analysis_noPINI
 
 $MUPIP journal -user="~$USER" -extract=buser2.mjf -detail -backward -since=\"$time1\" mumps.mjl -fences=none
 %YDB-I-FILECREATE, Journal extract file buser2.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf buser2.mjf
 buser2.mjf
 #Number of records of type (in the order of appearance):
@@ -647,8 +647,8 @@ GSET	4
 
 $MUPIP journal -user="~${gtmtest1}" -extract=buser3.mjf -detail -forward mumps.mjl
 %YDB-I-FILECREATE, Journal extract file buser3.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf buser3.mjf
 buser3.mjf
 #Number of records of type (in the order of appearance):
@@ -681,8 +681,8 @@ diff buser.mjf_analysis_noPINI buser3.mjf_analysis_noPINI
 
 $MUPIP journal -user="$USER,~${gtmtest1}" -extract=user4.mjf -detail -forward mumps.mjl
 %YDB-I-FILECREATE, Journal extract file user4.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf user4.mjf
 user4.mjf
 #Number of records of type (in the order of appearance):
@@ -715,8 +715,8 @@ diff buser.mjf_analysis_noPINI user4.mjf_analysis_noPINI
 
 $MUPIP journal -user="~$USER,${gtmtest1}" -extract=user5.mjf -detail -forward mumps.mjl -fences=none
 %YDB-I-FILECREATE, Journal extract file user5.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf user5.mjf
 user5.mjf
 #Number of records of type (in the order of appearance):
@@ -754,16 +754,16 @@ GSET	4
 
 $MUPIP journal -user="~$USER,~${gtmtest1}" -extract=user6.mjf -detail -forward mumps.mjl
 %YDB-I-FILENOTCREATE, Journal extract file user6.mjf not created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 if ( -e user6.mjf ) then
 
 
 
 $MUPIP journal -user="gtmtestx,~${gtmtest1}" -extract=user7.mjf -detail -forward mumps.mjl
 %YDB-I-FILENOTCREATE, Journal extract file user7.mjf not created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 if ( -e user7.mjf ) then
 
 
@@ -772,8 +772,8 @@ if ( -e user7.mjf ) then
 
 $MUPIP journal -user="$USER,~gtmtestx" -extract=user8.mjf -detail -forward mumps.mjl
 %YDB-I-FILECREATE, Journal extract file user8.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf user8.mjf
 user8.mjf
 #Number of records of type (in the order of appearance):
@@ -802,14 +802,14 @@ KILL	1
 
 $MUPIP journal -extract=user_${gtmtest1}.mjf -user="${gtmtest1}" -detail -fences=none -for mumps.mjl
 %YDB-I-FILECREATE, Journal extract file user_gtmtest1.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ( check_mjf user_${gtmtest1}.mjf ) > & /dev/null
 unset verbose
 $MUPIP journal -extract=user_star.mjf -user="$gtmtstusr1" -detail -fences=none -for mumps.mjl
 %YDB-I-FILECREATE, Journal extract file user_star.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf user_star.mjf
 user_star.mjf
 #Number of records of type (in the order of appearance):
@@ -844,8 +844,8 @@ GSET	4
 diff user_${gtmtest1}.mjf_analysis user_star.mjf_analysis
 $MUPIP journal -extract=user_per.mjf -user="$gtmtstusr2" -detail -fences=none -for mumps.mjl
 %YDB-I-FILECREATE, Journal extract file user_per.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf user_per.mjf
 user_per.mjf
 #Number of records of type (in the order of appearance):
@@ -911,8 +911,8 @@ GSET	4
 diff user_${gtmtest1}.mjf_analysis user_per.mjf_analysis
 $MUPIP journal -extract=user_per2.mjf -user="$gtmtstusr3" -detail -fences=none -for mumps.mjl
 %YDB-I-FILECREATE, Journal extract file user_per2.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf user_per2.mjf
 user_per2.mjf
 #Number of records of type (in the order of appearance):
@@ -951,8 +951,8 @@ set verbose
 $MUPIP journal -id="$pid1" -extract=bpid_1.mjf -detail -backward -since=\"$time1\" mumps.mjl
 %YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
 %YDB-I-FILECREATE, Journal extract file bpid_1.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf bpid_1.mjf
 bpid_1.mjf
 #Number of records of type (in the order of appearance):
@@ -981,8 +981,8 @@ $MUPIP journal -id="~$pid1" -extract=bpid_1m.mjf -lost=bpid_1m.lost -broken=bpid
 %YDB-I-FILECREATE, Journal extract file bpid_1m.mjf created
 %YDB-I-FILECREATE, Broken transactions extract file bpid_1m.broken created
 %YDB-I-FILECREATE, Lost transactions extract file bpid_1m.lost created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf bpid_1m.mjf
 bpid_1m.mjf
 #Number of records of type (in the order of appearance):
@@ -1032,8 +1032,8 @@ PFIN	2
 ^AA	1
 $MUPIP journal -id="~$pid1" -extract=bpid2_nofence.mjf -backward -since=\"$time1\" -detail -fences=none mumps.mjl
 %YDB-I-FILECREATE, Journal extract file bpid2_nofence.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf bpid2_nofence.mjf
 bpid2_nofence.mjf
 #Number of records of type (in the order of appearance):
@@ -1073,8 +1073,8 @@ GSET	4
 
 $MUPIP journal -id="~$pid1,$pid2" -extract=pid_m1_2.mjf -forward -detail mumps.mjl -fences=none
 %YDB-I-FILECREATE, Journal extract file pid_m1_2.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf pid_m1_2.mjf
 pid_m1_2.mjf
 #Number of records of type (in the order of appearance):
@@ -1111,8 +1111,8 @@ GSET	4
 
 $MUPIP journal -id="$pid1,$pid2" -extract=bpid_1_2.mjf -backward -since=\"$time1\" -detail mumps.mjl -fences=none
 %YDB-I-FILECREATE, Journal extract file bpid_1_2.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf bpid_1_2.mjf
 bpid_1_2.mjf
 #Number of records of type (in the order of appearance):
@@ -1157,8 +1157,8 @@ GSET	4
 $MUPIP journal -id="~($pid1,$pid2)" -extract=bpid_m12.mjf -backward -since=\"$time1\" -detail mumps.mjl
 %YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
 %YDB-I-FILECREATE, Journal extract file bpid_m12.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf bpid_m12.mjf
 bpid_m12.mjf
 #Number of records of type (in the order of appearance):
@@ -1172,8 +1172,8 @@ SET	1
 ^AA	1
 $MUPIP journal -id="~($pid1,$pid2)" -extract=pid_m12.mjf -forward -detail mumps.mjl
 %YDB-I-FILECREATE, Journal extract file pid_m12.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf pid_m12.mjf
 pid_m12.mjf
 #Number of records of type (in the order of appearance):
@@ -1189,8 +1189,8 @@ SET	1
 
 $MUPIP journal -id="~$pid1,~$pid2" -extract=pid_m1_m2.mjf -forward -detail mumps.mjl
 %YDB-I-FILECREATE, Journal extract file pid_m1_m2.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf pid_m1_m2.mjf
 pid_m1_m2.mjf
 #Number of records of type (in the order of appearance):
@@ -1209,8 +1209,8 @@ diff pid_m12.mjf_analysis pid_m1_m2.mjf_analysis
 $MUPIP journal -id="~$pid1,~$pid2,$pid3" -extract=bpid_m1_m2_3.mjf -backward -since=\"$time1\" -detail mumps.mjl
 %YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
 %YDB-I-FILECREATE, Journal extract file bpid_m1_m2_3.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf bpid_m1_m2_3.mjf
 bpid_m1_m2_3.mjf
 #Number of records of type (in the order of appearance):
@@ -1228,8 +1228,8 @@ PFIN	1
 $MUPIP journal -id="~$pid1,$pid4" -extract=bpid_m1_4.mjf -backward -since=\"$time1\" -detail mumps.mjl
 %YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
 %YDB-I-FILENOTCREATE, Journal extract file bpid_m1_4.mjf not created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 if ( -e bpid_m1_4.mjf ) then
 
 
@@ -1238,8 +1238,8 @@ if ( -e bpid_m1_4.mjf ) then
 $MUPIP journal -id="$pid4,$pid5" -extract=bpid_4_5.mjf -backward -since=\"$time1\" -detail mumps.mjl
 %YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
 %YDB-I-FILENOTCREATE, Journal extract file bpid_4_5.mjf not created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 if ( -e bpid_4_5.mjf ) then
 
 
@@ -1249,8 +1249,8 @@ if ( -e bpid_4_5.mjf ) then
 
 $MUPIP journal -transaction="set" -extract=btypeset.mjf -for -detail mumps.mjl -fences=none
 %YDB-I-FILECREATE, Journal extract file btypeset.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf btypeset.mjf
 btypeset.mjf
 #Number of records of type (in the order of appearance):
@@ -1285,8 +1285,8 @@ GSET	4
 
 $MUPIP journal -transaction=nokill -extract=btypenokill.mjf -for -detail mumps.mjl -fences=none
 %YDB-I-FILECREATE, Journal extract file btypenokill.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf btypenokill.mjf
 btypenokill.mjf
 #Number of records of type (in the order of appearance):
@@ -1324,8 +1324,8 @@ diff btypeset.mjf_analysis btypenokill.mjf_analysis
 
 $MUPIP journal -transaction="kill" -extract=btypekill.mjf -for -detail mumps.mjl -fences=none
 %YDB-I-FILECREATE, Journal extract file btypekill.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf btypekill.mjf
 btypekill.mjf
 #Number of records of type (in the order of appearance):
@@ -1343,8 +1343,8 @@ KILL	2
 
 $MUPIP journal -transaction="noset" -extract=btypenoset.mjf -for -detail mumps.mjl -fences=none
 %YDB-I-FILECREATE, Journal extract file btypenoset.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf btypenoset.mjf
 btypenoset.mjf
 #Number of records of type (in the order of appearance):
@@ -1365,8 +1365,8 @@ diff btypekill1.mjf btypenoset1.mjf
 
 $MUPIP journal -transaction="set" -global="^A*" -user="${gtmtest1}" -extract=select1.mjf -for -detail mumps.mjl -fences=none
 %YDB-I-FILECREATE, Journal extract file select1.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf select1.mjf
 select1.mjf
 #Number of records of type (in the order of appearance):
@@ -1381,8 +1381,8 @@ SET	5
 ^AAA	5
 $MUPIP journal -transaction="kill" -global="^AA" -user="$USER" -extract=select2.mjf -for -detail mumps.mjl -fences=none
 %YDB-I-FILECREATE, Journal extract file select2.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf select2.mjf
 select2.mjf
 #Number of records of type (in the order of appearance):
@@ -1505,8 +1505,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 
 $MUPIP journal -global="^A*,^C" -show=stat -forward mumps.mjl
 
@@ -1548,8 +1548,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 
 
 
@@ -1593,8 +1593,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 
 
 
@@ -1638,8 +1638,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 
 
 
@@ -1683,8 +1683,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 
 
 
@@ -1700,8 +1700,8 @@ PID        NODE         USER     TERM JPV_TIME
 ---------------------------------------------------------
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 
 
 
@@ -1745,8 +1745,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 
 
 
@@ -1762,8 +1762,8 @@ PID        NODE         USER     TERM JPV_TIME
 ---------------------------------------------------------
 ##TEST_AWK[0-9]*[ ]*##TEST_HOST_SHORT##[A-Za-z.]*[ ]* [A-Za-z0-9]*[ ]*20........ ..:..:..[ ]*
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 
 
 
@@ -1787,8 +1787,8 @@ PID        NODE         USER     TERM JPV_TIME
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 
 $MUPIP journal -transaction="set" -show=s -forward mumps.mjl
 
@@ -1830,8 +1830,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 
 
 
@@ -1875,8 +1875,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 
 
 unset verbose
@@ -2056,9 +2056,9 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf b.mjf
 b.mjf
 #Number of records of type (in the order of appearance):
@@ -2110,9 +2110,9 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf b1.mjf
 b1.mjf
 #Number of records of type (in the order of appearance):
@@ -2145,8 +2145,8 @@ b1.broken
 
 $MUPIP journal -extract=multi_mb.mjf -global="~^B" -forward "*"
 %YDB-I-FILECREATE, Journal extract file multi_mb.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 setenv extract_summary_sort 1
 
 check_mjf multi_mb.mjf
@@ -2213,9 +2213,9 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf no_a_mb.mjf
 no_a_mb.mjf
 #Number of records of type (in the order of appearance):
@@ -2383,9 +2383,9 @@ Record type    Count
    ULGTR          0
 
 %YDB-I-FILECREATE, Journal extract file multi_a_ma1.mjf created
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf multi_a_ma1.mjf
 multi_a_ma1.mjf
 #Number of records of type (in the order of appearance):
@@ -2442,9 +2442,9 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 check_mjf multi_a_ma1.mjf
 multi_a_ma1.mjf
 #Number of records of type (in the order of appearance):

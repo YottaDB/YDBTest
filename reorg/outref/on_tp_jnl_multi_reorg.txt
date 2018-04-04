@@ -48,9 +48,9 @@ checkdb PASSED.
 GTM>
 Extract from database...
 ##SOURCE_PATH##/mupip journal -recover -verbose -backward a.mjl,b.mjl,c.mjl,d.mjl,e.mjl,f.mjl,g.mjl,mumps.mjl
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -64,8 +64,8 @@ Extract from database...
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/g.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ##SOURCE_PATH##/mupip journal -recover -verbose -forward a.mjl,b.mjl,c.mjl,d.mjl,e.mjl,f.mjl,g.mjl,mumps.mjl
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

@@ -51,7 +51,7 @@ An abnormal termination will damage the database during the operation !!
 %YDB-I-MUINFOUINT4, Old file start_vbn : 49 [0x00000031]
 %YDB-I-MUINFOUINT4, Old file gds blk_size : 1024 [0x00000400]
 %YDB-I-MUINFOUINT4, Old file total_blks : 101 [0x00000065]
-##TEST_AWK%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M .*
+##TEST_AWK%YDB-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M .*
 databse upgraded to V5 now
 do gde exit in V5. this should automatically convert gld to V5 without issue
 %GDE-I-LOADGD, Loading Global Directory file 
@@ -191,7 +191,7 @@ An abnormal termination will damage the database during the operation !!
 %YDB-I-MUINFOSTR, Journal sync_io : FALSE
 ##TEST_AWK%YDB-I-MUINFOUINT4, Journal yield limit : (8|256) .0x00000[10]0[08].
 %YDB-I-MUINFOUINT8, Region sequence number : 1 [0x0000000000000001]
-##TEST_AWK%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M .*
+##TEST_AWK%YDB-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M .*
 databse upgraded to V5 now
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld

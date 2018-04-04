@@ -56,7 +56,7 @@ An abnormal termination will damage the database during the operation !!
 %YDB-I-TEXT, Mupip downgrade started
 %YDB-I-MUINFOUINT4, V5 supportable record size for current DB configuration  : 1008 [0x000003F0]
 %YDB-I-MUINFOUINT4, V5 supportable max key size for current DB configuration : 255 [0x000000FF]
-%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V5
+%YDB-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V5
 
 # Do the integrity check:
 ##SOURCE_PATH##/mupip
@@ -290,8 +290,8 @@ Region	DEFAULT
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 # Record decrypted by OpenSSL:

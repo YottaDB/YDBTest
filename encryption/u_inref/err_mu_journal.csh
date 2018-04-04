@@ -4,6 +4,9 @@
 # Copyright (c) 2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -51,7 +54,7 @@ unsetenv gtm_passwd
 echo "mupip journal -show=header -noverify -forw mumps.mjl"
 $MUPIP journal -show=header -noverify -forw mumps.mjl >&! jnlhdr.out
 $gtm_tst/com/check_error_exist.csh jnlhdr.out "CRYPTINIT"
-$grep "GTM-S-JNLSUCCESS" jnlhdr.out
+$grep "YDB-S-JNLSUCCESS" jnlhdr.out
 
 echo "---------------------------------------------------------------------------------------------------"
 echo "journal show header with verify while doing GTM updates without gtm_passwd and expect to error out"

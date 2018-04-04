@@ -30,10 +30,10 @@ PID        NODE             USER         TERM JPV_TIME
 -----------------------------------------------------------------
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 $GTM << XXX
 
 GTM>
@@ -72,10 +72,10 @@ PID        NODE             USER         TERM JPV_TIME
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..
 
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/ztp/mumps.dat is now OFF
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 
 $grep -q -w za mumps.broken2
 set st1 = $status
@@ -114,10 +114,10 @@ $grep -v MUJNLSTAT recov_back.out
 %YDB-I-FILECREATE, Journal extract file mumps.mjf1 created
 %YDB-I-FILENOTCREATE, Broken transactions extract file mumps.broken1 not created
 %YDB-I-FILENOTCREATE, Lost transactions extract file mumps.lost1 not created
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 $GTM << XXX
 
 GTM>
@@ -136,10 +136,10 @@ $grep -v MUJNLSTAT recov_forw.out
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/tp/mumps.dat is now OFF
 %YDB-I-FILENOTCREATE, Broken transactions extract file mumps.broken2 not created
 %YDB-I-FILENOTCREATE, Lost transactions extract file mumps.lost2 not created
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 
 unset verbose
 

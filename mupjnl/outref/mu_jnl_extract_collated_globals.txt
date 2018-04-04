@@ -67,8 +67,8 @@ List ^
 GTM>
 ##SOURCE_PATH##/mupip journal -extract -for mumps.mjl -detail
 %YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 GDSJDX08
 0x00010000 [0x00d0] :: PINI   \#TIMESTAMP#\9\#CHKSUM#\#PID1#\#HOST#\#USER1#\\0\\\
 0x000100d0 [0x00b8] :: EPOCH  \#TIMESTAMP#\9\#CHKSUM#\#PID1#\0\1\0\94\101\1
@@ -96,8 +96,8 @@ GDSJDX08
 0x00010900 [0x0028] :: EOF    \#TIMESTAMP#\21\#CHKSUM#\#PID2#\0\0
 ##SOURCE_PATH##/mupip journal -recover -for mumps.mjl
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Recover successful
 
 GTM>
 

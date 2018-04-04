@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2011, 2013 Fidelity Information Services, Inc	#
+# Copyright 2011, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -83,7 +86,7 @@ BEGIN "Recover should be succssful: db->jnl_eovtn <= jfh->eov_tn < db->curr_tn"
         echo "$MUPIP journal -recover -backward -verbose -since=$since -before=$before * >&! RECOVER.log"
         $MUPIP journal -recover -backward -verbose -since=\"$since\" -before=\"$before\" "*" >&! RECOVER.log
 
-	$grep '%GTM-S-JNLSUCCESS, Recover successful' RECOVER.log >&! success.log
+	$grep '%YDB-S-JNLSUCCESS, Recover successful' RECOVER.log >&! success.log
 	if ( ! $status ) then
 		echo "Recovery is successful"
 	endif

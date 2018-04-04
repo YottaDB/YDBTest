@@ -25,7 +25,7 @@ Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_T
 Shutting down Primary Source Server Server in ##TEST_PATH##
 ==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST1 RP'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST2 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >&! rollback_1.out; $grep "Rollback successful" rollback_1.out'==
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST1'==
 ==Executing MULTISITE_REPLIC 'START INST2 INST3 RP'==
 Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
@@ -39,7 +39,7 @@ Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_T
 Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
 ==Executing MULTISITE_REPLIC 'STARTSRC INST4 INST3 RP'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST3 SRC=INST4 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >&! rollback_2.out; $grep "Rollback successful" rollback_2.out'==
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ==Executing MULTISITE_REPLIC 'STARTRCV INST4 INST3'==
 ==Executing MULTISITE_REPLIC 'START INST2 INST4 RP'==
 Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
@@ -53,7 +53,7 @@ Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_T
 Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >&! rollback_3.out; $grep "Rollback successful" rollback_3.out'==
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'START INST1 INST4 RP'==
 Starting Primary Source Server in ##TEST_PATH##
@@ -67,7 +67,7 @@ Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_T
 Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
 ==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST4 RP'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST4 SRC=INST3 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >&! rollback_4.out; $grep "Rollback successful" rollback_4.out'==
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ==Executing MULTISITE_REPLIC 'STARTRCV INST3 INST4'==
 ==Executing MULTISITE_REPLIC 'START INST1 INST3 RP'==
 Starting Primary Source Server in ##TEST_PATH##

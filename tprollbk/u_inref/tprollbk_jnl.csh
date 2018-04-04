@@ -3,6 +3,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -43,7 +46,7 @@ xyz
 
 $gtm_tst/com/dbcheck.csh "-extract"
 $MUPIP journal -recover -back mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst1^tprollbk",!  do chktst1^tprollbk
 h
@@ -53,7 +56,7 @@ source $gtm_tst/com/bakrestore_test_replic.csh
 setenv gtm_test_sprgde_id "chktst1"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh mumps 1 64 256 1024 100 1024
 $MUPIP journal -recover -forwa mumps.mjl >&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst1^tprollbk",!  do chktst1^tprollbk
 h
@@ -88,7 +91,7 @@ xyz
 
 $gtm_tst/com/dbcheck.csh "-extract"
 $MUPIP journal -recover -back mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst3^tprollbk",!  do chktst3^tprollbk
 h
@@ -98,7 +101,7 @@ source $gtm_tst/com/bakrestore_test_replic.csh
 setenv gtm_test_sprgde_id "chktst3"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh mumps 1 64 256 1024 100 1024
 $MUPIP journal -recover -forwa mumps.mjl >&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst3^tprollbk",!  do chktst3^tprollbk
 h
@@ -119,7 +122,7 @@ xyz
 
 $gtm_tst/com/dbcheck.csh "-extract"
 $MUPIP journal -recover -back mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst4^tprollbk",!  do chktst4^tprollbk
 h
@@ -129,7 +132,7 @@ source $gtm_tst/com/bakrestore_test_replic.csh
 setenv gtm_test_sprgde_id "chktst4"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh mumps 1 64 256 1024 100 1024
 $MUPIP journal -recover -forwa mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst4^tprollbk",!  do chktst4^tprollbk
 h
@@ -154,7 +157,7 @@ xyz
 
 $gtm_tst/com/dbcheck.csh "-extract"
 $MUPIP journal -recover -back mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst5^tprollbk",!  do chktst5^tprollbk
 h
@@ -164,7 +167,7 @@ source $gtm_tst/com/bakrestore_test_replic.csh
 setenv gtm_test_sprgde_id "chktst5"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh mumps 1 64 256 1024 100 1024
 $MUPIP journal -recover -forwa mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst5^tprollbk",!  do chktst5^tprollbk
 h
@@ -185,7 +188,7 @@ xyz
 
 $gtm_tst/com/dbcheck.csh "-extract"
 $MUPIP journal -recover -back mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst6^tprollbk",!  do chktst6^tprollbk
 h
@@ -195,7 +198,7 @@ source $gtm_tst/com/bakrestore_test_replic.csh
 setenv gtm_test_sprgde_id "chktst6"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh mumps 1 64 256 1024 100 1024
 $MUPIP journal -recover -forwa mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst6^tprollbk",!  do chktst6^tprollbk
 h
@@ -216,7 +219,7 @@ xyz
 
 $gtm_tst/com/dbcheck.csh "-extract"
 $MUPIP journal -recover -back mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst7^tprollbk",!  do chktst7^tprollbk
 h
@@ -226,7 +229,7 @@ source $gtm_tst/com/bakrestore_test_replic.csh
 setenv gtm_test_sprgde_id "chktst7"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh mumps 1 64 256 1024 100 1024
 $MUPIP journal -recover -forwa mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst7^tprollbk",!  do chktst7^tprollbk
 h
@@ -247,7 +250,7 @@ xyz
 
 $gtm_tst/com/dbcheck.csh "-extract"
 $MUPIP journal -recover -back mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst8^tprollbk",!  do chktst8^tprollbk
 h
@@ -257,7 +260,7 @@ source $gtm_tst/com/bakrestore_test_replic.csh
 setenv gtm_test_sprgde_id "chktst8"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh mumps 1 64 256 1024 100 1024
 $MUPIP journal -recover -forwa mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst8^tprollbk",!  do chktst8^tprollbk
 h
@@ -287,7 +290,7 @@ xyz
 
 $gtm_tst/com/dbcheck.csh "-extract"
 $MUPIP journal -recover -back mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst10^tprollbk",!  do chktst10^tprollbk
 h
@@ -296,7 +299,7 @@ xyz
 setenv gtm_test_sprgde_id "chktst10"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh mumps 1 64 256 1024 100 1024
 $MUPIP journal -recover -forwa mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst10^tprollbk",!  do chktst10^tprollbk
 h
@@ -322,7 +325,7 @@ xyz
 
 $gtm_tst/com/dbcheck.csh "-extract"
 $MUPIP journal -recover -back mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst11^tprollbk",!  do chktst11^tprollbk
 h
@@ -331,7 +334,7 @@ xyz
 setenv gtm_test_sprgde_id "chktst11"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh mumps 1 200 480 512
 $MUPIP journal -recover -forwa mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chktst11^tprollbk",!  do chktst11^tprollbk
 h
@@ -352,7 +355,7 @@ xyz
 
 $gtm_tst/com/dbcheck.csh "-extract"
 $MUPIP journal -recover -back mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chkundo^tprollbk",!  do chkundo^tprollbk
 h
@@ -362,7 +365,7 @@ source $gtm_tst/com/bakrestore_test_replic.csh
 setenv gtm_test_sprgde_id "chkundo1"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh mumps 1 255 480 512
 $MUPIP journal -recover -forwa mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chkundo^tprollbk",!  do chkundo^tprollbk
 h
@@ -393,7 +396,7 @@ xyz
 
 $gtm_tst/com/dbcheck.csh "-extract"
 $MUPIP journal -recover -back mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chkundo^tprollbk",!  do chkundo^tprollbk
 h
@@ -403,7 +406,7 @@ source $gtm_tst/com/bakrestore_test_replic.csh
 setenv gtm_test_sprgde_id "chkundo2"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh mumps 1 255 480 512
 $MUPIP journal -recover -forwa mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chkundo^tprollbk",!  do chkundo^tprollbk
 h
@@ -424,7 +427,7 @@ xyz
 
 $gtm_tst/com/dbcheck.csh "-extract"
 $MUPIP journal -recover -back mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chkstr0^tprollbk",!  do chkstr0^tprollbk
 h
@@ -434,7 +437,7 @@ source $gtm_tst/com/bakrestore_test_replic.csh
 setenv gtm_test_sprgde_id "chkstr0"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh mumps 1 64 256 1024 100 1024
 $MUPIP journal -recover -forwa mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chkstr0^tprollbk",!  do chkstr0^tprollbk
 h
@@ -455,7 +458,7 @@ xyz
 
 $gtm_tst/com/dbcheck.csh "-extract"
 $MUPIP journal -recover -back mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chkstr1^tprollbk",!  do chkstr1^tprollbk
 h
@@ -465,7 +468,7 @@ source $gtm_tst/com/bakrestore_test_replic.csh
 setenv gtm_test_sprgde_id "chkstr1"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh mumps 1 64 256 1024 100 1024
 $MUPIP journal -recover -forwa mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chkstr1^tprollbk",!  do chkstr1^tprollbk
 h
@@ -486,7 +489,7 @@ xyz
 
 $gtm_tst/com/dbcheck.csh "-extract"
 $MUPIP journal -recover -back mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chkstr2^tprollbk",!  do chkstr2^tprollbk
 h
@@ -496,7 +499,7 @@ source $gtm_tst/com/bakrestore_test_replic.csh
 setenv gtm_test_sprgde_id "chkstr2"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh mumps 1 64 256 1024 100 1024
 $MUPIP journal -recover -forwa mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chkstr2^tprollbk",!  do chkstr2^tprollbk
 h
@@ -516,7 +519,7 @@ h
 xyz
 $gtm_tst/com/dbcheck.csh "-extract"
 $MUPIP journal -recover -back mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 cp mumps.dat database.bak
 cp mumps.mjl jnl.bak
 $GTM << xyz
@@ -528,7 +531,7 @@ source $gtm_tst/com/bakrestore_test_replic.csh
 setenv gtm_test_sprgde_id "chkstr3"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh mumps 1 64 256 1024 100 1024
 $MUPIP journal -recover -forwa mumps.mjl	>&! jnl_recover_${gtm_test_sprgde_id}.out
-$grep GTM-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
+$grep YDB-S-JNLSUCCESS jnl_recover_${gtm_test_sprgde_id}.out
 $GTM << xyz
 w "do chkstr3^tprollbk",!  do chkstr3^tprollbk
 h

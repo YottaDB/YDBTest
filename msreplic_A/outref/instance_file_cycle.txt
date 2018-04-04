@@ -54,9 +54,9 @@ Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_T
 Shutting down Primary Source Server Server in ##TEST_PATH##
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST3 $gtm_tst/com/mupip_rollback.csh -resync=1 -losttrans=ignore.glo "*" >&! rollback_fetchresync_1.out ; $grep -E "RLBKJNSEQ|JNLSUCCESS" rollback_fetchresync_1.out'==
 %YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 1 [0x0000000000000001]
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ==========================================================
 The instance file contents on INST1 (instancefile_1.out):
 YDB-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
@@ -220,9 +220,9 @@ Instance INSTANCE2 crashed!
 ==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST1 RP'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST3 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=fetch.glo "*" >&! rollback_fetchresync_1.out ; $grep -E "RLBKJNSEQ|JNLSUCCESS" rollback_fetchresync_1.out'==
 %YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 1 [0x0000000000000001]
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 PASS from lost transaction analysis
 ==Executing MULTISITE_REPLIC 'STARTRCV INST3 INST1'==
 ==Executing MULTISITE_REPLIC 'CRASH INST1'==
@@ -472,9 +472,9 @@ HST #      0 : History record type                       1 [0x00000001]
 %YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 1 [0x0000000000000001]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB
 %YDB-I-FILENOTCREATE, Lost transactions extract file lost1.glo not created
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ==Executing MULTISITE_REPLIC 'START INST1 INST4 RP'==
 Starting Primary Source Server in ##TEST_PATH##
@@ -795,15 +795,15 @@ Instance INSTANCE1 crashed!
 ==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST4'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/mupip_rollback.csh -losttrans=lost2.glo "*" >&! rollback_losttrans.out ; $grep -E "RLBKJNSEQ|JNLSUCCESS" rollback_losttrans.out'==
 %YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 101 [0x0000000000000065]
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST4 RP'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST4 SRC=INST2 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=fetch.glo "*" >&! rollback_fetchresync_2.out ; $grep -E "RLBKJNSEQ|JNLSUCCESS" rollback_fetchresync_2.out'==
 %YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 1 [0x0000000000000001]
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/analyze_jnl_extract.csh fetch.glo 1 110 >&! analyze_jnl_extract_fetch_glo.out ; $grep PASS analyze_jnl_extract_fetch_glo.out'==
 PASS from lost transaction analysis
 ==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST4 waitforconnect'==

@@ -37,7 +37,7 @@ GTM>
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/a.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Extract successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 # stop replication and restart with a fresh set of databases.
@@ -80,9 +80,9 @@ GTM>
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
 mupip journal rollback ...
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 
 # Now start primary and secondary.
 # The source server will start sending from seqno 352 onwards since that is the journal seqno of the secondary.

@@ -3,7 +3,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -52,5 +52,5 @@ source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
 $GDE exit
 $gtm_exe/mumps -run %XCMD "f i=1:1:10 s ^x(i)=i"
 $MUPIP upgrade mumps.dat < yes.txt >&! upgrade.out
-$gtm_tst/com/grepfile.csh "GTM-S-MUPGRDSUCC" upgrade.out 1
+$gtm_tst/com/grepfile.csh "YDB-S-MUPGRDSUCC" upgrade.out 1
 $gtm_tst/com/dbcheck.csh

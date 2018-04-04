@@ -313,9 +313,9 @@ Start MUPIP JOURNAL -ROLLBACK. Should work fine without DBFLCORRP error. Should 
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 ##TEST_AWK%YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is [1-9][0-9]* .0x.*
 %YDB-I-FILENOTCREATE, Lost transactions extract file rollback4.los not created
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 Try to start GT.M. Expect NO errors

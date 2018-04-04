@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -95,7 +98,7 @@ encrupd mumps_dat_key_2 DEFAULT
 echo '# mupip journal recover to $time1 should succeed'
 $MUPIP journal -recover -backward -since=\"$time1\" "*" >&! journal_recover_backward.out
 
-$grep 'GTM-S-JNLSUCCESS' journal_recover_backward.out
+$grep 'YDB-S-JNLSUCCESS' journal_recover_backward.out
 
 $gtm_tst/com/dbcheck.csh
 $gtm_tst/com/backup_dbjnl.csh case1 "*.dat *.mjl* $gtmcrypt_config" mv nozip

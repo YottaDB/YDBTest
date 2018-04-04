@@ -107,9 +107,9 @@ GTM>
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
 ##TEST_AWK%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 ##TEST_AWK%YDB-I-MUINFOUINT4,     Record Offset : [0-9]* .0x[0-9a-fA-F]*.
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mumps -direct
 
@@ -149,8 +149,8 @@ unset echo
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file forward_nv.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mupip journal -extract=forward.mjf -for mumps.mjl -verbose
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -181,8 +181,8 @@ unset echo
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
 %YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
 %YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 unset echo
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=backward.mjf -back mumps.mjl -since=".*" -verbose
@@ -224,8 +224,8 @@ unset echo
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
 %YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
 %YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mupip journal -show=all -back mumps.mjl -verbose
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -325,8 +325,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mupip create
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
@@ -357,9 +357,9 @@ Record type    Count
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
 %YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
 %YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mumps -direct
 
@@ -399,8 +399,8 @@ unset echo
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file forward2_nv.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mupip journal -extract=forward2.mjf -for mumps.mjl -verbose
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -431,8 +431,8 @@ unset echo
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
 %YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
 %YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 unset echo
 ##SOURCE_PATH##/mupip journal -show=all -for mumps.mjl -verbose
@@ -566,8 +566,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 unset echo
 ##SOURCE_PATH##/mupip

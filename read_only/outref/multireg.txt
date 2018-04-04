@@ -2670,8 +2670,8 @@ $MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file mumps.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -2687,8 +2687,8 @@ $MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file mumps.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -2704,8 +2704,8 @@ $MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file mumps.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -2721,8 +2721,8 @@ $MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file mumps.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -2766,8 +2766,8 @@ $MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -2783,8 +2783,8 @@ $MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -2850,9 +2850,9 @@ chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
 $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -2963,14 +2963,14 @@ $gtm_tst/com/dbcheck.csh
 No errors detected by integ.
 
 $grep successful jlsh*.out
-jlsh1.out:%GTM-S-JNLSUCCESS, Show successful
-jlsh1.out:%GTM-S-JNLSUCCESS, Verify successful
-jlsh2.out:%GTM-S-JNLSUCCESS, Show successful
-jlsh2.out:%GTM-S-JNLSUCCESS, Verify successful
-jlsh3.out:%GTM-S-JNLSUCCESS, Show successful
-jlsh3.out:%GTM-S-JNLSUCCESS, Verify successful
-jlsh4.out:%GTM-S-JNLSUCCESS, Show successful
-jlsh4.out:%GTM-S-JNLSUCCESS, Verify successful
+jlsh1.out:%YDB-S-JNLSUCCESS, Show successful
+jlsh1.out:%YDB-S-JNLSUCCESS, Verify successful
+jlsh2.out:%YDB-S-JNLSUCCESS, Show successful
+jlsh2.out:%YDB-S-JNLSUCCESS, Verify successful
+jlsh3.out:%YDB-S-JNLSUCCESS, Show successful
+jlsh3.out:%YDB-S-JNLSUCCESS, Verify successful
+jlsh4.out:%YDB-S-JNLSUCCESS, Show successful
+jlsh4.out:%YDB-S-JNLSUCCESS, Verify successful
 \rm -f jlsh*.out *.dat *.mjl mumps.gld
 
 *** TSTMJLVERI.CSH ***
@@ -3003,7 +3003,7 @@ $MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -3017,7 +3017,7 @@ $MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -3031,7 +3031,7 @@ $MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -3045,7 +3045,7 @@ $MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh

@@ -21,7 +21,7 @@ An abnormal termination will damage the database during the operation !!
 %YDB-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
 %YDB-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
 %YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
-%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgrade to GT.M ##MACHTYPE##
+%YDB-S-MUPGRDSUCC, Database file mumps.dat successfully upgrade to GT.M ##MACHTYPE##
 
 Begin Section 2
 
@@ -236,7 +236,7 @@ bks_to_upgrade value check PASS
 
 INCTN PBLK record check PASS
 
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -391,8 +391,8 @@ bks_to_upgrade value check PASS
 
 INCTN PBLK record check PASS
 
-%GTM-S-JNLSUCCESS, Recover successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -501,7 +501,7 @@ An abnormal termination will damage the database during the operation !!
 %YDB-I-MUINFOUINT4, Old file start_vbn : 49 [0x00000031]
 %YDB-I-MUINFOUINT4, Old file gds blk_size : 1024 [0x00000400]
 %YDB-I-MUINFOUINT4, Old file total_blks : 101 [0x00000065]
-##TEST_AWK%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M.*
+##TEST_AWK%YDB-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M.*
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
@@ -511,7 +511,7 @@ An abnormal termination will damage the database during the operation !!
 %YDB-I-MUINFOUINT4, Old file start_vbn : 49 [0x00000031]
 %YDB-I-MUINFOUINT4, Old file gds blk_size : 1024 [0x00000400]
 %YDB-I-MUINFOUINT4, Old file total_blks : 101 [0x00000065]
-##TEST_AWK%GTM-S-MUPGRDSUCC, Database file a.dat successfully upgraded to GT.M.*
+##TEST_AWK%YDB-S-MUPGRDSUCC, Database file a.dat successfully upgraded to GT.M.*
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
@@ -747,7 +747,7 @@ An abnormal termination will damage the database during the operation !!
 %YDB-I-MUINFOUINT4, Old file start_vbn : 49 [0x00000031]
 %YDB-I-MUINFOUINT4, Old file gds blk_size : 1024 [0x00000400]
 %YDB-I-MUINFOUINT4, Old file total_blks : 101 [0x00000065]
-##TEST_AWK%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M.*
+##TEST_AWK%YDB-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M.*
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK

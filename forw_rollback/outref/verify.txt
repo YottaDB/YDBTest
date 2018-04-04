@@ -28,28 +28,28 @@ No errors detected by integ.
 No errors detected by integ.
  --> Testing VERIFY status for mupip journal -rollback -forward
  --> Testing VERIFY status for mupip journal -rollback -forward -verify
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
  --> Testing VERIFY status for mupip journal -rollback -forward -noverify
  --> Testing VERIFY status for mupip journal -recover -forward
  --> Testing VERIFY status for mupip journal -recover -forward -verify
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
  --> Testing VERIFY status for mupip journal -recover -forward -noverify
  --> Testing VERIFY status for mupip journal -recover -forward -nochecktn
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
  --> Testing VERIFY status for mupip journal -extract -forward
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
  --> Testing VERIFY status for mupip journal -extract -forward -verify
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
  --> Testing VERIFY status for mupip journal -extract -forward -noverify
  --> Testing VERIFY status for mupip journal -show -forward
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
  --> Testing VERIFY status for mupip journal -show -forward -verify
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
  --> Testing VERIFY status for mupip journal -show -forward -noverify
  --> Testing VERIFY status for mupip journal -rollback -backward
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
  --> Testing VERIFY status for mupip journal -rollback -backward -verify
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
  --> Testing VERIFY status for mupip journal -rollback -backward -noverify
  --> Testing VERIFY status for mupip journal -recover -backward
 TEST-E-FAIL : MUPIP journal -recover -backward  failed. See backward_recover.out
@@ -64,7 +64,7 @@ Error MUNOACTION seen in backward_recover.out as expected:
 ----------
 # Retry with non-crashed mjl
  --> Retrying VERIFY status for mupip journal -recover -backward
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
  --> Testing VERIFY status for mupip journal -recover -backward -verify
 TEST-E-FAIL : MUPIP journal -recover -backward -verify failed. See backward_recover-verify.out
 # Previous action would have errored out with MUUSERLBK due to crashed mjl.
@@ -78,7 +78,7 @@ Error MUNOACTION seen in backward_recover-verify.out as expected:
 ----------
 # Retry with non-crashed mjl
  --> Retrying VERIFY status for mupip journal -recover -backward -verify
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
  --> Testing VERIFY status for mupip journal -recover -backward -noverify
 TEST-E-FAIL : MUPIP journal -recover -backward -noverify failed. See backward_recover-noverify.out
 # Previous action would have errored out with MUUSERLBK due to crashed mjl.
@@ -93,14 +93,14 @@ Error MUNOACTION seen in backward_recover-noverify.out as expected:
 # Retry with non-crashed mjl
  --> Retrying VERIFY status for mupip journal -recover -backward -noverify
  --> Testing VERIFY status for mupip journal -extract -backward
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
  --> Testing VERIFY status for mupip journal -extract -backward -verify
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
  --> Testing VERIFY status for mupip journal -extract -backward -noverify
  --> Testing VERIFY status for mupip journal -show -backward
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
  --> Testing VERIFY status for mupip journal -show -backward -verify
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
  --> Testing VERIFY status for mupip journal -show -backward -noverify
 # Test of REPLSTATEOFF error
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..

@@ -42,8 +42,8 @@ No errors detected by integ.
 Testing recover:
 Extract from original database...
 $MUPIP journal -recover -forward -verbose -fence=none *
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -51,9 +51,9 @@ Extact from database after forward recovery...
 diff origdata.glo forwglo.glo
 ##SUSPEND_OUTPUT JNL_NOBEFORE
 ##SOURCE_PATH##/mupip journal -recover -backward -verbose '*' -since=0 0:0:1
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -62,9 +62,9 @@ diff origdata.glo backglo.glo
 Testing rollback:
 Get JNLSEQNO from Secondary (B) at the first backup point...
 Now do rollback:
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##REMOTE_SOURCE_PATH##/mupip
 ##REMOTE_SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

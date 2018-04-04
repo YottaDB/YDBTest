@@ -91,8 +91,8 @@ Trying -CHECKTN with no missing .mjl file. Expect NO error
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
 %YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 7 [0x0000000000000007]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #############################################################################################################
 # Test that MUPIP JOURNAL -ROLLBACK (with -BACKWARD or -FORWARD) does not allow -FENCES=NONE or -FENCES=ALWAYS
@@ -126,8 +126,8 @@ Trying FENCES=PROCESS with FORWARD ROLLBACK. Expect NO error
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
 %YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 7 [0x0000000000000007]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 Trying FENCES=NONE with BACKWARD ROLLBACK. Expect MUPCLIERR error
@@ -166,9 +166,9 @@ Trying FENCES=PROCESS with BACKWARD ROLLBACK. Expect NO error
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
 %YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 7 [0x0000000000000007]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##ALLOW_OUTPUT JNL_NOBEFORE
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 # Do some journal extracts and time calculations in preparation for the next few tests
@@ -193,9 +193,9 @@ Trying FENCES=PROCESS with BACKWARD ROLLBACK. Expect NO error
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
 %YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 2 [0x0000000000000002]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 # Specify -BEFORE time in the middle of current  generation mjl file (mumps.mjl)
 # Expect RLBKJNSEQ of 7
@@ -208,9 +208,9 @@ Trying FENCES=PROCESS with BACKWARD ROLLBACK. Expect NO error
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
 %YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 7 [0x0000000000000007]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #############################################################################################################
 # Test MUPIP JOURNAL -ROLLBACK -BACKWARD -SINCE
@@ -228,9 +228,9 @@ Trying FENCES=PROCESS with BACKWARD ROLLBACK. Expect NO error
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
 %YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 7 [0x0000000000000007]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 # Specify -SINCE time in the middle of current  generation mjl file (mumps.mjl)
 # Expect RLBKJNSEQ of 7
@@ -243,9 +243,9 @@ Trying FENCES=PROCESS with BACKWARD ROLLBACK. Expect NO error
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
 %YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 7 [0x0000000000000007]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #############################################################################################################
 # Test that MUPIP JOURNAL -ROLLBACK -BACKWARD -BEFORE -SINCE works
@@ -263,9 +263,9 @@ Trying FENCES=PROCESS with BACKWARD ROLLBACK. Expect NO error
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
 %YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 2 [0x0000000000000002]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #############################################################################################################
 # Test MUPIP JOURNAL -ROLLBACK BACKWARD -BEFORE -RESYNC
@@ -284,9 +284,9 @@ Trying FENCES=PROCESS with BACKWARD ROLLBACK. Expect NO error
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
 %YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 2 [0x0000000000000002]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #
 # -BEFORE time occurs after the RESYNC seqno specification. RESYNC should prevail.
@@ -302,9 +302,9 @@ Trying FENCES=PROCESS with BACKWARD ROLLBACK. Expect NO error
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
 %YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 5 [0x0000000000000005]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##ALLOW_OUTPUT JNL_NOBEFORE
 #############################################################################################################
@@ -323,8 +323,8 @@ Trying FENCES=PROCESS with BACKWARD ROLLBACK. Expect NO error
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
 %YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 2 [0x0000000000000002]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #
 # -BEFORE time occurs after the RESYNC seqno specification. RESYNC should prevail.
@@ -344,8 +344,8 @@ Trying FENCES=PROCESS with BACKWARD ROLLBACK. Expect NO error
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
 %YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 5 [0x0000000000000005]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #############################################################################################################
 # Test MUPIP JOURNAL -ROLLBACK -FORWARD -BEFORE
@@ -362,8 +362,8 @@ Trying FENCES=PROCESS with BACKWARD ROLLBACK. Expect NO error
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
 %YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 2 [0x0000000000000002]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 # Specify -BEFORE time in the middle of current  generation mjl file (mumps.mjl)
 # Expect RLBKJNSEQ of 7
@@ -377,6 +377,6 @@ Trying FENCES=PROCESS with BACKWARD ROLLBACK. Expect NO error
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
 %YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 7 [0x0000000000000007]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB SUPPLEMENTARY_AP
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..

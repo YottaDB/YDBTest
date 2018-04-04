@@ -41,11 +41,11 @@ $gtm_exe/mumps -run dbfill^gtm7478
 # defined and without its definition for instance freezing and DB missing case.
 $gtm_exe/mumps -run bufferfill^gtm7478
 $gtm_tst/com/grepfile.csh 'YDB-W-DBCOLLREQ' freeze.out1 1
-$gtm_tst/com/grepfile.csh 'GTM-S-JNLSUCCESS' freeze.out1 1
+$gtm_tst/com/grepfile.csh 'YDB-S-JNLSUCCESS' freeze.out1 1
 $gtm_tst/com/grepfile.csh 'YDB-E-SETEXTRENV' freeze.out2 1
 $gtm_tst/com/grepfile.csh 'YDB-E-MUNOACTION' freeze.out2 1
 $gtm_tst/com/grepfile.csh 'YDB-W-DBCOLLREQ' dbmissing.out1 1
-$gtm_tst/com/grepfile.csh 'GTM-S-JNLSUCCESS' dbmissing.out1 1
+$gtm_tst/com/grepfile.csh 'YDB-S-JNLSUCCESS' dbmissing.out1 1
 $gtm_tst/com/grepfile.csh 'YDB-E-SETEXTRENV' dbmissing.out2 1
 $gtm_tst/com/grepfile.csh 'YDB-E-MUNOACTION' dbmissing.out2 1
 $MUPIP replicate -source -shutdown -timeout=0

@@ -23,8 +23,8 @@ EXTRACT
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##SOURCE_PATH##/mupip journal -extract=file-a.mjf -forward *
 %YDB-I-FILECREATE, Journal extract file file-a.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 GDSJEX07
 01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
@@ -45,8 +45,8 @@ unset echo
 %YDB-I-FILENOTCREATE, Journal extract file /bad/path/file-a.mjf not created
 ##SOURCE_PATH##/mupip journal -extract -forward mumps.mjl
 %YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 GDSJEX07
 01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
@@ -55,8 +55,8 @@ GDSJEX07
 if ( 1 != 4 ) then
 ##SOURCE_PATH##/mupip journal -extract=c.mjf -forward c.mjl
 %YDB-I-FILECREATE, Journal extract file c.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 GDSJEX07
 01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
@@ -64,8 +64,8 @@ GDSJEX07
 03\#TIMESTAMP#\1\#PID1#\0\1
 ##SOURCE_PATH##/mupip journal -extract=b.mjf -forward b.mjl,a.mjl
 %YDB-I-FILECREATE, Journal extract file b.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 GDSJEX07
 01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
@@ -76,8 +76,8 @@ GDSJEX07
 03\#TIMESTAMP#\1\#PID1#\0\1
 ##SOURCE_PATH##/mupip journal -extract=a.mjf -forward a.mjl,b.mjl
 %YDB-I-FILECREATE, Journal extract file a.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 GDSJEX07
 01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
@@ -88,8 +88,8 @@ GDSJEX07
 03\#TIMESTAMP#\1\#PID1#\0\1
 ##SOURCE_PATH##/mupip journal -extract=d.mjf -forward a.mjl,b.mjl
 %YDB-I-FILECREATE, Journal extract file d.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 GDSJEX07
 01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
@@ -198,8 +198,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=header -noverify -forward mumps.mjl
 
 -------------------------------------------------------------------------------
@@ -255,7 +255,7 @@ PID        NODE         USER     TERM JPV_TIME
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
 
-%GTM-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Show successful
 ##SOURCE_PATH##/mupip journal -show=processes -forward mumps.mjl
 
 -------------------------------------------------------------------------------
@@ -268,8 +268,8 @@ PID        NODE         USER     TERM JPV_TIME
 ---------------------------------------------------------
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=processes,active -forward mumps.mjl
 
 -------------------------------------------------------------------------------
@@ -282,24 +282,24 @@ PID        NODE         USER     TERM JPV_TIME
 ---------------------------------------------------------
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=ac -forward mumps.mjl
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/mumps.mjl
 -------------------------------------------------------------------------------
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=b -forward mumps.mjl
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/mumps.mjl
 -------------------------------------------------------------------------------
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=s -forward mumps.mjl
 
 -------------------------------------------------------------------------------
@@ -340,8 +340,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show -forward nonexist.mjl
 %YDB-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/nonexist.mjl
 %SYSTEM-E-ENO2, No such file or directory
@@ -370,8 +370,8 @@ Check that only ^acn(11,11),^acn(12,12),^acn(13,13),^acn(14,14) are present
 ##TEST_AWKTime written into time.*
 Updates done, test...
 ##SOURCE_PATH##/mupip journal -extract -back mumps.mjl
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 if ( 1 ) then
 echo ######################################
 ######################################
@@ -381,8 +381,8 @@ echo
 
 set echo
 ##SOURCE_PATH##/mupip journal -extract -back mumps.mjl
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 GDSJEX07
 01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
@@ -390,8 +390,8 @@ GDSJEX07
 03\#TIMESTAMP#\1\#PID1#\0\1
 ##SOURCE_PATH##/mupip journal -extract=fileb.mjf -forward *
 %YDB-I-FILECREATE, Journal extract file fileb.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -extract=/bad/path/fileb.mjf -forward *
 unset echo
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
@@ -401,8 +401,8 @@ unset echo
 %YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
 %YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
 %YDB-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 GDSJEX07
 01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
@@ -415,8 +415,8 @@ if ( 1 != 4 ) then
 %YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/c.mjf created
 %YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/c.broken created
 %YDB-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/c.lost created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 GDSJEX07
 01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
@@ -426,8 +426,8 @@ GDSJEX07
 ##SOURCE_PATH##/mupip journal -extract -forward c.mjl -fences=NONE
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjf is renamed to ##TEST_PATH##/c.mjf_##TIMESTAMP##
 %YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/c.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 GDSJEX07
 01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
@@ -480,8 +480,8 @@ GDSJEX07
 %YDB-I-FILECREATE, Journal extract file ab1.mjf created
 %YDB-I-FILECREATE, Broken transactions extract file ab1.broken created
 %YDB-I-FILECREATE, Lost transactions extract file ab1.lost created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 05 1 0 ^acn(1)="this is SET"
 05 1 0 ^bcn(1)="this is SET"
@@ -490,8 +490,8 @@ unset echo
 %YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
 %YDB-I-FILECREATE, Broken transactions extract file broken.list created
 %YDB-I-FILECREATE, Lost transactions extract file lost.list created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 6 lost.list
 39 broken.list
@@ -600,8 +600,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show -backward mumps.mjl
 
 -------------------------------------------------------------------------------
@@ -691,8 +691,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=header -noverify -forward mumps.mjl
 
 -------------------------------------------------------------------------------
@@ -748,7 +748,7 @@ PID        NODE         USER     TERM JPV_TIME
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
 
-%GTM-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Show successful
 ##SOURCE_PATH##/mupip journal -show=header -noverify -forward *
 
 -------------------------------------------------------------------------------
@@ -966,7 +966,7 @@ PID        NODE         USER     TERM JPV_TIME
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
 
-%GTM-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Show successful
 ##SOURCE_PATH##/mupip journal -show=processes -forward mumps.mjl
 
 -------------------------------------------------------------------------------
@@ -985,8 +985,8 @@ PID        NODE         USER     TERM JPV_TIME
 ---------------------------------------------------------
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=processes,active -forward mumps.mjl
 
 -------------------------------------------------------------------------------
@@ -1005,8 +1005,8 @@ PID        NODE         USER     TERM JPV_TIME
 ---------------------------------------------------------
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=ac -forward mumps.mjl
 
 -------------------------------------------------------------------------------
@@ -1019,8 +1019,8 @@ PID        NODE         USER     TERM JPV_TIME
 ---------------------------------------------------------
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=b -forward mumps.mjl
 
 -------------------------------------------------------------------------------
@@ -1033,8 +1033,8 @@ PID        NODE         USER     TERM JPV_TIME
 ---------------------------------------------------------
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=s -forward mumps.mjl
 
 -------------------------------------------------------------------------------
@@ -1075,8 +1075,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 if ( 1 != 4 ) then
 ##SOURCE_PATH##/mupip journal -show=process -forward *
 env LC_ALL=C gawk -f ##TEST_COM_PATH##/mupjnl_multireg_show_sort.awk show_process1.unsorted
@@ -1128,8 +1128,8 @@ PID        NODE         USER     TERM JPV_TIME
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=s -forward *
 env LC_ALL=C gawk -f ##TEST_COM_PATH##/mupjnl_multireg_show_sort.awk show_s1.unsorted
 
@@ -1288,8 +1288,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 endif
 endif
 if ( ( 1 != 4 ) && ( 1 || 1 ) ) then
@@ -1305,8 +1305,8 @@ set echo
 SHOW output for journal file ##TEST_PATH##/mumps.mjl
 -------------------------------------------------------------------------------
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -show=ac -forward -before=".*" mumps.mjl -fences=NONE
 
 -------------------------------------------------------------------------------
@@ -1319,8 +1319,8 @@ PID        NODE         USER     TERM JPV_TIME
 ---------------------------------------------------------
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -show=process -forward -before=".*" mumps.mjl -fences=NONE
 
 -------------------------------------------------------------------------------
@@ -1339,8 +1339,8 @@ PID        NODE         USER     TERM JPV_TIME
 ---------------------------------------------------------
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -show=all -forward -after=".*" mumps.mjl -fences=NONE
 
 -------------------------------------------------------------------------------
@@ -1436,8 +1436,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -show=s -forward -before=".*" mumps.mjl -after=".*" -fences=NONE
 
 -------------------------------------------------------------------------------
@@ -1478,8 +1478,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -show=all -back -since=".*" mumps.mjl -fences=NONE
 
 -------------------------------------------------------------------------------
@@ -1576,8 +1576,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -show=header -noverify -back -since=".*" mumps.mjl -fences=NONE
 
 -------------------------------------------------------------------------------
@@ -1633,7 +1633,7 @@ PID        NODE         USER     TERM JPV_TIME
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
 
-%GTM-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Show successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -show=processes -back -since=".*" mumps.mjl -fences=NONE
 
 -------------------------------------------------------------------------------
@@ -1647,24 +1647,24 @@ PID        NODE         USER     TERM JPV_TIME
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -show=active_processes -back -since=".*" mumps.mjl -fences=NONE
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/mumps.mjl
 -------------------------------------------------------------------------------
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -show=broken_transaction -back -since=".*" mumps.mjl -fences=NONE
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/mumps.mjl
 -------------------------------------------------------------------------------
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -show=statistics -back -since=".*" mumps.mjl -fences=NONE
 
 -------------------------------------------------------------------------------
@@ -1705,36 +1705,36 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 echo ###########
 ###########
 echo #TEST THE TIME QUALIFIERS WITH EXTRACT
 #TEST THE TIME QUALIFIERS WITH EXTRACT
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=for1.mjf -forward -before=".*" mumps.mjl -fences=NONE
 %YDB-I-FILECREATE, Journal extract file for1.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=for2.mjf -forward -after=".*" mumps.mjl -fences=NONE
 %YDB-I-FILECREATE, Journal extract file for2.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=for3.mjf -forward -before=".*" mumps.mjl -after=".*" -fences=NONE
 %YDB-I-FILECREATE, Journal extract file for3.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=for4.jf -forward -before=".*" mumps.mjl -after=".*" -fences=NONE
 ##TEST_AWK%YDB-E-JNLTMQUAL4, Time qualifier BEFORE_TIME="20../../.. ..:..:.." is less than AFTER_TIME="20../../.. ..:..:.."
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %YDB-I-FILENOTCREATE, Journal extract file for4.jf not created
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=for5.jf -forward mumps.mjl -after=".*" -fences=NONE
 %YDB-I-FILENOTCREATE, Journal extract file for5.jf not created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=sinc1.mjf -back -since=".*" mumps.mjl -fences=NONE
 %YDB-I-FILECREATE, Journal extract file sinc1.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 #################################################
 ####################################################################
@@ -1785,8 +1785,8 @@ EXTRACT
 %YDB-I-FILECREATE, Journal extract file filec.mjf created
 %YDB-I-FILECREATE, Broken transactions extract file filec.broken created
 %YDB-I-FILECREATE, Lost transactions extract file filec.lost created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 05 1 0 ^acn(1)="this is SET"
 05 1 0 ^bcn(1)="this is SET"
@@ -2002,8 +2002,8 @@ unset echo
 %YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.lost is renamed to ##TEST_PATH##/mumps.lost_##TIMESTAMP##
 %YDB-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 GDSJEX07
 01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
@@ -2017,8 +2017,8 @@ if ( 1 != 4 ) then
 %YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/c.broken created
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.lost is renamed to ##TEST_PATH##/c.lost_##TIMESTAMP##
 %YDB-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/c.lost created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 GDSJEX07
 01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
@@ -2027,8 +2027,8 @@ GDSJEX07
 05\#TIMESTAMP#\1\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^cn(1)="this is SET"
 ##SOURCE_PATH##/mupip journal -extract=cfornofence.mjf -forward c.mjl -fences=NONE
 %YDB-I-FILECREATE, Journal extract file cfornofence.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 GDSJEX07
 01\#TIMESTAMP#\1\#PID1#\#HOST#\#USER1#\\0\\\
@@ -2135,8 +2135,8 @@ GDSJEX07
 %YDB-I-FILECREATE, Journal extract file ab2.mjf created
 %YDB-I-FILECREATE, Broken transactions extract file ab2.broken created
 %YDB-I-FILECREATE, Lost transactions extract file ab2.lost created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 05 1 0 ^acn(1)="this is SET"
 05 1 0 ^bcn(1)="this is SET"
@@ -2148,8 +2148,8 @@ endif
 %YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.lost is renamed to ##TEST_PATH##/mumps.lost_##TIMESTAMP##
 %YDB-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 endif
 if ( 1 == 1 ) then
 echo ######################################
@@ -2266,8 +2266,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -show -backward mumps.mjl -since=".*"
 
 -------------------------------------------------------------------------------
@@ -2376,8 +2376,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=header -noverify -forward mumps.mjl
 
 -------------------------------------------------------------------------------
@@ -2433,7 +2433,7 @@ PID        NODE         USER     TERM JPV_TIME
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
 
-%GTM-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Show successful
 ##SOURCE_PATH##/mupip journal -show=header -noverify -forward *
 
 -------------------------------------------------------------------------------
@@ -2651,7 +2651,7 @@ PID        NODE         USER     TERM JPV_TIME
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
 
-%GTM-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Show successful
 ##SOURCE_PATH##/mupip journal -show=processes -forward mumps.mjl
 
 -------------------------------------------------------------------------------
@@ -2677,8 +2677,8 @@ PID        NODE         USER     TERM JPV_TIME
 ---------------------------------------------------------
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=processes,active -forward mumps.mjl
 
 -------------------------------------------------------------------------------
@@ -2704,8 +2704,8 @@ PID        NODE         USER     TERM JPV_TIME
 ---------------------------------------------------------
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=ac -forward mumps.mjl
 
 -------------------------------------------------------------------------------
@@ -2725,8 +2725,8 @@ PID        NODE         USER     TERM JPV_TIME
 ---------------------------------------------------------
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=b -forward mumps.mjl
 
 -------------------------------------------------------------------------------
@@ -2740,8 +2740,8 @@ PID        NODE         USER     TERM JPV_TIME
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=s -forward mumps.mjl
 
 -------------------------------------------------------------------------------
@@ -2782,8 +2782,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 if ( 1 != 4 ) then
 ##SOURCE_PATH##/mupip journal -show=process -forward *
 env LC_ALL=C gawk -f ##TEST_COM_PATH##/mupjnl_multireg_show_sort.awk show_process2.unsorted
@@ -2892,8 +2892,8 @@ PID        NODE         USER     TERM JPV_TIME
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=active -forward *
 env LC_ALL=C gawk -f ##TEST_COM_PATH##/mupjnl_multireg_show_sort.awk show_active2.unsorted
 
@@ -2964,8 +2964,8 @@ PID        NODE         USER     TERM JPV_TIME
 ---------------------------------------------------------
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show=s -forward *
 env LC_ALL=C gawk -f ##TEST_COM_PATH##/mupjnl_multireg_show_sort.awk show_s2.unsorted
 
@@ -3124,8 +3124,8 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 endif
 endif
 unset echo
@@ -3244,8 +3244,8 @@ PID        NODE         USER     TERM JPV_TIME
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

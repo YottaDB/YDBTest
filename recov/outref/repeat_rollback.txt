@@ -54,9 +54,9 @@ checkdb PASSED.
 GTM>
 Extact from database...
 ##SOURCE_PATH##/mupip journal -rollback -backward * -lost=lost_trans{1}.log >>&! rollback{1}.log
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 Extact from database...
 Checking database on ##TEST_PATH##
 
@@ -69,9 +69,9 @@ GTM>
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 ##SOURCE_PATH##/mupip journal -rollback -backward * -lost=lost_trans{2}.log >>&! rollback{2}.log
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 Extact from database...
 Checking database on ##TEST_PATH##
 
@@ -115,9 +115,9 @@ Extact from database...
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/g.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ##SOURCE_PATH##/mupip journal -recover -forward a.mjl,b.mjl,c.mjl,d.mjl,e.mjl,f.mjl,g.mjl,mumps.mjl
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

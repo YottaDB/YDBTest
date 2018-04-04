@@ -240,9 +240,9 @@ Snapshot of instance file on INST2 written into instancefile_##FILTERED##NO.out
 Snapshot of instance file on INST3 written into instancefile_##FILTERED##NO.out
 Snapshot of instance file on INST4 written into instancefile_##FILTERED##NO.out
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST2 $gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=lost1_INST1.glo "*"'==
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
   	--> We expect transactions with seqnos 71-100 to be in lost1_INST1.glo (L1). Also check the first line of the
 	    lost transaction file, the third field should show PRIMARY (newly introduced field that shows
 	    (previous)PRIMARY or (previous)SECONDARY).
@@ -429,9 +429,9 @@ Snapshot of instance file on INST2 written into instancefile_##FILTERED##NO.out
 Snapshot of instance file on INST3 written into instancefile_##FILTERED##NO.out
 Snapshot of instance file on INST4 written into instancefile_##FILTERED##NO.out
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST3 SRC=INST2 $gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=lost1_INST3.glo "*"'==
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 #  	--> Since there are no lost transactions, we do not expect lost1_INST3.glo to have any transactions.
 ==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/analyze_jnl_extract.csh lost1_INST3.glo 0 0'==
 lost transaction file empty
@@ -765,9 +765,9 @@ The Zqgblmod seqno value is as expected, (71 vs 71)
 #-- Switch journals on INST3.
 ==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/jnl_on.csh $test_jnldir'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST3 $gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=lost2_INST2.glo "*" >& rollback2_INST2.tmp; cat rollback2_INST2.tmp'==
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
   	--> We expect transactions with seqnos 101-140 in lost2_INST2.glo (L2). Also check the third field of the"
 	    first line shows PRIMARY type of lost transaction file (as in (previous)PRIMARY).
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/analyze_jnl_extract.csh lost2_INST2.glo 101 140'==
@@ -919,9 +919,9 @@ The Zqgblmod seqno value is as expected, (0 vs 0)
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST3 RCV=INST1 $MUPIP replic -source -needrestart -instsecondary=__RCV_INSTNAME__'==
 #	--> We expect a NEEDS to be restarted first message since the receiver did not connect yet.
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST3 $gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=lost2_INST1.glo "*"'==
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
   	--> We expect transactions with seqnos 101-130 in lost2_INST1.glo (X1). Note we will not need to apply this
 	    since the same lost transactions (and more) are already in L2. Also check that the first line indicates
 	    SECONDARY type of lost transaction file.

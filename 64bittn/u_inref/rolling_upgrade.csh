@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -151,7 +151,7 @@ sleep 5
 cd $SEC_SIDE
 echo "Do rollback in side A"
 $sec_shell '$sec_getenv; cd $SEC_SIDE;$sv_oldver;$gtm_tst/com/mupip_rollback.csh -fetchresync=$portno -losttrans=prev_pri.lost "*" >& rollback_sideA.out'
-$grep -q 'GTM-S-JNLSUCCESS' $SEC_SIDE/rollback_sideA.out
+$grep -q 'YDB-S-JNLSUCCESS' $SEC_SIDE/rollback_sideA.out
 if (0 == $status) then
 	echo  "Rollback succesful"
 else
