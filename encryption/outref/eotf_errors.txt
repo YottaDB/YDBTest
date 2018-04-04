@@ -12,7 +12,7 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
 %YDB-E-CRYPTNOMM, ##TEST_PATH##/mumps.dat is an encrypted database. Cannot support MM access method.
-%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
 Region DEFAULT : MUPIP REORG ENCRYPT started
 Region DEFAULT : MUPIP REORG -ENCRYPT cannot continue as access method is not BG
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
@@ -25,14 +25,14 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 $MUPIP set -encryptable -region "*"
 %YDB-E-MUREENCRYPTV4NOALLOW, Database (re)encryption supported only on fully upgraded V5 databases. ##TEST_PATH##/mumps.dat has V4 format blocks
-%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
 $MUPIP reorg -encrypt=$good_key -region "*"
 Region DEFAULT : MUPIP REORG ENCRYPT started
 %YDB-E-MUREENCRYPTV4NOALLOW, Database (re)encryption supported only on fully upgraded V5 databases. ##TEST_PATH##/mumps.dat has V4 format blocks
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $MUPIP set -encryptioncomplete -region "*"
 %YDB-E-MUREENCRYPTV4NOALLOW, Database (re)encryption supported only on fully upgraded V5 databases. ##TEST_PATH##/mumps.dat has V4 format blocks
-%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
 unset verbose
 # Case 2. Specified key is not found in the configuration file.
 ##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Could not obtain the real path of the key .*
@@ -55,7 +55,7 @@ Region DEFAULT : MUPIP REORG ENCRYPT started
 
 # Case 6. Attempt to mark encryption complete during an ongoing MUPIP REORG ENCRYPT.
 Cannot mark encryption complete on database file ##TEST_PATH##/mumps.dat due to an ongoing MUPIP REORG -ENCRYPT operation
-%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
 
 # Case 7. Attempt mupip extract -format=bin while mupip reorg -encrypt is running
 %YDB-E-ENCRYPTCONFLT, MUPIP REORG -ENCRYPT and MUPIP EXTRACT -FORMAT=BIN cannot run concurrently - skipping MUPIP EXTRACT -FORMAT=BIN on region: DEFAULT, file: ##TEST_PATH##/mumps.dat
@@ -71,7 +71,7 @@ Database file ##TEST_PATH##/mumps.dat now has encryption marked complete
 
 # Case 9. Attempt to make the database unencryptable in the middle of (re)encryption.
 Database file ##TEST_PATH##/mumps.dat is being (re)encrypted and must stay encryptable
-%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
 
 # Case 10. Attempt to resume (re)encryption with a different key.
 Region DEFAULT : MUPIP REORG ENCRYPT started

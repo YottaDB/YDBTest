@@ -1,4 +1,16 @@
 #!/usr/local/bin/tcsh
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 # test for conversion utility routines
 # these are the tests in the manual
 # for utf8 character set
@@ -39,7 +51,7 @@ uni:^z
 
 EOF
 #
-# Filter out the %GTM-W-LITNONGRAPH, warnings
+# Filter out the %YDB-W-LITNONGRAPH, warnings
 $tst_awk -f $gtm_tst/com/filter_litnongraph.awk gblinit.outx
 echo ""
 echo "########################################## "$cnt" ########################################"

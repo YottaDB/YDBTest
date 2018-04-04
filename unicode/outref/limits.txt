@@ -5,19 +5,19 @@
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
+%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ----------
-Error GTM-W-MUNOSTRMBKUP seen in redirected_dbcreate.out as expected:
-%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
+Error YDB-W-MUNOSTRMBKUP seen in redirected_dbcreate.out as expected:
+%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
 ----------
 ----------
 Error TEST-E-DBCREATE seen in redirected_dbcreate.out as expected:
 TEST-E-DBCREATE, errors seen in the log file dbcreate.out:
 ----------
 ----------
-Error GTM-W-MUNOSTRMBKUP seen in dbcreate.out as expected:
-%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
+Error YDB-W-MUNOSTRMBKUP seen in dbcreate.out as expected:
+%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
 ----------
 ###################################################################
 ---- Expected Error on ¨ exceeding 1MB at I = 24577 ----
@@ -25,8 +25,8 @@ Error GTM-W-MUNOSTRMBKUP seen in dbcreate.out as expected:
 ---- Expected Error on 𝔹 exceeding 1MB at I = 8193 ----
 ###################################################################
 ----------
-Error GTM-W-LSINSERTED seen in str2byteerror.out as expected:
-%GTM-W-LSINSERTED, Line 2, source module ##TEST_PATH##/str2byteerror.m exceeds maximum source line length; line seperator inserted, terminating scope of any prior IF, ELSE, or FOR
+Error YDB-W-LSINSERTED seen in str2byteerror.out as expected:
+%YDB-W-LSINSERTED, Line 2, source module ##TEST_PATH##/str2byteerror.m exceeds maximum source line length; line seperator inserted, terminating scope of any prior IF, ELSE, or FOR
 ----------
 ----------
 Error YDB-E-LSEXPECTED seen in str2byteerror.out as expected:
@@ -38,8 +38,8 @@ Error YDB-E-EXPR seen in str2byteerror.out as expected:
 %YDB-E-EXPR, Expression expected but not found
 ----------
 ----------
-Error GTM-W-LSINSERTED seen in str3byteerror.out as expected:
-%GTM-W-LSINSERTED, Line 2, source module ##TEST_PATH##/str3byteerror.m exceeds maximum source line length; line seperator inserted, terminating scope of any prior IF, ELSE, or FOR
+Error YDB-W-LSINSERTED seen in str3byteerror.out as expected:
+%YDB-W-LSINSERTED, Line 2, source module ##TEST_PATH##/str3byteerror.m exceeds maximum source line length; line seperator inserted, terminating scope of any prior IF, ELSE, or FOR
 ----------
 ----------
 Error YDB-E-LSEXPECTED seen in str3byteerror.out as expected:
@@ -51,8 +51,8 @@ Error YDB-E-EXPR seen in str3byteerror.out as expected:
 %YDB-E-EXPR, Expression expected but not found
 ----------
 ----------
-Error GTM-W-LSINSERTED seen in str4byteerror.out as expected:
-%GTM-W-LSINSERTED, Line 2, source module ##TEST_PATH##/str4byteerror.m exceeds maximum source line length; line seperator inserted, terminating scope of any prior IF, ELSE, or FOR
+Error YDB-W-LSINSERTED seen in str4byteerror.out as expected:
+%YDB-W-LSINSERTED, Line 2, source module ##TEST_PATH##/str4byteerror.m exceeds maximum source line length; line seperator inserted, terminating scope of any prior IF, ELSE, or FOR
 ----------
 ----------
 Error YDB-E-LSEXPECTED seen in str4byteerror.out as expected:
@@ -64,8 +64,8 @@ Error YDB-E-EXPR seen in str4byteerror.out as expected:
 %YDB-E-EXPR, Expression expected but not found
 ----------
 ----------
-Error GTM-W-LSINSERTED seen in strunicode1error.out as expected:
-%GTM-W-LSINSERTED, Line 2, source module ##TEST_PATH##/strunicode1error.m exceeds maximum source line length; line seperator inserted, terminating scope of any prior IF, ELSE, or FOR
+Error YDB-W-LSINSERTED seen in strunicode1error.out as expected:
+%YDB-W-LSINSERTED, Line 2, source module ##TEST_PATH##/strunicode1error.m exceeds maximum source line length; line seperator inserted, terminating scope of any prior IF, ELSE, or FOR
 ----------
 ----------
 Error YDB-E-LSEXPECTED seen in strunicode1error.out as expected:

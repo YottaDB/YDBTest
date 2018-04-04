@@ -20,7 +20,7 @@ source $gtm_tst/com/dbcreate.csh . 4
 echo "Start a GT.M client and crash one of the servers (the one on $tst_remote_host_2)"
 $gtm_exe/mumps -run long </dev/null >& long.log
 
-$gtm_tst/com/check_error_exist.csh long.log "YDB-E-GVPUTFAIL" "GTM-W-NOTPRINCIO"
+$gtm_tst/com/check_error_exist.csh long.log "YDB-E-GVPUTFAIL" "YDB-W-NOTPRINCIO"
 echo "Re-start a server (on $tst_remote_host_2)"
 setenv start_time `date +%H_%M_%S`
 setenv portno_gtcm `$rsh $tst_remote_host_2  "source $gtm_tst/com/remote_getenv.csh $SEC_DIR_GTCM_2 ;cd $SEC_DIR_GTCM_2;source $gtm_tst/com/portno_acquire.csh"`

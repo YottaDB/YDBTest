@@ -34,7 +34,7 @@ mupip integ region DEFAULT
 
 
 Integ of region DEFAULT
-%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+%YDB-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
 %YDB-I-DBBTUFIXED, The blocks-to-upgrade file-header field has been changed to the correct value
 
 No errors detected by integ.
@@ -82,7 +82,7 @@ PASS did not get DBBTUWRNG warning
 
 mupip integ file mumps.dat
 
-%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+%YDB-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
 %YDB-I-DBBTUFIXED, The blocks-to-upgrade file-header field has been changed to the correct value
 
 No errors detected by integ.
@@ -125,7 +125,7 @@ Block:Offset Level
                    Path:  4:10, 3:0
 Keys from ^a to the end are suspect.
 %YDB-I-DBTN, Block TN is 0x0000000000000500
-%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+%YDB-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
 
 Total error count from integ:		2.
 
@@ -153,7 +153,7 @@ Block:Offset Level
                    Path:  4:10, 3:0
 Keys from ^a to the end are suspect.
 %YDB-I-DBTN, Block TN is 0x0000000000000500
-%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+%YDB-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
 
 Total error count from integ:		2.
 
@@ -178,7 +178,7 @@ Block:Offset Level
                    Path:  4:10, 3:0
 Keys from ^a to the end are suspect.
 %YDB-I-DBTN, Block TN is 0x0000000000000500
-%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+%YDB-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
 
 Total error count from integ:		2.
 
@@ -203,7 +203,7 @@ Block:Offset Level
                    Path:  4:10, 3:0
 Keys from ^a to the end are suspect.
 %YDB-I-DBTN, Block TN is 0x0000000000000500
-%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+%YDB-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
 
 Total error count from integ:		2.
 
@@ -231,8 +231,8 @@ Region	DEFAULT
 
 
 Integ of region DEFAULT
-%GTM-W-MUKILLIP, Kill in progress indicator is set for file ##TEST_PATH##/mumps.dat - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
-%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+%YDB-W-MUKILLIP, Kill in progress indicator is set for file ##TEST_PATH##/mumps.dat - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
+%YDB-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
 
 Total error count from integ:		2.
 
@@ -244,12 +244,12 @@ Data                1               1           0.585             1
 Free               96              NA              NA            NA
 Total             100               4              NA             2
 %YDB-E-INTEGERRS, Database integrity errors
-PASS did get DBBTUWRNG GTM-W-MUKILLIP messages
+PASS did get DBBTUWRNG YDB-W-MUKILLIP messages
 
 
 Integ of region DEFAULT
-%GTM-W-MUKILLIP, Kill in progress indicator is set for file ##TEST_PATH##/mumps.dat - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
-%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+%YDB-W-MUKILLIP, Kill in progress indicator is set for file ##TEST_PATH##/mumps.dat - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
+%YDB-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
 
 Total error count from integ:		2.
 
@@ -261,9 +261,9 @@ Data                1               1           0.585             1
 Free               96              NA              NA            NA
 Total             100               4              NA             2
 %YDB-E-INTEGERRS, Database integrity errors
-PASS did get DBBTUWRNG GTM-W-MUKILLIP messages
-%GTM-W-MUKILLIP, Kill in progress indicator is set for file mumps.dat - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
-%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+PASS did get DBBTUWRNG YDB-W-MUKILLIP messages
+%YDB-W-MUKILLIP, Kill in progress indicator is set for file mumps.dat - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
+%YDB-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
 
 Total error count from integ:		1.
 
@@ -275,8 +275,8 @@ Data                1               1           0.585             1
 Free               96              NA              NA            NA
 Total             100               4              NA             2
 %YDB-E-INTEGERRS, Database integrity errors
-PASS did get DBBTUWRNG GTM-W-MUKILLIP messages
-%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+PASS did get DBBTUWRNG YDB-W-MUKILLIP messages
+%YDB-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
 %YDB-I-DBBTUFIXED, The blocks-to-upgrade file-header field has been changed to the correct value
 
 No errors detected by integ.
@@ -297,7 +297,7 @@ Region	DEFAULT
 
 
 Integ of region DEFAULT
-%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x0000000020000000 more transactions to go before reaching the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
+%YDB-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x0000000020000000 more transactions to go before reaching the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
 
 Total error count from integ:		1.
 
@@ -317,7 +317,7 @@ Region	DEFAULT
 
 
 Integ of region DEFAULT
-%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000001FFFFFFF more transactions to go before reaching the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
+%YDB-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000001FFFFFFF more transactions to go before reaching the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
 
 Total error count from integ:		1.
 
@@ -446,7 +446,7 @@ Region	DEFAULT
 
 
 Integ of region DEFAULT
-%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x0000000010000000 more transactions to go before reaching the transaction number limit (0xFFFFFFFF83FFFFFF). Renew database with MUPIP INTEG TN_RESET
+%YDB-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x0000000010000000 more transactions to go before reaching the transaction number limit (0xFFFFFFFF83FFFFFF). Renew database with MUPIP INTEG TN_RESET
 
 Total error count from integ:		1.
 
@@ -466,7 +466,7 @@ Region	DEFAULT
 
 
 Integ of region DEFAULT
-%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000000FFFFFFF more transactions to go before reaching the transaction number limit (0xFFFFFFFF83FFFFFF). Renew database with MUPIP INTEG TN_RESET
+%YDB-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000000FFFFFFF more transactions to go before reaching the transaction number limit (0xFFFFFFFF83FFFFFF). Renew database with MUPIP INTEG TN_RESET
 
 Total error count from integ:		1.
 
@@ -486,7 +486,7 @@ Total error count from integ:		1.
 
 
 Integ of region DEFAULT
-%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000000FFFFFFF more transactions to go before reaching the transaction number limit (0xFFFFFFFF83FFFFFF). Renew database with MUPIP INTEG TN_RESET
+%YDB-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000000FFFFFFF more transactions to go before reaching the transaction number limit (0xFFFFFFFF83FFFFFF). Renew database with MUPIP INTEG TN_RESET
 
 Total error count from integ:		1.
 
@@ -499,5 +499,5 @@ Free               96              NA              NA            NA
 Total             100               4              NA             2
 %YDB-E-INTEGERRS, Database integrity errors
 ##TEST_PATH##/mupip.err_##TEST_AWK.._.._.._.._.._..
-%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000000FFFFFFF more transactions to go before reaching the transaction number limit (0xFFFFFFFF83FFFFFF). Renew database with MUPIP INTEG TN_RESET
+%YDB-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000000FFFFFFF more transactions to go before reaching the transaction number limit (0xFFFFFFFF83FFFFFF). Renew database with MUPIP INTEG TN_RESET
 %YDB-E-INTEGERRS, Database integrity errors

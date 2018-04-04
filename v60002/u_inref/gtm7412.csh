@@ -25,6 +25,6 @@ sleep 1		# to ensure getoper has a working window
 set syslog_after1 = `date +"%b %e %H:%M:%S"`
 echo $syslog_before1 $syslog_after1 > time_window1.txt
 $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1.txt "" "YDB-E-GBLOFLOW"
-$gtm_tst/com/grepfile.csh "GTM-W-FREEBLKSLOW" syslog1.txt 1
+$gtm_tst/com/grepfile.csh "YDB-W-FREEBLKSLOW" syslog1.txt 1
 $gtm_tst/com/dbcheck.csh
 echo "# End gtm7412"

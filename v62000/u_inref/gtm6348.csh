@@ -1,6 +1,9 @@
 #################################################################
 #								#
-#	Copyright 2014 Fidelity Information Services, Inc	#
+# Copyright 2014 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -25,6 +28,6 @@ restore
 DSE_EOF
 sleep 1           # Some separation so last msg out gets included
 set syslog_time2 = `date +"%b %e %H:%M:%S"`
-$gtm_tst/com/getoper.csh "$syslog_time1" "$syslog_time2" gtm6348.txt "" "GTM-W-DBDANGER"
-$grep -c "GTM-W-DBDANGER" gtm6348.txt
+$gtm_tst/com/getoper.csh "$syslog_time1" "$syslog_time2" gtm6348.txt "" "YDB-W-DBDANGER"
+$grep -c "YDB-W-DBDANGER" gtm6348.txt
 $gtm_tst/com/dbcheck.csh

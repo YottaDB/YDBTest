@@ -54,7 +54,7 @@ else if (1 == $gtm7294todo) then
 	set expected_errors = "YDB-E-JNLACCESS SYSTEM-E-ENO28 YDB-E-MUNOACTION"
 else if (2 == $gtm7294todo) then
 	set numupdates = 10000
-	set expected_errors = "GTM-W-JNLCRESTATUS SYSTEM-E-ENO13 YDB-E-JNLNOCREATE YDB-E-MUNOACTION"
+	set expected_errors = "YDB-W-JNLCRESTATUS SYSTEM-E-ENO13 YDB-E-JNLNOCREATE YDB-E-MUNOACTION"
 endif
 
 $gtm_tst/com/dbcreate.csh mumps 2

@@ -147,12 +147,12 @@ Compiling $gtm_tst/$tst/inref/t17concat.m...
 		set a=b_$$echo^echo("world")_" says the dog"
 		        ^-----
 		At column 10, line 14, source module ##IN_TEST_PATH##/inref/t17concat.m
-%GTM-W-SIDEEFFECTEVAL, Extrinsic ($$), External call ($&) or $INCREMENT() with potential side effects in actuallist, function arguments, non-Boolean binary operands or subscripts
+%YDB-W-SIDEEFFECTEVAL, Extrinsic ($$), External call ($&) or $INCREMENT() with potential side effects in actuallist, function arguments, non-Boolean binary operands or subscripts
 Compiling $gtm_tst/$tst/inref/t17terse.m...
 		set a=b_$$echo^echo("world")_" says the dog"
 		        ^-----
 		At column 10, line 14, source module ##IN_TEST_PATH##/inref/t17terse.m
-%GTM-W-SIDEEFFECTEVAL, Extrinsic ($$), External call ($&) or $INCREMENT() with potential side effects in actuallist, function arguments, non-Boolean binary operands or subscripts
+%YDB-W-SIDEEFFECTEVAL, Extrinsic ($$), External call ($&) or $INCREMENT() with potential side effects in actuallist, function arguments, non-Boolean binary operands or subscripts
 Comparing number of instruction: PASS
 Running ##SOURCE_PATH##/mumps -run t17concat
 Running ##SOURCE_PATH##/mumps -run t17terse
@@ -181,15 +181,15 @@ Actual: foo
 		set c=$PIECE("Hello "_$ZCH(190)_" world!",$ZCH(191),1,2)
 		                                                       ^-----
 		At column 57, line 18, source module ##IN_TEST_PATH##/inref/crashtests.m
-%GTM-W-BADCHAR, $ZCHAR(190) is not a valid character in the UTF-8 encoding form
+%YDB-W-BADCHAR, $ZCHAR(190) is not a valid character in the UTF-8 encoding form
 		set d=$ZSUBSTR("Hello "_$ZCH(192)_" world!",2,5)
 		                                               ^-----
 		At column 49, line 19, source module ##IN_TEST_PATH##/inref/crashtests.m
-%GTM-W-BADCHAR, $ZCHAR(192) is not a valid character in the UTF-8 encoding form
+%YDB-W-BADCHAR, $ZCHAR(192) is not a valid character in the UTF-8 encoding form
 		set e=$ASCII($ZCH(193))
 		                      ^-----
 		At column 24, line 20, source module ##IN_TEST_PATH##/inref/crashtests.m
-%GTM-W-BADCHAR, $ZCHAR(193) is not a valid character in the UTF-8 encoding form
+%YDB-W-BADCHAR, $ZCHAR(193) is not a valid character in the UTF-8 encoding form
 %YDB-E-BADCHAR, $ZCHAR(191) is not a valid character in the UTF-8 encoding form
 		At M source location label+6^crashtests
 

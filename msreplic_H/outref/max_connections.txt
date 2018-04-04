@@ -144,11 +144,11 @@ GTM>
 0 : backlog number of transactions written to journal pool and yet to be sent by the source server
 ----------
 Error SRCSRVNOTEXIST seen in showbacklog_INST2.out as expected:
-%GTM-W-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE2 is not alive
+%YDB-W-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE2 is not alive
 ----------
 ----------
 Error SRCSRVNOTEXIST seen in showbacklog_INST3.out as expected:
-%GTM-W-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
+%YDB-W-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
 ----------
 ==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replicate -source -showbacklog'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE4]
@@ -293,7 +293,7 @@ Error REPLINSTSECNONE seen in showbacklog_instsecondary_INSTANCE3.out as expecte
 ----------
 ----------
 Error SRCSRVNOTEXIST seen in showbacklog_instsecondary_INSTANCE4.out as expected:
-%GTM-W-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE4 is not alive
+%YDB-W-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE4 is not alive
 ----------
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB
 26a27

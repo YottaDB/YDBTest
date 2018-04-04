@@ -37,24 +37,24 @@ echo $start_time >&! $PRI_DIR/start_time
 
 $gtm_tst/com/SRC.csh "." $portno $start_time >>&! $PRI_DIR/START_${start_time}.out
 
-echo "# Start the receiver without gtm_passwd - Expect GTM-W-CRYPTINIT warning in passive server log and update process log"
+echo "# Start the receiver without gtm_passwd - Expect YDB-W-CRYPTINIT warning in passive server log and update process log"
 $sec_shell  "$sec_getenv; cd $SEC_DIR; unsetenv gtm_passwd; $gtm_tst/com/RCVR.csh ""."" $portno $start_time < /dev/null "">&!"" $SEC_DIR/START_${start_time}.out;"
 
-# Check GTM-W-CRYPTINIT error from updateproc log. This error is expected
-$gtm_tst/com/wait_for_log.csh -log $SEC_SIDE/RCVR_${start_time}.log.updproc -message "GTM-W-CRYPTINIT" -duration 30 -waitcreation
+# Check YDB-W-CRYPTINIT error from updateproc log. This error is expected
+$gtm_tst/com/wait_for_log.csh -log $SEC_SIDE/RCVR_${start_time}.log.updproc -message "YDB-W-CRYPTINIT" -duration 30 -waitcreation
 
 echo "# Update some globals on primary - Expect update process to exit with YDB-E-CRYPTBADCONFIG"
 $gtm_exe/mumps -run %XCMD 'set ^a=10'
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_for_log.csh -log RCVR_${start_time}.log.updproc -message YDB-E-CRYPTBADCONFIG"
 
-echo "# Expect both GTM-W-CRYPTINIT and YDB-E-CRYPTBADCONFIG from update process log"
-$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/check_error_exist.csh RCVR_${start_time}.log.updproc GTM-W-CRYPTINIT YDB-E-CRYPTBADCONFIG"
+echo "# Expect both YDB-W-CRYPTINIT and YDB-E-CRYPTBADCONFIG from update process log"
+$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/check_error_exist.csh RCVR_${start_time}.log.updproc YDB-W-CRYPTINIT YDB-E-CRYPTBADCONFIG"
 
 setenv gtm_passwd $save_gtm_passwd
 echo "# Shut down source and receiver processes"
 setenv gtm_test_norfsync
 $gtm_tst/com/dbcheck.csh
 
-echo "# Expect and filter out GTM-W-CRYPTINIT warning from receiver start log and passive source server log"
-$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/check_error_exist.csh START_${start_time}.out GTM-W-CRYPTINIT"
-$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/check_error_exist.csh passive_${start_time}.log GTM-W-CRYPTINIT"
+echo "# Expect and filter out YDB-W-CRYPTINIT warning from receiver start log and passive source server log"
+$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/check_error_exist.csh START_${start_time}.out YDB-W-CRYPTINIT"
+$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/check_error_exist.csh passive_${start_time}.log YDB-W-CRYPTINIT"

@@ -77,7 +77,7 @@ $echoline
 echo "#- DSE DUMP"
 
 $gtm_tst/com/dbcreate.csh mumps -bl=512
-# comple unicodedbdata and filter out the %GTM-W-LITNONGRAPH, warnings
+# comple unicodedbdata and filter out the %YDB-W-LITNONGRAPH, warnings
 $gtm_exe/mumps -run unicodedbdata >&! unicodedbdata_with_warns.outx
 $tst_awk -f $gtm_tst/com/filter_litnongraph.awk unicodedbdata_with_warns.outx
 

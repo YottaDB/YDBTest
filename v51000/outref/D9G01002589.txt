@@ -376,10 +376,10 @@ mv dse_df.log dse_df2.log
 $MUPIP set -reg DEFAULT -lock=262144
 Database file ##TEST_PATH##/mumps.dat now has lock space 262144 pages
 $MUPIP set -reg DEFAULT -lock=524288
-%GTM-W-MUPIPSET2BIG, 524288 too large, maximum LOCK_SPACE allowed is 262144
+%YDB-W-MUPIPSET2BIG, 524288 too large, maximum LOCK_SPACE allowed is 262144
 %YDB-E-WCERRNOTCHG, Not all specified database files were changed
 $MUPIP set -reg DEFAULT -lock=262145
-%GTM-W-MUPIPSET2BIG, 262145 too large, maximum LOCK_SPACE allowed is 262144
+%YDB-W-MUPIPSET2BIG, 262145 too large, maximum LOCK_SPACE allowed is 262144
 %YDB-E-WCERRNOTCHG, Not all specified database files were changed
 $MUPIP set -reg DEFAULT -lock=262143
 Database file ##TEST_PATH##/mumps.dat now has lock space 262143 pages

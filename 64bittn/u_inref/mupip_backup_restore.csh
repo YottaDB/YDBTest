@@ -4,6 +4,9 @@
 # Copyright (c) 2005-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -40,11 +43,11 @@ sleep $rand_wait
 # At this point the databse has a mix of V4 & V6 format blocks
 echo "# Take a full backup"
 $MUPIP backup -database DEFAULT backup_orig.dat >>&! backup_orig.outx
-$grep -vE "shmpool lock|GTM-W-KILLABANDONED" backup_orig.outx | sed 's/Transactions up to/Transactions up to GTM_TEST_DEBUGINFO/'
+$grep -vE "shmpool lock|YDB-W-KILLABANDONED" backup_orig.outx | sed 's/Transactions up to/Transactions up to GTM_TEST_DEBUGINFO/'
 sleep $rand_wait
 echo "# Take an incremental backup since last full backup"
 $MUPIP backup -incremental -since=DATABASE DEFAULT backup.inc1 >>&! backup_inc1.outx
-$grep -vE "shmpool lock|GTM-W-KILLABANDONED" backup_inc1.outx | sed 's/[0-9]* blocks saved/XXX blocks saved/' | sed 's/Transactions from /Transactions from GTM_TEST_DEBUGINFO /'
+$grep -vE "shmpool lock|YDB-W-KILLABANDONED" backup_inc1.outx | sed 's/[0-9]* blocks saved/XXX blocks saved/' | sed 's/Transactions from /Transactions from GTM_TEST_DEBUGINFO /'
 echo "# Stop the background script that is running"
 $GTM << gtm_eof
 set ^stopbg=1
@@ -60,7 +63,7 @@ echo "# Stopping GT.M processes..."
 $gtm_tst/com/endtp.csh >>&! log_endtp.out
 echo "# Take an incremental backup since last incremental backup"
 $MUPIP backup -incremental -since=INCREMENTAL DEFAULT backup.inc2 >&! backup_inc2.outx
-$grep -vE "shmpool lock|GTM-W-KILLABANDONED" backup_inc2.outx | sed 's/[0-9]* blocks saved/XXX blocks saved/' | sed 's/Transactions from /Transactions from GTM_TEST_DEBUGINFO /'
+$grep -vE "shmpool lock|YDB-W-KILLABANDONED" backup_inc2.outx | sed 's/[0-9]* blocks saved/XXX blocks saved/' | sed 's/Transactions from /Transactions from GTM_TEST_DEBUGINFO /'
 # from now on dbcheck & application check is done repeatedly under various scenarios.
 # instead of repeating the steps below or adding another script to do this a cheeky "for" loop is added.
 @ i = 0

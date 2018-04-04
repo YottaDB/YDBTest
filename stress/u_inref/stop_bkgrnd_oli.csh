@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -38,9 +38,9 @@ endif
 # Since the concurrent updates happening during the online integ include KILLs, it is possible to see MUKILLIP errors
 # (and associated secondary errors like DBMRKBUSY etc.) in the online integ output. Therefore filter them away from
 # the sight of error catching logic in test framework.
-$grep -q GTM-W-MUKILLIP stress_oli.out
+$grep -q YDB-W-MUKILLIP stress_oli.out
 if (! $status) then
-	# Filter out GTM-W-MUKILLP and associated errors. The list of such errors can be found from dbcheck_base_filter.csh
+	# Filter out YDB-W-MUKILLP and associated errors. The list of such errors can be found from dbcheck_base_filter.csh
 	# KILLABANDONED is removed from that list because that requires processes to be killed which is not the case in
 	# the stress test. But we might need to add that eventually since the test does do MUPIP STOP of reorg processes.
 	mv stress_oli.out stress_oli.outx

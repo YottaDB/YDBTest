@@ -719,7 +719,7 @@ Global: d (region DEFAULT)
 ###############################################
 Testing -select qualifier
 $MUPIP size -heuristic="impsample,samples=1000" -select="nonexistent"
-%GTM-W-NOSELECT, None of the selected variables exist -- halting
+%YDB-W-NOSELECT, None of the selected variables exist -- halting
 
 MUPIP SIZE cannot proceed with above errors
 
@@ -810,7 +810,7 @@ $MUPIP size -heuristic="impsample,samples=1000" -select="b" -region="nonexistent
 $MUPIP size -heuristic="impsample,samples=1000" -select="b" -region
 %YDB-E-CLIERR, Option : REGION needs value
 $MUPIP size -heuristic="impsample,samples=1000" -select="a" -region="BREG"
-%GTM-W-NOSELECT, None of the selected variables exist -- halting
+%YDB-W-NOSELECT, None of the selected variables exist -- halting
 
 MUPIP SIZE cannot proceed with above errors
 
@@ -2219,7 +2219,7 @@ Global: d (region DEFAULT)
 ###############################################
 Testing -select qualifier
 $MUPIP size -heuristic="impsample,samples=1000" -select="nonexistent"
-%GTM-W-NOSELECT, None of the selected variables exist -- halting
+%YDB-W-NOSELECT, None of the selected variables exist -- halting
 
 MUPIP SIZE cannot proceed with above errors
 
@@ -2368,7 +2368,7 @@ $MUPIP size -heuristic="impsample,samples=1000" -select="b" -region="nonexistent
 $MUPIP size -heuristic="impsample,samples=1000" -select="b" -region
 %YDB-E-CLIERR, Option : REGION needs value
 $MUPIP size -heuristic="impsample,samples=1000" -select="a" -region="BREG"
-%GTM-W-NOSELECT, None of the selected variables exist -- halting
+%YDB-W-NOSELECT, None of the selected variables exist -- halting
 
 MUPIP SIZE cannot proceed with above errors
 

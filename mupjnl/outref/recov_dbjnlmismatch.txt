@@ -259,7 +259,7 @@ mupip set -journal=disable -reg DEFAULT
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now DISABLED
 mupip journal -recover -back "*"
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-W-NOTALLJNLEN, Journaling disabled/off for one or more regions
+%YDB-W-NOTALLJNLEN, Journaling disabled/off for one or more regions
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
 %GTM-S-JNLSUCCESS, Recover successful
@@ -269,7 +269,7 @@ mupip set -journal=enable,off,before -reg AREG
 %YDB-I-JNLSTATE, Journaling state for region AREG is now OFF
 mupip journal -recover -back "*"
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-W-NOTALLJNLEN, Journaling disabled/off for one or more regions
+%YDB-W-NOTALLJNLEN, Journaling disabled/off for one or more regions
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
 %GTM-S-JNLSUCCESS, Recover successful

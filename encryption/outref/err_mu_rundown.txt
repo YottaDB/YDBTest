@@ -9,13 +9,13 @@ Issue mupip rundown while doing GTM updates without gtm_passwd and expect to err
 unsetenv gtm_passwd
 mupip rundown -region DEFAULT
 %YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
-%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+%YDB-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 -----------------------------------------------------------------------------------------------
 Issue mupip rundown while doing GTM updates with bad gtm_passwd and expect to error out
 -----------------------------------------------------------------------------------------------
 mupip rundown -region DEFAULT
 ##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
-%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+%YDB-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

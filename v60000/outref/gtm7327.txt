@@ -50,11 +50,11 @@ No errors from gtm7327
 ##TEST_AWK.* trans.6.gtm7327 : hang 3
 ##TEST_AWK.* trans.6.gtm7327 : job silly::3
 ##TEST_AWK.* trans.6.gtm7327 : lock .silly:3
-##TEST_AWK.* %GTM-W-LOCKTIMINGINTP, A LOCK at trans.6.gtm7327 within a TP transaction is waiting in a final TP retry, which may lead to a general response gap, %YDB-I-LOCKIS,.*Resource name: .silly -- generated from 0x[0-9A-F]*.
+##TEST_AWK.* %YDB-W-LOCKTIMINGINTP, A LOCK at trans.6.gtm7327 within a TP transaction is waiting in a final TP retry, which may lead to a general response gap, %YDB-I-LOCKIS,.*Resource name: .silly -- generated from 0x[0-9A-F]*.
 ##TEST_AWK.* trans.6.gtm7327 : open "silly.txt":newversion:3
 ##TEST_AWK.* trans.6.gtm7327 : read .,"> ",r:3
 ##TEST_AWK.* trans.6.gtm7327 : zallocate .silly:3
-##TEST_AWK.* %GTM-W-LOCKTIMINGINTP, A LOCK at trans.6.gtm7327 within a TP transaction is waiting in a final TP retry, which may lead to a general response gap, %YDB-I-LOCKIS,.*Resource name: .silly -- generated from 0x[0-9A-F]*.
+##TEST_AWK.* %YDB-W-LOCKTIMINGINTP, A LOCK at trans.6.gtm7327 within a TP transaction is waiting in a final TP retry, which may lead to a general response gap, %YDB-I-LOCKIS,.*Resource name: .silly -- generated from 0x[0-9A-F]*.
 ##TEST_AWK.* trans.6.gtm7327 : hang 0
 ##TEST_AWK.* trans.6.gtm7327 : job silly::0
 ##TEST_AWK.* trans.6.gtm7327 : lock .silly:0

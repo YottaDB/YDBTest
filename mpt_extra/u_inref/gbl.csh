@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -23,7 +26,7 @@ $GTM << EOF >&! gblinit.outx
 do ^gblinit
 EOF
 #
-# Filter out the %GTM-W-LITNONGRAPH, warnings
+# Filter out the %YDB-W-LITNONGRAPH, warnings
 $tst_awk -f $gtm_tst/com/filter_litnongraph.awk gblinit.outx
 set cnt = 1
 echo "#####################"$cnt"###################"

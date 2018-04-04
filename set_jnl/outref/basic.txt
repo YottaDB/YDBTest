@@ -33,8 +33,8 @@ a.dat
 b.dat
 mumps.dat
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
-%GTM-W-MUPIPSET2BIG, 4096 too large, maximum RESERVED_BYTES allowed is 4012
-%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+%YDB-W-MUPIPSET2BIG, 4096 too large, maximum RESERVED_BYTES allowed is 4012
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
 Database file mumps.dat now has 600 reserved bytes
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
@@ -46,7 +46,7 @@ DISABLE option
 ##SOURCE_PATH##/mupip set -journal=disable -file mumps.dat
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
+%YDB-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
   Journal State               [inactive] ON  Journal Before imaging       FALSE
   Journal Allocation                   2048  Journal Extension              100
@@ -90,7 +90,7 @@ NOJOURNAL option
 NOJOURANL qualifier is equivalent to DISABLE option
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
+%YDB-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
   Journal State               [inactive] ON  Journal Before imaging       FALSE
   Journal Allocation                   2048  Journal Extension              100
@@ -134,8 +134,8 @@ ON option does not have any effect if journaling is not enabled
 ##SOURCE_PATH##/mupip set -journal=disable -file mumps.dat
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
 ##SOURCE_PATH##/mupip set -journal=on,nobefore -file mumps.dat
-%GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
-%GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
+%YDB-W-MUNOFINISH, MUPIP unable to finish all requested actions
 Journal state: 
 ##SOURCE_PATH##/mupip set -journal=enable,on,nobefore -file mumps.dat
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
@@ -163,10 +163,10 @@ OFF option does have any effect if journaling is not enabled
 ##SOURCE_PATH##/mupip set -journal=disable -file mumps.dat
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
 ##SOURCE_PATH##/mupip set -journal=off -file mumps.dat
-%GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
-%GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
+%YDB-W-MUNOFINISH, MUPIP unable to finish all requested actions
 ##SOURCE_PATH##/mupip set -journal=enable,off,alignsize=4096,allocation=2048,autoswitchlimit=16448,buffer_size=2308,extension=100,filename=abcd.mjl,sync_io,yield_limit=1000 -file mumps.dat
-%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
+%YDB-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
   Journal State                         OFF  Journal Before imaging       FALSE
   Journal Allocation                   2048  Journal Extension              100

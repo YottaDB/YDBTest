@@ -75,7 +75,7 @@ Blocks reused       : 0
 Blocks extended     : 0 
 $MUPIP reorg -region AREG
 Fill Factor:: Index blocks 100%: Data blocks 100%
-%GTM-W-NOSELECT, None of the selected variables exist -- halting
+%YDB-W-NOSELECT, None of the selected variables exist -- halting
 $MUPIP reorg -region DEFAULT
 Fill Factor:: Index blocks 100%: Data blocks 100%
    
@@ -345,7 +345,7 @@ Blocks reused       : 0
 Blocks extended     : 0 
 $MUPIP reorg -region AREG
 Fill Factor:: Index blocks 100%: Data blocks 100%
-%GTM-W-NOSELECT, None of the selected variables exist -- halting
+%YDB-W-NOSELECT, None of the selected variables exist -- halting
 $MUPIP reorg -region DEFAULT
 Fill Factor:: Index blocks 100%: Data blocks 100%
    
@@ -501,8 +501,8 @@ $MUPIP reorg -exclude="^a" -region AREG
 Fill Factor:: Index blocks 100%: Data blocks 100%
    
 Global: a (region AREG)
-%GTM-W-EXCLUDEREORG, Global: a is present in the EXCLUDE option.  REORG will skip the global.
-%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+%YDB-W-EXCLUDEREORG, Global: a is present in the EXCLUDE option.  REORG will skip the global.
+%YDB-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 $MUPIP reorg -exclude="^b" -region AREG
 Fill Factor:: Index blocks 100%: Data blocks 100%
    
@@ -527,7 +527,7 @@ Blocks reused       : 0
 Blocks extended     : 0 
 $MUPIP reorg -select="^b" -region AREG
 Fill Factor:: Index blocks 100%: Data blocks 100%
-%GTM-W-NOSELECT, None of the selected variables exist -- halting
+%YDB-W-NOSELECT, None of the selected variables exist -- halting
 
 $MUPIP reorg "*"
 MUPIP REORG only accepts a parameter when -REGION is specified.

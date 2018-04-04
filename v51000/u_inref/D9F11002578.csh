@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -37,7 +40,7 @@ $grep -qE 'mumps.dat.*(File is in use|File already open) by another process' glo
 if ($status) then
 	echo "FLUSH-E-ERROR : Expected File is in use or File already open error from the above command, but did not find it in glo_err.outx"
 endif
-$grep -v 'GTM-W-WCWRNNOTCHG' glo_err.outx >& glo_err.out
+$grep -v 'YDB-W-WCWRNNOTCHG' glo_err.outx >& glo_err.out
 $gtm_tst/com/get_dse_df.csh        # creates dse_df.log
 $grep -E "Region          |Flush timer" dse_df.log
 mv dse_df.log dse_df1.log
