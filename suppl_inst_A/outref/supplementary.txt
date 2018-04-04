@@ -53,7 +53,7 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simplegblupd.csh -instance INST2 -count 1 -internal'==
 
 GTM>
-%GTM-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
+%YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
 		At M source location simplegblupd+9^simplegblupd
 
 GTM>
@@ -61,7 +61,7 @@ GTM>
 ==Executing MULTISITE_REPLIC 'RUN INST4 ##TEST_COM_PATH##/simplegblupd.csh -instance INST4 -count 1 -internal'==
 
 GTM>
-%GTM-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
+%YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
 		At M source location simplegblupd+9^simplegblupd
 
 GTM>
@@ -133,12 +133,12 @@ No errors detected by integ.
 ##REMOTE_SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 ##TEST_HOST_SHORT##:##TEST_PATH##/msr_execute_##TEST_AWK[0-9]*.out
-%GTM-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
+%YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
 ##TEST_HOST_SHORT##:##TEST_PATH##/msr_execute_##TEST_AWK[0-9]*.out
-%GTM-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
+%YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
 ##TEST_HOST_SHORT##:##TEST_PATH##/simplegblupd_dbg.log
-%GTM-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
+%YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
 ##TEST_AWK.*/instance2/simplegblupd.log
-%GTM-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
+%YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
 ##TEST_AWK.*/instance4/simplegblupd.log
-%GTM-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
+%YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary

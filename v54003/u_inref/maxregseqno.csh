@@ -4,6 +4,9 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -33,7 +36,7 @@ endif
 
 BEGIN "Create instance file on source and receiver servers"
 # START INST1 INST2 creates mumps.repl and the same mumps.repl should be used for -updateresync below. If mumps.repl is created now at INST1
-# receiver will fail with GTM-E-UPDSYNCINSTFILE hence do not create replication instance file on INST1. Create only in INST2
+# receiver will fail with YDB-E-UPDSYNCINSTFILE hence do not create replication instance file on INST1. Create only in INST2
 $MSR RUN INST2 "set msr_dont_trace ; $MUPIP replic -instance_create -name=INSTANCE2 $supplarg2 $gtm_test_qdbrundown_parms"
 END
 

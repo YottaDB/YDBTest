@@ -35,21 +35,21 @@ Test 1-5: Test for source (active and passive) and receiver starts
 #         --> We expect a REPLLOGOPN error
 ----------
 Error REPLLOGOPN seen in src_log_dir_not_exist1.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test/gen_source1.log: No such file or directory.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file test/gen_source1.log: No such file or directory.  Logging done to /dev/null.
 ----------
 # Attempt 2: to start source server for INST1 with a log, but the directory containing the log file is not writable
 ==Executing MULTISITE_REPLIC 'RUN INST1 mkdir test1; chmod =r test1'==
 #         --> We expect a REPLLOGOPN error
 ----------
 Error REPLLOGOPN seen in src_log_dir_unwritable1.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test1/gen_source1.log: Permission denied.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file test1/gen_source1.log: Permission denied.  Logging done to /dev/null.
 ----------
 # Attempt 3: to start source server for INST1 with a log not accessible
 ==Executing MULTISITE_REPLIC 'RUN INST1 touch mumps.dat.log; chmod og-rwx mumps.dat.log; $gtm_com/IGS mumps.dat.log CHOWN gtmtest1 gtc'==
 #         --> We expect a REPLLOGOPN error
 ----------
 Error REPLLOGOPN seen in src_log_unwritable1.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
 ----------
 ============Test1 ends==========
  
@@ -64,21 +64,21 @@ Error REPLLOGOPN seen in src_log_unwritable1.out as expected:
 #  	--> We expect a REPLLOGOPN error
 ----------
 Error REPLLOGOPN seen in src_log_dir_not_exist3.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test/passive3.log: No such file or directory.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file test/passive3.log: No such file or directory.  Logging done to /dev/null.
 ----------
 # Attempt 2: to start passive server for INST2, but the directory containing the log file is not writable
 ==Executing MULTISITE_REPLIC 'RUN INST2  mkdir test2; chmod =r test2'==
 #         --> We expect a REPLLOGOPN error
 ----------
 Error REPLLOGOPN seen in src_log_dir_unwritable3.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test2/passive3.log: Permission denied.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file test2/passive3.log: Permission denied.  Logging done to /dev/null.
 ----------
 # Attempt 3: to start passive server for INST2 with a log not accessible
 ==Executing MULTISITE_REPLIC 'RUN INST2 touch mumps.dat.log; chmod og-rwx mumps.dat.log; $gtm_com/IGS mumps.dat.log CHOWN gtmtest1 gtc'==
 #         --> We expect a REPLLOGOPN error
 ----------
 Error REPLLOGOPN seen in src_log_unwritable3.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
 ----------
 ============Test3 ends==========
  
@@ -93,19 +93,19 @@ Error REPLLOGOPN seen in src_log_unwritable3.out as expected:
 #         --> We expect a REPLLOGOPN error
 ----------
 Error REPLLOGOPN seen in rcv_log_dir_not_exist5.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test/receiver.log: No such file or directory.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file test/receiver.log: No such file or directory.  Logging done to /dev/null.
 ----------
 # Attempt 2: to start receiver server of INST2, but the directory containing the log file is not writable
 #         --> We expect a REPLLOGOPN error
 ----------
 Error REPLLOGOPN seen in rcv_log_dir_unwritable5.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test2/receiver.log: Permission denied.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file test2/receiver.log: Permission denied.  Logging done to /dev/null.
 ----------
 # Attempt 3: to start receiver server of INST2 with a log not accessible
 #         --> We expect a REPLLOGOPN error
 ----------
 Error REPLLOGOPN seen in rcv_log_unwritable5.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
 ----------
 ============Test5 ends==========
  
@@ -121,19 +121,19 @@ Test 6-10: Test for activating, changing log
 #         --> We expect a REPLLOGOPN error
 ----------
 Error REPLLOGOPN seen in src_activ_log_dir_not_exist6.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test/activate.log: No such file or directory.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file test/activate.log: No such file or directory.  Logging done to /dev/null.
 ----------
 # Attempt 2: Directory containing the log file is not writable
 #         --> We expect a REPLLOGOPN error
 ----------
 Error REPLLOGOPN seen in src_activ_log_dir_unwritable6.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test2/activate.log: Permission denied.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file test2/activate.log: Permission denied.  Logging done to /dev/null.
 ----------
 # Attempt 3: The log is not accessible
 #         --> We expect a REPLLOGOPN error
 ----------
 Error REPLLOGOPN seen in src_activ_log_unwritable6.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
 ----------
 #Now activate passive server of INST2 with writable log file. Expect no failure
 ============Test6 ends==========
@@ -152,19 +152,19 @@ Error REPLLOGOPN seen in src_activ_log_unwritable6.out as expected:
 #         --> We expect a REPLLOGOPN error 
 ----------
 Error REPLLOGOPN seen in src_chang_log_dir_not_exist9.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test/source_new.log: No such file or directory.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file test/source_new.log: No such file or directory.  Logging done to /dev/null.
 ----------
 # Attempt 2: Directory containing the log file is not writable
 #         --> We expect a REPLLOGOPN error
 ----------
 Error REPLLOGOPN seen in src_chang_log_dir_unwritable9.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test1/source_new.log: Permission denied.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file test1/source_new.log: Permission denied.  Logging done to /dev/null.
 ----------
 # Attempt 3: New log not accessible
 #         --> We expect a REPLLOGOPN error
 ----------
 Error REPLLOGOPN seen in src_chang_log_unwritable9.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
 ----------
  
 #Now change the log to a writable log. Expect no failure
@@ -180,19 +180,19 @@ Change log initiated with file source_new.log
 #         --> We expect a REPLLOGOPN error 
 ----------
 Error REPLLOGOPN seen in rcv_chang_log_dir_not_exist10.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test/receiver_new.log: No such file or directory.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file test/receiver_new.log: No such file or directory.  Logging done to /dev/null.
 ----------
 # Attempt 2: Directory containing the log file is not writable
 #         --> We expect a REPLLOGOPN error
 ----------
 Error REPLLOGOPN seen in rcv_chang_log_dir_unwritable10.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file test2/receiver_new.log: Permission denied.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file test2/receiver_new.log: Permission denied.  Logging done to /dev/null.
 ----------
 # Attempt 3: New log not accessible
 #         --> We expect a REPLLOGOPN error
 ----------
 Error REPLLOGOPN seen in rcv_chang_log_unwritable10.out as expected:
-%GTM-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
+%YDB-E-REPLLOGOPN, Replication subsystem could not open log file mumps.dat.log: Permission denied.  Logging done to /dev/null.
 ----------
  
 # Now change the log to a writable log. Expect no failure

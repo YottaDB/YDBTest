@@ -287,11 +287,11 @@ M ^xgbl=^varlongvariablenamesworkfornull
 Next Command Will fail
 M ^agbl("newtree","")=^varlongvariablenamesworkfornull
 Error Number=1
-STAT=nullntp+9^nullntp,%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^agbl("newtree","",-100,100,-100)
+STAT=nullntp+9^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^agbl("newtree","",-100,100,-100)
 Next Command Will fail
 M ^agbl=^varlongvariablenamesworkfornull
 Error Number=2
-STAT=nullntp+11^nullntp,%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^agbl(-100,100,"")
+STAT=nullntp+11^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^agbl(-100,100,"")
 Verify MERGE
 
 Verify ^xgbl("newtree","")
@@ -311,16 +311,16 @@ ZWR ^agbl
 Test more:
 Next Command Will fail
 Error Number=3
-STAT=nullntp+23^nullntp,%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^aaa("I will not be created",1,"",200)
+STAT=nullntp+23^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^aaa("I will not be created",1,"",200)
 Next Command Will fail
 Error Number=4
-STAT=nullntp+25^nullntp,%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^aaa("I will not be created",2,"")
+STAT=nullntp+25^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^aaa("I will not be created",2,"")
 Next Command Will fail
 Error Number=5
-STAT=nullntp+27^nullntp,%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^aaa("I will not be created",3,"",200)
+STAT=nullntp+27^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^aaa("I will not be created",3,"",200)
 Next Command Will fail
 Error Number=6
-STAT=nullntp+29^nullntp,%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^aaa("I will not be created",3,"")
+STAT=nullntp+29^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^aaa("I will not be created",3,"")
 
 
 Test local to global:
@@ -328,7 +328,7 @@ M ^cgbl=varlongvariablenamesworkfornull
 Next Command Will fail
 M ^bgbl=varlongvariablenamesworkfornull
 Error Number=7
-STAT=nullntp+37^nullntp,%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^bgbl(-100,100,"")
+STAT=nullntp+37^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^bgbl(-100,100,"")
 Verify MERGE
 
 Verify ^cgbl
@@ -361,11 +361,11 @@ view "NOLVNULLSUBS"
 Next Command Will fail
 M nllcl1=varlongvariablenamesworkfornull
 Error Number=8
-STAT=nullntp+58^nullntp,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+STAT=nullntp+58^nullntp,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
 Next Command Will fail
 M nllcl2(1,"")=varlongvariablenamesworkfornull
 Error Number=9
-STAT=nullntp+60^nullntp,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+STAT=nullntp+60^nullntp,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
 K (varlongvariablenamesworkfornull,nllcl1,nllcl2)Verify MERGE
 ZSHOW "V"
 nllcl1(-100,100,-100)=1
@@ -733,15 +733,15 @@ Using Non-TP:
 Next Command Will fail
 M avar(1,2,3,4,5,6,7,8,9,10,11,12,13,14)=^varlongvariablenamesworkfornull
 Error Number=10
-STAT=lab4+8^nulllc,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+STAT=lab4+8^nulllc,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
 Next Command Will fail
 M bbvar=^varlongvariablenamesworkfornull
 Error Number=11
-STAT=lab4+11^nulllc,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+STAT=lab4+11^nulllc,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
 Next Command Will fail
 M ccvar(1,"")=^varlongvariablenamesworkfornull
 Error Number=12
-STAT=lab4+14^nulllc,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+STAT=lab4+14^nulllc,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
 Final ZWR
 avar(1,2,3,4,5,6,7,8,9,10,11,12,13,14,-100,100,-100)=1
 avar(1,2,3,4,5,6,7,8,9,10,11,12,13,14,-100,100,-3.14285714285714285)=2

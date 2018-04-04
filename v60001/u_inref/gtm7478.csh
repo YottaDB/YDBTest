@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -39,12 +42,12 @@ $gtm_exe/mumps -run dbfill^gtm7478
 $gtm_exe/mumps -run bufferfill^gtm7478
 $gtm_tst/com/grepfile.csh 'GTM-W-DBCOLLREQ' freeze.out1 1
 $gtm_tst/com/grepfile.csh 'GTM-S-JNLSUCCESS' freeze.out1 1
-$gtm_tst/com/grepfile.csh 'GTM-E-SETEXTRENV' freeze.out2 1
-$gtm_tst/com/grepfile.csh 'GTM-E-MUNOACTION' freeze.out2 1
+$gtm_tst/com/grepfile.csh 'YDB-E-SETEXTRENV' freeze.out2 1
+$gtm_tst/com/grepfile.csh 'YDB-E-MUNOACTION' freeze.out2 1
 $gtm_tst/com/grepfile.csh 'GTM-W-DBCOLLREQ' dbmissing.out1 1
 $gtm_tst/com/grepfile.csh 'GTM-S-JNLSUCCESS' dbmissing.out1 1
-$gtm_tst/com/grepfile.csh 'GTM-E-SETEXTRENV' dbmissing.out2 1
-$gtm_tst/com/grepfile.csh 'GTM-E-MUNOACTION' dbmissing.out2 1
+$gtm_tst/com/grepfile.csh 'YDB-E-SETEXTRENV' dbmissing.out2 1
+$gtm_tst/com/grepfile.csh 'YDB-E-MUNOACTION' dbmissing.out2 1
 $MUPIP replicate -source -shutdown -timeout=0
 mv SRC_${start_time}.log  SRC_${start_time}.logx
 $grep -v REPLINSTFROZEN SRC_${start_time}.logx  >&! SRC_${start_time}.log

@@ -4,6 +4,9 @@
 # Copyright (c) 2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -24,7 +27,7 @@
 # test/64bittn/u_inref/upgrade_and_start_repl.csh. If this script is run
 # outside of the usual FIS environment, both versions under test will see the
 # same journal version, UNSUPPORTED. As such the test will skip checking for
-# GTM-E-JNLBADLABEL.
+# YDB-E-JNLBADLABEL.
 #
 # However, if the external testing environment has attempted to set up GT.M
 # development style builds, there is no telling how this test will operate.

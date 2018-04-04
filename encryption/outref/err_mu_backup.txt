@@ -65,11 +65,11 @@ unsetenv gtm_passwd
 #####################################################
 mupip backup -bytestream -online DEFAULT ./back5
 %GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
-%GTM-E-CRYPTOPFAILED, Encrypt/Decrypt operation failed for file ##TEST_PATH##/mumps.dat. Please look at prior messages related to encryption for more details
+%YDB-E-CRYPTOPFAILED, Encrypt/Decrypt operation failed for file ##TEST_PATH##/mumps.dat. Please look at prior messages related to encryption for more details
 #####################################################
 mupip backup -comprehensive DEFAULT ./back6
 %GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
-%GTM-E-CRYPTOPFAILED, Encrypt/Decrypt operation failed for file ##TEST_PATH##/mumps.dat. Please look at prior messages related to encryption for more details
+%YDB-E-CRYPTOPFAILED, Encrypt/Decrypt operation failed for file ##TEST_PATH##/mumps.dat. Please look at prior messages related to encryption for more details
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

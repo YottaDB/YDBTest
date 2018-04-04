@@ -1,11 +1,22 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 DZSPLIT1 ; ; ; test from getfail IIII
 	;
 ;requires a database with a block size of 2048
-; Keep adding record to the beginning of a pre-existing 
+; Keep adding record to the beginning of a pre-existing
 ; zero-level directory block until it splits.
 ;
 ; Produced the following error message prior to V3.1-6a:
-;  %GTM-E-GVGETFAIL, Global variable retrieval failed. Failure code: IIII,
+;  %YDB-E-GVGETFAIL, Global variable retrieval failed. Failure code: IIII,
 ;  -GTM-I-GVIS, Global variable : ^A0000002
 ;  At M source location +22^DZSPLIT1
 ;

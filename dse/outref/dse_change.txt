@@ -41,10 +41,10 @@ DSE> DSE> DSE> --------------------- Test 3 ---------------------
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-DSE> DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
-DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
-DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
-DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+DSE> DSE> %YDB-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+DSE> %YDB-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+DSE> %YDB-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+DSE> %YDB-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
 DSE> DSE> --------------------- Test 4 ---------------------
 
 File  	##TEST_PATH##/a.dat
@@ -180,7 +180,7 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> CRIT is currently unowned on all regions
-DSE> DSE> %GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
+DSE> DSE> %YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
 %GTM-I-GVIS, 		Global variable: ^aglobal("abcdefghijklmnop")
 DSE> DSE> DSE> CRIT is currently unowned on all regions
 DSE> --------------------- Test 19 ---------------------
@@ -192,7 +192,7 @@ DSE> CRIT is currently unowned on all regions
 DSE> 
 Seized write critical section.
 
-DSE> DSE> %GTM-E-REC2BIG, Record size (23) is greater than maximum (22) for region: AREG
+DSE> DSE> %YDB-E-REC2BIG, Record size (23) is greater than maximum (22) for region: AREG
 %GTM-I-GVIS, 		Global variable: aglobal
 ##TEST_AWKDSE. Database ##TEST_PATH##/a.dat . CRIT Owned by pid .*
 DSE> --------------------- Test 20 ---------------------
@@ -209,8 +209,8 @@ DSE> DSE> DSE> --------------------- Test 21 ---------------------
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-DSE> DSE> DSE> %GTM-E-BLKINVALID, 00000027 is not a valid block as database file ##TEST_PATH##/a.dat has 00000010 total blocks
-DSE> %GTM-E-BLKINVALID, 00000011 is not a valid block as database file ##TEST_PATH##/a.dat has 00000010 total blocks
+DSE> DSE> DSE> %YDB-E-BLKINVALID, 00000027 is not a valid block as database file ##TEST_PATH##/a.dat has 00000010 total blocks
+DSE> %YDB-E-BLKINVALID, 00000011 is not a valid block as database file ##TEST_PATH##/a.dat has 00000010 total blocks
 DSE> DSE> DSE> 
 Rec:E  Blk 27  Off 247  Size 2B  Cmpc A  Key ^aglobal(1234,44424)
 

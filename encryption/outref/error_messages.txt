@@ -9,9 +9,9 @@ mumps.dat
 ###################################
 Test case 1: gtmcrypt_config unset.
 ###################################
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Environment variable gtmcrypt_config not set
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Environment variable gtmcrypt_config not set
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. Environment variable gtmcrypt_config not set
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Environment variable gtmcrypt_config not set
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Environment variable gtmcrypt_config not set
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. Environment variable gtmcrypt_config not set
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 
@@ -19,9 +19,9 @@ Test case 1: gtmcrypt_config unset.
 Test case 2: gtmcrypt_config set to null string.
 ################################################
 rm: No match.
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Environment variable gtmcrypt_config set to empty string
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Environment variable gtmcrypt_config set to empty string
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. Environment variable gtmcrypt_config set to empty string
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Environment variable gtmcrypt_config set to empty string
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Environment variable gtmcrypt_config set to empty string
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. Environment variable gtmcrypt_config set to empty string
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 
@@ -29,9 +29,9 @@ rm: No match.
 Test case 3: gtmcrypt_config pointing to non-existent file.
 ###########################################################
 rm: No match.
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot stat configuration file: ./nonexistent.cfg. No such file or directory
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Cannot stat configuration file: ./nonexistent.cfg. No such file or directory
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. Cannot stat configuration file: ./nonexistent.cfg. No such file or directory
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Cannot stat configuration file: ./nonexistent.cfg. No such file or directory
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Cannot stat configuration file: ./nonexistent.cfg. No such file or directory
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. Cannot stat configuration file: ./nonexistent.cfg. No such file or directory
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 
@@ -39,9 +39,9 @@ rm: No match.
 Test case 4: gtm_passwd unset.
 ##############################
 rm: No match.
-%GTM-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file a.dat. Environment variable gtm_passwd not set
-%GTM-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file b.dat. Environment variable gtm_passwd not set
-%GTM-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file mumps.dat. Environment variable gtm_passwd not set
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file a.dat. Environment variable gtm_passwd not set
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file b.dat. Environment variable gtm_passwd not set
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file mumps.dat. Environment variable gtm_passwd not set
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 
@@ -49,9 +49,9 @@ rm: No match.
 Test case 5: gtm_passwd set to empty string.
 ############################################
 rm: No match.
-%GTM-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file a.dat. Environment variable gtm_passwd set to empty string. Cannot prompt for password in this mode of operation.
-%GTM-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file b.dat. Environment variable gtm_passwd set to empty string. Cannot prompt for password in this mode of operation.
-%GTM-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file mumps.dat. Environment variable gtm_passwd set to empty string. Cannot prompt for password in this mode of operation.
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file a.dat. Environment variable gtm_passwd set to empty string. Cannot prompt for password in this mode of operation.
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file b.dat. Environment variable gtm_passwd set to empty string. Cannot prompt for password in this mode of operation.
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file mumps.dat. Environment variable gtm_passwd set to empty string. Cannot prompt for password in this mode of operation.
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 
@@ -59,9 +59,9 @@ rm: No match.
 Test case 6: gtm_passwd set to bad passphrase.
 ##############################################
 rm: No match.
-##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. .*
-##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. .*
-##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. .*
+##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. .*
+##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. .*
+##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. .*
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 
@@ -69,7 +69,7 @@ rm: No match.
 Test case 7: Encryption key file not found.
 ###########################################
 rm: No match.
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. In config file ./gtmcrypt.cfg, could not obtain the real path of 'database.keys' entry #3's key. No such file or directory
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. In config file ./gtmcrypt.cfg, could not obtain the real path of 'database.keys' entry #3's key. No such file or directory
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 
@@ -77,7 +77,7 @@ rm: No match.
 Test case 8: Configuration file doesn't have an entry for the DEFAULT region.
 ############################################################################
 rm: No match.
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. Database file ##TEST_PATH##/mumps.dat missing in configuration file or does not exist
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. Database file ##TEST_PATH##/mumps.dat missing in configuration file or does not exist
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 
@@ -85,7 +85,7 @@ rm: No match.
 Test case 9: Corrupted encryption key file.
 ###########################################
 rm: No match.
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Error while accessing key file ##TEST_PATH##/a_dat_key: No data
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Error while accessing key file ##TEST_PATH##/a_dat_key: No data
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 rm: No match.

@@ -32,13 +32,13 @@ Testing mupip journal -extract=-NOSUCHFILE writes to a file named -NOSUCHFILE...
 %GTM-S-JNLSUCCESS, Verify successful
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Testing mupip journal -extract=--forward mumps.mjl gives an error...
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FORWARD BACKWARD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FORWARD BACKWARD
 Testing mupip journal -extract=-forward mumps.mjl gives an error...
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FORWARD BACKWARD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FORWARD BACKWARD
 Testing mupip journal -extract= mumps.mjl gives an error...
-%GTM-E-CLIERR, Unrecognized option : EXTRACT, value expected but not found
+%YDB-E-CLIERR, Unrecognized option : EXTRACT, value expected but not found
 Testing mupip set -journal= -reg "*" gives an error...
-%GTM-E-CLIERR, Unrecognized option : JOURNAL, value expected but not found
+%YDB-E-CLIERR, Unrecognized option : JOURNAL, value expected but not found
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

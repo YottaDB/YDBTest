@@ -73,32 +73,32 @@ THIS IS MUMPS
 $ZGBLDIR = a
 THIS IS A
 This will error: 
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$b.gld.  Retaining ##TEST_PATH##/mumps.gld.,%SYSTEM-E-ENO2, No such file or directory
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$b.gld.  Retaining ##TEST_PATH##/mumps.gld.,%SYSTEM-E-ENO2, No such file or directory
 		At M source location err1^basic
 
 GTM>
 This will error: 
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/badgld.gld.  Retaining ##TEST_PATH##/mumps.gld.,%SYSTEM-E-ENO2, No such file or directory
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/badgld.gld.  Retaining ##TEST_PATH##/mumps.gld.,%SYSTEM-E-ENO2, No such file or directory
 		At M source location err2^basic
 
 GTM>
 This will error with a message:
-%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, This is an error from gtm_env_xlate
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, This is an error from gtm_env_xlate
 		At M source location err3+2^basic
 
 GTM>
 This will error without a message:
-%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm
 		At M source location err4+2^basic
 
 GTM>
 This will error with too long a return string (and success):  
-%GTM-E-XTRNRETVAL, Length of return value (33333) from extended reference translation algorithm is not in the range [0,32767]
+%YDB-E-XTRNRETVAL, Length of return value (33333) from extended reference translation algorithm is not in the range [0,32767]
 		At M source location err5+3^basic
 
 GTM>
 This will error without too long a return string (and error): 
-%GTM-E-XTRNRETVAL, Length of return value (33333) from extended reference translation algorithm is not in the range [0,32767]
+%YDB-E-XTRNRETVAL, Length of return value (33333) from extended reference translation algorithm is not in the range [0,32767]
 		At M source location err6^basic
 
 GTM>
@@ -110,7 +110,7 @@ mumps.gld
 The status of the link is:  0
 undefined environment variable (gtm_gblxlate)...
 ^["/a/b/c","sphere"]GBL= 
-%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot translate environment variable gtm_gblxlate
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot translate environment variable gtm_gblxlate
 		At M source location tsq+3^sq
 
 GTM>
@@ -119,23 +119,23 @@ bad file name for gtm_gblxlate...
 gtm_gblxlate = ##IN_TEST_PATH##/inref/notthere.dat
 ^["/a/b/c","sphere"]GBL= 
 ##SUSPEND_OUTPUT HOST_OS390_S390
-%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (2) - No such file or directory
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (2) - No such file or directory
 		At M source location tsq+3^sq
 
 GTM>
 ^["/a/b/c","sphere"]GBL= 
-%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (2) - No such file or directory
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (2) - No such file or directory
 		At M source location tsq+3^sq
 
 GTM>
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
-%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (129) - No such file or directory
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (129) - No such file or directory
 		At M source location tsq+3^sq
 
 GTM>
 ^["/a/b/c","sphere"]GBL= 
-%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (129) - No such file or directory
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (129) - No such file or directory
 		At M source location tsq+3^sq
 
 GTM>
@@ -144,17 +144,17 @@ GTM>
 Now the correct gtm_gblxlate...
 gtm_gblxlate = ##IN_TEST_PATH##/inref/table.dat
 ^["/a/b/c","emotehost"]GBL= 
-%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  No translation available
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  No translation available
 		At M source location tsq+3^sq
 
 GTM>
 ^["/b/c","sphere"]GBL= 
-%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  No translation available
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  No translation available
 		At M source location tsq+3^sq
 
 GTM>
 ^["a/a/b/c","sphere"]GBL= 
-%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  No translation available
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  No translation available
 		At M source location tsq+3^sq
 
 GTM>
@@ -178,7 +178,7 @@ Now let's test an error - no-existent host
 
 gtm_gblxlate = ##IN_TEST_PATH##/inref/table_bad.dat
 ^["/a/b/c","sphere"]GBL= 
-%GTM-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Can't get IP address for host in /not/here
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Can't get IP address for host in /not/here
 		At M source location tsq+3^sq
 
 GTM>

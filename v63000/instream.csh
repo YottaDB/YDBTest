@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,7 +20,7 @@
 # gtm7762	[hathawayc]	Tests to verify that generated assembly has concatenated all string literals
 # gtm8190	[base]		Verfiy that NONTPRESTART messages appear in the log when a non-tp transaction is restarted
 # gtm6301	[partridger]	white box test for secshr_db_clnup handling of reads in progress
-# gtm8394	[nars]		GTMASSERT in mur_insert_prev.c line 148 in case of GTM-E-MEMORY interrupted rollbacks
+# gtm8394	[nars]		GTMASSERT in mur_insert_prev.c line 148 in case of YDB-E-MEMORY interrupted rollbacks
 # gtm6220	[maimoneb]	Verify proper repositioning of assert
 # gtm8340	[duzang]	Test that starting and stopping helpers works correctly
 # gtm6114	[partridger]	Verify ZMESSAGE with indirection in its arguments produces the appropriate error and $ZSTATUS

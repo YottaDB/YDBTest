@@ -252,19 +252,19 @@ Merging global1 (NEVER) with local (without null_subs) should pass
 GTM>
 Merging global1 (NEVER) with global2 (ALWAYS) should error out
 
-%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
 		At M source location error1neverglobal+2^nullsubmerge
 
 GTM>
 Merging global1 (NEVER) with global2 (EXISTING) should error out
 
-%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
 		At M source location error2neverglobal+2^nullsubmerge
 
 GTM>
 Merging global1 (NEVER) with local (with null_subs) should error out
 
-%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
 		At M source location error3neverglobal+2^nullsubmerge
 
 GTM>
@@ -368,43 +368,43 @@ Merging global1 (EXIST) with global2 (ALWAYS) should pass as global2 has no null
 GTM>
 Merging global1 (EXIST) with global2 (NEVER) should error out as LHS contains null_subs
 
-%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"",1)
+%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"",1)
 		At M source location error1+2^nullsubmerge
 
 GTM>
 Merging global1 (EXIST) with global2 (ALWAYS) should error out with source global having descendant null subs
 
-%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
 		At M source location error2+2^nullsubmerge
 
 GTM>
 Merging global1 (EXIST) with global2 (ALWAYS) should error out as merging with destination global's null subs
 
-%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
 		At M source location error2sub+2^nullsubmerge
 
 GTM>
 Merging global1 (EXIST) with global2 (ALWAYS) should error out with source global having descendant null subs
 
-%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
 		At M source location error3+2^nullsubmerge
 
 GTM>
 Merging global1 (EXIST) with global2 (ALWAYS) should error out as merging with destination global's null subs
 
-%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
 		At M source location error3sub+2^nullsubmerge
 
 GTM>
 Merging global1 (EXIST) with local should error out with source having descendant null subs
 
-%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
 		At M source location error4+2^nullsubmerge
 
 GTM>
 Merging global1 (EXIST) with local should error out as merging with destination global's null subs
 
-%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
+%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^defaultregion(1,"")
 		At M source location error5+2^nullsubmerge
 
 GTM>

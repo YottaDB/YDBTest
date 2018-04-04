@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -316,16 +319,16 @@ GTM_EOF
 	$gtm_tst/com/dbcheck.csh -extract
 	# filter out messages from dbcheck which vary based on test variables (e.g., gtm_test_fake_enospc)
 	foreach file (dse_buffer_flush.out dse_df.log rf_sync_*_src_sc.out src_checkhealth.log)
-		foreach msg ("GTM-[EW]-DBFLCORRP" "GTM-E-DBNOREGION")
+		foreach msg ("GTM-[EW]-DBFLCORRP" "YDB-E-DBNOREGION")
 			$gtm_tst/com/check_error_exist.csh $file "$msg" >>& ${file:as/./_/}_err.outx
 		end
 	end
 endif
 # filter out DBFLCORRP error message from *.mje* if any. See mrep <gtm8121_test_failures>
 foreach file (child_gtm8121*.mje*)
-	$gtm_tst/com/check_error_exist.csh $file "GTM-E-DBFLCORRP" "GTM-E-NOTALLDBRNDWN" "GTM-E-GVRUNDOWN" >& ${file:r}.tmpx
+	$gtm_tst/com/check_error_exist.csh $file "YDB-E-DBFLCORRP" "YDB-E-NOTALLDBRNDWN" "YDB-E-GVRUNDOWN" >& ${file:r}.tmpx
 	if (-e ${file}x) then
-		# GTM-E-... in *.mje*x will get caught by test framework. So rename file to escape from that.
+		# YDB-E-... in *.mje*x will get caught by test framework. So rename file to escape from that.
 		mv ${file}x $file:r.orig
 	endif
 end

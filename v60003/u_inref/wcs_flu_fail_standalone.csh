@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -37,7 +40,7 @@ else
 	$gtm_tst/com/getoper.csh "$time_before" "$time_after" "jnlfilopn${case}.txt" "" JNLFILOPN
 	$grep -q -E 'JNLFILOPN.*'$cwd jnlfilopn${case}.txt
 	if ($status) then
-		echo "TEST-E-FAIL, GTM-E-JNLFILOPN not found in operator log. Check jnlfilopn${case}.txt."
+		echo "TEST-E-FAIL, YDB-E-JNLFILOPN not found in operator log. Check jnlfilopn${case}.txt."
 	endif
 endif
 

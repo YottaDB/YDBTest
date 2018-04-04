@@ -1,36 +1,36 @@
 zro_search test starts.....
-%GTM-E-LABELMISSING, Label referenced but not defined: xsqrt
+%YDB-E-LABELMISSING, Label referenced but not defined: xsqrt
 %GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/mathbad.m
-%GTM-E-LABELMISSING, Label referenced but not defined: wcscat
+%YDB-E-LABELMISSING, Label referenced but not defined: wcscat
 %GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/stringbad.m
 rm: No match.
 
 GTM>
 
 GTM>
-%GTM-E-ZROSYNTAX, $ZROUTINES syntax error: ./shlib1##TEST_SHL_SUFFIX## ./shlib2 ./shlib_bad_txt
-%GTM-E-FILEPARSE, Error parsing file specification: ./shlib_bad_txt
+%YDB-E-ZROSYNTAX, $ZROUTINES syntax error: ./shlib1##TEST_SHL_SUFFIX## ./shlib2 ./shlib_bad_txt
+%YDB-E-FILEPARSE, Error parsing file specification: ./shlib_bad_txt
 %SYSTEM-E-ENO2, No such file or directory
 
 GTM>
-%GTM-E-ZROSYNTAX, $ZROUTINES syntax error: ./noexist##TEST_SHL_SUFFIX##
-%GTM-E-FILEPARSE, Error parsing file specification: ./noexist##TEST_SHL_SUFFIX##
+%YDB-E-ZROSYNTAX, $ZROUTINES syntax error: ./noexist##TEST_SHL_SUFFIX##
+%YDB-E-FILEPARSE, Error parsing file specification: ./noexist##TEST_SHL_SUFFIX##
 %SYSTEM-E-ENO2, No such file or directory
 
 GTM>
-%GTM-E-ZROSYNTAX, $ZROUTINES syntax error: ./shlib1##TEST_SHL_SUFFIX##(./src) ./shlib
-%GTM-E-NOLBRSRC, Object libraries cannot have SRC paths associated
+%YDB-E-ZROSYNTAX, $ZROUTINES syntax error: ./shlib1##TEST_SHL_SUFFIX##(./src) ./shlib
+%YDB-E-NOLBRSRC, Object libraries cannot have SRC paths associated
 
 GTM>
 
 GTM>
 ZL avg
-%GTM-E-ZLINKFILE, Error while zlinking "avg"
-%GTM-E-FILENOTFND, File avg not found
+%YDB-E-ZLINKFILE, Error while zlinking "avg"
+%YDB-E-FILENOTFND, File avg not found
 
 GTM>
-%GTM-E-ZROSYNTAX, $ZROUTINES syntax error: ./shlib2 ./obj(./src) /dev/tty
-%GTM-E-INVZROENT, /dev/tty is neither a directory nor an object library(DLL)
+%YDB-E-ZROSYNTAX, $ZROUTINES syntax error: ./shlib2 ./obj(./src) /dev/tty
+%YDB-E-INVZROENT, /dev/tty is neither a directory nor an object library(DLL)
 
 GTM>
 

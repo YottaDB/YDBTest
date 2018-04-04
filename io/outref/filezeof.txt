@@ -26,10 +26,10 @@ $ZEOF after a READ of a READONLY file = 1
 GTM>
 
 GTM>
-%GTM-E-DEVICEREADONLY, Cannot write to read-only device
+%YDB-E-DEVICEREADONLY, Cannot write to read-only device
 
 GTM>
-%GTM-E-IOEOF, Attempt to read past an end-of-file
+%YDB-E-IOEOF, Attempt to read past an end-of-file
 
 GTM>
 
@@ -67,7 +67,7 @@ $ZEOF after a READ of a file opened for APPEND = 1
 GTM>
 
 GTM>
-%GTM-E-IOEOF, Attempt to read past an end-of-file
+%YDB-E-IOEOF, Attempt to read past an end-of-file
 
 GTM>
 
@@ -105,7 +105,7 @@ $ZEOF after open of nullfile file APPEND = 0
 $ZEOF after first read from nullfile file APPEND = 1
 BAD
 $ZEOF after second read from nullfile file APPEND = 1
-150373082,filezeof+14^filezeof,%GTM-E-IOEOF, Attempt to read past an end-of-file
+150373082,filezeof+14^filezeof,%YDB-E-IOEOF, Attempt to read past an end-of-file
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -124,7 +124,7 @@ nullfile OPEN RMS
 $ZEOF after open of nullfile file APPEND = 0
 EX1
 $ZEOF after first read from nullfile file APPEND = 1
-150373082,filezeof+14^filezeof,%GTM-E-IOEOF, Attempt to read past an end-of-file
+150373082,filezeof+14^filezeof,%YDB-E-IOEOF, Attempt to read past an end-of-file
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -142,7 +142,7 @@ nullfile OPEN RMS EXCE="goto EX1"
 ##ALLOW_OUTPUT HOST_OS390_S390
 EX1
 $ZEOF after second read from nullfile file APPEND = 1
-150373082,filezeof+14^filezeof,%GTM-E-IOEOF, Attempt to read past an end-of-file
+150373082,filezeof+14^filezeof,%YDB-E-IOEOF, Attempt to read past an end-of-file
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -162,7 +162,7 @@ $ZEOF after open of nullfile file READONLY = 0
 $ZEOF after first read from nullfile file READONLY = 1
 BAD
 $ZEOF after second read from nullfile file READONLY = 1
-150373082,filezeof+14^filezeof,%GTM-E-IOEOF, Attempt to read past an end-of-file
+150373082,filezeof+14^filezeof,%YDB-E-IOEOF, Attempt to read past an end-of-file
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -181,7 +181,7 @@ nullfile OPEN RMS READ
 $ZEOF after open of nullfile file READONLY = 0
 EX1
 $ZEOF after first read from nullfile file READONLY = 1
-150373082,filezeof+14^filezeof,%GTM-E-IOEOF, Attempt to read past an end-of-file
+150373082,filezeof+14^filezeof,%YDB-E-IOEOF, Attempt to read past an end-of-file
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -199,7 +199,7 @@ nullfile OPEN RMS READ EXCE="goto EX1"
 ##ALLOW_OUTPUT HOST_OS390_S390
 EX1
 $ZEOF after second read from nullfile file READONLY = 1
-150373082,filezeof+14^filezeof,%GTM-E-IOEOF, Attempt to read past an end-of-file
+150373082,filezeof+14^filezeof,%YDB-E-IOEOF, Attempt to read past an end-of-file
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -219,7 +219,7 @@ $ZEOF after open of nonnullfile file APPEND = 0
 $ZEOF after first read from nonnullfile file APPEND = 1
 BAD
 $ZEOF after second read from nonnullfile file APPEND = 1
-150373082,filezeof+14^filezeof,%GTM-E-IOEOF, Attempt to read past an end-of-file
+150373082,filezeof+14^filezeof,%YDB-E-IOEOF, Attempt to read past an end-of-file
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -238,7 +238,7 @@ nonnullfile OPEN RMS
 $ZEOF after open of nonnullfile file APPEND = 0
 EX1
 $ZEOF after first read from nonnullfile file APPEND = 1
-150373082,filezeof+14^filezeof,%GTM-E-IOEOF, Attempt to read past an end-of-file
+150373082,filezeof+14^filezeof,%YDB-E-IOEOF, Attempt to read past an end-of-file
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -256,7 +256,7 @@ nonnullfile OPEN RMS EXCE="goto EX1"
 ##ALLOW_OUTPUT HOST_OS390_S390
 EX1
 $ZEOF after second read from nonnullfile file APPEND = 1
-150373082,filezeof+14^filezeof,%GTM-E-IOEOF, Attempt to read past an end-of-file
+150373082,filezeof+14^filezeof,%YDB-E-IOEOF, Attempt to read past an end-of-file
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -279,7 +279,7 @@ $ZEOF after open of nonnullfile file READONLY = 0
 $ZEOF after first read from nonnullfile file READONLY = 0
 EX1
 $ZEOF after second read from nonnullfile file READONLY = 1
-150373082,filezeof+14^filezeof,%GTM-E-IOEOF, Attempt to read past an end-of-file
+150373082,filezeof+14^filezeof,%YDB-E-IOEOF, Attempt to read past an end-of-file
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 

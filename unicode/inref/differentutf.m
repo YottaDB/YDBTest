@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 differentutf ;
 		do sets
 		for i=1:1:cnti do
@@ -38,7 +49,7 @@ testzcenc(ci,enc) ;
 		. write $ZCONVERT(testar(ci),enc,"UTF-8")
 		. close file1
 		. if ("expected"=flag) write "TEST-E-EXPECTED ZCONVERT BADCHAR NOT ISSUED on "_comments(ci)_" for encoding "_enc,!
-		if (1=legalsequence) do 
+		if (1=legalsequence) do
 		. set file2="zconvert_nobadchar.out"
 		. open file2:(APPEND)
 		. use file2
@@ -47,7 +58,7 @@ testzcenc(ci,enc) ;
 		. close file2
 		quit
 errortrap ;
-		if ($FIND($zstatus,"GTM-E-BADCHAR")=0) set $ZTRAP="" w "TEST-E-UNEXPECTED "_$zstatus_" ERROR " quit
+		if ($FIND($zstatus,"YDB-E-BADCHAR")=0) set $ZTRAP="" w "TEST-E-UNEXPECTED "_$zstatus_" ERROR " quit
 		if ("notexpected"=flag) write "TEST-E-UNEXPECTED ZCONVERT BADCHAR ISSUED on "_comments(ci)_" for encoding "_enc,!
                 W "$ZSTATUS on "_comments(ci)_" for "_enc_" "_$zstatus,!
                 set lab=$PIECE(errpos,"+",1)

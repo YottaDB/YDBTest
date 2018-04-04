@@ -25,8 +25,8 @@ MUPIP journal -show=head -for mumps.mjl
 MUPIP journal -recover -back -since=0 0:0:1  '*'
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-E-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##TEST_AWK.*%YDB-E-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 End of test
 ##SOURCE_PATH##/mupip

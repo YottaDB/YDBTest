@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2002, 2013 Fidelity Information Services, Inc	;
+; Copyright 2002, 2013 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -23,8 +26,8 @@ open(ip,port)
 	o tcpconn:(connect=ip_":"_port_":TCP":ioerror="TRAP"):30:"SOCKET"
 	s status=$T
 	u tcpconn s dev=$DEVICE u $p
-	i status=0 w "Timeout opening connection to server",!,dev,! zm GTMERR("GTM-E-OPENCONN") q 0
-	i dev w "Error opening connection to server",!,dev,! zm GTMERR("GTM-E-OPENCONN") q 0
+	i status=0 w "Timeout opening connection to server",!,dev,! zm GTMERR("YDB-E-OPENCONN") q 0
+	i dev w "Error opening connection to server",!,dev,! zm GTMERR("YDB-E-OPENCONN") q 0
 	s Server("ip")=ip
 	s Server("port")=port
 	q 1
@@ -56,7 +59,7 @@ send(type,msg)
 
 
 readerr
-	if $P($ZSTATUS,",",3)="%GTM-E-IOEOF" u $P w "Socket closed by network partner",! b  u tcpconn q
+	if $P($ZSTATUS,",",3)="%YDB-E-IOEOF" u $P w "Socket closed by network partner",! b  u tcpconn q
 	u tcpconn:exception=""
 	q
 

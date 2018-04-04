@@ -1,4 +1,16 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 #
 # Test all possible combinations for BADCHAR error
 # Test VIEW:"BADCHAR", $VIEW("BADCHAR"), $gtm_badchar, and the BADCHAR error
@@ -88,13 +100,13 @@ if ($status) then
 endif
 # the reason we are redirecting the check_error_exist.csh output to a logx extension file is because
 # the output of check_error_exist.csh is HUGE. It will be a pain to traverse even a PASSED reference file
-# So instead do a grep -v of the redirected logx extension file to see if there are any issues other than GTM-E-BADCHAR
+# So instead do a grep -v of the redirected logx extension file to see if there are any issues other than YDB-E-BADCHAR
 # if check_error_exist.csh itself has failed with issues then viewbadchar_expected.out wouldn't have been processed
 # and the test sytem will catch them at the end of the run - so no worries there too.
-$gtm_tst/com/check_error_exist.csh  viewbadchar_expected.out "GTM-E-BADCHAR" >&! check_error_exist.logx
-$gtm_tst/com/check_error_exist.csh  viewbadchar_zconvert.out "GTM-E-BADCHAR" >&! check_error_exist.logy
-$gtm_tst/com/check_error_exist.csh  alwaysbadchar.out "GTM-E-BADCHAR" >&! alwaysbadchar.loga
-# first check GTM-E-BADCHAR is seen or not in the redirected logs
+$gtm_tst/com/check_error_exist.csh  viewbadchar_expected.out "YDB-E-BADCHAR" >&! check_error_exist.logx
+$gtm_tst/com/check_error_exist.csh  viewbadchar_zconvert.out "YDB-E-BADCHAR" >&! check_error_exist.logy
+$gtm_tst/com/check_error_exist.csh  alwaysbadchar.out "YDB-E-BADCHAR" >&! alwaysbadchar.loga
+# first check YDB-E-BADCHAR is seen or not in the redirected logs
 set stat1x=`$grep "%GTM\-E\-BADCHAR" check_error_exist.logx|wc -l`
 # then check for any other -E- errors in the redirected log
 set stat2x=`$grep "\-E\-" check_error_exist.logx|grep -v "GTM\-E\-BADCHAR"|wc -l`
@@ -105,19 +117,19 @@ set stat2y=`$grep "\-E\-" check_error_exist.logy|grep -v "GTM\-E\-BADCHAR"|wc -l
 set stat1a=`$grep "GTM\-E\-BADCHAR" alwaysbadchar.loga|wc -l`
 set stat2a=`$grep "\-E\-" alwaysbadchar.loga|grep -v "GTM\-E\-BADCHAR"|wc -l`
 if ( (0 != $stat1x) && (0 != $stat1y) && (0 != $stat1a) && (0 == $stat2x) && (0 == $stat2y) && (0 == $stat2a) ) then
-	echo "PASS. Expected error GTM-E-BADCHAR seen and not other errors detected"
+	echo "PASS. Expected error YDB-E-BADCHAR seen and not other errors detected"
 else
 	echo "TEST-E-ERROR. Either BADCHAR not seen or some other errors detected. check check_error_exist.log[x,y] logs"
 endif
 #
 # check for INVDLRCVAL error here. Since this error depends on VIEW "BADCHAR" seetting we will have i captured here
 # insted of in the errors subtest
-$gtm_tst/com/check_error_exist.csh  invdlrcval_expected.out "GTM-E-INVDLRCVAL" >&! check_error_exist.logz
+$gtm_tst/com/check_error_exist.csh  invdlrcval_expected.out "YDB-E-INVDLRCVAL" >&! check_error_exist.logz
 set stat1z=`$grep "%GTM\-E\-INVDLRCVAL" check_error_exist.logz|wc -l`
 # then check for any other -E- errors in the redirected log
 set stat2z=`$grep "\-E\-" check_error_exist.logz|grep -v "GTM\-E\-INVDLRCVAL"|wc -l`
 if ( (0 != $stat1z) && (0 == $stat2z) ) then
-	echo "PASS. Expected error GTM-E-INVDLRCVAL seen and not other errors detected"
+	echo "PASS. Expected error YDB-E-INVDLRCVAL seen and not other errors detected"
 else
 	echo "TEST-E-ERROR. Either INVDLRCVAL not seen or some other errors detected. check check_error_exist.logz"
 endif
@@ -131,18 +143,18 @@ grep -E "TEST-E-EXPECTED|TEST-E-UNEXPECTED" zconvert_*.out
 if !($status) then
 	echo "TEST-E-ERROR ZCONVERT BADCHAR test doesn't produce expected results"
 endif
-$gtm_tst/com/check_error_exist.csh  zconvert_badchar.out "GTM-E-BADCHAR" >&! check_error_exist.logxx
+$gtm_tst/com/check_error_exist.csh  zconvert_badchar.out "YDB-E-BADCHAR" >&! check_error_exist.logxx
 set stat1xx=`$grep "%GTM\-E\-BADCHAR" check_error_exist.logxx|wc -l`
 # then check for any other -E- errors in the redirected log
 set stat2xx=`$grep "\-E\-" check_error_exist.logxx|grep -v "GTM\-E\-BADCHAR"|wc -l`
 if ( (0 != $stat1xx) && (0 == $stat2xx) ) then
-	echo "PASS. Expected error GTM-E-BADCHAR seen and not other errors detected for ZCONVERT"
+	echo "PASS. Expected error YDB-E-BADCHAR seen and not other errors detected for ZCONVERT"
 else
 	echo "TEST-E-ERROR. Either BADCHAR not seen or some other errors detected for ZCONVERT. check check_error_exist.logxx"
 endif
 #
 $echoline
-echo "Test compiling UTF-16 encoded m routine produces GTM-E-LSEXPECTED "
+echo "Test compiling UTF-16 encoded m routine produces YDB-E-LSEXPECTED "
 $GTM << EOF
 write "BEGIN UTF-16 WRITE",!
 set file="testutf16.m" open file:(new:OCHSET="UTF-16") use file
@@ -154,8 +166,8 @@ write "END OF UTF-16 WRITE",!
 EOF
 $gtm_exe/mumps testutf16.m >&! testutf16.out
 # note: BADCHAR is expected only if they are present within a string literal
-# for the below GTM-E-LSEXPECTED is the expected error
-#NOTE: Even GTM-E-LSEXPECTED  is issued only if ochset is UTF-16 and NOT for UTF-16LE or UTF-16BE
-$gtm_tst/com/check_error_exist.csh  testutf16.out "GTM-E-LSEXPECTED"
+# for the below YDB-E-LSEXPECTED is the expected error
+#NOTE: Even YDB-E-LSEXPECTED  is issued only if ochset is UTF-16 and NOT for UTF-16LE or UTF-16BE
+$gtm_tst/com/check_error_exist.csh  testutf16.out "YDB-E-LSEXPECTED"
 #
 $gtm_tst/com/dbcheck.csh

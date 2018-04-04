@@ -21,17 +21,17 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ===================================================================
 Non-incremental backup is not supported to pipes and tcp:
 $MUPIP backup -nonew -o DEFAULT '"| gzip -c > mumpsbak.dat.gz"'
-%GTM-E-NOTRNDMACC, Only random access files are supported as backup files for non-incremental backup
+%YDB-E-NOTRNDMACC, Only random access files are supported as backup files for non-incremental backup
 
 MUPIP cannot start backup with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP backup -nonew -o -nettimeout=120 DEFAULT "tcp://`hostname`:6200"
-%GTM-E-NOTRNDMACC, Only random access files are supported as backup files for non-incremental backup
+%YDB-E-NOTRNDMACC, Only random access files are supported as backup files for non-incremental backup
 
 MUPIP cannot start backup with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 unset verbose
 Check D9C05002121a.log for more detailed info
 ===================================================================

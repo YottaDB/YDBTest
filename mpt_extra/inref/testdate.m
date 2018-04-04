@@ -1,10 +1,21 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 testdate ;
 	; should also test:
 	;s $ZDATEFORM=3 << fix, it should be set'able.
-	;%GTM-E-SVNOSET, Cannot SET this special variable
+	;%YDB-E-SVNOSET, Cannot SET this special variable
 	;        s $ZDATEFORM=3
 	;n $ZDATEFORM
-	;%GTM-E-INVSVN, Invalid special variable name
+	;%YDB-E-INVSVN, Invalid special variable name
 	;        n $ZDATEFORM
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	w "$ZDATEFORM:",$ZDATEFORM,!
@@ -29,7 +40,7 @@ testdate ;
 	d do("3025","%H cannot handle such large $H",4)
 	d testh
 	q
-do(var,var2,var4)	
+do(var,var2,var4)
 	W !,"-----------------------------------------------------------",!
 	s $ZDATEFORM=var
 	w "ZDATE_FORM: ",$J($ZDATEFORM,6)," ",var2,?55,"  #%D OUTPUT DIGITS: ",var4,!
@@ -50,7 +61,7 @@ testdo	s testdo=test_"(var,""1/1/75"")" d @testdo
 	s testdo=test_"(var,""9/9/1969"")" d @testdo
 	q
 dodate(var,var3)	;
-	s res=$$FUNC^%DATE(var3) 
+	s res=$$FUNC^%DATE(var3)
 	s %DT=res
 	d %CDS^%H
 	w "%DATE input:",$J(var3,10)," means -> $H: ",res," -> ",$J(%DAT,10),!
@@ -60,7 +71,7 @@ doh(var,var3) ;
 	;s %DT=h
 	;do %CDS^%H ; always outputs in 4 digits
 	s %DT=var3
-	d %CDN^%H	
+	d %CDN^%H
 	s %DT=%DAT
 	d %CDS^%H
 	w "%H    input:",$J(var3,10)," means -> $H: ",%DT," -> ",$J(%DAT,10),!

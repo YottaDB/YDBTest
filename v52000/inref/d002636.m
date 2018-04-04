@@ -2,8 +2,8 @@
 ;								;
 ; Copyright 2007, 2013 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
-; All rights reserved.	     	  	     			;
+; Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -197,7 +197,7 @@ ztrprtn New $ZT Set $ZTRAP="S $ZT="""" s ^drvactive=0 ZSHOW ""*"" Halt"
 	; line that was executing when it got broke.
 	s ztcnt=ztcnt+1
 	s ztidxlst(ztcnt)=i_","_j
-	if ($P($zs,",",5)="-GTM-E-DIVZERO")&($zini=1) S zintr=zintrini Quit ; return back to $zinterrut
+	if ($P($zs,",",5)="-YDB-E-DIVZERO")&($zini=1) S zintr=zintrini Quit ; return back to $zinterrut
 	;
 	; Either the ztrap was not a divide by zero we expect or we weren't in an interrupt
 	; which we also did not expect

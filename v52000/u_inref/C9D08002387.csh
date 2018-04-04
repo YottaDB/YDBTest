@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -92,8 +92,8 @@ echo $newline
 $DSE crit -all >&! dse_crit_all.logx
 
 set dbnoreg_not_found = 0
-$grep "GTM-E-VERMISMATCH" dse_crit_all.logx
-$grep "GTM-E-DBNOREGION" dse_crit_all.logx >& /dev/null
+$grep "YDB-E-VERMISMATCH" dse_crit_all.logx
+$grep "YDB-E-DBNOREGION" dse_crit_all.logx >& /dev/null
 if ($status) set dbnoreg_not_found = 1
 
 if ($dbnoreg_not_found) then

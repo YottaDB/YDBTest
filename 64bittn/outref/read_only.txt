@@ -6,11 +6,11 @@ Region	DEFAULT
 make database read-only
 make current directory read-only
 should issue DEVOPENFAIL error accompanied with TEXT message indicating permission issue
-%GTM-E-DEVOPENFAIL, Error opening dbcmdx_DEFAULT.sh
+%YDB-E-DEVOPENFAIL, Error opening dbcmdx_DEFAULT.sh
 %GTM-I-TEXT, Permission denied
 current directory back to read-write
 should issue DBRDONLY error
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 make database back to read-write
 scan should run fine here
 
@@ -33,7 +33,7 @@ Proceeding will also turn off replication and/or journaling if enabled
 --------------------------------------------------------------------------------
 Proceed? [y/n]:
 Certification phase for database ##TEST_PATH##/mumps.dat beginning
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 Now make db read_write
 run dbcertify again,should be fine here
 %GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
@@ -54,11 +54,11 @@ You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
 %GTM-I-TEXT, Mupip upgrade started
-%GTM-E-DBRDONLY, Database file mumps.dat read only
+%YDB-E-DBRDONLY, Database file mumps.dat read only
 %SYSTEM-E-ENO13, Permission denied
 
-%GTM-E-TEXT, Cannot upgrade read-only database
-%GTM-E-MUNOUPGRD, Database not upgraded because of preceding errors
+%YDB-E-TEXT, Cannot upgrade read-only database
+%YDB-E-MUNOUPGRD, Database not upgraded because of preceding errors
 ======= successful upgrade =======
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
@@ -77,11 +77,11 @@ You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
 %GTM-I-TEXT, Mupip downgrade started
-%GTM-E-DBRDONLY, Database file mumps.dat read only
+%YDB-E-DBRDONLY, Database file mumps.dat read only
 %SYSTEM-E-ENO13, Permission denied
 
-%GTM-E-TEXT, Cannot downgrade read-only database
-%GTM-E-MUNODWNGRD, Database not downgraded because of preceding errors
+%YDB-E-TEXT, Cannot downgrade read-only database
+%YDB-E-MUNODWNGRD, Database not downgraded because of preceding errors
 ==== successful downgrade ========
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
@@ -127,28 +127,28 @@ An abnormal termination will damage the database during the operation !!
 All of the following commands from now on should give DBRDONLY error
 ===== version =======
 MUPIP SET -VERSION=V6 -reg DEFAULT
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed
 MUPIP SET -VERSION=V4 -reg DEFAULT
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed
 ====== access_method =======
-%GTM-E-DBFILOPERR, Error doing database I/O to region mumps.dat
+%YDB-E-DBFILOPERR, Error doing database I/O to region mumps.dat
 %SYSTEM-E-ENO13, Permission denied
-%GTM-E-WCERRNOTCHG, Not all specified database files were changed
-%GTM-E-DBFILOPERR, Error doing database I/O to region mumps.dat
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed
+%YDB-E-DBFILOPERR, Error doing database I/O to region mumps.dat
 %SYSTEM-E-ENO13, Permission denied
-%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed
 ==== REORG upgrade ====
 
 Region DEFAULT : MUPIP REORG UPGRADE started
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ==== REORG downgrade ====
 
 Region DEFAULT : MUPIP REORG DOWNGRADE started
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 == Make database read-write before final verification ===
 Final verification for upddated database should run fine
 

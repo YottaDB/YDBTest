@@ -26,7 +26,7 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 # 	--> We expect a SRCSRVEXISTS error since there is already a source server running to INST2.
 ----------
 Error SRCSRVEXISTS seen in log1.log as expected:
-%GTM-E-SRCSRVEXISTS, Source server for secondary instance INSTANCE2 is already running with pid ##FILTERED##
+%YDB-E-SRCSRVEXISTS, Source server for secondary instance INSTANCE2 is already running with pid ##FILTERED##
 ----------
 log1.log:
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 set msr_dont_chk_stat; $MUPIP replic -source -start -passive -log=passive1.log -instsecondary=__RCV_INSTNAME__'==
@@ -36,19 +36,19 @@ log1.log:
 #		--> We expect a SRCSRVEXISTS error since there is already a source server running to INST2.
 ----------
 Error SRCSRVEXISTS seen in log2.log as expected:
-%GTM-E-SRCSRVEXISTS, Source server for secondary instance INSTANCE2 is already running with pid ##FILTERED##
+%YDB-E-SRCSRVEXISTS, Source server for secondary instance INSTANCE2 is already running with pid ##FILTERED##
 ----------
 log2.log:
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 set msr_dont_chk_stat; $MUPIP replic -source -start -log=active2.log -secondary=__RCV_HOST__:__RCV_PORTNO__ -instsecondary=__RCV_INSTNAME__'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE2]
 ###################################################################
 #- Attempt to start a passive/supplementary source server on INST2
-GTM-E-SRCSRVEXISTS seen in restart_source_secondary.out as expected
+YDB-E-SRCSRVEXISTS seen in restart_source_secondary.out as expected
 ###################################################################
 #- Attempt to start receiver server again on secondaray
 ----------
 Error RECVPOOLSETUP seen in restart_inst2_receiver.out as expected:
-%GTM-E-RECVPOOLSETUP, Receive Pool setup error
+%YDB-E-RECVPOOLSETUP, Receive Pool setup error
 ----------
 ----------
 Error GTM-I-TEXT seen in restart_inst2_receiver.out as expected:
@@ -61,7 +61,7 @@ Error GTM-I-TEXT seen in restart_inst2_receiver.out as expected:
 #  	--> We expect a REPLINSTSECMTCH error.
 ----------
 Error REPLINSTSECMTCH seen in active3.log as expected:
-##FILTERED##... ... .. ..:..:.. 20.. : %GTM-E-REPLINSTSECMTCH, Secondary replication instance name INSTANCE3 sent by receiver does not match INSTANCE4 specified at source server startup
+##FILTERED##... ... .. ..:..:.. 20.. : %YDB-E-REPLINSTSECMTCH, Secondary replication instance name INSTANCE3 sent by receiver does not match INSTANCE4 specified at source server startup
 ----------
 log3.log:
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 set msr_dont_chk_stat; $MUPIP replic -source -start -log=active3.log -secondary=__RCV_HOST__:__RCV_PORTNO__ -instsecondary=INSTANCE4'==
@@ -72,7 +72,7 @@ log3.log:
 #  	--> We expect a REPLINSTSECMTCH error in the source server log active4.log
 ----------
 Error REPLINSTSECMTCH seen in active4.log as expected:
-##FILTERED##... ... .. ..:..:.. 20.. : %GTM-E-REPLINSTSECMTCH, Secondary replication instance name INSTANCE3 sent by receiver does not match WRONGINSTNAME specified at source server startup
+##FILTERED##... ... .. ..:..:.. 20.. : %YDB-E-REPLINSTSECMTCH, Secondary replication instance name INSTANCE3 sent by receiver does not match WRONGINSTNAME specified at source server startup
 ----------
 log4.log:
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 set msr_dont_chk_stat; $MUPIP replic -source -start -passive -log=active4.log -instsecondary=WRONGINSTNAME -rootprimary'==
@@ -82,7 +82,7 @@ log4.log:
 #  	--> We expect a SRCSRVEXISTS error.
 ----------
 Error SRCSRVEXISTS seen in log6.log as expected:
-%GTM-E-SRCSRVEXISTS, Source server for secondary instance INSTANCE2 is already running with pid ##FILTERED##
+%YDB-E-SRCSRVEXISTS, Source server for secondary instance INSTANCE2 is already running with pid ##FILTERED##
 ----------
 log6.log:
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 set msr_dont_chk_stat; $MUPIP replic -source -start -log=active6.log -secondary=__RCV_HOST__:__RCV_PORTNO__ -instsecondary=INSTANCE2'==

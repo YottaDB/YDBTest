@@ -121,7 +121,7 @@ write strings of length: 1
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
 --> itera("NEWVERSION:RECORDSIZE=-1","","",1,FAIL)
-150375962,open+10^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+10^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+9^filetest
 open+10^io
     ($ZTRAP)
@@ -143,7 +143,7 @@ write strings of length: 1
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
 --> itera("NEWVERSION:RECORDSIZE=0","","",1,FAIL)
-150375962,open+10^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+10^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+9^filetest
 open+10^io
     ($ZTRAP)
@@ -213,7 +213,7 @@ write strings of length: 1
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
 --> itera("NEWVERSION:BIGRECORD:RECORDSIZE=1048580","","",1,FAIL)
-150376194,open+10^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+150376194,open+10^io,%YDB-E-RMWIDTHTOOBIG, File record size or width too big
 error+9^filetest
 open+10^io
     ($ZTRAP)
@@ -237,7 +237,7 @@ ZSHOW "D" output: test14.txt OPEN RMS
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
 --> itera("","LENGTH=-1","",1,FAIL)
-150372658,use+6^io,%GTM-E-DEVPARMNEG, Deviceparameter must be a positive value
+150372658,use+6^io,%YDB-E-DEVPARMNEG, Deviceparameter must be a positive value
 error+9^filetest
 use+6^io
     ($ZTRAP)
@@ -325,7 +325,7 @@ ZSHOW "D" output: test19.txt OPEN RMS
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
 --> itera("","WIDTH=-1","",1,FAIL)
-150375962,use+6^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,use+6^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+9^filetest
 use+6^io
     ($ZTRAP)
@@ -349,7 +349,7 @@ ZSHOW "D" output: test20.txt OPEN RMS
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
 --> itera("","WIDTH=0","",1,FAIL)
-150375962,use+6^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,use+6^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+9^filetest
 use+6^io
     ($ZTRAP)
@@ -405,7 +405,7 @@ ZSHOW "D" output: test23.txt OPEN RMS
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
 --> itera("","WIDTH=1048580","",1,FAIL)
-150376194,use+6^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+150376194,use+6^io,%YDB-E-RMWIDTHTOOBIG, File record size or width too big
 error+9^filetest
 use+6^io
     ($ZTRAP)
@@ -926,7 +926,7 @@ write strings of length: 10
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
 --> itera("NEWVERSION:GROUP","","",10,FAIL)
-150372650,open+10^io,%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+150372650,open+10^io,%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 error+9^filetest
 open+10^io
     ($ZTRAP)
@@ -948,7 +948,7 @@ write strings of length: 10
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
 --> itera("NEWVERSION:SYSTEM=badperm","","",10,FAIL)
-150372610,open+10^io,%GTM-E-DEVPARPROT, The protection specification is invalid
+150372610,open+10^io,%YDB-E-DEVPARPROT, The protection specification is invalid
 error+9^filetest
 open+10^io
     ($ZTRAP)
@@ -970,7 +970,7 @@ write strings of length: 10
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
 --> itera("NEWVERSION:OWNER=badperm","","",10,FAIL)
-150372610,open+10^io,%GTM-E-DEVPARPROT, The protection specification is invalid
+150372610,open+10^io,%YDB-E-DEVPARPROT, The protection specification is invalid
 error+9^filetest
 open+10^io
     ($ZTRAP)
@@ -992,7 +992,7 @@ write strings of length: 10
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
 --> itera("NEWVERSION:GROUP=badperm","","",10,FAIL)
-150372610,open+10^io,%GTM-E-DEVPARPROT, The protection specification is invalid
+150372610,open+10^io,%YDB-E-DEVPARPROT, The protection specification is invalid
 error+9^filetest
 open+10^io
     ($ZTRAP)
@@ -1014,7 +1014,7 @@ write strings of length: 10
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
 --> itera("NEWVERSION:WORLD=badperm","","",10,FAIL)
-150372610,open+10^io,%GTM-E-DEVPARPROT, The protection specification is invalid
+150372610,open+10^io,%YDB-E-DEVPARPROT, The protection specification is invalid
 error+9^filetest
 open+10^io
     ($ZTRAP)

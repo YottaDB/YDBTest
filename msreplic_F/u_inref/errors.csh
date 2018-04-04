@@ -5,7 +5,7 @@
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -74,7 +74,7 @@ source $gtm_tst/$tst/u_inref/replinstfmt_check.csh >&! replinstfmt_check.out
 set error_status = $status
 mv replinstfmt_check.out replinstfmt_check.outx
 # The below four errors are expected. Anything other than these should be caught by the error catching mechanism.
-$grep -vE "TEST-E-MULTISITE|GTM-E-REPLINSTFMT|JNL_ON-E-MUPIP|GTM-E-MUNOFINISH|TEST-E-REPLINSTNAME" replinstfmt_check.outx >&! replinstfmt_check.out
+$grep -vE "TEST-E-MULTISITE|YDB-E-REPLINSTFMT|JNL_ON-E-MUPIP|YDB-E-MUNOFINISH|TEST-E-REPLINSTNAME" replinstfmt_check.outx >&! replinstfmt_check.out
 if ($error_status) then
 	echo "TEST-F-REPLINSTFMT check failed. Check replinstfmt_check.outx"
 endif
@@ -224,17 +224,17 @@ $MSR RUN INST2 'cp save1/mumps.repl .'
 $MSR STARTRCV INST1 INST2
 get_msrtime
 $MSR RUN INST2 "$msr_err_chk passive_$time_msr.log REPLINSTDBMATCH"
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-REPLINSTDBMATCH
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-REPLINSTDBMATCH
 $MSR RUN INST2 "$msr_err_chk START_$time_msr.out NOJNLPOOL"
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-NOJNLPOOL
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-NOJNLPOOL
 
-# When the passive source server fails to start, the subsequent checkhealth statement will error with GTM-E-NOJNLPOOL
+# When the passive source server fails to start, the subsequent checkhealth statement will error with YDB-E-NOJNLPOOL
 # Below backward rollback invocation is expected to fail. Therefore pass "-backward" explicitly to mupip_rollback.csh
 # (and avoid implicit "-forward" rollback invocation that would otherwise happen by default.
 $MSR RUN RCV=INST2 'set msr_dont_chk_stat ; $gtm_tst/com/mupip_rollback.csh -backward -fetchresync=__RCV_PORTNO__ -losttrans=fetch.glo "*" >&! rollback_REPLINSTDBMATCH.out'
 $MSR RUN INST2 "$msr_err_chk rollback_REPLINSTDBMATCH.out REPLINSTDBMATCH MUNOACTION"
-$gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-E-REPLINSTDBMATCH"
-$gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-E-MUNOACTION"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "YDB-E-REPLINSTDBMATCH"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "YDB-E-MUNOACTION"
 
 $echoline
 
@@ -257,7 +257,7 @@ $MSR STARTSRC INST1 INST2
 # The $MSR STARTRCV done below will actually invoke a framework script RCVR.csh which in turn starts the receiver server
 # and then does a checkhealth to ensure it is up and running. It is possible in rare cases that the receiver server
 # exits (thereby cleaning up the receive pool) even before the checkhealth is attempted in RCVR.csh. In this case,
-# the checkhealth will error out with GTM-E-NORECVPOOL message. Another possibility is that the receiver server is up
+# the checkhealth will error out with YDB-E-NORECVPOOL message. Another possibility is that the receiver server is up
 # and running but in the process of shutting down so we will see a "Update process crashed during shutdown" message.
 # We do not want either of this to happen so we specifically ask RCVR.csh to skip the checkhealth by setting the
 # environment variable gtm_test_repl_skiprcvrchkhlth. It is unset right afterwards.
@@ -267,7 +267,7 @@ unsetenv gtm_test_repl_skiprcvrchkhlth
 get_msrtime
 $MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message REPLINSTNOHIST -duration 120 -waitcreation'
 $MSR RUN INST2 "$msr_err_chk RCVR_$time_msr.log REPLINSTNOHIST"
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-REPLINSTNOHIST
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-REPLINSTNOHIST
 
 $MSR RUN RCV=INST2 SRC=INST1 '$MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST1INST2.out'
  #The above is done because, the receiver will be shut down but the passive server will be alive still. The next STARTRCV will complain.
@@ -296,7 +296,7 @@ get_msrtime
 $MSR RUN INST5 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message REPLINSTNOHIST -duration 120 -waitcreation'
 
 $MSR RUN INST5 "$msr_err_chk RCVR_$time_msr.log REPLINSTNOHIST"
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-REPLINSTNOHIST
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-REPLINSTNOHIST
 
 $MSR RUN RCV=INST5 SRC=INST1 'set msr_dont_trace ; $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST1INST5.out'
  #The above is done because, the receiver will be shut down but the passive server will be alive still.
@@ -325,7 +325,7 @@ get_msrtime
 $MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log 'SRC_$time_msr.log' -message REPLINSTNOHIST -duration 120 -waitcreation'
 
 $MSR RUN INST2 "$msr_err_chk SRC_$time_msr.log REPLINSTNOHIST"
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-REPLINSTNOHIST
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-REPLINSTNOHIST
 
 $MSR CHECKHEALTH INST2 INST3 SRC
 
@@ -390,7 +390,7 @@ get_msrtime
 $gtm_tst/com/wait_for_log.csh -log $gtm_test_msr_DBDIR1/SRC_$time_msr.log -message REPLINSTDBMATCH -duration 120 -waitcreation
 $msr_err_chk $gtm_test_msr_DBDIR1/SRC_$time_msr.log REPLINSTDBMATCH
 $msr_err_chk $gtm_test_msr_DBDIR1/START_$time_msr.out NOJNLPOOL
-# When the source server fails to start, the subsequent checkhealth statement will error with GTM-E-NOJNLPOOL
+# When the source server fails to start, the subsequent checkhealth statement will error with YDB-E-NOJNLPOOL
 $MSR STOPRCV INST1 INST2
 
 ## - save db, jnl, and instance file on INST1 at time3 (note instance file save into "save3" is already done a few steps ago)

@@ -78,8 +78,8 @@ set verbose
 $MUPIP journal -recov -back mumps1.mjl -extract=1.mjf
 ##SOURCE_PATH##/mupip journal -recov -back mumps1.mjl -extract=1.mjf
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps1.mjl does not match the current journal file ##TEST_PATH##/mumps2.mjl of database file ##TEST_PATH##/mumps.dat
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps1.mjl does not match the current journal file ##TEST_PATH##/mumps2.mjl of database file ##TEST_PATH##/mumps.dat
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-FILENOTCREATE, Journal extract file 1.mjf not created
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
@@ -101,8 +101,8 @@ $MUPIP journal -recov -back mumps2.mjl -extract=2.mjf
 $MUPIP journal -recov -back mumps1.mjl,mumps2.mjl -since=\"$time1\" -extract=3.mjf
 ##TEST_AWK##SOURCE_PATH##/mupip journal -recov -back mumps1.mjl,mumps2.mjl -since=".*" -extract=3.mjf
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps1.mjl does not match the current journal file ##TEST_PATH##/mumps2.mjl of database file ##TEST_PATH##/mumps.dat
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps1.mjl does not match the current journal file ##TEST_PATH##/mumps2.mjl of database file ##TEST_PATH##/mumps.dat
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-FILENOTCREATE, Journal extract file 3.mjf not created
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
@@ -113,15 +113,15 @@ cp mumps2.mjl mumpsn.mjl
 $MUPIP journal -recov -back mumps2.mjl,mumpsn.mjl -since=\"$time1\" -extract=3n.mjf
 ##TEST_AWK##SOURCE_PATH##/mupip journal -recov -back mumps2.mjl,mumpsn.mjl -since=".*" -extract=3n.mjf
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumpsn.mjl does not match the current journal file ##TEST_PATH##/mumps2.mjl of database file ##TEST_PATH##/mumps.dat
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumpsn.mjl does not match the current journal file ##TEST_PATH##/mumps2.mjl of database file ##TEST_PATH##/mumps.dat
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-FILENOTCREATE, Journal extract file 3n.mjf not created
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 $MUPIP journal -recov -back mumpsn.mjl -since=\"$time1\" -extract=3n.mjf
 ##TEST_AWK##SOURCE_PATH##/mupip journal -recov -back mumpsn.mjl -since=".*" -extract=3n.mjf
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumpsn.mjl does not match the current journal file ##TEST_PATH##/mumps2.mjl of database file ##TEST_PATH##/mumps.dat
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumpsn.mjl does not match the current journal file ##TEST_PATH##/mumps2.mjl of database file ##TEST_PATH##/mumps.dat
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-FILENOTCREATE, Journal extract file 3n.mjf not created
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
@@ -135,9 +135,9 @@ grep -v MUJNLPREVGEN mupip_journal_recov_back.outx
 grep -v MUJNLPREVGEN mupip_journal_recov_back.outx
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/a1.mjl
+##TEST_AWK.*%YDB-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/a1.mjl
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-FILENOTCREATE, Journal extract file 4.mjf not created
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
@@ -157,8 +157,8 @@ $MUPIP set -journal="on,enable,before,file=mumps3.mjl" -file mumps.dat
 $MUPIP journal -recov -back mumps2.mjl -since=\"$time1\" -extract=5.mjf
 ##TEST_AWK##SOURCE_PATH##/mupip journal -recov -back mumps2.mjl -since=".*" -extract=5.mjf
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps2.mjl does not match the current journal file ##TEST_PATH##/mumps3.mjl of database file ##TEST_PATH##/mumps.dat
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps2.mjl does not match the current journal file ##TEST_PATH##/mumps3.mjl of database file ##TEST_PATH##/mumps.dat
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-FILENOTCREATE, Journal extract file 5.mjf not created
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
@@ -176,15 +176,15 @@ GTM>
 $MUPIP journal -recov -back mumps1.mjl,mumps2.mjl,mumps3.mjl -extract=7.mjf
 ##SOURCE_PATH##/mupip journal -recov -back mumps1.mjl,mumps2.mjl,mumps3.mjl -extract=7.mjf
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps1.mjl does not match the current journal file ##TEST_PATH##/mumps3.mjl of database file ##TEST_PATH##/mumps.dat
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps1.mjl does not match the current journal file ##TEST_PATH##/mumps3.mjl of database file ##TEST_PATH##/mumps.dat
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-FILENOTCREATE, Journal extract file 7.mjf not created
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 $MUPIP journal -recov -back mumps1.mjl,mumps3.mjl -extract=8.mjf
 ##SOURCE_PATH##/mupip journal -recov -back mumps1.mjl,mumps3.mjl -extract=8.mjf
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps1.mjl does not match the current journal file ##TEST_PATH##/mumps3.mjl of database file ##TEST_PATH##/mumps.dat
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps1.mjl does not match the current journal file ##TEST_PATH##/mumps3.mjl of database file ##TEST_PATH##/mumps.dat
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-FILENOTCREATE, Journal extract file 8.mjf not created
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
@@ -194,33 +194,33 @@ $MUPIP journal -recov -back mumps3.mjl -since=\"$time1\" -extract=9.mjf
 ##TEST_AWK##SOURCE_PATH##/mupip journal -recov -back mumps3.mjl -since=".*" -extract=9.mjf
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/mumps2.mjl
+##TEST_AWK.*%YDB-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/mumps2.mjl
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-FILENOTCREATE, Journal extract file 9.mjf not created
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 $MUPIP journal -recov -back mumps2.mjl,mumps1.mjl -since=\"$time1\" -extract=10.mjf
 ##TEST_AWK##SOURCE_PATH##/mupip journal -recov -back mumps2.mjl,mumps1.mjl -since=".*" -extract=10.mjf
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/mumps2.mjl
+%YDB-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/mumps2.mjl
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-FILENOTCREATE, Journal extract file 10.mjf not created
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 $MUPIP journal -recov -back mumps2.mjl -since=\"$time1\" -extract=11.mjf
 ##TEST_AWK##SOURCE_PATH##/mupip journal -recov -back mumps2.mjl -since=".*" -extract=11.mjf
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/mumps2.mjl
+%YDB-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/mumps2.mjl
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-FILENOTCREATE, Journal extract file 11.mjf not created
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 $MUPIP journal -recov -back mumps2.mjl,a3.mjl -since=\"$time1\" -extract=12.mjf
 ##TEST_AWK##SOURCE_PATH##/mupip journal -recov -back mumps2.mjl,a3.mjl -since=".*" -extract=12.mjf
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/mumps2.mjl
+%YDB-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/mumps2.mjl
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-FILENOTCREATE, Journal extract file 12.mjf not created
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 

@@ -1,8 +1,20 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 #
 # C9I09003032 : Prevent malformed string literals from over-scanning EOL
 #
-echo "# This subtest generates a lot of GTM-W-LITNONGRAPH, GTM-E-SPOREOL and GTM-E-EQUAL errors"
+echo "# This subtest generates a lot of GTM-W-LITNONGRAPH, YDB-E-SPOREOL and YDB-E-EQUAL errors"
 $gtm_tst/com/dbcreate.csh mumps 1
 echo "# Compile the mumps routine containing malformed string literals"
 cp $gtm_tst/$tst/inref/c003032.m .

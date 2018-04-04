@@ -1,7 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
-; All rights reserved.	     	  	     			;
+; Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -13,7 +13,7 @@ incrgv4;
 	; create 8 globals ^INCREMENTGV1, ^INCREMENTGV2, ... ^INCREMENTGV8
 	; do $increment(^INCREMENTGVi(100)) with multiple processes
 	; concurrently create/kill records ^INCREMENTGVi with subscripts randomly below and above 100
-	; this way create a constant motion in the tree for ^INCREMENTGVi(100) thereby exercising the concurrency validation logic 
+	; this way create a constant motion in the tree for ^INCREMENTGVi(100) thereby exercising the concurrency validation logic
 	; this is to test that $incr of a key that is constantly being moved by concurrent updates works fine
 	;
 	set ^waittime=15+$r(15) ; time (in seconds) that jobbed off children run for before they stop gracefully
@@ -66,7 +66,7 @@ child	;
 	set gblname=^gblname
 	set incrindx=^incrindx
 	for index=1:1:^numgbls  set global7890123456789012345678901="^"_^gblname_index set finalcnt(global7890123456789012345678901)=0
-	for index=1:1:^numgbls  set global789012345678901234567890="this fails" 
+	for index=1:1:^numgbls  set global789012345678901234567890="this fails"
 	for index=1:1 quit:^stop=1  do
 	.	set global7890123456789012345678901="^"_gblname_(index#numgbls+1)
 	.	set global789012345678901234567890="this should fail"

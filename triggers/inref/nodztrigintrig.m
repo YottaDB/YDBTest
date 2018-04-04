@@ -3,6 +3,9 @@
 ; Copyright (c) 2010, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -34,7 +37,7 @@ nodztrigintrig
 	; INTRA handler for test/com/incretrap.m
 etraphandler(inerr)
 	set err=$piece(inerr,$char(44),2)
-	quit:err="%GTM-E-DZTRIGINTRIG"
+	quit:err="%YDB-E-DZTRIGINTRIG"
 	use $p
 	write "FAIL - unexpected error",!
 	if $ztlevel=0 do  quit
@@ -135,7 +138,7 @@ nestedmrtn
 	;	- trigger chained2 meddles with chained1
 	;	- trigger chained3 is innocuos
 	;	update ^a twice
-	;		both updates will hit %GTM-E-DZTRIGINTRIG
+	;		both updates will hit %YDB-E-DZTRIGINTRIG
 chained
 	do ^echoline
 	new $ztwormhole
@@ -259,7 +262,7 @@ suicide
 	kill ^a,^fired,^incretrap,^stop
 	set ^stop=127 ; don't exceed MAXTRIGNEST
 	set ^incretrap("INTRA")="do etraphandler^nodztrigintrig(%MYSTAT)"
-	set ^incretrap("expected","%GTM-E-STACKCRIT")="set $ecode="""",^stop=$ztlevel+1" ; z/OS hits stack crit
+	set ^incretrap("expected","%YDB-E-STACKCRIT")="set $ecode="""",^stop=$ztlevel+1" ; z/OS hits stack crit
 	set x=$increment(^a)
 	if '$data(^fired)!'$data(^fired("suicide#")) do dumpcontext write "FAIL",!,"^fired(""suicide#"") is undefined!",!
 	else  do

@@ -45,7 +45,7 @@ TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh 
 ==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##START_##TIMESTAMP##.out INITORRESUME'==
 ----------
 Error INITORRESUME seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-INITORRESUME, UPDATERESYNC on a Supplementary Instance must additionally specify INITIALIZE or RESUME
+%YDB-E-INITORRESUME, UPDATERESYNC on a Supplementary Instance must additionally specify INITIALIZE or RESUME
 ----------
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST3 updateresync=srcinstback.repl -initialize'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_dist/mumps -run %XCMD "for i=6:1:15 set ^INST1(i)=i"'==

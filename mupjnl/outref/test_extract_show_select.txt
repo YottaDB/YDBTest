@@ -1955,32 +1955,32 @@ GTM>
 End of second_process job!
 ############ END SECOND PROCESS OUTPUT ###################
 $MUPIP journal -extract=error.mjf -global=\"^A\(\" -for mumps.mjl
-%GTM-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 3 in ^A(
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 3 in ^A(
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 %GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
 $MUPIP journal -extract=error.mjf -global=\"^A\(1,2,3\" -for mumps.mjl
-%GTM-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 8 in ^A(1,2,3
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 8 in ^A(1,2,3
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 %GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
 $MUPIP journal -extract=error.mjf -global=\"^A\)\" -for mumps.mjl
-%GTM-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 3 in ^A)
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 3 in ^A)
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 %GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
 $MUPIP journal -extract=error.mjf -global=\"^\(\" -for mumps.mjl
-%GTM-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 2 in ^(
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 2 in ^(
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 %GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
 $MUPIP journal -extract=error.mjf -global=\"^\)\" -for mumps.mjl
-%GTM-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 2 in ^)
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 2 in ^)
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 %GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
 $MUPIP journal -id="badpid" -extract=error.mjf -detail -forward mumps.mjl
-%GTM-E-INVIDQUAL, Invalid ID qualifier value badpid
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-INVIDQUAL, Invalid ID qualifier value badpid
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 %GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
 $MUPIP journal -id="98765432198" -extract=error.mjf -detail -forward mumps.mjl
-%GTM-E-INVIDQUAL, Invalid ID qualifier value 98765432198
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-INVIDQUAL, Invalid ID qualifier value 98765432198
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 %GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
 
 unset verbose

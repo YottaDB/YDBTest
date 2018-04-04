@@ -3,6 +3,9 @@
 ; Copyright (c) 2014, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -135,7 +138,7 @@ setExpectations(arg,setup,cycles,expect)
 	else  if ('wildcarded) do
 	.	set stop=TRUE
 	if (stop) do  quit
-	.	set expect("error",1)="GTM-E-FILEPARSE, Error parsing file specification: "_arg
+	.	set expect("error",1)="YDB-E-FILEPARSE, Error parsing file specification: "_arg
 	.	set expect("error",2)="GTM-I-TEXT, Filename is not a valid routine name"
 
 	; Validate whether the name may possibly be valid considering the use of wildcards.
@@ -148,7 +151,7 @@ setExpectations(arg,setup,cycles,expect)
 	else  if ('wildcarded) do
 	.	set stop=TRUE
 	if (stop) do  quit
-	.	set expect("error",1)="GTM-E-FILEPARSE, Error parsing file specification: "_arg
+	.	set expect("error",1)="YDB-E-FILEPARSE, Error parsing file specification: "_arg
 	.	set expect("error",2)="GTM-I-TEXT, Unsupported filetype specified"
 	do log(" - @ point 2")
 
@@ -189,7 +192,7 @@ setExpectations(arg,setup,cycles,expect)
 	.	; Consideration for future improvement: It would be nice to also induce "Permission denied" error due to ownership
 	.	; by a different user, but currently it is impractical because of associated overheads in the test system.
 	.	if ((directory["dir4")!(directory["dir3")) do:('wildcarded)  quit		; Note the quit.
-	.	.	set expect("error",1)="GTM-E-FILEPARSE, Error parsing file specification: "_arg
+	.	.	set expect("error",1)="YDB-E-FILEPARSE, Error parsing file specification: "_arg
 	.	.	set:("/"'=$extract(directory)) directory=$zdirectory_directory
 	.	.	do &gtmposix.realpath($$canonicalizePath(directory_"/.."),.realDir,.errno)
 	.	.	set:(""'=realDir) realDir=realDir_"/"
@@ -202,7 +205,7 @@ setExpectations(arg,setup,cycles,expect)
 	.	do log(" - @ point 4")
 	.
 	.	if ($data(setup(realDir,"unreadable"))) do:('wildcarded)  quit			; Note the quit.
-	.	.	set expect("error",1)="GTM-E-FILEPARSE, Error parsing file specification: "_arg
+	.	.	set expect("error",1)="YDB-E-FILEPARSE, Error parsing file specification: "_arg
 	.	.	set expect("error",2)="SYSTEM-E-ENO13, Permission denied"
 	.	.	set stop=TRUE
 	.	do log(" - @ point 5")
@@ -215,7 +218,7 @@ setExpectations(arg,setup,cycles,expect)
 	.
 	.	; If the directory does not exist and never existed, expect an error.
 	.	if (noresult&(""=realDir)&('$data(cycles(objDir)))) do:('wildcarded)  quit 	; Note the quit.
-	.	.	set expect("error",1)="GTM-E-FILEPARSE, Error parsing file specification: "_arg
+	.	.	set expect("error",1)="YDB-E-FILEPARSE, Error parsing file specification: "_arg
 	.	.	set expect("error",2)="SYSTEM-E-ENO2, No such file or directory"
 	.	.	set stop=TRUE
 	.	do log(" - @ point 7")

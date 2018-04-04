@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -31,7 +34,7 @@ echo "Prevent the filter from starting"
 echo ""
 $MUPIP replic -receiv -start -listen=$portno -log=receiver.logx -filter='"$gtm_dist/mumps -run $gtm_tst/$tst/inref/nullfilter.m"'
 
-$gtm_tst/com/wait_for_log.csh -log receiver.logx -message "GTM-E-REPLFILTER" -grep
+$gtm_tst/com/wait_for_log.csh -log receiver.logx -message "YDB-E-REPLFILTER" -grep
 
 $MUPIP replicate -receiver -shut -time=0 >&! shut_receiver.log
 

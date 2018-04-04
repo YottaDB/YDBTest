@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 IXSPLIT3 ; ; ; test for GETFAIL IIII
 	;
 ; Split an index-level block
@@ -10,7 +21,7 @@ IXSPLIT3 ; ; ; test for GETFAIL IIII
 ;   was that the chain record for the *-key in the left block was not
 ;   updated correctly.  This caused the following error message:
 ;
-;	%GTM-E-GVGETFAIL, Global variable retrieval failed. Failure code: IIII
+;	%YDB-E-GVGETFAIL, Global variable retrieval failed. Failure code: IIII
 ;	%GTM-I-GVIS,            Global variable : ^A(183)
 ;	                At M source location +56^ixsplit3
 ;
@@ -41,8 +52,8 @@ IXSPLIT3 ; ; ; test for GETFAIL IIII
 ; | |     |     |     |       |     | |     | |       |     |              |
 ; | |     |     |     |       |     | |     | |       |     |              |
 ; ----------------   ------------------     --------------------------------
-;			 |  |   ^	        ^  
-;  TP chain---------------  ----|     TP chain'-|  
+;			 |  |   ^	        ^
+;  TP chain---------------  ----|     TP chain'-|
 ;
 	n (act)
 	i '$d(act) n act s act="w ""^A("",i,"") = "",^A(i),!"
@@ -57,7 +68,7 @@ IXSPLIT3 ; ; ; test for GETFAIL IIII
 	f i=i+1:1:185 s ^A(i)="A"_i_" "_X1900
 	tc
 	f i=1:1:185 d
-	. s cmp="A"_i_" "_X1900 
+	. s cmp="A"_i_" "_X1900
 	. i ^A(i)'=cmp s cnt=cnt+1 x act
 	w !,$s(cnt:"FAIL",1:"PASS")," from ",$t(+0)
 	q

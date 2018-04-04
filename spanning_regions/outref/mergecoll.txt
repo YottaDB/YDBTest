@@ -30,7 +30,7 @@ zwrite ^a
 
 # kill ^c ; merge ^c=^a ; zwrite ^c
 # Since CREG does not allow null subscripts, the below merge shoud error out
-STAT=mergecoll+16^mergecoll,%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^c(1,"")
+STAT=mergecoll+16^mergecoll,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^c(1,"")
 ^c(1)=900
 
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
@@ -82,12 +82,12 @@ unset echo
 	##TEST_PATH##/mumps.gld
 
 GTM>
-%GTM-E-ACTCOLLMISMTCH, Global ^col inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/c.dat contains different collation sequence #2 for this global
+%YDB-E-ACTCOLLMISMTCH, Global ^col inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/c.dat contains different collation sequence #2 for this global
 
 GTM>
-%GTM-E-ACTCOLLMISMTCH, Global ^col inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/c.dat contains different collation sequence #2 for this global
+%YDB-E-ACTCOLLMISMTCH, Global ^col inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/c.dat contains different collation sequence #2 for this global
 
 GTM>
-%GTM-E-ACTCOLLMISMTCH, Global ^col inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/c.dat contains different collation sequence #2 for this global
+%YDB-E-ACTCOLLMISMTCH, Global ^col inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/c.dat contains different collation sequence #2 for this global
 
 GTM>

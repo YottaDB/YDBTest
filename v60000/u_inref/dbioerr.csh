@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -66,14 +69,14 @@ echo "Return status from MUMPS is:" $status
 unsetenv gtm_white_box_test_case_enable
 
 # Check for DBIOERR
-$gtm_tst/com/check_error_exist.csh wcs_wtstart_errs.out DBIOERR ENO GTM-E-NOTALLDBRNDWN GTM-E-GVRUNDOWN
+$gtm_tst/com/check_error_exist.csh wcs_wtstart_errs.out DBIOERR ENO YDB-E-NOTALLDBRNDWN YDB-E-GVRUNDOWN
 
 # Check for DBIOERR in the operator log
 $gtm_tst/com/getoper.csh "$syslog_before" "" syslog.txt "" DBIOERR
 
 set stat = $status
 if (0 == $stat) then
-	$gtm_tst/com/check_error_exist.csh syslog.txt DBIOERR | sed 's/^.*GTM-E-/%GTM-E-/g' | sed 's/generated.*//g'
+	$gtm_tst/com/check_error_exist.csh syslog.txt DBIOERR | sed 's/^.*YDB-E-/%YDB-E-/g' | sed 's/generated.*//g'
 else
 	echo "TEST-E-FAILED: DBIOERR not found in the syslog. Please check syslog1.txt for more details"
 endif

@@ -1,4 +1,16 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 $gtm_tst/com/dbcreate.csh mumps 1
 
 # max size is MAX_ZTWORMHOLE_SIZE
@@ -24,6 +36,6 @@ GTM_EOF
 #show the smaller number succeeded
 $grep 'size of $ZTWOrmhole' ztwormhole.log
 #show the error exists for next larger number
-$gtm_tst/com/check_error_exist.csh ztwormhole.log GTM-E-ZTWORMHOLE2BIG
+$gtm_tst/com/check_error_exist.csh ztwormhole.log YDB-E-ZTWORMHOLE2BIG
 
 $gtm_tst/com/dbcheck.csh -extract

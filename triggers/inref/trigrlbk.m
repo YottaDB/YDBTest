@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 trigrlbk ;
 	; load the trigger file before doing the test
 	do text^dollarztrigger("tfile^trigrlbk","trigrlbk.trg")
@@ -63,7 +74,7 @@ etr	;
 	if ^disp  write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $ecode=",$ecode," : ZSTATUS=",$zstatus,!
 	; make sure that the error is a anticipated failure for this test
 	set curZS=$piece($zstatus,",",3)
-	if $select(curZS="%GTM-E-TRIGTLVLCHNG":1,curZS="%GTM-E-SETINTRIGONLY":1,1:0)  set $ecode=""
+	if $select(curZS="%YDB-E-TRIGTLVLCHNG":1,curZS="%YDB-E-SETINTRIGONLY":1,1:0)  set $ecode=""
 	else  do
 	.	write "Unanticipated failure occured, halting",!
 	.	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $ecode=",$ecode," : ZSTATUS=",$zstatus,!

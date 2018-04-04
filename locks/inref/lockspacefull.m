@@ -4,7 +4,7 @@
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
 ; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
-; All rights reserved.	     	  	     			;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -21,7 +21,7 @@ lockspacefull(test,show)
 	; If show=1 do not occupy all lock space otherwise the test will hang.
 	; The reson for this is the number of lines differ in LKE SHOW output due to
 	; additional error messages at the end (LOCKSPACEFULL/LOCKSPACEINFO)
-	; The last will cause the GTM-E-LOCKSPACEFULL error.
+	; The last will cause the YDB-E-LOCKSPACEFULL error.
 	set unix=$zversion'["VMS"
 	set addlocks=test
 	set ^a=0
@@ -43,7 +43,7 @@ lockspacefull(test,show)
 	lock ^a
 	do ^job("justlock^lockspacefull",addlocks,"""""")
 	if (unix)&'show do
-	.  zsystem "$gtm_tst/com/getoper.csh ""$syslog_before1"" """" syslog1.txt """" ""GTM-E-LOCKSPACEFULL"""
+	.  zsystem "$gtm_tst/com/getoper.csh ""$syslog_before1"" """" syslog1.txt """" ""YDB-E-LOCKSPACEFULL"""
 	else  do
 	.  for  quit:plaunched  do
 	.  . zsystem zsywaitchld

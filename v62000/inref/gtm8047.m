@@ -4,7 +4,7 @@
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
 ; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
-; All rights reserved.	     	  	     			;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -20,7 +20,7 @@ gtm8047	;
         set z=$justify("",1000),z=$translate(z," ",$zchar(2))
         set x=$justify("",98900)
 	; at this time the stringpool should be almost full.
-	; now create a GTM-E-MEMORY error which in turn ends up doing a stp_gcol
+	; now create a YDB-E-MEMORY error which in turn ends up doing a stp_gcol
         tstart ():serial
 	for i=1:1 set j=i\100,^y(i#100)=$select(j#2=0:z,1:1) write "i = ",i," : $zrealstor = ",$zrealstor,!
         tcommit

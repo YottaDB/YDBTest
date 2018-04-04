@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -38,7 +41,7 @@ change -gblname efgh -collation=199
 show -gblname
 gde_eof
 
-echo "# unset gtm_collate_199, when efgh is created with -collation=199. Expect GDE to throw GTM-E-COLLATIONUNDEF"
+echo "# unset gtm_collate_199, when efgh is created with -collation=199. Expect GDE to throw YDB-E-COLLATIONUNDEF"
 unsetenv gtm_collate_199
 $GDE show -gblname
 

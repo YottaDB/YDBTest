@@ -21,7 +21,7 @@ Now, try creating another instance file (without -name qualifier) to test that R
 => ##SOURCE_PATH##/mupip replicate -instance_create
 ###################################################################
 
-%GTM-E-REPLINSTNMUNDEF, Replication instance name not defined
+%YDB-E-REPLINSTNMUNDEF, Replication instance name not defined
 
 mumps.dat
 mumps.gld
@@ -31,7 +31,7 @@ Now, by passing a valid -name qualifier with -noreplace flag test that RENAMING 
 ###################################################################
 => ##SOURCE_PATH##/mupip replicate -instance_create -name=INSTA -noreplace
 ###################################################################
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/mumps.repl already exists
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/mumps.repl already exists
 
 mumps.dat
 mumps.gld

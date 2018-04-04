@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -34,7 +37,7 @@ setenv gtm_white_box_test_case_number 104
 
 $MUPIP replic -receiv -start -listen=$portno -log=receiver1.logx
 
-$grep GTM-E-UPDPROC receiver1.logx
+$grep YDB-E-UPDPROC receiver1.logx
 
 $MUPIP replicate -receiver -shut -time=0 >&! shut_receiver1.log
 
@@ -53,7 +56,7 @@ setenv gtm_white_box_test_case_number 114
 
 $MUPIP replic -receiv -start -listen=$portno -log=receiver2.logx
 
-$grep GTM-E-UPDPROC receiver2.logx
+$grep YDB-E-UPDPROC receiver2.logx
 
 $MUPIP replicate -receiver -shut -time=0 >&! shut_receiver2.log
 

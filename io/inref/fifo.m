@@ -1,7 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
-; All rights reserved.	     	  	     			;
+; Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -38,8 +38,8 @@ fifo	;FIFO - RECORDSIZE and WIDTH limits for FIFO devices"
 	; Wait for reader to get to its OPEN
 	for i=1:1:60 quit:^A  hang 1
 	; The following hang stalls the "writer" so that the "reader" (executing at fifo4) has enough time
-	; to get to the point where its open is waiting for the "writer" end to open (which will be done in 
-	; the "test" routine).  If the "writer" starts first, then the open errors will remove the FIFO.  With 
+	; to get to the point where its open is waiting for the "writer" end to open (which will be done in
+	; the "test" routine).  If the "writer" starts first, then the open errors will remove the FIFO.  With
 	; the "reader" starting first, the FIFO stays and the tests can run normally.
 	hang 5
 dotests	;;;;;
@@ -99,8 +99,8 @@ error	;
 	zshow "S"
 	write "Will continue with the rest of the tests...",!
 	if '$DATA(expfail) set expfail="NO"
-	if "FAIL"'=expfail write "TEST-E-FAIL, was not expecting an error!",! 
-	if "FAIL"=expfail write "TEST-I-OK, was expecting an error",! 
+	if "FAIL"'=expfail write "TEST-E-FAIL, was not expecting an error!",!
+	if "FAIL"=expfail write "TEST-I-OK, was expecting an error",!
 	kill expfail	; reset expect FAIL
 	write "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",!
 	zgoto mainlvl

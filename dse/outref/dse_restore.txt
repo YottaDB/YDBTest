@@ -90,7 +90,7 @@ DSE> DSE>
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-DSE> %GTM-E-BLKINVALID, 00000232 is not a valid block as database file ##TEST_PATH##/mumps.dat has 00000065 total blocks
+DSE> %YDB-E-BLKINVALID, 00000232 is not a valid block as database file ##TEST_PATH##/mumps.dat has 00000065 total blocks
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -151,7 +151,7 @@ Restoring block 3 from version 1
 DSE> 
 ##TEST_AWKBlock 3   Size 61   Level 0   TN 7 V[0-9][0-9]*
 
-DSE> %GTM-E-NOREGION, REGION not found: FREELUNCH
+DSE> %YDB-E-NOREGION, REGION not found: FREELUNCH
 DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -172,7 +172,7 @@ Saving version 1 of block 64
 DSE> DSE> 
 Restoring block 4 from version 1 of block 64
 
-%GTM-E-AIMGBLKFAIL, After image build for block 00000004 in region ##TEST_PATH##/a.dat failed in DSE or MUPIP
+%YDB-E-AIMGBLKFAIL, After image build for block 00000004 in region ##TEST_PATH##/a.dat failed in DSE or MUPIP
 DSE> 
 Removing version 1 of block 64
 DSE> DSE> 
@@ -193,11 +193,11 @@ No errors detected by integ.
 ##REMOTE_SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 ##ALLOW_OUTPUT  NON_REPLIC
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
 %SYSTEM-E-ENO2, No such file or directory
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-DSE> %GTM-E-DSENOTOPEN, DSE could not open region DEFAULT - see DSE startup error message for cause
+DSE> %YDB-E-DSENOTOPEN, DSE could not open region DEFAULT - see DSE startup error message for cause
 DSE> 

@@ -10,13 +10,13 @@ GTM>
 ******* Experiment #1: Verify that we cannot access the global in an encrypted file without password *******
 
 GTM>
-%GTM-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
 
 GTM>
 ******* Experiment #2: Verify we can set gtm_passwd value after we are in GT.M *******
 
 GTM>
-%GTM-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
 
 GTM>
 
@@ -28,14 +28,14 @@ Experiment #3 passed.
 ******* Experiment #4 Verify we can recover from a bad password by setting to a correct value after entering GT.M *******
 
 GTM>
-%GTM-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
 
 GTM>
 
 GTM>
 
 GTM>
-##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
+##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
 
 GTM>
 

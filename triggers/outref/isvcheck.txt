@@ -29,89 +29,89 @@ Not in a trigger operation
 		set $ZTRIggerop="Z"
 		     ^-----
 ##TEST_AWK		At column 7, line [0-9]*, source module .*/triggers/inref/inspectISV.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set $ZTRI="G"
 		     ^-----
 ##TEST_AWK		At column 7, line [0-9]*, source module .*/triggers/inref/inspectISV.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set $ZTOLdval="old data"
 		     ^-----
 ##TEST_AWK		At column 7, line [0-9]*, source module .*/triggers/inref/inspectISV.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set $ZTOL=42
 		     ^-----
 ##TEST_AWK		At column 7, line [0-9]*, source module .*/triggers/inref/inspectISV.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set $ZTDAta=101
 		     ^-----
 ##TEST_AWK		At column 7, line [0-9]*, source module .*/triggers/inref/inspectISV.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set $ZTDA="some text data"
 		     ^-----
 ##TEST_AWK		At column 7, line [0-9]*, source module .*/triggers/inref/inspectISV.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set $ZTUPdate="1,2,3,4,5,6,100000000"
 		     ^-----
 ##TEST_AWK		At column 7, line [0-9]*, source module .*/triggers/inref/inspectISV.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set $ZTUP="1,2,3,4,5,6,100000001"
 		     ^-----
 ##TEST_AWK		At column 7, line [0-9]*, source module .*/triggers/inref/inspectISV.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set $ZTDElim="1,2,3,4,5,6,100000000"
 		     ^-----
 ##TEST_AWK		At column 7, line [0-9]*, source module .*/triggers/inref/inspectISV.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set $ZTDE="1,2,3,4,5,6,100000001"
 		     ^-----
 ##TEST_AWK		At column 7, line [0-9]*, source module .*/triggers/inref/inspectISV.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set $ZTLEvel=-1
 		     ^-----
 ##TEST_AWK		At column 7, line [0-9]*, source module .*/triggers/inref/inspectISV.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set $ZTLE=129
 		     ^-----
 ##TEST_AWK		At column 7, line [0-9]*, source module .*/triggers/inref/inspectISV.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set $ZTCOde="w not+4,!"
 		     ^-----
 ##TEST_AWK		At column 7, line [0-9]*, source module .*/triggers/inref/inspectISV.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set $ZTCO="set x=y"
 		     ^-----
 ##TEST_AWK		At column 7, line [0-9]*, source module .*/triggers/inref/inspectISV.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set $ZTNAme="joe#1#"
 		     ^-----
 ##TEST_AWK		At column 7, line [0-9]*, source module .*/triggers/inref/inspectISV.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set $ZTNA="abcd#"
 		     ^-----
 ##TEST_AWK		At column 7, line [0-9]*, source module .*/triggers/inref/inspectISV.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 =====================================================
 2.5 ISV Inspection
-$ZSTATUS=ztriggerop+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztriggerop+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztslate+4^inspectISV,%GTM-E-SETINTRIGONLY, ISV $ZTSLATE cannot be modified outside of the trigger environment
-$ZSTATUS=ztslate+5^inspectISV,%GTM-E-SETINTRIGONLY, ISV $ZTSLATE cannot be modified outside of the trigger environment
-$ZSTATUS=ztvalue+1^inspectISV,%GTM-E-SETINTRIGONLY, ISV $ZTVALUE cannot be modified outside of the trigger environment
-$ZSTATUS=ztvalue+2^inspectISV,%GTM-E-SETINTRIGONLY, ISV $ZTVALUE cannot be modified outside of the trigger environment
-$ZSTATUS=ztoldval+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztoldval+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztdata+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztdata+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztupdate+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztupdate+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztdelim+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztdelim+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztlevel+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztlevel+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztcode+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztcode+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztname+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztname+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztriggerop+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztriggerop+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztslate+4^inspectISV,%YDB-E-SETINTRIGONLY, ISV $ZTSLATE cannot be modified outside of the trigger environment
+$ZSTATUS=ztslate+5^inspectISV,%YDB-E-SETINTRIGONLY, ISV $ZTSLATE cannot be modified outside of the trigger environment
+$ZSTATUS=ztvalue+1^inspectISV,%YDB-E-SETINTRIGONLY, ISV $ZTVALUE cannot be modified outside of the trigger environment
+$ZSTATUS=ztvalue+2^inspectISV,%YDB-E-SETINTRIGONLY, ISV $ZTVALUE cannot be modified outside of the trigger environment
+$ZSTATUS=ztoldval+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztoldval+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztdata+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztdata+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztupdate+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztupdate+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztdelim+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztdelim+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztlevel+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztlevel+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztcode+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztcode+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztname+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztname+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
 =====================================================
 3. View ISVs inside of the trigger
 3.1
@@ -391,95 +391,95 @@ No errors detected by integ.
 No errors detected by integ.
 ##SUSPEND_OUTPUT NON_REPLIC
 ##TEST_AWK##TEST_HOST_SHORT##:##REMOTE_TEST_PATH##/RCVR_[0-9][0-9]_[0-9][0-9]_[0-9][0-9].log.updproc
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable

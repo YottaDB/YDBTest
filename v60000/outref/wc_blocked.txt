@@ -6,7 +6,7 @@ No errors detected by integ.
 ###################################################################
 Case 2. Remove shared memory and start a GT.M process after a crash with wc_blocked but no journaling.
 
-%GTM-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -14,7 +14,7 @@ No errors detected by integ.
 ###################################################################
 Case 3. Remove shared memory and start a GT.M process after a crash with wc_blocked and journaling.
 
-%GTM-E-REQRECOV, Error accessing database ##TEST_PATH##/mumps.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-E-REQRECOV, Error accessing database ##TEST_PATH##/mumps.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -34,8 +34,8 @@ Instance INSTANCE2 crashed!
 TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
 ----------
 Error REPLREQROLLBACK seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
-%GTM-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+%YDB-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+%YDB-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
 ----------
 ----------
 Error ENO seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##TIMESTAMP##.out as expected:
@@ -48,13 +48,13 @@ Error JNL_ON-E-MUPIP seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##
 ----------
 ----------
 Error REQROLLBACK seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
-%GTM-E-REQROLLBACK, Error accessing database ##REMOTE_TEST_PATH##/instance2/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-E-REQROLLBACK, Error accessing database ##REMOTE_TEST_PATH##/instance2/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 ----------
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_exe/mumps -run %XCMD "set ^c=1" >&! gtm4c.out'==
 TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
 ----------
 Error REQROLLBACK seen in ##REMOTE_TEST_PATH##/instance2/gtm4c.out as expected:
-%GTM-E-REQROLLBACK, Error accessing database ##REMOTE_TEST_PATH##/instance2/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-E-REQROLLBACK, Error accessing database ##REMOTE_TEST_PATH##/instance2/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 ----------
 ----------
 Error ENO seen in ##REMOTE_TEST_PATH##/instance2/gtm4c.out as expected:
@@ -66,7 +66,7 @@ Error ENO seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
 ----------
 ----------
 Error MUNOFINISH seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ----------
 ----------
 Error JNL_ON-E-MUPIP seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:

@@ -3,7 +3,7 @@ Expect a REPLINSTOPEN and a REPLINSTREAD error for the next 2 commands
 
 ----------
 Error REPLINSTOPEN seen in editinstance_REPLINSTOPEN.out as expected:
-%GTM-E-REPLINSTOPEN, Error opening replication instance file mumps.repl
+%YDB-E-REPLINSTOPEN, Error opening replication instance file mumps.repl
 ----------
 ----------
 ##SUSPEND_OUTPUT HOST_OS390_S390
@@ -17,7 +17,7 @@ Error SYSTEM-E-ENO129 seen in editinstance_REPLINSTOPEN.out as expected:
 ----------
 ----------
 Error REPLINSTREAD seen in editinstance_REPLINSTREAD.out as expected:
-%GTM-E-REPLINSTREAD, Error reading [0x00000800] bytes at offset [0x0000000000000000] from replication instance file mumps.repl
+%YDB-E-REPLINSTREAD, Error reading [0x00000800] bytes at offset [0x0000000000000000] from replication instance file mumps.repl
 ----------
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
@@ -42,7 +42,7 @@ mumps.dat
 
 Expect a MUPCLIERR error next
 
-Instance File Name: %GTM-E-MUPCLIERR, Action not taken due to CLI errors
+Instance File Name: %YDB-E-MUPCLIERR, Action not taken due to CLI errors
 Instance File Name: GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
 
 ----------------------------------------------------------
@@ -399,29 +399,29 @@ Offset     Size
 Simulating crash on Instance INSTANCE1 in ##TEST_PATH##
 Instance INSTANCE1 crashed!
 ==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
-%GTM-E-SIZENOTVALID8, Size (in bytes) must be either 1, 2, 4, or 8
+%YDB-E-SIZENOTVALID8, Size (in bytes) must be either 1, 2, 4, or 8
 Test offset = offset + size/2 for each of the offsets 1-6
 
 Error: OFFSET [0x00000C74] should be a multiple of Size [8]
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 Error: OFFSET [0x00000B24] should be a multiple of Size [8]
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 Error: OFFSET [0x00000B2C] should be a multiple of Size [8]
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 Error: OFFSET [0x00000A02] should be a multiple of Size [4]
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 Error: OFFSET [0x00000404] should be a multiple of Size [8]
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 Error: OFFSET [0x0000040C] should be a multiple of Size [8]
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 Error: OFFSET [0x00000414] should be a multiple of Size [8]
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 Error: OFFSET [0x00000054] should be a multiple of Size [8]
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 Error: OFFSET [0x0000005C] should be a multiple of Size [8]
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 Error: OFFSET [0x000000A6] should be a multiple of Size [4]
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 Test a bad offset, non-HEX value for offset and out of scope offset
 
@@ -431,9 +431,9 @@ Error: OFFSET [0x000007D3] should be a multiple of Size [4]
 ##SUSPEND_OUTPUT 64BIT_GTM
 Error: OFFSET [0x000007D3] should be a multiple of Size [4]
 ##ALLOW_OUTPUT 64BIT_GTM
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
-%GTM-E-CLIERR, Unrecognized value: badoffset, HEX number expected
-%GTM-E-REPLINSTREAD, Error reading [0x00000004] bytes at offset [0x0000000000000DC0] from replication instance file mumps.repl
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-CLIERR, Unrecognized value: badoffset, HEX number expected
+%YDB-E-REPLINSTREAD, Error reading [0x00000004] bytes at offset [0x0000000000000DC0] from replication instance file mumps.repl
 
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo "*" >&! rollback_losttrans.out'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 $grep -E "RLBKJNSEQ|JNLSUCCESS" rollback_losttrans.out'==
@@ -452,11 +452,11 @@ Diffing instancefile_2.out and instancefile_3.out on INST1
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3'==
 ----------
 Error REPLINSTSEQORD seen in ##TEST_PATH##/##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-REPLINSTSEQORD, Instance file header has seqno [0x000000000000007E] which is less than last record seqno [0x0000000000000151] in replication instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSEQORD, Instance file header has seqno [0x000000000000007E] which is less than last record seqno [0x0000000000000151] in replication instance file ##TEST_PATH##/mumps.repl
 ----------
 ----------
 Error NOJNLPOOL seen in ##TEST_PATH##/##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
+%YDB-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
 ----------
 Changing the offset B20
 
@@ -478,7 +478,7 @@ Offset 2852 [0x00000B24] : Old Value = 65 [0x41] : New Value = 79 [0x4F] : Size 
 0x00000B20 0x0010 HST #      5 : Root Primary Instance Name        A2LNONCE1
 Offset 2852 [0x00000B24] : Old Value = 79 [0x4F] : New Value = 79 [0x4F] : Size = 1 [0x01]
 0x00000B20 0x0010 HST #      5 : Root Primary Instance Name        A2LNONCE1
-%GTM-E-CLIERR, Unrecognized value: 4G, HEX number expected
+%YDB-E-CLIERR, Unrecognized value: 4G, HEX number expected
 0x00000B20 0x0010 HST #      5 : Root Primary Instance Name        A2LNONCE1
 Offset 2853 [0x00000B25] : Old Value = 78 [0x4E] : New Value = 80 [0x50] : Size = 1 [0x01]
 0x00000B20 0x0010 HST #      5 : Root Primary Instance Name        A2LNOPCE1

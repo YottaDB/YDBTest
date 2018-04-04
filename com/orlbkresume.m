@@ -3,6 +3,9 @@
 ; Copyright (c) 2012, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -19,7 +22,7 @@ incretrap
 	set incretrap("SHOWDEST")=1			; show destination
 	set incretrap("NODISP")=1			; suppress output for expected errors
 	if $ztrnlnm("gtm_test_os_machtype")="HOST_HP-UX_PA_RISC" do
-	.	set incretrap("expected","%GTM-E-FNOTONSYS")="set $ecode="""",ztlevel=0"
+	.	set incretrap("expected","%YDB-E-FNOTONSYS")="set $ecode="""",ztlevel=0"
 	quit
 	; pass in the job id, ^@rtn, and the target $ZLEVEL
 init(rtn,reslevel,origetrap)

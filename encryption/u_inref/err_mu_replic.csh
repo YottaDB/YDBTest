@@ -4,6 +4,9 @@
 # Copyright (c) 2009-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -40,12 +43,12 @@ $sec_shell  "$sec_getenv; cd $SEC_DIR; unsetenv gtm_passwd; $gtm_tst/com/RCVR.cs
 # Check GTM-W-CRYPTINIT error from updateproc log. This error is expected
 $gtm_tst/com/wait_for_log.csh -log $SEC_SIDE/RCVR_${start_time}.log.updproc -message "GTM-W-CRYPTINIT" -duration 30 -waitcreation
 
-echo "# Update some globals on primary - Expect update process to exit with GTM-E-CRYPTBADCONFIG"
+echo "# Update some globals on primary - Expect update process to exit with YDB-E-CRYPTBADCONFIG"
 $gtm_exe/mumps -run %XCMD 'set ^a=10'
-$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_for_log.csh -log RCVR_${start_time}.log.updproc -message GTM-E-CRYPTBADCONFIG"
+$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_for_log.csh -log RCVR_${start_time}.log.updproc -message YDB-E-CRYPTBADCONFIG"
 
-echo "# Expect both GTM-W-CRYPTINIT and GTM-E-CRYPTBADCONFIG from update process log"
-$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/check_error_exist.csh RCVR_${start_time}.log.updproc GTM-W-CRYPTINIT GTM-E-CRYPTBADCONFIG"
+echo "# Expect both GTM-W-CRYPTINIT and YDB-E-CRYPTBADCONFIG from update process log"
+$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/check_error_exist.csh RCVR_${start_time}.log.updproc GTM-W-CRYPTINIT YDB-E-CRYPTBADCONFIG"
 
 setenv gtm_passwd $save_gtm_passwd
 echo "# Shut down source and receiver processes"

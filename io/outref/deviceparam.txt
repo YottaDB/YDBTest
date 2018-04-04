@@ -28,7 +28,7 @@ Will test a valid fixed len (1048576)
 The length of variable line read was:12
 The length of variable line read was:17
 Will test an invalid fixed len (1048577)
-150377474,fixedlen+16^fixedlen,%GTM-E-RDFLTOOLONG, Length specified for fixed length read exceeds the maximum string size
+150377474,fixedlen+16^fixedlen,%YDB-E-RDFLTOOLONG, Length specified for fixed length read exceeds the maximum string size
 ==================================================================================
 # RENAME - Test that the RENAME deviceparameter for CLOSE actually renames the file.
 
@@ -115,7 +115,7 @@ File: readonly.txt
 1    4       BLAH
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 In ZTRAP
-150373618,readonly+11^readonly,%GTM-E-DEVICEREADONLY, Cannot write to read-only device
+150373618,readonly+11^readonly,%YDB-E-DEVICEREADONLY, Cannot write to read-only device
 The file, again:
 File: readonly.txt
 #l   $L(l)   l
@@ -300,7 +300,7 @@ TEST-I-FNF, file is not found
 Test: fifo.pipe
 -> OPEN "fifo.pipe":(FIFO:WRITE:RECORDSIZE=-1):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+10^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+10^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^fifo
 open+10^io
     ($ZTRAP)
@@ -315,7 +315,7 @@ TEST-I-FNF, file is not found
 Test: fifo.pipe
 -> OPEN "fifo.pipe":(FIFO:WRITE:RECORDSIZE=-1):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+10^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+10^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^fifo
 open+10^io
     ($ZTRAP)
@@ -329,7 +329,7 @@ TEST-I-OK, was expecting an error
 Test: fifo.pipe
 -> OPEN "fifo.pipe":(FIFO:WRITE:RECORDSIZE=0):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+10^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+10^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^fifo
 open+10^io
     ($ZTRAP)
@@ -361,7 +361,7 @@ PASS
 Test: fifo.pipe
 -> OPEN "fifo.pipe":(FIFO:WRITE:RECORDSIZE=1048580):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150376194,open+10^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+150376194,open+10^io,%YDB-E-RMWIDTHTOOBIG, File record size or width too big
 error+6^fifo
 open+10^io
     ($ZTRAP)
@@ -376,7 +376,7 @@ Test: fifo.pipe
 -> OPEN "fifo.pipe":(FIFO:WRITE):60
 -> USE "fifo.pipe":(WIDTH=-1)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,use+6^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,use+6^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^fifo
 use+6^io
     ($ZTRAP)
@@ -391,7 +391,7 @@ Test: fifo.pipe
 -> OPEN "fifo.pipe":(FIFO:WRITE):60
 -> USE "fifo.pipe":(WIDTH=0)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,use+6^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,use+6^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^fifo
 use+6^io
     ($ZTRAP)
@@ -424,7 +424,7 @@ Test: fifo.pipe
 -> OPEN "fifo.pipe":(FIFO:WRITE):60
 -> USE "fifo.pipe":(WIDTH=1048580)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150376194,use+6^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+150376194,use+6^io,%YDB-E-RMWIDTHTOOBIG, File record size or width too big
 error+6^fifo
 use+6^io
     ($ZTRAP)

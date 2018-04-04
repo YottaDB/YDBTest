@@ -332,7 +332,7 @@ funcbadalsct(errflg)
 	; Routine to perform check that we got the error we expected
 errorcheck(experr,lvl,resumelabel)
 	New $ETrap Set $ETrap=""
-	Set errname=$ZPiece($ZStatus,"GTM-E-",2),errname=$ZPiece(errname,",",1)
+	Set errname=$ZPiece($ZStatus,"YDB-E-",2),errname=$ZPiece(errname,",",1)
 	If errname=experr Set $ECode="",errflg=1 ZGoto lvl:@resumelabel
 	; Else things didn't match and that's a problem..
 	Write "FAIL - error did not match - expected: ",experr," but got ",errname,!

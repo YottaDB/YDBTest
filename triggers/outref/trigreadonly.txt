@@ -7,7 +7,7 @@ b.dat
 mumps.dat
 
 Case 1 - MUPIP TRIGGER - Adding a trigger to a read-only database
-%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+%YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
 Case 2 - MUPIP TRIGGER - Delete all triggers in a read-only database (first add a trigger to attempt to 'delete')
 File ##IN_TEST_PATH##/inref/readonlyadd1.trg, Line 1: Added SET and/or Non-SET trigger on ^C named addedtrig
@@ -20,13 +20,13 @@ File ##IN_TEST_PATH##/inref/readonlyadd1.trg, Line 1: Added SET and/or Non-SET t
 =========================================
 File ##IN_TEST_PATH##/inref/readonlydall.trg, Line 1: This operation will delete all triggers.
 Proceed? [Y/N]: 
-%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+%YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
 Case 3 - MUPIP TRIGGER - Modifying a trigger in a read-only database
-%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+%YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
 Case 4 - MUPIP TRIGGER - Deleting a specific trigger in a read-only database
-%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+%YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
 Case 5 - MUPIP TRIGGER - multi-region - verify can add trigger to AREG if BREG is R/O
 File ##IN_TEST_PATH##/inref/readonlyadd2.trg, Line 1: Added SET and/or Non-SET trigger on ^A named addedtrig2
@@ -89,7 +89,7 @@ All existing triggers named readwrite* (count = 2) now deleted
 1
 # Case GTM6901B - Trigger add/delete name* should not work if one of the regions that have a matching trigger is read-only
 # Install triggers in AREG, BREG and DEFAULT - with AREG read-only
-%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region AREG is read-only
+%YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region AREG is read-only
 # Install triggers in AREG, BREG and DEFAULT with all regions read-write
 # Select name* should work if one of the regions that have a matching trigger is read-only
 ;trigger name: readonlyareg (region AREG)  cycle: 1
@@ -100,7 +100,7 @@ All existing triggers named readwrite* (count = 2) now deleted
 +^c -name=readwritedef -commands=S -xecute="set ^readwritetrg=^c"
 1
 # Delete triggers with -readwrite*
-%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region BREG is read-only
+%YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region BREG is read-only
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -179,7 +179,7 @@ GTM>
 Case 10 - $ZTrigger(FILE) - Adding a trigger to a read-only database
 
 GTM>
-%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+%YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
 GTM>
 Case 11 - $ZTrigger(FILE) - Delete all triggers in a read-only database (first add a trigger to attempt to 'delete')
@@ -200,19 +200,19 @@ File ##IN_TEST_PATH##/inref/readonlyadd1.trg, Line 1: Added SET and/or Non-SET t
 GTM>
 
 GTM>
-%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+%YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
 GTM>
 Case 12 - $ZTrigger(FILE) - Modifying a trigger in a read-only database
 
 GTM>
-%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+%YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
 GTM>
 Case 13 - $ZTrigger(FILE) - Deleting a specific trigger in a read-only database
 
 GTM>
-%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+%YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
 GTM>
 Case 14 - $ZTrigger(FILE) - multi-region - verify can add trigger to AREG if BREG is R/O
@@ -313,7 +313,7 @@ GTM>
 Case 19 - $ZTrigger(ITEM) - Adding a trigger to a read-only database
 
 GTM>
-%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+%YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
 GTM>
 Case 20 - $ZTrigger(ITEM) - Delete all triggers in a read-only database (first add a trigger to attempt to 'delete')
@@ -327,19 +327,19 @@ Added SET and/or Non-SET trigger on ^C named addedtrig
 GTM>
 
 GTM>
-%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+%YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
 GTM>
 Case 21 - $ZTrigger(ITEM) - Modifying a trigger in a read-only database
 
 GTM>
-%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+%YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
 GTM>
 Case 22 - $ZTrigger(ITEM) - Deleting a specific trigger in a read-only database
 
 GTM>
-%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+%YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
 GTM>
 Case 23 - $ZTrigger(ITEM) - multi-region - verify can add trigger to AREG if BREG is R/O
@@ -403,7 +403,7 @@ GTM>
 Case 28 - Drive trigger for non-existant global in a read-only database
 
 GTM>
-%GTM-E-ZTRIGNOTRW, ZTRIGGER cannot operate on read-only region DEFAULT
+%YDB-E-ZTRIGNOTRW, ZTRIGGER cannot operate on read-only region DEFAULT
 
 GTM>
 
@@ -412,7 +412,7 @@ GTM>
 Case 29 - Drive trigger for existing global in a read-only database
 
 GTM>
-%GTM-E-ZTRIGNOTRW, ZTRIGGER cannot operate on read-only region DEFAULT
+%YDB-E-ZTRIGNOTRW, ZTRIGGER cannot operate on read-only region DEFAULT
 
 GTM>
 ##SOURCE_PATH##/mupip

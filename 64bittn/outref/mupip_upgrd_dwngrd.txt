@@ -11,8 +11,8 @@ You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
 %GTM-I-TEXT, Mupip upgrade started
-%GTM-E-TEXT, Database already upgraded
-%GTM-E-MUNOUPGRD, Database not upgraded because of preceding errors
+%YDB-E-TEXT, Database already upgraded
+%YDB-E-MUNOUPGRD, Database not upgraded because of preceding errors
 
 Begin Section 2
 
@@ -22,7 +22,7 @@ You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
 %GTM-I-TEXT, Mupip upgrade started
-%GTM-E-MUSTANDALONE, Could not get exclusive access to mumps.dat
+%YDB-E-MUSTANDALONE, Could not get exclusive access to mumps.dat
 %SYSTEM-E-ENO17, File exists
 
 ##TEST_AWK.GTM-I-FTOKKEY, FTOK key 0x[0-9A-F]+
@@ -38,15 +38,15 @@ You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
 %GTM-I-TEXT, Mupip upgrade started
-##TEST_AWK%GTM-E-MUUPGRDNRDY, Database mumps.dat has not been certified as being ready to upgrade to GT.M.*
-%GTM-E-MUNOUPGRD, Database not upgraded because of preceding errors
+##TEST_AWK%YDB-E-MUUPGRDNRDY, Database mumps.dat has not been certified as being ready to upgrade to GT.M.*
+%YDB-E-MUNOUPGRD, Database not upgraded because of preceding errors
 Attempting MUPIP DOWNGRADE on a V4 db.Should issue BADDBVER error
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
 %GTM-I-TEXT, Mupip downgrade started
-%GTM-E-BADDBVER, Incorrect database version: mumps.dat
-%GTM-E-MUNODWNGRD, Database not downgraded because of preceding errors
+%YDB-E-BADDBVER, Incorrect database version: mumps.dat
+%YDB-E-MUNODWNGRD, Database not downgraded because of preceding errors
 
 Begin Section 4
 
@@ -67,8 +67,8 @@ You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
 %GTM-I-TEXT, Mupip upgrade started
-%GTM-E-MUUPGRDNRDY, Database mumps.dat has not been certified as being ready to upgrade to GT.M ##MACHTYPE##
-%GTM-E-MUNOUPGRD, Database not upgraded because of preceding errors
+%YDB-E-MUUPGRDNRDY, Database mumps.dat has not been certified as being ready to upgrade to GT.M ##MACHTYPE##
+%YDB-E-MUNOUPGRD, Database not upgraded because of preceding errors
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -116,8 +116,8 @@ You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
 %GTM-I-TEXT, Mupip upgrade started
-%GTM-E-DBMINRESBYTES, Minimum RESERVED BYTES value required for certification/upgrade is 8 - Currently is 7
-%GTM-E-MUNOUPGRD, Database not upgraded because of preceding errors
+%YDB-E-DBMINRESBYTES, Minimum RESERVED BYTES value required for certification/upgrade is 8 - Currently is 7
+%YDB-E-MUNOUPGRD, Database not upgraded because of preceding errors
 Database file ##TEST_PATH##/mumps.dat now has 8 reserved bytes
 
 File  	##TEST_PATH##/mumps.dat
@@ -128,7 +128,7 @@ You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
 %GTM-I-TEXT, Mupip upgrade started
-%GTM-E-DBMAXREC2BIG, Maximum record size ##MAX_REC_SIZE## is too large for this block size (512) - Maximum is 496
+%YDB-E-DBMAXREC2BIG, Maximum record size ##MAX_REC_SIZE## is too large for this block size (512) - Maximum is 496
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -170,7 +170,7 @@ $error_free :  ; $no_regions = 1
 
 
 Integ of region DEFAULT
-%GTM-E-DYNUPGRDFAIL, Unable to dynamically upgrade block ##TN## in database ##TEST_PATH##/mumps.dat due to lack of free space in block
+%YDB-E-DYNUPGRDFAIL, Unable to dynamically upgrade block ##TN## in database ##TEST_PATH##/mumps.dat due to lack of free space in block
 
 GTM>
 
@@ -179,15 +179,15 @@ GTM>
 verification should issue DYNUPGRDFAIL error here,as too-big records were previously set
 
 GTM>
-%GTM-E-DYNUPGRDFAIL, Unable to dynamically upgrade block ##TN## in database ##TEST_PATH##/mumps.dat due to lack of free space in block
+%YDB-E-DYNUPGRDFAIL, Unable to dynamically upgrade block ##TN## in database ##TEST_PATH##/mumps.dat due to lack of free space in block
 		At M source location vrfybig+8^upgrdtst
 
 GTM>
 ##ALLOW_OUTPUT DBG
 Attempting MUPIP REORG UPGRADE with too big records. Should error out
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
-%GTM-E-DYNUPGRDFAIL, Unable to dynamically upgrade block ##TN## in database  due to lack of free space in block
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
+%YDB-E-DYNUPGRDFAIL, Unable to dynamically upgrade block ##TN## in database  due to lack of free space in block
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 Attempting MUPIP REORG DOWNGRADE with too big records. Should run fine
 Region ##REG## : Statistics : Blocks Read From Disk (Bitmap)     : ##REORG_BLOCKS##
 Region ##REG## : Statistics : Blocks Skipped (Free)              : ##REORG_BLOCKS##
@@ -258,7 +258,7 @@ GTM>
 verification error expected since database is upgraded to V5 but the version now is V4
 
 GTM>
-%GTM-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
+%YDB-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
 		At M source location dirtloop+4^upgrdtst
 
 GTM>
@@ -268,7 +268,7 @@ You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
 %GTM-I-TEXT, Mupip downgrade started
-%GTM-E-MUSTANDALONE, Could not get exclusive access to mumps.dat
+%YDB-E-MUSTANDALONE, Could not get exclusive access to mumps.dat
 %SYSTEM-E-ENO17, File exists
 
 ##TEST_AWK.GTM-I-FTOKKEY, FTOK key 0x[0-9A-F]+
@@ -329,7 +329,7 @@ No errors detected by integ.
 verification expected to now fail with BADDBVER error as V5 version is used on a V4 database
 
 GTM>
-%GTM-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
+%YDB-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
 		At M source location dirtloop+4^upgrdtst
 
 GTM>
@@ -340,8 +340,8 @@ You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
 %GTM-I-TEXT, Mupip upgrade started
-%GTM-E-MUUPGRDNRDY, Database mumps.dat has not been certified as being ready to upgrade to GT.M ##MACHTYPE##
-%GTM-E-MUNOUPGRD, Database not upgraded because of preceding errors
+%YDB-E-MUUPGRDNRDY, Database mumps.dat has not been certified as being ready to upgrade to GT.M ##MACHTYPE##
+%YDB-E-MUNOUPGRD, Database not upgraded because of preceding errors
 
 
 Total blocks in database  -------##SCAN_BLOCKS##
@@ -385,8 +385,8 @@ An abnormal termination will damage the database during the operation !!
 %GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
 %GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
 %GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
-%GTM-E-MUDWNGRDNRDY, Database mumps.dat is not ready to downgrade - still 1 database blocks to downgrade
-%GTM-E-MUNODWNGRD, Database not downgraded because of preceding errors
+%YDB-E-MUDWNGRDNRDY, Database mumps.dat is not ready to downgrade - still 1 database blocks to downgrade
+%YDB-E-MUNODWNGRD, Database not downgraded because of preceding errors
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -405,8 +405,8 @@ An abnormal termination will damage the database during the operation !!
 %GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
 %GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
 %GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
-%GTM-E-MUDWNGRDTN, Transaction number ##TN## in database ##DATAFILE## is too big for MUPIP [REORG] DOWNGRADE. Renew database with MUPIP INTEG TN_RESET
-%GTM-E-MUNODWNGRD, Database not downgraded because of preceding errors
+%YDB-E-MUDWNGRDTN, Transaction number ##TN## in database ##DATAFILE## is too big for MUPIP [REORG] DOWNGRADE. Renew database with MUPIP INTEG TN_RESET
+%YDB-E-MUNODWNGRD, Database not downgraded because of preceding errors
 No errors detected by integ.
 
 File  	##TEST_PATH##/mumps.dat
@@ -466,10 +466,10 @@ $error_free :  ; $no_regions = 1
 
 
 Integ of region DEFAULT
-%GTM-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
+%YDB-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
 %GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
 Clean up ftok semaphore which will be left around from the BADDBVER error from the dbcheck.csh call
 %GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 ##TEST_PATH##/mupip.err_##TEST_AWK.._.._.._.._.._..
-%GTM-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
+%YDB-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
 %GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages

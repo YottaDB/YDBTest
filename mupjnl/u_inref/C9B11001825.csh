@@ -1,5 +1,17 @@
 #
-# If run with journaling, this test requires BEFORE_IMAGE so set that unconditionally even if test was started with -jnl nobefore 
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+# If run with journaling, this test requires BEFORE_IMAGE so set that unconditionally even if test was started with -jnl nobefore
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
 $gtm_tst/com/dbcreate.csh . 3
 $gtm_tst/com/jnl_on.csh
@@ -52,7 +64,7 @@ set verbose
 #a) Test that backward recovery checks journal file name in database file header.
 $MUPIP journal -recov -back mumps1.mjl -extract=1.mjf
 #Expected result: journal file name does not match database file header.
-#Return Status: GTM-E-JNLNMBKNOTPRCD
+#Return Status: YDB-E-JNLNMBKNOTPRCD
 #whereas the following should work:
 $MUPIP journal -recov -back mumps2.mjl -extract=2.mjf
 
@@ -61,7 +73,7 @@ $MUPIP journal -recov -back mumps2.mjl -extract=2.mjf
 
 $MUPIP journal -recov -back mumps1.mjl,mumps2.mjl -since=\"$time1\" -extract=3.mjf
 #Expected result: Only one-generation journal file per region can be specified explicitly
-#Return status: GTM-E-JNLNMBKNOTPRCD
+#Return status: YDB-E-JNLNMBKNOTPRCD
 ###
 cp mumps2.mjl mumpsn.mjl
 $MUPIP journal -recov -back mumps2.mjl,mumpsn.mjl -since=\"$time1\" -extract=3n.mjf

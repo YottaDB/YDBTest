@@ -24,7 +24,7 @@ GTM>
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log.updproc UPDREPLSTATEOFF'==
 ----------
 Error UPDREPLSTATEOFF seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
-%GTM-E-UPDREPLSTATEOFF, Error replicating global ^bglobal as it maps to database ##REMOTE_TEST_PATH##/instance2/b.dat which has replication turned OFF
+%YDB-E-UPDREPLSTATEOFF, Error replicating global ^bglobal as it maps to database ##REMOTE_TEST_PATH##/instance2/b.dat which has replication turned OFF
 ----------
 ==Executing MULTISITE_REPLIC 'RUN INST2 set msr_dont_chk_stat ; $MUPIP replicate -receiver -checkhealth'==
 PID ##FILTERED##[##PID##] Receiver server is alive
@@ -36,7 +36,7 @@ Update Process crashed during shutdown
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log.updproc UPDREPLSTATEOFF'==
 ----------
 Error UPDREPLSTATEOFF seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
-%GTM-E-UPDREPLSTATEOFF, Error replicating global ^bglobal as it maps to database ##REMOTE_TEST_PATH##/instance2/b.dat which has replication turned OFF
+%YDB-E-UPDREPLSTATEOFF, Error replicating global ^bglobal as it maps to database ##REMOTE_TEST_PATH##/instance2/b.dat which has replication turned OFF
 ----------
 ==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
 # Turn replication ON in region BREG. (MSR action command not printed)

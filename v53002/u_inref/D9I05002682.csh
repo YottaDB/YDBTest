@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -34,7 +34,7 @@ $GTM << EOF
 for i=1:1:10 set ^aglobal(i)=i set ^bglobal(i)=i set ^default(i)=i
 EOF
 
-# Check if the above updates caused the update process to die with a GTM-E-UPDREPLSTATEOFF error
+# Check if the above updates caused the update process to die with a YDB-E-UPDREPLSTATEOFF error
 # while trying to update the non-replicated region BREG.
 $MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log.updproc' -message UPDREPLSTATEOFF'
 $MSR RUN INST2 "$msr_err_chk RCVR_$time_msr.log.updproc UPDREPLSTATEOFF"
@@ -51,7 +51,7 @@ sed 's/PID [0-9]* /PID ##FILTERED##[##PID##] /' checkhealth_INST2_2.out
 $MSR STOPRCV INST1 INST2
 
 # Try to restart the replication servers on the secondary.
-# Since there is an update waiting to be applied, the update process will die with the same GTM-E-UPDREPLSTATEOFF error
+# Since there is an update waiting to be applied, the update process will die with the same YDB-E-UPDREPLSTATEOFF error
 setenv msr_dont_chk_stat
 $MSR STARTRCV INST1 INST2
 get_msrtime

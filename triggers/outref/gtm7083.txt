@@ -7,21 +7,21 @@ File a.trg, Line 1: Added trigger on ^a named x#
 0 triggers modified
 =========================================
 # switch to current ver and try setting ^a
-# Expect GTM-E-NEEDTRIGUPGRD for all the below attempts (GTM-8116 : $text should silently exit)
+# Expect YDB-E-NEEDTRIGUPGRD for all the below attempts (GTM-8116 : $text should silently exit)
 $gtm_exe/mumps -run %XCMD 'set ^a=1'
-%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+%YDB-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
 $gtm_exe/mumps -run %XCMD 'set ^notrigger=1'
-%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+%YDB-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
 echo "" | $MUPIP trigger -select
 Output File: 
-%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+%YDB-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
 $MUPIP trigger -triggerfile=a.trg
-%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+%YDB-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
 $gtm_exe/mumps -run %XCMD 'zbreak ^x#'
-%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+%YDB-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
 $gtm_exe/mumps -run %XCMD 'write $text(^x#)'
 $gtm_exe/mumps -run %XCMD 'zprint ^x#'
-%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+%YDB-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##TEST_PATH##/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
 unset verbose
 # The below that does not require trigger access should work fine
 $LKE show -all
@@ -33,10 +33,10 @@ $grep '.-E-.' dsedumpbl3.out
 $gtm_exe/mumps -run %XCMD 'write ^a(1)'
 1
 $gtm_exe/mumps -run %XCMD 'write ^notrigger'
-%GTM-E-GVUNDEF, Global variable undefined: ^notrigger
+%YDB-E-GVUNDEF, Global variable undefined: ^notrigger
 unset verbose
 # Try trigger -upgrade on a read-only database. Expect it to fail
-%GTM-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
+%YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 # trigger -upgrade on a read-write database should work
 Triggers in region DEFAULT have been upgraded
 trigger executed
@@ -51,8 +51,8 @@ File a.trg, Line 1: SET trigger on ^a already present in trigger named x - no ac
 =========================================
 # switch to prior ver and try setting ^a
 ----------
-Error GTM-E-TRIGDEFBAD seen in prior_ver_upgraded_trig.out as expected:
-%GTM-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#LABEL")
+Error YDB-E-TRIGDEFBAD seen in prior_ver_upgraded_trig.out as expected:
+%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#LABEL")
 ----------
 # switch to current ver and delete all triggers
 All existing triggers (count = 1) deleted

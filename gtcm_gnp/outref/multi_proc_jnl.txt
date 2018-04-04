@@ -54,7 +54,7 @@ Check local (client) database...
 No errors detected by integ.
 # Do Database extract after stopping GTCM servers:
 # Local: ##SOURCE_PATH##/mupip extract back_extr_fail.glo
-%GTM-E-UNIMPLOP, Unimplemented construct encountered
+%YDB-E-UNIMPLOP, Unimplemented construct encountered
 %GTM-I-TEXT, This utility does not support remote database operations
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/local.gld
@@ -70,9 +70,9 @@ GDE>
 ##SUSPEND_OUTPUT JNL_NOBEFORE
 # Local: Do ##SOURCE_PATH##/mupip journal -recover -back '*' :: will fail
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-FILENOTFND, File ##TEST_REMOTE_NODE_PATH_GTCM_2##/b.dat not found
+%YDB-E-FILENOTFND, File ##TEST_REMOTE_NODE_PATH_GTCM_2##/b.dat not found
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful

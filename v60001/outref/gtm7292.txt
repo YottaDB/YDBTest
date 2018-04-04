@@ -107,26 +107,26 @@ unset verbose
 ###############################################
 Testing -heuristic qualifier on A/R sampling method
 $MUPIP size -heuristic="arsample,samples"
-%GTM-E-CLIERR, Option : SAMPLES needs value
+%YDB-E-CLIERR, Option : SAMPLES needs value
 
 
 $MUPIP size -heuristic="ar,sample=110" >> & heur_ar.log
 echo $status
 0
 $MUPIP size -heuristic="arsample,samples=0"
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.SAMPLES
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.SAMPLES
 
 MUPIP SIZE cannot proceed with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="arsample,samples=-3"
-%GTM-E-CLIERR, Unrecognized value: -3, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: -3, Decimal number expected
 $MUPIP size -heuristic="arsample,samples=34s"
-%GTM-E-CLIERR, Unrecognized value: 34s, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: 34s, Decimal number expected
 $MUPIP size -heuristic="arsample,dummy=110"
-%GTM-E-CLIERR, Unrecognized option : DUMMY
+%YDB-E-CLIERR, Unrecognized option : DUMMY
 $MUPIP size -heuristic="arsample,dummy"
-%GTM-E-CLIERR, Unrecognized option : DUMMY
+%YDB-E-CLIERR, Unrecognized option : DUMMY
 $MUPIP size -heuristic="arsample,samples=110,seed=$SEED"
 
 Global: a (region AREG)
@@ -311,21 +311,21 @@ unset verbose
 ###############################################
 Testing -heuristic qualifier on importance sampling method
 $MUPIP size -heuristic="impsample,samples"
-%GTM-E-CLIERR, Option : SAMPLES needs value
+%YDB-E-CLIERR, Option : SAMPLES needs value
 $MUPIP size -heuristic="impsample,samples=0"
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.SAMPLES
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.SAMPLES
 
 MUPIP SIZE cannot proceed with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="impsample,samples=-3"
-%GTM-E-CLIERR, Unrecognized value: -3, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: -3, Decimal number expected
 $MUPIP size -heuristic="impsample,samples=34s"
-%GTM-E-CLIERR, Unrecognized value: 34s, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: 34s, Decimal number expected
 $MUPIP size -heuristic="impsample,dummy=110"
-%GTM-E-CLIERR, Unrecognized option : DUMMY
+%YDB-E-CLIERR, Unrecognized option : DUMMY
 $MUPIP size -heuristic="impsample,dummy"
-%GTM-E-CLIERR, Unrecognized option : DUMMY
+%YDB-E-CLIERR, Unrecognized option : DUMMY
 $MUPIP size -heuristic="impsample,samples=110,seed=$SEED"
 
 Global: a (region AREG)
@@ -474,51 +474,51 @@ unset verbose
 ###############################################
 Testing -heuristic qualifier on Scan method
 $MUPIP size -heuristic="scan,level"
-%GTM-E-CLIERR, Option : LEVEL needs value
+%YDB-E-CLIERR, Option : LEVEL needs value
 $MUPIP size -heuristic="scan,level=4"
 
 Global: a (region AREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: b (region BREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c2 (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c3 (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: d (region DEFAULT)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $MUPIP size -heuristic="scan,level=8"
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 MUPIP SIZE cannot proceed with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="scan,level=-19"
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 MUPIP SIZE cannot proceed with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="scan,level=-1s9"
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 MUPIP SIZE cannot proceed with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="scan,level=-9"
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 MUPIP SIZE cannot proceed with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="scan"
 
 Global: a (region AREG)
@@ -576,7 +576,7 @@ Level          Blocks          Records         Adjacent
     2               4              113                0
 
 Global: b (region BREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c (region CREG)
 Level          Blocks          Records         Adjacent
@@ -591,8 +591,8 @@ Level          Blocks          Records         Adjacent
     2               1               15                1
 
 Global: d (region DEFAULT)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $MUPIP size -heuristic="scan,level=0"
 
 Global: a (region AREG)
@@ -650,7 +650,7 @@ Level          Blocks          Records         Adjacent
     1             113             4854                8
 
 Global: b (region BREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c (region CREG)
 Level          Blocks          Records         Adjacent
@@ -665,8 +665,8 @@ Level          Blocks          Records         Adjacent
     0             686             8125                8
 
 Global: d (region DEFAULT)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $MUPIP size -heuristic="scan,level=-3"
 
 Global: a (region AREG)
@@ -674,35 +674,35 @@ Level          Blocks          Records         Adjacent
     0            4854            57292                0
 
 Global: b (region BREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c2 (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c3 (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: d (region DEFAULT)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 unset verbose
 ###############################################
 Testing -heuristic qualifier disallowed combinations
 $MUPIP size -heuristic="scan,arsample"
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN
 $MUPIP size -heuristic="scan,impsample"
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN
 $MUPIP size -heuristic="impsample,level=1"
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN LEVEL
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN LEVEL
 $MUPIP size -heuristic="arsample,level=1"
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE SCAN LEVEL
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE SCAN LEVEL
 $MUPIP size -heuristic="scan,samples=101"
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SAMPLES
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SAMPLES
 $MUPIP size -heuristic="scan,seed=5"
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SEED
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SEED
 unset verbose
 ###############################################
 Testing -heuristic default behavior
@@ -723,7 +723,7 @@ $MUPIP size -heuristic="impsample,samples=1000" -select="nonexistent"
 
 MUPIP SIZE cannot proceed with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -select="a"
 
 Global: a (region AREG)
@@ -805,16 +805,16 @@ unset verbose
 ###############################################
 Testing -region qualifier
 $MUPIP size -heuristic="impsample,samples=1000" -select="b" -region="nonexistent"
-%GTM-E-NOREGION, REGION not found: NONEXISTENT
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-NOREGION, REGION not found: NONEXISTENT
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="impsample,samples=1000" -select="b" -region
-%GTM-E-CLIERR, Option : REGION needs value
+%YDB-E-CLIERR, Option : REGION needs value
 $MUPIP size -heuristic="impsample,samples=1000" -select="a" -region="BREG"
 %GTM-W-NOSELECT, None of the selected variables exist -- halting
 
 MUPIP SIZE cannot proceed with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -region="AREG"
 
 Global: a (region AREG)
@@ -1110,9 +1110,9 @@ Global: d (region DEFAULT)
 Level          Blocks          Records         Adjacent
     1               1               35             1135
 $MUPIP size -heuristic="scan" -adjacency=-200
-%GTM-E-CLIERR, Unrecognized value: -200, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: -200, Decimal number expected
 $MUPIP size -heuristic="scan" -adjacency=foo
-%GTM-E-CLIERR, Unrecognized value: foo, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: foo, Decimal number expected
 unset verbose
 Done!
 ##ALLOW_OUTPUT SPANNING_REGIONS
@@ -1243,26 +1243,26 @@ unset verbose
 ###############################################
 Testing -heuristic qualifier on A/R sampling method
 $MUPIP size -heuristic="arsample,samples"
-%GTM-E-CLIERR, Option : SAMPLES needs value
+%YDB-E-CLIERR, Option : SAMPLES needs value
 
 
 $MUPIP size -heuristic="ar,sample=110" >> & heur_ar.log
 echo $status
 0
 $MUPIP size -heuristic="arsample,samples=0"
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.SAMPLES
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.SAMPLES
 
 MUPIP SIZE cannot proceed with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="arsample,samples=-3"
-%GTM-E-CLIERR, Unrecognized value: -3, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: -3, Decimal number expected
 $MUPIP size -heuristic="arsample,samples=34s"
-%GTM-E-CLIERR, Unrecognized value: 34s, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: 34s, Decimal number expected
 $MUPIP size -heuristic="arsample,dummy=110"
-%GTM-E-CLIERR, Unrecognized option : DUMMY
+%YDB-E-CLIERR, Unrecognized option : DUMMY
 $MUPIP size -heuristic="arsample,dummy"
-%GTM-E-CLIERR, Unrecognized option : DUMMY
+%YDB-E-CLIERR, Unrecognized option : DUMMY
 $MUPIP size -heuristic="arsample,samples=110,seed=$SEED"
 
 Global: a (region AREG)
@@ -1573,21 +1573,21 @@ unset verbose
 ###############################################
 Testing -heuristic qualifier on importance sampling method
 $MUPIP size -heuristic="impsample,samples"
-%GTM-E-CLIERR, Option : SAMPLES needs value
+%YDB-E-CLIERR, Option : SAMPLES needs value
 $MUPIP size -heuristic="impsample,samples=0"
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.SAMPLES
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.SAMPLES
 
 MUPIP SIZE cannot proceed with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="impsample,samples=-3"
-%GTM-E-CLIERR, Unrecognized value: -3, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: -3, Decimal number expected
 $MUPIP size -heuristic="impsample,samples=34s"
-%GTM-E-CLIERR, Unrecognized value: 34s, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: 34s, Decimal number expected
 $MUPIP size -heuristic="impsample,dummy=110"
-%GTM-E-CLIERR, Unrecognized option : DUMMY
+%YDB-E-CLIERR, Unrecognized option : DUMMY
 $MUPIP size -heuristic="impsample,dummy"
-%GTM-E-CLIERR, Unrecognized option : DUMMY
+%YDB-E-CLIERR, Unrecognized option : DUMMY
 $MUPIP size -heuristic="impsample,samples=110,seed=$SEED"
 
 Global: a (region AREG)
@@ -1832,66 +1832,66 @@ unset verbose
 ###############################################
 Testing -heuristic qualifier on Scan method
 $MUPIP size -heuristic="scan,level"
-%GTM-E-CLIERR, Option : LEVEL needs value
+%YDB-E-CLIERR, Option : LEVEL needs value
 $MUPIP size -heuristic="scan,level=4"
 
 Global: a (region AREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: a (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: a (region DEFAULT)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: b (region BREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c (region AREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c2 (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c2 (region DEFAULT)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c3 (region AREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c3 (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: d (region DEFAULT)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $MUPIP size -heuristic="scan,level=8"
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 MUPIP SIZE cannot proceed with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="scan,level=-19"
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 MUPIP SIZE cannot proceed with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="scan,level=-1s9"
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 MUPIP SIZE cannot proceed with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="scan,level=-9"
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 MUPIP SIZE cannot proceed with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="scan"
 
 Global: a (region AREG)
@@ -1989,36 +1989,36 @@ Level          Blocks          Records         Adjacent
     2               1                6                0
 
 Global: a (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: a (region DEFAULT)
 Level          Blocks          Records         Adjacent
     2               1                2                2
 
 Global: b (region BREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c (region AREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c2 (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c2 (region DEFAULT)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c3 (region AREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c3 (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: d (region DEFAULT)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $MUPIP size -heuristic="scan,level=0"
 
 Global: a (region AREG)
@@ -2116,86 +2116,86 @@ Level          Blocks          Records         Adjacent
     0             819            37345                0
 
 Global: a (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: a (region DEFAULT)
 Level          Blocks          Records         Adjacent
     0             343            16038                0
 
 Global: b (region BREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c (region AREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c2 (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c2 (region DEFAULT)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c3 (region AREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c3 (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: d (region DEFAULT)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $MUPIP size -heuristic="scan,level=-3"
 
 Global: a (region AREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: a (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: a (region DEFAULT)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: b (region BREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c (region AREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c2 (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c2 (region DEFAULT)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c3 (region AREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c3 (region CREG)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: d (region DEFAULT)
-%GTM-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 unset verbose
 ###############################################
 Testing -heuristic qualifier disallowed combinations
 $MUPIP size -heuristic="scan,arsample"
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN
 $MUPIP size -heuristic="scan,impsample"
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN
 $MUPIP size -heuristic="impsample,level=1"
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN LEVEL
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SCAN LEVEL
 $MUPIP size -heuristic="arsample,level=1"
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE SCAN LEVEL
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE SCAN LEVEL
 $MUPIP size -heuristic="scan,samples=101"
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SAMPLES
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SAMPLES
 $MUPIP size -heuristic="scan,seed=5"
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SEED
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ARSAMPLE IMPSAMPLE SEED
 unset verbose
 ###############################################
 Testing -heuristic default behavior
@@ -2223,7 +2223,7 @@ $MUPIP size -heuristic="impsample,samples=1000" -select="nonexistent"
 
 MUPIP SIZE cannot proceed with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -select="a"
 
 Global: a (region AREG)
@@ -2363,16 +2363,16 @@ unset verbose
 ###############################################
 Testing -region qualifier
 $MUPIP size -heuristic="impsample,samples=1000" -select="b" -region="nonexistent"
-%GTM-E-NOREGION, REGION not found: NONEXISTENT
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-NOREGION, REGION not found: NONEXISTENT
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="impsample,samples=1000" -select="b" -region
-%GTM-E-CLIERR, Option : REGION needs value
+%YDB-E-CLIERR, Option : REGION needs value
 $MUPIP size -heuristic="impsample,samples=1000" -select="a" -region="BREG"
 %GTM-W-NOSELECT, None of the selected variables exist -- halting
 
 MUPIP SIZE cannot proceed with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="impsample,samples=1000,seed=$SEED" -region="AREG"
 
 Global: a (region AREG)
@@ -2842,9 +2842,9 @@ Global: d (region DEFAULT)
 Level          Blocks          Records         Adjacent
     1               1                6             1104
 $MUPIP size -heuristic="scan" -adjacency=-200
-%GTM-E-CLIERR, Unrecognized value: -200, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: -200, Decimal number expected
 $MUPIP size -heuristic="scan" -adjacency=foo
-%GTM-E-CLIERR, Unrecognized value: foo, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: foo, Decimal number expected
 unset verbose
 Done!
 ##ALLOW_OUTPUT NONSPANNING_REGIONS

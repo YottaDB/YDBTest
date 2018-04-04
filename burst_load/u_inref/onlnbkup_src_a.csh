@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -53,7 +56,7 @@ $gtm_tst/com/wait_for_log.csh -log online_back_out.out  -message "BACKUP COMPLET
 $gtm_tst/com/dbcheck.csh -extract
 cat showbacklog.log >>&! $tst_general_dir/$timefile
 ls -l *.dat *.mjl  >>&! $tst_general_dir/$timefile
-$grep "%GTM-E-" $tst_general_dir/$timefile
+$grep "%YDB-E-" $tst_general_dir/$timefile
 $grep "%GTM-F-" $tst_general_dir/$timefile
 echo "onlnbkup_src_a test ends."
 echo "Please look at $timefile for timing information."

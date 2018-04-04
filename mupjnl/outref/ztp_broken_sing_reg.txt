@@ -115,8 +115,8 @@ GTM>
 ##TEST_AWKmupip journal -recover -back "\*" -since=".*"
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-E-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##TEST_AWK.*%YDB-E-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ------------------------------------------------------------------
 mupip journal -recover -back "*" -look="time=time0"
@@ -173,8 +173,8 @@ GTM>
 ------------------------------------------------------------------
 ##TEST_AWKmupip journal -recover -back "\*" -since=".*" -look="time=time3"
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK%GTM-E-JNLTMQUAL2, Time qualifier LOOKBACK_TIME="20../../.. ..:..:.." is later than SINCE_TIME="20../../.. ..:..:.."
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##TEST_AWK%YDB-E-JNLTMQUAL2, Time qualifier LOOKBACK_TIME="20../../.. ..:..:.." is later than SINCE_TIME="20../../.. ..:..:.."
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ------------------------------------------------------------------
 ##TEST_AWKmupip journal -recover -back "\*" -since=".*" -look="time=time1"

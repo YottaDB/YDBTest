@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -50,7 +50,7 @@ $MUPIP reorg -truncate=100 >& trunc_err1.outx
 if (("BG" == $acc_meth) && ("dbg" == "$tst_image")) then
 	set plvalue = `$tst_awk '/GTMPOOLLIMIT used for mupip reorg :/ {print $NF; exit}' trunc_err1.outx`
 	if ($gtm_poollimit_value != $plvalue) then
-		echo "GTM-E-POOLLIMIT value mismatch. expected : $gtm_poollimit_value, found : $plvalue"
+		echo "YDB-E-POOLLIMIT value mismatch. expected : $gtm_poollimit_value, found : $plvalue"
 	endif
 endif
 $grep "MUTRUNCPERCENT" trunc_err1.outx
@@ -69,7 +69,7 @@ else
 	if (("BG" == $acc_meth) && ("dbg" == "$tst_image")) then
 		set plvalue = `$tst_awk '/GTMPOOLLIMIT used for mupip reorg :/ {print $NF; exit}' trunc_1.out`
 		if ($gtm_poollimit_value != $plvalue) then
-			echo "GTM-E-POOLLIMIT value mismatch. expected : $gtm_poollimit_value, found : $plvalue"
+			echo "YDB-E-POOLLIMIT value mismatch. expected : $gtm_poollimit_value, found : $plvalue"
 		endif
 	endif
 	$grep "Trunc" trunc_1.out
@@ -101,7 +101,7 @@ else
 	if (("BG" == $acc_meth) && ("dbg" == "$tst_image")) then
 		set plvalue = `$tst_awk '/GTMPOOLLIMIT used for mupip reorg :/ {print $NF; exit}' trunc_3.outx`
 		if ($gtm_poollimit_value != $plvalue) then
-			echo "GTM-E-POOLLIMIT value mismatch. expected : $gtm_poollimit_value, found : $plvalue"
+			echo "YDB-E-POOLLIMIT value mismatch. expected : $gtm_poollimit_value, found : $plvalue"
 		endif
 	endif
 	$grep "TRUNC" trunc_3.outx
@@ -120,7 +120,7 @@ else
 	if (("BG" == $acc_meth) && ("dbg" == "$tst_image")) then
 		set plvalue = `$tst_awk '/GTMPOOLLIMIT used for mupip reorg :/ {print $NF; exit}' trunc_4.outx`
 		if ($gtm_poollimit_value != $plvalue) then
-			echo "GTM-E-POOLLIMIT value mismatch. expected : $gtm_poollimit_value, found : $plvalue"
+			echo "YDB-E-POOLLIMIT value mismatch. expected : $gtm_poollimit_value, found : $plvalue"
 		endif
 	endif
 	$grep "Truncated" trunc_4.outx

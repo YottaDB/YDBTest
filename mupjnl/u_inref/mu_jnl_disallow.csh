@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -127,7 +130,7 @@ set echo
 #-file-list should not be * for -REDIRECT
 $MUPIP journal -recover -forward -redirect="bgdbb.dat=test.dat" "*"
 #%GTM-I-STARFILE, Star argument cannot be be specified with REDIRECT qualifier,
-#%GTM-E-MUPCLIERR,
+#%YDB-E-MUPCLIERR,
 
 #-file-list should be * for ROLLBACK
 $MUPIP journal -rollback -back -lost=1 a.mjl								#BYPASSOK("-rollback")
@@ -135,4 +138,4 @@ unset echo
 $gtm_tst/com/dbcheck.csh
 
 #Star qualifier should be specified for ROLLBACK
-#%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+#%YDB-E-MUNOACTION, MUPIP unable to perform requested action

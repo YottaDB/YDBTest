@@ -85,16 +85,16 @@ lock +^%jobwait(2,1)
 ##TEST_AWKlock ..jobgtm2.1,[0-9]*.
 d gtm2^c9h03002827
 ##SUSPEND_OUTPUT CUSTOM_ERRORS
-##TEST_AWKZSTATUS=gtm2.4.c9h03002827,%GTM-E-REPLINSTNOSHM, Database ##TEST_PATH##/b.dat has no active connection to a replication journal pool
+##TEST_AWKZSTATUS=gtm2.4.c9h03002827,%YDB-E-REPLINSTNOSHM, Database ##TEST_PATH##/b.dat has no active connection to a replication journal pool
 ##ALLOW_OUTPUT CUSTOM_ERRORS
 ^b=6
 ###################################################################
 #- Step 7:
 # Try to cause a REPLINSTUNDEF error
-%GTM-E-REPLINSTUNDEF, Replication instance environment variable $gtm_repl_instance is undefined
+%YDB-E-REPLINSTUNDEF, Replication instance environment variable $gtm_repl_instance is undefined
 ^a=5
 $ZSTATUS=""
-$ZSTATUS="150379386,c9h03002827+7^c9h03002827,%GTM-E-REPLINSTUNDEF, Replication instance environment variable $gtm_repl_instance is undefined"
+$ZSTATUS="150379386,c9h03002827+7^c9h03002827,%YDB-E-REPLINSTUNDEF, Replication instance environment variable $gtm_repl_instance is undefined"
 ###################################################################
 #- Step 8:
 # Clean up and exit
@@ -110,5 +110,5 @@ No errors detected by integ.
 %GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
 ##SUSPEND_OUTPUT CUSTOM_ERRORS
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm2_c9h030028272.mjo1
-##TEST_AWKZSTATUS=gtm2.4.c9h03002827,%GTM-E-REPLINSTNOSHM, Database ##TEST_PATH##/b.dat has no active connection to a replication journal pool
+##TEST_AWKZSTATUS=gtm2.4.c9h03002827,%YDB-E-REPLINSTNOSHM, Database ##TEST_PATH##/b.dat has no active connection to a replication journal pool
 ##ALLOW_OUTPUT CUSTOM_ERRORS

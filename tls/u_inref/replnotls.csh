@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -69,7 +69,7 @@ else
 	set logfile = $src_logfile
 endif
 $MSR RUN $target_inst "set msr_dont_trace; $gtm_tst/com/wait_for_log.csh -log $logfile -message REPLNOTLS"
-$MSR RUN $target_inst "set msr_dont_trace; $msr_err_chk $logfile 'GTM-E-REPLNOTLS'" >&! capture_REPLNOTLS.logx
+$MSR RUN $target_inst "set msr_dont_trace; $msr_err_chk $logfile 'YDB-E-REPLNOTLS'" >&! capture_REPLNOTLS.logx
 
 # Filter out randomness and print only what matters.
 # sed 's/RCVR.*log/##FILTERED##/g' capture_REPLNOTLS.logx | sed 's/SRC.*log/##FILTERED##/g' | sed 's/Receiver/##FILTERED##/g'	\
@@ -78,8 +78,8 @@ $MSR RUN $target_inst "set msr_dont_trace; $msr_err_chk $logfile 'GTM-E-REPLNOTL
 $tst_awk '{gsub(/((RCVR|SRC)[_0-9]*.log|Receiver|Source)/,"##FILTERED##");print}' capture_REPLNOTLS.logx
 
 # Get rid of the -E-REPLNOTLS from the last MSR script that was executed as well as from the multisite_replic.log.
-$gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-E-REPLNOTLS"
-$gtm_tst/com/knownerror.csh multisite_replic.log "GTM-E-REPLNOTLS"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "YDB-E-REPLNOTLS"
+$gtm_tst/com/knownerror.csh multisite_replic.log "YDB-E-REPLNOTLS"
 
 if ("INST1" == "$target_inst") then
 	# The source server would have exited, leaving behind ipcs. Manually remove them

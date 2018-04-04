@@ -7,9 +7,9 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 Database file ##TEST_PATH##/mumps.dat now has 8 reserved bytes
 dbcertify scan run on V5 database,should issue BADDBVER error
-%GTM-E-BADDBVER, Incorrect database version: 
+%YDB-E-BADDBVER, Incorrect database version: 
 dbcertify scan run on V5 database,should issue BADDBVER error
-%GTM-E-BADDBVER, Incorrect database version: 
+%YDB-E-BADDBVER, Incorrect database version: 
 version switched to is ##FILTERED##PRIORVER##
 Database file ##TEST_PATH##/mumps.dat now has 8 reserved bytes
 
@@ -17,7 +17,7 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 dbcertify scan run on V4 database with <8 reserved bytes,should issue DBMINRESBYTES error
-%GTM-E-DBMINRESBYTES, Minimum RESERVED BYTES value required for certification/upgrade is 8 - Currently is 7
+%YDB-E-DBMINRESBYTES, Minimum RESERVED BYTES value required for certification/upgrade is 8 - Currently is 7
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -27,15 +27,15 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 dbcertify scan run on V4 database with max_record_size is > (db_block_size - 16) ,should issue DBMAXREC2BIG error
-%GTM-E-DBMAXREC2BIG, Maximum record size ##MAX_REC_SIZE## is too large for this block size (512) - Maximum is 496
+%YDB-E-DBMAXREC2BIG, Maximum record size ##MAX_REC_SIZE## is too large for this block size (512) - Maximum is 496
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 dbcertify scan run with report_only & outfile options.Should pass and not error out
 check for reserved bytes and record_max_size complaints from the scan run
-%GTM-E-DBMINRESBYTES, Minimum RESERVED BYTES value required for certification/upgrade is 8 - Currently is 0
-%GTM-E-DBMAXREC2BIG, Maximum record size ##MAX_REC_SIZE## is too large for this block size (512) - Maximum is 496
+%YDB-E-DBMINRESBYTES, Minimum RESERVED BYTES value required for certification/upgrade is 8 - Currently is 0
+%YDB-E-DBMAXREC2BIG, Maximum record size ##MAX_REC_SIZE## is too large for this block size (512) - Maximum is 496
 
 
 Total blocks in database  -------##SCAN_BLOCKS##
@@ -56,8 +56,8 @@ GTM>
 GTM>
 dbcertify scan run with too-big records. should NOT issue DBCREC2BIG but only DBMAXREC2BIG
 Displaying dbcertify_output2.out in the reference file
-%GTM-E-DBMINRESBYTES, Minimum RESERVED BYTES value required for certification/upgrade is 8 - Currently is 0
-%GTM-E-DBMAXREC2BIG, Maximum record size ##MAX_REC_SIZE## is too large for this block size (512) - Maximum is 496
+%YDB-E-DBMINRESBYTES, Minimum RESERVED BYTES value required for certification/upgrade is 8 - Currently is 0
+%YDB-E-DBMAXREC2BIG, Maximum record size ##MAX_REC_SIZE## is too large for this block size (512) - Maximum is 496
 
 
 Total blocks in database  -------##SCAN_BLOCKS##
@@ -74,7 +74,7 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 dbcertify scan run with too-long records .should issue DBCREC2BIG error
-%GTM-E-DBCREC2BIG, Record with key ^biggbl(##KEY##) is length ##SIZE## in block ##BLOCK## which is greater than the maximum length 496 in database ##TEST_PATH##/mumps.dat
+%YDB-E-DBCREC2BIG, Record with key ^biggbl(##KEY##) is length ##SIZE## in block ##BLOCK## which is greater than the maximum length 496 in database ##TEST_PATH##/mumps.dat
 
 GTM>
 
@@ -118,7 +118,7 @@ Blocks needing to be split ------##SCAN_BLOCKS##
 PASS no error detected
 dbcertify scan run with incorrect gtm_dist value. should issue DBCCMDFAIL error
 ##TEST_AWK./dbcmdx_DEFAULT.sh.*DUMMY/dse:.*
-##TEST_AWK%GTM-E-DBCCMDFAIL, Executed command failed with return code [0-9]*: ./dbcmdx_DEFAULT.sh which executed DSE buffer_flush
+##TEST_AWK%YDB-E-DBCCMDFAIL, Executed command failed with return code [0-9]*: ./dbcmdx_DEFAULT.sh which executed DSE buffer_flush
 %GTM-I-TEXT, Note that the environment variable $gtm_dist must point to the current GT.M V4 installation
 ##V4VER##/mupip
 ##V4VER##/mupip integ -REG *
@@ -129,7 +129,7 @@ dbcertify scan phase ends
 
 dbcertify certify phase starts
 dbcertify run without outfile option. should error out
-SCAN output file:%GTM-E-FILENOTFND, File yes not found
+SCAN output file:%YDB-E-FILENOTFND, File yes not found
 Files Created in ##TEST_PATH##/tempv5:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
@@ -137,10 +137,10 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 version switched to is ##FILTERED##PRIORVER##
 dbcertify attempted on a V5 database. should issue BADDBVER error
-%GTM-E-BADDBVER, Incorrect database version: ##TEST_PATH##/tempv5/mumps.dat
+%YDB-E-BADDBVER, Incorrect database version: ##TEST_PATH##/tempv5/mumps.dat
 PASS, expected error received
 dbcertify used with report_only option for certify phase. should issue CLIERR error
-%GTM-E-CLIERR, Unrecognized command: -
+%YDB-E-CLIERR, Unrecognized command: -
 dbcertify attempted when a concurrent GT.M process is running. should issue MUSTANDALONE error
 --------------------------------------------------------------------------------
 You must have a backup of database ##TEST_PATH##/mumps.dat before you proceed!
@@ -149,7 +149,7 @@ Proceeding will also turn off replication and/or journaling if enabled
 --------------------------------------------------------------------------------
 Proceed? [y/n]:
 Certification phase for database ##TEST_PATH##/mumps.dat beginning
-%GTM-E-MUSTANDALONE, Could not get exclusive access to ##TEST_PATH##/mumps.dat
+%YDB-E-MUSTANDALONE, Could not get exclusive access to ##TEST_PATH##/mumps.dat
 %SYSTEM-E-ENO17, File exists
 
 ##TEST_AWK.GTM-I-FTOKKEY, FTOK key 0x[0-9A-F]+
@@ -158,7 +158,7 @@ GTM>
 
 GTM>
 dbcertify run with an improper report file. should issue DBCBADFILE error
-%GTM-E-DBCBADFILE, Source file mumps.dat does not appear to have been generated by DBCERTIFY SCAN - rerun SCAN or specify correct file
+%YDB-E-DBCBADFILE, Source file mumps.dat does not appear to have been generated by DBCERTIFY SCAN - rerun SCAN or specify correct file
 dbcertify run on a database which is moved/renamed after the report file creation. should issue DBCNOTSAMEDB error
 --------------------------------------------------------------------------------
 You must have a backup of database ##TEST_PATH##/mumps.dat before you proceed!
@@ -167,7 +167,7 @@ Proceeding will also turn off replication and/or journaling if enabled
 --------------------------------------------------------------------------------
 Proceed? [y/n]:
 Certification phase for database ##TEST_PATH##/mumps.dat beginning
-%GTM-E-DBCNOTSAMEDB, Database has been moved or restored since DBCERTIFY SCAN - Rerun scan
+%YDB-E-DBCNOTSAMEDB, Database has been moved or restored since DBCERTIFY SCAN - Rerun scan
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -205,7 +205,7 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 dbcertify run with too big records. should issue DBCMODBLK2BIG error
-##TEST_AWK.*%GTM-E-DBCMODBLK2BIG, Block ##BLK_NO## has been modified since DBCERTIFY SCAN but is still too large or now has an earlier TN than in the scan phase - Rerun scan phase
+##TEST_AWK.*%YDB-E-DBCMODBLK2BIG, Block ##BLK_NO## has been modified since DBCERTIFY SCAN but is still too large or now has an earlier TN than in the scan phase - Rerun scan phase
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -218,7 +218,7 @@ Proceeding will also turn off replication and/or journaling if enabled
 --------------------------------------------------------------------------------
 Proceed? [y/n]:
 Certification phase for database ##TEST_PATH##/mumps.dat beginning
-%GTM-E-DBCKILLIP, Cannot proceed with kill in progress indicator set for database ##TEST_PATH##/mumps.dat -- Run MUPIP INTEG first
+%YDB-E-DBCKILLIP, Cannot proceed with kill in progress indicator set for database ##TEST_PATH##/mumps.dat -- Run MUPIP INTEG first
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT

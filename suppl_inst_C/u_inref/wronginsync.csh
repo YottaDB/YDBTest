@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -60,7 +60,7 @@ setenv gtm_test_repl_skiprcvrchkhlth 1 ; $MSR STARTRCV INST2 INST3 >&! STARTRCV_
 get_msrtime
 $MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message INSNOTJOINED -duration 120 -waitcreation'
 $MSR RUN INST3 "$msr_err_chk RCVR_$time_msr.log INSNOTJOINED"
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-INSNOTJOINED
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-INSNOTJOINED
 echo "# The receiver would have exited with the above error. Manually shutdown the update process and passive server"
 $MSR RUN INST3 'set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_IST2INST3.out'
 $MSR RUN RCV=INST3 SRC=INST2 '$MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__ >&! passivesrc_shut_INST2INST3.out'
@@ -89,7 +89,7 @@ setenv gtm_test_repl_skiprcvrchkhlth 1 ; $MSR STARTRCV INST5 INST7 >&! STARTRCV_
 get_msrtime
 $MSR RUN INST7 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message INSNOTJOINED -duration 120 -waitcreation'
 $MSR RUN INST7 "$msr_err_chk RCVR_$time_msr.log INSNOTJOINED"
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-INSNOTJOINED
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-INSNOTJOINED
 echo "# The receiver would have exited with the above error. Manually shutdown the update process and passive server"
 $MSR RUN INST7 'set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_IST2INST3.out'
 $MSR RUN RCV=INST7 SRC=INST5 '$MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__ >&! passivesrc_shut_INST2INST3.out'

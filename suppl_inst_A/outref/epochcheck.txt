@@ -125,7 +125,7 @@ Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/ins
 ==Executing MULTISITE_REPLIC 'RUN INST17 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log UPDSYNCINSTFILE'==
 ----------
 Error UPDSYNCINSTFILE seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%GTM-E-UPDSYNCINSTFILE, Error with instance file name specified in UPDATERESYNC qualifier
+%YDB-E-UPDSYNCINSTFILE, Error with instance file name specified in UPDATERESYNC qualifier
 ----------
 # The receiver would have exited with the above error. Manually shutdown the update process and passive server
 ==Executing MULTISITE_REPLIC 'RUN INST17 set msr_dont_chk_stat ;$MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_INST16INST17.out'==

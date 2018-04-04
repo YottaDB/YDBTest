@@ -1,241 +1,241 @@
 	 set $zy=$p(%z,"[",2)-1
 	      ^-----
 		At column 7, line 18, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 	 for  quit:$zpriv(r1wait)   ; On Unix, this will generate a FNOTONSYS error
 	            ^-----
 		At column 13, line 24, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
 	 i '$zpriv("SYSLCK")  ; On Unix, this will generate a FNOTONSYS error
 	     ^-----
 		At column 6, line 31, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
 	 q $zsqr($$var(.arr))
 	    ^-----
 		At column 5, line 38, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 N N S $ZE="",$ZT="ChkBad" q $ZU(12,R,2)
 	                              ^-----
 		At column 31, line 39, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 i %ZNOGTM s %=$zu(132) d $zu(69,55,1) i %'=1 d terminate("Error switching principal %device to socket")
 	                ^-----
 		At column 17, line 46, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 i %ZNOGTM s %=$zu(132) d $zu(69,55,1) i %'=1 d terminate("Error switching principal %device to socket")
 	                          ^-----
 		At column 27, line 46, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-LABELEXPECTED, Label expected in this context
+%YDB-E-LABELEXPECTED, Label expected in this context
 	 S V="M"?@($MN("A")?.N)
 	            ^-----
 		At column 13, line 53, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 I $MN>50 W #
 	    ^-----
 		At column 5, line 59, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 	 e  i %ZNOGTM s %device=$ZU(53)
 	                         ^-----
 		At column 26, line 60, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 i %ZNOGTM  use %device:(::"S":$C(28):packSz:packSz) i 1
 	                         ^-----
 		At column 26, line 61, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 	 f i=1:1:($MN(7)+1) s glob=glob_$MN(x,$MN(52)+1)
 	           ^-----
 		At column 12, line 62, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 f i=1:1:($MN(7)+1) s glob=glob_$MN(x,$MN(52)+1)
 	                                 ^-----
 		At column 34, line 62, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 do ^a($MN(strt,$MN(206,240)),9,"a")
 	        ^-----
 		At column 9, line 63, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 Use $MN
 	      ^-----
 		At column 7, line 64, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 	 i $MN(%lnam)+$MN(%sub1)+$MN(%sub2)>%maxkey q
 	    ^-----
 		At column 5, line 65, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 i $MN(%lnam)+$MN(%sub1)+$MN(%sub2)>%maxkey q
 	               ^-----
 		At column 16, line 65, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 i $MN(%lnam)+$MN(%sub1)+$MN(%sub2)>%maxkey q
 	                          ^-----
 		At column 27, line 65, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 s locstr=locstr_"a"_$MN(nowexam,6,$MN(nowexam,"a")-7)
 	                      ^-----
 		At column 23, line 66, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 X "a"_subs_"a""a"_$MN(alpha,i)_"a""a""a""a"
 	                    ^-----
 		At column 21, line 67, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 i kills<kil,'$MN(3) s count=count-1,kills=kills+1 k ^a(sub2) s:'$MN(@glob) globals=globals-1
 	               ^-----
 		At column 16, line 68, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 i kills<kil,'$MN(3) s count=count-1,kills=kills+1 k ^a(sub2) s:'$MN(@glob) globals=globals-1
 	                                                                  ^-----
 		At column 67, line 68, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 write $MN($MN(1000),1000000),!
 	        ^-----
 		At column 9, line 69, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 D:$MN(@^a1A(@A))=1 98+1^a@@^a1A(1),AT^a1IDDO1:@C(1),AT+1^a1IDDO1:@C(2)
 	    ^-----
 		At column 5, line 70, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 D:$MN(@^a1A(@A))=1 98+1^a@@^a1A(1),AT^a1IDDO1:@C(1),AT+1^a1IDDO1:@C(2)
 	                          ^-----
 		At column 27, line 70, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 	 G:$MN(@^a1A(@A))=1 192+1^a@@^a1A(1):"a",AT^a1IDGOB:@C(1),AT+1^a1IDGOB:1
 	    ^-----
 		At column 5, line 71, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 G:$MN(@^a1A(@A))=1 192+1^a@@^a1A(1):"a",AT^a1IDGOB:@C(1),AT+1^a1IDGOB:1
 	                           ^-----
 		At column 28, line 71, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 	 K:$MN("a")>2 ^a1 S VCOMP=VCOMP_$MN(^a1)
 	    ^-----
 		At column 5, line 72, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 K:$MN("a")>2 ^a1 S VCOMP=VCOMP_$MN(^a1)
 	                                 ^-----
 		At column 34, line 72, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 N @$MN("a","a","a")
 	     ^-----
 		At column 6, line 73, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 MERGE ^a($MN("a",25))=^a
 	           ^-----
 		At column 12, line 74, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 N:$MN(A) A,D
 	    ^-----
 		At column 5, line 75, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 Open $MN:::"a"
 	       ^-----
 		At column 8, line 76, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 	 Q $MN(E="a":"a",1:$$MNV($MN(E,2,$MN(E)))_$MN(E,1))
 	    ^-----
 		At column 5, line 77, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 Quit:$MN>anchor
 	       ^-----
 		At column 8, line 78, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 	 Set:'$MN cnt=cnt+1 Xecute:'$MN act
 	       ^-----
 		At column 8, line 79, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 	 Set:'$MN cnt=cnt+1 Xecute:'$MN act
 	                             ^-----
 		At column 30, line 79, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 	 W $MN(00.999999999)
 	    ^-----
 		At column 5, line 80, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 W ?20,$MN(I*20/20*.1,8,2),?34,$MN(I*20/10,8,2),!
 	        ^-----
 		At column 9, line 81, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 W ?20,$MN(I*20/20*.1,8,2),?34,$MN(I*20/10,8,2),!
 	                                ^-----
 		At column 33, line 81, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 c:$MN(ifl)'="a" ifl
 	    ^-----
 		At column 5, line 82, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 ZM +$MN
 	      ^-----
 		At column 7, line 83, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 	 d @$MN
 	     ^-----
 		At column 6, line 84, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 	 f  q:$MN(actual("a",i))'=1 d
 	       ^-----
 		At column 8, line 85, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 f  q:$MN(actual("a",i))'=1 d
 	                            ^-----
 		At column 29, line 85, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-QUITARGUSE, Quit cannot take an argument in this context
+%YDB-E-QUITARGUSE, Quit cannot take an argument in this context
 	 k:$MN(id)'[0 id s idok=0 q
 	    ^-----
 		At column 5, line 86, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 q +$MN(%range*$&RAND(.%qrszqrs),"a")
 	     ^-----
 		At column 6, line 87, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 tcommit:$MN=2
 	          ^-----
 		At column 11, line 88, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 	 trollback:$MN
 	            ^-----
 		At column 13, line 89, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 	 u $MN:(NOPASTHRU)
 	    ^-----
 		At column 5, line 90, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 	 view "a":$MN(2)
 	           ^-----
 		At column 12, line 91, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 zsy $MN($MN["a":"a"_$$MNUNC^a%DH($MN),1:"a"_$MN)
 	      ^-----
 		At column 7, line 92, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 zkill ^a8($MN($$MNUNC^a%HD("a"),$$MNUNC^a%HD("a")))
 	            ^-----
 		At column 13, line 93, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 zgoto $MN
 	        ^-----
 		At column 9, line 94, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 	 i 0 s %=$zu(132) d $zu(69) d $zu(69)
 	          ^-----
 		At column 11, line 100, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 i 0 s %=$zu(132) d $zu(69) d $zu(69)
 	                    ^-----
 		At column 21, line 100, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-LABELEXPECTED, Label expected in this context
+%YDB-E-LABELEXPECTED, Label expected in this context
 	 i 0 s %=$zu(132) s %=$zu(132) s %=$zu(132) s %=$zu(132)
 	          ^-----
 		At column 11, line 106, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 i 0 s %=$zu(132) s %=$zu(132) s %=$zu(132) s %=$zu(132)
 	                       ^-----
 		At column 24, line 106, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 i 0 s %=$zu(132) s %=$zu(132) s %=$zu(132) s %=$zu(132)
 	                                    ^-----
 		At column 37, line 106, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 	 i 0 s %=$zu(132) s %=$zu(132) s %=$zu(132) s %=$zu(132)
 	                                                 ^-----
 		At column 50, line 106, source module ##IN_TEST_PATH##/inref/c002856.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 c002856.o

@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -79,7 +79,7 @@ while ( ! -f running.txt && $sleepcount < 120)
     @ sleepcount++
 end
 if ($sleepcount == 120) then
-    echo '%GTM-E-TIMEOUT, Process not started in allotted time'
+    echo '%YDB-E-TIMEOUT, Process not started in allotted time'
     exit 1
 endif
 
@@ -118,7 +118,7 @@ while ( ! -f running.txt && $sleepcount < 120)
     @ sleepcount++
 end
 if ($sleepcount == 120) then
-    echo '%GTM-E-TIMEOUT, Process not started in allotted time'
+    echo '%YDB-E-TIMEOUT, Process not started in allotted time'
     exit 1
 endif
 
@@ -131,7 +131,7 @@ echo "# Attempt to connect with prior version"
 $gtm_exe/mumps -run dowrite^gtm6811 >& connect.logx
 
 # Different prior versions have different errors. Just make sure we got one.
-$grep -qE 'GTM-E-(VERMISMATCH|DBIDMISMATCH|REQRUNDOWN)' connect.logx && echo Found expected error || echo Did not find expected error
+$grep -qE 'YDB-E-(VERMISMATCH|DBIDMISMATCH|REQRUNDOWN)' connect.logx && echo Found expected error || echo Did not find expected error
 
 echo "# Switch to current version"
 cd ../new

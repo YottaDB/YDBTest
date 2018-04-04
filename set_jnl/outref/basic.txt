@@ -1,10 +1,10 @@
 Test case 01
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
 ============================================================
 Test case 02
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/dummy.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/dummy.dat
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
@@ -14,15 +14,15 @@ b.dat
 mumps.dat
 %GTM-I-REGFILENOTFOUND, Database file a.dat corresponding to region AREG cannot be found
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-NOREGION, REGION not found: AREG
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-NOREGION, REGION not found: AREG
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-REGFILENOTFOUND, Database file a.dat corresponding to region AREG cannot be found
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-NOREGION, REGION not found: AREG
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/dummy.dat
+%YDB-E-NOREGION, REGION not found: AREG
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/dummy.dat
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ============================================================
 Test case 03
 Files Created in ##TEST_PATH##:
@@ -38,7 +38,7 @@ mumps.dat
 Database file mumps.dat now has 600 reserved bytes
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
 ============================================================
 DISABLE option
 ##SOURCE_PATH##/mupip set -journal=disable -file mumps.dat
@@ -68,18 +68,18 @@ DISABLE option
 ============================================================
 Test case : 5
 DISABLE option is not compatible with any other option
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE ALIGNSIZE
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE ALIGNSIZE EPOCH_INTERVAL AUTOSWITCHLIMIT
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE ALIGNSIZE EPOCH_INTERVAL
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME
-%GTM-E-CLIERR, Option expected
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE ALIGNSIZE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE ALIGNSIZE EPOCH_INTERVAL AUTOSWITCHLIMIT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE ALIGNSIZE EPOCH_INTERVAL
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME
+%YDB-E-CLIERR, Option expected
 ============================================================
 Test case 06
 NOJOURNAL option
@@ -112,9 +112,9 @@ Journal state (expected DISABLED): DISABLED
 Test case 07
 [NO]BEFORE qualifier
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
@@ -186,7 +186,7 @@ OFF option does have any effect if journaling is not enabled
 ============================================================
 Test case 12
 ON and OFF are mutually exclusive
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
 ============================================================
 Test case 13 (default value of qualifiers)
 Default values are  tested with  other test cases

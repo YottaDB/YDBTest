@@ -1,4 +1,16 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 #
 
 setenv gtm_white_box_test_case_number 43
@@ -49,7 +61,7 @@ set start_time=`date +%H_%M_%S`
 set portno = `cat $SEC_DIR/portno`
 setenv gtm_white_box_test_case_enable 1
 $MUPIP replic -source -start -buffsize=1 -instsecondary=$gtm_test_cur_sec_name -secondary="$tst_now_secondary":"$portno" -log="$PRI_SIDE/SRC_${start_time}.log"
-$gtm_tst/com/wait_for_log.csh -log "$PRI_SIDE/SRC_${start_time}.log" -message "GTM-E-JNLFILOPN" -duration 60
+$gtm_tst/com/wait_for_log.csh -log "$PRI_SIDE/SRC_${start_time}.log" -message "YDB-E-JNLFILOPN" -duration 60
 $gtm_tst/com/wait_for_log.csh -log "$PRI_SIDE/SRC_${start_time}.log" -message "Source server exiting" -duration 60
 setenv gtm_white_box_test_case_number 23
 unsetenv gtm_white_box_test_case_count
@@ -58,7 +70,7 @@ unsetenv gtm_white_box_test_case_enable
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $MUPIP replic -receiv -shutdown -timeout=0 ; $MUPIP replic -source -shutdown -timeout=0" >&! secondary_shut.out
 $gtm_tst/com/dbcheck.csh
 setenv loglist "SRC*.log SHUT*.out RCVR*.log.updproc rf_sync*.out src_*.log rcvr_*.log"
-$grep GTM-E-JNLFILOPN $loglist | sort -u
+$grep YDB-E-JNLFILOPN $loglist | sort -u
 tar -cf repliclogs.tar $loglist
 rm -f $loglist
-$sec_shell '$sec_getenv ; cd $SEC_SIDE ; $grep GTM-E-JNLFILOPN $loglist | sort -u; tar -cf repliclogs.tar $loglist passive*.log ; rm -f $loglist passive*.log'
+$sec_shell '$sec_getenv ; cd $SEC_SIDE ; $grep YDB-E-JNLFILOPN $loglist | sort -u; tar -cf repliclogs.tar $loglist passive*.log ; rm -f $loglist passive*.log'

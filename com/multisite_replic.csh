@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -84,7 +87,7 @@
 # this will hold the name of the last executed msr_execute.csh
 # NOTE : If the MSR RUN command output is redirected to pipe, it is executed in a subshell and so the new value of
 # msr_execute_last_out will not be reflected. The workaround is to not redirect the entire output to pipe. e.g, for the below
-# $MSR RUN INST2 "$msr_err_chk $rcv_logfile 'GTM-E-REPLNOTLS'" |& sed 's/RCVR.*log/#FILTERED#/g'
+# $MSR RUN INST2 "$msr_err_chk $rcv_logfile 'YDB-E-REPLNOTLS'" |& sed 's/RCVR.*log/#FILTERED#/g'
 # Since entire output is redirected to pipe, $msr_execute_last_out will not have the latest value, but the previous value
 #
 #	-----------------

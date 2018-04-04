@@ -105,8 +105,8 @@ GTM>
 
 GTM>
 BADCHAR PASSED
-PASS. Expected error GTM-E-BADCHAR seen and not other errors detected
-PASS. Expected error GTM-E-INVDLRCVAL seen and not other errors detected
+PASS. Expected error YDB-E-BADCHAR seen and not other errors detected
+PASS. Expected error YDB-E-INVDLRCVAL seen and not other errors detected
 ###################################################################
 Test for zconvert BADCHAR error when on three arguments
 Processing $ZCHAR(150,151,152) for UTF-8
@@ -149,9 +149,9 @@ Processing $ZCHAR(66,48) for UTF-8
 Processing $ZCHAR(66,48) for UTF-16LE
 Processing $ZCHAR(66,48) for UTF-16BE
 ###################################################################
-PASS. Expected error GTM-E-BADCHAR seen and not other errors detected for ZCONVERT
+PASS. Expected error YDB-E-BADCHAR seen and not other errors detected for ZCONVERT
 ###################################################################
-Test compiling UTF-16 encoded m routine produces GTM-E-LSEXPECTED 
+Test compiling UTF-16 encoded m routine produces YDB-E-LSEXPECTED 
 
 GTM>
 BEGIN UTF-16 WRITE
@@ -171,8 +171,8 @@ END OF UTF-16 WRITE
 
 GTM>
 ----------
-Error GTM-E-LSEXPECTED seen in testutf16.out as expected:
-%GTM-E-LSEXPECTED, A line separator is expected here
+Error YDB-E-LSEXPECTED seen in testutf16.out as expected:
+%YDB-E-LSEXPECTED, A line separator is expected here
 ----------
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -36,22 +39,22 @@ if ("linux" != $gtm_test_osname) then
 endif
 if (0 == $gtm7294todo) then
 	set numupdates = 20000
-	set expected_errors = "GTM-E-REPLSTATEOFF GTM-E-MUNOACTION"
+	set expected_errors = "YDB-E-REPLSTATEOFF YDB-E-MUNOACTION"
 	if ($gtm_error_on_jnl_file_lost) then
 		# with gtm_error_on_jnl_file_lost, when GT.M processes updating the journals runs out of space a runtime error is issued (instead of turning-off journaling)
-		set check_runtime_error = "GTM-E-JNLEXTEND GTM-E-NOSPACEEXT"
-		# Which means, rollback will not issue GTM-E-REPLSTATEOFF. It will issue SYSTEM-E-ENO28 (like case (1) below)
-		set expected_errors = "GTM-E-JNLACCESS SYSTEM-E-ENO28 GTM-E-MUNOACTION"
+		set check_runtime_error = "YDB-E-JNLEXTEND YDB-E-NOSPACEEXT"
+		# Which means, rollback will not issue YDB-E-REPLSTATEOFF. It will issue SYSTEM-E-ENO28 (like case (1) below)
+		set expected_errors = "YDB-E-JNLACCESS SYSTEM-E-ENO28 YDB-E-MUNOACTION"
 	endif
 	# If gtm_test_freeze_on_error is turned on, the instance will be frozen due to DSKNOSPCAVAIL.
 	# The test intends to check for the right errors and not freeze with DSKNOSPCAVAIL. So turn of gtm_test_freeze_on_error
 	setenv gtm_test_freeze_on_error 0
 else if (1 == $gtm7294todo) then
 	set numupdates = 10000
-	set expected_errors = "GTM-E-JNLACCESS SYSTEM-E-ENO28 GTM-E-MUNOACTION"
+	set expected_errors = "YDB-E-JNLACCESS SYSTEM-E-ENO28 YDB-E-MUNOACTION"
 else if (2 == $gtm7294todo) then
 	set numupdates = 10000
-	set expected_errors = "GTM-W-JNLCRESTATUS SYSTEM-E-ENO13 GTM-E-JNLNOCREATE GTM-E-MUNOACTION"
+	set expected_errors = "GTM-W-JNLCRESTATUS SYSTEM-E-ENO13 YDB-E-JNLNOCREATE YDB-E-MUNOACTION"
 endif
 
 $gtm_tst/com/dbcreate.csh mumps 2

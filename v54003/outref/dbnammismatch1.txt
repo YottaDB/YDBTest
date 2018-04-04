@@ -42,8 +42,8 @@ BEGIN 4 :-) move mumps database to backup to trigger DBNAMEMISMATCH error
 
 
 GTM>
-%GTM-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/backup.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
-##TEST_AWK.GTM-E-DBNAMEMISMATCH, Database file ##TEST_PATH##.backup.dat points to shared memory .id = [0-9]+. which in turn points to an inaccessible database file ##TEST_PATH##.mumps.dat
+%YDB-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/backup.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+##TEST_AWK.YDB-E-DBNAMEMISMATCH, Database file ##TEST_PATH##.backup.dat points to shared memory .id = [0-9]+. which in turn points to an inaccessible database file ##TEST_PATH##.mumps.dat
 %SYSTEM-E-ENO2, No such file or directory
 
 GTM>

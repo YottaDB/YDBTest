@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2004, 2013 Fidelity Information Services, Inc	;
+; Copyright 2004, 2013 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -211,7 +214,7 @@ testjob	; test a label/routine of length 31 can be jobbed off
 	.. for i=1:1 quit:$$^isprcalv(job2)=0  hang 1
 	write "checking errors from jobs...",!
 	if unix do
-	. set zcmd="grep ""GTM-E-"" *.mje"
+	. set zcmd="grep ""YDB-E-"" *.mje"
 	. zsystem zcmd
 	else  do
 	. if (""'=$zsearch("*.mje")) write "JOB-E-ERROR check *.mje files",!

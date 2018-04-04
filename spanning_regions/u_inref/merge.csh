@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -104,7 +107,7 @@ GDE_EOF
 setenv gtmgbldir mumps.gld
 $gtm_exe/mumps -run %XCMD 'set ^a(2,1)=1,^a(2,2)=2'
 
-echo "# merge ^|other.gld|a(1)=^a should issue GTM-E-MERGEDESC as breg intersects src(^a) and dest(^a(1))"
+echo "# merge ^|other.gld|a(1)=^a should issue YDB-E-MERGEDESC as breg intersects src(^a) and dest(^a(1))"
 $GTM << GTM_EOF
 	merge ^|"other.gld"|a(1)=^a
 GTM_EOF
@@ -164,7 +167,7 @@ $GDE @3reg.cmd >&! gde_other_gld.out
 setenv gtmgbldir mumps.gld
 $gtm_exe/mumps -run %XCMD 'set ^a(2,1)=1,^a(2,2)=2'
 
-echo "# merge ^|other.gld|a(1)=^a should issue GTM-E-MERGEDESC as breg intersects src(^a) and dest(^a(1))"
+echo "# merge ^|other.gld|a(1)=^a should issue YDB-E-MERGEDESC as breg intersects src(^a) and dest(^a(1))"
 $GTM << GTM_EOF
 	merge ^|"other.gld"|a(1)=^a
 GTM_EOF
@@ -191,7 +194,7 @@ $GDE @3reg.cmd >&! gde_other_gld.out
 setenv gtmgbldir mumps.gld
 $gtm_exe/mumps -run %XCMD 'set ^a(2,1)=1,^a(2,2)=2'
 
-echo "# merge ^|mumps.gld|a(1)=^a should issue GTM-E-MERGEDESC as areg intersects src(^a(2)) and dest(^a)"
+echo "# merge ^|mumps.gld|a(1)=^a should issue YDB-E-MERGEDESC as areg intersects src(^a(2)) and dest(^a)"
 $GTM << GTM_EOF
 	set \$zgbldir="other.gld"
 	merge ^|"mumps.gld"|a=^a(2)
@@ -218,7 +221,7 @@ $GDE @3reg.cmd >&! gde_other_gld.out
 setenv gtmgbldir other.gld
 $gtm_exe/mumps -run %XCMD 'set ^a(2,1)=1,^a(2,2)=2'
 
-echo "# merge ^|mumps.gld|a=^a(2) should issue GTM-E-MERGEDESC as areg intersects src(^a(2)) and target(^a)"
+echo "# merge ^|mumps.gld|a=^a(2) should issue YDB-E-MERGEDESC as areg intersects src(^a(2)) and target(^a)"
 $GTM << GTM_EOF
 	merge ^|"mumps.gld"|a=^a(2)
 GTM_EOF
@@ -245,7 +248,7 @@ $GDE @3reg.cmd >&! gde_other_gld.out
 setenv gtmgbldir other.gld
 $gtm_exe/mumps -run %XCMD 'set ^a(2,1)=1,^a(2,2)=2'
 
-echo "# merge ^|mumps.gld|a(1)=^a should issue GTM-E-MERGEDESC as areg intersects src(^a(2)) and dest(^a(2))"
+echo "# merge ^|mumps.gld|a(1)=^a should issue YDB-E-MERGEDESC as areg intersects src(^a(2)) and dest(^a(2))"
 $GTM << GTM_EOF
 	merge ^|"mumps.gld"|a=^a(2)
 GTM_EOF

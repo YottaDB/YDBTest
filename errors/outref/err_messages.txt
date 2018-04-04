@@ -12,19 +12,19 @@ ANSI ERRORS
 	 Write $apple
 	        ^-----
 		At column 9, line 70, source module ##IN_TEST_PATH##/inref/erransi.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 	 Write ^$Routine($Text(+0),"SantaClaus")
 	        ^-----
 		At column 9, line 232, source module ##IN_TEST_PATH##/inref/erransi.m
-%GTM-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
+%YDB-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
 	 Write $Name(12345)
 	             ^-----
 		At column 14, line 237, source module ##IN_TEST_PATH##/inref/erransi.m
-%GTM-E-VAREXPECTED, Variable expected in this context
+%YDB-E-VAREXPECTED, Variable expected in this context
 	 Job pass(.x)
 	          ^-----
 		At column 11, line 242, source module ##IN_TEST_PATH##/inref/erransi.m
-%GTM-E-JOBACTREF, Actual parameter in job command passed by reference
+%YDB-E-JOBACTREF, Actual parameter in job command passed by reference
 	indent . Write "This should be an error"
 	         ^-----
 		At column 10, line 630, source module ##IN_TEST_PATH##/inref/erransi.m
@@ -32,18 +32,18 @@ ANSI ERRORS
 	same(a,a) ; Does this generate an M21?
 	       ^-----
 		At column 8, line 633, source module ##IN_TEST_PATH##/inref/erransi.m
-%GTM-E-MULTFORMPARM, This formal parameter is multiply defined
+%YDB-E-MULTFORMPARM, This formal parameter is multiply defined
 	double ; second
 	^-----
 		At column 0, line 637, source module ##IN_TEST_PATH##/inref/erransi.m
-%GTM-E-MULTLAB, This label has been previously defined
-%GTM-E-LABELMISSING, Label referenced but not defined: unknown
+%YDB-E-MULTLAB, This label has been previously defined
+%YDB-E-LABELMISSING, Label referenced but not defined: unknown
 %GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/erransi.m
-%GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: call
+%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: call
 %GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/erransi.m
-%GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: same
+%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: same
 %GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/erransi.m
-%GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: pass
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: pass
 %GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/erransi.m
 
 M1 ; Naked indicator undefined
@@ -52,7 +52,7 @@ M1 ; Naked indicator undefined
  Set $ECode=",Z1-Error didn't happen,"
  Quit
  ;
-150372946,M1+2^erransi,%GTM-E-GVNAKED, Illegal naked global reference
+150372946,M1+2^erransi,%YDB-E-GVNAKED, Illegal naked global reference
 ,M1,Z150372946,
 
 M2 ; Invalid combination with P _fncodatom_
@@ -60,7 +60,7 @@ M2 ; Invalid combination with P _fncodatom_
  Set $ECode=",Z2-Error didn't happen,"
  Quit
  ;
-150372818,M2+1^erransi,%GTM-E-FNARGINC, Format specifiers to $FNUMBER are incompatible: "P+"
+150372818,M2+1^erransi,%YDB-E-FNARGINC, Format specifiers to $FNUMBER are incompatible: "P+"
 ,M2,Z150372818,
 
 M3 ; $RANDOM seed less than 1
@@ -68,7 +68,7 @@ M3 ; $RANDOM seed less than 1
  Set $ECode=",Z3-Error didn't happen,"
  Quit
  ;
-150373586,M3+1^erransi,%GTM-E-RANDARGNEG, Random number generator argument must be greater than or equal to one
+150373586,M3+1^erransi,%YDB-E-RANDARGNEG, Random number generator argument must be greater than or equal to one
 ,M3,Z150373586,
 
 M4 ; No true condition in $SELECT
@@ -76,7 +76,7 @@ M4 ; No true condition in $SELECT
  Set $ECode=",Z4-Error didn't happen,"
  Quit
  ;
-150373698,M4+1^erransi,%GTM-E-SELECTFALSE, No argument to $SELECT was true
+150373698,M4+1^erransi,%YDB-E-SELECTFALSE, No argument to $SELECT was true
 ,M4,Z150373698,
 
 M5 ; _lineref_ less than zero
@@ -85,7 +85,7 @@ M5 ; _lineref_ less than zero
  Set $ECode=",Z5-Error didn't happen,"
  Quit
  ; Write !,"At line call - 4"
-150379506,M5+3^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M5+3^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z5-Error didn't happen,
 
 M6 ; Undefined _lvn_
@@ -93,7 +93,7 @@ M6 ; Undefined _lvn_
  Set $ECode=",Z6-Error didn't happen,"
  Quit
  ;
-150373850,M6+1^erransi,%GTM-E-LVUNDEF, Undefined local variable: a
+150373850,M6+1^erransi,%YDB-E-LVUNDEF, Undefined local variable: a
 ,M6,Z150373850,
 
 M7 ; Undefined _gvn_
@@ -101,7 +101,7 @@ M7 ; Undefined _gvn_
  Set $ECode=",Z7-Error didn't happen,"
  Quit
  ;
-150372994,M7+1^erransi,%GTM-E-GVUNDEF, Global variable undefined: ^a
+150372994,M7+1^erransi,%YDB-E-GVUNDEF, Global variable undefined: ^a
 ,M7,Z150372994,
 
 M8 ; Undefined _svn_
@@ -109,7 +109,7 @@ M8 ; Undefined _svn_
  Set $ECode=",Z8-Error didn't happen,"
  Quit
  ;
-150373074,M8+1^erransi,%GTM-E-INVSVN, Invalid special variable name
+150373074,M8+1^erransi,%YDB-E-INVSVN, Invalid special variable name
 ,M8,Z150373074,
 
 M9 ; Divide by zero
@@ -117,7 +117,7 @@ M9 ; Divide by zero
  Set $ECode=",Z9-Error didn't happen,"
  Quit
  ;
-150373210,M9+1^erransi,%GTM-E-DIVZERO, Attempt to divide by zero
+150373210,M9+1^erransi,%YDB-E-DIVZERO, Attempt to divide by zero
 ,M9,Z150373210,
 
 M10 ; Invalid pattern match range
@@ -125,7 +125,7 @@ M10 ; Invalid pattern match range
  Set $ECode=",Z10-Error didn't happen,"
  Quit
  ;
-150379754,M10+1^erransi,%GTM-E-PATNOTFOUND, Current pattern table has no characters with pattern code B
+150379754,M10+1^erransi,%YDB-E-PATNOTFOUND, Current pattern table has no characters with pattern code B
 ,Z150379754,
 
 M11 ; No parameters passed
@@ -145,7 +145,7 @@ At line call - 4
 at line call - 3
 At line call - 2
 At line call - 1
-150379506,M12+3^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M12+3^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z12-Error didn't happen,
 
 M13 ; Invalid _lineref_ (label not found)
@@ -153,7 +153,7 @@ M13 ; Invalid _lineref_ (label not found)
  Set $ECode=",Z13-Error didn't happen,"
  Quit
  ;
-150373202,M13+1^erransi,%GTM-E-LABELUNKNOWN, Label referenced but not defined
+150373202,M13+1^erransi,%YDB-E-LABELUNKNOWN, Label referenced but not defined
 ,M13,Z150373202,
 
 M14 ; _line_ level not 1
@@ -163,7 +163,7 @@ M14 ; _line_ level not 1
  Quit
  ;
 indent . Write "This should be an error"
-150379506,M14+3^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M14+3^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z14-Error didn't happen,
 
 M15 ; Undefined index variable
@@ -173,7 +173,7 @@ M15 ; Undefined index variable
  Set $ECode=",Z15-Error didn't happen,"
  Quit
  ;
-150373850,M15+1^erransi,%GTM-E-LVUNDEF, Undefined local variable: i
+150373850,M15+1^erransi,%YDB-E-LVUNDEF, Undefined local variable: i
 ,M6,Z150373850,
 
 M16 ; Argumented QUIT not allowed
@@ -181,10 +181,10 @@ M16 ; Argumented QUIT not allowed
  Set $ECode=",Z16-Error didn't happen,"
  Quit
  ;
-150374450,exfun+1^erransi,%GTM-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed
+150374450,exfun+1^erransi,%YDB-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed
 ,M16,Z150374450,
 
-150379506,M16+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M16+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z16-Error didn't happen,
 
 M17 ; Argumented QUIT required
@@ -192,7 +192,7 @@ M17 ; Argumented QUIT required
  Set $ECode=",Z17-Error didn't happen,"
  Quit
  ;
-150374554,M17+1^erransi,%GTM-E-QUITARGREQD, Quit from an extrinsic must have an argument
+150374554,M17+1^erransi,%YDB-E-QUITARGREQD, Quit from an extrinsic must have an argument
 ,M17,Z150374554,
 
 M18 ; Fixed length READ not greater than zero
@@ -200,7 +200,7 @@ M18 ; Fixed length READ not greater than zero
  Set $ECode=",Z18-Error didn't happen,"
  Quit
  ;
-150375298,M18+1^erransi,%GTM-E-RDFLTOOSHORT, Length specified for fixed length read less than or equal to zero
+150375298,M18+1^erransi,%YDB-E-RDFLTOOSHORT, Length specified for fixed length read less than or equal to zero
 ,M18,Z150375298,
 
 M19 ; Cannot copy a tree or subtree into itself
@@ -210,7 +210,7 @@ M19 ; Cannot copy a tree or subtree into itself
  Set $ECode=",Z19-Error didn't happen,"
  Quit
  ;
-150379322,M19+3^erransi,%GTM-E-MERGEDESC, Merge operation not possible.  tree(1) is descendent of tree.
+150379322,M19+3^erransi,%YDB-E-MERGEDESC, Merge operation not possible.  tree(1) is descendent of tree.
 ,M19,Z150379322,
 
 M20 ; _line_ must have _formallist_
@@ -220,7 +220,7 @@ M20 ; _line_ must have _formallist_
  Quit
  ;
 call ; This entry can be called without parameters
-150374466,M20+2^erransi,%GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+150374466,M20+2^erransi,%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
 ,M20,Z150374466,
 
 M21 ; Algorithm specification invalid -- Duplicate formal parameter
@@ -230,7 +230,7 @@ M21 ; Algorithm specification invalid -- Duplicate formal parameter
  Quit
  ;
 same(a,a) ; Does this generate an M21?
-150374466,M21+2^erransi,%GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+150374466,M21+2^erransi,%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
 ,M20,Z150374466,
 
 M22 ; SET or KILL to ^$GLOBAL when data in global
@@ -238,7 +238,7 @@ M22 ; SET or KILL to ^$GLOBAL when data in global
  Set $ECode=",Z22-Error didn't happen,"
  Quit
  ;
-150379506,M22+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M22+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z22-Error didn't happen,
 
 M23 ; SET or KILL to ^$JOB for non-existent job number
@@ -246,7 +246,7 @@ M23 ; SET or KILL to ^$JOB for non-existent job number
  Set $ECode=",Z23-Error didn't happen,"
  Quit
  ;
-150379506,M23+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M23+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z23-Error didn't happen,
 
 M24 ; Change to collation algorithm while subscripted local variables defined
@@ -254,7 +254,7 @@ M24 ; Change to collation algorithm while subscripted local variables defined
  Set $ECode=",Z24-Error didn't happen,"
  Quit
  ;
-150379506,M24+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M24+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z24-Error didn't happen,
 
 M25 ; Attempt to modify currently executing routine
@@ -262,9 +262,9 @@ M25 ; Attempt to modify currently executing routine
  Set $ECode=",Z25-Error didn't happen,"
  Quit
  ;
-%GTM-E-FILENOTFND, File ansi.m not found
+%YDB-E-FILENOTFND, File ansi.m not found
 
-150379506,M25+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M25+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z25-Error didn't happen,
 
 M26 ; Non-existent _environment_
@@ -272,7 +272,7 @@ M26 ; Non-existent _environment_
  Set $ECode=",Z26-Error didn't happen,"
  Quit
  ;
-150374122,M26+1^erransi,%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/nono.gld.  Retaining ##TEST_PATH##/mumps.gld.,%SYSTEM-E-ENO2, No such file or directory
+150374122,M26+1^erransi,%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/nono.gld.  Retaining ##TEST_PATH##/mumps.gld.,%SYSTEM-E-ENO2, No such file or directory
 ,M26,Z150374122,
 
 M27 ; Attempt to rollback a transaction that is not restartable
@@ -283,7 +283,7 @@ M27 ; Attempt to rollback a transaction that is not restartable
  Set $ECode=",Z27-Error didn't happen,"
  Quit
  ;
-150376066,M27+2^erransi,%GTM-E-TRESTNOT, Cannot TRESTART, transaction is not restartable,%GTM-E-TRESTLOC, Transaction start: M27+2^erransi, Transaction failure: M27+4^erransi
+150376066,M27+2^erransi,%YDB-E-TRESTNOT, Cannot TRESTART, transaction is not restartable,%YDB-E-TRESTLOC, Transaction start: M27+2^erransi, Transaction failure: M27+4^erransi
 ,M27,Z150376066,
 
 M28 ; Mathematical function, parameter out of range
@@ -291,7 +291,7 @@ M28 ; Mathematical function, parameter out of range
  Set $ECode=",Z28-Error didn't happen,"
  Quit
  ;
-150379506,M28+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M28+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z28-Error didn't happen,
 
 M29 ; SET or KILL on _ssvn_ not allowed by implementation
@@ -299,7 +299,7 @@ M29 ; SET or KILL on _ssvn_ not allowed by implementation
  Set $ECode=",Z29-Error didn't happen,"
  Quit
  ;
-150379506,M29+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M29+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z29-Error didn't happen,
 
 M30 ; Reference to _glvn_ with different collating sequence within a collating algorithm
@@ -307,7 +307,7 @@ M30 ; Reference to _glvn_ with different collating sequence within a collating a
  Set $ECode=",Z30-Error didn't happen,"
  Quit
  ;
-150379506,M30+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M30+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z30-Error didn't happen,
 
 M31 ; _controlmnemonic_ used for device without a _mnemonicspace_ selected
@@ -315,7 +315,7 @@ M31 ; _controlmnemonic_ used for device without a _mnemonicspace_ selected
  Set $ECode=",Z31-Error didn't happen,"
  Quit
  ;
-150379506,M31+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M31+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z31-Error didn't happen,
 
 M32 ; _controlmnemonic_ used in user-defined _mnemonicspace_ which has no associated line
@@ -323,7 +323,7 @@ M32 ; _controlmnemonic_ used in user-defined _mnemonicspace_ which has no associ
  Set $ECode=",Z32-Error didn't happen,"
  Quit
  ;
-150379506,M32+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M32+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z32-Error didn't happen,
 
 M33 ; SET or KILL to ^$ROUTINE when _routine_ exists
@@ -331,7 +331,7 @@ M33 ; SET or KILL to ^$ROUTINE when _routine_ exists
  Set $ECode=",Z33-Error didn't happen,"
  Quit
  ;
-150379506,M33+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M33+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z33-Error didn't happen,
 
 M35 ; Device does not support _mnemonicspace_
@@ -339,7 +339,7 @@ M35 ; Device does not support _mnemonicspace_
  Set $ECode=",Z35-Error didn't happen,"
  Quit
  ;
-150379506,M35+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M35+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z35-Error didn't happen,
 
 M36 ; Incompatible _mnemonicspace_s
@@ -347,7 +347,7 @@ M36 ; Incompatible _mnemonicspace_s
  Set $ECode=",Z36-Error didn't happen,"
  Quit
  ;
-150379506,M36+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M36+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z36-Error didn't happen,
 
 M38 ; Invalid _ssvn_ subscript
@@ -355,7 +355,7 @@ M38 ; Invalid _ssvn_ subscript
  Set $ECode=",Z38-Error didn't happen,"
  Quit
  ;
-150372874,M38+1^erransi,%GTM-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
+150372874,M38+1^erransi,%YDB-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
 ,M29,Z150372874,
 
 M39 ; Invalid $NAME argument -- Name of variable expected
@@ -363,7 +363,7 @@ M39 ; Invalid $NAME argument -- Name of variable expected
  Set $ECode=",Z39-Error didn't happen,"
  Quit
  ;
-150373866,M39+1^erransi,%GTM-E-VAREXPECTED, Variable expected in this context
+150373866,M39+1^erransi,%YDB-E-VAREXPECTED, Variable expected in this context
 ,M39,Z150373866,
 
 M40 ; Call-by-reference in JOB _actual_
@@ -371,7 +371,7 @@ M40 ; Call-by-reference in JOB _actual_
  Set $ECode=",Z40-Error didn't happen,"
  Quit
  ;
-150379690,M40+1^erransi,%GTM-E-JOBACTREF, Actual parameter in job command passed by reference
+150379690,M40+1^erransi,%YDB-E-JOBACTREF, Actual parameter in job command passed by reference
 ,M40,Z150379690,
 
 M41 ; Invalid LOCK argument within a TRANSACTION
@@ -381,7 +381,7 @@ M41 ; Invalid LOCK argument within a TRANSACTION
  Set $ECode=",Z41-Error didn't happen,"
  Quit
  ;
-150376074,M41+3^erransi,%GTM-E-TPLOCK, Cannot release LOCK(s) held prior to current TSTART
+150376074,M41+3^erransi,%YDB-E-TPLOCK, Cannot release LOCK(s) held prior to current TSTART
 ,M41,Z150376074,
 
 M42 ; Invalid QUIT within a TRANSACTION
@@ -391,10 +391,10 @@ M42 ; Invalid QUIT within a TRANSACTION
  Set $ECode=",Z42-Error didn't happen,"
  Quit
  ;
-150376082,M42+3^erransi,%GTM-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+150376082,M42+3^erransi,%YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
 ,M42,Z150376082,
 
-150379506,M42+4^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M42+4^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z42-Error didn't happen,
 
 M43 ; Invalid range ($X, $Y)
@@ -402,7 +402,7 @@ M43 ; Invalid range ($X, $Y)
  Set $ECode=",Z43-Error didn't happen,"
  Quit
  ;
-150379506,M43+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M43+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z43-Error didn't happen,
 
 M44 ; Invalid _command_ outside of a TRANSACTION
@@ -410,7 +410,7 @@ M44 ; Invalid _command_ outside of a TRANSACTION
  Set $ECode=",Z44-Error didn't happen,"
  Quit
  ;
-150376058,M44+1^erransi,%GTM-E-TLVLZERO, Transaction is not in progress
+150376058,M44+1^erransi,%YDB-E-TLVLZERO, Transaction is not in progress
 ,M44,Z150376058,
 
 M45 ; Invalid GOTO reference
@@ -420,7 +420,7 @@ M45 ; Invalid GOTO reference
  Set $ECode=",Z45-Error didn't happen,"
  Quit
  ;
-150379506,M45+4^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M45+4^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z45-Error didn't happen,
 
 M46 ; Invalid attribute name -- Cannot modify reserved attribute
@@ -428,7 +428,7 @@ M46 ; Invalid attribute name -- Cannot modify reserved attribute
  Set $ECode=",Z46-Error didn't happen,"
  Quit
  ;
-150379506,M46+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M46+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z46-Error didn't happen,
 
 M47 ; Invalid attribute name -- Cannot modify tied attribute
@@ -436,7 +436,7 @@ M47 ; Invalid attribute name -- Cannot modify tied attribute
  Set $ECode=",Z47-Error didn't happen,"
  Quit
  ;
-150379506,M47+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M47+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z47-Error didn't happen,
 
 M48 ; Nonexistent window, element or choice
@@ -444,7 +444,7 @@ M48 ; Nonexistent window, element or choice
  Set $ECode=",Z48-Error didn't happen,"
  Quit
  ;
-150379506,M48+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M48+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z48-Error didn't happen,
 
 M49 ; Invalid attempt to set focus
@@ -452,7 +452,7 @@ M49 ; Invalid attempt to set focus
  Set $ECode=",Z49-Error didn't happen,"
  Quit
  ;
-150379506,M49+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M49+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z49-Error didn't happen,
 
 M50 ; Attempt to reference a non M-Term window in an OPEN command
@@ -460,7 +460,7 @@ M50 ; Attempt to reference a non M-Term window in an OPEN command
  Set $ECode=",Z50-Error didn't happen,"
  Quit
  ;
-150379506,M50+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M50+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z50-Error didn't happen,
 
 M51 ; Attempt to destroy M-Term window prior to CLOSE
@@ -468,7 +468,7 @@ M51 ; Attempt to destroy M-Term window prior to CLOSE
  Set $ECode=",Z51-Error didn't happen,"
  Quit
  ;
-150379506,M51+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M51+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z51-Error didn't happen,
 
 M52 ; Required attribute missing
@@ -476,7 +476,7 @@ M52 ; Required attribute missing
  Set $ECode=",Z52-Error didn't happen,"
  Quit
  ;
-150379506,M52+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M52+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z52-Error didn't happen,
 
 M53 ; Invalid argument for font function
@@ -484,7 +484,7 @@ M53 ; Invalid argument for font function
  Set $ECode=",Z53-Error didn't happen,"
  Quit
  ;
-150379506,M53+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M53+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z53-Error didn't happen,
 
 M54 ; Attempt to create non-modal child of a modal parent
@@ -492,7 +492,7 @@ M54 ; Attempt to create non-modal child of a modal parent
  Set $ECode=",Z54-Error didn't happen,"
  Quit
  ;
-150379506,M54+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M54+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z54-Error didn't happen,
 
 M55 ; Invalid nested ESTART command
@@ -500,7 +500,7 @@ M55 ; Invalid nested ESTART command
  Set $ECode=",Z55-Error didn't happen,"
  Quit
  ;
-150379506,M55+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M55+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z55-Error didn't happen,
 
 M56 ; Name length exceeds implementation's limit
@@ -515,7 +515,7 @@ off=-5
 supercalifragilistixexpialidoci=1
 x=""
 
-150379506,M56+3^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M56+3^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z56-Error didn't happen,
 
 M57 ; More than one defining occurrence of label in routine
@@ -523,10 +523,10 @@ M57 ; More than one defining occurrence of label in routine
  Set $ECode=",Z57-Error didn't happen,"
  Quit
  ;
-150373434,double+1^erransi,%GTM-E-MULTLAB, This label has been previously defined
+150373434,double+1^erransi,%YDB-E-MULTLAB, This label has been previously defined
 ,M57,Z150373434,
 
-150379506,M57+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M57+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z57-Error didn't happen,
 
 M58 ; Too few formal parameters
@@ -534,7 +534,7 @@ M58 ; Too few formal parameters
  Set $ECode=",Z58-Error didn't happen,"
  Quit
  ;
-150374474,M58+1^erransi,%GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+150374474,M58+1^erransi,%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
 ,M58,Z150374474,
 
 M59 ; Environment reference not permitted for this _ssvn_
@@ -542,7 +542,7 @@ M59 ; Environment reference not permitted for this _ssvn_
  Set $ECode=",Z59-Error didn't happen,"
  Quit
  ;
-150379506,M59+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M59+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z59-Error didn't happen,
 
 M60 ; Undefined _ssvn_
@@ -550,7 +550,7 @@ M60 ; Undefined _ssvn_
  Set $ECode=",Z60-Error didn't happen,"
  Quit
  ;
-150379506,M60+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M60+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z60-Error didn't happen,
 
 M61 ; Attempt to OPEN file with conflicting ACCESS parameters
@@ -558,7 +558,7 @@ M61 ; Attempt to OPEN file with conflicting ACCESS parameters
  Set $ECode=",Z61-Error didn't happen,"
  Quit
  ;
-150379506,M61+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M61+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z61-Error didn't happen,
 
 M62 ; Illegal value for ACCESS parameter while attempting to OPEN file
@@ -566,7 +566,7 @@ M62 ; Illegal value for ACCESS parameter while attempting to OPEN file
  Set $ECode=",Z62-Error didn't happen,"
  Quit
  ;
-150379506,M62+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M62+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z62-Error didn't happen,
 
 M63 ; Illegal value for DISPOSITION parameter while attempting to CLOSE file
@@ -574,7 +574,7 @@ M63 ; Illegal value for DISPOSITION parameter while attempting to CLOSE file
  Set $ECode=",Z63-Error didn't happen,"
  Quit
  ;
-150379506,M63+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M63+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z63-Error didn't happen,
 
 M64 ; Illegal value for RENAME parameter while attempting to CLOSE file
@@ -582,7 +582,7 @@ M64 ; Illegal value for RENAME parameter while attempting to CLOSE file
  Set $ECode=",Z64-Error didn't happen,"
  Quit
  ;
-150379506,M64+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M64+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z64-Error didn't happen,
 
 M65 ; Illegal value for VOLUME label
@@ -590,7 +590,7 @@ M65 ; Illegal value for VOLUME label
  Set $ECode=",Z65-Error didn't happen,"
  Quit
  ;
-150379506,M65+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M65+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z65-Error didn't happen,
 
 M66 ; Illegal value for DENSITY parameter
@@ -598,7 +598,7 @@ M66 ; Illegal value for DENSITY parameter
  Set $ECode=",Z66-Error didn't happen,"
  Quit
  ;
-150379506,M66+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M66+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z66-Error didn't happen,
 
 M67 ; Illegal value for ACCESS parameter
@@ -606,7 +606,7 @@ M67 ; Illegal value for ACCESS parameter
  Set $ECode=",Z67-Error didn't happen,"
  Quit
  ;
-150379506,M67+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M67+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z67-Error didn't happen,
 
 M68 ; Illegal value for MOUNT parameter
@@ -614,7 +614,7 @@ M68 ; Illegal value for MOUNT parameter
  Set $ECode=",Z68-Error didn't happen,"
  Quit
  ;
-150379506,M68+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M68+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z68-Error didn't happen,
 
 M69 ; Attempted tape I/O while no tape mounted
@@ -622,7 +622,7 @@ M69 ; Attempted tape I/O while no tape mounted
  Set $ECode=",Z69-Error didn't happen,"
  Quit
  ;
-150379506,M69+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M69+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z69-Error didn't happen,
 
 M70 ; Illegal value for BLOCKSIZE parameter
@@ -630,7 +630,7 @@ M70 ; Illegal value for BLOCKSIZE parameter
  Set $ECode=",Z70-Error didn't happen,"
  Quit
  ;
-150379506,M70+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M70+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z70-Error didn't happen,
 
 M71 ; Attempt to read data block larger than buffer size
@@ -638,7 +638,7 @@ M71 ; Attempt to read data block larger than buffer size
  Set $ECode=",Z71-Error didn't happen,"
  Quit
  ;
-150379506,M71+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M71+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z71-Error didn't happen,
 
 M72 ; Illegal value for recordsize parameter
@@ -646,7 +646,7 @@ M72 ; Illegal value for recordsize parameter
  Set $ECode=",Z72-Error didn't happen,"
  Quit
  ;
-150379506,M72+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M72+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z72-Error didn't happen,
 
 M73 ; Invalid usage of _devicekeyword_ NEWFILE
@@ -654,7 +654,7 @@ M73 ; Invalid usage of _devicekeyword_ NEWFILE
  Set $ECode=",Z73-Error didn't happen,"
  Quit
  ;
-150379506,M73+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M73+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z73-Error didn't happen,
 
 M74 ; Illegal value for TRANSLATION parameter
@@ -662,7 +662,7 @@ M74 ; Illegal value for TRANSLATION parameter
  Set $ECode=",Z74-Error didn't happen,"
  Quit
  ;
-150379506,M74+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M74+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z74-Error didn't happen,
 
 M75 ; String length exceeds implementation's limit
@@ -670,7 +670,7 @@ M75 ; String length exceeds implementation's limit
  Set $ECode=",Z75-Error didn't happen,"
  Quit
  ;
-150373290,M75+1^erransi,%GTM-E-MAXSTRLEN, Maximum string length exceeded
+150373290,M75+1^erransi,%YDB-E-MAXSTRLEN, Maximum string length exceeded
 ,M75,Z150373290,
 
 M76 ; TCP socket state incorrect for CONNECT or LISTEN
@@ -678,7 +678,7 @@ M76 ; TCP socket state incorrect for CONNECT or LISTEN
  Set $ECode=",Z76-Error didn't happen,"
  Quit
  ;
-150379506,M76+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M76+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z76-Error didn't happen,
 
 M77 ; TCP _deviceattribute_ missing
@@ -686,7 +686,7 @@ M77 ; TCP _deviceattribute_ missing
  Set $ECode=",Z77-Error didn't happen,"
  Quit
  ;
-150379506,M77+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M77+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z77-Error didn't happen,
 
 M78 ; TCP _devicekeyword_ missing
@@ -694,7 +694,7 @@ M78 ; TCP _devicekeyword_ missing
  Set $ECode=",Z78-Error didn't happen,"
  Quit
  ;
-150379506,M78+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M78+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z78-Error didn't happen,
 
 M79 ; TCP socket allocated to another device
@@ -702,7 +702,7 @@ M79 ; TCP socket allocated to another device
  Set $ECode=",Z79-Error didn't happen,"
  Quit
  ;
-150379506,M79+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M79+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z79-Error didn't happen,
 
 M80 ; Network error not otherwise specified
@@ -710,7 +710,7 @@ M80 ; Network error not otherwise specified
  Set $ECode=",Z80-Error didn't happen,"
  Quit
  ;
-150379506,M80+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M80+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z80-Error didn't happen,
 
 M81 ; Unable to establish network connection
@@ -718,7 +718,7 @@ M81 ; Unable to establish network connection
  Set $ECode=",Z81-Error didn't happen,"
  Quit
  ;
-150379506,M81+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M81+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z81-Error didn't happen,
 
 M82 ; Network connection suspended: wait to resume
@@ -726,7 +726,7 @@ M82 ; Network connection suspended: wait to resume
  Set $ECode=",Z82-Error didn't happen,"
  Quit
  ;
-150379506,M82+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M82+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z82-Error didn't happen,
 
 M83 ; Network connection lost
@@ -734,7 +734,7 @@ M83 ; Network connection lost
  Set $ECode=",Z83-Error didn't happen,"
  Quit
  ;
-150379506,M83+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M83+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z83-Error didn't happen,
 
 M84 ; Network protocol error: invalid client message
@@ -742,7 +742,7 @@ M84 ; Network protocol error: invalid client message
  Set $ECode=",Z84-Error didn't happen,"
  Quit
  ;
-150379506,M84+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M84+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z84-Error didn't happen,
 
 M85 ; Network protocol error: invalid server message
@@ -750,7 +750,7 @@ M85 ; Network protocol error: invalid server message
  Set $ECode=",Z85-Error didn't happen,"
  Quit
  ;
-150379506,M85+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M85+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z85-Error didn't happen,
 
 M86 ; Cannot relinquish device with I/O pending
@@ -758,7 +758,7 @@ M86 ; Cannot relinquish device with I/O pending
  Set $ECode=",Z86-Error didn't happen,"
  Quit
  ;
-150379506,M86+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M86+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z86-Error didn't happen,
 
 M87 ; Network buffer overflow
@@ -766,7 +766,7 @@ M87 ; Network buffer overflow
  Set $ECode=",Z87-Error didn't happen,"
  Quit
  ;
-150379506,M87+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M87+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z87-Error didn't happen,
 
 M88 ; Non-existent _routine_
@@ -774,7 +774,7 @@ M88 ; Non-existent _routine_
  Set $ECode=",Z88-Error didn't happen,"
  Quit
  ;
-150379506,M88+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M88+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z88-Error didn't happen,
 
 M89 ; Specified pattern is not a _subpattern_
@@ -782,7 +782,7 @@ M89 ; Specified pattern is not a _subpattern_
  Set $ECode=",Z89-Error didn't happen,"
  Quit
  ;
-150379506,M89+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M89+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z89-Error didn't happen,
 
 M90 ; Invalid _namevalue_
@@ -790,7 +790,7 @@ M90 ; Invalid _namevalue_
  Set $ECode=",Z90-Error didn't happen,"
  Quit
  ;
-150379530,M90+1^erransi,%GTM-E-NOCANONICNAME, Value is not a canonic name ("123456")
+150379530,M90+1^erransi,%YDB-E-NOCANONICNAME, Value is not a canonic name ("123456")
 ,M90,Z150379530,
 
 M91 ; Routine source is not available
@@ -798,7 +798,7 @@ M91 ; Routine source is not available
  Set $ECode=",Z91-Error didn't happen,"
  Quit
  ;
-150379506,M91+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M91+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z91-Error didn't happen,
 
 M92 ; Mathematical overflow
@@ -806,7 +806,7 @@ M92 ; Mathematical overflow
  Set $ECode=",Z92-Error didn't happen,"
  Quit
  ;
-150373506,M92+1^erransi,%GTM-E-NUMOFLOW, Numeric overflow
+150373506,M92+1^erransi,%YDB-E-NUMOFLOW, Numeric overflow
 ,M92,Z150373506,
 
 M93 ; Mathematical underflow
@@ -815,7 +815,7 @@ M93 ; Mathematical underflow
  Set $ECode=",Z93-Error didn't happen,"
  Quit
  ;0
-150379506,M93+3^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M93+3^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z93-Error didn't happen,
 
 M94 ; Attempt to compute zero to the zero-th power
@@ -823,7 +823,7 @@ M94 ; Attempt to compute zero to the zero-th power
  Set $ECode=",Z94-Error didn't happen,"
  Quit
  ;1
-150379506,M94+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M94+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z94-Error didn't happen,
 
 M95 ; Exponentiation returns complex number with non-zero imaginary part
@@ -831,7 +831,7 @@ M95 ; Exponentiation returns complex number with non-zero imaginary part
  Set $ECode=",Z95-Error didn't happen,"
  Quit
  ;
-150376226,M95+1^erransi,%GTM-E-NEGFRACPWR, Invalid operation: fractional power of negative number
+150376226,M95+1^erransi,%YDB-E-NEGFRACPWR, Invalid operation: fractional power of negative number
 ,M95,Z150376226,
 
 M96 ; Attempt to assign value to already valued write-once _ssvn_
@@ -839,7 +839,7 @@ M96 ; Attempt to assign value to already valued write-once _ssvn_
  Set $ECode=",Z96-Error didn't happen,"
  Quit
  ;
-150379506,M96+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M96+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z96-Error didn't happen,
 
 M97 ; Routine associated with user-defined _ssvn_ does not exist
@@ -847,7 +847,7 @@ M97 ; Routine associated with user-defined _ssvn_ does not exist
  Set $ECode=",Z97-Error didn't happen,"
  Quit
  ;
-150379506,M97+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M97+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z97-Error didn't happen,
 
 M98 ; Resource unavailable
@@ -855,7 +855,7 @@ M98 ; Resource unavailable
  Set $ECode=",Z98-Error didn't happen,"
  Quit
  ;
-150379506,M98+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M98+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z98-Error didn't happen,
 
 M99 ; Invalid operation for context
@@ -863,7 +863,7 @@ M99 ; Invalid operation for context
  Set $ECode=",Z99-Error didn't happen,"
  Quit
  ;
-150379506,M99+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M99+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z99-Error didn't happen,
 
 M100 ; Output time-out expired
@@ -871,7 +871,7 @@ M100 ; Output time-out expired
  Set $ECode=",Z100-Error didn't happen,"
  Quit
  ;
-150379506,M100+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M100+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z100-Error didn't happen,
 
 M101 ; Attempt to assign incorrect value to $ECODE
@@ -879,7 +879,7 @@ M101 ; Attempt to assign incorrect value to $ECODE
  Set $ECode=",Z101-Error didn't happen,"
  Quit
  ;
-150379498,M101+1^erransi,%GTM-E-INVECODEVAL, Invalid value for $ECODE (erroneous value)
+150379498,M101+1^erransi,%YDB-E-INVECODEVAL, Invalid value for $ECODE (erroneous value)
 ,M101,Z150379498,
 
 M102 ; Simultaneous synchronous and asynchronous event class
@@ -887,7 +887,7 @@ M102 ; Simultaneous synchronous and asynchronous event class
  Set $ECode=",Z102-Error didn't happen,"
  Quit
  ;
-150379506,M102+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M102+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z102-Error didn't happen,
 
 M103 ; Invalid event identifier
@@ -895,7 +895,7 @@ M103 ; Invalid event identifier
  Set $ECode=",Z103-Error didn't happen,"
  Quit
  ;
-150379506,M103+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M103+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z103-Error didn't happen,
 
 M104 ; IPC event identifier is not a valid job-number
@@ -903,7 +903,7 @@ M104 ; IPC event identifier is not a valid job-number
  Set $ECode=",Z104-Error didn't happen,"
  Quit
  ;
-150379506,M104+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M104+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z104-Error didn't happen,
 
 M105 ; Object not currently accessible
@@ -911,7 +911,7 @@ M105 ; Object not currently accessible
  Set $ECode=",Z105-Error didn't happen,"
  Quit
  ;
-150379506,M105+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M105+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z105-Error didn't happen,
 
 M106 ; Object does not support requested method or property
@@ -919,7 +919,7 @@ M106 ; Object does not support requested method or property
  Set $ECode=",Z106-Error didn't happen,"
  Quit
  ;
-150379506,M106+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M106+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z106-Error didn't happen,
 
 M107 ; Object has no default value
@@ -927,7 +927,7 @@ M107 ; Object has no default value
  Set $ECode=",Z107-Error didn't happen,"
  Quit
  ;
-150379506,M107+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M107+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z107-Error didn't happen,
 
 M108 ; Value if not of data type OREF
@@ -935,7 +935,7 @@ M108 ; Value if not of data type OREF
  Set $ECode=",Z108-Error didn't happen,"
  Quit
  ;
-150379506,M108+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M108+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z108-Error didn't happen,
 
 M109 ; Undefined _devicekeyword_
@@ -943,7 +943,7 @@ M109 ; Undefined _devicekeyword_
  Set $ECode=",Z109-Error didn't happen,"
  Quit
  ;
-150379506,M109+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M109+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z109-Error didn't happen,
 
 M110 ; Event identifier not available
@@ -951,7 +951,7 @@ M110 ; Event identifier not available
  Set $ECode=",Z110-Error didn't happen,"
  Quit
  ;
-150379506,M110+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M110+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z110-Error didn't happen,
 
 M111 ; Invalid number of days for date
@@ -959,7 +959,7 @@ M111 ; Invalid number of days for date
  Set $ECode=",Z111-Error didn't happen,"
  Quit
  ;
-150379506,M111+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M111+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z111-Error didn't happen,
 
 M112 ; Invalid number of seconds for time
@@ -967,7 +967,7 @@ M112 ; Invalid number of seconds for time
  Set $ECode=",Z112-Error didn't happen,"
  Quit
  ;
-150379506,M112+2^erransi,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+150379506,M112+2^erransi,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
 ,Z112-Error didn't happen,
 ############################################################################
 
@@ -978,9 +978,9 @@ Initial $STack(-1) = 0.
 : 
      
 Attempt to set invalid value into $ecode: 
-Error trapped: ',M101,Z150379498,', '150379498,err+6^errdemo,%GTM-E-INVECODEVAL, Invalid value for $ECODE (abcdefg)'.
+Error trapped: ',M101,Z150379498,', '150379498,err+6^errdemo,%YDB-E-INVECODEVAL, Invalid value for $ECODE (abcdefg)'.
 Set $ecode correctly: 
-User-trap: ',U1test,', '150379506,conti1+2^errdemo,%GTM-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)'.
+User-trap: ',U1test,', '150379506,conti1+2^errdemo,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)'.
 $ecode is now ',U1test,'.
 In subroutine 1, $stack is 1 / 1
 In subroutine 2, $stack is 2 / 0, iteration 0
@@ -994,7 +994,7 @@ $ecode is
 conti2+3^errdemo
 --- end of stack ---
 At error trap, $ecode is ',M9,Z150373210,',
-$zstatus=150373210,3+6^errdemo,%GTM-E-DIVZERO, Attempt to divide by zero
+$zstatus=150373210,3+6^errdemo,%YDB-E-DIVZERO, Attempt to divide by zero
 $STack(-1) = 4, $STACK = 4, $ESTACK = 2, release=3, $ETRAP=d etr^errdemo
 0: conti2+3^errdemo:  d 1
 1: 1+4^errdemo:  s zz=$$2()
@@ -1005,7 +1005,7 @@ $STack(-1) = 4, $STACK = 4, $ESTACK = 2, release=3, $ETRAP=d etr^errdemo
 5: etr+8^errdemo:  . w $STACK(i,"MCODE")
 Leaving error trap with $ECODE=,M9,Z150373210,
 At error trap, $ecode is ',M9,Z150373210,',
-$zstatus=150373210,3+6^errdemo,%GTM-E-DIVZERO, Attempt to divide by zero
+$zstatus=150373210,3+6^errdemo,%YDB-E-DIVZERO, Attempt to divide by zero
 $STack(-1) = 3, $STACK = 3, $ESTACK = 1, release=3, $ETRAP=d etr^errdemo
 0: conti2+3^errdemo:  d 1
 1: 1+4^errdemo:  s zz=$$2()
@@ -1017,7 +1017,7 @@ Leaving error trap with $ECODE=
 Back from 2, return value is , $ECODE = 
 $Ztrap is now , $Etrap is now d etr^errdemo
 At error trap, $ecode is ',M75,Z150373290,',
-$zstatus=150373290,1+8^errdemo,%GTM-E-MAXSTRLEN, Maximum string length exceeded
+$zstatus=150373290,1+8^errdemo,%YDB-E-MAXSTRLEN, Maximum string length exceeded
 $STack(-1) = 2, $STACK = 2, $ESTACK = 2, release=3, $ETRAP=d etr^errdemo
 0: conti2+3^errdemo:  d 1
 1: 1+8^errdemo:  s x="" f i=1:1 s x=x_(i#10)

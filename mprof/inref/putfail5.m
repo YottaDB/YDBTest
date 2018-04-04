@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; GVPUTFAIL regression test  7/9/93
 ;
 ; Requirements:
@@ -6,7 +17,7 @@
 ;
 ; This test sets a global variable to larger and larger string values, until
 ; it becomes too large for the block to contain.  It should result in
-; a %GTM-E-REC2BIG error.
+; a %YDB-E-REC2BIG error.
 ;
 putfail5
 	New (errcnt)
@@ -23,6 +34,6 @@ putfail5
 	Halt
 
 err
-	If $PIECE($ZSTATUS,",",3)="%GTM-E-REC2BIG" Write "   PASS - putfail5",!
+	If $PIECE($ZSTATUS,",",3)="%YDB-E-REC2BIG" Write "   PASS - putfail5",!
 	Else  Write "Maximum record length:  ",i+999,!,"** FAIL - putfail5: ",$ZSTATUS,!  Set errcnt=errcnt+1
 	Quit

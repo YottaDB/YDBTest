@@ -1,4 +1,16 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 
 ## ## multisite_replic/instance_create			###3###Kishore
 ## We need to test the different valid and invalid alternatives for instance names (mupip replic -instance_create -name)
@@ -7,7 +19,7 @@
 ## - setenv gtm_repl_instance "mumps.repl"
 ## - unsetenv (deassign) gtm_repl_instname
 
-echo "There would be lots of GTM-E- errors following. They are part of the test"
+echo "There would be lots of YDB-E- errors following. They are part of the test"
 echo " "
 setenv MUPIP "$gtm_exe/mupip"
 setenv gtm_repl_instance "mumps.repl"
@@ -32,7 +44,7 @@ echo " "
 $MUPIP replicate -instance_create
 if (-e "mumps.repl") echo "TEST-E-ERROR mumps.repl is not expected here"
 echo " "
-echo "expect GTM-E-CLIERR error"
+echo "expect YDB-E-CLIERR error"
 echo " "
 $MUPIP replicate -instance_create -name=
 if (-e "mumps.repl") echo "TEST-E-ERROR mumps.repl is not expected here"

@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -54,7 +54,7 @@ get_msrtime
 $MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message INSUNKNOWN -duration 120 -waitcreation'
 $MSR RUN INST3 "$msr_err_chk RCVR_$time_msr.log INSUNKNOWN"
 # Receiver server would have exited with the above error. Manually shutdown update process
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-INSUNKNOWN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-INSUNKNOWN
 $MSR RUN INST3 'set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_INST1INST3.out'
 $MSR STOPSRC INST1 INST3
 $MSR STOPSRC INST3 INST2

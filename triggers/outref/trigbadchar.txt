@@ -158,7 +158,7 @@ Use unicode in the XECUTE string without quotes
 	 do mrtn^trigbadchar set x=à write x,!
 	                           ^-----
 ##TEST_AWK		At column 28, line 1, source module /.*/trgtmp.*
-%GTM-E-EXPR, Expression expected but not found
+%YDB-E-EXPR, Expression expected but not found
 Error : Parsing XECUTE string: " do mrtn^trigbadchar set x=à write x,!"
                                                                PASS
 
@@ -202,7 +202,7 @@ Invalid name entry in SELECT list: "bad"_$ZCH(224)
 
 Output File: 
 Invalid global variable name in SELECT list: "^a१"
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 
 ###################################################################
 Output File: 
@@ -218,7 +218,7 @@ Output File:
 ###################################################################
 Output File: 
 Invalid name entry in SELECT list: "bad१"
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 
 ###################################################################
 Output File: 
@@ -282,7 +282,7 @@ Error : In parsing input:
 +^a -name=badcharcli5 -commands=S -delim=$C(9) -xecute="do mrtn^trigbadchar set x=5"
 ;trigger name: badcharcli6 (region DEFAULT)  cycle: 27
 +^a -name=badcharcli6 -commands=S -delim=$C(9) -pieces=1 -xecute="do mrtn^trigbadchar set x=6"
-150381066,+1^badcharinxecute#,%GTM-E-BADCHAR, $ZCHAR(224,161) is not a valid character in the UTF-8 encoding form
+150381066,+1^badcharinxecute#,%YDB-E-BADCHAR, $ZCHAR(224,161) is not a valid character in the UTF-8 encoding form
 
 ^fired("+1^badcharcli1#")="executions=1.$reference=^a"
 ^fired("+1^badcharcli2#")="executions=1.$reference=^a"
@@ -294,7 +294,7 @@ Error : In parsing input:
 ^fired("+1^disappearingbadchar1#")="executions=1.$reference=^a"
 ###################################################################
 Run time test
-150381066,+1^badcharinxecute#,%GTM-E-BADCHAR, $ZCHAR(224,161) is not a valid character in the UTF-8 encoding form
+150381066,+1^badcharinxecute#,%YDB-E-BADCHAR, $ZCHAR(224,161) is not a valid character in the UTF-8 encoding form
 
 ^fired("+1^badcharcli1#")="executions=1.$reference=^a"
 ^fired("+1^badcharcli2#")="executions=1.$reference=^a"
@@ -317,5 +317,5 @@ No errors detected by integ.
 No errors detected by integ.
 ##SUSPEND_OUTPUT NON_REPLIC
 ##TEST_AWK##TEST_HOST_SHORT##:##REMOTE_TEST_PATH##/RCVR_[0-9][0-9]_[0-9][0-9]_[0-9][0-9].log.updproc
-150381066,+1^badcharinxecute#,%GTM-E-BADCHAR, $ZCHAR(224,161) is not a valid character in the UTF-8 encoding form
-150381066,+1^badcharinxecute#,%GTM-E-BADCHAR, $ZCHAR(224,161) is not a valid character in the UTF-8 encoding form
+150381066,+1^badcharinxecute#,%YDB-E-BADCHAR, $ZCHAR(224,161) is not a valid character in the UTF-8 encoding form
+150381066,+1^badcharinxecute#,%YDB-E-BADCHAR, $ZCHAR(224,161) is not a valid character in the UTF-8 encoding form

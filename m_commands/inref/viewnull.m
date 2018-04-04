@@ -1,39 +1,50 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 viewnull	; view null subs for local variables
 nolvnull;
 	set $ztrap="goto incrtrap"
 	write "view ""NOLVNULLSUBS""",!
 	view "NOLVNULLSUBS"
-	set abcdefghi0123456789012345678901("")=31		; should issue GTM-E-LVNULLSUBS error 
+	set abcdefghi0123456789012345678901("")=31		; should issue YDB-E-LVNULLSUBS error
 	set abcdefghi0123456789012345678901(1)="xx312"
-	set abcdefghi0123456789012345678901(1,"",2)=3123	; should issue GTM-E-LVNULLSUBS error 
+	set abcdefghi0123456789012345678901(1,"",2)=3123	; should issue YDB-E-LVNULLSUBS error
 	write !,"-----> zwrite NOLVNULLSUBS 1 <------",!
 	zwrite  write !
-	set abcdefgh("")=1	; should issue GTM-E-LVNULLSUBS error 
+	set abcdefgh("")=1	; should issue YDB-E-LVNULLSUBS error
 	set abcdefgh(1)="xx12"
-	set abcdefgh(1,"",2)=123	; should issue GTM-E-LVNULLSUBS error 
+	set abcdefgh(1,"",2)=123	; should issue YDB-E-LVNULLSUBS error
 	write !,"-----> zwrite NOLVNULLSUBS 2 <------",!
 	zwrite  write !
-	set abcdefghi("")=91	; should issue GTM-E-LVNULLSUBS error 
+	set abcdefghi("")=91	; should issue YDB-E-LVNULLSUBS error
 	set abcdefghi(1)="xx912"
-	set abcdefghi(1,"",2)=9123	; should issue GTM-E-LVNULLSUBS error 
+	set abcdefghi(1,"",2)=9123	; should issue YDB-E-LVNULLSUBS error
 	write !,"-----> zwrite NOLVNULLSUBS 3 <------",!
 	zwrite  write !
 	;test indirection
 	set len=7,var="var"
 	for i=4:1:len set n=i#10 set var=var_n
-	set @var@("")="var"_len	; should issue GTM-E-LVNULLSUBS error 
+	set @var@("")="var"_len	; should issue YDB-E-LVNULLSUBS error
 	;
 	set len=8,var="var"
 	for i=4:1:len set n=i#10 set var=var_n
-	set @var@("")="var"_len	; should issue GTM-E-LVNULLSUBS error 
+	set @var@("")="var"_len	; should issue YDB-E-LVNULLSUBS error
 	;
 	set len=9,var="var"
 	for i=4:1:len set n=i#10 set var=var_n
-	set @var@("")="var"_len	; should issue GTM-E-LVNULLSUBS error 
+	set @var@("")="var"_len	; should issue YDB-E-LVNULLSUBS error
 	;
 	set len=31,var="var"
 	for i=4:1:len set n=i#10 set var=var_n
-	set @var@("")="var"_len	; should issue GTM-E-LVNULLSUBS error 
+	set @var@("")="var"_len	; should issue YDB-E-LVNULLSUBS error
 	;
 	write !,"-----> zwrite NOLVNULLSUBS 4 <------",!
 	zwrite  write !
@@ -68,7 +79,7 @@ lvnull	;
 	zwrite  write !
 	quit
 incrtrap; ------------------------------------------------------------------------------------------
-	;   Error handler. Prints current error and continues processing from the next M-line 
+	;   Error handler. Prints current error and continues processing from the next M-line
 	; ------------------------------------------------------------------------------------------
 	if $tlevel trollback
 	new savestat,mystat,prog,line,newprog

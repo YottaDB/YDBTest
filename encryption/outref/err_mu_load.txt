@@ -169,15 +169,15 @@ Mupip load without gtm_passwd
 unsetenv gtm_passwd
 ##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
 
-%GTM-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ext1.bin. Environment variable gtm_passwd not set
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ext1.bin. Environment variable gtm_passwd not set
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ---------------------------------------
 Mupip load with bad gtm_passwd
 ---------------------------------------
 ##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
 
-##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ext1.bin. .*
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ext1.bin. .*
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

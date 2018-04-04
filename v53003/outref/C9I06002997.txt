@@ -14,7 +14,7 @@ All requested regions frozen
 # set MUPIP freeze ON for the second region. Expect error message : ##FILTERED##GTM_TEST_DEBUGINFO.*
 Kill in progress indicator is set for database file ##TEST_PATH##/##DBNAME2##
 All regions will be unfrozen
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # set MUPIP freeze ON for the third region. Expect success : ##FILTERED##GTM_TEST_DEBUGINFO.*
 All requested regions frozen
 # MUPIP FREEZE test ends
@@ -42,7 +42,7 @@ Index               0               0           0.000             0
 Data                0               0           0.000             0
 Free               98              NA              NA            NA
 Total             100               1              NA             0
-%GTM-E-INTEGERRS, Database integrity errors
+%YDB-E-INTEGERRS, Database integrity errors
 # MUPIP integ for third region. Expect region already frozen : ##FILTERED##GTM_TEST_DEBUGINFO.*
 
 
@@ -82,7 +82,7 @@ All requested regions unfrozen
 Region ##REGION1## is now FROZEN
 Kill in progress indicator is set for database file ##TEST_PATH##/##DBNAME2##
 All regions will be unfrozen
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # MUPIP integ for first region. Expect success : ##FILTERED##GTM_TEST_DEBUGINFO.*
 No errors detected by integ.
 MUPIP integ for third region. Expect success : ##FILTERED##GTM_TEST_DEBUGINFO.*

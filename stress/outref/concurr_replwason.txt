@@ -59,7 +59,7 @@ GTM>
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 set msr_dont_chk_stat ; $MUPIP replic -source -checkhealth -instsecondary=__RCV_INSTNAME__'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid [##PID##] for secondary instance name [INSTANCE2]
 PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
-##TEST_AWK.GTM-E-REPLJNLCLOSED, Replication in jeopardy as journaling got closed for database file ##TEST_PATH##/a.dat.*
+##TEST_AWK.YDB-E-REPLJNLCLOSED, Replication in jeopardy as journaling got closed for database file ##TEST_PATH##/a.dat.*
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/bkgrnd_reorg.csh >>& stress_reorg.out'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/bkgrnd_reorg.csh >>& stress_reorg.out'==
 =>Check that processes that newly attach to regions with repl_state=WAS_ON have no problems doing so
@@ -74,7 +74,7 @@ GTM>
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##SRC_##TIMESTAMP##.log -message "REPLBRKNTRANS" -duration 3600 -waitcreation'==
 ----------
 Error REPLBRKNTRANS seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-%GTM-E-REPLBRKNTRANS, Replication subsystem found seqno ##SEQNO## broken or missing in the journal files
+%YDB-E-REPLBRKNTRANS, Replication subsystem found seqno ##SEQNO## broken or missing in the journal files
 ----------
 =>Turning permissions back on ajnl subdirectory before starting source server from INST1 to INST3
 =>Turning replication back ON those regions that lost them
@@ -92,7 +92,7 @@ Error REPLBRKNTRANS seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##SRC_##TIMESTAMP##.log -message REPLBRKNTRANS -duration 3600 -waitcreation'==
 ----------
 Error REPLBRKNTRANS seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-%GTM-E-REPLBRKNTRANS, Replication subsystem found seqno ##SEQNO## broken or missing in the journal files
+%YDB-E-REPLBRKNTRANS, Replication subsystem found seqno ##SEQNO## broken or missing in the journal files
 ----------
 =>Check that checkhealth of the INST1->INST2 source server at this point does NOT indicate any REPLJNLCLOSED error
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 $MUPIP replic -source -checkhealth -instsecondary=__RCV_INSTNAME__'==
@@ -149,7 +149,7 @@ Verification PASS
 GTM>
 =>Application level check on INST3 : Should FAIL since replication from INST1 was incomplete due to jnl_file_lost error
 ==Executing MULTISITE_REPLIC 'RUN INST3 ##SOURCE_PATH##/mumps -run allverify^replwason'==
-%GTM-E-GVUNDEF, Global variable undefined: ^jobindex(1)
+%YDB-E-GVUNDEF, Global variable undefined: ^jobindex(1)
 		At M source location verify+4^replwason
 
 GTM>
@@ -208,15 +208,15 @@ TEST-E-RECOVFAIL Mupip recover -forw failed (as expected)
 JNLDBTNNOMATCH error found in forw_recover1.log (as expected)
 ----------
 Error JNLDBTNNOMATCH seen in forw_recover1.log as expected:
-##TEST_AWK%GTM-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##/ajnl/a.mjl(_[0-9]*)? has beginning transaction number ##TRANSACTION_NO##, but database ##TEST_PATH##/a.dat has current transaction number \[0x0000000000000001\] and journal end transaction number \[0x0000000000000001\]
+##TEST_AWK%YDB-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##/ajnl/a.mjl(_[0-9]*)? has beginning transaction number ##TRANSACTION_NO##, but database ##TEST_PATH##/a.dat has current transaction number \[0x0000000000000001\] and journal end transaction number \[0x0000000000000001\]
 ----------
 ----------
 Error NOPREVLINK seen in forw_recover1.log as expected:
-##TEST_AWK%GTM-E-NOPREVLINK, Journal file ##TEST_PATH##/ajnl/a.mjl(_[0-9]*)? has a null previous link
+##TEST_AWK%YDB-E-NOPREVLINK, Journal file ##TEST_PATH##/ajnl/a.mjl(_[0-9]*)? has a null previous link
 ----------
 ----------
 Error MUNOACTION seen in forw_recover1.log as expected:
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ----------
 ##SUSPEND_OUTPUT JNL_NOBEFORE
 =>INST1 : Restore db and journal files (from save2) to test backward recovery

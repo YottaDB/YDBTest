@@ -2,7 +2,7 @@
 #								#
 # Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -263,7 +263,7 @@ if (("TRUE" == $gtm_test_unicode_support) && ("0" == "$gtm_platform_no_4byte_utf
 	else
 		echo "TEST-I-PASSED Unicode section of the xcall test"
 		mv unicode_tests.log unicode_tests.logx
-		$grep -v GTM-E-ZCPREALLVALINV unicode_tests.logx >&! unicode_tests.log
+		$grep -v YDB-E-ZCPREALLVALINV unicode_tests.logx >&! unicode_tests.log
 	endif
 else
 	echo "TEST-I-NOTRUN Unicode section of the xcall test"

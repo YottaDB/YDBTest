@@ -12,12 +12,12 @@ mumps.dat
 ---> Now that the process is holding onto the FTOK, start another process to cause FTOK contention
 ---> This should cause SEMWT2LONG error
 ----------
-Error GTM-E-DBFILERR seen in ftokcontender_1.out as expected:
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
+Error YDB-E-DBFILERR seen in ftokcontender_1.out as expected:
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
 ----------
 ----------
-Error GTM-E-SEMWT2LONG seen in ftokcontender_1.out as expected:
-##TEST_AWK%GTM-E-SEMWT2LONG, Process [1-9][0-9]* waited 0 second.s. for the ftok lock for region ##TEST_PATH##/mumps.dat, lock held by pid [1-9][0-9]*
+Error YDB-E-SEMWT2LONG seen in ftokcontender_1.out as expected:
+##TEST_AWK%YDB-E-SEMWT2LONG, Process [1-9][0-9]* waited 0 second.s. for the ftok lock for region ##TEST_PATH##/mumps.dat, lock held by pid [1-9][0-9]*
 ----------
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -37,12 +37,12 @@ mumps.dat
 ---> Now that the process is holding onto the FTOK, start another process to cause FTOK contention
 ---> This should cause SEMWT2LONG error
 ----------
-Error GTM-E-DBFILERR seen in ftokcontender_2.out as expected:
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
+Error YDB-E-DBFILERR seen in ftokcontender_2.out as expected:
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
 ----------
 ----------
-Error GTM-E-SEMWT2LONG seen in ftokcontender_2.out as expected:
-##TEST_AWK%GTM-E-SEMWT2LONG, Process [1-9][0-9]* waited [1-9][0-9]* second.s. for the ftok lock for region ##TEST_PATH##/mumps.dat, lock held by pid [1-9][0-9]*
+Error YDB-E-SEMWT2LONG seen in ftokcontender_2.out as expected:
+##TEST_AWK%YDB-E-SEMWT2LONG, Process [1-9][0-9]* waited [1-9][0-9]* second.s. for the ftok lock for region ##TEST_PATH##/mumps.dat, lock held by pid [1-9][0-9]*
 ----------
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -87,12 +87,12 @@ mumps.dat
 ---> Now that the process is holding onto the ACCESS control lock, start another process to cause contention
 ---> This should cause SEMWT2LONG error
 ----------
-Error GTM-E-DBFILERR seen in accsemcontender_1.out as expected:
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
+Error YDB-E-DBFILERR seen in accsemcontender_1.out as expected:
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
 ----------
 ----------
-Error GTM-E-SEMWT2LONG seen in accsemcontender_1.out as expected:
-##TEST_AWK%GTM-E-SEMWT2LONG, Process [1-9][0-9]* waited 0 second.s. for the access control lock for region ##TEST_PATH##/mumps.dat, lock held by pid [1-9][0-9]*
+Error YDB-E-SEMWT2LONG seen in accsemcontender_1.out as expected:
+##TEST_AWK%YDB-E-SEMWT2LONG, Process [1-9][0-9]* waited 0 second.s. for the access control lock for region ##TEST_PATH##/mumps.dat, lock held by pid [1-9][0-9]*
 ----------
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -112,12 +112,12 @@ mumps.dat
 ---> Now that the process is holding onto the ACCESS control lock, start another process to cause contention
 ---> This should cause SEMWT2LONG error
 ----------
-Error GTM-E-DBFILERR seen in accsemcontender_2.out as expected:
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
+Error YDB-E-DBFILERR seen in accsemcontender_2.out as expected:
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
 ----------
 ----------
-Error GTM-E-SEMWT2LONG seen in accsemcontender_2.out as expected:
-##TEST_AWK%GTM-E-SEMWT2LONG, Process [1-9][0-9]* waited [1-9][0-9]* second.s. for the access control lock for region ##TEST_PATH##/mumps.dat, lock held by pid [1-9][0-9]*
+Error YDB-E-SEMWT2LONG seen in accsemcontender_2.out as expected:
+##TEST_AWK%YDB-E-SEMWT2LONG, Process [1-9][0-9]* waited [1-9][0-9]* second.s. for the access control lock for region ##TEST_PATH##/mumps.dat, lock held by pid [1-9][0-9]*
 ----------
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..

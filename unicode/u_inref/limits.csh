@@ -81,7 +81,7 @@ $GTM << gtm_eof >&! $bytestr$check.out
 do ^$bytestr$check
 gtm_eof
 		# check and filter out the known expected errors
-		if ( "error" == $check ) $gtm_tst/com/check_error_exist.csh $bytestr$check.out "GTM-W-LSINSERTED" "GTM-E-LSEXPECTED" "GTM-E-EXPR"
+		if ( "error" == $check ) $gtm_tst/com/check_error_exist.csh $bytestr$check.out "GTM-W-LSINSERTED" "YDB-E-LSEXPECTED" "YDB-E-EXPR"
 	end
 #
 $GTM << gtm_eof >&! rec_$check.out
@@ -107,8 +107,8 @@ set ^(y_"$key")="VALUE PLEASE"
 gtm_eof
 	# check and filter out the known expected errors
 	if ( "error" == $check ) then
-		$gtm_tst/com/check_error_exist.csh rec_$check.out "GTM-E-REC2BIG"
-		$gtm_tst/com/check_error_exist.csh key_$check.out "GTM-E-GVSUBOFLOW"
+		$gtm_tst/com/check_error_exist.csh rec_$check.out "YDB-E-REC2BIG"
+		$gtm_tst/com/check_error_exist.csh key_$check.out "YDB-E-GVSUBOFLOW"
 	endif
 end
 $gtm_tst/com/dbcheck.csh

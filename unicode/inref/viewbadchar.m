@@ -3,8 +3,8 @@
 ; Copyright (c) 2006, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
-; All rights reserved.	     	  	     			;
+; Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -130,7 +130,7 @@ convert ;
 		close file3
 		quit
 errortrap ;
-		if (($FIND($zstatus,"GTM-E-BADCHAR")=0)&($FIND($zstatus,"GTM-E-INVDLRCVAL")=0)) set $ZTRAP="" w "TEST-E-UNEXPECTED "_$zstatus_" ERROR " quit
+		if (($FIND($zstatus,"YDB-E-BADCHAR")=0)&($FIND($zstatus,"YDB-E-INVDLRCVAL")=0)) set $ZTRAP="" w "TEST-E-UNEXPECTED "_$zstatus_" ERROR " quit
 		if ("notexpected"=verror) write "TEST-E-UNEXPECTED BADCHAR ISSUED on "_j_" for - "_ccc,!
 		W "$ZSTATUS for "_ccc_" "_$zstatus,!
 		set lab=$PIECE(errpos,"+",1)

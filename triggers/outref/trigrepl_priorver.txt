@@ -15,7 +15,7 @@ File a.trg, Line 1: Added SET trigger on ^a named a#1
 =========================================
 ----------
 Error REPLNOHASHTREC seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-%GTM-E-REPLNOHASHTREC, Sequence number 0x0000000000000002 contains trigger definition updates. Receiver side must be at least V6.2-000 for replication to continue
+%YDB-E-REPLNOHASHTREC, Sequence number 0x0000000000000002 contains trigger definition updates. Receiver side must be at least V6.2-000 for replication to continue
 ----------
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST3'==
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
@@ -55,7 +55,7 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 ==Executing MULTISITE_REPLIC 'RUN INST7 set msr_dont_chk_stat ; ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log REPLNOHASHTREC'==
 ----------
 Error REPLNOHASHTREC seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%GTM-E-REPLNOHASHTREC, Sequence number 0x0000000000000002 contains trigger definition updates. Source side must be at least V6.2-000 for replication to continue
+%YDB-E-REPLNOHASHTREC, Sequence number 0x0000000000000002 contains trigger definition updates. Source side must be at least V6.2-000 for replication to continue
 ----------
 # The receiver would have exited with the above error. Manually shutdown the update process and passive server
 ==Executing MULTISITE_REPLIC 'RUN INST7 set msr_dont_chk_stat ;$MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut.out'==

@@ -1,6 +1,9 @@
 #################################################################
 #								#
-#	Copyright 2006, 2014 Fidelity Information Services, Inc	#
+# Copyright 2006, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -58,7 +61,7 @@ $echoline
 set echo; setenv gtm_chset "UTF-8"; unset echo
 $gtm_exe/mumps -run utfpattern >&! out4.out
 echo "#  --> Check that utfpattern.o does not get regenerated automatically but instead error out with INVOBJ"
-$gtm_tst/com/check_error_exist.csh out4.out "GTM-E-INVOBJFILE" "GTM-I-TEXT"
+$gtm_tst/com/check_error_exist.csh out4.out "YDB-E-INVOBJFILE" "GTM-I-TEXT"
 set sum4 = `sum utfpattern.o | $tst_awk '{print $1}'`
 if ($sum4 != $sum1) then
 	echo "TEST-E-ERROR sum4 ($sum4) vs sum1 ($sum1) should have been equal as the object recompilation attempt failed"
@@ -78,7 +81,7 @@ $echoline
 set echo; setenv gtm_chset "M"; unset echo
 $gtm_exe/mumps -run utfpattern >&! out5.out
 echo "#  --> Check that utfpattern.o does not get regenerated automatically but instead error out with INVOBJ"
-$gtm_tst/com/check_error_exist.csh out5.out "GTM-E-INVOBJFILE" "GTM-I-TEXT"
+$gtm_tst/com/check_error_exist.csh out5.out "YDB-E-INVOBJFILE" "GTM-I-TEXT"
 set sum5 = `sum utfpattern.o | $tst_awk '{print $1}'`
 if ($sum5 != $sum44) then
 	echo "TEST-E-ERROR sum5 ($sum5) vs sum44 ($sum44) should have been equal as the object recompilation attempt failed"
@@ -101,7 +104,7 @@ do ^utfpattern
 halt
 EOF
 echo "#  --> Check that utfpattern.o does not get regenerated automatically but instead error out with INVOBJ"
-$gtm_tst/com/check_error_exist.csh out6.out "GTM-E-INVOBJFILE" "GTM-I-TEXT"
+$gtm_tst/com/check_error_exist.csh out6.out "YDB-E-INVOBJFILE" "GTM-I-TEXT"
 set sum6 = `sum utfpattern.o | $tst_awk '{print $1}'`
 if ($sum6 != $sum55) then
 	echo "TEST-E-ERROR sum6 ($sum6) vs sum55 ($sum55) should have been equal as the object recompilation attempt failed"
@@ -124,7 +127,7 @@ do ^utfpattern
 halt
 EOF
 echo "#  --> Check that utfpattern.o does not get regenerated automatically but instead error out with INVOBJ"
-$gtm_tst/com/check_error_exist.csh out7.out "GTM-E-INVOBJFILE" "GTM-I-TEXT"
+$gtm_tst/com/check_error_exist.csh out7.out "YDB-E-INVOBJFILE" "GTM-I-TEXT"
 set sum7 = `sum utfpattern.o | $tst_awk '{print $1}'`
 if ($sum7 != $sum66) then
 	echo "TEST-E-ERROR sum7 ($sum7) vs sum66 ($sum66) should have been equal as the object recompilation attempt failed"

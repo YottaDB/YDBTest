@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -23,7 +23,7 @@ foreach bad ( bad*check*.trg )
 	rm $bad
 end
 echo "Failures `$grep -c '^;' invalid.fail`"
-echo "Number of times MUPIP rejected invalid names `$grep -c GTM-E-MUNOACTION invalidnametest.txt`"
+echo "Number of times MUPIP rejected invalid names `$grep -c YDB-E-MUNOACTION invalidnametest.txt`"
 $gtm_exe/mumps -run run^invalidnames
 source $gtm_tst/com/ydb_trig_upgrade_check.csh
 $gtm_tst/com/dbcheck.csh -extract

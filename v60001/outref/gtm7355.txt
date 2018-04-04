@@ -11,10 +11,10 @@ Starting case 1
 No matching triggers found for deletion
 Added SET trigger on ^x named x#1
 
-** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** casehndlr: Error in case 1: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 1: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=0
 ZGoto back to main from casehndlr^gtm7355
 Case 1 complete
@@ -24,10 +24,10 @@ Case 1 complete
 Starting case 2
 Starting transaction
 
-** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** casehndlr: Error in case 2: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 2: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 ZGoto back to main from casehndlr^gtm7355
 Case 2 complete
@@ -38,10 +38,10 @@ Starting case 3
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** mainerr: Case 3 unwound to main drive routine: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** mainerr: Case 3 unwound to main drive routine: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 Case 3 complete
 $TLEVEL=0
 ZGoto back to main from mainerr^gtm7355
@@ -51,10 +51,10 @@ ZGoto back to main from mainerr^gtm7355
 Starting case 4
 Starting transaction
 
-** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** mainerr: Case 4 unwound to main drive routine: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** mainerr: Case 4 unwound to main drive routine: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 Case 4 complete
 $TLEVEL=0
 ZGoto back to main from mainerr^gtm7355
@@ -65,10 +65,10 @@ Starting case 5
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** casehndlr: Error in case 5: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 5: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 ZGoto back to main from casehndlr^gtm7355
 Case 5 complete
@@ -78,10 +78,10 @@ Case 5 complete
 Starting case 6
 Starting transaction
 
-** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** casehndlr: Error in case 6: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 6: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 ZGoto back to main from casehndlr^gtm7355
 Case 6 complete
@@ -92,14 +92,14 @@ Starting case 7
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr1^gtm7355 entered: 150373978,+1^x#1#,%GTM-E-ZLINKFILE, Error while zlinking "notexist",%GTM-E-FILENOTFND, File notexist not found
+** Error trap etr1^gtm7355 entered: 150373978,+1^x#1#,%YDB-E-ZLINKFILE, Error while zlinking "notexist",%YDB-E-FILENOTFND, File notexist not found
 $TLEVEL=1
 
-** Error trap etr1^gtm7355 entered: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap etr1^gtm7355 entered: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=0
 ZGoto back to main from etr1^gtm7355
 
-** casehndlr: Error in case 7: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 7: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=0
 Detected unwind past where we can return to case - returning to case loop instead
 
@@ -109,14 +109,14 @@ Starting case 8
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr1^gtm7355 entered: 150373978,+1^x#1#,%GTM-E-ZLINKFILE, Error while zlinking "notexist",%GTM-E-FILENOTFND, File notexist not found
+** Error trap etr1^gtm7355 entered: 150373978,+1^x#1#,%YDB-E-ZLINKFILE, Error while zlinking "notexist",%YDB-E-FILENOTFND, File notexist not found
 $TLEVEL=1
 
-** Error trap etr1^gtm7355 entered: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap etr1^gtm7355 entered: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=0
 ZGoto back to main from etr1^gtm7355
 
-** casehndlr: Error in case 8: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 8: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=0
 ZGoto back to main from casehndlr^gtm7355
 Case 8 complete
@@ -135,10 +135,10 @@ Starting case 1
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** casehndlr: Error in case 1: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 1: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=0
 ZGoto back to main from casehndlr^gtm7355
 Case 1 complete
@@ -148,10 +148,10 @@ Case 1 complete
 Starting case 2
 Starting transaction
 
-** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** casehndlr: Error in case 2: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 2: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 ZGoto back to main from casehndlr^gtm7355
 Case 2 complete
@@ -162,10 +162,10 @@ Starting case 3
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** mainerr: Case 3 unwound to main drive routine: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** mainerr: Case 3 unwound to main drive routine: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 Case 3 complete
 $TLEVEL=0
 ZGoto back to main from mainerr^gtm7355
@@ -175,10 +175,10 @@ ZGoto back to main from mainerr^gtm7355
 Starting case 4
 Starting transaction
 
-** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** mainerr: Case 4 unwound to main drive routine: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** mainerr: Case 4 unwound to main drive routine: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 Case 4 complete
 $TLEVEL=0
 ZGoto back to main from mainerr^gtm7355
@@ -189,10 +189,10 @@ Starting case 5
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** casehndlr: Error in case 5: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 5: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 ZGoto back to main from casehndlr^gtm7355
 Case 5 complete
@@ -202,10 +202,10 @@ Case 5 complete
 Starting case 6
 Starting transaction
 
-** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr1^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** casehndlr: Error in case 6: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 6: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 ZGoto back to main from casehndlr^gtm7355
 Case 6 complete
@@ -216,14 +216,14 @@ Starting case 7
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr1^gtm7355 entered: 150373978,+1^x#1#,%GTM-E-ZLINKFILE, Error while zlinking "notexist",%GTM-E-FILENOTFND, File notexist not found
+** Error trap etr1^gtm7355 entered: 150373978,+1^x#1#,%YDB-E-ZLINKFILE, Error while zlinking "notexist",%YDB-E-FILENOTFND, File notexist not found
 $TLEVEL=1
 
-** Error trap etr1^gtm7355 entered: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap etr1^gtm7355 entered: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=0
 ZGoto back to main from etr1^gtm7355
 
-** casehndlr: Error in case 7: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 7: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=0
 Detected unwind past where we can return to case - returning to case loop instead
 
@@ -233,14 +233,14 @@ Starting case 8
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr1^gtm7355 entered: 150373978,+1^x#1#,%GTM-E-ZLINKFILE, Error while zlinking "notexist",%GTM-E-FILENOTFND, File notexist not found
+** Error trap etr1^gtm7355 entered: 150373978,+1^x#1#,%YDB-E-ZLINKFILE, Error while zlinking "notexist",%YDB-E-FILENOTFND, File notexist not found
 $TLEVEL=1
 
-** Error trap etr1^gtm7355 entered: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap etr1^gtm7355 entered: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=0
 ZGoto back to main from etr1^gtm7355
 
-** casehndlr: Error in case 8: 150382970,etr1+9^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 8: 150382970,etr1+9^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=0
 ZGoto back to main from casehndlr^gtm7355
 Case 8 complete
@@ -259,10 +259,10 @@ Starting case 1
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** $ETrap (7a) entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** $ETrap (7a) entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** casehndlr: Error in case 1: 150379578,sub1+4^gtm7355,%GTM-E-ERRWETRAP, Error while processing $ETRAP,-GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 1: 150379578,sub1+4^gtm7355,%YDB-E-ERRWETRAP, Error while processing $ETRAP,-YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=0
 ZGoto back to main from casehndlr^gtm7355
 Case 1 complete
@@ -272,10 +272,10 @@ Case 1 complete
 Starting case 2
 Starting transaction
 
-** $ETrap (7a) entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** $ETrap (7a) entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** casehndlr: Error in case 2: 150379578,sub1+4^gtm7355,%GTM-E-ERRWETRAP, Error while processing $ETRAP,-GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 2: 150379578,sub1+4^gtm7355,%YDB-E-ERRWETRAP, Error while processing $ETRAP,-YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 ZGoto back to main from casehndlr^gtm7355
 Case 2 complete
@@ -286,10 +286,10 @@ Starting case 3
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** $ETrap (7a) entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** $ETrap (7a) entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** mainerr: Case 3 unwound to main drive routine: 150379578,sub1+4^gtm7355,%GTM-E-ERRWETRAP, Error while processing $ETRAP,-GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** mainerr: Case 3 unwound to main drive routine: 150379578,sub1+4^gtm7355,%YDB-E-ERRWETRAP, Error while processing $ETRAP,-YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 Case 3 complete
 $TLEVEL=0
 ZGoto back to main from mainerr^gtm7355
@@ -299,10 +299,10 @@ ZGoto back to main from mainerr^gtm7355
 Starting case 4
 Starting transaction
 
-** $ETrap (7a) entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** $ETrap (7a) entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** mainerr: Case 4 unwound to main drive routine: 150379578,sub1+4^gtm7355,%GTM-E-ERRWETRAP, Error while processing $ETRAP,-GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** mainerr: Case 4 unwound to main drive routine: 150379578,sub1+4^gtm7355,%YDB-E-ERRWETRAP, Error while processing $ETRAP,-YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 Case 4 complete
 $TLEVEL=0
 ZGoto back to main from mainerr^gtm7355
@@ -313,10 +313,10 @@ Starting case 5
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** $ETrap (7a) entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** $ETrap (7a) entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** casehndlr: Error in case 5: 150379578,sub1+4^gtm7355,%GTM-E-ERRWETRAP, Error while processing $ETRAP,-GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 5: 150379578,sub1+4^gtm7355,%YDB-E-ERRWETRAP, Error while processing $ETRAP,-YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 ZGoto back to main from casehndlr^gtm7355
 Case 5 complete
@@ -326,10 +326,10 @@ Case 5 complete
 Starting case 6
 Starting transaction
 
-** $ETrap (7a) entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** $ETrap (7a) entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
-** casehndlr: Error in case 6: 150379578,sub1+4^gtm7355,%GTM-E-ERRWETRAP, Error while processing $ETRAP,-GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 6: 150379578,sub1+4^gtm7355,%YDB-E-ERRWETRAP, Error while processing $ETRAP,-YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 ZGoto back to main from casehndlr^gtm7355
 Case 6 complete
@@ -340,14 +340,14 @@ Starting case 7
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** $ETrap (7a) entered: 150373978,+1^x#1#,%GTM-E-ZLINKFILE, Error while zlinking "notexist",%GTM-E-FILENOTFND, File notexist not found
+** $ETrap (7a) entered: 150373978,+1^x#1#,%YDB-E-ZLINKFILE, Error while zlinking "notexist",%YDB-E-FILENOTFND, File notexist not found
 $TLEVEL=1
 
-** $ETrap (7a) entered: 150379578,+1^x#1#,%GTM-E-ERRWETRAP, Error while processing $ETRAP,-GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** $ETrap (7a) entered: 150379578,+1^x#1#,%YDB-E-ERRWETRAP, Error while processing $ETRAP,-YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=0
 ZGoto back to main from eror trap
 
-** casehndlr: Error in case 7: 150379578,+1^x#1#,%GTM-E-ERRWETRAP, Error while processing $ETRAP,-GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 7: 150379578,+1^x#1#,%YDB-E-ERRWETRAP, Error while processing $ETRAP,-YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=0
 Detected unwind past where we can return to case - returning to case loop instead
 
@@ -357,14 +357,14 @@ Starting case 8
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** $ETrap (7a) entered: 150373978,+1^x#1#,%GTM-E-ZLINKFILE, Error while zlinking "notexist",%GTM-E-FILENOTFND, File notexist not found
+** $ETrap (7a) entered: 150373978,+1^x#1#,%YDB-E-ZLINKFILE, Error while zlinking "notexist",%YDB-E-FILENOTFND, File notexist not found
 $TLEVEL=1
 
-** $ETrap (7a) entered: 150379578,+1^x#1#,%GTM-E-ERRWETRAP, Error while processing $ETRAP,-GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** $ETrap (7a) entered: 150379578,+1^x#1#,%YDB-E-ERRWETRAP, Error while processing $ETRAP,-YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=0
 ZGoto back to main from eror trap
 
-** casehndlr: Error in case 8: 150379578,+1^x#1#,%GTM-E-ERRWETRAP, Error while processing $ETRAP,-GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** casehndlr: Error in case 8: 150379578,+1^x#1#,%YDB-E-ERRWETRAP, Error while processing $ETRAP,-YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=0
 ZGoto back to main from casehndlr^gtm7355
 Case 8 complete
@@ -383,14 +383,14 @@ Starting case 1
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
 ** $ZInterrupt trap zint^gtm7355 entered
 $TLEVEL=1
 Driving TP Restart
 
-** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 Clearing $ECODE and Quitting from this level
 Returning from zint^gtm7355
@@ -402,14 +402,14 @@ Case 1 complete
 Starting case 2
 Starting transaction
 
-** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
 ** $ZInterrupt trap zint^gtm7355 entered
 $TLEVEL=1
 Driving TP Restart
 
-** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 Clearing $ECODE and Quitting from this level
 Returning from zint^gtm7355
@@ -422,14 +422,14 @@ Starting case 3
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
 ** $ZInterrupt trap zint^gtm7355 entered
 $TLEVEL=1
 Driving TP Restart
 
-** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 Clearing $ECODE and Quitting from this level
 Returning from zint^gtm7355
@@ -441,14 +441,14 @@ Case 3 complete
 Starting case 4
 Starting transaction
 
-** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
 ** $ZInterrupt trap zint^gtm7355 entered
 $TLEVEL=1
 Driving TP Restart
 
-** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 Clearing $ECODE and Quitting from this level
 Returning from zint^gtm7355
@@ -461,14 +461,14 @@ Starting case 5
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
 ** $ZInterrupt trap zint^gtm7355 entered
 $TLEVEL=1
 Driving TP Restart
 
-** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 Clearing $ECODE and Quitting from this level
 Returning from zint^gtm7355
@@ -480,14 +480,14 @@ Case 5 complete
 Starting case 6
 Starting transaction
 
-** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
 ** $ZInterrupt trap zint^gtm7355 entered
 $TLEVEL=1
 Driving TP Restart
 
-** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 Clearing $ECODE and Quitting from this level
 Returning from zint^gtm7355
@@ -500,14 +500,14 @@ Starting case 7
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr2^gtm7355 entered: 150373978,+1^x#1#,%GTM-E-ZLINKFILE, Error while zlinking "notexist",%GTM-E-FILENOTFND, File notexist not found
+** Error trap etr2^gtm7355 entered: 150373978,+1^x#1#,%YDB-E-ZLINKFILE, Error while zlinking "notexist",%YDB-E-FILENOTFND, File notexist not found
 $TLEVEL=1
 
 ** $ZInterrupt trap zint^gtm7355 entered
 $TLEVEL=1
 Driving TP Restart
 
-** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 Clearing $ECODE and Quitting from this level
 Returning from zint^gtm7355
@@ -520,14 +520,14 @@ Starting case 8
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr2^gtm7355 entered: 150373978,+1^x#1#,%GTM-E-ZLINKFILE, Error while zlinking "notexist",%GTM-E-FILENOTFND, File notexist not found
+** Error trap etr2^gtm7355 entered: 150373978,+1^x#1#,%YDB-E-ZLINKFILE, Error while zlinking "notexist",%YDB-E-FILENOTFND, File notexist not found
 $TLEVEL=1
 
 ** $ZInterrupt trap zint^gtm7355 entered
 $TLEVEL=1
 Driving TP Restart
 
-** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 Clearing $ECODE and Quitting from this level
 Returning from zint^gtm7355
@@ -548,14 +548,14 @@ Starting case 1
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
 ** $ZInterrupt trap zint^gtm7355 entered
 $TLEVEL=1
 Driving TP Restart
 
-** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 Clearing $ECODE and Quitting from this level
 Returning from zint^gtm7355
@@ -567,14 +567,14 @@ Case 1 complete
 Starting case 2
 Starting transaction
 
-** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
 ** $ZInterrupt trap zint^gtm7355 entered
 $TLEVEL=1
 Driving TP Restart
 
-** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 Clearing $ECODE and Quitting from this level
 Returning from zint^gtm7355
@@ -587,14 +587,14 @@ Starting case 3
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
 ** $ZInterrupt trap zint^gtm7355 entered
 $TLEVEL=1
 Driving TP Restart
 
-** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 Clearing $ECODE and Quitting from this level
 Returning from zint^gtm7355
@@ -606,14 +606,14 @@ Case 3 complete
 Starting case 4
 Starting transaction
 
-** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
 ** $ZInterrupt trap zint^gtm7355 entered
 $TLEVEL=1
 Driving TP Restart
 
-** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 Clearing $ECODE and Quitting from this level
 Returning from zint^gtm7355
@@ -626,14 +626,14 @@ Starting case 5
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
 ** $ZInterrupt trap zint^gtm7355 entered
 $TLEVEL=1
 Driving TP Restart
 
-** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 Clearing $ECODE and Quitting from this level
 Returning from zint^gtm7355
@@ -645,14 +645,14 @@ Case 5 complete
 Starting case 6
 Starting transaction
 
-** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%GTM-E-LVUNDEF, Undefined local variable: yy
+** Error trap etr2^gtm7355 entered: 150373850,sub1+4^gtm7355,%YDB-E-LVUNDEF, Undefined local variable: yy
 $TLEVEL=1
 
 ** $ZInterrupt trap zint^gtm7355 entered
 $TLEVEL=1
 Driving TP Restart
 
-** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 Clearing $ECODE and Quitting from this level
 Returning from zint^gtm7355
@@ -665,14 +665,14 @@ Starting case 7
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr2^gtm7355 entered: 150373978,+1^x#1#,%GTM-E-ZLINKFILE, Error while zlinking "notexist",%GTM-E-FILENOTFND, File notexist not found
+** Error trap etr2^gtm7355 entered: 150373978,+1^x#1#,%YDB-E-ZLINKFILE, Error while zlinking "notexist",%YDB-E-FILENOTFND, File notexist not found
 $TLEVEL=1
 
 ** $ZInterrupt trap zint^gtm7355 entered
 $TLEVEL=1
 Driving TP Restart
 
-** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 Clearing $ECODE and Quitting from this level
 Returning from zint^gtm7355
@@ -685,14 +685,14 @@ Starting case 8
 All existing triggers (count = 1) deleted
 Added SET trigger on ^x named x#1
 
-** Error trap etr2^gtm7355 entered: 150373978,+1^x#1#,%GTM-E-ZLINKFILE, Error while zlinking "notexist",%GTM-E-FILENOTFND, File notexist not found
+** Error trap etr2^gtm7355 entered: 150373978,+1^x#1#,%YDB-E-ZLINKFILE, Error while zlinking "notexist",%YDB-E-FILENOTFND, File notexist not found
 $TLEVEL=1
 
 ** $ZInterrupt trap zint^gtm7355 entered
 $TLEVEL=1
 Driving TP Restart
 
-** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%GTM-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
+** Error trap zintetr2^gtm7355 entered: 150382970,zint+12^gtm7355,%YDB-E-TPRESTNESTERR, TP restart signaled while handing error - treated as nested error - Use TROLLBACK in error handler to avoid this
 $TLEVEL=1
 Clearing $ECODE and Quitting from this level
 Returning from zint^gtm7355

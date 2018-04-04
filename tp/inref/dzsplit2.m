@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 DZSPLIT2 ; ; ; test for PUTFAIL MP
 	;
 ;requires a database with a block size of 2048
@@ -5,7 +16,7 @@ DZSPLIT2 ; ; ; test for PUTFAIL MP
 ; until it splits.
 ;
 ; Produced the following error message prior to V3.1-6a:
-;  %GTM-E-GVPUTFAIL, Global variable put failed. Failure code: MP
+;  %YDB-E-GVPUTFAIL, Global variable put failed. Failure code: MP
 ;                  At M source location +24^DZSPLIT2
 ; ...followed by a hang upon exiting GT.M
 ;

@@ -78,7 +78,7 @@ Block      1E0:	|  ........  ........  ........  ........  |
 
 'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
 
-%GTM-E-BITMAPSBAD, Database bit maps are incorrect
+%YDB-E-BITMAPSBAD, Database bit maps are incorrect
 DSE> CRIT is currently unowned on all regions
 DSE> 
 Restoring block 0 from version 1
@@ -115,7 +115,7 @@ Block      1E0:	|  ........  ........  ........  ........  |
 
 'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
 
-%GTM-E-BITMAPSBAD, Database bit maps are incorrect
+%YDB-E-BITMAPSBAD, Database bit maps are incorrect
 ##TEST_AWKDSE. Database ##TEST_PATH##/a.dat . CRIT Owned by pid .*
 DSE> 
 Restoring block 0 from version 1
@@ -136,7 +136,7 @@ DSE>
     Path--blk:off
 	4:10,	3
 
-DSE> %GTM-E-CLIERR, Unrecognized option : DATA, value expected but not found
+DSE> %YDB-E-CLIERR, Unrecognized option : DATA, value expected but not found
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG

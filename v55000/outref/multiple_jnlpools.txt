@@ -29,10 +29,10 @@ GDE>
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/other.mjl created for region DEFAULT with BEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 %GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
-# The below update should error out with GTM-E-REPLINSTNOSHM
+# The below update should error out with YDB-E-REPLINSTNOSHM
 
 GTM>
-%GTM-E-REPLINSTNOSHM, Database ##TEST_PATH##/other.dat has no active connection to a replication journal pool
+%YDB-E-REPLINSTNOSHM, Database ##TEST_PATH##/other.dat has no active connection to a replication journal pool
 
 GTM>
 # Start background updates
@@ -44,23 +44,23 @@ GTM>
 # Check if the error message prints the shmid of the old mumps.repl correctly
 ----------
 Error REPLINSTMISMTCH seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-%GTM-E-REPLINSTMISMTCH, Process has replication instance file ##TEST_PATH##/mumps.repl (jnlpool shmid = ##NEW_SHMID##) open but database ##TEST_PATH##/mumps.dat is bound to instance file ##TEST_PATH##/mumps.repl (jnlpool shmid = ##OLD_SHMID##)
+%YDB-E-REPLINSTMISMTCH, Process has replication instance file ##TEST_PATH##/mumps.repl (jnlpool shmid = ##NEW_SHMID##) open but database ##TEST_PATH##/mumps.dat is bound to instance file ##TEST_PATH##/mumps.repl (jnlpool shmid = ##OLD_SHMID##)
 ----------
 ----------
-Error GTM-E-DBNOREGION seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-%GTM-E-DBNOREGION, None of the database regions accessible
+Error YDB-E-DBNOREGION seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%YDB-E-DBNOREGION, None of the database regions accessible
 ----------
 # The below should error out with NOJNLPOOL error because source server startup failed
 
 GTM>
 
 GTM>
-%GTM-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
+%YDB-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
 
 GTM>
 # The below shutdown command should issue NOJNLPOOL error because source server did not start at all
 ##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
-%GTM-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
+%YDB-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
 # Kill the background mumps process
 $MUPIP rundown
 # Check that NONE of the orphaned ipcs exist after argument-less mupip rundown

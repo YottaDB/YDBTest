@@ -91,7 +91,7 @@ mumps.dat
 # Randomly choose any version prior to V62003
 
 # Attempt a load
-##TEST_AWK%GTM-E-L.*
+##TEST_AWK%YDB-E-L.*
 
 # Switch to current version
 
@@ -253,7 +253,7 @@ No errors detected by integ.
 
 # Switch to current version
 ##TEST_AWKMinor DB version in the extract \(GDSMV[A-Z0-9]*\) is different from that in the database \(GDSMV[A-Z0-9]*\)
-%GTM-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
+%YDB-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
 
 # Do the integrity check:
 ##SOURCE_PATH##/mupip

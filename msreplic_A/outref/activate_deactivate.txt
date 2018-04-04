@@ -24,7 +24,7 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 #  	--> We expect a REPLINSTSECNONE error since there is no source server running to INST3.
 ----------
 Error REPLINSTSECNONE seen in log1.log as expected:
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
 ----------
 log1.log:
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 set msr_dont_chk_stat; $MUPIP replic -source -activate -instsecondary=__RCV_INSTNAME__ -secondary=__RCV_HOST__:1234'==
@@ -33,7 +33,7 @@ log1.log:
 #  	--> We expect a REPLINSTSECNONE error since there is no source server running to INST3.
 ----------
 Error REPLINSTSECNONE seen in log2.log as expected:
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
 ----------
 log2.log:
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 set msr_dont_chk_stat; $MUPIP replic -source -deactivate -instsecondary=__RCV_INSTNAME__'==
@@ -42,7 +42,7 @@ log2.log:
 #   	--> We expect a PRIMARYISROOT error since -propagateprimary will be implicitly assumed
 ----------
 Error PRIMARYISROOT seen in log3.log as expected:
-%GTM-E-PRIMARYISROOT, Attempted operation not valid on root primary instance INSTANCE1
+%YDB-E-PRIMARYISROOT, Attempted operation not valid on root primary instance INSTANCE1
 ----------
 log3.log:
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 set msr_dont_chk_stat; $MUPIP replic -source -deactivate -instsecondary=__RCV_INSTNAME__'==
@@ -55,7 +55,7 @@ log4.log:
 #  	--> We expect a PRIMARYISROOT error since this is not the propagating primary, but only a deactivated rootprimary.
 ----------
 Error PRIMARYISROOT seen in log5.log as expected:
-%GTM-E-PRIMARYISROOT, Attempted operation not valid on root primary instance INSTANCE1
+%YDB-E-PRIMARYISROOT, Attempted operation not valid on root primary instance INSTANCE1
 ----------
 log5.log:
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 set msr_dont_chk_stat; $MUPIP replic -source -propagateprimary -activate -instsecondary=__RCV_INSTNAME__ -secondary=__RCV_HOST__:__RCV_PORTNO__'==
@@ -93,11 +93,11 @@ GTM>
 #  	--> We expect a ACTIVATEFAIL error since -rootprimary will be assumed, and there are more processes attached to the journal pool than only one passive source server.
 ----------
 Error ACTIVATEFAIL seen in log8.log as expected:
-%GTM-E-ACTIVATEFAIL, Cannot activate passive source server on instance INSTANCE3 while a receiver server and/or update process is running
+%YDB-E-ACTIVATEFAIL, Cannot activate passive source server on instance INSTANCE3 while a receiver server and/or update process is running
 ----------
 ----------
 Error ACTIVATEFAIL seen in msr_execute_##FILTERED##NO.out as expected:
-%GTM-E-ACTIVATEFAIL, Cannot activate passive source server on instance INSTANCE3 while a receiver server and/or update process is running
+%YDB-E-ACTIVATEFAIL, Cannot activate passive source server on instance INSTANCE3 while a receiver server and/or update process is running
 ----------
 ###################################################################
 #  	--> This should succeed.

@@ -4,6 +4,9 @@
 # Copyright (c) 2005-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.	     	  	     			#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -30,7 +33,7 @@ echo ""
 # hence output of this testscript is redirected to v5cbsu.out but not to the reference file
 # v5cbsu.out will then be searched for error messages
 ###################################################################################################
-# rand.o might already exist and sometime we see %GTM-E-INVOBJ, error.
+# rand.o might already exist and sometime we see %YDB-E-INVOBJ, error.
 \rm -f rand.o >&! /dev/null
 if (! $?v5cert_randno) then
 	set v5cert_randno=`$gtm_exe/mumps -run rand 2`

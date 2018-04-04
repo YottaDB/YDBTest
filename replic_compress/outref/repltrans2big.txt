@@ -16,8 +16,8 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 # Wait for receiver server exiting message to appear in the receiver server log
 # Make sure REPLTRANS2BIG error exists in receiver server log file
 ----------
-Error GTM-E-REPLTRANS2BIG seen in ##REMOTE_TEST_PATH##/##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-##TEST_AWK.GTM-E-REPLTRANS2BIG, Transaction 0000000000000001 of size [0-9]* .pre-filter size 0. too large to be accommodated in the Receive pool
+Error YDB-E-REPLTRANS2BIG seen in ##REMOTE_TEST_PATH##/##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+##TEST_AWK.YDB-E-REPLTRANS2BIG, Transaction 0000000000000001 of size [0-9]* .pre-filter size 0. too large to be accommodated in the Receive pool
 ----------
 # Shut down receiver side (update process etc.)
 # reset receive pool size to 32Mb to accommodate the HUGE transaction

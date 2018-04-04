@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2011, 2014 Fidelity Information Services, Inc	;
+; Copyright 2011, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -26,7 +29,7 @@ streamnonutf(type)
 	. write a,!
 	. read y
 	. if $za!$zeof set za=$za set zeof=$zeof use $p write "$za= ",za," $zeof= ",zeof,! set ^quit=2 halt
-	. if a'=y use $p write "GTM-E-BADINPUT: ",!,"Expected: ",!,a,!,"Read: ",!,y,! set ^quit=1 halt
+	. if a'=y use $p write "YDB-E-BADINPUT: ",!,"Expected: ",!,a,!,"Read: ",!,y,! set ^quit=1 halt
 	do finish(type)
 	quit
 
@@ -93,7 +96,7 @@ processStrUtf(type,t,a)
 	. write b,!
 	. read y
 	. if $za!$zeof set za=$za set zeof=$zeof use $p write "$za= ",za," $zeof= ",zeof,! set ^quit=2 halt
-	. if b'=y use $p write "GTM-E-BADINPUT: ",!,"Expected: ",!,b,!,"Read: ",!,y,! set ^quit=1 halt
+	. if b'=y use $p write "YDB-E-BADINPUT: ",!,"Expected: ",!,b,!,"Read: ",!,y,! set ^quit=1 halt
 	do finish(type)
 	quit
 
@@ -104,7 +107,7 @@ processFix(type,t,a)
 	. write a
 	. read y
 	. if $za!$zeof set za=$za set zeof=$zeof use $p write "$za= ",za," $zeof= ",zeof,! set ^quit=2 halt
-	. if a'=y use $p write "GTM-E-BADINPUT: ",!,"Expected: ",!,a,!,"Read: ",!,y,! set ^quit=1 halt
+	. if a'=y use $p write "YDB-E-BADINPUT: ",!,"Expected: ",!,a,!,"Read: ",!,y,! set ^quit=1 halt
 	do finish(type)
 	quit
 

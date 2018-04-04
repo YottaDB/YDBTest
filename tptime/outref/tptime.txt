@@ -30,7 +30,7 @@ GTM>
 
 ZTRAP is called
 Timed out as expected
-ZSTATUS:%GTM-E-TPTIMEOUT, Transaction timeout
+ZSTATUS:%YDB-E-TPTIMEOUT, Transaction timeout
 
 TEST PASSED
 
@@ -43,7 +43,7 @@ GTM>
 
 ZTRAP is called
 Timed out as expected
-ZSTATUS:%GTM-E-TPTIMEOUT, Transaction timeout
+ZSTATUS:%YDB-E-TPTIMEOUT, Transaction timeout
 
 TEST PASSED
 
@@ -56,7 +56,7 @@ GTM>
 
 ZTRAP is called
 Timed out as expected
-ZSTATUS:%GTM-E-TPTIMEOUT, Transaction timeout
+ZSTATUS:%YDB-E-TPTIMEOUT, Transaction timeout
 
 TEST PASSED
 
@@ -69,7 +69,7 @@ GTM>
 
 ZTRAP is called
 Timed out as expected
-ZSTATUS:%GTM-E-TPTIMEOUT, Transaction timeout
+ZSTATUS:%YDB-E-TPTIMEOUT, Transaction timeout
 
 TEST PASSED
 
@@ -84,7 +84,7 @@ GTM>
 
 ZTRAP is called
 Timed out as expected
-ZSTATUS:%GTM-E-TPTIMEOUT, Transaction timeout
+ZSTATUS:%YDB-E-TPTIMEOUT, Transaction timeout
 
 TEST PASSED
 
@@ -97,7 +97,7 @@ GTM>
 
 ZTRAP is called
 Timed out as expected
-ZSTATUS:%GTM-E-TPTIMEOUT, Transaction timeout
+ZSTATUS:%YDB-E-TPTIMEOUT, Transaction timeout
 
 TEST PASSED
 
@@ -108,7 +108,7 @@ GTM>
 
 ZTRAP is called
 Timed out as expected
-ZSTATUS:%GTM-E-TPTIMEOUT, Transaction timeout
+ZSTATUS:%YDB-E-TPTIMEOUT, Transaction timeout
 
 TEST PASSED
 #
@@ -121,33 +121,33 @@ GTM>
 ----------------------------------------------------------
 
  Subtest ecodeclr starting
-##TEST_AWK errortrap: error tripped: 150379506,ecodeclr\+[0-9]+\^tptimeecode,%GTM-E-SETECODE, Non-empty value assigned to \$ECODE \(user-defined error trap\)
-##TEST_AWK errortrap: error tripped: 150377322,ecodeclrcont\+[0-9]+\^tptimeecode,%GTM-E-TPTIMEOUT, Transaction timeout
+##TEST_AWK errortrap: error tripped: 150379506,ecodeclr\+[0-9]+\^tptimeecode,%YDB-E-SETECODE, Non-empty value assigned to \$ECODE \(user-defined error trap\)
+##TEST_AWK errortrap: error tripped: 150377322,ecodeclrcont\+[0-9]+\^tptimeecode,%YDB-E-TPTIMEOUT, Transaction timeout
  Subtest ecodeclr completed successfully (got interrupt)
 
 
 ----------------------------------------------------------
 
  Subtest tpunw starting
-##TEST_AWK errortrap: error tripped: 150379506,tpunw\+[0-9]+\^tptimeecode,%GTM-E-SETECODE, Non-empty value assigned to \$ECODE \(user-defined error trap\)
+##TEST_AWK errortrap: error tripped: 150379506,tpunw\+[0-9]+\^tptimeecode,%YDB-E-SETECODE, Non-empty value assigned to \$ECODE \(user-defined error trap\)
  Subtest tpunw completed successfully (interrupt cancelled)
 
 
 ----------------------------------------------------------
 
  Subtest ztrapset starting
-##TEST_AWK errortrap: error tripped: 150379506,ztrapset\+[0-9]+\^tptimeecode,%GTM-E-SETECODE, Non-empty value assigned to \$ECODE \(user-defined error trap\)
-##TEST_AWK errorztrap via : error tripped: 150377322,ztrapsetcont1\+[0-9]+\^tptimeecode,%GTM-E-TPTIMEOUT, Transaction timeout
+##TEST_AWK errortrap: error tripped: 150379506,ztrapset\+[0-9]+\^tptimeecode,%YDB-E-SETECODE, Non-empty value assigned to \$ECODE \(user-defined error trap\)
+##TEST_AWK errorztrap via : error tripped: 150377322,ztrapsetcont1\+[0-9]+\^tptimeecode,%YDB-E-TPTIMEOUT, Transaction timeout
  Subtest ztrapset completed successfully (got interrupt)
 
 
 ----------------------------------------------------------
 
  Subtest unwztrap starting
-##TEST_AWK errortrap: error tripped: 150379506,unwztrap\+[0-9]+\^tptimeecode,%GTM-E-SETECODE, Non-empty value assigned to \$ECODE \(user-defined error trap\)
+##TEST_AWK errortrap: error tripped: 150379506,unwztrap\+[0-9]+\^tptimeecode,%YDB-E-SETECODE, Non-empty value assigned to \$ECODE \(user-defined error trap\)
 unwztrapcont1 entered
  Leaving $ETRAP block to $ZTRAP block - should allow handler to be be driven
-##TEST_AWK errortrap: error tripped: 150377322,unwztrapcont1\+[0-9]+\^tptimeecode,%GTM-E-TPTIMEOUT, Transaction timeout
+##TEST_AWK errortrap: error tripped: 150377322,unwztrapcont1\+[0-9]+\^tptimeecode,%YDB-E-TPTIMEOUT, Transaction timeout
  Subtest unwztrap completed successfully (got interrupt)
 
 
@@ -156,7 +156,7 @@ unwztrapcont1 entered
  Subtest jintexit starting
  Job interrupt jintexitcont entered (TP timeout in 10 seconds)
  Exiting jobinterrupt
-##TEST_AWK errortrap: error tripped: 150377322,jintexit\+[0-9]+\^tptimeecode,%GTM-E-TPTIMEOUT, Transaction timeout
+##TEST_AWK errortrap: error tripped: 150377322,jintexit\+[0-9]+\^tptimeecode,%YDB-E-TPTIMEOUT, Transaction timeout
  Subtest jintexit completed successfully (got interrupt)
 
 

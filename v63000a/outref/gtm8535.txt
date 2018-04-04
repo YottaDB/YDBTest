@@ -27,6 +27,6 @@ No errors detected by integ.
 Expect ENO34 errors in dbchild4.mje and replchild4.mje to be caught by error-catching test framework
 ----------------------------------------------------------------------------------------------------
 ##TEST_HOST_SHORT##:##TEST_PATH##/dbchild4.mje
-##TEST_AWK%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat,%GTM-E-CRITSEMFAIL.* ##TEST_PATH##/mumps.dat,%GTM-E-SYSCALL, Error received from system call semctl../semop.. -- called from module .*/gvcst_init_sysops.c .*,%SYSTEM-E-ENO34, .*
+##TEST_AWK%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat,%YDB-E-CRITSEMFAIL.* ##TEST_PATH##/mumps.dat,%YDB-E-SYSCALL, Error received from system call semctl../semop.. -- called from module .*/gvcst_init_sysops.c .*,%SYSTEM-E-ENO34, .*
 ##TEST_HOST_SHORT##:##TEST_PATH##/replchild4.mje
-##TEST_AWK%GTM-E-JNLPOOLSETUP, Journal Pool setup error,%GTM-I-TEXT, Error incrementing the ftok semaphore counter,%SYSTEM-E-ENO34, .*
+##TEST_AWK%YDB-E-JNLPOOLSETUP, Journal Pool setup error,%GTM-I-TEXT, Error incrementing the ftok semaphore counter,%SYSTEM-E-ENO34, .*

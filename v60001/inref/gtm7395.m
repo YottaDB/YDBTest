@@ -1,5 +1,16 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 gtm7395 ;
-	; OPEN with READONLY should return EISDIR 
+	; OPEN with READONLY should return EISDIR
 	;
 
 	; handle EISDIR trap
@@ -23,6 +34,6 @@ noreadonlyTest
 
 errorHandler
 	set errMsg=$PIECE($ZSTATUS,",",3)
-	if errMsg="%GTM-E-GTMEISDIR" write $ZSTATUS,! set $ECODE=""
-	else  write $ZSTATUS,! 
+	if errMsg="%YDB-E-GTMEISDIR" write $ZSTATUS,! set $ECODE=""
+	else  write $ZSTATUS,!
 	quit

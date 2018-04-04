@@ -7,37 +7,37 @@ do badvarname^GTMBadVariableNameTest1
 	       set %12345678%9012345678901A=1
 	                    ^-----
 		At column 21, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest1.m
-%GTM-E-EQUAL, Equal sign expected but not found
+%YDB-E-EQUAL, Equal sign expected but not found
 Error Number=1
-STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+STAT=mbadvarname+40^mbadvarname,%YDB-E-LABELMISSING, Label referenced but not defined: badvarname
 do badvarname^GTMBadVariableNameTest2
 	       set %ABCDEFG%HIJKLM=1
 	                   ^-----
 		At column 20, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest2.m
-%GTM-E-EQUAL, Equal sign expected but not found
+%YDB-E-EQUAL, Equal sign expected but not found
 Error Number=2
-STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+STAT=mbadvarname+40^mbadvarname,%YDB-E-LABELMISSING, Label referenced but not defined: badvarname
 do badvarname^GTMBadVariableNameTest3
 	       set %ABCDEFG%123456=1
 	                   ^-----
 		At column 20, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest3.m
-%GTM-E-EQUAL, Equal sign expected but not found
+%YDB-E-EQUAL, Equal sign expected but not found
 Error Number=3
-STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+STAT=mbadvarname+40^mbadvarname,%YDB-E-LABELMISSING, Label referenced but not defined: badvarname
 do badvarname^GTMBadVariableNameTest4
 	       set %%=1
 	            ^-----
 		At column 13, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest4.m
-%GTM-E-EQUAL, Equal sign expected but not found
+%YDB-E-EQUAL, Equal sign expected but not found
 Error Number=4
-STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+STAT=mbadvarname+40^mbadvarname,%YDB-E-LABELMISSING, Label referenced but not defined: badvarname
 do badvarname^GTMBadVariableNameTest5
 	       set 123456789012345678901A=1
 	           ^-----
 		At column 12, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest5.m
-%GTM-E-VAREXPECTED, Variable expected in this context
+%YDB-E-VAREXPECTED, Variable expected in this context
 Error Number=5
-STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+STAT=mbadvarname+40^mbadvarname,%YDB-E-LABELMISSING, Label referenced but not defined: badvarname
 do badvarname^GTMBadVariableNameTest6
 ##SUSPEND_OUTPUT UNICODE_MODE
 	       set 12345678901234567890=1
@@ -47,30 +47,30 @@ do badvarname^GTMBadVariableNameTest6
 ##ALLOW_OUTPUT NONUNICODE_MODE
 	           ^-----
 		At column 12, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest6.m
-%GTM-E-VAREXPECTED, Variable expected in this context
+%YDB-E-VAREXPECTED, Variable expected in this context
 Error Number=6
-STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+STAT=mbadvarname+40^mbadvarname,%YDB-E-LABELMISSING, Label referenced but not defined: badvarname
 do badvarname^GTMBadVariableNameTest7
 ##TEST_AWK	       set 123456789012345678901234567....=1
 	           ^-----
 		At column 12, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest7.m
-%GTM-E-VAREXPECTED, Variable expected in this context
+%YDB-E-VAREXPECTED, Variable expected in this context
 Error Number=7
-STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+STAT=mbadvarname+40^mbadvarname,%YDB-E-LABELMISSING, Label referenced but not defined: badvarname
 do badvarname^GTMBadVariableNameTest8
 ##TEST_AWK	       set ....123456789012345678901234567=1
 	           ^-----
 		At column 12, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest8.m
-%GTM-E-VAREXPECTED, Variable expected in this context
+%YDB-E-VAREXPECTED, Variable expected in this context
 Error Number=8
-STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+STAT=mbadvarname+40^mbadvarname,%YDB-E-LABELMISSING, Label referenced but not defined: badvarname
 do badvarname^GTMBadVariableNameTest9
 ##TEST_AWK	       set ...............................=1
 	           ^-----
 		At column 12, line 4, source module ##TEST_PATH##/GTMBadVariableNameTest9.m
-%GTM-E-VAREXPECTED, Variable expected in this context
+%YDB-E-VAREXPECTED, Variable expected in this context
 Error Number=9
-STAT=mbadvarname+40^mbadvarname,%GTM-E-LABELMISSING, Label referenced but not defined: badvarname
+STAT=mbadvarname+40^mbadvarname,%YDB-E-LABELMISSING, Label referenced but not defined: badvarname
 cnt=31
 errcnt=9
 fn="GTMBadVariableNameTest9.m"

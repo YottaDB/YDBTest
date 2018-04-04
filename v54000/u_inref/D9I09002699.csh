@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -11,7 +14,7 @@
 #								#
 #################################################################
 echo "# Enable WHITE BOX TESTING"
-# Since we are intentionally introducing a GTM-E-JNLCNTRL error,
+# Since we are intentionally introducing a YDB-E-JNLCNTRL error,
 # use this white box test case to avoid an assert failure in jnl_write_attempt.c.
 # This white box test case does not induce this error it just prevents asserts.
 setenv gtm_white_box_test_case_enable 1
@@ -46,7 +49,7 @@ GTM_EOF
 $gtm_tst/com/endtp.csh >>&! imptp.out
 set syslog_after = `date +"%b %e %H:%M:%S"`
 $gtm_tst/com/getoper.csh "$syslog_before" "$syslog_after" syslog.txt
-$gtm_tst/com/check_error_exist.csh syslog.txt "GTM-E-JNLCNTRL, Journal control unsynchronized" >>& Test.logx
+$gtm_tst/com/check_error_exist.csh syslog.txt "YDB-E-JNLCNTRL, Journal control unsynchronized" >>& Test.logx
 if ($status) then
 	echo "SUBTEST PASS"
 else

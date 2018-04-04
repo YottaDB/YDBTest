@@ -15,9 +15,9 @@ Turn journaling on:
 EXTRACT
 
 ##SOURCE_PATH##/mupip journal -extract -forward nonexist.mjl
-%GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/nonexist.mjl
+%YDB-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/nonexist.mjl
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##SOURCE_PATH##/mupip journal -extract=file-a.mjf -forward *
 %GTM-I-FILECREATE, Journal extract file file-a.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
@@ -29,9 +29,9 @@ GDSJEX07
 03\#TIMESTAMP#\1\#PID1#\0\1
 ##SOURCE_PATH##/mupip journal -extract=/bad/path/file-a.mjf -forward *
 unset echo
-%GTM-E-FILENOTCREATE, Journal extract file /bad/path/file-a.mjf not created
+%YDB-E-FILENOTCREATE, Journal extract file /bad/path/file-a.mjf not created
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##SOURCE_PATH##/mupip journal -extract -forward mumps.mjl
 %GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
@@ -286,9 +286,9 @@ Record type    Count
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -show -forward nonexist.mjl
-%GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/nonexist.mjl
+%YDB-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/nonexist.mjl
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 unset echo
 ####################################################################
 #STAGE B
@@ -337,9 +337,9 @@ GDSJEX07
 %GTM-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -extract=/bad/path/fileb.mjf -forward *
 unset echo
-%GTM-E-FILENOTCREATE, Journal extract file /bad/path/fileb.mjf not created
+%YDB-E-FILENOTCREATE, Journal extract file /bad/path/fileb.mjf not created
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##SOURCE_PATH##/mupip journal -extract -forward mumps.mjl
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
 %GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created

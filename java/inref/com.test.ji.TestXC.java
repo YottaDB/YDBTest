@@ -213,7 +213,7 @@ public class TestXC {
 							StringBuilder builder = new StringBuilder();
 							if (ret != GTMType.VOID) {
 								if (ret == GTMType.GTM_STATUS && !retValue.equals("0"))
-									builder.append("%GTM-E-ZCSTATUSRET, External call returned error status\n");
+									builder.append("%YDB-E-ZCSTATUSRET, External call returned error status\n");
 								else
 									builder.append("Job returned " + retValue + "\n");
 							}
@@ -433,7 +433,7 @@ public class TestXC {
 							StringBuilder builder = new StringBuilder();
 							if (ret != GTMType.VOID) {
 								if (ret == GTMType.GTM_STATUS && !retValue.equals("0"))
-									builder.append("%GTM-E-ZCSTATUSRET, External call returned error status\n");
+									builder.append("%YDB-E-ZCSTATUSRET, External call returned error status\n");
 								else
 									builder.append("Job returned " + retValue + "\n");
 							}
@@ -498,7 +498,7 @@ public class TestXC {
 
 				@Override
 				public String getMResponse() {
-					return "%GTM-E-JNI, " + errorTexts[errorIndex] + "\n";
+					return "%YDB-E-JNI, " + errorTexts[errorIndex] + "\n";
 				}
 			};
 		}
@@ -608,7 +608,7 @@ public class TestXC {
 					@Override
 					public String getJavaResponse() {
 						if (retType1 != retType2)
-							return	"%GTM-E-JNI, Method (" + retTypeWord + ")" + packagePrefix + testName + "." + name + " not found.\n";
+							return	"%YDB-E-JNI, Method (" + retTypeWord + ")" + packagePrefix + testName + "." + name + " not found.\n";
 						return "";
 					}
 				};
@@ -684,7 +684,7 @@ public class TestXC {
 
 					@Override
 					public String getMResponse() {
-						return	"%GTM-E-JNI, Arg #1 to method " + packagePrefix + testName + "." + name +
+						return	"%YDB-E-JNI, Arg #1 to method " + packagePrefix + testName + "." + name +
 							" is expected to be of type " + argTypeName + ", but different type found.\n";
 					}
 				};
@@ -809,10 +809,10 @@ public class TestXC {
 			"\tdo &test9.lbl2(\"com/test/Test123\",\"lbl2\")\n",
 			"\tdo &test9.lbl3(\"com/test/Test9\",\"lbl123\")\n" };
 		final String[] mResponses = new String[]{
-			"%GTM-E-ZCCTENV, Environmental variable for external package GTMXC_test123 not set\n",
-			"%GTM-E-ZCRTENOTF, External call routine lbl123 not found\n",
-			"%GTM-E-JNI, Class com/test/Test123 is not found.\n",
-			"%GTM-E-JNI, Method (void)" + packagePrefix + "Test9.lbl123 not found.\n" };
+			"%YDB-E-ZCCTENV, Environmental variable for external package GTMXC_test123 not set\n",
+			"%YDB-E-ZCRTENOTF, External call routine lbl123 not found\n",
+			"%YDB-E-JNI, Class com/test/Test123 is not found.\n",
+			"%YDB-E-JNI, Method (void)" + packagePrefix + "Test9.lbl123 not found.\n" };
 
 		int numOfCases = mCodes.length;
 
@@ -898,9 +898,9 @@ public class TestXC {
 				@Override
 				public String getMResponse() {
 					if (numOfTestArgs > 30)
-						return "%GTM-E-MAXACTARG, Maximum number of actual arguments exceeded\n";
+						return "%YDB-E-MAXACTARG, Maximum number of actual arguments exceeded\n";
 					else if (numOfTestArgs > 29)
-						return "%GTM-E-ZCMAXPARAM, Exceeded maximum number of external call parameters\n";
+						return "%YDB-E-ZCMAXPARAM, Exceeded maximum number of external call parameters\n";
 					else
 						return "";
 				}
@@ -953,7 +953,7 @@ public class TestXC {
 
 				@Override
 				public String getMResponse() {
-					return	"%GTM-E-ZCARGMSMTCH, External call: Actual argument count, " + numOfActuals +
+					return	"%YDB-E-ZCARGMSMTCH, External call: Actual argument count, " + numOfActuals +
 							", is greater than formal argument count, " + numOfFormals + "\n" +
 							"\n" +
 							"GTM>\n";
@@ -1065,10 +1065,10 @@ public class TestXC {
 					@Override
 					public String getMResponse() {
 						if (retType1 == GTMType.VOID && retType2 != GTMType.VOID)
-							return	"%GTM-E-XCVOIDRET, Attempt to return a value from function " +
+							return	"%YDB-E-XCVOIDRET, Attempt to return a value from function " +
 									"gtm_xcj, which is declared void in external call table ./test13.xc\n";
 						else if (retType1 != GTMType.VOID && retType2 == GTMType.VOID)
-							return	"%GTM-E-JNI, Method (void)" + packagePrefix + testName + "." + name + " not found.\n";
+							return	"%YDB-E-JNI, Method (void)" + packagePrefix + testName + "." + name + " not found.\n";
 						return "";
 					}
 				};
@@ -1113,7 +1113,7 @@ public class TestXC {
 
 				@Override
 				public String getMResponse() {
-					return	"%GTM-E-JNI, Length of updated arg #1 to method " + packagePrefix + testName + "." + name + " exceeds the capacity of M variables.\n";
+					return	"%YDB-E-JNI, Length of updated arg #1 to method " + packagePrefix + testName + "." + name + " exceeds the capacity of M variables.\n";
 				}
 			}
 		};
@@ -1158,7 +1158,7 @@ public class TestXC {
 
 				@Override
 				public String getMResponse() {
-					return "150373858," + name + "+4^test15,%GTM-E-UNIMPLOP, Unimplemented construct encountered\n";
+					return "150373858," + name + "+4^test15,%YDB-E-UNIMPLOP, Unimplemented construct encountered\n";
 				}
 
 				@Override
@@ -1220,9 +1220,9 @@ public class TestXC {
 				@Override
 				public String getMResponse() {
 					if (unimplType)
-						return "150373858,lbl0+4^test16,%GTM-E-UNIMPLOP, Unimplemented construct encountered\n";
+						return "150373858,lbl0+4^test16,%YDB-E-UNIMPLOP, Unimplemented construct encountered\n";
 					else
-						return "150376802,lbl0+4^test16,%GTM-E-ZCUNTYPE, Unknown type encountered\n";
+						return "150376802,lbl0+4^test16,%YDB-E-ZCUNTYPE, Unknown type encountered\n";
 				}
 
 				@Override
@@ -1507,7 +1507,7 @@ public class TestXC {
 
 				@Override
 				public String getJavaResponse() {
-					return	"%GTM-E-JNI, Passing back a null reference in the 'value' field of arg #1 to method " + packagePrefix + testName + "." + name + ".\n" +
+					return	"%YDB-E-JNI, Passing back a null reference in the 'value' field of arg #1 to method " + packagePrefix + testName + "." + name + ".\n" +
 						"123\n";
 				}
 			};
@@ -1824,7 +1824,7 @@ public class TestXC {
 					StringBuilder builder = new StringBuilder();
 
 					if (error[0]) {
-						builder.append("%GTM-E-LVUNDEF, Undefined local variable: " + undefVar + "\n");
+						builder.append("%YDB-E-LVUNDEF, Undefined local variable: " + undefVar + "\n");
 						return builder.toString();
 					}
 

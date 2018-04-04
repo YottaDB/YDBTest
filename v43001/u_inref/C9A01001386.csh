@@ -1,7 +1,10 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -57,7 +60,7 @@ $grep -E "$grepit" backup_default.out |& sort -f
 echo "This should error:"
 $MUPIP backup -c -rec -o DEFAULT $bkp_dir
 echo "This should error:"
-# The below output will have GTM-E-FILEEXISTS and GTM-E-MUNOACTION.
+# The below output will have YDB-E-FILEEXISTS and YDB-E-MUNOACTION.
 # To prevent errorcatching mechanism from reporting at the end, lets redirect it to outx.
 # Since the entire contents of the file is printed here, it is safe to redirect it to outx
 $MUPIP backup -c -o "*" $bkp_dir >&! backup_star_error.outx
@@ -79,7 +82,7 @@ $grep -E "$grepit" backup_again.out |& sort -f
 trcount backup_again.out
 
 echo "This should error:"
-# The below output will have GTM-E-FILEEXISTS and GTM-E-MUNOACTION.
+# The below output will have YDB-E-FILEEXISTS and YDB-E-MUNOACTION.
 # to prevent errorcatching mechanism from reporting at the end, lets redirect it to outx
 # since the entire contents of the file is printed here, it is safe to redirect it to outx
 $MUPIP backup -c -o "*" $bkp_dir >&! backup_again_error.outx

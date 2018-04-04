@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -294,7 +297,7 @@ EOF
 
 echo
 echo "TEST CASE 4: Test length of tlsid."
-# ^expected(4,"zstatus")="150383618,dotls+1^tsocerrors,%GTM-E-TLSPARAM, TLS parameter TLSID too long"
+# ^expected(4,"zstatus")="150383618,dotls+1^tsocerrors,%YDB-E-TLSPARAM, TLS parameter TLSID too long"
 echo
 $GTM << EOF
 d fail^tsocerrors("4","thisisatoolongtlsid01234567890123","too long")
@@ -307,12 +310,12 @@ echo
 $GTM << EOF
 d servererrors^tsocerrors("5")
 EOF
-# ^expected("5b","zstatus")="150383618,dotls+1^tsocerrors,%GTM-E-TLSPARAM, TLS parameter SERVER but TLS already enabled"
+# ^expected("5b","zstatus")="150383618,dotls+1^tsocerrors,%YDB-E-TLSPARAM, TLS parameter SERVER but TLS already enabled"
 # special case code in tsocerrors.m depends on case 5b
 $GTM << EOF
 d fail^tsocerrors("5b","server","already",1,1,"client2")
 EOF
-# ^expected("5c","zstatus")="150383618,dotls+7^tsocerrors,%GTM-E-TLSPARAM, TLS parameter /TLS but socket is not TCP"
+# ^expected("5c","zstatus")="150383618,dotls+7^tsocerrors,%YDB-E-TLSPARAM, TLS parameter /TLS but socket is not TCP"
 $GTM << EOF
 set ^localsocket="case5c.local"
 d fail^tsocerrors("5c","server","socket is not TCP",0,0)
@@ -425,7 +428,7 @@ set ^spasswd="012345G789"
 d fail^tsocerrors("8d","server","valid hexa",1,0)
 EOF
 # try with no tlsid
-# ^expected("8e","zstatus")="150383618,dotls+7^tsocerrors,%GTM-E-TLSPARAM, TLS parameter passphrase requires TLSID"
+# ^expected("8e","zstatus")="150383618,dotls+7^tsocerrors,%YDB-E-TLSPARAM, TLS parameter passphrase requires TLSID"
 $GTM << EOF
 set ^spasswd="$gtmtls_passwd_server"
 d fail^tsocerrors("8e","","requires TLSID",1,0)

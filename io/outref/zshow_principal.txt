@@ -14,11 +14,11 @@ $P = abc, $ZPIN = abc, $ZPOUT = abc
 A("D",1)="/dev/pts/* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE NOWRAP WIDTH=* LENG=* "
 ZSHOW "D" with no $PRINCIPAL redirection followed by attempt to open %$P
 /dev/pts/* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=* LENG=* 
-%GTM-E-DEVOPENFAIL, Error opening abc< /
+%YDB-E-DEVOPENFAIL, Error opening abc< /
 %GTM-I-TEXT, The value of $P followed by "< /" is an invalid device name
 ZSHOW "D" with no $PRINCIPAL redirection followed by attempt to open #$P
 /dev/pts/* OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=* LENG=* 
-%GTM-E-DEVOPENFAIL, Error opening abc> /
+%YDB-E-DEVOPENFAIL, Error opening abc> /
 %GTM-I-TEXT, The value of $P followed by "> /" is an invalid device name
 ZSHOW "D" with $PRINCIPAL input redirected from a file
 0 OPEN RMS STREAM NOWRAP 
@@ -80,8 +80,8 @@ $ZPOUT = 0> /
 0-out OPEN RMS STREAM NOWRAP 
 tfile OPEN RMS 
 TEST OPEN and USE a file with a split $PRINCIPAL works fine
-STAT=zpinandzpout+27^zpinandzpout,%GTM-E-DEVOPENFAIL, Error opening 0< /,%GTM-I-TEXT, The value of $P followed by "< /" is an invalid device name
-STAT=zpinandzpout+29^zpinandzpout,%GTM-E-DEVOPENFAIL, Error opening 0> /,%GTM-I-TEXT, The value of $P followed by "> /" is an invalid device name
+STAT=zpinandzpout+27^zpinandzpout,%YDB-E-DEVOPENFAIL, Error opening 0< /,%GTM-I-TEXT, The value of $P followed by "< /" is an invalid device name
+STAT=zpinandzpout+29^zpinandzpout,%YDB-E-DEVOPENFAIL, Error opening 0> /,%GTM-I-TEXT, The value of $P followed by "> /" is an invalid device name
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 tfile OPEN RMS 

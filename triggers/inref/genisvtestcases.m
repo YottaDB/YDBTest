@@ -1,8 +1,19 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 genisvtestcases
 	; This test program was written to validate that GTM only
 	; uses the first 4 characters of the new trigger ISVs. It
 	; creates another M program with all the possible listings
-	; ISVs and the compiles it.  The number %GTM-E-SVNOSET errors
+	; ISVs and the compiles it.  The number %YDB-E-SVNOSET errors
 	; from the compile are counted
 	;
 	; The new ISVs are pulled from inspectISV.m, which are in

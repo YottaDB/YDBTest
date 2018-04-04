@@ -57,8 +57,8 @@ mupip journal -recover -forward mumps3.mjl,mumps2.mjl
 ----------------------------------------------------------------------------
 mupip journal -recover -forward mumps3.mjl,mumps1.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLTNOUTOFSEQ, End transaction [0x0000000000000002] of journal ##TEST_PATH##/mumps1.mjl different from Begin transaction [0x0000000000000003] of next generation journal ##TEST_PATH##/mumps3.mjl
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLTNOUTOFSEQ, End transaction [0x0000000000000002] of journal ##TEST_PATH##/mumps1.mjl different from Begin transaction [0x0000000000000003] of next generation journal ##TEST_PATH##/mumps3.mjl
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ----------------------------------------------------------------------------
 mupip journal -recover -forward mumps2.mjl,mumps1.mjl
@@ -72,7 +72,7 @@ mupip journal -recover -forward mumps2.mjl,mumps1.mjl
 
 GTM>
 ^x=1,^y=2,^z=
-%GTM-E-GVUNDEF, Global variable undefined: ^z
+%YDB-E-GVUNDEF, Global variable undefined: ^z
 
 GTM>
 ----------------------------------------------------------------------------
@@ -94,8 +94,8 @@ GTM>
 ----------------------------------------------------------------------------
 mupip journal -recover -forward -nochain mumps3.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##/mumps3.mjl has beginning transaction number [0x0000000000000003], but database ##TEST_PATH##/mumps.dat has current transaction number [0x0000000000000001] and journal end transaction number [0x0000000000000001]
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##/mumps3.mjl has beginning transaction number [0x0000000000000003], but database ##TEST_PATH##/mumps.dat has current transaction number [0x0000000000000001] and journal end transaction number [0x0000000000000001]
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ----------------------------------------------------------------------------
 mupip journal -recover -forward -chain mumps2.mjl
@@ -116,7 +116,7 @@ GTM>
 
 GTM>
 ^z=
-%GTM-E-GVUNDEF, Global variable undefined: ^z
+%YDB-E-GVUNDEF, Global variable undefined: ^z
 
 GTM>
 ----------------------------------------------------------------------------
@@ -135,18 +135,18 @@ GTM>
 
 GTM>
 ^x=
-%GTM-E-GVUNDEF, Global variable undefined: ^x
+%YDB-E-GVUNDEF, Global variable undefined: ^x
 
 GTM>
 ^y=
-%GTM-E-GVUNDEF, Global variable undefined: ^y
+%YDB-E-GVUNDEF, Global variable undefined: ^y
 
 GTM>
 ----------------------------------------------------------------------------
 mupip journal -recover -forward -chain mumps3.mjl,mumps1.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLTNOUTOFSEQ, End transaction [0x0000000000000002] of journal ##TEST_PATH##/mumps1.mjl different from Begin transaction [0x0000000000000003] of next generation journal ##TEST_PATH##/mumps3.mjl
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLTNOUTOFSEQ, End transaction [0x0000000000000002] of journal ##TEST_PATH##/mumps1.mjl different from Begin transaction [0x0000000000000003] of next generation journal ##TEST_PATH##/mumps3.mjl
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ----------------------------------------------------------------------------
 mupip journal -recover -forward -chain -nochecktn mumps3.mjl,mumps1.mjl
@@ -167,15 +167,15 @@ GTM>
 
 GTM>
 ^y=
-%GTM-E-GVUNDEF, Global variable undefined: ^y
+%YDB-E-GVUNDEF, Global variable undefined: ^y
 
 GTM>
 ----------------------------------------------------------------------------
 Mutiple generation journal file cannot be specified with backward recovery
  mupip journal -recover -backward mumps3.mjl,mumps2.mjl,mumps1.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps2.mjl does not match the current journal file ##TEST_PATH##/mumps3.mjl of database file ##TEST_PATH##/mumps.dat
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps2.mjl does not match the current journal file ##TEST_PATH##/mumps3.mjl of database file ##TEST_PATH##/mumps.dat
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 End of test
 ##SOURCE_PATH##/mupip

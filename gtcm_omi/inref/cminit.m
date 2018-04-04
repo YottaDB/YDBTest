@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Set up local variables
 init(env)
 ; Control operations
@@ -45,11 +56,11 @@ init(env)
 	s Error(23)="Connect request received during session"
 	s Error(24)="OMI session not established"
 
-	s GTMERR("GTM-E-GVUNDEF")=150372994
-	s GTMERR("GTM-E-GVINVALID")=150372628
-	s GTMERR("GTM-E-NOTGBL")=150372604
-	s GTMERR("GTM-E-OPENCONN")=150376394
-	s GTMERR("GTM-E-IOEOF")=150373082
+	s GTMERR("YDB-E-GVUNDEF")=150372994
+	s GTMERR("YDB-E-GVINVALID")=150372628
+	s GTMERR("YDB-E-NOTGBL")=150372604
+	s GTMERR("YDB-E-OPENCONN")=150376394
+	s GTMERR("YDB-E-IOEOF")=150373082
 
 	s Connect("Major Ver")=1
 	s Connect("Minor Ver")=0

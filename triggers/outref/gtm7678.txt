@@ -13,7 +13,7 @@ File gtm7678_a.trg, Line 3: Error : Specified options and commands cannot both b
 1 trigger file entries have errors
 2 trigger file entries have no errors
 =========================================
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 # The second line should error out because, -options is changed (to nothing), but the entire -commands is not specified
 File gtm7678_b.trg, Line 1: No matching triggers found for deletion
 File gtm7678_b.trg, Line 2: Added SET and/or Non-SET trigger on ^b named b#1
@@ -22,7 +22,7 @@ File gtm7678_b.trg, Line 3: Error : Specified options and commands cannot both b
 1 trigger file entries have errors
 2 trigger file entries have no errors
 =========================================
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 # The third trigger should error out because
 # while changing -options it does not specify the entire list of commands in the matching trigger
 File gtm7678_c.trg, Line 1: No matching triggers found for deletion
@@ -33,7 +33,7 @@ File gtm7678_c.trg, Line 4: Error : Specified options and commands cannot both b
 1 trigger file entries have errors
 3 trigger file entries have no errors
 =========================================
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 # The third trigger should not error out even if it does not specify the entire lis of commands because
 # -options is ignored in case of trigger deletes.
 File gtm7678_d.trg, Line 1: No matching triggers found for deletion

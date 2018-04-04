@@ -63,8 +63,8 @@ var4567890123456789012345678901("")="var31"
 
 GTM>
 view "NOLVNULLSUBS"
---> ERROR (expected) : $ZSTATUS=nolvnull+4^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
---> ERROR (expected) : $ZSTATUS=nolvnull+6^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+--> ERROR (expected) : $ZSTATUS=nolvnull+4^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
+--> ERROR (expected) : $ZSTATUS=nolvnull+6^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
 
 -----> zwrite NOLVNULLSUBS 1 <------
 abcdefgh(1)=12
@@ -81,15 +81,15 @@ len=31
 lvnullsubs="LVNULLSUBS"
 n=1
 newprog="2:nolvnull+7^viewnull"
-savestat="150375938,nolvnull+6^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables"
+savestat="150375938,nolvnull+6^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables"
 var="var4567890123456789012345678901"
 var4567("")="var7"
 var45678("")="var8"
 var456789("")="var9"
 var4567890123456789012345678901("")="var31"
 
---> ERROR (expected) : $ZSTATUS=nolvnull+9^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
---> ERROR (expected) : $ZSTATUS=nolvnull+11^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+--> ERROR (expected) : $ZSTATUS=nolvnull+9^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
+--> ERROR (expected) : $ZSTATUS=nolvnull+11^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
 
 -----> zwrite NOLVNULLSUBS 2 <------
 abcdefgh(1)="xx12"
@@ -106,15 +106,15 @@ len=31
 lvnullsubs="LVNULLSUBS"
 n=1
 newprog="2:nolvnull+12^viewnull"
-savestat="150375938,nolvnull+11^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables"
+savestat="150375938,nolvnull+11^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables"
 var="var4567890123456789012345678901"
 var4567("")="var7"
 var45678("")="var8"
 var456789("")="var9"
 var4567890123456789012345678901("")="var31"
 
---> ERROR (expected) : $ZSTATUS=nolvnull+14^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
---> ERROR (expected) : $ZSTATUS=nolvnull+16^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+--> ERROR (expected) : $ZSTATUS=nolvnull+14^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
+--> ERROR (expected) : $ZSTATUS=nolvnull+16^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
 
 -----> zwrite NOLVNULLSUBS 3 <------
 abcdefgh(1)="xx12"
@@ -131,17 +131,17 @@ len=31
 lvnullsubs="LVNULLSUBS"
 n=1
 newprog="2:nolvnull+17^viewnull"
-savestat="150375938,nolvnull+16^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables"
+savestat="150375938,nolvnull+16^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables"
 var="var4567890123456789012345678901"
 var4567("")="var7"
 var45678("")="var8"
 var456789("")="var9"
 var4567890123456789012345678901("")="var31"
 
---> ERROR (expected) : $ZSTATUS=nolvnull+22^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
---> ERROR (expected) : $ZSTATUS=nolvnull+26^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
---> ERROR (expected) : $ZSTATUS=nolvnull+30^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
---> ERROR (expected) : $ZSTATUS=nolvnull+34^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables
+--> ERROR (expected) : $ZSTATUS=nolvnull+22^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
+--> ERROR (expected) : $ZSTATUS=nolvnull+26^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
+--> ERROR (expected) : $ZSTATUS=nolvnull+30^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
+--> ERROR (expected) : $ZSTATUS=nolvnull+34^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
 
 -----> zwrite NOLVNULLSUBS 4 <------
 abcdefgh(1)="xx12"
@@ -158,7 +158,7 @@ len=31
 lvnullsubs="LVNULLSUBS"
 n=1
 newprog="2:nolvnull+35^viewnull"
-savestat="150375938,nolvnull+34^viewnull,%GTM-E-LVNULLSUBS, Null subscripts not allowed in local variables"
+savestat="150375938,nolvnull+34^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables"
 var="var4567890123456789012345678901"
 var4567("")="var7"
 var45678("")="var8"
@@ -173,9 +173,9 @@ test view LABELS
 DEFAULT
 
 GTM>
-%GTM-E-LABELMISSING, Label referenced but not defined: LOWERCASEONLYLABEL111111111111
+%YDB-E-LABELMISSING, Label referenced but not defined: LOWERCASEONLYLABEL111111111111
 %GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/viewlab.m
-%GTM-E-LABELMISSING, Label referenced but not defined: uppercaseonlylabel111111111111
+%YDB-E-LABELMISSING, Label referenced but not defined: uppercaseonlylabel111111111111
 %GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/viewlab.m
 $VIEW("LABELS") is 1
 Those lines marked with an [X] are not expected to work when case sensitivity is enabled,
@@ -209,7 +209,7 @@ GTM>
 	LONGLABElloweRANDUPPERCASE1111	write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
 	^-----
 		At column 0, line 43, source module ##IN_TEST_PATH##/inref/viewlab.m
-%GTM-E-MULTLAB, This label has been previously defined
+%YDB-E-MULTLAB, This label has been previously defined
 $VIEW("LABELS") is 0
 Those lines marked with an [X] are expected to work when case sensitivity is disabled,
 However, this time round, the labels marked with a [Z] are expected to error with MULTLAB
@@ -217,7 +217,7 @@ calling longLABelloweranduppercase2222^vlabels       :
 	LONGLABElloweRANDUPPERCASE2222	write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
 	^-----
 		At column 0, line 2, source module ##IN_TEST_PATH##/inref/vlabels.m
-%GTM-E-MULTLAB, This label has been previously defined
+%YDB-E-MULTLAB, This label has been previously defined
 LONGLABELLOWERANDUPPERCASE2222^vlabels:->longLABelloweranduppercase2222 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
 calling LONGLABElloweRANDUPPERCASE2222^vlabels    [Z]: LONGLABELLOWERANDUPPERCASE2222^vlabels:->longLABelloweranduppercase2222 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
 calling lowercaseonlylabel222222222222^vlabels      : LOWERCASEONLYLABEL222222222222^vlabels:->lowercaseonlylabel222222222222 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
@@ -238,9 +238,9 @@ LOWER - i.e. enable case sensitivity
 GTM>
 
 GTM>
-%GTM-E-LABELMISSING, Label referenced but not defined: LOWERCASEONLYLABEL111111111111
+%YDB-E-LABELMISSING, Label referenced but not defined: LOWERCASEONLYLABEL111111111111
 %GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/viewlab.m
-%GTM-E-LABELMISSING, Label referenced but not defined: uppercaseonlylabel111111111111
+%YDB-E-LABELMISSING, Label referenced but not defined: uppercaseonlylabel111111111111
 %GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/viewlab.m
 $VIEW("LABELS") is 1
 Those lines marked with an [X] are not expected to work when case sensitivity is enabled,
@@ -320,12 +320,12 @@ test view NOISOLATION:^
 GTM>
 
 GTM>
-%GTM-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): 
+%YDB-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): 
 
 GTM>
 
 GTM>
-%GTM-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): 
+%YDB-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): 
 
 GTM>
 ##SOURCE_PATH##/mupip

@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Unlock a global variable
 ;
 ;
@@ -11,7 +22,7 @@
 unlock(gvn)
 	new rval,ref,val,rsp
 	s rval=1
-	i $E(gvn,1,1)'="^" zm GTMERR("GTM-E-NOTGBL"):gvn q 0
+	i $E(gvn,1,1)'="^" zm GTMERR("YDB-E-NOTGBL"):gvn q 0
 	s ref=$$gvn2ref^cvt(gvn)
 	s val=$$str2SS^cvt($J)
 	do send^tcp(OpType("Unlock"),$$str2LS^cvt(ref)_val)

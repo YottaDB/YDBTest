@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -276,7 +279,7 @@ echo
 echo "Too small an autoswitch limit"
 @ autoswitch = $MIN_AUTOSWITCH_LIMIT - 1
 $gtm_dist/mupip set -journal=enable,on,$b4nob4image,auto=$autoswitch -reg "*" >&! mupip_set-a.out
-$grep "%GTM-E-JNLINVSWITCHLMT, Journal AUTOSWITCHLIMIT \[$autoswitch\] falls outside of allowed limits \[$MIN_AUTOSWITCH_LIMIT\] and \[$MAX_AUTOSWITCH_LIMIT\]" mupip_set-a.out >&! /dev/null
+$grep "%YDB-E-JNLINVSWITCHLMT, Journal AUTOSWITCHLIMIT \[$autoswitch\] falls outside of allowed limits \[$MIN_AUTOSWITCH_LIMIT\] and \[$MAX_AUTOSWITCH_LIMIT\]" mupip_set-a.out >&! /dev/null
 if ($status) then
 	echo "TEST-E-FAIL Expected error for a low autoswitch limit not found"
 else
@@ -289,7 +292,7 @@ echo
 echo "Too large an autoswitch limit"
 @ autoswitch = $MAX_AUTOSWITCH_LIMIT + 1
 $gtm_dist/mupip set -journal=enable,on,$b4nob4image,auto=$autoswitch -reg "*" >&! mupip_set-b.out
-$grep "%GTM-E-JNLINVSWITCHLMT, Journal AUTOSWITCHLIMIT \[$autoswitch\] falls outside of allowed limits \[$MIN_AUTOSWITCH_LIMIT\] and \[$MAX_AUTOSWITCH_LIMIT\]" mupip_set-b.out >&! /dev/null
+$grep "%YDB-E-JNLINVSWITCHLMT, Journal AUTOSWITCHLIMIT \[$autoswitch\] falls outside of allowed limits \[$MIN_AUTOSWITCH_LIMIT\] and \[$MAX_AUTOSWITCH_LIMIT\]" mupip_set-b.out >&! /dev/null
 if ($status) then
 	echo "TEST-E-FAIL Expected error for a high autoswitch limit not found"
 else
@@ -329,7 +332,7 @@ echo "Allocation larger than autoswitch limit"
 @ autoswitch = $MIN_AUTOSWITCH_LIMIT
 @ allocation = $MAX_ALLOCATION_LIMIT
 $gtm_dist/mupip set -journal=enable,on,$b4nob4image,auto=$autoswitch,alloc=$allocation -reg "*" >&! mupip_set-e.out
-$grep "%GTM-E-JNLSWITCHTOOSM, Journal AUTOSWITCHLIMIT \[$autoswitch blocks\] is less than Journal ALLOCATION \[$allocation blocks\] for database file" mupip_set-e.out >&! /dev/null
+$grep "%YDB-E-JNLSWITCHTOOSM, Journal AUTOSWITCHLIMIT \[$autoswitch blocks\] is less than Journal ALLOCATION \[$allocation blocks\] for database file" mupip_set-e.out >&! /dev/null
 if ($status) then
 	echo "TEST-E-FAIL Expected error for autoswitch limit being lower than allocation size not found"
 else

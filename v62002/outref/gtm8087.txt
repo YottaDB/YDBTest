@@ -197,17 +197,17 @@ Let's check some limits on locals
 
 kill x
 zshow "C":x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)
-%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 		At M source location locallimits31+7^gtm8087
 
 GTM>
 zshow "C":x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30)
-%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 		At M source location locallimits30+4^gtm8087
 
 GTM>
 zshow "C":x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29)
-%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 		At M source location locallimits29+4^gtm8087
 
 GTM>
@@ -226,22 +226,22 @@ Let's check some limits on globals
 
 kill ^z
 zshow "C":^z(1,2,3,4,5)
-%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^z(1,2,3,4,5,"C","gtm8087xcalls1","iamtoolongforanexternalcallname")
+%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^z(1,2,3,4,5,"C","gtm8087xcalls1","iamtoolongforanexternalcallname")
 		At M source location globallimits5+7^gtm8087
 
 GTM>
-%GTM-E-GVUNDEF, Global variable undefined: ^z
+%YDB-E-GVUNDEF, Global variable undefined: ^z
 		At M source location globallimits5b+1^gtm8087
 
 GTM>
 
 kill ^z
 zshow "C":^z(1,2,3,4)
-%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^z(1,2,3,4,"C","gtm8087xcalls1","iamtoolongforanexternalcallname")
+%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^z(1,2,3,4,"C","gtm8087xcalls1","iamtoolongforanexternalcallname")
 		At M source location globallimits4+6^gtm8087
 
 GTM>
-%GTM-E-GVUNDEF, Global variable undefined: ^z
+%YDB-E-GVUNDEF, Global variable undefined: ^z
 		At M source location globallimits4b+1^gtm8087
 
 GTM>

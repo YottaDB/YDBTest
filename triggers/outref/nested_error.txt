@@ -181,13 +181,13 @@ main+11^nestederror :	for i=1:2:10 zkill ^b(i)
 +1^b#1#             : xecute "$ZTRIGgerop ^a("_subs_")"
 etr^nestederror     :etr(err)	;
 etr+1^nestederror   :	write $zstatus,!
-150372458,+1^b#1#,%GTM-E-CMD, Command expected but not found
+150372458,+1^b#1#,%YDB-E-CMD, Command expected but not found
 etr+2^nestederror   :	if err=0 tcommit
 etr^nestederror     :etr(err)	;
 etr+1^nestederror   :	write $zstatus,!
-150381738,etr+2^nestederror,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
+150381738,etr+2^nestederror,%YDB-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
 etr+2^nestederror   :	if err=0 tcommit
-%GTM-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
+%YDB-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
 		At M source location etr+2^nestederror
 
 GTM>
@@ -369,15 +369,15 @@ main+11^nestederror :	for i=1:2:10 zkill ^b(i)
 +1^b#1#             : xecute "$ZTRIGgerop ^a("_subs_")"
 etr^nestederror     :etr(err)	;
 etr+1^nestederror   :	write $zstatus,!
-150372458,+1^b#1#,%GTM-E-CMD, Command expected but not found
+150372458,+1^b#1#,%YDB-E-CMD, Command expected but not found
 etr+2^nestederror   :	if err=0 tcommit
 etr+3^nestederror   :	if err=1&$tlevel tcommit
 etr^nestederror     :etr(err)	;
 etr+1^nestederror   :	write $zstatus,!
-150381738,etr+3^nestederror,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
+150381738,etr+3^nestederror,%YDB-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
 etr+2^nestederror   :	if err=0 tcommit
 etr+3^nestederror   :	if err=1&$tlevel tcommit
-%GTM-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
+%YDB-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
 		At M source location etr+3^nestederror
 
 GTM>
@@ -559,7 +559,7 @@ main+11^nestederror :	for i=1:2:10 zkill ^b(i)
 +1^b#1#             : xecute "$ZTRIGgerop ^a("_subs_")"
 etr^nestederror     :etr(err)	;
 etr+1^nestederror   :	write $zstatus,!
-150372458,+1^b#1#,%GTM-E-CMD, Command expected but not found
+150372458,+1^b#1#,%YDB-E-CMD, Command expected but not found
 etr+2^nestederror   :	if err=0 tcommit
 etr+3^nestederror   :	if err=1&$tlevel tcommit
 etr+4^nestederror   :	if err=2&$tlevel trollback
@@ -567,7 +567,7 @@ etr+5^nestederror   :	set $ecode=""
 etr+6^nestederror   :	quit
 etr^nestederror     :etr(err)	;
 etr+1^nestederror   :	write $zstatus,!
-150381746,main+11^nestederror,%GTM-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger b#1#. Transaction level must be the same at exit as when the trigger started
+150381746,main+11^nestederror,%YDB-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger b#1#. Transaction level must be the same at exit as when the trigger started
 etr+2^nestederror   :	if err=0 tcommit
 etr+3^nestederror   :	if err=1&$tlevel tcommit
 etr+4^nestederror   :	if err=2&$tlevel trollback
@@ -594,14 +594,14 @@ Non-TP sets that are implicitly converted to TP
 test1+2^tcommitdisallow:	set ^f(1)=1
 +1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+10^tcommitdisallow:	if $zlevel>2  do
 etr+11^tcommitdisallow:	.	if $tlevel  do
 etr+12^tcommitdisallow:	.	.	tcommit
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=3 : $ztlevel=0 : $tlevel=0 : $zstatus=150381738,etr+12^tcommitdisallow,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
+$zlevel=3 : $ztlevel=0 : $tlevel=0 : $zstatus=150381738,etr+12^tcommitdisallow,%YDB-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+10^tcommitdisallow:	if $zlevel>2  do
@@ -624,21 +624,21 @@ test2+2^tcommitdisallow:	tstart ():serial
 test2+3^tcommitdisallow:	set ^f(2)=2
 +1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+10^tcommitdisallow:	if $zlevel>2  do
 etr+11^tcommitdisallow:	.	if $tlevel  do
 etr+12^tcommitdisallow:	.	.	tcommit
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=3 : $ztlevel=0 : $tlevel=1 : $zstatus=150381738,etr+12^tcommitdisallow,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
+$zlevel=3 : $ztlevel=0 : $tlevel=1 : $zstatus=150381738,etr+12^tcommitdisallow,%YDB-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+10^tcommitdisallow:	if $zlevel>2  do
 etr+11^tcommitdisallow:	.	if $tlevel  do
 etr+12^tcommitdisallow:	.	.	tcommit
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150381842,etr+12^tcommitdisallow,%GTM-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
+$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150381842,etr+12^tcommitdisallow,%YDB-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+10^tcommitdisallow:	if $zlevel>2  do
@@ -659,21 +659,21 @@ test3+2^tcommitdisallow:	tstart ():serial
 test3+3^tcommitdisallow:	for i=1:1:1  set ^f(3)=3
 +1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+10^tcommitdisallow:	if $zlevel>2  do
 etr+11^tcommitdisallow:	.	if $tlevel  do
 etr+12^tcommitdisallow:	.	.	tcommit
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=3 : $ztlevel=0 : $tlevel=1 : $zstatus=150381738,etr+12^tcommitdisallow,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
+$zlevel=3 : $ztlevel=0 : $tlevel=1 : $zstatus=150381738,etr+12^tcommitdisallow,%YDB-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+10^tcommitdisallow:	if $zlevel>2  do
 etr+11^tcommitdisallow:	.	if $tlevel  do
 etr+12^tcommitdisallow:	.	.	tcommit
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150381842,etr+12^tcommitdisallow,%GTM-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
+$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150381842,etr+12^tcommitdisallow,%YDB-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+10^tcommitdisallow:	if $zlevel>2  do
@@ -695,28 +695,28 @@ test4+3^tcommitdisallow:	do
 test4+4^tcommitdisallow:	.	set ^f(4)=4
 +1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=5 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=5 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+10^tcommitdisallow:	if $zlevel>2  do
 etr+11^tcommitdisallow:	.	if $tlevel  do
 etr+12^tcommitdisallow:	.	.	tcommit
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=4 : $ztlevel=0 : $tlevel=1 : $zstatus=150381738,etr+12^tcommitdisallow,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
+$zlevel=4 : $ztlevel=0 : $tlevel=1 : $zstatus=150381738,etr+12^tcommitdisallow,%YDB-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+10^tcommitdisallow:	if $zlevel>2  do
 etr+11^tcommitdisallow:	.	if $tlevel  do
 etr+12^tcommitdisallow:	.	.	tcommit
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=3 : $ztlevel=0 : $tlevel=1 : $zstatus=150381842,etr+12^tcommitdisallow,%GTM-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
+$zlevel=3 : $ztlevel=0 : $tlevel=1 : $zstatus=150381842,etr+12^tcommitdisallow,%YDB-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+10^tcommitdisallow:	if $zlevel>2  do
 etr+11^tcommitdisallow:	.	if $tlevel  do
 etr+12^tcommitdisallow:	.	.	tcommit
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150381842,etr+12^tcommitdisallow,%GTM-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
+$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150381842,etr+12^tcommitdisallow,%YDB-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+10^tcommitdisallow:	if $zlevel>2  do
@@ -738,24 +738,14 @@ test5+3^tcommitdisallow:	do
 test5+4^tcommitdisallow:	.	set ^f(55)=55
 +1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=5 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=5 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+10^tcommitdisallow:	if $zlevel>2  do
 etr+11^tcommitdisallow:	.	if $tlevel  do
 etr+12^tcommitdisallow:	.	.	tcommit
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=4 : $ztlevel=0 : $tlevel=1 : $zstatus=150381738,etr+12^tcommitdisallow,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
-etr+2^tcommitdisallow:	if $get(label)="test5" do
-etr+3^tcommitdisallow:	.	tstart ():serial
-etr+4^tcommitdisallow:	.	set ^good=$get(^good)+1
-etr+5^tcommitdisallow:	.	tcommit
-etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
-etr+10^tcommitdisallow:	if $zlevel>2  do
-etr+11^tcommitdisallow:	.	if $tlevel  do
-etr+12^tcommitdisallow:	.	.	tcommit
-etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=3 : $ztlevel=0 : $tlevel=1 : $zstatus=150381842,etr+12^tcommitdisallow,%GTM-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
+$zlevel=4 : $ztlevel=0 : $tlevel=1 : $zstatus=150381738,etr+12^tcommitdisallow,%YDB-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=1 not allowed as corresponding TSTART was done at lower $ZTLEVEL=0
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+3^tcommitdisallow:	.	tstart ():serial
 etr+4^tcommitdisallow:	.	set ^good=$get(^good)+1
@@ -765,7 +755,17 @@ etr+10^tcommitdisallow:	if $zlevel>2  do
 etr+11^tcommitdisallow:	.	if $tlevel  do
 etr+12^tcommitdisallow:	.	.	tcommit
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150381842,etr+12^tcommitdisallow,%GTM-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
+$zlevel=3 : $ztlevel=0 : $tlevel=1 : $zstatus=150381842,etr+12^tcommitdisallow,%YDB-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
+etr+2^tcommitdisallow:	if $get(label)="test5" do
+etr+3^tcommitdisallow:	.	tstart ():serial
+etr+4^tcommitdisallow:	.	set ^good=$get(^good)+1
+etr+5^tcommitdisallow:	.	tcommit
+etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
+etr+10^tcommitdisallow:	if $zlevel>2  do
+etr+11^tcommitdisallow:	.	if $tlevel  do
+etr+12^tcommitdisallow:	.	.	tcommit
+etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
+$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150381842,etr+12^tcommitdisallow,%YDB-E-TCOMMITDISALLOW, TROLLBACK required after an unhandled error in trigger context
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+3^tcommitdisallow:	.	tstart ():serial
 etr+4^tcommitdisallow:	.	set ^good=$get(^good)+1
@@ -794,11 +794,11 @@ test6+6^tcommitdisallow:	.	tstart ():serial
 test6+7^tcommitdisallow:	.	set ^f(6)=6
 +1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=5 : $ztlevel=1 : $tlevel=2 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=5 : $ztlevel=1 : $tlevel=2 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=4 : $ztlevel=0 : $tlevel=2 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=4 : $ztlevel=0 : $tlevel=2 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+7^tcommitdisallow:	.	if $ztlevel=^startztlevel  do
@@ -830,7 +830,7 @@ test7+4^tcommitdisallow:	set ^f(7)=7
 +1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
 etrcommon^tcommitdisallow:etrcommon(tst);
 etrcommon+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etrcommon+2^tcommitdisallow:	if $tlevel  trollback
 etrcommon+3^tcommitdisallow:	set $etrap="do etr^tcommitdisallow"
 etrcommon+4^tcommitdisallow:	set ^label=tst
@@ -848,11 +848,11 @@ test6+6^tcommitdisallow:	.	tstart ():serial
 test6+7^tcommitdisallow:	.	set ^f(6)=6
 +1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=9 : $ztlevel=2 : $tlevel=2 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=9 : $ztlevel=2 : $tlevel=2 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=8 : $ztlevel=1 : $tlevel=2 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=8 : $ztlevel=1 : $tlevel=2 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+7^tcommitdisallow:	.	if $ztlevel=^startztlevel  do
@@ -871,7 +871,7 @@ test6+8^tcommitdisallow:	quit
 etrcommon+9^tcommitdisallow:	quit
 etrcommon^tcommitdisallow:etrcommon(tst);
 etrcommon+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=3 : $ztlevel=0 : $tlevel=0 : $zstatus=150381746,test7+4^tcommitdisallow,%GTM-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger f#1#. Transaction level must be the same at exit as when the trigger started
+$zlevel=3 : $ztlevel=0 : $tlevel=0 : $zstatus=150381746,test7+4^tcommitdisallow,%YDB-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger f#1#. Transaction level must be the same at exit as when the trigger started
 etrcommon+2^tcommitdisallow:	if $tlevel  trollback
 etrcommon+3^tcommitdisallow:	set $etrap="do etr^tcommitdisallow"
 etrcommon+4^tcommitdisallow:	set ^label=tst
@@ -894,7 +894,7 @@ test8+4^tcommitdisallow:	set ^f(8)=8
 +1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
 etrcommon^tcommitdisallow:etrcommon(tst);
 etrcommon+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etrcommon+2^tcommitdisallow:	if $tlevel  trollback
 etrcommon+3^tcommitdisallow:	set $etrap="do etr^tcommitdisallow"
 etrcommon+4^tcommitdisallow:	set ^label=tst
@@ -913,7 +913,7 @@ test6+7^tcommitdisallow:	.	set ^f(6)=6
 +1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
 etrcommon^tcommitdisallow:etrcommon(tst);
 etrcommon+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=3 : $ztlevel=0 : $tlevel=0 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=3 : $ztlevel=0 : $tlevel=0 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etrcommon+2^tcommitdisallow:	if $tlevel  trollback
 etrcommon+3^tcommitdisallow:	set $etrap="do etr^tcommitdisallow"
 etrcommon+4^tcommitdisallow:	set ^label=tst
@@ -922,7 +922,7 @@ etrcommon+6^tcommitdisallow:	if ^ecodenull  set $ecode=""
 etrcommon+7^tcommitdisallow:	if $ztlevel  do
 etrcommon+9^tcommitdisallow:	quit
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+7^tcommitdisallow:	.	if $ztlevel=^startztlevel  do
@@ -947,7 +947,7 @@ test9+4^tcommitdisallow:	set ^f(9)=9
 +1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
 etrcommon^tcommitdisallow:etrcommon(tst);
 etrcommon+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etrcommon+2^tcommitdisallow:	if $tlevel  trollback
 etrcommon+3^tcommitdisallow:	set $etrap="do etr^tcommitdisallow"
 etrcommon+4^tcommitdisallow:	set ^label=tst
@@ -962,14 +962,14 @@ test5+3^tcommitdisallow:	do
 test5+4^tcommitdisallow:	.	set ^f(55)=55
 +1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=9 : $ztlevel=2 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=9 : $ztlevel=2 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+6^tcommitdisallow:	if $get(^label)="test6" quit:$ztlevel>^startztlevel  do
 etr+10^tcommitdisallow:	if $zlevel>2  do
 etr+11^tcommitdisallow:	.	if $tlevel  do
 etr+12^tcommitdisallow:	.	.	tcommit
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=8 : $ztlevel=1 : $tlevel=1 : $zstatus=150381738,etr+12^tcommitdisallow,%GTM-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=2 not allowed as corresponding TSTART was done at lower $ZTLEVEL=1
+$zlevel=8 : $ztlevel=1 : $tlevel=1 : $zstatus=150381738,etr+12^tcommitdisallow,%YDB-E-TRIGTCOMMIT, TCOMMIT at $ZTLEVEL=2 not allowed as corresponding TSTART was done at lower $ZTLEVEL=1
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+3^tcommitdisallow:	.	tstart ():serial
 etr+4^tcommitdisallow:	.	set ^good=$get(^good)+1
@@ -989,7 +989,7 @@ test5+5^tcommitdisallow:	quit
 etrcommon+9^tcommitdisallow:	quit
 etrcommon^tcommitdisallow:etrcommon(tst);
 etrcommon+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=3 : $ztlevel=0 : $tlevel=0 : $zstatus=150381746,test9+4^tcommitdisallow,%GTM-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger f#1#. Transaction level must be the same at exit as when the trigger started
+$zlevel=3 : $ztlevel=0 : $tlevel=0 : $zstatus=150381746,test9+4^tcommitdisallow,%YDB-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger f#1#. Transaction level must be the same at exit as when the trigger started
 etrcommon+2^tcommitdisallow:	if $tlevel  trollback
 etrcommon+3^tcommitdisallow:	set $etrap="do etr^tcommitdisallow"
 etrcommon+4^tcommitdisallow:	set ^label=tst
@@ -1012,7 +1012,7 @@ test10+4^tcommitdisallow:	set ^f(10)=10
 +1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
 etrcommon^tcommitdisallow:etrcommon(tst);
 etrcommon+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=4 : $ztlevel=1 : $tlevel=1 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etrcommon+2^tcommitdisallow:	if $tlevel  trollback
 etrcommon+3^tcommitdisallow:	set $etrap="do etr^tcommitdisallow"
 etrcommon+4^tcommitdisallow:	set ^label=tst
@@ -1028,7 +1028,7 @@ test5+4^tcommitdisallow:	.	set ^f(55)=55
 +1^f#1#             : xecute "$ZTRIGgerop ^e("_subs_")"
 etrcommon^tcommitdisallow:etrcommon(tst);
 etrcommon+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=3 : $ztlevel=0 : $tlevel=0 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=3 : $ztlevel=0 : $tlevel=0 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etrcommon+2^tcommitdisallow:	if $tlevel  trollback
 etrcommon+3^tcommitdisallow:	set $etrap="do etr^tcommitdisallow"
 etrcommon+4^tcommitdisallow:	set ^label=tst
@@ -1037,7 +1037,7 @@ etrcommon+6^tcommitdisallow:	if ^ecodenull  set $ecode=""
 etrcommon+7^tcommitdisallow:	if $ztlevel  do
 etrcommon+9^tcommitdisallow:	quit
 etr+1^tcommitdisallow:	write "$zlevel=",$zlevel," : $ztlevel=",$ztlevel," : $tlevel=",$tlevel," : $zstatus=",$zstatus,!
-$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150372458,+1^f#1#,%GTM-E-CMD, Command expected but not found
+$zlevel=2 : $ztlevel=0 : $tlevel=0 : $zstatus=150372458,+1^f#1#,%YDB-E-CMD, Command expected but not found
 etr+2^tcommitdisallow:	if $get(label)="test5" do
 etr+3^tcommitdisallow:	.	tstart ():serial
 etr+4^tcommitdisallow:	.	set ^good=$get(^good)+1

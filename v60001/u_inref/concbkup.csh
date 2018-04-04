@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,9 +13,9 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-# The test verifies that the backup started concurrently to the already running backup issues GTM-E-BKUPRUNNING error.
+# The test verifies that the backup started concurrently to the already running backup issues YDB-E-BKUPRUNNING error.
 # The test starts backup processes one after another in the foreground as well as in the background expecting that
-# at least in one of the cases out of 1000, the 'GTM-E-BKUPRUNNING' case will be hit.
+# at least in one of the cases out of 1000, the 'YDB-E-BKUPRUNNING' case will be hit.
 
 $gtm_tst/com/dbcreate.csh mumps 1
 $gtm_exe/mumps -run %XCMD 'for i=1:1:10000 set ^a(i)=$j(i,256)'

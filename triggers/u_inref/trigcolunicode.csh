@@ -4,7 +4,7 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -23,12 +23,12 @@
 # range of 1 to 9 will collate all numbers beginning with 1 before any
 # number beginning with 2.
 #
-# Test case 1: Use the trigger as is and see a %GTM-E-TRIGSUBSCRANGE
+# Test case 1: Use the trigger as is and see a %YDB-E-TRIGSUBSCRANGE
 # error message.
 #
 # Test case 2: Use the trigger and an accompanying collation library
 # which reverses the collation, Hindi numbers now collate 9 to 1. This
-# use will not generate the %GTM-E-TRIGSUBSCRANGE error message.
+# use will not generate the %YDB-E-TRIGSUBSCRANGE error message.
 
 # trigger error handler to catch the TRIGSUBSCRANGE
 setenv gtm_trigger_etrap 'set $ecode="" write $zstatus'
@@ -68,9 +68,9 @@ endif
 # run without the collation libraries
 setenv test_specific_gde $tst_working_dir/default.gde
 $gtm_tst/com/dbcreate.csh mumps
-echo "Should see %GTM-E-TRIGSUBSCRANGE"
+echo "Should see %YDB-E-TRIGSUBSCRANGE"
 $gtm_exe/mumps -run trigcolunicode >&! shoulderror.outx
-$grep '%GTM-E-TRIGSUBSCRANGE' shoulderror.outx >&! /dev/null && echo "PASS %GTM-E-TRIGSUBSCRANGE seen"
+$grep '%YDB-E-TRIGSUBSCRANGE' shoulderror.outx >&! /dev/null && echo "PASS %YDB-E-TRIGSUBSCRANGE seen"
 source $gtm_tst/com/ydb_trig_upgrade_check.csh
 $gtm_tst/com/dbcheck.csh
 $echoline
@@ -88,9 +88,9 @@ endif
 # run with the collation libraries
 setenv test_specific_gde $tst_working_dir/unicode.gde
 $gtm_tst/com/dbcreate.csh mumps
-echo "Should not see %GTM-E-TRIGSUBSCRANGE"
+echo "Should not see %YDB-E-TRIGSUBSCRANGE"
 $gtm_exe/mumps -run trigcolunicode >&! shouldnoterror.outx
-$grep '%GTM-E-TRIGSUBSCRANGE' shouldnoterror.outx || echo "PASS %GTM-E-TRIGSUBSCRANGE not seen"
+$grep '%YDB-E-TRIGSUBSCRANGE' shouldnoterror.outx || echo "PASS %YDB-E-TRIGSUBSCRANGE not seen"
 source $gtm_tst/com/ydb_trig_upgrade_check.csh
 $gtm_tst/com/dbcheck.csh -extract
 

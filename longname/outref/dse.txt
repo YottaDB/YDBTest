@@ -246,7 +246,7 @@ $DSE find -region=abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdab
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLISTRTOOLONG, REGION specified is 100 bytes long which is greater than the allowed maximum of 31 bytes
+%YDB-E-CLISTRTOOLONG, REGION specified is 100 bytes long which is greater than the allowed maximum of 31 bytes
 $DSE find -key="^AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 ##SOURCE_PATH##/dse find -key=^AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
@@ -569,7 +569,7 @@ there is no region A2345678901234567890123456789:
 File  	##TEST_PATH##/a1.dat
 Region	A
 
-%GTM-E-NOREGION, REGION not found: A2345678901234567890123456789
+%YDB-E-NOREGION, REGION not found: A2345678901234567890123456789
 ##SOURCE_PATH##/dse find -region=A234567890123456
 
 File  	##TEST_PATH##/a1.dat

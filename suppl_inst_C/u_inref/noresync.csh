@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -73,7 +76,7 @@ $MSR SYNC ALL_LINKS
 echo "# EPOCH record gets written in the journal file by the update process with a strm_seqno of 9 for strm_num=1"
 $MSR RUN INST3 "$gtm_exe/mumps -run jnlflush"
 # If instance3 is frozen due to $gtm_test_fake_enospc, journal -extract below would fail with,
-# %GTM-E-SETEXTRENV, Database files are missing or Instance is frozen; supply the database files, wait for the freeze to lift or
+# %YDB-E-SETEXTRENV, Database files are missing or Instance is frozen; supply the database files, wait for the freeze to lift or
 # define gtm_extract_nocol to extract possibly incorrect collation
 # To avoid that set gtm_extract_nocol before doing extract
 $MSR RUN INST3 'setenv gtm_extract_nocol 1 ; set files = `ls mumps.mjl*`;set mjls = `echo $files | sed "s/ /,/g"` ;$MUPIP journal -extract=mumps.mjf -detail -forward $mjls >&! jnl_extr.out'

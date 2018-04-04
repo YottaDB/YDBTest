@@ -4,13 +4,16 @@
 # Copyright (c) 2010-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-# Test various incarnations of GTM-E-TRIGDEFBAD. The error is issued whenever the integrity of the trigger global is in suspect
+# Test various incarnations of YDB-E-TRIGDEFBAD. The error is issued whenever the integrity of the trigger global is in suspect
 # Some instances are: If the ^#t exists, but #TRIGNAME is missing. This is unexpected since, we expect MUPIP TRIGGER to have
 # properly filled the #TRIGNAME.
 
@@ -33,7 +36,7 @@ cp mumps.dat mumps.bak
 
 $DSE dump -block=3 >&! dse_dump_bl3.out
 $echoline
-echo "Test 1: #LABEL incorrect. Expect GTM-E-TRIGDEFBAD"
+echo "Test 1: #LABEL incorrect. Expect YDB-E-TRIGDEFBAD"
 $echoline
 # Corrupt the 1-byte value field of the ^#t("a","#LABEL") node.
 # The DSE DUMP of block 3 will display something like the below
@@ -49,7 +52,7 @@ echo ""
 
 reload_db
 $echoline
-echo "Test 2:  #CYCLE missing. Expect GTM-E-TRIGDEFBAD"
+echo "Test 2:  #CYCLE missing. Expect YDB-E-TRIGDEFBAD"
 $echoline
 # Corrupt the key field of ^#t("a","#CYCLE") so it effectively becomes missing.
 # The DSE DUMP of block 3 will display something like the below
@@ -65,7 +68,7 @@ echo ""
 
 reload_db
 $echoline
-echo "Test 3: #CYCLE = 0. Expect GTM-E-TRIGDEFBAD"
+echo "Test 3: #CYCLE = 0. Expect YDB-E-TRIGDEFBAD"
 $echoline
 set corruptoffset = `echo "obase=16; ibase=16; $corruptoffset+1" | bc `
 dse_corrupt $corruptoffset "0"
@@ -76,7 +79,7 @@ echo ""
 
 reload_db
 $echoline
-echo "Test 4: #COUNT missing. Expect GTM-E-TRIGDEFBAD"
+echo "Test 4: #COUNT missing. Expect YDB-E-TRIGDEFBAD"
 $echoline
 # Corrupt the key field of ^#t("a","#COUNT") so it effectively becomes missing.
 # The DSE DUMP of block 3 will display something like the below
@@ -92,7 +95,7 @@ echo ""
 
 reload_db
 $echoline
-echo "Test 5: #COUNT = 0. Expect GTM-E-TRIGDEFBAD"
+echo "Test 5: #COUNT = 0. Expect YDB-E-TRIGDEFBAD"
 $echoline
 set corruptoffset = `echo "obase=16; ibase=16; $corruptoffset+2" | bc `
 dse_corrupt $corruptoffset "0"
@@ -103,7 +106,7 @@ echo ""
 
 reload_db
 $echoline
-echo "Test 6: #TRIGNAME missing. Expect GTM-E-TRIGDEFBAD"
+echo "Test 6: #TRIGNAME missing. Expect YDB-E-TRIGDEFBAD"
 $echoline
 # Corrupt the key field of ^#t("a",1,"TRIGNAME") so it effectively becomes missing.
 # The DSE DUMP of block 3 will display something like the below
@@ -118,7 +121,7 @@ echo ""
 
 reload_db
 $echoline
-echo "Test 7: #CMD missing. Expect GTM-E-TRIGDEFBAD"
+echo "Test 7: #CMD missing. Expect YDB-E-TRIGDEFBAD"
 $echoline
 # Corrupt the key field of ^#t("a",1,"CMD") so it effectively becomes missing.
 # The DSE DUMP of block 3 will display something like the below
@@ -133,7 +136,7 @@ echo ""
 
 reload_db
 $echoline
-echo "Test 8: #CHSET missing. Expect GTM-E-TRIGDEFBAD"
+echo "Test 8: #CHSET missing. Expect YDB-E-TRIGDEFBAD"
 $echoline
 # Corrupt the key field of ^#t("a",1,"CHSET") so it effectively becomes missing.
 # The DSE DUMP of block 3 will display something like the below

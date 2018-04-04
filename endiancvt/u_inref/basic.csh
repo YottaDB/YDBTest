@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -24,10 +27,10 @@ if !($?gtm_platform_no_V4) then
 
 ## create a V4 database
 ## mupip endiancvt mumps.dat
-##      --> Shoud issue "GTM-E-NOENDIANCVT Unable to convert the endian format of the file mumps.dat due to the database not in current version" error
+##      --> Shoud issue "YDB-E-NOENDIANCVT Unable to convert the endian format of the file mumps.dat due to the database not in current version" error
 ## concurrently run a few updates
 ## mupip endiancvt mumps.dat
-##      --> Shoud issue "GTM-E-NOENDIANCVT Unable to convert the endian format of the file mumps.dat due to the database not in current version" error
+##      --> Shoud issue "YDB-E-NOENDIANCVT Unable to convert the endian format of the file mumps.dat due to the database not in current version" error
 
 EOF
 	# On HPPA, we cannot invoke switch_gtm_version unconditionally while V4 IMPTP is in progress as libreverse.sl

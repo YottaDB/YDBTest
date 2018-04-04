@@ -47,8 +47,8 @@ BEGIN 4 :-) Issue REQRUNDOWN message with a DBSHMNAMEDIFF secondary error:
 GTM>
 write ^x
 GTM>
-%GTM-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/backup.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
-##TEST_AWK.GTM-E-DBSHMNAMEDIFF, Database file ##TEST_PATH##.backup.dat points to shared memory .id = [0-9]+. which points to a different database file ##TEST_PATH##.mumps.dat
+%YDB-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/backup.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+##TEST_AWK.YDB-E-DBSHMNAMEDIFF, Database file ##TEST_PATH##.backup.dat points to shared memory .id = [0-9]+. which points to a different database file ##TEST_PATH##.mumps.dat
 
 GTM>
 

@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -63,8 +63,8 @@ if ($?gtmcrypt_config) setenv gtmcrypt_config "../gtmcrypt.cfg"
 unsetenv gtm_repl_instance
 $gtm_exe/mumps -run %XCMD 'set ^a=1' >&! back_update.logx
 if ($?test_replic) setenv gtm_repl_instance mumps.repl
-echo "Expect count of 2 for errors GTM-E-JNLOPNERR and GTM-E-FILEIDMATCH found in online4/back_update.logx:"
-$grep -c -E 'GTM-E-JNLOPNERR|GTM-E-FILEIDMATCH' back_update.logx
+echo "Expect count of 2 for errors YDB-E-JNLOPNERR and YDB-E-FILEIDMATCH found in online4/back_update.logx:"
+$grep -c -E 'YDB-E-JNLOPNERR|YDB-E-FILEIDMATCH' back_update.logx
 cd ..
 # if encrypted then reset gtmcrypt_config
 if ($?gtmcrypt_config) setenv gtmcrypt_config "gtmcrypt.cfg"

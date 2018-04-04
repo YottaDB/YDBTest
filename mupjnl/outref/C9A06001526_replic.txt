@@ -22,8 +22,8 @@ Shutting down Primary Source Server Server in ##TEST_PATH##
 ##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLFILOPN, Error opening journal file ##REMOTE_TEST_PATH##/mumps.mjl for database file ##REMOTE_TEST_PATH##/mumps.dat
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLFILOPN, Error opening journal file ##REMOTE_TEST_PATH##/mumps.mjl for database file ##REMOTE_TEST_PATH##/mumps.dat
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Testing for sr_port/updproc.c
 Starting Primary Source Server in ##TEST_PATH##
@@ -67,5 +67,5 @@ No errors detected by integ.
 ##REMOTE_SOURCE_PATH##/mupip
 ##REMOTE_SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-##FILTERED##SRC_##TIMESTAMP##.log:%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
-##FILTERED##RCVR_##TIMESTAMP##.log.updproc:%GTM-E-JNLFILOPN, Error opening journal file ##REMOTE_TEST_PATH##/mumps.mjl for database file ##REMOTE_TEST_PATH##/mumps.dat
+##FILTERED##SRC_##TIMESTAMP##.log:%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
+##FILTERED##RCVR_##TIMESTAMP##.log.updproc:%YDB-E-JNLFILOPN, Error opening journal file ##REMOTE_TEST_PATH##/mumps.mjl for database file ##REMOTE_TEST_PATH##/mumps.dat

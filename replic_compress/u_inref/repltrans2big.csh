@@ -4,6 +4,9 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -31,7 +34,7 @@ set timestamp1 = `cat $PRI_DIR/start_time`
 # Define strings to look out for in the log files
 #
 set connresetstr = "Connection reset"
-set trans2bigstr = "GTM-E-REPLTRANS2BIG"
+set trans2bigstr = "YDB-E-REPLTRANS2BIG"
 set rcvrexitstr  = "Receiver server exiting"
 
 echo "# Wait for connection reset string to appear in the source server log"

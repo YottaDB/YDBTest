@@ -15,7 +15,7 @@ TEST-I-PASS The mumps.dat is sparse as expected after filling the database with 
 # Extend by 0 blocks should cause an error when defer_allocate is TRUE
 
 BLOCKS too small, no extension done
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 Database file ##TEST_PATH##/mumps.dat now has defer allocation flag set to FALSE
 # Fully allocate the database
 Extension successful, file ##TEST_PATH##/mumps.dat extended by 0 blocks.  Total blocks = 1525.

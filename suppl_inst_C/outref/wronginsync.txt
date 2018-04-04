@@ -60,7 +60,7 @@ Shutting down Primary Source Server Server in ##TEST_PATH##
 ==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log INSNOTJOINED'==
 ----------
 Error INSNOTJOINED seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%GTM-E-INSNOTJOINED, Replicating Instance INSTANCE3 is not a member of the same Group as Instance INSTANCE2
+%YDB-E-INSNOTJOINED, Replicating Instance INSTANCE3 is not a member of the same Group as Instance INSTANCE2
 ----------
 # The receiver would have exited with the above error. Manually shutdown the update process and passive server
 ==Executing MULTISITE_REPLIC 'RUN INST3 set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_IST2INST3.out'==
@@ -116,7 +116,7 @@ Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/ins
 ==Executing MULTISITE_REPLIC 'RUN INST7 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log INSNOTJOINED'==
 ----------
 Error INSNOTJOINED seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%GTM-E-INSNOTJOINED, Replicating Instance INSTANCE7 is not a member of the same Group as Instance INSTANCE5
+%YDB-E-INSNOTJOINED, Replicating Instance INSTANCE7 is not a member of the same Group as Instance INSTANCE5
 ----------
 # The receiver would have exited with the above error. Manually shutdown the update process and passive server
 ==Executing MULTISITE_REPLIC 'RUN INST7 set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_IST2INST3.out'==

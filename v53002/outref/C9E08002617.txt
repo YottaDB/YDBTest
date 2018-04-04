@@ -7,7 +7,7 @@ mumps.dat
           Testing mumps -run test0^c002617  
 ---------------------------------------------------------------------------------------------------
 
-150373210,test0+4^c002617,%GTM-E-DIVZERO, Attempt to divide by zero
+150373210,test0+4^c002617,%YDB-E-DIVZERO, Attempt to divide by zero
 
 ---------------------------------------------------------------------------------------------------
           Testing do test0^c002617  
@@ -15,8 +15,8 @@ mumps.dat
 
 
 GTM>
-150373210,test0+4^c002617,%GTM-E-DIVZERO, Attempt to divide by zero
-%GTM-E-DIVZERO, Attempt to divide by zero
+150373210,test0+4^c002617,%YDB-E-DIVZERO, Attempt to divide by zero
+%YDB-E-DIVZERO, Attempt to divide by zero
 
 GTM>
 
@@ -24,7 +24,7 @@ GTM>
           Testing mumps -run test1^c002617  
 ---------------------------------------------------------------------------------------------------
 
-%GTM-E-LVUNDEF, Undefined local variable: cnt
+%YDB-E-LVUNDEF, Undefined local variable: cnt
 		At M source location A+1^c002617a
 
 GTM>
@@ -35,7 +35,7 @@ GTM>
 
 
 GTM>
-%GTM-E-LVUNDEF, Undefined local variable: cnt
+%YDB-E-LVUNDEF, Undefined local variable: cnt
 		At M source location A+1^c002617a
 
 GTM>
@@ -44,7 +44,7 @@ GTM>
           Testing mumps -run test2^c002617  
 ---------------------------------------------------------------------------------------------------
 
-$ZSTATUS=150373738,stacktst+4^stacktst,%GTM-E-STACKCRIT, Stack space critical
+$ZSTATUS=150373738,stacktst+4^stacktst,%YDB-E-STACKCRIT, Stack space critical
 %GTM-F-STACKOFLOW, Stack overflow
 
 ---------------------------------------------------------------------------------------------------
@@ -53,14 +53,14 @@ $ZSTATUS=150373738,stacktst+4^stacktst,%GTM-E-STACKCRIT, Stack space critical
 
 
 GTM>
-$ZSTATUS=150373738,stacktst+4^stacktst,%GTM-E-STACKCRIT, Stack space critical
+$ZSTATUS=150373738,stacktst+4^stacktst,%YDB-E-STACKCRIT, Stack space critical
 %GTM-F-STACKOFLOW, Stack overflow
 
 ---------------------------------------------------------------------------------------------------
           Testing mumps -run test3^c002617  
 ---------------------------------------------------------------------------------------------------
 
-$ZSTATUS=150373738,stacktst1+5^stacktst1,%GTM-E-STACKCRIT, Stack space critical
+$ZSTATUS=150373738,stacktst1+5^stacktst1,%YDB-E-STACKCRIT, Stack space critical
 %GTM-F-STACKOFLOW, Stack overflow
 
 ---------------------------------------------------------------------------------------------------
@@ -69,14 +69,14 @@ $ZSTATUS=150373738,stacktst1+5^stacktst1,%GTM-E-STACKCRIT, Stack space critical
 
 
 GTM>
-$ZSTATUS=150373738,stacktst1+5^stacktst1,%GTM-E-STACKCRIT, Stack space critical
+$ZSTATUS=150373738,stacktst1+5^stacktst1,%YDB-E-STACKCRIT, Stack space critical
 %GTM-F-STACKOFLOW, Stack overflow
 
 ---------------------------------------------------------------------------------------------------
           Testing mumps -run test4^c002617  
 ---------------------------------------------------------------------------------------------------
 
-%GTM-E-LVUNDEF, Undefined local variable: cnt
+%YDB-E-LVUNDEF, Undefined local variable: cnt
 		At M source location lab1+1^test
 
 GTM>
@@ -87,7 +87,7 @@ GTM>
 
 
 GTM>
-%GTM-E-LVUNDEF, Undefined local variable: cnt
+%YDB-E-LVUNDEF, Undefined local variable: cnt
 		At M source location lab1+1^test
 
 GTM>
@@ -96,7 +96,7 @@ GTM>
           Testing mumps -run test5^c002617  
 ---------------------------------------------------------------------------------------------------
 
-Error occurred: 150373050,TestTrap+2^TestTrap,%GTM-E-INVCMD, Invalid command keyword encountered
+Error occurred: 150373050,TestTrap+2^TestTrap,%YDB-E-INVCMD, Invalid command keyword encountered
 
 ---------------------------------------------------------------------------------------------------
           Testing do test5^c002617  
@@ -104,7 +104,7 @@ Error occurred: 150373050,TestTrap+2^TestTrap,%GTM-E-INVCMD, Invalid command key
 
 
 GTM>
-%GTM-E-INVCMD, Invalid command keyword encountered
+%YDB-E-INVCMD, Invalid command keyword encountered
 
 GTM>
 

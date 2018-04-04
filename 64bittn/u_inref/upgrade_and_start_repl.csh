@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -17,7 +20,7 @@
 # Accepts two arguments - both optional
 # arg1 - common timestamp to be suffixed in the name of the log files
 # arg2 - one for qualifier like "updateresync"
-# arg3 - "check_jnlbadlabel" - an option to check if GTM-E-JNLBADLABEL is seen in syslog
+# arg3 - "check_jnlbadlabel" - an option to check if YDB-E-JNLBADLABEL is seen in syslog
 ########################################################################################################
 #
 if ( "" != $1 ) then
@@ -43,7 +46,7 @@ if ($gtm_test_qdbrundown) then
 endif
 echo "Start V5 replication servers in secondary site "
 $MUPIP replic -editinstance -show mumps.repl >&! inst_replinstfmt.outx
-$grep -q GTM-E-REPLINSTFMT inst_replinstfmt.outx
+$grep -q YDB-E-REPLINSTFMT inst_replinstfmt.outx
 if ($status) then
 	set updresyncstr=""	# No REPLINSTFMT error between the two versions. So -updateresync startup NOT needed.
 	if ($gtm_test_qdbrundown) then
@@ -66,10 +69,10 @@ if ( "" != "$updresyncstr") then
 	# We expect the receiver server to exit (due to the source server closing the connection due to the REPINSTNOHIST error).
 	# RCVR.csh which starts the receiver server and then does a checkhealth to ensure it is up and running.
 	# It is possible in rare cases that the receiver server exits (thereby cleaning up the receive pool) even before the checkhealth is attempted.
-	# In this case,the checkhealth will error out with GTM-E-NORECVPOOL message. We do not want this to happen so we specifically ask RCVR.csh
+	# In this case,the checkhealth will error out with YDB-E-NORECVPOOL message. We do not want this to happen so we specifically ask RCVR.csh
 	# to skip the checkhealth by setting the environment variable gtm_test_repl_skiprcvrchkhlth. It is unset right afterwards.
 	if ("0" != "${gtm_test_updhelpers}") then
-		# The helpers will issue the GTM-E-JNLBADLABEL here instead of below, so start the syslog search from here.
+		# The helpers will issue the YDB-E-JNLBADLABEL here instead of below, so start the syslog search from here.
 		set syslog_before = `$gtm_tst/com/mumps_curpro.csh -cur_routines -run timestampdh -1`
 	endif
 	setenv gtm_test_repl_skiprcvrchkhlth 1
@@ -88,7 +91,7 @@ if ( "" != "$updresyncstr") then
 endif
 
 if ($gtm_test_freeze_on_error) then
-	# If freeze on error is set, GTM-E-JNLBADLABEL would freeze the instance.
+	# If freeze on error is set, YDB-E-JNLBADLABEL would freeze the instance.
 	# To prevent it, cut new journal files before starting reciever server.
 	$MUPIP set $tst_jnl_str -noprevjnlfile -region "*" >>&! cutnewjnl.out
 endif
@@ -107,7 +110,7 @@ $gtm_tst/com/RCVR.csh "decide" $portno "$timestamp" "$updresyncstr" >&! START_${
 if ( (! $gtm_test_freeze_on_error) && (! $gtm_test_trigger) ) then
 	set prior_jnl_label = `cat prior_ver_jnl_label.txt`
 	set curr_jnl_label = `cat curr_ver_jnl_label.txt`
-	# If journal labels are mismatched, new journals are not cut, updateprocess would switch journals and log GTM-E-JNLBADLABEL in syslog
+	# If journal labels are mismatched, new journals are not cut, updateprocess would switch journals and log YDB-E-JNLBADLABEL in syslog
 	if ($?check_jnlbadlabel && "${prior_jnl_label}" != "${curr_jnl_label}") then
 		$gtm_tst/com/getoper.csh "$syslog_before" "" jnlbadlabel.txt "" "JNLBADLABEL"
 	else

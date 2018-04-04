@@ -9,23 +9,23 @@ GTM>
 ---------------- d001998a testing BEGIN -------------------------------
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript=""
-%GTM-E-CLIERR, Unrecognized option : SUBSCRIPT, value expected but not found
+%YDB-E-CLIERR, Unrecognized option : SUBSCRIPT, value expected but not found
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^"
 Error in SUBSCRIPT qualifier : Global variable name does not begin with an alphabet or % at offset 1 in ^
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript=":"
 Error in SUBSCRIPT qualifier : Key does not begin with '^' at offset 0 in :
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="abcd"
 Error in SUBSCRIPT qualifier : Key does not begin with '^' at offset 0 in abcd
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:abcd"
 Error in SUBSCRIPT qualifier : Key does not begin with '^' at offset 3 in ^a:abcd
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^%abcd"
 
@@ -67,11 +67,11 @@ Total               2               1              NA             0
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^1abcd"
 Error in SUBSCRIPT qualifier : Global variable name does not begin with an alphabet or % at offset 1 in ^1abcd
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^1abcd"
 Error in SUBSCRIPT qualifier : Global variable name does not begin with an alphabet or % at offset 4 in ^a:^1abcd
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a123b"
 
@@ -113,55 +113,55 @@ Total               2               1              NA             0
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a123#"
 Error in SUBSCRIPT qualifier : Global variable name contains non-alphanumeric characters at offset 5 in ^a123#
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^a123#"
 Error in SUBSCRIPT qualifier : Global variable name contains non-alphanumeric characters at offset 8 in ^a:^a123#
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^abcd(1,23a)"
 Error in SUBSCRIPT qualifier : Non-string subscript contains non-numerical characters at offset 10 in ^abcd(1,23a)
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^abcd(1,23a)"
 Error in SUBSCRIPT qualifier : Non-string subscript contains non-numerical characters at offset 13 in ^a:^abcd(1,23a)
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^abcd(1,)"
 Error in SUBSCRIPT qualifier : Empty subscript specified at offset 8 in ^abcd(1,)
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^abcd(1,)"
 Error in SUBSCRIPT qualifier : Empty subscript specified at offset 11 in ^a:^abcd(1,)
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^abcd(1,"
 Error in SUBSCRIPT qualifier : Empty/Incomplete subscript specified at offset 8 in ^abcd(1,
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^abcd(1,"
 Error in SUBSCRIPT qualifier : Empty/Incomplete subscript specified at offset 11 in ^a:^abcd(1,
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^abcd("
 Error in SUBSCRIPT qualifier : Empty/Incomplete subscript specified at offset 6 in ^abcd(
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^abcd("
 Error in SUBSCRIPT qualifier : Empty/Incomplete subscript specified at offset 9 in ^a:^abcd(
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript=\"^a\(1,\"\"a\"\":^abcd\(1,2\"
 Error in SUBSCRIPT qualifier : Subscript terminating right parentheses not found at offset 8 in ^a(1,"a":^abcd(1,2
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^a:^b:^c"
 Error: Subscript qualifier keyrange not clear. More than two keys specified at offset 6 in ^a:^b:^c
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript=\"^TEST\(\"\"a\)\"
 Error in SUBSCRIPT qualifier : String subscript does not terminate with double-quote (") character at offset 9 in ^TEST("a)
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript=\"^TEST\(\"\"a\"\"\):^TEST\(\"\"b\"\"\)\"
 
@@ -354,7 +354,7 @@ Total               2               2              NA             0
 echo ""
 
 $gtm_dist/mupip integ -reg DEFAULT -full -subscript="^xxxxx(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)"
-%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
+%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
 %GTM-I-GVIS, 		Global variable: ^xxxxx(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1*
 unset verbose
 

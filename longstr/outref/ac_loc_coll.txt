@@ -1,14 +1,14 @@
 alternative collation  with long string
 gtm_ac_xform_1 is present, but gtm_ac_xback_1 is missing
-%GTM-E-COLLFNMISSING, Routine gtm_ac_xback_1() is not found for collation sequence 1
-%GTM-E-COLLATIONUNDEF, Collation type 1 is not defined
+%YDB-E-COLLFNMISSING, Routine gtm_ac_xback_1() is not found for collation sequence 1
+%YDB-E-COLLATIONUNDEF, Collation type 1 is not defined
 ------------------------------------------------------------
 gtm_ac_xform is present, but gtm_ac_xback is missing
-%GTM-E-COLLFNMISSING, Routine gtm_ac_xback() is not found for collation sequence 1
-%GTM-E-COLLATIONUNDEF, Collation type 1 is not defined
+%YDB-E-COLLFNMISSING, Routine gtm_ac_xback() is not found for collation sequence 1
+%YDB-E-COLLATIONUNDEF, Collation type 1 is not defined
 ------------------------------------------------------------
 neither gtm_ac_xform_1 nor  gtm_ac_xform is present
-%GTM-E-COLLATIONUNDEF, Collation type 1 is not defined
+%YDB-E-COLLATIONUNDEF, Collation type 1 is not defined
 ------------------------------------------------------------
 Both gtm_ac_xform_1 and gtm_ac_xback_1 are present
 
@@ -35,7 +35,7 @@ Output will be in the reverse order of $order() output
 65536
 32768
 ================== $query() ====================================
-150373290,query1ma+6^fnlgstr,%GTM-E-MAXSTRLEN, Maximum string length exceeded
+150373290,query1ma+6^fnlgstr,%YDB-E-MAXSTRLEN, Maximum string length exceeded
 32778 AAA
 65546 BBB
 131082 CCC
@@ -59,6 +59,6 @@ Try with subscripts > 32767, which will give error
 GTM>
 
 GTM>
-%GTM-E-COLLARGLONG, Collation sequence 1 does not contain routines for long strings
+%YDB-E-COLLARGLONG, Collation sequence 1 does not contain routines for long strings
 
 GTM>

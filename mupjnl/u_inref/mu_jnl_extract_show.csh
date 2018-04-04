@@ -3,6 +3,9 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -44,10 +47,10 @@ if ($?test_extract) then
 	if (1 == $no_regions) then
 		cat badpath_a.outx
 	else
-		# A multi-region extract could print more than one GTM-E-FILENOTCREATE message, one per region
+		# A multi-region extract could print more than one YDB-E-FILENOTCREATE message, one per region
 		# depending on the parallelism chosen by test framework (env var "gtm_mupjnl_parallel"). Filter
 		# them out as they cause varying # of lines in the test output that is not easily captured in a reference file.
-		set filter1 = "%GTM-E-FILENOTCREATE, Journal extract file /bad/path/file-a.mjf_(AREG|BREG|CREG|DEFAULT) not created"
+		set filter1 = "%YDB-E-FILENOTCREATE, Journal extract file /bad/path/file-a.mjf_(AREG|BREG|CREG|DEFAULT) not created"
 		set filter2 = "%SYSTEM-E-ENO2, No such file or directory"
 		$grep -vE "$filter1|$filter2" badpath_a.outx
 	endif
@@ -115,10 +118,10 @@ if ($?test_extract) then
 	if (1 == $no_regions) then
 		cat badpath_b.outx
 	else
-		# A multi-region extract could print more than one GTM-E-FILENOTCREATE message, one per region
+		# A multi-region extract could print more than one YDB-E-FILENOTCREATE message, one per region
 		# depending on the parallelism chosen by test framework (env var "gtm_mupjnl_parallel"). Filter
 		# them out as they cause varying # of lines in the test output that is not easily captured in a reference file.
-		set filter1 = "%GTM-E-FILENOTCREATE, Journal extract file /bad/path/fileb.mjf_(AREG|BREG|CREG|DEFAULT) not created"
+		set filter1 = "%YDB-E-FILENOTCREATE, Journal extract file /bad/path/fileb.mjf_(AREG|BREG|CREG|DEFAULT) not created"
 		set filter2 = "%SYSTEM-E-ENO2, No such file or directory"
 		$grep -vE "$filter1|$filter2" badpath_b.outx
 	endif

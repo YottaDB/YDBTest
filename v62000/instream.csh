@@ -42,7 +42,7 @@
 # zsyslog		[estess]	Test for $ZSYSLOG() for GTM-7999.
 # gtm8015		[rog]		Add test of gtm_boolean and gtm_side_effects environment variable value handling and gtm_boolean VIEW/$VIEW() interaction
 # gtm7569		[rog]		Add test of MAXBTLEVEL from gvcst_put
-# gtm8047		[nars]		GTM-E-MEMORY errors during non-mandatory stringpool expansion result in no garbage collection
+# gtm8047		[nars]		YDB-E-MEMORY errors during non-mandatory stringpool expansion result in no garbage collection
 # gtm8065		[rp]		Check that JOB detects an undefined lvn
 # gtm8083		[nars]		TXTSRCMAT error inside trigger code + TP restarts does not cause SIG-11 anymore
 #					This also tests GTM-8085

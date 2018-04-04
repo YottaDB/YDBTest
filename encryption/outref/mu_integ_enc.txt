@@ -16,9 +16,9 @@ Test Scenario 1: Environment variable gtmcrypt_config not set.
 
 
 
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/a.dat. Environment variable gtmcrypt_config not set
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/b.dat. Environment variable gtmcrypt_config not set
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Environment variable gtmcrypt_config not set
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/a.dat. Environment variable gtmcrypt_config not set
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/b.dat. Environment variable gtmcrypt_config not set
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Environment variable gtmcrypt_config not set
 %GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/a.dat. Environment variable gtmcrypt_config not set
 %GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/b.dat. Environment variable gtmcrypt_config not set
 %GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Environment variable gtmcrypt_config not set
@@ -36,9 +36,9 @@ Test Scenario 2: Environment variable gtm_passwd set to bad password.
 
 
 
-##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/a.dat. .*
-##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/b.dat. .*
-##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
+##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/a.dat. .*
+##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/b.dat. .*
+##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
 ##TEST_AWK%GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/a.dat. .*
 ##TEST_AWK%GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/b.dat. .*
 ##TEST_AWK%GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
@@ -56,9 +56,9 @@ Test Scenario 3: Environment variable gtmcrypt_config points to non-existent fil
 
 
 
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/a.dat. Cannot stat configuration file: ./foobar.cfg. No such file or directory
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/b.dat. Cannot stat configuration file: ./foobar.cfg. No such file or directory
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Cannot stat configuration file: ./foobar.cfg. No such file or directory
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/a.dat. Cannot stat configuration file: ./foobar.cfg. No such file or directory
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/b.dat. Cannot stat configuration file: ./foobar.cfg. No such file or directory
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Cannot stat configuration file: ./foobar.cfg. No such file or directory
 %GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/a.dat. Cannot stat configuration file: ./foobar.cfg. No such file or directory
 %GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/b.dat. Cannot stat configuration file: ./foobar.cfg. No such file or directory
 %GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Cannot stat configuration file: ./foobar.cfg. No such file or directory

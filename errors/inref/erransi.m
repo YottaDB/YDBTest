@@ -1,7 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
-; All rights reserved.	     	  	     			;
+; Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -15,7 +15,7 @@ ansi ; Test that all ANSI standardized error messages do appear
  . Quit:ansi=34  ; Not assigned
  . Quit:ansi=37  ; Only execute this step interactively
  . For i=0:1 Do  Quit:x=""
- . . Xecute "Set x=$Text(M"_ansi_"+"_i_")" 
+ . . Xecute "Set x=$Text(M"_ansi_"+"_i_")"
  . . If i>0,$Extract(x,1)="M" Set x="" Quit
  . . Write !,x
  . . Quit

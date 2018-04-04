@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -12,7 +15,7 @@
 
 $gtm_tst/com/dbcreate.csh mumps
 $gtm_exe/mumps -run gtm7503
-$gtm_tst/com/check_error_exist.csh  gtm7503.mje 'GTM-E-HOSTCONFLICT'
+$gtm_tst/com/check_error_exist.csh  gtm7503.mje 'YDB-E-HOSTCONFLICT'
 echo "Renaming gtm7503.mjex to errout.txtx"
 \mv gtm7503.mjex errout.txtx
 $gtm_tst/com/dbcheck.csh

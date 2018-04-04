@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013, 2014 Fidelity Information Services, Inc	#
+# Copyright 2013, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -56,7 +59,7 @@ while (3 >= $cnt)
 		$kill9 $bkgrnd_pid
 		$MUPIP rundown -reg "*" >>&! mupip_rundown_$bkgrnd_pid.out
 		$MUPIP rundown -relinkctl >&! mupip_rundown_ctl_$bkgrnd_pid.outx
-		$gtm_tst/com/check_error_exist.csh ftokcontender_$cnt.out "GTM-E-DBFILERR" "GTM-E-SEMWT2LONG"
+		$gtm_tst/com/check_error_exist.csh ftokcontender_$cnt.out "YDB-E-DBFILERR" "YDB-E-SEMWT2LONG"
 	else
 		# For the indefinite wait ($gtm_db_startup_max_wait = -1), both the process will succeed eventually and hence at
 		# this point we won't have the background process alive for killing it.
@@ -115,7 +118,7 @@ while (3 >= $cnt)
 		$kill9 $bkgrnd_pid
 		$MUPIP rundown -reg "*" >>&! mupip_rundown_$bkgrnd_pid.out
 		$MUPIP rundown -relinkctl >&! mupip_rundown_ctl_$bkgrnd_pid.outx
-		$gtm_tst/com/check_error_exist.csh accsemcontender_$cnt.out "GTM-E-DBFILERR" "GTM-E-SEMWT2LONG"
+		$gtm_tst/com/check_error_exist.csh accsemcontender_$cnt.out "YDB-E-DBFILERR" "YDB-E-SEMWT2LONG"
 	else
 		# For the indefinite wait ($gtm_db_startup_max_wait = -1), both the process will succeed eventually and hence at
 		# this point we won't have the background process alive for killing it.

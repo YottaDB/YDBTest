@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -55,7 +58,7 @@ foreach proc_type ("SRCSRVR" "RCVSRVR" "UPDPROC" "UPDREAD" "UPDWRITE")
 	$gtm_tst/com/getoper.csh "$syslog_before" "$syslog_after" ${proc_type}_syslog.logx
 	$grep "${msg}\[.*\]:" ${proc_type}_syslog.logx >&! ${proc_type}.logx
 	if ( $status ) then
-		echo "GTM-E-ERROR: $msg is not present in the operator log"
+		echo "YDB-E-ERROR: $msg is not present in the operator log"
 	endif
 end
 $gtm_tst/com/dbcheck.csh -extract
