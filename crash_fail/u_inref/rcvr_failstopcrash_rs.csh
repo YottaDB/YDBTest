@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -69,10 +72,10 @@ if ( 0 == "$stopfailcrash_todo" ) then
 	$sec_shell "$sec_getenv; $gtm_tst/$tst/u_inref/receiver_fail.csh >&! receiver_fail.out"
 else if ( 1 == "$stopfailcrash_todo" ) then
 	$sec_shell "$sec_getenv; $gtm_tst/$tst/u_inref/receiver_stop.csh >&! receiver_stop.out"
-	$sec_shell "$sec_getenv; cd $SEC_SIDE ; mv RCVR_${start_time}.log RCVR_${start_time}.logx ; $grep -v GTM-F-FORCEDHALT RCVR_${start_time}.logx >&! RCVR_${start_time}.log"
+	$sec_shell "$sec_getenv; cd $SEC_SIDE ; mv RCVR_${start_time}.log RCVR_${start_time}.logx ; $grep -v YDB-F-FORCEDHALT RCVR_${start_time}.logx >&! RCVR_${start_time}.log"
 else if ( 2 == "$stopfailcrash_todo" ) then
 	$sec_shell "$sec_getenv; $gtm_tst/$tst/u_inref/updproc_fail.csh >&! updproc_fail.out"
-	$sec_shell "$sec_getenv; cd $SEC_SIDE ; mv RCVR_${start_time}.log.updproc RCVR_${start_time}.log.updprocx ; $grep -v GTM-F-FORCEDHALT RCVR_${start_time}.log.updprocx >&! RCVR_${start_time}.log.updproc"
+	$sec_shell "$sec_getenv; cd $SEC_SIDE ; mv RCVR_${start_time}.log.updproc RCVR_${start_time}.log.updprocx ; $grep -v YDB-F-FORCEDHALT RCVR_${start_time}.log.updprocx >&! RCVR_${start_time}.log.updproc"
 else
 	$sec_shell "$sec_getenv; $gtm_tst/com/receiver_crash.csh >&! receiver_crash.out"
 endif

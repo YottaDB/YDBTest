@@ -70,9 +70,9 @@ if !(("hp-ux" == "$gtm_test_osname") || ("aix" == "$gtm_test_osname")) then
 	# The test will create YDB_FATAL_* files in most cases but in some cases it might not. So filter that out.
 	mv -f YDB_FATAL* filter.ZSHOW_DMP >& mv.out
 
-	# Test that GTM-F-MEMORY error does show up somewhere (either in zshow dump file or in output)
+	# Test that YDB-F-MEMORY error does show up somewhere (either in zshow dump file or in output)
 	# Note that sometimes GT.M could end up with memory issues even while loading encryption libraries or so
-	# and therefore we might not always see GTM-F-MEMORY but we are more likely to see SYSTEM-E-ENO12. So check that.
+	# and therefore we might not always see YDB-F-MEMORY but we are more likely to see SYSTEM-E-ENO12. So check that.
 	# Also we have found some situations where loading the encryption library does not print the ENO12 error. In
 	# that case it prints a "Cannot allocate memory" error so include that in the search.
 	# Update: In some cases we do not see either of the above two search strings. But we do see 150373340, in $ZSTATUS.

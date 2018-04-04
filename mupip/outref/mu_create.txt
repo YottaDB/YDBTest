@@ -26,7 +26,7 @@ MUPIP CREATE
 %YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/create2.dat
 : EDC5117I File exists. (errno2=0x05620063)
 ##ALLOW_OUTPUT HOST_ALL
-%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 PASS from fill1^myfill("set")
 PASS from fill1^myfill("ver")
 ##SOURCE_PATH##/mupip

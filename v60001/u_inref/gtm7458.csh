@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2012, 2013 Fidelity Information Services, Inc	#
+# Copyright 2012, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -70,7 +73,7 @@ echo "=====> AFTER MUPIP STOP $receivpid <=====" >>&! $psfile
 $ps >>&! $psfile
 echo "Time after MUPIP STOP Receiver Server - GTM_TEST_DEBUGINFO `date`"
 $MSR RUN INST2 "set msr_dont_trace; $msr_err_chk RCVR_${time_msr}.log FORCEDHALT"
-$msr_err_chk $msr_execute_last_out GTM-F-FORCEDHALT
+$msr_err_chk $msr_execute_last_out YDB-F-FORCEDHALT
 
 $MSR RUN INST2 '$MUPIP replic -editinstance -show mumps.repl' >&! receiver_inst_show_after.txt	# For aid in debugging
 

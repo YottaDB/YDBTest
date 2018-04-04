@@ -20,7 +20,7 @@ setenv TERM xterm
 # Process does not stuck up after receiving TERM signal while running in background.
 expect -f $gtm_tst/$tst/u_inref/gtm4661a.exp | tr '\r' ' ' >&! gtm4661a.expected
 
-$gtm_tst/com/grepfile.csh 'GTM-F-FORCEDHALT' gtm4661a.expected 1
+$gtm_tst/com/grepfile.csh 'YDB-F-FORCEDHALT' gtm4661a.expected 1
 @ proc_pid1 = `$gtm_exe/mumps -run %XCMD 'write ^myjob'`
 # if process did not die after 2 min after receiving TERM signal, it indicates that the process is stuck up.
 $gtm_tst/com/wait_for_proc_to_die.csh $proc_pid1 120

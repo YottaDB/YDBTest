@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2013 Fidelity Information Services, Inc	;
+; Copyright 2013 Fidelity Information Services, Inc		;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -12,7 +15,7 @@
 ; the correct binary. This test abuses the PATH to feed MUPIP a bogus IPCS script that it
 ; creates. The bogus script uses SHMID and KEY values greater than 128 bytes, the maximum
 ; length of the parsed value. Currently V990 PRO may or may not SIG-11. DBG hits this assert:
-; %GTM-F-ASSERT, Assert failed in /usr/library/V990/inc/gtm_malloc_src.h line 946 for expression (0 == memcmp(trailerMarker, markerChar, SIZEOF(markerChar)))
+; %YDB-F-ASSERT, Assert failed in /usr/library/V990/inc/gtm_malloc_src.h line 946 for expression (0 == memcmp(trailerMarker, markerChar, SIZEOF(markerChar)))
 ; This test should not create a core file
 gtm7616
 	do text^dollartext("ipcs^gtm7616","ipcs")

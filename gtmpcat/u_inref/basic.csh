@@ -232,7 +232,7 @@ EOF
 	rm -f repl2ndary/${updproccore} >& /dev/null
     endif
     #
-    # Rename the replication logs so they aren't pulled into the test log (we expext GTM-F-KILLBYSIG* errors in logs along with cores).
+    # Rename the replication logs so they aren't pulled into the test log (we expext YDB-F-KILLBYSIG* errors in logs along with cores).
     # If the files don't exist due to other errors, don't add to the carnage.
     #
     mv repl.src.log repl.src.log-${pcatver}.txt >& /dev/null

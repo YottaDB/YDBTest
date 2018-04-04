@@ -113,7 +113,7 @@ if !($?test_align) then
 			set align = `date | $tst_awk '{srand () ; print 2^(12 + int(rand() * 7))}'`
 			breaksw
 		case "HOST_AIX_RS6000":
-			# On pfloyd, we have seen GTM-F-MEMORY failures in source server due to huge alignsize
+			# On pfloyd, we have seen YDB-F-MEMORY failures in source server due to huge alignsize
 			# So restrict it to 64K there while keep the max at 512K on other AIX boxes.
 			if ("$shorthost" == "pfloyd") then
 				# Pick a power of 2 between (inclusive) 2^[12, 16] -- [4096, 65536]

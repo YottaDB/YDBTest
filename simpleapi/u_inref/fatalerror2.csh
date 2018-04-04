@@ -32,7 +32,7 @@ foreach file (fatalerror.c)
 		continue
 	endif
 
-	echo "# Set vmemoryuse limit to 200Mb; Eventually triggers GTM-F-MEMORY (and in turn FATALERROR2 error in syslog)"
+	echo "# Set vmemoryuse limit to 200Mb; Eventually triggers YDB-F-MEMORY (and in turn FATALERROR2 error in syslog)"
 	limit vmemoryuse 200000
 	echo "# unsetenv gtmdbglvl (needed for FATALERROR2)"
 	unsetenv gtmdbglvl

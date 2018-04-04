@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -32,10 +35,10 @@ if !($?gtm_test_replay) then
 endif
 if ($mustop_sigquit_todo) then
 	set mustop_sigquit = "MU_STOP"
-	set expected_error = "GTM-F-FORCEDHALT"
+	set expected_error = "YDB-F-FORCEDHALT"
 else
 	set mustop_sigquit = "SIGQUIT"
-	set expected_error = "GTM-F-KILLBYSIGUINFO"
+	set expected_error = "YDB-F-KILLBYSIGUINFO"
 endif
 # For this test buffer size is forced to be 16 MB
 setenv tst_buffsize 16777216

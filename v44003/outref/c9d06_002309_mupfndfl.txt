@@ -68,7 +68,7 @@ $MUPIP create
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/dir2/a.dat created
 %YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/dir1/mumps.dat
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 $MUPIP set -journal=enable,on,before -reg "*"
 %YDB-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
@@ -147,7 +147,7 @@ $MUPIP create
 %YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/dir2/a.dat
 %SYSTEM-E-ENO17, File exists
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/dir1/mumps.dat created
-%GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 $MUPIP set -journal=enable,on,before -reg "*" > & mupip_set_jnl.out
 sort -f mupip_set_jnl.out
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir1/mumps.mjl created for region DEFAULT with BEFORE_IMAGES

@@ -1,7 +1,10 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013, 2014 Fidelity Information Services, Inc	#
+# Copyright 2013, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -34,7 +37,7 @@ else
 	# $kill -15 case
 	$gtm_tst/$tst/u_inref/source_stop.csh >&! source_stop.out
 	mv SRC_${start_time}.log SRC_${start_time}.logx
-	$grep -v "GTM-F-FORCEDHALT" SRC_${start_time}.logx >&! SRC_${start_time}.log
+	$grep -v "YDB-F-FORCEDHALT" SRC_${start_time}.logx >&! SRC_${start_time}.log
 endif
 
 # Run argumentless MUPIP RUNDOWN after the source server was kill -9ed (to test GTM-8156)
