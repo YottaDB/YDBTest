@@ -112,7 +112,7 @@ foreach m_test ( test?.m test??.m )
 	else if ($test_name == "test8") then
 		setenv gtm_test_fake_enospc $fake_enospc
 		unsetenv GTMCI
-		$gtm_tst/com/check_error_exist.csh test8.mje "GTM-F-FORCEDHALT" | uniq
+		$gtm_tst/com/check_error_exist.csh test8.mje "YDB-F-FORCEDHALT" | uniq
 		\mv test8.mjex test8.job.logx
 	else if ($test_name == "test11") then
 		cp test11.outx test11.outx.bak

@@ -1,4 +1,15 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 #
 # GTM-7353 Database integrity errors in v51000/C9E12002698 test
 #
@@ -38,7 +49,7 @@
 # Process A then proceeds to validate INDEX1 and makes use of the indexmod optimization, since no M-kill or REORG operation has
 # touched the block. In reality, an index record that was present in that block earlier in the transaction no longer exists.
 # Process A then proceeds to update block DATA1 (even though it is now free) triggering the following assert in debug:
-# %GTM-F-ASSERT, Assert failed in /usr/library/V55000/src/bml_status_check.c line 75
+# %YDB-F-ASSERT, Assert failed in /usr/library/V55000/src/bml_status_check.c line 75
 #		for expression ((gds_t_acquired == cs->mode) || (BLK_BUSY == bml_status))
 ###
 

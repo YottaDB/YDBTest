@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -88,7 +91,7 @@ end
 $MSR STOPRCV INST1 INST2
 $MUPIP rundown >& rundown_final.logx
 foreach file ($srclogfile12 impjob_imptp1.mje*)
-    sed 's/GTM-F-FORCEDHALT/FORCEDHALT/' $file > ${file}.tmp
+    sed 's/YDB-F-FORCEDHALT/FORCEDHALT/' $file > ${file}.tmp
     mv ${file}.tmp $file
 end
 

@@ -56,6 +56,6 @@ $gtm_tst/com/dbcheck.csh -extract
 cat showbacklog.log >>&! $tst_general_dir/$timefile
 ls -l *.dat *.mjl  >>&! $tst_general_dir/$timefile
 $grep "%YDB-E-" $tst_general_dir/$timefile
-$grep "%GTM-F-" $tst_general_dir/$timefile
+$grep "%YDB-F-" $tst_general_dir/$timefile
 echo "onlnbkup_src_b test ends."
 echo "Please look at $timefile for timing information."

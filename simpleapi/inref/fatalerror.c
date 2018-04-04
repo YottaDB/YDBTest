@@ -27,7 +27,7 @@ int main()
         int	status;
 
 	printf(" ### Test FATALERROR1 error ###\n"); fflush(stdout);
-	printf(" # This test triggers a GTM-F-MEMORY error which then sends the FATALERROR1 message to syslog #\n"); fflush(stdout);
+	printf(" # This test triggers a YDB-F-MEMORY error which then sends the FATALERROR1 message to syslog #\n"); fflush(stdout);
         tpfn = &gvnset;
         status = ydb_tp_s(tpfn, NULL, NULL, 0, NULL);
         ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -49,7 +49,7 @@ int gvnset()
         subs.len_used = 0;
         subs.len_alloc = sizeof(subsbuff);
 
-	printf(" # Set subscripts indefinitely to trigger a GTM-F-MEMORY error #\n"); fflush(stdout);
+	printf(" # Set subscripts indefinitely to trigger a YDB-F-MEMORY error #\n"); fflush(stdout);
         for (i = 0; ; i++)
         {
                 subs.len_used = sprintf(subs.buf_addr, "%d", i);
