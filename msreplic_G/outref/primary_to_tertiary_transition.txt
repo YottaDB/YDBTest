@@ -54,7 +54,7 @@ Error MUNOACTION seen in ##TEST_PATH##/rollback_inst1inst3.out as expected:
 ==Executing MULTISITE_REPLIC 'ACTIVATE INST2 INST1 RP'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating ACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE1]
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST2 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost2.glo "*" >&! rollback_inst1inst2.out'==
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Rollback successful
 lost transaction file empty
 ==Executing MULTISITE_REPLIC 'STOPSRC INST2 INST1'==
 ## - Attempt to start replication from INST3 to INST1:
@@ -108,9 +108,9 @@ Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/ins
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST3 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost3.glo "*" >&! rollback_fetchresync_1.out'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 $grep -E "RLBKJNSEQ|JNLSUCCESS" rollback_fetchresync_1.out'==
 %YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 2 [0x0000000000000002]
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 lost transaction file empty
 ==Executing MULTISITE_REPLIC 'STARTRCV INST3 INST1'==
 ==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST3'==

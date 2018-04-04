@@ -24,9 +24,9 @@
    m. >mupip journal -recover -back "*"
 	%YDB-I-MUJNLSTAT, Initial processing started at Tue Jun 24 10:49:05 2003
 	%YDB-I-FILEDEL, File $testpath/mumps.mjl_new successfully deleted
-	%GTM-S-JNLSUCCESS, Show successful
-	%GTM-S-JNLSUCCESS, Verify successful
-	%GTM-S-JNLSUCCESS, Recover successful
+	%YDB-S-JNLSUCCESS, Show successful
+	%YDB-S-JNLSUCCESS, Verify successful
+	%YDB-S-JNLSUCCESS, Recover successful
 	%YDB-I-MUJNLSTAT, End processing at Tue Jun 24 10:49:05 2003
 
 # PART B
@@ -47,7 +47,7 @@
    m. >mupip journal -recover -back "*"
         %YDB-I-MUJNLSTAT, Initial processing started at $timestamp         
         %YDB-I-FILERENAME, File $testpath/mumps.mjl_new is renamed to $testpath/mumps.mjl
-        %GTM-S-JNLSUCCESS, Show successful
-        %GTM-S-JNLSUCCESS, Verify successful
-        %GTM-S-JNLSUCCESS, Recover successful
+        %YDB-S-JNLSUCCESS, Show successful
+        %YDB-S-JNLSUCCESS, Verify successful
+        %YDB-S-JNLSUCCESS, Recover successful
         %YDB-I-MUJNLSTAT, End processing at $timestamp 

@@ -37,8 +37,8 @@ GTM>
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file ext1b.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 unset echo
 #Number of records of type (in the order of appearance):
@@ -59,8 +59,8 @@ EOF	1
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file ext2b.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 unset echo
 #Number of records of type (in the order of appearance):
@@ -154,10 +154,10 @@ PID        NODE         USER     TERM JPV_TIME
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps2.mjl_##TIMESTAMP## is renamed to ##TEST_PATH##/rolled_bak_mumps2.mjl_##TIMESTAMP##
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #Number of records of type (in the order of appearance):
 PFIN	1
@@ -191,8 +191,8 @@ $MUPIP journal -extract=ext1.mjf -detail -forward mumps1.mjl  -fences=none
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file ext1.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #Number of records of type (in the order of appearance):
 PINI	1
@@ -202,8 +202,8 @@ $MUPIP journal -extract=ext2.mjf -detail -forward *mumps2.mjl_*  -fences=none
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file ext2.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #Number of records of type (in the order of appearance):
 PINI	2

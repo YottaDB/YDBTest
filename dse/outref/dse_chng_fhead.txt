@@ -273,9 +273,9 @@ Set gtmgbldir and retry journal recover
 ##FILTERED##%YDB-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mupip rundown
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
@@ -317,9 +317,9 @@ Enable journaling
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 Attempt a journal backward recovery
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
   Recover interrupted          FALSE        INTRPT resolve time              0
 Set -interrupted_recov=FALSE
@@ -330,9 +330,9 @@ Region	DEFAULT
   Recover interrupted          FALSE        INTRPT resolve time              0
 Retry backward journal recovery, after setting interrupted_recov=FALSE
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##ALLOW_OUTPUT  JNL_NOBEFORE
 ##SOURCE_PATH##/mupip

@@ -50,17 +50,17 @@ check the journal files
 check -show=header time
 ##SUSPEND_OUTPUT  REPLIC
 Backward recovery ...
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##SUSPEND_OUTPUT  NON_REPLIC
 ##ALLOW_OUTPUT  REPLIC
 Rollback on side A ...
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 Rollback on side B ...
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 Verifying data ...
 
 GTM>
@@ -68,7 +68,7 @@ VERIFICATION PASSED
 
 GTM>
 Forward recovery ...
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##ALLOW_OUTPUT  NON_REPLIC
 Verifying data ...
 
@@ -78,7 +78,7 @@ VERIFICATION PASSED
 GTM>
 ##SUSPEND_OUTPUT  REPLIC
 Forward recovery ...
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Recover successful
 Verifying data ...
 
 GTM>

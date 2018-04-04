@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -264,7 +267,7 @@ if ($status) then
 	exit 1
 endif
 
-$grep -q "%GTM-S-JNLSUCCESS, Recover successful" mupip_journal_recover.out
+$grep -q "%YDB-S-JNLSUCCESS, Recover successful" mupip_journal_recover.out
 if ($status) then
 	echo "TEST-E-FAIL, MUPIP JOURNAL -RECOVER failed. See mupip_journal_recover.out for details"
 	exit 1

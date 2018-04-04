@@ -69,7 +69,7 @@ An abnormal termination will damage the database during the operation !!
 %YDB-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
 %YDB-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
 %YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
-%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgrade to GT.M ##MACHTYPE##
+%YDB-S-MUPGRDSUCC, Database file mumps.dat successfully upgrade to GT.M ##MACHTYPE##
 ############## DOWNGRADE #################
  Try to downgrade
 should issue DBRDONLY error
@@ -92,7 +92,7 @@ An abnormal termination will damage the database during the operation !!
 %YDB-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
 %YDB-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
 %YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
-%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V4
+%YDB-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V4
 run db certification phases and do a mupip upgrade on the downgraded db.All steps should pass
 
 
@@ -123,7 +123,7 @@ An abnormal termination will damage the database during the operation !!
 %YDB-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
 %YDB-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
 %YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
-%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgrade to GT.M ##MACHTYPE##
+%YDB-S-MUPGRDSUCC, Database file mumps.dat successfully upgrade to GT.M ##MACHTYPE##
 All of the following commands from now on should give DBRDONLY error
 ===== version =======
 MUPIP SET -VERSION=V6 -reg DEFAULT

@@ -88,13 +88,13 @@ $gtm_tst/com/mupip_rollback.csh -resync=10000 -lost=lost.glo *
 ##SUSPEND_OUTPUT  NON_REPLIC
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl_##TIMESTAMP## is renamed to ##TEST_PATH##/rolled_bak_mumps.mjl_##TIMESTAMP##
 ##ALLOW_OUTPUT  NON_REPLIC
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##SUSPEND_OUTPUT  REPLIC
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##SUSPEND_OUTPUT  NON_REPLIC
 ##ALLOW_OUTPUT  REPLIC
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##ALLOW_OUTPUT  NON_REPLIC
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SUSPEND_OUTPUT  NON_REPLIC
@@ -111,8 +111,8 @@ $gtm_tst/com/mupip_rollback.csh -resync=10000 -lost=lost.glo *
 %YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 10000 [0x0000000000002710]
 ##FILTERED##%YDB-I-FILERENAME, File ##REMOTE_TEST_PATH##/mumps.mjl_##TIMESTAMP## is renamed to ##REMOTE_TEST_PATH##/rolled_bak_mumps.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-FILERENAME, File ##REMOTE_TEST_PATH##/mumps.mjl_##TIMESTAMP## is renamed to ##REMOTE_TEST_PATH##/rolled_bak_mumps.mjl_##TIMESTAMP##
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 DATABASE EXTRACT PASSED

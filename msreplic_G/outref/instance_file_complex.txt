@@ -438,9 +438,9 @@ No diff on INST3 between instancefile_5.out instancefile_6.out
 ==========================================================
 	--> No diff expected.
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST3 $gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=fetch13.glo "*" >& rollback13.log'==
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 #  	--> INST1 should rollback to 70 (i.e. fetch13.glo should have seqno's 71-100).
 05 71 ^GBL("INSTANCE1",71)="71"
 05 72 ^GBL("INSTANCE1",72)="72"
@@ -576,9 +576,9 @@ Diffing instancefile_6.out and instancefile_7.out on INST3
 #- Step 3:
 ==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/mupip_rollback.csh -verbose -losttrans=lost1.glo "*" >& rollback3.log'==
 ==Executing MULTISITE_REPLIC 'RUN INST3 $grep JNLSUCCESS rollback3.log'==
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 #  	--> There should not be any rollback (i.e. lost1.glo should be empty)
 ==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/analyze_jnl_extract.csh lost1.glo 0 0'==
 lost transaction file empty
@@ -622,9 +622,9 @@ Diffing instancefile_7.out and instancefile_8.out on INST3
 ==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST2 RP'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST3 $gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=fetch23.glo "*" >& rollback23.log'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 $grep JNLSUCCESS rollback23.log'==
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 #  	--> INST2 should rollback to 70 (i.e. fetch23.glo should have seqno's 71-80).
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/analyze_jnl_extract.csh fetch23.glo 71 80'==
 05 71 ^GBL("INSTANCE1",71)="71"
@@ -970,9 +970,9 @@ No diff on INST3 between instancefile_9.out instancefile_10.out
 #- Step 4:
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/mupip_rollback.csh -verbose -losttrans=lost2.glo "*" >& rollback2.log'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 $grep JNLSUCCESS rollback2.log'==
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 # 	--> There should not be any rollback (i.e. lost2.glo should be empty)
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/analyze_jnl_extract.csh lost2.glo 0 0'==
 lost transaction file empty
@@ -1105,9 +1105,9 @@ No diff on INST3 between instancefile_11.out instancefile_12.out
 	           <seqno=121, name=INSTANCE3, cycle=2>
 	           <seqno=141, name=INSTANCE2, cycle=1>
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST2 $gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=fetch12.glo "*" >& rollback12.log'==
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 #  	--> INST1 should not do any rollback, i.e. there should be no lost transactions (fetch12.glo should be empty).
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/analyze_jnl_extract.csh fetch12.glo 0 0'==
 lost transaction file empty

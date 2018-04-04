@@ -145,7 +145,7 @@ if ("$secondary_rollback" != "$resyncno") then
 	echo "Check testnumbers.out and secondary_rollback.out"
 	exit 1
 endif
-$grep GTM-S-JNLSUCCESS secondary_rollback.out
+$grep YDB-S-JNLSUCCESS secondary_rollback.out
 
 cat << COMMENT
 

@@ -183,8 +183,8 @@ Verification PASS
 ==Executing MULTISITE_REPLIC 'RUN INST2 rm -f *.dat*; ##SOURCE_PATH##/mupip create >& mupip_create2.out'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP set -journal="enable,off,nobefore" -reg "*" >& jnlon2.out'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP journal -recover -forward -verbose -fence=none  "*" >& forw_recover2.log; set stat1=$status; $grep successful forw_recover2.log'==
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Recover successful
 Doing database extract diff of INST1 and INST2 after forward recovery on INST2
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/RF_EXTR.csh INST1 INST2'==
 DATABASE EXTRACT PASSED
@@ -221,9 +221,9 @@ Error MUNOACTION seen in forw_recover1.log as expected:
 ##SUSPEND_OUTPUT JNL_NOBEFORE
 =>INST1 : Restore db and journal files (from save2) to test backward recovery
 ##SOURCE_PATH##/mupip journal -recover -backward -verbose '*' -since=0 0:0:1
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 =>Extact from database after backward recovery...
 =>diff origdata.glo backglo.glo (db after original set of updates with db after backward recovery)
 No diff found (as expected)

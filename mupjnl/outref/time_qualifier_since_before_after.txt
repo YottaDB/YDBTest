@@ -12,8 +12,8 @@ mumps.dat
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=total.mjf -forward mumps.mjl,mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 %YDB-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 %YDB-I-FILECREATE, Journal extract file total.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 #Globals set (in the order of appearance):
 ^A	10
@@ -27,8 +27,8 @@ unset echo
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=after1.mjf -after=.* -forward mumps.mjl,mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 %YDB-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 %YDB-I-FILECREATE, Journal extract file after1.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 #Globals set (in the order of appearance):
 ^C	10
@@ -38,8 +38,8 @@ unset echo
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=after2.mjf -after=.* -before=.* -forward mumps.mjl,mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 %YDB-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 %YDB-I-FILECREATE, Journal extract file after2.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 #Globals set (in the order of appearance):
 ^C	10
@@ -47,8 +47,8 @@ unset echo
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=after3.mjf -after=.* -forward mumps.mjl,mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 %YDB-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 %YDB-I-FILECREATE, Journal extract file after3.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=before1_err.mjf -before=.* -forward mumps.mjl,mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 %YDB-E-INVQUALTIME, Invalid time qualifier value.  Specify as BEFORE=delta_or_absolute_time.
@@ -62,13 +62,13 @@ unset echo
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=before2a_err.mjf -before=.* -backward mumps.mjl,mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 %YDB-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 %YDB-I-FILENOTCREATE, Journal extract file before2a_err.mjf not created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=before3.mjf -before=.* -forward mumps.mjl,mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 %YDB-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 %YDB-I-FILECREATE, Journal extract file before3.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 #Globals set (in the order of appearance):
 ^A	10
@@ -81,8 +81,8 @@ unset echo
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=since1.mjf -since=.* -before=.* -backward mumps.mjl
 %YDB-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 %YDB-I-FILECREATE, Journal extract file since1.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 #Globals set (in the order of appearance):
 ^A	10
@@ -92,8 +92,8 @@ unset echo
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=since2.mjf -since=.* -before=.* -backward mumps.mjl
 %YDB-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 %YDB-I-FILECREATE, Journal extract file since2.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 #Globals set (in the order of appearance):
 ^A	10
@@ -101,8 +101,8 @@ unset echo
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=since3.mjf -since=.* -before=.* -backward mumps.mjl
 %YDB-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 %YDB-I-FILECREATE, Journal extract file since3.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 #Globals set (in the order of appearance):
 ^A	10
@@ -132,8 +132,8 @@ unset echo
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=since5.mjf -since=.* -before=.* -backward mumps.mjl
 %YDB-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 %YDB-I-FILECREATE, Journal extract file since5.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 unset echo
 #Globals set (in the order of appearance):
 ^A	10

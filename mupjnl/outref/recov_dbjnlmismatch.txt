@@ -58,8 +58,8 @@ mupip journal -recover -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Journal state  OFF (expected)
   Journal State                         OFF  Journal Before imaging        TRUE
@@ -70,8 +70,8 @@ Verify recover.mjl is untouched
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/recover.mjf created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 --------------------------------------------------------------
 Jouranl State : DISABLED and with * option
@@ -100,9 +100,9 @@ mupip set -journal=enable,on,before,file=newa.mjl -file mumps.dat
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 mupip journal -recover -back "*"
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 --------------------------------------------------------------
 Journal State : ON and with nobefore image
@@ -151,8 +151,8 @@ mupip journal -recover -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Journal State  OFF (expected)
   Journal State                         OFF  Journal Before imaging       FALSE
@@ -173,8 +173,8 @@ mupip journal -recover -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Journal State  OFF (expected)
   Journal State                         OFF  Journal Before imaging        TRUE
@@ -196,8 +196,8 @@ mupip journal -recover -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Journal State : DISABLED (expected)
   Journal State                    DISABLED
@@ -226,8 +226,8 @@ mupip journal -recover -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Journal State  OFF (expected)
   Journal State                         OFF  Journal Before imaging       FALSE
@@ -260,9 +260,9 @@ mupip set -journal=disable -reg DEFAULT
 mupip journal -recover -back "*"
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-W-NOTALLJNLEN, Journaling disabled/off for one or more regions
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 --------------------------------------------------------------
 mupip set -journal=enable,off,before -reg AREG
@@ -270,9 +270,9 @@ mupip set -journal=enable,off,before -reg AREG
 mupip journal -recover -back "*"
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-W-NOTALLJNLEN, Journaling disabled/off for one or more regions
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 --------------------------------------------------------------
 mupip set -journal=enable,on,before,file=a_new.mjl -reg AREG

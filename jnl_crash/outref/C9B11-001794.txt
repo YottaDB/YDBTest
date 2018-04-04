@@ -20,9 +20,9 @@ Shared Memory is existing
 %YDB-I-SHMREMOVED, Removed Shared Memory id XXXX corresponding to file ##TEST_PATH##/mumps.dat
 Recover...
 ##SOURCE_PATH##/mupip journal -recover -backward *
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -40,9 +40,9 @@ Kill -9 <pid> : ipcrm -s <sem_id>
 Shared Memory is existing
 Recover...
 ##SOURCE_PATH##/mupip journal -recover -backward *
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

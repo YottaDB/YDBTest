@@ -448,7 +448,7 @@ if (! $forward_only_specified) then
 		set pattern = "FILECREATE|MUJNLSTAT|FILERENAME|JNLSTATE|^SHOW output|MUJNLPREVGEN|MUINFO|CHNGTPRSLVTM"
 		# By default backward rollback runs with -verify, but forward rollback runs with -noverify.
 		# Therefore filter out "Verify successful" message from both logs.
-		set pattern = "$pattern|GTM-S-JNLSUCCESS, Verify successful"
+		set pattern = "$pattern|YDB-S-JNLSUCCESS, Verify successful"
 		if ($do_fetchresync) then
 			# If -fetchresync is used in backward rollback, then we need to filter associated logs with establishing the
 			#	connection on a remote host:port since forward rollback does not support it. The set of lines

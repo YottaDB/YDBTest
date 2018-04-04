@@ -438,9 +438,9 @@ Error: OFFSET [0x000007D3] should be a multiple of Size [4]
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo "*" >&! rollback_losttrans.out'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 $grep -E "RLBKJNSEQ|JNLSUCCESS" rollback_losttrans.out'==
 %YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 126 [0x000000000000007E]
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Verify successful
-%GTM-S-JNLSUCCESS, Rollback successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
 Offset 3184 [0x00000C70] : Old Value = 121 [0x79] : New Value = 337 [0x151] : Size = 8 [0x08]
 ==========================================================
 Diffing instancefile_2.out and instancefile_3.out on INST1

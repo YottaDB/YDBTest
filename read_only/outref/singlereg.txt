@@ -1607,8 +1607,8 @@ mupip journal -extract=mumps.1 -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file mumps.1 created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
@@ -1623,8 +1623,8 @@ mupip journal -extract=mumps.1 -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file mumps.1 created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
@@ -1639,8 +1639,8 @@ mupip journal -extract=mumps.1 -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file mumps.1 created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
@@ -1655,8 +1655,8 @@ mupip journal -extract=mumps.1 -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %YDB-I-FILECREATE, Journal extract file mumps.1 created
-%GTM-S-JNLSUCCESS, Extract successful
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
@@ -1682,8 +1682,8 @@ mupip journal -recover -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
@@ -1698,8 +1698,8 @@ mupip journal -recover -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Show successful
-%GTM-S-JNLSUCCESS, Recover successful
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
@@ -1780,14 +1780,14 @@ OK.
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-jlsh1.out:%GTM-S-JNLSUCCESS, Show successful
-jlsh1.out:%GTM-S-JNLSUCCESS, Verify successful
-jlsh2.out:%GTM-S-JNLSUCCESS, Show successful
-jlsh2.out:%GTM-S-JNLSUCCESS, Verify successful
-jlsh3.out:%GTM-S-JNLSUCCESS, Show successful
-jlsh3.out:%GTM-S-JNLSUCCESS, Verify successful
-jlsh4.out:%GTM-S-JNLSUCCESS, Show successful
-jlsh4.out:%GTM-S-JNLSUCCESS, Verify successful
+jlsh1.out:%YDB-S-JNLSUCCESS, Show successful
+jlsh1.out:%YDB-S-JNLSUCCESS, Verify successful
+jlsh2.out:%YDB-S-JNLSUCCESS, Show successful
+jlsh2.out:%YDB-S-JNLSUCCESS, Verify successful
+jlsh3.out:%YDB-S-JNLSUCCESS, Show successful
+jlsh3.out:%YDB-S-JNLSUCCESS, Verify successful
+jlsh4.out:%YDB-S-JNLSUCCESS, Show successful
+jlsh4.out:%YDB-S-JNLSUCCESS, Verify successful
 
 *** TSTJLVERI.CSH ***
 
@@ -1805,7 +1805,7 @@ mupip journal -verify -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
@@ -1819,7 +1819,7 @@ mupip journal -verify -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
@@ -1833,7 +1833,7 @@ mupip journal -verify -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
@@ -1847,7 +1847,7 @@ mupip journal -verify -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
