@@ -22,12 +22,12 @@
    j. when it stops at the just set breakpoint, exit (quit) from the debugger
    l. check (ls mumps.mjl*) that there are two journal files: mumps.mjl and mumps.mjl_new
    m. >mupip journal -recover -back "*"
-	%GTM-I-MUJNLSTAT, Initial processing started at Tue Jun 24 10:49:05 2003
-	%GTM-I-FILEDEL, File $testpath/mumps.mjl_new successfully deleted
+	%YDB-I-MUJNLSTAT, Initial processing started at Tue Jun 24 10:49:05 2003
+	%YDB-I-FILEDEL, File $testpath/mumps.mjl_new successfully deleted
 	%GTM-S-JNLSUCCESS, Show successful
 	%GTM-S-JNLSUCCESS, Verify successful
 	%GTM-S-JNLSUCCESS, Recover successful
-	%GTM-I-MUJNLSTAT, End processing at Tue Jun 24 10:49:05 2003
+	%YDB-I-MUJNLSTAT, End processing at Tue Jun 24 10:49:05 2003
 
 # PART B
 #  a0. rm/delete mumps.*
@@ -45,9 +45,9 @@
    j. when it stops at the just set breakpoint, exit (quit) from the debugger
    l. check (ls mumps.mjl*) that there are two journal files: mumps.mjl_$timestamp and mumps.mjl_new
    m. >mupip journal -recover -back "*"
-        %GTM-I-MUJNLSTAT, Initial processing started at $timestamp         
-        %GTM-I-FILERENAME, File $testpath/mumps.mjl_new is renamed to $testpath/mumps.mjl
+        %YDB-I-MUJNLSTAT, Initial processing started at $timestamp         
+        %YDB-I-FILERENAME, File $testpath/mumps.mjl_new is renamed to $testpath/mumps.mjl
         %GTM-S-JNLSUCCESS, Show successful
         %GTM-S-JNLSUCCESS, Verify successful
         %GTM-S-JNLSUCCESS, Recover successful
-        %GTM-I-MUJNLSTAT, End processing at $timestamp 
+        %YDB-I-MUJNLSTAT, End processing at $timestamp 

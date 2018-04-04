@@ -17,7 +17,7 @@ DZSPLIT1 ; ; ; test from getfail IIII
 ;
 ; Produced the following error message prior to V3.1-6a:
 ;  %YDB-E-GVGETFAIL, Global variable retrieval failed. Failure code: IIII,
-;  -GTM-I-GVIS, Global variable : ^A0000002
+;  -YDB-I-GVIS, Global variable : ^A0000002
 ;  At M source location +22^DZSPLIT1
 ;
 ;

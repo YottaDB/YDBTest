@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2009, 2013 Fidelity Information Services, Inc	#
+# Copyright 2009, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -52,7 +55,7 @@ echo "---------------------------------------------"
 echo "BYTESTREAM BACKUP for mumps.dat --> mumps.bak"
 echo '$MUPIP backup -bytestream DEFAULT mumps.bak'
 # Since backup renames and creates fresh journal files, redirect the output as otherwise
-# GTM-I-JNLCREATE output will change depending on the random behaviour of tst_jnl_str (BEFORE or NOBEFORE)
+# YDB-I-JNLCREATE output will change depending on the random behaviour of tst_jnl_str (BEFORE or NOBEFORE)
 $MUPIP backup -bytestream DEFAULT mumps.bak >&! bytebak.out
 echo "---------------------------------------------"
 $NL
@@ -61,7 +64,7 @@ echo "---------------------------------------------"
 echo "COMPREHENSIVE BACKUP for mumps.dat --> mumps.co"
 echo '$MUPIP backup -c DEFAULT mumps.co'
 # Since backup renames and creates fresh journal files, redirect the output as otherwise
-# GTM-I-JNLCREATE output will change depending on the random behaviour of tst_jnl_str (BEFORE or NOBEFORE)
+# YDB-I-JNLCREATE output will change depending on the random behaviour of tst_jnl_str (BEFORE or NOBEFORE)
 $MUPIP backup -c DEFAULT mumps.co >&! comprebak.out
 echo "---------------------------------------------"
 $NL

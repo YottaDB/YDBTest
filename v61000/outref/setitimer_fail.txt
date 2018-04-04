@@ -5,7 +5,7 @@ Case 1. Generate a SETITIMERFAILED error from direct mode.
 Error SETITIMERFAILED seen in mumps-dir.out as expected:
 ##TEST_AWK%GTM-F-SETITIMERFAILED, A setitimer\(\) call returned an error status of [0-9]*
 ----------
-##TEST_AWK.*%GTM-F-SETITIMERFAILED, A setitimer\(\) call returned an error status of [0-9]*, %GTM-I-TEXT, Timer: ITIMER_REAL; timer_active: 0; sys_timer.it_value: \[tv_sec: 0; tv_usec: 1[0-1]0000\]; sys_timer.it_interval: \[tv_sec: 0; tv_usec: 0\] -- generated from 0x[0-9A-F]*.
+##TEST_AWK.*%GTM-F-SETITIMERFAILED, A setitimer\(\) call returned an error status of [0-9]*, %YDB-I-TEXT, Timer: ITIMER_REAL; timer_active: 0; sys_timer.it_value: \[tv_sec: 0; tv_usec: 1[0-1]0000\]; sys_timer.it_interval: \[tv_sec: 0; tv_usec: 0\] -- generated from 0x[0-9A-F]*.
 
 Case 2. Generate a SETITIMERFAILED error from an M routine.
 ###################################################################
@@ -14,4 +14,4 @@ Case 2. Generate a SETITIMERFAILED error from an M routine.
 Error SETITIMERFAILED seen in mumps-run.out as expected:
 ##TEST_AWK%GTM-F-SETITIMERFAILED, A setitimer\(\) call returned an error status of [0-9]*
 ----------
-##TEST_AWK.*%GTM-F-SETITIMERFAILED, A setitimer\(\) call returned an error status of [0-9]*, %GTM-I-TEXT, Timer: ITIMER_REAL; timer_active: 0; sys_timer.it_value: \[tv_sec: 0; tv_usec: 2[0-1]0000\]; sys_timer.it_interval: \[tv_sec: 0; tv_usec: 0\] -- generated from 0x[0-9A-F]*.
+##TEST_AWK.*%GTM-F-SETITIMERFAILED, A setitimer\(\) call returned an error status of [0-9]*, %YDB-I-TEXT, Timer: ITIMER_REAL; timer_active: 0; sys_timer.it_value: \[tv_sec: 0; tv_usec: 2[0-1]0000\]; sys_timer.it_interval: \[tv_sec: 0; tv_usec: 0\] -- generated from 0x[0-9A-F]*.

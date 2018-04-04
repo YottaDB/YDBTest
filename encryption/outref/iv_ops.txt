@@ -53,9 +53,9 @@ TEST 2
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
-%GTM-I-MUINFOUINT4, V5 supportable record size for current DB configuration  : 1008 [0x000003F0]
-%GTM-I-MUINFOUINT4, V5 supportable max key size for current DB configuration : 255 [0x000000FF]
+%YDB-I-TEXT, Mupip downgrade started
+%YDB-I-MUINFOUINT4, V5 supportable record size for current DB configuration  : 1008 [0x000003F0]
+%YDB-I-MUINFOUINT4, V5 supportable max key size for current DB configuration : 255 [0x000000FF]
 %GTM-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V5
 
 # Do the integrity check:
@@ -72,8 +72,8 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
 # Do an extract
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
 ##TEST_AWK000000..*G   D   S       B   I   N   A   R   Y       E   X   T   R   A
 ##TEST_AWK00000...*C   T       L   E   V   E   L       9
 ##TEST_AWK00000..
@@ -108,8 +108,8 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
 # Do an extract
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
 ##TEST_AWK000000..*G   D   S       B   I   N   A   R   Y       E   X   T   R   A
 ##TEST_AWK00000...*C   T       L   E   V   E   L       8
 ##TEST_AWK00000..
@@ -187,8 +187,8 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
 
 Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................GT.M MUPIP EXTRACT              
 
@@ -197,8 +197,8 @@ Beginning LOAD at record number: 2
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 3  Max Data Len: 1
 Last LOAD record number: 2
 
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
 
 # Randomly choose any version prior to V62003
 
@@ -277,8 +277,8 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -286,13 +286,13 @@ Region	DEFAULT
  Journal file encrypted               ##FILTERED##
  Journal file uses null IV                   FALSE
 
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 # Record decrypted by OpenSSL:
 ##SUSPEND_OUTPUT HOST_ALL

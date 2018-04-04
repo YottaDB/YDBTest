@@ -25,10 +25,10 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/other.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/other.dat created
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/other.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/other.dat created
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/other.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
 # The below update should error out with YDB-E-REPLINSTNOSHM
 
 GTM>
@@ -80,7 +80,7 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/user1.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/user1.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/user1.dat created
 
 GTM>
 

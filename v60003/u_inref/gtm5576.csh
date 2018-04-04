@@ -33,16 +33,16 @@ setenv gtm_collate_1 `pwd`/libreverse.{$ext}
 $gtm_exe/mumps -run %XCMD 'for i=1:1:3 set ^x(i)=i'
 
 # Set the current GT.M collation to non-existent collation library. This should
-# cause GTM-I-DLLNOOPEN and YDB-E-COLLATIONUNDEF error when tried to access the
+# cause YDB-I-DLLNOOPEN and YDB-E-COLLATIONUNDEF error when tried to access the
 # database values.
 setenv gtm_collate_1 badcollation.{$ext}
 $gtm_exe/mumps -dir <<EOF  >&! zwr.op
 zwrite ^x
 halt
 EOF
-$gtm_tst/com/check_error_exist.csh zwr.op "GTM-I-DLLNOOPEN"
+$gtm_tst/com/check_error_exist.csh zwr.op "YDB-I-DLLNOOPEN"
 $gtm_tst/com/check_error_exist.csh zwr.op "YDB-E-COLLATIONUNDEF"
-$gtm_tst/com/check_error_exist.csh zwr.op "GTM-I-GVIS"
+$gtm_tst/com/check_error_exist.csh zwr.op "YDB-I-GVIS"
 
 
 # Set the current GT.M collation to current collation library. Database access should be successful.

@@ -13,18 +13,18 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 ##SOURCE_PATH##/mupip set -journal=enable,on,before,alloc=2500,extension=1000,auto=17384 -reg DEFAULT
-%GTM-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [17384 blocks] is rounded down to [16500 blocks] to equal the sum of Journal ALLOCATION [2500 blocks] and a multiple of Journal EXTENSION [1000 blocks] for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [17384 blocks] is rounded down to [16500 blocks] to equal the sum of Journal ALLOCATION [2500 blocks] and a multiple of Journal EXTENSION [1000 blocks] for database file ##TEST_PATH##/mumps.dat
 ##SUSPEND_OUTPUT  NON_REPLIC
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##ALLOW_OUTPUT  NON_REPLIC
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 ##SUSPEND_OUTPUT  NON_REPLIC
 Secondary Side: ##SOURCE_PATH##/mupip set -journal=enable,on,before,alloc=2500,extension=1000,auto=17384 -reg DEFAULT
-%GTM-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [17384 blocks] is rounded down to [16500 blocks] to equal the sum of Journal ALLOCATION [2500 blocks] and a multiple of Journal EXTENSION [1000 blocks] for database file ##REMOTE_TEST_PATH##/mumps.dat
-##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##REMOTE_TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [17384 blocks] is rounded down to [16500 blocks] to equal the sum of Journal ALLOCATION [2500 blocks] and a multiple of Journal EXTENSION [1000 blocks] for database file ##REMOTE_TEST_PATH##/mumps.dat
+##FILTERED##%YDB-I-FILERENAME, File ##REMOTE_TEST_PATH##/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##REMOTE_TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 ##ALLOW_OUTPUT  NON_REPLIC
 
 GTM>
@@ -68,25 +68,25 @@ GTM>
 ##ALLOW_OUTPUT  REPLIC
 $gtm_tst/com/mupip_rollback.csh -resync=10000 -lost=lost.glo *
 ##ALLOW_OUTPUT  NON_REPLIC
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##SUSPEND_OUTPUT  NON_REPLIC
-%GTM-I-RESOLVESEQNO, Resolving until sequence number 10000 [0x0000000000002710]
+%YDB-I-RESOLVESEQNO, Resolving until sequence number 10000 [0x0000000000002710]
 ##ALLOW_OUTPUT  NON_REPLIC
-##TEST_AWK.*%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/mumps.dat
+##TEST_AWK.*%YDB-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/mumps.dat
 ##SUSPEND_OUTPUT  NON_REPLIC
-##TEST_AWK.*%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/mumps.dat
+##TEST_AWK.*%YDB-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/mumps.dat
 ##ALLOW_OUTPUT  NON_REPLIC
-##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 ##SUSPEND_OUTPUT  NON_REPLIC
-%GTM-I-FILECREATE, Lost transactions extract file lost.glo created
-%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 10000 [0x0000000000002710]
+%YDB-I-FILECREATE, Lost transactions extract file lost.glo created
+%YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 10000 [0x0000000000002710]
 ##ALLOW_OUTPUT  NON_REPLIC
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl_##TIMESTAMP## is renamed to ##TEST_PATH##/rolled_bak_mumps.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl_##TIMESTAMP## is renamed to ##TEST_PATH##/rolled_bak_mumps.mjl_##TIMESTAMP##
 ##SUSPEND_OUTPUT  NON_REPLIC
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl_##TIMESTAMP## is renamed to ##TEST_PATH##/rolled_bak_mumps.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl_##TIMESTAMP## is renamed to ##TEST_PATH##/rolled_bak_mumps.mjl_##TIMESTAMP##
 ##ALLOW_OUTPUT  NON_REPLIC
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
@@ -96,23 +96,23 @@ $gtm_tst/com/mupip_rollback.csh -resync=10000 -lost=lost.glo *
 ##ALLOW_OUTPUT  REPLIC
 %GTM-S-JNLSUCCESS, Rollback successful
 ##ALLOW_OUTPUT  NON_REPLIC
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SUSPEND_OUTPUT  NON_REPLIC
 $gtm_tst/com/mupip_rollback.csh -resync=10000 -lost=lost.glo *
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-RESOLVESEQNO, Resolving until sequence number 10000 [0x0000000000002710]
-##TEST_AWK.*%GTM-I-MUJNLPREVGEN, Previous generation journal file ##REMOTE_TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##REMOTE_TEST_PATH##/mumps.dat
-##TEST_AWK.*%GTM-I-MUJNLPREVGEN, Previous generation journal file ##REMOTE_TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##REMOTE_TEST_PATH##/mumps.dat
-##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/mumps.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Lost transactions extract file lost.glo created
-%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 10000 [0x0000000000002710]
-##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/mumps.mjl_##TIMESTAMP## is renamed to ##REMOTE_TEST_PATH##/rolled_bak_mumps.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/mumps.mjl_##TIMESTAMP## is renamed to ##REMOTE_TEST_PATH##/rolled_bak_mumps.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-RESOLVESEQNO, Resolving until sequence number 10000 [0x0000000000002710]
+##TEST_AWK.*%YDB-I-MUJNLPREVGEN, Previous generation journal file ##REMOTE_TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##REMOTE_TEST_PATH##/mumps.dat
+##TEST_AWK.*%YDB-I-MUJNLPREVGEN, Previous generation journal file ##REMOTE_TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##REMOTE_TEST_PATH##/mumps.dat
+##FILTERED##%YDB-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-FILERENAME, File ##REMOTE_TEST_PATH##/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Lost transactions extract file lost.glo created
+%YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 10000 [0x0000000000002710]
+##FILTERED##%YDB-I-FILERENAME, File ##REMOTE_TEST_PATH##/mumps.mjl_##TIMESTAMP## is renamed to ##REMOTE_TEST_PATH##/rolled_bak_mumps.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##REMOTE_TEST_PATH##/mumps.mjl_##TIMESTAMP## is renamed to ##REMOTE_TEST_PATH##/rolled_bak_mumps.mjl_##TIMESTAMP##
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
 %GTM-S-JNLSUCCESS, Rollback successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 DATABASE EXTRACT PASSED

@@ -7,8 +7,8 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/test1.mjl created for region DEFAULT with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/test1.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 ====================================================
 Test Case 17
 multiple region and filename option
@@ -25,8 +25,8 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a_acn.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a_acn.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 Multiple database regions cannot be journalled in a single file
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
@@ -51,156 +51,156 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a_acn.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.d.tbls created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a_acn.mjl created for region AREG with NOBEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with NOBEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c_d_tbls.mjl created for region CREG with NOBEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a_acn.mjl is renamed to ##TEST_PATH##/a_acn.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a_acn.mjl created for database file ##TEST_PATH##/a_acn.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/a_acn.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for database file ##TEST_PATH##/b.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/b.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c_d_tbls.mjl is renamed to ##TEST_PATH##/c_d_tbls.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c_d_tbls.mjl created for database file ##TEST_PATH##/c.d.tbls with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/c.d.tbls is now ON
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a_acn.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/c.d.tbls created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a_acn.mjl created for region AREG with NOBEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with NOBEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c_d_tbls.mjl created for region CREG with NOBEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a_acn.mjl is renamed to ##TEST_PATH##/a_acn.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a_acn.mjl created for database file ##TEST_PATH##/a_acn.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/a_acn.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for database file ##TEST_PATH##/b.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/b.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c_d_tbls.mjl is renamed to ##TEST_PATH##/c_d_tbls.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c_d_tbls.mjl created for database file ##TEST_PATH##/c.d.tbls with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/c.d.tbls is now ON
 ====================================================
 Test Case 19
 User specified journal filename
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/test3.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/test3.mjl is renamed to ##TEST_PATH##/test3.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/test3.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/test3.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/test3.mjl is renamed to ##TEST_PATH##/test3.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/test3.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/dummy.mjl already exists
 %YDB-E-JNLNOCREATE, Journal file ##TEST_PATH##/dummy.mjl not created
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 ====================================================
 Test Case 20
 journal file rename
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/abcd.mjl is renamed to ##TEST_PATH##/abcd.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 ====================================================
 Test Case 21
 Previous journal filename
 Journal state 0 to 2
 ##SOURCE_PATH##/mupip set -journal=disable -file mumps.dat
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
 ##SOURCE_PATH##/mupip set -journal=enable,nobefore -file mumps.dat
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 Journal state 1 to 2
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 Journal state 2 to 2
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 Switching between NOBEFORE and BEFORE image does have effect on prev jnl file name
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 Replication on clears the previous link failed (2 to 2)
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
-%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
 First DISABLE journaling and then turn on replication
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
-%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+%YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
 ====================================================
 Test Case 22
 Journal filename cycle
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/j1.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/j2.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/j3.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/j1.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/j2.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/j3.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/j1.mjl already exists
 %YDB-E-JNLNOCREATE, Journal file ##TEST_PATH##/j1.mjl not created
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions

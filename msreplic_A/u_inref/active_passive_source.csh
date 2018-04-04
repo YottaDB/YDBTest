@@ -61,7 +61,7 @@ $gtm_tst/com/check_error_exist.csh $msr_execute_last_out SRCSRVEXISTS > /dev/nul
 $echoline
 echo "#- Attempt to start receiver server again on secondaray"
 $MSR RUN RCV=INST2 SRC=INST1 "set msr_dont_chk_stat ; $MUPIP replic -receiv -start -buffsize=$tst_buffsize -listen=__RCV_PORTNO__ -log=secondrecv.log" >&! restart_inst2_receiver.out
-$gtm_tst/com/check_error_exist.csh restart_inst2_receiver.out RECVPOOLSETUP GTM-I-TEXT
+$gtm_tst/com/check_error_exist.csh restart_inst2_receiver.out RECVPOOLSETUP YDB-I-TEXT
 $gtm_tst/com/check_error_exist.csh $msr_execute_last_out RECVPOOLSETUP  > /dev/null
 
 $echoline

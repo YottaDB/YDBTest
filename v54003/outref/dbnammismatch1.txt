@@ -54,9 +54,9 @@ END 4
 BEGIN 5 :-) Do mupip rundown on backup.dat and then access it. Database access should be clean
 
 ##TEST_AWKmupip rundown .*
-##TEST_AWK.GTM-I-DBNAMEMISMATCH, Database file .*backup.dat points to shared memory .id = [0-9]+. which in turn points to an inaccessible database file ##TEST_PATH##.mumps.dat
-##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file .*backup.dat
-##TEST_AWK.GTM-I-MUFILRNDWNSUC, File .*backup.dat successfully rundown
+##TEST_AWK.YDB-I-DBNAMEMISMATCH, Database file .*backup.dat points to shared memory .id = [0-9]+. which in turn points to an inaccessible database file ##TEST_PATH##.mumps.dat
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file .*backup.dat
+##TEST_AWK.YDB-I-MUFILRNDWNSUC, File .*backup.dat successfully rundown
 
 GTM>
 set ^x=1
@@ -72,7 +72,7 @@ END 5
 BEGIN 6 :-) do mupip rundown on mumps.dat to remove leftover ipcs
 
 mupip rundown -reg "*"
-##TEST_AWK.GTM-I-MUFILRNDWNSUC, File .*mumps.dat successfully rundown
+##TEST_AWK.YDB-I-MUFILRNDWNSUC, File .*mumps.dat successfully rundown
 
 END 6
 ---------------------------------------------------------------------------------------

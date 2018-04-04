@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -30,7 +33,7 @@ $MSR START INST1 INST2 RP
 
 # Online rollback should wait on the server latch and send SIGCONTs to source server
 set syslog_before = `date +"%b %e %H:%M:%S"`
-$gtm_tst/com/mupip_rollback.csh -online "*" |& $grep -v "GTM-I-RLBKSTRMSEQ"
+$gtm_tst/com/mupip_rollback.csh -online "*" |& $grep -v "YDB-I-RLBKSTRMSEQ"
 $gtm_tst/com/getoper.csh "$syslog_before" "" syslog1.txt "" "Process [0-9]* was requested to resume processing"
 $grep "GTMSECSHRSRVFID" syslog1.txt
 if (0 == $status) then

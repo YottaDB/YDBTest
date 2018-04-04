@@ -15,7 +15,7 @@
 # In the case of a JNLMOVED situation, running MUPIP SET -JOURNAL to switch the journal file fails with the same JNLMOVED error.
 # This is what one would get:
 # > mupip set -journal="enable,on,before" -reg "*"
-# %GTM-I-JNLFNF, Journal file ##PATH##/mumps.mjl not found
+# %YDB-I-JNLFNF, Journal file ##PATH##/mumps.mjl not found
 # %YDB-E-JNLFILOPN, Error opening journal file ##PATH##/mumps.mjl for database file ##PATH##/mumps.dat
 # %YDB-E-JNLFILOPN, Error opening journal file  for database file
 # %YDB-E-JNLNOCREATE, Journal file ##PATH##/mumps.mjl not created

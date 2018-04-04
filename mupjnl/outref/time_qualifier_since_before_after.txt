@@ -11,7 +11,7 @@ mumps.dat
 ##TEST_AWKmjlfiles is mumps.mjl,mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=total.mjf -forward mumps.mjl,mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
-%GTM-I-FILECREATE, Journal extract file total.mjf created
+%YDB-I-FILECREATE, Journal extract file total.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -26,7 +26,7 @@ unset echo
 ##TEST_AWK.*
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=after1.mjf -after=.* -forward mumps.mjl,mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
-%GTM-I-FILECREATE, Journal extract file after1.mjf created
+%YDB-I-FILECREATE, Journal extract file after1.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -37,7 +37,7 @@ unset echo
 ^AA	10
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=after2.mjf -after=.* -before=.* -forward mumps.mjl,mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
-%GTM-I-FILECREATE, Journal extract file after2.mjf created
+%YDB-I-FILECREATE, Journal extract file after2.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -46,27 +46,27 @@ unset echo
 ^CC	10
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=after3.mjf -after=.* -forward mumps.mjl,mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
-%GTM-I-FILECREATE, Journal extract file after3.mjf created
+%YDB-I-FILECREATE, Journal extract file after3.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=before1_err.mjf -before=.* -forward mumps.mjl,mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 %YDB-E-INVQUALTIME, Invalid time qualifier value.  Specify as BEFORE=delta_or_absolute_time.
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
-%GTM-I-FILENOTCREATE, Journal extract file before1_err.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file before1_err.mjf not created
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=before2.mjf -before=".*" -forward mumps.mjl,mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 ##TEST_AWK%YDB-E-JNLTMQUAL3, Time qualifier BEFORE_TIME=".*" is less than the journal file.s. minimum timestamp=".*"
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%GTM-I-FILENOTCREATE, Journal extract file before2.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file before2.mjf not created
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=before2a_err.mjf -before=.* -backward mumps.mjl,mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
-%GTM-I-FILENOTCREATE, Journal extract file before2a_err.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file before2a_err.mjf not created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=before3.mjf -before=.* -forward mumps.mjl,mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]),mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
-%GTM-I-FILECREATE, Journal extract file before3.mjf created
+%YDB-I-FILECREATE, Journal extract file before3.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -77,10 +77,10 @@ unset echo
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 ##TEST_AWK%YDB-E-JNLTMQUAL4, Time qualifier BEFORE_TIME=".*" is less than AFTER_TIME=".*"
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%GTM-I-FILENOTCREATE, Journal extract file before4_err.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file before4_err.mjf not created
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=since1.mjf -since=.* -before=.* -backward mumps.mjl
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
-%GTM-I-FILECREATE, Journal extract file since1.mjf created
+%YDB-I-FILECREATE, Journal extract file since1.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -91,7 +91,7 @@ unset echo
 ^CC	10
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=since2.mjf -since=.* -before=.* -backward mumps.mjl
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
-%GTM-I-FILECREATE, Journal extract file since2.mjf created
+%YDB-I-FILECREATE, Journal extract file since2.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -100,7 +100,7 @@ unset echo
 ^B	10
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=since3.mjf -since=.* -before=.* -backward mumps.mjl
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
-%GTM-I-FILECREATE, Journal extract file since3.mjf created
+%YDB-I-FILECREATE, Journal extract file since3.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -113,25 +113,25 @@ unset echo
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 ##TEST_AWK.*%YDB-E-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) has a null previous link
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%GTM-I-FILENOTCREATE, Journal extract file since4_err.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file since4_err.mjf not created
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=error.mjf -since=.* -before=.* -backward mumps.mjl
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 ##TEST_AWK%YDB-E-JNLTMQUAL1, Time qualifier BEFORE_TIME="20../../.. ..:..:.." is less than SINCE_TIME="20../../.. ..:..:.."
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file error.mjf not created
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=error.mjf -since=.* -before=.* -backward mumps.mjl
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 ##TEST_AWK%YDB-E-JNLTMQUAL1, Time qualifier BEFORE_TIME="20../../.. ..:..:.." is less than SINCE_TIME="20../../.. ..:..:.."
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file error.mjf not created
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=error.mjf -after=.* -before=.* -forward mumps.mjl
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 ##TEST_AWK%YDB-E-JNLTMQUAL3, Time qualifier BEFORE_TIME=".*" is less than the journal file.s. minimum timestamp=".*"
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file error.mjf not created
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=since5.mjf -since=.* -before=.* -backward mumps.mjl
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
-%GTM-I-FILECREATE, Journal extract file since5.mjf created
+%YDB-I-FILECREATE, Journal extract file since5.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo

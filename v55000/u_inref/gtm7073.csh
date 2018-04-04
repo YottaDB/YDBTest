@@ -69,11 +69,11 @@ $head -n 6 show1.txtx
 set syslog_after1 = `date +"%b %e %H:%M:%S"`
 echo $syslog_before1 $syslog_after1 > time_window1.txt
 
-$grep -q "%GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]% of 40 pages" show1.txtx
+$grep -q "%YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]% of 40 pages" show1.txtx
 if ($? != 0) then
     echo "Error: Free lock space is outside of expected range. Check show1.txtx."
 endif
-$gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1.txt "" "YDB-E-LOCKSPACEFULL|GTM-I-LOCKSPACEINFO"
+$gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1.txt "" "YDB-E-LOCKSPACEFULL|YDB-I-LOCKSPACEINFO"
 $grep -q "YDB-E-LOCKSPACEFULL" syslog1.txt
 if ($? == 0) then
     echo "TEST-I-PASS YDB-E-LOCKSPACEFULL found in operator log as expected."
@@ -81,9 +81,9 @@ else
     echo "TEST-E-FAIL YDB-E-LOCKSPACEFULL not found in operator log. Check syslog1.txt."
 endif
 #LOCKSPACEFULL and LOCKSPACEINFO Must be issued together.
-$grep -q "GTM-I-LOCKSPACEINFO" syslog1.txt
+$grep -q "YDB-I-LOCKSPACEINFO" syslog1.txt
 if ($? != 0) then
-    echo "TEST-E-FAIL GTM-I-LOCKSPACEINFO not found in operator log. Check syslog1.txt."
+    echo "TEST-E-FAIL YDB-I-LOCKSPACEINFO not found in operator log. Check syslog1.txt."
 endif
 
 
@@ -116,7 +116,7 @@ set syslog_before1 = `date +"%b %e %H:%M:%S"`
 ($gtm_exe/mumps -run %XCMD 'do lockandwait^gtm7073(1000)' >&! procstat1.txt &)
 $gtm_exe/mumps -run waitlocks^gtm7073
 # Wait for the message to trigger
-$gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1000locks.txt "" "GTM-I-LOCKSPACEINFO"
+$gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1000locks.txt "" "YDB-I-LOCKSPACEINFO"
 sleep 1 # Advance timestamp because some fast boxes capture this message again in the following getoper.csh
 
 #save half of the lock count somewhere
@@ -131,7 +131,7 @@ $head -n 6 show2.txtx
 set syslog_after1 = `date +"%b %e %H:%M:%S"`
 echo $syslog_before1 $syslog_after1 > time_window2.txt
 
-$grep -q "%GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]% of 40 pages" show2.txtx
+$grep -q "%YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]% of 40 pages" show2.txtx
 if ($? != 0) then
     echo "Error: Free lock space is not in expected range. Check show2.txtx."
 endif
@@ -169,11 +169,11 @@ $gtm_exe/mumps -run %XCMD 'set ^grabbed=0'
 $gtm_exe/mumps -run waitlocks^gtm7073
 set syslog_after1 = `date +"%b %e %H:%M:%S"`
 echo $syslog_before1 $syslog_after1 > time_window3.txt
-$gtm_tst/com/getoper.csh "$syslog_before1" "" syslog3.txt "" "GTM-I-LOCKSPACEINFO"
+$gtm_tst/com/getoper.csh "$syslog_before1" "" syslog3.txt "" "YDB-I-LOCKSPACEINFO"
 if ($status) then
-    echo "TEST-E-FAIL GTM-I-LOCKSPACEINFO not found in operator log. Check syslog3.txt."
+    echo "TEST-E-FAIL YDB-I-LOCKSPACEINFO not found in operator log. Check syslog3.txt."
 else
-    echo "TEST-I-PASS GTM-I-LOCKSPACEINFO found in operator log as expected."
+    echo "TEST-I-PASS YDB-I-LOCKSPACEINFO found in operator log as expected."
 endif
 
 $LKE show >& show4.txtx

@@ -12,12 +12,12 @@ GTM Process starts in background...
 Kill -9 <pid> : ipcrm -s <sem_id>
 Shared Memory is existing
 ##SOURCE_PATH##/mupip rundown -reg *
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
-%GTM-I-SHMREMOVED, Removed Shared Memory id XXXX corresponding to file ##TEST_PATH##/a.dat
-%GTM-I-SHMREMOVED, Removed Shared Memory id XXXX corresponding to file ##TEST_PATH##/b.dat
-%GTM-I-SHMREMOVED, Removed Shared Memory id XXXX corresponding to file ##TEST_PATH##/mumps.dat
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-SHMREMOVED, Removed Shared Memory id XXXX corresponding to file ##TEST_PATH##/a.dat
+%YDB-I-SHMREMOVED, Removed Shared Memory id XXXX corresponding to file ##TEST_PATH##/b.dat
+%YDB-I-SHMREMOVED, Removed Shared Memory id XXXX corresponding to file ##TEST_PATH##/mumps.dat
 Recover...
 ##SOURCE_PATH##/mupip journal -recover -backward *
 %GTM-S-JNLSUCCESS, Show successful

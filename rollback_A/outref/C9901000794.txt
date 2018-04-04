@@ -17,11 +17,11 @@ GTM>
 GTM>
 Receiver shut down ...
 Source shut down ...
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-REPLSTATE, Replication state for region DEFAULT is now OFF
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now OFF
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
 Starting receiver server ...
 Starting source server ...
 
@@ -31,21 +31,21 @@ GTM>
 Receiver shut down ...
 Source shut down ...
 Rolling back on primary side 
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK%GTM-I-RESOLVESEQNO, Resolving until sequence number.*
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%YDB-I-RESOLVESEQNO, Resolving until sequence number.*
 ##TEST_AWK.*%YDB-E-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%GTM-I-FILENOTCREATE, Lost transactions extract file lost.glo not created
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+%YDB-I-FILENOTCREATE, Lost transactions extract file lost.glo not created
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 *********************************
 Backward recovery on primary side
 *********************************
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##TEST_AWK.*%YDB-E-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 PASS
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

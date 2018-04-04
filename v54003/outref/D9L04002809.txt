@@ -38,11 +38,11 @@ Step 5 ===> Bring back the receiver server with helper processes
 ###################################################################
 	Step 5a ===> Verify that receiver server detects an already existing update process
 ###################################################################
-==Executing MULTISITE_REPLIC 'RUN RCV=INST2 $gtm_tst/com/wait_for_log.csh -log RCVR_restart.log -message GTM-I-TEXT -duration 120'==
-==Executing MULTISITE_REPLIC 'RUN RCV=INST2 $gtm_tst/com/check_error_exist.csh RCVR_restart.log GTM-I-TEXT'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 $gtm_tst/com/wait_for_log.csh -log RCVR_restart.log -message YDB-I-TEXT -duration 120'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST2 $gtm_tst/com/check_error_exist.csh RCVR_restart.log YDB-I-TEXT'==
 ----------
-Error GTM-I-TEXT seen in RCVR_restart.log as expected:
-%GTM-I-TEXT, Update process already exists. Not starting it
+Error YDB-I-TEXT seen in RCVR_restart.log as expected:
+%YDB-I-TEXT, Update process already exists. Not starting it
 ----------
 
 ###################################################################
@@ -69,7 +69,7 @@ Error ALERT seen in RCVR_restart.logx as expected:
 Step 8 ===> Bring back ONLY the Update process
 ###################################################################
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -receiv -start -updateonly'==
-%GTM-I-REPLINFO, Update Process started successfully
+%YDB-I-REPLINFO, Update Process started successfully
 
 ###################################################################
 Step 9 ===> Verify that Receiver checkhealth comes out clean with NO hangs

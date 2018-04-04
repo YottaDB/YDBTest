@@ -25,7 +25,7 @@ if ((1 == $gtm_test_spanreg) || (3 == $gtm_test_spanreg)) then
 	setenv use_test_specific_gde $gtm_tst/$tst/inref/reorg_truncate_col${colno}.gde
 endif
 setenv gtm_test_spanreg 0 	# The calculated number of sets below doesn't work with spanningregions
-				# Test expects GTM-I-MUTRUNCNOSPACE, but due to global distribution, it doesn't happen
+				# Test expects YDB-I-MUTRUNCNOSPACE, but due to global distribution, it doesn't happen
 #
 setenv test_reorg NON_REORG
 setenv gtm_test_mupip_set_version "V5"

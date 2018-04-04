@@ -3,8 +3,8 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps1.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps1.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 Time written into time1:##FILTERED##GTM_TEST_DEBUGINFO.*
 start second process...
 Wait for second process to finish its processing...
@@ -33,13 +33,13 @@ GTM>
 
 GTM>
 ##SOURCE_PATH##/mupip journal -extract=ext1b.mjf -detail -forward mumps1.mjl -fences=none
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file ext1b.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ext1b.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 unset echo
 #Number of records of type (in the order of appearance):
 PINI	3
@@ -55,13 +55,13 @@ EOF	1
 ^cact1	1
 ^dact1	1
 ##SOURCE_PATH##/mupip journal -extract=ext2b.mjf -detail -forward mumps2.mjl -fences=none
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file ext2b.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ext2b.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 unset echo
 #Number of records of type (in the order of appearance):
 PINI	2
@@ -78,7 +78,7 @@ unset echo
 ##SOURCE_PATH##/mupip journal -recover -extract=norecov.mjf -detail -lost=norecov.lost -broken=norecov.broken -back mumps2.mjl
 Simulating kill of GTM Processes in ##TEST_PATH##
 GTM processes Killed!
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 ################ SECOND PROCESS OUTPUT ###################
 Check second_process.log for the following output:
 ##SOURCE_PATH##
@@ -106,8 +106,8 @@ GTM>
 GTM>
 
 GTM>
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps2.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps2.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
 GTM>
 
@@ -120,17 +120,17 @@ Killed
 End of second_process job!
 ############ END SECOND PROCESS OUTPUT ###################
 $MUPIP journal -recover -extract=recov.mjf -detail -lost=recov.lost -broken=recov.broken -back mumps2.mjl -since=$time1
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps1.mjl included for database file ##TEST_PATH##/mumps.dat
-##FILTERED##%GTM-I-MUJNLSTAT, Lookback processing started at ... ... .. ..:..:.. ....
-%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps1.mjl has a null previous link
-##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps2.mjl is renamed to ##TEST_PATH##/mumps2.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file recov.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file recov.broken created
-%GTM-I-FILECREATE, Lost transactions extract file recov.lost created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%YDB-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps1.mjl included for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%YDB-I-MUJNLSTAT, Lookback processing started at ... ... .. ..:..:.. ....
+%YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps1.mjl has a null previous link
+##FILTERED##%YDB-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps2.mjl is renamed to ##TEST_PATH##/mumps2.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file recov.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file recov.broken created
+%YDB-I-FILECREATE, Lost transactions extract file recov.lost created
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/mumps1.mjl
@@ -153,12 +153,12 @@ PID        NODE         USER     TERM JPV_TIME
 ---------------------------------------------------------
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..                   
 
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps2.mjl_##TIMESTAMP## is renamed to ##TEST_PATH##/rolled_bak_mumps2.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps2.mjl_##TIMESTAMP## is renamed to ##TEST_PATH##/rolled_bak_mumps2.mjl_##TIMESTAMP##
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 %GTM-S-JNLSUCCESS, Recover successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #Number of records of type (in the order of appearance):
 PFIN	1
 PINI	1
@@ -187,24 +187,24 @@ PBLK	2
 unset echo
 VERIFY PASSED
 $MUPIP journal -extract=ext1.mjf -detail -forward mumps1.mjl  -fences=none
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file ext1.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ext1.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #Number of records of type (in the order of appearance):
 PINI	1
 unset echo
 $MUPIP journal -extract=ext2.mjf -detail -forward *mumps2.mjl_*  -fences=none
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file ext2.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ext2.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #Number of records of type (in the order of appearance):
 PINI	2
 PFIN	1

@@ -23,24 +23,24 @@ Simulating crash on primary in ##TEST_PATH##
 Primary crashed!
 Doing Fail over.
 Do rundown on B:
-%GTM-I-MUFILRNDWNSUC, File ##REMOTE_TEST_PATH##/a.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##REMOTE_TEST_PATH##/b.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##REMOTE_TEST_PATH##/c.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##REMOTE_TEST_PATH##/mumps.dat successfully rundown
-%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section (id = xxx) belonging to the replication instance ##REMOTE_TEST_PATH##/mumps.repl successfully rundown
-%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section (id = xxx) belonging to the replication instance ##REMOTE_TEST_PATH##/mumps.repl successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##REMOTE_TEST_PATH##/a.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##REMOTE_TEST_PATH##/b.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##REMOTE_TEST_PATH##/c.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##REMOTE_TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-MUJPOOLRNDWNSUC, Jnlpool section (id = xxx) belonging to the replication instance ##REMOTE_TEST_PATH##/mumps.repl successfully rundown
+%YDB-I-MUJPOOLRNDWNSUC, Jnlpool section (id = xxx) belonging to the replication instance ##REMOTE_TEST_PATH##/mumps.repl successfully rundown
 Doing rollback on B:
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
 %GTM-S-JNLSUCCESS, Rollback successful
 Restarting (B) as primary...
 Doing rundown on (A):
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
-%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section (id = xxx) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
-%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section (id = xxx) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-MUJPOOLRNDWNSUC, Jnlpool section (id = xxx) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
+%YDB-I-MUJPOOLRNDWNSUC, Jnlpool section (id = xxx) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
 Doing rollback on (A):
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful

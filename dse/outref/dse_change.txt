@@ -151,7 +151,7 @@ DSE> DSE> --------------------- Test 11 ---------------------
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-DSE> %GTM-I-BLKSIZ512, Block size 0 rounds to 512
+DSE> %YDB-I-BLKSIZ512, Block size 0 rounds to 512
 DSE> --------------------- Test 12 ---------------------
   Reserved Bytes                          0  Block size (in bytes)          512
   Create in progress                  FALSE  Modified cache blocks            0
@@ -160,7 +160,7 @@ DSE> --------------------- Test 12 ---------------------
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-DSE> %GTM-I-BLKSIZ512, Block size 1023 rounds to 1024
+DSE> %YDB-I-BLKSIZ512, Block size 1023 rounds to 1024
 DSE> --------------------- Test 14 ---------------------
   Reserved Bytes                          0  Block size (in bytes)         1024
 --------------------- Test 15 ---------------------
@@ -181,7 +181,7 @@ Region	AREG
 
 DSE> CRIT is currently unowned on all regions
 DSE> DSE> %YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
-%GTM-I-GVIS, 		Global variable: ^aglobal("abcdefghijklmnop")
+%YDB-I-GVIS, 		Global variable: ^aglobal("abcdefghijklmnop")
 DSE> DSE> DSE> CRIT is currently unowned on all regions
 DSE> --------------------- Test 19 ---------------------
 
@@ -193,7 +193,7 @@ DSE>
 Seized write critical section.
 
 DSE> DSE> %YDB-E-REC2BIG, Record size (23) is greater than maximum (22) for region: AREG
-%GTM-I-GVIS, 		Global variable: aglobal
+%YDB-I-GVIS, 		Global variable: aglobal
 ##TEST_AWKDSE. Database ##TEST_PATH##/a.dat . CRIT Owned by pid .*
 DSE> --------------------- Test 20 ---------------------
 
@@ -226,7 +226,7 @@ DSE> DSE> DSE> --------------------- Test 22 ---------------------
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-DSE> %GTM-I-TIMRBADVAL, Bad value specified.  Timer not changed.
+DSE> %YDB-I-TIMRBADVAL, Bad value specified.  Timer not changed.
 DSE> DSE> --------------------- Test 23 ---------------------
   Cache freeze id                0x00000000  Flush timer            00:00:00:02
 --------------------- Test 24 ---------------------
@@ -241,7 +241,7 @@ DSE> DSE> --------------------- Test 25 ---------------------
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-DSE> %GTM-I-TIMRBADVAL, Bad value specified.  Timer not changed.
+DSE> %YDB-I-TIMRBADVAL, Bad value specified.  Timer not changed.
 DSE> --------------------- Test 27 ---------------------
   Cache freeze id                0x00000000  Flush timer            00:00:01:00
 --------------------- Test 28 ---------------------
@@ -256,7 +256,7 @@ DSE> DSE> --------------------- Test 29 ---------------------
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-DSE> %GTM-I-TIMRBADVAL, Bad value specified.  Timer not changed.
+DSE> %YDB-I-TIMRBADVAL, Bad value specified.  Timer not changed.
 DSE> --------------------- Test 31 ---------------------
   Cache freeze id                0x00000000  Flush timer            01:00:00:00
 --------------------- Test 32 ---------------------
@@ -265,7 +265,7 @@ DSE> --------------------- Test 31 ---------------------
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-DSE> %GTM-I-TIMRBADVAL, Bad value specified.  Timer not changed.
+DSE> %YDB-I-TIMRBADVAL, Bad value specified.  Timer not changed.
 DSE> --------------------- Test 34 ---------------------
   Cache freeze id                0x00000000  Flush timer            01:00:00:00
   Cache freeze id                0x00000000  Flush timer            01:00:00:00

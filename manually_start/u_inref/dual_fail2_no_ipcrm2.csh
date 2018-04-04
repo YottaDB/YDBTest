@@ -4,6 +4,9 @@
 # Copyright (c) 2007-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -59,8 +62,8 @@ $DO_FAIL_OVER
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl*,*.gld,*.repl' cp nozip"
 $pri_shell "$pri_getenv; cd $PRI_SIDE;"'echo Do rundown on B:'
 $pri_shell "$pri_getenv; cd $PRI_SIDE;"'$MUPIP rundown -override -reg "*"' >& rundown1.tmp
-$grep "%GTM-I-MUFILRNDWNSUC" rundown1.tmp | sort -f
-$grep "%GTM-I-MUJPOOLRNDWNSUC" rundown1.tmp | $tst_awk 'sub(/ [0-9]+/," xxx")'| sort -f
+$grep "%YDB-I-MUFILRNDWNSUC" rundown1.tmp | sort -f
+$grep "%YDB-I-MUJPOOLRNDWNSUC" rundown1.tmp | $tst_awk 'sub(/ [0-9]+/," xxx")'| sort -f
 
 # ROLLBACK ON PRIMARY SIDE (B)
 echo "Doing rollback on B:"
@@ -78,8 +81,8 @@ cd $SEC_SIDE
 $gtm_tst/com/backup_dbjnl.csh bak2 '*.dat *.mjl* *.gld *.repl' cp nozip
 echo "Doing rundown on (A):"
 $MUPIP rundown -override -reg "*" >& rundown2.tmp
-$grep "%GTM-I-MUFILRNDWNSUC" rundown2.tmp | sort -f
-$grep "%GTM-I-MUJPOOLRNDWNSUC" rundown2.tmp | $tst_awk 'sub(/ [0-9]+/," xxx")'| sort -f
+$grep "%YDB-I-MUFILRNDWNSUC" rundown2.tmp | sort -f
+$grep "%YDB-I-MUJPOOLRNDWNSUC" rundown2.tmp | $tst_awk 'sub(/ [0-9]+/," xxx")'| sort -f
 #
 echo "Doing rollback on (A):"
 echo "$gtm_tst/com/mupip_rollback.csh -fetchresync=$portno -losttrans=fetch.glo " >>&! rollback2.log

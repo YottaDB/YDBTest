@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -364,11 +364,11 @@ df .
 
 echo ""
 
-$grep "GTM\[${pid1}\]: %%GTM-I-DSKSPACEFLOW" /var/log/messages > /dev/null && echo -n "Found Warning Message" || echo -n "Did Not Find Warning Message"
+$grep "GTM\[${pid1}\]: %%YDB-I-DSKSPACEFLOW" /var/log/messages > /dev/null && echo -n "Found Warning Message" || echo -n "Did Not Find Warning Message"
 echo " for pass 1"
-$grep "GTM\[${pid2}\]: %%GTM-I-DSKSPACEFLOW" /var/log/messages > /dev/null && echo -n "Found Warning Message" || echo -n "Did Not Find Warning Message"
+$grep "GTM\[${pid2}\]: %%YDB-I-DSKSPACEFLOW" /var/log/messages > /dev/null && echo -n "Found Warning Message" || echo -n "Did Not Find Warning Message"
 echo " for pass 2"
-$grep "GTM\[${pid3}\]: %%GTM-I-DSKSPACEFLOW" /var/log/messages > /dev/null && echo -n "Found Warning Message" || echo -n "Did Not Find Warning Message"
+$grep "GTM\[${pid3}\]: %%YDB-I-DSKSPACEFLOW" /var/log/messages > /dev/null && echo -n "Found Warning Message" || echo -n "Did Not Find Warning Message"
 echo " for pass 3"
 
 cd ..

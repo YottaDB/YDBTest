@@ -1,9 +1,21 @@
 #!/usr/local/bin/tcsh
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 #
 # D9G01-002587 Errors during MUPIP LOAD with a fillfactor of less than 100%
 #
 # mupip load below will have an additional line about renaming journal file if journaling is enabled
-# So filter out GTM-I-FILERENAME from the load output, to keep the reference file consistent
+# So filter out YDB-I-FILERENAME from the load output, to keep the reference file consistent
 $gtm_tst/com/dbcreate.csh mumps 1 255 950 1024
 mv mumps.dat mumpsbak.dat
 
@@ -58,7 +70,7 @@ $DSE << DSE_EOF
 	change -file -reserved_bytes=128
 DSE_EOF
 $MUPIP load data1.glo -fill=60 >&! load_expect_RSVDBYTE2HIGH.outx # should issue RSVDBYTE2HIGH error
-$tail -n +3 load_expect_RSVDBYTE2HIGH.outx | $grep -v GTM-I-FILERENAME
+$tail -n +3 load_expect_RSVDBYTE2HIGH.outx | $grep -v YDB-I-FILERENAME
 $gtm_tst/com/dbcheck.csh
 $MUPIP extract data3.glo
 
@@ -66,7 +78,7 @@ echo ""
 echo "###### MUPIP LOAD with RESERVED_BYTES=0 and FILLFACTOR=30. Should NOT issue RSVDBYTE2HIGH error ###### "
 cp mumpsbak.dat mumps.dat
 $MUPIP load data1.glo -fill=30 >&! load_not_expect_RSVDBYTE2HIGH.out # should NOT issue RSVDBYTE2HIGH error
-$tail -n +3 load_not_expect_RSVDBYTE2HIGH.out | $grep -v GTM-I-FILERENAME
+$tail -n +3 load_not_expect_RSVDBYTE2HIGH.out | $grep -v YDB-I-FILERENAME
 $gtm_tst/com/dbcheck.csh
 $MUPIP extract data4.glo
 
@@ -95,7 +107,7 @@ echo ""
 echo "###### MUPIP LOAD with FILLFACTOR=60 ######"
 cp mumpsbak.dat mumps.dat
 $MUPIP load data5.glo -fill=60 >&! load_fill_60.out
-$tail -n +3 load_fill_60.out | $grep -v GTM-I-FILERENAME
+$tail -n +3 load_fill_60.out | $grep -v YDB-I-FILERENAME
 $gtm_tst/com/dbcheck.csh
 $MUPIP extract data6.glo
 echo "data6.glo"
@@ -132,11 +144,11 @@ cp mumpsbak.dat mumps.dat
 echo ""
 echo "###### MUPIP LOAD of DATA2 with FILLFACTOR=60 ######"
 $MUPIP load data_2.glo -fill=60 >&! load_fill_60_data2.out
-$tail -n +3 load_fill_60_data2.out | $grep -v GTM-I-FILERENAME
+$tail -n +3 load_fill_60_data2.out | $grep -v YDB-I-FILERENAME
 $gtm_tst/com/dbcheck.csh
 echo ""
 echo "###### MUPIP LOAD of DATA1 with FILLFACTOR=30 ######"
-$MUPIP load data_1.glo -fill=30 |& $tail -n +3 
+$MUPIP load data_1.glo -fill=30 |& $tail -n +3
 $gtm_tst/com/dbcheck.csh
 
 $MUPIP extract data8.glo

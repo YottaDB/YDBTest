@@ -8,37 +8,37 @@ b.dat
 c.dat
 mumps.dat
 #No locks. All lock space should be free
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in AREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in BREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in AREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in BREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in CREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 #All but DEFAULT region should have free space
 
 GTM>
 
 GTM>
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in AREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in BREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in AREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in BREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in CREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 
 DEFAULT
 ##TEST_AWKa Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
 
 GTM>
 #All but AREG region should have free space
@@ -51,17 +51,17 @@ GTM>
 
 AREG
 ##TEST_AWK.avar Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in BREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in BREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in CREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 
 GTM>
 #All but BREG region should have free space
@@ -71,20 +71,20 @@ GTM>
 GTM>
 
 GTM>
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in AREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in AREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 
 BREG
 ##TEST_AWK.bvar Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in CREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 
 GTM>
 #CREG and DEFAULT region should have free space
@@ -101,56 +101,56 @@ GTM>
 
 AREG
 ##TEST_AWK.avar Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
 
 BREG
 ##TEST_AWK.bvar Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in CREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 
 GTM>
 #No locks should be here
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in AREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in BREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in AREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in BREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in CREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 #Trying to grab 1000 locks from DEFAULT (should hang before reaching 1000)
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in AREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in BREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in AREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in BREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 TEST-I-PASS YDB-E-LOCKSPACEFULL found in operator log as expected.
 #Grabbing as many locks possible, releasing 2 of them, waiting on the bg
 #Adding 2 of the locks again. The lock space should be full but syslog should not have LOCKSPACEFULL
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in AREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in BREG
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in AREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in BREG
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 TEST-I-PASS YDB-E-LOCKSPACEFULL not found in operator log as expected.
 #Stop the process
 #Trying with 2 diffrent processes...
 #Grab 3 locks with shorter names and wait in the background
 #Grab 1000 locks with shorter names and wait in the background
-TEST-I-PASS GTM-I-LOCKSPACEINFO found in operator log as expected.
+TEST-I-PASS YDB-I-LOCKSPACEINFO found in operator log as expected.
 #Stop the processes
 #using half of the total lock space
 TEST-I-PASS YDB-E-LOCKSPACEFULL not found in operator log as expected.

@@ -53,7 +53,7 @@ GTM>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==========================================================
 The instance file contents on INST1 (instancefile_1.out):
-GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+YDB-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
 
 ----------------------------------------------------------
 File Header
@@ -132,7 +132,7 @@ HST #      0 : History record type                       1 [0x00000001]
 ==========================================================
 ==========================================================
 The instance file contents on INST2 (instancefile_1.out):
-GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+YDB-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
 
 ----------------------------------------------------------
 File Header
@@ -207,7 +207,7 @@ HST #      0 : History record type                       1 [0x00000001]
 ==========================================================
 ==========================================================
 The instance file contents on INST3 (instancefile_1.out):
-GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+YDB-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
 
 ----------------------------------------------------------
 File Header
@@ -422,22 +422,22 @@ No diff on INST3 between instancefile_3.out instancefile_4.out
 #- Step 3:
 #  Start replicating on INST1 and INST2 from INST3:
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST3 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=fetch13.glo "*" >& rollback13.log'==
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, FETCHRESYNC processing started at... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-RESOLVESEQNO, Resolving until sequence number 71 [0x0000000000000047]
-##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Lost transactions extract file fetch13.glo created
-%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 71 [0x0000000000000047]
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, FETCHRESYNC processing started at... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-RESOLVESEQNO, Resolving until sequence number 71 [0x0000000000000047]
+##FILTERED##%YDB-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Lost transactions extract file fetch13.glo created
+%YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 71 [0x0000000000000047]
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB
-%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 71 [0x0000000000000047]
+%YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 71 [0x0000000000000047]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
 %GTM-S-JNLSUCCESS, Rollback successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #  	--> INST1 should rollback to 71 (i.e. fetch13.glo should have seqno's 71-100).
 05 71 ^GBL("INSTANCE1",71)="71"
 05 72 ^GBL("INSTANCE1",72)="72"
@@ -586,22 +586,22 @@ Diffing instancefile_5.out and instancefile_6.out on INST3
 	             <seqno=71, name=INSTANCE3, cycle=1>
 ==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST2 RP'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST3 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=fetch23.glo "*" >& rollback23.tmp; $grep "%GTM-" rollback23.tmp'==
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, FETCHRESYNC processing started at... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-RESOLVESEQNO, Resolving until sequence number 71 [0x0000000000000047]
-##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_AWK.*/instance2/mumps.mjl is renamed to ##TEST_AWK.*/instance2/mumps.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Lost transactions extract file fetch23.glo created
-%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 71 [0x0000000000000047]
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, FETCHRESYNC processing started at... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-RESOLVESEQNO, Resolving until sequence number 71 [0x0000000000000047]
+##FILTERED##%YDB-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_AWK.*/instance2/mumps.mjl is renamed to ##TEST_AWK.*/instance2/mumps.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Lost transactions extract file fetch23.glo created
+%YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 71 [0x0000000000000047]
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB
-%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 71 [0x0000000000000047]
+%YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 71 [0x0000000000000047]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
 %GTM-S-JNLSUCCESS, Rollback successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #  	--> INST2 should rollback to 70 (i.e. fetch23.glo should have seqno's 71-80).
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/analyze_jnl_extract.csh fetch23.glo 71 80'==
 05 71 ^GBL("INSTANCE1",71)="71"
@@ -757,7 +757,7 @@ No errors detected by integ.
 No errors detected by integ.
 ==========================================================
 The instance file contents on INST1 (instancefile_9.out):
-GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+YDB-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
 
 ----------------------------------------------------------
 File Header
@@ -853,7 +853,7 @@ HST #      1 : Stream  0: Last History Number            0 [0x00000000]
 ==========================================================
 ==========================================================
 The instance file contents on INST2 (instancefile_9.out):
-GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+YDB-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
 
 ----------------------------------------------------------
 File Header
@@ -949,7 +949,7 @@ HST #      1 : Stream  0: Last History Number            0 [0x00000000]
 ==========================================================
 ==========================================================
 The instance file contents on INST3 (instancefile_9.out):
-GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+YDB-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
 
 ----------------------------------------------------------
 File Header

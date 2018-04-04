@@ -22,7 +22,7 @@ EXTRACT
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##SOURCE_PATH##/mupip journal -extract=file-a.mjf -forward *
-%GTM-I-FILECREATE, Journal extract file file-a.mjf created
+%YDB-I-FILECREATE, Journal extract file file-a.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -42,9 +42,9 @@ GDSJEX07
 ##SOURCE_PATH##/mupip journal -extract=/bad/path/file-a.mjf -forward *
 unset echo
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%GTM-I-FILENOTCREATE, Journal extract file /bad/path/file-a.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file /bad/path/file-a.mjf not created
 ##SOURCE_PATH##/mupip journal -extract -forward mumps.mjl
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -54,7 +54,7 @@ GDSJEX07
 03\#TIMESTAMP#\1\#PID1#\0\1
 if ( 1 != 4 ) then
 ##SOURCE_PATH##/mupip journal -extract=c.mjf -forward c.mjl
-%GTM-I-FILECREATE, Journal extract file c.mjf created
+%YDB-I-FILECREATE, Journal extract file c.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -63,7 +63,7 @@ GDSJEX07
 02\#TIMESTAMP#\1\#PID1#\0
 03\#TIMESTAMP#\1\#PID1#\0\1
 ##SOURCE_PATH##/mupip journal -extract=b.mjf -forward b.mjl,a.mjl
-%GTM-I-FILECREATE, Journal extract file b.mjf created
+%YDB-I-FILECREATE, Journal extract file b.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -75,7 +75,7 @@ GDSJEX07
 02\#TIMESTAMP#\1\#PID1#\0
 03\#TIMESTAMP#\1\#PID1#\0\1
 ##SOURCE_PATH##/mupip journal -extract=a.mjf -forward a.mjl,b.mjl
-%GTM-I-FILECREATE, Journal extract file a.mjf created
+%YDB-I-FILECREATE, Journal extract file a.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -87,7 +87,7 @@ GDSJEX07
 02\#TIMESTAMP#\1\#PID1#\0
 03\#TIMESTAMP#\1\#PID1#\0\1
 ##SOURCE_PATH##/mupip journal -extract=d.mjf -forward a.mjl,b.mjl
-%GTM-I-FILECREATE, Journal extract file d.mjf created
+%YDB-I-FILECREATE, Journal extract file d.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -389,18 +389,18 @@ GDSJEX07
 02\#TIMESTAMP#\1\#PID1#\0
 03\#TIMESTAMP#\1\#PID1#\0\1
 ##SOURCE_PATH##/mupip journal -extract=fileb.mjf -forward *
-%GTM-I-FILECREATE, Journal extract file fileb.mjf created
+%YDB-I-FILECREATE, Journal extract file fileb.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -extract=/bad/path/fileb.mjf -forward *
 unset echo
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%GTM-I-FILENOTCREATE, Journal extract file /bad/path/fileb.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file /bad/path/fileb.mjf not created
 ##SOURCE_PATH##/mupip journal -extract -forward mumps.mjl
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
-%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
+%YDB-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -411,10 +411,10 @@ GDSJEX07
 05\#TIMESTAMP#\1\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(1)="this is SET"
 if ( 1 != 4 ) then
 ##SOURCE_PATH##/mupip journal -extract -forward c.mjl
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjf is renamed to ##TEST_PATH##/c.mjf_##TIMESTAMP##
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/c.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/c.broken created
-%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/c.lost created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjf is renamed to ##TEST_PATH##/c.mjf_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/c.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/c.broken created
+%YDB-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/c.lost created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -424,8 +424,8 @@ GDSJEX07
 01\#TIMESTAMP#\1\#PID2#\#HOST#\#USER1#\\0\\\
 05\#TIMESTAMP#\1\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^cn(1)="this is SET"
 ##SOURCE_PATH##/mupip journal -extract -forward c.mjl -fences=NONE
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjf is renamed to ##TEST_PATH##/c.mjf_##TIMESTAMP##
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/c.mjf created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjf is renamed to ##TEST_PATH##/c.mjf_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/c.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -477,19 +477,19 @@ GDSJEX07
 02\#TIMESTAMP#\20\#PID2#\0
 03\#TIMESTAMP#\20\#PID2#\0\0
 ##SOURCE_PATH##/mupip journal -extract=ab1.mjf -broken=ab1.broken -lost=ab1.lost -forward b.mjl,a.mjl
-%GTM-I-FILECREATE, Journal extract file ab1.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file ab1.broken created
-%GTM-I-FILECREATE, Lost transactions extract file ab1.lost created
+%YDB-I-FILECREATE, Journal extract file ab1.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file ab1.broken created
+%YDB-I-FILECREATE, Lost transactions extract file ab1.lost created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
 05 1 0 ^acn(1)="this is SET"
 05 1 0 ^bcn(1)="this is SET"
 ##SOURCE_PATH##/mupip journal -ex -losttrans=lost.list -broken=broken.list -for mumps.mjl
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file broken.list created
-%GTM-I-FILECREATE, Lost transactions extract file lost.list created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file broken.list created
+%YDB-I-FILECREATE, Lost transactions extract file lost.list created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -1712,27 +1712,27 @@ echo ###########
 echo #TEST THE TIME QUALIFIERS WITH EXTRACT
 #TEST THE TIME QUALIFIERS WITH EXTRACT
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=for1.mjf -forward -before=".*" mumps.mjl -fences=NONE
-%GTM-I-FILECREATE, Journal extract file for1.mjf created
+%YDB-I-FILECREATE, Journal extract file for1.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=for2.mjf -forward -after=".*" mumps.mjl -fences=NONE
-%GTM-I-FILECREATE, Journal extract file for2.mjf created
+%YDB-I-FILECREATE, Journal extract file for2.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=for3.mjf -forward -before=".*" mumps.mjl -after=".*" -fences=NONE
-%GTM-I-FILECREATE, Journal extract file for3.mjf created
+%YDB-I-FILECREATE, Journal extract file for3.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=for4.jf -forward -before=".*" mumps.mjl -after=".*" -fences=NONE
 ##TEST_AWK%YDB-E-JNLTMQUAL4, Time qualifier BEFORE_TIME="20../../.. ..:..:.." is less than AFTER_TIME="20../../.. ..:..:.."
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%GTM-I-FILENOTCREATE, Journal extract file for4.jf not created
+%YDB-I-FILENOTCREATE, Journal extract file for4.jf not created
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=for5.jf -forward mumps.mjl -after=".*" -fences=NONE
-%GTM-I-FILENOTCREATE, Journal extract file for5.jf not created
+%YDB-I-FILENOTCREATE, Journal extract file for5.jf not created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=sinc1.mjf -back -since=".*" mumps.mjl -fences=NONE
-%GTM-I-FILECREATE, Journal extract file sinc1.mjf created
+%YDB-I-FILECREATE, Journal extract file sinc1.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -1782,9 +1782,9 @@ GTM processes Killed!
 EXTRACT
 
 ##SOURCE_PATH##/mupip journal -extract=filec.mjf -broken=filec.broken -lost=filec.lost -forward *
-%GTM-I-FILECREATE, Journal extract file filec.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file filec.broken created
-%GTM-I-FILECREATE, Lost transactions extract file filec.lost created
+%YDB-I-FILECREATE, Journal extract file filec.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file filec.broken created
+%YDB-I-FILECREATE, Lost transactions extract file filec.lost created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -1996,12 +1996,12 @@ unset echo
 10 41 1 ^acn(13)
 10 42 5 ^acn(14)
 ##SOURCE_PATH##/mupip journal -extract -forward mumps.mjl
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.broken is renamed to ##TEST_PATH##/mumps.broken_##TIMESTAMP##
-%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.lost is renamed to ##TEST_PATH##/mumps.lost_##TIMESTAMP##
-%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.broken is renamed to ##TEST_PATH##/mumps.broken_##TIMESTAMP##
+%YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.lost is renamed to ##TEST_PATH##/mumps.lost_##TIMESTAMP##
+%YDB-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -2012,11 +2012,11 @@ GDSJEX07
 05\#TIMESTAMP#\1\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^dcn(1)="this is SET"
 if ( 1 != 4 ) then
 ##SOURCE_PATH##/mupip journal -extract=cfor.mjf -forward c.mjl
-%GTM-I-FILECREATE, Journal extract file cfor.mjf created
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.broken is renamed to ##TEST_PATH##/c.broken_##TIMESTAMP##
-%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/c.broken created
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.lost is renamed to ##TEST_PATH##/c.lost_##TIMESTAMP##
-%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/c.lost created
+%YDB-I-FILECREATE, Journal extract file cfor.mjf created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.broken is renamed to ##TEST_PATH##/c.broken_##TIMESTAMP##
+%YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/c.broken created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.lost is renamed to ##TEST_PATH##/c.lost_##TIMESTAMP##
+%YDB-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/c.lost created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -2026,7 +2026,7 @@ GDSJEX07
 01\#TIMESTAMP#\1\#PID2#\#HOST#\#USER1#\\0\\\
 05\#TIMESTAMP#\1\#PID2#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^cn(1)="this is SET"
 ##SOURCE_PATH##/mupip journal -extract=cfornofence.mjf -forward c.mjl -fences=NONE
-%GTM-I-FILECREATE, Journal extract file cfornofence.mjf created
+%YDB-I-FILECREATE, Journal extract file cfornofence.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -2132,9 +2132,9 @@ GDSJEX07
 01\#TIMESTAMP#\42\#PID7#\#HOST#\#USER1#\\0\\\
 05\#TIMESTAMP#\42\#PID7#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^c="5"
 ##SOURCE_PATH##/mupip journal -extract=ab2.mjf -broken=ab2.broken -lost=ab2.lost -forward b.mjl,a.mjl
-%GTM-I-FILECREATE, Journal extract file ab2.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file ab2.broken created
-%GTM-I-FILECREATE, Lost transactions extract file ab2.lost created
+%YDB-I-FILECREATE, Journal extract file ab2.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file ab2.broken created
+%YDB-I-FILECREATE, Lost transactions extract file ab2.lost created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -2142,12 +2142,12 @@ unset echo
 05 1 0 ^bcn(1)="this is SET"
 endif
 ##SOURCE_PATH##/mupip journal -extract -forward mumps.mjl -detail
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.broken is renamed to ##TEST_PATH##/mumps.broken_##TIMESTAMP##
-%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.lost is renamed to ##TEST_PATH##/mumps.lost_##TIMESTAMP##
-%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.broken is renamed to ##TEST_PATH##/mumps.broken_##TIMESTAMP##
+%YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.lost is renamed to ##TEST_PATH##/mumps.lost_##TIMESTAMP##
+%YDB-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 endif

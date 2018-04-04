@@ -276,11 +276,11 @@ GDE>
 GDE> 
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/ｍｕｍｐｓ.ｇｌｄ
 ###################################################################
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/安办在.好 created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/我能吞下玻璃而不伤身体.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/ＲＥＧＣ.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/D我能吞下玻璃而不伤身体.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/安办在.好 created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/我能吞下玻璃而不伤身体.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/ＲＥＧＣ.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/D我能吞下玻璃而不伤身体.dat created
 
 GTM>
 
@@ -624,16 +624,16 @@ SHOW -ALL
 !                                                                 SEG = DEFAULT
 !                                                                 FILE = ＲＥＧＤＥＦＡＵＬＴ.dat
 ###################################################################
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mｇmｄｅｆ.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/安办在.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/我能吞下玻璃而不伤身体.mjl created for region BREG with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/D我能吞下玻璃而不伤身体.mjl created for region DREG with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DREG is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mｇmｄｅｆ.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/安办在.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/我能吞下玻璃而不伤身体.mjl created for region BREG with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/D我能吞下玻璃而不伤身体.mjl created for region DREG with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DREG is now ON
 ##FILTERED##GTM_TEST_DEBUGINFO.*
 sleep 2
 unset echo
@@ -646,8 +646,8 @@ GTM>
 GTM>
 ###################################################################
 #- cut a new generation jnl file for one region (DEFAULT)
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mｇmｄｅｆ１.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mｇmｄｅｆ１.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 ##FILTERED##GTM_TEST_DEBUGINFO.*
 sleep 2
 unset echo
@@ -675,9 +675,9 @@ GTM>
 GTM>
 ###################################################################
 #- cut a new generation jnl file for one region (DEFAULT) again
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mｇmｄｅｆ１.mjl is renamed to ##TEST_PATH##/mｇmｄｅｆ１.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mｇmｄｅｆ１.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mｇmｄｅｆ１.mjl is renamed to ##TEST_PATH##/mｇmｄｅｆ１.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mｇmｄｅｆ１.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 #- ls -lt mｇmｄｅｆ*.mjl*
 ##FILTERED##GTM_TEST_DEBUGINFO.*
 ##FILTERED##GTM_TEST_DEBUGINFO.*
@@ -689,9 +689,9 @@ unset echo
 ##FILTERED##GTM_TEST_DEBUGINFO.*
 
 #- cut a new generation jnl file for CREG, would be named ＲＥＧＣ．ｍｊｌ.mjl
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl is renamed to ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl is renamed to ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
 
 GTM>
 
@@ -710,9 +710,9 @@ unset echo
 GTM>
 
 GTM>
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mｇmｄｅｆ１.mjl is renamed to ##TEST_PATH##/mｇmｄｅｆ１.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mｇmｄｅｆ１.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mｇmｄｅｆ１.mjl is renamed to ##TEST_PATH##/mｇmｄｅｆ１.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mｇmｄｅｆ１.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 ##FILTERED##GTM_TEST_DEBUGINFO.*
 ##FILTERED##GTM_TEST_DEBUGINFO.*
 ##FILTERED##GTM_TEST_DEBUGINFO.*
@@ -721,13 +721,13 @@ GTM>
 # - mupip journal -extract to extract from the journal files
 # DEFAULT region
 # mｇmｄｅｆ.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mｇmｄｅｆ.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mｇmｄｅｆ.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 05 11 ^zvar(1,"我能吞下玻璃而不伤身体",1)="ｓｏｍｅ ｄａｔａ"
 05 12 ^zvar(2,"我能吞下玻璃而不伤身体",2)="ｓｏｍｅ ｄａｔａ"
 05 13 ^zvar(3,"我能吞下玻璃而不伤身体",3)="ｓｏｍｅ ｄａｔａ"
@@ -737,13 +737,13 @@ PASS from lost transaction analysis
 ###################################################################
 # defmjlprev1
 ##FILTERED##GTM_TEST_DEBUGINFO.*
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mｇmｄｅｆ１.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mｇmｄｅｆ１.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 05 16 ^zvar(1,"我能吞下玻璃而不伤身体",1)="ｓｏｍｅ ｄａｔａ"
 05 17 ^zvar(2,"我能吞下玻璃而不伤身体",2)="ｓｏｍｅ ｄａｔａ"
 05 18 ^zvar(3,"我能吞下玻璃而不伤身体",3)="ｓｏｍｅ ｄａｔａ"
@@ -839,35 +839,35 @@ unset echo
 ##FILTERED##GTM_TEST_DEBUGINFO.*
 # defmjlprev2
 ##FILTERED##GTM_TEST_DEBUGINFO.*
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mｇmｄｅｆ１.mjf is renamed to ##TEST_PATH##/mｇmｄｅｆ１.mjf_##TIMESTAMP##
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mｇmｄｅｆ１.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mｇmｄｅｆ１.mjf is renamed to ##TEST_PATH##/mｇmｄｅｆ１.mjf_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mｇmｄｅｆ１.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 05 104 ^zvar("another")="for jnl timestamp"
 PASS from lost transaction analysis
 # mｇmｄｅｆ１.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mｇmｄｅｆ１.mjf is renamed to ##TEST_PATH##/mｇmｄｅｆ１.mjf_##TIMESTAMP##
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mｇmｄｅｆ１.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mｇmｄｅｆ１.mjf is renamed to ##TEST_PATH##/mｇmｄｅｆ１.mjf_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mｇmｄｅｆ１.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 lost transaction file empty
 ###################################################################
 #AREG
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/安办在.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/安办在.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 05 11 ^avar(1,"我能吞下玻璃而不伤身体",1)="ｓｏｍｅ ｄａｔａ"
 05 12 ^avar(2,"我能吞下玻璃而不伤身体",2)="ｓｏｍｅ ｄａｔａ"
 05 13 ^avar(3,"我能吞下玻璃而不伤身体",3)="ｓｏｍｅ ｄａｔａ"
@@ -888,13 +888,13 @@ lost transaction file empty
 05 28 ^avar(7,"ｓｏｍｅ",7)="some data"
 PASS from lost transaction analysis
 #BREG
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/我能吞下玻璃而不伤身体.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/我能吞下玻璃而不伤身体.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 05 11 ^bvar(1,"我能吞下玻璃而不伤身体",1)="ｓｏｍｅ ｄａｔａ"
 05 12 ^bvar(2,"我能吞下玻璃而不伤身体",2)="ｓｏｍｅ ｄａｔａ"
 05 13 ^bvar(3,"我能吞下玻璃而不伤身体",3)="ｓｏｍｅ ｄａｔａ"
@@ -920,13 +920,13 @@ PASS from lost transaction analysis
 PASS from lost transaction analysis
 #CREG
 ##FILTERED##GTM_TEST_DEBUGINFO.*
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 05 11 ^cvar(1,"我能吞下玻璃而不伤身体",1)="ｓｏｍｅ ｄａｔａ"
 05 12 ^cvar(2,"我能吞下玻璃而不伤身体",2)="ｓｏｍｅ ｄａｔａ"
 05 13 ^cvar(3,"我能吞下玻璃而不伤身体",3)="ｓｏｍｅ ｄａｔａ"
@@ -961,14 +961,14 @@ PASS from lost transaction analysis
 05 42 ^cvar(32,"我能吞下玻璃而不伤身体",32)="ｓｏｍｅ ｄａｔａ"
 05 43 ^cvar(33,"我能吞下玻璃而不伤身体",33)="ｓｏｍｅ ｄａｔａ"
 PASS from lost transaction analysis
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjf is renamed to ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjf_##TIMESTAMP##
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjf is renamed to ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjf_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 05 44 ^cvar(1,"ｓｏｍｅ",1)="some data"
 05 45 ^cvar(2,"ｓｏｍｅ",2)="some data"
 05 46 ^cvar(3,"ｓｏｍｅ",3)="some data"
@@ -978,13 +978,13 @@ PASS from lost transaction analysis
 05 50 ^cvar(7,"ｓｏｍｅ",7)="some data"
 PASS from lost transaction analysis
 #DREG
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/D我能吞下玻璃而不伤身体.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/D我能吞下玻璃而不伤身体.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 05 11 ^dvar(1,"我能吞下玻璃而不伤身体",1)="ｓｏｍｅ ｄａｔａ"
 05 12 ^dvar(2,"我能吞下玻璃而不伤身体",2)="ｓｏｍｅ ｄａｔａ"
 05 13 ^dvar(3,"我能吞下玻璃而不伤身体",3)="ｓｏｍｅ ｄａｔａ"
@@ -1033,7 +1033,7 @@ PASS from lost transaction analysis
 ###################################################################
 # - mupip journal -show 
 #AREG
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/安办在.mjl
@@ -1094,9 +1094,9 @@ PID        NODE             USER         TERM JPV_TIME
 
 
 %GTM-S-JNLSUCCESS, Show successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #BREG
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/我能吞下玻璃而不伤身体.mjl
@@ -1111,7 +1111,7 @@ Database file name      ##TEST_PATH##/我能吞下玻璃而不伤身体.dat
  Before-image journal                      ENABLED
  Journal file header size                    65536 [0x00010000]
 #CREG
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 
 -------------------------------------------------------------------------------
 ##FILTERED##SHOW output for journal file ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl_##TIMESTAMP##
@@ -1125,9 +1125,9 @@ Database file name      ##TEST_PATH##/ＲＥＧＣ.dat
 
  Before-image journal                      ENABLED
  Journal file header size                    65536 [0x00010000]
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl
@@ -1140,7 +1140,7 @@ Database file name      ##TEST_PATH##/ＲＥＧＣ.dat
  Next journal file name 
 
 #DREG
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/D我能吞下玻璃而不伤身体.mjl
@@ -1155,7 +1155,7 @@ Database file name      ##TEST_PATH##/D我能吞下玻璃而不伤身体.dat
  Before-image journal                      ENABLED
  Journal file header size                    65536 [0x00010000]
 #DEFAULT
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/mｇmｄｅｆ.mjl
@@ -1169,7 +1169,7 @@ Database file name      ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat
 
  Before-image journal                      ENABLED
  Journal file header size                    65536 [0x00010000]
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 
 -------------------------------------------------------------------------------
 ##FILTERED##SHOW output for journal file ##TEST_PATH##/mｇmｄｅｆ１.mjl_##TIMESTAMP##
@@ -1183,7 +1183,7 @@ Database file name      ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat
 
  Before-image journal                      ENABLED
  Journal file header size                    65536 [0x00010000]
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 
 -------------------------------------------------------------------------------
 ##FILTERED##SHOW output for journal file ##TEST_PATH##/mｇmｄｅｆ１.mjl_##TIMESTAMP##
@@ -1197,7 +1197,7 @@ Database file name      ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat
 
  Before-image journal                      ENABLED
  Journal file header size                    65536 [0x00010000]
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/mｇmｄｅｆ１.mjl
@@ -1309,28 +1309,28 @@ File            ##TEST_PATH##/安办在.好
   Journal File: ##TEST_PATH##/安办在.mjl
 ###################################################################
 #- mupip extract the data
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 14  max node len: 22
-%GTM-I-RECORDSTAT, ^avar:	  Key cnt: 18  max subsc len: 47  max rec len: 25  max node len: 76
-%GTM-I-RECORDSTAT, ^binregb:	  Key cnt: 10  max subsc len: 12  max rec len: 14  max node len: 28
-%GTM-I-RECORDSTAT, ^bvar:	  Key cnt: 22  max subsc len: 47  max rec len: 25  max node len: 76
-%GTM-I-RECORDSTAT, ^cats:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
-%GTM-I-RECORDSTAT, ^cvar:	  Key cnt: 40  max subsc len: 47  max rec len: 25  max node len: 76
-%GTM-I-RECORDSTAT, ^dogs:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
-%GTM-I-RECORDSTAT, ^dvar:	  Key cnt: 44  max subsc len: 47  max rec len: 25  max node len: 76
-%GTM-I-RECORDSTAT, ^xyz:	  Key cnt: 10  max subsc len: 8  max rec len: 14  max node len: 24
-%GTM-I-RECORDSTAT, ^zvar:	  Key cnt: 90  max subsc len: 47  max rec len: 25  max node len: 76
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 264  max subsc len: 47  max rec len: 25  max node len: 76
-Output File: %GTM-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 14  max node len: 22
-%GTM-I-RECORDSTAT, ^avar:	  Key cnt: 18  max subsc len: 47  max rec len: 25  max node len: 76
-%GTM-I-RECORDSTAT, ^binregb:	  Key cnt: 10  max subsc len: 12  max rec len: 14  max node len: 28
-%GTM-I-RECORDSTAT, ^bvar:	  Key cnt: 22  max subsc len: 47  max rec len: 25  max node len: 76
-%GTM-I-RECORDSTAT, ^cats:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
-%GTM-I-RECORDSTAT, ^cvar:	  Key cnt: 40  max subsc len: 47  max rec len: 25  max node len: 76
-%GTM-I-RECORDSTAT, ^dogs:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
-%GTM-I-RECORDSTAT, ^dvar:	  Key cnt: 44  max subsc len: 47  max rec len: 25  max node len: 76
-%GTM-I-RECORDSTAT, ^xyz:	  Key cnt: 10  max subsc len: 8  max rec len: 14  max node len: 24
-%GTM-I-RECORDSTAT, ^zvar:	  Key cnt: 90  max subsc len: 47  max rec len: 25  max node len: 76
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 264  max subsc len: 47  max rec len: 25  max node len: 76
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 14  max node len: 22
+%YDB-I-RECORDSTAT, ^avar:	  Key cnt: 18  max subsc len: 47  max rec len: 25  max node len: 76
+%YDB-I-RECORDSTAT, ^binregb:	  Key cnt: 10  max subsc len: 12  max rec len: 14  max node len: 28
+%YDB-I-RECORDSTAT, ^bvar:	  Key cnt: 22  max subsc len: 47  max rec len: 25  max node len: 76
+%YDB-I-RECORDSTAT, ^cats:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
+%YDB-I-RECORDSTAT, ^cvar:	  Key cnt: 40  max subsc len: 47  max rec len: 25  max node len: 76
+%YDB-I-RECORDSTAT, ^dogs:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
+%YDB-I-RECORDSTAT, ^dvar:	  Key cnt: 44  max subsc len: 47  max rec len: 25  max node len: 76
+%YDB-I-RECORDSTAT, ^xyz:	  Key cnt: 10  max subsc len: 8  max rec len: 14  max node len: 24
+%YDB-I-RECORDSTAT, ^zvar:	  Key cnt: 90  max subsc len: 47  max rec len: 25  max node len: 76
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 264  max subsc len: 47  max rec len: 25  max node len: 76
+Output File: %YDB-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 14  max node len: 22
+%YDB-I-RECORDSTAT, ^avar:	  Key cnt: 18  max subsc len: 47  max rec len: 25  max node len: 76
+%YDB-I-RECORDSTAT, ^binregb:	  Key cnt: 10  max subsc len: 12  max rec len: 14  max node len: 28
+%YDB-I-RECORDSTAT, ^bvar:	  Key cnt: 22  max subsc len: 47  max rec len: 25  max node len: 76
+%YDB-I-RECORDSTAT, ^cats:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
+%YDB-I-RECORDSTAT, ^cvar:	  Key cnt: 40  max subsc len: 47  max rec len: 25  max node len: 76
+%YDB-I-RECORDSTAT, ^dogs:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
+%YDB-I-RECORDSTAT, ^dvar:	  Key cnt: 44  max subsc len: 47  max rec len: 25  max node len: 76
+%YDB-I-RECORDSTAT, ^xyz:	  Key cnt: 10  max subsc len: 8  max rec len: 14  max node len: 24
+%YDB-I-RECORDSTAT, ^zvar:	  Key cnt: 90  max subsc len: 47  max rec len: 25  max node len: 76
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 264  max subsc len: 47  max rec len: 25  max node len: 76
 GT.M MUPIP EXTRACT UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 GT.M MUPIP EXTRACT UTF-8
@@ -1343,8 +1343,8 @@ GT.M MUPIP EXTRACT UTF-8
 %SYSTEM-E-ENO17, File exists
 %YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/我能吞下玻璃而不伤身体.dat
 %SYSTEM-E-ENO17, File exists
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/ＲＥＧＣ.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/ＲＥＧＣ.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat created
 %YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/D我能吞下玻璃而不伤身体.dat
 %SYSTEM-E-ENO17, File exists
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
@@ -1357,17 +1357,17 @@ LOAD TOTAL		Key Cnt: 264  Max Subsc Len: 47  Max Data Len: 25
 Last LOAD record number: 266
 
 # now do mupip extract into ｍｕｐｉｐｅｘｔ3.ext
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 14  max node len: 22
-%GTM-I-RECORDSTAT, ^avar:	  Key cnt: 18  max subsc len: 47  max rec len: 25  max node len: 76
-%GTM-I-RECORDSTAT, ^binregb:	  Key cnt: 10  max subsc len: 12  max rec len: 14  max node len: 28
-%GTM-I-RECORDSTAT, ^bvar:	  Key cnt: 22  max subsc len: 47  max rec len: 25  max node len: 76
-%GTM-I-RECORDSTAT, ^cats:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
-%GTM-I-RECORDSTAT, ^cvar:	  Key cnt: 40  max subsc len: 47  max rec len: 25  max node len: 76
-%GTM-I-RECORDSTAT, ^dogs:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
-%GTM-I-RECORDSTAT, ^dvar:	  Key cnt: 44  max subsc len: 47  max rec len: 25  max node len: 76
-%GTM-I-RECORDSTAT, ^xyz:	  Key cnt: 10  max subsc len: 8  max rec len: 14  max node len: 24
-%GTM-I-RECORDSTAT, ^zvar:	  Key cnt: 90  max subsc len: 47  max rec len: 25  max node len: 76
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 264  max subsc len: 47  max rec len: 25  max node len: 76
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 14  max node len: 22
+%YDB-I-RECORDSTAT, ^avar:	  Key cnt: 18  max subsc len: 47  max rec len: 25  max node len: 76
+%YDB-I-RECORDSTAT, ^binregb:	  Key cnt: 10  max subsc len: 12  max rec len: 14  max node len: 28
+%YDB-I-RECORDSTAT, ^bvar:	  Key cnt: 22  max subsc len: 47  max rec len: 25  max node len: 76
+%YDB-I-RECORDSTAT, ^cats:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
+%YDB-I-RECORDSTAT, ^cvar:	  Key cnt: 40  max subsc len: 47  max rec len: 25  max node len: 76
+%YDB-I-RECORDSTAT, ^dogs:	  Key cnt: 10  max subsc len: 9  max rec len: 14  max node len: 25
+%YDB-I-RECORDSTAT, ^dvar:	  Key cnt: 44  max subsc len: 47  max rec len: 25  max node len: 76
+%YDB-I-RECORDSTAT, ^xyz:	  Key cnt: 10  max subsc len: 8  max rec len: 14  max node len: 24
+%YDB-I-RECORDSTAT, ^zvar:	  Key cnt: 90  max subsc len: 47  max rec len: 25  max node len: 76
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 264  max subsc len: 47  max rec len: 25  max node len: 76
 # check if the two extracts ｍｕｐｉｐｅｘｔ1.ext and ｍｕｐｉｐｅｘｔ3.ext differ
 TEST-I-PASS mupip load test passed.
 ###################################################################
@@ -1393,7 +1393,7 @@ Error MUNOACTION seen in freeze_err.log as expected:
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ----------
 # cat freeze_err.log
-%GTM-I-REGFILENOTFOUND, Database file ＲＥＧＤＥＦＡＵＬＴ.dat corresponding to region DEFAULT cannot be found
+%YDB-I-REGFILENOTFOUND, Database file ＲＥＧＤＥＦＡＵＬＴ.dat corresponding to region DEFAULT cannot be found
 %YDB-E-NOREGION, REGION not found: DEFAULT
 
 MUPIP cannot start freeze with above errors
@@ -1414,44 +1414,44 @@ GTM>
 
 AREG
 ##TEST_AWK.a."ａｂｃ". Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 
 BREG
 ##TEST_AWK.b.1,"ａｂｃ". Owned by PID= [1-9][0-9]* which is an existing process
 ^b("我能吞下玻璃而不伤身体")
 ##TEST_AWK                         Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 4/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 4/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in CREG
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 
 DEFAULT
 z("我能吞下玻璃而不伤身体")
 ##TEST_AWK                         Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in DREG
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in DREG
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 #lke and output files
 LKE> LKE> LKE> # all locks should be gone now
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in AREG
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in BREG
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in CREG
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in DREG
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in AREG
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in BREG
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in CREG
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in DREG
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 #release the job
 
 GTM>
@@ -1479,7 +1479,7 @@ Error DIVZERO seen in ｊｏｂｏｆｆ.ｍｊｅ as expected:
 (such as mupip replic -source -start -instsecondary=我能吞我能)
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [我能吞我能]
 #- editinstance -show
-GTM-I-MUREPLSHOW, SHOW output for replication instance file 我能吞下玻璃而不伤身体.repl
+YDB-I-MUREPLSHOW, SHOW output for replication instance file 我能吞下玻璃而不伤身体.repl
 
 ----------------------------------------------------------
 File Header

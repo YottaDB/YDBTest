@@ -13,12 +13,12 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 # Make gtmgbldir point to single-region gld
 # Create replication instance file and set replic on
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
 # Start the passive source server
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTB]
 # Now switch to a two-region gld file (AREG and DEFAULT) and turn journaling ON (but not replication) on AREG
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
 # Run c002736 and expect YDB-E-REPLOFFJNLON
 150380314,c002736+31^c002736,%YDB-E-REPLOFFJNLON, Replication state for database file ##TEST_PATH##/a.dat is OFF but journaling state is enabled
 # Shutdown the passive source server

@@ -19,7 +19,7 @@ EXTRACT
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##SOURCE_PATH##/mupip journal -extract=file-a.mjf -forward *
-%GTM-I-FILECREATE, Journal extract file file-a.mjf created
+%YDB-I-FILECREATE, Journal extract file file-a.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -33,7 +33,7 @@ unset echo
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##SOURCE_PATH##/mupip journal -extract -forward mumps.mjl
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -332,7 +332,7 @@ GDSJEX07
 02\#TIMESTAMP#\1\#PID1#\0
 03\#TIMESTAMP#\1\#PID1#\0\1
 ##SOURCE_PATH##/mupip journal -extract=fileb.mjf -forward *
-%GTM-I-FILECREATE, Journal extract file fileb.mjf created
+%YDB-I-FILECREATE, Journal extract file fileb.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 ##SOURCE_PATH##/mupip journal -extract=/bad/path/fileb.mjf -forward *
@@ -341,8 +341,8 @@ unset echo
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##SOURCE_PATH##/mupip journal -extract -forward mumps.mjl
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -474,10 +474,10 @@ GDSJEX07
 if ( 1 != 1 ) then
 unset echo
 check that SHOW=STAT and EXTRACT counts match
-%GTM-I-FILECREATE, Journal extract file nodetail.mjf created
+%YDB-I-FILECREATE, Journal extract file nodetail.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-%GTM-I-FILECREATE, Journal extract file detail.mjf created
+%YDB-I-FILECREATE, Journal extract file detail.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 TOT_KILL, TOT_SET, and TOT_ZKILL should be the same in the three:
@@ -959,9 +959,9 @@ echo
 
 set echo
 ##SOURCE_PATH##/mupip journal -extract=filec.mjf -broken=filec.broken -lost=filec.lost -forward *
-%GTM-I-FILECREATE, Journal extract file filec.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file filec.broken created
-%GTM-I-FILECREATE, Lost transactions extract file filec.lost created
+%YDB-I-FILECREATE, Journal extract file filec.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file filec.broken created
+%YDB-I-FILECREATE, Lost transactions extract file filec.lost created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -1212,10 +1212,10 @@ GDSJEX07
 07\#TIMESTAMP#\134\#PID3#\0\#TOKENSEQ17#\1
 unset echo
 ##SOURCE_PATH##/mupip journal -extract -forward mumps.mjl
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
-%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
+%YDB-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 unset echo
@@ -1466,12 +1466,12 @@ GDSJEX07
 07\#TIMESTAMP#\134\#PID3#\0\#TOKENSEQ17#\1
 if ( 1 != 1 ) then
 ##SOURCE_PATH##/mupip journal -extract -forward mumps.mjl -detail
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.broken is renamed to ##TEST_PATH##/mumps.broken_##TIMESTAMP##
-%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.lost is renamed to ##TEST_PATH##/mumps.lost_##TIMESTAMP##
-%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.broken is renamed to ##TEST_PATH##/mumps.broken_##TIMESTAMP##
+%YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.lost is renamed to ##TEST_PATH##/mumps.lost_##TIMESTAMP##
+%YDB-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 endif
@@ -2053,8 +2053,8 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
 GTM>
 ##TEST_AWKTime written into time.*
@@ -2106,8 +2106,8 @@ Check that only ^acn(11,11),^acn(12,12),^acn(13,13),^acn(14,14) are present
 ^acn(12,12)="this is USET"
 ^acn(13,13)="this is GSET"
 ^acn(14,14)="this is GSET"
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 Check that the offset + len matches the next offset (i.e. no records are omitted, and len is correct)

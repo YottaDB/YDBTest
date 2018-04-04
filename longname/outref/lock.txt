@@ -10,18 +10,18 @@ a8.dat
 mumps.dat
 test long variable names for lock command
 test long region names
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A234567890123456
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A23456789012345678901234567890
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A23456789012345678901234567890
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 
 GTM>
 do ^lkelong
@@ -32,21 +32,21 @@ Try to lock loc4567890123456789012345678901wowthisisonelongvariablehere and ^gbl
 Show all the locks
 #####################################################################
 $LKE show -all
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A2345678
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A234567890123456
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A23456789012345678901234567890
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A2345678
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A23456789012345678901234567890
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 
 DEFAULT
 ^a Owned by PID= PID1 which is an existing process
@@ -126,8 +126,8 @@ loc456789012345678901234567890
                          Owned by PID= PID1 which is an existing process
 loc4567890123456789012345678901
                          Owned by PID= PID1 which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 60/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 60/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 zshow L
 MLG:31,MLT:0
 LOCK ^gbl4567890123456789012345678901 LEVEL=3
@@ -193,23 +193,23 @@ LOCK ^a LEVEL=1
 #####################################################################
 Show locks ^A2345678 loc4567890123456789012345678901 and ^gbl4567890123456789012345678901
 $LKE show -lock=^A2345678 -region=A2345678
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A2345678
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A2345678
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 $LKE show -lock=loc4567890123456789012345678901 -region=DEFAULT
 
 DEFAULT
 loc4567890123456789012345678901
                          Owned by PID= PID1 which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 60/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 60/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 $LKE show -lock=^gbl4567890123456789012345678901 -region=DEFAULT
 
 DEFAULT
 ^gbl4567890123456789012345678901
                          Owned by PID= PID1 which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 60/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 60/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 #####################################################################
 ZSHOW L
 ^gbl4567890123456789012345678901("L",0)="MLG:31,MLT:0"
@@ -276,11 +276,11 @@ ZSHOW L
 #####################################################################
 Clear locks ^a,^b,loc4567890123456789012345678901,^gbl4567890123456789012345678901 and ^xxx
 $LKE clear -nointeractive -lock=^a
-%GTM-I-NOLOCKMATCH, No matching locks were found in A
-%GTM-I-NOLOCKMATCH, No matching locks were found in A2345678
-%GTM-I-NOLOCKMATCH, No matching locks were found in A234567890123456
-%GTM-I-NOLOCKMATCH, No matching locks were found in A23456789012345678901234567890
-%GTM-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
+%YDB-I-NOLOCKMATCH, No matching locks were found in A
+%YDB-I-NOLOCKMATCH, No matching locks were found in A2345678
+%YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456
+%YDB-I-NOLOCKMATCH, No matching locks were found in A23456789012345678901234567890
+%YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
 
 DEFAULT
 Lock removed : ^a
@@ -298,9 +298,9 @@ $LKE clear -nointeractive -lock=^gbl4567890123456789012345678901 -region=DEFAULT
 DEFAULT
 Lock removed : ^gbl4567890123456789012345678901
 $LKE clear -nointeractive -lock=^gbl4567890123456789012345678901 -region=DEFAULT
-%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 $LKE clear -nointeractive -lock=^xxx -region=DEFAULT
-%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 #####################################################################
 show all the locks again
 $LKE show -all -region=DEFAULT
@@ -375,8 +375,8 @@ loc45678901234567890123456789
                          Owned by PID= PID1 which is an existing process
 loc456789012345678901234567890
                          Owned by PID= PID1 which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 56/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 56/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 zshow L
 ^gbl4567890123456789012345678901("L",0)="MLG:31,MLT:0"
 ^gbl4567890123456789012345678901("L",1)="ZAL ^gbl456789012345678901234567890"
@@ -1044,11 +1044,11 @@ LOCK ab34567890123456789012345678901 LEVEL=1
 clear all the locks
 #####################################################################
 $LKE clear -nointeractive -all
-%GTM-I-NOLOCKMATCH, No matching locks were found in A
-%GTM-I-NOLOCKMATCH, No matching locks were found in A2345678
-%GTM-I-NOLOCKMATCH, No matching locks were found in A234567890123456
-%GTM-I-NOLOCKMATCH, No matching locks were found in A23456789012345678901234567890
-%GTM-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
+%YDB-I-NOLOCKMATCH, No matching locks were found in A
+%YDB-I-NOLOCKMATCH, No matching locks were found in A2345678
+%YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456
+%YDB-I-NOLOCKMATCH, No matching locks were found in A23456789012345678901234567890
+%YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
 
 DEFAULT
 Lock removed : ^gbl45
@@ -1106,9 +1106,9 @@ Lock removed : loc45678901234567890123456789
 Lock removed : loc456789012345678901234567890
 #####################################################################
 $LKE show -all -region=DEFAULT
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 zshow L
 #####################################################################
 
@@ -1130,8 +1130,8 @@ A
 ^A2345 Owned by PID= PID2 which is an existing process
 ^A23456 Owned by PID= PID2 which is an existing process
 ^A234567 Owned by PID= PID2 which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(160|213); LOCK slots in use: 7/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(160|213); LOCK slots in use: 7/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 
 A2345678
 ^A2345678 Owned by PID= PID2 which is an existing process
@@ -1142,8 +1142,8 @@ A2345678
 ^A234567890123 Owned by PID= PID2 which is an existing process
 ^A2345678901234 Owned by PID= PID2 which is an existing process
 ^A23456789012345 Owned by PID= PID2 which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(160|213); LOCK slots in use: 8/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(160|213); LOCK slots in use: 8/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 
 A234567890123456
 ^A234567890123456 Owned by PID= PID2 which is an existing process
@@ -1166,23 +1166,23 @@ A234567890123456
                          Owned by PID= PID2 which is an existing process
 ^A2345678901234567890123456789
                          Owned by PID= PID2 which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(160|213); LOCK slots in use: 14/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(160|213); LOCK slots in use: 14/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 
 A23456789012345678901234567890
 ^A23456789012345678901234567890
                          Owned by PID= PID2 which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 
 A234567890123456789012345678901
 ^A234567890123456789012345678901
                          Owned by PID= PID2 which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 #####################################################################
 $LKE show -reg=A
 
@@ -1194,8 +1194,8 @@ A
 ^A2345 Owned by PID= PID2 which is an existing process
 ^A23456 Owned by PID= PID2 which is an existing process
 ^A234567 Owned by PID= PID2 which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(160|213); LOCK slots in use: 7/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(160|213); LOCK slots in use: 7/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 #####################################################################
 $LKE show -reg=A2345678
 
@@ -1208,8 +1208,8 @@ A2345678
 ^A234567890123 Owned by PID= PID2 which is an existing process
 ^A2345678901234 Owned by PID= PID2 which is an existing process
 ^A23456789012345 Owned by PID= PID2 which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(160|213); LOCK slots in use: 8/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(160|213); LOCK slots in use: 8/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 #####################################################################
 $LKE show -reg=A234567890123456
 
@@ -1234,24 +1234,24 @@ A234567890123456
                          Owned by PID= PID2 which is an existing process
 ^A2345678901234567890123456789
                          Owned by PID= PID2 which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(160|213); LOCK slots in use: 14/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(160|213); LOCK slots in use: 14/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 #####################################################################
 $LKE show -reg=A23456789012345678901234567890
 
 A23456789012345678901234567890
 ^A23456789012345678901234567890
                          Owned by PID= PID2 which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 #####################################################################
 $LKE show -reg=A234567890123456789012345678901
 
 A234567890123456789012345678901
 ^A234567890123456789012345678901
                          Owned by PID= PID2 which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 #####################################################################
 LKE clear some of the locks...
 $LKE clear -nointeractive -reg=A2345678
@@ -1302,26 +1302,26 @@ A
 ^A2345 Owned by PID= PID2 which is an existing process
 ^A23456 Owned by PID= PID2 which is an existing process
 ^A234567 Owned by PID= PID2 which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(160|213); LOCK slots in use: 7/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A2345678
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A234567890123456
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(160|213); LOCK slots in use: 7/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A2345678
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 
 A23456789012345678901234567890
 ^A23456789012345678901234567890
                          Owned by PID= PID2 which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 #####################################################################
 clear all locks...
 #####################################################################
@@ -1335,33 +1335,33 @@ Lock removed : ^A234
 Lock removed : ^A2345
 Lock removed : ^A23456
 Lock removed : ^A234567
-%GTM-I-NOLOCKMATCH, No matching locks were found in A2345678
-%GTM-I-NOLOCKMATCH, No matching locks were found in A234567890123456
+%YDB-I-NOLOCKMATCH, No matching locks were found in A2345678
+%YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456
 
 A23456789012345678901234567890
 Lock removed : ^A23456789012345678901234567890
-%GTM-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
-%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 #####################################################################
 $LKE show -all
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A2345678
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A234567890123456
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A23456789012345678901234567890
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A2345678
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A23456789012345678901234567890
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 
 GTM>
 ##SOURCE_PATH##/mupip

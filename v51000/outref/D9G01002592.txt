@@ -12,9 +12,9 @@ GTM>
                            Testing format=zwr
 ######################################################################################
 $MUPIP extract -format=$fmt all.$fmt
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 10  max subsc len: 6  max rec len: 400  max node len: 410
-%GTM-I-RECORDSTAT, ^y:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 11  max subsc len: 6  max rec len: 400  max node len: 410
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 10  max subsc len: 6  max rec len: 400  max node len: 410
+%YDB-I-RECORDSTAT, ^y:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 11  max subsc len: 6  max rec len: 400  max node len: 410
 if ( $fmt == bin ) then
 
 set fmtstr = ""
@@ -196,9 +196,9 @@ unset verbose
                            Testing format=go
 ######################################################################################
 $MUPIP extract -format=$fmt all.$fmt
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 10  max subsc len: 6  max rec len: 400  max node len: 410
-%GTM-I-RECORDSTAT, ^y:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 11  max subsc len: 6  max rec len: 400  max node len: 410
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 10  max subsc len: 6  max rec len: 400  max node len: 410
+%YDB-I-RECORDSTAT, ^y:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 11  max subsc len: 6  max rec len: 400  max node len: 410
 if ( $fmt == bin ) then
 
 set fmtstr = ""
@@ -384,9 +384,9 @@ unset verbose
                            Testing format=bin
 ######################################################################################
 $MUPIP extract -format=$fmt all.$fmt
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 10  max subsc len: 6  max rec len: 400  max node len: 410
-%GTM-I-RECORDSTAT, ^y:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 11  max subsc len: 6  max rec len: 400  max node len: 410
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 10  max subsc len: 6  max rec len: 400  max node len: 410
+%YDB-I-RECORDSTAT, ^y:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 11  max subsc len: 6  max rec len: 400  max node len: 410
 if ( $fmt == bin ) then
 set fmtstr = "-format=bin"
 else

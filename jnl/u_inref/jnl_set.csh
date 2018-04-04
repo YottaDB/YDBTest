@@ -1,4 +1,16 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 # This test is for C9B12-001854 GTM increments curr_tn even jnl_file_open fails
 # it sets the jnl file to read only and tries to write to the db.
 # Current transaction field from dse d -f should not change.
@@ -10,7 +22,7 @@ setenv gtm_test_disable_randomdbtn
 source $gtm_tst/com/dbcreate.csh mumps 1
 
 $MUPIP set -reg $tst_jnl_str "*" >&! jnl_on.log
-$grep "GTM-I-JNLSTATE" jnl_on.log
+$grep "YDB-I-JNLSTATE" jnl_on.log
 chmod 444 mumps.mjl
 $DSE d -f
 

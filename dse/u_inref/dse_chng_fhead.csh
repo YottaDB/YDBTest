@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -136,7 +136,7 @@ echo "testing interrupted_recov flag"
 
 echo "set tp transactions"
 $MUPIP set $tst_jnl_str -reg "*" >&! jnl_on.log
-$grep "GTM-I-JNLSTATE" jnl_on.log | sort
+$grep "YDB-I-JNLSTATE" jnl_on.log | sort
 \rm -rf jobid.txt
 
 $gtm_tst/com/abs_time.csh time1 >>! /dev/null

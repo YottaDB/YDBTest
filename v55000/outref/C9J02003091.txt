@@ -8,7 +8,7 @@ mumps.dat
 %YDB-E-JNLNOCREATE, Journal file ##TEST_PATH##/mumps.dat not created
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # Now Turn on journaling normally
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 # Turn on journaling again with -file= pointing to the database itself. Expect YDB-E-FILEEXISTS and YDB-E-JNLNOCREATE
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/mumps.dat already exists
 %YDB-E-JNLNOCREATE, Journal file ##TEST_PATH##/mumps.dat not created
@@ -25,7 +25,7 @@ mumps.dat
 %YDB-E-JNLNOCREATE, Journal file ##TEST_PATH##/backup_dir/mumps.mjl not created
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # mupip set -journal=on,file=<new-file> -reg DEFAUT should work fine
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 # The journal file shoud have NO previous links
 Journal file name       ##TEST_PATH##/backup_dir/newmumps.mjl
 Database file name      ##TEST_PATH##/backup_dir/mumps.dat

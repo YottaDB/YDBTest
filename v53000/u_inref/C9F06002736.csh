@@ -40,14 +40,14 @@ setenv gtm_repl_instance mumps.repl
 echo "# Create replication instance file and set replic on"
 $MUPIP replicate -instance -name=INSTA $gtm_test_qdbrundown_parms
 $MUPIP set -replication=on -reg "*" >&! mupip_replic_on.out
-$grep -E "GTM-I-JNLSTATE|GTM-I-REPLSTATE" mupip_replic_on.out
+$grep -E "YDB-I-JNLSTATE|YDB-I-REPLSTATE" mupip_replic_on.out
 echo "# Start the passive source server"
 $MUPIP replic -source -start -passive -log=source.log -buf=1 -instsecondary=INSTB -rootprimary
 
 echo "# Now switch to a two-region gld file (AREG and DEFAULT) and turn journaling ON (but not replication) on AREG"
 setenv gtmgbldir tworeg.gld
 $MUPIP set $tst_jnl_str -reg AREG >&! mupip_set_jnlon.out
-$grep "GTM-I-JNLSTATE" mupip_set_jnlon.out
+$grep "YDB-I-JNLSTATE" mupip_set_jnlon.out
 echo "# Run c002736 and expect YDB-E-REPLOFFJNLON"
 $gtm_exe/mumps -run c002736
 echo "# Shutdown the passive source server"

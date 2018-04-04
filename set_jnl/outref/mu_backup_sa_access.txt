@@ -73,19 +73,19 @@ d.dat
 mumps.dat
 Take AREG in state 1
 ##SOURCE_PATH##/mupip set -journal=enable,off,[no]before -reg AREG
-%GTM-I-JNLSTATE, Journaling state for region AREG is now OFF
+%YDB-I-JNLSTATE, Journaling state for region AREG is now OFF
 Take BREG in state 2
 ##SOURCE_PATH##/mupip set -journal=enable,on,[no]before -reg BREG
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with (NO|)BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with (NO|)BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
 GTM Process starts in background...
 ##SOURCE_PATH##/mupip backup * -newjnl ./back{5}
 
 
 
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with (NO|)BEFORE_IMAGES
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with (NO|)BEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with (NO|)BEFORE_IMAGES
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with (NO|)BEFORE_IMAGES
 %GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/c.dat
 %GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/d.dat
 %GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
@@ -121,12 +121,12 @@ Journal States:
 
 
 
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with (NO|)BEFORE_IMAGES
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with (NO|)BEFORE_IMAGES
-%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/a.mjl created for database file ##TEST_PATH##/a.dat
-%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/b.mjl created for database file ##TEST_PATH##/b.dat
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with (NO|)BEFORE_IMAGES
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with (NO|)BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/a.mjl created for database file ##TEST_PATH##/a.dat
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/b.mjl created for database file ##TEST_PATH##/b.dat
 %GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/c.dat
 %GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/d.dat
 %GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
@@ -146,10 +146,10 @@ Journal States:
 
 
 
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with (NO|)BEFORE_IMAGES
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with (NO|)BEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with (NO|)BEFORE_IMAGES
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with (NO|)BEFORE_IMAGES
 %GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/c.dat
 %GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/d.dat
 %GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat

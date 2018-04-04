@@ -1,6 +1,6 @@
 
 ;# Set gtm_zstep environmental variable to display the code in specified location
-%GTM-I-BREAK, Break instruction encountered
+%YDB-I-BREAK, Break instruction encountered
 		At M source location begin^gtm8357
 GTM>
 1    write $zstep,!
@@ -11,25 +11,25 @@ line7
 line8
 line9
 	write "line1",!
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+1^gtm8357
 GTM>
 3    zstep
 line1
 	write "line2",!
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+2^gtm8357
 GTM>
 4    zstep
 line2
 	write "line3",!
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+3^gtm8357
 GTM>
 5    zstep
 line3
 	write "line4",!
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+4^gtm8357
 GTM>
 6    zcontinue
@@ -37,7 +37,7 @@ line4
 line5
 line6
 ;# gtm_zstep is not defined test case
-%GTM-I-BREAK, Break instruction encountered
+%YDB-I-BREAK, Break instruction encountered
 		At M source location begin^gtm8357
 GTM>
 1    write $zstep,!
@@ -47,22 +47,22 @@ GTM>
 line7
 line8
 line9
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+1^gtm8357
 GTM>
 3    zstep
 line1
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+2^gtm8357
 GTM>
 4    zstep
 line2
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+3^gtm8357
 GTM>
 5    zstep
 line3
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+4^gtm8357
 GTM>
 6    zcontinue
@@ -70,7 +70,7 @@ line4
 line5
 line6
 ;# gtm_zstep is defined and overwritten while doing debug
-%GTM-I-BREAK, Break instruction encountered
+%YDB-I-BREAK, Break instruction encountered
 		At M source location begin^gtm8357
 GTM>
 1    write $zstep,!
@@ -81,26 +81,26 @@ line7
 line8
 line9
 	write "line1",!
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+1^gtm8357
 GTM>
 3    zstep
 line1
 	write "line2",!
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+2^gtm8357
 GTM>
 4    zstep
 line2
 	write "line3",!
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+3^gtm8357
 GTM>
 5    set $ZSTEP="B"
 GTM>
 6    zstep
 line3
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+4^gtm8357
 GTM>
 7    zcontinue

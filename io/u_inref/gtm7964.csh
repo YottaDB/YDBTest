@@ -33,7 +33,7 @@ $echoline
 # the following command enters mumps with $PATH undefined and then tries to open a pipe with the parse parameter
 # prior to gtm-7964 this caused a signal 11.  After this JI it issues the following:
 # %YDB-E-DEVOPENFAIL, Error opening PP
-# %GTM-I-TEXT, $PATH undefined, Invalid command string: cat
+# %YDB-I-TEXT, $PATH undefined, Invalid command string: cat
 # The new information in the text message is that $PATH is undefined so parse_pipe() can't find cat
 # If the parse device parameter is omitted the underlying exec of a shell to execute the command
 # string will initialize PATH resulting in cat being found.

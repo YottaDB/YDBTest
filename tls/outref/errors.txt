@@ -29,8 +29,8 @@ Error W-TLSCONVSOCK seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
 %GTM-W-TLSCONVSOCK, Failed to convert Unix TCP/IP socket to TLS/SSL aware socket
 ----------
 ----------
-Error GTM-I-TEXT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-%GTM-I-TEXT, Failed to read private key ##TEST_PATH##/demoCA/private/client.key. Reason: error:0906D066:PEM routines:PEM_read_bio:bad end line
+Error YDB-I-TEXT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%YDB-I-TEXT, Failed to read private key ##TEST_PATH##/demoCA/private/client.key. Reason: error:0906D066:PEM routines:PEM_read_bio:bad end line
 ----------
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
@@ -56,8 +56,8 @@ Error W-TLSCONVSOCK seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
 %GTM-W-TLSCONVSOCK, Failed to convert Unix TCP/IP socket to TLS/SSL aware socket
 ----------
 ----------
-Error GTM-I-TEXT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-##TEST_AWK%GTM-I-TEXT, Failed to read private key ##TEST_PATH##/demoCA/private/client.key. Reason: error:.*(bad decrypt|wrong tag|header too long)
+Error YDB-I-TEXT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+##TEST_AWK%YDB-I-TEXT, Failed to read private key ##TEST_PATH##/demoCA/private/client.key. Reason: error:.*(bad decrypt|wrong tag|header too long)
 ----------
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
@@ -83,8 +83,8 @@ Error W-TLSCONVSOCK seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
 %GTM-W-TLSCONVSOCK, Failed to convert Unix TCP/IP socket to TLS/SSL aware socket
 ----------
 ----------
-Error GTM-I-TEXT seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%GTM-I-TEXT, Configuration parameter `tls.dh512' not specified.
+Error YDB-I-TEXT seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+%YDB-I-TEXT, Configuration parameter `tls.dh512' not specified.
 ----------
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2

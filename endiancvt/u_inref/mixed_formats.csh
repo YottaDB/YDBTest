@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2006, 2013 Fidelity Information Services, Inc	#
+# Copyright 2006, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -37,7 +40,7 @@ $gtm_tst/com/dbcheck.csh
 source $gtm_tst/com/bakrestore_test_replic.csh
 
 echo "# Now endian convert the databases concurrently"
-$gtm_tst/$tst/u_inref/endiancvt_db.csh mumps.dat a.dat b.dat c.dat >&! endiancvt_db.out ; $grep GTM-I-ENDIANCVT endiancvt_db.out
+$gtm_tst/$tst/u_inref/endiancvt_db.csh mumps.dat a.dat b.dat c.dat >&! endiancvt_db.out ; $grep YDB-I-ENDIANCVT endiancvt_db.out
 
 $rcp mumps.dat "$tst_remote_host":$SEC_SIDE
 $rcp a.dat "$tst_remote_host":$SEC_SIDE
@@ -76,7 +79,7 @@ $sec_shell "$sec_getenv ; cd $SEC_SIDE ; cp c.dat check_endian/ ; cd check_endia
 
 
 echo "#  In the remote machine, run endiancvt on all the databases simultaneously"
-$sec_shell "$sec_getenv ; cd $SEC_SIDE ;"'$gtm_tst/$tst/u_inref/endiancvt_db.csh mumps.dat a.dat b.dat c.dat >&! endiancvt_db.out ; $grep GTM-I-ENDIANCVT endiancvt_db.out'
+$sec_shell "$sec_getenv ; cd $SEC_SIDE ;"'$gtm_tst/$tst/u_inref/endiancvt_db.csh mumps.dat a.dat b.dat c.dat >&! endiancvt_db.out ; $grep YDB-I-ENDIANCVT endiancvt_db.out'
 
 echo "# Now test the endianness of each database using DSE"
 echo "# DEFAULT: mumps.dat"

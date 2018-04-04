@@ -33,17 +33,17 @@ DEFAULT
                          Owned by PID= ##PID## which is an existing process
 z("ΨΈẸẪΆΨ") Owned by PID= ##PID## which is an existing process
 zl("ΨΈẸẪΆΨ") Owned by PID= ##PID## which is an existing process
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 ###################################################################
 with gtm_chset equal to bla
 TEST-I-PASS lke show -all test passed
 ###################################################################
 show and clear certain existent and non-existent locks
 with gtm_chset equal to bla
-LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+LKE> %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+LKE> %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+LKE> %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+LKE> %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 LKE> 
 ###################################################################
 #proceed with gtm_chset equal to UTF-8
@@ -51,12 +51,12 @@ LKE>
 DEFAULT
 ^b("ڦAΨמ","ẙ۩Ÿ",2,"ĂȑƋっ")
                          Owned by PID= ##PID## which is an existing process
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-LKE> %GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+LKE> %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+LKE> %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+LKE> %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+LKE> %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+LKE> %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 LKE> 
 DEFAULT
 ^a("","ABC","ＮＯＮ-ＧＲＡＰＨＩＣ １")
@@ -72,7 +72,7 @@ DEFAULT
                          Owned by PID= ##PID## which is an existing process
 z("ΨΈẸẪΆΨ") Owned by PID= ##PID## which is an existing process
 zl("ΨΈẸẪΆΨ") Owned by PID= ##PID## which is an existing process
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 LKE> 
 DEFAULT
 Lock removed : ^a("","ABC","ＮＯＮ-ＧＲＡＰＨＩＣ １")

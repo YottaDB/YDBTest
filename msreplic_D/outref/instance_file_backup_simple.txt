@@ -94,12 +94,12 @@ unset echo
 
 
 
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with .*BEFORE_IMAGES
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with .*BEFORE_IMAGES
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
 BACKUP COMPLETED.
 DB file ##TEST_PATH##/a.dat backed up in file bakdir1on/a.dat
 DB file ##TEST_PATH##/b.dat backed up in file bakdir1on/b.dat
@@ -155,12 +155,12 @@ unset echo
 
 
 
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with .*BEFORE_IMAGES
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with .*BEFORE_IMAGES
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
 BACKUP COMPLETED.
 DB file ##TEST_PATH##/a.dat backed up in file bakdirdb/a.dat
 DB file ##TEST_PATH##/b.dat backed up in file bakdirdb/b.dat
@@ -234,12 +234,12 @@ NEWJNLFILES cannot be specified without specifying a backup region
 
 
 
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_AWK.*/instance2/a.mjl is renamed to ##TEST_AWK.*/instance2/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_AWK.*/instance2/b.mjl is renamed to ##TEST_AWK.*/instance2/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_AWK.*/instance2/mumps.mjl is renamed to ##TEST_AWK.*/instance2/mumps.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_AWK.*/instance2/a.mjl created for region AREG with .*BEFORE_IMAGES
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_AWK.*/instance2/b.mjl created for region BREG with .*BEFORE_IMAGES
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_AWK.*/instance2/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_AWK.*/instance2/a.mjl is renamed to ##TEST_AWK.*/instance2/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_AWK.*/instance2/b.mjl is renamed to ##TEST_AWK.*/instance2/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_AWK.*/instance2/mumps.mjl is renamed to ##TEST_AWK.*/instance2/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_AWK.*/instance2/a.mjl created for region AREG with .*BEFORE_IMAGES
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_AWK.*/instance2/b.mjl created for region BREG with .*BEFORE_IMAGES
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_AWK.*/instance2/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
 ==Executing MULTISITE_REPLIC 'RUN INST2 mkdir bakdir2; $MUPIP backup -replinstance=bakdir2 "*" bakdir2 >& backup24.tmp; cat backup24.tmp'==
 BACKUP COMPLETED.
 DB file ##TEST_AWK.*/instance2/a.dat backed up in file bakdir2/a.dat
@@ -345,12 +345,12 @@ unset echo
 
 
 
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with .*BEFORE_IMAGES
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with .*BEFORE_IMAGES
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
 BACKUP COMPLETED.
 DB file ##TEST_PATH##/a.dat backed up in file bakdir1off/a.dat
 DB file ##TEST_PATH##/b.dat backed up in file bakdir1off/b.dat

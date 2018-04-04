@@ -62,7 +62,7 @@ Region	DEFAULT
 
 
 # dbcertify certify...
-%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+%YDB-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
 
 # mupip upgrade...
 ##TEST_AWK%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M .*
@@ -155,7 +155,7 @@ No errors detected by integ.
 Converting in place - database will be damaged by an abnormal termination
 You must have a backup before proceeding
 Proceed [yes/no] ?
-##FILTERED##%GTM-I-ENDIANCVT, Converted database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+##FILTERED##%YDB-I-ENDIANCVT, Converted database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
 # DSE dump after endian cvt; Make sure REUSABLE blocks (:) do NOT show up
 
 File  	##REMOTE_TEST_PATH##/mumps.dat

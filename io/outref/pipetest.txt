@@ -113,8 +113,8 @@ test OPEN PIPE COMMAND="./echoback" STDERR="e1"
 ###################################################################
 **************************** alternate ****************************
 ###################################################################
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
 zshow after open
 
@@ -182,7 +182,7 @@ zshow after closing "test":
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 ##ALLOW_OUTPUT HOST_OS390_S390
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
 ###################################################################
 **************************** docat4 ******************************
 ###################################################################
@@ -604,7 +604,7 @@ GTM>
 ##ALLOW_OUTPUT HOST_OS390_S390
 
 badopen error
-150379354,JUSTGOODLABEL+5^badhandler,%YDB-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, Invalid shell: jjj
+150379354,JUSTGOODLABEL+5^badhandler,%YDB-E-DEVOPENFAIL, Error opening test,%YDB-I-TEXT, Invalid shell: jjj
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -645,7 +645,7 @@ GTM>
 ###################################################################
 
 badopen error
-150379354,EX1+2^ex1,%YDB-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, Invalid shell: jjj
+150379354,EX1+2^ex1,%YDB-E-DEVOPENFAIL, Error opening test,%YDB-I-TEXT, Invalid shell: jjj
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -681,7 +681,7 @@ test OPEN PIPE SHELL="/usr/local/bin/tcsh" COMMAND="cat -u" STDERR="e1" EXCE="G 
 ###################################################################
 
 badopen error
-150379354,EX3+2^ex3,%YDB-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, Invalid command string: jjj
+150379354,EX3+2^ex3,%YDB-E-DEVOPENFAIL, Error opening test,%YDB-I-TEXT, Invalid command string: jjj
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -767,7 +767,7 @@ $za = 0
 ###################################################################
 
 BADOPEN0 error
-150379354,exnull+2^exnull,%YDB-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, Command string has no value
+150379354,exnull+2^exnull,%YDB-E-DEVOPENFAIL, Error opening test,%YDB-I-TEXT, Command string has no value
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -778,7 +778,7 @@ BADOPEN0 error
 ##ALLOW_OUTPUT HOST_OS390_S390
 
 BADOPEN1 error
-150379354,BADOPEN0+2^exnull,%YDB-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, Missing command string
+150379354,BADOPEN0+2^exnull,%YDB-E-DEVOPENFAIL, Error opening test,%YDB-I-TEXT, Missing command string
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -789,7 +789,7 @@ BADOPEN1 error
 ##ALLOW_OUTPUT HOST_OS390_S390
 
 BADOPEN2 error
-150379354,BADOPEN1+2^exnull,%YDB-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, SHELL parameter has no value
+150379354,BADOPEN1+2^exnull,%YDB-E-DEVOPENFAIL, Error opening test,%YDB-I-TEXT, SHELL parameter has no value
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -800,7 +800,7 @@ BADOPEN2 error
 ##ALLOW_OUTPUT HOST_OS390_S390
 
 BADOPEN3 error
-150379354,BADOPEN2+2^exnull,%YDB-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, STDERR parameter has no value
+150379354,BADOPEN2+2^exnull,%YDB-E-DEVOPENFAIL, Error opening test,%YDB-I-TEXT, STDERR parameter has no value
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 

@@ -30,7 +30,7 @@ foreach i (1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 )
 end
 
 #%YDB-E-UPDSYNCINSTFILE, Error with instance file name specified in UPDATERESYNC qualifier
-#%GTM-I-TEXT, No empty slot found. Specify REUSE to choose one for reuse
+#%YDB-I-TEXT, No empty slot found. Specify REUSE to choose one for reuse
 echo "# Expect the rcvr to exit with UPDSYNCINSTFILE if a 16th server is connected to supplementary instance P"
 $MSR STARTSRC INST16 INST17
 setenv gtm_test_repl_skiprcvrchkhlth 1 ; $MSR STARTRCV INST16 INST17  >&! STARTRCV_INST16_INST17.outx ; unsetenv gtm_test_repl_skiprcvrchkhlth

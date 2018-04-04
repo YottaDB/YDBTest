@@ -119,7 +119,7 @@ PASS no error detected
 dbcertify scan run with incorrect gtm_dist value. should issue DBCCMDFAIL error
 ##TEST_AWK./dbcmdx_DEFAULT.sh.*DUMMY/dse:.*
 ##TEST_AWK%YDB-E-DBCCMDFAIL, Executed command failed with return code [0-9]*: ./dbcmdx_DEFAULT.sh which executed DSE buffer_flush
-%GTM-I-TEXT, Note that the environment variable $gtm_dist must point to the current GT.M V4 installation
+%YDB-I-TEXT, Note that the environment variable $gtm_dist must point to the current GT.M V4 installation
 ##V4VER##/mupip
 ##V4VER##/mupip integ -REG *
 No errors detected by integ.
@@ -152,7 +152,7 @@ Certification phase for database ##TEST_PATH##/mumps.dat beginning
 %YDB-E-MUSTANDALONE, Could not get exclusive access to ##TEST_PATH##/mumps.dat
 %SYSTEM-E-ENO17, File exists
 
-##TEST_AWK.GTM-I-FTOKKEY, FTOK key 0x[0-9A-F]+
+##TEST_AWK.YDB-I-FTOKKEY, FTOK key 0x[0-9A-F]+
 
 GTM>
 
@@ -225,7 +225,7 @@ Region	DEFAULT
 
 ##TEST_AWKDatabase file mumps.dat now has extension count [0-9]*
 dbcertify should run fine without errors here,should issue DBCDBCERTIFIED message
-%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+%YDB-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
 Journal state PASS after certifying phase
 Replication state PASS after certifying phase
 dbcertify scan should run fine here without errors

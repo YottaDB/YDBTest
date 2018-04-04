@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -29,10 +32,10 @@ expect -f $gtm_tst/$tst/u_inref/gtm4661b.exp | tr '\r' ' ' >&! gtm4661b.expected
 @ proc_pid2 = `$gtm_exe/mumps -run %XCMD 'write ^myjob'`
 
 $gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog.txt "" REQ2RESUME
-$gtm_tst/com/grepfile.csh "GTM-I-SUSPENDING" test_syslog.txt 1 >&! grepresult.txt
-$gtm_tst/com/grepfile.csh "GTM-I-REQ2RESUME" test_syslog.txt 1 >>&! grepresult.txt
+$gtm_tst/com/grepfile.csh "YDB-I-SUSPENDING" test_syslog.txt 1 >&! grepresult.txt
+$gtm_tst/com/grepfile.csh "YDB-I-REQ2RESUME" test_syslog.txt 1 >>&! grepresult.txt
 $grep "is not present" grepresult.txt
-@ msgcnt = `$grep -c "${proc_pid2}.*GTM-I-SUSPENDING" test_syslog.txt`
+@ msgcnt = `$grep -c "${proc_pid2}.*YDB-I-SUSPENDING" test_syslog.txt`
 if (1 != $msgcnt) then
 	echo "TEST-E-FAIL more than one SUSPENDING message in the oeprator log"
 endif

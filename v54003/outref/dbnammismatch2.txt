@@ -60,9 +60,9 @@ END 5
 BEGIN 6 :-) Do MUPIP rundown on backup.dat and then access it. Database access should be clean
 
 ##TEST_AWKmupip rundown .*
-##TEST_AWK.GTM-I-DBNAMEMISMATCH, Database file .*backup.dat points to shared memory .id = [0-9]+. which in turn points to an inaccessible database file ##TEST_PATH##.tmp.mumps.dat
+##TEST_AWK.YDB-I-DBNAMEMISMATCH, Database file .*backup.dat points to shared memory .id = [0-9]+. which in turn points to an inaccessible database file ##TEST_PATH##.tmp.mumps.dat
 %SYSTEM-E-ENO13, Permission denied
-##TEST_AWK.GTM-I-MUFILRNDWNSUC, File .*backup.dat successfully rundown
+##TEST_AWK.YDB-I-MUFILRNDWNSUC, File .*backup.dat successfully rundown
 
 GTM>
 set ^x=1
@@ -78,9 +78,9 @@ END 6
 BEGIN 7 :-) do mupip rundown on mumps.dat to remove leftover ipcs
 
 mupip rundown -reg "*"
-##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/tmp/mumps.dat
-##TEST_AWK%GTM-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
-##TEST_AWK.GTM-I-MUFILRNDWNSUC, File .*mumps.dat successfully rundown
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/tmp/mumps.dat
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+##TEST_AWK.YDB-I-MUFILRNDWNSUC, File .*mumps.dat successfully rundown
 
 END 7
 ---------------------------------------------------------------------------------------

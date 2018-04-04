@@ -74,8 +74,8 @@ echo ""
 
 
 $MUPIP extract x6.ext -select="^A91TLDvnf7ZRJBtld5XPHzrjb3VNFxpa"
-%GTM-I-RECORDSTAT, ^A91TLDvnf7ZRJBtld5XPHzrjb3VNFxp:	  Key cnt: 1  max subsc len: 76  max rec len: 75  max node len: 155
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 76  max rec len: 75  max node len: 155
+%YDB-I-RECORDSTAT, ^A91TLDvnf7ZRJBtld5XPHzrjb3VNFxp:	  Key cnt: 1  max subsc len: 76  max rec len: 75  max node len: 155
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 76  max rec len: 75  max node len: 155
 cat x6.ext
 ##TEST_AWKGT.M MUPIP EXTRACT.*
 ##TEST_AWK.*
@@ -477,7 +477,7 @@ Global: %isCMW6gqAKU4eoy (region DEFAULT)
 
 $MUPIP reorg -exclude="^Abva,^CdxRa,^MnH1lF,^bDXhBVfzTa,^AbvP9tN7rL5pJ3nH1lFZjDXhBVfzU,^H9tN7rL5pJ3nH1lFZjDXhBVfzTdxRbV" >> & ! exclude_reorg_1.out
 $grep "NOEXCLUDE" exclude_reorg_1.out
-%GTM-I-NOEXCLUDE, None of the excluded variables exist
+%YDB-I-NOEXCLUDE, None of the excluded variables exist
 $MUPIP reorg -exclude="^bVGrcXIt,^a4gsEQ2e:^a93XRLFz,^bVGrcXIt01234,^LEpaVGrcXIteZKvg1Mxi3Ozk5QBm7SD,^LEpaVGrcXIteZKvg1Mxi3Ozk5QBm7SD01" >> & ! exclude_reorg_2.out
 $grep 'bVGrcXIt[$ ]' exclude_reorg_2.out
 Global: bVGrcXIt (region BREG)
@@ -1548,7 +1548,7 @@ Error REORGINC seen in exclude_reorg_3.out as expected:
 
 $MUPIP reorg -exclude="^Z8isCMW7*" >> & ! exclude_reorg_4.out
 $grep "NOEXCLUDE" exclude_reorg_4.out
-%GTM-I-NOEXCLUDE, None of the excluded variables exist
+%YDB-I-NOEXCLUDE, None of the excluded variables exist
 $MUPIP reorg -exclude="^%jd71VPJD*" >> & ! exclude_reorg_5.out
 $grep 'Global: %jd71VPJ[$ ]' exclude_reorg_5.out
 Global: %jd71VPJ (region DEFAULT)
@@ -1571,9 +1571,9 @@ echo ""
 echo "MUPIP JOURNAL -forward -global=global-name-list mumps.mjl"
 MUPIP JOURNAL -forward -global=global-name-list mumps.mjl
 $MUPIP journal -show -forw -global="^e31ZXVTR,^zxvtrpnljhfdb97,^db97531ZXVTRPNLJHFDBzxvtrpnljh" mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/mumps.mjl
@@ -1684,15 +1684,15 @@ Record type    Count
 
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 $MUPIP journal -extract=extract1.mjf -forw -global="(^e31ZXVTR,^zxvtrpnljhfdb97,^db97531ZXVTRPNLJHFDBzxvtrpnljh,^B:^E)" mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file extract1.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file extract1.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 $tst_awk '{n=split($0,f,"\\");if (f[1]=="05") print f[n]}' extract1.mjf
 ^e31ZXVTR(1,"e31ZXVTR",2,8)="^e31ZXVTR(1,""e31ZXVTR"",2,8)"
 ^e31ZXVTR(1,"e31ZXVTR",2,8)="^e31ZXVTR(1,""e31ZXVTR"",2,8)"
@@ -1700,26 +1700,26 @@ $tst_awk '{n=split($0,f,"\\");if (f[1]=="05") print f[n]}' extract1.mjf
 ^e31ZXVTR(1,"e31ZXVTRPNLJHFDBzxvtrpnl",2,24)="^e31ZXVTR(1,""e31ZXVTRPNLJHFDBzxvtrpnl"",2,24)"
 ^db97531ZXVTRPNLJHFDBzxvtrpnljh("db97531ZXVTRPNLJHFDBzxvtrpnljh",30)="^db97531ZXVTRPNLJHFDBzxvtrpnljh(""db97531ZXVTRPNLJHFDBzxvtrpnljh"",30)"
 $MUPIP journal -extract=extract2.mjf -forw -global="(^brQfE3sRgF4tShG5uTiH6vUjI7wVk,^b,^BL6rM7sN8tO9uPavQbwRcxSdyTe)" b.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file extract2.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file extract2.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 $tst_awk '{n=split($0,f,"\\");if (f[1]=="05") print f[n]}' extract2.mjf
 ^b(1,"b",2,1)="^b(1,""b"",2,1)"
 ^b(1,"b",2,1)="^b(1,""b"",2,1)"
 ^brQfE3sRgF4tShG5uTiH6vUjI7wVk(1,"brQfE3sRgF4tShG5uTiH6vUjI7wVk",2,184)="^brQfE3sRgF4tShG5uTiH6vUjI7wVk(1,""brQfE3sRgF4tShG5uTiH6vUjI7wVk"",2,184)"
 ^BL6rM7sN8tO9uPavQbwRcxSdyTe(1,"BL6rM7sN8tO9uPavQbwRcxSdyTe",2,864)="^BL6rM7sN8tO9uPavQbwRcxSdyTe(1,""BL6rM7sN8tO9uPavQbwRcxSdyTe"",2,864)"
 $MUPIP journal -extract=extract3.mjf -forw -global="(^ZN*)" mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file extract3.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file extract3.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 $tst_awk '{n=split($0,f,"\\");if (f[1]=="05") print f[n]}' extract3.mjf
 ^ZNK("ZNK",220)="^ZNK(""ZNK"",220)"
 ^ZNK("ZNK",220)="^ZNK(""ZNK"",220)"
@@ -1728,13 +1728,13 @@ $tst_awk '{n=split($0,f,"\\");if (f[1]=="05") print f[n]}' extract3.mjf
 ^ZN7rL5pJ(1,"ZN7rL5pJ3nH1lFZjDX",2,1382)="^ZN7rL5pJ(1,""ZN7rL5pJ3nH1lFZjDX"",2,1382)"
 ^ZN7rL5pJ3nH1lFZjDX(1,"ZN7rL5pJ3nH1lFZjDX",2,1382)="^ZN7rL5pJ3nH1lFZjDX(1,""ZN7rL5pJ3nH1lFZjDX"",2,1382)"
 $MUPIP journal -extract=extract4.mjf -forw -global="^A" mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file extract4.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file extract4.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 $tst_awk '{n=split($0,f,"\\");if (f[1]=="05") print f[n]}' extract4.mjf
 
 unset verbose
@@ -1750,7 +1750,7 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
@@ -1764,10 +1764,10 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/A23.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/A23.dat created
 Extension successful, file ##TEST_PATH##/A23.dat extended by 100 blocks.  Total blocks = 200.
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/A23.mjl created for region A23 with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region A23 is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/A23.mjl created for region A23 with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region A23 is now ON
 
 GTM>
 
@@ -1778,13 +1778,13 @@ GTM>
 GTM>
 
 GTM>
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file A23.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file A23.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ^AA="1"
 ^AAb="2"
 
@@ -1800,9 +1800,9 @@ Index               2               2           0.585             2
 Data                2               2           0.622             2
 Free              194              NA              NA            NA
 Total             200               7              NA             4
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/A23.dat successfully rundown
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/A23.mjl is renamed to ##TEST_PATH##/A23.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/A23.mjl created for region A23 with BEFORE_IMAGES
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/A23.dat successfully rundown
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/A23.mjl is renamed to ##TEST_PATH##/A23.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/A23.mjl created for region A23 with BEFORE_IMAGES
 DB file ##TEST_PATH##/A23.dat backed up in file A23.bak
 Transactions up to 0x0000000000000004 are backed up.
 
@@ -1824,10 +1824,10 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/A2345.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/A2345.dat created
 Extension successful, file ##TEST_PATH##/A2345.dat extended by 100 blocks.  Total blocks = 200.
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/A2345.mjl created for region A2345 with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region A2345 is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/A2345.mjl created for region A2345 with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region A2345 is now ON
 
 GTM>
 
@@ -1838,13 +1838,13 @@ GTM>
 GTM>
 
 GTM>
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file A2345.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file A2345.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ^AAAA="1"
 ^AAAAb="2"
 
@@ -1860,9 +1860,9 @@ Index               2               2           0.585             2
 Data                2               2           0.671             2
 Free              194              NA              NA            NA
 Total             200               7              NA             4
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/A2345.dat successfully rundown
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/A2345.mjl is renamed to ##TEST_PATH##/A2345.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/A2345.mjl created for region A2345 with BEFORE_IMAGES
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/A2345.dat successfully rundown
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/A2345.mjl is renamed to ##TEST_PATH##/A2345.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/A2345.mjl created for region A2345 with BEFORE_IMAGES
 DB file ##TEST_PATH##/A2345.dat backed up in file A2345.bak
 Transactions up to 0x0000000000000004 are backed up.
 
@@ -1884,10 +1884,10 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/A23456789012345.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/A23456789012345.dat created
 Extension successful, file ##TEST_PATH##/A23456789012345.dat extended by 100 blocks.  Total blocks = 200.
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/A23456789012345.mjl created for region A23456789012345 with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region A23456789012345 is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/A23456789012345.mjl created for region A23456789012345 with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region A23456789012345 is now ON
 
 GTM>
 
@@ -1898,13 +1898,13 @@ GTM>
 GTM>
 
 GTM>
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file A23456789012345.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file A23456789012345.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ^AAAAAAAAAAAAAA="1"
 ^AAAAAAAAAAAAAAb="2"
 
@@ -1920,9 +1920,9 @@ Index               2               2           0.585             2
 Data                2               2           0.915             2
 Free              194              NA              NA            NA
 Total             200               7              NA             4
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/A23456789012345.dat successfully rundown
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/A23456789012345.mjl is renamed to ##TEST_PATH##/A23456789012345.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/A23456789012345.mjl created for region A23456789012345 with BEFORE_IMAGES
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/A23456789012345.dat successfully rundown
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/A23456789012345.mjl is renamed to ##TEST_PATH##/A23456789012345.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/A23456789012345.mjl created for region A23456789012345 with BEFORE_IMAGES
 DB file ##TEST_PATH##/A23456789012345.dat backed up in file A23456789012345.bak
 Transactions up to 0x0000000000000004 are backed up.
 
@@ -1944,10 +1944,10 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/A234567890123456789012345.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/A234567890123456789012345.dat created
 Extension successful, file ##TEST_PATH##/A234567890123456789012345.dat extended by 100 blocks.  Total blocks = 200.
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/A234567890123456789012345.mjl created for region A234567890123456789012345 with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region A234567890123456789012345 is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/A234567890123456789012345.mjl created for region A234567890123456789012345 with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region A234567890123456789012345 is now ON
 
 GTM>
 
@@ -1958,13 +1958,13 @@ GTM>
 GTM>
 
 GTM>
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file A234567890123456789012345.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file A234567890123456789012345.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ^AAAAAAAAAAAAAAAAAAAAAAAA="1"
 ^AAAAAAAAAAAAAAAAAAAAAAAAb="2"
 
@@ -1980,9 +1980,9 @@ Index               2               2           0.585             2
 Data                2               2           1.159             2
 Free              194              NA              NA            NA
 Total             200               7              NA             4
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/A234567890123456789012345.dat successfully rundown
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/A234567890123456789012345.mjl is renamed to ##TEST_PATH##/A234567890123456789012345.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/A234567890123456789012345.mjl created for region A234567890123456789012345 with BEFORE_IMAGES
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/A234567890123456789012345.dat successfully rundown
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/A234567890123456789012345.mjl is renamed to ##TEST_PATH##/A234567890123456789012345.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/A234567890123456789012345.mjl created for region A234567890123456789012345 with BEFORE_IMAGES
 DB file ##TEST_PATH##/A234567890123456789012345.dat backed up in file A234567890123456789012345.bak
 Transactions up to 0x0000000000000004 are backed up.
 
@@ -2004,10 +2004,10 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/A23456789012345678901234567890.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/A23456789012345678901234567890.dat created
 Extension successful, file ##TEST_PATH##/A23456789012345678901234567890.dat extended by 100 blocks.  Total blocks = 200.
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/A23456789012345678901234567890.mjl created for region A23456789012345678901234567890 with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region A23456789012345678901234567890 is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/A23456789012345678901234567890.mjl created for region A23456789012345678901234567890 with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region A23456789012345678901234567890 is now ON
 
 GTM>
 
@@ -2018,13 +2018,13 @@ GTM>
 GTM>
 
 GTM>
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file A23456789012345678901234567890.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file A23456789012345678901234567890.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ^AAAAAAAAAAAAAAAAAAAAAAAAAAAAA="1"
 ^AAAAAAAAAAAAAAAAAAAAAAAAAAAAAb="2"
 
@@ -2040,9 +2040,9 @@ Index               2               2           0.585             2
 Data                2               2           1.281             2
 Free              194              NA              NA            NA
 Total             200               7              NA             4
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/A23456789012345678901234567890.dat successfully rundown
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/A23456789012345678901234567890.mjl is renamed to ##TEST_PATH##/A23456789012345678901234567890.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/A23456789012345678901234567890.mjl created for region A23456789012345678901234567890 with BEFORE_IMAGES
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/A23456789012345678901234567890.dat successfully rundown
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/A23456789012345678901234567890.mjl is renamed to ##TEST_PATH##/A23456789012345678901234567890.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/A23456789012345678901234567890.mjl created for region A23456789012345678901234567890 with BEFORE_IMAGES
 DB file ##TEST_PATH##/A23456789012345678901234567890.dat backed up in file A23456789012345678901234567890.bak
 Transactions up to 0x0000000000000004 are backed up.
 
@@ -2064,10 +2064,10 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/A234567890123456789012345678901.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/A234567890123456789012345678901.dat created
 Extension successful, file ##TEST_PATH##/A234567890123456789012345678901.dat extended by 100 blocks.  Total blocks = 200.
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/A234567890123456789012345678901.mjl created for region A234567890123456789012345678901 with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region A234567890123456789012345678901 is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/A234567890123456789012345678901.mjl created for region A234567890123456789012345678901 with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region A234567890123456789012345678901 is now ON
 
 GTM>
 
@@ -2078,13 +2078,13 @@ GTM>
 GTM>
 
 GTM>
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file A234567890123456789012345678901.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file A234567890123456789012345678901.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ^AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="1"
 ^AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb="2"
 
@@ -2100,9 +2100,9 @@ Index               2               2           0.585             2
 Data                2               2           1.306             2
 Free              194              NA              NA            NA
 Total             200               7              NA             4
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/A234567890123456789012345678901.dat successfully rundown
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/A234567890123456789012345678901.mjl is renamed to ##TEST_PATH##/A234567890123456789012345678901.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/A234567890123456789012345678901.mjl created for region A234567890123456789012345678901 with BEFORE_IMAGES
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/A234567890123456789012345678901.dat successfully rundown
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/A234567890123456789012345678901.mjl is renamed to ##TEST_PATH##/A234567890123456789012345678901.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/A234567890123456789012345678901.mjl created for region A234567890123456789012345678901 with BEFORE_IMAGES
 DB file ##TEST_PATH##/A234567890123456789012345678901.dat backed up in file A234567890123456789012345678901.bak
 Transactions up to 0x0000000000000004 are backed up.
 

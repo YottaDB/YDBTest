@@ -6,8 +6,8 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 ＡＢＣＤ.gld
 Using: ##SOURCE_PATH##/mupip
 ＡＢＣＤ.dat
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
 GTM>
 Do in0^udbfill("set")
@@ -16,8 +16,8 @@ GTM>
 set PASS
 
 GTM>
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/ＡＢＣＤ.mjl is renamed to ##TEST_PATH##/ＡＢＣＤ.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/ＡＢＣＤ.mjl is renamed to ##TEST_PATH##/ＡＢＣＤ.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
 DB file ##TEST_PATH##/ＡＢＣＤ.dat backed up in file ##TEST_PATH##/ＡＤＩＲ/ＡＢＣＤ.dat
 ##SUSPEND_OUTPUT MM_FILE_NO_EXT
 Transactions up to 0x000000000000040C are backed up.
@@ -43,8 +43,8 @@ GTM>
 set PASS
 
 GTM>
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/ＡＢＣＤ.mjl is renamed to ##TEST_PATH##/ＡＢＣＤ.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/ＡＢＣＤ.mjl is renamed to ##TEST_PATH##/ＡＢＣＤ.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
 MUPIP backup of database file ##TEST_PATH##/ＡＢＣＤ.dat to ##TEST_PATH##/αβγδε/backup.bak2
 DB file ##TEST_PATH##/ＡＢＣＤ.dat incrementally backed up in file ##TEST_PATH##/αβγδε/backup.bak2
 ##SUSPEND_OUTPUT  NON_COLLATION
@@ -77,8 +77,8 @@ GTM>
 set PASS
 
 GTM>
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/ＡＢＣＤ.mjl is renamed to ##TEST_PATH##/ＡＢＣＤ.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/ＡＢＣＤ.mjl is renamed to ##TEST_PATH##/ＡＢＣＤ.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
 MUPIP backup of database file ##TEST_PATH##/ＡＢＣＤ.dat to ##TEST_PATH##/我能吞下玻璃而不伤身体/backup.bak3
 DB file ##TEST_PATH##/ＡＢＣＤ.dat incrementally backed up in file ##TEST_PATH##/我能吞下玻璃而不伤身体/backup.bak3
 ##SUSPEND_OUTPUT  NON_COLLATION
@@ -192,7 +192,7 @@ GTM>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/ＡＢＣＤ.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/ＡＢＣＤ.dat created
 
 RESTORE COMPLETED
 ##SUSPEND_OUTPUT  NON_COLLATION
@@ -212,7 +212,7 @@ GTM>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/ＡＢＣＤ.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/ＡＢＣＤ.dat created
 
 RESTORE COMPLETED
 ##SUSPEND_OUTPUT  NON_COLLATION

@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2012, 2014 Fidelity Information Services, Inc	#
+# Copyright 2012, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -50,7 +53,7 @@ $gtm_tst/com/wait_for_proc_to_die.csh $pid -1
 set loop_iterations = `cat iterations.outx`
 
 # get the number of expected complete error messages printed
-set message_count = `$grep 'GTM-I-SETEXTRENV, Database files are missing or Instance is frozen; supply the database files, wait for the freeze to lift or define gtm_extract_nocol to extract possibly incorrect collation' gtm6686.outx | wc -l`
+set message_count = `$grep 'YDB-I-SETEXTRENV, Database files are missing or Instance is frozen; supply the database files, wait for the freeze to lift or define gtm_extract_nocol to extract possibly incorrect collation' gtm6686.outx | wc -l`
 
 # compare the numbers and signal an error if they do not match
 if ($loop_iterations != $message_count) then

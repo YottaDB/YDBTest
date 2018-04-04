@@ -6,7 +6,7 @@ mumps.dat
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
+%YDB-I-TEXT, Mupip downgrade started
 %YDB-E-TEXT, Database is created with V6 version.
 %YDB-E-MUNODWNGRD, Database not downgraded because of preceding errors
 # Randomly choose a prior V5 version to create the database first.
@@ -36,7 +36,7 @@ Downgrade should fail as spanning node is present
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
+%YDB-I-TEXT, Mupip downgrade started
 %YDB-E-TEXT, Spanning node might be present.
 %YDB-E-MUNODWNGRD, Database not downgraded because of preceding errors
 
@@ -48,7 +48,7 @@ Downgrade should fail as spanning node absent flag is not set yet
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
+%YDB-I-TEXT, Mupip downgrade started
 %YDB-E-TEXT, Spanning node might be present.
 %YDB-E-MUNODWNGRD, Database not downgraded because of preceding errors
 
@@ -70,7 +70,7 @@ Downgrade should fail as record size is not supported in V5 database
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
+%YDB-I-TEXT, Mupip downgrade started
 %YDB-E-TEXT, MAX REC SIZE is not supported for given BLK SIZE in V5
 %YDB-E-MUNODWNGRD, Database not downgraded because of preceding errors
 
@@ -83,9 +83,9 @@ Downgrade should be successful
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
-%GTM-I-MUINFOUINT4, V5 supportable record size for current DB configuration  : 1008 [0x000003F0]
-%GTM-I-MUINFOUINT4, V5 supportable max key size for current DB configuration : 255 [0x000000FF]
+%YDB-I-TEXT, Mupip downgrade started
+%YDB-I-MUINFOUINT4, V5 supportable record size for current DB configuration  : 1008 [0x000003F0]
+%YDB-I-MUINFOUINT4, V5 supportable max key size for current DB configuration : 255 [0x000000FF]
 %GTM-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V5
 
 Set the max_key_size to value which is not supported in V5 database
@@ -100,7 +100,7 @@ downgrade should fail as it max_key_size is not supported in V5 database
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
+%YDB-I-TEXT, Mupip downgrade started
 %YDB-E-TEXT, Database might contain keys larger than MAX KEY SIZE in DB header
 %YDB-E-MUNODWNGRD, Database not downgraded because of preceding errors
 
@@ -116,7 +116,7 @@ Downgrade should fail as MAXIMUM KEY SIZE ASSURED field is FALSE in DB header
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
+%YDB-I-TEXT, Mupip downgrade started
 %YDB-E-TEXT, Database might contain keys larger than MAX KEY SIZE in DB header
 %YDB-E-MUNODWNGRD, Database not downgraded because of preceding errors
 
@@ -138,9 +138,9 @@ Downgrade should success as MAXIMUM KEY SIZE ASSURED is set appropriately by abo
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
-%GTM-I-MUINFOUINT4, V5 supportable record size for current DB configuration  : 1008 [0x000003F0]
-%GTM-I-MUINFOUINT4, V5 supportable max key size for current DB configuration : 255 [0x000000FF]
+%YDB-I-TEXT, Mupip downgrade started
+%YDB-I-MUINFOUINT4, V5 supportable record size for current DB configuration  : 1008 [0x000003F0]
+%YDB-I-MUINFOUINT4, V5 supportable max key size for current DB configuration : 255 [0x000000FF]
 %GTM-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V5
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

@@ -7,23 +7,23 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
 %GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 1153 to 2312.
-%GTM-I-TEXT, The previous value was outside the allowable range of 2307 to 32768
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+%YDB-I-TEXT, The previous value was outside the allowable range of 2307 to 32768
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
 
 Journal State OFF Journal
 Journal Buffer Size 2312
 
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
 %GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 1153 to 2312.
-%GTM-I-TEXT, The previous value was outside the allowable range of 2307 to 32768
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-TEXT, The previous value was outside the allowable range of 2307 to 32768
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
 Journal State [inactive] ON
 Journal Buffer Size 2312
 
 %GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 1153 to 2312.
-%GTM-I-TEXT, The previous value was outside the allowable range of 2307 to 32768
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+%YDB-I-TEXT, The previous value was outside the allowable range of 2307 to 32768
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
 
 Journal State OFF Journal
 Journal Buffer Size 2312
@@ -40,19 +40,19 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
 Journal State [inactive] ON
 Journal Buffer Size 2312
 
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
 
 Journal State DISABLED 
 
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
 Journal State [inactive] ON
 Journal Buffer Size 2312
@@ -80,7 +80,7 @@ Case 3.
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
 
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 Journal State OFF Journal
 Journal Buffer Size 2308
@@ -101,8 +101,8 @@ Case 4.
 Created file ##TEST_PATH##/mumps.dat
 
 ##TEST_AWKJournal file buffer size for database file ##TEST_PATH##/mumps.dat is now 11[0-9][0-9]
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
@@ -136,8 +136,8 @@ Case 5.
 Created file ##TEST_PATH##/mumps.dat
 
 ##TEST_AWKJournal file buffer size for database file ##TEST_PATH##/mumps.dat is now 11[0-9][0-9]
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
@@ -148,12 +148,12 @@ Created file ##TEST_PATH##/mumps.dat
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
 
-%GTM-I-JNLFNF, Journal file ##TEST_PATH##/mumps.mjl not found
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
-%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLFNF, Journal file ##TEST_PATH##/mumps.mjl not found
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
 %GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 576 to 2308.
-%GTM-I-TEXT, The previous value was outside the allowable range of 2307 to 32768
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-TEXT, The previous value was outside the allowable range of 2307 to 32768
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
 Journal State [inactive] ON
 Journal Buffer Size 2308
@@ -174,8 +174,8 @@ Case 6.
 Created file ##TEST_PATH##/mumps.dat
 
 ##TEST_AWKJournal file buffer size for database file ##TEST_PATH##/mumps.dat is now 11[0-9][0-9]
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
@@ -205,8 +205,8 @@ Case 7.
 Created file ##TEST_PATH##/mumps.dat
 
 ##TEST_AWKJournal file buffer size for database file ##TEST_PATH##/mumps.dat is now 11[0-9][0-9]
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
@@ -217,10 +217,10 @@ Created file ##TEST_PATH##/mumps.dat
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
 
-%GTM-I-JNLFNF, Journal file ##TEST_PATH##/mumps.mjl not found
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
-%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-JNLFNF, Journal file ##TEST_PATH##/mumps.mjl not found
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
 Journal State [inactive] ON
 Journal Buffer Size 2308
@@ -254,8 +254,8 @@ GTM>
 
 GTM>
 
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
 Journal State [inactive] ON
 Journal Buffer Size 2308
@@ -286,7 +286,7 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 Journal State OFF Journal
 Journal Buffer Size 32765

@@ -194,20 +194,20 @@ Database file ##TEST_PATH##/mumps.dat now has maximum record size 1500
 #######################################################
 # Test MUPIP EXTRACT and LOAD
 ### -format=zwr ###
-%GTM-I-RECORDSTAT, ^d:	  Key cnt: 2  max subsc len: 1019  max rec len: 4  max node len: 1027
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 1014  max subsc len: 1019  max rec len: 4  max node len: 1027
-%GTM-I-RECORDSTAT, ^y:	  Key cnt: 1014  max subsc len: 1019  max rec len: 4  max node len: 1025
-%GTM-I-RECORDSTAT, ^yy:	  Key cnt: 1  max subsc len: 7  max rec len: 1  max node len: 12
-%GTM-I-RECORDSTAT, ^z:	  Key cnt: 1  max subsc len: 595  max rec len: 3  max node len: 602
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2032  max subsc len: 1019  max rec len: 4  max node len: 1027
+%YDB-I-RECORDSTAT, ^d:	  Key cnt: 2  max subsc len: 1019  max rec len: 4  max node len: 1027
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 1014  max subsc len: 1019  max rec len: 4  max node len: 1027
+%YDB-I-RECORDSTAT, ^y:	  Key cnt: 1014  max subsc len: 1019  max rec len: 4  max node len: 1025
+%YDB-I-RECORDSTAT, ^yy:	  Key cnt: 1  max subsc len: 7  max rec len: 1  max node len: 12
+%YDB-I-RECORDSTAT, ^z:	  Key cnt: 1  max subsc len: 595  max rec len: 3  max node len: 602
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2032  max subsc len: 1019  max rec len: 4  max node len: 1027
 ### -format=bin ###
-%GTM-I-RECORDSTAT, ^d:	  Key cnt: 2  max subsc len: 1019  max rec len: 4  max node len: 1027
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 1014  max subsc len: 1019  max rec len: 4  max node len: 1027
-%GTM-I-RECORDSTAT, ^y:	  Key cnt: 1014  max subsc len: 1019  max rec len: 4  max node len: 1025
-%GTM-I-RECORDSTAT, ^yy:	  Key cnt: 1  max subsc len: 7  max rec len: 1  max node len: 12
-%GTM-I-RECORDSTAT, ^z:	  Key cnt: 1  max subsc len: 595  max rec len: 3  max node len: 602
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2032  max subsc len: 1019  max rec len: 4  max node len: 1027
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-RECORDSTAT, ^d:	  Key cnt: 2  max subsc len: 1019  max rec len: 4  max node len: 1027
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 1014  max subsc len: 1019  max rec len: 4  max node len: 1027
+%YDB-I-RECORDSTAT, ^y:	  Key cnt: 1014  max subsc len: 1019  max rec len: 4  max node len: 1025
+%YDB-I-RECORDSTAT, ^yy:	  Key cnt: 1  max subsc len: 7  max rec len: 1  max node len: 12
+%YDB-I-RECORDSTAT, ^z:	  Key cnt: 1  max subsc len: 595  max rec len: 3  max node len: 602
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2032  max subsc len: 1019  max rec len: 4  max node len: 1027
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
 
 Beginning LOAD at record number: 2

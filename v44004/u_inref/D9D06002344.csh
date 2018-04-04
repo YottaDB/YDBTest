@@ -4,6 +4,9 @@
 # Copyright (c) 2004-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -36,13 +39,13 @@ endif
 $MUPIP set -journal="disable" -region AREG
 $MUPIP set -journal="enable,off,$tstacc" -region BREG
 $MUPIP set -journal="enable,on,$tstacc,nosync_io" -region CREG >&! jnl_on_1.log
-$grep -v "GTM-I-JNLCREATE" jnl_on_1.log
+$grep -v "YDB-I-JNLCREATE" jnl_on_1.log
 $MUPIP set -journal="enable,on,$tstacc,sync_io" -region DEFAULT >&! jnl_on_2.log
-$grep -v "GTM-I-JNLCREATE" jnl_on_2.log
+$grep -v "YDB-I-JNLCREATE" jnl_on_2.log
 $MUPIP set -journal="enable,on,$tstacc,nosync_io" -replication="on" -region DREG >&! jnl_on_3.log
-$grep -v "GTM-I-JNLCREATE" jnl_on_3.log
+$grep -v "YDB-I-JNLCREATE" jnl_on_3.log
 $MUPIP set -journal="enable,on,$tstacc,sync_io" -replication="on" -region EREG >&! jnl_on_4.log
-$grep -v "GTM-I-JNLCREATE" jnl_on_4.log
+$grep -v "YDB-I-JNLCREATE" jnl_on_4.log
 
 mkdir savedir
 cp *.dat *.mjl* savedir
@@ -67,7 +70,7 @@ foreach sync_io ("" ",nosync_io" ",sync_io")
 	# hence the decision to explicitly echo what we want even if it means duplicating the command line.
 	echo "$MUPIP backup -newjnlfiles=prevlink$sync_io * backupdir |& sort -f"
 	$MUPIP backup -newjnlfiles=prevlink$sync_io "*" backupdir >&! jnl_on_5_${sync_io}.log
-	$grep -v "GTM-I-JNLCREATE" jnl_on_5_${sync_io}.log |& sort -f
+	$grep -v "YDB-I-JNLCREATE" jnl_on_5_${sync_io}.log |& sort -f
 	$gtm_tst/com/get_dse_df.csh
 	$grep -E "Region          |Journal State|Journal Sync IO" dse_df.log | sed 's/\(Journal Before imaging\).*/\1##FILTERED##/'
 end

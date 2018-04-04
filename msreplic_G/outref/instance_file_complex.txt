@@ -61,7 +61,7 @@ GTM>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==========================================================
 The instance file contents on INST1 (instancefile_1.out):
-GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+YDB-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
 
 ----------------------------------------------------------
 File Header
@@ -140,7 +140,7 @@ HST #      0 : History record type                       1 [0x00000001]
 ==========================================================
 ==========================================================
 The instance file contents on INST2 (instancefile_1.out):
-GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+YDB-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
 
 ----------------------------------------------------------
 File Header
@@ -210,7 +210,7 @@ HST #      0 : History record type                       1 [0x00000001]
 ==========================================================
 ==========================================================
 The instance file contents on INST3 (instancefile_1.out):
-GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+YDB-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
 
 ----------------------------------------------------------
 File Header
@@ -962,9 +962,9 @@ No diff on INST3 between instancefile_9.out instancefile_10.out
 	           <seqno=121, name=INSTANCE3, cycle=2>
 	    i.e. no diff in history from the last time.
 ==Executing MULTISITE_REPLIC 'RUN INST3 $MUPIP rundown -reg "*" -override |& sort ; echo ""'==
-%GTM-I-MUFILRNDWNSUC, File ##TEST_AWK.*/instance3/a.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_AWK.*/instance3/c.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_AWK.*/instance3/mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_AWK.*/instance3/a.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_AWK.*/instance3/c.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_AWK.*/instance3/mumps.dat successfully rundown
 
 ###################################################################
 #- Step 4:

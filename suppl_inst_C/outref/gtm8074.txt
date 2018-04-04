@@ -50,12 +50,12 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3 RP'==
 # Redo fetchresync rollback. This should work fine. And exercise INTERRUPTED ROLLBACK code
 # Log interesting portions of rollback2.log
-%GTM-I-MUINFOUINT4, Gtmrecv_fetchresync returned strm_index : 1 [0x00000001]
-%GTM-I-MUINFOUINT8, Gtmrecv_fetchresync returned resync_seqno : 10012 [0x000000000000271C]
-%GTM-I-RESOLVESEQSTRM, Resolving until stream sequence number Stream  1 : Seqno 10012 [0x000000000000271C]
-%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 31 [0x000000000000001F]
-%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 21 [0x0000000000000015]
-%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  1 : Seqno 10012 [0x000000000000271C]
+%YDB-I-MUINFOUINT4, Gtmrecv_fetchresync returned strm_index : 1 [0x00000001]
+%YDB-I-MUINFOUINT8, Gtmrecv_fetchresync returned resync_seqno : 10012 [0x000000000000271C]
+%YDB-I-RESOLVESEQSTRM, Resolving until stream sequence number Stream  1 : Seqno 10012 [0x000000000000271C]
+%YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 31 [0x000000000000001F]
+%YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 21 [0x0000000000000015]
+%YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  1 : Seqno 10012 [0x000000000000271C]
 %GTM-S-JNLSUCCESS, Rollback successful
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==

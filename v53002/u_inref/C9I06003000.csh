@@ -4,6 +4,9 @@
 # Copyright (c) 2008-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -136,7 +139,7 @@ $gtm_tst/com/RF_SHUT.csh on
 echo "mupip journal rollback ..."
 $sec_shell '$sec_getenv ; cd $SEC_SIDE ; $gtm_tst/com/mupip_rollback.csh -resync='$resyncno' -lost=x.lost "*"' \
                          >&! secondary_rollback.out
-set secondary_rollback = `$tst_awk '/GTM-I-RLBKJNSEQ,/ {print $10}' secondary_rollback.out`
+set secondary_rollback = `$tst_awk '/YDB-I-RLBKJNSEQ,/ {print $10}' secondary_rollback.out`
 if ("$secondary_rollback" != "$resyncno") then
 	echo "TEST-E-ROLLBACK Journal seqno of the instance after rollback is $secondary_rollback. Expected: $resyncno"
 	echo "Check testnumbers.out and secondary_rollback.out"

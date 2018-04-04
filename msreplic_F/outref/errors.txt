@@ -313,7 +313,7 @@ Error NOJNLPOOL seen in ##TEST_PATH##/##FILTERED##START_##TIMESTAMP##.out as exp
 %YDB-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
 ----------
 ==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.repl is renamed to ##TEST_PATH##/mumps.repl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.repl is renamed to ##TEST_PATH##/mumps.repl_##TIMESTAMP##
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 $gtm_tst/com/cp_remote_file.csh __SRC_DIR__/save3/*.{dat,repl} _REMOTEINFO___RCV_DIR__/'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 mv mumps.repl inst1_save3_mumps.repl ; mv mumps.mjl mumps.mjl.bak'==
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2 updateresync=inst1_save3_mumps.repl -initialize'==

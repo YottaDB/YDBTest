@@ -22,7 +22,7 @@ IXSPLIT3 ; ; ; test for GETFAIL IIII
 ;   updated correctly.  This caused the following error message:
 ;
 ;	%YDB-E-GVGETFAIL, Global variable retrieval failed. Failure code: IIII
-;	%GTM-I-GVIS,            Global variable : ^A(183)
+;	%YDB-I-GVIS,            Global variable : ^A(183)
 ;	                At M source location +56^ixsplit3
 ;
 ;				      before

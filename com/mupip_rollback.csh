@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -301,7 +304,7 @@ else if ($do_fetchresync) then
 	set use_back_seqno = 1
 endif
 if (! $forward_only_specified) then
-	set forw_resync_seqno = `$tst_awk '/GTM-I-RLBKJNSEQ,/ {print $10}' $backwardlog`
+	set forw_resync_seqno = `$tst_awk '/YDB-I-RLBKJNSEQ,/ {print $10}' $backwardlog`
 	if ($use_back_seqno) then
 		set rollforwparms = "$rollforwparms -resync=$forw_resync_seqno"
 	endif

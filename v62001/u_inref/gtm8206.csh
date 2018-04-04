@@ -3,7 +3,7 @@
 #								#
 # Copyright 2014 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,6 +14,6 @@
 #################################################################
 
 setenv TERM vt320
-echo "# Running expect (output: expect.out) : Expecting a GTM-I-CTRLC message"
+echo "# Running expect (output: expect.out) : Expecting a YDB-I-CTRLC message"
 expect $gtm_tst/$tst/u_inref/gtm8206.exp > expect.out
 $grep CTRL_C expect.out

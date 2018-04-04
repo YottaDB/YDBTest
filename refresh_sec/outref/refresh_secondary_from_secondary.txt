@@ -33,8 +33,8 @@ Create backlog...
 Replication Instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl backed up in file bak1/mumps.repl
 ##TEST_AWK.*Journal Seqnos up to 0x[0-9A-F]* are backed up.
 
-##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/instance2/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/instance2/mumps.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##REMOTE_TEST_PATH##/instance2/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##REMOTE_TEST_PATH##/instance2/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/instance2/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##REMOTE_TEST_PATH##/instance2/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
 DB file ##REMOTE_TEST_PATH##/instance2/mumps.dat backed up in file bak1/mumps.dat
 ##TEST_AWKTransactions up to 0x[0-9A-Z]* are backed up.
 
@@ -45,7 +45,7 @@ BACKUP COMPLETED.
 ##SUSPEND_OUTPUT  NON_ENCRYPT
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST3 cp *key* __RCV_DIR__/'==
 ##ALLOW_OUTPUT  NON_ENCRYPT
-##FILTERED##%GTM-I-FILERENAME, File ##FILTERED##_REMOTE_TEST_PATH_INSTANCE_/mumps.repl is renamed to ##FILTERED##_REMOTE_TEST_PATH_INSTANCE_/mumps.repl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##FILTERED##_REMOTE_TEST_PATH_INSTANCE_/mumps.repl is renamed to ##FILTERED##_REMOTE_TEST_PATH_INSTANCE_/mumps.repl_##TIMESTAMP##
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST3 updateresync=sec_mumps.repl'==
 Stopping GTM processes...
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/endtp.csh >>&! endtp.out'==

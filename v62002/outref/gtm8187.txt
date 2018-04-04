@@ -49,7 +49,7 @@ Blocks freed        : 526
 Blocks reused       : 263 
 Blocks extended     : 0 
 Total root blocks moved: 2
-%GTM-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 0
+%YDB-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 0
 Truncated region: DEFAULT. Reduced total blocks from [602] to [512]. Reduced free blocks from [329] to [240].
 
 Run MUPIP reorg -truncate one more time and verify no more truncation happens (i.e. previous truncate was optimal)
@@ -92,8 +92,8 @@ Blocks reused       : 96
 Levels Eliminated   : 1 
 Blocks extended     : 0 
 Total root blocks moved: 1
-%GTM-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 0
-%GTM-I-MUTRUNCNOSPACE, Region DEFAULT has insufficient space to meet truncate target percentage of 0
+%YDB-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 0
+%YDB-I-MUTRUNCNOSPACE, Region DEFAULT has insufficient space to meet truncate target percentage of 0
 
 Remove write permissions on a.dat and redo MUPIP reorg -truncate to ensure it does not SIG-11 etc. on a read-only database file
 Fill Factor:: Index blocks 100%: Data blocks 100%

@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -64,7 +64,7 @@ endif
 
 set movefiles = 0	# argumentless rundown NOT done below
 if (1 == $movefiles) then
-	set dbmessage = "GTM-I-TEXT"
+	set dbmessage = "YDB-I-TEXT"
 	mkdir ./save; mv *.dat mumps.repl ./save #BYPASSOK no need to use backup_dbjnl.csh
 	$sec_shell "$sec_getenv; cd $SEC_SIDE; mkdir ./save; mv *.dat mumps.repl ./save" #BYPASSOK no need to use backup_dbjnl.csh
 else

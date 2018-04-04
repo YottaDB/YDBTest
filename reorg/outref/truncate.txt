@@ -26,14 +26,14 @@ GTM>
 # Try -truncate=100
 %YDB-E-MUTRUNCPERCENT, Truncate threshold percentage should be from 0 to 99
 # Try -truncate=99
-%GTM-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 99
-%GTM-I-MUTRUNCNOSPACE, Region BREG has insufficient space to meet truncate target percentage of 99
+%YDB-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 99
+%YDB-I-MUTRUNCNOSPACE, Region BREG has insufficient space to meet truncate target percentage of 99
 # A plain reorg -truncate should work
 Truncated region: AREG. Reduced total blocks from [602] to [512]. Reduced free blocks from [92] to [3].
 Truncated region: BREG. Reduced total blocks from [602] to [512]. Reduced free blocks from [92] to [3].
 # No local bitmaps eligible for truncate yet
-%GTM-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 0
-%GTM-I-MUTRUNCNOSPACE, Region BREG has insufficient space to meet truncate target percentage of 0
+%YDB-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 0
+%YDB-I-MUTRUNCNOSPACE, Region BREG has insufficient space to meet truncate target percentage of 0
 # The below commands will create a full local bitmap eligible for truncation
 
 GTM>
@@ -41,11 +41,11 @@ GTM>
 GTM>
 
 GTM>
-%GTM-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 0
+%YDB-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 0
 Truncated region: BREG. Reduced total blocks from [613] to [512]. Reduced free blocks from [101] to [1].
 # Extending AREG by rand_ext :##FILTERED##GTM_TEST_DEBUGINFO.*
 ##TEST_AWKTruncated region: AREG\. Reduced total blocks from \[33[0-9][0-9][0-9]\] to \[512\]\. Reduced free blocks from \[32[7-8][0-9][0-9]\] to \[3\]\.
-%GTM-I-MUTRUNCNOSPACE, Region BREG has insufficient space to meet truncate target percentage of 0
+%YDB-I-MUTRUNCNOSPACE, Region BREG has insufficient space to meet truncate target percentage of 0
 # Test -REGION qualifier
 ##TEST_AWKTruncated region: AREG\. Reduced total blocks from \[1514\] to \[512\]\. Reduced free blocks from \[1003\] to \[3\]\.
 ##SOURCE_PATH##/mupip
@@ -70,7 +70,7 @@ GTM>
 Truncated region: DEFAULT. Reduced total blocks from [31262] to [6144]. Reduced free blocks from [25364] to [296].
 # Second truncate shouldn't move root blocks unnecessarily
 Total root blocks moved: 0
-%GTM-I-MUTRUNCNOSPACE, Region DEFAULT has insufficient space to meet truncate target percentage of 0
+%YDB-I-MUTRUNCNOSPACE, Region DEFAULT has insufficient space to meet truncate target percentage of 0
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -183,9 +183,9 @@ Blocks freed        : 1
 Blocks reused       : 1 
 Blocks extended     : 0 
 Total root blocks moved: 2
-%GTM-I-MUTRUNCNOSPACE, Region REG1 has insufficient space to meet truncate target percentage of 0
-%GTM-I-MUTRUNCNOSPACE, Region REG2 has insufficient space to meet truncate target percentage of 0
-%GTM-I-MUTRUNCNOSPACE, Region REG3 has insufficient space to meet truncate target percentage of 0
+%YDB-I-MUTRUNCNOSPACE, Region REG1 has insufficient space to meet truncate target percentage of 0
+%YDB-I-MUTRUNCNOSPACE, Region REG2 has insufficient space to meet truncate target percentage of 0
+%YDB-I-MUTRUNCNOSPACE, Region REG3 has insufficient space to meet truncate target percentage of 0
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -236,9 +236,9 @@ Blocks freed        : 1
 Blocks reused       : 1 
 Blocks extended     : 0 
 Total root blocks moved: 2
-%GTM-I-MUTRUNCNOSPACE, Region REG1 has insufficient space to meet truncate target percentage of 0
-%GTM-I-MUTRUNCNOSPACE, Region REG2 has insufficient space to meet truncate target percentage of 0
-%GTM-I-MUTRUNCNOSPACE, Region REG3 has insufficient space to meet truncate target percentage of 0
+%YDB-I-MUTRUNCNOSPACE, Region REG1 has insufficient space to meet truncate target percentage of 0
+%YDB-I-MUTRUNCNOSPACE, Region REG2 has insufficient space to meet truncate target percentage of 0
+%YDB-I-MUTRUNCNOSPACE, Region REG3 has insufficient space to meet truncate target percentage of 0
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

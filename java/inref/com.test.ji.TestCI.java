@@ -1293,8 +1293,8 @@ public class TestCI {
 
 				@Override
 				public String getJavaResponse() {
-					return	"%GTM-I-EXTSRCLIN, \tlbl0\t:void lbl0^test17(I:" + invalidType + ")\n" +
-							"%GTM-I-EXTSRCLOC, \t\tAt column xx, line 1, source module ./Test17.ci\n" +
+					return	"%YDB-I-EXTSRCLIN, \tlbl0\t:void lbl0^test17(I:" + invalidType + ")\n" +
+							"%YDB-I-EXTSRCLOC, \t\tAt column xx, line 1, source module ./Test17.ci\n" +
 							"150379658,(Call-In),%YDB-E-CIUNTYPE, Unknown parameter type encountered\n";
 				}
 

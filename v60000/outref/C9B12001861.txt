@@ -16,12 +16,12 @@ GTM>
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-##TEST_AWK.*GTM-DSE\[.*%GTM-I-RESRCWAIT, Waiting briefly for the FTOK semaphore for region DEFAULT \(##TEST_PATH##/mumps.dat\) was held by PID [0-9]* \(Sem. ID: [0-9]*\).*
-##TEST_AWK.*GTM-DSE\[.*%GTM-I-RESRCWAIT, Waiting briefly for the access control semaphore for region DEFAULT \(##TEST_PATH##/mumps.dat\) was held by PID [0-9]* \(Sem. ID: [0-9]*\).*
+##TEST_AWK.*GTM-DSE\[.*%YDB-I-RESRCWAIT, Waiting briefly for the FTOK semaphore for region DEFAULT \(##TEST_PATH##/mumps.dat\) was held by PID [0-9]* \(Sem. ID: [0-9]*\).*
+##TEST_AWK.*GTM-DSE\[.*%YDB-I-RESRCWAIT, Waiting briefly for the access control semaphore for region DEFAULT \(##TEST_PATH##/mumps.dat\) was held by PID [0-9]* \(Sem. ID: [0-9]*\).*
 #Allow the first process to go
 ##TEST_AWKINTRPT issued to process.*
 #Wait for all processes to quit
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 1024
 #Launch first process and wait after db_init()
 
@@ -32,15 +32,15 @@ GTM>
 GTM>
 #Launch second process
 #Launch third and bypasser process:  lke show
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK.*GTM-LKE\[.*%GTM-I-RESRCWAIT, Waiting briefly for the FTOK semaphore for region DEFAULT \(##TEST_PATH##/mumps.dat\) was held by PID [0-9]* \(Sem. ID: [0-9]*\).*
-##TEST_AWK.*GTM-LKE\[.*%GTM-I-RESRCWAIT, Waiting briefly for the access control semaphore for region DEFAULT \(##TEST_PATH##/mumps.dat\) was held by PID [0-9]* \(Sem. ID: [0-9]*\).*
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+##TEST_AWK.*GTM-LKE\[.*%YDB-I-RESRCWAIT, Waiting briefly for the FTOK semaphore for region DEFAULT \(##TEST_PATH##/mumps.dat\) was held by PID [0-9]* \(Sem. ID: [0-9]*\).*
+##TEST_AWK.*GTM-LKE\[.*%YDB-I-RESRCWAIT, Waiting briefly for the access control semaphore for region DEFAULT \(##TEST_PATH##/mumps.dat\) was held by PID [0-9]* \(Sem. ID: [0-9]*\).*
 #Allow the first process to go
 ##TEST_AWKINTRPT issued to process.*
 #Wait for all processes to quit
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 1024
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

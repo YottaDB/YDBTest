@@ -65,12 +65,12 @@ GDE>
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
 $MUPIP create
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/dir2/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/dir2/a.dat created
 %YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/dir1/mumps.dat
 %SYSTEM-E-ENO2, No such file or directory
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 $MUPIP set -journal=enable,on,before -reg "*"
-%GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
+%YDB-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-NOREGION, REGION not found: DEFAULT
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
@@ -79,7 +79,7 @@ Fill Factor:: Index blocks 100%: Data blocks 100%
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/dir1/mumps.dat
 %SYSTEM-E-ENO2, No such file or directory
 $MUPIP backup "*" ./back1
-%GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
+%YDB-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-NOREGION, REGION not found: DEFAULT
 
@@ -87,7 +87,7 @@ MUPIP cannot start backup with above errors
 
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP integ -r "*"
-%GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
+%YDB-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-NOREGION, REGION not found: DEFAULT
 
@@ -105,15 +105,15 @@ Free               98              NA              NA            NA
 Total             100               1              NA             0
 %YDB-E-INTEGERRS, Database integrity errors
 $MUPIP set -reg DEFAULT -exten=100
-%GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
+%YDB-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-NOREGION, REGION not found: DEFAULT
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP rundown -reg "*"
-%GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
+%YDB-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-NOREGION, REGION not found: DEFAULT
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/dir2/a.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/dir2/a.dat successfully rundown
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 
 
@@ -121,7 +121,7 @@ $MUPIP extr extr.gbl2
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/dir1/mumps.dat
 %SYSTEM-E-ENO2, No such file or directory
 $MUPIP fr -on "*"
-%GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
+%YDB-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-NOREGION, REGION not found: DEFAULT
 
@@ -129,7 +129,7 @@ MUPIP cannot start freeze with above errors
 
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP fr -off "*"
-%GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
+%YDB-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-NOREGION, REGION not found: DEFAULT
 
@@ -146,14 +146,14 @@ mkdir ./dir1
 $MUPIP create
 %YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/dir2/a.dat
 %SYSTEM-E-ENO17, File exists
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/dir1/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/dir1/mumps.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 $MUPIP set -journal=enable,on,before -reg "*" > & mupip_set_jnl.out
 sort -f mupip_set_jnl.out
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/dir1/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/dir2/a.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir1/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir2/a.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 $GTM << xyz
 
 GTM>
@@ -234,8 +234,8 @@ $MUPIP set -reg DEFAULT -exten=100
 Database file ##TEST_PATH##/dir1/mumps.dat now has extension count 100
 $MUPIP rundown -reg "*" > & mupip_rundown_r.out
 sort -f mupip_rundown_r.out
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/dir1/mumps.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/dir2/a.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/dir1/mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/dir2/a.dat successfully rundown
 $MUPIP load extr.glo
 ##TEST_AWKGT.M MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
@@ -245,13 +245,13 @@ LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 10  Max Data Len: 1
 Last LOAD record number: 7
 
 $MUPIP extr extr.gbl3
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
-%GTM-I-RECORDSTAT, ^aload:	  Key cnt: 2  max subsc len: 10  max rec len: 1  max node len: 12
-%GTM-I-RECORDSTAT, ^b:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
-%GTM-I-RECORDSTAT, ^bload:	  Key cnt: 2  max subsc len: 10  max rec len: 1  max node len: 12
-%GTM-I-RECORDSTAT, ^c:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
-%GTM-I-RECORDSTAT, ^cload:	  Key cnt: 1  max subsc len: 7  max rec len: 1  max node len: 12
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 35  max subsc len: 10  max rec len: 2  max node len: 12
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^aload:	  Key cnt: 2  max subsc len: 10  max rec len: 1  max node len: 12
+%YDB-I-RECORDSTAT, ^b:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^bload:	  Key cnt: 2  max subsc len: 10  max rec len: 1  max node len: 12
+%YDB-I-RECORDSTAT, ^c:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^cload:	  Key cnt: 1  max subsc len: 7  max rec len: 1  max node len: 12
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 35  max subsc len: 10  max rec len: 2  max node len: 12
 $MUPIP freeze -on "*" > & mupip_freeze_on.out
 sort -f mupip_freeze_on.out
 All requested regions frozen
@@ -280,7 +280,7 @@ echo "#"
 $MUPIP integ a''d/mumps.dat
 %YDB-E-DBOPNERR, Error opening database file ad/mumps.dat
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-I-MUSTANDALONE, Could not get exclusive access to ad/mumps.dat
+%YDB-I-MUSTANDALONE, Could not get exclusive access to ad/mumps.dat
 %YDB-E-INTEGERRS, Database integrity errors
 
 set nonomatch
@@ -318,21 +318,21 @@ echo "#"
 rm -f ./dir1/*.dat
 rm -f ./dir2/*.dat
 $MUPIP journal -recover -for ./dir2/a.mjl,./dir1/mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-FILENOTFND, File ##TEST_PATH##/dir2/a.dat not found
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 $MUPIP crea
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/dir2/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/dir1/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/dir2/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/dir1/mumps.dat created
 rm -f ./dir1/*.dat ;
 $MUPIP journal -recover -for ./dir2/a.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Recover successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 $GTM << xyz
 
 GTM>

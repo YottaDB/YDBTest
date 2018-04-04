@@ -77,14 +77,14 @@ if ($status) then
 	echo "enabling journaling for region AREG failed. Check AREG_jnl_on.out. Exiting test now"
 	exit 1
 endif
-$grep GTM-I-REPLSTATE AREG_jnl_on.out
+$grep YDB-I-REPLSTATE AREG_jnl_on.out
 
 $MUPIP set -replic=on -reg DEFAULT >&! DEFAULT_replic_on.out
 if ($status) then
 	echo "enabling replic for region DEFAULT failed. Check DEFAULT_replic_on.out. Exiting test now"
 	exit 1
 endif
-$grep GTM-I-REPLSTATE DEFAULT_replic_on.out
+$grep YDB-I-REPLSTATE DEFAULT_replic_on.out
 
 source $gtm_tst/com/portno_acquire.csh > portno.out
 @ port = `cat portno.out`

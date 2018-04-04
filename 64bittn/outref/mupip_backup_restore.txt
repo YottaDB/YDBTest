@@ -176,8 +176,8 @@ GTM>
 
 GTM>
 # MUPIP extract here to check for the globals at the end
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
 # Take an incremental backup upto tn=2**63
 MUPIP backup of database file ##TEST_PATH##/mumps.dat to backupv5.inc1
 DB file ##TEST_PATH##/mumps.dat incrementally backed up in file backupv5.inc1
@@ -191,8 +191,8 @@ BACKUP COMPLETED.
 RESTORE COMPLETED
 15 blocks restored
 # mupip extract again to verify the values existing in the database
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
 PASS.Database extract values checked.
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

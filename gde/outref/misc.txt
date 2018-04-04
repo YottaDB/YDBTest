@@ -139,16 +139,16 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-# Expect GTM-I-JNLALLOCGROW below and not an assert failure
+# Expect YDB-I-JNLALLOCGROW below and not an assert failure
 ##SUSPEND_OUTPUT UNICODE_MODE
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat -acc=BG created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat -acc=BG created
 ##ALLOW_OUTPUT UNICODE_MODE
 ##SUSPEND_OUTPUT NONUNICODE_MODE
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.d created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.d created
 ##ALLOW_OUTPUT NONUNICODE_MODE
-%GTM-I-JNLALLOCGROW, Increased Journal ALLOCATION from [2048 blocks] to [16384 blocks] to match AUTOSWITCHLIMIT for database file b.dat
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-JNLALLOCGROW, Increased Journal ALLOCATION from [2048 blocks] to [16384 blocks] to match AUTOSWITCHLIMIT for database file b.dat
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 # While the vaule of allocation in the gde settings was not changed, expect it to be higher due to JNLALLOCGROW above
  Jnlfile SwitchLimit                         16384 [0x00004000] blocks
  Jnlfile Allocation                          16384 [0x00004000] blocks
@@ -273,9 +273,9 @@ ADD -SEGMENT ASEG -BLOCK_SIZE=65024 -FILE_NAME="locksmutexa.dat" -LOCK_SPACE=262
 ADD -SEGMENT BSEG -ACCESS_METHOD=MM -FILE_NAME="locksmutexb.dat"
 # DSE dump should reflect the modified values of lockspace, mutex slots and reserved bytes
 %GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/locksmutexa.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/locksmutexa.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/locksmutexb.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/locksmutexdefault.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/locksmutexa.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/locksmutexb.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/locksmutexdefault.dat created
 Region	AREG
 Region          AREG
   Reserved Bytes                      63965  Block size (in bytes)        65024

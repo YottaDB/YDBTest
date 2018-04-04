@@ -127,7 +127,7 @@ Lock removed : ^X("w","x","y")
 Step 10: Verify clear -exact on non-existent lock
 Issue: $LKE clear -lock=^DOESNOTEXIST -exact
 Should see no lock message
-%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 
 Step 11: Verify lke show -exact
 Issue: $LKE show -exact

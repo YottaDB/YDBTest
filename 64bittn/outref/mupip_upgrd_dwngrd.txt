@@ -10,7 +10,7 @@ Attempting MUPIP UPGRADE on V5 db. Should error out
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip upgrade started
+%YDB-I-TEXT, Mupip upgrade started
 %YDB-E-TEXT, Database already upgraded
 %YDB-E-MUNOUPGRD, Database not upgraded because of preceding errors
 
@@ -21,11 +21,11 @@ Attempting V5 MUPIP UPGRADE without stand alone acces. Should issue MUSTANDLONE 
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip upgrade started
+%YDB-I-TEXT, Mupip upgrade started
 %YDB-E-MUSTANDALONE, Could not get exclusive access to mumps.dat
 %SYSTEM-E-ENO17, File exists
 
-##TEST_AWK.GTM-I-FTOKKEY, FTOK key 0x[0-9A-F]+
+##TEST_AWK.YDB-I-FTOKKEY, FTOK key 0x[0-9A-F]+
 
 GTM>
 
@@ -37,14 +37,14 @@ Attempting MUPIP UPGRADE without running dbcertify.Should issue MUUPGRDNRDY erro
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip upgrade started
+%YDB-I-TEXT, Mupip upgrade started
 ##TEST_AWK%YDB-E-MUUPGRDNRDY, Database mumps.dat has not been certified as being ready to upgrade to GT.M.*
 %YDB-E-MUNOUPGRD, Database not upgraded because of preceding errors
 Attempting MUPIP DOWNGRADE on a V4 db.Should issue BADDBVER error
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
+%YDB-I-TEXT, Mupip downgrade started
 %YDB-E-BADDBVER, Incorrect database version: mumps.dat
 %YDB-E-MUNODWNGRD, Database not downgraded because of preceding errors
 
@@ -66,7 +66,7 @@ Attempting MUPIP UPGRADE without running dbcertify CERTIFY.Should issue MUUPGRDN
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip upgrade started
+%YDB-I-TEXT, Mupip upgrade started
 %YDB-E-MUUPGRDNRDY, Database mumps.dat has not been certified as being ready to upgrade to GT.M ##MACHTYPE##
 %YDB-E-MUNOUPGRD, Database not upgraded because of preceding errors
 
@@ -78,25 +78,25 @@ Attempting MUPIP UPGRADE after explicit certify bit using DSE. Shoud PASS
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip upgrade started
-%GTM-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-TEXT, Mupip upgrade started
+%YDB-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
 %GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgrade to GT.M ##MACHTYPE##
 Attempting MUPIP DOWNGRADE after the UPGRADE.Should PASS
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
-%GTM-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-TEXT, Mupip downgrade started
+%YDB-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
 %GTM-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V4
-%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+%YDB-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
 Database file ##TEST_PATH##/mumps.dat now has 0 reserved bytes
 
 File  	##TEST_PATH##/mumps.dat
@@ -115,7 +115,7 @@ Attempting MUPIP UPGRADE with less reserved bytes.Should issue DBMINRESBYTES err
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip upgrade started
+%YDB-I-TEXT, Mupip upgrade started
 %YDB-E-DBMINRESBYTES, Minimum RESERVED BYTES value required for certification/upgrade is 8 - Currently is 7
 %YDB-E-MUNOUPGRD, Database not upgraded because of preceding errors
 Database file ##TEST_PATH##/mumps.dat now has 8 reserved bytes
@@ -127,7 +127,7 @@ Attempting MUPIP UPGRADE with incorrect record size .Should issue DBMAXREC2BIG e
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip upgrade started
+%YDB-I-TEXT, Mupip upgrade started
 %YDB-E-DBMAXREC2BIG, Maximum record size ##MAX_REC_SIZE## is too large for this block size (512) - Maximum is 496
 
 File  	##TEST_PATH##/mumps.dat
@@ -137,12 +137,12 @@ Attempting MUPIP UPGRADE should PASS
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip upgrade started
-%GTM-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-TEXT, Mupip upgrade started
+%YDB-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
 %GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgrade to GT.M ##MACHTYPE##
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
@@ -204,12 +204,12 @@ Attempting MUPIP DOWNGRADE. Should run fine
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
-%GTM-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-TEXT, Mupip downgrade started
+%YDB-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
 %GTM-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V4
 
 GTM>
@@ -229,16 +229,16 @@ Blocks needing to be split ------##SCAN_BLOCKS##
 - DT index blocks ---------------##SCAN_BLOCKS##
 - GVT leaf (data) blocks --------##SCAN_BLOCKS##
 - GVT index blocks --------------##SCAN_BLOCKS##
-%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+%YDB-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip upgrade started
-%GTM-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-TEXT, Mupip upgrade started
+%YDB-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
 %GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgrade to GT.M ##MACHTYPE##
 
 GTM>
@@ -267,11 +267,11 @@ Attempting MUPIP DOWNGRADE without standalone access. Should issue MUSTANDLONE e
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
+%YDB-I-TEXT, Mupip downgrade started
 %YDB-E-MUSTANDALONE, Could not get exclusive access to mumps.dat
 %SYSTEM-E-ENO17, File exists
 
-##TEST_AWK.GTM-I-FTOKKEY, FTOK key 0x[0-9A-F]+
+##TEST_AWK.YDB-I-FTOKKEY, FTOK key 0x[0-9A-F]+
 
 GTM>
 
@@ -280,12 +280,12 @@ Attempting MUPIP DOWNGRADE again with standalone access. Should PASS
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
-%GTM-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-TEXT, Mupip downgrade started
+%YDB-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
 %GTM-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V4
 check for reserved bytes incremented by 8 and zero counters in the DSE dump output
 Reserved Bytes 8
@@ -334,12 +334,12 @@ GTM>
 
 GTM>
 Clean up ftok semaphore which will be left around from the BADDBVER error before attempting MUPIP UPGRADE
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 MUPIP UPGRADE should issue MUUPGRDNRDY error here as dbcertify is not yet run
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip upgrade started
+%YDB-I-TEXT, Mupip upgrade started
 %YDB-E-MUUPGRDNRDY, Database mumps.dat has not been certified as being ready to upgrade to GT.M ##MACHTYPE##
 %YDB-E-MUNOUPGRD, Database not upgraded because of preceding errors
 
@@ -353,17 +353,17 @@ Blocks needing to be split ------##SCAN_BLOCKS##
 - DT index blocks ---------------##SCAN_BLOCKS##
 - GVT leaf (data) blocks --------##SCAN_BLOCKS##
 - GVT index blocks --------------##SCAN_BLOCKS##
-%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+%YDB-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
 MUPIP UPGRADE should be fine now since dbcertify is done
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip upgrade started
-%GTM-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-TEXT, Mupip upgrade started
+%YDB-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
 %GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgrade to GT.M ##MACHTYPE##
 
 GTM>
@@ -379,12 +379,12 @@ Attempting MUPIP downgrade when blks_to_upgrade!=tot_blks - free_blks.Should iss
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
-%GTM-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-TEXT, Mupip downgrade started
+%YDB-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
 %YDB-E-MUDWNGRDNRDY, Database mumps.dat is not ready to downgrade - still 1 database blocks to downgrade
 %YDB-E-MUNODWNGRD, Database not downgraded because of preceding errors
 
@@ -399,12 +399,12 @@ Attempting MUPIP DOWNGRADE with curr_tn > M32 - 128M. Should issue MUDWNGRDTN er
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
-%GTM-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-TEXT, Mupip downgrade started
+%YDB-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
 %YDB-E-MUDWNGRDTN, Transaction number ##TN## in database ##DATAFILE## is too big for MUPIP [REORG] DOWNGRADE. Renew database with MUPIP INTEG TN_RESET
 %YDB-E-MUNODWNGRD, Database not downgraded because of preceding errors
 No errors detected by integ.
@@ -415,12 +415,12 @@ Region	DEFAULT
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
-%GTM-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-TEXT, Mupip downgrade started
+%YDB-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
 %GTM-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V4
 
 File  	##TEST_PATH##/mumps.dat
@@ -430,12 +430,12 @@ Region	DEFAULT
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip upgrade started
-%GTM-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-TEXT, Mupip upgrade started
+%YDB-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
 %GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgrade to GT.M ##MACHTYPE##
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
@@ -452,12 +452,12 @@ Region	DEFAULT
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip downgrade started
-%GTM-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
-%GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-TEXT, Mupip downgrade started
+%YDB-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##
+%YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
 %GTM-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V4
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -469,7 +469,7 @@ Integ of region DEFAULT
 %YDB-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
 %GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
 Clean up ftok semaphore which will be left around from the BADDBVER error from the dbcheck.csh call
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 ##TEST_PATH##/mupip.err_##TEST_AWK.._.._.._.._.._..
 %YDB-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
 %GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages

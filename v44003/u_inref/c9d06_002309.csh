@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2003, 2014 Fidelity Information Services, Inc	#
+# Copyright 2003, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -15,7 +18,7 @@ $gtm_tst/com/dbcreate.csh mumps 1
 # To make the reference file consistent for before and nobefore image journaling,
 # redirect the set -journal output to a file and grep only for the journal state info
 $MUPIP set $tst_jnl_str -region "*" >&! mupip_set_jnl.out
-$grep "GTM-I-JNLSTATE" mupip_set_jnl.out
+$grep "YDB-I-JNLSTATE" mupip_set_jnl.out
 $GTM <<EOF
 do in0^pfill("set",1)
 EOF

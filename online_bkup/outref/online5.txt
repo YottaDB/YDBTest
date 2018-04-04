@@ -19,8 +19,8 @@ PASS from fill3^myfill("set")
 
 GTM>
 ##SUSPEND_OUTPUT  NON_REPLIC
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/online5.mjl is renamed to ##TEST_PATH##/online5.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/online5.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/online5.mjl is renamed to ##TEST_PATH##/online5.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/online5.mjl created for region DEFAULT with .*BEFORE_IMAGES
 ##ALLOW_OUTPUT  NON_REPLIC
 ##TEST_AWKMUPIP backup of database file ##TEST_PATH##/online5.dat to  .*gzip -c > online5pipe.inc.gz
 ##TEST_AWKDB file ##TEST_PATH##/online5.dat incrementally backed up in file  .*gzip -c > online5pipe.inc.gz
@@ -58,7 +58,7 @@ No errors detected by integ.
 ##REMOTE_SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 ##ALLOW_OUTPUT  NON_REPLIC
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/online5.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online5.dat created
 
 RESTORE COMPLETED
 ##SUSPEND_OUTPUT COLLATION
@@ -72,7 +72,7 @@ GTM>
 PASS from fill3^myfill("ver")
 
 GTM>
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/online5.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online5.dat created
 RESTORE COMPLETED
 ##SUSPEND_OUTPUT COLLATION
 190 blocks restored

@@ -20,15 +20,15 @@ e.dat
 mumps.dat
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for database file ##TEST_PATH##/a.dat with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/a.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for database file ##TEST_PATH##/b.dat with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/b.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for database file ##TEST_PATH##/a.dat with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/a.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for database file ##TEST_PATH##/a.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/a.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for database file ##TEST_PATH##/b.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/b.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for database file ##TEST_PATH##/a.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/a.dat is now ON
 Source shut down ...
 Restarting (B) as primary...
 mupip_rollback.csh -verbose -fetchresync=portno -losttrans=fetch.glo *  >&! rollback.log

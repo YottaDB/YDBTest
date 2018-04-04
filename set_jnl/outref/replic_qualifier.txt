@@ -6,8 +6,8 @@ Using: ##SOURCE_PATH##/mupip
 a.dat
 mumps.dat
 ##SOURCE_PATH##/mupip set -journal=enable,nobefore -file mumps.dat
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 =========================================================
 Test Case 30
 REPLICATION qualifier may be on or off but cannot be empty
@@ -18,36 +18,36 @@ REPLICATION qualifier may be on or off but cannot be empty
 ##SOURCE_PATH##/mupip set -journal=enable,before -replic=onoff -file mumps.dat
 %YDB-E-CLIERR, Unrecognized option : ONOFF
 ##SOURCE_PATH##/mupip set -journal=enable,before -replic=on -file mumps.dat
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
-%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
 ##SOURCE_PATH##/mupip set -journal=enable,before -replic=off -file mumps.dat
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
 =========================================================
 Test Case 31
 Replication on makes journal state ON
 ##SOURCE_PATH##/mupip set -journal=disable -file mumps.dat
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
 ##SOURCE_PATH##/mupip set -REPLIC=on -reg *
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-REPLSTATE, Replication state for region AREG is now ON
-%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region AREG is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
 Journal State:(expected ON) ON
 Replication State:(expected ON) ON
 replication with file option
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
 Journal State:(expected ON) ON
 Replication State:(expected ON) ON
 =========================================================
@@ -58,8 +58,8 @@ However journal=disable and replication=off can be specified together
 %GTM-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/mumps.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
 %GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
 ##SOURCE_PATH##/mupip set -journal=disable -replic=off -file mumps.dat
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
-%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+%YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
 Journal State:(expected DISABLED) DISABLED
 Replication State:(expected OFF) OFF
 =========================================================
@@ -70,65 +70,65 @@ Journal=off and replication=off allowed
 replication=off does change journal state unless replication and journal options
 are specified in the same command
 ##SOURCE_PATH##/mupip set -replic=on -file mumps.dat
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
 ##SOURCE_PATH##/mupip set -journal=off -file mumps.dat
 %GTM-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/mumps.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
 %GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
 ##SOURCE_PATH##/mupip set -journal=off -replic=on -file mumps.dat
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
 ##SOURCE_PATH##/mupip set -replic=off -file mumps.dat
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
 Journal State:(expected ON) [inactive]
 Replication State:(expected OFF) OFF
 ##SOURCE_PATH##/mupip set -journal=off -replic=on -file mumps.dat
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
 ##SOURCE_PATH##/mupip set -replic=on -file mumps.dat
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
-%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
 ##SOURCE_PATH##/mupip set -journal=off -replic=off -file mumps.dat
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
-%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+%YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
 Journal State:(expected OFF) OFF
 Replication State:(expected OFF) OFF
 =========================================================
 Test Case 35
 replication=on and journal=nobefore DOES NOT give error
 ##SOURCE_PATH##/mupip set -replic=on -file mumps.dat
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
 ##SOURCE_PATH##/mupip set -journal=nobefore -file mumps.dat
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 ##SOURCE_PATH##/mupip set -journal=disable -replic=off -file mumps.dat
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
-%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+%YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
 ##SOURCE_PATH##/mupip set -journal=enable,nobefore -replic=on -file mumps.dat
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
 Journal State:(expected [inactive]) [inactive]
 Replication State:(expected ON) ON
 =========================================================
 Test Case 36
 replication=on and other journal qualifiers
 ##SOURCE_PATH##/mupip set -journal=enable,before,alignsize=4096,allocation=2048,autoswitchlimit=16448,bu=2308,EP=600,extension=100,filename=abcd.mjl,sync_io,yield_limit=1000 -replic=on -file mumps.dat
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
 %GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
   Journal State               [inactive] ON  Journal Before imaging        TRUE
   Journal Allocation                   2048  Journal Extension              100
   Journal Buffer Size                  2312  Journal Alignsize             4096
@@ -139,10 +139,10 @@ replication=on and other journal qualifiers
 Test Case 37
 replication=off and other journal qualifiers
 ##SOURCE_PATH##/mupip set -journal=enable,before,alignsize=4096,allocation=2048,autoswitchlimit=16448,bu=2308,EP=600,extension=100,filename=test_37.mjl,sync_io,yteld_limit=1000 -replic=off -file mumps.dat
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/test_37.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/test_37.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
 %GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
   Journal State               [inactive] ON  Journal Before imaging        TRUE
   Journal Allocation                   2048  Journal Extension              100
   Journal Buffer Size                  2312  Journal Alignsize             4096

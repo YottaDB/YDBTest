@@ -16,16 +16,16 @@ GTM>
 # Extract in Binary format
 # Do bytestream backup of DEFAULT region
 # Recreate database
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 # Restore into encrypted database file with new key files
 RESTORE COMPLETED
 # Extract to check if globals are accesable
 # Loading into encrypted database file with new key files
 LOAD TOTAL		Key Cnt: 384  Max Subsc Len: 59  Max Data Len: 4
 # Extract to check if globals are accesable
-##TEST_AWK.GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 384  max subsc len: 59  max rec len: 4  max node len: [67].
+##TEST_AWK.YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 384  max subsc len: 59  max rec len: 4  max node len: [67].
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

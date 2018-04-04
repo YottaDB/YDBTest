@@ -6,10 +6,10 @@ a.dat
 b.dat
 c.dat
 mumps.dat
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
 GTM>
 
@@ -22,9 +22,9 @@ forward extract one......
 mupip journal -forward -extract=tmp.mjf -broken=mumps.broken -lost=mumps.lost mumps.mjl,a.mjl,b.mjl,c.mjl
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-%GTM-I-FILECREATE, Journal extract file tmp.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file mumps.broken created
-%GTM-I-FILECREATE, Lost transactions extract file mumps.lost created
+%YDB-I-FILECREATE, Journal extract file tmp.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file mumps.broken created
+%YDB-I-FILECREATE, Lost transactions extract file mumps.lost created
 Verifying the extract file ...
 ^a="1"
 ^b="1"
@@ -39,9 +39,9 @@ forward extract two......
 mupip journal -forward -extract=a.mjf -broken=a.broken -lost=a.lost *
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-%GTM-I-FILECREATE, Journal extract file a.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file a.broken created
-%GTM-I-FILECREATE, Lost transactions extract file a.lost created
+%YDB-I-FILECREATE, Journal extract file a.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file a.broken created
+%YDB-I-FILECREATE, Lost transactions extract file a.lost created
 Verifying the extract file ...
 ^a="1"
 ^b="1"
@@ -56,9 +56,9 @@ forward extract three......
 mupip journal -forward -extract=a.mjf -broken=a.broken -lost=a.lost a.mjl,b.mjl,c.mjl,mumps.mjl
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-%GTM-I-FILECREATE, Journal extract file a.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file a.broken created
-%GTM-I-FILECREATE, Lost transactions extract file a.lost created
+%YDB-I-FILECREATE, Journal extract file a.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file a.broken created
+%YDB-I-FILECREATE, Lost transactions extract file a.lost created
 Verifying the extract file ...
 ^a="1"
 ^b="1"
@@ -73,9 +73,9 @@ forward extract four......
 mupip journal -forward -extract=c.mjf -broken=c.broken -lost=c.lost c.mjl,b.mjl,a.mjl,mumps.mjl
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-%GTM-I-FILECREATE, Journal extract file c.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file c.broken created
-%GTM-I-FILECREATE, Lost transactions extract file c.lost created
+%YDB-I-FILECREATE, Journal extract file c.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file c.broken created
+%YDB-I-FILECREATE, Lost transactions extract file c.lost created
 Verifying the extract file ...
 ^a="1"
 ^b="1"

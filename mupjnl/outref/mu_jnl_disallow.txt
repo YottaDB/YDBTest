@@ -110,16 +110,16 @@ a.dat
 mumps.dat
 Turn journaling on...
 ##SOURCE_PATH##/mupip journal -recover -forward -redirect=bgdbb.dat=test.dat *
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-STARFILE, Star(*) argument cannot be specified with REDIRECT qualifier
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mupip journal -rollback -back -lost=1 a.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-NOSTARFILE, Only star(*) argument can be specified with ROLLBACK -BACKWARD qualifier
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
-%GTM-I-FILENOTCREATE, Lost transactions extract file 1 not created
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+%YDB-I-FILENOTCREATE, Lost transactions extract file 1 not created
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 unset echo
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

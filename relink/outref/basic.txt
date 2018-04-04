@@ -147,11 +147,11 @@ Object Directory         : ##TEST_PATH##
 
  e. ZRUPDATE "someRtn.o","someRtn.m","someDir/otherRtn.o","someDir/%someRtn.o"
 %YDB-E-FILEPARSE, Error parsing file specification: someRtn.m
-%GTM-I-TEXT, Unsupported filetype specified
+%YDB-I-TEXT, Unsupported filetype specified
 
  f. ZRUPDATE "someRtn.m","someDir/otherRtn.o","someDir/%someRtn.o"
 %YDB-E-FILEPARSE, Error parsing file specification: someRtn.m
-%GTM-I-TEXT, Unsupported filetype specified
+%YDB-I-TEXT, Unsupported filetype specified
 
  g. ZRUPDATE "*some*.o","some*/*"
 Object Directory         : ##TEST_PATH##/someDir
@@ -169,7 +169,7 @@ Object Directory         : ##TEST_PATH##
 
  h. ZRUPDATE "other*","*/*.m"
 %YDB-E-FILEPARSE, Error parsing file specification: */*.m
-%GTM-I-TEXT, Unsupported filetype specified
+%YDB-I-TEXT, Unsupported filetype specified
 
 Static link of a routine from a directory following a starred directory in $zroutines.
 Object Directory         : ##TEST_PATH##/dir1

@@ -23,8 +23,8 @@ Database layout -
 AREG REGION - A to B : UNENCRYPTED
 DEFAULT REGION - REST : ENCRYPTED
 ------------------------------------------------------------
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 
 Create journal files for the respective regions
@@ -71,16 +71,16 @@ $MUPIP backup -c DEFAULT a.co
 ---------------------------------------------
 BINARY EXTRACT for mumps.dat --> mumps.ext
 $MUPIP extract -fo=bin -select="t*" mumps.ext
-%GTM-I-RECORDSTAT, ^thisIsEncryptedKey:	  Key cnt: 1  max subsc len: 20  max rec len: 34  max node len: 58
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 20  max rec len: 34  max node len: 58
+%YDB-I-RECORDSTAT, ^thisIsEncryptedKey:	  Key cnt: 1  max subsc len: 20  max rec len: 34  max node len: 58
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 20  max rec len: 34  max node len: 58
 ---------------------------------------------
 
 
 ---------------------------------------------
 BINARY EXTRACT for a.dat --> a.ext
 $MUPIP extract -fo=bin -select="A*" a.ext
-%GTM-I-RECORDSTAT, ^AkeyNotEncrypted:	  Key cnt: 1  max subsc len: 18  max rec len: 36  max node len: 58
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 18  max rec len: 36  max node len: 58
+%YDB-I-RECORDSTAT, ^AkeyNotEncrypted:	  Key cnt: 1  max subsc len: 18  max rec len: 36  max node len: 58
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 18  max rec len: 36  max node len: 58
 ---------------------------------------------
 
 STRINGS TEST FOR DATABASE FILES

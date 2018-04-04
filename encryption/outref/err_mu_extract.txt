@@ -27,7 +27,7 @@ mupip extract -fo=zwr ext1.zwr
 mupip extract -fo=go ext1.go
 %GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
 %YDB-E-CRYPTBADCONFIG, Could not retrieve data from encrypted file ##TEST_PATH##/mumps.dat due to bad encryption configuration. Please look at prior messages related to encryption for more details
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 --------------------------------------------------------------------------------------------------
 Try extracting while doing parallel GTM updates without gtm_passwd and expect error message
 --------------------------------------------------------------------------------------------------
@@ -71,8 +71,8 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 PASS from fill1^myfill("set")
@@ -99,8 +99,8 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 
@@ -111,8 +111,8 @@ GTM>
 Try binary extract with select qualifier to extract global from unencrypted region (DEFAULT)
 --------------------------------------------------------------------------------------------
 mupip extract -fo=bin -select=b* ext5.bin
-%GTM-I-RECORDSTAT, ^b:	  Key cnt: 1  max subsc len: 3  max rec len: 2  max node len: 9
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 2  max node len: 9
+%YDB-I-RECORDSTAT, ^b:	  Key cnt: 1  max subsc len: 3  max rec len: 2  max node len: 9
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 2  max node len: 9
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

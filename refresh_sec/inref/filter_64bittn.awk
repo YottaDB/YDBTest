@@ -25,11 +25,11 @@ gsub("- GVT index blocks --------------[ ]*[0-9]* .0x[0-9a-z]*.","- GVT index bl
 gsub("^--> Number of globals in directory tree : [0-9]*","--> Number of globals in directory tree : ##V4RAND##",$0)
 gsub("^--> Number of records in global variable tree : [0-9]*","--> Number of records in global variable tree : ##V4RAND##",$0)
 ########################### MUPIP upgrade/downgrade statistics filter ##########################
-gsub("%GTM-I-MUINFOUINT4, Old file header size : [0-9]* .0x[0-9A-Z]*.","%GTM-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##",$0)
-gsub("%GTM-I-MUINFOUINT8, Old file length : [0-9]* .0x[0-9A-Z]*.","%GTM-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##",$0)
-gsub("%GTM-I-MUINFOUINT4, Old file start_vbn : [0-9]* .0x[0-9A-Z]*.","%GTM-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##",$0)
-gsub("%GTM-I-MUINFOUINT4, Old file gds blk_size : [0-9]* .0x[0-9A-Z]*.","%GTM-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##",$0)
-gsub("%GTM-I-MUINFOUINT4, Old file total_blks : [0-9]* .0x[0-9A-Z]*.","%GTM-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##",$0)
+gsub("%YDB-I-MUINFOUINT4, Old file header size : [0-9]* .0x[0-9A-Z]*.","%YDB-I-MUINFOUINT4, Old file header size : ##UPGRD_DWNGRD_BLKS##",$0)
+gsub("%YDB-I-MUINFOUINT8, Old file length : [0-9]* .0x[0-9A-Z]*.","%YDB-I-MUINFOUINT8, Old file length : ##UPGRD_DWNGRD_BLKS##",$0)
+gsub("%YDB-I-MUINFOUINT4, Old file start_vbn : [0-9]* .0x[0-9A-Z]*.","%YDB-I-MUINFOUINT4, Old file start_vbn : ##UPGRD_DWNGRD_BLKS##",$0)
+gsub("%YDB-I-MUINFOUINT4, Old file gds blk_size : [0-9]* .0x[0-9A-Z]*.","%YDB-I-MUINFOUINT4, Old file gds blk_size : ##UPGRD_DWNGRD_BLKS##",$0)
+gsub("%YDB-I-MUINFOUINT4, Old file total_blks : [0-9]* .0x[0-9A-Z]*.","%YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##",$0)
 ########################### MUPIP REORG upgrade/downgrade statistics filter ##########################
 gsub("Region[$A-Za-z ]*: Statistics : Blocks Read From Disk .Bitmap.     : 0x[0-9A-Z]*","Region ##REG## : Statistics : Blocks Read From Disk (Bitmap)     : ##REORG_BLOCKS##",$0)
 gsub("Region[$A-Za-z ]*: Statistics : Blocks Skipped .Free.              : 0x[0-9A-Z]*","Region ##REG## : Statistics : Blocks Skipped (Free)              : ##REORG_BLOCKS##",$0)

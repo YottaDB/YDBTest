@@ -57,15 +57,15 @@ END 4
 ---------------------------------------------------------------------------------------
 BEGIN 5 :-) Do mupip rundown on backup.dat. This should not touch shared memory as it is not related to backup.dat:
 
-##TEST_AWK.GTM-I-DBSHMNAMEDIFF, Database file ##TEST_PATH##.backup.dat points to shared memory .id = [0-9]+. which points to a different database file ##TEST_PATH##.mumps.dat
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/backup.dat successfully rundown
+##TEST_AWK.YDB-I-DBSHMNAMEDIFF, Database file ##TEST_PATH##.backup.dat points to shared memory .id = [0-9]+. which points to a different database file ##TEST_PATH##.mumps.dat
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/backup.dat successfully rundown
 
 END 5
 ---------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------
 BEGIN 6 :-) Do mupip rundown on backup.dat again and it should be fine. Accesss to backup.dat should also be fine:
 
-##TEST_AWK.GTM-I-MUFILRNDWNSUC, File .*backup.dat successfully rundown
+##TEST_AWK.YDB-I-MUFILRNDWNSUC, File .*backup.dat successfully rundown
 
 GTM>
 set ^y=1
@@ -91,7 +91,7 @@ END 7
 BEGIN 8 :-) Mupip rundown on mumps.dat and access GT.M and that should be fine:
 
 ##TEST_AWKmupip rundown .*
-##TEST_AWK.GTM-I-MUFILRNDWNSUC, File .*.dat successfully rundown
+##TEST_AWK.YDB-I-MUFILRNDWNSUC, File .*.dat successfully rundown
 
 GTM>
 write ^x

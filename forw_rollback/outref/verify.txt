@@ -103,20 +103,20 @@ Error MUNOACTION seen in backward_recover-noverify.out as expected:
 %GTM-S-JNLSUCCESS, Verify successful
  --> Testing VERIFY status for mupip journal -show -backward -noverify
 # Test of REPLSTATEOFF error
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-REPLSTATEOFF, MUPIP JOURNAL -ROLLBACK -BACKWARD cannot proceed as database ##TEST_PATH##/mumps.dat does not have replication ON
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 # Test of MUPJNLINTERRUPT error from forward rollback
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 Location 972 [0x000003CC] : Old Value = 0 [0x00000000] : New Value = 1 [0x00000001] : Size = 4 [0x04]
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-MUPJNLINTERRUPT, Database file ##TEST_PATH##/mumps.dat indicates interrupted MUPIP JOURNAL command.  Restore from backup for forward recover/rollback.
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 # Test of JNLDBSEQNOMATCH error
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
@@ -149,13 +149,13 @@ No errors detected by integ.
 No errors detected by integ.
 # Copy *.dat from $bkupdir1
 # Expect JNLDBSEQNOMATCH error when rollback -forward is attempted with -nochain
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-JNLDBSEQNOMATCH, Journal file ##TEST_PATH##/a.mjl has beginning region sequence number [0x0000000000000033], but database ##TEST_PATH##/a.dat has region sequence number [0x000000000000001D]
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 # Expect JNLDBSEQNOMATCH error for the below rollback -forward, since journal backlinks are cut
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-JNLDBSEQNOMATCH, Journal file ##TEST_PATH##/a.mjl has beginning region sequence number [0x0000000000000033], but database ##TEST_PATH##/a.dat has region sequence number [0x000000000000001D]
 %YDB-E-NOPREVLINK, Journal file ##TEST_PATH##/a.mjl has a null previous link
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..

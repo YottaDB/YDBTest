@@ -10,7 +10,7 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/backup.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/backup.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/backup.dat created
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/mumps.gld
 
@@ -20,7 +20,7 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 END 1
 ---------------------------------------------------------------------------------------
@@ -37,8 +37,8 @@ GTM>
 		At M source location backup+1^backup
 
 GTM>
-##TEST_AWK.GTM-I-DBSHMNAMEDIFF, Database file ##TEST_PATH##.backup.dat points to shared memory .id = [0-9]+. which points to a different database file ##TEST_PATH##.mumps.dat
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/backup.dat successfully rundown
+##TEST_AWK.YDB-I-DBSHMNAMEDIFF, Database file ##TEST_PATH##.backup.dat points to shared memory .id = [0-9]+. which points to a different database file ##TEST_PATH##.mumps.dat
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/backup.dat successfully rundown
 
 GTM>
 set ^n=1

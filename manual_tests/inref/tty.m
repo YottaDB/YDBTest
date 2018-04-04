@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 tty	; Checks tty behavior
 	W "This test tests deviceparameters for terminals.",!
 	w "For each test, it gives a PASS/FAIL result, so check the lines:",!
@@ -16,7 +27,7 @@ ctrl	;
 	w "PASTHRU:NOTTSYNC",!
 in	w "=>Enter ^a to ^z also ^? and ^\ (order is not important)",!
 	w "=> Try ^c first.",!
-	w "=>You should not see GTM-I-CTRLC.",!
+	w "=>You should not see YDB-I-CTRLC.",!
 	w "  If you do, please zc.",!
 	w "=>If you get a sig-3, run again and do not input ^\",!
 	w "=>^n might mess terminal, reset the terminal with ctrl-middle button -> ""Do Soft Reset"" option)",!
@@ -25,7 +36,7 @@ in	w "=>Enter ^a to ^z also ^? and ^\ (order is not important)",!
 	f  q:q=1  d
 	. r xi
 	. i xi=0 s q=1
-	. e  s x=x_xi w "<=====Oops, fell out. Go back again(enter 0 to exit).",! zwr x 
+	. e  s x=x_xi w "<=====Oops, fell out. Go back again(enter 0 to exit).",! zwr x
 	w "Input taken. Can you read this?",!
 	r tmp
 	zwr x
@@ -44,7 +55,7 @@ recov	r x
 	zc
 	q
 ctrl1	w "type ^c then ret",!
-	w "You sohuld not see GTM-I-CTRLC!. If you do, please zc (and then return)",!
+	w "You sohuld not see YDB-I-CTRLC!. If you do, please zc (and then return)",!
 	d rx($C(3))
 	w "Type in ^a ^b ^d ^e ... ^j then ret",!
 	d rx($C(1,2,4,5,6,7,8,9,10))

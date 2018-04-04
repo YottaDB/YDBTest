@@ -30,12 +30,12 @@ mumps.dat
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP integ -r "*"  >>& integ.out'==
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 ##TEST_COM_PATH##/rfstatus.csh BEFORE'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 ##TEST_COM_PATH##/rfstatus.csh BEFORE: < /dev/null'==
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/ajnl/a.mjl created for region AREG with .*BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/bjnl/b.mjl created for region BREG with .*BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/cjnl/c.mjl created for region DEFAULT with .*BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/ajnl/a.mjl created for region AREG with .*BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/bjnl/b.mjl created for region BREG with .*BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/cjnl/c.mjl created for region DEFAULT with .*BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
 GTM>
 

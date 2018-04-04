@@ -9,8 +9,8 @@ mumps.dat
 ##############################################################
 Test Scenario 1: Bad perms for one of the key files.
 ##############################################################
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
 %YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. Encryption key file ##TEST_PATH##/mumps_dat_key not accessible
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
@@ -26,17 +26,17 @@ Test Scenario 2: One of the keys doesn't exist.
 Test Scenario 3: One of the keys is empty.
 ##############################################################
 rm: No match.
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
 %YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. Symmetric key ##TEST_PATH##/mumps_dat_key found to be empty
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 ##############################################################
 Restore everything and do an INTEG
 ##############################################################
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

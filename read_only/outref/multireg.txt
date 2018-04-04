@@ -318,7 +318,7 @@ chmod 666 *.dat
 echo "mupip extract -nolog glo.dir"
 mupip extract -nolog glo.dir
 $MUPIP extract -nolog glo.dir | & sort -f
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -332,7 +332,7 @@ chmod 444 *.dat
 echo "mupip extract -nolog glo.dir"
 mupip extract -nolog glo.dir
 $MUPIP extract -nolog glo.dir | & sort -f
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -367,7 +367,7 @@ chmod 666 *.dat
 echo "mupip extract -fr -nolog glo.dir"
 mupip extract -fr -nolog glo.dir
 $MUPIP extract -fr -nolog glo.dir | & sort -f
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -421,7 +421,7 @@ echo "**** *.dat R/W *.mjl R/W ****"
 echo "mupip extract -nolog glo.dir"
 mupip extract -nolog glo.dir
 $MUPIP extract -nolog glo.dir | & sort -f
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -436,7 +436,7 @@ echo "**** b.dat R/W b.mjl R/O ****"
 echo "mupip extract -nolog glo.dir"
 mupip extract -nolog glo.dir
 $MUPIP extract -nolog glo.dir | & sort -f
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -451,7 +451,7 @@ echo "**** b.dat R/O b.mjl R/W ****"
 echo "mupip extract -nolog glo.dir"
 mupip extract -nolog glo.dir
 $MUPIP extract -nolog glo.dir | & sort -f
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -466,7 +466,7 @@ echo "**** b.dat R/O b.mjl R/O ****"
 echo "mupip extract -nolog glo.dir"
 mupip extract -nolog glo.dir
 $MUPIP extract -nolog glo.dir | & sort -f
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -502,7 +502,7 @@ echo "**** *.dat R/W *.mjl R/W ***"
 echo "mupip extract -fr -nolog glo.dir"
 mupip extract -fr -nolog glo.dir
 $MUPIP extract -fr -nolog glo.dir | & sort -f
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -517,7 +517,7 @@ chmod 444 b.mjl
 echo "mupip extract -fr -nolog glo.dir"
 mupip extract -fr -nolog glo.dir
 $MUPIP extract -fr -nolog glo.dir | & sort -f
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -894,19 +894,19 @@ echo ""
 
 
 $MUPIP create
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 $MUPIP set -journal=enable,on,before -reg "*" | & sort -f
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 $GTM << aaa
 
 GTM>
@@ -2216,10 +2216,10 @@ No errors detected by integ.
 
 \rm -f *.dat
 $MUPIP create
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
 res mumps.dat a.dat b.dat c.dat
@@ -2246,10 +2246,10 @@ No errors detected by integ.
 
 \rm -f *.dat
 $MUPIP create
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 chmod.csh rwro
 **** R/W b.dat R/O b.mjl ****
 res mumps.dat a.dat b.dat c.dat
@@ -2276,10 +2276,10 @@ No errors detected by integ.
 
 \rm -f *.dat
 $MUPIP create
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 chmod.csh rorw
 **** R/O b.dat R/W b.mjl ****
 res mumps.dat a.dat b.dat c.dat
@@ -2306,10 +2306,10 @@ No errors detected by integ.
 
 \rm -f *.dat
 $MUPIP create
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 chmod.csh roro
 **** R/O b.dat R/O b.mjl ****
 res mumps.dat a.dat b.dat c.dat
@@ -2363,10 +2363,10 @@ chmod.csh rwrw
 echo "mupip rundown -reg * "
 mupip rundown -reg * 
 $MUPIP rundown -reg "*" | & sort -f
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -2394,10 +2394,10 @@ chmod.csh rwro
 echo "mupip rundown -reg * "
 mupip rundown -reg * 
 $MUPIP rundown -reg "*" | & sort -f
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -2426,17 +2426,17 @@ echo "mupip rundown -reg * "
 mupip rundown -reg * 
 $MUPIP rundown -reg "*" | & sort -f
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
 $MUPIP rundown -reg "*" | & sort -f
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -2465,17 +2465,17 @@ echo "mupip rundown -reg * "
 mupip rundown -reg * 
 $MUPIP rundown -reg "*" | & sort -f
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
 $MUPIP rundown -reg "*" | & sort -f
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -2509,18 +2509,18 @@ GTM>
 chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
 $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -2553,15 +2553,15 @@ $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
 %YDB-E-JNLNOCREATE, Journal file ##TEST_PATH##/b.mjl not created
 %YDB-E-JNLRDONLY, Journal file ##TEST_PATH##/b.mjl read only
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -2592,15 +2592,15 @@ chmod.csh rorw
 $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
 %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -2630,15 +2630,15 @@ chmod.csh roro
 $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
 %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -2666,13 +2666,13 @@ GTM>
 chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
 $MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file mumps.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file mumps.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -2683,13 +2683,13 @@ No errors detected by integ.
 chmod.csh rwro
 **** R/W b.dat R/O b.mjl ****
 $MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file mumps.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file mumps.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -2700,13 +2700,13 @@ No errors detected by integ.
 chmod.csh rorw
 **** R/O b.dat R/W b.mjl ****
 $MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file mumps.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file mumps.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -2717,13 +2717,13 @@ No errors detected by integ.
 chmod.csh roro
 **** R/O b.dat R/O b.mjl ****
 $MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file mumps.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file mumps.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -2763,12 +2763,12 @@ $MUPIP create > & /dev/null
 chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
 $MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Recover successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -2780,12 +2780,12 @@ $MUPIP create > & /dev/null
 chmod.csh rwro
 **** R/W b.dat R/O b.mjl ****
 $MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Recover successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -2797,10 +2797,10 @@ $MUPIP create > & /dev/null
 chmod.csh rorw
 **** R/O b.dat R/W b.mjl ****
 $MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -2812,10 +2812,10 @@ $MUPIP create > & /dev/null
 chmod.csh roro
 **** R/O b.dat R/O b.mjl ****
 $MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -2849,11 +2849,11 @@ chmod 666 *.dat *.mjl
 chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
 $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
 %GTM-S-JNLSUCCESS, Recover successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -2862,12 +2862,12 @@ No errors detected by integ.
 chmod.csh rwro
 **** R/W b.dat R/O b.mjl ****
 $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/b.mjl
 ##TEST_AWK%YDB-E-SYSCALL, Error received from system call open -- called from module .*/mur_read_file_sp.c at line [0-9]*
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -2876,10 +2876,10 @@ No errors detected by integ.
 chmod.csh rorw
 **** R/O b.dat R/W b.mjl ****
 $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -2888,12 +2888,12 @@ No errors detected by integ.
 chmod.csh roro
 **** R/O b.dat R/O b.mjl ****
 $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/b.mjl
 ##TEST_AWK%YDB-E-SYSCALL, Error received from system call open -- called from module .*/mur_read_file_sp.c at line [0-9]*
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -3000,11 +3000,11 @@ chmod 666 *.dat *.mjl
 chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
 $MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -3014,11 +3014,11 @@ No errors detected by integ.
 chmod.csh rwro
 **** R/W b.dat R/O b.mjl ****
 $MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -3028,11 +3028,11 @@ No errors detected by integ.
 chmod.csh rorw
 **** R/O b.dat R/W b.mjl ****
 $MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -3042,11 +3042,11 @@ No errors detected by integ.
 chmod.csh roro
 **** R/O b.dat R/O b.mjl ****
 $MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip

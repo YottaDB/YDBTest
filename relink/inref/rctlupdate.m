@@ -139,7 +139,7 @@ setExpectations(arg,setup,cycles,expect)
 	.	set stop=TRUE
 	if (stop) do  quit
 	.	set expect("error",1)="YDB-E-FILEPARSE, Error parsing file specification: "_arg
-	.	set expect("error",2)="GTM-I-TEXT, Filename is not a valid routine name"
+	.	set expect("error",2)="YDB-I-TEXT, Filename is not a valid routine name"
 
 	; Validate whether the name may possibly be valid considering the use of wildcards.
 	set extension=parse("ext")
@@ -152,7 +152,7 @@ setExpectations(arg,setup,cycles,expect)
 	.	set stop=TRUE
 	if (stop) do  quit
 	.	set expect("error",1)="YDB-E-FILEPARSE, Error parsing file specification: "_arg
-	.	set expect("error",2)="GTM-I-TEXT, Unsupported filetype specified"
+	.	set expect("error",2)="YDB-I-TEXT, Unsupported filetype specified"
 	do log(" - @ point 2")
 
 	; Prepare the argument for searching with relink.matchFiles().
@@ -231,8 +231,8 @@ setExpectations(arg,setup,cycles,expect)
 	.	set:('wildcarded) stop=TRUE
 
 	if (wildcarded&(0=count)&("+1^GTM$DMOD"=$stack(0,"PLACE"))) do
-	.	set expect("error",1)="GTM-I-FILEPARSE, Error parsing file specification: "_arg
-	.	set expect("error",2)="GTM-I-TEXT, No object files found"
+	.	set expect("error",1)="YDB-I-FILEPARSE, Error parsing file specification: "_arg
+	.	set expect("error",2)="YDB-I-TEXT, No object files found"
 
 	quit
 

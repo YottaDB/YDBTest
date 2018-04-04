@@ -107,7 +107,7 @@ Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/ins
 ==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST1 PP'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST3 $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost3.glo "*" >&! rollback_fetchresync_1.out'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 $grep -E "RLBKJNSEQ|JNLSUCCESS" rollback_fetchresync_1.out'==
-%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 2 [0x0000000000000002]
+%YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 2 [0x0000000000000002]
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
 %GTM-S-JNLSUCCESS, Rollback successful

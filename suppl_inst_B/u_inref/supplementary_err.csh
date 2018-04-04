@@ -72,7 +72,7 @@ $MSR RUN INST4 "set msr_dont_trace ; $gtm_tst/com/portno_release.csh $port_41"
 #
 # UPDSYNCINSTFILE
 # %YDB-E-UPDSYNCINSTFILE, Error with instance file name specified in UPDATERESYNC qualifier
-# %GTM-I-TEXT, Source side is >= V5.5-000 implies -UPDATERESYNC needs a value specified
+# %YDB-I-TEXT, Source side is >= V5.5-000 implies -UPDATERESYNC needs a value specified
 
 echo "# Expect rcvr to exit with YDB-E-UPDSYNCINSTFILE when no value is specified to -updateresync"
 $MSR STARTSRC INST4 INST5 RP

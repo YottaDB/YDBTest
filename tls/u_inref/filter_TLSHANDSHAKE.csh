@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -30,13 +30,13 @@ $MSR RUN INST2 "set msr_dont_trace; $gtm_tst/com/wait_for_log.csh -log $rcv_logf
 # out.
 set stat1 = `$MSR RUN INST1 'set msr_dont_trace; $grep -q TLSHANDSHAKE '$src_logfile'; echo $status'`
 if (0 == $stat1) then
-	$MSR RUN INST1 "set msr_dont_trace; $msr_err_chk $src_logfile 'W-TLSHANDSHAKE' 'GTM-I-TEXT'" >>&! $outfile
+	$MSR RUN INST1 "set msr_dont_trace; $msr_err_chk $src_logfile 'W-TLSHANDSHAKE' 'YDB-I-TEXT'" >>&! $outfile
 	$gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-W-TLSHANDSHAKE"
 endif
 
 set stat2 = `$MSR RUN INST2 'set msr_dont_trace; $grep -q TLSHANDSHAKE '$rcv_logfile'; echo $status'`
 if (0 == $stat2) then
-	$MSR RUN INST2 "set msr_dont_trace; $msr_err_chk $rcv_logfile 'W-TLSHANDSHAKE' 'GTM-I-TEXT'" >>&! $outfile
+	$MSR RUN INST2 "set msr_dont_trace; $msr_err_chk $rcv_logfile 'W-TLSHANDSHAKE' 'YDB-I-TEXT'" >>&! $outfile
 	$gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-W-TLSHANDSHAKE"
 endif
 

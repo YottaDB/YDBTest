@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,7 +27,7 @@ $gtm_exe/mumps -r %XCMD "do envdelta^restart($no_of_restarts)"
 set syslog_end = `date +"%b %e %H:%M:%S"`
 echo "syslog_end = $syslog_end" >> syslog_time1
 $gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog1.txt
-@ act_msgcnt = `$grep -c "${proc_pid}.*GTM-I-TPRESTART" test_syslog1.txt`
+@ act_msgcnt = `$grep -c "${proc_pid}.*YDB-I-TPRESTART" test_syslog1.txt`
 if (0 == $act_msgcnt) then
 	echo "No message is seen in the operator log"
 else
@@ -47,7 +47,7 @@ unsetenv gtm_tprestart_log_first
 set syslog_end = `date +"%b %e %H:%M:%S"`
 echo "syslog_end = $syslog_end" >> syslog_time2
 $gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog2.txt
-@ act_msgcnt = `$grep -c "${proc_pid}.*GTM-I-TPRESTART.*in glbl: \^a([0-9]*)" test_syslog2.txt`
+@ act_msgcnt = `$grep -c "${proc_pid}.*YDB-I-TPRESTART.*in glbl: \^a([0-9]*)" test_syslog2.txt`
 if (0 == $act_msgcnt) then
 	echo "No message is seen in the operator log"
 else
@@ -67,7 +67,7 @@ unsetenv gtm_tprestart_log_delta
 @ proc_pid = `$gtm_exe/mumps -run %XCMD 'write ^myjob'`
 set syslog_end = `date +"%b %e %H:%M:%S"`
 echo "syslog_end = $syslog_end" >> syslog_time3
-$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog3.txt "" "${proc_pid}.*GTM-I-TPRESTART.*in glbl: \^a([0-9]*)" $exp_msgcnt
+$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog3.txt "" "${proc_pid}.*YDB-I-TPRESTART.*in glbl: \^a([0-9]*)" $exp_msgcnt
 if (0 == $status) then
 	echo "no of messages = $exp_msgcnt"
 else
@@ -89,7 +89,7 @@ unsetenv gtm_tprestart_log_first
 @ proc_pid = `$gtm_exe/mumps -run %XCMD 'write ^myjob'`
 set syslog_end = `date +"%b %e %H:%M:%S"`
 echo "syslog_end = $syslog_end" >> syslog_time4
-$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog4.txt "" "${proc_pid}.*GTM-I-TPRESTART.*in glbl: \^a([0-9]*)" $exp_msgcnt
+$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog4.txt "" "${proc_pid}.*YDB-I-TPRESTART.*in glbl: \^a([0-9]*)" $exp_msgcnt
 if (0 == $status) then
 	echo "no of messages = $exp_msgcnt"
 else
@@ -107,7 +107,7 @@ $gtm_exe/mumps -r %XCMD "do viewdelta^restart($no_of_restarts,0,100)"
 @ proc_pid = `$gtm_exe/mumps -run %XCMD 'write ^myjob'`
 set syslog_end = `date +"%b %e %H:%M:%S"`
 echo "syslog_end = $syslog_end" >> syslog_time5
-$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog5.txt "" "${proc_pid}.*GTM-I-TPRESTART.*in glbl: \^a([0-9]*)" $exp_msgcnt
+$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog5.txt "" "${proc_pid}.*YDB-I-TPRESTART.*in glbl: \^a([0-9]*)" $exp_msgcnt
 if (0 == $status) then
 	echo "no of messages = $exp_msgcnt"
 else
@@ -125,7 +125,7 @@ $gtm_exe/mumps -r %XCMD "do viewdelta^restart($no_of_restarts,1,$log_freq)"
 @ proc_pid = `$gtm_exe/mumps -run %XCMD 'write ^myjob'`
 set syslog_end = `date +"%b %e %H:%M:%S"`
 echo "syslog_end = $syslog_end" >> syslog_time6
-$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog6.txt "" "${proc_pid}.*GTM-I-TPRESTART.*in glbl: \^a([0-9]*)" $exp_msgcnt
+$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog6.txt "" "${proc_pid}.*YDB-I-TPRESTART.*in glbl: \^a([0-9]*)" $exp_msgcnt
 if (0 == $status) then
 	echo "no of messages = $exp_msgcnt"
 else
@@ -143,7 +143,7 @@ $gtm_exe/mumps -r %XCMD "do viewdelta^restart($no_of_restarts,0,100)"
 @ proc_pid = `$gtm_exe/mumps -run %XCMD 'write ^myjob'`
 set syslog_end = `date +"%b %e %H:%M:%S"`
 echo "syslog_end = $syslog_end" >> syslog_time7
-$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog7.txt "" "${proc_pid}.*GTM-I-TPRESTART.*in glbl: \^a([0-9]*)" $exp_msgcnt
+$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog7.txt "" "${proc_pid}.*YDB-I-TPRESTART.*in glbl: \^a([0-9]*)" $exp_msgcnt
 if (0 == $status) then
 	echo "no of messages = $exp_msgcnt"
 else
@@ -163,7 +163,7 @@ unsetenv gtm_tprestart_log_delta
 @ proc_pid = `$gtm_exe/mumps -run %XCMD 'write ^myjob'`
 set syslog_end = `date +"%b %e %H:%M:%S"`
 echo "syslog_end = $syslog_end" >> syslog_time8
-$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog8.txt "" "${proc_pid}.*GTM-I-TPRESTART.*in glbl: \^a([0-9]*)" $exp_msgcnt
+$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog8.txt "" "${proc_pid}.*YDB-I-TPRESTART.*in glbl: \^a([0-9]*)" $exp_msgcnt
 if (0 == $status) then
 	echo "no of messages = $exp_msgcnt"
 else
@@ -184,7 +184,7 @@ unsetenv gtm_tprestart_log_delta
 set syslog_end = `date +"%b %e %H:%M:%S"`
 echo "syslog_end = $syslog_end" >> syslog_time9
 $gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog9.txt
-@ act_msgcnt = `$grep -c "${proc_pid}.*GTM-I-TPRESTART" test_syslog9.txt`
+@ act_msgcnt = `$grep -c "${proc_pid}.*YDB-I-TPRESTART" test_syslog9.txt`
 if ($exp_msgcnt == $act_msgcnt) then
 	echo "no of messages = $exp_msgcnt"
 else
@@ -207,7 +207,7 @@ unsetenv gtm_tprestart_log_delta
 unsetenv gtm_tprestart_log_first
 set syslog_end = `date +"%b %e %H:%M:%S"`
 echo "syslog_end = $syslog_end" >> syslog_time10
-$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog10.txt "" ".*GTM-I-TPRESTART.*BITMAP"
+$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog10.txt "" ".*YDB-I-TPRESTART.*BITMAP"
 if (0 != $status) then
 	echo "TEST-E-FAIL: not even one TPRESTART BITMAP message found"
 endif
